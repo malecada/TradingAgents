@@ -3,6 +3,28 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact dictionary production/publication — October 1 continuation**:
+Fresh synthetic red01 CLOSED1missing-module failure8deselected33.54s/session55995
+exit1 under full_sources/compact-dictionary-production-2026-10-01/. Implementing
+actual scientific Proof consumption, unchanged source-admitted scalar dictionary
+kernel, compact pair execution, exact completion count and bounded numeric
+publication. Representative indices reference the admitted sample artifact;
+matrices and dictionary metadata are pinned before seal callbacks. Explicit
+matrix/readback and legacy identity input allowances do not bound SciPy/Python
+scratch or total RSS. check01 CLOSED9passes361.13s/session6135exit0. Original source/test retained.
+Independent REVIEW_INITIAL identifies completed-stage inventory/inode, guaranteed
+failure cleanup and pre-namespace lease corrections. red02 CLOSED3failures9deselected122.26s/session24880exit1 reproduced all3
+findings. Corrections applied; check02 CLOSED5passed7deselected212.12s/session72056exit0
+verifies positive numerics, reverse-direction failure preservation and3regressions.
+Public owner-wrapper regression owner-check01 CLOSED2passed6deselected40.43s/
+session42613exit0. All engineering jobs terminal. Independent REVIEW accepted
+the bounded dictionary production/publication, SHA
+31f8b2aa754234d5c5fac5ef9f275138b6677c73ff3429e3c88458c15ac89520. Next actual compact MCM production from the
+Produced dictionary; full representation/native and empirical resource gates
+remain pending. Disk21279514624B available;10GiB floor preserved.
+No empirical job started;
+coverage77/109 and all1420pending financial fits unchanged.
+
 **Compact scientific sample proof — October 1 heartbeat**:
 Fresh synthetic red01 CLOSED1missing-module failure3deselected30.92s/
 session81002exit1 under

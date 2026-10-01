@@ -236,6 +236,11 @@ class Owner:
 
     @transition
     def finish_stage(self, stage, *, log_terminal_sha256, stream_terminal_sha256, completed_pairs=None):
+        return self._finish_stage(stage, log_terminal_sha256=log_terminal_sha256,
+            stream_terminal_sha256=stream_terminal_sha256, completed_pairs=completed_pairs)
+
+    def _finish_stage(self, stage, *, log_terminal_sha256, stream_terminal_sha256, completed_pairs=None):
+        """Internal transition; caller holds _transition for the whole producer."""
         self.boundary()
         require(self.active is stage and self.stages.get(stage.name) is stage and not stage.closed,
                 'actual active compact stage required')

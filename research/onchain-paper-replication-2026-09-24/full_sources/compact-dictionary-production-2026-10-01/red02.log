@@ -1,0 +1,60 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________ test_completed_stage_foreign_marker_revokes_dictionary ____________
+
+admitted = (<tradingagents.research.onchain_replication.compact_sample_proof.Proof object at 0x742ca110e660>, <tests.research.onc...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_completed_stage_foreign_marker_revokes_dictionary(admitted):
+        proof,t = admitted; m = api(); result = m.produce(proof,input_name='compact_dictionary')
+        (proof.owner.root/'dictionary/failed.json').write_bytes(b'{}')
+>       with pytest.raises(ValueError,match='inventory'): result.check()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_dictionary.py:127: Failed
+__ test_double_log_cleanup_failure_still_revokes_owner_and_preserves_attempt ___
+
+admitted = (<tradingagents.research.onchain_replication.compact_sample_proof.Proof object at 0x742c9bd64e10>, <tests.research.onc...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x742cad89c640>
+
+    def test_double_log_cleanup_failure_still_revokes_owner_and_preserves_attempt(admitted, monkeypatch):
+        proof,t = admitted; m = api(); close = m.compact_pair_log.PairLog.close
+        def fail(*args): raise OSError('synthetic fail terminal failure')
+        def broken_close(log): close(log); raise OSError('synthetic close failure')
+        def create(*args,**kwargs): raise RuntimeError('synthetic primary numerical failure')
+        monkeypatch.setattr(m.compact_pair_log.PairLog,'fail',fail)
+        monkeypatch.setattr(m.compact_pair_log.PairLog,'close',broken_close)
+        monkeypatch.setattr(m.compact_matcher.engine,'create',create)
+        with pytest.raises(BaseException): m.produce(proof,input_name='compact_dictionary')
+>       assert proof.owner.poisoned, 'cleanup bypassed owner revocation'
+E       AssertionError: cleanup bypassed owner revocation
+E       assert False
+E        +  where False = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x742c9bd64690>.poisoned
+E        +    where <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x742c9bd64690> = <tradingagents.research.onchain_replication.compact_sample_proof.Proof object at 0x742c9bd64e10>.owner
+
+tests/research/onchain_replication/test_compact_dictionary.py:139: AssertionError
+_____ test_owner_revoked_during_parent_setup_cannot_claim_output_directory _____
+
+admitted = (<tradingagents.research.onchain_replication.compact_sample_proof.Proof object at 0x742de7f58050>, <tests.research.onc...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x742c9bf8a0f0>
+
+    def test_owner_revoked_during_parent_setup_cannot_claim_output_directory(admitted, monkeypatch):
+        proof,t = admitted; m = api(); mkdir = m.durable_mkdir
+        def revoke(path): mkdir(path); t.run.fail('synthetic owner revocation during parent preparation')
+        monkeypatch.setattr(m,'durable_mkdir',revoke)
+        with pytest.raises(ValueError): m.produce(proof,input_name='compact_dictionary')
+>       assert not m.directory(proof).exists(), 'stale owner created attempt directory'
+E       AssertionError: stale owner created attempt directory
+E       assert not True
+E        +  where True = exists()
+E        +    where exists = PosixPath('/tmp/tmp5zooa5v5/research_artifacts/onchain_compact_dictionary/d397fdc5c50afacb7dd85a06ad27de3537ea9e1fc29b27b35c4f8d8cfbe58a85/example-a').exists
+E        +      where PosixPath('/tmp/tmp5zooa5v5/research_artifacts/onchain_compact_dictionary/d397fdc5c50afacb7dd85a06ad27de3537ea9e1fc29b27b35c4f8d8cfbe58a85/example-a') = <function directory at 0x742ca0c9c180>(<tradingagents.research.onchain_replication.compact_sample_proof.Proof object at 0x742de7f58050>)
+E        +        where <function directory at 0x742ca0c9c180> = <module 'tradingagents.research.onchain_replication.compact_dictionary' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_dictionary.py'>.directory
+
+tests/research/onchain_replication/test_compact_dictionary.py:148: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_dictionary.py::test_completed_stage_foreign_marker_revokes_dictionary
+FAILED tests/research/onchain_replication/test_compact_dictionary.py::test_double_log_cleanup_failure_still_revokes_owner_and_preserves_attempt
+FAILED tests/research/onchain_replication/test_compact_dictionary.py::test_owner_revoked_during_parent_setup_cannot_claim_output_directory
+3 failed, 9 deselected in 122.26s (0:02:02)
