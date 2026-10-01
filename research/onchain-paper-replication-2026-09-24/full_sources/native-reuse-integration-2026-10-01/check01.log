@@ -1,0 +1,23 @@
+test_actual_consumer_repeated_batches_and_guard_loss (__main__.Tests.test_actual_consumer_repeated_batches_and_guard_loss) ... ok
+test_normal_executor_reuses_features_for_both_fits (__main__.Tests.test_normal_executor_reuses_features_for_both_fits) ... NATIVE REUSE BOTH FITS COMPLETE
+ERROR
+test_source_transition_cannot_waive_numerical_changes (__main__.Tests.test_source_transition_cannot_waive_numerical_changes) ... ok
+
+======================================================================
+ERROR: test_normal_executor_reuses_features_for_both_fits (__main__.Tests.test_normal_executor_reuses_features_for_both_fits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-reuse-integration-2026-10-01/test_reuse.py", line 58, in <lambda>
+    self.addCleanup(lambda:run.fail('synthetic consumer fixture closed'))
+                           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/lifecycle.py", line 155, in fail
+    self._active()
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/lifecycle.py", line 103, in _active
+    raise ValueError("run is terminal; output/completion cannot be repeated")
+ValueError: run is terminal; output/completion cannot be repeated
+
+----------------------------------------------------------------------
+Ran 3 tests in 148.767s
+
+FAILED (errors=1)
