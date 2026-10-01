@@ -1,0 +1,109 @@
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+_ test_directional_hierarchy_capacity_includes_every_partition_and_final_matrix _
+
+    def test_directional_hierarchy_capacity_includes_every_partition_and_final_matrix():
+>       from tradingagents.research.onchain_replication.compact_policy import dictionary_capacity
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:15: ModuleNotFoundError
+___ test_policy_binds_full_log_checkpoint_and_retained_tail_batch_allowances ___
+
+    def test_policy_binds_full_log_checkpoint_and_retained_tail_batch_allowances():
+>       from tradingagents.research.onchain_replication.compact_policy import validate
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:26: ModuleNotFoundError
+____________ test_invalid_or_underreserved_policy_refused[backend] _____________
+
+change = 'backend'
+
+    @pytest.mark.parametrize('change', ['backend', 'boolean', 'events', 'pairs', 'checkpoint', 'logical', 'chunk', 'unknown'])
+    def test_invalid_or_underreserved_policy_refused(change):
+>       from tradingagents.research.onchain_replication.compact_policy import validate
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:40: ModuleNotFoundError
+____________ test_invalid_or_underreserved_policy_refused[boolean] _____________
+
+change = 'boolean'
+
+    @pytest.mark.parametrize('change', ['backend', 'boolean', 'events', 'pairs', 'checkpoint', 'logical', 'chunk', 'unknown'])
+    def test_invalid_or_underreserved_policy_refused(change):
+>       from tradingagents.research.onchain_replication.compact_policy import validate
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:40: ModuleNotFoundError
+_____________ test_invalid_or_underreserved_policy_refused[events] _____________
+
+change = 'events'
+
+    @pytest.mark.parametrize('change', ['backend', 'boolean', 'events', 'pairs', 'checkpoint', 'logical', 'chunk', 'unknown'])
+    def test_invalid_or_underreserved_policy_refused(change):
+>       from tradingagents.research.onchain_replication.compact_policy import validate
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:40: ModuleNotFoundError
+_____________ test_invalid_or_underreserved_policy_refused[pairs] ______________
+
+change = 'pairs'
+
+    @pytest.mark.parametrize('change', ['backend', 'boolean', 'events', 'pairs', 'checkpoint', 'logical', 'chunk', 'unknown'])
+    def test_invalid_or_underreserved_policy_refused(change):
+>       from tradingagents.research.onchain_replication.compact_policy import validate
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:40: ModuleNotFoundError
+___________ test_invalid_or_underreserved_policy_refused[checkpoint] ___________
+
+change = 'checkpoint'
+
+    @pytest.mark.parametrize('change', ['backend', 'boolean', 'events', 'pairs', 'checkpoint', 'logical', 'chunk', 'unknown'])
+    def test_invalid_or_underreserved_policy_refused(change):
+>       from tradingagents.research.onchain_replication.compact_policy import validate
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:40: ModuleNotFoundError
+____________ test_invalid_or_underreserved_policy_refused[logical] _____________
+
+change = 'logical'
+
+    @pytest.mark.parametrize('change', ['backend', 'boolean', 'events', 'pairs', 'checkpoint', 'logical', 'chunk', 'unknown'])
+    def test_invalid_or_underreserved_policy_refused(change):
+>       from tradingagents.research.onchain_replication.compact_policy import validate
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:40: ModuleNotFoundError
+_____________ test_invalid_or_underreserved_policy_refused[chunk] ______________
+
+change = 'chunk'
+
+    @pytest.mark.parametrize('change', ['backend', 'boolean', 'events', 'pairs', 'checkpoint', 'logical', 'chunk', 'unknown'])
+    def test_invalid_or_underreserved_policy_refused(change):
+>       from tradingagents.research.onchain_replication.compact_policy import validate
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:40: ModuleNotFoundError
+____________ test_invalid_or_underreserved_policy_refused[unknown] _____________
+
+change = 'unknown'
+
+    @pytest.mark.parametrize('change', ['backend', 'boolean', 'events', 'pairs', 'checkpoint', 'logical', 'chunk', 'unknown'])
+    def test_invalid_or_underreserved_policy_refused(change):
+>       from tradingagents.research.onchain_replication.compact_policy import validate
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_policy'
+
+tests/research/onchain_replication/test_compact_policy.py:40: ModuleNotFoundError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_directional_hierarchy_capacity_includes_every_partition_and_final_matrix
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_policy_binds_full_log_checkpoint_and_retained_tail_batch_allowances
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_invalid_or_underreserved_policy_refused[backend]
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_invalid_or_underreserved_policy_refused[boolean]
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_invalid_or_underreserved_policy_refused[events]
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_invalid_or_underreserved_policy_refused[pairs]
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_invalid_or_underreserved_policy_refused[checkpoint]
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_invalid_or_underreserved_policy_refused[logical]
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_invalid_or_underreserved_policy_refused[chunk]
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_invalid_or_underreserved_policy_refused[unknown]
+10 failed in 0.34s

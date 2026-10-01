@@ -38,3 +38,9 @@
   from matching identities or an intact checksum. The new path has passed only
   tiny synthetic integration and is not yet selected by the registered native
   producer; it is not empirical resource-capacity or paper-agreement evidence.
+- The prospective compact policy counts directional dictionary work and retained
+  logical evidence before allocation. Its metadata-only capacity calculator
+  refuses hierarchies exceeding 1024 levels and overflow at each reduction; it
+  never truncates numerical samples or returns partial counts. This operational
+  validator limit is explicit and requires review if a deeper hierarchy is
+  requested. It does not establish available physical storage or admit a run.

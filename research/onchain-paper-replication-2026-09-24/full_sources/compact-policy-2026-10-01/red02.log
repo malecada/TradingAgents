@@ -1,0 +1,66 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_pathological_hierarchy_is_refused_with_bounded_accounting_work ______
+
+    def test_pathological_hierarchy_is_refused_with_bounded_accounting_work():
+        source = '''from tradingagents.research.onchain_replication.compact_policy import dictionary_capacity
+    for size in (2**40 - 1, 10**6):
+        try:
+            dictionary_capacity(sample_count=2*size+1, size=size, partition_threshold=size, partition_size=size+1)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError('pathological accounting accepted')
+    '''
+        # Timeout kills and waits for this fresh metadata-only child; no lingering worker.
+>       result = subprocess.run([sys.executable, '-B', '-c', source], capture_output=True, timeout=3)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_policy.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:556: in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:1222: in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:2155: in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Popen: returncode: -9 args: ['/home/malecada/master_thesis/TradingAgents-au...>
+endtime = 88418.48731726, orig_timeout = 3, stdout_seq = [], stderr_seq = []
+skip_check_and_raise = False
+
+    def _check_timeout(self, endtime, orig_timeout, stdout_seq, stderr_seq,
+                       skip_check_and_raise=False):
+        """Convenience for checking if a timeout has expired."""
+        if endtime is None:
+            return
+        if skip_check_and_raise or _time() > endtime:
+>           raise TimeoutExpired(
+                    self.args, orig_timeout,
+                    output=b''.join(stdout_seq) if stdout_seq else None,
+                    stderr=b''.join(stderr_seq) if stderr_seq else None)
+E           subprocess.TimeoutExpired: Command '['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', "from tradingagents.research.onchain_replication.compact_policy import dictionary_capacity\nfor size in (2**40 - 1, 10**6):\n    try:\n        dictionary_capacity(sample_count=2*size+1, size=size, partition_threshold=size, partition_size=size+1)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('pathological accounting accepted')\n"]' timed out after 3 seconds
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:1269: TimeoutExpired
+_ test_mcm_chunk_filename_capacity_refused_even_with_sufficient_logical_budget _
+
+    def test_mcm_chunk_filename_capacity_refused_even_with_sufficient_logical_budget():
+        from tradingagents.research.onchain_replication.compact_policy import validate
+        p = candidate(); pairs = 10**12 + 1
+        p['score_chunk_cells'] = 1
+        p['log'].update(chunk_events=10000, max_pairs=pairs, max_events=2*pairs+10,
+            max_logical_bytes=(2*pairs+10)*168+16384)
+        p['max_retained_logical_bytes'] = 10**18
+>       with pytest.raises(ValueError, match='chunk'): validate(p, kind='mcm', pairs=pairs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_policy.py:77: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_pathological_hierarchy_is_refused_with_bounded_accounting_work
+FAILED tests/research/onchain_replication/test_compact_policy.py::test_mcm_chunk_filename_capacity_refused_even_with_sufficient_logical_budget
+2 failed, 11 deselected in 3.40s

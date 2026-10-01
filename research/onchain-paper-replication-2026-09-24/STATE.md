@@ -3,6 +3,57 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact dictionary integration and prospective execution policy — October 1 continuation**:
+Fresh compact-workload-integration-2026-10-01/check01 CLOSED4passes0.72s,
+session83423exit0. The actual dictionary workload now has synthetic evidence using
+CompactMatcher through both ordered matching directions, partition blocks,
+hierarchical memberships/medoids, exact distance matrices and persisted float64
+scores. Independent scalar scores agree; dictionary orchestration is shared, so
+this is callback integration evidence rather than an independent clustering proof.
+Failure on the reverse-direction allocation retains the first completion and next
+pending begin without retry. Actual full MCM callback-chain checkpoint exhaustion
+and injected cleanup failure after real release retain a pending pair and no
+acknowledged first-cell score. Independent REVIEW accepted, SHA
+592f62772b74f0d0d26f25954cd53da8198bff2206b4010ba1abf4c161c4b84a.
+Limits: tiny seven-sample fixture/one seed, first-cell MCM failures, no successor
+admission or actual unresolved OS cleanup exercised. Closed checks are not rerun.
+
+Maintained compact_policy.py defines a distinct prospective persistence backend
+resident-native-compact-current-owner-v1, leaving the scalar numerical backend
+unchanged. Exact schema binds pair policy, grouped advance/checkpoint schedule,
+compact log limits, score chunk size and retained logical evidence allowance.
+It checks directional dictionary capacity through all counted hierarchy levels,
+log events/pairs, complete permitted checkpoint reservation, retained MCM
+tail/batch metadata and filename capacity. Logical bounds exclude physical
+allocation, graphs, numerical matrices, scratch, logs and predecessor evidence.
+Pathological accounting exceeding1024levels is refused before returning counts;
+no numerical workload is truncated. This is validation, NOT registered admission.
+Evidence compact-policy-2026-10-01/: red01 ten missing-module failures; check01
+10passes0.30s; independent initial review found accounting-depth and filename
+limits missing. Pre-fix source retained. red02 reproduced both failures,
+2failed11deselected3.40s/session95761exit1; its timed-out metadata child was killed
+and waited for. Corrected check02 CLOSED13passes0.64s/session91085exit0, including
+zero-pair dictionary handling. FINAL_REVIEW accepted, SHA
+52a0d977a4024e9abb1a8edf618f346441bbf806baa462ca304472affc2fe44e.
+Exact remaining interfaces are retained in compact-policy-2026-10-01/
+INTEGRATION_REQUIREMENTS.md, SHA
+ced844160c86a25556a2e87d5cbccc3047751385de64bb9e5f442c172a2cbcdc.
+
+Integration audit identifies the remaining implementation precisely: current
+terminal-output-lifetime seal enumerates old OwnedJournal records/state and
+session directories. An empty old journal cannot certify compact work. Implement
+an explicitly selected compact owner/publication/reader/terminal branch binding
+each compact log start/terminal, exact completed denominator/no pending pair,
+score stream/tail/batch references and retained checkpoint inventory. Preserve
+old dated source and route. Replace per-cell full graph/source hashing and old
+journal replay with a reviewed frozen-input/source contract, lightweight live
+ownership checks and explicit full-verification boundaries. Compact bookkeeping
+alone does not remove those costs. Complete source closure and register the new
+policy before any empirical selection. Then finish physical storage/offload and
+hub-cap amendments and reviewed committed60→61 gate. Coverage77/109 and all1420
+financial fits remain pending. No numerical job is active. Host snapshot:
+21296820224B available disk,7174873088B available RAM; preserve10GiB disk floor.
+
 **Compact matcher bookkeeping and real-engine MCM integration implemented — October 1 continuation**:
 Maintained compact_pair_log.py replaces per-completed-pair Python state with fixed
 168-byte append-only begin/complete/progress records and one pending pair. Owner,
