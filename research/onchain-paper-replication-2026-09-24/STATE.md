@@ -3,6 +3,42 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Durable first-owner dictionary publication independently accepted**:
+New isolated full_sources/dictionary-publication-2026-10-01/ derives a driver
+that retains its admitted sample receipt for publication without a second full
+sample load. An explicit selected output policy reserves start/complete/failed
+metadata, event and component encoded bytes before fitting. The fixed attempt
+is exclusive; every existing identity refuses. Sample/matrix numeric allowance
+is preflighted separately from parent/pair/scratch/process memory. Publication
+preflights numeric components and lifecycle-encoded event size, binds exact
+sample/proof/workload/owner evidence and retains failures. Admission/reuse of
+the resulting dictionary is still pending; no empirical release.
+red01 CLOSED6methods/8missing-publication failures0.002s,session68240 exit1.
+check01 CLOSED6passes/126.936s,session34978 exit0. Independent initial review
+withheld for missing dictionary-component final inventory/signature checks and
+missing preflight of the sample policy journal event-count ceiling. Prior source
+and tests retained. red02 CLOSED2methods/4intended failures73.554s,
+session94308 exit1. The publisher now preflights at least two allowed events
+and retains exact output signatures/inventory for final compact checks after
+owner/sample leases. Numeric output allowance is also explicit before writes.
+check02 CLOSED8methods/12cases201.156s,session34481 exit0. No active job or
+source freeze. Independent REVIEW SHA
+c98dbb981e31834a8750d32d0e16b812051401bb4c58ec09f14f0d70f68c1571.
+All191bindings match manifest SHA
+60a0adb4fb75184811957dac17cbeaf51d2e6c687203500aa8599acdf472ac7a.
+Acceptance is bounded publication only; no financial fits launched.
+Next safe action: implement current-owner dictionary artifact admission/reuse.
+Require the explicit completion proof and selected output policy; reject partial
+or conflicting markers, foreign owners, unbound source/policy and corrupted
+component metadata before array loading. Join exact sample/proof provenance to
+configuration, training hashes, membership, ordered representatives and hierarchy;
+account for sample plus dictionary load/copy residency. Return a combined lease.
+Completed reuse must avoid dictionary workload, Serial and PairSession APIs.
+Historical ancestry and full mapped/MCM/resource admission remain mandatory.
+Next admission/reuse fixtures prepared in dictionary-artifact-route-2026-10-01;
+red01 CLOSED6missing-route failures0.002s,session43381 exit1. Implementation
+is still absent; this is locally preserved preparation, not accepted admission.
+
 **Dictionary execution requiring sampler proof independently accepted**:
 New isolated full_sources/dictionary-proof-driver-2026-10-01/ replaces the
 sample-event-only entry with mandatory current-owner proof admission. It leases

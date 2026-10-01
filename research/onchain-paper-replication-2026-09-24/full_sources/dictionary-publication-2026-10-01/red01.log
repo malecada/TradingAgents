@@ -1,0 +1,130 @@
+test_actual_dictionary_publication_has_exact_provenance_sizes_and_scalar_parity (__main__.Tests.test_actual_dictionary_publication_has_exact_provenance_sizes_and_scalar_parity) ... FAIL
+test_artifact_cap_preserves_failed_attempt_before_feature_write (__main__.Tests.test_artifact_cap_preserves_failed_attempt_before_feature_write) ... FAIL
+test_bad_route_and_reservation_or_array_budget_refuse_before_fitting (__main__.Tests.test_bad_route_and_reservation_or_array_budget_refuse_before_fitting) ... 
+  test_bad_route_and_reservation_or_array_budget_refuse_before_fitting (__main__.Tests.test_bad_route_and_reservation_or_array_budget_refuse_before_fitting) (mode='route') ... FAIL
+  test_bad_route_and_reservation_or_array_budget_refuse_before_fitting (__main__.Tests.test_bad_route_and_reservation_or_array_budget_refuse_before_fitting) (mode='reservation_cap') ... FAIL
+  test_bad_route_and_reservation_or_array_budget_refuse_before_fitting (__main__.Tests.test_bad_route_and_reservation_or_array_budget_refuse_before_fitting) (mode='array_cap') ... FAIL
+test_completion_lease_failure_preserves_conflicting_markers (__main__.Tests.test_completion_lease_failure_preserves_conflicting_markers) ... FAIL
+test_partial_attempt_is_never_refitted (__main__.Tests.test_partial_attempt_is_never_refitted) ... FAIL
+test_sampler_drift_after_fit_refuses_dictionary_write (__main__.Tests.test_sampler_drift_after_fit_refuses_dictionary_write) ... FAIL
+
+======================================================================
+FAIL: test_actual_dictionary_publication_has_exact_provenance_sizes_and_scalar_parity (__main__.Tests.test_actual_dictionary_publication_has_exact_provenance_sizes_and_scalar_parity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 44, in test_actual_dictionary_publication_has_exact_provenance_sizes_and_scalar_parity
+    f=self.fixture();result=self.run_publication();proof=json.loads(Path(result['path']).read_bytes())
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').is_file(),'dictionary publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary publication missing
+
+======================================================================
+FAIL: test_artifact_cap_preserves_failed_attempt_before_feature_write (__main__.Tests.test_artifact_cap_preserves_failed_attempt_before_feature_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 74, in test_artifact_cap_preserves_failed_attempt_before_feature_write
+    f=self.fixture('artifact_cap')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').is_file(),'dictionary publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary publication missing
+
+======================================================================
+FAIL: test_bad_route_and_reservation_or_array_budget_refuse_before_fitting (__main__.Tests.test_bad_route_and_reservation_or_array_budget_refuse_before_fitting) (mode='route')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 70, in test_bad_route_and_reservation_or_array_budget_refuse_before_fitting
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').is_file(),'dictionary publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary publication missing
+
+======================================================================
+FAIL: test_bad_route_and_reservation_or_array_budget_refuse_before_fitting (__main__.Tests.test_bad_route_and_reservation_or_array_budget_refuse_before_fitting) (mode='reservation_cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 70, in test_bad_route_and_reservation_or_array_budget_refuse_before_fitting
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').is_file(),'dictionary publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary publication missing
+
+======================================================================
+FAIL: test_bad_route_and_reservation_or_array_budget_refuse_before_fitting (__main__.Tests.test_bad_route_and_reservation_or_array_budget_refuse_before_fitting) (mode='array_cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 70, in test_bad_route_and_reservation_or_array_budget_refuse_before_fitting
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').is_file(),'dictionary publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary publication missing
+
+======================================================================
+FAIL: test_completion_lease_failure_preserves_conflicting_markers (__main__.Tests.test_completion_lease_failure_preserves_conflicting_markers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 90, in test_completion_lease_failure_preserves_conflicting_markers
+    f=self.fixture();sync=self.m.sync_directory
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').is_file(),'dictionary publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary publication missing
+
+======================================================================
+FAIL: test_partial_attempt_is_never_refitted (__main__.Tests.test_partial_attempt_is_never_refitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 80, in test_partial_attempt_is_never_refitted
+    self.fixture();self.attempt().mkdir(parents=True);(self.attempt()/'start.json').write_text('{}')
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').is_file(),'dictionary publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary publication missing
+
+======================================================================
+FAIL: test_sampler_drift_after_fit_refuses_dictionary_write (__main__.Tests.test_sampler_drift_after_fit_refuses_dictionary_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 84, in test_sampler_drift_after_fit_refuses_dictionary_write
+    f=self.fixture();original=self.m.driver.fit
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').is_file(),'dictionary publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary publication missing
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=8)
