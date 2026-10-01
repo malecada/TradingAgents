@@ -3,6 +3,30 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact scientific sample proof — October 1 heartbeat**:
+Fresh synthetic red01 CLOSED1missing-module failure3deselected30.92s/
+session81002exit1 under
+full_sources/compact-sample-proof-2026-10-01/. Implementing the actual published-
+sample proof: complete induced training neighborhoods, exact saved draw/array
+joins, weighted probabilities and saved uniform CDF intervals, ordered sample
+identity and exact dictionary workload scope. This audits existing live-owner
+draw evidence without invoking the sampler or selecting another sample. It does
+not establish the complete calendar, price/label provenance or empirical release.
+Maintained proof check01 CLOSED4passes130.50s/session72263exit0.
+Independent REVIEW_INITIAL found selected-index scratch remained referenced
+across extractions; original source/test retained. Fresh red02 CLOSED1failure
+1pass3deselected60.05s/session12953exit1: weakref lifetime regression reproduced,
+valid-equal-probability wrong-center CDF refusal passed. The scratch references
+are now explicitly released after the weight update. check02 CLOSED3passed
+2deselected92.39s/session15005exit0 verifies actual proof, semantic negatives
+including the wrong-CDF-center case, and scratch lifetime. No combined current
+5-case run claimed. All engineering checks terminal; independent REVIEW
+accepted the bounded scientific sample proof, SHA
+5c313f9123d51c6b0d0ae914c20f54803b562ef090e3ae1ebc7de2352fed44af. Next actual compact dictionary production/publication using
+this verified workload scope and the accepted capacity/count mode. No empirical/resource/financial job started.
+Latest disk21292544000B available;10GiB floor preserved. Resource coverage77/109
+and all1420 pending financial fits are unchanged.
+
 **Compact sample numeric publication — October 1 heartbeat**:
 Fresh synthetic red01 CLOSED1missing-module failure8deselected23.47s/
 session2623exit1, evidence
