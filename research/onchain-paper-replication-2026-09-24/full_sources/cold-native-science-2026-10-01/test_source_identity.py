@@ -1,0 +1,35 @@
+"""Read-only library comparison and isolated source drift counterexamples."""
+import importlib.util
+from pathlib import Path
+import shutil
+import tempfile
+import unittest
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+def module(name,path):
+    s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+m=module('source_identity_candidate',HERE/'source_identity.py')
+fixture=module('science_fixture',HERE/'test_science.py')
+class Tests(unittest.TestCase):
+    def setUp(self):
+        f=fixture.Tests();f.setUp();self.root=f.root;self.history=f.history
+    def test_exact_saved_library_matches_without_entrypoint_admission(self):
+        result=m.inspect(self.root,self.history,ROOT)
+        self.assertTrue(result['producer_library_identical']);self.assertEqual(result['library_files'],119)
+        self.assertEqual(len(result['records']),238)
+        self.assertEqual(list(result['historical_entrypoint_or_extra_files']),['engine.py'])
+        self.assertIs(result['current_run_admitted'],False);self.assertIs(result['full_execution_compatibility_verified'],False)
+    def test_metadata_bounds_refuse(self):
+        for field in ('max_files','max_file_bytes','max_total_bytes'):
+            with self.subTest(field=field),self.assertRaises(ValueError):m.inspect(self.root,self.history,ROOT,**{field:1})
+    def test_actual_changed_library_file_refuses(self):
+        import json
+        declared=json.loads((self.root/'research_runs/example-a/claim.json').read_text())['experiment']['source_files']
+        names=set(declared)-{'engine.py'}
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve()
+            for name in names:
+                dest=root/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,dest)
+            target=root/'tradingagents/research/onchain_replication/dictionary.py'
+            target.write_bytes(target.read_bytes()+b'\n# changed library\n')
+            with self.assertRaisesRegex(ValueError,'library source differs'):m.inspect(self.root,self.history,root)
+if __name__=='__main__':unittest.main(verbosity=2)

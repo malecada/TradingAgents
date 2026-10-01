@@ -1,0 +1,125 @@
+"""Saved feature science joins without numerical production or fit admission.
+
+Complete registered examples/scaler and calendar are compared to the prospective
+consumer. Saved dictionary arrays are verified and decoded, never refitted.
+Price omissions retain their historical qualification; source compatibility and
+actual current-run admission remain false until the guarded consumer integrates.
+"""
+from dataclasses import asdict
+import importlib.util
+from pathlib import Path
+from tradingagents.research.onchain_replication import calendar
+from tradingagents.research.onchain_replication.cache import cache_key
+from tradingagents.research.onchain_replication.contracts import Fold
+from tradingagents.research.onchain_replication.dataset import CalendarGraph
+from tradingagents.research.onchain_replication.job_payload import population_record
+from tradingagents.research.onchain_replication.matching_identity import graph_identity
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze,thaw,utc
+from tradingagents.research.onchain_replication.serialization import dictionary_from_record
+
+HERE=Path(__file__).resolve().parent
+def module(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);value=importlib.util.module_from_spec(spec);spec.loader.exec_module(value);return value
+pub=module('science_cold_publication',HERE.parent/'cold-native-publication-2026-10-01/publication.py')
+dates=module('science_cold_dates',HERE.parent/'representation-denominator-2026-10-01/denominator.py')
+require=pub.require;equal=pub.equal
+
+def inspect(root,history_reference,seal_reference,*,expected_descriptor,examples,scaler,
+            max_metadata_bytes=2097152,max_total_bytes=33554432,max_records=256,max_dictionary_bytes=67108864):
+    require(type(max_dictionary_bytes) is int and max_dictionary_bytes>0,'positive dictionary byte allowance required')
+    root=Path(root).absolute()
+    prior=pub.inspect(root,history_reference,seal_reference,max_metadata_bytes=max_metadata_bytes,max_total_bytes=max_total_bytes,max_records=max_records)
+    snapshots={};records={};total=0
+    def read(path,sha=None):
+        nonlocal total
+        path=Path(path)
+        require(path in records or len(records)<max_records,'science metadata record allowance exceeded')
+        cap=min(max_metadata_bytes,records[path]['bytes'] if path in records else max_total_bytes-total)
+        value,h,size=pub.history._read_metadata(root,path,snapshots,sha,max_bytes=cap)
+        if path not in records:total+=size
+        records[path]={'path':str(path),'sha256':h,'bytes':size}
+        return value
+    def ref(value,path=None):
+        require(type(value) is dict and set(value)=={'path','sha256'} and (path is None or value['path']==str(path)),'science evidence reference differs')
+        return read(value['path'],value['sha256'])
+    for pin in prior['records']:read(pin['path'],pin['sha256'])
+    claim=read(root/'research_runs'/history_reference['experiment']/'claim.json',history_reference['claim_sha256'])
+    inputs=claim['experiment']['inputs']
+    def registered(name):
+        require(type(name) is str and name in inputs,'historical science input missing')
+        value=inputs[name];return read(root/value['path'],value['sha256'])
+    seal=ref(seal_reference);owner=seal['owner'];journal=Path(owner['journal_directory'])
+    representation=read(journal/'claim.json');descriptor=representation['descriptor']
+    require(equal(descriptor,expected_descriptor),'prospective scientific descriptor differs')
+    selected=registered('execution_job')['payload']['representation_jobs'][owner['representation']]
+    item=registered(representation['plan_input'])['producers'][owner['producer']]
+    population_input=registered('execution_job')['payload']['population_inputs'][selected['population']]
+    require(type(population_input) is str,'cold science requires an immutable registered full population')
+    population=registered(population_input)
+    require(equal(population,population_record(examples,scaler)),'complete prospective example/scaler population differs')
+    require(scaler.train_hash==examples.train_hash==descriptor['train_hash'],'cold training population differs')
+    control=registered(item['pair_workload_input'])
+    require(item['pair_workload_input']==selected['pair_workload_input'],'historical workload policy selection differs')
+    expected_manifest=control['example_manifest_sha256'];fold=Fold(**descriptor['fold'])
+    require(item['denominator_input']==selected['denominator_input'],'historical denominator policy selection differs')
+    policy=registered(item['denominator_input']);config=registered(policy['calendar_input']);coverage=registered(policy['coverage_input'])
+    folds=[f for f in calendar.build_folds(config,coverage) if f.id==fold.id]
+    require(len(folds)==1 and equal(asdict(folds[0]),asdict(fold)),'historical fold/coverage differs')
+    graphs={}
+    require(set(item['graphs'])==set(descriptor['graph_population']),'historical complete graph population differs')
+    for h,route in item['graphs'].items():
+        require(set(route)=={'input'},'historical immutable graph input required')
+        manifest=registered(route['input']);metadata=manifest['metadata']
+        require(manifest['graph_hash']==h,'historical graph manifest identity differs')
+        graphs[h]=CalendarGraph(metadata['asset'],metadata['start_utc'],metadata['end_utc'],metadata['available_at'],tuple(metadata['source_hashes']),h)
+    denominator=dates.validate(tuple(graphs.values()),examples,fold,lookback_days=config['lookback_days'],
+        max_calendar_days=policy['max_calendar_days'],expected_manifest_sha256=expected_manifest,
+        expected_population=descriptor['graph_population'],expected_required=descriptor['required_graphs'])
+    publication=ref(seal['publication']);closure=publication['closure'];binding=closure['binding']
+    require(equal(denominator,closure['denominator']['denominator']),'historical full daily denominator differs')
+    fitted={**descriptor['configs']['dictionary'],'train_start':fold.train_start,'train_end':fold.train_end,'pair_execution':descriptor['pair_execution']}
+    require(binding['fold_id']==fold.id and binding['fold_hash']==fold.member_hash and binding['train_hash']==examples.train_hash
+        and binding['seed']==descriptor['seed'] and all(g.asset==binding['asset'] for g in graphs.values())
+        and binding['configuration_hash']==cache_key({'dictionary':fitted,'matching':descriptor['configs']['matching'],'baselines':descriptor['configs']['baselines']}),
+        'historical fitted scientific configuration differs')
+    first=next(iter(closure['graphs'].values()))['feature_provenance']['mcm_provenance']['dictionary_provenance']
+    directory=root/'research_artifacts/onchain_dictionary_workflows'/owner['workflow_identity']/owner['experiment']
+    proof=ref(first['dictionary_proof'],directory/'complete.json');start=ref(proof['start'],directory/'start.json')
+    event=ref(proof['event'],journal/'event-000001.json')
+    require(proof['status']=='complete' and proof['resumable'] is False and start['status']=='reserved'
+        and equal(proof['owner'],owner) and equal(start['owner'],owner)
+        and proof['dictionary_identity']==binding['dictionary_hash']==event['context']['dictionary_identity']
+        and equal(proof['component'],first['component']) and proof['component']=={'path':str(journal/'checkpoint-000001/manifest.json'),'sha256':event['sha256']},
+        'historical dictionary proof identity differs')
+    require(item['sample_artifact_input']==selected['sample_artifact_input'],'historical artifact policy selection differs')
+    artifact=registered(item['sample_artifact_input']);component=proof['component']
+    array_cap=min(max_dictionary_bytes,artifact['max_array_bytes'])
+    def lease():
+        for path,pin in list(records.items()):read(path,pin['sha256'])
+        pub.history._output_inventory(directory,{'start.json','complete.json'})
+        require(equal(expected_descriptor,descriptor) and equal(population_record(examples,scaler),population),'prospective population changed')
+    reader=pub.native.reader
+    reader.inspect_component(Path(component['path']),component['sha256'],event['binding'],root,
+        artifact['max_manifest_bytes'],artifact['max_artifact_bytes'],array_cap)
+    value=reader.read_component(component['path'],component['sha256'],event['binding'],root=root,
+        max_manifest_bytes=artifact['max_manifest_bytes'],max_artifact_bytes=artifact['max_artifact_bytes'],max_array_bytes=array_cap,lease=lease)
+    dictionary=dictionary_from_record(value)
+    eligible=sorted((g for g in graphs.values() if utc(g.start_utc)>=utc(fold.train_start) and utc(g.available_at)<utc(fold.train_end)),key=lambda g:(g.start_utc,g.asset,g.identity))
+    training=[g.identity for g in eligible]
+    require(list(dictionary.training_graph_hashes)==training==binding['dictionary_training_graph_hashes']
+        and dictionary.identity==binding['dictionary_hash'] and equal(dictionary.config,fitted)
+        and dictionary.matching_config_hash==cache_key(descriptor['configs']['matching'])
+        and len(dictionary.representatives)==fitted['size']
+        and all(g.parent_hash in training for g in dictionary.representatives),'historical dictionary training lineage differs')
+    motifs=[graph_identity(g) for g in dictionary.representatives]
+    for h,graph in closure['graphs'].items():
+        provenance=graph['feature_provenance']['mcm_provenance']
+        require(equal(provenance['dictionary_provenance'],first) and provenance['ordered_motifs']==motifs,'historical MCM motif order differs')
+        mcm_event=ref(provenance['event'])
+        require(mcm_event['context']['ordered_motifs']==motifs and mcm_event['context']['graph_hash']==h,'historical MCM event motif order differs')
+    lease()
+    return freeze({'schema_version':1,'historical_scientific_metadata_verified':True,'current_run_admitted':False,
+        'source_compatibility_verified':False,'price_exclusions_revalidated':False,'numerical_producers_replayed':False,
+        'denominator':denominator,'dictionary_hash':dictionary.identity,'ordered_motifs':motifs,'training_graphs':training,
+        'binding':binding,'records':list(records.values()),'metadata_bytes':total,
+        'history_reference':history_reference,'seal_reference':seal_reference})

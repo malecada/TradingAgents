@@ -1,0 +1,38 @@
+test_actual_complete_population_and_dictionary_without_refit (__main__.Tests.test_actual_complete_population_and_dictionary_without_refit) ... ERROR
+test_bounded_dictionary_read_refuses_before_allocation (__main__.Tests.test_bounded_dictionary_read_refuses_before_allocation) ... ok
+test_changed_scaler_refuses (__main__.Tests.test_changed_scaler_refuses) ... ok
+test_changed_seed_config_fold_and_required_graph_refuse (__main__.Tests.test_changed_seed_config_fold_and_required_graph_refuse) ... ok
+test_complete_population_not_just_training_hash_is_required (__main__.Tests.test_complete_population_not_just_training_hash_is_required) ... ok
+test_reordered_motif_provenance_refuses (__main__.Tests.test_reordered_motif_provenance_refuses) ... ok
+
+======================================================================
+ERROR: test_actual_complete_population_and_dictionary_without_refit (__main__.Tests.test_actual_complete_population_and_dictionary_without_refit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-science-2026-10-01/test_science.py", line 26, in test_actual_complete_population_and_dictionary_without_refit
+    result=self.inspect()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-science-2026-10-01/test_science.py", line 21, in inspect
+    return m.inspect(self.root,self.history,self.seal,expected_descriptor=kwargs.pop('descriptor',self.descriptor),
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        examples=kwargs.pop('examples',self.examples),scaler=kwargs.pop('scaler',self.scaler),**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-science-2026-10-01/science.py", line 109, in inspect
+    require(list(dictionary.training_graph_hashes)==training==binding['dictionary_training_graph_hashes']
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        and dictionary.identity==binding['dictionary_hash'] and equal(dictionary.config,{**fitted,'pair_execution':descriptor['pair_execution']})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        and dictionary.matching_config_hash==cache_key(descriptor['configs']['matching'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        and len(dictionary.representatives)==fitted['size']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        and all(g.parent_hash in training for g in dictionary.representatives),'historical dictionary training lineage differs')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-history-2026-10-01/terminal.py", line 16, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: historical dictionary training lineage differs
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.903s
+
+FAILED (errors=1)

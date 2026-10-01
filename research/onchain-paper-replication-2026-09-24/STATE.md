@@ -3,6 +3,42 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Continued scientific reuse validation — no active fit**:
+full_sources/cold-native-science-2026-10-01/science.py now compares the complete
+prospective descriptor/population/scaler with admitted historical inputs, rebuilds
+calendar/fold/full date denominator, and verifies saved dictionary identity, exact
+training-only graph scope and MCM motif order. Numerical producers are never rerun.
+Typed native dictionary tree checks precede decoding, and selected dictionary output
+policies bound reads. Current-run admission, source compatibility and independent
+price-exclusion recomputation remain explicitly false.
+red01 missing module retained; check01 CLOSED5passes/1error1.828s/session3259exit1;
+check02 CLOSED5passes/1error1.903s/session19379exit1: saved configuration conventions
+corrected to distinguish route settings from backend-qualified dictionary settings.
+check03 CLOSED7passes/1failure2.603s/session79128exit1: positive passed; the training
+boundary test inspected the wrong path component and was corrected. All snapshots
+and failed logs retained. check04 CLOSED10passes2.876s/session3283exit0. REVIEW SHA
+c7ba539d156e51a88582a6f90470204c5a4fdf679a10cd44f44b4e953658d668 independently accepts
+this bounded scientific-metadata inspection and records the initial review fixes.
+Next step already implemented: source_identity.py compares the actual producer
+library in historical/current roots with the registered hashes using bounded,
+nonblocking reads. source-check01 CLOSED2passes/1failure0.219s/session37331exit1;
+comparison itself passed, but its source-list helper covered116files rather than
+119. The registered owner journal/ownership/workload modules are now explicitly
+retained in the comparison; only engine.py is separately unverified. source-check02
+CLOSED3passes0.187s/session29350exit0 verifies119libraries in both roots, bounded
+reads and an actual isolated changed dictionary source refusal. SOURCE_REVIEW SHA
+e1336ba8baa2f56fdc1b1e907732cf4b6c91ed1b2408033d2075cd4d9b299d83 accepts this
+library-only scope and independently verified238hashes/1859534bytes across both roots.
+No historical job/test identity is reopened; no empirical budget was consumed.
+
+The remaining current-consumer step requires an actual active ResearchRun, a new
+explicit native reuse route and registered history/seal/full-population references,
+current runtime/source closure, actual guard ownership/liveness at each batch, and
+an immutable current binding output. The library identity helper deliberately
+rejects source changes; any job_payload/native routing transition must receive an
+exact prospective old/new source mapping and review, never an implicit exception.
+Existing producing-owner APIs must remain unchanged. No active numerical process.
+
 **Actual guarded native pipeline CLOSED complete; cold history/content checks accepted**:
 Full sampler→motif dictionary→MCM→native graph features→proposed neural fits now
 executes through the real launcher/monitor/worker. Actual guarded launch01 CLOSED

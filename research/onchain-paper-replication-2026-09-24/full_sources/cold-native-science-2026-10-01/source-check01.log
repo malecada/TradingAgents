@@ -1,0 +1,17 @@
+test_actual_changed_library_file_refuses (__main__.Tests.test_actual_changed_library_file_refuses) ... ok
+test_exact_saved_library_matches_without_entrypoint_admission (__main__.Tests.test_exact_saved_library_matches_without_entrypoint_admission) ... FAIL
+test_metadata_bounds_refuse (__main__.Tests.test_metadata_bounds_refuse) ... ok
+
+======================================================================
+FAIL: test_exact_saved_library_matches_without_entrypoint_admission (__main__.Tests.test_exact_saved_library_matches_without_entrypoint_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-science-2026-10-01/test_source_identity.py", line 17, in test_exact_saved_library_matches_without_entrypoint_admission
+    self.assertTrue(result['producer_library_identical']);self.assertEqual(result['library_files'],119)
+                                                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 116 != 119
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.219s
+
+FAILED (failures=1)

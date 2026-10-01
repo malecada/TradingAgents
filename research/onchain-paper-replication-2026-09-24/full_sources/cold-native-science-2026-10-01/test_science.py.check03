@@ -1,0 +1,68 @@
+"""Synthetic retained metadata/content only; no closed producer execution."""
+import copy
+from dataclasses import replace
+import importlib.util
+import json
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+from tradingagents.research.onchain_replication.job_payload import population_from_record
+from tradingagents.research.onchain_replication.provenance import file_hash
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+spec=importlib.util.spec_from_file_location('cold_science_candidate',HERE/'science.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+class Tests(unittest.TestCase):
+    def setUp(self):
+        self.root=ROOT/'research_artifacts/native-guarded-synthetic/attempt01';run=self.root/'research_runs/example-a';base=self.root/m.pub.history.job.PREFIX/'runs/example-a'
+        self.history={'experiment':'example-a','source':'e8aa67ec16d0023f94bccb5e77d61c2b0e3aed7c','claim_sha256':file_hash(run/'claim.json'),'terminal_sha256':file_hash(run/'complete.json'),'guard_sha256':file_hash(base/'guard/final.json'),'observer_sha256':file_hash(base/'observer.json')}
+        seal=next((self.root/'research_artifacts/onchain_representation_seals').glob('*/*/complete.json'));self.seal={'path':str(seal),'sha256':file_hash(seal)}
+        self.descriptor=json.loads((self.root/'plan.json').read_text())['producers']['p']['descriptor']
+        self.examples,self.scaler=population_from_record(json.loads((self.root/'population.json').read_text()))
+    def inspect(self,**kwargs):
+        return m.inspect(self.root,self.history,self.seal,expected_descriptor=kwargs.pop('descriptor',self.descriptor),
+            examples=kwargs.pop('examples',self.examples),scaler=kwargs.pop('scaler',self.scaler),**kwargs)
+    def test_actual_complete_population_and_dictionary_without_refit(self):
+        with (patch.object(m,'dictionary_from_record',wraps=m.dictionary_from_record) as loaded,
+             patch.object(m.pub.native.seal,'finish',side_effect=AssertionError('no live producer'))):
+            result=self.inspect()
+        self.assertEqual(loaded.call_count,1)
+        self.assertEqual(result['denominator']['calendar_days'],27)
+        self.assertEqual(len(result['ordered_motifs']),2)
+        self.assertTrue(result['historical_scientific_metadata_verified'])
+        for key in ('current_run_admitted','source_compatibility_verified','price_exclusions_revalidated','numerical_producers_replayed'):self.assertIs(result[key],False)
+    def test_changed_seed_config_fold_and_required_graph_refuse(self):
+        for change in (lambda d:d.update(seed=23),lambda d:d['configs']['dictionary'].update(size=3),lambda d:d['fold'].update(test_end='2024-02-05T00:00:00Z'),lambda d:d['required_graphs'].pop()):
+            d=copy.deepcopy(self.descriptor);change(d)
+            with self.assertRaises(ValueError):self.inspect(descriptor=d)
+    def test_complete_population_not_just_training_hash_is_required(self):
+        for value in (replace(self.examples,test=self.examples.test[:-1]),replace(self.examples,exclusions=self.examples.exclusions[:-1]),
+            replace(self.examples,test=(replace(self.examples.test[0],graph_available_at=('2025-01-01T00:00:00Z',)*2),*self.examples.test[1:]))):
+            with self.assertRaises(ValueError):self.inspect(examples=value)
+    def test_changed_scaler_refuses(self):
+        with self.assertRaises(ValueError):self.inspect(scaler=replace(self.scaler,mean=self.scaler.mean+1))
+    def test_bounded_dictionary_read_refuses_before_allocation(self):
+        original=m.pub.native.reader.read_component
+        def checked(path,*args,**kwargs):
+            if Path(path).parent.name=='checkpoint-000001':raise AssertionError('cap before dictionary read')
+            return original(path,*args,**kwargs)
+        with patch.object(m.pub.native.reader,'read_component',side_effect=checked),self.assertRaises(ValueError):
+            self.inspect(max_dictionary_bytes=1)
+    def test_reordered_motif_provenance_refuses(self):
+        original=m.pub.history._read_metadata
+        def changed(root,path,signatures,expected=None,*,max_bytes):
+            value,sha,size=original(root,path,signatures,expected,max_bytes=max_bytes)
+            if 'onchain_representation_publications' in path.parts and path.name=='complete.json':
+                value=copy.deepcopy(value)
+                for graph in value['closure']['graphs'].values():graph['feature_provenance']['mcm_provenance']['ordered_motifs'].reverse()
+            return value,sha,size
+        with patch.object(m.pub.history,'_read_metadata',side_effect=changed),self.assertRaises(ValueError):self.inspect()
+    def test_decoded_motif_identity_must_match_saved_column_order(self):
+        with patch.object(m,'graph_identity',return_value='0'*64),self.assertRaisesRegex(ValueError,'MCM motif order differs'):self.inspect()
+    def test_dictionary_graph_at_train_end_is_ineligible(self):
+        original=m.pub.history._read_metadata
+        def changed(root,path,signatures,expected=None,*,max_bytes):
+            value,sha,size=original(root,path,signatures,expected,max_bytes=max_bytes)
+            if path.name.startswith('graph-ba1c5315'):
+                value=copy.deepcopy(value);value['metadata']['available_at']=self.descriptor['fold']['train_end']
+            return value,sha,size
+        with patch.object(m.pub.history,'_read_metadata',side_effect=changed),self.assertRaisesRegex(ValueError,'dictionary training lineage differs'):self.inspect()
+if __name__=='__main__':unittest.main(verbosity=2)

@@ -1,0 +1,49 @@
+"""Exact current/historical producer-library identity, never job admission.
+
+The separately registered entrypoint (engine.py in the synthetic fixture) and
+new consumer modules are reported separately and are not granted compatibility.
+No source change is automatically waived, including control/dispatch changes.
+"""
+import importlib.util
+from pathlib import Path
+from tradingagents.research.onchain_replication import job,native_producer
+from tradingagents.research.onchain_replication.provenance import freeze
+HERE=Path(__file__).resolve().parent
+spec=importlib.util.spec_from_file_location('source_identity_history',HERE.parent/'cold-native-history-2026-10-01/terminal.py')
+history=importlib.util.module_from_spec(spec);spec.loader.exec_module(history)
+require=history.require
+
+def inspect(root,history_reference,current_root,*,max_files=512,max_file_bytes=2097152,max_total_bytes=33554432):
+    require(all(type(n) is int and n>0 for n in (max_files,max_file_bytes,max_total_bytes)),'positive source limits required')
+    root=Path(root).absolute();current_root=Path(current_root).absolute()
+    require(current_root.resolve()==current_root and current_root.is_dir(),'canonical current source root required')
+    previous=history.inspect(root,history_reference)
+    declared=previous['claim']['experiment']['source_files']
+    required=set(job.required_sources())|set(native_producer.required_sources())
+    # Retain registered transitive dated modules even if a newer source-list
+    # helper omits them. In the retained producer this adds the owner journal,
+    # ownership and workload modules. No registered library may silently vanish.
+    required|={n for n in declared if n.endswith('.py') and n.startswith(('tradingagents/',
+        'research/onchain-paper-replication-2026-09-24/full_sources/'))}
+    require(required and required<=set(declared) and len(required)*2<=max_files,'registered producer library closure missing or too large')
+    reader=native_producer.api().reader;records=[];total=0
+    # Historical and prospective libraries must both equal the original hashes.
+    # Current consumer admission must separately register every reader dependency.
+    for directory in (root,current_root):
+        for name in sorted(required):
+            path=directory/name
+            require(path.is_relative_to(directory),'source path escapes root')
+            with reader.opened(path,directory) as (stream,signature):
+                size=signature[2]
+                require(size<=max_file_bytes and total+size<=max_total_bytes,'source byte allowance exceeded')
+                require(reader.digest_stream(stream,size)==declared[name],'historical/current library source differs: '+name)
+            total+=size;records.append({'root':str(directory),'path':str(path),'sha256':declared[name],'bytes':size,'signature':signature})
+    # Bind the observation across the complete comparison; no cached process state.
+    for directory in (root,current_root):
+        for record in (r for r in records if r['root']==str(directory)):
+            with reader.opened(Path(record['path']),directory,record['signature']) as (stream,signature):
+                require(signature[2]==record['bytes'] and reader.digest_stream(stream,record['bytes'])==record['sha256'],'source changed during comparison')
+    return freeze({'schema_version':1,'producer_library_identical':True,'library_files':len(required),
+        'source_bytes_read_once':total,'records':records,'historical_entrypoint_or_extra_files':sorted(set(declared)-required),
+        'full_execution_compatibility_verified':False,'current_run_admitted':False,
+        'history_reference':history_reference,'current_root':str(current_root)})
