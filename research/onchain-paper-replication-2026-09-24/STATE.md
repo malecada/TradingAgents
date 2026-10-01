@@ -3,6 +3,26 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Leased sampler core independently accepted**:
+New isolated full_sources/sampler-leased-core-2026-10-01/ derives the unchanged
+resident sampling algorithm with mandatory pre-allocation/per-draw leases and
+chained immutable per-draw evidence callbacks. It preserves exact PCG64 choice,
+training order, overlap weighting and sample identity. Array-neighborhood scratch
+and retained samples have separate limits;16bytes/center counts only direct
+weights/probability, never peak RSS or NumPy choice scratch. The outer guard is
+still mandatory. No maintained sampler or scientific setting is changed.
+red01 CLOSED7missing-core failures/0.002s. check01 CLOSED exit0:7passes/0.055s. Five seeds compare samples/record
+probabilities/local arrays/final RNG state and identity against the maintained
+sampler. Other cases check capacity/lease refusal and callback failure cleanup.
+Independent REVIEW SHA705b0db89d161f746bdec483a65b373c640fffe38498e3bab0759d7ae880a7ca.
+All16bindings match manifest SHAd14a4edfe4866302d8c6df318595a9efe3e577a49132fbdec1c4b12ebd01ba81.
+No active job. This core has no durable owner/publication or resume API. Next:
+implement reserved→failed/complete
+sampler producer disposition, pre-write artifact budgets, and a completion proof
+joining policy/source/owner/start-final RNG to exact sample event/component hashes.
+Per-draw callbacks alone do not establish durable checkpoints or resumability.
+Partial attempts must remain inspectable and must not trigger automatic redraw.
+
 **Published samples → actual dictionary execution independently accepted**:
 full_sources/dictionary-sample-driver-2026-10-01/ now joins the accepted sample
 artifact route to the actual dictionary workload and serial pair consumer.
