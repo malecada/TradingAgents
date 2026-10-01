@@ -54,7 +54,7 @@ actual two-graph binding publication/duplicate/corruption refusal, and final
 publication callback owner revocation with retained complete+failed evidence.
 All checks terminal; independent final REVIEW accepted SHA
 54d56bde3da0cf410c3e014abbd3a90b172f3e35e3b99dcc83fa3b1fa79a5329.
-Next safe action: back up this reviewed checkpoint, then immediately implement
+Next safe action: immediately implement
 the explicit compact terminal-to-native handoff. The old FeatureJournal reader
 requires graph-complete events and cannot interpret compact artifact receipts;
 keep a distinct compact terminal schema/reader and do not fabricate old events.
@@ -62,8 +62,10 @@ The existing compact_owner.finish closes active leases. A post-seal current-run/
 guard/source/input and exact saved-evidence contract is necessary before native
 loading or registered output publication.
 No empirical jobs. Graph artifacts/owner/closure checkpoint154dc3fa05639a688f8555e006cc9295f02d0f45
-committed, pushed and exact remote hash verified; newer publication checkpoint
-is not yet backed up.
+committed, pushed and exact remote hash verified. Publication checkpoint
+e73a58f33daa4c724061d9400c065694a5c06ea1 is also committed, pushed and exact
+remote hash verified. All engineering jobs terminal; no empirical job is active.
+Latest available disk21334437888B; preserve the authorized10GiB floor.
 
 **Compact complete-calendar admission — October 1 continuation**:
 Implemented compact_denominator.py: actual Training, both registered plan/job
