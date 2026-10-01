@@ -1,0 +1,25 @@
+test_accounting_query_cannot_race_with_batch_registration (__main__.Tests.test_accounting_query_cannot_race_with_batch_registration) ... FAIL
+test_minimum_capacity_requires_each_graph_to_load_before_sealing (__main__.Tests.test_minimum_capacity_requires_each_graph_to_load_before_sealing) ... ERROR
+
+======================================================================
+ERROR: test_minimum_capacity_requires_each_graph_to_load_before_sealing (__main__.Tests.test_minimum_capacity_requires_each_graph_to_load_before_sealing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 59, in test_minimum_capacity_requires_each_graph_to_load_before_sealing
+    m.minimum_capacity(graphs,['a'],2,base)
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: module 'native_map_candidate' has no attribute 'minimum_capacity'
+
+======================================================================
+FAIL: test_accounting_query_cannot_race_with_batch_registration (__main__.Tests.test_accounting_query_cannot_race_with_batch_registration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 51, in test_accounting_query_cannot_race_with_batch_registration
+    with self.assertRaisesRegex(ValueError,'already active'):features.live_tensor_bytes()
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.215s
+
+FAILED (failures=1, errors=1)

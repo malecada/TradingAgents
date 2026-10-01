@@ -3,6 +3,49 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Terminal native-feature batch adapter independently accepted**:
+New isolated full_sources/terminal-native-map-2026-10-01/ prepare calls the actual
+registered seal transition once and builds strict native feature references from
+its real terminal receipt and published binding. Private numeric helper alone
+is not admission. Subclassing FixedFeatureMap preserves both evaluation dispatches;
+no generic mmap/ArrayReference route or completed producer replay is used.
+Budget preflight includes live original returned wrappers, unique new tensors,
+current native load/copy and bounded chunks. Aliases/autograd storage beyond
+wrapper lifetime, model/parent graphs/Python/stream buffers/RSS remain excluded;
+outer guard and full workflow admission are still required. Load/verification
+operations are locked, content-leased and release newly allocated results on error.
+red01 CLOSED6missing failures0.002s, session58112 exit1.
+Focused check01 CLOSED6passes1.094s, session38533 exit0. Includes empty edges,
+deduplication, budgets before allocation, corruption/storage drift, reentrancy,
+cleanup and maintained batch_factory/full neural forward/backward gradient groups.
+No financial fit. Independent initial review found NM1 capacity checked after
+seal and NM2 unsynchronized public accounting. Source/tests preserved as .check01.
+Corrections preflight largest required single graph before seal.finish and lock
+the public live-byte query together with loading/verification. Multi-graph batch
+feasibility remains checked at allocation; individual capacity is not full-fit
+resource admission. red02 CLOSED2methods0.215s,1failure+1error, session86815 exit1.
+check02 CLOSED8passes1.232s, session22209 exit0, including barrier/query-lock
+regression and individual capacity boundaries. Actual registered integration
+(successful seal/map plus low-cap no-seal case) passed; final review accepted.
+Independent supplement accepts NM1/NM2 source correction; no new blocker.
+SUPPLEMENT_REVIEW SHA737a52ae9941f46ecac78ab96e17233ab7978a91a5c44140f12d78c4ded620e9.
+Actual registered integration-check01 CLOSED2passes342.508s, session51018 exit0;
+exact PythonPID1382389 gone. Both actual terminal→native map and low-cap
+refusal before seal passed. All409frozen files verified unchanged;
+integration-check01-sources.json
+SHA76a4f708727e5c38ec207808533cd8792449049935883eb14534fd3ce811d7df.
+No active process or source freeze remains. Preserve closed test identities.
+Sealing predecessor accepted/pushedd182698d3c39f41a1c510bd901c752bcf2529059;
+remote hash verified. Final412bindings SHA301d1d306e51736a7531a97f9d909acad2239655ed26bfd84fa9441ebd772b41.
+Independent final review accepts bounded current-owner seal→native map and
+maintained dispatch reuse; NM1/NM2 closed. All412bindings,409freeze and394inherited
+entries independently verified. REVIEW SHA
+cb6465a7550c3a12b1a55655cce23c08c43d6fedbe35348e25012dc57c2b0baa.
+Next: commit/push compact evidence, then actual registered batch-executor
+synthetic integration. Native map production is accepted; executor fit/checkpoint/
+prediction integration has not yet been exercised through this route.
+All1420financial fits pending; all original paper scope remains required.
+
 **Current-owner sealing and registered outputs independently accepted**:
 New isolated full_sources/representation-seal-2026-10-01/ implements a first-owner
 publication-to-terminal handoff and registered binding/journal outputs. It keeps

@@ -1,0 +1,95 @@
+test_aggregate_budget_and_unknown_keys_refuse_before_reader_allocation (__main__.Tests.test_aggregate_budget_and_unknown_keys_refuse_before_reader_allocation) ... FAIL
+test_deduplicated_native_cpu_bytes_empty_edges_and_release (__main__.Tests.test_deduplicated_native_cpu_bytes_empty_edges_and_release) ... FAIL
+test_maintained_batch_factory_full_neural_path_and_gradients (__main__.Tests.test_maintained_batch_factory_full_neural_path_and_gradients) ... FAIL
+test_reentrancy_and_late_failure_do_not_retain_new_tensors (__main__.Tests.test_reentrancy_and_late_failure_do_not_retain_new_tensors) ... FAIL
+test_storage_layout_mutation_and_file_drift_refuse (__main__.Tests.test_storage_layout_mutation_and_file_drift_refuse) ... FAIL
+test_wrong_manifest_shape_refuses_before_numeric_allocation (__main__.Tests.test_wrong_manifest_shape_refuses_before_numeric_allocation) ... FAIL
+
+======================================================================
+FAIL: test_aggregate_budget_and_unknown_keys_refuse_before_reader_allocation (__main__.Tests.test_aggregate_budget_and_unknown_keys_refuse_before_reader_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 49, in test_aggregate_budget_and_unknown_keys_refuse_before_reader_allocation
+    features=self.fixture(max_numeric_bytes=153);m=self.m
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 26, in fixture
+    self.m=m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);root=Path(tmp.name)
+             ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 21, in api
+    assert (HERE/'native_map.py').exists(),'terminal native feature map missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: terminal native feature map missing
+
+======================================================================
+FAIL: test_deduplicated_native_cpu_bytes_empty_edges_and_release (__main__.Tests.test_deduplicated_native_cpu_bytes_empty_edges_and_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 39, in test_deduplicated_native_cpu_bytes_empty_edges_and_release
+    features=self.fixture();m=self.m
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 26, in fixture
+    self.m=m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);root=Path(tmp.name)
+             ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 21, in api
+    assert (HERE/'native_map.py').exists(),'terminal native feature map missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: terminal native feature map missing
+
+======================================================================
+FAIL: test_maintained_batch_factory_full_neural_path_and_gradients (__main__.Tests.test_maintained_batch_factory_full_neural_path_and_gradients)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 85, in test_maintained_batch_factory_full_neural_path_and_gradients
+    features=self.fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 26, in fixture
+    self.m=m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);root=Path(tmp.name)
+             ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 21, in api
+    assert (HERE/'native_map.py').exists(),'terminal native feature map missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: terminal native feature map missing
+
+======================================================================
+FAIL: test_reentrancy_and_late_failure_do_not_retain_new_tensors (__main__.Tests.test_reentrancy_and_late_failure_do_not_retain_new_tensors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 70, in test_reentrancy_and_late_failure_do_not_retain_new_tensors
+    features=self.fixture();m=self.m
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 26, in fixture
+    self.m=m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);root=Path(tmp.name)
+             ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 21, in api
+    assert (HERE/'native_map.py').exists(),'terminal native feature map missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: terminal native feature map missing
+
+======================================================================
+FAIL: test_storage_layout_mutation_and_file_drift_refuse (__main__.Tests.test_storage_layout_mutation_and_file_drift_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 59, in test_storage_layout_mutation_and_file_drift_refuse
+    features=self.fixture();out=features.load_batch(['a'*64]);out['a'*64]['mcm'].resize_(1)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 26, in fixture
+    self.m=m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);root=Path(tmp.name)
+             ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 21, in api
+    assert (HERE/'native_map.py').exists(),'terminal native feature map missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: terminal native feature map missing
+
+======================================================================
+FAIL: test_wrong_manifest_shape_refuses_before_numeric_allocation (__main__.Tests.test_wrong_manifest_shape_refuses_before_numeric_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 65, in test_wrong_manifest_shape_refuses_before_numeric_allocation
+    features=self.fixture();m=self.m;h='a'*64;ref=dict(self.refs[h]);ref['nodes']=4
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 26, in fixture
+    self.m=m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);root=Path(tmp.name)
+             ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/test_map.py", line 21, in api
+    assert (HERE/'native_map.py').exists(),'terminal native feature map missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: terminal native feature map missing
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=6)

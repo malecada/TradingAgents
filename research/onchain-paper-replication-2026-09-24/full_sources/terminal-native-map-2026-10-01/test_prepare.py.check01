@@ -1,0 +1,52 @@
+"""Actual registered seal transition to native batch reuse, no financial fit."""
+import importlib.util
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+from types import SimpleNamespace
+import numpy as np
+from tradingagents.research.onchain_replication.evaluation import batch_factory
+from tests.research.onchain_replication import test_matching_owner as first
+
+HERE=Path(__file__).resolve().parent
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+base=load('native_prepare_fixture',HERE.parent/'representation-seal-2026-10-01/test_seal.py')
+
+class Tests(unittest.TestCase):
+    def test_actual_terminal_transition_and_native_batches_without_producer_reentry(self):
+        m=load('native_prepare_candidate',HERE/'native_map.py')
+        f=base.Tests('test_seals_publishes_receipt_and_old_leases_refuse');self.addCleanup(f.doCleanups)
+        original=first.OwnershipTests.input
+        def configured(instance,name,value):
+            if name=='plan':
+                original(instance,'native_batch',{'schema_version':1,'max_live_tensor_bytes':1048576,'max_numeric_bytes':2097152,'chunk_entries':8})
+                value['producers']['p']['native_feature_batch_input']='native_batch'
+            if name=='execution_job':value['payload']['representation_jobs']['r']['native_feature_batch_input']='native_batch'
+            return original(instance,name,value)
+        with patch.object(base,'api',return_value=m.seal),patch.object(m.seal,'SOURCES',m.SOURCES),patch.object(first.OwnershipTests,'input',new=configured):owner=f.fixture()
+        args={'examples':owner.examples,'fold':owner.fold,'denominator_input':'denominator','dictionary_ticket':f.f.f.ticket,
+            'closure_input':'closure','output_input':'representation_output','seal_input':'seal_policy','batch_input':'native_batch'}
+        result,terminal=m.prepare(owner.owned,owner.journal,**args);terminal.lease()
+        self.assertTrue(owner.journal.sealed);self.assertTrue(owner.owned.journal.sealed)
+        self.assertEqual(set(result.features),set(owner.workload.descriptor['required_graphs']))
+        self.assertEqual(result.binding['schema_version'],3);self.assertIsNone(result.dictionary)
+        from contextlib import ExitStack
+        with ExitStack() as stack:
+            for module,name in ((m.seal,'finish'),(m.seal.publication,'produce'),(m.seal.publication.closure,'admit'),
+                    (m.seal.publication.closure.graphs,'admit'),(m.seal.saved,'prepare_dictionary')):
+                stack.enter_context(patch.object(module,name,side_effect=AssertionError('completed producer/admission reentered')))
+            stack.enter_context(patch.object(np,'load',side_effect=AssertionError('generic loader used')))
+            self.assertEqual(result.features.verified_hashes(),result.binding['feature_hashes'])
+            factory=batch_factory('proposed','direction',owner.examples.train,SimpleNamespace(transform=lambda x:np.asarray(x)),result.features)
+            inputs,targets=factory([0]);self.assertEqual(len(inputs['graph_sequences']),1)
+            sequence=inputs['graph_sequences'][0]
+            if owner.examples.train[0].graph_hashes[0]==owner.examples.train[0].graph_hashes[1]:self.assertIs(sequence[0],sequence[1])
+            self.assertEqual(targets.shape[0],1)
+            del sequence,inputs,targets
+            self.assertEqual(result.features.live_tensor_bytes(),0)
+            with self.assertRaises(ValueError):m.prepare(owner.owned,owner.journal,**args)
+            with patch.object(owner.owned.workload.bound,'_guard',side_effect=RuntimeError('synthetic guard stopped')):
+                with self.assertRaisesRegex(RuntimeError,'guard stopped'):result.features.load_batch([next(iter(result.features))])
+
+if __name__=='__main__':unittest.main(verbosity=2)
