@@ -38,7 +38,7 @@ def population_from_record(record):
 
 def execute_fit_payload(run, payload, *, job_input='execution_job'):
     """Build/reuse registered fixed representations, then execute the batch."""
-    from . import native_producer,native_reuse,compact_native_producer
+    from . import native_producer,native_reuse
     from .graph_store import load_graph
     from .registered_features import prepare_registered_features, reuse_registered_features
     from .run import execute_batch, preflight_batch
@@ -54,11 +54,10 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
     from .sampling_policy import read_sampling_policy,require_sampling_arm
     from .matching_policy import read_matching_policy,require_matching_arm
     from .neighborhood_policy import read_neighborhood_policy,require_neighborhood_arm
-    native_routes={};native_reuses={};compact_routes={}
+    native_routes={};native_reuses={}
     for representation,job in payload['representation_jobs'].items():
         native_reuses[representation]=native_reuse.selected(run,representation,job)
-        compact_routes[representation]=False if native_reuses[representation] else compact_native_producer.selected(run,representation,job)
-        native_routes[representation]=False if native_reuses[representation] or compact_routes[representation] else native_producer.selected(run,representation,job)
+        native_routes[representation]=False if native_reuses[representation] else native_producer.selected(run,representation,job)
         neighborhood_input=job.get('neighborhood_input')
         matching_input=job.get('matching_input')
         sampling_input=job.get('sampling_input')
@@ -153,8 +152,6 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
                     raise ValueError('job representation descriptor/output differs')
                 examples, _ = populations[job['population']]
                 def produce(graphs):
-                    if compact_routes[name]:
-                        return compact_native_producer.produce(run,name,job,graphs,examples)
                     if native_routes[name]:
                         return native_producer.produce(run,name,job,graphs,examples)
                     return prepare_registered_features(run, job['producer'], graphs, examples,
@@ -169,7 +166,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
                     with open_graph_population(manifests,graph_policy,max_graph_payload_bytes=job['max_graph_payload_bytes']) as population:
                         value,_=produce(population)
                 else:
-                    loader=(lambda path,sha:load_graph(path,sha,resident=True)) if native_routes[name] or compact_routes[name] else load_graph
+                    loader=(lambda path,sha:load_graph(path,sha,resident=True)) if native_routes[name] else load_graph
                     value=_produce_eager_graphs(run,descriptor,producer,job,produce,loader)
             else:
                 raise ValueError('unknown representation operation')
@@ -178,7 +175,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
             run.write_json(reference['failure_output'], {'status': 'complete', 'representation': name,
                 'reason': 'fixed representation available; no failure', 'workflow_identity': value.binding['workflow_identity']})
             prepared[name] = value
-        except (GraphPopulationCleanupError,native_producer.NativeProducerCleanupError,compact_native_producer.CompactProducerError):
+        except (GraphPopulationCleanupError,native_producer.NativeProducerCleanupError):
             # Cannot mark this merely unavailable and proceed with live maps.
             raise
         except (ValueError, RuntimeError, OSError) as error:
@@ -191,14 +188,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
                 producer = json.loads(run.read_input(job['plan_input']))['producers'][job['producer']]
                 if producer['journal_output'] not in run._published_outputs:
                     run.write_json(producer['journal_output'], {'status': 'unavailable', 'reason': reason})
-    for name,value in prepared.items():
-        if compact_routes[name]:compact_native_producer.finalize(value)
-    result=execute_batch(run, populations, prepared, plan_input=payload['batch_plan_input'])
-    # A full content check is required after outcomes and control outputs too.
-    # Failure propagates to the outer job; already-spent cells stay retained.
-    for name,value in prepared.items():
-        if compact_routes[name]:compact_native_producer.finalize(value)
-    return result
+    return execute_batch(run, populations, prepared, plan_input=payload['batch_plan_input'])
 
 
 def _produce_eager_graphs(run,descriptor,producer,job,produce,load_graph):

@@ -1,0 +1,14 @@
+# Independent initial producer review
+
+Acceptance withheld pending the namespace correction and actual producer integration evidence. This review inspects the draft and current test design; it does not claim an executed complete producer or executor dispatch. No tests or empirical jobs were run by the reviewer.
+
+**CNP1 — incomplete preclaim namespace set.** `producer.py.draft:29–31,85–89` omits `onchain_compact_outputs`. The actual MCM producer and its publication adapter create required-graph output attempts there. A prior partial, complete, failed or redirected output namespace can therefore pass the advertised fresh-namespace selection and be discovered only after fresh owner creation, sampling and dictionary work. Include this namespace in the preclaim checks. Add an actual registered selection counterexample with an existing namespace and a dangling symlink, requiring refusal before `matching_owner.open_first` or any numerical production. Downstream exclusive publication still refuses conflict; the defect is late discovery and unnecessary consumed work, not silent overwrite.
+
+The inspected component call signatures and ancestry flow otherwise match: actual Training and full denominator, durable sampler and numeric publication, scientific sample proof, actual dictionary, each required graph MCM/features/artifact, complete graph closure, metadata publication, terminal transition and native preparation. The descriptor is reconstructed before claim and single-graph native capacity is checked. Source admission includes the dynamic sampler/reader/workload/kernel/boundary/denominator/native helper closure. Postclaim exceptions preserve subordinate evidence and poison an acquired owner; first-journal construction failures retain the lower-level exact namespace cause even before the caller receives a journal object. A forthcoming executor must propagate CompactProducerError fatally and call full finalize after fitting; neither behavior follows merely from this draft.
+
+Planned tests cover actual-run refusal, conflicting route/backend selection, minimum capacity before claim, postclaim training failure and retry refusal, full fresh producer preparation and altered returned binding refusal. The fixture captures a registered fresh state before upstream owner construction and then supplies the complete synthetic denominator population. The missing-module red result alone proves none of the positive chain. This inspection does not establish every preflight policy schema, cleanup syscall failure, actual OS guard, fitted executor path, full-scale capacity, cold reuse, price reconstruction or empirical validity. Resident originals and inherited resource exclusions remain explicit.
+
+Inspected direct SHA-256:
+
+- producer.py.draft: `581bce4fbc59a9506b1ebc87e80e27444a67c0d62fc681546d4562f25a262070`
+- test_compact_native_producer.py: `65ecd579bb9d9cf76747b2b4439f96c26b3d619f37b96f9a91a213f8d87e6d8a`

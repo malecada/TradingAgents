@@ -3,6 +3,98 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Latest handoff — October 2, compact executor accepted; training check active**:
+Terminal/native feature checkpoint26ea4fa329d66d93c0daa5e5c22e0e83a6623252 was
+committed, pushed and exact remote HEAD verified. Complete fresh compact producer
+and executor dispatch now independently accepted, REVIEW
+7b9ac411f9315db49ce983019857eef690e19ba01e66aeeae9a84c48c66f301a.
+Producer check01 CLOSED6passed505.78s; CNP1 output-namespace correction verified
+by preflight-check01 CLOSED2passed69.42s. Dispatch/old-route check01 CLOSED
+12passed3subtests19.14s. All those jobs are terminal; no combined final8-case
+producer test claim. Dispatch tests stub fitting, while producer tests use the
+actual synthetic compact chain and a mocked OS guard.
+
+Next independent verification already started: full_sources/compact-native-training-2026-10-02/
+check01.log, session56350, one actual compact producer -> native features -> full
+trainable MLP/GAT/attention-LSTM forward/backward/Adam update. Two motifs and two
+time steps are explicit synthetic fixture dimensions; production512samples,
+32motifs,28days,100epochs and all financial cells remain unchanged. This is not
+an empirical fit or actual OS-guarded full executor check. **Package source freeze
+until session56350 terminates.** Do not duplicate it. Root owns this job/source;
+independent reviewer owns REVIEW*.md. Next safe action: inspect this same check,
+resolve findings, then continue feasible storage/resource preparation and guarded
+synthetic integration before empirical admission.
+
+Reviewed conditional selected-payload lower bound249479184384B across9recorded
+resource graphs now includes compact pair events. Smallest graph22614280704B
+before omitted checkpoint/dictionary/graph/header/scratch/physical costs. Both
+existing local volumes have only about21–22GB free, and10GiB floor remains.
+Storage Box archive capacity does not satisfy the current local same-device
+reader/writer contract. Prepare and verify a retained-evidence storage/disposition
+route compatible with final full-content checks, or document the exact external
+capacity needed; never delete prior evidence or silently drop per-pair history.
+Continue independently executable engineering when storage blocks empirical work.
+Coverage77/109,32open and all1420financial fits pending remain unchanged. No
+empirical job active;60→61 remains a draft/unadopted gate. Whole-workflow physical
+accounting and hub-cap amendments still required before pilot release.
+
+**Compact terminal handoff — October 2 continuation in progress**:
+Implemented compact_terminal.py from actual compact_publication.Published. Policy
+must match plan/job; exact owner seal, distinct schema2 compact representation
+marker and two registered output bytes are bound before any terminal mutation.
+Postseal metadata leases preserve active run/source/input/runtime/guard and
+monotonic registered output additions; full checks revisit original actual
+sample/dictionary/calendar/MCM/graph receipts and retained stage/checkpoint/score
+content. Original producer leases remain closed. Resident originals remain held;
+metadata lease does not certify numeric/archive content. This terminal component alone grants no cold
+reuse or empirical admission; native loading is verified separately below. compact_owner.finish now forwards under
+its existing lock to the unchanged extracted _finish body for composed transitions.
+red01 CLOSED1missing-module failure3deselected2.51s/session27285exit1.
+Owner wrapper regression CLOSED2passed18deselected35.18s/session48110exit0.
+check01 CLOSED1passed3fixture failures652.11s/session82332exit1: inherited
+execution job omitted binding_output/journal_output; strict plan/job output check
+correctly refused before sealing. Original test/log preserved. Corrected fixture
+registers both names explicitly. check02 CLOSED3passed1deselected745.20s/session36734exit0: actual seal,
+monotonic later outputs, closed old leases, corruption and final callback
+revocation, and preserved partial output failure. Native feature pure type/final-
+callback checks CLOSED2passed1deselected2.95s/session68747exit0. Its actual
+integration check02 CLOSED1passed2deselected377.60s/session88932exit0:
+actual terminal, exact saved numeric values, independent storage, release and
+corruption refusal. Both package-freezing jobs are terminal. Independent final reviews accepted:
+terminal2ba04fe623fef37db769cd298f6b06055755f7466176516c26e363d5118fa3ca;
+nativecbd9e2689576b4e56722b06a6e7fd69f942fb4f38c3a8e535c2544dd1f4c8998. Evidence full_sources/compact-terminal-2026-10-02/ and
+full_sources/compact-native-features-2026-10-02/. No cold reader or empirical
+admission is claimed. Capacity excludes retained original parents, aliases,
+autograd, model state, Python and RSS.
+Producer/selector draft installed after both checks closed; evidence and draft
+in full_sources/compact-native-producer-2026-10-02/. Missing-module red01
+CLOSED1failure5deselected3.05s/session32691exit1; dispatch-red01 CLOSED1missing-
+module failure2.42s/session76846exit1. Dispatch behavior red02 CLOSED1failure3.08s/session30618exit1, proving the old
+selector was incorrectly reached. Added explicit compact selection, resident
+graph loading, fatal partial-attempt propagation, and full evidence checks before
+and after batch completion. Dispatch/old-route regression check01 CLOSED12passed3subtests19.14s/session92869exit0;
+actual producer check01 CLOSED6passed505.78s/session22173exit0. CNP1 namespace
+fix now installed; preflight-check01 CLOSED2passed69.42s/session68761exit0 (directory and dangling-link
+forms, each with valid fresh namespace first). All engineering checks terminal; no empirical fit is running. Producer review/verification and explicit job dispatch/final acceptance hook
+are complete within their bounded scopes. The latest handoff above supersedes
+this section for active job and next safe action. Coverage77/109,32open
+and all1420financial fits pending unchanged. No empirical job active.
+
+Static storage accounting now includes compact begin/completion events:
+full_sources/compact-workflow-accounting-2026-10-02/lower-bound01.json and ASSESSMENT.md.
+Selected persistent payload lower bound249479184384B across the recorded nine
+resource graphs; even smallest graph22614280704B exceeds current free space
+before10GiB floor. Checkpoint/dictionary/graph/metadata/filesystem/scratch/backup
+costs excluded. This is conditional arithmetic, not measured physical capacity
+or a pilot admission. Reviewed storage/disposition or prospective persistence
+change remains required. Independent accounting REVIEW accepted02ae1bfb1c32851b34d27dce986454b502716690593446beda3946b5fdab7207.
+Read-only volume snapshot local-volumes01.json confirms both existing local
+volumes have only about21–22GB free; no data moved or storage policy changed.
+Producer review identified missing onchain_compact_outputs freshness preflight;
+new preflight-red01 CLOSED1failed20.56s/session84088exit1 reproduces it. Original
+source retained as producer-check01.py; fixed preclaim namespace and verification
+completed with both cases passing. All empirical jobs remain gated.
+
 **Compact graph artifact publication — October 1 continuation**:
 Implemented compact_graph_artifacts.py from actual compact_features.Features:
 registered both-plan/job policy, required-population artifact reservation, exact

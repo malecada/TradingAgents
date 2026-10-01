@@ -1,0 +1,26 @@
+F
+=================================== FAILURES ===================================
+______ test_existing_mcm_output_namespace_refused_before_owner[directory] ______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'), fold_hash='e3bbc4d2a4a3f555d0c48899d37cf989a7eebdbfc2f5f7b4ca7434cde568bd45'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7052ae913100>
+form = 'directory'
+
+    @pytest.mark.parametrize('form',['directory','dangling_link'])
+    def test_existing_mcm_output_namespace_refused_before_owner(admitted,monkeypatch,form):
+        t,job,graphs,examples=admitted;m=api()
+        path=t.root/'research_artifacts/onchain_compact_outputs'/cache_key(job['descriptor'])
+        path.parent.mkdir(parents=True,exist_ok=True)
+        if form=='directory':path.mkdir()
+        else:path.symlink_to(path.parent/'absent',target_is_directory=True)
+        monkeypatch.setattr(m.matching_owner,'open_first',lambda *args,**kw:pytest.fail('existing output reached owner claim'))
+>       with pytest.raises(ValueError,match='reserved|redirected'):m.selected(t.run,'r',job)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_preflight.py:15: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_preflight.py::test_existing_mcm_output_namespace_refused_before_owner[directory]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 20.56s

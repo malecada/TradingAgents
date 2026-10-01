@@ -1,0 +1,118 @@
+{
+  "kind": "static_lower_bound_only",
+  "execution_admitted": false,
+  "record_bytes": 168,
+  "assumptions": [
+    "all nine recorded graphs each receive one 32-motif MCM",
+    "every pair completes with begin and completion events",
+    "all completed pair events and score tails/batches remain retained",
+    "MCM output and graph feature artifact each retain one float32 MCM copy"
+  ],
+  "source_input_sha256": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/score-tail-2026-10-01/accounting01.json": "d3dfa6ece6acccd76c5afc9863261c0ac8fb9b40e3dc60f78cd1f5e690bac044",
+    "tradingagents/research/onchain_replication/compact_pair_log.py": "de8f5544d1689029b05e9e7978506dd8597da5e930308d1f1ae1c2788fffe860",
+    "tradingagents/research/onchain_replication/compact_mcm_publication.py": "068707321e7b2b05213e2dc0aeb06ea5f56e865eff5c2b2e03ea7dbd33828688",
+    "tradingagents/research/onchain_replication/compact_graph_artifacts.py": "fd1395b0c274b1b51dc26365fd0c2954f904492cf77ddb3d553ce40c6dc6bf8a"
+  },
+  "rows": [
+    {
+      "week": "2022-01-03",
+      "cells": 65571040,
+      "minimum_pair_events": 131142080,
+      "minimum_pair_log_payload_bytes": 22031869440,
+      "retained_score_payload_bytes": 5770251520,
+      "two_saved_float32_mcm_payloads_bytes": 524568320,
+      "selected_persistent_payload_lower_bound_bytes": 28326689280
+    },
+    {
+      "week": "2022-06-13",
+      "cells": 56584576,
+      "minimum_pair_events": 113169152,
+      "minimum_pair_log_payload_bytes": 19012417536,
+      "retained_score_payload_bytes": 4979442688,
+      "two_saved_float32_mcm_payloads_bytes": 452676608,
+      "selected_persistent_payload_lower_bound_bytes": 24444536832
+    },
+    {
+      "week": "2022-07-25",
+      "cells": 88455072,
+      "minimum_pair_events": 176910144,
+      "minimum_pair_log_payload_bytes": 29720904192,
+      "retained_score_payload_bytes": 7784046336,
+      "two_saved_float32_mcm_payloads_bytes": 707640576,
+      "selected_persistent_payload_lower_bound_bytes": 38212591104
+    },
+    {
+      "week": "2022-11-07",
+      "cells": 52347872,
+      "minimum_pair_events": 104695744,
+      "minimum_pair_log_payload_bytes": 17588884992,
+      "retained_score_payload_bytes": 4606612736,
+      "two_saved_float32_mcm_payloads_bytes": 418782976,
+      "selected_persistent_payload_lower_bound_bytes": 22614280704
+    },
+    {
+      "week": "2023-06-05",
+      "cells": 58791936,
+      "minimum_pair_events": 117583872,
+      "minimum_pair_log_payload_bytes": 19754090496,
+      "retained_score_payload_bytes": 5173690368,
+      "two_saved_float32_mcm_payloads_bytes": 470335488,
+      "selected_persistent_payload_lower_bound_bytes": 25398116352
+    },
+    {
+      "week": "2024-01-01",
+      "cells": 58638304,
+      "minimum_pair_events": 117276608,
+      "minimum_pair_log_payload_bytes": 19702470144,
+      "retained_score_payload_bytes": 5160170752,
+      "two_saved_float32_mcm_payloads_bytes": 469106432,
+      "selected_persistent_payload_lower_bound_bytes": 25331747328
+    },
+    {
+      "week": "2024-03-11",
+      "cells": 73796480,
+      "minimum_pair_events": 147592960,
+      "minimum_pair_log_payload_bytes": 24795617280,
+      "retained_score_payload_bytes": 6494090240,
+      "two_saved_float32_mcm_payloads_bytes": 590371840,
+      "selected_persistent_payload_lower_bound_bytes": 31880079360
+    },
+    {
+      "week": "2024-08-05",
+      "cells": 54576288,
+      "minimum_pair_events": 109152576,
+      "minimum_pair_log_payload_bytes": 18337632768,
+      "retained_score_payload_bytes": 4802713344,
+      "two_saved_float32_mcm_payloads_bytes": 436610304,
+      "selected_persistent_payload_lower_bound_bytes": 23576956416
+    },
+    {
+      "week": "2024-12-23",
+      "cells": 68736544,
+      "minimum_pair_events": 137473088,
+      "minimum_pair_log_payload_bytes": 23095478784,
+      "retained_score_payload_bytes": 6048815872,
+      "two_saved_float32_mcm_payloads_bytes": 549892352,
+      "selected_persistent_payload_lower_bound_bytes": 29694187008
+    }
+  ],
+  "totals": {
+    "cells": 577498112,
+    "minimum_pair_events": 1154996224,
+    "minimum_pair_log_payload_bytes": 194039365632,
+    "retained_score_payload_bytes": 50819833856,
+    "two_saved_float32_mcm_payloads_bytes": 4619984896,
+    "selected_persistent_payload_lower_bound_bytes": 249479184384
+  },
+  "excludes": [
+    "checkpoint/progress events and snapshot files",
+    "all metadata, headers and filesystem allocation",
+    "dictionary events, sampled neighborhoods and dictionary matrices",
+    "graph inputs and saved edge arrays",
+    "model, batch and live matching scratch",
+    "guard/application logs and all prior attempts",
+    "backup/offload staging and failed partial writes"
+  ],
+  "qualification": "Logical payload lower bound, not measured physical allocation, RSS, runtime, whole workflow upper bound or adopted pilot population. No graph arrays, labels or outcomes read."
+}
