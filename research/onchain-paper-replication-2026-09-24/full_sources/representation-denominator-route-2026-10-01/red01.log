@@ -1,0 +1,127 @@
+test_policy_selection_lookback_coverage_and_calendar_bound_refuse (__main__.Tests.test_policy_selection_lookback_coverage_and_calendar_bound_refuse) ... 
+  test_policy_selection_lookback_coverage_and_calendar_bound_refuse (__main__.Tests.test_policy_selection_lookback_coverage_and_calendar_bound_refuse) (mode='selection') ... FAIL
+  test_policy_selection_lookback_coverage_and_calendar_bound_refuse (__main__.Tests.test_policy_selection_lookback_coverage_and_calendar_bound_refuse) (mode='lookback') ... FAIL
+  test_policy_selection_lookback_coverage_and_calendar_bound_refuse (__main__.Tests.test_policy_selection_lookback_coverage_and_calendar_bound_refuse) (mode='coverage') ... FAIL
+  test_policy_selection_lookback_coverage_and_calendar_bound_refuse (__main__.Tests.test_policy_selection_lookback_coverage_and_calendar_bound_refuse) (mode='cap') ... FAIL
+test_real_owner_calendar_coverage_and_all_five_days_are_bound (__main__.Tests.test_real_owner_calendar_coverage_and_all_five_days_are_bound) ... FAIL
+test_receipt_rechecks_graph_population_sources_policy_and_owner (__main__.Tests.test_receipt_rechecks_graph_population_sources_policy_and_owner) ... FAIL
+test_registered_truncation_cannot_claim_complete_denominator (__main__.Tests.test_registered_truncation_cannot_claim_complete_denominator) ... FAIL
+test_supplied_fold_fields_or_example_membership_cannot_hide_under_old_hashes (__main__.Tests.test_supplied_fold_fields_or_example_membership_cannot_hide_under_old_hashes) ... FAIL
+
+======================================================================
+FAIL: test_policy_selection_lookback_coverage_and_calendar_bound_refuse (__main__.Tests.test_policy_selection_lookback_coverage_and_calendar_bound_refuse) (mode='selection')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 88, in test_policy_selection_lookback_coverage_and_calendar_bound_refuse
+    f=self.fixture(mode)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 40, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'registered denominator route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered denominator route missing
+
+======================================================================
+FAIL: test_policy_selection_lookback_coverage_and_calendar_bound_refuse (__main__.Tests.test_policy_selection_lookback_coverage_and_calendar_bound_refuse) (mode='lookback')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 88, in test_policy_selection_lookback_coverage_and_calendar_bound_refuse
+    f=self.fixture(mode)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 40, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'registered denominator route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered denominator route missing
+
+======================================================================
+FAIL: test_policy_selection_lookback_coverage_and_calendar_bound_refuse (__main__.Tests.test_policy_selection_lookback_coverage_and_calendar_bound_refuse) (mode='coverage')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 88, in test_policy_selection_lookback_coverage_and_calendar_bound_refuse
+    f=self.fixture(mode)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 40, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'registered denominator route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered denominator route missing
+
+======================================================================
+FAIL: test_policy_selection_lookback_coverage_and_calendar_bound_refuse (__main__.Tests.test_policy_selection_lookback_coverage_and_calendar_bound_refuse) (mode='cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 88, in test_policy_selection_lookback_coverage_and_calendar_bound_refuse
+    f=self.fixture(mode)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 40, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'registered denominator route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered denominator route missing
+
+======================================================================
+FAIL: test_real_owner_calendar_coverage_and_all_five_days_are_bound (__main__.Tests.test_real_owner_calendar_coverage_and_all_five_days_are_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 68, in test_real_owner_calendar_coverage_and_all_five_days_are_bound
+    f=self.fixture();before=f.owned.journal.reservations
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 40, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'registered denominator route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered denominator route missing
+
+======================================================================
+FAIL: test_receipt_rechecks_graph_population_sources_policy_and_owner (__main__.Tests.test_receipt_rechecks_graph_population_sources_policy_and_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 98, in test_receipt_rechecks_graph_population_sources_policy_and_owner
+    f=self.fixture();r=self.admit();h=next(iter(f.workload._graphs));g=f.workload._graphs[h]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 40, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'registered denominator route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered denominator route missing
+
+======================================================================
+FAIL: test_registered_truncation_cannot_claim_complete_denominator (__main__.Tests.test_registered_truncation_cannot_claim_complete_denominator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 83, in test_registered_truncation_cannot_claim_complete_denominator
+    self.fixture('truncated')
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 40, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'registered denominator route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered denominator route missing
+
+======================================================================
+FAIL: test_supplied_fold_fields_or_example_membership_cannot_hide_under_old_hashes (__main__.Tests.test_supplied_fold_fields_or_example_membership_cannot_hide_under_old_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 92, in test_supplied_fold_fields_or_example_membership_cannot_hide_under_old_hashes
+    f=self.fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 40, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'registered denominator route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered denominator route missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (failures=8)

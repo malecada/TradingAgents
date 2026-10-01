@@ -1,0 +1,112 @@
+"""Real registered owner + complete tiny calendar, with no numerical fitting."""
+import importlib.util
+from dataclasses import asdict,replace
+from pathlib import Path
+import shutil
+import unittest
+from unittest.mock import patch
+import numpy as np
+from tradingagents.research.onchain_replication.calendar import build_folds
+from tradingagents.research.onchain_replication.contracts import GraphSnapshot,PricePanel
+from tradingagents.research.onchain_replication.dataset import build_examples
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,file_hash,thaw
+from tests.research.onchain_replication import test_matching_owner as first
+
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+base=load('denominator_owner_fixture',HERE.parent/'pair-owner-route-2026-09-30/test_ownership.py')
+def api():
+    assert (HERE/'route.py').exists(),'registered denominator route missing'
+    return load('registered_denominator_candidate',HERE/'route.py')
+def stamp(d):return d+'T00:00:00Z'
+COVERAGE={'source_hashes':['a'*64]}
+CALENDAR={'lookback_days':2,'folds':[{'id':'tiny','train_start':stamp('2024-01-30'),
+    'train_end':stamp('2024-02-01'),'test_start':stamp('2024-02-02'),'test_end':stamp('2024-02-04'),
+    'validation_start':None,'validation_end':None}]}
+def population():
+    graphs=[]
+    for start,end,available in [('2024-01-15','2024-01-22','2024-01-23'),('2024-01-22','2024-01-29','2024-01-30')]:
+        graphs.append(GraphSnapshot('ETH',stamp(start),stamp(end),stamp(available),('a'*64,),'a'*64,
+            ('a','b'),np.ones((2,4)),np.array([[0],[1]],dtype=np.int64),np.ones((1,2)),1,1,{}))
+    dates=('2024-01-28','2024-01-29','2024-01-30','2024-01-31','2024-02-01','2024-02-02','2024-02-03')
+    prices=PricePanel('ETH-USD',dates,tuple(100.+i for i in range(7)),(),'b'*64,stamp('2026-01-01'))
+    fold=build_folds(CALENDAR,COVERAGE)[0]
+    return graphs,fold,build_examples(graphs,prices,fold,CALENDAR)
+def full_hash(e):return digest(canonical_bytes({**vars(e),'train':[asdict(x) for x in e.train],'test':[asdict(x) for x in e.test]}))
+
+class Tests(unittest.TestCase):
+    def fixture(self,mode=None):
+        self.m=api();m=self.m
+        class Fixture(base.Parent):
+            bridge=m.ownership;close_pair=False
+            def prepare(self):
+                for name in m.SOURCES:
+                    p=self.root/name;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,p)
+                    self.exp['source_files'][name]=file_hash(p);first.git(self.root,'add','--',name)
+                self.input('calendar',CALENDAR)
+                self.input('coverage',COVERAGE if mode!='coverage' else {'source_hashes':['c'*64]})
+                self.input('denominator',{'schema_version':1,'calendar_input':'calendar','coverage_input':'coverage',
+                    'max_calendar_days':4 if mode=='cap' else 20})
+                self.item['denominator_input']='denominator'
+                self.execution['payload']['representation_jobs']['r']['denominator_input']='calendar' if mode=='selection' else 'denominator'
+                if mode=='lookback':self.input('calendar',CALENDAR|{'lookback_days':3})
+                super().prepare()
+            @staticmethod
+            def change(self):
+                if mode=='truncated':
+                    rows=self.examples.test[:1]
+                    self.examples=replace(self.examples,test=rows,test_mask_hash=digest(canonical_bytes([r.decision_at for r in rows])))
+                    self.control['example_manifest_sha256']=full_hash(self.examples)
+        f=Fixture('test_actual_claim_owner_and_old_numerical_anchor_are_distinct');self.addCleanup(f.doCleanups)
+        # Replace only this fixture's intentionally truncated population builder.
+        with patch.object(base.rf,'population',new=population):f.setUp()
+        self.f=f;return f
+    def admit(self,**kw):
+        f=self.f;args=dict(examples=f.examples,fold=f.fold,policy_input='denominator');args.update(kw)
+        return self.m.admit(f.owned,**args)
+    def test_real_owner_calendar_coverage_and_all_five_days_are_bound(self):
+        f=self.fixture();before=f.owned.journal.reservations
+        with patch.object(f.workload,'sample_scope',side_effect=AssertionError('sampling')):
+            result=self.admit();result.lease()
+        record=thaw(result.record)
+        self.assertEqual(record['denominator']['calendar_days'],5)
+        self.assertEqual(record['denominator']['train_rows'],2);self.assertEqual(record['denominator']['test_rows'],2)
+        self.assertEqual(record['denominator']['excluded_by_reason'],{'outside_fold':1})
+        self.assertFalse(record['denominator']['price_exclusions_revalidated'])
+        self.assertEqual(record['owner'],thaw(f.workload.bound.record))
+        self.assertEqual(record['calendar']['sha256'],f.exp['inputs']['calendar']['sha256'])
+        self.assertEqual(record['coverage']['sha256'],f.exp['inputs']['coverage']['sha256'])
+        self.assertEqual(before,f.owned.journal.reservations)
+        with self.assertRaises((TypeError,AttributeError)):result.record={}
+        with self.assertRaises(TypeError):result.record['denominator']['calendar_days']=1
+    def test_registered_truncation_cannot_claim_complete_denominator(self):
+        self.fixture('truncated')
+        with self.assertRaisesRegex(ValueError,'full daily denominator'):self.admit()
+    def test_policy_selection_lookback_coverage_and_calendar_bound_refuse(self):
+        for mode,reason in [('selection','selected denominator'),('lookback','lookback'),('coverage','registered fold'),('cap','calendar metadata bound')]:
+            with self.subTest(mode=mode):
+                f=self.fixture(mode)
+                with self.assertRaisesRegex(ValueError,reason):self.admit()
+                f.doCleanups()
+    def test_supplied_fold_fields_or_example_membership_cannot_hide_under_old_hashes(self):
+        f=self.fixture()
+        with self.assertRaisesRegex(ValueError,'registered fold'):self.admit(fold=replace(f.fold,test_end=stamp('2024-02-05')))
+        changed=replace(f.examples,test=tuple(reversed(f.examples.test)))
+        with self.assertRaisesRegex(ValueError,'example/fold hash'):self.admit(examples=changed)
+        with self.assertRaises(ValueError):self.m.admit(object(),examples=f.examples,fold=f.fold,policy_input='denominator')
+    def test_receipt_rechecks_graph_population_sources_policy_and_owner(self):
+        f=self.fixture();r=self.admit();h=next(iter(f.workload._graphs));g=f.workload._graphs[h]
+        f.workload._graphs[h]=replace(g,node_features=g.node_features+1)
+        with self.assertRaisesRegex(ValueError,'graph'):r.lease()
+        f.workload._graphs[h]=g
+        path=f.root/'calendar.json';raw=path.read_bytes();path.write_text('{}')
+        with self.assertRaises(ValueError):r.lease()
+        path.write_bytes(raw)
+        source=f.root/str((HERE/'route.py').relative_to(ROOT));raw=source.read_bytes();source.write_text('# drift\n')
+        with self.assertRaises(ValueError):r.lease()
+        source.write_bytes(raw)
+        f.owned.seal('failed')
+        with self.assertRaises(ValueError):r.lease()
+
+if __name__=='__main__':unittest.main(verbosity=2)

@@ -3,6 +3,28 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Registered denominator linkage independently accepted**:
+New isolated full_sources/representation-denominator-route-2026-10-01/ links an
+actual current owner to a selected denominator policy in both plan and execution
+job. Actual registered calendar and coverage reconstruct the full Fold (including
+its member hash); resident graph hashes and full registered ExampleManifest feed
+the accepted complete-day validator. Retained receipt leases recheck owner,
+source, policy, graph population and examples. No graph array loads or fits occur.
+A complete five-day/two-lookback synthetic fixture replaces the old deliberately
+truncated population only within this new test, without changing historical files.
+red01 CLOSED5methods8missing-route failures0.002s, session26436; source preserved.
+A fixture staticmethod calling convention was corrected before implementation.
+check01 CLOSED5methods passing71.014s, session32627 exit0, PID577047 gone.
+All327frozen files verified against
+check01-sources.json SHAedaae747535615a9fedf365de3993f6dadfe08bb9b997541a569ede4d98750f1.
+No active process or source freeze. Final330bindings in bindings.json SHA
+f167a977541a962cf6101178a109d1e8f68c46bbc208d3129d31c789743df962.
+Independent review accepted the bounded scope, REVIEW SHA
+5d636fb3355c6a13e9c371a8017a1865a6add750e11f96896be20b1a875682ba.
+Next: complete required graph receipt closure and bounded top-level representation
+publication/reuse, without loading every graph tensor at once.
+Pure denominator predecessor accepted/pushed at1cd3fc18. All1420fits pending.
+
 **Exact representation metadata denominator independently accepted**:
 New isolated full_sources/representation-denominator-2026-10-01/ validates the
 full daily decision calendar, unique chronological included/excluded membership,
