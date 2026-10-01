@@ -1,0 +1,261 @@
+FFFFFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+________ test_binary_values_and_cell_order_survive_complete_publication ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_binary_values_and_cell_or0')
+
+    def test_binary_values_and_cell_order_survive_complete_publication(tmp_path):
+>       store = writer(tmp_path)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_batches.py:20: in writer
+    return api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+______ test_duplicate_out_of_order_short_and_nonfinite_chunks_are_refused ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_duplicate_out_of_order_sh0')
+
+    def test_duplicate_out_of_order_short_and_nonfinite_chunks_are_refused(tmp_path):
+>       store = writer(tmp_path)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_batches.py:20: in writer
+    return api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+____________ test_corrupt_or_wrong_identity_cannot_verify[payload] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_corrupt_or_wrong_identity0')
+damage = 'payload'
+
+    @pytest.mark.parametrize('damage', ['payload', 'scope', 'owner', 'terminal', 'missing', 'symlink'])
+    def test_corrupt_or_wrong_identity_cannot_verify(tmp_path, damage):
+>       store = writer(tmp_path); store.append(0, np.arange(4, dtype='<f8'))
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_batches.py:20: in writer
+    return api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+_____________ test_corrupt_or_wrong_identity_cannot_verify[scope] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_corrupt_or_wrong_identity1')
+damage = 'scope'
+
+    @pytest.mark.parametrize('damage', ['payload', 'scope', 'owner', 'terminal', 'missing', 'symlink'])
+    def test_corrupt_or_wrong_identity_cannot_verify(tmp_path, damage):
+>       store = writer(tmp_path); store.append(0, np.arange(4, dtype='<f8'))
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_batches.py:20: in writer
+    return api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+_____________ test_corrupt_or_wrong_identity_cannot_verify[owner] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_corrupt_or_wrong_identity2')
+damage = 'owner'
+
+    @pytest.mark.parametrize('damage', ['payload', 'scope', 'owner', 'terminal', 'missing', 'symlink'])
+    def test_corrupt_or_wrong_identity_cannot_verify(tmp_path, damage):
+>       store = writer(tmp_path); store.append(0, np.arange(4, dtype='<f8'))
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_batches.py:20: in writer
+    return api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+____________ test_corrupt_or_wrong_identity_cannot_verify[terminal] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_corrupt_or_wrong_identity3')
+damage = 'terminal'
+
+    @pytest.mark.parametrize('damage', ['payload', 'scope', 'owner', 'terminal', 'missing', 'symlink'])
+    def test_corrupt_or_wrong_identity_cannot_verify(tmp_path, damage):
+>       store = writer(tmp_path); store.append(0, np.arange(4, dtype='<f8'))
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_batches.py:20: in writer
+    return api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+____________ test_corrupt_or_wrong_identity_cannot_verify[missing] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_corrupt_or_wrong_identity4')
+damage = 'missing'
+
+    @pytest.mark.parametrize('damage', ['payload', 'scope', 'owner', 'terminal', 'missing', 'symlink'])
+    def test_corrupt_or_wrong_identity_cannot_verify(tmp_path, damage):
+>       store = writer(tmp_path); store.append(0, np.arange(4, dtype='<f8'))
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_batches.py:20: in writer
+    return api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+____________ test_corrupt_or_wrong_identity_cannot_verify[symlink] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_corrupt_or_wrong_identity5')
+damage = 'symlink'
+
+    @pytest.mark.parametrize('damage', ['payload', 'scope', 'owner', 'terminal', 'missing', 'symlink'])
+    def test_corrupt_or_wrong_identity_cannot_verify(tmp_path, damage):
+>       store = writer(tmp_path); store.append(0, np.arange(4, dtype='<f8'))
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_batches.py:20: in writer
+    return api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+_ test_failed_write_preserves_unpublished_bytes_and_requires_terminal_failure __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_failed_write_preserves_un0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a172718f360>
+
+    def test_failed_write_preserves_unpublished_bytes_and_requires_terminal_failure(tmp_path, monkeypatch):
+>       module = api(); store = writer(tmp_path); original = module._write
+                 ^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+__ test_revoked_lease_prevents_writes_and_oversized_policy_prevents_creation ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_revoked_lease_prevents_wr0')
+
+    def test_revoked_lease_prevents_writes_and_oversized_policy_prevents_creation(tmp_path):
+        alive = True
+        def lease():
+            if not alive: raise RuntimeError('owner gone')
+>       store = api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+                ^^^^^
+            rows=3, motifs=2, chunk_cells=4, lease=lease)
+
+tests/research/onchain_replication/test_score_batches.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+_______________ test_unknown_files_and_changed_root_are_refused ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-12/test_unknown_files_and_changed0')
+
+    def test_unknown_files_and_changed_root_are_refused(tmp_path):
+>       store = writer(tmp_path)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_batches.py:20: in writer
+    return api().ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+________ test_logical_bound_counts_chunks_without_per_cell_reservations ________
+
+    def test_logical_bound_counts_chunks_without_per_cell_reservations():
+        # 6 values, 2 chunks: 48 raw bytes + 4 compact metadata caps.
+>       assert api().logical_bound(rows=3, motifs=2, chunk_cells=4) == 32816
+               ^^^^^
+
+tests/research/onchain_replication/test_score_batches.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_batches
+E       ImportError: cannot import name 'score_batches' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_batches.py:9: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_score_batches.py::test_binary_values_and_cell_order_survive_complete_publication
+FAILED tests/research/onchain_replication/test_score_batches.py::test_duplicate_out_of_order_short_and_nonfinite_chunks_are_refused
+FAILED tests/research/onchain_replication/test_score_batches.py::test_corrupt_or_wrong_identity_cannot_verify[payload]
+FAILED tests/research/onchain_replication/test_score_batches.py::test_corrupt_or_wrong_identity_cannot_verify[scope]
+FAILED tests/research/onchain_replication/test_score_batches.py::test_corrupt_or_wrong_identity_cannot_verify[owner]
+FAILED tests/research/onchain_replication/test_score_batches.py::test_corrupt_or_wrong_identity_cannot_verify[terminal]
+FAILED tests/research/onchain_replication/test_score_batches.py::test_corrupt_or_wrong_identity_cannot_verify[missing]
+FAILED tests/research/onchain_replication/test_score_batches.py::test_corrupt_or_wrong_identity_cannot_verify[symlink]
+FAILED tests/research/onchain_replication/test_score_batches.py::test_failed_write_preserves_unpublished_bytes_and_requires_terminal_failure
+FAILED tests/research/onchain_replication/test_score_batches.py::test_revoked_lease_prevents_writes_and_oversized_policy_prevents_creation
+FAILED tests/research/onchain_replication/test_score_batches.py::test_unknown_files_and_changed_root_are_refused
+FAILED tests/research/onchain_replication/test_score_batches.py::test_logical_bound_counts_chunks_without_per_cell_reservations
+12 failed in 0.25s

@@ -3,6 +3,38 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact completed-score batch primitive implemented — October 1 continuation**:
+Maintained score_batches.py now provides bounded row-major float64 chunks with
+owner/graph/node-order/dictionary/motif-order/matching/workflow bindings, immutable
+hash-chained publication, explicit retained partial-write failure evidence and
+streaming verification. No old pair journal or numerical calculation was changed.
+Evidence full_sources/score-batches-2026-10-01/: red01 retained12missing-module
+failures; check01 CLOSED12passed0.23s; independent INITIAL_REVIEW withheld acceptance
+for publication/verification boundaries and parent fsync; red02 CLOSED4expected
+regression failures/session99671exit1; corrected check02 CLOSED16passed0.25s.
+Parent creation is synchronized; post-publication lease/root/content checks and
+constant-memory final inventory checks were added. FINAL_REVIEW retained a same-
+signature content-change concern; red03 reproduced it (1failed16deselected0.19s).
+A second bounded content/hash pass after the final lease fixes that case; check03
+CLOSED17passed0.27s. It reads score bytes twice and remains non-atomic after each
+last read. check01/check02 source snapshots and all failed checks remain retained.
+Independent REVIEW03 accepts this bounded primitive (SHA
+f0a0717a95590265da80f36a3d46a34393dc025a85ecece16627573fa405e7a8).
+Per-score durability, actual numerical integration and full resource coverage
+remain explicitly outside this acceptance. This is sampled, non-atomic verification,
+not a physical quota, process-memory guarantee or empirical admission.
+
+Next concrete integration: a bounded durable active-score tail binding every
+completed scalar to its exact purpose before callback return, then immutable
+batch sealing. Whole-batch publication alone does not satisfy per-score durability
+or remove existing per-pair journals. Preserve interrupted tails/checkpoints and
+failed-owner lineage; no automatic successor, scratch deletion or historical
+replay. Then integrate actual MCM/matching ownership, establish synthetic numerical
+parity, finish whole-workflow resource reservations and review/commit the60→61
+amendment/gate. Coverage remains77/109; all1420financial fits pending. No empirical
+job was launched in this continuation. Prior remoteHEAD9de538bbdb5b347705cfd7d5a3ec36efb715795f
+was independently observed with git ls-remote.
+
 **Sampled storage guard implemented and actual probes CLOSED**:
 Maintained workflow_storage.py provides descriptor-anchored allocated st_blocks*512
 accounting (including directories), logical sparse-file size, entry/depth limits

@@ -1,0 +1,100 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_lease_loss_during_publication_cannot_return_success[False] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-14/test_lease_loss_during_publica0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77144cb8c2b0>
+terminal = False
+
+    @pytest.mark.parametrize('terminal', [False, True])
+    def test_lease_loss_during_publication_cannot_return_success(tmp_path, monkeypatch, terminal):
+        module = api(); alive = True
+        def lease():
+            if not alive: raise RuntimeError('owner revoked during write')
+        store = module.ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+            rows=1, motifs=2, chunk_cells=2, lease=lease)
+        if terminal: store.append(0, np.ones(2))
+        original = module._write
+        def interrupt(fd, name, raw):
+            nonlocal alive
+            result = original(fd, name, raw)
+            if name == ('terminal.json' if terminal else 'chunk-000000000000.json'):
+                alive = False
+            return result
+        monkeypatch.setattr(module, '_write', interrupt)
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/research/onchain_replication/test_score_batches.py:135: Failed
+________ test_lease_loss_during_publication_cannot_return_success[True] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-14/test_lease_loss_during_publica1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77144cc37100>
+terminal = True
+
+    @pytest.mark.parametrize('terminal', [False, True])
+    def test_lease_loss_during_publication_cannot_return_success(tmp_path, monkeypatch, terminal):
+        module = api(); alive = True
+        def lease():
+            if not alive: raise RuntimeError('owner revoked during write')
+        store = module.ScoreBatches(tmp_path / 'scores', scope=SCOPE, owner=OWNER,
+            rows=1, motifs=2, chunk_cells=2, lease=lease)
+        if terminal: store.append(0, np.ones(2))
+        original = module._write
+        def interrupt(fd, name, raw):
+            nonlocal alive
+            result = original(fd, name, raw)
+            if name == ('terminal.json' if terminal else 'chunk-000000000000.json'):
+                alive = False
+            return result
+        monkeypatch.setattr(module, '_write', interrupt)
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/research/onchain_replication/test_score_batches.py:135: Failed
+___________ test_late_mutation_of_previously_read_payload_is_refused ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-14/test_late_mutation_of_previous0')
+
+    def test_late_mutation_of_previously_read_payload_is_refused(tmp_path):
+        store = writer(tmp_path); store.append(0, np.ones(4)); store.append(4, np.ones(2))
+        ref = store.finish(); calls = 0
+        def lease():
+            nonlocal calls
+            calls += 1
+            if calls == 4:
+                (tmp_path / 'scores/chunk-000000000000.bin').write_bytes(b'x' * 32)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_score_batches.py:149: Failed
+_____________ test_store_parent_entry_is_synced_before_publication _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-14/test_store_parent_entry_is_syn0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77144cb572f0>
+
+    def test_store_parent_entry_is_synced_before_publication(tmp_path, monkeypatch):
+        import os
+        module = api(); original = os.fsync; seen = []
+        parent_identity = (tmp_path.stat().st_dev, tmp_path.stat().st_ino)
+        def record(fd):
+            info = os.fstat(fd); seen.append((info.st_dev, info.st_ino)); return original(fd)
+        monkeypatch.setattr(module.os, 'fsync', record)
+        store = writer(tmp_path)
+>       assert seen[0] == parent_identity
+E       assert (66310, 11411056) == (66310, 11411053)
+E         
+E         At index 1 diff: 11411056 != 11411053
+E         Use -v to get more diff
+
+tests/research/onchain_replication/test_score_batches.py:162: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_score_batches.py::test_lease_loss_during_publication_cannot_return_success[False]
+FAILED tests/research/onchain_replication/test_score_batches.py::test_lease_loss_during_publication_cannot_return_success[True]
+FAILED tests/research/onchain_replication/test_score_batches.py::test_late_mutation_of_previously_read_payload_is_refused
+FAILED tests/research/onchain_replication/test_score_batches.py::test_store_parent_entry_is_synced_before_publication
+4 failed, 12 deselected in 1.34s

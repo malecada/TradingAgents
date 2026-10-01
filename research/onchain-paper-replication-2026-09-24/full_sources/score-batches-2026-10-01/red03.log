@@ -1,0 +1,29 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_late_rewrite_with_coalesced_metadata_still_checks_content ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-16/test_late_rewrite_with_coalesc0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d9e02b13360>
+
+    def test_late_rewrite_with_coalesced_metadata_still_checks_content(tmp_path, monkeypatch):
+        module = api(); store = writer(tmp_path)
+        store.append(0, np.ones(4)); store.append(4, np.ones(2)); ref = store.finish()
+        original = module._signature
+        # Filesystem clocks can coalesce. Retain real inode/type/size/block metadata,
+        # but deterministically model unchanged modification/change timestamps.
+        monkeypatch.setattr(module, '_signature', lambda info: original(info)[:5] + (0, 0) + original(info)[7:])
+        calls = 0
+        def lease():
+            nonlocal calls
+            calls += 1
+            if calls == 4:
+                (tmp_path / 'scores/chunk-000000000000.bin').write_bytes(b'x' * 32)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_score_batches.py:179: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_score_batches.py::test_late_rewrite_with_coalesced_metadata_still_checks_content
+1 failed, 16 deselected in 0.19s
