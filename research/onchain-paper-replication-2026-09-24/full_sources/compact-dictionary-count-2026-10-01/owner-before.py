@@ -25,7 +25,6 @@ require = io._require
 LIMIT = 65536
 OWNER_BYTES = 2 * LIMIT
 STAGE_BYTES = 2 * io.META_LIMIT
-DICTIONARY_COUNT_POLICY = 'capacity-with-exact-completion-v1'
 
 
 def transition(function):
@@ -66,11 +65,10 @@ def exact(root, name, expected):
 
 
 class Stage:
-    def __init__(self, owner, name, scope, pairs, reservation, count_policy=None):
+    def __init__(self, owner, name, scope, pairs, reservation):
         self.owner = owner; self.name = name; self.root = owner.root / name
         self.scope = freeze(scope); self.pairs = pairs; self.reservation = reservation
         self.kind = 'dictionary' if name == 'dictionary' else 'mcm'
-        self.count_policy = freeze(count_policy) if count_policy is not None else None
         self.closed = self.closing = False; self.reference = None; self.contract = None
         self.intent = io._json(self.intent_value())
         self.intent_sha256 = io._hash(self.intent)
@@ -86,11 +84,9 @@ class Stage:
         finally: os.close(fd)
 
     def intent_value(self):
-        value = {'schema_version': 1, 'owner': self.owner.identity, 'stage': self.name,
+        return {'schema_version': 1, 'owner': self.owner.identity, 'stage': self.name,
             'kind': self.kind, 'scope': thaw(self.scope), 'pairs': self.pairs,
             'logical_reservation_bytes': self.reservation, 'policy_sha256': cache_key(thaw(self.owner.policy))}
-        if self.count_policy is not None: value['pair_count_policy'] = thaw(self.count_policy)
-        return value
 
     def integrity(self):
         require(io._hash(self.intent) == self.intent_sha256 and io._json(self.intent_value()) == self.intent
@@ -187,34 +183,6 @@ class Owner:
 
     @transition
     def begin(self, name, *, workload_sha256, pairs):
-        """Existing exact-count contract; never relaxed during completion."""
-        return self._begin(name, workload_sha256, pairs, None)
-
-    def _dictionary_count_policy(self):
-        run = self.bound._run; record = self.bound.record
-        selected = json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][record['representation']]
-        item = json.loads(run.read_input(selected['plan_input']))['producers'][record['producer']]
-        require(selected.get('compact_dictionary_count_policy') == item.get('compact_dictionary_count_policy')
-            == DICTIONARY_COUNT_POLICY, 'explicit dictionary count policy differs')
-        settings = selected['descriptor']['configs'].get('dictionary')
-        require(type(settings) is dict, 'registered dictionary configuration required')
-        fields = ('sample_count', 'size', 'partition_threshold', 'partition_size')
-        require(all(k in settings for k in fields), 'dictionary capacity configuration incomplete')
-        capacity = compact_policy.dictionary_capacity(**{k: settings[k] for k in fields})
-        return {'name': DICTIONARY_COUNT_POLICY, 'dictionary_config_sha256': cache_key(settings),
-                'capacity': capacity}
-
-    @transition
-    def begin_dictionary(self, *, workload_sha256):
-        """Reserve the registered upper bound; producer later supplies actual count.
-
-        Identical ordered subsets may share complete distance matrices. Capacity
-        is not an expected completion denominator or proof of scientific work.
-        """
-        self.boundary(); policy = self._dictionary_count_policy()
-        return self._begin('dictionary', workload_sha256, policy['capacity']['max_pairs'], policy)
-
-    def _begin(self, name, workload_sha256, pairs, count_policy):
         self.boundary()
         require(self.active is None and name in self.required and name not in self.stages,
                 'compact stage absent, active or already claimed')
@@ -227,7 +195,7 @@ class Owner:
         scope = compact_matcher.scope(thaw(self.matching), thaw(self.bound.context), thaw(self.policy['pair']),
             workload_sha256, thaw(self.policy['schedule']))
         try:
-            stage = Stage(self, name, scope, pairs, reservation, count_policy)
+            stage = Stage(self, name, scope, pairs, reservation)
             self.stages[name] = stage; self.active = stage
             self.reserved += reservation; self._reserved = self.reserved
             stage.lease(); return stage
@@ -235,20 +203,13 @@ class Owner:
             self.poisoned = True; raise
 
     @transition
-    def finish_stage(self, stage, *, log_terminal_sha256, stream_terminal_sha256, completed_pairs=None):
+    def finish_stage(self, stage, *, log_terminal_sha256, stream_terminal_sha256):
         self.boundary()
         require(self.active is stage and self.stages.get(stage.name) is stage and not stage.closed,
                 'actual active compact stage required')
         stage.lease()
-        if stage.count_policy is None:
-            require(completed_pairs is None, 'exact stage denominator cannot be overridden')
-            count = stage.pairs
-        else:
-            require(type(completed_pairs) is int and 0 <= completed_pairs <= stage.pairs,
-                    'explicit bounded dictionary completion count required')
-            count = completed_pairs
         contract = {'owner': self.identity, 'scope': thaw(stage.scope), 'policy': thaw(self.policy),
-            'kind': stage.kind, 'pairs': count, 'log_terminal_sha256': log_terminal_sha256,
+            'kind': stage.kind, 'pairs': stage.pairs, 'log_terminal_sha256': log_terminal_sha256,
             'stream_terminal_sha256': stream_terminal_sha256}
         try:
             self._stage_bindings(stage)
@@ -262,14 +223,6 @@ class Owner:
             self.poisoned = True; raise
 
     def _stage_bindings(self, stage):
-        if stage.count_policy is not None:
-            require(stage.kind == 'dictionary' and thaw(stage.count_policy) == self._dictionary_count_policy()
-                and stage.pairs == stage.count_policy['capacity']['max_pairs'],
-                'dictionary capacity differs from registered count policy')
-        if stage.contract is not None:
-            count = stage.contract['pairs']
-            require(type(count) is int and (count == stage.pairs if stage.count_policy is None
-                else 0 <= count <= stage.pairs), 'completed stage denominator differs')
         start, _ = compact_stage.read(stage.root / 'matching', 'start.json')
         require(type(start['max_iterations']) is int and start['max_iterations'] == self.matching['max_iterations'],
                 'compact log iteration limit differs from registered matching config')

@@ -1,0 +1,183 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_actual_dictionary_completes_with_separate_reserved_and_observed_counts __
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f14b0fa10>, <stream_synthetic_fixture....nts-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py'>)
+
+    def test_actual_dictionary_completes_with_separate_reserved_and_observed_counts(admitted):
+        owner, f, base = admitted
+>       stage, log, matcher = dictionary_log(owner, f)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f14b0fa10>
+f = <stream_synthetic_fixture.Tests testMethod=runTest>, bounded = True
+
+    def dictionary_log(owner, f, *, bounded=True):
+        from tradingagents.research.onchain_replication.compact_pair_log import PairLog
+        from tradingagents.research.onchain_replication.compact_matcher import CompactMatcher
+        scope = dictionary_scope(f)
+>       stage = owner.begin_dictionary(workload_sha256=scope) if bounded else owner.begin(
+                ^^^^^^^^^^^^^^^^^^^^^^
+            'dictionary', workload_sha256=scope, pairs=30)
+E       AttributeError: 'Owner' object has no attribute 'begin_dictionary'
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:42: AttributeError
+___ test_unselected_dictionary_count_policy_refuses_before_namespace[route] ____
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f14527c50>, <stream_synthetic_fixture....nts-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py'>)
+
+    @pytest.mark.parametrize('admitted', ['route'], indirect=True)
+    def test_unselected_dictionary_count_policy_refuses_before_namespace(admitted):
+        owner, f, _ = admitted
+>       with pytest.raises(ValueError): owner.begin_dictionary(workload_sha256=dictionary_scope(f))
+                                        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Owner' object has no attribute 'begin_dictionary'
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:72: AttributeError
+______ test_dictionary_capacity_is_not_an_implicit_completion_count[None] ______
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f14525e50>, <stream_synthetic_fixture....nts-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py'>)
+count = None
+
+    @pytest.mark.parametrize('count', [None, True, -1, 31])
+    def test_dictionary_capacity_is_not_an_implicit_completion_count(admitted, count):
+        owner, f, _ = admitted
+>       stage, log, matcher = dictionary_log(owner, f)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f14525e50>
+f = <stream_synthetic_fixture.Tests testMethod=runTest>, bounded = True
+
+    def dictionary_log(owner, f, *, bounded=True):
+        from tradingagents.research.onchain_replication.compact_pair_log import PairLog
+        from tradingagents.research.onchain_replication.compact_matcher import CompactMatcher
+        scope = dictionary_scope(f)
+>       stage = owner.begin_dictionary(workload_sha256=scope) if bounded else owner.begin(
+                ^^^^^^^^^^^^^^^^^^^^^^
+            'dictionary', workload_sha256=scope, pairs=30)
+E       AttributeError: 'Owner' object has no attribute 'begin_dictionary'
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:42: AttributeError
+______ test_dictionary_capacity_is_not_an_implicit_completion_count[True] ______
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f14527890>, <stream_synthetic_fixture....nts-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py'>)
+count = True
+
+    @pytest.mark.parametrize('count', [None, True, -1, 31])
+    def test_dictionary_capacity_is_not_an_implicit_completion_count(admitted, count):
+        owner, f, _ = admitted
+>       stage, log, matcher = dictionary_log(owner, f)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f14527890>
+f = <stream_synthetic_fixture.Tests testMethod=runTest>, bounded = True
+
+    def dictionary_log(owner, f, *, bounded=True):
+        from tradingagents.research.onchain_replication.compact_pair_log import PairLog
+        from tradingagents.research.onchain_replication.compact_matcher import CompactMatcher
+        scope = dictionary_scope(f)
+>       stage = owner.begin_dictionary(workload_sha256=scope) if bounded else owner.begin(
+                ^^^^^^^^^^^^^^^^^^^^^^
+            'dictionary', workload_sha256=scope, pairs=30)
+E       AttributeError: 'Owner' object has no attribute 'begin_dictionary'
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:42: AttributeError
+_______ test_dictionary_capacity_is_not_an_implicit_completion_count[-1] _______
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f13f5ce10>, <stream_synthetic_fixture....nts-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py'>)
+count = -1
+
+    @pytest.mark.parametrize('count', [None, True, -1, 31])
+    def test_dictionary_capacity_is_not_an_implicit_completion_count(admitted, count):
+        owner, f, _ = admitted
+>       stage, log, matcher = dictionary_log(owner, f)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f13f5ce10>
+f = <stream_synthetic_fixture.Tests testMethod=runTest>, bounded = True
+
+    def dictionary_log(owner, f, *, bounded=True):
+        from tradingagents.research.onchain_replication.compact_pair_log import PairLog
+        from tradingagents.research.onchain_replication.compact_matcher import CompactMatcher
+        scope = dictionary_scope(f)
+>       stage = owner.begin_dictionary(workload_sha256=scope) if bounded else owner.begin(
+                ^^^^^^^^^^^^^^^^^^^^^^
+            'dictionary', workload_sha256=scope, pairs=30)
+E       AttributeError: 'Owner' object has no attribute 'begin_dictionary'
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:42: AttributeError
+_______ test_dictionary_capacity_is_not_an_implicit_completion_count[31] _______
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f13f5d6d0>, <stream_synthetic_fixture....nts-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py'>)
+count = 31
+
+    @pytest.mark.parametrize('count', [None, True, -1, 31])
+    def test_dictionary_capacity_is_not_an_implicit_completion_count(admitted, count):
+        owner, f, _ = admitted
+>       stage, log, matcher = dictionary_log(owner, f)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f13f5d6d0>
+f = <stream_synthetic_fixture.Tests testMethod=runTest>, bounded = True
+
+    def dictionary_log(owner, f, *, bounded=True):
+        from tradingagents.research.onchain_replication.compact_pair_log import PairLog
+        from tradingagents.research.onchain_replication.compact_matcher import CompactMatcher
+        scope = dictionary_scope(f)
+>       stage = owner.begin_dictionary(workload_sha256=scope) if bounded else owner.begin(
+                ^^^^^^^^^^^^^^^^^^^^^^
+            'dictionary', workload_sha256=scope, pairs=30)
+E       AttributeError: 'Owner' object has no attribute 'begin_dictionary'
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:42: AttributeError
+________ test_exact_stage_cannot_opt_into_a_smaller_denominator_at_seal ________
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f13f5e0d0>, <stream_synthetic_fixture....nts-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py'>)
+
+    def test_exact_stage_cannot_opt_into_a_smaller_denominator_at_seal(admitted):
+        owner, f, _ = admitted
+        stage, log, matcher = dictionary_log(owner, f, bounded=False)
+        with pytest.raises(ValueError):
+>           owner.finish_stage(stage, log_terminal_sha256=log.finish(), stream_terminal_sha256=None,
+                               completed_pairs=0)
+
+tests/research/onchain_replication/test_compact_dictionary_count.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7b2f13f5e0d0>
+args = (<tradingagents.research.onchain_replication.compact_owner.Stage object at 0x7b2f14b0f380>,)
+kwargs = {'log_terminal_sha256': 'd1c847d6d5ffa5a463f29a3201d3c74eeaf0fb2279c170b3a3c6f77c80f02d67', 'stream_terminal_sha256': None, 'completed_pairs': 0}
+
+    @wraps(function)
+    def call(self, *args, **kwargs):
+        require(self._transition.acquire(blocking=False), 'concurrent compact owner transition')
+>       try: return function(self, *args, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Owner.finish_stage() got an unexpected keyword argument 'completed_pairs'
+
+tradingagents/research/onchain_replication/compact_owner.py:34: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_dictionary_count.py::test_actual_dictionary_completes_with_separate_reserved_and_observed_counts
+FAILED tests/research/onchain_replication/test_compact_dictionary_count.py::test_unselected_dictionary_count_policy_refuses_before_namespace[route]
+FAILED tests/research/onchain_replication/test_compact_dictionary_count.py::test_dictionary_capacity_is_not_an_implicit_completion_count[None]
+FAILED tests/research/onchain_replication/test_compact_dictionary_count.py::test_dictionary_capacity_is_not_an_implicit_completion_count[True]
+FAILED tests/research/onchain_replication/test_compact_dictionary_count.py::test_dictionary_capacity_is_not_an_implicit_completion_count[-1]
+FAILED tests/research/onchain_replication/test_compact_dictionary_count.py::test_dictionary_capacity_is_not_an_implicit_completion_count[31]
+FAILED tests/research/onchain_replication/test_compact_dictionary_count.py::test_exact_stage_cannot_opt_into_a_smaller_denominator_at_seal
+7 failed in 79.18s (0:01:19)

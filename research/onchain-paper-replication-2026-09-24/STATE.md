@@ -3,6 +3,36 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact dictionary capacity/count continuation — October 1 heartbeat**:
+Fresh synthetic red01 CLOSED7API failures79.18s/session86164exit1 at
+full_sources/compact-dictionary-count-2026-10-01/red01.log. check01 CLOSED7passes
+100.86s/session21701exit0. New targeted check02 CLOSED2passed6deselected41.24s/
+session2453exit0. No engineering, empirical or financial job is active. Root
+implemented an explicitly selected dictionary count contract which reserves the
+conservative registered configuration capacity before matching but seals only the
+exact completed count. Existing exact-count stages must not silently adopt a
+smaller denominator at closure. Scientific sampler/dictionary admission remains
+a separate producer requirement. Independent owner_closure_review established a
+tiny constant-score example:5samples,2motifs,threshold2,partition3,seed12 yields
+20actual comparisons/32matrix entries versus22/36conservative capacity. The final
+[0,4] subset reuses an earlier matrix. Fresh investigation-01 serialization failure
+and corrected investigation-02 evidence are retained; this is orchestration,
+not numerical or sample-provenance proof. Current implementation tests use real
+scalar matching with identical-feature isolated neighborhoods to exercise reuse.
+Check01 proved actual20-versus22 dictionary completion without refunding its
+reservation and six count/selection refusals. Its fixture used descriptor seed11
+versus samples12 and is retained without scientific-seed claims. Current fixture
+explicitly aligns descriptor/sample seed12; check02 verifies actual10-comparison MCM
+from that dictionary and aggregate30actual-pair closure, plus an in-range false
+denominator refused at the saved-log join. Source unchanged since check01.
+Independent REVIEW accepted the stated count contract, SHA
+efc141efd92859f1b0183649dbcbd99b4e1cb6b0a738e199c5bb8211c99da0e3.
+No historical job was replayed. Next implement the compact admitted training-
+sample route and dictionary producer/publication using this explicit count mode;
+retain the external scientific-scope obligations and final representation gate.
+Disk snapshot21259952128B available;10GiB floor unchanged. Resource coverage77/109
+and all1420financial fits pending remain unchanged.
+
 **Compact MCM numeric output and registered publication — October 1 continuation**:
 New compact_mcm_output.py converts completed saved float64 MCM score chunks into
 an exclusive row-major float32 artifact, without repeating numerical comparisons

@@ -1,0 +1,293 @@
+{
+  "actual_directional_comparisons": 20,
+  "actual_directional_indices": [
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      3,
+      4
+    ]
+  ],
+  "actual_matrix_subsets": [
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      1,
+      4
+    ],
+    [
+      3
+    ],
+    [
+      0,
+      3,
+      4
+    ]
+  ],
+  "actual_unique_matrix_entries": 32,
+  "conservative_capacity": {
+    "levels": 4,
+    "max_matrix_entries": 36,
+    "max_pairs": 22
+  },
+  "constant_score": 0.5,
+  "hierarchy": [
+    {
+      "original_memberships": [
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "representatives": [
+        1,
+        3
+      ],
+      "samples": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "original_memberships": [
+        [
+          0
+        ],
+        [
+          4
+        ]
+      ],
+      "representatives": [
+        0,
+        4
+      ],
+      "samples": [
+        0,
+        4
+      ]
+    },
+    {
+      "original_memberships": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          4
+        ]
+      ],
+      "representatives": [
+        0,
+        4
+      ],
+      "samples": [
+        0,
+        1,
+        4
+      ]
+    },
+    {
+      "original_memberships": [
+        [
+          3
+        ]
+      ],
+      "representatives": [
+        3
+      ],
+      "samples": [
+        3
+      ]
+    },
+    {
+      "original_memberships": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          4
+        ]
+      ],
+      "representatives": [
+        0,
+        4
+      ],
+      "samples": [
+        0,
+        3,
+        4
+      ]
+    }
+  ],
+  "identity": "compact-dictionary-count-investigation-02",
+  "memberships": [
+    [
+      0,
+      1,
+      2,
+      3
+    ],
+    [
+      4
+    ]
+  ],
+  "numeric_oracle": false,
+  "reconstructed_visits": [
+    {
+      "final": false,
+      "indices": [
+        1,
+        2,
+        3
+      ],
+      "reused": false
+    },
+    {
+      "final": false,
+      "indices": [
+        0,
+        4
+      ],
+      "reused": false
+    },
+    {
+      "final": false,
+      "indices": [
+        0,
+        1,
+        4
+      ],
+      "reused": false
+    },
+    {
+      "final": false,
+      "indices": [
+        3
+      ],
+      "reused": false
+    },
+    {
+      "final": false,
+      "indices": [
+        0,
+        3,
+        4
+      ],
+      "reused": false
+    },
+    {
+      "final": true,
+      "indices": [
+        0,
+        4
+      ],
+      "reused": true
+    }
+  ],
+  "sample_draw_provenance": false,
+  "sample_manifest_sha256": "87fadb335167e1812c133bf118e37155a5b64f0209bdb97b80fd4b5a545f99ea",
+  "search_candidates": 109,
+  "seed": 12,
+  "settings": {
+    "partition_size": 3,
+    "partition_threshold": 2,
+    "sample_count": 5,
+    "size": 2
+  },
+  "source_sha256": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py": "30a957ad48997a3236203e1af2ccf9e0874b172ffac73773c31efc6bece9fc67",
+    "tradingagents/research/onchain_replication/compact_policy.py": "50adcadc1f0ae194518093cc1b82db9e620641f80d9395e37fff4564659f4e3d",
+    "tradingagents/research/onchain_replication/dictionary.py": "32e27a4a17dc2aa993d1440d6486c75b0d4dcff341969dbf99bdff412dd7e446"
+  },
+  "synthetic_only": true
+}
