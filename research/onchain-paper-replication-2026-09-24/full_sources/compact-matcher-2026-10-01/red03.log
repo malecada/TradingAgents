@@ -1,0 +1,100 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______ test_log_publication_cannot_invalidate_checkpoint_before_return ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-35/test_log_publication_cannot_in0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d4c95b2f360>
+
+    def test_log_publication_cannot_invalidate_checkpoint_before_return(tmp_path, monkeypatch):
+        schedule = SCHEDULE | {'operations_per_call': 1, 'calls_per_checkpoint': 1, 'max_checkpoints': 1}
+        module, matcher, log, a, b, c, purpose = fixture(tmp_path, schedule)
+        armed = False; original = log.progress
+        def progress(ref):
+            nonlocal armed
+            armed = True
+            return original(ref)
+        def lease():
+            if armed:
+                path = tmp_path / 'checkpoints/event-000000000001/state/annealing/M.npy'
+                path.write_bytes(b'x' * path.stat().st_size)
+        monkeypatch.setattr(log, 'progress', progress); log.lease = lease
+>       with pytest.raises(ValueError): matcher(purpose, a, b)
+                                        ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_matcher.py:134: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.compact_matcher.CompactMatcher object at 0x7d4c55824830>
+purpose = {'schema_version': 1, 'kind': 'mcm', 'workload_sha256': 'fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff...fcd5d1272291f02d7b30683d8bf85c41d33b8ab5b1a', 'bc649f6a7ff7e4492cd0f8d980f652d870080073d071de6eb03ee1c6d250f946'], ...}
+a = GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09T..., edge_features=array([[0.1]]), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None)
+b = GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09T..., edge_features=array([[0.4]]), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None)
+
+    def __call__(self, purpose, a, b):
+        require(not self.busy and not self.poisoned, 'compact matcher busy or poisoned')
+        self.busy = True; state = None; primary = None
+        try:
+            self._check(); purpose = copy.deepcopy(purpose)
+            require(purpose.get('schema_version') == 1 and purpose.get('kind') in ('mcm', 'dictionary')
+                and purpose.get('workload_sha256') == self.workload
+                and purpose.get('typed_graphs') == [graph_identity(a), graph_identity(b)], 'compact matcher purpose differs')
+            pair.policy_check(a, b, self.config, self.policy)
+            require(self.log.events + 2 + self.schedule['max_checkpoints'] <= self.log.start['limits']['max_events'],
+                    'insufficient completion/progress event capacity')
+            reserved = self.policy['max_checkpoint_bytes'] + 2 * io.META_LIMIT
+            require(self.checkpoints + self.schedule['max_checkpoints'] <= self.schedule['max_total_checkpoints']
+                and self.reserved_bytes + self.schedule['max_checkpoints'] * reserved
+                    <= self.schedule['max_total_checkpoint_bytes'],
+                'insufficient cumulative checkpoint capacity before allocation')
+            identity = self.pair_identity(a, b)
+            self.log.begin(cache_key(purpose), pair.digest(identity))
+            self._check()
+            state = engine.create(a, b, self.config, **{k: self.policy[k] for k in pair.ENGINE_FIELDS})
+            for _ in range(self.schedule['max_checkpoints']):
+                for _ in range(self.schedule['calls_per_checkpoint']):
+                    self._check()
+                    engine.advance(state, a, b, self.config, max_operations=self.schedule['operations_per_call'])
+                    if state['phase'] == 'done': break
+                if state['phase'] == 'done':
+                    self._check()
+                    result = engine.score_only(state, a, b, self.config,
+                        max_buffer_bytes=self.policy['max_score_buffer_bytes'], chunk_edges=self.policy['chunk_edges'])
+                    try: engine.close(state)
+                    except BaseException as failure:
+                        raise CleanupFailure('ranked matcher cleanup unresolved; worker must stop') from failure
+                    finally: state = None
+                    self._check()
+                    return self.log.complete(float(result.score), result.convergence, result.iterations)
+                self._save(state, a, b, identity, purpose)
+>           raise CheckpointStop('bounded calls exhausted; checkpoint retained for separately admitted successor')
+E           tradingagents.research.onchain_replication.compact_matcher.CheckpointStop: bounded calls exhausted; checkpoint retained for separately admitted successor
+
+tradingagents/research/onchain_replication/compact_matcher.py:233: CheckpointStop
+______ test_independent_log_lease_cannot_revoke_matcher_during_completion ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-35/test_independent_log_lease_can0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d4c95b2f230>
+
+    def test_independent_log_lease_cannot_revoke_matcher_during_completion(tmp_path, monkeypatch):
+        module, matcher, log, a, b, c, purpose = fixture(tmp_path)
+        alive = True; armed = False; original = log.complete
+        def matcher_lease():
+            if not alive: raise RuntimeError('matcher owner lost')
+        def complete(*args):
+            nonlocal armed
+            armed = True
+            return original(*args)
+        def log_lease():
+            nonlocal alive
+            if armed: alive = False
+        matcher.lease = matcher_lease; log.lease = log_lease
+        monkeypatch.setattr(log, 'complete', complete)
+>       with pytest.raises(RuntimeError): matcher(purpose, a, b)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/research/onchain_replication/test_compact_matcher.py:153: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_log_publication_cannot_invalidate_checkpoint_before_return
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_independent_log_lease_cannot_revoke_matcher_during_completion
+2 failed, 7 deselected in 0.34s

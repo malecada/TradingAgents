@@ -1,0 +1,121 @@
+FFF.F                                                                    [100%]
+=================================== FAILURES ===================================
+_______ test_real_engine_exact_score_and_cleanup_without_per_pair_files ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-31/test_real_engine_exact_score_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71af32b13360>
+
+    def test_real_engine_exact_score_and_cleanup_without_per_pair_files(tmp_path, monkeypatch):
+        module, matcher, log, a, b, c, purpose = fixture(tmp_path)
+        original = pair.engine.close; closed = []
+        def close(state):
+            original(state); closed.append(state)
+        monkeypatch.setattr(pair.engine, 'close', close)
+>       got = matcher(purpose, a, b); expected = match_reference(a, b, c)
+              ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_matcher.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_matcher.py:203: in __call__
+    pair.policy_check(a, b, self.config, self.policy)
+tradingagents/research/onchain_replication/matching_pair.py:90: in policy_check
+    engine.policy(len(a.node_ids), len(b.node_ids), config,
+tradingagents/research/onchain_replication/matching_checkpoint.py:21: in policy
+    ann.normalization_policy(n,m,normalization_chunk_entries)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 2, m = 2, cap = 2
+
+    def normalization_policy(n,m,cap):
+        if type(cap) is not int or cap<max(m,n if m==1 else 2*n):
+>           raise ValueError('complete reduction axis and singleton padding allowance required')
+E           ValueError: complete reduction axis and singleton padding allowance required
+
+tradingagents/research/onchain_replication/matching_annealing.py:39: ValueError
+______ test_progress_checkpoint_is_saved_and_loadable_without_continuing _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-31/test_progress_checkpoint_is_sa0')
+
+    def test_progress_checkpoint_is_saved_and_loadable_without_continuing(tmp_path):
+        schedule = SCHEDULE | {'operations_per_call': 1, 'calls_per_checkpoint': 1, 'max_checkpoints': 1}
+        module, matcher, log, a, b, c, purpose = fixture(tmp_path, schedule)
+>       with pytest.raises(module.CheckpointStop): matcher(purpose, a, b)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_matcher.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_matcher.py:203: in __call__
+    pair.policy_check(a, b, self.config, self.policy)
+tradingagents/research/onchain_replication/matching_pair.py:90: in policy_check
+    engine.policy(len(a.node_ids), len(b.node_ids), config,
+tradingagents/research/onchain_replication/matching_checkpoint.py:21: in policy
+    ann.normalization_policy(n,m,normalization_chunk_entries)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 2, m = 2, cap = 2
+
+    def normalization_policy(n,m,cap):
+        if type(cap) is not int or cap<max(m,n if m==1 else 2*n):
+>           raise ValueError('complete reduction axis and singleton padding allowance required')
+E           ValueError: complete reduction axis and singleton padding allowance required
+
+tradingagents/research/onchain_replication/matching_annealing.py:39: ValueError
+_________ test_cleanup_failure_is_fatal_and_no_completion_is_published _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-31/test_cleanup_failure_is_fatal_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71aef2662780>
+
+    def test_cleanup_failure_is_fatal_and_no_completion_is_published(tmp_path, monkeypatch):
+        module, matcher, log, a, b, c, purpose = fixture(tmp_path)
+        original = pair.engine.close
+        def close(state):
+            original(state); raise OSError('synthetic cleanup failure after real release')
+        monkeypatch.setattr(pair.engine, 'close', close)
+>       with pytest.raises(module.CleanupFailure): matcher(purpose, a, b)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_matcher.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_matcher.py:203: in __call__
+    pair.policy_check(a, b, self.config, self.policy)
+tradingagents/research/onchain_replication/matching_pair.py:90: in policy_check
+    engine.policy(len(a.node_ids), len(b.node_ids), config,
+tradingagents/research/onchain_replication/matching_checkpoint.py:21: in policy
+    ann.normalization_policy(n,m,normalization_chunk_entries)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 2, m = 2, cap = 2
+
+    def normalization_policy(n,m,cap):
+        if type(cap) is not int or cap<max(m,n if m==1 else 2*n):
+>           raise ValueError('complete reduction axis and singleton padding allowance required')
+E           ValueError: complete reduction axis and singleton padding allowance required
+
+tradingagents/research/onchain_replication/matching_annealing.py:39: ValueError
+______ test_checkpoint_corruption_before_publication_keeps_begin_pending _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-31/test_checkpoint_corruption_bef0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71aef26e4d10>
+
+    def test_checkpoint_corruption_before_publication_keeps_begin_pending(tmp_path, monkeypatch):
+        schedule = SCHEDULE | {'operations_per_call': 1, 'calls_per_checkpoint': 1, 'max_checkpoints': 1}
+        module, matcher, log, a, b, c, purpose = fixture(tmp_path, schedule)
+        original = pair.engine.save
+        def corrupt(state, path, *args, **kwargs):
+            sha = original(state, path, *args, **kwargs)
+            p = path / 'annealing/M.npy'; p.write_bytes(b'x' * p.stat().st_size)
+            return sha
+        monkeypatch.setattr(pair.engine, 'save', corrupt)
+        with pytest.raises(ValueError): matcher(purpose, a, b)
+>       assert log.events == 1 and log.state['progress_events'] == 0
+E       assert (0 == 1)
+E        +  where 0 = <tradingagents.research.onchain_replication.compact_pair_log.PairLog object at 0x71aef26622c0>.events
+
+tests/research/onchain_replication/test_compact_matcher.py:99: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_real_engine_exact_score_and_cleanup_without_per_pair_files
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_progress_checkpoint_is_saved_and_loadable_without_continuing
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_cleanup_failure_is_fatal_and_no_completion_is_published
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_checkpoint_corruption_before_publication_keeps_begin_pending
+4 failed, 1 passed in 0.41s

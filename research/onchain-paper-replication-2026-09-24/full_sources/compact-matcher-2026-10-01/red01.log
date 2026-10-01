@@ -1,0 +1,111 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______ test_real_engine_exact_score_and_cleanup_without_per_pair_files ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_real_engine_exact_score_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d512eb43360>
+
+    def test_real_engine_exact_score_and_cleanup_without_per_pair_files(tmp_path, monkeypatch):
+>       module, matcher, log, a, b, c, purpose = fixture(tmp_path)
+                                                 ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_matcher.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_real_engine_exact_score_a0')
+schedule = None
+
+    def fixture(tmp_path, schedule=None):
+>       from tradingagents.research.onchain_replication import compact_matcher as module
+E       ImportError: cannot import name 'compact_matcher' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_compact_matcher.py:20: ImportError
+______ test_progress_checkpoint_is_saved_and_loadable_without_continuing _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_progress_checkpoint_is_sa0')
+
+    def test_progress_checkpoint_is_saved_and_loadable_without_continuing(tmp_path):
+        schedule = SCHEDULE | {'operations_per_call': 1, 'calls_per_checkpoint': 1, 'max_checkpoints': 1}
+>       module, matcher, log, a, b, c, purpose = fixture(tmp_path, schedule)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_matcher.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_progress_checkpoint_is_sa0')
+schedule = {'operations_per_call': 1, 'calls_per_checkpoint': 1, 'max_checkpoints': 1, 'max_total_checkpoints': 10, ...}
+
+    def fixture(tmp_path, schedule=None):
+>       from tradingagents.research.onchain_replication import compact_matcher as module
+E       ImportError: cannot import name 'compact_matcher' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_compact_matcher.py:20: ImportError
+_________ test_cleanup_failure_is_fatal_and_no_completion_is_published _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_cleanup_failure_is_fatal_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d50ee88dba0>
+
+    def test_cleanup_failure_is_fatal_and_no_completion_is_published(tmp_path, monkeypatch):
+>       module, matcher, log, a, b, c, purpose = fixture(tmp_path)
+                                                 ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_matcher.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_cleanup_failure_is_fatal_0')
+schedule = None
+
+    def fixture(tmp_path, schedule=None):
+>       from tradingagents.research.onchain_replication import compact_matcher as module
+E       ImportError: cannot import name 'compact_matcher' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_compact_matcher.py:20: ImportError
+_____ test_insufficient_publication_capacity_refuses_before_engine_create ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_insufficient_publication_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d50ee85e8d0>
+
+    def test_insufficient_publication_capacity_refuses_before_engine_create(tmp_path, monkeypatch):
+>       module, matcher, log, a, b, c, purpose = fixture(tmp_path)
+                                                 ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_matcher.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_insufficient_publication_0')
+schedule = None
+
+    def fixture(tmp_path, schedule=None):
+>       from tradingagents.research.onchain_replication import compact_matcher as module
+E       ImportError: cannot import name 'compact_matcher' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_compact_matcher.py:20: ImportError
+______ test_checkpoint_corruption_before_publication_keeps_begin_pending _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_checkpoint_corruption_bef0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d50ee8bd7b0>
+
+    def test_checkpoint_corruption_before_publication_keeps_begin_pending(tmp_path, monkeypatch):
+        schedule = SCHEDULE | {'operations_per_call': 1, 'calls_per_checkpoint': 1, 'max_checkpoints': 1}
+>       module, matcher, log, a, b, c, purpose = fixture(tmp_path, schedule)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_matcher.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_checkpoint_corruption_bef0')
+schedule = {'operations_per_call': 1, 'calls_per_checkpoint': 1, 'max_checkpoints': 1, 'max_total_checkpoints': 10, ...}
+
+    def fixture(tmp_path, schedule=None):
+>       from tradingagents.research.onchain_replication import compact_matcher as module
+E       ImportError: cannot import name 'compact_matcher' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_compact_matcher.py:20: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_real_engine_exact_score_and_cleanup_without_per_pair_files
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_progress_checkpoint_is_saved_and_loadable_without_continuing
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_cleanup_failure_is_fatal_and_no_completion_is_published
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_insufficient_publication_capacity_refuses_before_engine_create
+FAILED tests/research/onchain_replication/test_compact_matcher.py::test_checkpoint_corruption_before_publication_keeps_begin_pending
+5 failed in 0.37s

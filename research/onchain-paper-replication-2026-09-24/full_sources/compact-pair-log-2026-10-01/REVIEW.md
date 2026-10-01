@@ -1,0 +1,21 @@
+# Independent compact pair-log review
+
+Accepted as a bounded append-only event-storage primitive. No blocking source finding remains within that scope. This does not accept direct matching execution, registered ownership, checkpoint-body admission, successor recovery or empirical capacity.
+
+The fixed format is 136 frame bytes plus a 32-byte chained checksum, totaling 168 bytes per event. Start metadata binds the owner and supplied workflow/config/policy/context/numerical-source hashes, limits, iteration ceiling and format. Replay keeps only counters and one pending ordinal/purpose/numerical identity. Begin requires no pending pair and the next ordinal; progress and completion must match that pending identity. Completion consumes it, preserves the float64 score and convergence code/iterations, and rejects nonfinite/out-of-range scores. Checksums bind frame order to the start hash and previous event.
+
+Append validates the transition before mutation, writes through an exclusive bounded chunk with exact fd/path identity and extent checks, handles partial writes, fsyncs and performs fresh lease/root/readback checks before advancing acknowledged state. Write failures poison the identity. A failed terminal can retain an incomplete extra record or newly created empty chunk without interpreting it as acknowledged work. Terminal publication then replays and checks the actual chain under the prebound terminal hash. Verification performs two bounded content/signature passes, exact canonical chunk-name inventory and final root checks after external callbacks. Parent-directory synchronization is present. No per-completed-pair dictionary or directory is required by this log.
+
+Saved check01 reports **10 passes in 0.47 seconds**; the missing-module red01 is retained. Cases cover ordered completion/progress, pending-pair refusal, invalid completion values, a retained 17-byte short write, lease loss around sync, payload/extra-file/symlink/late mutation refusal and event/pair/logical bounds. The reviewer read source and saved evidence without running tests. These cases do not exercise actual engine allocation, numerical checkpoint loading, power-loss recovery or actual mapped-state cleanup.
+
+The logical allowance `168 * max_events + 2 * 8192` covers event payloads and bounded start/terminal files for this identity, including at most one partially written attempted event within the event cap. It excludes filesystem allocation and directories, checkpoints, live numerical state, score tails/batches, logs and other outputs. Working memory scales with a bounded chunk plus constant replay state; runtime/I/O still scale with retained events. Verification remains non-atomic after the final individual observations, and there is no automatic reopen, truncation or retry.
+
+Required caller constraints, rather than additional guarantees inferred from this primitive:
+
+- Different ordinals may carry the same purpose/identity hash. Actual occurrence uniqueness and graph membership must come from the admitted numerical schedule.
+- The log bounds iterations and stores the convergence code; it does not recompute whether the engine reached the corresponding temperature/iteration stopping condition.
+- Begin can use the last remaining event slot. A direct executor must reserve sufficient completion/progress capacity before allocation, rather than discovering an exhausted log after numerical work.
+- `checkpoint_path()` names an event-ordinal directory under the log parent's checkpoints directory. The caller must own that parent namespace exclusively, preflight extent/retention allowances, verify the saved manifest and bodies, and publish the exact progress event only after that validation. Checkpoint content is not read by log verification.
+- Progress, incomplete records, ambiguous acknowledged returns and cleanup failures require explicit outer failure/continuation handling. Durable log bytes alone do not authorize a successor or prove that a callback returned before a crash.
+
+Exact reviewed SHA-256: source `65dc775fddd98acc1221a84d03c0cf4fd6810c9ee1dfce2a6f9069e18c360e61`; tests `b42d9b50480c2fea3249d2ae516045ee5f8bb1d90aefe2a1db5dc8b4d8200127`; check01 `301c9b4c4f561e4efaf40239d4343801f3d74c4386c826fcc03f38dad57ee02b`; red01 `06e73994892585b97f13f0ec7232d9d93d3e12bd4d0e2f402e732900ef658140`.

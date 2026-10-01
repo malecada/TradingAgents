@@ -22,3 +22,19 @@
   cached across parameter updates. Sparse neighborhood indexing preserves the same
   directed induced graphs and original edge order; graph hashing streams canonical
   JSON to avoid large list copies without changing the identity formula.
+
+- October 1 compact matcher execution is a prospective operational variant:
+  `calls_per_checkpoint` groups a bounded number of unchanged checkpoint-engine
+  `advance` calls before a retained progress snapshot. This changes the earlier
+  Serial runner's checkpoint cadence, not the matching equations, temperature
+  schedule, convergence criterion or hardening order. It must be registered
+  explicitly before resource or financial execution. An operation bound does
+  not bound the stable sort inside the annealing-to-hardening transition.
+- The compact completion path records durable begin/completion/progress events
+  instead of creating a PairSession owner and completion directory for every
+  completed comparison. Completion retains exact score, convergence and iteration
+  count, purpose and numerical identity. Progress/failure snapshots and old
+  historical artifacts remain preserved. No successor/reuse permission follows
+  from matching identities or an intact checksum. The new path has passed only
+  tiny synthetic integration and is not yet selected by the registered native
+  producer; it is not empirical resource-capacity or paper-agreement evidence.

@@ -3,6 +3,50 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact matcher bookkeeping and real-engine MCM integration implemented — October 1 continuation**:
+Maintained compact_pair_log.py replaces per-completed-pair Python state with fixed
+168-byte append-only begin/complete/progress records and one pending pair. Owner,
+exact purpose/numerical identity, convergence, iterations and checkpoint references
+remain bound. Partial writes poison the writer and remain preserved. No automatic
+replay/reopen exists. Evidence compact-pair-log-2026-10-01/check01 CLOSED10passes0.47s;
+REVIEW accepted SHA f1d8b21fdb804dc845ed7396fa67dccb468fb262ad367aba4354adefa3ebdf5c.
+
+Maintained compact_matcher.py invokes the unchanged scalar checkpoint engine.
+Durable begin precedes allocation; successful real engine cleanup precedes durable
+completion and callback return. Progress saves exact exclusive intent/state/wrapper
+files and checks all nested metadata/array hashes with bounded reads. Per-pair and
+whole prospective checkpoint envelopes are checked before allocation. The explicit
+calls_per_checkpoint schedule changes checkpoint cadence only and is recorded in
+IMPLEMENTATION_ASSUMPTIONS.md; it is NOT adopted for empirical execution. Stable
+ranking still needs process/time/scratch controls. Source-component hashes are
+pinned once under source freeze. Numerical equations/configuration are unchanged.
+Evidence compact-matcher-2026-10-01/: check01 failed4/passed1 due synthetic invalid
+normalization cap2; corrected fixture4 check02 CLOSED5passes0.39s. Red capacity and
+publication counterexamples preserved with source snapshots; corrected check04
+CLOSED10passes0.42s. FINAL_REVIEW accepted SHA
+126d36bb4aae2b56b967f54c664c6c1d1c05de25671a0238346e5bedf7d903a6.
+
+Fresh full MCM composition now uses CompactMatcher with the actual unchanged
+checkpoint engine, compact log, durable tails and score batches. Seven synthetic
+nodes/two motifs produce14comparisons,28events/4704recordB/two log chunks andfour
+score batches; no per-pair owner/complete directories or progress snapshots were
+needed in this tiny fixture. Exact14purpose order/float64score bytes/finalfloat32MCM
+match the independent reference. integration01 passed0.60s; its prior test retained,
+then stronger float64/purpose assertions passed integration02 CLOSED1pass0.60s/
+session5868exit0. Independent INTEGRATION_REVIEW accepted SHA
+3cc5764d7e670e040fd28420ccd8c3abdaeb1298893392ada16e35cc93e71624. No financial inputs,
+empirical job, historical rerun, archive deletion or scope reduction occurred.
+
+Next safe implementation: select this route via an explicit registered native
+backend/source/policy/owner contract and bind compact event/tail/checkpoint evidence
+into representation closure. The current registered native producer still uses
+its old route; broad resource-capacity improvement is NOT established. Dictionary
+hierarchical/directional schedule and partial-owner successor recovery still need
+explicit verification/integration. Finish whole-workflow physical reservations,
+retained-state/offload bounds, hub-cap amendment and reviewed committed60→61 gate
+before full-size empirical resource execution. Coverage remains77/109 and all1420
+financial fits remain pending. No numerical job is active at this checkpoint.
+
 **Durable per-score tails and actual MCM callback adapter accepted — October 1 continuation**:
 Maintained score_tail.py now binds every scalar to its ordinal/exact purpose,
 owner/scope and exact batch destination in80-byte chained records. Append fsync,
