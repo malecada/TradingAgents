@@ -1,0 +1,24 @@
+test_prior_events_use_admitted_artifact_cap_and_keep_it_on_lease (__main__.Tests.test_prior_events_use_admitted_artifact_cap_and_keep_it_on_lease) ... ERROR
+
+======================================================================
+ERROR: test_prior_events_use_admitted_artifact_cap_and_keep_it_on_lease (__main__.Tests.test_prior_events_use_admitted_artifact_cap_and_keep_it_on_lease)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-closure-route-2026-10-01/test_metadata.py", line 24, in test_prior_events_use_admitted_artifact_cap_and_keep_it_on_lease
+    m.snapshot_events(metadata,root,prefix,artifact_cap=1024,mcm_cap=128,graph_cap=256)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-closure-route-2026-10-01/closure.py", line 39, in snapshot_events
+    require(equal(metadata.read(directory/f'event-{i:06d}.json',cap=cap),event),'closure event differs')
+                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 68, in read
+    require(0<sig[2]<=cap,'sampler metadata cap exceeded')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 27, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: sampler metadata cap exceeded
+
+----------------------------------------------------------------------
+Ran 1 test in 0.106s
+
+FAILED (errors=1)

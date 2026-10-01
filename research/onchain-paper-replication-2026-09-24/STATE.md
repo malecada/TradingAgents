@@ -3,6 +3,46 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Sequential complete-graph closure independently accepted**:
+New isolated full_sources/representation-closure-route-2026-10-01/ joins accepted
+registered date coverage, an issued dictionary ticket and every required graph's
+actual saved graph admission. It releases each numeric graph receipt before the
+next, retains compact graph/MCM proof/event/component signatures and inventories,
+and builds schema3 motif binding including unscored dictionary training lineage.
+The selected closure policy checks graph count, encoded record size and declared
+sequential read/conversion numeric ceilings. Parent graphs, dictionary/sample
+prerequisites, serialization, physical storage and total RSS remain excluded.
+No representation event/seal or empirical release is implemented in this step.
+New synthetic integration uses two required graphs plus an extra dictionary
+training graph, all27calendar days with explicit price exclusions, and actual
+sampler/dictionary/MCM/native graph artifacts under temporary registration.
+red01 CLOSED2missing-component failures0.001s, session62713 exit1.
+check01 CLOSED2passes183.557s, session30195 exit0, PID622392 gone.
+All335frozen files verified against
+check01-sources.json SHAe4fc8f02f0e8a1ee6ffd3ca960c28947e7c615492d0b9692db2e012b55443aed.
+Independent review withholds acceptance for RC1: sample/dictionary prefix events
+use an unrelated MCM metadata cap. INITIAL_REVIEW SHA
+b88bf6a77e5355328e3ae74740935c5e93fc6e4c842627e7684657c8bbf9bf36.
+Source/test .check01 snapshots retained. metadata-red01 CLOSED2methods0.153s,
+1missing-helper failure; edge hash parity (C/F/reversed/empty) passed.
+metadata-red02 CLOSED1error0.106s reproduces RC1 through the extracted original
+cap routing and real compact reader on valid whitespace-expanded prior events.
+That source is preserved as closure.py.metadata-red02. Correction now uses the
+issued dictionary ticket's selected artifact max_manifest_bytes for samples and
+dictionary events; MCM and graph events retain their own metadata caps.
+metadata-check01 CLOSED1pass0.106s, session82970 exit0; actual caps are retained
+by later leases. New check02 CLOSED2passes181.179s, session71236 exit0, PID679721 gone.
+All345frozen hashes verified against
+check02-sources.json SHA2e4c1b4af48e242fa8d1bbfc3ab27882360248bccd688cdd1464c5a80c4db9f6.
+No source freeze or process remains. Final348bindings SHA
+50087b0645b39fcb9d35a014350e5aed52b505e2ac66320fead15b6c65adeee2.
+Final independent review accepts this in-memory closure and resolves RC1.
+REVIEW SHA42c2eeda8136282ecf35a3404545e6fd846ab5bb43c6d9b3401dca86e9ee61c0.
+Next: durable exclusive representation publication and explicit admitted saved
+reuse; whole-workflow quotas/mapped support and empirical admission remain open.
+Registered denominator predecessor accepted/pushed3040d102, remote verified.
+All1420financial fits pending; no empirical process running.
+
 **Registered denominator linkage independently accepted**:
 New isolated full_sources/representation-denominator-route-2026-10-01/ links an
 actual current owner to a selected denominator policy in both plan and execution
