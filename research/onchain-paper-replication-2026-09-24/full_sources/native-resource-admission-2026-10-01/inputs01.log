@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-resource-admission-2026-10-01/build_inventory.py", line 80, in <module>
+    result=build(ROOT)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-resource-admission-2026-10-01/build_inventory.py", line 57, in build
+    require(len(matches)==1 and matches[0]=={k:v for k,v in verification.items() if k!='week'},'legacy verification closure differs')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-resource-admission-2026-10-01/build_inventory.py", line 13, in require
+    if not ok:raise ValueError(message)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: legacy verification closure differs

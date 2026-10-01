@@ -16,7 +16,10 @@ accepts actual guard/owner/source/output closure and releases the source freeze.
 Original producer652files unchanged; no new producer namespaces. Complete new
 checkout368files/4194917logicalB is archived with all member hashes verified:
 guarded-attempt01.tar.gz2325137B SHA1922426d92b801c3c9b8f35930c37a2a302c23b4c6592fe5a4b664490b8deee1.
-External fetch/recovery pending. Evidence: full_sources/native-reuse-integration-2026-10-01/.
+External recovery VERIFIED: a fresh temporary bare partial fetch from GitHub at
+82d1c4ac98762354aad94680517b10a5404c1447 recovered the archive and matched all368
+member hashes. Receipt guarded-remote-recovery01.json. Evidence:
+full_sources/native-reuse-integration-2026-10-01/.
 No active numerical process, empirical admission or resource-coverage credit.
 
 **Next resource input preparation already executed**:
@@ -25,12 +28,16 @@ retained graph manifests to their saved independent verifier records, including
 the later two legacy verifications, and maps all32open requirement IDs. Original
 512samples/32motifs/seed11 and current execution caps are preserved. Metadata-only
 inputs01 failed an incorrect legacy week-field comparison; source/log retained.
-Corrected inputs02 succeeded, with independent INPUTS_REVIEW pending. Aggregates:
+Corrected inputs02 succeeded with43compact pins. Three synthetic arithmetic/
+identity/denominator tests passed (inventory-check01). Independent reconstruction
+confirmed all43pins,9graph joins and the exact32pending rows. INPUTS_REVIEW SHA
+0b41891724346c5ad7c9b688eb2c5d4a4bc35c39886f5006e2dc31fb2013d8b6 accepts this
+metadata preparation only. Aggregates:
 18046816nodes/24381697directededges,4779690416B saved array files;32-column dense MCM
 payload arithmetic2309992448B float32 or4619984896B float64,577498112node-motif pairs.
 These are stored-evidence arithmetic, not measured peak memory/disk/runtime or a
 requirement to load all graphs simultaneously. No arrays, targets or outcomes read.
-Next safe action: close archive external recovery and input review; implement the
+Next safe action: implement the
 remaining resource execution contract (population, whole-workflow physical quotas,
 hub/node/pair cap amendment, per-stage checkpoint/disposition bounds), independently
 review and commit cumulative60→61 amendment/gate before empirical execution.
