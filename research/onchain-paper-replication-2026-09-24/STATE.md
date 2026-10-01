@@ -3,6 +3,35 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Current-owner dictionary artifact admission/reuse independently accepted**:
+New isolated full_sources/dictionary-artifact-route-2026-10-01/ validates exact
+publication proof/start/source/policy/owner/event/component references and
+preflights numeric member corruption before loading sample or dictionary arrays.
+The load budget reserves the sample read allowance plus two dictionary copies.
+The route joins actual sample proof, dictionary settings/training/representative
+membership and deterministic partition hierarchy, and returns combined leases.
+It does not invoke matching, clustering, dictionary workload or pair execution.
+Medoid objective recomputation, historical reuse and mapped empirical admission
+remain separate. Original red01 remains closed. check01 CLOSED6passes/154.400s,
+session56500 exit0. membership-check01 CLOSED3passes/5.104s,session73752 exit0.
+Review found no source blocker and requested stronger multi-level/adversarial
+partition evidence. Source remains unchanged; prior tests retained.
+membership-check02 CLOSED4methods/8.220s,session32535 exit0:13samples, two
+reduction levels/five seeds plus partition/ownership corruptions. check02 CLOSED
+2passes/58.227s,session68009 exit0: explicit Serial refusal during reuse and a
+fully rehashed false matrix-byte claim. No active job/source freeze.
+Independent REVIEW SHA
+596058c4c3897a64899f5d8cceb852dec7cb73a6c6c87b51f6fdeb0523b1bc82.
+All204bindings match manifest SHA
+4a733804f47acbc4511b96cd3e30de41e53e0b8ffd7a1f5157e3fabc8d070aba.
+No financial fits or budget changes executed. Next safe action: join this admitted
+dictionary to actual MCM execution for one exact required resident graph, deriving
+its scope from registered graph/node order/dictionary/matching settings and all
+pair purposes internally. Lease dictionary/owner across every pair and final
+return, compare every tiny MCM cell to independent scalar arithmetic and forbid
+new pair creation on completed replay. MCM publication/mapped support, historical
+sampler/dictionary reuse and measured full-fold resource release remain due.
+
 **Durable first-owner dictionary publication independently accepted**:
 New isolated full_sources/dictionary-publication-2026-10-01/ derives a driver
 that retains its admitted sample receipt for publication without a second full

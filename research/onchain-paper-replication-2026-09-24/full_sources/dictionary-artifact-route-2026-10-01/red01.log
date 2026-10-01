@@ -1,0 +1,97 @@
+test_conflicting_marker_refuses_before_array_loading (__main__.Tests.test_conflicting_marker_refuses_before_array_loading) ... FAIL
+test_corrupt_dictionary_member_refuses_before_array_loading (__main__.Tests.test_corrupt_dictionary_member_refuses_before_array_loading) ... FAIL
+test_current_dictionary_reuse_does_not_enter_numerical_workload (__main__.Tests.test_current_dictionary_reuse_does_not_enter_numerical_workload) ... FAIL
+test_foreign_owner_refuses_even_with_new_expected_hash (__main__.Tests.test_foreign_owner_refuses_even_with_new_expected_hash) ... FAIL
+test_later_dictionary_drift_invalidates_receipt (__main__.Tests.test_later_dictionary_drift_invalidates_receipt) ... FAIL
+test_proof_drift_during_dictionary_loading_refuses_return (__main__.Tests.test_proof_drift_during_dictionary_loading_refuses_return) ... FAIL
+
+======================================================================
+FAIL: test_conflicting_marker_refuses_before_array_loading (__main__.Tests.test_conflicting_marker_refuses_before_array_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 38, in test_conflicting_marker_refuses_before_array_loading
+    self.fixture();(self.proof.parent/'failed.json').write_text('{}')
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'dictionary artifact admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary artifact admission missing
+
+======================================================================
+FAIL: test_corrupt_dictionary_member_refuses_before_array_loading (__main__.Tests.test_corrupt_dictionary_member_refuses_before_array_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 44, in test_corrupt_dictionary_member_refuses_before_array_loading
+    f=self.fixture();path=f.directory/'checkpoint-000001/array-000000.npy'
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'dictionary artifact admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary artifact admission missing
+
+======================================================================
+FAIL: test_current_dictionary_reuse_does_not_enter_numerical_workload (__main__.Tests.test_current_dictionary_reuse_does_not_enter_numerical_workload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 29, in test_current_dictionary_reuse_does_not_enter_numerical_workload
+    f=self.fixture();before=f.owned.journal.reservations;pub=self.m.publication;pair=pub.driver.artifacts.consumer.serial.pair
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'dictionary artifact admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary artifact admission missing
+
+======================================================================
+FAIL: test_foreign_owner_refuses_even_with_new_expected_hash (__main__.Tests.test_foreign_owner_refuses_even_with_new_expected_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 41, in test_foreign_owner_refuses_even_with_new_expected_hash
+    self.fixture();proof=json.loads(self.proof.read_bytes());proof['owner']['experiment']='foreign';self.proof.write_bytes(canonical_bytes(proof))
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'dictionary artifact admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary artifact admission missing
+
+======================================================================
+FAIL: test_later_dictionary_drift_invalidates_receipt (__main__.Tests.test_later_dictionary_drift_invalidates_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 48, in test_later_dictionary_drift_invalidates_receipt
+    f=self.fixture();result=self.admit();path=f.directory/'checkpoint-000001/array-000000.npy'
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'dictionary artifact admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary artifact admission missing
+
+======================================================================
+FAIL: test_proof_drift_during_dictionary_loading_refuses_return (__main__.Tests.test_proof_drift_during_dictionary_loading_refuses_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 52, in test_proof_drift_during_dictionary_loading_refuses_return
+    f=self.fixture();reader=self.m.publication.reader;original=reader.read_component;hit=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'dictionary artifact admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: dictionary artifact admission missing
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=6)
