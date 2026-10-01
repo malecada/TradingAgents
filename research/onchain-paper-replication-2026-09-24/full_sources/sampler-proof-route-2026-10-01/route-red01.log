@@ -1,0 +1,100 @@
+test_conflicting_terminal_marker_refuses_before_array_loading (__main__.Tests.test_conflicting_terminal_marker_refuses_before_array_loading) ... FAIL
+test_current_completion_proof_is_admitted_without_redrawing (__main__.Tests.test_current_completion_proof_is_admitted_without_redrawing) ... FAIL
+test_foreign_owner_refuses_even_with_new_expected_proof_hash (__main__.Tests.test_foreign_owner_refuses_even_with_new_expected_proof_hash) ... FAIL
+test_later_proof_drift_invalidates_receipt (__main__.Tests.test_later_proof_drift_invalidates_receipt) ... FAIL
+test_proof_drift_after_artifact_loading_refuses_return (__main__.Tests.test_proof_drift_after_artifact_loading_refuses_return) ... FAIL
+test_rehashed_incorrect_rng_draw_refuses_before_array_loading (__main__.Tests.test_rehashed_incorrect_rng_draw_refuses_before_array_loading) ... FAIL
+
+======================================================================
+FAIL: test_conflicting_terminal_marker_refuses_before_array_loading (__main__.Tests.test_conflicting_terminal_marker_refuses_before_array_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 34, in test_conflicting_terminal_marker_refuses_before_array_loading
+    self.fixture();(self.proof.parent/'failed.json').symlink_to('absent')
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_production_publishes_typed_samples_and_exact_completion_proof')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'sampler proof admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sampler proof admission missing
+
+======================================================================
+FAIL: test_current_completion_proof_is_admitted_without_redrawing (__main__.Tests.test_current_completion_proof_is_admitted_without_redrawing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 26, in test_current_completion_proof_is_admitted_without_redrawing
+    f=self.fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_production_publishes_typed_samples_and_exact_completion_proof')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'sampler proof admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sampler proof admission missing
+
+======================================================================
+FAIL: test_foreign_owner_refuses_even_with_new_expected_proof_hash (__main__.Tests.test_foreign_owner_refuses_even_with_new_expected_proof_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 37, in test_foreign_owner_refuses_even_with_new_expected_proof_hash
+    self.fixture();value=json.loads(self.proof.read_bytes());value['owner']['experiment']='foreign'
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_production_publishes_typed_samples_and_exact_completion_proof')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'sampler proof admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sampler proof admission missing
+
+======================================================================
+FAIL: test_later_proof_drift_invalidates_receipt (__main__.Tests.test_later_proof_drift_invalidates_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 48, in test_later_proof_drift_invalidates_receipt
+    self.fixture();result=self.admit();path=self.proof.parent/'draw-000000.json';path.write_text('{}')
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_production_publishes_typed_samples_and_exact_completion_proof')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'sampler proof admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sampler proof admission missing
+
+======================================================================
+FAIL: test_proof_drift_after_artifact_loading_refuses_return (__main__.Tests.test_proof_drift_after_artifact_loading_refuses_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 51, in test_proof_drift_after_artifact_loading_refuses_return
+    self.fixture();original=self.m.producer.artifacts.admit_samples
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_production_publishes_typed_samples_and_exact_completion_proof')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'sampler proof admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sampler proof admission missing
+
+======================================================================
+FAIL: test_rehashed_incorrect_rng_draw_refuses_before_array_loading (__main__.Tests.test_rehashed_incorrect_rng_draw_refuses_before_array_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 41, in test_rehashed_incorrect_rng_draw_refuses_before_array_loading
+    self.fixture();value=json.loads(self.proof.read_bytes());path=Path(value['draws'][0]['path'])
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 19, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_production_publishes_typed_samples_and_exact_completion_proof')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 14, in api
+    assert (HERE/'route.py').is_file(),'sampler proof admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sampler proof admission missing
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=6)

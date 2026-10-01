@@ -1,0 +1,76 @@
+test_512_absolute_references_fit_registered_bound_and_repeated_lease (__main__.Tests.test_512_absolute_references_fit_registered_bound_and_repeated_lease) ... ERROR
+test_registered_larger_policy_produces_actual_small_sample_artifact (__main__.Tests.test_registered_larger_policy_produces_actual_small_sample_artifact) ... ERROR
+test_unregistered_size_and_overall_ceiling_refuse (__main__.Tests.test_unregistered_size_and_overall_ceiling_refuse) ... 
+  test_unregistered_size_and_overall_ceiling_refuse (__main__.Tests.test_unregistered_size_and_overall_ceiling_refuse) (cap=65536) ... ERROR
+  test_unregistered_size_and_overall_ceiling_refuse (__main__.Tests.test_unregistered_size_and_overall_ceiling_refuse) (cap=True) ... ERROR
+  test_unregistered_size_and_overall_ceiling_refuse (__main__.Tests.test_unregistered_size_and_overall_ceiling_refuse) (cap=0) ... ERROR
+  test_unregistered_size_and_overall_ceiling_refuse (__main__.Tests.test_unregistered_size_and_overall_ceiling_refuse) (cap=2097153) ... ERROR
+
+======================================================================
+ERROR: test_512_absolute_references_fit_registered_bound_and_repeated_lease (__main__.Tests.test_512_absolute_references_fit_registered_bound_and_repeated_lease)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_metadata.py", line 26, in test_512_absolute_references_fit_registered_bound_and_repeated_lease
+    metadata=m.Metadata(root)
+             ^^^^^^^^^^
+AttributeError: module 'larger_proof_producer' has no attribute 'Metadata'
+
+======================================================================
+ERROR: test_registered_larger_policy_produces_actual_small_sample_artifact (__main__.Tests.test_registered_larger_policy_produces_actual_small_sample_artifact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_metadata.py", line 45, in test_registered_larger_policy_produces_actual_small_sample_artifact
+    result=f.produce();proof=json.loads(Path(result['proof']['path']).read_bytes())
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 42, in produce
+    def produce(self):return self.m.produce(self.f.owned,self.f.journal,sampler_input='sampler_execution',artifact_input='artifact_read')
+                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 96, in produce
+    require(all(type(policy[k]) is int and policy[k]>0 for k in ('max_metadata_bytes','max_attempt_bytes'))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        and policy['max_metadata_bytes']<=65536,'sampler metadata/reservation caps differ')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 27, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: sampler metadata/reservation caps differ
+
+======================================================================
+ERROR: test_unregistered_size_and_overall_ceiling_refuse (__main__.Tests.test_unregistered_size_and_overall_ceiling_refuse) (cap=65536)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_metadata.py", line 36, in test_unregistered_size_and_overall_ceiling_refuse
+    with self.subTest(cap=cap),self.assertRaises(ValueError):m.Metadata(root).read(path,cap=cap)
+                                                             ^^^^^^^^^^
+AttributeError: module 'larger_proof_producer' has no attribute 'Metadata'
+
+======================================================================
+ERROR: test_unregistered_size_and_overall_ceiling_refuse (__main__.Tests.test_unregistered_size_and_overall_ceiling_refuse) (cap=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_metadata.py", line 36, in test_unregistered_size_and_overall_ceiling_refuse
+    with self.subTest(cap=cap),self.assertRaises(ValueError):m.Metadata(root).read(path,cap=cap)
+                                                             ^^^^^^^^^^
+AttributeError: module 'larger_proof_producer' has no attribute 'Metadata'
+
+======================================================================
+ERROR: test_unregistered_size_and_overall_ceiling_refuse (__main__.Tests.test_unregistered_size_and_overall_ceiling_refuse) (cap=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_metadata.py", line 36, in test_unregistered_size_and_overall_ceiling_refuse
+    with self.subTest(cap=cap),self.assertRaises(ValueError):m.Metadata(root).read(path,cap=cap)
+                                                             ^^^^^^^^^^
+AttributeError: module 'larger_proof_producer' has no attribute 'Metadata'
+
+======================================================================
+ERROR: test_unregistered_size_and_overall_ceiling_refuse (__main__.Tests.test_unregistered_size_and_overall_ceiling_refuse) (cap=2097153)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_metadata.py", line 36, in test_unregistered_size_and_overall_ceiling_refuse
+    with self.subTest(cap=cap),self.assertRaises(ValueError):m.Metadata(root).read(path,cap=cap)
+                                                             ^^^^^^^^^^
+AttributeError: module 'larger_proof_producer' has no attribute 'Metadata'
+
+----------------------------------------------------------------------
+Ran 3 tests in 7.450s
+
+FAILED (errors=6)

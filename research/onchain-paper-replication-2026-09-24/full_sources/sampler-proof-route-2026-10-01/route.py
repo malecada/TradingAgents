@@ -1,0 +1,137 @@
+"""Current first-owner sampler completion proof admission; no redraw or resume."""
+import importlib.util
+from pathlib import Path
+import numpy as np
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,file_hash,freeze,thaw,utc
+
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+spec=importlib.util.spec_from_file_location('proof_route_producer',HERE/'producer.py')
+producer=importlib.util.module_from_spec(spec);spec.loader.exec_module(producer)
+SOURCES=tuple(sorted(set(producer.SOURCES)|{str(Path(__file__).relative_to(ROOT))}))
+
+def require(value,message):
+    if not value:raise ValueError(message)
+def equal(a,b):return canonical_bytes(a)==canonical_bytes(b)
+def valid_hash(value):return isinstance(value,str) and producer.artifacts.reader.re.fullmatch('[0-9a-f]{64}',value)
+
+class Admitted:
+    def __init__(self,artifact,proof,lease):
+        self.samples=artifact.samples;self.scope=artifact.scope
+        self.record=freeze({'sample_artifact':thaw(artifact.record),'sampler_proof':proof});self._lease=lease
+    def lease(self):self._lease()
+
+def admit(owned,journal,*,sampler_input,artifact_input,proof_sha256):
+    artifacts=producer.artifacts
+    require(type(owned) is artifacts.consumer.ownership.OwnedJournal,'actual admitted sampler owner required')
+    bound=owned.workload.bound;bound.check();owned.lease()
+    require(bound._ancestry_arguments is None,'historical sampler proof needs separate admission')
+    ad=bound._run.admission;owner=thaw(bound.record);directory=producer.attempt_directory(owned)
+    metadata=producer.Metadata(ad.root)
+    def sources():
+        for name in SOURCES:
+            sha=ad.experiment['source_files'].get(name)
+            require(sha is not None and file_hash(ROOT/name)==sha and file_hash(ad.root/name)==sha,'sampler proof source not admitted or changed')
+    sources()
+    def registered(name):
+        require(type(name) is str and name in ad.inputs,'registered sampler proof input required')
+        info=ad.inputs[name];return metadata.read(ad.root/info['path'],info['sha256'])
+    claim=metadata.read(Path(owner['journal_directory'])/'claim.json')
+    plan=registered(claim['plan_input']);job=registered('execution_job')
+    item=plan.get('producers',{}).get(owner['producer']);selected=job.get('payload',{}).get('representation_jobs',{}).get(owner['representation'])
+    require(isinstance(item,dict) and isinstance(selected,dict)
+        and item.get('sampler_input')==selected.get('sampler_input')==sampler_input
+        and item.get('sample_artifact_input')==selected.get('sample_artifact_input')==artifact_input,'sampler proof policy route differs')
+    policy=registered(sampler_input);artifact_policy=registered(artifact_input)
+    require(set(policy)=={'schema_version','kernel','max_metadata_bytes','max_attempt_bytes','limits'}
+        and type(policy['schema_version']) is int and policy['schema_version']==1
+        and policy['kernel']=='resident-leased-v1','sampler proof policy schema differs')
+    cap=policy['max_metadata_bytes']
+    require(type(cap) is int and 0<cap<=artifacts.reader.MANIFEST_LIMIT
+        and type(policy['max_attempt_bytes']) is int and policy['max_attempt_bytes']>0,'sampler proof metadata bounds differ')
+    limits=policy['limits']
+    require(isinstance(limits,dict) and set(limits)=={'schema_version','max_centers','max_direct_weight_bytes','neighborhood'}
+        and type(limits['schema_version']) is int and limits['schema_version']==1,'sampler limits schema differs')
+    require(all(type(limits[k]) is int and limits[k]>0 for k in ('max_centers','max_direct_weight_bytes')),'positive sampler bounds required')
+    neighborhood=producer.neighborhood_policy.validate_neighborhood_policy(limits['neighborhood'])
+    require(neighborhood is not None,'bounded neighborhoods required')
+    require(valid_hash(proof_sha256),'explicit sampler completion hash required')
+    proof_path=directory/'complete.json';proof=metadata.read(proof_path,proof_sha256,cap)
+    fields={'schema_version','status','owner','start','draws','last_draw_sha256','rng_initial','rng_final',
+        'sample_identity','training_graphs','sampler_input','sampler_policy_sha256','artifact_input','artifact_policy_sha256',
+        'event','component','encoded_artifact_bytes','encoded_event_bytes','resident_sample_bytes','resumable'}
+    require(set(proof)==fields and type(proof['schema_version']) is int and proof['schema_version']==1
+        and proof['status']=='complete' and proof['resumable'] is False and equal(proof['owner'],owner),'sampler completion schema/owner differs')
+    for key,name in (('sampler',sampler_input),('artifact',artifact_input)):
+        require(proof[key+'_input']==name and proof[key+'_policy_sha256']==ad.inputs[name]['sha256'],'sampler completion policy differs')
+    cfg=thaw(owned.workload.settings);count=cfg['sample_count'];seed=owned.workload.descriptor['seed']
+    require(type(count) is int and count>0 and isinstance(proof['draws'],list) and len(proof['draws'])==count,'sampler draw count differs')
+    expected_files={directory/'start.json',proof_path,*(directory/f'draw-{i:06d}.json' for i in range(count))}
+    def inventory():artifacts.reader.inventory(directory,expected_files)
+    inventory()
+    def reference(ref,path):
+        require(isinstance(ref,dict) and set(ref)=={'path','sha256'} and ref['path']==str(path)
+            and valid_hash(ref['sha256']),'sampler proof reference differs')
+        return metadata.read(path,ref['sha256'],cap)
+    start=reference(proof['start'],directory/'start.json')
+    start_fields={'schema_version','status','owner','sampler_input','sampler_policy_sha256','artifact_input',
+        'artifact_policy_sha256','sources','configuration_sha256','seed','rng_initial','reserved_encoded_bytes','resumable'}
+    reserved=(count+4)*cap+artifact_policy['max_artifact_bytes']
+    require(set(start)==start_fields and type(start['schema_version']) is int and start['schema_version']==1
+        and start['status']=='reserved' and start['resumable'] is False and equal(start['owner'],owner)
+        and start['sources']=={n:ad.experiment['source_files'][n] for n in producer.SOURCES}
+        and start['configuration_sha256']==producer.core.cache_key(cfg) and type(start['seed']) is int and start['seed']==seed
+        and start['reserved_encoded_bytes']==reserved<=policy['max_attempt_bytes'],'sampler start/source/reservation differs')
+    for key in ('sampler_input','sampler_policy_sha256','artifact_input','artifact_policy_sha256'):
+        require(start[key]==proof[key],'sampler start policy differs')
+    training=sorted(((h,g) for h,g in owned.workload._graphs.items()
+        if utc(g.start_utc)>=utc(cfg['train_start']) and utc(g.available_at)<utc(cfg['train_end'])),
+        key=lambda pair:(pair[1].start_utc,pair[1].asset,pair[0]))
+    total=sum(len(g.node_ids) for h,g in training)
+    require(count<=total<=limits['max_centers'],'training center capacity differs')
+    require(16*total<=limits['max_direct_weight_bytes'],'direct weight array allowance exceeded')
+    hashes=[h for h,g in training];rng=np.random.Generator(np.random.PCG64(seed))
+    require(equal(start['rng_initial'],rng.bit_generator.state) and equal(proof['rng_initial'],start['rng_initial'])
+        and proof['training_graphs']==hashes,'sampler initial RNG/training population differs')
+    records=[];draws=[];previous=None;retained=0
+    draw_fields={'schema_version','index','previous_sha256','training_graphs','configuration_sha256','seed','numpy',
+        'bit_generator','rng_before','rng_after','record','selected_indices_sha256','retained_array_bytes','sha256'}
+    for i,ref in enumerate(proof['draws']):
+        draw=reference(ref,directory/f'draw-{i:06d}.json')
+        require(set(draw)==draw_fields and type(draw['schema_version']) is int and draw['schema_version']==1
+            and type(draw['index']) is int and draw['index']==i and draw['previous_sha256']==previous
+            and draw['sha256']==producer.core.cache_key({k:v for k,v in draw.items() if k!='sha256'})
+            and draw['configuration_sha256']==start['configuration_sha256'] and type(draw['seed']) is int and draw['seed']==seed
+            and draw['training_graphs']==hashes and draw['numpy']==np.__version__ and draw['bit_generator']=='PCG64'
+            and equal(draw['rng_before'],rng.bit_generator.state) and valid_hash(draw['selected_indices_sha256']), 'sampler draw chain/configuration differs')
+        # Audit one uniform PCG64 transition per pinned NumPy choice. No centers
+        # are selected and no weight/population arrays are allocated here.
+        rng.random(())
+        require(equal(draw['rng_after'],rng.bit_generator.state) and type(draw['retained_array_bytes']) is int
+            and draw['retained_array_bytes']>retained,'sampler RNG transition/retained count differs')
+        previous=draw['sha256'];retained=draw['retained_array_bytes'];records.append(draw['record']);draws.append(draw)
+    require(proof['last_draw_sha256']==previous and equal(proof['rng_final'],rng.bit_generator.state)
+        and proof['resident_sample_bytes']==retained,'sampler final chain differs')
+    feature_directory=Path(owner['journal_directory']);event=reference(proof['event'],feature_directory/'event-000000.json')
+    require(proof['component']=={'path':str(feature_directory/'checkpoint-000000/manifest.json'),'sha256':event['sha256']}
+        and event['context']['sample_identity']==proof['sample_identity'],'sampler output references differ')
+    def lease():owned.lease();sources();metadata.lease();inventory();owned.lease()
+    lease()
+    result=artifacts.admit_samples(owned,journal,artifact_input=artifact_input,event_index=0,event_sha256=proof['event']['sha256'])
+    require(equal(result.samples.records,records) and equal(result.samples.rng_state,proof['rng_final'])
+        and result.samples.identity==proof['sample_identity'],'sample artifact differs from draw evidence')
+    retained=0
+    for local,record,draw in zip(result.samples.graphs,records,draws,strict=True):
+        parent=owned.workload._graphs[record['graph_hash']]
+        wanted=set(local.node_ids)
+        indices=[i for i,node in enumerate(parent.node_ids) if node in wanted]
+        require(tuple(parent.node_ids[i] for i in indices)==tuple(local.node_ids),'sample parent node order differs')
+        require(producer.neighborhoods.node_order_hash(indices)==draw['selected_indices_sha256'],'sample selected-index digest differs')
+        retained+=producer.neighborhood_policy.sample_array_bytes(local)
+        require(retained==draw['retained_array_bytes'] and retained<=neighborhood['max_sample_array_bytes'],
+            'sample retained-byte prefix or allowance differs')
+    manifest_bytes,encoded,numeric=producer.encoded_size(producer.numeric_record(result.samples),event['binding'])
+    require(proof['resident_sample_bytes']==numeric and proof['encoded_artifact_bytes']==encoded
+        and proof['encoded_event_bytes']==len(producer.lifecycle._encode(event)),'sampler reported output bytes differ')
+    def final_lease():lease();result.lease();lease()
+    final_lease()
+    return Admitted(result,{'path':str(proof_path),'sha256':proof_sha256},final_lease)

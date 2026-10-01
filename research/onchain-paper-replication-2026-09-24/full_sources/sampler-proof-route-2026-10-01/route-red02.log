@@ -1,0 +1,46 @@
+test_rehashed_selected_neighborhood_digest_is_checked (__main__.Tests.test_rehashed_selected_neighborhood_digest_is_checked) ... FAIL
+test_rehashed_intermediate_retained_count_is_checked (__main__.Tests.test_rehashed_intermediate_retained_count_is_checked) ... FAIL
+test_actual_samples_cannot_bypass_registered_sampler_limits (__main__.Tests.test_actual_samples_cannot_bypass_registered_sampler_limits) ... 
+  test_actual_samples_cannot_bypass_registered_sampler_limits (__main__.Tests.test_actual_samples_cannot_bypass_registered_sampler_limits) (limits={'schema_version': 1, 'max_centers': 10000, 'max_direct_weight_bytes': 1, 'neighborhood': {'schema_version': 1, 'mode': 'array', 'max_buffer_bytes': 1048576, 'edge_chunk': 2, 'max_sample_array_bytes': 1048576}}) ... FAIL
+  test_actual_samples_cannot_bypass_registered_sampler_limits (__main__.Tests.test_actual_samples_cannot_bypass_registered_sampler_limits) (limits={'schema_version': 1, 'max_centers': 10000, 'max_direct_weight_bytes': 160000, 'neighborhood': {'schema_version': 1, 'mode': 'array', 'max_buffer_bytes': 1048576, 'edge_chunk': 2, 'max_sample_array_bytes': 1}}) ... FAIL
+
+======================================================================
+FAIL: test_rehashed_selected_neighborhood_digest_is_checked (__main__.Tests.test_rehashed_selected_neighborhood_digest_is_checked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 71, in test_rehashed_selected_neighborhood_digest_is_checked
+    with self.assertRaises(ValueError):self.admit()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_rehashed_intermediate_retained_count_is_checked (__main__.Tests.test_rehashed_intermediate_retained_count_is_checked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 74, in test_rehashed_intermediate_retained_count_is_checked
+    with self.assertRaises(ValueError):self.admit()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_actual_samples_cannot_bypass_registered_sampler_limits (__main__.Tests.test_actual_samples_cannot_bypass_registered_sampler_limits) (limits={'schema_version': 1, 'max_centers': 10000, 'max_direct_weight_bytes': 1, 'neighborhood': {'schema_version': 1, 'mode': 'array', 'max_buffer_bytes': 1048576, 'edge_chunk': 2, 'max_sample_array_bytes': 1048576}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 81, in test_actual_samples_cannot_bypass_registered_sampler_limits
+    with self.assertRaises(ValueError):self.admit()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_actual_samples_cannot_bypass_registered_sampler_limits (__main__.Tests.test_actual_samples_cannot_bypass_registered_sampler_limits) (limits={'schema_version': 1, 'max_centers': 10000, 'max_direct_weight_bytes': 160000, 'neighborhood': {'schema_version': 1, 'mode': 'array', 'max_buffer_bytes': 1048576, 'edge_chunk': 2, 'max_sample_array_bytes': 1}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 81, in test_actual_samples_cannot_bypass_registered_sampler_limits
+    with self.assertRaises(ValueError):self.admit()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 49.657s
+
+FAILED (failures=4)

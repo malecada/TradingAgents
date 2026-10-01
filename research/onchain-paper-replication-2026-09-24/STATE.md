@@ -3,6 +3,46 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Larger bounded proof metadata and current-owner admission accepted**:
+New isolated full_sources/sampler-proof-route-2026-10-01/ preserves the accepted
+predecessor producer unchanged. Its derived producer allows explicitly registered
+per-file metadata caps up to2MiB and remembers each cap for repeated lease reads.
+Synthetic512-reference metadata plus64KiB owner/source placeholder fits256KiB;
+this removes the demonstrated absolute-reference ceiling for that fixture without
+changing sample count or scientific settings. It is not a512-draw resource run.
+metadata red01 CLOSED3cases/6errors(missingMetadata and old-cap refusal).
+metadata check01 CLOSED3passes/10.331s, including actual small production using
+registered256KiB metadata and refusal above the2MiB hard ceiling.
+New current-owner proof route validates exact proof/start/draw references and
+inventory, owner/source/policies, training/configuration, chain and PCG64 state
+transitions before joining the exact sample artifact. No sampler redraw occurs;
+random-state audit draws uniform values only, not centers or weight arrays.
+route-red01 CLOSED6missing-admission failures/0.002s.
+route-check01 CLOSED5passes/1test-instrumentation failure70.221s: a global
+np.empty mock intercepted tiny PCG64 state allocation before the intended RNG
+refusal. The corrected test forbids sample-artifact materialization instead.
+INITIAL_REVIEW withheld for unchecked selected-index/prefix evidence and limits.
+route-red02 CLOSED3methods/4intended failures49.657s, session24305 exit1.
+The route now checks the exact sampler limit schema and admitted population
+arithmetic, recomputes selected parent-index hashes and actual retained-byte
+prefixes from admitted samples. route-check02 CLOSED9passes/119.747s,
+session73641 exit0. Review found a final boundary: proof could drift during
+the last artifact lease. route-red03 CLOSED1intended failure12.441s,
+session82678 exit1. Initial admission now uses the same proof→artifact→proof
+lease as later receipt checks. route-check03 CLOSED10passes/131.157s,
+session63408 exit0. Independent REVIEW SHA
+1516020eaac42d21cbe89abb6204b00021752399b7db8783fbc353f3a0e6ea2b.
+All162bindings match manifest SHA
+8c003389dc824f2ee65114aaf081ad4aa998dae41510722322984baed8729c30.
+No active test/empirical process. Acceptance is bounded resident proof admission.
+Existing dictionary execution does
+not yet require this proof; weighted-choice recomputation, historical sampler
+continuation, mapped/resource admission and full publication scope remain due.
+Next safe action: enforce the accepted proof in the actual dictionary driver,
+lease it across every pair and carry exact proof/sample references into the
+result. dictionary-proof-driver-2026-10-01 has prepared source/tests and a closed
+red01 (5missing-driver failures/0.003s); implemented verification is not yet run.
+
 **Registered first-attempt sampler publication independently accepted**:
 New isolated full_sources/sampler-producer-2026-10-01/ composes actual admitted
 owner/empty FeatureJournal, explicit sampler/read policies, exclusive attempt

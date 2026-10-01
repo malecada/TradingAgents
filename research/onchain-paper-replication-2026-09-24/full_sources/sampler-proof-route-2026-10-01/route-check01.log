@@ -1,0 +1,35 @@
+test_conflicting_terminal_marker_refuses_before_array_loading (__main__.Tests.test_conflicting_terminal_marker_refuses_before_array_loading) ... ok
+test_current_completion_proof_is_admitted_without_redrawing (__main__.Tests.test_current_completion_proof_is_admitted_without_redrawing) ... ok
+test_foreign_owner_refuses_even_with_new_expected_proof_hash (__main__.Tests.test_foreign_owner_refuses_even_with_new_expected_proof_hash) ... ok
+test_later_proof_drift_invalidates_receipt (__main__.Tests.test_later_proof_drift_invalidates_receipt) ... ok
+test_proof_drift_after_artifact_loading_refuses_return (__main__.Tests.test_proof_drift_after_artifact_loading_refuses_return) ... ok
+test_rehashed_incorrect_rng_draw_refuses_before_array_loading (__main__.Tests.test_rehashed_incorrect_rng_draw_refuses_before_array_loading) ... FAIL
+
+======================================================================
+FAIL: test_rehashed_incorrect_rng_draw_refuses_before_array_loading (__main__.Tests.test_rehashed_incorrect_rng_draw_refuses_before_array_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 46, in test_rehashed_incorrect_rng_draw_refuses_before_array_loading
+    with self.forbidden_arrays(),self.assertRaises(ValueError):self.admit()
+                                                               ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 23, in admit
+    def admit(self):return self.m.admit(self.f.f.owned,self.f.f.journal,sampler_input='sampler_execution',artifact_input='artifact_read',proof_sha256=file_hash(self.proof))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/route.py", line 84, in admit
+    require(equal(start['rng_initial'],rng.bit_generator.state) and equal(proof['rng_initial'],start['rng_initial'])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "numpy/random/_pcg64.pyx", line 208, in numpy.random._pcg64.PCG64.state.__get__
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+AssertionError: arrays before proof admission
+
+----------------------------------------------------------------------
+Ran 6 tests in 70.221s
+
+FAILED (failures=1)

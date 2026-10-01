@@ -1,0 +1,15 @@
+test_proof_drift_during_final_artifact_lease_refuses_return (__main__.Tests.test_proof_drift_during_final_artifact_lease_refuses_return) ... FAIL
+
+======================================================================
+FAIL: test_proof_drift_during_final_artifact_lease_refuses_return (__main__.Tests.test_proof_drift_during_final_artifact_lease_refuses_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/test_route.py", line 98, in test_proof_drift_during_final_artifact_lease_refuses_return
+    with patch.object(self.m.producer.artifacts,'admit_samples',side_effect=wrapped),self.assertRaises(ValueError):self.admit()
+                                                                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 12.441s
+
+FAILED (failures=1)
