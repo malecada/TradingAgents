@@ -1,0 +1,65 @@
+test_budget_and_bad_input_refuse_before_tensor_allocation (__main__.Tests.test_budget_and_bad_input_refuse_before_tensor_allocation) ... FAIL
+test_drift_during_lease_and_copy_is_rejected (__main__.Tests.test_drift_during_lease_and_copy_is_rejected) ... FAIL
+test_exact_independent_cpu_tensors_and_model_compatibility (__main__.Tests.test_exact_independent_cpu_tensors_and_model_compatibility) ... FAIL
+test_layouts_and_zero_edges_preserve_maintained_hash (__main__.Tests.test_layouts_and_zero_edges_preserve_maintained_hash) ... FAIL
+test_lease_failure_propagates_without_allocation (__main__.Tests.test_lease_failure_propagates_without_allocation) ... FAIL
+
+======================================================================
+FAIL: test_budget_and_bad_input_refuse_before_tensor_allocation (__main__.Tests.test_budget_and_bad_input_refuse_before_tensor_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 51, in test_budget_and_bad_input_refuse_before_tensor_allocation
+    m=api();a,e=self.fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 16, in api
+    assert path.exists(),'bounded tensor boundary missing'
+           ~~~~~~~~~~~^^
+AssertionError: bounded tensor boundary missing
+
+======================================================================
+FAIL: test_drift_during_lease_and_copy_is_rejected (__main__.Tests.test_drift_during_lease_and_copy_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 70, in test_drift_during_lease_and_copy_is_rejected
+    m=api();a,e=self.fixture();calls=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 16, in api
+    assert path.exists(),'bounded tensor boundary missing'
+           ~~~~~~~~~~~^^
+AssertionError: bounded tensor boundary missing
+
+======================================================================
+FAIL: test_exact_independent_cpu_tensors_and_model_compatibility (__main__.Tests.test_exact_independent_cpu_tensors_and_model_compatibility)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 32, in test_exact_independent_cpu_tensors_and_model_compatibility
+    m=api();a,e=self.fixture();out=self.convert(m,a,e)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 16, in api
+    assert path.exists(),'bounded tensor boundary missing'
+           ~~~~~~~~~~~^^
+AssertionError: bounded tensor boundary missing
+
+======================================================================
+FAIL: test_layouts_and_zero_edges_preserve_maintained_hash (__main__.Tests.test_layouts_and_zero_edges_preserve_maintained_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 45, in test_layouts_and_zero_edges_preserve_maintained_hash
+    m=api();a,e=self.fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 16, in api
+    assert path.exists(),'bounded tensor boundary missing'
+           ~~~~~~~~~~~^^
+AssertionError: bounded tensor boundary missing
+
+======================================================================
+FAIL: test_lease_failure_propagates_without_allocation (__main__.Tests.test_lease_failure_propagates_without_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 83, in test_lease_failure_propagates_without_allocation
+    m=api();a,e=self.fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 16, in api
+    assert path.exists(),'bounded tensor boundary missing'
+           ~~~~~~~~~~~^^
+AssertionError: bounded tensor boundary missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (failures=5)

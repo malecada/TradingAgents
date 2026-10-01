@@ -3,6 +3,33 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Native graph-feature tensor boundary independently accepted**:
+New isolated full_sources/graph-feature-boundary-2026-10-01/ converts already
+admitted float32 MCM and int64 edge arrays into independent CPU tensors, with
+mandatory caller lease, expected hash and source/output/chunk numeric allowance.
+No actual research admission or durable publication follows from this primitive.
+red01 CLOSED5missing failures0.002s,session20153 exit1. check01 CLOSED5methods
+with2errors0.098s,session10211 exit1: maintained feature_hash cannot cast empty
+multidimensional memoryview. Original source/test/log preserved; historical
+hashing source unchanged. check02 CLOSED5passes0.025s,session96806 exit0.
+Tests cover tensor/hash/model-forward equality, layouts/empty edges, preallocation
+schema/value/cap refusals, copy/lease drift and owner failure. Empty-edge identity
+uses explicit same metadata plus empty payload; downstream hashing correction is
+still required. All89bindings recorded in bindings.json SHA
+ e121fb7ec19f6b8ed40df9d30fa47792faf88d8d26d9b92dd1d7fde4a9e2929a.
+Independent review accepts the bounded conversion primitive; REVIEW SHA
+ d1622d026ca2c6f7c4b66215cea025e6c45644d06e5c2db522a361867a916e73.
+No process active. Exact next action: actual owner/graph/MCM/policy linkage and
+preserved feature identity, followed by durable graph_complete publication and
+strict storage admission. The converter accepts caller-supplied leases and is not
+an issued provenance receipt; the successor must invoke actual saved-MCM admission
+or require an issued prerequisite, verify graph identity/node order and select a
+registered policy before allocation. Native-array storage plus explicit tensor
+conversion can preserve the numerical interface, but that publication/reuse path
+must be reviewed. Empty-edge hashing must receive a derived correction without
+rewriting frozen historical source identities. No empirical run/fit or budget change.
+Saved-MCM predecessor below is committed/pushed at a96c72c9, remote verified.
+
 **Current-owner saved MCM admission independently accepted**:
 New isolated full_sources/mcm-artifact-route-2026-10-01/ separates one-time actual
 dictionary preparation from subsequent saved MCM reuse. Locally issued opaque

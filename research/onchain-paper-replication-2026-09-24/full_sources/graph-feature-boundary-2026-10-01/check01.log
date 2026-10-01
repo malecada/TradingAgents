@@ -1,0 +1,53 @@
+test_budget_and_bad_input_refuse_before_tensor_allocation (__main__.Tests.test_budget_and_bad_input_refuse_before_tensor_allocation) ... 
+  test_budget_and_bad_input_refuse_before_tensor_allocation (__main__.Tests.test_budget_and_bad_input_refuse_before_tensor_allocation) (options={}, dtypes=(dtype('float32'), dtype('int64'))) ... ERROR
+test_drift_during_lease_and_copy_is_rejected (__main__.Tests.test_drift_during_lease_and_copy_is_rejected) ... ok
+test_exact_independent_cpu_tensors_and_model_compatibility (__main__.Tests.test_exact_independent_cpu_tensors_and_model_compatibility) ... ok
+test_layouts_and_zero_edges_preserve_maintained_hash (__main__.Tests.test_layouts_and_zero_edges_preserve_maintained_hash) ... 
+  test_layouts_and_zero_edges_preserve_maintained_hash (__main__.Tests.test_layouts_and_zero_edges_preserve_maintained_hash) (strides=((8, 4), (16, 8))) ... ERROR
+test_lease_failure_propagates_without_allocation (__main__.Tests.test_lease_failure_propagates_without_allocation) ... ok
+
+======================================================================
+ERROR: test_budget_and_bad_input_refuse_before_tensor_allocation (__main__.Tests.test_budget_and_bad_input_refuse_before_tensor_allocation) (options={}, dtypes=(dtype('float32'), dtype('int64')))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 59, in test_budget_and_bad_input_refuse_before_tensor_allocation
+    with self.assertRaises(ValueError):self.convert(m,x,y,**options)
+                                       ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 26, in convert
+    options=dict(expected_hash=feature_hash({'mcm':mcm,'edge_index':edges}),
+                               ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/evaluation.py", line 153, in feature_hash
+    feed(value);return h.hexdigest()
+    ~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/evaluation.py", line 151, in feed
+    for key in sorted(item):h.update(canonical_bytes(key));feed(item[key])
+                                                           ~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/evaluation.py", line 149, in feed
+    h.update(canonical_bytes({'shape':array.shape,'dtype':str(array.dtype)}));h.update(memoryview(array).cast('B'))
+                                                                                       ~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+======================================================================
+ERROR: test_layouts_and_zero_edges_preserve_maintained_hash (__main__.Tests.test_layouts_and_zero_edges_preserve_maintained_hash) (strides=((8, 4), (16, 8)))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 48, in test_layouts_and_zero_edges_preserve_maintained_hash
+    out=self.convert(m,x,y);self.assertEqual(feature_hash(out),feature_hash({'mcm':x,'edge_index':y}))
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/test_boundary.py", line 26, in convert
+    options=dict(expected_hash=feature_hash({'mcm':mcm,'edge_index':edges}),
+                               ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/evaluation.py", line 153, in feature_hash
+    feed(value);return h.hexdigest()
+    ~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/evaluation.py", line 151, in feed
+    for key in sorted(item):h.update(canonical_bytes(key));feed(item[key])
+                                                           ~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/evaluation.py", line 149, in feed
+    h.update(canonical_bytes({'shape':array.shape,'dtype':str(array.dtype)}));h.update(memoryview(array).cast('B'))
+                                                                                       ~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: memoryview: cannot cast view with zeros in shape or strides
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.098s
+
+FAILED (errors=2)
