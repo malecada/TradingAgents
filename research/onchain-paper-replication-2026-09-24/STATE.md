@@ -3,6 +3,25 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Active actual guarded reuse trial — do not duplicate**:
+The distinct retained root research_artifacts/native-reuse-synthetic/attempt01,
+experimentexample-a/source7d2b6fde5035c5178d2f39e98fe4f4aa118b697e is now RUNNING.
+Session31248, supervisor2768440, monitor2769004, guardchild2769265,
+worker2769268. Actual launch01 follows accepted FINAL_REVIEW and
+GUARDED_ADMISSION_REVIEW and fresh guarded-preflight03 (249source/test bindings,
+all current inputs/runtime matched, resource reserves available, no active job).
+The earlier prelaunch-refusal01/session81568exit1 was a broad process-string
+check matching its own shell text; no launch reservation, claim or worker existed.
+It is retained and was corrected to check Python command lines only. No terminal
+identity was retried. Limits3GiBmax/2GiBhigh/zeroswap/twoCPUs/10GiBfloor/900swall.
+Frozen code/tests/source roots must remain untouched until terminal. Reviewed
+consumer source and failed/passing checks pushed through1c5645dacdc46b267f673b69e6037be6470fd62c;
+remote hash verified. The old producer remains closed and immutable.
+Next safe action: observe/reconcile this job, verify both checkpoint/prediction
+outputs and actual kernel/owner/cleanup evidence, independently review closure,
+archive the complete new checkout including its pinned input bodies, and continue
+full-size resource-gate preparation. No financial study fits or coverage credit.
+
 **Current consumer integration — synthetic checks passed; guarded trial prepared**:
 Maintained native_reuse.py and the explicit job_payload reuse dispatch are now
 implemented. The new current ResearchRun registers exact historical references,

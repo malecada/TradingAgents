@@ -20,6 +20,10 @@ match their declared identities. Registration and charter are committed. The
 nine input bodies are retained working files whose exact hashes are committed
 in the registration, not committed input blobs. Preserve them and all subsequent
 run artifacts in the resulting archive; no remote backup is inferred here.
+All 249 source/test entries in `guarded-source-freeze01.json` were additionally
+checked independently against both byte sizes and SHA-256 hashes, with no mismatch.
+The freeze manifest SHA-256 is
+`99725261c43a8e45f266279cf72e7bd4aa6c803f95fbb0328c0162c5e7dbd50c`.
 
 The transition changes exactly one of the 119 historical libraries:
 `job_payload.py`, before
