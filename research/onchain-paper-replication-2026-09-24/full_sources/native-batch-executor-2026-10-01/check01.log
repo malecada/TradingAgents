@@ -1,0 +1,17 @@
+test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch (__main__.Tests.test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch) ... ERROR
+
+======================================================================
+ERROR: test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch (__main__.Tests.test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-batch-executor-2026-10-01/test_executor.py", line 68, in test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch
+    self.assertTrue(compare_summary(record['metrics'],actual)['passed'])
+                    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/verification.py", line 124, in compare_summary
+    raise ValueError('C13 metric mismatch: '+str(key))
+ValueError: C13 metric mismatch: log_loss
+
+----------------------------------------------------------------------
+Ran 1 test in 244.458s
+
+FAILED (errors=1)

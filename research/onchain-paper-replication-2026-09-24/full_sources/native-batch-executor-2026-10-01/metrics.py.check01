@@ -12,8 +12,6 @@ def _pair(a,b):
 def classification_metrics(labels,probabilities):
     y,p=_pair(labels,probabilities)
     if not np.isin(y,[0,1]).all() or ((p<0)|(p>1)).any():raise ValueError('invalid label/probability')
-    # Match saved scalar probabilities and make the frozen 1e-15 clip representable.
-    y=y.astype(np.float64);p=p.astype(np.float64)
     pred=(p>.5).astype(int)
     precision,recall,f1,_=precision_recall_fscore_support(y,pred,labels=[0,1],zero_division=0)
     out={'accuracy':float(np.mean(y==pred)),'precision_up':float(precision[1]),'recall_up':float(recall[1]),'f1_up':float(f1[1]),'balanced_accuracy':float(recall.mean()),'brier':float(np.mean((p-y)**2))}

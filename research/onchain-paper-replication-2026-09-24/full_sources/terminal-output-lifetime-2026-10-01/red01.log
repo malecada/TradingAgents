@@ -1,0 +1,379 @@
+test_baseline_cannot_be_omitted_or_rebound (__main__.Tests.test_baseline_cannot_be_omitted_or_rebound) ... FAIL
+test_observer_waits_for_actual_writer_registry_publication (__main__.Tests.test_observer_waits_for_actual_writer_registry_publication) ... FAIL
+test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) ... 
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='bytes') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='delete') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='registry') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='registry_delete') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='same_bytes_replace') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='bytes') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='delete') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='registry') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='registry_delete') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='same_bytes_replace') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='bytes') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='delete') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='registry') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='registry_delete') ... FAIL
+  test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='same_bytes_replace') ... FAIL
+test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) ... 
+  test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='disk_only') ... FAIL
+  test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='registry_only') ... FAIL
+  test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='foreign') ... FAIL
+  test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='broken_link') ... FAIL
+  test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='pending') ... FAIL
+  test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='oversized') ... FAIL
+test_real_registered_additions_are_accepted_and_pinned (__main__.Tests.test_real_registered_additions_are_accepted_and_pinned) ... FAIL
+test_unadmitted_object_and_invalid_cap_refuse (__main__.Tests.test_unadmitted_object_and_invalid_cap_refuse) ... FAIL
+
+======================================================================
+FAIL: test_baseline_cannot_be_omitted_or_rebound (__main__.Tests.test_baseline_cannot_be_omitted_or_rebound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 66, in test_baseline_cannot_be_omitted_or_rebound
+    m,run,_=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_observer_waits_for_actual_writer_registry_publication (__main__.Tests.test_observer_waits_for_actual_writer_registry_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 70, in test_observer_waits_for_actual_writer_registry_publication
+    _,run,t=self.fixture();entered=threading.Event();release=threading.Event();attempted=threading.Event();done=threading.Event();errors=[]
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='delete')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='registry')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='registry_delete')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='binding.json', mode='same_bytes_replace')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='delete')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='registry')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='registry_delete')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='journal.json', mode='same_bytes_replace')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='delete')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='registry')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='registry_delete')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry (__main__.Tests.test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry) (name='controls.json', mode='same_bytes_replace')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 38, in test_original_and_new_outputs_cannot_mutate_disappear_or_change_registry
+    _,run,t=self.fixture()
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='disk_only')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 51, in test_partial_unknown_link_and_oversized_outputs_refuse
+    _,run,t=self.fixture();out=run.directory/'outputs'
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='registry_only')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 51, in test_partial_unknown_link_and_oversized_outputs_refuse
+    _,run,t=self.fixture();out=run.directory/'outputs'
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='foreign')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 51, in test_partial_unknown_link_and_oversized_outputs_refuse
+    _,run,t=self.fixture();out=run.directory/'outputs'
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='broken_link')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 51, in test_partial_unknown_link_and_oversized_outputs_refuse
+    _,run,t=self.fixture();out=run.directory/'outputs'
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='pending')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 51, in test_partial_unknown_link_and_oversized_outputs_refuse
+    _,run,t=self.fixture();out=run.directory/'outputs'
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_partial_unknown_link_and_oversized_outputs_refuse (__main__.Tests.test_partial_unknown_link_and_oversized_outputs_refuse) (mode='oversized')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 51, in test_partial_unknown_link_and_oversized_outputs_refuse
+    _,run,t=self.fixture();out=run.directory/'outputs'
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_real_registered_additions_are_accepted_and_pinned (__main__.Tests.test_real_registered_additions_are_accepted_and_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 29, in test_real_registered_additions_are_accepted_and_pinned
+    _,run,t=self.fixture();before=dict(run._published_outputs)
+            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 21, in fixture
+    m=api();tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+======================================================================
+FAIL: test_unadmitted_object_and_invalid_cap_refuse (__main__.Tests.test_unadmitted_object_and_invalid_cap_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 60, in test_unadmitted_object_and_invalid_cap_refuse
+    m=api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/test_outputs.py", line 15, in api
+    assert (HERE/'outputs.py').exists(),'post-terminal output tracker missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: post-terminal output tracker missing
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.007s
+
+FAILED (failures=25)

@@ -1,0 +1,39 @@
+test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch (__main__.Tests.test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch) ... ERROR
+
+======================================================================
+ERROR: test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch (__main__.Tests.test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-batch-executor-2026-10-01/test_executor.py", line 96, in test_native_terminal_features_fit_checkpoint_predict_and_refuse_duplicate_batch
+    output=predict_cell(model,factory,len(owner.examples.test),plan['training']['batch_size'])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/training.py", line 103, in predict_cell
+    inputs,_=batch_factory(list(range(start,min(start+batch_size,n_examples))))
+             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/evaluation.py", line 31, in batch
+    selected=(features.load_batch(h for i in indices for h in examples[i].graph_hashes)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/native_map.py", line 108, in load_batch
+    self._lease();retained=0
+    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/terminal-native-map-2026-10-01/native_map.py", line 169, in lease
+    def lease():terminal.lease();metadata.lease();sources()
+                ~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/seal.py", line 31, in lease
+    def lease(self):self._lease()
+                    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/seal.py", line 226, in lease
+    reader.inventory(run.directory/'outputs',output_children|{run.directory/'outputs'/n for n in output_done})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/reader.py", line 75, in inventory
+    require(entry.name in expected and entry.name not in seen,
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            'component has unexpected inventory entry')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/reader.py", line 27, in require
+    raise ValueError(message)
+ValueError: component has unexpected inventory entry
+
+----------------------------------------------------------------------
+Ran 1 test in 244.865s
+
+FAILED (errors=1)

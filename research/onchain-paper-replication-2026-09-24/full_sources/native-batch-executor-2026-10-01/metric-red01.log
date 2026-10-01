@@ -1,0 +1,40 @@
+test_float32_endpoints_use_finite_frozen_clipping (__main__.Tests.test_float32_endpoints_use_finite_frozen_clipping) ... ERROR
+test_float32_labels_and_probabilities_preserve_brier_precision (__main__.Tests.test_float32_labels_and_probabilities_preserve_brier_precision) ... FAIL
+test_float32_probabilities_match_saved_scalar_metric_arithmetic (__main__.Tests.test_float32_probabilities_match_saved_scalar_metric_arithmetic) ... ERROR
+
+======================================================================
+ERROR: test_float32_endpoints_use_finite_frozen_clipping (__main__.Tests.test_float32_endpoints_use_finite_frozen_clipping)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-batch-executor-2026-10-01/test_metric_precision.py", line 16, in test_float32_endpoints_use_finite_frozen_clipping
+    with np.errstate(all='raise'):a=classification_metrics(y,p)
+                                    ~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/metrics.py", line 22, in classification_metrics
+    q=np.clip(p,1e-15,1-1e-15);out['log_loss']=float(-np.mean(y*np.log(q)+(1-y)*np.log1p(-q)))
+                                                                                ~~~~~~~~^^^^
+FloatingPointError: divide by zero encountered in log1p
+
+======================================================================
+ERROR: test_float32_probabilities_match_saved_scalar_metric_arithmetic (__main__.Tests.test_float32_probabilities_match_saved_scalar_metric_arithmetic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-batch-executor-2026-10-01/test_metric_precision.py", line 12, in test_float32_probabilities_match_saved_scalar_metric_arithmetic
+    self.assertTrue(compare_summary(a,expected)['passed'])
+                    ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/verification.py", line 124, in compare_summary
+    raise ValueError('C13 metric mismatch: '+str(key))
+ValueError: C13 metric mismatch: log_loss
+
+======================================================================
+FAIL: test_float32_labels_and_probabilities_preserve_brier_precision (__main__.Tests.test_float32_labels_and_probabilities_preserve_brier_precision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-batch-executor-2026-10-01/test_metric_precision.py", line 24, in test_float32_labels_and_probabilities_preserve_brier_precision
+    self.assertAlmostEqual(actual['brier'],expected,places=14)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0.11666666716337204 != 0.11666666915019358 within 14 places (1.9868215406226852e-09 difference)
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.019s
+
+FAILED (failures=1, errors=2)

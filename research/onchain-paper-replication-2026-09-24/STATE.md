@@ -3,6 +3,124 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Terminal output lifetime and native executor integration independently accepted**:
+New full_sources/terminal-output-lifetime-2026-10-01/ adds bounded append-only
+output observation plus derived sealer/native-map imports; prior accepted source
+bytes and both failed executor identities remain unchanged. During the original
+seal transition inventory/registry remain exact. Only the returned terminal lease
+permits additional registered same-run publications, under the writer lifecycle
+lock. Original/new observed hashes and file signatures remain pinned; deletion,
+replacement, foreign/partial files or oversized metadata refuse. Per-file cap is
+the existing selected max_metadata_bytes; this is no whole-workflow resource claim.
+Focused red01:6methods/25subtest failures0.007s (missing module), exit1.
+Focused check01:6passes3.343s, session93280exit0. Actual temporary ResearchRun
+checks include valid additions, mutations/deletions/registry changes/same-byte
+replacement, foreign/partial/oversized inputs and controlled concurrent publication.
+Independent source review accepted, INITIAL_REVIEW SHA
+11454b8dc7d812746efbe0c2108c12a3205b19bddf753b59941cbddddc282e4b.
+Actual executor integration-check01 CLOSED1pass258.536s session84650exit0;
+exact PythonPID1682009 absent. integration-check01.log. All573frozen files verified
+unchanged; integration-check01-sources.json
+integration-check01-sources.json SHA
+fc793b783861f68b54b3cbd7cbee47bd479c83d70455d775d80ae3507e1236a3.
+One strengthened temporary registered test executes proposed direction/regression,
+expected prediction joins, checkpoint-byte/state checks and exact restored-model
+prediction parity, independent metrics, release and duplicate refusal. Tiny
+synthetic settings/mockguard unchanged; no financial data, claims or fits.
+No active test or source freeze remains; do not rerun closed identities. Both
+synthetic fits and expected prediction/metric/restore checks passed. RESULT.md
+records exact scope; no optimizer/RNG continuation or retained temporary-blob claim.
+Final577bindings SHA94c10a705fda5c071287ba845bd9afc16a93ce8eb348e644630c139bde311609.
+Independent final review accepts output lifetime, actual synthetic executor/replay
+and narrow float64 metric correction. All577bindings,573freeze and412inherited
+entries verified;164historical supplemental entries match original commit945cadb0.
+REVIEW SHAf357fb886cf0787ef7b4ac9481c100b3562dbdc1a156c6f53766db3691b1ac9e.
+Frozen SCOPE wording means no financial-data fits; synthetic optimization occurred.
+Next: commit/push reviewed output correction,
+metric fix and retained failed checks. Production guarded dispatch remains next.
+All1420financial fits pending; last accepted remoteHEAD945cadb0.
+
+**Latest native executor check closed with output-lifetime integration failure**:
+check02 CLOSEDFAILED1error244.865s, session80085exit1, exact PythonPID1583714
+absent. All563frozen files verified unchanged after closure. No test or financial
+fit process remains active from this checkpoint. The log retains the exact stack.
+Both synthetic direction/regression cells returned complete. The strengthened
+verification reached restored-model prediction, where native-map terminal.lease
+rejected new run outputs with "component has unexpected inventory entry".
+Source diagnosis: representation-seal/seal.py fixes the output inventory and
+_published_outputs registry to the pre-seal outputs plus its own binding/journal
+outputs (lines226–228). execute_batch legitimately publishes controls/ledger after
+fitting, so later feature reads/replay reject those additional registered files.
+This is a terminal-feature lifetime integration defect; the full replay/metric
+assertions did not complete. The52 targeted metric tests remain passed; full
+native executor acceptance remains withheld. No tolerance changes or empirical
+results follow. Historical failed checks remain preserved; never rerun check02.
+Next: independently review a successor terminal-output contract that admits only
+legitimate same-run registered additions with verified published hashes while
+pinning all original outputs and refusing foreign/replaced/partial files. Preserve
+the accepted old sealer/native-map bytes; verify the successor with a new identity.
+Then finish executor verification, commit/push, connect actual guarded producer
+dispatch, and continue full-workflow resource admission. All1420financial fits
+remain pending. Automatic continuation remains active.
+
+**Prior check02 launch checkpoint — superseded by failed closure above**:
+First actual registered native→execute_batch check01 CLOSEDFAILED1error244.458s,
+session31503exit1 PID1497328gone. Both tiny direction/regression cells completed;
+independent log_loss comparison then failed before later assertions. All416initial
+and164supplement hashes verified unchanged before correction. Original source/test
+preserved as metrics.py.check01/test_executor.py.check01; FAILURE_CHECK01.md records
+failure, source-supplement qualification and diagnosis. No financial fits ran.
+Minimal arithmetic reproduced float32 log rounding (~1e-8 versus saved scalar
+arithmetic), endpoint1 clipping rounding to1/NaN, and float32 Brier precision loss.
+Only production change: classification_metrics converts validated y,p to float64.
+No formula, probability threshold, clip bounds or verifier tolerance was changed.
+Three new regressions: red1failure2errors0.019s; metric-check01 passed3/0.014s.
+Relevant maintained metrics/verification suite passed49/2.49s(session70696exit0).
+Independent source review accepts narrow correction and strengthened test source;
+final integration acceptance is pending.
+New check02 ACTIVE session80085, exact PythonPID1583714, check02.log in
+full_sources/native-batch-executor-2026-10-01. New complete563file prelaunch freeze
+check02-sources.json SHAf6db6b7f0c5074d573733f40c8c7214042a306f25bdb8847e0bd1fbd90aaf3c6.
+Adds exact prediction count/order/labels/clocks/cell identity versus test examples,
+actual fit-completion→checkpoint SHA/member checks, optimizer state/cursor checks,
+and exact prediction replay from restored model state. No producer reentry;
+no old test identity relaunched. Tiny synthetic settings and mocked guard remain.
+Do not edit frozen files or duplicate/relaunch. Next: inspect exact process/exit/log,
+verify563hashes, independent final review, explicit-stage compact evidence and
+maintained metric fix/test, commit/push/remoteverify. Then connect the production
+job_payload producer dispatch as DISPATCH_GAP.md specifies. All1420financial fits
+remain pending; full resource/data scope is unchanged. Last accepted remoteHEAD
+945cadb05f0eabeaecb45d988d4e7c4e07f8a406 (native map).
+
+**Earlier native executor check01 checkpoint — superseded by failed closure above**:
+Native adapter independently accepted and pushed at
+945cadb05f0eabeaecb45d988d4e7c4e07f8a406; remote hash verified.
+New full_sources/native-batch-executor-2026-10-01/check01 ACTIVE session31503,
+exact PythonPID1497328; check01.log. One actual temporary registered fixture
+covers proposed direction and regression, optimizer/checkpoint/prediction,
+independent metrics, feature release and duplicate-batch refusal. Completed
+representation production and generic NumPy loads are forbidden after preparation.
+Explicit fixture-only dimensions: tiny graphs/motif width, two-day lookback,
+one epoch and batch size one; full architecture, no financial data or fits.
+Outer kernel guard remains mocked. Maintained production sources are unchanged.
+Frozen416files check01-sources.json
+SHA5df1d08578c90f7229b531ebb96b7714a5554df909fced674cb2e6aced78ba4e.
+The inherited initial freeze omitted newly used maintained executor/test imports.
+check01-executor-supplement.json adds164 files, each verified byte-identical to
+committed HEAD945cadb0 while check01 was active; SHA
+ dfc75e00f007d637f8bb33c19ae8dc827082d216f2b28b99dcad1457c7bb7238.
+This is explicitly a during-run supplement, not a complete pre-launch closure.
+Independent initial review notes metrics use saved y_true rather than independently
+joining every prediction to expected examples, and checkpoint hashes are printed
+without independent artifact-content/restore parity verification. Preserve those
+limits in the result. DISPATCH_GAP.md records the actual remaining guarded-worker
+producer selection/source-closure/graph-lifetime boundary; no production change.
+Do not edit frozen dependencies or duplicate/relaunch check01. Next: observe exact
+process/log/exit, verify freeze, independent evidence review, preserve any failure
+before revision, commit/push. Production job_payload dispatch, cold saved/mapped
+parent admission and whole-workflow resource coverage remain separate requirements.
+All1420financial fits pending; all13tasks/C01–C18 remain required.
+
 **Terminal native-feature batch adapter independently accepted**:
 New isolated full_sources/terminal-native-map-2026-10-01/ prepare calls the actual
 registered seal transition once and builds strict native feature references from
