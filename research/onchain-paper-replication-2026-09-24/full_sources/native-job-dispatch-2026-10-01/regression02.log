@@ -1,0 +1,120 @@
+.........................F........................................ [ 75%]
+.....................                                                    [100%]
+=================================== FAILURES ===================================
+____ SuccessorTests.test_claim_publication_failure_retains_partial_journal _____
+
+path = PosixPath('/tmp/tmp5bxmqvhc/research_artifacts/onchain_representations/16fe3f7230a75fc2b74d94be64deac0e0f855a93bc9d9537d03d147f2b09a95b/example-b/claim.json')
+value = {'owner': {'experiment': 'example-b', 'source_commit': '0868c19eece23e1ef7b5553dd4a27879cd1aa9a8', 'producer': 'p', 'w...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa']}, 'plan_input': 'plan', 'binding_output': 'binding.json', ...}
+
+    def fail_claim(path,value):
+>       if path.name=='claim.json':raise OSError('synthetic publication failure')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: synthetic publication failure
+
+tests/research/onchain_replication/test_matching_successor.py:172: OSError
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.research.onchain_replication.test_matching_successor.SuccessorTests testMethod=test_claim_publication_failure_retains_partial_journal>
+
+    def test_claim_publication_failure_retains_partial_journal(self):
+        real=owner._immutable
+        def fail_claim(path,value):
+            if path.name=='claim.json':raise OSError('synthetic publication failure')
+            return real(path,value)
+>       with patch.object(owner,'_immutable',side_effect=fail_claim),self.assertRaises(OSError):self.open()
+                                                                                                ^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_successor.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_matching_successor.py:97: in open
+    return owner.open_successor(self.run,representation='r',plan_input='plan',producer='p',policy_input='pair_policy',
+tradingagents/research/onchain_replication/matching_owner.py:243: in open_successor
+    return bind(run,representation=representation,plan_input=plan_input,producer=producer,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def bind(run,*,representation,plan_input,producer,policy_input,journal_directory=None,
+             continuation_input=None,death_input=None,_create=False,_first=False):
+        require(isinstance(run,ResearchRun),'actual admitted ResearchRun required')
+        run._active();run._check_source()
+        ad=run.admission
+        execution=json.loads(run.read_input('execution_job'));job.job_schema(execution)
+        require(type(execution['schema_version']) is int,'execution schema version must be integer')
+        require(execution['kind']=='fit','matching producer requires admitted fit job')
+        policy_resources=job.resource_policy(execution['resources'],ad.root)
+        jobs=execution['payload'].get('representation_jobs',{})
+        require(representation in jobs,'representation absent from execution job')
+        selected=jobs[representation]
+        require(selected.get('operation')=='produce' and selected.get('plan_input')==plan_input
+                and selected.get('producer')==producer and selected.get('pair_checkpoint_input')==policy_input,'selected producer/policy differs')
+        plan=json.loads(run.read_input(plan_input))
+        require(isinstance(plan,dict) and type(plan.get('schema_version')) is int and plan['schema_version']==2 and producer in plan.get('producers',{}),'explicit version2 producer plan required')
+        item=plan['producers'][producer]
+        require(item.get('pair_checkpoint_input')==policy_input and equal(item.get('descriptor'),selected.get('descriptor')),'producer policy/descriptor differs')
+        require(item.get('binding_output')!=item.get('journal_output') and {item.get('binding_output'),item.get('journal_output')}<=set(ad.experiment['outputs']),'producer outputs are not admitted')
+        require((continuation_input is None)==(death_input is None),'continuation and death inputs must be paired')
+        for key,value in [('continuation_input',continuation_input),('death_input',death_input)]:
+            require(selected.get(key)==value and item.get(key)==value,'selected successor route differs')
+        ancestry_arguments=None if continuation_input is None else dict(representation=representation,plan_input=plan_input,
+            producer=producer,policy_input=policy_input,continuation_input=continuation_input,death_input=death_input)
+        policy=json.loads(run.read_input(policy_input))
+        require(isinstance(policy,dict) and set(policy)=={'schema_version','backend','limits','numerical_source'} and type(policy['schema_version']) is int and policy['schema_version']==1,'pair execution policy schema differs')
+        require(equal(policy['backend'],matching_pair.BACKEND),'pair numerical backend differs')
+        limits=policy['limits']
+        require(isinstance(limits,dict) and set(limits)==matching_pair.POLICY_FIELDS and all(type(v) is int and v>0 for v in limits.values()),'pair limits differ')
+        require(limits['chunk_edges']<=65536,'pair edge chunk exceeds bound')
+        descriptor=item['descriptor']
+        require(descriptor.get('arm')=='proposed','checkpoint backend requires motif representation')
+        require(equal(descriptor.get('pair_execution'),{'backend':policy['backend'],'policy_sha256':ad.inputs[policy_input]['sha256']}),'explicit backend/policy workflow identity differs')
+        identity=cache_key(descriptor)
+        expected=ad.root/'research_artifacts/onchain_representations'/identity/ad.experiment_id
+        if not _create:
+            require(journal_directory is not None,'existing admitted journal directory required')
+            directory=Path(journal_directory)
+            require(directory==expected and directory.resolve()==expected and directory.is_dir()
+                    and directory.stat().st_dev==ad.root.stat().st_dev,'exact admitted journal directory required')
+        # All source/runtime/policy and live-worker checks precede journal creation.
+        _source(run,policy['numerical_source'])
+        env=json.loads(run.read_input(execution['environment_input']))
+        require(equal(env,inventory(ad.root,include_torch=True)),'registered execution environment differs')
+        base=ad.root/job.PREFIX/'runs'/ad.experiment_id
+        snapshots={}
+        def read(path):
+            value,h=metadata(path,ad.root);snapshots[path]=h;return value
+        launch=read(base/'launch.json');guard_owner=read(base/'owner.json')
+        require(set(launch)=={'experiment','source_commit','supervisor_pid','nonce'} and launch['experiment']==ad.experiment_id and launch['source_commit']==ad.source,'guard launch differs')
+        require(set(guard_owner)==set(launch)|{'monitor_pid','monitor_start_ticks'} and all(equal(guard_owner[k],v) for k,v in launch.items()),'guard owner/launch join differs')
+        _guard(run,policy_resources,guard_owner,base)
+        if _create:
+            require(journal_directory is None and ((_first and ancestry_arguments is None) or (not _first and ancestry_arguments is not None)),
+                    'constructor requires exact first-owner or successor mode')
+            with _lock(ad.root):
+                run._active();_guard(run,policy_resources,guard_owner,base)
+                _creation_path(expected,ad.root,descriptor['required_graphs'])
+                if _first:
+                    require(not expected.parent.exists() and not expected.parent.is_symlink(),
+                            'representation namespace already reserved; fresh first owner forbidden')
+                    parent=None
+                else:
+                    ancestry.verify(run,**ancestry_arguments)
+                    info=ad.inputs[continuation_input];path=ad.root/info['path']
+                    manifest,_=metadata(path,ad.root)
+                    require(file_hash(path)==info['sha256'],'parent changed before successor creation')
+                    parent={'path':str(path),'sha256':info['sha256'],'owner':manifest['owner']}
+                owner={'experiment':ad.experiment_id,'source_commit':ad.source,'producer':producer,'workflow_identity':identity}
+                run._active();_guard(run,policy_resources,guard_owner,base)
+                try:
+                    journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent)
+                    _immutable(expected/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
+                        'binding_output':item['binding_output'],'registration_sha256':ad.registration_sha256,
+                        'pair_checkpoint_input':policy_input,'pair_checkpoint_policy_sha256':ad.inputs[policy_input]['sha256'],
+                        'continuation_input':continuation_input,'death_input':death_input})
+                except BaseException as error:
+>                   raise JournalConstructionError('partial journal construction preserved at '+str(expected)) from error
+E                   tradingagents.research.onchain_replication.matching_owner.JournalConstructionError: partial journal construction preserved at /tmp/tmp5bxmqvhc/research_artifacts/onchain_representations/16fe3f7230a75fc2b74d94be64deac0e0f855a93bc9d9537d03d147f2b09a95b/example-b
+
+tradingagents/research/onchain_replication/matching_owner.py:205: JournalConstructionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_matching_successor.py::SuccessorTests::test_claim_publication_failure_retains_partial_journal
+1 failed, 86 passed, 6 subtests passed in 315.46s (0:05:15)

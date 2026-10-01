@@ -1,0 +1,56 @@
+test_admitted_header_is_not_reparsed_from_mutable_file (tests.research.onchain_replication.test_resident_graph_header.Tests.test_admitted_header_is_not_reparsed_from_mutable_file) ... FAIL
+test_large_header_length_refuses_before_header_reader (tests.research.onchain_replication.test_resident_graph_header.Tests.test_large_header_length_refuses_before_header_reader) ... FAIL
+test_payload_change_during_allocation_refuses (tests.research.onchain_replication.test_resident_graph_header.Tests.test_payload_change_during_allocation_refuses) ... FAIL
+
+======================================================================
+FAIL: test_admitted_header_is_not_reparsed_from_mutable_file (tests.research.onchain_replication.test_resident_graph_header.Tests.test_admitted_header_is_not_reparsed_from_mutable_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_resident_graph_header.py", line 17, in test_admitted_header_is_not_reparsed_from_mutable_file
+    actual=_resident_array(manifest.parent/'node_features.npy',info)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/graph_store.py", line 39, in _resident_array
+    stream.seek(0);value=np.load(stream,allow_pickle=False,max_header_size=10000)
+                         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+AssertionError: mutable header reparsed
+
+======================================================================
+FAIL: test_large_header_length_refuses_before_header_reader (tests.research.onchain_replication.test_resident_graph_header.Tests.test_large_header_length_refuses_before_header_reader)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_resident_graph_header.py", line 23, in test_large_header_length_refuses_before_header_reader
+    with self.assertRaisesRegex(ValueError,'header length'):_resident_array(path,{'bytes':path.stat().st_size,'sha256':file_hash(path)})
+                                                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/graph_store.py", line 35, in _resident_array
+    elif version==(2,0):shape,fortran,dtype=np.lib.format.read_array_header_2_0(stream,max_header_size=10000)
+                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+AssertionError: oversized header read reached
+
+======================================================================
+FAIL: test_payload_change_during_allocation_refuses (tests.research.onchain_replication.test_resident_graph_header.Tests.test_payload_change_during_allocation_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_resident_graph_header.py", line 33, in test_payload_change_during_allocation_refuses
+    with self.assertRaisesRegex(ValueError,'changed|hash'):_resident_array(path,info)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.022s
+
+FAILED (failures=3)

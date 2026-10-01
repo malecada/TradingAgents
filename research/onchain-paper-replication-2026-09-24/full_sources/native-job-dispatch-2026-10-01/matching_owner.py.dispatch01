@@ -108,34 +108,6 @@ class Binding:
         self.lease()
 
 
-def _anchor_blobs(raw,sizes):
-    """Parse Git's binary-safe batch frames without treating body newlines as headers."""
-    require(len(raw)<=sum(sizes)+128*len(sizes),'anchor response exceeds expected source extent')
-    offset=0
-    for expected in sizes:
-        end=raw.find(b'\n',offset,min(len(raw),offset+128))
-        require(end>=0,'anchor response header missing or oversized')
-        fields=raw[offset:end].split(b' ')
-        require(len(fields)==3 and fields[1]==b'blob','anchor object missing or not a blob')
-        matching_pair.hash_string(fields[0].decode('ascii'),40)
-        require(fields[2].isdigit() and int(fields[2])==expected,'anchor source extent differs')
-        offset=end+1;end=offset+expected
-        require(end<len(raw) and raw[end:end+1]==b'\n','anchor body or delimiter truncated')
-        yield memoryview(raw)[offset:end]
-        offset=end+1
-    require(offset==len(raw),'anchor response has trailing data')
-
-
-def _anchor_read(root,commit,names,sizes):
-    require(len(names)==len(sizes) and all(type(n) is str and '\n' not in n and '\x00' not in n for n in names),
-            'anchor request contains invalid name')
-    requests=''.join(commit+':'+name+'\n' for name in names).encode()
-    # check_output uses communicate(input), avoiding simultaneous pipe deadlock
-    # and reaping the process on failure. No results are cached across checks.
-    raw=subprocess.check_output(['git','cat-file','--batch'],input=requests,cwd=root,stderr=subprocess.DEVNULL)
-    yield from _anchor_blobs(raw,sizes)
-
-
 def _source(run,numerical):
     ad=run.admission;registered=ad.experiment['source_files'];required=job.required_sources()
     require(required|{SELF}<=set(registered),'complete owner/execution source closure required')
@@ -146,12 +118,11 @@ def _source(run,numerical):
         require(file_hash(ROOT/name)==registered[name],'imported implementation differs from admitted source')
     # Explicit exact-byte compatibility. Actual execution commit remains in the
     # owner; an older anchor is only a numerical context, never a forged owner.
-    names=sorted(required)
-    for name in names:
-        require(numerical['files'][name]==registered[name],'numerical source differs from current execution')
-    sizes=[(ROOT/name).stat().st_size for name in names]
-    for name,raw in zip(names,_anchor_read(ad.root,numerical['commit'],names,sizes),strict=True):
-        require(digest(raw)==numerical['files'][name],'numerical anchor committed source differs')
+    for name in sorted(required):
+        expected=numerical['files'][name]
+        require(expected==registered[name],'numerical source differs from current execution')
+        raw=subprocess.check_output(['git','show',numerical['commit']+':'+name],cwd=ad.root,stderr=subprocess.DEVNULL)
+        require(digest(raw)==expected,'numerical anchor committed source differs')
 
 
 def bind(run,*,representation,plan_input,producer,policy_input,journal_directory=None,
@@ -231,13 +202,11 @@ def bind(run,*,representation,plan_input,producer,policy_input,journal_directory
                     'pair_checkpoint_input':policy_input,'pair_checkpoint_policy_sha256':ad.inputs[policy_input]['sha256'],
                     'continuation_input':continuation_input,'death_input':death_input})
             except BaseException as error:
-                if not _first:raise
                 raise JournalConstructionError('partial journal construction preserved at '+str(expected)) from error
         try:
             return journal,bind(run,representation=representation,plan_input=plan_input,producer=producer,
                 policy_input=policy_input,journal_directory=expected,continuation_input=continuation_input,death_input=death_input)
         except BaseException as error:
-            if not _first:raise
             raise JournalConstructionError('unbound journal construction preserved at '+str(expected)) from error
     directory=Path(journal_directory)
     require(directory==expected and directory.resolve()==expected and directory.is_dir() and directory.stat().st_dev==ad.root.stat().st_dev,'exact admitted journal directory required')

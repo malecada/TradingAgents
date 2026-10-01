@@ -1,0 +1,33 @@
+test_actual_job_creates_first_owner_and_completes_both_cells (__main__.Tests.test_actual_job_creates_first_owner_and_completes_both_cells) ... DISPATCH VERIFIED sum 132aa6f8ba24ba926dc172275afd22e97d521c2c72ae74dd1cfcf664665c985f
+DISPATCH VERIFIED count 300f3b33c793d6cc5a8c56243ad3f6d2e5c1aa4abd0ef66865432d2b701aff45
+FAIL
+
+======================================================================
+FAIL: test_actual_job_creates_first_owner_and_completes_both_cells (__main__.Tests.test_actual_job_creates_first_owner_and_completes_both_cells)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-job-dispatch-2026-10-01/test_dispatch.py", line 108, in test_actual_job_creates_first_owner_and_completes_both_cells
+    with self.assertRaises((FileExistsError,ValueError)):job_payload.execute_fit_payload(f.run,f.execution['payload'])
+                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job_payload.py", line 163, in execute_fit_payload
+    value=_produce_eager_graphs(run,descriptor,producer,job,produce,loader)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job_payload.py", line 203, in _produce_eager_graphs
+    value,_=produce(graphs)
+            ~~~~~~~^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job_payload.py", line 149, in produce
+    return native_producer.produce(run,name,job,graphs,examples)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+AssertionError: duplicate producer reached
+
+----------------------------------------------------------------------
+Ran 1 test in 319.753s
+
+FAILED (failures=1)

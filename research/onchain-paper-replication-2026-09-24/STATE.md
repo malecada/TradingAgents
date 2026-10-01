@@ -3,6 +3,46 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Native dispatch implemented and verified; actual OS-guarded synthetic job ACTIVE**:
+The full fresh-owner sampler→dictionary→MCM→native graph/feature→proposed-model
+batch chain is now explicitly selectable through the maintained job payload.
+Native dispatch02 passed its two synthetic fits and preallocation duplicate refusal.
+Failure02 passed partial pair construction/sampler closure. First-owner checks passed
+creation failure, duplicate, ancestor and guard boundaries. Independent review closed
+the resident-header defects after header03; batched Git anchor retrieval preserves
+all exact-byte checks and removes87 subprocess starts per full source check.
+Component timing87objects:0.134048s serial vs0.007769s batch, no whole-run claim.
+Candidate03 regression CLOSED107passes/19subtests360.95s session96019exit0; exact
+PID2305466 absent. All798 frozen source hashes verified unchanged. The former
+successor exception failure and all earlier red/failed identities remain retained.
+Evidence: full_sources/native-job-dispatch-2026-10-01/{RESULT,REVIEW_V3}.md.
+
+The next step was executed immediately: independently reviewed actual guarded
+synthetic launch01 ACTIVE session81718, supervisor2474956/monitor2475207.
+Retained root research_artifacts/native-guarded-synthetic/attempt01, experiment
+example-a, sourcee8aa67ec16d0023f94bccb5e77d61c2b0e3aed7c. Never relaunch this identity.
+Its registered source/input/runtime120/28/7 bindings were independently checked;
+real preflight passed with7067631616B availableRAM and21031366656B free disk.
+Actual cgroup onchain-replication-eb7031c42b804a14bc3128b61823f1e3.service enforces
+3GiB max/2GiB high/zero swap/two CPUs/10GiB disk floor/900s wall limit. At20.49s
+sampled peak374243328B, no memory events; this is not a terminal capacity result.
+The prepared checkout is frozen through cleanup; no mocked guard is used here.
+Evidence: full_sources/native-guarded-dispatch-2026-10-01/{SCOPE,ADMISSION_REVIEW}.md,
+preflight01.json, prepare01.log, launch01.log and the retained run/guard artifacts.
+Next safe action: inspect actual terminal/cleanup, independently verify both cell
+and checkpoint dispositions, preserve full retained evidence, then continue the
+full-scale resource admission and remaining cold/history/mapped work. Continue
+independent preparation while the guard runs; never replay closed synthetic or
+historical empirical identities merely for context.
+
+The retained-graph resource budget draft is prepared under
+full_sources/native-resource-admission-2026-10-01/: proposed60→61 preserves33spent,
+12body and15financial allocations, adds one proposed resource attempt and no new
+financial fits. It is explicitly NOT adopted or executable; exact graph/population,
+hub caps, workflow quotas, source/runtime and independent admission remain required.
+No existing unused empirical registration covers it. Coverage77/109, all1420
+financial fits pending, full13task/C01–C18 scope and prior exposed samples unchanged.
+
 **Terminal output lifetime and native executor integration independently accepted**:
 New full_sources/terminal-output-lifetime-2026-10-01/ adds bounded append-only
 output observation plus derived sealer/native-map imports; prior accepted source
@@ -36,9 +76,11 @@ and narrow float64 metric correction. All577bindings,573freeze and412inherited
 entries verified;164historical supplemental entries match original commit945cadb0.
 REVIEW SHAf357fb886cf0787ef7b4ac9481c100b3562dbdc1a156c6f53766db3691b1ac9e.
 Frozen SCOPE wording means no financial-data fits; synthetic optimization occurred.
-Next: commit/push reviewed output correction,
-metric fix and retained failed checks. Production guarded dispatch remains next.
-All1420financial fits pending; last accepted remoteHEAD945cadb0.
+Reviewed output correction, metric fix and retained failed checks committed/pushed
+1211bfafc79db48a13030735d64a0bf6f82f1f65; remote hash verified.
+Next: implement explicit guarded-job selection and first-owner native representation
+orchestration described in native-batch-executor/DISPATCH_GAP.md. No process active.
+All1420financial fits pending; full paper scope unchanged.
 
 **Latest native executor check closed with output-lifetime integration failure**:
 check02 CLOSEDFAILED1error244.865s, session80085exit1, exact PythonPID1583714

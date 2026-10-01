@@ -15,7 +15,7 @@ from types import SimpleNamespace
 from tradingagents.research.lifecycle import ResearchRun, _lock, _immutable
 from tradingagents.research.onchain_replication import job, resources, matching_pair
 from . import matching_ancestry as ancestry
-from .feature_journal import FeatureJournal,required_set
+from .feature_journal import FeatureJournal
 from tradingagents.research.onchain_replication.cache import cache_key
 from tradingagents.research.onchain_replication.environment import inventory
 from tradingagents.research.onchain_replication.provenance import canonical_bytes, digest, file_hash, freeze
@@ -23,19 +23,6 @@ from tradingagents.research.onchain_replication.provenance import canonical_byte
 ROOT=Path(__file__).resolve().parents[3]
 SELF=str(Path(__file__).resolve().relative_to(ROOT))
 LIMIT=65536
-
-class JournalConstructionError(RuntimeError):
-    """Preserved partial namespace requires outer-run closure, never local retry."""
-
-
-def _creation_path(expected,root,required):
-    require(expected.resolve()==expected and expected.is_relative_to(root),'journal creation path is redirected')
-    ancestor=expected.parent
-    while not ancestor.exists():ancestor=ancestor.parent
-    info=ancestor.stat()
-    require(ancestor.resolve()==ancestor and stat.S_ISDIR(info.st_mode) and info.st_dev==root.stat().st_dev,
-            'journal ancestor type/device differs')
-    require(equal(required_set(required),required),'required graph list must be canonical before creation')
 
 
 def require(condition,message):
@@ -108,34 +95,6 @@ class Binding:
         self.lease()
 
 
-def _anchor_blobs(raw,sizes):
-    """Parse Git's binary-safe batch frames without treating body newlines as headers."""
-    require(len(raw)<=sum(sizes)+128*len(sizes),'anchor response exceeds expected source extent')
-    offset=0
-    for expected in sizes:
-        end=raw.find(b'\n',offset,min(len(raw),offset+128))
-        require(end>=0,'anchor response header missing or oversized')
-        fields=raw[offset:end].split(b' ')
-        require(len(fields)==3 and fields[1]==b'blob','anchor object missing or not a blob')
-        matching_pair.hash_string(fields[0].decode('ascii'),40)
-        require(fields[2].isdigit() and int(fields[2])==expected,'anchor source extent differs')
-        offset=end+1;end=offset+expected
-        require(end<len(raw) and raw[end:end+1]==b'\n','anchor body or delimiter truncated')
-        yield memoryview(raw)[offset:end]
-        offset=end+1
-    require(offset==len(raw),'anchor response has trailing data')
-
-
-def _anchor_read(root,commit,names,sizes):
-    require(len(names)==len(sizes) and all(type(n) is str and '\n' not in n and '\x00' not in n for n in names),
-            'anchor request contains invalid name')
-    requests=''.join(commit+':'+name+'\n' for name in names).encode()
-    # check_output uses communicate(input), avoiding simultaneous pipe deadlock
-    # and reaping the process on failure. No results are cached across checks.
-    raw=subprocess.check_output(['git','cat-file','--batch'],input=requests,cwd=root,stderr=subprocess.DEVNULL)
-    yield from _anchor_blobs(raw,sizes)
-
-
 def _source(run,numerical):
     ad=run.admission;registered=ad.experiment['source_files'];required=job.required_sources()
     require(required|{SELF}<=set(registered),'complete owner/execution source closure required')
@@ -146,16 +105,15 @@ def _source(run,numerical):
         require(file_hash(ROOT/name)==registered[name],'imported implementation differs from admitted source')
     # Explicit exact-byte compatibility. Actual execution commit remains in the
     # owner; an older anchor is only a numerical context, never a forged owner.
-    names=sorted(required)
-    for name in names:
-        require(numerical['files'][name]==registered[name],'numerical source differs from current execution')
-    sizes=[(ROOT/name).stat().st_size for name in names]
-    for name,raw in zip(names,_anchor_read(ad.root,numerical['commit'],names,sizes),strict=True):
-        require(digest(raw)==numerical['files'][name],'numerical anchor committed source differs')
+    for name in sorted(required):
+        expected=numerical['files'][name]
+        require(expected==registered[name],'numerical source differs from current execution')
+        raw=subprocess.check_output(['git','show',numerical['commit']+':'+name],cwd=ad.root,stderr=subprocess.DEVNULL)
+        require(digest(raw)==expected,'numerical anchor committed source differs')
 
 
 def bind(run,*,representation,plan_input,producer,policy_input,journal_directory=None,
-         continuation_input=None,death_input=None,_create=False,_first=False):
+         continuation_input=None,death_input=None,_create=False):
     require(isinstance(run,ResearchRun),'actual admitted ResearchRun required')
     run._active();run._check_source()
     ad=run.admission
@@ -207,38 +165,25 @@ def bind(run,*,representation,plan_input,producer,policy_input,journal_directory
     require(set(guard_owner)==set(launch)|{'monitor_pid','monitor_start_ticks'} and all(equal(guard_owner[k],v) for k,v in launch.items()),'guard owner/launch join differs')
     _guard(run,policy_resources,guard_owner,base)
     if _create:
-        require(journal_directory is None and ((_first and ancestry_arguments is None) or (not _first and ancestry_arguments is not None)),
-                'constructor requires exact first-owner or successor mode')
+        require(ancestry_arguments is not None and journal_directory is None,'successor constructor requires registered ancestry')
         with _lock(ad.root):
             run._active();_guard(run,policy_resources,guard_owner,base)
-            _creation_path(expected,ad.root,descriptor['required_graphs'])
-            if _first:
-                require(not expected.parent.exists() and not expected.parent.is_symlink(),
-                        'representation namespace already reserved; fresh first owner forbidden')
-                parent=None
-            else:
-                ancestry.verify(run,**ancestry_arguments)
-                info=ad.inputs[continuation_input];path=ad.root/info['path']
-                manifest,_=metadata(path,ad.root)
-                require(file_hash(path)==info['sha256'],'parent changed before successor creation')
-                parent={'path':str(path),'sha256':info['sha256'],'owner':manifest['owner']}
+            ancestry.verify(run,**ancestry_arguments)
+            info=ad.inputs[continuation_input];path=ad.root/info['path']
+            manifest,_=metadata(path,ad.root)
+            require(file_hash(path)==info['sha256'],'parent changed before successor creation')
+            parent={'path':str(path),'sha256':info['sha256'],'owner':manifest['owner']}
             owner={'experiment':ad.experiment_id,'source_commit':ad.source,'producer':producer,'workflow_identity':identity}
             run._active();_guard(run,policy_resources,guard_owner,base)
-            try:
-                journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent)
-                _immutable(expected/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
-                    'binding_output':item['binding_output'],'registration_sha256':ad.registration_sha256,
-                    'pair_checkpoint_input':policy_input,'pair_checkpoint_policy_sha256':ad.inputs[policy_input]['sha256'],
-                    'continuation_input':continuation_input,'death_input':death_input})
-            except BaseException as error:
-                if not _first:raise
-                raise JournalConstructionError('partial journal construction preserved at '+str(expected)) from error
-        try:
-            return journal,bind(run,representation=representation,plan_input=plan_input,producer=producer,
-                policy_input=policy_input,journal_directory=expected,continuation_input=continuation_input,death_input=death_input)
-        except BaseException as error:
-            if not _first:raise
-            raise JournalConstructionError('unbound journal construction preserved at '+str(expected)) from error
+            journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent)
+            _immutable(expected/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
+                'binding_output':item['binding_output'],'registration_sha256':ad.registration_sha256,
+                'pair_checkpoint_input':policy_input,'pair_checkpoint_policy_sha256':ad.inputs[policy_input]['sha256'],
+                'continuation_input':continuation_input,'death_input':death_input})
+        # Failure after publication preserves the partial attempt; no retry or
+        # deletion is permitted. The outer lifecycle owner must close its run.
+        return journal,bind(run,representation=representation,plan_input=plan_input,producer=producer,
+            policy_input=policy_input,journal_directory=expected,continuation_input=continuation_input,death_input=death_input)
     directory=Path(journal_directory)
     require(directory==expected and directory.resolve()==expected and directory.is_dir() and directory.stat().st_dev==ad.root.stat().st_dev,'exact admitted journal directory required')
     require(not any((directory/name).exists() for name in ('complete.json','failed.json')),'representation journal is terminal')
@@ -273,13 +218,3 @@ def open_successor(run,*,representation,plan_input,producer,policy_input,continu
     require(continuation_input is not None and death_input is not None,'registered successor inputs required')
     return bind(run,representation=representation,plan_input=plan_input,producer=producer,
                 policy_input=policy_input,continuation_input=continuation_input,death_input=death_input,_create=True)
-
-
-def open_first(run,*,representation,plan_input,producer,policy_input):
-    """Create one fresh journal after source/runtime/policy/live-guard admission.
-
-    Existing namespaces, including empty or partially created ones, refuse.
-    Numerical production is separate; a failed creation is never silently retried.
-    """
-    return bind(run,representation=representation,plan_input=plan_input,producer=producer,
-                policy_input=policy_input,_create=True,_first=True)

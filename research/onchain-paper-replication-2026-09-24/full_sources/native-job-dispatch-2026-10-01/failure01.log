@@ -1,0 +1,86 @@
+test_pair_construction_failures_are_fatal_and_preserved (__main__.Tests.test_pair_construction_failures_are_fatal_and_preserved) ... 
+  test_pair_construction_failures_are_fatal_and_preserved (__main__.Tests.test_pair_construction_failures_are_fatal_and_preserved) (stage='start.json') ... ERROR
+  test_pair_construction_failures_are_fatal_and_preserved (__main__.Tests.test_pair_construction_failures_are_fatal_and_preserved) (stage='binding.json') ... ERROR
+  test_pair_construction_failures_are_fatal_and_preserved (__main__.Tests.test_pair_construction_failures_are_fatal_and_preserved) (stage='final-lease') ... ERROR
+test_sampler_failure_preserves_pair_and_feature_failure (__main__.Tests.test_sampler_failure_preserves_pair_and_feature_failure) ... PRESERVED_FAILURE /tmp/tmpflk1hecv/research_artifacts/onchain_representations/c4db0a89d2fb85d4d1ee4c8cb08f9d24499e520d984587e31d4f29864446d517/example-a
+ok
+
+======================================================================
+ERROR: test_pair_construction_failures_are_fatal_and_preserved (__main__.Tests.test_pair_construction_failures_are_fatal_and_preserved) (stage='start.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-job-dispatch-2026-10-01/test_failure.py", line 41, in test_pair_construction_failures_are_fatal_and_preserved
+    native.produce(f.run,'r',f.execution['payload']['representation_jobs']['r'],f.graphs,f.examples)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/native_producer.py", line 88, in produce
+    owned=ownership.open_journal(workload,parent_input=None)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/ownership.py", line 215, in open_journal
+    j=journal.Journal(root,run.admission.experiment_id,cache_key(cert),workload.bound.record['workflow_identity'],policy,parent=parent,before_create=before_create)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/journal.py", line 199, in __init__
+    self.start = write(self.directory/'start.json', {'schema_version': 1, 'owner': owner,
+                 ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'workflow': workflow, 'policy': self.policy, 'parent': copy.deepcopy(parent)})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-job-dispatch-2026-10-01/test_failure.py", line 33, in fail
+    if Path(path).name==stage:raise OSError('injected pair construction stop')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: injected pair construction stop
+
+======================================================================
+ERROR: test_pair_construction_failures_are_fatal_and_preserved (__main__.Tests.test_pair_construction_failures_are_fatal_and_preserved) (stage='binding.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-job-dispatch-2026-10-01/test_failure.py", line 41, in test_pair_construction_failures_are_fatal_and_preserved
+    native.produce(f.run,'r',f.execution['payload']['representation_jobs']['r'],f.graphs,f.examples)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/native_producer.py", line 88, in produce
+    owned=ownership.open_journal(workload,parent_input=None)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/ownership.py", line 216, in open_journal
+    ref=journal.write(j.directory/'binding.json',cert)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-job-dispatch-2026-10-01/test_failure.py", line 33, in fail
+    if Path(path).name==stage:raise OSError('injected pair construction stop')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: injected pair construction stop
+
+======================================================================
+ERROR: test_pair_construction_failures_are_fatal_and_preserved (__main__.Tests.test_pair_construction_failures_are_fatal_and_preserved) (stage='final-lease')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/native-job-dispatch-2026-10-01/test_failure.py", line 41, in test_pair_construction_failures_are_fatal_and_preserved
+    native.produce(f.run,'r',f.execution['payload']['representation_jobs']['r'],f.graphs,f.examples)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/native_producer.py", line 88, in produce
+    owned=ownership.open_journal(workload,parent_input=None)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/ownership.py", line 218, in open_journal
+    owned.lease()
+    ~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+ValueError: injected pair construction stop
+
+----------------------------------------------------------------------
+Ran 2 tests in 119.725s
+
+FAILED (errors=3)

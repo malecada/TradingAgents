@@ -1,0 +1,130 @@
+test_actual_batch_matches_individual_reads_and_missing_anchor_refuses (tests.research.onchain_replication.test_anchor_batch.Tests.test_actual_batch_matches_individual_reads_and_missing_anchor_refuses) ... FAIL
+test_framed_binary_and_multiple_objects (tests.research.onchain_replication.test_anchor_batch.Tests.test_framed_binary_and_multiple_objects) ... FAIL
+test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) ... 
+  test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'unknown missing\n') ... FAIL
+  test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa tree 1\nx\n') ... FAIL
+  test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1\nx') ... FAIL
+  test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1\nx\njunk') ... FAIL
+  test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1\nx\n') ... FAIL
+  test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'bad header\n') ... FAIL
+  test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1000000000000\nx\n') ... FAIL
+test_subprocess_failure_propagates (tests.research.onchain_replication.test_anchor_batch.Tests.test_subprocess_failure_propagates) ... FAIL
+
+======================================================================
+FAIL: test_actual_batch_matches_individual_reads_and_missing_anchor_refuses (tests.research.onchain_replication.test_anchor_batch.Tests.test_actual_batch_matches_individual_reads_and_missing_anchor_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 22, in test_actual_batch_matches_individual_reads_and_missing_anchor_refuses
+    self.assertTrue(hasattr(m,'_anchor_read'),'batch reader missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch reader missing
+
+======================================================================
+FAIL: test_framed_binary_and_multiple_objects (tests.research.onchain_replication.test_anchor_batch.Tests.test_framed_binary_and_multiple_objects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 16, in test_framed_binary_and_multiple_objects
+    self.assertEqual([bytes(x) for x in self.parse(raw,list(map(len,data)))],data)
+                                        ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 12, in parse
+    self.assertTrue(hasattr(m,'_anchor_blobs'),'batch parser missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch parser missing
+
+======================================================================
+FAIL: test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'unknown missing\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 20, in test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused
+    with self.subTest(raw=raw),self.assertRaises(ValueError):self.parse(raw,sizes)
+                                                             ~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 12, in parse
+    self.assertTrue(hasattr(m,'_anchor_blobs'),'batch parser missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch parser missing
+
+======================================================================
+FAIL: test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa tree 1\nx\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 20, in test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused
+    with self.subTest(raw=raw),self.assertRaises(ValueError):self.parse(raw,sizes)
+                                                             ~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 12, in parse
+    self.assertTrue(hasattr(m,'_anchor_blobs'),'batch parser missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch parser missing
+
+======================================================================
+FAIL: test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1\nx')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 20, in test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused
+    with self.subTest(raw=raw),self.assertRaises(ValueError):self.parse(raw,sizes)
+                                                             ~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 12, in parse
+    self.assertTrue(hasattr(m,'_anchor_blobs'),'batch parser missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch parser missing
+
+======================================================================
+FAIL: test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1\nx\njunk')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 20, in test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused
+    with self.subTest(raw=raw),self.assertRaises(ValueError):self.parse(raw,sizes)
+                                                             ~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 12, in parse
+    self.assertTrue(hasattr(m,'_anchor_blobs'),'batch parser missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch parser missing
+
+======================================================================
+FAIL: test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1\nx\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 20, in test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused
+    with self.subTest(raw=raw),self.assertRaises(ValueError):self.parse(raw,sizes)
+                                                             ~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 12, in parse
+    self.assertTrue(hasattr(m,'_anchor_blobs'),'batch parser missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch parser missing
+
+======================================================================
+FAIL: test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'bad header\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 20, in test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused
+    with self.subTest(raw=raw),self.assertRaises(ValueError):self.parse(raw,sizes)
+                                                             ~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 12, in parse
+    self.assertTrue(hasattr(m,'_anchor_blobs'),'batch parser missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch parser missing
+
+======================================================================
+FAIL: test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused (tests.research.onchain_replication.test_anchor_batch.Tests.test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused) (raw=b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1000000000000\nx\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 20, in test_missing_wrong_type_truncated_trailing_or_wrong_extent_refused
+    with self.subTest(raw=raw),self.assertRaises(ValueError):self.parse(raw,sizes)
+                                                             ~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 12, in parse
+    self.assertTrue(hasattr(m,'_anchor_blobs'),'batch parser missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch parser missing
+
+======================================================================
+FAIL: test_subprocess_failure_propagates (tests.research.onchain_replication.test_anchor_batch.Tests.test_subprocess_failure_propagates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_anchor_batch.py", line 38, in test_subprocess_failure_propagates
+    self.assertTrue(hasattr(m,'_anchor_read'),'batch reader missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : batch reader missing
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+FAILED (failures=10)

@@ -3,9 +3,6 @@ from pathlib import Path
 import json
 import os
 import math
-import io
-import struct
-import hashlib
 import stat
 import numpy as np
 from .contracts import GraphSnapshot,validate_graph
@@ -33,34 +30,13 @@ def _resident_array(member,info):
         before=os.fstat(stream.fileno())
         if not stat.S_ISREG(before.st_mode) or before.st_nlink!=1 or type(info['bytes']) is not int or before.st_size!=info['bytes']:
             raise ValueError('resident graph member extent differs')
-        magic=stream.read(8)
-        if magic[:6]!=b'\x93NUMPY' or magic[6:] not in (b'\x01\x00',b'\x02\x00'):
-            raise ValueError('resident graph NPY version unsupported')
-        width=2 if magic[6:]==b'\x01\x00' else 4
-        prefix=stream.read(width)
-        if len(prefix)!=width:raise ValueError('resident graph header length missing')
-        length=struct.unpack('<H' if width==2 else '<I',prefix)[0]
-        if not 0<length<=10000 or 8+width+length>before.st_size:
-            raise ValueError('resident graph header length exceeds bound')
-        header=stream.read(length)
-        if len(header)!=length:raise ValueError('resident graph header truncated')
-        # Parse the captured bounded header once; mutable file bytes cannot
-        # redefine the allocation through a second NumPy load.
-        captured=io.BytesIO(prefix+header)
-        reader=np.lib.format.read_array_header_1_0 if width==2 else np.lib.format.read_array_header_2_0
-        shape,fortran,dtype=reader(captured,max_header_size=10000)
+        version=np.lib.format.read_magic(stream)
+        if version==(1,0):shape,fortran,dtype=np.lib.format.read_array_header_1_0(stream,max_header_size=10000)
+        elif version==(2,0):shape,fortran,dtype=np.lib.format.read_array_header_2_0(stream,max_header_size=10000)
+        else:raise ValueError('resident graph NPY version unsupported')
         if dtype.hasobject or any(type(n) is not int or n<0 for n in shape) or stream.tell()+math.prod(shape)*dtype.itemsize!=before.st_size:
             raise ValueError('resident graph header extent differs')
-        value=np.empty(shape,dtype=dtype,order='F' if fortran else 'C')
-        payload=memoryview(value.ravel(order='K')).cast('B');offset=0
-        checksum=hashlib.sha256(magic+prefix+header)
-        while offset<len(payload):
-            end=min(len(payload),offset+1048576)
-            n=stream.readinto(payload[offset:end])
-            if not n:raise ValueError('resident graph payload changed or truncated')
-            checksum.update(payload[offset:offset+n]);offset+=n
-        if stream.read(1) or checksum.hexdigest()!=info['sha256']:
-            raise ValueError('resident graph payload hash changed')
+        stream.seek(0);value=np.load(stream,allow_pickle=False,max_header_size=10000)
         after=os.fstat(stream.fileno())
         if any(getattr(before,k)!=getattr(after,k) for k in ('st_dev','st_ino','st_size','st_mtime_ns','st_ctime_ns')):
             raise ValueError('resident graph changed during allocation')

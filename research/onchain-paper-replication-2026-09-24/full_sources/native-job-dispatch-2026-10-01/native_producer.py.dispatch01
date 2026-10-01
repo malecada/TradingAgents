@@ -1,0 +1,120 @@
+"""Explicit first-owner resident native representation path for guarded fit jobs.
+
+No cold/historical or mapped-parent fallback. Dated source closure is registered
+in addition to the maintained package. All components share one import chain.
+"""
+from functools import lru_cache
+import importlib.util
+import json
+from pathlib import Path
+from . import matching_owner
+from .cache import cache_key
+from .contracts import Fold,GraphSnapshot
+from .neighborhoods import graph_hash
+from .registered_features import representation_descriptor
+from .provenance import canonical_bytes,file_hash
+from ..lifecycle import ResearchRun,_immutable
+
+BACKEND='resident-native-current-owner-v1'
+ROOT=Path(__file__).resolve().parents[3]
+NATIVE='research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/native_map.py'
+ROUTES=('pair_checkpoint_input','pair_workload_input','sampler_input','sample_artifact_input',
+    'dictionary_output_input','mcm_execution_input','mcm_output_input','mcm_read_input',
+    'feature_tensor_input','graph_output_input','graph_read_input','denominator_input',
+    'representation_closure_input','representation_output_input','representation_seal_input','native_feature_batch_input')
+UNSUPPORTED=('continuation_input','death_input','pair_journal_parent_input','graph_residency_input',
+             'residency_input','sampling_input','matching_input','neighborhood_input')
+
+class NativeProducerCleanupError(RuntimeError):pass
+
+def require(value,message):
+    if not value:raise ValueError(message)
+
+@lru_cache(maxsize=1)
+def api():
+    spec=importlib.util.spec_from_file_location('registered_native_feature_chain',ROOT/NATIVE)
+    m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+
+def required_sources():return set(api().SOURCES)|{str(Path(__file__).resolve().relative_to(ROOT))}
+
+def selected(run,representation,job):
+    """Validate route selection and dependencies before graphs or numerical work."""
+    require(isinstance(run,ResearchRun),'actual native run required');run._active()
+    require(type(job) is dict,'native job must be an object')
+    plan=json.loads(run.read_input(job['plan_input'])) if job.get('plan_input') else None
+    item=plan.get('producers',{}).get(job.get('producer')) if isinstance(plan,dict) else None
+    a=job.get('native_backend');b=item.get('native_backend') if isinstance(item,dict) else None
+    if a is None and b is None:return False
+    require(a==b==BACKEND and job.get('operation')=='produce','native engine selection differs or operation unsupported')
+    require(plan.get('schema_version')==2 and type(plan['schema_version']) is int,'native producer requires version2 plan')
+    actual=json.loads(run.read_input('execution_job'))['payload']['representation_jobs'].get(representation)
+    require(canonical_bytes(actual)==canonical_bytes(job),'native selected execution job differs')
+    require(all(item.get(k) is None and job.get(k) is None for k in UNSUPPORTED),'native path requires fresh resident inputs; requested reuse/mapped policy unsupported')
+    require('pair_journal_parent_input' in item and 'pair_journal_parent_input' in job,'explicit fresh pair journal parent required')
+    for key in ROUTES:
+        name=job.get(key)
+        require(type(name) is str and item.get(key)==name and name in run.admission.inputs,'native required policy route differs: '+key)
+        run.read_input(name)
+    for key in ('descriptor','binding_output','journal_output'):
+        require(key in job and canonical_bytes(item.get(key))==canonical_bytes(job[key]),'native producer '+key+' differs')
+    require(item['binding_output']!=item['journal_output'] and {item['binding_output'],item['journal_output']}<=set(run.admission.experiment['outputs']),'native output names differ')
+    require(job['descriptor']['arm']=='proposed','native path requires motif representation')
+    require(type(job.get('max_graph_payload_bytes')) is int and job['max_graph_payload_bytes']>0,'native parent graph capacity required')
+    for name in required_sources():
+        expected=run.admission.experiment['source_files'].get(name)
+        require(expected is not None and file_hash(ROOT/name)==expected and file_hash(run.admission.root/name)==expected,'native source closure is unregistered or changed: '+name)
+    return True
+
+def produce(run,representation,job,graphs,examples):
+    require(selected(run,representation,job),'native production must be explicitly selected')
+    m=api();graphs=tuple(graphs);d=job['descriptor'];fold=Fold(**d['fold'])
+    require(graphs and all(type(g) is GraphSnapshot for g in graphs),'native producer requires resident graph snapshots')
+    actual=representation_descriptor(graphs,examples,fold,'proposed',d['seed'],d['configs'])
+    actual.update(pair_execution=d['pair_execution'],pair_workload=d['pair_workload'])
+    require(canonical_bytes(actual)==canonical_bytes(d),'native actual representation differs before journal creation')
+    by_hash={graph_hash(g):g for g in graphs}
+    m.minimum_capacity(by_hash,d['required_graphs'],d['configs']['dictionary']['size'],m.policy(json.loads(run.read_input(job['native_feature_batch_input']))))
+    journal=None;owned=None
+    try:
+        try:
+            journal,bound=matching_owner.open_first(run,representation=representation,plan_input=job['plan_input'],
+                producer=job['producer'],policy_input=job['pair_checkpoint_input'])
+        except matching_owner.JournalConstructionError as error:
+            raise NativeProducerCleanupError(str(error)) from error
+        ownership=m.seal.ownership
+        workload=ownership.route.admit(run,representation=representation,plan_input=job['plan_input'],producer=job['producer'],
+            policy_input=job['pair_checkpoint_input'],control_input=job['pair_workload_input'],journal_directory=journal.directory,
+            graphs=graphs,examples=examples,fold=fold,seed=d['seed'],configs=d['configs'])
+        owned=ownership.open_journal(workload,parent_input=None)
+        saved=m.seal.saved;dictionary=saved.artifacts.publication;sampler=dictionary.producer
+        sample_result=sampler.produce(owned,journal,sampler_input=job['sampler_input'],artifact_input=job['sample_artifact_input'])
+        sample_proof=sample_result['proof'];del sample_result
+        dictionary_proof=dictionary.produce(owned,journal,sampler_input=job['sampler_input'],artifact_input=job['sample_artifact_input'],
+            proof_sha256=sample_proof['sha256'],output_input=job['dictionary_output_input'])
+        ticket=saved.prepare_dictionary(owned,journal,sampler_input=job['sampler_input'],artifact_input=job['sample_artifact_input'],
+            output_input=job['dictionary_output_input'],proof_sha256=dictionary_proof['sha256'])
+        graph_producer=m.seal.publication.closure.graphs.publication
+        for h in d['required_graphs']:
+            proof=saved.publication.produce(owned,journal,graph_hash=h,sampler_input=job['sampler_input'],artifact_input=job['sample_artifact_input'],
+                dictionary_output_input=job['dictionary_output_input'],dictionary_proof_sha256=dictionary_proof['sha256'],
+                mcm_input=job['mcm_execution_input'],output_input=job['mcm_output_input'])
+            graph_producer.produce(owned,journal,dictionary_ticket=ticket,graph_hash=h,mcm_input=job['mcm_execution_input'],
+                mcm_output_input=job['mcm_output_input'],read_input=job['mcm_read_input'],mcm_proof_sha256=proof['sha256'],
+                feature_input=job['feature_tensor_input'],output_input=job['graph_output_input'])
+        return m.prepare(owned,journal,examples=examples,fold=fold,denominator_input=job['denominator_input'],dictionary_ticket=ticket,
+            closure_input=job['representation_closure_input'],output_input=job['representation_output_input'],
+            seal_input=job['representation_seal_input'],batch_input=job['native_feature_batch_input'])
+    except BaseException as error:
+        cleanup=[]
+        if owned is not None and not owned.journal.sealed:
+            try:owned.seal('failed')
+            except BaseException as failure:cleanup.append(failure)
+        if journal is not None:
+            if not journal.sealed:
+                try:journal.seal('failed',reason=type(error).__name__+': '+str(error))
+                except BaseException as failure:cleanup.append(failure)
+            try:_immutable(journal.directory/'attempt-failed.json',{'reason':type(error).__name__+': '+str(error),
+                'numerical_complete':(journal.directory/'complete.json').exists(),'cleanup_errors':[str(e) for e in cleanup]})
+            except BaseException as failure:cleanup.append(failure)
+        if cleanup:raise NativeProducerCleanupError('native partial owner closure failed; outer job must stop') from error
+        raise
