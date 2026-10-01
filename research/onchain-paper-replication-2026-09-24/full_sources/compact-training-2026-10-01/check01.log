@@ -1,0 +1,42 @@
+F..
+=================================== FAILURES ===================================
+__ test_actual_training_population_is_bound_without_sampling_or_pair_creation __
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7ae21fb6d400>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_actual_training_population_is_bound_without_sampling_or_pair_creation(admitted):
+        owner, args, t = admitted
+>       route = admit(owner, args); route.check(); route.lease()
+                ^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_training.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_training.py:56: in admit
+    return admit(owner, input_name='compact_training', **args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_training.py:183: in admit
+    graphs, training, settings = _science(graphs, examples, fold, seed, configs, descriptor, control, extensions)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_training.py:114: in _science
+    and by_hash[h].start_utc == expected_week(step), 'actual graph step clock lineage differs')
+                                ^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/calendar.py:15: in expected_week
+    lagged=utc(decision_at)-timedelta(days=1)
+           ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = datetime.datetime(2022, 1, 11, 0, 0, tzinfo=datetime.timezone.utc)
+
+    def utc(value: str) -> datetime:
+        if not isinstance(value, str):
+>           raise ValueError('UTC timestamp must be a string')
+E           ValueError: UTC timestamp must be a string
+
+tradingagents/research/onchain_replication/provenance.py:34: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_training.py::test_actual_training_population_is_bound_without_sampling_or_pair_creation
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/selectors.py:398: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+1 failed, 2 passed in 126.57s (0:02:06)

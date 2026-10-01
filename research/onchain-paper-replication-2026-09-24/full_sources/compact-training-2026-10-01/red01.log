@@ -1,0 +1,192 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+__ test_actual_training_population_is_bound_without_sampling_or_pair_creation __
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3dc65400>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_actual_training_population_is_bound_without_sampling_or_pair_creation(admitted):
+        owner, args, t = admitted
+>       route = admit(owner, args); route.check(); route.lease()
+                ^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_training.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3dc65400>
+args = {'graphs': [GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', ava...025-01-01T00:00:00Z', member_hash='3e38a93ad11c3914c2c156bf330f1fb365869330cbeba716b4809f2f0e5ccf35'), 'seed': 11, ...}
+
+    def admit(owner, args):
+>       from tradingagents.research.onchain_replication.compact_training import admit
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_training'
+
+tests/research/onchain_replication/test_compact_training.py:55: ModuleNotFoundError
+____________ test_metadata_refusal_precedes_graph_iteration[route] _____________
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3dcc3390>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    @pytest.mark.parametrize('admitted', ['route', 'schema', 'manifest'], indirect=True)
+    def test_metadata_refusal_precedes_graph_iteration(admitted):
+        owner, args, t = admitted
+        def forbidden():
+            raise AssertionError('graphs read before metadata admission')
+            yield
+>       with pytest.raises(ValueError): admit(owner, args | {'graphs': forbidden()})
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_training.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3dcc3390>
+args = {'graphs': <generator object test_metadata_refusal_precedes_graph_iteration.<locals>.forbidden at 0x7e5d3d81b280>, 'ex...025-01-01T00:00:00Z', member_hash='3e38a93ad11c3914c2c156bf330f1fb365869330cbeba716b4809f2f0e5ccf35'), 'seed': 11, ...}
+
+    def admit(owner, args):
+>       from tradingagents.research.onchain_replication.compact_training import admit
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_training'
+
+tests/research/onchain_replication/test_compact_training.py:55: ModuleNotFoundError
+____________ test_metadata_refusal_precedes_graph_iteration[schema] ____________
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3dcc3d90>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    @pytest.mark.parametrize('admitted', ['route', 'schema', 'manifest'], indirect=True)
+    def test_metadata_refusal_precedes_graph_iteration(admitted):
+        owner, args, t = admitted
+        def forbidden():
+            raise AssertionError('graphs read before metadata admission')
+            yield
+>       with pytest.raises(ValueError): admit(owner, args | {'graphs': forbidden()})
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_training.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3dcc3d90>
+args = {'graphs': <generator object test_metadata_refusal_precedes_graph_iteration.<locals>.forbidden at 0x7e5d3d558d00>, 'ex...025-01-01T00:00:00Z', member_hash='3e38a93ad11c3914c2c156bf330f1fb365869330cbeba716b4809f2f0e5ccf35'), 'seed': 11, ...}
+
+    def admit(owner, args):
+>       from tradingagents.research.onchain_replication.compact_training import admit
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_training'
+
+tests/research/onchain_replication/test_compact_training.py:55: ModuleNotFoundError
+___________ test_metadata_refusal_precedes_graph_iteration[manifest] ___________
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3dcf3a80>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    @pytest.mark.parametrize('admitted', ['route', 'schema', 'manifest'], indirect=True)
+    def test_metadata_refusal_precedes_graph_iteration(admitted):
+        owner, args, t = admitted
+        def forbidden():
+            raise AssertionError('graphs read before metadata admission')
+            yield
+>       with pytest.raises(ValueError): admit(owner, args | {'graphs': forbidden()})
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_training.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3dcf3a80>
+args = {'graphs': <generator object test_metadata_refusal_precedes_graph_iteration.<locals>.forbidden at 0x7e5d3d87ec80>, 'ex...025-01-01T00:00:00Z', member_hash='3e38a93ad11c3914c2c156bf330f1fb365869330cbeba716b4809f2f0e5ccf35'), 'seed': 11, ...}
+
+    def admit(owner, args):
+>       from tradingagents.research.onchain_replication.compact_training import admit
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_training'
+
+tests/research/onchain_replication/test_compact_training.py:55: ModuleNotFoundError
+_ test_actual_graph_examples_seed_config_and_fold_cannot_use_registered_descriptor _
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3d44c640>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_actual_graph_examples_seed_config_and_fold_cannot_use_registered_descriptor(admitted):
+        owner, args, t = admitted
+        changed = replace(args['graphs'][0], node_features=args['graphs'][0].node_features + 1)
+        cfg = copy.deepcopy(args['configs']); cfg['matching']['max_iterations'] += 1
+        rows = tuple(reversed(args['examples'].test))
+        changed_examples = replace(args['examples'], test=rows,
+            test_mask_hash=digest(canonical_bytes([r.decision_at for r in rows])))
+        for edits in ({'graphs': (changed, *args['graphs'][1:])}, {'graphs': args['graphs'][1:]},
+                      {'seed': 12}, {'configs': cfg}, {'examples': changed_examples},
+                      {'fold': replace(args['fold'], train_end='2023-12-01T00:00:00Z')}):
+>           with pytest.raises(ValueError): admit(owner, args | edits)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_training.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3d44c640>
+args = {'graphs': (GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', ava...025-01-01T00:00:00Z', member_hash='3e38a93ad11c3914c2c156bf330f1fb365869330cbeba716b4809f2f0e5ccf35'), 'seed': 11, ...}
+
+    def admit(owner, args):
+>       from tradingagents.research.onchain_replication.compact_training import admit
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_training'
+
+tests/research/onchain_replication/test_compact_training.py:55: ModuleNotFoundError
+_____________ test_even_registered_future_input_is_refused[future] _____________
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3d832210>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    @pytest.mark.parametrize('admitted', ['future'], indirect=True)
+    def test_even_registered_future_input_is_refused(admitted):
+        owner, args, t = admitted
+>       with pytest.raises(ValueError, match='future'): admit(owner, args)
+                                                        ^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_training.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3d832210>
+args = {'graphs': [GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', ava...025-01-01T00:00:00Z', member_hash='3e38a93ad11c3914c2c156bf330f1fb365869330cbeba716b4809f2f0e5ccf35'), 'seed': 11, ...}
+
+    def admit(owner, args):
+>       from tradingagents.research.onchain_replication.compact_training import admit
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_training'
+
+tests/research/onchain_replication/test_compact_training.py:55: ModuleNotFoundError
+_ test_route_views_cannot_redirect_owner_or_training_inputs_and_terminal_owner_revokes _
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3d71d9d0>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_route_views_cannot_redirect_owner_or_training_inputs_and_terminal_owner_revokes(admitted):
+>       owner, args, t = admitted; route = admit(owner, args)
+                                           ^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_training.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3d71d9d0>
+args = {'graphs': [GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', ava...025-01-01T00:00:00Z', member_hash='3e38a93ad11c3914c2c156bf330f1fb365869330cbeba716b4809f2f0e5ccf35'), 'seed': 11, ...}
+
+    def admit(owner, args):
+>       from tradingagents.research.onchain_replication.compact_training import admit
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_training'
+
+tests/research/onchain_replication/test_compact_training.py:55: ModuleNotFoundError
+____________ test_registered_metadata_drift_is_refused_at_boundary _____________
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3d58f9b0>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_registered_metadata_drift_is_refused_at_boundary(admitted):
+>       owner, args, t = admitted; route = admit(owner, args)
+                                           ^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_training.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+owner = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7e5d3d58f9b0>
+args = {'graphs': [GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', ava...025-01-01T00:00:00Z', member_hash='3e38a93ad11c3914c2c156bf330f1fb365869330cbeba716b4809f2f0e5ccf35'), 'seed': 11, ...}
+
+    def admit(owner, args):
+>       from tradingagents.research.onchain_replication.compact_training import admit
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_training'
+
+tests/research/onchain_replication/test_compact_training.py:55: ModuleNotFoundError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_training.py::test_actual_training_population_is_bound_without_sampling_or_pair_creation
+FAILED tests/research/onchain_replication/test_compact_training.py::test_metadata_refusal_precedes_graph_iteration[route]
+FAILED tests/research/onchain_replication/test_compact_training.py::test_metadata_refusal_precedes_graph_iteration[schema]
+FAILED tests/research/onchain_replication/test_compact_training.py::test_metadata_refusal_precedes_graph_iteration[manifest]
+FAILED tests/research/onchain_replication/test_compact_training.py::test_actual_graph_examples_seed_config_and_fold_cannot_use_registered_descriptor
+FAILED tests/research/onchain_replication/test_compact_training.py::test_even_registered_future_input_is_refused[future]
+FAILED tests/research/onchain_replication/test_compact_training.py::test_route_views_cannot_redirect_owner_or_training_inputs_and_terminal_owner_revokes
+FAILED tests/research/onchain_replication/test_compact_training.py::test_registered_metadata_drift_is_refused_at_boundary
+8 failed in 94.69s (0:01:34)

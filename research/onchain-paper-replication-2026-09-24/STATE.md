@@ -3,6 +3,38 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact training-population admission — October 1 heartbeat**:
+Fresh synthetic red01 CLOSED8missing-module failures94.69s/session35372exit1,
+evidence full_sources/compact-training-2026-10-01/. Root is implementing the
+explicit registered compact training route: actual graph/example/fold/config/
+seed and source/clock joins, training-only population, live owner and frozen
+input boundaries. No sampling, pair allocation or scientific sample-provenance
+claim is made by this admission-only component. Independent owner_closure_review
+is checking the scientific requirements. check01 was interrupted deliberately
+after the positive case exposed a datetime/string calendar error:1failed2passed
+126.57s/session66315exit2. It also repeatedly scanned the complete source checkout
+per graph manifest; source/test/log preserved. Calendar comparisons now normalize
+timestamps, and bounded registered metadata reads use live leases with full
+source/input checks bracketing the admission boundary. This is not a throughput
+benchmark. red02 CLOSED1failed11deselected15.77s/session53489exit1 reproduced a
+late owner-callback mutation of the route view. Source/test retained; integrity
+now brackets the owner callback. check02 CLOSED12passes169.87s/session40869exit0
+includes full resident graph/example drift and admission-before-stage checks.
+Independent review identified raw timestamp comparison could admit equivalent
+Z/+00:00 duplicate weekly slots. Preserved check02 source/test; red03 CLOSED1failed
+12deselected15.65s/session79996exit1 reproduced the exact separately registered
+duplicate. Uniqueness now uses normalized UTC starts. check03 CLOSED2passed
+11deselected30.28s/session72763exit0 verifies successful actual admission and the
+duplicate refusal; no combined current13-case run is claimed. No engineering,
+empirical/resource or financial job is active. Independent REVIEW accepted the
+bounded registered resident-population contract, SHA
+6e1f52cb30c887908b74e9e18455dfc63505124bd37dbe8ac28175c3f477459e.
+Exact supplied registered rows are bound; full calendar/exclusion denominator completeness,
+independent prices/labels and sampler-draw provenance remain separate gates.
+Next implement durable bounded sampler publication from this admitted route,
+then consume its verified RNG/draw/artifact evidence in the compact dictionary
+producer. Current full representation closure and native selection remain pending.
+
 **Compact dictionary capacity/count continuation — October 1 heartbeat**:
 Fresh synthetic red01 CLOSED7API failures79.18s/session86164exit1 at
 full_sources/compact-dictionary-count-2026-10-01/red01.log. check01 CLOSED7passes

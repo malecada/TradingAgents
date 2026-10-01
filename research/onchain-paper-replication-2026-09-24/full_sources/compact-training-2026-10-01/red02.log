@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_last_owner_callback_cannot_change_route_views ______________
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7a53f1665550>, {'graphs': [GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a53f16f2780>
+
+    def test_last_owner_callback_cannot_change_route_views(admitted, monkeypatch):
+        owner, args, t = admitted; route = admit(owner, args)
+        original = owner.lease
+        def changed():
+            original(); route._seed = 12
+        monkeypatch.setattr(owner, 'lease', changed)
+>       with pytest.raises(ValueError, match='route changed'): route.lease()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_training.py:139: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_training.py::test_last_owner_callback_cannot_change_route_views
+1 failed, 11 deselected in 15.77s

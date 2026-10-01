@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_registered_equivalent_timestamp_week_cannot_duplicate_training_exposure[duplicate_week] _
+
+admitted = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x7a21d40a5550>, {'graphs': (GraphSnapshot(...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    @pytest.mark.parametrize('admitted', ['duplicate_week'], indirect=True)
+    def test_registered_equivalent_timestamp_week_cannot_duplicate_training_exposure(admitted):
+        owner, args, t = admitted
+        assert len({g.start_utc for g in args['graphs']}) == len(args['graphs'])
+        assert len({utc(g.start_utc) for g in args['graphs']}) == len(args['graphs']) - 1
+>       with pytest.raises(ValueError, match='duplicate weekly'): admit(owner, args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_training.py:152: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_training.py::test_registered_equivalent_timestamp_week_cannot_duplicate_training_exposure[duplicate_week]
+1 failed, 12 deselected in 15.65s
