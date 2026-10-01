@@ -3,26 +3,40 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Active actual guarded reuse trial — do not duplicate**:
-The distinct retained root research_artifacts/native-reuse-synthetic/attempt01,
-experimentexample-a/source7d2b6fde5035c5178d2f39e98fe4f4aa118b697e is now RUNNING.
-Session31248, supervisor2768440, monitor2769004, guardchild2769265,
-worker2769268. Actual launch01 follows accepted FINAL_REVIEW and
-GUARDED_ADMISSION_REVIEW and fresh guarded-preflight03 (249source/test bindings,
-all current inputs/runtime matched, resource reserves available, no active job).
-The earlier prelaunch-refusal01/session81568exit1 was a broad process-string
-check matching its own shell text; no launch reservation, claim or worker existed.
-It is retained and was corrected to check Python command lines only. No terminal
-identity was retried. Limits3GiBmax/2GiBhigh/zeroswap/twoCPUs/10GiBfloor/900swall.
-Frozen code/tests/source roots must remain untouched until terminal. Reviewed
-consumer source and failed/passing checks pushed through1c5645dacdc46b267f673b69e6037be6470fd62c;
-remote hash verified. The old producer remains closed and immutable.
-Next safe action: observe/reconcile this job, verify both checkpoint/prediction
-outputs and actual kernel/owner/cleanup evidence, independently review closure,
-archive the complete new checkout including its pinned input bodies, and continue
-full-size resource-gate preparation. No financial study fits or coverage credit.
+**Actual guarded native reuse CLOSED complete — October 1 continuation**:
+Retained root research_artifacts/native-reuse-synthetic/attempt01,
+experimentexample-a/source7d2b6fde5035c5178d2f39e98fe4f4aa118b697e is terminal.
+Launch01/session31248exit0 completed both tiny cells in99.506942334s, sampled
+peak459923456B (~439MiB), all memoryevents0, childexit0, cleanupverified.
+Supervisor2768440/monitor2769004/guardchild2769265/worker2769268 and cgroup absent.
+Never relaunch this identity. guarded-verification01/session37643exit0 verifies
+saved checkpoint bytes/state, expected labels/clocks and independent metrics.
+GUARDED_CLOSURE_REVIEW SHA dbf51760614d4a20df70b1335024ddef231cdcc21365ede9d6fcb94938fa4bbc
+accepts actual guard/owner/source/output closure and releases the source freeze.
+Original producer652files unchanged; no new producer namespaces. Complete new
+checkout368files/4194917logicalB is archived with all member hashes verified:
+guarded-attempt01.tar.gz2325137B SHA1922426d92b801c3c9b8f35930c37a2a302c23b4c6592fe5a4b664490b8deee1.
+External fetch/recovery pending. Evidence: full_sources/native-reuse-integration-2026-10-01/.
+No active numerical process, empirical admission or resource-coverage credit.
 
-**Current consumer integration — synthetic checks passed; guarded trial prepared**:
+**Next resource input preparation already executed**:
+full_sources/native-resource-admission-2026-10-01/build_inventory.py joins the9
+retained graph manifests to their saved independent verifier records, including
+the later two legacy verifications, and maps all32open requirement IDs. Original
+512samples/32motifs/seed11 and current execution caps are preserved. Metadata-only
+inputs01 failed an incorrect legacy week-field comparison; source/log retained.
+Corrected inputs02 succeeded, with independent INPUTS_REVIEW pending. Aggregates:
+18046816nodes/24381697directededges,4779690416B saved array files;32-column dense MCM
+payload arithmetic2309992448B float32 or4619984896B float64,577498112node-motif pairs.
+These are stored-evidence arithmetic, not measured peak memory/disk/runtime or a
+requirement to load all graphs simultaneously. No arrays, targets or outcomes read.
+Next safe action: close archive external recovery and input review; implement the
+remaining resource execution contract (population, whole-workflow physical quotas,
+hub/node/pair cap amendment, per-stage checkpoint/disposition bounds), independently
+review and commit cumulative60→61 amendment/gate before empirical execution.
+All1420financial fits remain pending, resource coverage77/109 unchanged.
+
+**Historical prelaunch consumer checkpoint — superseded by closure above**:
 Maintained native_reuse.py and the explicit job_payload reuse dispatch are now
 implemented. The new current ResearchRun registers exact historical references,
 full population, source additions and the sole permitted job_payload bridge
