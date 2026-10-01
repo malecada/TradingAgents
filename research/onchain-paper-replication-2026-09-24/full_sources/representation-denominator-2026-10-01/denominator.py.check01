@@ -1,0 +1,100 @@
+"""Metadata-only exact daily denominator and per-step graph clock validation.
+
+Caller must bind actual graph metadata, complete manifest hash, fold and lookback
+to an admitted registration. Price-based exclusions are retained, not independently
+recomputed. This validates coverage accounting, not data completeness or fits.
+"""
+from collections import Counter
+from dataclasses import asdict
+from datetime import timedelta
+from tradingagents.research.onchain_replication.contracts import Fold
+from tradingagents.research.onchain_replication.dataset import ExampleManifest,CalendarGraph
+from tradingagents.research.onchain_replication.calendar import expected_week,stamp
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,utc,require_hash
+
+def require(value,message):
+    if not value:raise ValueError(message)
+
+def midnight(value):
+    result=utc(value);require(result.hour==result.minute==result.second==result.microsecond==0,'daily midnight required')
+    return result
+
+def validate(graphs,examples,fold,*,lookback_days,max_calendar_days,expected_manifest_sha256,expected_population,expected_required):
+    require(type(examples) is ExampleManifest and type(fold) is Fold,'actual example/fold metadata required')
+    require(type(lookback_days) is int and lookback_days>0 and type(max_calendar_days) is int and max_calendar_days>0,
+        'positive calendar bounds required')
+    require_hash(expected_manifest_sha256)
+    raw={**vars(examples),'train':[asdict(row) for row in examples.train],'test':[asdict(row) for row in examples.test]}
+    require(digest(canonical_bytes(raw))==expected_manifest_sha256 and examples.fold_hash==fold.member_hash,'registered full example/fold hash differs')
+    require(examples.train_hash==digest(canonical_bytes(raw['train']))
+        and examples.test_mask_hash==digest(canonical_bytes([r.decision_at for r in examples.test])),'example partition hashes differ')
+    start,train_end,test_start,end=map(midnight,(fold.train_start,fold.train_end,fold.test_start,fold.test_end))
+    require(start<train_end<=test_start<end and fold.validation_start is None and fold.validation_end is None,'frozen fold ordering differs')
+    days=(end-start).days;require(days<=max_calendar_days,'calendar metadata bound exceeded')
+    for values in (expected_population,expected_required):
+        require(isinstance(values,(list,tuple)) and list(values)==sorted(set(values)),'exact sorted unique graph denominator required')
+        for identity in values:require_hash(identity)
+    by_hash={};weeks={};asset=None
+    for graph in graphs:
+        require(type(graph) is CalendarGraph,'admitted graph calendar metadata required');require_hash(graph.identity)
+        begin,finish,available=midnight(graph.start_utc),midnight(graph.end_utc),utc(graph.available_at)
+        require(begin.weekday()==0 and finish-begin==timedelta(days=7) and available>=finish+timedelta(days=1),'graph weekly calendar/lag differs')
+        require(graph.identity not in by_hash and begin not in weeks and (asset is None or graph.asset==asset),'graph metadata population differs')
+        require(set(graph.source_hashes)<=set(examples.source_hashes),'unbound graph sources')
+        by_hash[graph.identity]=graph;weeks[begin]=graph;asset=graph.asset
+    require(sorted(by_hash)==list(expected_population) and bool(by_hash),'registered graph population differs')
+    seen={};required=set();included={'train':[],'test':[]};excluded=Counter()
+    def partition(day):return 'train' if day<train_end else 'test'
+    def forced_reason(day):
+        if day<train_end and day+timedelta(days=1)>=test_start:return 'purged_training_label'
+        if train_end<=day<test_start:return 'outside_fold'
+        if day>=train_end and day+timedelta(days=1)>end:return 'test_label_boundary'
+        return None
+    def claim(date,part):
+        day=midnight(date)
+        require(start<=day<end and day not in seen and partition(day)==part,'missing/duplicate/outside partition day')
+        seen[day]=part;return day
+    def input_dates(day):return tuple((day-timedelta(days=i)).date().isoformat() for i in range(lookback_days,0,-1))
+    for part,rows in (('train',examples.train),('test',examples.test)):
+        previous=None
+        for row in rows:
+            day=claim(row.decision_at,part)
+            require(previous is None or previous<day,'example dates not strictly chronological');previous=day
+            require(forced_reason(day) is None,'included day violates fold exclusion')
+            require(midnight(row.label_start)==day and midnight(row.label_end)==day+timedelta(days=1)
+                and utc(row.max_input_available_at)==day,'example label/input clocks differ')
+            dates=input_dates(day)
+            require(tuple(row.input_dates)==dates and len(row.input_prices)==len(row.graph_hashes)==len(row.graph_available_at)==lookback_days,
+                'exact chronological lookback differs')
+            for date,identity,availability in zip(dates,row.graph_hashes,row.graph_available_at,strict=True):
+                step=utc(date+'T00:00:00Z')+timedelta(days=1);graph=by_hash.get(identity)
+                require(graph is not None and utc(graph.start_utc)==utc(expected_week(step))
+                    and utc(graph.available_at)==utc(availability)<=step,'per-input expected graph/availability differs')
+                required.add(identity)
+            included[part].append(stamp(day))
+    reasons={'purged_training_label','outside_fold','test_label_boundary','warmup_or_missing_price','missing_expected_graph','late_expected_graph'}
+    previous=None
+    for item in examples.exclusions:
+        require(set(item)=={'decision_at','reason','partition'} and item['reason'] in reasons,'explicit known exclusion required')
+        day=claim(item['decision_at'],item['partition'])
+        require(previous is None or previous<day,'excluded dates not strictly chronological');previous=day
+        forced=forced_reason(day)
+        if forced is not None:require(item['reason']==forced,'frozen calendar exclusion differs')
+        else:
+            require(item['reason'] in {'warmup_or_missing_price','missing_expected_graph','late_expected_graph'},'unjustified calendar exclusion')
+            if item['reason']!='warmup_or_missing_price':
+                expected=None
+                for date in input_dates(day):
+                    step=utc(date+'T00:00:00Z')+timedelta(days=1);graph=weeks.get(utc(expected_week(step)))
+                    if graph is None:expected='missing_expected_graph';break
+                    if utc(graph.available_at)>step:expected='late_expected_graph';break
+                require(item['reason']==expected,'graph exclusion metadata differs')
+        excluded[item['reason']]+=1
+    require(len(seen)==days and all(start+timedelta(days=i) in seen for i in range(days)),'full daily denominator incomplete')
+    require(sorted(required)==list(expected_required),'required graph union differs')
+    return {'schema_version':1,'metadata_only':True,'fold_hash':fold.member_hash,'example_manifest_sha256':expected_manifest_sha256,
+        'lookback_days':lookback_days,'calendar_days':days,'test_calendar_days':(end-test_start).days,
+        'train_rows':len(examples.train),'test_rows':len(examples.test),'excluded_by_reason':dict(sorted(excluded.items())),
+        'required_graphs':sorted(required),'graph_population':sorted(by_hash),
+        'date_denominator_hash':digest(canonical_bytes({'included':included,'exclusions':examples.exclusions})),
+        'price_exclusions_revalidated':False}

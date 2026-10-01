@@ -1,0 +1,65 @@
+test_complete_day_partition_and_graph_denominator (__main__.Tests.test_complete_day_partition_and_graph_denominator) ... FAIL
+test_graph_available_by_decision_but_future_at_input_step_refuses (__main__.Tests.test_graph_available_by_decision_but_future_at_input_step_refuses) ... FAIL
+test_lookback_labels_exclusion_partition_and_population_refuse (__main__.Tests.test_lookback_labels_exclusion_partition_and_population_refuse) ... FAIL
+test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation (__main__.Tests.test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation) ... FAIL
+test_rehashed_missing_duplicate_or_reordered_dates_still_refuse (__main__.Tests.test_rehashed_missing_duplicate_or_reordered_dates_still_refuse) ... FAIL
+
+======================================================================
+FAIL: test_complete_day_partition_and_graph_denominator (__main__.Tests.test_complete_day_partition_and_graph_denominator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 45, in test_complete_day_partition_and_graph_denominator
+    m=api();g,f,e=fixture();record=self.run_case(m,g,f,e)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 12, in api
+    path=HERE/'denominator.py';assert path.exists(),'exact representation denominator missing'
+                                      ~~~~~~~~~~~^^
+AssertionError: exact representation denominator missing
+
+======================================================================
+FAIL: test_graph_available_by_decision_but_future_at_input_step_refuses (__main__.Tests.test_graph_available_by_decision_but_future_at_input_step_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 58, in test_graph_available_by_decision_but_future_at_input_step_refuses
+    m=api();g,f,e=fixture();row=replace(e.train[0],graph_hashes=('2'*64,'2'*64),graph_available_at=(g[1].available_at,)*2)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 12, in api
+    path=HERE/'denominator.py';assert path.exists(),'exact representation denominator missing'
+                                      ~~~~~~~~~~~^^
+AssertionError: exact representation denominator missing
+
+======================================================================
+FAIL: test_lookback_labels_exclusion_partition_and_population_refuse (__main__.Tests.test_lookback_labels_exclusion_partition_and_population_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 63, in test_lookback_labels_exclusion_partition_and_population_refuse
+    m=api();g,f,e=fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 12, in api
+    path=HERE/'denominator.py';assert path.exists(),'exact representation denominator missing'
+                                      ~~~~~~~~~~~^^
+AssertionError: exact representation denominator missing
+
+======================================================================
+FAIL: test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation (__main__.Tests.test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 75, in test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation
+    m=api();g,f,e=fixture();excluded=freeze({'decision_at':e.test[1].decision_at,'reason':'warmup_or_missing_price','partition':'test'})
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 12, in api
+    path=HERE/'denominator.py';assert path.exists(),'exact representation denominator missing'
+                                      ~~~~~~~~~~~^^
+AssertionError: exact representation denominator missing
+
+======================================================================
+FAIL: test_rehashed_missing_duplicate_or_reordered_dates_still_refuse (__main__.Tests.test_rehashed_missing_duplicate_or_reordered_dates_still_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 51, in test_rehashed_missing_duplicate_or_reordered_dates_still_refuse
+    m=api();g,f,e=fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 12, in api
+    path=HERE/'denominator.py';assert path.exists(),'exact representation denominator missing'
+                                      ~~~~~~~~~~~^^
+AssertionError: exact representation denominator missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (failures=5)

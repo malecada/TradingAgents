@@ -3,6 +3,29 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Exact representation metadata denominator independently accepted**:
+New isolated full_sources/representation-denominator-2026-10-01/ validates the
+full daily decision calendar, unique chronological included/excluded membership,
+exact graph population/required union, frozen lookback/label clocks and per-input
+expected graph availability. Missing/late graph and calendar purge/gap exclusions
+are replayed. Price-based exclusions remain recorded and explicitly unverified;
+passing this metadata check is not full paper coverage or empirical admission.
+The caller must separately bind exact fold/lookback/graph metadata and manifest
+hash to actual registered sources. Explicit max_calendar_days bounds enumeration.
+red01 CLOSED5missing failures0.002s. check01 CLOSED5methods2errors0.020s from the
+existing expected_week string-only API; source/test/log preserved. Canonical
+string conversion fixes it; check02 CLOSED5passes0.015s. New graph-exclusion/purge
+coverage justified check03 CLOSED7passes0.026s, no code change since check02.
+All17bindings recorded in bindings.json SHA
+150f5303366cefa36d0d5bf507f9a50e392246fbd51230774c7084837b2de651.
+Independent review accepts the pure metadata scope, REVIEW SHA
+f0426cf014db7525822df2b8d38cb05295f25c7613a913165cdb7fa0e62eb54a.
+No process active. Next safe action: connect this metadata check to
+actual current owner, registered example/fold/lookback policy and all required
+graph completion receipts without eagerly retaining every graph tensor.
+Saved graph-feature admission predecessor accepted/pushed at ae66b00b,
+remote verified. All1420financial fits remain pending.
+
 **Saved graph-feature admission independently accepted**:
 New isolated full_sources/graph-feature-artifact-route-2026-10-01/ validates the
 actual current owner/ticket and selected graph/MCM/tensor policies, exact native

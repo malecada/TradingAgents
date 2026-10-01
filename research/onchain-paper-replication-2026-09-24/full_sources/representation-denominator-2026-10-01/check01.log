@@ -1,0 +1,49 @@
+test_complete_day_partition_and_graph_denominator (__main__.Tests.test_complete_day_partition_and_graph_denominator) ... ERROR
+test_graph_available_by_decision_but_future_at_input_step_refuses (__main__.Tests.test_graph_available_by_decision_but_future_at_input_step_refuses) ... ok
+test_lookback_labels_exclusion_partition_and_population_refuse (__main__.Tests.test_lookback_labels_exclusion_partition_and_population_refuse) ... ok
+test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation (__main__.Tests.test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation) ... ERROR
+test_rehashed_missing_duplicate_or_reordered_dates_still_refuse (__main__.Tests.test_rehashed_missing_duplicate_or_reordered_dates_still_refuse) ... ok
+
+======================================================================
+ERROR: test_complete_day_partition_and_graph_denominator (__main__.Tests.test_complete_day_partition_and_graph_denominator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 45, in test_complete_day_partition_and_graph_denominator
+    m=api();g,f,e=fixture();record=self.run_case(m,g,f,e)
+                                   ~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 42, in run_case
+    args.update(kw);return m.validate(graphs,examples,fold,**args)
+                           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/denominator.py", line 71, in validate
+    require(graph is not None and utc(graph.start_utc)==utc(expected_week(step))
+                                                            ~~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/calendar.py", line 15, in expected_week
+    lagged=utc(decision_at)-timedelta(days=1)
+           ~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py", line 34, in utc
+    raise ValueError('UTC timestamp must be a string')
+ValueError: UTC timestamp must be a string
+
+======================================================================
+ERROR: test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation (__main__.Tests.test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 78, in test_recorded_price_exclusion_keeps_day_without_claiming_price_revalidation
+    record=self.run_case(m,g,f,bad)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/test_denominator.py", line 42, in run_case
+    args.update(kw);return m.validate(graphs,examples,fold,**args)
+                           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/denominator.py", line 71, in validate
+    require(graph is not None and utc(graph.start_utc)==utc(expected_week(step))
+                                                            ~~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/calendar.py", line 15, in expected_week
+    lagged=utc(decision_at)-timedelta(days=1)
+           ~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py", line 34, in utc
+    raise ValueError('UTC timestamp must be a string')
+ValueError: UTC timestamp must be a string
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.020s
+
+FAILED (errors=2)
