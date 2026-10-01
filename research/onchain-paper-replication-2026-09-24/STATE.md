@@ -1,7 +1,69 @@
-# Current execution checkpoint — October 1, 2026
+# Current execution checkpoint — October 2, 2026
 
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
+
+**Compact graph artifact publication — October 1 continuation**:
+Implemented compact_graph_artifacts.py from actual compact_features.Features:
+registered both-plan/job policy, required-population artifact reservation, exact
+NPY/manifest sizing, strict saved-byte comparison, current-owner loaded tensors,
+preserved failed namespaces and fatal owned-descriptor cleanup. Source/tensor/
+readback cap is per load; parent attributes, scratch/RSS and repeated retention
+remain separately accountable. Evidence full_sources/compact-graph-artifacts-2026-10-01/.
+red01 CLOSED1missing-module failure5deselected81.27s/session25103exit1.
+check01 CLOSED5passed1failed568.26s/session5268exit1: growth fixture hit PyTorch
+storage protection before actual mutation. Source/test retained. Independent
+closure review identified final callback owner revocation; actual artifact red02
+reproduced1failed7deselected97.43s/session61277exit1. Added callback-free
+compact_owner.verify_current and pinned binding metadata snapshot expectations
+at owner construction. Existing live guard remains preceding sampled check.
+Growth fixture now uses actual tensor storage replacement and asserts shape;
+added valid rehashed wrong-value rejection and empty-edge layout/readback checks.
+check02 CLOSED5passed4deselected402.73s/session15121exit0. owner-check01
+CLOSED12passed139.19s/session49820exit0. No combined final nine-case run claimed.
+RESULT.md records exact source hashes and all retained failures. Independent final
+artifact REVIEW accepted SHA9f8d66969cb0b428d063f19930ded2894bf7530b4c99d911f59f83b68533db90.
+
+**Compact graph/calendar metadata closure — October 2 continuation**:
+Installed compact_closure.py from the reviewed draft, including callback-free
+current-owner verification. Exact same-Training dictionary and complete calendar,
+all required graph artifacts and sequential saved-value readback form a schema3
+metadata binding. Full cross-graph checks retained; proposed scalar optimization
+is deferred. No durable representation publication, terminal seal or native
+handoff is claimed. Earlier red01 CLOSED1missing-module failure1deselected2.69s/
+session51823exit1. check01 CLOSED2passed200.42s/session43581exit0, actual two required graphs
+and20calendar days, including final Receipt.lease owner revocation. Independent
+final closure REVIEW accepted SHA24c6b8529e75a5e62fc1b820d0b8b4d81bee016dfdbde05c102f015bceaffbe9.
+All artifact/closure checks are terminal. No empirical/resource/financial jobs. Coverage77/109 and
+all1420financial fits pending unchanged. Latest disk21335605248B available,
+authorized10GiB floor maintained. Next safe action: inspect this same check and
+independent review; then implement durable representation publication/terminal
+handoff. Whole-workflow physical accounting, hub-cap amendments and independently
+reviewed committed60→61 gate remain required before empirical pilots.
+
+**Compact durable metadata publication — October 2 continuation**:
+Implemented compact_publication.py after the missing-module regression; independent
+static review found no blocker. Same current-owner closure, explicit both-plan/job
+policy, four-file bounded output allowance, exclusive namespace, exact persisted
+binding/closure bytes, callback-free final owner verification and preserved failed
+identity. No old-format FeatureJournal event, terminal seal, registered run outputs
+or native handoff is claimed. Evidence full_sources/compact-publication-2026-10-02/.
+red01 CLOSED1missing-module failure2deselected2.75s/session29695exit1.
+check01 CLOSED3passed417.98s/session90914exit0: actual closure required,
+actual two-graph binding publication/duplicate/corruption refusal, and final
+publication callback owner revocation with retained complete+failed evidence.
+All checks terminal; independent final REVIEW accepted SHA
+54d56bde3da0cf410c3e014abbd3a90b172f3e35e3b99dcc83fa3b1fa79a5329.
+Next safe action: back up this reviewed checkpoint, then immediately implement
+the explicit compact terminal-to-native handoff. The old FeatureJournal reader
+requires graph-complete events and cannot interpret compact artifact receipts;
+keep a distinct compact terminal schema/reader and do not fabricate old events.
+The existing compact_owner.finish closes active leases. A post-seal current-run/
+guard/source/input and exact saved-evidence contract is necessary before native
+loading or registered output publication.
+No empirical jobs. Graph artifacts/owner/closure checkpoint154dc3fa05639a688f8555e006cc9295f02d0f45
+committed, pushed and exact remote hash verified; newer publication checkpoint
+is not yet backed up.
 
 **Compact complete-calendar admission — October 1 continuation**:
 Implemented compact_denominator.py: actual Training, both registered plan/job
