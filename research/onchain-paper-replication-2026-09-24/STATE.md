@@ -3,6 +3,32 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Dictionary execution requiring sampler proof independently accepted**:
+New isolated full_sources/dictionary-proof-driver-2026-10-01/ replaces the
+sample-event-only entry with mandatory current-owner proof admission. It leases
+proof/artifacts across every actual pair and returns exact sample/proof provenance.
+The scalar dictionary semantics and prior source remain unchanged.
+red01 CLOSED5missing-driver failures/0.003s. check01 CLOSED exit0/session5887:
+5passes/75.961s. No active test/empirical process or source freeze.
+All actual tiny matrices, memberships/hierarchy and ordered representatives match
+the scalar reference; exact sampler proof/sample references are returned. Completed
+pair replay forbids create/resume and adds no reservations. Conflict/missing draw
+refuse before workload; proof drift after the first pair stops further work.
+Independent REVIEW SHA
+f1b0dd903f2d71ec437f8d5df91cc58fc1bd1978a5e7eb7ef52d1846412db2cb.
+All178bindings match manifest SHA
+dd03da553c88e9311e5941904c0ede6d3a35753b3201ce35f4c3fa1e6285a6ae.
+No empirical execution or budget change; all1420financial fits remain pending.
+Next safe action: durable dictionary publication/admission under an exact
+registered output budget. Bind numeric representatives, memberships/hierarchy,
+training hashes, sample identity and proof/event/component references to the
+actual owner, workload and matching settings. Preflight encoded/numeric/event
+allowances before writing a dictionary_complete FeatureJournal event; retain
+partial failures and refuse duplicate publication. Completed dictionary reuse
+must load the exact admitted artifact without workload/Serial/PairSession entry.
+Historical ancestry and mapped full-fold/MCM integration remain subsequent
+mandatory work; existing tiny resident checks do not release empirical runs.
+
 **Larger bounded proof metadata and current-owner admission accepted**:
 New isolated full_sources/sampler-proof-route-2026-10-01/ preserves the accepted
 predecessor producer unchanged. Its derived producer allows explicitly registered
@@ -35,13 +61,12 @@ session63408 exit0. Independent REVIEW SHA
 All162bindings match manifest SHA
 8c003389dc824f2ee65114aaf081ad4aa998dae41510722322984baed8729c30.
 No active test/empirical process. Acceptance is bounded resident proof admission.
-Existing dictionary execution does
-not yet require this proof; weighted-choice recomputation, historical sampler
+The predecessor dictionary-sample-driver does
+not require this proof; the accepted successor above does. Weighted-choice
+recomputation, historical sampler
 continuation, mapped/resource admission and full publication scope remain due.
-Next safe action: enforce the accepted proof in the actual dictionary driver,
-lease it across every pair and carry exact proof/sample references into the
-result. dictionary-proof-driver-2026-10-01 has prepared source/tests and a closed
-red01 (5missing-driver failures/0.003s); implemented verification is not yet run.
+Proof enforcement in the actual dictionary driver is completed in the newer
+checkpoint above; dictionary publication/admission is the next safe action.
 
 **Registered first-attempt sampler publication independently accepted**:
 New isolated full_sources/sampler-producer-2026-10-01/ composes actual admitted

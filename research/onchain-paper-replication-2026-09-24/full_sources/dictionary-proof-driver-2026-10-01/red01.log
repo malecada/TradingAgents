@@ -1,0 +1,80 @@
+test_actual_dictionary_parity_provenance_and_completed_pair_reuse (__main__.Tests.test_actual_dictionary_parity_provenance_and_completed_pair_reuse) ... FAIL
+test_conflicting_proof_refuses_before_workload_or_pair_reservation (__main__.Tests.test_conflicting_proof_refuses_before_workload_or_pair_reservation) ... FAIL
+test_partial_proof_refuses_before_workload_or_pair_reservation (__main__.Tests.test_partial_proof_refuses_before_workload_or_pair_reservation) ... FAIL
+test_proof_drift_after_first_pair_refuses_further_work (__main__.Tests.test_proof_drift_after_first_pair_refuses_further_work) ... FAIL
+test_unregistered_driver_refuses_before_reservation (__main__.Tests.test_unregistered_driver_refuses_before_reservation) ... FAIL
+
+======================================================================
+FAIL: test_actual_dictionary_parity_provenance_and_completed_pair_reuse (__main__.Tests.test_actual_dictionary_parity_provenance_and_completed_pair_reuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 31, in test_actual_dictionary_parity_provenance_and_completed_pair_reuse
+    f=self.fixture();actual=self.run_driver()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 21, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_current_completion_proof_is_admitted_without_redrawing')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 16, in api
+    assert (HERE/'driver.py').is_file(),'proof-enforcing dictionary driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: proof-enforcing dictionary driver missing
+
+======================================================================
+FAIL: test_conflicting_proof_refuses_before_workload_or_pair_reservation (__main__.Tests.test_conflicting_proof_refuses_before_workload_or_pair_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 53, in test_conflicting_proof_refuses_before_workload_or_pair_reservation
+    f=self.fixture();(self.f.proof.parent/'failed.json').write_text('{}')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 21, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_current_completion_proof_is_admitted_without_redrawing')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 16, in api
+    assert (HERE/'driver.py').is_file(),'proof-enforcing dictionary driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: proof-enforcing dictionary driver missing
+
+======================================================================
+FAIL: test_partial_proof_refuses_before_workload_or_pair_reservation (__main__.Tests.test_partial_proof_refuses_before_workload_or_pair_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 57, in test_partial_proof_refuses_before_workload_or_pair_reservation
+    f=self.fixture();(self.f.proof.parent/'draw-000000.json').unlink()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 21, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_current_completion_proof_is_admitted_without_redrawing')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 16, in api
+    assert (HERE/'driver.py').is_file(),'proof-enforcing dictionary driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: proof-enforcing dictionary driver missing
+
+======================================================================
+FAIL: test_proof_drift_after_first_pair_refuses_further_work (__main__.Tests.test_proof_drift_after_first_pair_refuses_further_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 61, in test_proof_drift_after_first_pair_refuses_further_work
+    f=self.fixture();original=self.m.artifacts.consumer.dictionary_consumer;calls=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 21, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_current_completion_proof_is_admitted_without_redrawing')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 16, in api
+    assert (HERE/'driver.py').is_file(),'proof-enforcing dictionary driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: proof-enforcing dictionary driver missing
+
+======================================================================
+FAIL: test_unregistered_driver_refuses_before_reservation (__main__.Tests.test_unregistered_driver_refuses_before_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 71, in test_unregistered_driver_refuses_before_reservation
+    f=self.fixture(omit=True)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 21, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_current_completion_proof_is_admitted_without_redrawing')
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-proof-driver-2026-10-01/test_driver.py", line 16, in api
+    assert (HERE/'driver.py').is_file(),'proof-enforcing dictionary driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: proof-enforcing dictionary driver missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+FAILED (failures=5)
