@@ -3,6 +3,52 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Durable per-score tails and actual MCM callback adapter accepted — October 1 continuation**:
+Maintained score_tail.py now binds every scalar to its ordinal/exact purpose,
+owner/scope and exact batch destination in80-byte chained records. Append fsync,
+lease/root/file identity and readback precede acknowledgement. Partial and late
+failures preserve bytes and poison the writer; sealed tails remain retained.
+Evidence full_sources/score-tail-2026-10-01/: check01 CLOSED12passes0.22s;
+red02 reproduced post-seal tail ownership failure; check02 CLOSED13passes0.23s;
+red03 reproduced reciprocal late destination mutation; check03 CLOSED14passes0.28s.
+Original sources/logs retained. REVIEW03 accepted SHA
+6714d22dd9aee4b1af93ab967c1984856695c5a1b8ffa1a5c93b54ccf01531b1.
+
+Maintained mcm_score_stream.py now drives the existing array MCM kernel through
+exact occurrence/purpose checks, durable tail acknowledgement, batch seals and
+full completion-chain verification. Fresh synthetic7node/2motif execution saved
+all14comparisons into4chunks with exact float64 reference bytes and identical
+float32MCM. Wrong occurrence and injected callback failure are refused; actual
+PairSession cleanup remains untested. Evidence full_sources/mcm-score-stream-2026-10-01/:
+check01 CLOSED3passes0.55s; review findings reproduced red02(3failed3deselected0.73s,
+session51331exit1); corrected check02 CLOSED6passes0.85s/session16877exit0.
+FINAL_REVIEW accepted SHA73c78ea16cf9e9b9c2a61b690b988d6d25b0e5fc33792eb55438104872ab2e58.
+Verification is sampled/non-atomic and adds bounded content reads, not measured
+whole-run RSS/disk/runtime evidence. No empirical job was launched.
+
+Next safe implementation: replace the production Serial/per-pair completion
+bookkeeping with an explicitly owned compact route preserving convergence,
+iterations, source/policy identity and progress/failure checkpoints. The current
+adapter wraps a callback and DOES NOT yet remove old per-pair state/artifacts or
+reservations. No historical artifact is deleted or replayed. Define bounded
+prospective live scratch/offload and successor rules; verify actual matcher
+cleanup/numerical parity; integrate registered native source/policy ownership.
+Dictionary hierarchical/directional scheduling needs its own explicit handling;
+the new adapter is MCM-only. Then finish full resource reservations/cap amendments
+and independently review/commit the60→61 gate before empirical execution.
+
+Static score-tail/accounting01.json (full_sources/score-tail-2026-10-01) records
+577498112cells across9graphs: prospective65536cells/chunk gives8816chunks,
+46199848960tail-recordB+4619984896batchB+289177600metadataB=51109011456logicalB.
+All tails remain retained. This is NOT adopted configuration, actual filesystem
+allocation, RSS, runtime, IOPS or a purchase requirement. Excludes old pair journals,
+checkpoints, live matcher state, graphs, logs, other outputs and predecessors.
+Independent ACCOUNTING_REVIEW accepted these pins/conditional totals, SHA
+f47200822897b9676d119e67504708bb7307d46a916d2af9d0d2808f01d14c15.
+Whole-workflow capacity/offload still needs admission. Coverage77/109 and all1420
+financial fits pending are unchanged. STATE, review records and automation remain
+the continuation authority; old historical snapshots below are superseded.
+
 **Compact completed-score batch primitive implemented — October 1 continuation**:
 Maintained score_batches.py now provides bounded row-major float64 chunks with
 owner/graph/node-order/dictionary/motif-order/matching/workflow bindings, immutable

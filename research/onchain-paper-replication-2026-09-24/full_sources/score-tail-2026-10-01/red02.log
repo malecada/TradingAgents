@@ -1,0 +1,33 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_tail_lease_loss_during_batch_publication_refuses_seal_success ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-20/test_tail_lease_loss_during_ba0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76412bc37360>
+
+    def test_tail_lease_loss_during_batch_publication_refuses_seal_success(tmp_path, monkeypatch):
+        module = api()
+        from tradingagents.research.onchain_replication import score_batches as b
+        batches = b.ScoreBatches(tmp_path / 'batches', scope=SCOPE, owner=OWNER,
+            rows=1, motifs=2, chunk_cells=2, lease=lambda: None)
+        obj = tail(tmp_path, destination=module.destination(batches))
+        obj.append(0, 'b' * 64, 0.2); obj.append(1, 'c' * 64, 0.3); ref = obj.finish()
+        alive = True
+        def lease():
+            if not alive: raise RuntimeError('tail owner lost')
+        original = b._write
+        def revoke(fd, name, raw):
+            nonlocal alive
+            result = original(fd, name, raw)
+            if name == 'chunk-000000000000.json': alive = False
+            return result
+        monkeypatch.setattr(b, '_write', revoke)
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/research/onchain_replication/test_score_tail.py:147: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_score_tail.py::test_tail_lease_loss_during_batch_publication_refuses_seal_success
+1 failed, 12 deselected in 0.19s

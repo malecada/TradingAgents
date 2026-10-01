@@ -1,0 +1,112 @@
+{
+  "kind": "static_arithmetic_only",
+  "execution_admitted": false,
+  "input_sha256": "dc4c267c1cd8ce98ec14b49bc5b5c3253598f0380e3d23efdbc6a4286d3d322b",
+  "source_sha256": {
+    "tradingagents/research/onchain_replication/score_tail.py": "deb225ccb9d4002d619d4a09c23272ee93bcfa675a8c54d932fc4f3758420e88",
+    "tradingagents/research/onchain_replication/score_batches.py": "079571b425e1fd04ecf46d8b34aa6fb5352ca2a2bdfda1d9f45982a1ced1f531",
+    "tradingagents/research/onchain_replication/mcm_score_stream.py": "73daf274e788c0c46df6c1bd2a6ea203f1704b843458bb96632292432ef856d2"
+  },
+  "prospective_chunk_cells": 65536,
+  "rows": [
+    {
+      "week": "2022-01-03",
+      "cells": 65571040,
+      "chunks": 1001,
+      "retained_tail_record_bytes": 5245683200,
+      "batch_payload_bytes": 524568320,
+      "metadata_allowance_bytes": 32833536,
+      "logical_completed_score_bound": 5803085056
+    },
+    {
+      "week": "2022-06-13",
+      "cells": 56584576,
+      "chunks": 864,
+      "retained_tail_record_bytes": 4526766080,
+      "batch_payload_bytes": 452676608,
+      "metadata_allowance_bytes": 28344320,
+      "logical_completed_score_bound": 5007787008
+    },
+    {
+      "week": "2022-07-25",
+      "cells": 88455072,
+      "chunks": 1350,
+      "retained_tail_record_bytes": 7076405760,
+      "batch_payload_bytes": 707640576,
+      "metadata_allowance_bytes": 44269568,
+      "logical_completed_score_bound": 7828315904
+    },
+    {
+      "week": "2022-11-07",
+      "cells": 52347872,
+      "chunks": 799,
+      "retained_tail_record_bytes": 4187829760,
+      "batch_payload_bytes": 418782976,
+      "metadata_allowance_bytes": 26214400,
+      "logical_completed_score_bound": 4632827136
+    },
+    {
+      "week": "2023-06-05",
+      "cells": 58791936,
+      "chunks": 898,
+      "retained_tail_record_bytes": 4703354880,
+      "batch_payload_bytes": 470335488,
+      "metadata_allowance_bytes": 29458432,
+      "logical_completed_score_bound": 5203148800
+    },
+    {
+      "week": "2024-01-01",
+      "cells": 58638304,
+      "chunks": 895,
+      "retained_tail_record_bytes": 4691064320,
+      "batch_payload_bytes": 469106432,
+      "metadata_allowance_bytes": 29360128,
+      "logical_completed_score_bound": 5189530880
+    },
+    {
+      "week": "2024-03-11",
+      "cells": 73796480,
+      "chunks": 1127,
+      "retained_tail_record_bytes": 5903718400,
+      "batch_payload_bytes": 590371840,
+      "metadata_allowance_bytes": 36962304,
+      "logical_completed_score_bound": 6531052544
+    },
+    {
+      "week": "2024-08-05",
+      "cells": 54576288,
+      "chunks": 833,
+      "retained_tail_record_bytes": 4366103040,
+      "batch_payload_bytes": 436610304,
+      "metadata_allowance_bytes": 27328512,
+      "logical_completed_score_bound": 4830041856
+    },
+    {
+      "week": "2024-12-23",
+      "cells": 68736544,
+      "chunks": 1049,
+      "retained_tail_record_bytes": 5498923520,
+      "batch_payload_bytes": 549892352,
+      "metadata_allowance_bytes": 34406400,
+      "logical_completed_score_bound": 6083222272
+    }
+  ],
+  "totals": {
+    "cells": 577498112,
+    "chunks": 8816,
+    "retained_tail_record_bytes": 46199848960,
+    "batch_payload_bytes": 4619984896,
+    "metadata_allowance_bytes": 289177600,
+    "logical_completed_score_bound": 51109011456
+  },
+  "excludes": [
+    "filesystem allocation overhead",
+    "original pair journals and checkpoints",
+    "live matching state",
+    "graph and dictionary storage",
+    "guard and application logs",
+    "other run outputs",
+    "predecessor evidence"
+  ],
+  "qualification": "Not measured physical disk, RSS, runtime, IOPS or a purchase requirement. Current stream wraps the existing callback; old per-pair artifacts remain."
+}

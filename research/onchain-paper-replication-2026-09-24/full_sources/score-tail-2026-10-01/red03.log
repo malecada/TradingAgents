@@ -1,0 +1,25 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_final_tail_lease_cannot_change_published_destination_undetected _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-23/test_final_tail_lease_cannot_c0')
+
+    def test_final_tail_lease_cannot_change_published_destination_undetected(tmp_path):
+        module = api()
+        from tradingagents.research.onchain_replication import score_batches as b
+        batches = b.ScoreBatches(tmp_path / 'batches', scope=SCOPE, owner=OWNER,
+            rows=1, motifs=2, chunk_cells=2, lease=lambda: None)
+        obj = tail(tmp_path, destination=module.destination(batches))
+        obj.append(0, 'b' * 64, 0.2); obj.append(1, 'c' * 64, 0.3); ref = obj.finish()
+        def lease():
+            path = tmp_path / 'batches/chunk-000000000000.bin'
+            if path.exists(): path.write_bytes(b'x' * 16)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_score_tail.py:163: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_score_tail.py::test_final_tail_lease_cannot_change_published_destination_undetected
+1 failed, 13 deselected in 0.20s

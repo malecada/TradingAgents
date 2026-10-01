@@ -1,0 +1,260 @@
+FFFFFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+___ test_each_score_is_synced_before_acknowledgement_and_seals_exact_values ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_each_score_is_synced_befo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78b100b2f360>
+
+    def test_each_score_is_synced_before_acknowledgement_and_seals_exact_values(tmp_path, monkeypatch):
+>       module = api(); obj = tail(tmp_path); original = os.fsync; counts = []
+                 ^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+______ test_failed_tail_preserves_acknowledged_prefix_and_refuses_restart ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_failed_tail_preserves_ack0')
+
+    def test_failed_tail_preserves_acknowledged_prefix_and_refuses_restart(tmp_path):
+>       obj = tail(tmp_path); obj.append(0, 'b' * 64, 0.125)
+              ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_tail.py:16: in tail
+    return api().ScoreTail(tmp_path / 'tail', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+_____________ test_partial_write_is_retained_and_not_acknowledged ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_partial_write_is_retained0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78b0fe591f30>
+
+    def test_partial_write_is_retained_and_not_acknowledged(tmp_path, monkeypatch):
+>       module = api(); obj = tail(tmp_path); original = os.write; calls = 0
+                 ^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+___________ test_revoked_lease_after_fsync_never_acknowledges_score ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_revoked_lease_after_fsync0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78b0fe5cd490>
+
+    def test_revoked_lease_after_fsync_never_acknowledges_score(tmp_path, monkeypatch):
+>       module = api(); alive = True
+                 ^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+__________ test_corruption_and_identity_changes_are_refused[payload] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_corruption_and_identity_c0')
+change = 'payload'
+
+    @pytest.mark.parametrize('change', ['payload', 'order', 'owner', 'scope', 'extra', 'symlink'])
+    def test_corruption_and_identity_changes_are_refused(tmp_path, change):
+>       obj = tail(tmp_path); obj.append(0, 'b' * 64, 0.125); obj.append(1, 'c' * 64, 0.25)
+              ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_tail.py:16: in tail
+    return api().ScoreTail(tmp_path / 'tail', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+___________ test_corruption_and_identity_changes_are_refused[order] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_corruption_and_identity_c1')
+change = 'order'
+
+    @pytest.mark.parametrize('change', ['payload', 'order', 'owner', 'scope', 'extra', 'symlink'])
+    def test_corruption_and_identity_changes_are_refused(tmp_path, change):
+>       obj = tail(tmp_path); obj.append(0, 'b' * 64, 0.125); obj.append(1, 'c' * 64, 0.25)
+              ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_tail.py:16: in tail
+    return api().ScoreTail(tmp_path / 'tail', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+___________ test_corruption_and_identity_changes_are_refused[owner] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_corruption_and_identity_c2')
+change = 'owner'
+
+    @pytest.mark.parametrize('change', ['payload', 'order', 'owner', 'scope', 'extra', 'symlink'])
+    def test_corruption_and_identity_changes_are_refused(tmp_path, change):
+>       obj = tail(tmp_path); obj.append(0, 'b' * 64, 0.125); obj.append(1, 'c' * 64, 0.25)
+              ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_tail.py:16: in tail
+    return api().ScoreTail(tmp_path / 'tail', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+___________ test_corruption_and_identity_changes_are_refused[scope] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_corruption_and_identity_c3')
+change = 'scope'
+
+    @pytest.mark.parametrize('change', ['payload', 'order', 'owner', 'scope', 'extra', 'symlink'])
+    def test_corruption_and_identity_changes_are_refused(tmp_path, change):
+>       obj = tail(tmp_path); obj.append(0, 'b' * 64, 0.125); obj.append(1, 'c' * 64, 0.25)
+              ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_tail.py:16: in tail
+    return api().ScoreTail(tmp_path / 'tail', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+___________ test_corruption_and_identity_changes_are_refused[extra] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_corruption_and_identity_c4')
+change = 'extra'
+
+    @pytest.mark.parametrize('change', ['payload', 'order', 'owner', 'scope', 'extra', 'symlink'])
+    def test_corruption_and_identity_changes_are_refused(tmp_path, change):
+>       obj = tail(tmp_path); obj.append(0, 'b' * 64, 0.125); obj.append(1, 'c' * 64, 0.25)
+              ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_tail.py:16: in tail
+    return api().ScoreTail(tmp_path / 'tail', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+__________ test_corruption_and_identity_changes_are_refused[symlink] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_corruption_and_identity_c5')
+change = 'symlink'
+
+    @pytest.mark.parametrize('change', ['payload', 'order', 'owner', 'scope', 'extra', 'symlink'])
+    def test_corruption_and_identity_changes_are_refused(tmp_path, change):
+>       obj = tail(tmp_path); obj.append(0, 'b' * 64, 0.125); obj.append(1, 'c' * 64, 0.25)
+              ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_tail.py:16: in tail
+    return api().ScoreTail(tmp_path / 'tail', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+__________ test_wrong_order_range_and_capacity_refused_before_writes ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_wrong_order_range_and_cap0')
+
+    def test_wrong_order_range_and_capacity_refused_before_writes(tmp_path):
+>       obj = tail(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_tail.py:16: in tail
+    return api().ScoreTail(tmp_path / 'tail', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+______________________ test_failed_tail_cannot_be_sealed _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-18/test_failed_tail_cannot_be_sea0')
+
+    def test_failed_tail_cannot_be_sealed(tmp_path):
+>       obj = tail(tmp_path); obj.append(0, 'b' * 64, 0.5); ref = obj.fail('stopped')
+              ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_score_tail.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_score_tail.py:16: in tail
+    return api().ScoreTail(tmp_path / 'tail', scope=SCOPE, owner=OWNER,
+           ^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import score_tail
+E       ImportError: cannot import name 'score_tail' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_score_tail.py:11: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_score_tail.py::test_each_score_is_synced_before_acknowledgement_and_seals_exact_values
+FAILED tests/research/onchain_replication/test_score_tail.py::test_failed_tail_preserves_acknowledged_prefix_and_refuses_restart
+FAILED tests/research/onchain_replication/test_score_tail.py::test_partial_write_is_retained_and_not_acknowledged
+FAILED tests/research/onchain_replication/test_score_tail.py::test_revoked_lease_after_fsync_never_acknowledges_score
+FAILED tests/research/onchain_replication/test_score_tail.py::test_corruption_and_identity_changes_are_refused[payload]
+FAILED tests/research/onchain_replication/test_score_tail.py::test_corruption_and_identity_changes_are_refused[order]
+FAILED tests/research/onchain_replication/test_score_tail.py::test_corruption_and_identity_changes_are_refused[owner]
+FAILED tests/research/onchain_replication/test_score_tail.py::test_corruption_and_identity_changes_are_refused[scope]
+FAILED tests/research/onchain_replication/test_score_tail.py::test_corruption_and_identity_changes_are_refused[extra]
+FAILED tests/research/onchain_replication/test_score_tail.py::test_corruption_and_identity_changes_are_refused[symlink]
+FAILED tests/research/onchain_replication/test_score_tail.py::test_wrong_order_range_and_capacity_refused_before_writes
+FAILED tests/research/onchain_replication/test_score_tail.py::test_failed_tail_cannot_be_sealed
+12 failed in 0.25s

@@ -1,0 +1,82 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_actual_mcm_kernel_preserves_all_scalar_values_purposes_and_final_float32 _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-22/test_actual_mcm_kernel_preserv0')
+
+    def test_actual_mcm_kernel_preserves_all_scalar_values_purposes_and_final_float32(tmp_path):
+        base, f, d, kernel = fixture(); expected_calls = base.Scores(f.match)
+        expected = f.m.mcm(f.g, d, f.match, **f.kw, score_pair=expected_calls)
+>       actual_calls = base.Scores(f.match); sink = stream(tmp_path, f, d, actual_calls)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mcm_score_stream.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-22/test_actual_mcm_kernel_preserv0')
+f = <stream_synthetic_fixture.Tests testMethod=runTest>
+d = Dictionary(representatives=(AttributedGraph(node_ids=('0', '1'), node_features=array([[0. ],
+       [0.2]]), edge_inde...), (3, 4))}), mappingproxy({'samples': (0, 2, 6), 'representatives': (0, 2), 'original_memberships': ((0,), (2, 6))})))
+compute = <stream_synthetic_fixture.Scores object at 0x720ad572f890>
+
+    def stream(tmp_path, f, d, compute):
+>       from tradingagents.research.onchain_replication.mcm_score_stream import MCMScoreStream
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.mcm_score_stream'
+
+tests/research/onchain_replication/test_mcm_score_stream.py:26: ModuleNotFoundError
+________ test_matcher_failure_preserves_tail_and_blocks_further_compute ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-22/test_matcher_failure_preserves0')
+
+    def test_matcher_failure_preserves_tail_and_blocks_further_compute(tmp_path):
+        base, f, d, kernel = fixture(); calls = []
+        def fail(p, a, b):
+            calls.append(p)
+            raise RuntimeError('synthetic matcher cleanup failed')
+>       sink = stream(tmp_path, f, d, fail)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mcm_score_stream.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-22/test_matcher_failure_preserves0')
+f = <stream_synthetic_fixture.Tests testMethod=runTest>
+d = Dictionary(representatives=(AttributedGraph(node_ids=('0', '1'), node_features=array([[0. ],
+       [0.2]]), edge_inde...), (3, 4))}), mappingproxy({'samples': (0, 2, 6), 'representatives': (0, 2), 'original_memberships': ((0,), (2, 6))})))
+compute = <function test_matcher_failure_preserves_tail_and_blocks_further_compute.<locals>.fail at 0x720ad4e1e7a0>
+
+    def stream(tmp_path, f, d, compute):
+>       from tradingagents.research.onchain_replication.mcm_score_stream import MCMScoreStream
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.mcm_score_stream'
+
+tests/research/onchain_replication/test_mcm_score_stream.py:26: ModuleNotFoundError
+____________ test_wrong_occurrence_rejected_before_matcher_dispatch ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-22/test_wrong_occurrence_rejected0')
+
+    def test_wrong_occurrence_rejected_before_matcher_dispatch(tmp_path):
+        base, f, d, kernel = fixture(); seen = base.Scores(f.match)
+        f.m.mcm(f.g, d, f.match, **f.kw, score_pair=seen)
+>       sink = stream(tmp_path, f, d, lambda *args: pytest.fail('wrong-order matcher called'))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mcm_score_stream.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-22/test_wrong_occurrence_rejected0')
+f = <stream_synthetic_fixture.Tests testMethod=runTest>
+d = Dictionary(representatives=(AttributedGraph(node_ids=('0', '1'), node_features=array([[0. ],
+       [0.2]]), edge_inde...), (3, 4))}), mappingproxy({'samples': (0, 2, 6), 'representatives': (0, 2), 'original_memberships': ((0,), (2, 6))})))
+compute = <function test_wrong_occurrence_rejected_before_matcher_dispatch.<locals>.<lambda> at 0x720ad4de53a0>
+
+    def stream(tmp_path, f, d, compute):
+>       from tradingagents.research.onchain_replication.mcm_score_stream import MCMScoreStream
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.mcm_score_stream'
+
+tests/research/onchain_replication/test_mcm_score_stream.py:26: ModuleNotFoundError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_mcm_score_stream.py::test_actual_mcm_kernel_preserves_all_scalar_values_purposes_and_final_float32
+FAILED tests/research/onchain_replication/test_mcm_score_stream.py::test_matcher_failure_preserves_tail_and_blocks_further_compute
+FAILED tests/research/onchain_replication/test_mcm_score_stream.py::test_wrong_occurrence_rejected_before_matcher_dispatch
+3 failed in 0.52s

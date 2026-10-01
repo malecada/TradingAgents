@@ -1,0 +1,64 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________ test_late_completion_mutation_cannot_return_success[batch] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-26/test_late_completion_mutation_0')
+target = 'batch'
+
+    @pytest.mark.parametrize('target', ['batch', 'link'])
+    def test_late_completion_mutation_cannot_return_success(tmp_path, target):
+        base, f, d, kernel = fixture(); sink = stream(tmp_path, f, d, base.Scores(f.match))
+        kernel.mcm(f.g, d, f.match, **f.kw, score_pair=sink, policy=POLICY, lease=lambda: None)
+        def lease():
+            if (tmp_path / 'stream/complete.json').exists():
+                path = tmp_path / ('stream/batches/chunk-000000000000.bin' if target == 'batch'
+                    else 'stream/seal-000000000000.json')
+                path.write_bytes(b'x' * path.stat().st_size)
+        sink.lease = lease
+>       with pytest.raises(ValueError): sink.finish()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_mcm_score_stream.py:95: Failed
+__________ test_late_completion_mutation_cannot_return_success[link] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-26/test_late_completion_mutation_1')
+target = 'link'
+
+    @pytest.mark.parametrize('target', ['batch', 'link'])
+    def test_late_completion_mutation_cannot_return_success(tmp_path, target):
+        base, f, d, kernel = fixture(); sink = stream(tmp_path, f, d, base.Scores(f.match))
+        kernel.mcm(f.g, d, f.match, **f.kw, score_pair=sink, policy=POLICY, lease=lambda: None)
+        def lease():
+            if (tmp_path / 'stream/complete.json').exists():
+                path = tmp_path / ('stream/batches/chunk-000000000000.bin' if target == 'batch'
+                    else 'stream/seal-000000000000.json')
+                path.write_bytes(b'x' * path.stat().st_size)
+        sink.lease = lease
+>       with pytest.raises(ValueError): sink.finish()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_mcm_score_stream.py:95: Failed
+_________ test_late_seal_link_lease_mutation_refuses_callback_success __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-26/test_late_seal_link_lease_muta0')
+
+    def test_late_seal_link_lease_mutation_refuses_callback_success(tmp_path):
+        base, f, d, kernel = fixture(); calls = base.Scores(f.match)
+        sink = stream(tmp_path, f, d, calls)
+        def lease():
+            if (tmp_path / 'stream/seal-000000000000.json').exists():
+                (tmp_path / 'stream/batches/chunk-000000000000.bin').write_bytes(b'x' * 32)
+        sink.lease = lease
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_mcm_score_stream.py:105: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_mcm_score_stream.py::test_late_completion_mutation_cannot_return_success[batch]
+FAILED tests/research/onchain_replication/test_mcm_score_stream.py::test_late_completion_mutation_cannot_return_success[link]
+FAILED tests/research/onchain_replication/test_mcm_score_stream.py::test_late_seal_link_lease_mutation_refuses_callback_success
+3 failed, 3 deselected in 0.73s
