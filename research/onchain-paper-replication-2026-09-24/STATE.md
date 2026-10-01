@@ -3,6 +3,34 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Admitted dictionary to actual resident MCM independently accepted**:
+New isolated full_sources/mcm-dictionary-driver-2026-10-01/ selects only an exact
+required graph from the admitted resident population, requires the dictionary
+artifact proof, derives MCM scope and pair purposes internally and leases the
+dictionary/owner/graph around each pair. It uses the actual existing scalar MCM
+workload and serial journal. The output entry cap is checked before dictionary
+loading. This is current resident composition only; the inherited Python
+NeighborhoodIndex and whole MCM allocation are not claimed scalable or admitted
+for empirical full-fold use. MCM artifact publication/reuse and mapped support
+remain due. red01 CLOSED4missing-driver failures0.001s,session90963 exit1.
+check01 CLOSED4passes/151.446s,session72524 exit0. Every2x2MCM cell agrees
+exactly with independently computed scalar matching cast to float32. Completed
+replay forbids pair create/resume and adds no reservations. Foreign graph,
+conflicting dictionary and post-first-pair drift refusals pass. No active
+job/source freeze. Independent REVIEW SHA
+38cd05b9aa84f8423faccfa62b18ed4edb94659f7a0c32508d213250e05912ff.
+All211bindings match manifest SHA
+7c107636086469bcae4984eb8778e71f89c1027eba9daf6bc53ff4df95b49ece.
+No financial fits or empirical budget changes. Next safe action: replace the
+known unbounded Python-neighborhood dependency in an isolated exact MCM kernel
+using the reviewed array-neighborhood implementation, explicit registered scratch
+and output bounds, mandatory leases and complete row/cell accounting. Preserve
+node/motif order, float32 outputs, scalar matching and exact pair purposes;
+verify full tiny matrices and completed pair replay before publication work.
+Then implement durable MCM publication/admission/reuse. Whole-workflow physical
+accounting, cheaper reviewed leases, mapped populations, historical continuation
+and prospective measured resource/budget admission remain required before fits.
+
 **Current-owner dictionary artifact admission/reuse independently accepted**:
 New isolated full_sources/dictionary-artifact-route-2026-10-01/ validates exact
 publication proof/start/source/policy/owner/event/component references and
