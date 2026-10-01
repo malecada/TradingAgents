@@ -1,0 +1,84 @@
+test_real_saved_mcm_to_exact_tensors_without_numerical_recomputation (__main__.Tests.test_real_saved_mcm_to_exact_tensors_without_numerical_recomputation) ... FAIL
+test_registered_policy_drift_after_conversion_refuses_return (__main__.Tests.test_registered_policy_drift_after_conversion_refuses_return) ... FAIL
+test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load (__main__.Tests.test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load) ... 
+  test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load (__main__.Tests.test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load) (mode='route') ... FAIL
+  test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load (__main__.Tests.test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load) (mode='cap') ... FAIL
+test_unknown_graph_unissued_dictionary_and_corrupt_matrix_refuse (__main__.Tests.test_unknown_graph_unissued_dictionary_and_corrupt_matrix_refuse) ... FAIL
+
+======================================================================
+FAIL: test_real_saved_mcm_to_exact_tensors_without_numerical_recomputation (__main__.Tests.test_real_saved_mcm_to_exact_tensors_without_numerical_recomputation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 46, in test_real_saved_mcm_to_exact_tensors_without_numerical_recomputation
+    f=self.fixture();m=self.m;before=f.owned.journal.reservations
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 24, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 19, in api
+    assert (HERE/'route.py').exists(),'registered graph feature route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered graph feature route missing
+
+======================================================================
+FAIL: test_registered_policy_drift_after_conversion_refuses_return (__main__.Tests.test_registered_policy_drift_after_conversion_refuses_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 80, in test_registered_policy_drift_after_conversion_refuses_return
+    self.fixture();m=self.m;original=m.boundary.materialize
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 24, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 19, in api
+    assert (HERE/'route.py').exists(),'registered graph feature route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered graph feature route missing
+
+======================================================================
+FAIL: test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load (__main__.Tests.test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load) (mode='route')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 67, in test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 24, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 19, in api
+    assert (HERE/'route.py').exists(),'registered graph feature route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered graph feature route missing
+
+======================================================================
+FAIL: test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load (__main__.Tests.test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load) (mode='cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 67, in test_selected_route_and_numeric_cap_refuse_before_saved_matrix_load
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 24, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 19, in api
+    assert (HERE/'route.py').exists(),'registered graph feature route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered graph feature route missing
+
+======================================================================
+FAIL: test_unknown_graph_unissued_dictionary_and_corrupt_matrix_refuse (__main__.Tests.test_unknown_graph_unissued_dictionary_and_corrupt_matrix_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 72, in test_unknown_graph_unissued_dictionary_and_corrupt_matrix_refuse
+    f=self.fixture();m=self.m
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 24, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/test_route.py", line 19, in api
+    assert (HERE/'route.py').exists(),'registered graph feature route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered graph feature route missing
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=5)

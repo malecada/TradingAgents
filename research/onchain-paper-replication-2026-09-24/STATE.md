@@ -3,6 +3,31 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Registered saved-MCM to graph tensors independently accepted**:
+New isolated full_sources/graph-feature-route-2026-10-01/ links an actual current
+owner, required graph, issued dictionary ticket and saved MCM proof to a selected
+feature_tensor_input policy shared by the registered plan and execution job.
+The numeric allowance is checked before saved matrix admission; exact graph,
+node order and MCM provenance remain attached to the tensor feature receipt.
+Frozen attributes/mapping prevent replacement; mutable tensor content is checked
+by its receipt lease. This is not durable graph_complete publication or a grant
+for fitting. Parent graph/dictionary/RSS remain outside its numeric allowance.
+red01 CLOSED4methods5missing-route failures0.002s,session67553 exit1.
+check01 CLOSED4methods367.505s,session37653 exit0; PID143687 no longer exists.
+All271frozen source/dependency files match check01-sources.json SHA
+3656df72845173acd56d306c54aabd825f5306660f8554a22cd4df1eb1b8a0da.
+Actual saved reuse without numerical APIs, exact tensor/proof/hash and output
+drift, route/cap preflight, foreign graph/forged prerequisite/corrupt MCM and
+post-copy policy drift pass. No process/source freeze remains. Final independent review accepts the bounded
+route, REVIEW SHA8a20e93193abd1da71d1c38f628bb4cccc0106bdcf70e89f541f619f9d63cee5.
+All274final bindings match manifest SHA
+530b4b11abcad160213df09dd8269c3100ebca22bc67fb6fadec25e4f987c745.
+Next safe action: exclusive current-owner per-graph graph_complete publication,
+selected encoded-byte/event/attempt limits, exact feature/MCM provenance and
+strict native-array checkpoint validation. Saved graph reuse must explicitly
+materialize tensors; older generic loading is not admitted for this storage.
+No empirical job, financial fit or budget amendment has been executed.
+
 **Native graph-feature tensor boundary independently accepted**:
 New isolated full_sources/graph-feature-boundary-2026-10-01/ converts already
 admitted float32 MCM and int64 edge arrays into independent CPU tensors, with
