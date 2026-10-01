@@ -1,0 +1,48 @@
+"""Read retained synthetic publication; never mutate or replay it."""
+import copy
+import importlib.util
+import json
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+from tradingagents.research.onchain_replication.provenance import file_hash
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+spec=importlib.util.spec_from_file_location('cold_publication_candidate',HERE/'publication.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+class Tests(unittest.TestCase):
+    def setUp(self):
+        self.root=ROOT/'research_artifacts/native-guarded-synthetic/attempt01';run=self.root/'research_runs/example-a';base=self.root/m.history.job.PREFIX/'runs/example-a'
+        self.history={'experiment':'example-a','source':'e8aa67ec16d0023f94bccb5e77d61c2b0e3aed7c','claim_sha256':file_hash(run/'claim.json'),'terminal_sha256':file_hash(run/'complete.json'),'guard_sha256':file_hash(base/'guard/final.json'),'observer_sha256':file_hash(base/'observer.json')}
+        seal=next((self.root/'research_artifacts/onchain_representation_seals').glob('*/*/complete.json'))
+        self.seal={'path':str(seal),'sha256':file_hash(seal)}
+    def run_inspection(self,**kwargs):return m.inspect(self.root,self.history,self.seal,**kwargs)
+    def test_saved_native_features_verify_without_live_seal(self):
+        with patch.object(m.native.seal,'finish',side_effect=AssertionError('cannot rerun a terminal producer')):
+            result=self.run_inspection()
+        self.assertTrue(result['native_content_verified']);self.assertEqual(len(result['feature_hashes']),2)
+        self.assertEqual(set(result['feature_hashes'].values()),{'dee03481ecb3514db5325e718367ec14ee445c293d88ae3ace951928805ebae1'})
+        for key in ('current_run_admitted','scientific_denominator_revalidated','source_compatibility_verified','numerical_producers_replayed'):self.assertIs(result[key],False)
+    def test_wrong_seal_pin_refuses(self):
+        with self.assertRaises(ValueError):m.inspect(self.root,self.history,{**self.seal,'sha256':'0'*64})
+    def test_metadata_count_and_total_bound_refuse(self):
+        for key,value in [('max_records',14),('max_total_bytes',80000)]:
+            with self.subTest(key=key),self.assertRaises(ValueError):self.run_inspection(**{key:value})
+    def mutated(self,suffix,change):
+        original=m.history._read_metadata
+        def changed(root,path,signatures,expected=None,*,max_bytes):
+            value,sha,size=original(root,path,signatures,expected,max_bytes=max_bytes)
+            if str(path).endswith(suffix):value=copy.deepcopy(value);change(value)
+            return value,sha,size
+        return patch.object(m.history,'_read_metadata',side_effect=changed)
+    def test_false_seal_owner_refuses(self):
+        suffix='onchain_representation_seals/'+Path(self.seal['path']).parent.parent.name+'/example-a/complete.json'
+        with self.mutated(suffix,lambda x:x['owner'].update(source_commit='0'*40)),self.assertRaisesRegex(ValueError,'owner differs'):self.run_inspection()
+    def test_reordered_or_omitted_feature_events_refuse(self):
+        seal=json.loads(Path(self.seal['path']).read_text());suffix=str(Path(seal['feature_terminal']['path']).relative_to(self.root))
+        for change in (lambda x:x['events'].pop(),lambda x:x['events'].reverse()):
+            with self.mutated(suffix,change),self.assertRaises(ValueError):self.run_inspection()
+    def test_false_native_wire_payload_refuses(self):
+        original=m.native._NativeMap._read
+        def changed(instance,key):
+            result=original(instance,key);result['mcm'][0,0]=0.5 if result['mcm'][0,0]!=0.5 else 0.25;return result
+        with patch.object(m.native._NativeMap,'_read',new=changed),self.assertRaisesRegex(ValueError,'wire hash differs'):self.run_inspection()
+if __name__=='__main__':unittest.main(verbosity=2)

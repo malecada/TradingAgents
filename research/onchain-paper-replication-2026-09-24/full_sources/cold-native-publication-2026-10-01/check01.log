@@ -1,0 +1,55 @@
+test_false_native_wire_payload_refuses (__main__.Tests.test_false_native_wire_payload_refuses) ... ERROR
+test_false_seal_owner_refuses (__main__.Tests.test_false_seal_owner_refuses) ... ok
+test_metadata_count_and_total_bound_refuse (__main__.Tests.test_metadata_count_and_total_bound_refuse) ... ok
+test_reordered_or_omitted_feature_events_refuse (__main__.Tests.test_reordered_or_omitted_feature_events_refuse) ... ERROR
+test_saved_native_features_verify_without_live_seal (__main__.Tests.test_saved_native_features_verify_without_live_seal) ... ERROR
+test_wrong_seal_pin_refuses (__main__.Tests.test_wrong_seal_pin_refuses) ... ok
+
+======================================================================
+ERROR: test_false_native_wire_payload_refuses (__main__.Tests.test_false_native_wire_payload_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-publication-2026-10-01/test_publication.py", line 47, in test_false_native_wire_payload_refuses
+    with patch.object(m.native._NativeMap,'_read',new=changed),self.assertRaisesRegex(ValueError,'wire hash differs'):self.run_inspection()
+                                                                                                                      ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-publication-2026-10-01/test_publication.py", line 17, in run_inspection
+    def run_inspection(self,**kwargs):return m.inspect(self.root,self.history,self.seal,**kwargs)
+                                             ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-publication-2026-10-01/publication.py", line 61, in inspect
+    and selected['operation']=='produce' and selected['backend']=='resident-native-current-owner-v1','historical native selection differs')
+                                             ~~~~~~~~^^^^^^^^^^^
+KeyError: 'backend'
+
+======================================================================
+ERROR: test_reordered_or_omitted_feature_events_refuse (__main__.Tests.test_reordered_or_omitted_feature_events_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-publication-2026-10-01/test_publication.py", line 42, in test_reordered_or_omitted_feature_events_refuse
+    with self.mutated(suffix,change),self.assertRaises(ValueError):self.run_inspection()
+                                                                   ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-publication-2026-10-01/test_publication.py", line 17, in run_inspection
+    def run_inspection(self,**kwargs):return m.inspect(self.root,self.history,self.seal,**kwargs)
+                                             ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-publication-2026-10-01/publication.py", line 61, in inspect
+    and selected['operation']=='produce' and selected['backend']=='resident-native-current-owner-v1','historical native selection differs')
+                                             ~~~~~~~~^^^^^^^^^^^
+KeyError: 'backend'
+
+======================================================================
+ERROR: test_saved_native_features_verify_without_live_seal (__main__.Tests.test_saved_native_features_verify_without_live_seal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-publication-2026-10-01/test_publication.py", line 20, in test_saved_native_features_verify_without_live_seal
+    result=self.run_inspection()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-publication-2026-10-01/test_publication.py", line 17, in run_inspection
+    def run_inspection(self,**kwargs):return m.inspect(self.root,self.history,self.seal,**kwargs)
+                                             ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-publication-2026-10-01/publication.py", line 61, in inspect
+    and selected['operation']=='produce' and selected['backend']=='resident-native-current-owner-v1','historical native selection differs')
+                                             ~~~~~~~~^^^^^^^^^^^
+KeyError: 'backend'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.087s
+
+FAILED (errors=3)

@@ -3,45 +3,82 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Native dispatch implemented and verified; actual OS-guarded synthetic job ACTIVE**:
-The full fresh-owner sampler→dictionary→MCM→native graph/feature→proposed-model
-batch chain is now explicitly selectable through the maintained job payload.
-Native dispatch02 passed its two synthetic fits and preallocation duplicate refusal.
-Failure02 passed partial pair construction/sampler closure. First-owner checks passed
-creation failure, duplicate, ancestor and guard boundaries. Independent review closed
-the resident-header defects after header03; batched Git anchor retrieval preserves
-all exact-byte checks and removes87 subprocess starts per full source check.
-Component timing87objects:0.134048s serial vs0.007769s batch, no whole-run claim.
-Candidate03 regression CLOSED107passes/19subtests360.95s session96019exit0; exact
-PID2305466 absent. All798 frozen source hashes verified unchanged. The former
-successor exception failure and all earlier red/failed identities remain retained.
-Evidence: full_sources/native-job-dispatch-2026-10-01/{RESULT,REVIEW_V3}.md.
+**Actual guarded native pipeline CLOSED complete; cold history/content checks accepted**:
+Full sampler→motif dictionary→MCM→native graph features→proposed neural fits now
+executes through the real launcher/monitor/worker. Actual guarded launch01 CLOSED
+complete273.545558363s, session81718exit0, two synthetic cells complete and0unavailable.
+Sampled peak460210176B (~439MiB), memoryevents all0, childexit0, cleanupverified;
+supervisor2474956/monitor2475207/cgroup absent. Limits3GiBmax/2GiBhigh/zeroswap/
+twoCPUs/10GiBdiskfloor/900swall. No process remains active from this job.
+Never relaunch retained root research_artifacts/native-guarded-synthetic/attempt01,
+experimentexample-a/sourcee8aa67ec16d0023f94bccb5e77d61c2b0e3aed7c.
+Evidence: full_sources/native-guarded-dispatch-2026-10-01/. CLOSURE_REVIEW SHA
+7542bad2117394165ee5119baaad75b246bf294f9117794bfdb9b773515c65d3 independently
+accepts120sources/28inputs/5outputs, actualkernel/owner/terminal joins, two complete
+cells and7feature events. verification01 CLOSEDsession28130exit0 additionally checks
+checkpoint artifact bytes/stateepoch1/batch0/optimizer and expected prediction
+labels/clocks/counts, with independent metrics. Actual checkpoint blobs are retained.
+Tiny3graph/3sample/2motif/2day/1epoch/batch1 fixture: no financial-data fits and no
+full-scale resource credit. This is actual OS integration, not paper-scale capacity.
 
-The next step was executed immediately: independently reviewed actual guarded
-synthetic launch01 ACTIVE session81718, supervisor2474956/monitor2475207.
-Retained root research_artifacts/native-guarded-synthetic/attempt01, experiment
-example-a, sourcee8aa67ec16d0023f94bccb5e77d61c2b0e3aed7c. Never relaunch this identity.
-Its registered source/input/runtime120/28/7 bindings were independently checked;
-real preflight passed with7067631616B availableRAM and21031366656B free disk.
-Actual cgroup onchain-replication-eb7031c42b804a14bc3128b61823f1e3.service enforces
-3GiB max/2GiB high/zero swap/two CPUs/10GiB disk floor/900s wall limit. At20.49s
-sampled peak374243328B, no memory events; this is not a terminal capacity result.
-The prepared checkout is frozen through cleanup; no mocked guard is used here.
-Evidence: full_sources/native-guarded-dispatch-2026-10-01/{SCOPE,ADMISSION_REVIEW}.md,
-preflight01.json, prepare01.log, launch01.log and the retained run/guard artifacts.
-Next safe action: inspect actual terminal/cleanup, independently verify both cell
-and checkpoint dispositions, preserve full retained evidence, then continue the
-full-scale resource admission and remaining cold/history/mapped work. Continue
-independent preparation while the guard runs; never replay closed synthetic or
-historical empirical identities merely for context.
+Preservation01 archives the complete synthetic checkout including Git/source,
+inputs, producer artifacts, predictions and checkpoints:652files/6002271logicalB;
+archive2466585B SHAa7cc574856e1a99a00440313684c22ef4b452b2c92371ad5cd4e7d8c8c26556b.
+Every member hash/size matches, source unchanged. Archive and full closure evidence
+were pushed in6e28c070bc4cdf02fa9cad71f72aee6f5f0558db; remote branch hash verified.
+backup01.json records the actual Git archive blob/size/SHA join. No raw body or
+prior result was deleted or overwritten.
 
-The retained-graph resource budget draft is prepared under
-full_sources/native-resource-admission-2026-10-01/: proposed60→61 preserves33spent,
-12body and15financial allocations, adds one proposed resource attempt and no new
-financial fits. It is explicitly NOT adopted or executable; exact graph/population,
-hub caps, workflow quotas, source/runtime and independent admission remain required.
-No existing unused empirical registration covers it. Coverage77/109, all1420
-financial fits pending, full13task/C01–C18 scope and prior exposed samples unchanged.
+Maintained implementation/source review already accepted and pushed69e1f03515688bfe866e85e8174293dc428c9346;
+remote hash verified. Native dispatch833bindings SHA735655039b0a2d8eaadd4e9677ebc2789e3db7bc1166e3f5625ecec34fae8d56.
+Candidate03 regression CLOSED107passes/19subtests360.95s, all798frozen hashes matched.
+FINAL_REVIEW SHA7ab48138687c016704c08ade4110619a34e0c2957d285d6707b6106184fa1d58.
+All failed/red identities and prior-source distinctions are retained. Source-anchor
+retrieval87objects observed0.134048s serial versus0.007769s batch; no whole-job speed
+claim. Resident header capture/extent checks and no-cache anchor semantics accepted.
+
+Immediate continuation already implemented: full_sources/cold-native-history-2026-10-01/
+terminal.py reads bounded historical lifecycle/registration/output/guard/observer
+joins. check01 retained1failure/5passes0.042s (missing observer denominator check);
+corrected check02 CLOSED6passes0.041s. Actual retained tiny synthetic metadata is
+read-only: no producer/fit replay, no arrays. Current-run admission, native feature
+validation and source compatibility flags remain false. Review found read-cap races,
+eager inventory/final observation gaps, missing unavailable reasons and a blocking
+FIFO replacement window. Prior source snapshots and both withheld reviews retained.
+Corrections use pinned bounded nonblocking metadata reads, unique-byte accounting,
+streaming/final output inventory, repeated death observation and required reasons.
+check03 CLOSED12passes0.095s; check04 CLOSED13passes0.072s includes an actual FIFO
+replacement refusal before reading. ACCEPTANCE_REVIEW SHA
+3a5cd6202705a6a2d567ff5a9f19b0858e0c32552bb1c1d90964d0e3bb61c65c independently
+accepts this historical metadata boundary; it grants no native/current admission.
+
+Next step already implemented under cold-native-publication-2026-10-01: joins the
+historical registered native selection, seal/publication/output/feature-event chain,
+and reads saved native MCM/edge arrays through the strict bounded reader to compare
+wire hashes. It returns no PreparedFeatures or current-run admission. check01 CLOSED
+3passes/3errors0.087s (wrong selection field); check02 CLOSED5passes/1failure0.331s
+(negative payload left valid score range before expected hash check). Both sources
+and logs retained; corrected check03 CLOSED6passes0.354s/session37108exit0.
+Review CP1/CP2 required graph attempt start/conflict/inventory and feature owner/start
+joins, and exact selected graph read policy before content allocation. Those fixes
+are implemented; check04 CLOSED9passes0.496s/session8439exit0. FINAL_REVIEW SHA
+97c9b1c94b868b7187fa4b8efcae6e15b44f9bc973c53f0dbb07abffdc9ffefb accepts bounded
+historical metadata/native-content inspection. All652 retained checkout files were
+rehashed after these checks and remain byte-identical to the archived inventory.
+No producer or fit replay occurred. Full example chronology/source compatibility/current guard
+and reuse dispatch remain required; read-only artifact inspection is not fit admission.
+NEXT_COLD_ADMISSION.md identifies the exact next seal/publication/scientific/native
+member/source joins, then a new actual current-worker guard and explicit native
+reuse dispatch. Never revive the old live OwnedJournal/Receipt or substitute the
+generic journal reconstructor. Root owns implementation/tests; reviewer owns reviews.
+
+Next safe actions: continue the cold scientific/source/current-run integration and prospective full-size
+resource admission immediately. No old test/job identity should be replayed for
+context. The resource budget draft under native-resource-admission-2026-10-01 proposes
+60→61 preserving33spent+12body+15fit and adding1resource slot; it is NOT adopted or
+executable. Freeze exact verified graph/population/hub/workflow caps and independently
+review/commit a complete gate before retained-data execution. Coverage77/109 and all
+1420financial fits remain pending; all13tasks/C01–C18/broader paper scope unchanged.
 
 **Terminal output lifetime and native executor integration independently accepted**:
 New full_sources/terminal-output-lifetime-2026-10-01/ adds bounded append-only

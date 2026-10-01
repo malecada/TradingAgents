@@ -1,0 +1,136 @@
+"""Bounded read-only completed-run certificate; never native reuse admission.
+
+This first cold-history layer does not read arrays, revive a producer, construct
+PreparedFeatures or admit a current worker. Source/member/scientific admission
+and a new current-run guard remain mandatory before any feature reuse.
+"""
+from pathlib import Path
+import json
+import os
+import re
+import stat
+from tradingagents.research.onchain_replication import matching_ancestry,job
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze,require_hash
+
+def require(value,message):
+    if not value:raise ValueError(message)
+
+def _read_metadata(root,path,signatures,expected=None,*,max_bytes):
+    require(path.is_absolute() and path.is_relative_to(root) and path.resolve()==path,'history metadata path differs')
+    before=path.lstat();signature=matching_ancestry.death.signature(before)
+    require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_dev==root.stat().st_dev,
+        'history metadata type differs')
+    require(before.st_size<=max_bytes,'history metadata byte allowance exceeded')
+    require(path not in signatures or signatures[path]==signature,'history metadata changed between reads')
+    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
+    try:
+        require(matching_ancestry.death.signature(os.fstat(fd))==signature,'history metadata changed before read')
+        with os.fdopen(fd,'rb',closefd=False) as stream:raw=stream.read(before.st_size+1)
+        require(len(raw)==before.st_size and matching_ancestry.death.signature(os.fstat(fd))==signature
+            and matching_ancestry.death.signature(path.lstat())==signature and path.resolve()==path,
+            'history metadata changed during read')
+    finally:os.close(fd)
+    sha=digest(raw)
+    require(expected is None or sha==expected,'history metadata hash differs')
+    value=json.loads(raw);signatures[path]=signature
+    return value,sha,len(raw)
+
+def _output_inventory(directory,names):
+    observed=set()
+    with os.scandir(directory) as entries:
+        for entry in entries:
+            require(entry.name in names and len(observed)<len(names),'foreign historical output')
+            observed.add(entry.name)
+    require(observed==set(names),'historical output missing')
+
+def _dead(guard,owner):
+    if guard['boot_id']==Path('/proc/sys/kernel/random/boot_id').read_text().strip():
+        require(not job.same_process_alive(owner['monitor_pid'],owner['monitor_start_ticks']),'historical monitor still alive')
+        group=Path(guard['cgroup'])
+        if group.exists():
+            require(dict(line.split() for line in (group/'cgroup.events').read_text().splitlines()).get('populated')=='0','historical cgroup still populated')
+
+def inspect(root,reference,*,max_metadata_bytes=2097152,max_total_bytes=33554432,max_records=128):
+    root=Path(root).absolute()
+    require(root.resolve()==root and root.is_dir(),'canonical history root required')
+    require(type(reference) is dict and set(reference)=={'experiment','source','claim_sha256','terminal_sha256','guard_sha256','observer_sha256'},'history reference schema differs')
+    experiment=reference['experiment'];source=reference['source']
+    require(type(experiment) is str and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,127}',experiment),'history experiment differs')
+    require(type(source) is str and re.fullmatch(r'[0-9a-f]{40}',source),'history source differs')
+    for k,v in reference.items():
+        if k.endswith('_sha256'):require_hash(v)
+    require(all(type(n) is int and n>0 for n in (max_metadata_bytes,max_total_bytes,max_records))
+            and max_metadata_bytes<=matching_ancestry.MAX_BYTES,'history metadata limits differ')
+    signatures={};records={};total=0
+    def read(path,expected=None):
+        nonlocal total
+        path=Path(path)
+        require(path.resolve()==path and path.is_relative_to(root),'history metadata path differs')
+        if path not in records:
+            require(len(records)<max_records,'history metadata record allowance exceeded')
+        cap=min(max_metadata_bytes,max_total_bytes-total) if path not in records else records[path]['bytes']
+        value,sha,size=_read_metadata(root,path,signatures,expected=expected,max_bytes=cap)
+        if path not in records:
+            total+=size
+        records[path]={'path':str(path),'sha256':sha,'bytes':size}
+        return value
+    def absent(path):require(not path.exists() and not path.is_symlink(),'conflicting history terminal exists')
+    run=root/'research_runs'/experiment;base=root/job.PREFIX/'runs'/experiment
+    absent(run/'failed.json')
+    claim=read(run/'claim.json',reference['claim_sha256'])
+    require(claim.get('experiment_id')==experiment and claim.get('source')==source,'historical claim owner differs')
+    registration=read(root/claim['registration'],claim['registration_sha256'])
+    require(canonical_bytes(registration['experiments'][experiment])==canonical_bytes(claim['experiment']),'historical registered experiment differs')
+    terminal=read(run/'complete.json',reference['terminal_sha256'])
+    require(terminal.get('status')=='complete' and terminal.get('experiment_id')==experiment and terminal.get('source')==source
+        and terminal.get('claim_sha256')==reference['claim_sha256'] and terminal.get('registration_sha256')==claim['registration_sha256'],'historical lifecycle join differs')
+    cells=terminal.get('cells',[]);ids=[c.get('id') for c in cells]
+    require(len(ids)==len(set(ids)) and set(ids)==set(claim['experiment']['cells']) and terminal.get('cell_count')==len(ids),'historical cell denominator differs')
+    require(all(c.get('status') in ('complete','unavailable') for c in cells)
+        and terminal.get('unavailable_count')==sum(c['status']=='unavailable' for c in cells),'historical cell status differs')
+    require(all(c['status']!='unavailable' or (type(c.get('reason')) is str and c['reason'].strip()) for c in cells),
+        'historical unavailable cell reason missing')
+    outputs=terminal.get('output_sha256',{})
+    require(type(outputs) is dict and set(outputs)==set(claim['experiment']['outputs']) and len(outputs)<=max_records,'historical output denominator differs')
+    _output_inventory(run/'outputs',outputs)
+    for name,sha in outputs.items():read(run/'outputs'/name,sha)
+    launch=read(base/'launch.json');owner=read(base/'owner.json')
+    require(set(launch)=={'experiment','source_commit','supervisor_pid','nonce'}
+        and type(launch['supervisor_pid']) is int and launch['supervisor_pid']>0
+        and type(owner.get('monitor_pid')) is int and owner['monitor_pid']>0
+        and type(owner.get('monitor_start_ticks')) is str and owner['monitor_start_ticks'].isdecimal(),'historical process identity differs')
+    require(launch.get('experiment')==experiment and launch.get('source_commit')==source
+        and set(owner)==set(launch)|{'monitor_pid','monitor_start_ticks'}
+        and all(owner[k]==v for k,v in launch.items()),'historical guard owner differs')
+    guard=read(base/'guard/final.json',reference['guard_sha256']);live=read(base/'guard/live.json')
+    require(canonical_bytes(guard)==canonical_bytes(live),'historical guard did not reach identical final state')
+    require(guard.get('phase')=='complete' and guard.get('child_exit_code')==0 and guard.get('cleanup_verified') is True
+        and guard.get('limit_reason') is None and guard.get('owner_identity')==owner and guard.get('monitor_pid')==owner['monitor_pid'],'historical guard completion differs')
+    require(all(type(guard.get('memory_events',{}).get(k)) is int and guard['memory_events'][k]==0 for k in ('oom','oom_kill')),'historical guard OOM evidence differs')
+    expected_suffix=['-B','-m',job.MODULE,'--mode','worker','--root',str(root),'--registration',claim['registration'],'--experiment',experiment,'--source',source]
+    command=guard.get('command')
+    require(type(command) is list and len(command)==len(expected_suffix)+1 and type(command[0]) is str and Path(command[0]).is_absolute() and command[1:]==expected_suffix,'historical worker command differs')
+    require(guard.get('cwd')==str(root),'historical worker root differs')
+    require(type(guard.get('boot_id')) is str and re.fullmatch(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',guard['boot_id']),'historical boot identity differs')
+    group=Path(guard['cgroup'])
+    require(group.is_absolute() and group.resolve()==group and group.is_relative_to('/sys/fs/cgroup')
+        and group.name==guard['unit'] and group.name.startswith('onchain-replication-'),'historical cgroup path differs')
+    _dead(guard,owner)
+    observer=read(base/'observer.json',reference['observer_sha256'])
+    require(observer.get('status')=='complete' and observer.get('cgroup_empty') is True
+        and observer.get('terminal_sha256')==reference['terminal_sha256']
+        and observer.get('owner_sha256')==records[base/'owner.json']['sha256'],'historical observer owner/terminal differs')
+    require(observer.get('all_cells_complete') is (terminal['unavailable_count']==0)
+        and observer.get('financial_completion') is False,'historical observer cell/scope claim differs')
+    evidence=observer.get('evidence_sha256',{})
+    require(set(evidence)=={'launch.json','guard/live.json','guard/final.json'},'historical observer evidence set differs')
+    for name,sha in evidence.items():read(base/name,sha)
+    # Recheck every pinned compact record and signature after all joins.
+    for path,pin in list(records.items()):read(path,pin['sha256'])
+    _output_inventory(run/'outputs',outputs)
+    _dead(guard,owner)
+    absent(run/'failed.json')
+    return freeze({'schema_version':1,'historical_run_verified':True,'current_run_admitted':False,
+        'native_features_verified':False,'source_compatibility_verified':False,'arrays_read':False,
+        'reference':reference,'claim':claim,'terminal':terminal,'records':list(records.values()),
+        'metadata_bytes':total,'root':str(root)})

@@ -1,0 +1,20 @@
+test_changed_pins_and_invalid_experiment_refuse (__main__.Tests.test_changed_pins_and_invalid_experiment_refuse) ... ok
+test_each_bound_refuses (__main__.Tests.test_each_bound_refuses) ... ok
+test_historical_monitor_must_be_dead (__main__.Tests.test_historical_monitor_must_be_dead) ... ok
+test_observer_cell_claim_must_match_actual_denominator (__main__.Tests.test_observer_cell_claim_must_match_actual_denominator) ... FAIL
+test_owner_cell_output_and_cleanup_joins_refuse (__main__.Tests.test_owner_cell_output_and_cleanup_joins_refuse) ... ok
+test_real_completed_history_grants_no_current_or_feature_admission (__main__.Tests.test_real_completed_history_grants_no_current_or_feature_admission) ... ok
+
+======================================================================
+FAIL: test_observer_cell_claim_must_match_actual_denominator (__main__.Tests.test_observer_cell_claim_must_match_actual_denominator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/cold-native-history-2026-10-01/test_terminal.py", line 43, in test_observer_cell_claim_must_match_actual_denominator
+    with self.mutated('observer.json',lambda x:x.update(all_cells_complete=False)),self.assertRaises(ValueError):m.inspect(self.root,self.reference)
+                                                                                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.042s
+
+FAILED (failures=1)

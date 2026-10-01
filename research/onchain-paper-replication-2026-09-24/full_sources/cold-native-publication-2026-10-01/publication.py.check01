@@ -1,0 +1,135 @@
+"""Read-only saved publication/content audit, not current research admission.
+
+Uses accepted historical producer evidence for numerical transformation; never
+repeats sampling, dictionary fitting or matching. Full example/scientific/source
+compatibility and an actual current worker guard remain separate requirements.
+"""
+import importlib.util
+from pathlib import Path
+from tradingagents.research.onchain_replication.cache import cache_key
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,freeze,thaw,require_hash
+
+HERE=Path(__file__).resolve().parent
+def module(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);value=importlib.util.module_from_spec(spec);spec.loader.exec_module(value);return value
+history=module('cold_publication_history',HERE.parent/'cold-native-history-2026-10-01/terminal.py')
+native=module('cold_publication_native',HERE.parent/'terminal-output-lifetime-2026-10-01/native_map.py')
+require=history.require
+def equal(a,b):return canonical_bytes(a)==canonical_bytes(b)
+
+def inspect(root,history_reference,seal_reference,*,max_metadata_bytes=2097152,max_total_bytes=33554432,max_records=128):
+    root=Path(root).absolute()
+    prior=history.inspect(root,history_reference,max_metadata_bytes=max_metadata_bytes,max_total_bytes=max_total_bytes,max_records=max_records)
+    signatures={};records={};total=0
+    def read(path,sha=None,cap=max_metadata_bytes):
+        nonlocal total
+        path=Path(path)
+        require(path in records or len(records)<max_records,'publication record allowance exceeded')
+        limit=min(cap,records[path]['bytes'] if path in records else max_total_bytes-total)
+        value,actual,size=history._read_metadata(root,path,signatures,sha,max_bytes=limit)
+        if path not in records:total+=size
+        records[path]={'path':str(path),'sha256':actual,'bytes':size}
+        return value
+    def ref(value,expected=None):
+        require(type(value) is dict and set(value)=={'path','sha256'},'publication reference schema differs')
+        require_hash(value['sha256']);path=Path(value['path'])
+        require(expected is None or path==expected,'publication fixed path differs')
+        return read(path,value['sha256'])
+    for pin in prior['records']:read(pin['path'],pin['sha256'])
+    claim=thaw(prior['claim']);experiment=history_reference['experiment'];inputs=claim['experiment']['inputs']
+    def registered(name):
+        require(type(name) is str and name in inputs,'historical registered input missing')
+        info=inputs[name];return read(root/info['path'],info['sha256'])
+    seal=ref(seal_reference);owner=seal['owner'];identity=owner['workflow_identity'];require_hash(identity)
+    journal=root/'research_artifacts/onchain_representations'/identity/experiment
+    seal_dir=root/'research_artifacts/onchain_representation_seals'/identity/experiment
+    pub_dir=root/'research_artifacts/onchain_representation_publications'/identity/experiment
+    pair_dir=root/'research_artifacts/onchain_pair_workflows'/identity/experiment
+    require(Path(seal_reference['path'])==seal_dir/'complete.json','historical seal fixed path differs')
+    require(seal['schema_version']==1 and seal['status']=='complete' and seal['resumable'] is False,'historical seal incomplete')
+    require(owner['experiment']==experiment and owner['source_commit']==history_reference['source']
+        and owner['claim_sha256']==history_reference['claim_sha256'] and owner['registration_sha256']==claim['registration_sha256']
+        and owner['journal_directory']==str(journal),'historical publication owner differs')
+    short_owner={k:owner[k] for k in ('experiment','producer','source_commit','workflow_identity')}
+    claim_rep=read(journal/'claim.json');descriptor=claim_rep['descriptor']
+    require(equal(claim_rep['owner'],short_owner) and claim_rep['registration_sha256']==claim['registration_sha256']
+        and cache_key(descriptor)==identity and descriptor['arm']=='proposed','historical representation claim differs')
+    plan=registered(claim_rep['plan_input']);execution=registered('execution_job')
+    item=plan['producers'][owner['producer']];selected=execution['payload']['representation_jobs'][owner['representation']]
+    require(equal(item['descriptor'],descriptor) and equal(selected['descriptor'],descriptor)
+        and selected['producer']==owner['producer'] and selected['plan_input']==claim_rep['plan_input']
+        and selected['operation']=='produce' and selected['backend']=='resident-native-current-owner-v1','historical native selection differs')
+    start=ref(seal['start'],seal_dir/'start.json');policy=registered(seal['seal_input'])
+    require(equal(start['owner'],owner) and start['status']=='reserved' and start['resumable'] is False
+        and seal['seal_input']==start['seal_input']==item['representation_seal_input']==selected['representation_seal_input']
+        and seal['seal_policy_sha256']==start['seal_policy_sha256']==inputs[seal['seal_input']]['sha256'],'historical seal policy differs')
+    binding_name,journal_name=native.seal.outputs(item,selected,claim['experiment']['outputs'])
+    require(start['binding_output']==binding_name and start['journal_output']==journal_name
+        and set(seal['outputs'])=={binding_name,journal_name},'historical seal outputs differ')
+    out={}
+    for name,value in seal['outputs'].items():
+        require(value['sha256']==prior['terminal']['output_sha256'][name],'historical output hash join differs')
+        out[name]=ref(value,root/'research_runs'/experiment/'outputs'/name)
+    feature=ref(seal['feature_terminal'],journal/'complete.json');pairs=ref(seal['pair_terminal'],pair_dir/'complete.json')
+    pair_start=ref(pairs['start'],pair_dir/'start.json')
+    require(feature['status']==pairs['status']=='complete' and feature['parent'] is None and pair_start['parent'] is None
+        and feature['workflow_identity']==pair_start['workflow']==identity and equal(feature['owner'],short_owner),'historical producer terminals differ')
+    require(equal(out[journal_name],{'path':str((journal/'complete.json').relative_to(root)),
+        'sha256':seal['feature_terminal']['sha256'],'owner':short_owner,'workflow_identity':identity}),'historical journal output differs')
+    publication=ref(seal['publication'],pub_dir/'complete.json');pub_start=ref(publication['start'],pub_dir/'start.json')
+    require(publication['status']=='complete' and publication['resumable'] is False
+        and equal(publication['owner'],owner) and equal(pub_start['owner'],owner),'historical publication differs')
+    closure=publication['closure'];binding=closure['binding'];required=descriptor['required_graphs'];events=feature['events']
+    require(equal(closure['owner'],owner) and equal(binding,out[binding_name]) and binding['schema_version']==3
+        and binding['workflow_identity']==identity and binding['representation']=='motif_mcm','historical binding differs')
+    require(required==sorted(set(required)) and required==feature['required_graphs']
+        and set(required)==set(closure['graphs'])==set(binding['feature_hashes']),'historical required graph denominator differs')
+    require(len(events)==3+2*len(required) and len(events)<=policy['max_journal_events']
+        and len(pairs['events'])<=policy['max_pair_events'],'historical event denominator differs')
+    expected_stages=['samples_complete','dictionary_complete']+['mcm_progress','graph_complete']*len(required)+['representation_complete']
+    require([e['stage'] for e in events]==expected_stages,'historical event stage order differs')
+    for i,event in enumerate(events):
+        require(equal(read(journal/f'event-{i:06d}.json'),event) and event['path']==f'checkpoint-{i:06d}/manifest.json'
+            and equal(event['binding'],{'owner':short_owner,'stage':event['stage'],'context':event['context']})
+            and event['context']['workflow_identity']==identity,'historical event content/owner differs')
+    require(publication['event_index']==len(events)-1
+        and equal(ref(publication['event'],journal/f'event-{len(events)-1:06d}.json'),events[-1])
+        and events[-1]['context']['binding_hash']==cache_key(binding),'historical publication event differs')
+    settings=native.policy(registered(item['native_feature_batch_input']))
+    require(item['native_feature_batch_input']==selected['native_feature_batch_input'],'historical native batch route differs')
+    refs={}
+    for i,h in enumerate(required):
+        record=closure['graphs'][h];event=events[3+2*i];mcm=events[2+2*i];context=event['context']
+        require(equal(record['owner'],owner) and record['graph_hash']==context['graph_hash']==mcm['context']['graph_hash']==h
+            and context['storage']=='native_graph_feature_v1' and record['feature_hash']==binding['feature_hashes'][h]
+            and equal(context['feature_provenance'],record['feature_provenance']),'historical native graph provenance differs')
+        require(equal(ref(record['event'],journal/f'event-{3+2*i:06d}.json'),event)
+            and record['component']=={'path':str(journal/event['path']),'sha256':event['sha256']},'historical graph component differs')
+        graph_proof=ref(record['graph_proof'])
+        require(graph_proof['status']=='complete' and equal(graph_proof['owner'],owner)
+            and equal(graph_proof['component'],record['component']) and equal(graph_proof['feature_provenance'],record['feature_provenance']),
+            'historical graph proof differs')
+        output=registered(context['output_input'])
+        require(inputs[context['output_input']]['sha256']==context['output_policy_sha256'],'historical graph policy differs')
+        manifest=ref(record['component']);arrays=manifest['arrays']
+        nodes,motifs=arrays['array-000000.npy']['shape'];edge_shape=arrays['array-000001.npy']['shape']
+        require(motifs==descriptor['configs']['dictionary']['size'] and nodes==mcm['context']['completed_rows']
+            and mcm['context']['completed_cells']==nodes*motifs,'historical native dimensions differ')
+        refs[h]={'path':record['component']['path'],'sha256':record['component']['sha256'],'context':event['binding'],
+            'nodes':nodes,'motifs':motifs,'edge_shape':edge_shape,'feature_hash':record['feature_hash'],
+            'max_manifest_bytes':output['max_manifest_bytes'],'max_artifact_bytes':output['max_artifact_bytes']}
+    def lease():
+        for path,pin in list(records.items()):read(path,pin['sha256'])
+        for directory in (seal_dir,pub_dir,pair_dir,journal):
+            require(not (directory/'failed.json').exists() and not (directory/'failed.json').is_symlink(),'conflicting producer terminal')
+        history._output_inventory(root/'research_runs'/experiment/'outputs',prior['terminal']['output_sha256'])
+        history._output_inventory(seal_dir,{'start.json','complete.json'})
+        history._output_inventory(pub_dir,{'start.json','complete.json'})
+        history._output_inventory(journal,{'owner.json','start.json','claim.json','complete.json'}
+            |{f'event-{i:06d}.json' for i in range(len(events))}|{f'checkpoint-{i:06d}' for i in range(len(events))})
+    values=native._NativeMap(root,refs,settings,lease=lease,read_lease=lease)
+    hashes=values.verified_hashes();lease()
+    return freeze({'schema_version':1,'historical_publication_metadata_verified':True,'native_content_verified':True,
+        'current_run_admitted':False,'scientific_denominator_revalidated':False,'source_compatibility_verified':False,
+        'numerical_producers_replayed':False,'binding':binding,'feature_hashes':hashes,'records':list(records.values()),
+        'metadata_bytes':total,'history_reference':history_reference,'seal_reference':seal_reference})

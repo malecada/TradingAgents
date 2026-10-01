@@ -1,0 +1,105 @@
+"""Read-only retained synthetic history checks; source bytes never mutated."""
+import copy
+import importlib.util
+import os
+from pathlib import Path
+import tempfile
+from types import SimpleNamespace
+import unittest
+from unittest.mock import patch
+from tradingagents.research.onchain_replication.provenance import file_hash
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+spec=importlib.util.spec_from_file_location('cold_terminal_candidate',HERE/'terminal.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+class Tests(unittest.TestCase):
+    def setUp(self):
+        self.root=ROOT/'research_artifacts/native-guarded-synthetic/attempt01';run=self.root/'research_runs/example-a';self.base=self.root/m.job.PREFIX/'runs/example-a'
+        self.reference={'experiment':'example-a','source':'e8aa67ec16d0023f94bccb5e77d61c2b0e3aed7c','claim_sha256':file_hash(run/'claim.json'),'terminal_sha256':file_hash(run/'complete.json'),'guard_sha256':file_hash(self.base/'guard/final.json'),'observer_sha256':file_hash(self.base/'observer.json')}
+    def test_real_completed_history_grants_no_current_or_feature_admission(self):
+        result=m.inspect(self.root,self.reference)
+        self.assertTrue(result['historical_run_verified']);self.assertEqual(len(result['records']),13)
+        for key in ('current_run_admitted','native_features_verified','source_compatibility_verified','arrays_read'):self.assertIs(result[key],False)
+        self.assertLess(result['metadata_bytes'],100000)
+    def test_changed_pins_and_invalid_experiment_refuse(self):
+        for key,value in [('claim_sha256','0'*64),('terminal_sha256','0'*64),('guard_sha256','0'*64),('observer_sha256','0'*64),('experiment','../example-a')]:
+            with self.subTest(key=key),self.assertRaises(ValueError):m.inspect(self.root,{**self.reference,key:value})
+    def test_each_bound_refuses(self):
+        for key in ('max_metadata_bytes','max_total_bytes','max_records'):
+            with self.subTest(key=key),self.assertRaises(ValueError):m.inspect(self.root,self.reference,**{key:1})
+    def test_historical_monitor_must_be_dead(self):
+        with patch.object(m.job,'same_process_alive',return_value=True),self.assertRaisesRegex(ValueError,'still alive'):m.inspect(self.root,self.reference)
+    def mutated(self,filename,mutate):
+        original=m._read_metadata
+        def changed(root,path,snapshots,expected=None,*,max_bytes):
+            value,sha,size=original(root,path,snapshots,expected,max_bytes=max_bytes)
+            if str(path).endswith(filename):value=copy.deepcopy(value);mutate(value)
+            return value,sha,size
+        return patch.object(m,'_read_metadata',side_effect=changed)
+    def test_owner_cell_output_and_cleanup_joins_refuse(self):
+        cases=[('research_runs/example-a/claim.json',lambda x:x.update(source='0'*40)),
+               ('research_runs/example-a/complete.json',lambda x:x.update(cells=x['cells']*2)),
+               ('research_runs/example-a/complete.json',lambda x:x['output_sha256'].pop('binding.json')),
+               ('guard/final.json',lambda x:x.update(cleanup_verified=False)),
+               ('observer.json',lambda x:x.update(terminal_sha256='0'*64))]
+        for suffix,change in cases:
+            with self.subTest(suffix=suffix),self.mutated(suffix,change),self.assertRaises(ValueError):m.inspect(self.root,self.reference)
+    def test_observer_cell_claim_must_match_actual_denominator(self):
+        with self.mutated('observer.json',lambda x:x.update(all_cells_complete=False)),self.assertRaises(ValueError):m.inspect(self.root,self.reference)
+    def test_unavailable_cell_needs_nonempty_reason(self):
+        def change(value):
+            value['cells'][0]['status']='unavailable';value['cells'][0].pop('reason',None);value['unavailable_count']=1
+        with self.mutated('research_runs/example-a/complete.json',change),self.assertRaisesRegex(ValueError,'reason missing'):m.inspect(self.root,self.reference)
+    def test_bound_and_pinned_extent_apply_before_open_and_allocation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();path=root/'m.json';path.write_text('{}');pins={}
+            with patch.object(m.os,'open',side_effect=AssertionError('must not open')),self.assertRaisesRegex(ValueError,'allowance'):
+                m._read_metadata(root,path,pins,max_bytes=1)
+            m._read_metadata(root,path,pins,max_bytes=2)
+            path.write_text('{"larger":true}')
+            with patch.object(m.os,'open',side_effect=AssertionError('must not open')),self.assertRaisesRegex(ValueError,'between reads'):
+                m._read_metadata(root,path,pins,max_bytes=100)
+    def test_growth_between_stat_and_open_refuses_before_read(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();path=root/'m.json';path.write_text('{}');original=os.open
+            def changed(*args,**kwargs):
+                path.write_text('{"larger":true}')
+                return original(*args,**kwargs)
+            with patch.object(m.os,'open',side_effect=changed),patch.object(m.os,'fdopen',side_effect=AssertionError('must not read')),self.assertRaisesRegex(ValueError,'before read'):
+                m._read_metadata(root,path,{},max_bytes=2)
+    def test_nonblocking_open_prevents_fifo_replacement_stall(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();path=root/'m.json';path.write_text('{}');original=os.open
+            def changed(name,flags):
+                self.assertTrue(flags & os.O_NONBLOCK)
+                path.unlink();os.mkfifo(path)
+                return original(name,flags)
+            with patch.object(m.os,'open',side_effect=changed),patch.object(m.os,'fdopen',side_effect=AssertionError('must not read')),self.assertRaisesRegex(ValueError,'before read'):
+                m._read_metadata(root,path,{},max_bytes=2)
+    def test_exact_unique_bytes_and_reread_extent(self):
+        original=m._read_metadata;seen={}
+        def checked(root,path,pins,expected=None,*,max_bytes):
+            if path in seen:self.assertEqual(max_bytes,seen[path])
+            value,sha,size=original(root,path,pins,expected,max_bytes=max_bytes);seen[path]=size
+            return value,sha,size
+        with patch.object(m,'_read_metadata',side_effect=checked):result=m.inspect(self.root,self.reference)
+        self.assertEqual(result['metadata_bytes'],sum(seen.values()))
+        self.assertEqual(sum(r['bytes'] for r in result['records']),result['metadata_bytes'])
+    def test_inventory_is_streamed_and_late_foreign_output_refuses(self):
+        class Entries:
+            def __enter__(self):return self
+            def __exit__(self,*args):return False
+            def __iter__(self):
+                yield SimpleNamespace(name='foreign')
+                raise AssertionError('must stop before enumerating all entries')
+        with patch.object(m.os,'scandir',return_value=Entries()),self.assertRaisesRegex(ValueError,'foreign'):
+            m._output_inventory(Path('/unused'),{'expected':None})
+        original=m._output_inventory;calls=[]
+        def late(directory,names):
+            calls.append(directory)
+            if len(calls)==2:
+                with patch.object(m.os,'scandir',return_value=Entries()):return original(directory,names)
+            return original(directory,names)
+        with patch.object(m,'_output_inventory',side_effect=late),self.assertRaisesRegex(ValueError,'foreign'):m.inspect(self.root,self.reference)
+        self.assertEqual(len(calls),2)
+    def test_death_is_observed_again_at_final_boundary(self):
+        with patch.object(m.job,'same_process_alive',side_effect=[False,True]),self.assertRaisesRegex(ValueError,'still alive'):m.inspect(self.root,self.reference)
+if __name__=='__main__':unittest.main(verbosity=2)
