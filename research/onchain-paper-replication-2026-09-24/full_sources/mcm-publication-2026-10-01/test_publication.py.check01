@@ -1,0 +1,97 @@
+"""Actual tiny registered MCM publication; kernel guard observations mocked."""
+import importlib.util
+import json
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+import numpy as np
+from tests.research.onchain_replication import test_matching_owner as owner_fixture
+from tradingagents.research.onchain_replication.provenance import file_hash
+from tradingagents.research.onchain_replication.neighborhoods import NeighborhoodIndex
+from tradingagents.research.onchain_replication.matching_reference import match_reference
+
+HERE=Path(__file__).resolve().parent
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+base=load('mcm_publication_fixture',HERE.parent/'mcm-array-kernel-2026-10-01/test_driver.py')
+def api():
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+    return load('mcm_publication',HERE/'publication.py')
+
+class Tests(unittest.TestCase):
+    def fixture(self,mode=None):
+        self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+        original=owner_fixture.OwnershipTests.input
+        policy={'schema_version':1,'max_metadata_bytes':262144,'max_manifest_bytes':1048576,
+            'max_artifact_bytes':1048576,'max_attempt_bytes':3000000,'max_array_bytes':16}
+        if mode=='reservation_cap':policy['max_attempt_bytes']=1
+        if mode=='array_cap':policy['max_array_bytes']=15
+        if mode=='artifact_cap':policy['max_artifact_bytes']=1
+        def configured(instance,name,value):
+            if name=='plan':
+                original(instance,'mcm_output',policy);value['producers']['p']['mcm_output_input']='mcm_output'
+            if name=='execution_job':value['payload']['representation_jobs']['r']['mcm_output_input']='wrong' if mode=='route' else 'mcm_output'
+            if name=='artifact_read' and mode=='event_cap':value=value|{'max_journal_events':2}
+            return original(instance,name,value)
+        with patch.object(base,'api',return_value=m.driver),patch.object(m.driver,'SOURCES',m.SOURCES),patch.object(owner_fixture.OwnershipTests,'input',new=configured):owner=f.fixture()
+        self.f=f;self.owner=owner;return owner
+    def produce(self):
+        return self.m.produce(self.owner.owned,self.owner.journal,graph_hash=self.f.graph_hash,
+            sampler_input='sampler_execution',artifact_input='artifact_read',dictionary_output_input='dictionary_output',
+            dictionary_proof_sha256=self.f.f.receipt['sha256'],mcm_input='mcm_execution',output_input='mcm_output')
+    def attempt(self):return self.m.attempt_directory(self.owner.owned,self.f.graph_hash)
+    def test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch(self):
+        f=self.fixture();receipt=self.produce();proof=json.loads(Path(receipt['path']).read_bytes())
+        self.assertEqual(receipt['sha256'],file_hash(Path(receipt['path'])))
+        self.assertEqual(proof['status'],'complete');self.assertFalse(proof['resumable'])
+        event=json.loads((f.directory/'event-000002.json').read_bytes());self.assertEqual(event['stage'],'mcm_progress')
+        self.assertEqual(event['context']['next_node'],2)
+        path=f.directory/event['path'];payload=self.m.reader.read_component(path,event['sha256'],event['binding'],root=f.root,
+            max_manifest_bytes=1048576,max_artifact_bytes=1048576,max_array_bytes=16,lease=f.owned.lease)
+        d=self.f.f.admit().dictionary;g=f.workload._graphs[self.f.graph_hash];idx=NeighborhoodIndex(g)
+        expected=np.asarray([[match_reference(idx.neighborhood(i,d.config),motif,f.configs['matching']).score
+            for motif in d.representatives] for i in range(2)],dtype=np.float32)
+        np.testing.assert_array_equal(payload,expected)
+        self.assertEqual(proof['completed_rows'],2);self.assertEqual(proof['completed_cells'],4)
+        self.assertEqual(proof['array_bytes'],16);self.assertEqual(proof['graph_hash'],self.f.graph_hash)
+        self.assertEqual(proof['dictionary_provenance']['dictionary_proof'],self.f.f.receipt)
+        self.assertEqual(proof['encoded_artifact_bytes'],sum(p.stat().st_size for p in path.parent.iterdir()))
+        self.assertEqual(proof['encoded_event_bytes'],(f.directory/'event-000002.json').stat().st_size)
+        before=f.owned.journal.reservations
+        with patch.object(self.m.driver,'compute',side_effect=AssertionError('completed MCM relaunched')),self.assertRaises((ValueError,FileExistsError)):self.produce()
+        self.assertEqual(before,f.owned.journal.reservations)
+    def test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt(self):
+        for mode in ('route','reservation_cap','array_cap','event_cap'):
+            with self.subTest(mode=mode):
+                self.fixture(mode)
+                with patch.object(self.m.driver,'compute',side_effect=AssertionError('MCM before preflight')),self.assertRaises(ValueError):self.produce()
+                self.assertFalse(self.attempt().exists())
+    def test_partial_identity_refuses_without_compute_or_overwrite(self):
+        self.fixture();attempt=self.attempt();attempt.mkdir(parents=True);(attempt/'start.json').write_text('{}')
+        with patch.object(self.m.driver,'compute',side_effect=AssertionError('partial MCM relaunched')),self.assertRaises((ValueError,FileExistsError)):self.produce()
+        self.assertEqual((attempt/'start.json').read_text(),'{}')
+    def test_small_artifact_cap_preserves_failure_before_checkpoint_write(self):
+        f=self.fixture('artifact_cap')
+        with self.assertRaises(ValueError):self.produce()
+        self.assertTrue((self.attempt()/'start.json').exists());self.assertTrue((self.attempt()/'failed.json').exists())
+        self.assertEqual(len(f.journal.records),2);self.assertFalse((f.directory/'checkpoint-000002').exists())
+        with patch.object(self.m.driver,'compute',side_effect=AssertionError('failed MCM relaunched')),self.assertRaises((ValueError,FileExistsError)):self.produce()
+    def test_dictionary_drift_after_computation_refuses_feature_write(self):
+        f=self.fixture();original=self.m.driver.compute
+        def changed(*args,**kw):
+            result=original(*args,**kw);path=f.directory/'checkpoint-000001/array-000000.npy'
+            raw=bytearray(path.read_bytes());raw[-1]^=1;path.write_bytes(raw);return result
+        with patch.object(self.m.driver,'compute',side_effect=changed),self.assertRaises(ValueError):self.produce()
+        self.assertEqual(len(f.journal.records),2);self.assertTrue((self.attempt()/'failed.json').exists())
+    def test_output_drift_during_completion_refuses_success_and_preserves_conflict(self):
+        f=self.fixture();original=self.m.sync_directory;hit=[]
+        def changed(path):
+            original(path)
+            if (self.attempt()/'complete.json').exists() and not hit:
+                hit.append(True);target=f.directory/'checkpoint-000002/array-000000.npy'
+                raw=bytearray(target.read_bytes());raw[-1]^=1;target.write_bytes(raw)
+        with patch.object(self.m,'sync_directory',side_effect=changed),self.assertRaises(ValueError):self.produce()
+        self.assertEqual(hit,[True]);self.assertTrue((self.attempt()/'complete.json').exists())
+        self.assertTrue((self.attempt()/'failed.json').exists())
+
+if __name__=='__main__':unittest.main(verbosity=2)

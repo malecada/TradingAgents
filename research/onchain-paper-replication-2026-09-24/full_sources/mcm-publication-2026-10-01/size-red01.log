@@ -1,0 +1,146 @@
+test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) ... 
+  test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='c') ... FAIL
+  test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='f') ... FAIL
+  test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='strided') ... FAIL
+  test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='reversed') ... FAIL
+  test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='one') ... FAIL
+test_non_float32_or_non_matrix_payload_refuses (__main__.Tests.test_non_float32_or_non_matrix_payload_refuses) ... FAIL
+
+======================================================================
+FAIL: test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='c')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 19, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    try:manifest,total,numeric=predict(matrix,{'purpose':'tiny MCM'})
+                               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 56, in encoded_size
+    tree=encode(payload)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 46, in encode
+    require(value.dtype in (np.dtype('float64'),np.dtype('int64')),'native sample numeric types required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 27, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: native sample numeric types required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 20, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    except ValueError as error:self.fail(f'valid float32 MCM rejected: {error}')
+                               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: valid float32 MCM rejected: native sample numeric types required
+
+======================================================================
+FAIL: test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='f')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 19, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    try:manifest,total,numeric=predict(matrix,{'purpose':'tiny MCM'})
+                               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 56, in encoded_size
+    tree=encode(payload)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 46, in encode
+    require(value.dtype in (np.dtype('float64'),np.dtype('int64')),'native sample numeric types required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 27, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: native sample numeric types required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 20, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    except ValueError as error:self.fail(f'valid float32 MCM rejected: {error}')
+                               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: valid float32 MCM rejected: native sample numeric types required
+
+======================================================================
+FAIL: test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='strided')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 19, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    try:manifest,total,numeric=predict(matrix,{'purpose':'tiny MCM'})
+                               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 56, in encoded_size
+    tree=encode(payload)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 46, in encode
+    require(value.dtype in (np.dtype('float64'),np.dtype('int64')),'native sample numeric types required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 27, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: native sample numeric types required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 20, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    except ValueError as error:self.fail(f'valid float32 MCM rejected: {error}')
+                               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: valid float32 MCM rejected: native sample numeric types required
+
+======================================================================
+FAIL: test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='reversed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 19, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    try:manifest,total,numeric=predict(matrix,{'purpose':'tiny MCM'})
+                               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 56, in encoded_size
+    tree=encode(payload)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 46, in encode
+    require(value.dtype in (np.dtype('float64'),np.dtype('int64')),'native sample numeric types required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 27, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: native sample numeric types required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 20, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    except ValueError as error:self.fail(f'valid float32 MCM rejected: {error}')
+                               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: valid float32 MCM rejected: native sample numeric types required
+
+======================================================================
+FAIL: test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts (__main__.Tests.test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts) (layout='one')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 19, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    try:manifest,total,numeric=predict(matrix,{'purpose':'tiny MCM'})
+                               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 56, in encoded_size
+    tree=encode(payload)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 46, in encode
+    require(value.dtype in (np.dtype('float64'),np.dtype('int64')),'native sample numeric types required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 27, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: native sample numeric types required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 20, in test_float32_sizes_equal_actual_component_encoding_for_all_supported_layouts
+    except ValueError as error:self.fail(f'valid float32 MCM rejected: {error}')
+                               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: valid float32 MCM rejected: native sample numeric types required
+
+======================================================================
+FAIL: test_non_float32_or_non_matrix_payload_refuses (__main__.Tests.test_non_float32_or_non_matrix_payload_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_sizes.py", line 27, in test_non_float32_or_non_matrix_payload_refuses
+    m=api();self.assertTrue(hasattr(m,'encoded_size'),'dedicated MCM size contract absent')
+            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : dedicated MCM size contract absent
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.018s
+
+FAILED (failures=6)

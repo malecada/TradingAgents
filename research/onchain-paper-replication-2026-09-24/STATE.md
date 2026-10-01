@@ -3,6 +3,45 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Durable MCM publication independently accepted**:
+New isolated full_sources/mcm-publication-2026-10-01/ implements an exclusive
+current-owner per-graph output attempt and a derived bounded driver retaining its
+combined lease receipt. A selected output policy reserves metadata/component
+bytes; output numeric size, event count and existing graph progress are checked
+before computation. Complete matrix publication binds graph/node/motif order,
+dictionary proof, pair scope and exact row/cell counts. Existing attempt identities
+refuse; errors retain failed evidence. Saved-array reuse is a separate next step.
+red01 CLOSED6methods/9missing-publication failures0.003s,session45112 exit1.
+check01 CLOSED6methods357.516s with1error and1failure,session61740 exit1.
+Initial independent review withheld acceptance for MP1: the reused sampler size
+predictor rejects required float32. Original source/tests/log are preserved.
+A local native float32-only predictor now checks exact one-array component sizes;
+size-red01 CLOSED2methods/6fails1.018s,session97479 exit1; size-check01 CLOSED
+2methods1.130s,session61398 exit0, with actual C/F/strided/reversed/one-cell
+serialization and invalid dtype/dimension/empty refusals. The artifact-cap test
+now distinguishes its intended refusal from the unrelated dtype error.
+check02 CLOSED6methods/9expanded cases367.376s,session17402 exit0. The actual
+saved matrix equals independent scalar matching; encoded byte counts, prior
+identity refusals, policy/cap preflights and post-compute dictionary/final-output
+drift refusals pass. No active job/source freeze. Final independent review accepts the bounded
+publication scope and closes MP1; REVIEW SHA
+42598cf0666106357728b0abaf87ecac7c4b33aecee0023c41efca1351a9575f.
+All237bindings match manifest SHA
+eed4bf999e6c82c46077a502de5ff934a12ce40d995e885ab82e323bf69d80ff.
+No empirical job, fit, scientific setting or budget change.
+Next safe action: implement current-owner saved MCM admission/reuse. Require exact
+completion/start/event/component proof, registered source/selected policies,
+required graph/node/motif order, dictionary provenance, workload scope and all
+byte/row/cell claims. Strictly inspect the float32 matrix before loading; retain
+metadata, component and owner leases. Refuse conflicting/partial/failed markers
+and duplicate graph denominators. Reuse must avoid sampling, dictionary fitting,
+matching, Serial/PairSession and neighborhood reconstruction, including indirect
+reconstruction inside initial dictionary/sample admission. An already-admitted
+receipt or a separately reviewed compact provenance validator may be needed;
+no unstated bypass is permitted. Historical/sealed owners, mapped populations,
+whole-workflow physical accounting, cheaper leases and measured admission remain
+separate outstanding requirements. All1420financial fits remain pending.
+
 **Bounded array MCM independently accepted**:
 New isolated full_sources/mcm-array-kernel-2026-10-01/ preserves scalar cell values,
 node/motif order and internally derived pair purposes while using the reviewed

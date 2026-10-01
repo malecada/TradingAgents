@@ -1,0 +1,54 @@
+test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch (__main__.Tests.test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch) ... ERROR
+test_dictionary_drift_after_computation_refuses_feature_write (__main__.Tests.test_dictionary_drift_after_computation_refuses_feature_write) ... ok
+test_output_drift_during_completion_refuses_success_and_preserves_conflict (__main__.Tests.test_output_drift_during_completion_refuses_success_and_preserves_conflict) ... FAIL
+test_partial_identity_refuses_without_compute_or_overwrite (__main__.Tests.test_partial_identity_refuses_without_compute_or_overwrite) ... ok
+test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) ... ok
+test_small_artifact_cap_preserves_failure_before_checkpoint_write (__main__.Tests.test_small_artifact_cap_preserves_failure_before_checkpoint_write) ... ok
+
+======================================================================
+ERROR: test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch (__main__.Tests.test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 44, in test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch
+    f=self.fixture();receipt=self.produce();proof=json.loads(Path(receipt['path']).read_bytes())
+                             ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 39, in produce
+    return self.m.produce(self.owner.owned,self.owner.journal,graph_hash=self.f.graph_hash,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sampler_input='sampler_execution',artifact_input='artifact_read',dictionary_output_input='dictionary_output',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        dictionary_proof_sha256=self.f.f.receipt['sha256'],mcm_input='mcm_execution',output_input='mcm_output')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/publication.py", line 113, in produce
+    event_bytes=len(producer.lifecycle._encode(template));manifest_bytes,encoded,actual_numeric=producer.encoded_size(matrix,binding)
+                                                                                                ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 56, in encoded_size
+    tree=encode(payload)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 46, in encode
+    require(value.dtype in (np.dtype('float64'),np.dtype('int64')),'native sample numeric types required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 27, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: native sample numeric types required
+
+======================================================================
+FAIL: test_output_drift_during_completion_refuses_success_and_preserves_conflict (__main__.Tests.test_output_drift_during_completion_refuses_success_and_preserves_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 94, in test_output_drift_during_completion_refuses_success_and_preserves_conflict
+    self.assertEqual(hit,[True]);self.assertTrue((self.attempt()/'complete.json').exists())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [True]
+
+Second list contains 1 additional elements.
+First extra element 0:
+True
+
+- []
++ [True]
+
+----------------------------------------------------------------------
+Ran 6 tests in 357.516s
+
+FAILED (failures=1, errors=1)

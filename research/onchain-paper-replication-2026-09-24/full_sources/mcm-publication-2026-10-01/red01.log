@@ -1,0 +1,146 @@
+test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch (__main__.Tests.test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch) ... FAIL
+test_dictionary_drift_after_computation_refuses_feature_write (__main__.Tests.test_dictionary_drift_after_computation_refuses_feature_write) ... FAIL
+test_output_drift_during_completion_refuses_success_and_preserves_conflict (__main__.Tests.test_output_drift_during_completion_refuses_success_and_preserves_conflict) ... FAIL
+test_partial_identity_refuses_without_compute_or_overwrite (__main__.Tests.test_partial_identity_refuses_without_compute_or_overwrite) ... FAIL
+test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) ... 
+  test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) (mode='route') ... FAIL
+  test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) (mode='reservation_cap') ... FAIL
+  test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) (mode='array_cap') ... FAIL
+  test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) (mode='event_cap') ... FAIL
+test_small_artifact_cap_preserves_failure_before_checkpoint_write (__main__.Tests.test_small_artifact_cap_preserves_failure_before_checkpoint_write) ... FAIL
+
+======================================================================
+FAIL: test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch (__main__.Tests.test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 44, in test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch
+    f=self.fixture();receipt=self.produce();proof=json.loads(Path(receipt['path']).read_bytes())
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable MCM publication missing
+
+======================================================================
+FAIL: test_dictionary_drift_after_computation_refuses_feature_write (__main__.Tests.test_dictionary_drift_after_computation_refuses_feature_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 80, in test_dictionary_drift_after_computation_refuses_feature_write
+    f=self.fixture();original=self.m.driver.compute
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable MCM publication missing
+
+======================================================================
+FAIL: test_output_drift_during_completion_refuses_success_and_preserves_conflict (__main__.Tests.test_output_drift_during_completion_refuses_success_and_preserves_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 87, in test_output_drift_during_completion_refuses_success_and_preserves_conflict
+    f=self.fixture();original=self.m.sync_directory;hit=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable MCM publication missing
+
+======================================================================
+FAIL: test_partial_identity_refuses_without_compute_or_overwrite (__main__.Tests.test_partial_identity_refuses_without_compute_or_overwrite)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 70, in test_partial_identity_refuses_without_compute_or_overwrite
+    self.fixture();attempt=self.attempt();attempt.mkdir(parents=True);(attempt/'start.json').write_text('{}')
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable MCM publication missing
+
+======================================================================
+FAIL: test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) (mode='route')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 66, in test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable MCM publication missing
+
+======================================================================
+FAIL: test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) (mode='reservation_cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 66, in test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable MCM publication missing
+
+======================================================================
+FAIL: test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) (mode='array_cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 66, in test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable MCM publication missing
+
+======================================================================
+FAIL: test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt (__main__.Tests.test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt) (mode='event_cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 66, in test_route_reservation_array_and_event_caps_refuse_before_compute_or_attempt
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable MCM publication missing
+
+======================================================================
+FAIL: test_small_artifact_cap_preserves_failure_before_checkpoint_write (__main__.Tests.test_small_artifact_cap_preserves_failure_before_checkpoint_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 74, in test_small_artifact_cap_preserves_failure_before_checkpoint_write
+    f=self.fixture('artifact_cap')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_admitted_output_records_policy_and_complete_accounting');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').is_file(),'durable MCM publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable MCM publication missing
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.003s
+
+FAILED (failures=9)
