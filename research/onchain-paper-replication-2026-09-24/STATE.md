@@ -3,6 +3,34 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Current consumer integration — synthetic checks passed; guarded trial prepared**:
+Maintained native_reuse.py and the explicit job_payload reuse dispatch are now
+implemented. The new current ResearchRun registers exact historical references,
+full population, source additions and the sole permitted job_payload bridge
+replacement. Current source/runtime/guard ownership is enforced, saved metadata
+and numerical features are read under bounded leases, and historical producer
+identities remain closed. No financial-data fits have started.
+Evidence: full_sources/native-reuse-integration-2026-10-01/. check01 CLOSED
+session18413 exit1, 3 tests/148.767s: repeated batches/guard-loss refusal and
+numerical-source-change refusal passed; both tiny fits completed through the normal
+executor, but cleanup incorrectly attempted to fail the already-completed test run.
+The log and exact check01 source snapshots remain preserved. Independent REVIEW
+708579c8d7eb12ca9333e42a32951cd81dc7726490d4041e5af59452bb918f04 withheld acceptance
+for observed-directory baseline adoption and broken failure-marker symlinks.
+Both are corrected: inventories derive from admitted declarations and failure
+markers use exists OR is_symlink on every lease. Isolated counterexamples added;
+check02 CLOSED session54970 exit0: four tests passed in149.726s, including both
+synthetic fits through the normal executor. Independent FINAL_REVIEW and GUARDED_ADMISSION_REVIEW accept the corrected source
+and this one-shot synthetic admission, conditional on immediate fresh preflight. A distinct
+retained checkout research_artifacts/native-reuse-synthetic/attempt01 is prepared,
+source7d2b6fde5035c5178d2f39e98fe4f4aa118b697e, family budget1, no claim or launch.
+guarded-preflight01 confirms actual-root admission, all652oldfiles unchanged,
+8141860864B available RAM and20981182464B free disk. Limits3GiBmax/2GiBhigh,
+zero worker swap,10GiBdiskfloor/900swall. Next safe action: fresh preflight and a single guarded launch after preserving
+the reviewed engineering checkpoint. Both review documents remain in the evidence
+directory; no empirical admission is implied.
+This is an engineering milestone only; full-size resource pilot admission remains.
+
 **Continued scientific reuse validation — no active fit**:
 full_sources/cold-native-science-2026-10-01/science.py now compares the complete
 prospective descriptor/population/scaler with admitted historical inputs, rebuilds
