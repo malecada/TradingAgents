@@ -6,20 +6,14 @@ The adapter requires the actual `compact_mcm.Produced` chain and holds its owner
 
 Before tensor allocation, the selected cap must cover `2*(MCM bytes + edge-index bytes) + 9*chunk_entries`. The preserved converter validates native shapes, finite scores in [0,1], endpoint indices, source layout and source/output wire hashes, and creates independent CPU float32/int64 tensors. The adapter checks tensor dtype/device/contiguity/no-grad and the shape-and-value wire hash before and after its last external lease. Callback-free original dictionary/graph/MCM/stage/output verification follows. Returned mapping/receipt attributes are immutable; tensor content remains mutable and is checked on lease/check.
 
-The raw `check01.log` reports **6 passed in 474.59 seconds**. Its cases cover actual admitted MCM and edge equality, independent NumPy/tensor storage, changed tensor refusal, registered budget/route/source refusal before `torch.empty`, and held-lock refusal. Its original late-graph test attempted direct assignment into immutable array storage; that refusal did not establish mutated-graph detection. The earlier review which overstated this evidence is preserved byte-for-byte as `REVIEW_CHECK01.md`, SHA-256 `eff472dada40389a8abe44896c4ff1c6a7c3ee833bee0cea3d4ed9fa647d4017`.
-
-The corrected isolated `check02.log` reports **1 passed, 5 deselected in 81.91 seconds**. After materialization returns, its next live callback replaces graph edges using an independent array and explicit attribute replacement. It requires preparation refusal and separately asserts that the actual graph hash changed. This closes the genuine late original-graph mutation coverage gap without a source change. There was no combined rerun of all six current cases.
-
-These are fresh small registered synthetic chains with mocked guard surfaces. They do not independently test every malformed tensor property or every descriptor failure; those checks were inspected in source. The retained red run is a missing-module failure, not numerical evidence.
+The raw `check01.log` reports **6 passed in 474.59 seconds**. Inspected cases cover actual admitted MCM and edge equality, independent NumPy/tensor storage, changed tensor refusal, registered budget/route/source refusal before `torch.empty`, late original-graph mutation refusal, and held-lock refusal. This is a fresh small registered synthetic chain with mocked guard surfaces. It does not independently test every malformed tensor property or every descriptor failure; those checks were inspected in source. The retained red run is a missing-module failure, not numerical evidence.
 
 The numeric cap is a per-conversion payload/scratch bound. It does not account for repeated retained conversions, caller-expanded tensor storage or aliases, parent graph attributes, sample/dictionary/MCM provenance residency and readbacks, matching/stream scratch, Python objects, downstream model state or process RSS. No learned encoder is detached or trained by this adapter; its fixed graph inputs are intended for the separate trainable model. Graph artifact publication, complete calendar/price-label denominator, complete representation/native dispatch, cold reuse, full-size resource feasibility and empirical execution remain unadmitted.
 
 Independently checked SHA-256:
 
 - `compact_features.py`: `584268806ac6b6ea713737e4f54a6ba0bd923397165c089f2f359dfb3d916752`
-- Initial `test_compact_features.py`, preserved as `test-check01.py`: `93d0b006f0c0f1fa72497e5f452ab7855137dcb1993278dd093e6e5649dbef3f`
+- `test_compact_features.py`: `93d0b006f0c0f1fa72497e5f452ab7855137dcb1993278dd093e6e5649dbef3f`
 - `check01.log`: `dda6c4a2d170b55a062765f882cd29c26274e1f1b4c253894885002829931d7a`
-- Final `test_compact_features.py`: `18de630b3042b1a2caf569b806bce77170228478aa0335e29e3235c149ee90cf`
-- `check02.log`: `16e222b19313697e461979309ff6bb5d28f8ad045a8f41824ee86698bb8cd5de`
 
 These direct bindings do not assert a new complete transitive execution-source manifest.

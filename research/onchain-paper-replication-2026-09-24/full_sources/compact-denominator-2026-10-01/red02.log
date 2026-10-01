@@ -1,0 +1,35 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_lookback_mismatch_refused_before_calendar_allocation[lookback] ______
+
+admitted = (<tradingagents.research.onchain_replication.compact_training.Training object at 0x7155bf4516a0>, <tests.research.onch...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71572ad43100>
+
+    @pytest.mark.parametrize('admitted',['lookback'],indirect=True)
+    def test_lookback_mismatch_refused_before_calendar_allocation(admitted,monkeypatch):
+        route,t=admitted;m=api();validator=m._validator();calls=[]
+        def refused(*args,**kwargs):
+            calls.append(1);raise AssertionError('calendar allocation reached despite actual row mismatch')
+        monkeypatch.setattr(validator,'validate',refused);monkeypatch.setattr(m,'_validator',lambda:validator)
+>       with pytest.raises(ValueError,match='lookback'):m.admit(route,input_name='compact_denominator')
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_denominator.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_denominator.py:105: in admit
+    result = _validator().validate(graphs,training._examples,training._fold,lookback_days=config['lookback_days'],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ((CalendarGraph(asset='ETH', start_utc='2024-01-15T00:00:00Z', end_utc='2024-01-22T00:00:00Z', available_at='2024-01-2...00Z', test_end='2024-02-04T00:00:00Z', member_hash='e3bbc4d2a4a3f555d0c48899d37cf989a7eebdbfc2f5f7b4ca7434cde568bd45'))
+kwargs = {'lookback_days': 500000, 'max_calendar_days': 64, 'expected_manifest_sha256': '0508fede0e993a6e5968e346a353f84558c8df...0e5de278b4036619235efab590f6c78dad687f79f40', 'b02b3b9749ca969d3d8dba527a6b4f93d8a8261ab11b9a523a56fd8847a11481'], ...}
+
+    def refused(*args,**kwargs):
+>       calls.append(1);raise AssertionError('calendar allocation reached despite actual row mismatch')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: calendar allocation reached despite actual row mismatch
+
+tests/research/onchain_replication/test_compact_denominator.py:95: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_denominator.py::test_lookback_mismatch_refused_before_calendar_allocation[lookback]
+1 failed, 5 deselected in 21.35s

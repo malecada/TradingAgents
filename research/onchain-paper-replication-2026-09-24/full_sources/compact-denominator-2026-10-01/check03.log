@@ -1,0 +1,29 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_______ test_final_receipt_callback_cannot_hide_original_graph_mutation ________
+
+admitted = (<tradingagents.research.onchain_replication.compact_training.Training object at 0x77c9399ca710>, <tests.research.onch...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77c9399f2ea0>
+
+    def test_final_receipt_callback_cannot_hide_original_graph_mutation(admitted,monkeypatch):
+        route,t=admitted;m=api();result=m.admit(route,input_name='compact_denominator')
+        source=m._sources;lease=type(route).lease;ready=[]
+        def sources(value):
+            answer=source(value);ready.append(True);return answer
+        def changed(self):
+            lease(self)
+            if ready:
+                self.graphs[0].node_features.setflags(write=True)
+                self.graphs[0].node_features[0,0] += 1
+        monkeypatch.setattr(m,'_sources',sources);monkeypatch.setattr(type(route),'lease',changed)
+>       with pytest.raises(ValueError,match='original graphs'):result.check()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'original graphs'
+E         Actual message: 'cannot set WRITEABLE flag to True of this array'
+
+tests/research/onchain_replication/test_compact_denominator.py:112: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_denominator.py::test_final_receipt_callback_cannot_hide_original_graph_mutation
+1 failed, 1 passed, 5 deselected in 40.86s

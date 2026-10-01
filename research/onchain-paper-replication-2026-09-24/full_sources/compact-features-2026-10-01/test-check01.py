@@ -75,14 +75,10 @@ def test_last_live_callback_cannot_hide_graph_mutation(admitted,monkeypatch):
         result=materialize(*args,**kwargs);seen.append(result);return result
     def changed():
         lease()
-        if seen:
-            edges=np.array(mcm._graph.edge_index,copy=True)
-            edges[0,0]=1-int(edges[0,0])
-            object.__setattr__(mcm._graph,'edge_index',edges)
+        if seen:mcm._graph.edge_index[0,0]=1-int(mcm._graph.edge_index[0,0])
     monkeypatch.setattr(m,'_boundary',lambda:boundary)
     monkeypatch.setattr(boundary,'materialize',copy);monkeypatch.setattr(mcm,'lease',changed)
     with pytest.raises(ValueError):m.prepare(mcm,input_name='compact_features')
-    assert seen and upstream.graph_hash(mcm._graph) != mcm.record['graph_hash']
 
 
 def test_concurrent_conversion_refused_before_allocation(admitted):

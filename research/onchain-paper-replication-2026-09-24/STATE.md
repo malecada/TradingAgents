@@ -3,6 +3,48 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact complete-calendar admission — October 1 continuation**:
+Implemented compact_denominator.py: actual Training, both registered plan/job
+calendar/coverage/fold selection, complete included/excluded date and required
+Graph union through unchanged admitted denominator validator. Price exclusions
+remain unrevalidated; no representation/native/empirical admission implied.
+Evidence full_sources/compact-denominator-2026-10-01/RESULT.md. Initial5checks
+passed96.22s/session39200. Independent CDEN1 lookback expansion reproduced via
+safe boundary trap red02:1failed5deselected21.35s/session80370exit1. Added exact
+lookback-to-admitted-row-length preflight before date construction. check02
+positive and lookback passed; graph mutation fixture failed on read-only backing.
+check03 preserved the second fixture failure. Corrected actual graph replacement
+check04 CLOSED2passed5deselected41.52s/session64283exit0; first and final callback
+mutations detected. No combined final7-case run. Independent REVIEW accepted SHA
+08361c2959978d22b9d0b5e52d132d580f453740ee7037fa05a4aa416d378724.
+Original source/test/failures retained. No empirical work. Feature callback-test
+correction check02 CLOSED1passed5deselected81.91s/session74858exit0, explicitly
+replacing graph edge storage and asserting actual graph drift. All jobs terminal.
+Latest disk21271384064B available; authorized10GiB floor preserved. Resource
+coverage77/109 and all1420pending financial fits unchanged. Next safe action:
+implement compact graph artifact publication/saved admission from actual Features;
+then join all required graph outputs and this denominator in representation closure.
+Explicit native terminal handoff, whole-workflow physical accounting, hub-cap
+amendments and independently reviewed committed60→61 gate remain before pilots.
+
+**Compact graph tensor conversion — October 1 continuation**:
+MCM checkpoint6ee88fb4972d2ae4011b50e7e41fac55d2ed7fca committed, pushed and
+exact remote hash verified. Next actual compact_mcm.Produced -> registered
+bounded fixed CPU MCM/edge tensors implemented in compact_features.py. Reuses
+the source-admitted conversion boundary; full original provenance and saved
+scores rejoined after callbacks. No graph publication/representation claim.
+Fresh synthetic red01 CLOSED1missing-module failure5deselected72.41s/session81416
+exit1. check01 CLOSED6passes474.59s/session5042exit0. Evidence
+full_sources/compact-features-2026-10-01/RESULT.md. Independent REVIEW accepted
+eff472dada40389a8abe44896c4ff1c6a7c3ee833bee0cea3d4ed9fa647d4017.
+Original six-case mutation fixture only hit read-only protection; retained
+test-check01.py and REVIEW_CHECK01.md. Corrected check02 supplies actual graph
+mutation evidence. No combined final six-case run claimed. Amended independent REVIEW accepted SHA
+dccb673a780ed07391ccfe8110eba6e4aa3af63edc1a8f2424966ecee51628ad.
+Next compact graph artifact publication/saved admission and representation/native
+closure, followed by whole-workflow accounting and the reviewed committed resource
+amendment. No empirical/resource/financial jobs launched.
+
 **Compact required-graph MCM production — October 1 continuation**:
 Implemented actual Produced dictionary -> exact required Training graph ->
 unchanged source-admitted array MCM kernel -> compact matcher/score stream ->

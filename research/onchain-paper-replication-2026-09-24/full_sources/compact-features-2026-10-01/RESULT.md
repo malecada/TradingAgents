@@ -19,3 +19,12 @@ No graph artifact publication, full representation/native route or empirical
 admission follows from this boundary. All 1,420 financial fits remain pending.
 Next graph publication/saved admission; complete-calendar adapter proceeds
 independently before representation closure and full resource accounting.
+
+Correction to original mutation coverage: direct assignment to GraphSnapshot
+edges only exercised immutable-array write rejection in check01. The original
+test is retained as test-check01.py and review as REVIEW_CHECK01.md. A corrected
+fixture explicitly replaces graph edge storage and asserts the original graph
+hash changed after refusal. Targeted check02 passed one case, five deselected,
+81.91 seconds, session74858 exit0. Production source is unchanged; no combined
+final six-case run is claimed. This supplies actual final-callback graph drift
+coverage rather than relying on a read-only array exception.
