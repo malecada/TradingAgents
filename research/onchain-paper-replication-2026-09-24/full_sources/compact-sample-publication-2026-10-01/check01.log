@@ -1,0 +1,44 @@
+.......F.                                                                [100%]
+=================================== FAILURES ===================================
+_______ test_saved_array_tampering_is_refused_before_allocating_payload ________
+
+admitted = (<tradingagents.research.onchain_replication.compact_sampler.Draws object at 0x785f821e67a0>, <tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x785f81fc88c0>
+
+    def test_saved_array_tampering_is_refused_before_allocating_payload(admitted, monkeypatch):
+        draws, t = admitted; m = api(); saved = m.publish(draws, input_name='compact_samples')
+        path = saved.directory / 'artifact/array-000000.npy'; raw = path.read_bytes()
+        path.write_bytes(raw[:-1] + bytes([raw[-1] ^ 1]))
+        def forbidden(*args, **kwargs): raise AssertionError('allocation preceded hash admission')
+        monkeypatch.setattr(m.np, 'empty', forbidden)
+>       with pytest.raises(ValueError, match='hash'): saved.check()
+                                                      ^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_samples.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_samples.py:197: in check
+    self.lease(); self._draws.check(); _sources(self._draws)
+                  ^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_sampler.py:161: in check
+    self._verify(); self.lease()
+    ^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_sampler.py:149: in _verify
+    _draw(draw, i, previous, rng, start)
+tradingagents/research/onchain_replication/compact_sampler.py:173: in _draw
+    and canonical_bytes(draw['rng_before']) == canonical_bytes(rng.bit_generator.state),
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+numpy/random/_pcg64.pyx:208: in numpy.random._pcg64.PCG64.state.__get__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (4,), kwargs = {'dtype': <class 'numpy.uint64'>}
+
+>   def forbidden(*args, **kwargs): raise AssertionError('allocation preceded hash admission')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: allocation preceded hash admission
+
+tests/research/onchain_replication/test_compact_samples.py:87: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_samples.py::test_saved_array_tampering_is_refused_before_allocating_payload
+1 failed, 8 passed in 244.19s (0:04:04)

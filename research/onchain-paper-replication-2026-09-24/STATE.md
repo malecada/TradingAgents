@@ -3,6 +3,35 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact sample numeric publication — October 1 heartbeat**:
+Fresh synthetic red01 CLOSED1missing-module failure8deselected23.47s/
+session2623exit1, evidence
+full_sources/compact-sample-publication-2026-10-01/. Implemented bounded numeric
+sample publication from the actual compact Draws result, strict component reads,
+exact current-owner/draw/training joins and immutable failed output namespaces.
+Maintained publisher check01 CLOSED1failure8passes244.19s/session65740exit1.
+Failure was an overbroad allocation-test patch that also blocked NumPy PCG64
+state metadata; source/test retained, allocation trap now isolated to strict
+reader module. Fresh red02 CLOSED3failures9deselected87.92s/session28076exit1
+reproduced both final resident/draw mutations and post-sizing growth reaching
+the writer. Corrections add callback-free pinned draw/sample verification both
+after final live callback and immediately before numeric writes. check02 CLOSED
+5passed7deselected152.72s/session38337exit0 covers positive publication/read,
+preallocation damaged-file refusal and3callback regressions. All checks terminal;
+no combined current12-case run claimed. Independent REVIEW accepted the
+bounded numeric-publication contract, SHA
+e726625744c7a856f7c575c87646f688ef51db11c8cdbec7c8403763b0186626.
+REVIEW_INITIAL findings and original bytes remain preserved. The corrected
+final boundary rejoins original sample/draw evidence callback-free before the
+artifact; the pre-write boundary rejects post-sizing sample growth before writing.
+This step publishes numeric artifacts; independent weighted-sample scientific
+admission and dictionary/representation closure remain separate requirements.
+No engineering, empirical/resource or financial job remains active. Next implement
+the explicit bounded induced-neighborhood/draw-prefix/sample-identity proof and
+dictionary workload scope consumed by the compact dictionary producer.
+Disk21292457984B available at completion;10GiB floor and77/109coverage preserved.
+All1420financial fits remain pending.
+
 **Compact sampler durable draws — October 1 continuation**:
 Implementing the first current-owner bounded sampler adapter using the preserved
 leased core, with exclusive durable per-draw RNG evidence and retained failure

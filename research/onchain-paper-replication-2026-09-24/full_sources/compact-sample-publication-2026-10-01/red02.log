@@ -1,0 +1,93 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_last_publication_lease_cannot_break_original_sample_or_draw_join[resident] _
+
+admitted = (<tradingagents.research.onchain_replication.compact_sampler.Draws object at 0x743331e61d30>, <tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74349d913100>
+target = 'resident'
+
+    @pytest.mark.parametrize('target', ['resident', 'draw'])
+    def test_last_publication_lease_cannot_break_original_sample_or_draw_join(admitted, monkeypatch, target):
+        draws, t = admitted; m = api(); saved = m.publish(draws, input_name='compact_samples')
+        armed = False; equal = m._equal_numeric; lease = draws.lease
+        def compare(*args):
+            nonlocal armed
+            equal(*args); armed = True
+        def changed():
+            lease()
+            if armed:
+                if target == 'resident':
+                    g = draws.samples.graphs[0]; object.__setattr__(g, 'node_features', g.node_features + 1)
+                else: (draws.directory / 'draw-000000.json').write_bytes(b'{}')
+        monkeypatch.setattr(m, '_equal_numeric', compare); monkeypatch.setattr(draws, 'lease', changed)
+>       with pytest.raises(ValueError, match='sample|draw|metadata'): saved.check()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_samples.py:120: Failed
+_ test_last_publication_lease_cannot_break_original_sample_or_draw_join[draw] __
+
+admitted = (<tradingagents.research.onchain_replication.compact_sampler.Draws object at 0x743331ed3c50>, <tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743331ef7a80>
+target = 'draw'
+
+    @pytest.mark.parametrize('target', ['resident', 'draw'])
+    def test_last_publication_lease_cannot_break_original_sample_or_draw_join(admitted, monkeypatch, target):
+        draws, t = admitted; m = api(); saved = m.publish(draws, input_name='compact_samples')
+        armed = False; equal = m._equal_numeric; lease = draws.lease
+        def compare(*args):
+            nonlocal armed
+            equal(*args); armed = True
+        def changed():
+            lease()
+            if armed:
+                if target == 'resident':
+                    g = draws.samples.graphs[0]; object.__setattr__(g, 'node_features', g.node_features + 1)
+                else: (draws.directory / 'draw-000000.json').write_bytes(b'{}')
+        monkeypatch.setattr(m, '_equal_numeric', compare); monkeypatch.setattr(draws, 'lease', changed)
+>       with pytest.raises(ValueError, match='sample|draw|metadata'): saved.check()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_samples.py:120: Failed
+_________ test_growth_after_preflight_is_refused_before_numeric_writer _________
+
+admitted = (<tradingagents.research.onchain_replication.compact_sampler.Draws object at 0x743342644f50>, <tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74334262ae70>
+
+    def test_growth_after_preflight_is_refused_before_numeric_writer(admitted, monkeypatch):
+        draws, t = admitted; m = api(); prepared = False; prepare = m._prepare; lease = draws.lease
+        def sized(*args):
+            nonlocal prepared
+            result = prepare(*args); prepared = True; return result
+        def changed():
+            lease()
+            if prepared:
+                g = draws.samples.graphs[0]
+                object.__setattr__(g, 'node_features', m.np.zeros((len(g.node_ids), 100000)))
+        def forbidden(*args): raise AssertionError('resized sample reached numerical writer')
+        monkeypatch.setattr(m, '_prepare', sized); monkeypatch.setattr(draws, 'lease', changed)
+        monkeypatch.setattr(m.component_store, 'save_component', forbidden)
+>       with pytest.raises(ValueError, match='sample'): m.publish(draws, input_name='compact_samples')
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_samples.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_samples.py:228: in publish
+    path = component_store.save_component(root / 'artifact', _payload(draws.samples), context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (PosixPath('/tmp/tmp6o_1hijy/research_artifacts/onchain_compact_samples/83387ef8af175bd6b24bb1afde898ab3d763951c65a7f1...dd36a3536cf15bb4438767b72', 'binding_sha256': '85e23ca30c7be8486c521bed9745089a7a24e64f3af1bf25ff5f939c032570ef', ...})
+
+>   def forbidden(*args): raise AssertionError('resized sample reached numerical writer')
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: resized sample reached numerical writer
+
+tests/research/onchain_replication/test_compact_samples.py:133: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_samples.py::test_last_publication_lease_cannot_break_original_sample_or_draw_join[resident]
+FAILED tests/research/onchain_replication/test_compact_samples.py::test_last_publication_lease_cannot_break_original_sample_or_draw_join[draw]
+FAILED tests/research/onchain_replication/test_compact_samples.py::test_growth_after_preflight_is_refused_before_numeric_writer
+3 failed, 9 deselected in 87.92s (0:01:27)
