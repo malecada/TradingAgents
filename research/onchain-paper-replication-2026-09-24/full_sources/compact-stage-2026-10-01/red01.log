@@ -1,0 +1,94 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_complete_stage_joins_actual_log_scores_and_retained_progress[dictionary] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-41/test_complete_stage_joins_actu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7bd7d7d2f360>
+kind = 'dictionary'
+
+    @pytest.mark.parametrize('kind', ['dictionary', 'mcm'])
+    def test_complete_stage_joins_actual_log_scores_and_retained_progress(tmp_path, monkeypatch, kind):
+>       from tradingagents.research.onchain_replication.compact_stage import seal, verify
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_stage'
+
+tests/research/onchain_replication/test_compact_stage.py:43: ModuleNotFoundError
+____ test_complete_stage_joins_actual_log_scores_and_retained_progress[mcm] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-41/test_complete_stage_joins_actu1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7bd7d7d2f100>
+kind = 'mcm'
+
+    @pytest.mark.parametrize('kind', ['dictionary', 'mcm'])
+    def test_complete_stage_joins_actual_log_scores_and_retained_progress(tmp_path, monkeypatch, kind):
+>       from tradingagents.research.onchain_replication.compact_stage import seal, verify
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_stage'
+
+tests/research/onchain_replication/test_compact_stage.py:43: ModuleNotFoundError
+____ test_corrupt_or_mismatched_stage_cannot_publish_completion[checkpoint] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-41/test_corrupt_or_mismatched_sta0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7bd7971370b0>
+target = 'checkpoint'
+
+    @pytest.mark.parametrize('target', ['checkpoint', 'score', 'extra_checkpoint', 'denominator'])
+    def test_corrupt_or_mismatched_stage_cannot_publish_completion(tmp_path, monkeypatch, target):
+>       from tradingagents.research.onchain_replication.compact_stage import seal
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_stage'
+
+tests/research/onchain_replication/test_compact_stage.py:58: ModuleNotFoundError
+______ test_corrupt_or_mismatched_stage_cannot_publish_completion[score] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-41/test_corrupt_or_mismatched_sta1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7bd7966fcaf0>
+target = 'score'
+
+    @pytest.mark.parametrize('target', ['checkpoint', 'score', 'extra_checkpoint', 'denominator'])
+    def test_corrupt_or_mismatched_stage_cannot_publish_completion(tmp_path, monkeypatch, target):
+>       from tradingagents.research.onchain_replication.compact_stage import seal
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_stage'
+
+tests/research/onchain_replication/test_compact_stage.py:58: ModuleNotFoundError
+_ test_corrupt_or_mismatched_stage_cannot_publish_completion[extra_checkpoint] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-41/test_corrupt_or_mismatched_sta2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7bd7966fd9d0>
+target = 'extra_checkpoint'
+
+    @pytest.mark.parametrize('target', ['checkpoint', 'score', 'extra_checkpoint', 'denominator'])
+    def test_corrupt_or_mismatched_stage_cannot_publish_completion(tmp_path, monkeypatch, target):
+>       from tradingagents.research.onchain_replication.compact_stage import seal
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_stage'
+
+tests/research/onchain_replication/test_compact_stage.py:58: ModuleNotFoundError
+___ test_corrupt_or_mismatched_stage_cannot_publish_completion[denominator] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-41/test_corrupt_or_mismatched_sta3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7bd79673d450>
+target = 'denominator'
+
+    @pytest.mark.parametrize('target', ['checkpoint', 'score', 'extra_checkpoint', 'denominator'])
+    def test_corrupt_or_mismatched_stage_cannot_publish_completion(tmp_path, monkeypatch, target):
+>       from tradingagents.research.onchain_replication.compact_stage import seal
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_stage'
+
+tests/research/onchain_replication/test_compact_stage.py:58: ModuleNotFoundError
+_ test_late_owner_callback_corruption_leaves_failed_seal_bytes_without_success _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-41/test_late_owner_callback_corru0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7bd79673d850>
+
+    def test_late_owner_callback_corruption_leaves_failed_seal_bytes_without_success(tmp_path, monkeypatch):
+>       from tradingagents.research.onchain_replication.compact_stage import seal, verify
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_stage'
+
+tests/research/onchain_replication/test_compact_stage.py:72: ModuleNotFoundError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_complete_stage_joins_actual_log_scores_and_retained_progress[dictionary]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_complete_stage_joins_actual_log_scores_and_retained_progress[mcm]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_corrupt_or_mismatched_stage_cannot_publish_completion[checkpoint]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_corrupt_or_mismatched_stage_cannot_publish_completion[score]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_corrupt_or_mismatched_stage_cannot_publish_completion[extra_checkpoint]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_corrupt_or_mismatched_stage_cannot_publish_completion[denominator]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_late_owner_callback_corruption_leaves_failed_seal_bytes_without_success
+7 failed in 0.54s

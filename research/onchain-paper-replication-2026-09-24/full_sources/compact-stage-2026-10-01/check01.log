@@ -1,0 +1,301 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_complete_stage_joins_actual_log_scores_and_retained_progress[dictionary] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-42/test_complete_stage_joins_actu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ea4fb42f360>
+kind = 'dictionary'
+
+    @pytest.mark.parametrize('kind', ['dictionary', 'mcm'])
+    def test_complete_stage_joins_actual_log_scores_and_retained_progress(tmp_path, monkeypatch, kind):
+        from tradingagents.research.onchain_replication.compact_stage import seal, verify
+>       contract = completed(tmp_path, kind, monkeypatch, progress=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_stage.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_stage.py:33: in completed
+    f.fit(matcher); stream_ref = None
+    ^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py:48: in fit
+    return self.m.fit(self.samples,self.match,self.settings,score_pair=scores,**(self.kw|changes))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:106: in fit
+    centers,groups=reduce(list(range(n)),{i:[i] for i in range(n)},0)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:97: in reduce
+    centers,groups=cluster_medoids(distances(part,owners,{'level':level,'partition_start':start}),min(k,len(part)))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:87: in distances
+    values.append(score(score_pair,purpose,graphs[left],graphs[right]))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:36: in score
+    result=callback(thaw(purpose),a,b)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:247: in __call__
+    require(self.checkpoints + self.schedule['max_checkpoints'] <= self.schedule['max_total_checkpoints']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = 'insufficient cumulative checkpoint capacity before allocation'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: insufficient cumulative checkpoint capacity before allocation
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+____ test_complete_stage_joins_actual_log_scores_and_retained_progress[mcm] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-42/test_complete_stage_joins_actu1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ea4fb42f100>
+kind = 'mcm'
+
+    @pytest.mark.parametrize('kind', ['dictionary', 'mcm'])
+    def test_complete_stage_joins_actual_log_scores_and_retained_progress(tmp_path, monkeypatch, kind):
+        from tradingagents.research.onchain_replication.compact_stage import seal, verify
+>       contract = completed(tmp_path, kind, monkeypatch, progress=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_stage.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_stage.py:30: in completed
+    kernel.mcm(f.g, d, f.match, **f.kw, score_pair=stream, policy=MCM_POLICY, lease=lambda: None)
+research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py:58: in mcm
+    lease();value=workload.score(score_pair,purpose,local,m);lease()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:36: in score
+    result=callback(thaw(purpose),a,b)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/mcm_score_stream.py:163: in __call__
+    result = self.compute(thaw(expected), a, b)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_stage.py:25: in <lambda>
+    owner='e' * 64, chunk_cells=4, compute=lambda p, a, b: matcher(p, a, b), lease=lambda: None)
+                                                           ^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:247: in __call__
+    require(self.checkpoints + self.schedule['max_checkpoints'] <= self.schedule['max_total_checkpoints']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = 'insufficient cumulative checkpoint capacity before allocation'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: insufficient cumulative checkpoint capacity before allocation
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+____ test_corrupt_or_mismatched_stage_cannot_publish_completion[checkpoint] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-42/test_corrupt_or_mismatched_sta0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ea4b9badc70>
+target = 'checkpoint'
+
+    @pytest.mark.parametrize('target', ['checkpoint', 'score', 'extra_checkpoint', 'denominator'])
+    def test_corrupt_or_mismatched_stage_cannot_publish_completion(tmp_path, monkeypatch, target):
+        from tradingagents.research.onchain_replication.compact_stage import seal
+>       contract = completed(tmp_path, 'mcm', monkeypatch, progress=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_stage.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_stage.py:30: in completed
+    kernel.mcm(f.g, d, f.match, **f.kw, score_pair=stream, policy=MCM_POLICY, lease=lambda: None)
+research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py:58: in mcm
+    lease();value=workload.score(score_pair,purpose,local,m);lease()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:36: in score
+    result=callback(thaw(purpose),a,b)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/mcm_score_stream.py:163: in __call__
+    result = self.compute(thaw(expected), a, b)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_stage.py:25: in <lambda>
+    owner='e' * 64, chunk_cells=4, compute=lambda p, a, b: matcher(p, a, b), lease=lambda: None)
+                                                           ^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:247: in __call__
+    require(self.checkpoints + self.schedule['max_checkpoints'] <= self.schedule['max_total_checkpoints']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = 'insufficient cumulative checkpoint capacity before allocation'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: insufficient cumulative checkpoint capacity before allocation
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+______ test_corrupt_or_mismatched_stage_cannot_publish_completion[score] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-42/test_corrupt_or_mismatched_sta1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ea4b9a749e0>
+target = 'score'
+
+    @pytest.mark.parametrize('target', ['checkpoint', 'score', 'extra_checkpoint', 'denominator'])
+    def test_corrupt_or_mismatched_stage_cannot_publish_completion(tmp_path, monkeypatch, target):
+        from tradingagents.research.onchain_replication.compact_stage import seal
+>       contract = completed(tmp_path, 'mcm', monkeypatch, progress=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_stage.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_stage.py:30: in completed
+    kernel.mcm(f.g, d, f.match, **f.kw, score_pair=stream, policy=MCM_POLICY, lease=lambda: None)
+research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py:58: in mcm
+    lease();value=workload.score(score_pair,purpose,local,m);lease()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:36: in score
+    result=callback(thaw(purpose),a,b)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/mcm_score_stream.py:163: in __call__
+    result = self.compute(thaw(expected), a, b)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_stage.py:25: in <lambda>
+    owner='e' * 64, chunk_cells=4, compute=lambda p, a, b: matcher(p, a, b), lease=lambda: None)
+                                                           ^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:247: in __call__
+    require(self.checkpoints + self.schedule['max_checkpoints'] <= self.schedule['max_total_checkpoints']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = 'insufficient cumulative checkpoint capacity before allocation'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: insufficient cumulative checkpoint capacity before allocation
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+_ test_corrupt_or_mismatched_stage_cannot_publish_completion[extra_checkpoint] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-42/test_corrupt_or_mismatched_sta2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ea4b9b9b570>
+target = 'extra_checkpoint'
+
+    @pytest.mark.parametrize('target', ['checkpoint', 'score', 'extra_checkpoint', 'denominator'])
+    def test_corrupt_or_mismatched_stage_cannot_publish_completion(tmp_path, monkeypatch, target):
+        from tradingagents.research.onchain_replication.compact_stage import seal
+>       contract = completed(tmp_path, 'mcm', monkeypatch, progress=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_stage.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_stage.py:30: in completed
+    kernel.mcm(f.g, d, f.match, **f.kw, score_pair=stream, policy=MCM_POLICY, lease=lambda: None)
+research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py:58: in mcm
+    lease();value=workload.score(score_pair,purpose,local,m);lease()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:36: in score
+    result=callback(thaw(purpose),a,b)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/mcm_score_stream.py:163: in __call__
+    result = self.compute(thaw(expected), a, b)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_stage.py:25: in <lambda>
+    owner='e' * 64, chunk_cells=4, compute=lambda p, a, b: matcher(p, a, b), lease=lambda: None)
+                                                           ^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:247: in __call__
+    require(self.checkpoints + self.schedule['max_checkpoints'] <= self.schedule['max_total_checkpoints']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = 'insufficient cumulative checkpoint capacity before allocation'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: insufficient cumulative checkpoint capacity before allocation
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+___ test_corrupt_or_mismatched_stage_cannot_publish_completion[denominator] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-42/test_corrupt_or_mismatched_sta3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ea4b9a68d50>
+target = 'denominator'
+
+    @pytest.mark.parametrize('target', ['checkpoint', 'score', 'extra_checkpoint', 'denominator'])
+    def test_corrupt_or_mismatched_stage_cannot_publish_completion(tmp_path, monkeypatch, target):
+        from tradingagents.research.onchain_replication.compact_stage import seal
+>       contract = completed(tmp_path, 'mcm', monkeypatch, progress=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_stage.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_stage.py:30: in completed
+    kernel.mcm(f.g, d, f.match, **f.kw, score_pair=stream, policy=MCM_POLICY, lease=lambda: None)
+research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py:58: in mcm
+    lease();value=workload.score(score_pair,purpose,local,m);lease()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:36: in score
+    result=callback(thaw(purpose),a,b)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/mcm_score_stream.py:163: in __call__
+    result = self.compute(thaw(expected), a, b)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_stage.py:25: in <lambda>
+    owner='e' * 64, chunk_cells=4, compute=lambda p, a, b: matcher(p, a, b), lease=lambda: None)
+                                                           ^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:247: in __call__
+    require(self.checkpoints + self.schedule['max_checkpoints'] <= self.schedule['max_total_checkpoints']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = 'insufficient cumulative checkpoint capacity before allocation'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: insufficient cumulative checkpoint capacity before allocation
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+_ test_late_owner_callback_corruption_leaves_failed_seal_bytes_without_success _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-42/test_late_owner_callback_corru0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ea4b9be1050>
+
+    def test_late_owner_callback_corruption_leaves_failed_seal_bytes_without_success(tmp_path, monkeypatch):
+        from tradingagents.research.onchain_replication.compact_stage import seal, verify
+>       contract = completed(tmp_path, 'mcm', monkeypatch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_stage.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_stage.py:30: in completed
+    kernel.mcm(f.g, d, f.match, **f.kw, score_pair=stream, policy=MCM_POLICY, lease=lambda: None)
+research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py:58: in mcm
+    lease();value=workload.score(score_pair,purpose,local,m);lease()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:36: in score
+    result=callback(thaw(purpose),a,b)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/mcm_score_stream.py:163: in __call__
+    result = self.compute(thaw(expected), a, b)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_stage.py:25: in <lambda>
+    owner='e' * 64, chunk_cells=4, compute=lambda p, a, b: matcher(p, a, b), lease=lambda: None)
+                                                           ^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:247: in __call__
+    require(self.checkpoints + self.schedule['max_checkpoints'] <= self.schedule['max_total_checkpoints']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False
+message = 'insufficient cumulative checkpoint capacity before allocation'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: insufficient cumulative checkpoint capacity before allocation
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_complete_stage_joins_actual_log_scores_and_retained_progress[dictionary]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_complete_stage_joins_actual_log_scores_and_retained_progress[mcm]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_corrupt_or_mismatched_stage_cannot_publish_completion[checkpoint]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_corrupt_or_mismatched_stage_cannot_publish_completion[score]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_corrupt_or_mismatched_stage_cannot_publish_completion[extra_checkpoint]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_corrupt_or_mismatched_stage_cannot_publish_completion[denominator]
+FAILED tests/research/onchain_replication/test_compact_stage.py::test_late_owner_callback_corruption_leaves_failed_seal_bytes_without_success
+7 failed in 2.12s

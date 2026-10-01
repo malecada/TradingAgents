@@ -3,6 +3,53 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact stage evidence seal implemented — October 1 continuation**:
+Maintained compact_stage.py now joins a completed PairLog to every retained
+progress checkpoint and, for MCM, the exact score-stream/tail/batch chain. The
+receipt requires exact externally supplied pair counts, no pending comparison,
+matching policy and checkpoint intents/nested content hashes. MCM completion
+records and saved scores must have identical ordered ordinal/float64/purpose
+digests; valid internal checksums alone do not suffice. Dictionary stage receipts
+have no MCM stream. Exclusive publication is checked again after the final owner
+callback; late failure preserves any receipt bytes and refuses success. Read-only
+verification repeats the join without numerical matching or historical replay.
+Content verification uses bounded chunks/one checkpoint at a time at stage
+boundaries. It remains sampled/non-atomic; no full-workflow throughput claim.
+
+Evidence full_sources/compact-stage-2026-10-01/: red01 CLOSED7missing-module
+failures0.54s/session56076exit1. check01 CLOSED7fixture-capacity failures2.12s/
+session9135exit1: calls_per_checkpoint1 consumed the tiny global10checkpoint
+allowance. Original source/test preserved. The fresh corrected synthetic fixture
+explicitly reserves128checkpoints/64000000B, retaining actual progress snapshots;
+no empirical policy changed. check02 CLOSED7passes4.09s/session91577exit0:
+dictionary/MCM positive joins, corrupt checkpoint/batch, extra checkpoint, wrong
+denominator and post-publication callback corruption. Independent REVIEW accepted
+bounded receipt contract, SHA
+054a2aa212dfe4654e09ad55873a44de92f5e90e096985fcd5267f1e07dd3afb.
+Then added a targeted valid-but-different saved-score stream: its stream verifier
+passes, but the exact log-versus-stream digest comparison refuses stage completion.
+join01 CLOSED1pass7deselected0.90s/session25079exit0; implementation unchanged and
+prior test retained. Independent JOIN_REVIEW accepted, SHA
+5cb43cfcca1ee7745cf987b76bc240e4789565fdbe286549965a5f92cab66d5c.
+
+This is the evidence-sealing component, NOT registered compact execution. The
+caller still supplies trusted owner/scope/terminal references and must enforce
+exclusive stage-root inventory and selected-stage membership. Next implement the
+actual compact owner/policy/namespace contract and dictionary/MCM publication and
+saved-reader hooks, then join all required stages into representation closure.
+Do not attach compact receipts to an empty old OwnedJournal and claim old native
+seal compatibility. Binding.lease already separates live guard/claim checks from
+Binding.check full source/input/runtime verification; an explicit compact route
+must define the frozen-source/input boundaries before using that distinction in
+its inner loop. Old producer behavior/dynamic source remain unchanged. Full
+source/policy registration, physical workflow reservations/offload, hub-cap
+amendment and reviewed committed60→61 gate remain before resource execution.
+No empirical job or financial fit is active; targeted process check found none.
+Resource coverage remains77/109 (32open), all1420financial fits pending. Main
+active plan work is Task7 integration/recovery and Task8 full-size feasibility;
+synthetic architecture acceptance is not paper-scope or numerical-agreement
+completion. All13tasks/C01–C18 and BTC/ETH history/comparisons remain required.
+
 **Compact dictionary integration and prospective execution policy — October 1 continuation**:
 Fresh compact-workload-integration-2026-10-01/check01 CLOSED4passes0.72s,
 session83423exit0. The actual dictionary workload now has synthetic evidence using
