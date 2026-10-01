@@ -299,10 +299,6 @@ class Owner:
 
     @transition
     def finish(self):
-        return self._finish()
-
-    def _finish(self):
-        """Finish while the caller holds this owner's transition lock."""
         self.boundary()
         require(self.active is None and set(self.stages) == set(self.required)
             and all(s.closed for s in self.stages.values()), 'compact required stages incomplete')

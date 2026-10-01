@@ -1,0 +1,78 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_actual_seal_keeps_old_leases_closed_accepts_registered_outputs_and_detects_corruption _
+
+admitted = (<tradingagents.research.onchain_replication.compact_publication.Published object at 0x731a2e4b3c40>, <tests.research....plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_actual_seal_keeps_old_leases_closed_accepts_registered_outputs_and_detects_corruption(admitted):
+        published,t=admitted;m=api();owner=published._closure._dictionary._proof.owner
+>       terminal=m.finish(published,input_name='compact_terminal');terminal.check()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_terminal.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_terminal.py:93: in finish
+    require(all(type(n) is str and n and Path(n).name == n and n in ad.experiment['outputs'] for n in names)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'compact terminal registered output routes differ'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: compact terminal registered output routes differ
+
+tradingagents/research/onchain_replication/score_batches.py:49: ValueError
+_______________ test_last_terminal_callback_cannot_revoke_owner ________________
+
+admitted = (<tradingagents.research.onchain_replication.compact_publication.Published object at 0x731a2ed279c0>, <tests.research....plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731a2f236d70>
+
+    def test_last_terminal_callback_cannot_revoke_owner(admitted,monkeypatch):
+        published,t=admitted;m=api();owner=published._closure._dictionary._proof.owner
+        original=m.Receipt.lease;changed=[]
+        def revoke(self):
+            original(self);owner.poisoned=True;changed.append(True)
+        monkeypatch.setattr(m.Receipt,'lease',revoke)
+>       with pytest.raises(ValueError,match='owner'):m.finish(published,input_name='compact_terminal')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'owner'
+E         Actual message: 'compact terminal registered output routes differ'
+
+tests/research/onchain_replication/test_compact_terminal.py:66: AssertionError
+______ test_output_failure_keeps_sealed_representation_and_prevents_retry ______
+
+admitted = (<tradingagents.research.onchain_replication.compact_publication.Published object at 0x731a2f270c20>, <tests.research....plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x731a2e54b2f0>
+
+    def test_output_failure_keeps_sealed_representation_and_prevents_retry(admitted,monkeypatch):
+        published,t=admitted;m=api();owner=published._closure._dictionary._proof.owner
+        write=t.run.write_json
+        def fail(name,value):
+            if name=='journal.json':raise RuntimeError('synthetic output failure')
+            return write(name,value)
+        monkeypatch.setattr(t.run,'write_json',fail)
+>       with pytest.raises(RuntimeError,match='output failure'):m.finish(published,input_name='compact_terminal')
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_terminal.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_terminal.py:93: in finish
+    require(all(type(n) is str and n and Path(n).name == n and n in ad.experiment['outputs'] for n in names)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'compact terminal registered output routes differ'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: compact terminal registered output routes differ
+
+tradingagents/research/onchain_replication/score_batches.py:49: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_terminal.py::test_actual_seal_keeps_old_leases_closed_accepts_registered_outputs_and_detects_corruption
+FAILED tests/research/onchain_replication/test_compact_terminal.py::test_last_terminal_callback_cannot_revoke_owner
+FAILED tests/research/onchain_replication/test_compact_terminal.py::test_output_failure_keeps_sealed_representation_and_prevents_retry
+3 failed, 1 passed in 652.11s (0:10:52)

@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________________ test_actual_terminal_required _________________________
+
+    def test_actual_terminal_required():
+>       with pytest.raises(ValueError,match='actual'):api().prepare(object(),input_name='native')
+                                                      ^^^^^
+
+tests/research/onchain_replication/test_compact_native_features.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import compact_native_features
+E       ImportError: cannot import name 'compact_native_features' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_compact_native_features.py:12: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_native_features.py::test_actual_terminal_required
+1 failed, 1 deselected in 2.80s
