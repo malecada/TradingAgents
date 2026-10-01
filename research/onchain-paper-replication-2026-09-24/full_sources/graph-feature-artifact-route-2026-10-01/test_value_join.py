@@ -1,0 +1,47 @@
+"""Self-consistent false storage must not bypass the actual MCM value join."""
+import importlib.util
+import json
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+import numpy as np
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,file_hash
+
+HERE=Path(__file__).resolve().parent
+spec=importlib.util.spec_from_file_location('saved_graph_value_fixture',HERE/'test_route.py')
+base=importlib.util.module_from_spec(spec);spec.loader.exec_module(base)
+
+class Tests(unittest.TestCase):
+    def test_rehashed_wrong_graph_matrix_refuses_actual_source_value_join(self):
+        fixture=base.Tests('test_exact_saved_reuse_and_output_lease_without_numeric_reentry')
+        self.addCleanup(fixture.doCleanups);owner=fixture.fixture();m=fixture.m
+        upstream=owner.directory/'checkpoint-000002/array-000000.npy';before=file_hash(upstream)
+        component=owner.directory/'checkpoint-000003/manifest.json';member=component.parent/'array-000000.npy'
+        matrix=np.load(member,allow_pickle=False);matrix[0,0]=.125 if matrix[0,0]!=.125 else .25
+        with member.open('wb') as stream:np.save(stream,matrix,allow_pickle=False)
+        manifest=json.loads(component.read_bytes());manifest['arrays']['array-000000.npy']['sha256']=file_hash(member)
+        manifest['arrays']['array-000000.npy']['bytes']=member.stat().st_size
+        component.write_bytes(canonical_bytes(manifest))
+        event=owner.journal.records[3];event['sha256']=file_hash(component)
+        event_path=owner.directory/'event-000003.json'
+        event_path.write_bytes(m.publication.producer.lifecycle._encode(event))
+        proof=json.loads(fixture.path.read_bytes());proof['event']['sha256']=file_hash(event_path)
+        proof['component']['sha256']=file_hash(component)
+        proof['encoded_artifact_bytes']=sum(p.stat().st_size for p in component.parent.iterdir())
+        proof['encoded_event_bytes']=event_path.stat().st_size
+        fixture.path.write_bytes(canonical_bytes(proof))
+        # All storage checks pass independently. Original source values do not.
+        m.reader.inspect_component(component,event['sha256'],event['binding'],owner.root,1048576,1048576,1024)
+        # Initial prerequisite preparation is explicit and outside saved reuse.
+        # The original ticket correctly retains the pre-rewrite event signature.
+        # A fresh real ticket sees the repaired inventory, so numerical value
+        # admission must still reject it independently of that older signature.
+        graph_proof=json.loads(fixture.path.read_bytes())
+        dictionary_proof=graph_proof['feature_provenance']['mcm_provenance']['dictionary_provenance']['dictionary_proof']
+        ticket=m.saved.prepare_dictionary(owner.owned,owner.journal,sampler_input='sampler_execution',
+            artifact_input='artifact_read',output_input='dictionary_output',proof_sha256=dictionary_proof['sha256'])
+        with patch.object(m.boundary.torch,'empty',side_effect=AssertionError('tensor before value join')):
+            with self.assertRaisesRegex(ValueError,'feature input hash differs'):fixture.admit(dictionary_ticket=ticket)
+        self.assertEqual(file_hash(upstream),before)
+
+if __name__=='__main__':unittest.main(verbosity=2)

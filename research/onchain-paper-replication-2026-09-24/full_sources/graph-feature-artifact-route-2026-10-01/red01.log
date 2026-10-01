@@ -1,0 +1,66 @@
+test_copy_allowance_refuses_before_upstream_or_graph_array_loading (__main__.Tests.test_copy_allowance_refuses_before_upstream_or_graph_array_loading) ... FAIL
+test_exact_saved_reuse_and_output_lease_without_numeric_reentry (__main__.Tests.test_exact_saved_reuse_and_output_lease_without_numeric_reentry) ... FAIL
+test_false_proof_duplicate_conflict_and_corruption_refuse_before_arrays (__main__.Tests.test_false_proof_duplicate_conflict_and_corruption_refuse_before_arrays) ... FAIL
+test_post_read_component_drift_refuses_return (__main__.Tests.test_post_read_component_drift_refuses_return) ... FAIL
+
+======================================================================
+FAIL: test_copy_allowance_refuses_before_upstream_or_graph_array_loading (__main__.Tests.test_copy_allowance_refuses_before_upstream_or_graph_array_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 80, in test_copy_allowance_refuses_before_upstream_or_graph_array_loading
+    self.fixture('cap')
+    ~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'saved graph feature route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved graph feature route missing
+
+======================================================================
+FAIL: test_exact_saved_reuse_and_output_lease_without_numeric_reentry (__main__.Tests.test_exact_saved_reuse_and_output_lease_without_numeric_reentry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 47, in test_exact_saved_reuse_and_output_lease_without_numeric_reentry
+    f=self.fixture();m=self.m;before=f.owned.journal.reservations
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'saved graph feature route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved graph feature route missing
+
+======================================================================
+FAIL: test_false_proof_duplicate_conflict_and_corruption_refuse_before_arrays (__main__.Tests.test_false_proof_duplicate_conflict_and_corruption_refuse_before_arrays)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 63, in test_false_proof_duplicate_conflict_and_corruption_refuse_before_arrays
+    f=self.fixture();m=self.m;raw=self.path.read_bytes();original=json.loads(raw)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'saved graph feature route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved graph feature route missing
+
+======================================================================
+FAIL: test_post_read_component_drift_refuses_return (__main__.Tests.test_post_read_component_drift_refuses_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 85, in test_post_read_component_drift_refuses_return
+    f=self.fixture();m=self.m;original=m.reader.read_component
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').exists(),'saved graph feature route missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved graph feature route missing
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=4)

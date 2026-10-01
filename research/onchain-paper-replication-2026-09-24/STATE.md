@@ -3,6 +3,45 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Saved graph-feature admission independently accepted**:
+New isolated full_sources/graph-feature-artifact-route-2026-10-01/ validates the
+actual current owner/ticket and selected graph/MCM/tensor policies, exact native
+graph proof/start/event/component provenance, schema/order/counts and unique graph
+completion before strict graph loading. Actual saved original MCM admission joins
+full upstream provenance and derives the feature hash from original matrix plus
+resident graph edges. Explicit bounded native-to-CPU-tensor conversion follows.
+One original MCM is retained and counted alongside read graph arrays, output
+tensors and scratch: MCMbytes+2*featurebytes+9*readchunk. Upstream saved MCM has a
+separate read/copy phase cap; parent graph/dictionary/other receipts/RSS excluded.
+red01 CLOSED4missing failures0.002s,session45208 exit1.
+check01 CLOSED4methods398.106s,session32620 exit0; PID403019 no longer exists.
+All297frozen hashes match check01-sources.json SHA
+cce3af830a3787390754dc8c8613b73343c26020b3fdaac437b691b3c9367da7.
+Preliminary source review found no material blocker but requested a self-consistent
+false saved-value regression. value-check01 CLOSED1method96.738s,session23098
+exit1: expected source-value refusal, but the original dictionary ticket correctly
+rejected the rewritten graph event signature earlier. It does not prove the later
+value comparison. All300frozen hashes verified and test_value_join.py.check01
+preserved. Diagnostic value-check02 was interrupted after read-only review traced
+the earlier guard to the sample receipt's all-event inventory; exact PID522980
+SIGINT,session57207 exit130, no completed method. Its test/log are preserved.
+Production route.py is unchanged from passing check01.
+value-check03 CLOSED1pass115.520s,session63866 exit0; PID533741 gone. The fixture
+explicitly issues a NEW real dictionary ticket after the synthetic storage rewrite
+and before saved reuse. Initial preparation may reconstruct neighborhoods; original
+tickets/leases are not weakened. Strict storage inspection passes but actual MCM
+value identity rejects the false payload before tensor allocation; original MCM
+bytes remain unchanged. All305frozen files match value-check03-sources.json SHA
+b41a6940a9c8862997cb4c00ce539b4012b355bb72a7ec94e4eb355b42ee4595.
+No process/source freeze remains. Independent final review accepts this bounded
+scope, REVIEW SHA1377006b1d5149250e7b79ef66864a1a47434e344dd117ee020033e808034f11.
+All308final bindings match manifest SHA
+80406031f47c5b81e48701309608381e8610eed92e429219d253ee1428ee478a.
+Next safe action: exact graph/date/fold denominator and top-level representation
+closure, retaining all excluded/unavailable dates and per-input graph clocks.
+No empirical job or financial fit is running.
+Graph publication predecessor is accepted/pushed at71419a05, remote verified.
+
 **Durable native graph-feature publication independently accepted**:
 New isolated full_sources/graph-feature-publication-2026-10-01/ publishes one
 required graph_complete under an exclusive per-graph current-owner attempt.
