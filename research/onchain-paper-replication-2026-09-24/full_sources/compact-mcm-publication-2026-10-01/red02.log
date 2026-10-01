@@ -1,0 +1,67 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+_____ test_last_nested_exit_lease_cannot_change_wrapper_evidence[receipt] ______
+
+ready = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x742e5aae7250>, <tradingagents.research.on...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x742fb7513100>
+target = 'receipt'
+
+    @pytest.mark.parametrize('target', ['receipt', 'inventory'])
+    def test_last_nested_exit_lease_cannot_change_wrapper_evidence(ready, monkeypatch, target):
+        from tradingagents.research.onchain_replication import compact_mcm_publication as api
+        owner, stage, scope, t = ready
+        ticket = api.publish(owner, stage, output_input='compact_output', expected_scope=scope)
+        original = api.output.open_verified
+        @contextmanager
+        def injected(*args, lease, **kwargs):
+            exiting = False
+            def late_lease():
+                lease()
+                if exiting:
+                    root = Path(ticket['directory'])
+                    if target == 'receipt': (root / 'receipt.json').write_bytes(b'{}')
+                    else: (root / 'orphan').write_bytes(b'preserve')
+            with original(*args, lease=late_lease, **kwargs) as matrix:
+                yield matrix
+                exiting = True
+        monkeypatch.setattr(api.output, 'open_verified', injected)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_mcm_publication.py:95: Failed
+____ test_last_nested_exit_lease_cannot_change_wrapper_evidence[inventory] _____
+
+ready = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x742e595a0690>, <tradingagents.research.on...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x742fb7513100>
+target = 'inventory'
+
+    @pytest.mark.parametrize('target', ['receipt', 'inventory'])
+    def test_last_nested_exit_lease_cannot_change_wrapper_evidence(ready, monkeypatch, target):
+        from tradingagents.research.onchain_replication import compact_mcm_publication as api
+        owner, stage, scope, t = ready
+        ticket = api.publish(owner, stage, output_input='compact_output', expected_scope=scope)
+        original = api.output.open_verified
+        @contextmanager
+        def injected(*args, lease, **kwargs):
+            exiting = False
+            def late_lease():
+                lease()
+                if exiting:
+                    root = Path(ticket['directory'])
+                    if target == 'receipt': (root / 'receipt.json').write_bytes(b'{}')
+                    else: (root / 'orphan').write_bytes(b'preserve')
+            with original(*args, lease=late_lease, **kwargs) as matrix:
+                yield matrix
+                exiting = True
+        monkeypatch.setattr(api.output, 'open_verified', injected)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_mcm_publication.py:95: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_mcm_publication.py::test_last_nested_exit_lease_cannot_change_wrapper_evidence[receipt]
+FAILED tests/research/onchain_replication/test_compact_mcm_publication.py::test_last_nested_exit_lease_cannot_change_wrapper_evidence[inventory]
+2 failed, 1 passed, 3 deselected in 76.00s (0:01:16)

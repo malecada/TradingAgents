@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_detached_corrupt_mapping_cannot_be_hidden_by_valid_replacement ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-47/test_detached_corrupt_mapping_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75e51c513360>
+
+    def test_detached_corrupt_mapping_cannot_be_hidden_by_valid_replacement(tmp_path, monkeypatch):
+        from tradingagents.research.onchain_replication import compact_mcm_output as api
+        kw = source(tmp_path, monkeypatch); output = tmp_path / 'output'
+        ref = api.publish(output, **kw, lease=lambda: None)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_mcm_output.py:102: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_mcm_output.py::test_detached_corrupt_mapping_cannot_be_hidden_by_valid_replacement
+1 failed, 12 deselected in 1.59s

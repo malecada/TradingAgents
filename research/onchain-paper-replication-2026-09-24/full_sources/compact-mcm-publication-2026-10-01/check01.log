@@ -1,0 +1,33 @@
+F...                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_current_registered_owner_publishes_reads_and_closes_without_representation_claim _
+
+ready = (<tradingagents.research.onchain_replication.compact_owner.Owner object at 0x73ae510e3380>, <tradingagents.research.on...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_current_registered_owner_publishes_reads_and_closes_without_representation_claim(ready):
+        from tradingagents.research.onchain_replication import compact_mcm_publication as api
+        owner, stage, scope, t = ready
+>       ticket = api.publish(owner, stage, output_input='compact_output', expected_scope=scope)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_mcm_publication.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_mcm_publication.py:118: in publish
+    ref = io._write(fd, 'receipt.json', io._json(proof | {'artifact_sha256': artifact}))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/score_batches.py:61: in _json
+    _require(len(raw) <= META_LIMIT, 'compact metadata bound')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'compact metadata bound'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: compact metadata bound
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_mcm_publication.py::test_current_registered_owner_publishes_reads_and_closes_without_representation_claim
+1 failed, 3 passed in 76.57s (0:01:16)

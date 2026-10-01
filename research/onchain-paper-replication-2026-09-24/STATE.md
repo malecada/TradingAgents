@@ -3,6 +3,64 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact MCM numeric output and registered publication — October 1 continuation**:
+New compact_mcm_output.py converts completed saved float64 MCM score chunks into
+an exclusive row-major float32 artifact, without repeating numerical comparisons
+or allocating a complete matrix copy. Verification joins every output byte to
+the completed matching/stream/checkpoint receipt and exact external scientific
+scope. Its context reader maps read-only and checks the original descriptor and
+pathname through exit. Scratch is O(chunk size), with several byte/conversion
+copies; this is not an exact scratch/RSS reservation or physical quota.
+
+Evidence full_sources/compact-mcm-output-2026-10-01/: red01 CLOSED12missing-module
+failures0.59s/session34625exit1. check01 CLOSED12passes9.27s/session42039exit0:
+actual14-comparison MCM output, exact float32 conversion, scope/reservation
+refusal, damaged source/output, interrupted publication and terminal identity
+refusal. Independent review found a detached mapped inode could be altered then
+hidden by a valid pathname replacement. Prior source/test retained. red02 CLOSED
+1failed12deselected1.59s/session9202exit1 reproduced it. The original descriptor
+now stays pinned through exit verification, with fstat/path/final signature joins.
+check02 CLOSED3passes10deselected3.62s/session85334exit0 covers that regression,
+ordinary during-read mutation and successful exact output/read. FINAL_REVIEW
+accepted SHAac1c0b21f9aff81ab78a82f0cd77bf3949a59837037aa6929716b570941fb6e4.
+No combined final-source13-case run is claimed.
+
+The following implementation step has also been implemented: maintained
+compact_mcm_publication.py joins an actual current compact Owner and completed
+required MCM stage to an explicitly selected registered compact_mcm_output_input.
+It separately reserves each required graph's complete artifact allowance plus
+8192B receipt before publishing any graph, then exposes current-owner verified
+reads. This does not prove sampler/dictionary training provenance, select the
+native producer, append FeatureJournal events or close the representation.
+Evidence full_sources/compact-mcm-publication-2026-10-01/: red01 CLOSED4missing-
+module failures60.58s/session83347exit1. check01 CLOSED1failed3passed76.57s/
+session39703exit1: the full Binding record exceeded the8192B receipt cap after
+artifact publication. Source/test retained; receipt now pins Binding by hash and
+explicit claim hash, with exact placeholder-size preflight before namespace
+creation. Independent review also identified a nested-context late callback
+could change wrapper receipt/inventory after its last check. red02 CLOSED2failed
+1passed3deselected76.00s/session3765exit1: corrected positive publication/read/
+owner closure passed, both late-wrapper mutations reproduced. Its source/test
+were retained. A callback-free wrapper verification now follows the complete
+nested reader exit. check02 CLOSED3passed3deselected75.49s/session32513exit0
+targets the same3 cases: actual current-owner publication/read/aggregate closure
+and both late-wrapper regressions. Earlier3 refusal cases passed under check01's
+pre-correction source; no combined final-source6-case run is claimed.
+Independent FINAL_REVIEW accepted this contract, SHA
+bcb46d7614f69cfc9b95537703ee9bb56e54fcbdd9f577af39b4be5b04b60bf9.
+No engineering check, empirical/resource or financial job remains active.
+
+Remaining next interfaces: derive/admit actual training samples and compact
+dictionary publication; distinguish dictionary conservative pair capacity from
+the exact completed count (identical ordered subsets reuse their distance matrix);
+join required numeric outputs and neural features into representation closure
+and explicitly select the compact native route. Then complete physical whole-
+workflow/offload/cap amendments and reviewed committed60→61 resource gate.
+Coverage77/109 and all1420financial fits pending remain unchanged. Prior closed
+claims, source snapshots, raw stores and failures remain preserved.
+Latest host snapshot16135794688B physical RAM/8446255104B available and
+21261041664B disk available; the10GiB disk floor remains unchanged.
+
 **Compact registered owner integration verified — October 1 continuation**:
 New compact_owner.py attaches only to an actual fresh matching_owner.Binding.
 Plan/job compact backend and input must agree with the descriptor's policy hash
