@@ -1,0 +1,29 @@
+test_record_and_storage_are_nonassignable_and_layout_lease_is_pinned (__main__.Tests.test_record_and_storage_are_nonassignable_and_layout_lease_is_pinned) ... FAIL
+test_values_bounds_and_independent_immutable_copy (__main__.Tests.test_values_bounds_and_independent_immutable_copy) ... FAIL
+
+======================================================================
+FAIL: test_record_and_storage_are_nonassignable_and_layout_lease_is_pinned (__main__.Tests.test_record_and_storage_are_nonassignable_and_layout_lease_is_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_values.py", line 25, in test_record_and_storage_are_nonassignable_and_layout_lease_is_pinned
+    m=api();matrix=m.immutable_matrix(np.zeros((2,2),dtype=np.float32),1)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_values.py", line 10, in api
+    assert hasattr(m,'immutable_matrix'),'immutable MCM conversion missing'
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: immutable MCM conversion missing
+
+======================================================================
+FAIL: test_values_bounds_and_independent_immutable_copy (__main__.Tests.test_values_bounds_and_independent_immutable_copy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_values.py", line 15, in test_values_bounds_and_independent_immutable_copy
+    m=api();source=np.linspace(0,1,35,dtype=np.float32).reshape(5,7);expected=source.copy()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_values.py", line 10, in api
+    assert hasattr(m,'immutable_matrix'),'immutable MCM conversion missing'
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: immutable MCM conversion missing
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.101s
+
+FAILED (failures=2)

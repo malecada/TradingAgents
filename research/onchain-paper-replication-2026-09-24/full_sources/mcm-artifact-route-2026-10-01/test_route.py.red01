@@ -1,0 +1,95 @@
+"""Saved MCM reuse with issued dictionary prerequisites; guard mocked."""
+import importlib.util
+import json
+from pathlib import Path
+import unittest
+from unittest.mock import patch,ExitStack
+import numpy as np
+from tests.research.onchain_replication import test_matching_owner as owner_fixture
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,file_hash
+from tradingagents.research.onchain_replication.neighborhoods import NeighborhoodIndex
+from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+from tradingagents.research.onchain_replication.dictionary import reorder_dictionary
+
+HERE=Path(__file__).resolve().parent
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+base=load('saved_mcm_fixture',HERE.parent/'mcm-publication-2026-10-01/test_publication.py')
+def api():
+    assert (HERE/'route.py').is_file(),'saved MCM admission missing'
+    return load('saved_mcm_route',HERE/'route.py')
+
+class Tests(unittest.TestCase):
+    def fixture(self):
+        self.m=api();m=self.m;f=base.Tests('test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch');self.addCleanup(f.doCleanups)
+        original=owner_fixture.OwnershipTests.input
+        policy={'schema_version':1,'max_array_bytes':16,'validation_chunk_entries':2,'max_numeric_bytes':26}
+        def configured(instance,name,value):
+            if name=='plan':
+                original(instance,'mcm_read',policy);value['producers']['p']['mcm_read_input']='mcm_read'
+            if name=='execution_job':value['payload']['representation_jobs']['r']['mcm_read_input']='mcm_read'
+            return original(instance,name,value)
+        with patch.object(base,'api',return_value=m.publication),patch.object(m.publication,'SOURCES',m.SOURCES),patch.object(owner_fixture.OwnershipTests,'input',new=configured):owner=f.fixture()
+        self.f=f;self.owner=owner;self.proof=f.produce();self.proof_path=Path(self.proof['path'])
+        captured=[];original=m.artifacts.admit
+        def capture(*args,**kwargs):
+            receipt=original(*args,**kwargs);captured.append(receipt);return receipt
+        with patch.object(m.artifacts,'admit',side_effect=capture):
+            self.ticket=m.prepare_dictionary(owner.owned,owner.journal,sampler_input='sampler_execution',
+                artifact_input='artifact_read',output_input='dictionary_output',proof_sha256=f.f.f.receipt['sha256'])
+        self.dictionary_receipt=captured[0];return owner
+    def admit(self,ticket=None):
+        f=self.owner
+        return self.m.admit(f.owned,f.journal,dictionary_ticket=self.ticket if ticket is None else ticket,
+            graph_hash=self.f.f.graph_hash,mcm_input='mcm_execution',output_input='mcm_output',read_input='mcm_read',proof_sha256=file_hash(self.proof_path))
+    def forbidden_load(self):return patch.object(self.m.reader,'read_component',side_effect=AssertionError('array loaded before metadata refusal'))
+    def test_saved_reuse_and_lease_forbid_all_numerical_and_fresh_dictionary_apis(self):
+        f=self.fixture();m=self.m;before=f.owned.journal.reservations
+        expected=np.load(f.directory/'checkpoint-000002/array-000000.npy',allow_pickle=False)
+        with ExitStack() as stack:
+            for obj,name in [(m.artifacts,'admit'),(m.publication.driver,'compute'),(m.publication.driver.kernel,'mcm'),
+                (m.publication.driver.workload,'fit'),(m.publication.driver.workload,'mcm'),(m.publication.driver.serial,'Serial'),
+                (m.publication.driver.serial.pair.PairSession,'create'),(m.publication.driver.serial.pair.PairSession,'resume'),
+                (NeighborhoodIndex,'neighborhood'),(ArrayNeighborhoodIndex,'neighborhood')]:
+                stack.enter_context(patch.object(obj,name,side_effect=AssertionError('numerical API during saved reuse')))
+            result=self.admit();result.lease();again=self.admit()
+        np.testing.assert_array_equal(result.mcm,expected);np.testing.assert_array_equal(again.mcm,expected)
+        self.assertEqual(result.record['mcm_proof'],self.proof);self.assertEqual(before,f.owned.journal.reservations)
+    def test_conflicting_marker_refuses_before_loading(self):
+        self.fixture();(self.proof_path.parent/'failed.json').write_text('{}')
+        with self.forbidden_load(),self.assertRaises(ValueError):self.admit()
+    def test_corrupt_matrix_refuses_before_loading(self):
+        f=self.fixture();p=f.directory/'checkpoint-000002/array-000000.npy';raw=bytearray(p.read_bytes());raw[-1]^=1;p.write_bytes(raw)
+        with self.forbidden_load(),self.assertRaises(ValueError):self.admit()
+    def test_rehashed_wrong_scope_order_counts_or_dictionary_provenance_refuse(self):
+        self.fixture();raw=self.proof_path.read_bytes();original=json.loads(raw)
+        changes=[{'graph_hash':'f'*64},{'node_order_sha256':'f'*64},{'ordered_motifs':list(reversed(original['ordered_motifs']))},
+            {'workload_sha256':'f'*64},{'completed_rows':1},{'completed_cells':True},{'array_bytes':17},
+            {'dictionary_provenance':original['dictionary_provenance']|{'dictionary_identity':'f'*64}}]
+        for change in changes:
+            with self.subTest(change=next(iter(change))):
+                self.proof_path.write_bytes(canonical_bytes(original|change))
+                with self.forbidden_load(),self.assertRaises(ValueError):self.admit()
+        self.proof_path.write_bytes(raw)
+    def test_unissued_copied_receipts_and_mutated_prerequisites_refuse(self):
+        self.fixture();m=self.m;r=self.dictionary_receipt
+        forged=m.artifacts.Admitted(r.dictionary,r.record,lambda:None)
+        for ticket in (m.DictionaryTicket(),forged):
+            with self.forbidden_load(),self.assertRaises(ValueError):self.admit(ticket)
+        original=r._lease;r._lease=lambda:None
+        with self.forbidden_load(),self.assertRaises(ValueError):self.admit()
+        r._lease=original;original_d=r.dictionary;r.dictionary=reorder_dictionary(original_d,[1,0])
+        with self.forbidden_load(),self.assertRaises(ValueError):self.admit()
+        r.dictionary=original_d
+    def test_duplicate_graph_event_refuses_before_loading(self):
+        f=self.fixture();f.journal.records.append(f.journal.records[2])
+        with self.forbidden_load(),self.assertRaises(ValueError):self.admit()
+    def test_output_drift_after_read_refuses_return_and_later_drift_invalidates_lease(self):
+        f=self.fixture();result=self.admit();original=self.m.reader.read_component
+        def changed(*args,**kwargs):
+            value=original(*args,**kwargs);p=f.directory/'checkpoint-000002/array-000000.npy'
+            raw=bytearray(p.read_bytes());raw[-1]^=1;p.write_bytes(raw);return value
+        with patch.object(self.m.reader,'read_component',side_effect=changed),self.assertRaises(ValueError):self.admit()
+        with self.assertRaises(ValueError):result.lease()
+
+if __name__=='__main__':unittest.main(verbosity=2)

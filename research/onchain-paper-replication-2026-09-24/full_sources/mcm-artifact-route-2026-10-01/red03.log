@@ -1,0 +1,107 @@
+test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) ... 
+  test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='assignment') ... FAIL
+  test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='writeability') ... FAIL
+  test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='view') ... FAIL
+  test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='replacement') ... FAIL
+  test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='layout') ... FAIL
+test_immutable_copy_allowance_refuses_before_array_loading (__main__.Tests.test_immutable_copy_allowance_refuses_before_array_loading) ... FAIL
+test_prior_other_graph_completion_does_not_block_selected_graph (__main__.Tests.test_prior_other_graph_completion_does_not_block_selected_graph) ... ERROR
+
+======================================================================
+ERROR: test_prior_other_graph_completion_does_not_block_selected_graph (__main__.Tests.test_prior_other_graph_completion_does_not_block_selected_graph)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 113, in test_prior_other_graph_completion_does_not_block_selected_graph
+    actual=self.admit();self.assertEqual(actual.record['graph_hash'],self.f.f.graph_hash)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 45, in admit
+    return self.m.admit(f.owned,f.journal,dictionary_ticket=self.ticket if ticket is None else ticket,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        graph_hash=self.f.f.graph_hash,mcm_input='mcm_execution',output_input='mcm_output',read_input='mcm_read',proof_sha256=file_hash(self.proof_path))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py", line 163, in admit
+    journal_check()
+    ~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py", line 161, in journal_check
+    require(hits==[index] and not any(e['stage'] in ('embedding_progress','graph_complete','representation_complete') for e in journal.records[:index]),
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'MCM graph event denominator/order differs')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py", line 25, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: MCM graph event denominator/order differs
+
+======================================================================
+FAIL: test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='assignment')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 98, in test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease
+    with self.subTest(change='assignment'),self.assertRaises(ValueError):matrix[0,0]=0.
+                                           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='writeability')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 99, in test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease
+    with self.subTest(change='writeability'),self.assertRaises(ValueError):matrix.setflags(write=True)
+                                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='view')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 100, in test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease
+    with self.subTest(change='view'),self.assertRaises(ValueError):matrix.view().setflags(write=True)
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='replacement')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 101, in test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease
+    with self.subTest(change='replacement'),self.assertRaises(AttributeError):result.mcm=np.zeros_like(matrix)
+                                            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease (__main__.Tests.test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease) (change='layout')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 103, in test_resident_values_cannot_change_or_be_replaced_and_layout_drift_invalidates_lease
+    with self.subTest(change='layout'),self.assertRaises(ValueError):result.lease()
+                                       ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_immutable_copy_allowance_refuses_before_array_loading (__main__.Tests.test_immutable_copy_allowance_refuses_before_array_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 106, in test_immutable_copy_allowance_refuses_before_array_loading
+    with self.forbidden_load(),self.assertRaises(ValueError):self.admit()
+                                                             ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 45, in admit
+    return self.m.admit(f.owned,f.journal,dictionary_ticket=self.ticket if ticket is None else ticket,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        graph_hash=self.f.f.graph_hash,mcm_input='mcm_execution',output_input='mcm_output',read_input='mcm_read',proof_sha256=file_hash(self.proof_path))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py", line 180, in admit
+    matrix=reader.read_component(component,event['sha256'],binding,root=ad.root,max_manifest_bytes=policy['max_manifest_bytes'],
+        max_artifact_bytes=policy['max_artifact_bytes'],max_array_bytes=read['max_array_bytes'],lease=lease)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+AssertionError: array loaded before metadata refusal
+
+----------------------------------------------------------------------
+Ran 3 tests in 274.379s
+
+FAILED (failures=6, errors=1)

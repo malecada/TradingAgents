@@ -3,6 +3,49 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Current-owner saved MCM admission independently accepted**:
+New isolated full_sources/mcm-artifact-route-2026-10-01/ separates one-time actual
+dictionary preparation from subsequent saved MCM reuse. Locally issued opaque
+weak-key tickets pin exact owner/journal, dictionary/record/lease objects and
+preparation input hashes; a caller-constructed Admitted object is not sufficient.
+Reuse joins selected policies and complete proof/start/event/component provenance,
+checks node/motif order/workload/full counts, strictly inspects native float32
+bytes before loading and validates finite [0,1] values in bounded chunks.
+Initial tests retain an ExitStack import failure as red01 with its source; red02
+CLOSED7missing-route failures0.003s,session7364 exit1. Initial review withheld for
+MA1 (writable/reassignable output not covered by its lease) and MA2 (unrelated
+prior graph completion incorrectly rejected). check01 was interrupted with SIGINT,
+session89812 exit130, after one completed pass; its source/test/log are preserved,
+not counted as a passing suite. Targeted red03 CLOSED3methods274.379s,session84065 exit1, with6failures
+and1error confirming MA1/MA2. Original source/test snapshots remain preserved.
+MA1 now uses immutable bytes-backed float32 output and nonassignable receipt
+properties; leases pin shape/strides/dtype/writeability. The selected numeric
+allowance reserves two full payloads plus5bytes per validation-chunk entry before
+loading. MA2 now scopes prior graph stages to the selected graph. New value-red01
+CLOSED2fails2.101s,session63642 exit1; value-check01 CLOSED2passes2.230s,
+session80373 exit0, verifies finite/range validation, independent immutable copy,
+view/base writeability refusal, receipt replacement refusal and layout drift.
+check02 CLOSED10methods764.785s,session11907 exit0. All240frozen files match
+check02-sources.json SHA6ac8c63340866c3ee73762882bbb9403ce73c3399a44b3b68e9e9a5c2b711c46.
+No active process/source freeze remains. Final independent review accepts this
+bounded scope and resolves MA1/MA2. REVIEW SHA
+ a7e0cc51b6c88172f691574ca0b97fa3cee5f153dae4d9288016e7a8fe8c2e4c.
+All256final bindings match manifest SHA
+ b1bf4e75249a49ea77ff37d447ee821f85c66bff1a40654b6dac313621ec1fb1.
+The second-graph test uses placeholder embedding/completion payloads and proves
+event-order compatibility only, not representation correctness. Initial ticket
+preparation may reconstruct neighborhoods; reuse does not. Cold-start, historical,
+sealed, mapped and full-fold admission remain excluded. No empirical job or
+financial fit has been launched; all1420fits remain pending.
+Next safe action: integrate admitted MCM with exact edge_index as fixed graph
+features, preserving maintained feature hashes and explicit copy/array budgets.
+The maintained proposed arm packages MCM plus edges at graph_complete; its GAT
+is trained later inside the temporal model. Native-array strict reading does not
+currently establish tensor-kind storage admission. Verify that boundary before
+top-level exact graph/date/fold denominator and representation reuse. Remaining
+mapped/historical paths, whole-workflow accounting and measured admission must
+still precede the applicable empirical fits.
+
 **Durable MCM publication independently accepted**:
 New isolated full_sources/mcm-publication-2026-10-01/ implements an exclusive
 current-owner per-graph output attempt and a derived bounded driver retaining its

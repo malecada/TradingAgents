@@ -1,0 +1,99 @@
+test_conflicting_marker_refuses_before_loading (__main__.Tests.test_conflicting_marker_refuses_before_loading) ... ok
+test_corrupt_matrix_refuses_before_loading (__main__.Tests.test_corrupt_matrix_refuses_before_loading) ... Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 96, in <module>
+    if __name__=='__main__':unittest.main(verbosity=2)
+                            ~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/runner.py", line 240, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/case.py", line 707, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/case.py", line 651, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/case.py", line 606, in _callTestMethod
+    if method() is not None:
+       ~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 63, in test_corrupt_matrix_refuses_before_loading
+    f=self.fixture();p=f.directory/'checkpoint-000002/array-000000.npy';raw=bytearray(p.read_bytes());raw[-1]^=1;p.write_bytes(raw)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 34, in fixture
+    self.f=f;self.owner=owner;self.proof=f.produce();self.proof_path=Path(self.proof['path'])
+                                         ~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/test_publication.py", line 39, in produce
+    return self.m.produce(self.owner.owned,self.owner.journal,graph_hash=self.f.graph_hash,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sampler_input='sampler_execution',artifact_input='artifact_read',dictionary_output_input='dictionary_output',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        dictionary_proof_sha256=self.f.f.receipt['sha256'],mcm_input='mcm_execution',output_input='mcm_output')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/publication.py", line 113, in produce
+    result=driver.compute(owned,journal,graph_hash=graph_hash,sampler_input=sampler_input,artifact_input=artifact_input,
+        output_input=dictionary_output_input,dictionary_proof_sha256=dictionary_proof_sha256,mcm_input=mcm_input)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/driver.py", line 66, in compute
+    result=kernel.mcm(graph,dictionary,matching,workflow=route.bound.record['workflow_identity'],backend=serial.pair.BACKEND,
+        max_entries=route.control['max_entries'],score_pair=score,policy=policy,lease=lease)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py", line 58, in mcm
+    lease();value=workload.score(score_pair,purpose,local,m);lease()
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py", line 36, in score
+    result=callback(thaw(purpose),a,b)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/driver.py", line 64, in score
+    result=consumer(purpose,left,right);lease();return result
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-serial-composition-2026-09-30/serial.py", line 101, in __call__
+    self.lease()
+    ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/driver.py", line 57, in lease
+    admitted.lease()
+    ~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/route.py", line 21, in lease
+    def lease(self):self._lease()
+                    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/route.py", line 195, in lease
+    owned.lease();sources();compact();samples.lease();owned.lease();compact()
+                                      ~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/route.py", line 21, in lease
+    def lease(self):self._lease()
+                    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/route.py", line 135, in final_lease
+    def final_lease():lease();result.lease();lease()
+                              ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/route.py", line 66, in lease
+    def lease(self):self._lease()
+                    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/route.py", line 144, in lease
+    owned.lease()
+    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/ownership.py", line 165, in lease
+    self.workload.lease();sources(self.workload);j=self.journal;j.active()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-route-2026-09-30/route.py", line 48, in lease
+    owner.ancestry._read(root,path,{},expected=expected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_ancestry.py", line 48, in _read
+    snapshots[path]=death.signature(before)
+                    ~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_death.py", line 43, in signature
+    return tuple(getattr(value,k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns','st_blocks'))
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_death.py", line 43, in <genexpr>
+    return tuple(getattr(value,k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns','st_blocks'))
+                 ~~~~~~~^^^^^^^^^
+KeyboardInterrupt

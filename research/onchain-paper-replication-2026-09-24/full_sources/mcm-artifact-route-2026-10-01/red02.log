@@ -1,0 +1,113 @@
+test_conflicting_marker_refuses_before_loading (__main__.Tests.test_conflicting_marker_refuses_before_loading) ... FAIL
+test_corrupt_matrix_refuses_before_loading (__main__.Tests.test_corrupt_matrix_refuses_before_loading) ... FAIL
+test_duplicate_graph_event_refuses_before_loading (__main__.Tests.test_duplicate_graph_event_refuses_before_loading) ... FAIL
+test_output_drift_after_read_refuses_return_and_later_drift_invalidates_lease (__main__.Tests.test_output_drift_after_read_refuses_return_and_later_drift_invalidates_lease) ... FAIL
+test_rehashed_wrong_scope_order_counts_or_dictionary_provenance_refuse (__main__.Tests.test_rehashed_wrong_scope_order_counts_or_dictionary_provenance_refuse) ... FAIL
+test_saved_reuse_and_lease_forbid_all_numerical_and_fresh_dictionary_apis (__main__.Tests.test_saved_reuse_and_lease_forbid_all_numerical_and_fresh_dictionary_apis) ... FAIL
+test_unissued_copied_receipts_and_mutated_prerequisites_refuse (__main__.Tests.test_unissued_copied_receipts_and_mutated_prerequisites_refuse) ... FAIL
+
+======================================================================
+FAIL: test_conflicting_marker_refuses_before_loading (__main__.Tests.test_conflicting_marker_refuses_before_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 60, in test_conflicting_marker_refuses_before_loading
+    self.fixture();(self.proof_path.parent/'failed.json').write_text('{}')
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').is_file(),'saved MCM admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved MCM admission missing
+
+======================================================================
+FAIL: test_corrupt_matrix_refuses_before_loading (__main__.Tests.test_corrupt_matrix_refuses_before_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 63, in test_corrupt_matrix_refuses_before_loading
+    f=self.fixture();p=f.directory/'checkpoint-000002/array-000000.npy';raw=bytearray(p.read_bytes());raw[-1]^=1;p.write_bytes(raw)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').is_file(),'saved MCM admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved MCM admission missing
+
+======================================================================
+FAIL: test_duplicate_graph_event_refuses_before_loading (__main__.Tests.test_duplicate_graph_event_refuses_before_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 86, in test_duplicate_graph_event_refuses_before_loading
+    f=self.fixture();f.journal.records.append(f.journal.records[2])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').is_file(),'saved MCM admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved MCM admission missing
+
+======================================================================
+FAIL: test_output_drift_after_read_refuses_return_and_later_drift_invalidates_lease (__main__.Tests.test_output_drift_after_read_refuses_return_and_later_drift_invalidates_lease)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 89, in test_output_drift_after_read_refuses_return_and_later_drift_invalidates_lease
+    f=self.fixture();result=self.admit();original=self.m.reader.read_component
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').is_file(),'saved MCM admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved MCM admission missing
+
+======================================================================
+FAIL: test_rehashed_wrong_scope_order_counts_or_dictionary_provenance_refuse (__main__.Tests.test_rehashed_wrong_scope_order_counts_or_dictionary_provenance_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 66, in test_rehashed_wrong_scope_order_counts_or_dictionary_provenance_refuse
+    self.fixture();raw=self.proof_path.read_bytes();original=json.loads(raw)
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').is_file(),'saved MCM admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved MCM admission missing
+
+======================================================================
+FAIL: test_saved_reuse_and_lease_forbid_all_numerical_and_fresh_dictionary_apis (__main__.Tests.test_saved_reuse_and_lease_forbid_all_numerical_and_fresh_dictionary_apis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 48, in test_saved_reuse_and_lease_forbid_all_numerical_and_fresh_dictionary_apis
+    f=self.fixture();m=self.m;before=f.owned.journal.reservations
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').is_file(),'saved MCM admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved MCM admission missing
+
+======================================================================
+FAIL: test_unissued_copied_receipts_and_mutated_prerequisites_refuse (__main__.Tests.test_unissued_copied_receipts_and_mutated_prerequisites_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 76, in test_unissued_copied_receipts_and_mutated_prerequisites_refuse
+    self.fixture();m=self.m;r=self.dictionary_receipt
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 25, in fixture
+    self.m=api();m=self.m;f=base.Tests('test_actual_saved_mcm_matches_every_scalar_cell_and_refuses_completed_relaunch');self.addCleanup(f.doCleanups)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/test_route.py", line 20, in api
+    assert (HERE/'route.py').is_file(),'saved MCM admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: saved MCM admission missing
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+FAILED (failures=7)
