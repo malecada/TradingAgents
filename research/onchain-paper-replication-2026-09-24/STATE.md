@@ -3,6 +3,45 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Registered first-attempt sampler publication independently accepted**:
+New isolated full_sources/sampler-producer-2026-10-01/ composes actual admitted
+owner/empty FeatureJournal, explicit sampler/read policies, exclusive attempt
+reservation, durable per-draw metadata and reserved/failed/complete disposition.
+Existing attempt directories always refuse a redraw. Array-backed publication
+has an encoded NPY/manifest budget check before the FeatureJournal writer. A
+completion proof joins exact event/component references, owner/policies/source
+and initial/final RNG evidence. No empirical release, exact resume or downstream
+provenance-proof admission is claimed; those remain mandatory work.
+red01 CLOSED6cases/7missing-implementation failures/0.002s (one subtest).
+check01 CLOSED6passes/59.614s. INITIAL_REVIEW withheld for SP1 original-array
+reload overlap, SP2 missing post-completion lease, SP3 stale pre-reservation lease.
+Original source/tests retained; red02 CLOSED3intended failures/25.917s. Corrections
+release original arrays before reload and recheck leases before reservation and
+after completion. check02 CLOSED9passes/86.166s. Review also noted the separate
+FeatureJournal event was not included in the attempt reservation; red03 CLOSED
+1intended failure/7.520s. The producer now reserves/checks event bytes before
+publication. check03 CLOSED9passes/1failure92.330s: event estimate1112B
+versus1256B actual pretty JSON. Exact source/tests retained; event sizing now
+uses registered lifecycle._encode. check04 CLOSED exit0/session60639:
+10passes/93.262s. Independent REVIEW SHA
+c9f20d94f98e9df655f8a175d0b7701806884039c91f7ef77ffe4fa417bccd2c.
+All140bindings match manifest SHA
+8cac94a5d0ce260b7d941f3144c5f135b6e754f5aaca76f16ee56a8254f37a3e.
+No active test/empirical job or source freeze. Acceptance is for bounded resident
+first-attempt publication only, with mocked guard observations.
+SCALING_CHECK.json proves512absolute draw references alone require138753B at
+this checkout (even one-character experiment), exceeding the64KiB metadata cap.
+A compact proof format or reviewed larger bounded metadata policy is mandatory
+before full-fold sampling; never reduce the512sample scientific configuration.
+Next safe action: remove this proven metadata-size blockage with a reviewed
+bounded proof format/policy, then implement current-owner completion-proof
+admission that rechecks exact source/policy/owner/draw/event/component references
+and rejects partial or conflicting terminal markers. Existing artifact admission
+still does not require this sampler proof. Exact interrupted sampler continuation,
+mapped population support, dictionary/MCM publication and physical accounting
+remain mandatory. No financial fit, budget amendment or historical rerun. No raw
+data changed; all1420fits remain pending.
+
 **Leased sampler core independently accepted**:
 New isolated full_sources/sampler-leased-core-2026-10-01/ derives the unchanged
 resident sampling algorithm with mandatory pre-allocation/per-draw leases and

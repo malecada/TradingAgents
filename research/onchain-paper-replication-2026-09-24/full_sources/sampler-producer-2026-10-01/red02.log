@@ -1,0 +1,51 @@
+test_original_sample_arrays_are_released_before_artifact_reload (__main__.Tests.test_original_sample_arrays_are_released_before_artifact_reload) ... FAIL
+test_completion_publication_drift_refuses_success (__main__.Tests.test_completion_publication_drift_refuses_success) ... FAIL
+test_guard_loss_during_parent_hash_refuses_attempt_creation (__main__.Tests.test_guard_loss_during_parent_hash_refuses_attempt_creation) ... FAIL
+
+======================================================================
+FAIL: test_original_sample_arrays_are_released_before_artifact_reload (__main__.Tests.test_original_sample_arrays_are_released_before_artifact_reload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 67, in test_original_sample_arrays_are_released_before_artifact_reload
+    with patch.object(self.m.core,'sample',side_effect=sampled),patch.object(self.m.artifacts,'admit_samples',side_effect=reload):self.produce()
+                                                                                                                                  ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 41, in produce
+    def produce(self):return self.m.produce(self.f.owned,self.f.journal,sampler_input='sampler_execution',artifact_input='artifact_read')
+                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/producer.py", line 174, in produce
+    admitted=artifacts.admit_samples(owned,journal,artifact_input=artifact_input,event_index=0,event_sha256=event_sha)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 65, in reload
+    self.assertTrue(refs and all(ref() is None for ref in refs),'original sample arrays still retained during reload')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : original sample arrays still retained during reload
+
+======================================================================
+FAIL: test_completion_publication_drift_refuses_success (__main__.Tests.test_completion_publication_drift_refuses_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 73, in test_completion_publication_drift_refuses_success
+    with patch.object(self.m,'sync_directory',side_effect=drift),self.assertRaises(ValueError):self.produce()
+                                                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_guard_loss_during_parent_hash_refuses_attempt_creation (__main__.Tests.test_guard_loss_during_parent_hash_refuses_attempt_creation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 80, in test_guard_loss_during_parent_hash_refuses_attempt_creation
+    self.assertTrue(hit);self.assertFalse(self.attempt().exists())
+                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 3 tests in 25.917s
+
+FAILED (failures=3)

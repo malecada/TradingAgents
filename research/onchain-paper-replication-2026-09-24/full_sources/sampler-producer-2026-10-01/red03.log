@@ -1,0 +1,28 @@
+test_event_publication_allowance_is_reserved_before_draw (__main__.Tests.test_event_publication_allowance_is_reserved_before_draw) ... FAIL
+
+======================================================================
+FAIL: test_event_publication_allowance_is_reserved_before_draw (__main__.Tests.test_event_publication_allowance_is_reserved_before_draw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 110, in test_event_publication_allowance_is_reserved_before_draw
+    with patch.object(self.m.core,'sample',side_effect=AssertionError('event bytes not reserved')),self.assertRaises(ValueError):self.produce()
+                                                                                                                                 ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 42, in produce
+    def produce(self):return self.m.produce(self.f.owned,self.f.journal,sampler_input='sampler_execution',artifact_input='artifact_read')
+                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/producer.py", line 161, in produce
+    samples=core.sample(tuple(route._graphs.values()),settings,seed,policy=limits,lease=lease,checkpoint=checkpoint)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+AssertionError: event bytes not reserved
+
+----------------------------------------------------------------------
+Ran 1 test in 7.520s
+
+FAILED (failures=1)

@@ -1,0 +1,114 @@
+test_actual_production_publishes_typed_samples_and_exact_completion_proof (__main__.Tests.test_actual_production_publishes_typed_samples_and_exact_completion_proof) ... FAIL
+test_draw_failure_is_retained_and_cannot_be_relaunched (__main__.Tests.test_draw_failure_is_retained_and_cannot_be_relaunched) ... FAIL
+test_lease_loss_after_first_draw_preserves_checkpoint_and_failure (__main__.Tests.test_lease_loss_after_first_draw_preserves_checkpoint_and_failure) ... FAIL
+test_partial_attempt_is_never_redrawn (__main__.Tests.test_partial_attempt_is_never_redrawn) ... FAIL
+test_registered_route_and_reservation_cap_refuse_before_draw (__main__.Tests.test_registered_route_and_reservation_cap_refuse_before_draw) ... 
+  test_registered_route_and_reservation_cap_refuse_before_draw (__main__.Tests.test_registered_route_and_reservation_cap_refuse_before_draw) (mode='route') ... FAIL
+  test_registered_route_and_reservation_cap_refuse_before_draw (__main__.Tests.test_registered_route_and_reservation_cap_refuse_before_draw) (mode='reservation_cap') ... FAIL
+test_write_budget_refuses_before_feature_component_creation (__main__.Tests.test_write_budget_refuses_before_feature_component_creation) ... FAIL
+
+======================================================================
+FAIL: test_actual_production_publishes_typed_samples_and_exact_completion_proof (__main__.Tests.test_actual_production_publishes_typed_samples_and_exact_completion_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 44, in test_actual_production_publishes_typed_samples_and_exact_completion_proof
+    f=self.fixture();result=self.produce();proof=json.loads(Path(result['proof']['path']).read_bytes())
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 21, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 16, in api
+    assert (HERE/'producer.py').is_file(),'registered sampler producer missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered sampler producer missing
+
+======================================================================
+FAIL: test_draw_failure_is_retained_and_cannot_be_relaunched (__main__.Tests.test_draw_failure_is_retained_and_cannot_be_relaunched)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 63, in test_draw_failure_is_retained_and_cannot_be_relaunched
+    f=self.fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 21, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 16, in api
+    assert (HERE/'producer.py').is_file(),'registered sampler producer missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered sampler producer missing
+
+======================================================================
+FAIL: test_lease_loss_after_first_draw_preserves_checkpoint_and_failure (__main__.Tests.test_lease_loss_after_first_draw_preserves_checkpoint_and_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 81, in test_lease_loss_after_first_draw_preserves_checkpoint_and_failure
+    f=self.fixture();original=self.m.core.sample
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 21, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 16, in api
+    assert (HERE/'producer.py').is_file(),'registered sampler producer missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered sampler producer missing
+
+======================================================================
+FAIL: test_partial_attempt_is_never_redrawn (__main__.Tests.test_partial_attempt_is_never_redrawn)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 58, in test_partial_attempt_is_never_redrawn
+    self.fixture();path=self.attempt();path.mkdir(parents=True);(path/'start.json').write_text('{}')
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 21, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 16, in api
+    assert (HERE/'producer.py').is_file(),'registered sampler producer missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered sampler producer missing
+
+======================================================================
+FAIL: test_registered_route_and_reservation_cap_refuse_before_draw (__main__.Tests.test_registered_route_and_reservation_cap_refuse_before_draw) (mode='route')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 77, in test_registered_route_and_reservation_cap_refuse_before_draw
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 21, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 16, in api
+    assert (HERE/'producer.py').is_file(),'registered sampler producer missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered sampler producer missing
+
+======================================================================
+FAIL: test_registered_route_and_reservation_cap_refuse_before_draw (__main__.Tests.test_registered_route_and_reservation_cap_refuse_before_draw) (mode='reservation_cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 77, in test_registered_route_and_reservation_cap_refuse_before_draw
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 21, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 16, in api
+    assert (HERE/'producer.py').is_file(),'registered sampler producer missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered sampler producer missing
+
+======================================================================
+FAIL: test_write_budget_refuses_before_feature_component_creation (__main__.Tests.test_write_budget_refuses_before_feature_component_creation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 69, in test_write_budget_refuses_before_feature_component_creation
+    f=self.fixture('write_cap')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 21, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-producer-2026-10-01/test_producer.py", line 16, in api
+    assert (HERE/'producer.py').is_file(),'registered sampler producer missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered sampler producer missing
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=7)
