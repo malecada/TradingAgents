@@ -1,0 +1,191 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+___ test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk[close] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-51/test_pair_log_cleanup_is_fatal0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d1dc9437100>
+trap = <tests.research.onchain_replication.test_score_cleanup.trap.<locals>.Trap object at 0x7d1dc94863c0>
+when = 'close'
+
+    @pytest.mark.parametrize('when',['close','finish','constructor','rotation'])
+    def test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk(tmp_path,monkeypatch,trap,when):
+        from tests.research.onchain_replication import test_compact_pair_log as fixture
+        module=fixture.api();objects=[]
+        if when=='constructor':
+            def fail(obj,*args,**kwargs):
+                objects.append(obj);trap.owns(obj.fd);trap.broken.add(obj.fd)
+                raise RuntimeError('synthetic primary pair log construction')
+            monkeypatch.setattr(module.PairLog,'_check',fail);action=lambda:fixture.writer(tmp_path)
+        else:
+            obj=fixture.writer(tmp_path);objects.append(obj)
+            obj.begin('b'*64,'c'*64);obj.progress('d'*64);obj.complete(.2,'temperature_complete',1)
+            trap.owns(obj.fd,obj.chunk_fd);trap.broken.add(obj.chunk_fd)
+            if when=='rotation':action=lambda:obj.begin('e'*64,'f'*64)
+            else:action=obj.finish if when=='finish' else obj.close
+        with pytest.raises(BaseException) as caught:action()
+>       assert not isinstance(caught.value,Exception),'uncertain pair log cleanup escaped as ordinary error'
+E       AssertionError: uncertain pair log cleanup escaped as ordinary error
+E       assert not True
+E        +  where True = isinstance(OSError('synthetic descriptor not released'), Exception)
+E        +    where OSError('synthetic descriptor not released') = <ExceptionInfo OSError('synthetic descriptor not released') tblen=3>.value
+
+tests/research/onchain_replication/test_score_cleanup.py:116: AssertionError
+___ test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk[finish] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-51/test_pair_log_cleanup_is_fatal1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d1dc9437230>
+trap = <tests.research.onchain_replication.test_score_cleanup.trap.<locals>.Trap object at 0x7d1c61a1d940>
+when = 'finish'
+
+    @pytest.mark.parametrize('when',['close','finish','constructor','rotation'])
+    def test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk(tmp_path,monkeypatch,trap,when):
+        from tests.research.onchain_replication import test_compact_pair_log as fixture
+        module=fixture.api();objects=[]
+        if when=='constructor':
+            def fail(obj,*args,**kwargs):
+                objects.append(obj);trap.owns(obj.fd);trap.broken.add(obj.fd)
+                raise RuntimeError('synthetic primary pair log construction')
+            monkeypatch.setattr(module.PairLog,'_check',fail);action=lambda:fixture.writer(tmp_path)
+        else:
+            obj=fixture.writer(tmp_path);objects.append(obj)
+            obj.begin('b'*64,'c'*64);obj.progress('d'*64);obj.complete(.2,'temperature_complete',1)
+            trap.owns(obj.fd,obj.chunk_fd);trap.broken.add(obj.chunk_fd)
+            if when=='rotation':action=lambda:obj.begin('e'*64,'f'*64)
+            else:action=obj.finish if when=='finish' else obj.close
+        with pytest.raises(BaseException) as caught:action()
+>       assert not isinstance(caught.value,Exception),'uncertain pair log cleanup escaped as ordinary error'
+E       AssertionError: uncertain pair log cleanup escaped as ordinary error
+E       assert not True
+E        +  where True = isinstance(OSError('synthetic descriptor not released'), Exception)
+E        +    where OSError('synthetic descriptor not released') = <ExceptionInfo OSError('synthetic descriptor not released') tblen=5>.value
+
+tests/research/onchain_replication/test_score_cleanup.py:116: AssertionError
+_ test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk[constructor] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-51/test_pair_log_cleanup_is_fatal2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d1c61d33650>
+trap = <tests.research.onchain_replication.test_score_cleanup.trap.<locals>.Trap object at 0x7d1c61a1e270>
+when = 'constructor'
+
+    @pytest.mark.parametrize('when',['close','finish','constructor','rotation'])
+    def test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk(tmp_path,monkeypatch,trap,when):
+        from tests.research.onchain_replication import test_compact_pair_log as fixture
+        module=fixture.api();objects=[]
+        if when=='constructor':
+            def fail(obj,*args,**kwargs):
+                objects.append(obj);trap.owns(obj.fd);trap.broken.add(obj.fd)
+                raise RuntimeError('synthetic primary pair log construction')
+            monkeypatch.setattr(module.PairLog,'_check',fail);action=lambda:fixture.writer(tmp_path)
+        else:
+            obj=fixture.writer(tmp_path);objects.append(obj)
+            obj.begin('b'*64,'c'*64);obj.progress('d'*64);obj.complete(.2,'temperature_complete',1)
+            trap.owns(obj.fd,obj.chunk_fd);trap.broken.add(obj.chunk_fd)
+            if when=='rotation':action=lambda:obj.begin('e'*64,'f'*64)
+            else:action=obj.finish if when=='finish' else obj.close
+        with pytest.raises(BaseException) as caught:action()
+>       assert not isinstance(caught.value,Exception),'uncertain pair log cleanup escaped as ordinary error'
+E       AssertionError: uncertain pair log cleanup escaped as ordinary error
+E       assert not True
+E        +  where True = isinstance(OSError('synthetic descriptor not released'), Exception)
+E        +    where OSError('synthetic descriptor not released') = <ExceptionInfo OSError('synthetic descriptor not released') tblen=6>.value
+
+tests/research/onchain_replication/test_score_cleanup.py:116: AssertionError
+__ test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk[rotation] __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-51/test_pair_log_cleanup_is_fatal3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d1c61d4b570>
+trap = <tests.research.onchain_replication.test_score_cleanup.trap.<locals>.Trap object at 0x7d1c61a1e510>
+when = 'rotation'
+
+    @pytest.mark.parametrize('when',['close','finish','constructor','rotation'])
+    def test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk(tmp_path,monkeypatch,trap,when):
+        from tests.research.onchain_replication import test_compact_pair_log as fixture
+        module=fixture.api();objects=[]
+        if when=='constructor':
+            def fail(obj,*args,**kwargs):
+                objects.append(obj);trap.owns(obj.fd);trap.broken.add(obj.fd)
+                raise RuntimeError('synthetic primary pair log construction')
+            monkeypatch.setattr(module.PairLog,'_check',fail);action=lambda:fixture.writer(tmp_path)
+        else:
+            obj=fixture.writer(tmp_path);objects.append(obj)
+            obj.begin('b'*64,'c'*64);obj.progress('d'*64);obj.complete(.2,'temperature_complete',1)
+            trap.owns(obj.fd,obj.chunk_fd);trap.broken.add(obj.chunk_fd)
+            if when=='rotation':action=lambda:obj.begin('e'*64,'f'*64)
+            else:action=obj.finish if when=='finish' else obj.close
+        with pytest.raises(BaseException) as caught:action()
+>       assert not isinstance(caught.value,Exception),'uncertain pair log cleanup escaped as ordinary error'
+E       AssertionError: uncertain pair log cleanup escaped as ordinary error
+E       assert not True
+E        +  where True = isinstance(OSError('synthetic descriptor not released'), Exception)
+E        +    where OSError('synthetic descriptor not released') = <ExceptionInfo OSError('synthetic descriptor not released') tblen=5>.value
+
+tests/research/onchain_replication/test_score_cleanup.py:116: AssertionError
+___ test_final_producer_descriptor_close_is_fatal_and_releases_lock[success] ___
+
+admitted = (<tradingagents.research.onchain_replication.compact_dictionary.Produced object at 0x7d1c61a1fb60>, <tests.research.on...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d1c61d4bdf0>
+mode = 'success'
+
+    @pytest.mark.parametrize('mode',['success','failure'])
+    def test_final_producer_descriptor_close_is_fatal_and_releases_lock(admitted,monkeypatch,mode):
+        produced,t = admitted; m=api(); key,g=target(produced); owner=produced._proof.owner
+        root=m.directory(produced,key); opened=m.io._open; real_close=m.os.close; captured=[]
+        def opening(path):
+            value=opened(path)
+            if Path(path)==root and not captured:captured.append(value[1])
+            return value
+        def close(fd):
+            if captured and fd==captured[0]:raise OSError('synthetic retained producer descriptor')
+            real_close(fd)
+        def fail(*args,**kwargs):raise RuntimeError('synthetic primary numerical failure')
+        monkeypatch.setattr(m.io,'_open',opening);monkeypatch.setattr(m.os,'close',close)
+        if mode=='failure':monkeypatch.setattr(m.compact_matcher.engine,'create',fail)
+        try:
+            with pytest.raises(BaseException) as caught:
+                m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+>           assert not isinstance(caught.value,Exception),'root close masked fatal uncertainty'
+E           AssertionError: root close masked fatal uncertainty
+E           assert not True
+E            +  where True = isinstance(OSError('synthetic retained producer descriptor'), Exception)
+E            +    where OSError('synthetic retained producer descriptor') = <ExceptionInfo OSError('synthetic retained producer descriptor') tblen=3>.value
+
+tests/research/onchain_replication/test_compact_mcm.py:176: AssertionError
+___ test_final_producer_descriptor_close_is_fatal_and_releases_lock[failure] ___
+
+admitted = (<tradingagents.research.onchain_replication.compact_dictionary.Produced object at 0x7d1c61622d50>, <tests.research.on...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d1c61871250>
+mode = 'failure'
+
+    @pytest.mark.parametrize('mode',['success','failure'])
+    def test_final_producer_descriptor_close_is_fatal_and_releases_lock(admitted,monkeypatch,mode):
+        produced,t = admitted; m=api(); key,g=target(produced); owner=produced._proof.owner
+        root=m.directory(produced,key); opened=m.io._open; real_close=m.os.close; captured=[]
+        def opening(path):
+            value=opened(path)
+            if Path(path)==root and not captured:captured.append(value[1])
+            return value
+        def close(fd):
+            if captured and fd==captured[0]:raise OSError('synthetic retained producer descriptor')
+            real_close(fd)
+        def fail(*args,**kwargs):raise RuntimeError('synthetic primary numerical failure')
+        monkeypatch.setattr(m.io,'_open',opening);monkeypatch.setattr(m.os,'close',close)
+        if mode=='failure':monkeypatch.setattr(m.compact_matcher.engine,'create',fail)
+        try:
+            with pytest.raises(BaseException) as caught:
+                m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+>           assert not isinstance(caught.value,Exception),'root close masked fatal uncertainty'
+E           AssertionError: root close masked fatal uncertainty
+E           assert not True
+E            +  where True = isinstance(OSError('synthetic retained producer descriptor'), Exception)
+E            +    where OSError('synthetic retained producer descriptor') = <ExceptionInfo OSError('synthetic retained producer descriptor') tblen=3>.value
+
+tests/research/onchain_replication/test_compact_mcm.py:176: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_score_cleanup.py::test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk[close]
+FAILED tests/research/onchain_replication/test_score_cleanup.py::test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk[finish]
+FAILED tests/research/onchain_replication/test_score_cleanup.py::test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk[constructor]
+FAILED tests/research/onchain_replication/test_score_cleanup.py::test_pair_log_cleanup_is_fatal_and_never_retries_ambiguous_chunk[rotation]
+FAILED tests/research/onchain_replication/test_compact_mcm.py::test_final_producer_descriptor_close_is_fatal_and_releases_lock[success]
+FAILED tests/research/onchain_replication/test_compact_mcm.py::test_final_producer_descriptor_close_is_fatal_and_releases_lock[failure]
+6 failed, 18 deselected in 123.92s (0:02:03)

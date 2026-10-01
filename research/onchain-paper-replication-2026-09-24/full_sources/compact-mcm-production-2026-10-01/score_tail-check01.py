@@ -83,9 +83,8 @@ class ScoreTail:
             self._check()
             require(batch._hash(batch._read(self.fd, 'start.json', batch.META_LIMIT)) == self.start_sha,
                     'tail start changed during publication')
-        except BaseException as primary:
-            batch._close_after_failure(self.close, primary)
-            raise
+        except BaseException:
+            self.close(); raise
 
     def _check(self, *, pending=False, expected_size=None):
         require(not self.closed and (pending or not self.poisoned), 'tail terminal or interrupted')
@@ -143,11 +142,9 @@ class ScoreTail:
             require(batch._hash(batch._read(self.fd, 'terminal.json', batch.META_LIMIT)) == result
                     and batch._read(self.fd, 'records.bin', self.start['cells'] * RECORD_BYTES) == raw,
                     'tail terminal publication changed')
-        except BaseException as primary:
-            batch._close_after_failure(self.close, primary)
-            raise
-        self.close()
-        return result
+            return result
+        finally:
+            self.close()
 
     def finish(self):
         return self._terminal('complete', '')
@@ -158,10 +155,8 @@ class ScoreTail:
     def close(self):
         if not self.closed:
             self.closed = True
-            actions = []
-            if self.record_fd is not None: actions.append(lambda: os.close(self.record_fd))
-            actions.append(lambda: os.close(self.fd))
-            batch._cleanup(actions)
+            if self.record_fd is not None: os.close(self.record_fd)
+            os.close(self.fd)
 
 
 def verify(root, *, scope, owner, terminal_sha256, lease):

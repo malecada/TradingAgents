@@ -20,30 +20,6 @@ MAX_CHUNK_BYTES = 8 * 1024**2
 SCOPE_FIELDS = {'graph', 'node_order', 'dictionary', 'ordered_motifs', 'matching', 'workflow'}
 
 
-class CleanupFailure(BaseException):
-    """An owned close was uncertain; stop the worker, never retry its fd integer."""
-
-
-def _cleanup(actions):
-    """Attempt every independent close once, without masking fatal uncertainty."""
-    failures = []
-    for close in actions:
-        try: close()
-        except BaseException as error: failures.append(error)
-    if failures:
-        fatal = CleanupFailure('score storage cleanup unresolved; worker must stop')
-        for error in failures: fatal.add_note(repr(error))
-        raise fatal from failures[0]
-
-
-def _close_after_failure(close, primary):
-    try: close()
-    except BaseException as error:
-        fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')
-        if fatal is not error: fatal.add_note(repr(error))
-        raise fatal from primary
-
-
 def _require(condition, message):
     if not condition:
         raise ValueError(message)
@@ -170,8 +146,8 @@ class ScoreBatches:
             self._check()
             _require(_hash(_read(self.fd, 'start.json', META_LIMIT)) == self.start_sha,
                      'score start publication changed')
-        except BaseException as primary:
-            _close_after_failure(self.close, primary)
+        except BaseException:
+            os.close(self.fd); self.closed = True
             raise
 
     def _check(self, *, failing=False):
@@ -227,11 +203,9 @@ class ScoreBatches:
             self._check(failing=status == 'failed')
             _require(_hash(_read(self.fd, 'terminal.json', META_LIMIT)) == result,
                      'score terminal publication changed')
-        except BaseException as primary:
-            _close_after_failure(self.close, primary)
-            raise
-        self.close()
-        return result
+            return result
+        finally:
+            self.closed = True; os.close(self.fd)
 
     def finish(self):
         return self._terminal('complete', '')
@@ -242,8 +216,7 @@ class ScoreBatches:
     def close(self):
         """Release only the descriptor; incomplete bytes are never deleted."""
         if not self.closed:
-            self.closed = True
-            _cleanup((lambda: os.close(self.fd),))
+            self.closed = True; os.close(self.fd)
 
 
 def verify(root, *, scope, owner, terminal_sha256, lease):

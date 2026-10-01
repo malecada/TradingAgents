@@ -3,6 +3,23 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact required-graph MCM production — October 1 continuation**:
+Implemented actual Produced dictionary -> exact required Training graph ->
+unchanged source-admitted array MCM kernel -> compact matcher/score stream ->
+strict output publication/admission. Independent cleanup findings were reproduced
+and corrected, retaining all red logs and original bytes. Final primitive checks:
+59passes1.44s/session43310exit0. Final targeted producer check03:
+4passes9deselected258.46s/session30888exit0; positive scalar/saved-score agreement,
+both final producer-descriptor failure paths and fatal log cleanup propagation.
+All engineering checks terminal; no combined final13-case run claimed.
+Evidence: full_sources/compact-mcm-production-2026-10-01/RESULT.md.
+Independent REVIEW accepted the bounded MCM contract, SHA
+8d9fbca477608217fd0c4f35e47311756d7309e29899a738f86249dcd0caa986.
+Next compact graph-feature tensor conversion,
+publication and admission, then complete denominator/representation/native handoff.
+No empirical/resource/financial job started; coverage77/109 and all1420pending
+fits unchanged. Disk21277741056B available;10GiB floor preserved.
+
 **Compact dictionary production/publication — October 1 continuation**:
 Fresh synthetic red01 CLOSED1missing-module failure8deselected33.54s/session55995
 exit1 under full_sources/compact-dictionary-production-2026-10-01/. Implementing

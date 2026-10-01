@@ -92,9 +92,8 @@ class PairLog:
             self._check()
             require(io._hash(io._read(self.fd, 'start.json', io.META_LIMIT)) == self.start_sha,
                     'compact log start changed')
-        except BaseException as primary:
-            io._close_after_failure(self.close, primary)
-            raise
+        except BaseException:
+            self.close(); raise
 
     @property
     def events(self): return self.state['events']
@@ -127,9 +126,7 @@ class PairLog:
         try:
             self._check()
             if slot == 0:
-                if self.chunk_fd is not None:
-                    previous = self.chunk_fd; self.chunk_fd = None
-                    io._cleanup((lambda: os.close(previous),))
+                if self.chunk_fd is not None: os.close(self.chunk_fd); self.chunk_fd = None
                 self.chunk_fd = os.open(_name(chunk), os.O_RDWR | os.O_CREAT | os.O_EXCL
                     | os.O_NOFOLLOW | os.O_CLOEXEC, 0o600, dir_fd=self.fd)
                 self.chunks += 1; self.chunk_identity = io._signature(os.fstat(self.chunk_fd))[:2]
@@ -183,11 +180,8 @@ class PairLog:
             self._check(failing=status == 'failed')
             verify(self.root, owner=self.start['owner'], scope=self.start['scope'],
                    terminal_sha256=reference, lease=lambda: None)
-        except BaseException as primary:
-            io._close_after_failure(self.close, primary)
-            raise
-        self.close()
-        return reference
+            return reference
+        finally: self.close()
 
     def finish(self): return self._terminal('complete', '')
     def fail(self, reason): return self._terminal('failed', reason)
@@ -195,11 +189,8 @@ class PairLog:
     def close(self):
         if not self.closed:
             self.closed = True
-            chunk = self.chunk_fd; self.chunk_fd = None
-            actions = []
-            if chunk is not None: actions.append(lambda: os.close(chunk))
-            actions.append(lambda: os.close(self.fd))
-            io._cleanup(actions)
+            if self.chunk_fd is not None: os.close(self.chunk_fd); self.chunk_fd = None
+            os.close(self.fd)
 
 
 def verify(root, *, owner, scope, terminal_sha256, lease):

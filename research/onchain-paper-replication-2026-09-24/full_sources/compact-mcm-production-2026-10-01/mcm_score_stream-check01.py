@@ -62,9 +62,8 @@ class MCMScoreStream:
                 'batch_start_sha256': self.batches.start_sha, 'chunk_cells': chunk_cells}
             self.start_sha = self.head = batch._write(self.fd, 'start.json', batch._json(start))
             self._check()
-        except BaseException as primary:
-            batch._close_after_failure(self.close, primary)
-            raise
+        except BaseException:
+            self.close(); raise
 
     def _check(self):
         require(not self.closed, 'score stream is closed')
@@ -182,10 +181,10 @@ class MCMScoreStream:
                 self._seal_check(index, self.head)
                 self.active = None
             return saved
-        except BaseException as primary:
-            # Preserve evidence; cleanup uncertainty must stay worker-fatal.
-            batch._close_after_failure(self.close, primary)
-            raise
+        except BaseException:
+            # Preserve all successful, interrupted and ambiguous files. The
+            # outer owner records failure; this identity never reopens itself.
+            self.close(); raise
 
     def finish(self):
         self._check()
@@ -199,17 +198,13 @@ class MCMScoreStream:
             require(batch._read(self.fd, 'complete.json', batch.META_LIMIT) == raw,
                     'MCM completion publication changed')
             self._history_check(terminal, raw)
-        except BaseException as primary:
-            batch._close_after_failure(self.close, primary)
-            raise
-        self.close()
-        return {**record, 'terminal_sha256': result}
+            return {**record, 'terminal_sha256': result}
+        finally:
+            self.close()
 
     def close(self):
         if not self.closed:
             self.closed = True
-            actions = []
-            if self.active is not None: actions.append(self.active.close)
-            if self.batches is not None: actions.append(self.batches.close)
-            actions.append(lambda: os.close(self.fd))
-            batch._cleanup(actions)
+            if self.active is not None: self.active.close()
+            if self.batches is not None: self.batches.close()
+            os.close(self.fd)
