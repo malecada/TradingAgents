@@ -1,0 +1,14 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________________ test_actual_owner_type_required ________________________
+
+    def test_actual_owner_type_required():
+>       with pytest.raises(ValueError,match='actual'):compact_owner.verify_current(object())
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'tradingagents.research.onchain_replication.compact_owner' has no attribute 'verify_current'
+
+tests/research/onchain_replication/test_compact_owner_final.py:9: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_owner_final.py::test_actual_owner_type_required
+1 failed, 8 deselected in 2.60s

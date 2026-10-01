@@ -1,0 +1,37 @@
+.....F                                                                   [100%]
+=================================== FAILURES ===================================
+_____________ test_post_sizing_tensor_growth_refused_before_writer _____________
+
+admitted = (<tradingagents.research.onchain_replication.compact_features.Features object at 0x7734b769fb00>, <tests.research.onch...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77348738d050>
+
+    def test_post_sizing_tensor_growth_refused_before_writer(admitted,monkeypatch):
+        features,t=admitted;m=api();original=type(features).lease;calls=[]
+        def changed(self):
+            original(self)
+            if (m.directory(self)/'start.json').exists():self.feature['mcm'].resize_(100,100)
+        def refuse(*args,**kwargs):calls.append(1);raise AssertionError('grown tensor reached writer')
+        monkeypatch.setattr(type(features),'lease',changed);monkeypatch.setattr(m.component_store,'save_component',refuse)
+>       with pytest.raises(ValueError):m.publish(features,input_name='compact_graph_output')
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_graph_artifacts.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_graph_artifacts.py:236: in publish
+    features.lease(); _original(features); io._root(root,fd)
+    ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.compact_features.Features object at 0x7734b769fb00>
+
+    def changed(self):
+        original(self)
+>       if (m.directory(self)/'start.json').exists():self.feature['mcm'].resize_(100,100)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Trying to resize storage that is not resizable
+
+tests/research/onchain_replication/test_compact_graph_artifacts.py:93: RuntimeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_graph_artifacts.py::test_post_sizing_tensor_growth_refused_before_writer
+1 failed, 5 passed in 568.26s (0:09:28)

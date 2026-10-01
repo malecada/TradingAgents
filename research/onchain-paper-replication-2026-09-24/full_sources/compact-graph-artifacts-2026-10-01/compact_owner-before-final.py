@@ -149,8 +149,7 @@ class Owner:
     def binding_value(self):
         return {'record': thaw(self.bound.record), 'context': thaw(self.bound.context),
             'limits': thaw(self.bound.limits), 'run_directory': str(self.bound._run.directory),
-            'run_claim_sha256': self.bound._run._claim_sha256,
-            'metadata_snapshots': {str(path): value for path,value in self.bound._snapshots.items()}}
+            'run_claim_sha256': self.bound._run._claim_sha256}
 
     def check_binding(self):
         require(self.bound is self._bound and self.bound._run is self._run,
@@ -317,44 +316,6 @@ class Owner:
             exact(self.root, 'complete.json', raw); self.closed = True; return ref
         except BaseException:
             self.poisoned = True; raise
-
-
-def verify_current(owner):
-    """Callback-free final rejoin after an already successful live guard lease.
-
-    Checks current claim, binding metadata and exact compact owner state. Does
-    not invoke user/owner/guard callbacks or replace the preceding live resource
-    guard. Boundaries remain sampled, not an atomic filesystem snapshot.
-    """
-    require(type(owner) is Owner,'actual compact Owner required')
-    require(not owner.poisoned and not owner.closed and not owner.closing,
-        'compact owner is terminal, closing or poisoned')
-    owner.check_binding()
-    require(cache_key(owner.configuration()) == owner.configuration_sha256
-        and owner.reserved == owner._reserved,'compact owner runtime contract changed')
-    owner.bound._run._active()
-    require(not any(present(owner.bound._run.directory/name) for name in ('complete.json','failed.json')),
-        'current run terminal marker exists')
-    journal = Path(owner.bound.record['journal_directory'])
-    require(owner.bound._ancestry_arguments is None,'fresh compact owner required')
-    entries(journal.parent,{journal.name},required={journal.name})
-    require(not any(present(journal/name) for name in ('failed.json','complete.json')),
-        'representation terminal marker exists')
-    for path,expected in owner.bound._snapshots.items():
-        require(matching_owner.metadata(path,owner.bound._run.admission.root)[1] == expected,
-            'compact binding metadata changed')
-    require(owner.root == journal/'compact' and owner.root.resolve() == owner.root,'compact owner root redirected')
-    require(owner.root.stat().st_dev == owner.bound._run.admission.root.stat().st_dev,'compact owner device changed')
-    info = owner.root.lstat()
-    require((info.st_dev,info.st_ino) == owner.inode,'compact owner directory changed')
-    exact(owner.root,'owner.json',owner.start)
-    expected = {'owner.json'} | set(owner.stages)
-    entries(owner.root,expected,required=expected)
-    total = OWNER_BYTES
-    for name,stage in owner.stages.items():
-        require(name == stage.name and stage.owner is owner,'compact stage membership changed')
-        stage.integrity();exact(stage.root,'intent.json',stage.intent);total += stage.reservation
-    require(total == owner.reserved <= owner.maximum,'compact cumulative reservation differs')
 
 
 def attach(bound, *, policy_input):
