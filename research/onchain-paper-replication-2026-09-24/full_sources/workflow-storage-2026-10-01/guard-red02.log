@@ -1,0 +1,50 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________________ test_storage_startup_refusal_never_dispatches _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-8/test_storage_startup_refusal_n0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79f0d31502b0>
+
+    def test_storage_startup_refusal_never_dispatches(tmp_path,monkeypatch):
+        policy=budget(tmp_path);(Path(policy['root'])/'huge').write_bytes(b'x'*9000)
+        monkeypatch.setattr(guard.subprocess,'run',lambda *a,**k:(_ for _ in ()).throw(AssertionError('dispatched')))
+>       result=guard.guarded_run(['true'],cwd=tmp_path,receipt_dir=tmp_path/'r',storage_budget=policy)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: guarded_run() got an unexpected keyword argument 'storage_budget'
+
+tests/research/onchain_replication/test_workflow_storage_guard.py:14: TypeError
+_________________ test_storage_runtime_breach_stops_owned_unit _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-8/test_storage_runtime_breach_st0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79f0d34368b0>
+
+    def test_storage_runtime_breach_stops_owned_unit(tmp_path,monkeypatch):
+        receipt,calls=mock_unit(tmp_path,monkeypatch,completed=True);policy=budget(tmp_path);atomic=guard._atomic
+        def write(path,value):
+            atomic(path,value)
+            if path.name=='release.json':(Path(policy['root'])/'overflow').write_bytes(b'a'*9000)
+        monkeypatch.setattr(guard,'_atomic',write)
+>       result=guard.guarded_run(['true'],cwd=tmp_path,receipt_dir=receipt,storage_budget=policy)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: guarded_run() got an unexpected keyword argument 'storage_budget'
+
+tests/research/onchain_replication/test_workflow_storage_guard.py:25: TypeError
+______________ test_valid_storage_policy_and_terminal_observation ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-8/test_valid_storage_policy_and_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x79f0d30c3ad0>
+
+    def test_valid_storage_policy_and_terminal_observation(tmp_path,monkeypatch):
+        receipt,calls=mock_unit(tmp_path,monkeypatch,completed=True);policy=budget(tmp_path)
+        (Path(policy['root'])/'value').write_bytes(b'abc')
+>       result=guard.guarded_run(['true'],cwd=tmp_path,receipt_dir=receipt,storage_budget=policy)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: guarded_run() got an unexpected keyword argument 'storage_budget'
+
+tests/research/onchain_replication/test_workflow_storage_guard.py:34: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_workflow_storage_guard.py::test_storage_startup_refusal_never_dispatches
+FAILED tests/research/onchain_replication/test_workflow_storage_guard.py::test_storage_runtime_breach_stops_owned_unit
+FAILED tests/research/onchain_replication/test_workflow_storage_guard.py::test_valid_storage_policy_and_terminal_observation
+3 failed in 10.04s

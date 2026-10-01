@@ -3,6 +3,32 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Whole-workflow storage enforcement implementation in progress**:
+Maintained workflow_storage.py now provides descriptor-anchored sampled accounting
+of allocated st_blocks*512 (including directories), logical sparse-file size,
+entry/depth limits and cooperative scan-time limits. Root identities are pinned;
+symlinks, hardlinks, special files and cross-device entries are refused without
+reading file contents. Eight synthetic checks passed in0.012s; STORAGE_REVIEW SHA
+df9ea6382f51b5b43f50c5355cbfc0410f58d7365f73a956a02f1e6fd753f6cf accepts this scope.
+This is not a hard filesystem quota, atomic inventory or bound on growth between
+observations; a blocked metadata syscall is not preempted by scan-time checking.
+resources.guarded_run now optionally enforces a storage_budget at guard boundaries
+and after cleanup, preserving partial breach evidence and stopping owned units.
+guard-check01 CLOSED42passes1.62s/session62030exit0 covers the3new boundaries plus
+existing guard regression. guard-red01 was collection-refused before execution;
+the reviewed synthetic tests were moved into the admitted tests/research directory.
+guard-red02 retained3expected missing-keyword failures; no bypass flag was used.
+job.resource_policy now validates optional storage scope inside the admitted root;
+job-red01 retained2expected failures. job-check01 CLOSED46passes16.67s/session79417exit0. Independent GUARD_REVIEW
+accepts sampled integration, and PROBE_REVIEW accepts the two tiny probes subject
+to fresh host checks. Tiny
+actual positive01/breach01 probes are prepared but unlaunched in
+full_sources/workflow-storage-2026-10-01/probe.py; each identity is exclusive.
+No study claim/budget/cap/empirical coverage changed. Next safe action: fresh
+host/identity checks and the two tiny actual OS probes once; proceed with
+bounded writer/checkpoint reservations and exact
+resource population/cap amendments required for the full-size gate.
+
 **Actual guarded native reuse CLOSED complete — October 1 continuation**:
 Retained root research_artifacts/native-reuse-synthetic/attempt01,
 experimentexample-a/source7d2b6fde5035c5178d2f39e98fe4f4aa118b697e is terminal.

@@ -1,0 +1,48 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_registered_storage_policy_accepts_owned_scope ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-10/test_registered_storage_policy0')
+
+    def test_registered_storage_policy_accepts_owned_scope(tmp_path):
+        from tradingagents.research.onchain_replication.job import resource_policy
+        from tests.research.onchain_replication.test_job import policy
+        value={**policy(tmp_path),'storage_budget':budget(tmp_path)}
+>       assert resource_policy(value,tmp_path)==value
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_workflow_storage_guard.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'memory_max_bytes': 536870912, 'memory_high_bytes': 402653184, 'reserve_bytes': 3221225472, 'start_reserve_bytes': 3758096384, ...}
+root = PosixPath('/tmp/pytest-of-malecada/pytest-10/test_registered_storage_policy0')
+
+    def resource_policy(value, root):
+        required = {'memory_max_bytes', 'memory_high_bytes', 'reserve_bytes', 'start_reserve_bytes',
+                    'disk_floor_bytes', 'disk_paths', 'wall_seconds'}
+        if set(value) != required:
+>           raise ValueError('execution resource policy fields differ')
+E           ValueError: execution resource policy fields differ
+
+tradingagents/research/onchain_replication/job.py:48: ValueError
+_______ test_registered_storage_policy_rejects_foreign_or_invalid_scope ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-10/test_registered_storage_policy1')
+
+    def test_registered_storage_policy_rejects_foreign_or_invalid_scope(tmp_path):
+        import pytest
+        from tradingagents.research.onchain_replication.job import resource_policy
+        from tests.research.onchain_replication.test_job import policy
+        nested=tmp_path/'owned';nested.mkdir();value={**policy(nested),'storage_budget':budget(tmp_path)}
+>       with pytest.raises(ValueError,match='storage'):resource_policy(value,nested)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'storage'
+E         Actual message: 'execution resource policy fields differ'
+
+tests/research/onchain_replication/test_workflow_storage_guard.py:50: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_workflow_storage_guard.py::test_registered_storage_policy_accepts_owned_scope
+FAILED tests/research/onchain_replication/test_workflow_storage_guard.py::test_registered_storage_policy_rejects_foreign_or_invalid_scope
+2 failed, 3 deselected in 1.31s

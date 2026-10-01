@@ -44,7 +44,7 @@ def same_process_alive(pid, ticks):
 def resource_policy(value, root):
     required = {'memory_max_bytes', 'memory_high_bytes', 'reserve_bytes', 'start_reserve_bytes',
                 'disk_floor_bytes', 'disk_paths', 'wall_seconds'}
-    if set(value) != required:
+    if set(value) not in (required,required|{'storage_budget'}):
         raise ValueError('execution resource policy fields differ')
     for name in required-{'disk_paths'}:
         if type(value[name]) is not int or value[name] <= 0:
@@ -60,6 +60,14 @@ def resource_policy(value, root):
         raise ValueError('explicit unique guard volumes required')
     if root.stat().st_dev not in {Path(p).stat().st_dev for p in paths}:
         raise ValueError('guard omits artifact volume')
+    if 'storage_budget' in value:
+        from .workflow_storage import StorageWatch
+        budget=value['storage_budget']
+        if type(budget) is not dict or set(budget)!={'root','limits'} or type(budget['root']) is not str:
+            raise ValueError('registered storage budget schema differs')
+        watch=StorageWatch(budget['root'],budget['limits'])
+        if not watch.root.is_relative_to(Path(root).resolve()):
+            raise ValueError('registered storage root is outside the admitted workspace')
     return value
 
 

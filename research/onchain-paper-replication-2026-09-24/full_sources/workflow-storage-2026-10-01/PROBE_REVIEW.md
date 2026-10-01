@@ -1,0 +1,11 @@
+# Independent tiny OS storage-probe release review
+
+Conditionally accepted for exactly the distinct unused `positive01` and `breach01` synthetic identities in `probe.py`, after fresh host-memory/free-disk and no-conflicting-unit checks, with reviewed source bytes unchanged. Both directories were absent at review. This permits engineering observation only; it admits no retained-graph work, research claim, financial trial, or aggregate workflow storage budget.
+
+The launcher enforces the mode/identity pairing and exclusively creates each root. The positive payload writes 1,024 bytes and exits. The breach payload writes 262,144 bytes and sleeps for up to 20 seconds, allowing the sampled guard to observe allocated storage above the 65,536-byte limit. Each attempt separately records intent, command, policy and source hashes, uses the existing owned cgroup cleanup, verifies the expected outcome, and records the final-receipt and payload hashes. The outputs-only root keeps guard receipts outside the observed subtree. That is an explicit probe scope, not full output accounting.
+
+The exact policy is 256 MiB memory maximum, 192 MiB high threshold, zero worker swap, two inherited/read-back CPUs, 3 GiB host reserve, 10 GiB free-disk floor and a 60-second wall limit. The unchanged guard default startup requirement is maximum plus reserve, hence 3.25 GiB. Storage bounds are 64 KiB allocated, 1 MiB logical, 64 entries, depth 4 and a one-second cooperative scan bound. These bound a tiny one-file synthetic probe; sampled write overshoot is deliberate and preserved.
+
+Acceptance is prospective. No probe was executed by the reviewer. Actual launch/source identity, kernel readback, exact observed breach, child/monitor termination and cleanup still require terminal evidence. The script's result assertion is not itself an independent death/closure review. A refusal or partial attempt must remain under its original identity; this review does not authorize retries under the same directory.
+
+Reviewed `probe.py` SHA-256: `4a783395d93a82ac086e4faf330be2249dc5c878ac62636aacc2423c656902a4`. Guard/storage source hashes are recorded in `GUARD_REVIEW.md`; the probe also rehashes its three named sources after execution. Its narrow source list is not a claim of complete interpreter/dependency closure or committed execution identity.
