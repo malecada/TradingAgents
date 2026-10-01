@@ -1,0 +1,39 @@
+{
+  "mode": "positive",
+  "identity": "positive01",
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-c",
+    "import os,sys,time; p=sys.argv[1]; n=int(sys.argv[2]); f=open(p,'xb'); f.write(b'x'*n); f.flush(); os.fsync(f.fileno()); f.close(); time.sleep(20 if n>1024 else 0)",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01/outputs/payload.bin",
+    "1024"
+  ],
+  "policy": {
+    "memory_max_bytes": 268435456,
+    "memory_high_bytes": 201326592,
+    "memory_swap_max_bytes": 0,
+    "reserve_bytes": 3221225472,
+    "disk_paths": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01"
+    ],
+    "disk_floor_bytes": 10737418240,
+    "wall_seconds": 60,
+    "storage_budget": {
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01/outputs",
+      "limits": {
+        "max_allocated_bytes": 65536,
+        "max_logical_bytes": 1048576,
+        "max_entries": 64,
+        "max_depth": 4,
+        "max_scan_seconds": 1
+      }
+    }
+  },
+  "source_sha256": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/resources.py": "3962f2d5abd1e29e53108b76f3b14cebed9cb8217ee4b73fa4fe0bd2734f05ef",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/workflow_storage.py": "a0b1bd5e3f73f22f3c5922740a8bddde0437c3c635ea372a6853d4d504e7751f",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/probe.py": "4a783395d93a82ac086e4faf330be2249dc5c878ac62636aacc2423c656902a4"
+  },
+  "synthetic_only": true
+}

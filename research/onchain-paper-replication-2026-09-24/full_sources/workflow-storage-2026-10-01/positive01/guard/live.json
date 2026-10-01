@@ -1,0 +1,171 @@
+{
+  "boot_id": "da045a9a-8050-4716-b784-249c9e822769",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-b37000cbaf574990b834b75894c9f517.service",
+  "child_exit_code": 0,
+  "cleanup_stop_returncode": 5,
+  "cleanup_unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-c",
+    "import os,sys,time; p=sys.argv[1]; n=int(sys.argv[2]); f=open(p,'xb'); f.write(b'x'*n); f.flush(); os.fsync(f.fileno()); f.close(); time.sleep(20 if n>1024 else 0)",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01/outputs/payload.bin",
+    "1024"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "2853333": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01",
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01": 21393784832
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01"
+  ],
+  "elapsed_seconds": 0.3784389030042803,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 8204894208,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "201326592",
+    "memory.max": "268435456",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": null,
+  "memory_current_bytes": 8667136,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 201326592,
+  "memory_max_bytes": 268435456,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 2853326,
+  "monotonic_seconds": 81798.759269056,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 8208384,
+      "file_bytes": 8192,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-b37000cbaf574990b834b75894c9f517.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 5912035328,
+      "file_bytes": 4724658176,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=41495971\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=40970144",
+      "swap_current_bytes": 243703808,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": null,
+  "peak_sampled_memory_current_bytes": 8667136,
+  "phase": "complete",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01/guard",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 3489660928,
+  "storage_budget": {
+    "limits": {
+      "max_allocated_bytes": 65536,
+      "max_depth": 4,
+      "max_entries": 64,
+      "max_logical_bytes": 1048576,
+      "max_scan_seconds": 1
+    },
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01/outputs"
+  },
+  "storage_enforcement": "Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.",
+  "storage_observation": {
+    "allocated_bytes": 8192,
+    "directories": 1,
+    "elapsed_seconds": 0.00018780298705678433,
+    "entries": 1,
+    "logical_file_bytes": 1024,
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee.",
+    "regular_files": 1,
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/positive01/outputs",
+    "root_device": 66310,
+    "root_inode": 8428210
+  },
+  "storage_peak_allocated_bytes": 8192,
+  "storage_peak_entries": 1,
+  "storage_peak_logical_file_bytes": 1024,
+  "storage_root_identity": [
+    66310,
+    8428210
+  ],
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 8667136,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 8208384,
+        "file_bytes": 8192,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-b37000cbaf574990b834b75894c9f517.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 5912035328,
+        "file_bytes": 4724658176,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=41495971\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=40970144",
+        "swap_current_bytes": 243703808,
+        "unavailable": {}
+      }
+    }
+  },
+  "unit": "onchain-replication-b37000cbaf574990b834b75894c9f517.service",
+  "unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 60
+}

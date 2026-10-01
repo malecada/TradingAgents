@@ -3,31 +3,53 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Whole-workflow storage enforcement implementation in progress**:
-Maintained workflow_storage.py now provides descriptor-anchored sampled accounting
-of allocated st_blocks*512 (including directories), logical sparse-file size,
-entry/depth limits and cooperative scan-time limits. Root identities are pinned;
-symlinks, hardlinks, special files and cross-device entries are refused without
-reading file contents. Eight synthetic checks passed in0.012s; STORAGE_REVIEW SHA
-df9ea6382f51b5b43f50c5355cbfc0410f58d7365f73a956a02f1e6fd753f6cf accepts this scope.
-This is not a hard filesystem quota, atomic inventory or bound on growth between
-observations; a blocked metadata syscall is not preempted by scan-time checking.
-resources.guarded_run now optionally enforces a storage_budget at guard boundaries
-and after cleanup, preserving partial breach evidence and stopping owned units.
-guard-check01 CLOSED42passes1.62s/session62030exit0 covers the3new boundaries plus
-existing guard regression. guard-red01 was collection-refused before execution;
-the reviewed synthetic tests were moved into the admitted tests/research directory.
-guard-red02 retained3expected missing-keyword failures; no bypass flag was used.
-job.resource_policy now validates optional storage scope inside the admitted root;
-job-red01 retained2expected failures. job-check01 CLOSED46passes16.67s/session79417exit0. Independent GUARD_REVIEW
-accepts sampled integration, and PROBE_REVIEW accepts the two tiny probes subject
-to fresh host checks. Tiny
-actual positive01/breach01 probes are prepared but unlaunched in
-full_sources/workflow-storage-2026-10-01/probe.py; each identity is exclusive.
-No study claim/budget/cap/empirical coverage changed. Next safe action: fresh
-host/identity checks and the two tiny actual OS probes once; proceed with
-bounded writer/checkpoint reservations and exact
-resource population/cap amendments required for the full-size gate.
+**Sampled storage guard implemented and actual probes CLOSED**:
+Maintained workflow_storage.py provides descriptor-anchored allocated st_blocks*512
+accounting (including directories), logical sparse-file size, entry/depth limits
+and cooperative scan-time checks. Canonical root identities are pinned; symlinks,
+hardlinks, special files and cross-device entries are refused without content reads.
+This is sampled non-atomic accounting, NOT a hard filesystem quota, bound on growth
+between observations or a deadline that preempts blocked metadata syscalls.
+resources.guarded_run optionally checks storage_budget at boundaries and after
+cleanup, preserves partial breach evidence and stops owned units. job.resource_policy
+validates the registered scope inside the admitted root; worker ownership checks
+compare every registered policy field with the live receipt. Existing historical
+source hashes/receipts remain untouched; source-compatibility exceptions are not
+implicitly granted to older native consumers by these guard changes.
+
+Evidence: full_sources/workflow-storage-2026-10-01/. Eight storage tests passed;
+guard-check01 CLOSED42passes1.62s/session62030exit0; job-check01 CLOSED46passes16.67s/
+session79417exit0. Prior red/refused tests and source snapshots retained. STORAGE,
+GUARD and PROBE reviews accepted the sampled scope. Reviewed source committed
+baeac692; no study budget/cap/coverage change.
+Actual positive01 CLOSED complete0.378438903s/child0/cleanupverified,1024logicalB/
+8192allocatedB. Its driver then failed a str-versus-Path hash call: error and original
+driver retained, corrected one-expression probe_v2 independently reviewed. Positive
+was verified read-only and never rerun. Actual breach01 CLOSED expected allocated
+limit failure0.390520185s/cleanupverified;262144logicalB/266240allocatedB >65536cap.
+Both have actual256MiBmax/192MiBhigh/zeroswap/twoCPU controls and10GiBfree-disk floor.
+Saved read-only closures verify exact command/policy/source/kernel/output/cleanup;
+independent positive and BREACH_CLOSURE_REVIEW accept closure. All known PIDs/cgroups
+are absent. Breach partial counters and later child-memory observations are separate
+from the successful-sample peaks, which are not claimed as whole-run maxima.
+No active numerical job and no empirical capacity or aggregate workflow credit.
+
+**Immediate next scaling requirement identified from source**:
+full_sources/native-resource-admission-2026-10-01/assess_journal.py records pinned
+conditional arithmetic in journal-scaling01.json. The current per-pair journal
+reserves3*65536B of constant metadata allowance for each new pair before positive
+artifact bytes. Applied to577498112MCMcells this alone is113540748804096B of logical
+reservation and1154996224reserve/publish events. This is NOT actual disk capacity,
+RAM, elapsed-time measurement or a hardware purchase requirement. The current
+new-pair route and complete-cell assumption are explicit. JOURNAL_SCALING_REVIEW SHA
+74a52b574cdf4830b5dcce858d8afcb1c26c2990ced896d1cd7c79da5a55b363 accepts the arithmetic.
+Next safe implementation: compact checkpointed completed-score batches with exact
+row/motif identity, bounded live-pair scratch, immutable batch outputs and preserved
+failure/successor lineage; verify matching equivalence and do not discard historical
+pair journals. This addresses storage/metadata growth rather than reducing numerical
+work or paper scope. Then finish full-workflow reservations/resource population,
+hub/pair cap amendments and reviewed committed60→61 gate before empirical execution.
+All1420financial fits remain pending and resource coverage77/109 is unchanged.
 
 **Actual guarded native reuse CLOSED complete — October 1 continuation**:
 Retained root research_artifacts/native-reuse-synthetic/attempt01,

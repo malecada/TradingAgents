@@ -1,0 +1,149 @@
+{
+  "boot_id": "da045a9a-8050-4716-b784-249c9e822769",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7e20735134614a3c88865e926467735b.service",
+  "child_exit_code": null,
+  "cleanup_stop_returncode": 0,
+  "cleanup_unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-c",
+    "import os,sys,time; p=sys.argv[1]; n=int(sys.argv[2]); f=open(p,'xb'); f.write(b'x'*n); f.flush(); os.fsync(f.fileno()); f.close(); time.sleep(20 if n>1024 else 0)",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/breach01/outputs/payload.bin",
+    "262144"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "2854818": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/breach01",
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/breach01": 21392764928
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/breach01"
+  ],
+  "elapsed_seconds": 0.39052018499933183,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 8227274752,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "201326592",
+    "memory.max": "268435456",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": "StorageLimit: storage allocated limit exceeded",
+  "memory_current_bytes": 8372224,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 201326592,
+  "memory_max_bytes": 268435456,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 2854815,
+  "monotonic_seconds": 81952.525196537,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 8200192,
+      "file_bytes": 4096,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7e20735134614a3c88865e926467735b.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 5912236032,
+      "file_bytes": 4721287168,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=41495971\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=40970144",
+      "swap_current_bytes": 243703808,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": null,
+  "peak_sampled_memory_current_bytes": 8630272,
+  "phase": "failed",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/breach01/guard",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 3489660928,
+  "storage_breach": {
+    "allocated_bytes": 266240,
+    "directories": 1,
+    "entries": 1,
+    "logical_file_bytes": 262144,
+    "regular_files": 1
+  },
+  "storage_budget": {
+    "limits": {
+      "max_allocated_bytes": 65536,
+      "max_depth": 4,
+      "max_entries": 64,
+      "max_logical_bytes": 1048576,
+      "max_scan_seconds": 1
+    },
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/breach01/outputs"
+  },
+  "storage_enforcement": "Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.",
+  "storage_last_error": "StorageLimit: storage allocated limit exceeded",
+  "storage_observation": {
+    "allocated_bytes": 4096,
+    "directories": 1,
+    "elapsed_seconds": 0.0001273200032301247,
+    "entries": 0,
+    "logical_file_bytes": 0,
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee.",
+    "regular_files": 0,
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/workflow-storage-2026-10-01/breach01/outputs",
+    "root_device": 66310,
+    "root_inode": 8428230
+  },
+  "storage_peak_allocated_bytes": 4096,
+  "storage_peak_entries": 0,
+  "storage_peak_logical_file_bytes": 0,
+  "storage_root_identity": [
+    66310,
+    8428230
+  ],
+  "unit": "onchain-replication-7e20735134614a3c88865e926467735b.service",
+  "unit_properties": {
+    "ActiveState": "active",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7e20735134614a3c88865e926467735b.service",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "running"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 60
+}
