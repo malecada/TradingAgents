@@ -1,0 +1,122 @@
+"""Actual synthetic graph completion publication and bounded storage checks."""
+import importlib.util
+import json
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+import numpy as np
+from tests.research.onchain_replication import test_matching_owner as owner_fixture
+from tradingagents.research.onchain_replication.component_store import save_component
+from tradingagents.research.onchain_replication.provenance import file_hash
+
+HERE=Path(__file__).resolve().parent
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+base=load('graph_publication_fixture',HERE.parent/'graph-feature-route-2026-10-01/test_route.py')
+def api():
+    assert (HERE/'publication.py').exists(),'graph completion publication missing'
+    return load('graph_publication',HERE/'publication.py')
+
+class Tests(unittest.TestCase):
+    def fixture(self,mode=None):
+        self.m=api();m=self.m
+        f=base.Tests('test_real_saved_mcm_to_exact_tensors_without_numerical_recomputation');self.addCleanup(f.doCleanups)
+        original=owner_fixture.OwnershipTests.input
+        policy={'schema_version':1,'max_metadata_bytes':262144,'max_manifest_bytes':1048576,
+            'max_artifact_bytes':1048576,'max_attempt_bytes':3000000,'max_array_bytes':1024,'max_journal_events':100}
+        if mode=='reservation':policy['max_attempt_bytes']=1
+        if mode=='array':policy['max_array_bytes']=1
+        if mode=='event':policy['max_journal_events']=3
+        if mode=='artifact':policy['max_artifact_bytes']=1
+        def configured(instance,name,value):
+            if name=='plan':
+                original(instance,'graph_output',policy);value['producers']['p']['graph_output_input']='graph_output'
+            if name=='execution_job':value['payload']['representation_jobs']['r']['graph_output_input']='graph_output'
+            return original(instance,name,value)
+        with patch.object(base,'api',return_value=m.route),patch.object(m.route,'SOURCES',m.SOURCES),patch.object(owner_fixture.OwnershipTests,'input',new=configured):
+            owner=f.fixture()
+        self.f=f;self.owner=owner;self.graph_hash=json.loads(f.f.proof_path.read_text())['graph_hash'];return owner
+
+    def produce(self):
+        return self.m.produce(self.owner.owned,self.owner.journal,dictionary_ticket=self.f.f.ticket,
+            graph_hash=self.graph_hash,mcm_input='mcm_execution',mcm_output_input='mcm_output',read_input='mcm_read',
+            mcm_proof_sha256=file_hash(self.f.f.proof_path),feature_input='feature_tensor',output_input='graph_output')
+
+    def test_native_two_array_size_predictor_matches_actual_components(self):
+        m=api();a=np.array([[0,.5],[1,.25]],dtype=np.float32);e=np.array([[0,1],[1,0]],dtype=np.int64)
+        for x,y in ((a,e),(np.asfortranarray(a),np.asfortranarray(e)),(a[::-1],e[:,::-1]),(a,e[:,:0])):
+            with self.subTest(strides=(x.strides,y.strides)),tempfile.TemporaryDirectory() as tmp:
+                feature={'mcm':x,'edge_index':y};context={'synthetic':'size'}
+                manifest_bytes,total,numeric=m.encoded_size(feature,context)
+                path=save_component(Path(tmp)/'component',{'feature':feature,'aligned_vectors':None},context)
+                self.assertEqual(manifest_bytes,path.stat().st_size)
+                self.assertEqual(total,sum(p.stat().st_size for p in path.parent.iterdir()))
+                self.assertEqual(numeric,x.nbytes+y.nbytes)
+
+    def test_actual_graph_completion_strictly_roundtrips_and_refuses_relaunch(self):
+        f=self.fixture();m=self.m;proofref=self.produce();proof=json.loads(Path(proofref['path']).read_text())
+        self.assertEqual(file_hash(Path(proofref['path'])),proofref['sha256'])
+        event=f.journal.records[3];self.assertEqual(event['stage'],'graph_complete')
+        payload=m.reader.read_component(f.directory/event['path'],event['sha256'],event['binding'],root=f.root,
+            max_manifest_bytes=1048576,max_artifact_bytes=1048576,max_array_bytes=1024,lease=f.owned.lease)
+        expected=np.load(f.directory/'checkpoint-000002/array-000000.npy',allow_pickle=False)
+        np.testing.assert_array_equal(payload['feature']['mcm'],expected)
+        np.testing.assert_array_equal(payload['feature']['edge_index'],f.workload._graphs[self.graph_hash].edge_index)
+        self.assertIsNone(payload['aligned_vectors'])
+        self.assertEqual(proof['feature_provenance']['feature_hash'],m.route.boundary.identity(payload['feature']['mcm'],payload['feature']['edge_index'],2))
+        self.assertEqual(proof['encoded_artifact_bytes'],sum(p.stat().st_size for p in (f.directory/event['path']).parent.iterdir()))
+        self.assertEqual(proof['encoded_event_bytes'],(f.directory/'event-000003.json').stat().st_size)
+        with patch.object(m.route,'prepare',side_effect=AssertionError('completed graph prepared again')):
+            with self.assertRaises((ValueError,FileExistsError)):self.produce()
+
+    def test_preflight_limits_refuse_before_feature_preparation(self):
+        for mode in ('reservation','array','event'):
+            with self.subTest(mode=mode):
+                self.fixture(mode)
+                with patch.object(self.m.route,'prepare',side_effect=AssertionError('feature before preflight')):
+                    with self.assertRaises(ValueError):self.produce()
+                self.assertFalse(self.m.attempt_directory(self.owner.owned,self.graph_hash).exists())
+
+    def test_artifact_cap_retains_failed_identity_and_refuses_second_launch(self):
+        f=self.fixture('artifact');m=self.m
+        with self.assertRaisesRegex(ValueError,'graph event/component allowance'):self.produce()
+        attempt=m.attempt_directory(f.owned,self.graph_hash)
+        self.assertEqual({p.name for p in attempt.iterdir()},{'start.json','failed.json'})
+        self.assertEqual(len(f.journal.records),3);self.assertFalse((f.directory/'checkpoint-000003').exists())
+        with patch.object(m.route,'prepare',side_effect=AssertionError('failed graph prepared again')):
+            with self.assertRaises((ValueError,FileExistsError)):self.produce()
+
+    def test_final_component_drift_preserves_complete_and_failed_conflict(self):
+        f=self.fixture();m=self.m;original=m.sync_directory;changed=[]
+        def sync(path):
+            original(path)
+            if (m.attempt_directory(f.owned,self.graph_hash)/'complete.json').exists() and not changed:
+                changed.append(True);target=f.directory/'checkpoint-000003/array-000000.npy'
+                raw=bytearray(target.read_bytes());raw[-1]^=1;target.write_bytes(raw)
+        with patch.object(m,'sync_directory',side_effect=sync),self.assertRaises(ValueError):self.produce()
+        attempt=m.attempt_directory(f.owned,self.graph_hash)
+        self.assertEqual({p.name for p in attempt.iterdir()},{'start.json','complete.json','failed.json'})
+
+    def test_pre_manifest_saved_payload_drift_refuses_completion(self):
+        f=self.fixture();m=self.m;original=np.save;changed=[]
+        def altered(stream,array,**kwargs):
+            original(stream,array,**kwargs)
+            if not changed:
+                stream.flush();path=Path(stream.name);raw=bytearray(path.read_bytes());raw[-1]^=1
+                with path.open('r+b') as output:output.write(raw);output.flush()
+                changed.append(True)
+        with patch.object(np,'save',side_effect=altered),self.assertRaises(ValueError):self.produce()
+        attempt=m.attempt_directory(f.owned,self.graph_hash)
+        self.assertTrue((attempt/'failed.json').exists());self.assertFalse((attempt/'complete.json').exists())
+
+    def test_selected_large_mcm_metadata_cap_is_honored(self):
+        f=self.fixture();path=self.f.f.proof_path
+        # Same JSON object and provenance, valid extent above the default 64KiB
+        # but below the selected predecessor max_metadata_bytes=262144.
+        raw=path.read_bytes();self.assertLess(len(raw),70000)
+        path.write_bytes(raw+b' '*(70000-len(raw)))
+        result=self.produce();proof=json.loads(Path(result['path']).read_text())
+        self.assertEqual(proof['feature_provenance']['mcm_provenance']['mcm_proof']['sha256'],file_hash(path))
+
+if __name__=='__main__':unittest.main(verbosity=2)

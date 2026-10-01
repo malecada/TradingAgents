@@ -1,0 +1,111 @@
+test_actual_graph_completion_strictly_roundtrips_and_refuses_relaunch (__main__.Tests.test_actual_graph_completion_strictly_roundtrips_and_refuses_relaunch) ... FAIL
+test_artifact_cap_retains_failed_identity_and_refuses_second_launch (__main__.Tests.test_artifact_cap_retains_failed_identity_and_refuses_second_launch) ... FAIL
+test_final_component_drift_preserves_complete_and_failed_conflict (__main__.Tests.test_final_component_drift_preserves_complete_and_failed_conflict) ... FAIL
+test_native_two_array_size_predictor_matches_actual_components (__main__.Tests.test_native_two_array_size_predictor_matches_actual_components) ... FAIL
+test_preflight_limits_refuse_before_feature_preparation (__main__.Tests.test_preflight_limits_refuse_before_feature_preparation) ... 
+  test_preflight_limits_refuse_before_feature_preparation (__main__.Tests.test_preflight_limits_refuse_before_feature_preparation) (mode='reservation') ... FAIL
+  test_preflight_limits_refuse_before_feature_preparation (__main__.Tests.test_preflight_limits_refuse_before_feature_preparation) (mode='array') ... FAIL
+  test_preflight_limits_refuse_before_feature_preparation (__main__.Tests.test_preflight_limits_refuse_before_feature_preparation) (mode='event') ... FAIL
+
+======================================================================
+FAIL: test_actual_graph_completion_strictly_roundtrips_and_refuses_relaunch (__main__.Tests.test_actual_graph_completion_strictly_roundtrips_and_refuses_relaunch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 58, in test_actual_graph_completion_strictly_roundtrips_and_refuses_relaunch
+    f=self.fixture();m=self.m;proofref=self.produce();proof=json.loads(Path(proofref['path']).read_text())
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').exists(),'graph completion publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: graph completion publication missing
+
+======================================================================
+FAIL: test_artifact_cap_retains_failed_identity_and_refuses_second_launch (__main__.Tests.test_artifact_cap_retains_failed_identity_and_refuses_second_launch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 82, in test_artifact_cap_retains_failed_identity_and_refuses_second_launch
+    f=self.fixture('artifact');m=self.m
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').exists(),'graph completion publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: graph completion publication missing
+
+======================================================================
+FAIL: test_final_component_drift_preserves_complete_and_failed_conflict (__main__.Tests.test_final_component_drift_preserves_complete_and_failed_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 91, in test_final_component_drift_preserves_complete_and_failed_conflict
+    f=self.fixture();m=self.m;original=m.sync_directory;changed=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').exists(),'graph completion publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: graph completion publication missing
+
+======================================================================
+FAIL: test_native_two_array_size_predictor_matches_actual_components (__main__.Tests.test_native_two_array_size_predictor_matches_actual_components)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 47, in test_native_two_array_size_predictor_matches_actual_components
+    m=api();a=np.array([[0,.5],[1,.25]],dtype=np.float32);e=np.array([[0,1],[1,0]],dtype=np.int64)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').exists(),'graph completion publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: graph completion publication missing
+
+======================================================================
+FAIL: test_preflight_limits_refuse_before_feature_preparation (__main__.Tests.test_preflight_limits_refuse_before_feature_preparation) (mode='reservation')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 76, in test_preflight_limits_refuse_before_feature_preparation
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').exists(),'graph completion publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: graph completion publication missing
+
+======================================================================
+FAIL: test_preflight_limits_refuse_before_feature_preparation (__main__.Tests.test_preflight_limits_refuse_before_feature_preparation) (mode='array')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 76, in test_preflight_limits_refuse_before_feature_preparation
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').exists(),'graph completion publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: graph completion publication missing
+
+======================================================================
+FAIL: test_preflight_limits_refuse_before_feature_preparation (__main__.Tests.test_preflight_limits_refuse_before_feature_preparation) (mode='event')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 76, in test_preflight_limits_refuse_before_feature_preparation
+    self.fixture(mode)
+    ~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 23, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 18, in api
+    assert (HERE/'publication.py').exists(),'graph completion publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: graph completion publication missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+FAILED (failures=7)

@@ -3,6 +3,45 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Durable native graph-feature publication independently accepted**:
+New isolated full_sources/graph-feature-publication-2026-10-01/ publishes one
+required graph_complete under an exclusive per-graph current-owner attempt.
+Selected graph_output policy preflights logical encoded reservation, numeric
+array/event limits before actual registered feature preparation. Retained receipt
+leases bind MCM/graph/policy/source provenance; checkpoints store native float32
+MCM and int64 edges, explicitly marked native_graph_feature_v1. Exact two-array
+sizing precedes writing; strict inspection and final inventory/signatures detect
+drift. Partial/failed/complete identities refuse, and failures are preserved.
+red01 CLOSED5methods7missing-route failures0.003s,session73654 exit1.
+Initial independent review withheld for GP1 (saved bytes not joined to admitted
+feature hash) and GP2 (default64KiB MCM proof cap silently narrower than its
+selected predecessor cap). INITIAL_REVIEW SHA
+9b555bb35a0b15b22b54a36e4c3d68847c6b9ec81e13649a7bdc716f6efc759f.
+check01 interrupted via exact PID220237 SIGINT, session91400 exit130, before any
+completed method. Original source/test/log preserved; all279 frozen hashes
+verified before snapshots. It is not a passing run and must not be relaunched.
+Targeted red02 CLOSED2methods167.551s,session96340 exit1, with1failure and1error
+confirming both defects. Test source snapshot preserved as test_publication.py.red02.
+The new bounded encoded_hashes helper's hash-red01 CLOSED2missing failures0.001s,
+session78120 exit1; hash-check01 CLOSED2passes0.054s,session51686 exit0. Exact
+actual NPY descriptors match C/F/reversed/empty-edge layouts and chunks1/2/13.
+GP1 correction now prebinds the full expected canonical manifest, including tree
+and bounded exact NPY header/payload hashes, before writing. Actual event component
+hash and inspected manifest must equal that expectation. GP2 now reads the MCM
+proof under its selected registered metadata cap, retained in repeated leases.
+check02 CLOSED7methods659.820s,session8034 exit0; PID265081 no longer exists.
+All289frozen files match check02-sources.json SHA
+8c46512f07aac25a8ef62fbcb12c3eb0e147f11d9d6d3ea3ff8f09f61aa6802d.
+GP1/GP2 regressions, actual strict roundtrip, exact sizes, quota preflight and
+failure preservation all pass. No process/source freeze remains. Independent final review accepts the bounded publication and closes GP1/GP2.
+REVIEW SHA89669fcd3d8f0f600a19f0f43dfc61c399ba52d4fd77fa462fe7a0d89e841296.
+All292final bindings match manifest SHA
+414793f01e4313fa71e64249cc9abe003f9380816689e83cda68778a4715d693.
+Next safe action: strict saved graph-feature admission and explicit bounded
+tensor materialization with exact component/proof/policy/source joins. No empirical job or financial fit ran;
+whole representation/denominator closure remains outstanding.
+Predecessor graph-feature-route is accepted and pushed at c6cce8bc, remote verified.
+
 **Registered saved-MCM to graph tensors independently accepted**:
 New isolated full_sources/graph-feature-route-2026-10-01/ links an actual current
 owner, required graph, issued dictionary ticket and saved MCM proof to a selected

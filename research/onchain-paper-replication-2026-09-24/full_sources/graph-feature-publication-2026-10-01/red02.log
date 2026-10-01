@@ -1,0 +1,40 @@
+test_pre_manifest_saved_payload_drift_refuses_completion (__main__.Tests.test_pre_manifest_saved_payload_drift_refuses_completion) ... FAIL
+test_selected_large_mcm_metadata_cap_is_honored (__main__.Tests.test_selected_large_mcm_metadata_cap_is_honored) ... ERROR
+
+======================================================================
+ERROR: test_selected_large_mcm_metadata_cap_is_honored (__main__.Tests.test_selected_large_mcm_metadata_cap_is_honored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 119, in test_selected_large_mcm_metadata_cap_is_honored
+    result=self.produce();proof=json.loads(Path(result['path']).read_text())
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 42, in produce
+    return self.m.produce(self.owner.owned,self.owner.journal,dictionary_ticket=self.f.f.ticket,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        graph_hash=self.graph_hash,mcm_input='mcm_execution',mcm_output_input='mcm_output',read_input='mcm_read',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        mcm_proof_sha256=file_hash(self.f.f.proof_path),feature_input='feature_tensor',output_input='graph_output')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/publication.py", line 83, in produce
+    metadata.read(mcm_path,mcm_proof_sha256)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 68, in read
+    require(0<sig[2]<=cap,'sampler metadata cap exceeded')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py", line 27, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: sampler metadata cap exceeded
+
+======================================================================
+FAIL: test_pre_manifest_saved_payload_drift_refuses_completion (__main__.Tests.test_pre_manifest_saved_payload_drift_refuses_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_publication.py", line 109, in test_pre_manifest_saved_payload_drift_refuses_completion
+    with patch.object(np,'save',side_effect=altered),self.assertRaises(ValueError):self.produce()
+                                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 167.551s
+
+FAILED (failures=1, errors=1)

@@ -1,0 +1,29 @@
+test_bounded_hashes_equal_actual_npy_bytes_for_all_layouts (__main__.Tests.test_bounded_hashes_equal_actual_npy_bytes_for_all_layouts) ... FAIL
+test_invalid_chunk_or_schema_refuses (__main__.Tests.test_invalid_chunk_or_schema_refuses) ... FAIL
+
+======================================================================
+FAIL: test_bounded_hashes_equal_actual_npy_bytes_for_all_layouts (__main__.Tests.test_bounded_hashes_equal_actual_npy_bytes_for_all_layouts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_encoded_hashes.py", line 17, in test_bounded_hashes_equal_actual_npy_bytes_for_all_layouts
+    m=api();a=np.arange(35,dtype=np.float32).reshape(5,7)/35;e=np.array([[0,1,2,3],[1,2,3,4]],dtype=np.int64)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_encoded_hashes.py", line 12, in api
+    path=HERE/'encoded_hashes.py';assert path.exists(),'encoded feature hashing missing'
+                                         ~~~~~~~~~~~^^
+AssertionError: encoded feature hashing missing
+
+======================================================================
+FAIL: test_invalid_chunk_or_schema_refuses (__main__.Tests.test_invalid_chunk_or_schema_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_encoded_hashes.py", line 25, in test_invalid_chunk_or_schema_refuses
+    m=api();a=np.ones((2,2),dtype=np.float32);e=np.zeros((2,1),dtype=np.int64)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/test_encoded_hashes.py", line 12, in api
+    path=HERE/'encoded_hashes.py';assert path.exists(),'encoded feature hashing missing'
+                                         ~~~~~~~~~~~^^
+AssertionError: encoded feature hashing missing
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)
