@@ -3,7 +3,42 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Latest handoff — October 2, archive operation reservations accepted**:
+**Latest handoff — October 2, actual reserved archive writer accepted**:
+archive_owner_writer.run now consumes a durable current-owner writer claim and
+executes the actual ArchivePairLog under the captured owner transition. Bound
+policy/scope/limits, callback thread/lifetime checks, exact/capacity denominators
+and final original-inode/metadata joins follow reservation callbacks. The
+writer's existing full remote replay is retained; no extra unreserved replay
+is added. Callback return values remain unvalidated, stage/producer publication
+and terminal dispatch remain on their prior routes.
+
+Evidence: full_sources/archive-owner-writer-2026-10-02/. red01 CLOSED4missing-
+module failures53.29s; check01 CLOSED4passed157.66s. Independent AOW1 identified
+an inherited constructor parent-close error that was not fatal. review-red01
+CLOSED1failed1passed5deselected76.37s reproduced it; the original source/test
+snapshots remain. Corrected one-shot primary-aware cleanup passes check02
+CLOSED42passed349.14s/session86947exit0:7newwriter+10localpairlog+24archivewriter
++1publicledger regression. Actual tiny matching scores and16+2event chunks
+match the reference. Synthetic filesystem transport and mocked OS guards; no
+financial fit, external request, actual leak recovery or full producer proof.
+Independent REVIEW_FINAL accepted AOW1 closure, SHA256
+f49dddefe8c85306deb6298e6864300c0eb3a20caec7bdf8584432324a9c28f3.
+No active process or source freeze remains.
+
+Predecessordacf1312672675fbdeece363aaba36b926bcf435 was committed, pushed and
+exact remote HEAD verified. Next safe action: finish review/remote checkpoint,
+then consume finite read claims in archived scientific-stage joins with final
+local evidence checks after reservation callbacks. Respect the ledger's exact
+claim inventories and bind any read namespace explicitly. Then wire actual
+producer selection, stage seals, current-owner publication and separately
+authorized post-owner-close phase reads. Public writer execution takes the
+owner lock; existing locked producers require explicit control-flow integration.
+Immutable upload charging, diagnostic/protocol limits, checkpoint/score
+retention and whole-workflow physical accounting still precede resource/hub/
+budget admission. Coverage77/109,32open; all1420financial fits pending.
+Draft60→61 remains unadopted. The10GiB free-space floor remains.
+
+**Previous handoff — October 2, archive operation reservations accepted**:
 archive_owner_operations now consumes the registered Selection under the actual
 current owner transition lock. It retains exclusive writer and finite read
 claims for actual stages. Full event-capacity remote/decoded-member allowances

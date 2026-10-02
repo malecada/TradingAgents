@@ -225,6 +225,10 @@ class Ledger:
 
     @transition
     def _complete(self, operation, reference):
+        return self._complete_locked(operation,reference)
+
+    def _complete_locked(self, operation, reference):
+        """Internal route; the caller owns the original owner transition."""
         io._identity(reference)
         require(self._active is operation and not operation._terminal,'archive operation is terminal')
         raw = io._json({'schema_version':1,'reference_sha256':reference,

@@ -21,6 +21,9 @@ def admitted(tmp_path,request):
         t.descriptor['compact_execution'] = {'backend':p['backend'],
             'policy_sha256':t.exp['inputs']['compact_policy']['sha256']}
         t.descriptor['configs'] = {'matching':{'max_iterations':10}}
+        if option == 'writer_matching':
+            from tests.research.onchain_replication.test_matching_reference import config
+            t.descriptor['configs']['matching'] = config() | {'beta_final':1.}
         policy = {'schema_version':1,'backend':'compact-archive-events-v1',
             'transport_identity':transport.identity,'remote_namespace':'synthetic',
             'local_free_floor_bytes':10*1024**3,'max_stage_verifications':4,

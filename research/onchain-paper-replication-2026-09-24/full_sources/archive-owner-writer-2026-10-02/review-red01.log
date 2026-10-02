@@ -1,0 +1,53 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_uncertain_owned_close_is_fatal_and_retains_claim[constructor-writer_matching] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7080d1558440>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7080d1dc3b60>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7080d19ab100>
+phase = 'constructor'
+
+    @pytest.mark.parametrize('phase',['constructor','final_snapshot'])
+    def test_uncertain_owned_close_is_fatal_and_retains_claim(admitted,monkeypatch,phase):
+        module,ledger,stage = setup(admitted,0);owner=admitted[1]
+        original = module.os.close;injected=[]
+        def close(fd):
+            path = module.os.readlink('/proc/self/fd/'+str(fd))
+            original(fd)
+            parent = path == str(stage.root) and (stage.root/'matching').exists() and not (stage.root/'matching/start.json').exists()
+            claim = ledger._writers.get('dictionary')
+            final = path == str(stage.root/'matching') and claim is not None and (claim.root/'complete.json').exists()
+            if not injected and ((phase == 'constructor' and parent) or (phase == 'final_snapshot' and final)):
+                injected.append(True);raise OSError('synthetic uncertainty after real close')
+        monkeypatch.setattr(module.os,'close',close)
+>       with pytest.raises(module.io.CleanupFailure):module.run(ledger,stage,lambda *_:None)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_writer.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_owner_writer.py:66: in run
+    log = writer.ArchivePairLog(root,owner=owner.identity,scope=scope,limits=p['log'],
+tradingagents/research/onchain_replication/archive_pair_writer.py:54: in __init__
+    super().__init__(root, owner=owner, scope=scope, limits=limits,
+tradingagents/research/onchain_replication/compact_pair_log.py:88: in __init__
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        path = module.os.readlink('/proc/self/fd/'+str(fd))
+        original(fd)
+        parent = path == str(stage.root) and (stage.root/'matching').exists() and not (stage.root/'matching/start.json').exists()
+        claim = ledger._writers.get('dictionary')
+        final = path == str(stage.root/'matching') and claim is not None and (claim.root/'complete.json').exists()
+        if not injected and ((phase == 'constructor' and parent) or (phase == 'final_snapshot' and final)):
+>           injected.append(True);raise OSError('synthetic uncertainty after real close')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic uncertainty after real close
+
+tests/research/onchain_replication/test_archive_owner_writer.py:106: OSError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_writer.py::test_uncertain_owned_close_is_fatal_and_retains_claim[constructor-writer_matching]
+1 failed, 1 passed, 5 deselected in 76.37s (0:01:16)

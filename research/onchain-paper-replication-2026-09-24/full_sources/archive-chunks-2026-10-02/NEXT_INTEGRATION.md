@@ -144,3 +144,25 @@ must follow immutable snapshot creation and precede dispatch; generic
 put(source,member) alone cannot ensure this from an earlier stat. Receiver
 diagnostic overread and protocol overhead are additional resource limits.
 Checkpoint/score retention and complete physical accounting remain open.
+
+## October2 reserved actual writer continuation
+
+archive_owner_writer.run now runs the maintained ArchivePairLog under the actual
+stage's reserved writer claim and a captured owner transition. Actual tiny
+matching scores and16+2event chunk rotation are verified. It expires callback
+leases, checks exact/capacity pair counts and revalidates original local writer
+evidence after reservation callbacks without an extra remote replay. The
+PairLog constructor's parent close now follows the fatal one-shot cleanup
+contract. See archive-owner-writer-2026-10-02 for retained failures and42focused
+passes. Caller values are not independently admitted scientific outputs.
+
+Next: consume a finite read claim in the existing archived_stage.verify content
+join, with a final local check after reservation callbacks. The current stage
+validator's local inspect closure must remain equivalent if made reusable; do
+not silently fetch a second time under one read allowance. Ledger claim
+directories have an exact intent/terminal inventory, so adding read artifacts
+under them requires an explicit bounded inventory contract or a separately
+bound deterministic namespace. Then integrate actual producer writer selection,
+scientific stage sealing, publication and post-owner terminal reads. Public
+writer execution acquires its own lock; callers already holding the owner lock
+need explicit control-flow integration, not a locked() ownership guess.

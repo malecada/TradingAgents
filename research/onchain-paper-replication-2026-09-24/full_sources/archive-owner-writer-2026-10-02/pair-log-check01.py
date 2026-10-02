@@ -9,7 +9,6 @@ import hashlib
 import json
 import math
 import os
-import sys
 from pathlib import Path
 import stat
 import struct
@@ -86,10 +85,7 @@ class PairLog:
         lease(); root.mkdir()
         parent, fd = io._open(root.parent)
         try: os.fsync(fd); io._root(parent, fd)
-        finally:
-            primary = sys.exception()
-            if primary is not None: io._close_after_failure(lambda: os.close(fd), primary)
-            else: io._cleanup((lambda: os.close(fd),))
+        finally: os.close(fd)
         self.root, self.fd = io._open(root)
         try:
             self.head = self.start_sha = io._write(self.fd, 'start.json', io._json(self.start))

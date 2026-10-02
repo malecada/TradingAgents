@@ -1,0 +1,86 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_actual_matching_rotates_archive_under_reserved_writer[writer_matching] __
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a9aada982f0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a9aae2d3380>)
+
+    def test_actual_matching_rotates_archive_under_reserved_writer(admitted):
+>       module,ledger,stage = setup(admitted,9);owner = admitted[1]
+                              ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_writer.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a9aada982f0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a9aae2d3380>)
+pairs = 9
+
+    def setup(admitted,pairs):
+>       from tradingagents.research.onchain_replication import archive_owner_writer
+E       ImportError: cannot import name 'archive_owner_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_writer.py:16: ImportError
+____ test_callback_failure_preserves_actual_log_and_claim[writer_matching] _____
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a9aae0e3b10>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a9aae0e3250>)
+
+    def test_callback_failure_preserves_actual_log_and_claim(admitted):
+>       module,ledger,stage = setup(admitted,1)
+                              ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_writer.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a9aae0e3b10>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a9aae0e3250>)
+pairs = 1
+
+    def setup(admitted,pairs):
+>       from tradingagents.research.onchain_replication import archive_owner_writer
+E       ImportError: cannot import name 'archive_owner_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_writer.py:16: ImportError
+_ test_final_reservation_callback_cannot_invalidate_writer_evidence[writer_matching] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a9aadb24910>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a9aae0e3110>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a9c0a247230>
+
+    def test_final_reservation_callback_cannot_invalidate_writer_evidence(admitted,monkeypatch):
+>       module,ledger,stage = setup(admitted,0);owner=admitted[1];original=owner.lease
+                              ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_writer.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a9aadb24910>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a9aae0e3110>)
+pairs = 0
+
+    def setup(admitted,pairs):
+>       from tradingagents.research.onchain_replication import archive_owner_writer
+E       ImportError: cannot import name 'archive_owner_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_writer.py:16: ImportError
+_ test_callback_cannot_reenter_transition_or_reuse_expired_lease[writer_matching] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a9aadb34c30>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a9aadb34510>)
+
+    def test_callback_cannot_reenter_transition_or_reuse_expired_lease(admitted):
+>       module,ledger,stage = setup(admitted,0);saved=[]
+                              ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_writer.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a9aadb34c30>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a9aadb34510>)
+pairs = 0
+
+    def setup(admitted,pairs):
+>       from tradingagents.research.onchain_replication import archive_owner_writer
+E       ImportError: cannot import name 'archive_owner_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_writer.py:16: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_writer.py::test_actual_matching_rotates_archive_under_reserved_writer[writer_matching]
+FAILED tests/research/onchain_replication/test_archive_owner_writer.py::test_callback_failure_preserves_actual_log_and_claim[writer_matching]
+FAILED tests/research/onchain_replication/test_archive_owner_writer.py::test_final_reservation_callback_cannot_invalidate_writer_evidence[writer_matching]
+FAILED tests/research/onchain_replication/test_archive_owner_writer.py::test_callback_cannot_reenter_transition_or_reuse_expired_lease[writer_matching]
+4 failed in 53.29s
