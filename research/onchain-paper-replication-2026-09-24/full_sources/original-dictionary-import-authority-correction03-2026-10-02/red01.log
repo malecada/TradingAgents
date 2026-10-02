@@ -1,0 +1,49 @@
+FFFF
+======================================================================
+FAIL: test_actual_job_reference_required (__main__.Corrections.test_actual_job_reference_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 32, in test_actual_job_reference_required
+    f=selection();ad=SimpleNamespace(inputs={'a':{'sha256':'1'},'b':{'sha256':'2'}})
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 14, in selection
+    if len(nodes)!=2:raise AssertionError('exact job binding join absent')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact job binding join absent
+
+======================================================================
+FAIL: test_durable_roundtrip_exclusive_and_no_fdopen (__main__.Corrections.test_durable_roundtrip_exclusive_and_no_fdopen)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 59, in test_durable_roundtrip_exclusive_and_no_fdopen
+    ns=metadata()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 19, in metadata
+    if not file.exists():raise AssertionError('owned descriptor metadata boundary absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: owned descriptor metadata boundary absent
+
+======================================================================
+FAIL: test_fatal_read_then_close_preserves_identity_and_closes_all (__main__.Corrections.test_fatal_read_then_close_preserves_identity_and_closes_all)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 49, in test_fatal_read_then_close_preserves_identity_and_closes_all
+    ns=metadata();fatal=SystemExit('read fatal');closed=[];realclose=os.close
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 19, in metadata
+    if not file.exists():raise AssertionError('owned descriptor metadata boundary absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: owned descriptor metadata boundary absent
+
+======================================================================
+FAIL: test_fatal_write_then_close_preserves_identity_and_closes_all (__main__.Corrections.test_fatal_write_then_close_preserves_identity_and_closes_all)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 41, in test_fatal_write_then_close_preserves_identity_and_closes_all
+    ns=metadata();fatal=MemoryError('write fatal');closed=[];realclose=os.close
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 19, in metadata
+    if not file.exists():raise AssertionError('owned descriptor metadata boundary absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: owned descriptor metadata boundary absent
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=4)

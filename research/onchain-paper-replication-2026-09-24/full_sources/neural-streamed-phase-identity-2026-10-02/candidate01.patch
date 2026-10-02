@@ -1,0 +1,62 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-phase-identity-2026-10-02/baseline.py
++++ tradingagents/research/onchain_replication/neural_phases.py
+@@ -1,5 +1,6 @@
+ """Bounded diagnostic markers; no numerical values, retry or resource authority."""
+ import hashlib
++import json
+ import math
+ import os
+ from pathlib import Path
+@@ -13,6 +14,25 @@
+ EVENTS=tuple(phase+'_'+position for phase in PHASES for position in ('before','after'))
+ WEEKS=('2022-01-03','2022-06-13','2022-07-25','2022-11-07','2023-06-05','2024-01-01','2024-03-11','2024-08-05','2024-12-23')
+ IDENTITY_KEYS={'plan_sha256','claim_sha256','source_commit','model_config_sha256','cell_id','graph_manifest_sha256'}
++
++
++def _identity(value):
++    """Detach the exact legacy or registered streamed execution identity."""
++    if type(value) is not dict or set(value) not in (IDENTITY_KEYS,IDENTITY_KEYS|{'model_execution'}):raise ValueError('phase identity schema differs')
++    result=dict(value)
++    if 'model_execution' not in value:return result,1
++    selected=value['model_execution']
++    keys={'policy','policy_sha256','source_path','source_sha256','candidate_sha256'}
++    if type(selected) is not dict or set(selected)!=keys:raise ValueError('phase execution identity schema differs')
++    policy=selected['policy']
++    if type(policy) is not dict or set(policy)!={'schema_version','backend','block_edges'}:raise ValueError('phase execution policy schema differs')
++    if type(policy['schema_version']) is not int or policy['schema_version']!=1 or type(policy['block_edges']) is not int or policy['block_edges']!=65536 or type(policy['backend']) is not str or policy['backend']!='streamed-gat-mulsum-v1':raise ValueError('phase execution policy differs')
++    raw=json.dumps(policy,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode('utf-8')
++    expected='e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f'
++    if any(type(selected[k]) is not str for k in keys-{'policy'}):raise ValueError('phase execution identity types differ')
++    if selected['policy_sha256']!=hashlib.sha256(raw).hexdigest() or selected['source_path']!='tradingagents/research/onchain_replication/streamed_gat.py' or selected['source_sha256']!=expected or selected['candidate_sha256']!=expected:raise ValueError('phase execution source/policy hash differs')
++    result['model_execution']={**selected,'policy':dict(policy)}
++    return result,2
+ 
+ 
+ def _read(path,maximum):
+@@ -56,7 +76,7 @@
+     """Original physical scope owns every durable replacement and its scratch file."""
+     def __init__(self,scope,directory,identity,cgroup):
+         if scope is None or current_metadata_scope() is not scope:raise ValueError('original phase metadata authority required')
+-        if type(identity) is not dict or set(identity)!=IDENTITY_KEYS:raise ValueError('phase identity schema differs')
++        identity,version=_identity(identity)
+         for key in IDENTITY_KEYS-{'cell_id'}:
+             width=40 if key=='source_commit' else 64
+             if type(identity[key]) is not str or re.fullmatch('[0-9a-f]{'+str(width)+'}',identity[key]) is None:raise ValueError('phase identity hash differs')
+@@ -66,7 +86,7 @@
+         if directory!=expected or directory.resolve()!=directory or not directory.is_dir():raise ValueError('phase original cell directory differs')
+         if identity['source_commit']!=scope.anchor['source']:raise ValueError('phase source differs from original authority')
+         self._scope=scope;self._directory=directory;self._inode=self._directory_identity()
+-        self._path=directory/'phase-journal.json';self._identity=dict(identity)
++        self._path=directory/'phase-journal.json';self._identity=identity;self._version=version
+         self._anchor=scope.anchor_hash;self._events=[];self._last=None;self._poisoned=False
+         self._cgroup=Path(cgroup)
+         if not self._cgroup.is_absolute() or not self._cgroup.is_relative_to('/sys/fs/cgroup') or '..' in self._cgroup.parts or len(str(self._cgroup))>4096:raise ValueError('phase cgroup path differs')
+@@ -95,7 +115,7 @@
+         elapsed=time.monotonic()-self._begin
+         if not math.isfinite(elapsed) or not 0<=elapsed<=7*86400:raise ValueError('phase elapsed outside finite bound')
+         events=[*self._events,{'event':event,'elapsed_seconds':elapsed,'observation':_sample(self._cgroup)}]
+-        value={'schema_version':1,'identity':self._identity,'physical_anchor_sha256':self._anchor,
++        value={'schema_version':self._version,'identity':self._identity,'physical_anchor_sha256':self._anchor,
+                'events':events,'qualification':'before marks intent; after marks returned stage; no cell outcome or retry authority'}
+         encoded=_bounded_encode(value,self._maximum)
+         self._scope.atomic(self._path,value)

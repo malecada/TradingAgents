@@ -1,0 +1,20 @@
+...E
+======================================================================
+ERROR: test_selected_receipt_detached_and_schema2 (__main__.Checks.test_selected_receipt_detached_and_schema2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-phase-identity-2026-10-02/test_identity01.py", line 34, in test_selected_receipt_detached_and_schema2
+    value=identity();value['model_execution']=selected();expected=copy.deepcopy(value);journal=self.make(value)
+                                                                                               ~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-phase-identity-2026-10-02/test_identity01.py", line 30, in make
+    def make(self,value):return self.cls(self.scope,self.cell,value,'/sys/fs/cgroup/mock')
+                                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neural_phases.py", line 59, in __init__
+    if type(identity) is not dict or set(identity)!=IDENTITY_KEYS:raise ValueError('phase identity schema differs')
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: phase identity schema differs
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.012s
+
+FAILED (errors=1)

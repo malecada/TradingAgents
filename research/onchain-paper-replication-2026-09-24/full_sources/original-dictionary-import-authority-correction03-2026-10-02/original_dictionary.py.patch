@@ -1,0 +1,27 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/original_dictionary.py
++++ tradingagents/research/onchain_replication/original_dictionary.py
+@@ -276,6 +276,8 @@
+     from tradingagents.research.onchain_replication.provenance import thaw, file_hash
+     from pathlib import Path
+     require(type(bound) is matching_owner.Binding,'actual current matching Binding required')
++    from .resource_binding import assert_selected
++    assert_selected(bound,job_input)
+     run=bound._run;ad=run.admission;original_bound=bound;original_run=run
+     path=Path(__file__).resolve();root=ad.root.resolve()
+     require(path.is_relative_to(root),'candidate source is not inside admitted source root')
+@@ -292,6 +294,7 @@
+     def reader(name):
+         return _read_registered(run,name)
+     def selection():
++        assert_selected(bound,job_input)
+         selected=parse(reader(job_input))['payload']['representation_jobs'][bound.record['representation']]
+         item=parse(reader(selected['plan_input']))['producers'][bound.record['producer']]
+         require(selected.get('original_dictionary_input')==item.get('original_dictionary_input')==input_name,'explicit original import selector differs')
+@@ -299,6 +302,7 @@
+         require(selected['descriptor'].get('original_dictionary_import')=={'input':input_name,'sha256':ad.inputs[input_name]['sha256']},'import descriptor input hash differs')
+         return canonical({'selected':selected,'item':item})
+     def lease():
++        assert_selected(bound,job_input)
+         require(bound is original_bound and bound._run is original_run,'original live Binding changed')
+         require(binding_value()==binding_pin,'original Binding configuration changed')
+         bound.lease()

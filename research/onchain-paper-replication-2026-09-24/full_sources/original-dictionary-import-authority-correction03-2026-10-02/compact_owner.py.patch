@@ -1,0 +1,109 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/compact_owner.py
++++ tradingagents/research/onchain_replication/compact_owner.py
+@@ -189,15 +189,20 @@
+         if imported is not None:record['original_import']=contract
+         self.identity = cache_key(record); self.start = body(record)
+         self.configuration_sha256 = cache_key(self.configuration())
+-        bound.check(); self.root.mkdir()
+-        parent, fd = io._open(self.root.parent)
+-        try: os.fsync(fd); io._root(parent, fd)
+-        finally: os.close(fd)
+-        root, fd = io._open(self.root)
+-        try:
+-            self.inode = (os.fstat(fd).st_dev, os.fstat(fd).st_ino)
+-            io._write(fd, 'owner.json', self.start); io._root(root, fd)
+-        finally: os.close(fd)
++        if imported is not None:
++            from . import import_metadata
++            bound.check();self.inode=import_metadata.birth(self.root)
++            import_metadata.write(self.root,'owner.json',self.start)
++        else:
++            bound.check(); self.root.mkdir()
++            parent, fd = io._open(self.root.parent)
++            try: os.fsync(fd); io._root(parent, fd)
++            finally: os.close(fd)
++            root, fd = io._open(self.root)
++            try:
++                self.inode = (os.fstat(fd).st_dev, os.fstat(fd).st_ino)
++                io._write(fd, 'owner.json', self.start); io._root(root, fd)
++            finally: os.close(fd)
+         self.lease()
+ 
+     def configuration(self):
+@@ -228,7 +233,10 @@
+         self.check_binding()
+         info = self.root.lstat()
+         require((info.st_dev, info.st_ino) == self.inode, 'compact owner directory changed')
+-        exact(self.root, 'owner.json', self.start)
++        if self.required[0]=='dictionary-import':
++            from .import_metadata import exact as import_exact
++            import_exact(self.root,'owner.json',self.start)
++        else:exact(self.root, 'owner.json', self.start)
+         require(not present(self.root / 'failed.json') and
+             (self.closing or not present(self.root / 'complete.json')), 'compact owner terminal marker exists')
+ 
+@@ -241,7 +249,8 @@
+         total = OWNER_BYTES
+         for name, stage in self.stages.items():
+             require(name == stage.name and stage.owner is self, 'compact stage membership changed')
+-            stage.integrity(); exact(stage.root, 'intent.json', stage.intent)
++            stage.integrity()
++            if stage.kind!='dictionary-import':exact(stage.root, 'intent.json', stage.intent)
+             total += stage.reservation
+         require(total == self.reserved <= self.maximum, 'compact workflow cumulative reservation differs')
+ 
+@@ -386,13 +395,18 @@
+             raw = body(result); self.closing = True
+             self.lease(); require(self._verified_stages() == {k: result[k] for k in ('stages', 'pairs', 'stage_receipts_sha256')},
+                                   'compact stages changed before closure')
+-            root, fd = io._open(self.root)
+-            try: ref = io._write(fd, 'complete.json', raw); io._root(root, fd)
+-            finally: os.close(fd)
++            if self.required[0]=='dictionary-import':
++                from . import import_metadata
++                ref=import_metadata.write(self.root,'complete.json',raw)
++            else:
++                root, fd = io._open(self.root)
++                try: ref = io._write(fd, 'complete.json', raw); io._root(root, fd)
++                finally: os.close(fd)
+             self.boundary()
+             require(self._verified_stages() == {k: result[k] for k in ('stages', 'pairs', 'stage_receipts_sha256')},
+                     'compact stages changed during closure')
+-            exact(self.root, 'complete.json', raw)
++            if self.required[0]=='dictionary-import':import_metadata.exact(self.root,'complete.json',raw)
++            else:exact(self.root, 'complete.json', raw)
+             ledger = getattr(self, '_archive_operations', None)
+             if ledger is not None:
+                 require(ledger.owner is self and not ledger._closed and not ledger._poisoned
+@@ -424,20 +438,28 @@
+     entries(journal.parent,{journal.name},required={journal.name})
+     require(not any(present(journal/name) for name in ('failed.json','complete.json')),
+         'representation terminal marker exists')
++    reader=matching_owner.metadata
++    if owner.bound.record.get('resource_only') is True:
++        from .import_metadata import metadata as reader
+     for path,expected in owner.bound._snapshots.items():
+-        require(matching_owner.metadata(path,owner.bound._run.admission.root)[1] == expected,
++        require(reader(path,owner.bound._run.admission.root)[1] == expected,
+             'compact binding metadata changed')
+     require(owner.root == journal/'compact' and owner.root.resolve() == owner.root,'compact owner root redirected')
+     require(owner.root.stat().st_dev == owner.bound._run.admission.root.stat().st_dev,'compact owner device changed')
+     info = owner.root.lstat()
+     require((info.st_dev,info.st_ino) == owner.inode,'compact owner directory changed')
+-    exact(owner.root,'owner.json',owner.start)
++    if owner.required[0]=='dictionary-import':
++        from .import_metadata import exact as import_exact
++        import_exact(owner.root,'owner.json',owner.start)
++    else:exact(owner.root,'owner.json',owner.start)
+     expected = {'owner.json'} | set(owner.stages)
+     entries(owner.root,expected,required=expected)
+     total = OWNER_BYTES
+     for name,stage in owner.stages.items():
+         require(name == stage.name and stage.owner is owner,'compact stage membership changed')
+-        stage.integrity();exact(stage.root,'intent.json',stage.intent);total += stage.reservation
++        stage.integrity()
++        if stage.kind!='dictionary-import':exact(stage.root,'intent.json',stage.intent)
++        total += stage.reservation
+     require(total == owner.reserved <= owner.maximum,'compact cumulative reservation differs')
+ 
+ 

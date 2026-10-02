@@ -1,0 +1,28 @@
+{
+  "authentication": "existing installed SSH key; BatchMode=yes",
+  "credential_contents_inspected": false,
+  "exit_code": 0,
+  "host": "u676273.your-storagebox.de",
+  "kind": "authorized_existing_storage_read_only_capacity",
+  "known_host_check": "StrictHostKeyChecking=yes using existing named known_hosts",
+  "observed_utc_after_command": "2026-10-02T20:08:03.760584+00:00",
+  "port": 23,
+  "qualification": "Read-only server df report, not a reservation, upload/recovery proof or exact future capacity. No objects uploaded/deleted or provider contacted. Existing user authorization for Storage Box use retained.",
+  "remote_command": [
+    "df",
+    "-k"
+  ],
+  "reported_1024_byte_blocks": {
+    "available": 5230769792,
+    "total": 5368709120,
+    "used": 137939328
+  },
+  "reported_bytes": {
+    "available": 5356308267008,
+    "total": 5497558138880,
+    "used": 141249871872
+  },
+  "schema_version": 1,
+  "stdout": "Filesystem      1K-blocks      Used  Available Use% Mounted on\nu676273        5368709120 137939328 5230769792   3% /home\n",
+  "user": "u676273"
+}

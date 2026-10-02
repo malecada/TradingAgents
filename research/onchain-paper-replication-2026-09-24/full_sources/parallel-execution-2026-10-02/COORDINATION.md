@@ -1,3 +1,17 @@
+# Latest ownership — full04 release and phase identity correction
+
+No substantialnumericaljobactive/sourcefreeze. Root owns STATE/coordination,
+full04gate/source/runtime/claimRPC/amendment/recovery retention/commit/externalbackup
+andsole numericallauncher. physical_correction owns onlylive neural_phases.py
+andNEW neural-streamed-phase-identity-2026-10-02 evidence; no other liveedits.
+registration_review owns phaseidentity independentreview thenexactfull04gate.
+physical_review owns fivecase JOINT_REMOTE_RECOVERY01 independentreview then
+frozen originaldictionary authoritycorrection03 source review. Allold/failure
+identities/source/results immutable. Rootcaught seventh selectedidentity rejection
+before04claim. No heavyjob/adoption64/capacity/fit; sourcefreeze at actuallaunch.
+Accepted preparation changesonly256MiBschedulingmargin, unchanged3GiBhostreserve/
+3.75GiBcap/zeroSwap/10GiBdiskfloor.35spent/adopt63/77of109/all1420fits unchanged.
+
 # Parallel execution checkpoint — October 2, 2026
 
 ## Latest ownership — streamed production integration and one-use adapter release

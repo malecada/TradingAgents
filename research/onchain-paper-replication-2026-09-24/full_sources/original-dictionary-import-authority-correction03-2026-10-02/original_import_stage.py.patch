@@ -1,0 +1,71 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/original_import_stage.py
++++ tradingagents/research/onchain_replication/original_import_stage.py
+@@ -7,7 +7,7 @@
+ from pathlib import Path
+ from . import compact_owner as owners, compact_policy, original_dictionary as original
+ from . import original_import_preparation as preparation, resource_binding
+-from . import score_batches as io
++from . import score_batches as io,import_metadata
+ from .cache import cache_key
+ from .provenance import canonical_bytes,thaw
+ 
+@@ -15,23 +15,17 @@
+ 
+ 
+ def _write(root,name,raw):
+-    require(len(raw)<=io.META_LIMIT,'import receipt size ceiling')
+-    path,fd=io._open(root)
+-    try:
+-        io._root(path,fd);ref=io._write(fd,name,raw);io._root(path,fd);return ref
+-    finally:original._close_owned((fd,),io)
++    return import_metadata.write(root,name,raw)
+ 
+ 
+ def _birth(root):
+-    root.mkdir()
+-    parent,fd=io._open(root.parent)
+-    try:os.fsync(fd);io._root(parent,fd)
+-    finally:original._close_owned((fd,),io)
++    return import_metadata.birth(root)
+ 
+ 
+ class ImportStage:
+     def __init__(self,owner,prepared,policy,held):
+         require(type(owner) is owners.Owner and type(prepared) is preparation.PreparedImport and prepared._bound is owner.bound,'actual current imported owner required')
++        resource_binding.assert_selected(owner.bound,prepared._job_input)
+         held.check(owner);owner.boundary();prepared._check()
+         require(owner.required==tuple(prepared.stage_contract()['required_stages']) and owner.required[0]=='dictionary-import','owner did not select import before birth')
+         require(not owner.stages and owner.active is None,'import stage must be first and unused')
+@@ -52,19 +46,20 @@
+         self.integrity()
+ 
+     def integrity(self):
++        resource_binding.assert_selected(self.owner.bound,self.prepared._job_input)
+         require(type(self.owner) is owners.Owner and self.owner.stages.get(self.name) is self and self.owner.required[0]==self.name,'import stage membership changed')
+         require((id(self.owner),id(self.prepared))==self._objects and self.prepared._bound is self.owner.bound,'import authority replaced')
+         require(self.name==self.kind=='dictionary-import' and str(self.root)==self._root_pin and self.root==self.owner.root/self.name and self.root.resolve()==self.root,'import stage path/kind changed')
+         require(canonical_bytes(self.policy)==self._policy_pin and self.reservation==self.policy['max_stage_bytes'],'import policy/reservation changed')
+         require(self.intent==self._intent_pin and self.inode==self._inode_pin,'import intent/inode pin changed')
+         info=self.root.lstat();require((info.st_dev,info.st_ino)==self.inode,'import stage inode changed')
+-        owners.exact(self.root,'intent.json',self.intent)
++        import_metadata.exact(self.root,'intent.json',self.intent)
+         expected={'intent.json'}|({'import-complete.json'} if self.closed else set())
+         owners.entries(self.root,expected,required=expected)
+         if self.closed:
+             require(self.materialized is self._materialized_pin,'materialized original replaced')
+             require(self.materialized._integrity()==self._numeric_record,'imported numeric/provenance changed')
+-            owners.exact(self.root,'import-complete.json',self._receipt)
++            import_metadata.exact(self.root,'import-complete.json',self._receipt)
+             require(self.reference==io._hash(self._receipt),'import receipt hash changed')
+ 
+     def lease(self):
+@@ -106,7 +101,8 @@
+ def attach(prepared,*,policy_input,stage_policy_input):
+     """Create genuine Owner once, after exact resource/job/input preflight."""
+     require(type(prepared) is preparation.PreparedImport,'actual prepared import required');prepared._check()
+-    bound=prepared._bound;run=bound._run;selection=prepared._selection
++    bound=prepared._bound;resource_binding.assert_selected(bound,prepared._job_input)
++    run=bound._run;selection=prepared._selection
+     selected=selection['selected'];item=selection['producer'];descriptor=selected['descriptor']
+     for value in (selected,item):
+         require(value.get('compact_policy_input')==policy_input and value.get('native_backend')==compact_policy.BACKEND,'compact import owner route differs')

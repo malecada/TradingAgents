@@ -1,0 +1,59 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/matching_owner.py
++++ tradingagents/research/onchain_replication/matching_owner.py
+@@ -96,8 +96,11 @@
+         else:
+             ancestry.verify(run,**self._ancestry_arguments,current_journal=directory)
+         require(not any((directory/name).exists() for name in ('complete.json','failed.json')),'representation journal is terminal')
++        reader=metadata
++        if self.record.get('resource_only') is True:
++            from .import_metadata import metadata as reader
+         for path,expected in self._snapshots.items():
+-            require(metadata(path,run.admission.root)[1]==expected,'owner metadata changed after binding')
++            require(reader(path,run.admission.root)[1]==expected,'owner metadata changed after binding')
+         self._guard()
+ 
+     def check(self):
+@@ -211,7 +214,10 @@
+     base=ad.root/job.PREFIX/'runs'/ad.experiment_id
+     snapshots={}
+     def read(path):
+-        value,h=metadata(path,ad.root);snapshots[path]=h;return value
++        reader=metadata
++        if _resource:
++            from .import_metadata import metadata as reader
++        value,h=reader(path,ad.root);snapshots[path]=h;return value
+     launch=read(base/'launch.json');guard_owner=read(base/'owner.json')
+     require(set(launch)=={'experiment','source_commit','supervisor_pid','nonce'} and launch['experiment']==ad.experiment_id and launch['source_commit']==ad.source,'guard launch differs')
+     require(set(guard_owner)==set(launch)|{'monitor_pid','monitor_start_ticks'} and all(equal(guard_owner[k],v) for k,v in launch.items()),'guard owner/launch join differs')
+@@ -235,19 +241,29 @@
+             owner={'experiment':ad.experiment_id,'source_commit':ad.source,'producer':producer,'workflow_identity':identity}
+             run._active();_guard(run,policy_resources,guard_owner,base)
+             try:
+-                journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent)
+-                _immutable(expected/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
++                from .feature_journal import _RESOURCE_METADATA
++                journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent,
++                    **({'_metadata_role':_RESOURCE_METADATA} if _resource else {}))
++                publish=_immutable
++                if _resource:
++                    from .import_metadata import write as write_metadata
++                    publish=lambda path,value:write_metadata(path.parent,path.name,canonical_bytes(value))
++                publish(expected/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
+                     'binding_output':item['binding_output'],'registration_sha256':ad.registration_sha256,
+                     'pair_checkpoint_input':policy_input,'pair_checkpoint_policy_sha256':ad.inputs[policy_input]['sha256'],
+                     'continuation_input':continuation_input,'death_input':death_input,
+                     **({'job_input':job_input,'job_sha256':ad.inputs[job_input]['sha256'],'resource_only':True} if _resource else {})})
+             except BaseException as error:
++                if _resource and (not isinstance(error,Exception) or isinstance(error,MemoryError)):
++                    error.add_note('partial resource journal preserved at '+str(expected));raise
+                 if not _first:raise
+                 raise JournalConstructionError('partial journal construction preserved at '+str(expected)) from error
+         try:
+             return journal,bind(run,representation=representation,plan_input=plan_input,producer=producer,
+                 policy_input=policy_input,journal_directory=expected,continuation_input=continuation_input,death_input=death_input,job_input=job_input,_resource=_resource)
+         except BaseException as error:
++            if _resource and (not isinstance(error,Exception) or isinstance(error,MemoryError)):
++                error.add_note('unbound resource journal preserved at '+str(expected));raise
+             if not _first:raise
+             raise JournalConstructionError('unbound journal construction preserved at '+str(expected)) from error
+     directory=Path(journal_directory)

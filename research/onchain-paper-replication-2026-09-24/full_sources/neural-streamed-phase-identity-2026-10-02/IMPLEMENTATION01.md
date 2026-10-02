@@ -1,0 +1,9 @@
+# Phase identity compatibility correction
+
+The phase journal now accepts the exact seventh `model_execution` identity emitted by the registered schema2 neural resource producer. Six-field legacy identities retain receipt schema1. Selected streamed identities emit receipt schema2. The nested execution mapping and policy are detached from caller mutation before any durable receipt.
+
+Validation is pure stdlib and strict: exact keys, schema1 integer (not boolean), streamed-gat-mulsum-v1 backend, integer65536 block size, canonical JSON policy hash, fixed installed source path and independently accepted candidate02 source SHA e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f for both source/candidate references. It neither imports a model nor grants execution authority. Original source/claim/physical-authority, directory, cgroup, event-order, byte, no-retry and fatal-handling checks are unchanged.
+
+The preserved baseline SHA is60c6e6532a62034ec859b22c22902fee84f21428410c2cb5b86796a51b97d48c. `red01.log` retains one expected selected-identity constructor rejection with three other checks passing. `green01.log` records all four checks passing, including selected construction/two ordered receipts/deep detachment, legacy schema1, malformed policy/hash/source/unknown-field refusal before publication, authority loss and no retry. Tests compile the exact production module AST with qualified mocked Scope, metadata readbacks, encoding and sampling; no genuine authority or numerical module is imported or exercised. All mutations are limited to neural_phases.py and this new evidence directory. No model/adapter rerun, claim, resource launch, gate amendment or commit occurred.
+
+Independent source review remains required. The fixture does not prove actual native authority or capacity; previously accepted real phase-authority evidence remains separately qualified. Root owns release source-closure and registration refills before any empirical use.

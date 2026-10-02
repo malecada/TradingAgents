@@ -1,0 +1,14 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/resource_binding.py
++++ tradingagents/research/onchain_replication/resource_binding.py
+@@ -25,3 +25,11 @@
+     # evidence checks. This adapter does not construct a Binding itself.
+     return matching_owner.bind(run,representation=representation,plan_input=plan_input,
+       producer=producer,policy_input=policy_input,job_input=job_input,_create=True,_first=True,_resource=True)
++
++
++def assert_selected(bound,job_input):
++    record=bound.record;inputs=bound._run.admission.inputs
++    require(record.get('resource_only') is True,'genuine resource-only Binding required')
++    require(type(job_input) is str and job_input in inputs and record.get('job_input')==job_input,
++            'import job input differs from live Binding')
++    require(record.get('job_sha256')==inputs[job_input]['sha256'],'import job hash differs from live Binding')

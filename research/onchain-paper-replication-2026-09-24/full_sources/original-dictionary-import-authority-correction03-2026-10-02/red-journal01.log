@@ -1,0 +1,38 @@
+.......FFF
+======================================================================
+FAIL: test_checked_constructor_primary_retained (__main__.JournalCorrections.test_checked_constructor_primary_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 109, in test_checked_constructor_primary_retained
+    ns=self.journal();fatal=MemoryError('owner publication');owner={'experiment':'x','source_commit':'a'*40,'producer':'p','workflow_identity':'b'*64}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 92, in journal
+    if not file.exists():raise AssertionError('genuine checked journal seam absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: genuine checked journal seam absent
+
+======================================================================
+FAIL: test_genuine_checked_birth_and_failure_seal (__main__.JournalCorrections.test_genuine_checked_birth_and_failure_seal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 101, in test_genuine_checked_birth_and_failure_seal
+    ns=self.journal();owner={'experiment':'x','source_commit':'a'*40,'producer':'p','workflow_identity':'b'*64}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 92, in journal
+    if not file.exists():raise AssertionError('genuine checked journal seam absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: genuine checked journal seam absent
+
+======================================================================
+FAIL: test_untrusted_role_refused_before_birth (__main__.JournalCorrections.test_untrusted_role_refused_before_birth)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 115, in test_untrusted_role_refused_before_birth
+    ns=self.journal()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/test_corrections01.py", line 92, in journal
+    if not file.exists():raise AssertionError('genuine checked journal seam absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: genuine checked journal seam absent
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.044s
+
+FAILED (failures=3)

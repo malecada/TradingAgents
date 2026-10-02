@@ -1,5 +1,106 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: exactfull04 gate independentlyaccepted399aa477.**
+Review399aa47747a5c574a8668d372dbf9f583f8e0c5111a42af34c47121ab74ca579
+accepts prospectivegateb5d83f7e/249sourcepins/109inputs/134production7runtime,
+all18current+17prior terminalhashes/35spent27complete8failed/highestadopted63,
+originalfourancestorobjects andconservative110247claim/113462RPCpreview.
+Thisisstaticacceptance, notcurrentHEADadmission/nativecapacity/financialfit.
+No materialstaticblocker; nextcommit/push/actualremoteverify, actualadmission,
+fresh16x2s6.75GiBwindow/fresh<=1s thenONE04onlyifeligible. Hostreserve3GiB/
+cap3.75GiB/zeroSwap/disk10GiB fixed; lastavailable~6.1GiB cancauseunclaimeddeferral.
+No04namespace/claim/adoption64/substantialjob/sourcefreeze atthischeckpoint.
+
+Currentauthorized StorageBoxread-onlydf reports5230769792KiBavailable=
+5356308267008B(~5.36TB); exactoutput/currentreceipt95add741 retained.
+Investigation680747d2 finds tailonlyoffloadnotwholelocalcapacityproof: remaining
+9239969792B batches+twofloat32payload leaves188944384B(~180MiB) above10GiBfloor
+beforemetadata/staging/failed evidence. Newtypedtail writer/reader/Ownerledger/seal
+andadditionalbatch/outputoffload orstreaming contractneeded; remoteavailability
+reportisnotupload/recoveryproof/reservation. Existingrawbytesremainpreserved.
+
+Authority04frozenmanifestbcb24c79/8new+10priorpurechecks, independentreview inprogress;
+no liveproduction/numericproof. Worker nowownsisolatedfinancial-streamed-execution
+candidate to explicitlyforward/pinselectedbackend throughfuturefit/checkpoint/replay,
+legacy eagerdefaultunchanged; no financialregistration/fit/sourceintegration now.
+Rootsolelauncher/STATE/backupowner; reviewersownreports. All32remainingresourcecells/
+77of109coverage/all45initial and1420totalfinancialfits unchanged. Parallelwork
+continuesoutside selectedsourceclosure whileRAMdependency unresolved.
+
+# Current execution checkpoint — October 2, 2026
+
+**Latest checkpoint: exactfull04 gate assembled, finalindependentreview pending.**
+Gateb5d83f7ed997acb1de09032efe2ecbe989b2ee20200a7da3637d28e0117b603d
+infull_sources/neural-streamed-resource-release-2026-10-02 binds134production/
+249sourcepins/109inputs/7runtime; conservative claim110247/RPC113462<262144.
+Allfourancestor experimentobjects exactoriginalclaims03→02→pilot02→pilot;
+allthreebudgetcallbackdocs pinned. Plan2exactbackendcandidatee835/block65536/
+checkpointfalse, originalscience/ninecells/fullgraphs/jobhardlimits unchanged.
+Resourceamendmente458cb11 explicitlysupersedes onlyprior7GiB schedulingfield
+withreviewed6.75GiB/16x2s/fresh<=1s. Metadataassembler01failedwrongterminal
+filename assumption preserved;new02correctsfailed.json andselfsourcepin only.
+No namespace/claim/empiricalinputdecode/numericaljob/budget64adoption occurred.
+249source+109inputcurrenthashes and04namespaceabsence additionallychecked.
+
+Livephase identity11af32f66fa1d9289c713da0304a5c7e0d6dd7a0623f783597bd0f9368988d71
+acceptedreview2c3ae2cc. Fourpure mockedScope checks pass; originalauthority/event/
+IO safeguards unchanged, legacy1/selected2 anddeepdetachedexecutionidentity explicit.
+Smalladapterproofqualified; genuineselectedwholeproducer/fullcapacity stillunproved.
+Freshjointremoterecovery21blobs/477members independentlyaccepted049f8a3b; no
+failedparentdisposition upgraded. Next: finalgate acceptance/commit+actualremote
+verification/actualcurrentHEADadmission, thenfresh sustainedRAMreadiness andONE04
+ifeligible; no storedpermit. Recent6571929600B(~6.12GiB) below6.75GiB minimum.
+Rootsolelauncher; no substantialjobactive andsourcefreeze notactive.
+
+Originalauthority03review24dcdfb6 accepts exactjobjoins andnewdescriptor helpers,
+butwithholds integration forimmediate owners.entries/_held firstfatal masking
+andFeatureJournal resourcefailureseal originalinode/path/role/config lifetimegap.
+Workerowns NEW authoritycorrection04 only; previous03bytes immutable. LaterMCM
+array/publicationIO/componentpublication refusal/dispatcher/genuineguardedtwo-target
+fixture remainseparate. Independent scoretailoffload read-onlyinvestigation proceeds
+outside selectedsourceclosure.55,439,818,752B fullMCM inventory remainslargerthan
+availablelocalspacewith10GiBfloor; existing paireventarchive isnot scoretailproof.
+35spent/adopt63/77of109/9neural+23otherresources/all1420financialfits unchanged.
+Automation15min updated tocurrentparallel fileownership andimmediatenextsafeactions.
+
+# Current execution checkpoint — October 2, 2026
+
+**Latest checkpoint: full04 release preparation; no substantial job active.**
+Fresh external five-case recovery from actual remote3c4b5f86b679b013d8243cfc4a930c4e1a9cf040
+completed19:46:58UTC:21 selected blobs/477members/359filebodies/115dirs/3linktargets,
+902658regularbodybytes+744linktargetbytes, streamed without extraction or numeric
+imports. JOINT_REMOTE_RECOVERY01.json independentreview inprogress; allfailed
+parent dispositions retained. Actualadapter02 fourtests/12PASSphases/13progress
+records remain independentlyaccepted79cf9b5f with qualified mockedadmission.
+
+Root caught a selected whole-producer integration blocker before any04claim:
+PhaseJournal rejects seventh model_execution field supplied by schema2 producer.
+New metadata-only correction preserves legacy six-field/schema1, validates exact
+selected backend/source/policy identity, deeply detaches it and emits schema2.
+physical_correction owns onlylive neural_phases.py+new dated correction evidence;
+registration_review owns independent correction review. Wholeproducer unproved;
+originalbb32820d source review andactual adapter evidence preserved with limitations.
+
+Full04 preparationreviewea029c47 accepts declared removalofextra256MiB scheduling
+margin:6.75GiBminimum=3.75GiBcap+3GiBhostreserve;16x2s/fresh<=1s,zeroSwap,
+10GiBdiskfloor andhardstartup protections unchanged. Finalexact gate/source/runtime/
+budgetallthreecallbackdocs/4exactancestors/claimRPC/commit+externalbackup/current
+admission stillrequired. Latest available6578708480B(~6.13GiB),disk20173266944B;
+actual sustained fresh readiness remains mandatory. No empirical04 namespace,
+claim, budget64adoption or capacitypromise. Root owns finalregistration+solelauncher.
+
+Authoritycorrection03 frozen manifestac57a45ce7acab0557cec192e842579b782ab23dbe2ad4c970162880cacf2f75:
+10 pureAST/FDchecks pass; no liveintegration/genuineauthority/numericproof.
+It explicitly refuses resourcecomponentpublication until separately reviewed IO;
+later typedMCM array/publicationIO, realdispatcher, two-target fixture andscoretail
+storage remain open. Sourcecandidate03 is not complete23-cell execution.
+35spent/adopt63/77of109coverage/9neural+23otherresources/all1420financialfits unchanged.
+Nextsafeaction: accept phase/recoveryreviews; assemble exact04gate/sourceclosure;
+review/commit/externalverify/admit; fresh readiness then ONE unused04 ifeligible.
+Continue independently executable import/MCM/storage work ifreadiness unavailable.
+
+# Current execution checkpoint — October 2, 2026
+
 **Latest checkpoint: production adapter02 PASSED and independently accepted.**
 One-use65517 fromb853adf73e5b41b5f8e816c976e132dcb56c9ad7 closed19:31:21.467UTC/0
 in6.826s. Allfourtests/12PASSphases/13progressrecords and actualtiny selected

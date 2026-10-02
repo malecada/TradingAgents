@@ -1,0 +1,20 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/original_import_preparation.py
++++ tradingagents/research/onchain_replication/original_import_preparation.py
+@@ -59,6 +59,8 @@
+           'input':self._input,'selection':self._selection,'source':self._source})
+ 
+     def _selection_now(self):
++        from .resource_binding import assert_selected
++        assert_selected(self._bound,self._job_input)
+         run=self._run;value=original.parse(original._read_registered(run,self._job_input))
+         require(value['kind']=='compact_resource','resource-only import kind required')
+         selected=value['payload']['representation_jobs'][self._bound.record['representation']]
+@@ -187,6 +189,8 @@
+ def prepare(bound,*,input_name,job_input='execution_job'):
+     from . import matching_owner
+     require(type(bound) is matching_owner.Binding,'actual current Binding required')
++    from .resource_binding import assert_selected
++    assert_selected(bound,job_input)
+     bound.check();run=bound._run
+     # Candidate module location and full installed source hash must be admitted.
+     sources={}
