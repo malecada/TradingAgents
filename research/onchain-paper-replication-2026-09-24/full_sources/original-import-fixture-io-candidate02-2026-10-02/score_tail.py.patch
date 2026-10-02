@@ -1,0 +1,21 @@
+--- a/tradingagents/research/onchain_replication/score_tail.py
++++ b/tradingagents/research/onchain_replication/score_tail.py
+@@ -71,8 +71,7 @@
+         parent, parent_fd = batch._open(root.parent)
+         try:
+             os.fsync(parent_fd); batch._root(parent, parent_fd)
+-        finally:
+-            os.close(parent_fd)
++        finally: batch._release(lambda: os.close(parent_fd))
+         self.root, self.fd = batch._open(root)
+         try:
+             self.head = self.start_sha = batch._write(self.fd, 'start.json', batch._json(self.start))
+@@ -208,7 +207,7 @@
+         require(head == terminal['head'], 'tail acknowledged chain differs')
+         lease(); batch._root(root, fd)
+         final = [0, 0, 0]; count = 0
+-        with os.scandir(fd) as entries:
++        with batch._closing(os.scandir(fd)) as entries:
+             for entry in entries:
+                 count += 1
+                 require(count <= 3 and entry.name in ('start.json', 'records.bin', 'terminal.json'),

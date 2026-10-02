@@ -1,0 +1,39 @@
+--- a/tradingagents/research/onchain_replication/import_metadata.py
++++ b/tradingagents/research/onchain_replication/import_metadata.py
+@@ -89,34 +89,8 @@
+ 
+ 
+ def close_actions(actions):
+-    """Close each descriptor once; select actual fatal errors before wrapping."""
+-    import sys
+-    primary=sys.exception();errors=[]
+-    fatal=lambda e:isinstance(e,MemoryError) or not isinstance(e,Exception)
+-    for action in actions:
+-        try:action()
+-        except BaseException as error:errors.append(error)
+-    if not errors:return
+-    selected=primary if primary is not None and fatal(primary) else next((e for e in errors if fatal(e)),None)
+-    if selected is not None:
+-        for error in errors:
+-            if error is not selected:selected.add_note('import descriptor close unresolved: '+type(error).__name__)
+-        if selected is primary:return
+-        earlier=errors[:next(i for i,e in enumerate(errors) if e is selected)]
+-        prior=([primary] if primary is not None else [])+earlier
+-        if prior:
+-            cause=prior[0] if len(prior)==1 else ExceptionGroup('prior import body/close failures',prior)
+-            if selected.__cause__ is not None and selected.__cause__ is not cause:
+-                cause=BaseExceptionGroup('prior import evidence and original fatal cause',[cause,selected.__cause__])
+-            selected.__cause__=cause
+-        raise selected
+-    # Only ordinary cleanup errors remain. Construct the terminal wrapper now,
+-    # after every owned descriptor and actual fatal have been considered.
+-    failure=io.CleanupFailure('import descriptor close unresolved')
+-    causes=([primary] if primary is not None else [])+errors
+-    failure.__cause__=causes[0] if len(causes)==1 else ExceptionGroup('import body/close failures',causes)
+-    for error in errors:failure.add_note(type(error).__name__)
+-    raise failure
++    io._cleanup(actions)
++
+ 
+ def entries(root,allowed,*,required):
+     root=Path(root);fd=None;iterator=None

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/native_launcher02.py", line 68, in verify
+    require(path.resolve()==path and stat.S_ISREG(info.st_mode) and info.st_nlink==1
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and info.st_size<4194304 and sha(path)==expected,'runtime body differs')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/native_launcher02.py", line 31, in require
+    if not value: raise RuntimeError(message)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: runtime body differs

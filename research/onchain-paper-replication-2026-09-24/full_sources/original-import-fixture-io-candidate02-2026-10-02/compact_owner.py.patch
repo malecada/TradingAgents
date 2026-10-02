@@ -1,0 +1,63 @@
+--- a/tradingagents/research/onchain_replication/compact_owner.py
++++ b/tradingagents/research/onchain_replication/compact_owner.py
+@@ -105,7 +105,11 @@
+     def call(self, *args, **kwargs):
+         require(self._transition.acquire(blocking=False), 'concurrent compact owner transition')
+         try: return function(self, *args, **kwargs)
+-        finally: self._transition.release()
++        finally:
++            def release():
++                try:self._transition.release()
++                except BaseException:self.poisoned=True;raise
++            io._release(release)
+     return call
+ 
+ 
+@@ -124,7 +128,7 @@
+     path, fd = io._open(root)
+     try:
+         seen = set()
+-        with os.scandir(fd) as iterator:
++        with io._closing(os.scandir(fd)) as iterator:
+             for entry in iterator:
+                 require(len(seen) < len(allowed) and entry.name in allowed, 'foreign compact owner inventory')
+                 seen.add(entry.name)
+@@ -154,12 +158,12 @@
+         self.root.mkdir()
+         parent, fd = io._open(owner.root)
+         try: os.fsync(fd); io._root(parent, fd)
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+         root, fd = io._open(self.root)
+         try:
+             self.inode = (os.fstat(fd).st_dev, os.fstat(fd).st_ino)
+             io._write(fd, 'intent.json', self.intent); io._root(root, fd)
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+ 
+     def intent_value(self):
+         value = {'schema_version': 1, 'owner': self.owner.identity, 'stage': self.name,
+@@ -224,12 +228,12 @@
+             bound.check(); self.root.mkdir()
+             parent, fd = io._open(self.root.parent)
+             try: os.fsync(fd); io._root(parent, fd)
+-            finally: os.close(fd)
++            finally: io._release(lambda: os.close(fd))
+             root, fd = io._open(self.root)
+             try:
+                 self.inode = (os.fstat(fd).st_dev, os.fstat(fd).st_ino)
+                 io._write(fd, 'owner.json', self.start); io._root(root, fd)
+-            finally: os.close(fd)
++            finally: io._release(lambda: os.close(fd))
+         self.lease()
+ 
+     def configuration(self):
+@@ -428,7 +432,7 @@
+             else:
+                 root, fd = io._open(self.root)
+                 try: ref = io._write(fd, 'complete.json', raw); io._root(root, fd)
+-                finally: os.close(fd)
++                finally: io._release(lambda: os.close(fd))
+             self.boundary()
+             require(self._verified_stages() == {k: result[k] for k in ('stages', 'pairs', 'stage_receipts_sha256')},
+                     'compact stages changed during closure')

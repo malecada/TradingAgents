@@ -1,0 +1,98 @@
+--- a/tradingagents/research/onchain_replication/compact_matcher.py
++++ b/tradingagents/research/onchain_replication/compact_matcher.py
+@@ -28,7 +28,7 @@
+     """Progress is retained; this consumer is poisoned, never self-resumed."""
+ 
+ 
+-class CleanupFailure(BaseException):
++class CleanupFailure(io.CleanupFailure):
+     """Fatal to the worker; cannot become an ordinary unavailable cell."""
+ 
+ 
+@@ -102,7 +102,7 @@
+         pending = [directory]; seen_files = set(); seen_dirs = set(); count = 0
+         while pending:
+             current = pending.pop(); seen_dirs.add(str(current.relative_to(directory)))
+-            with os.scandir(current) as entries:
++            with io._closing(os.scandir(current)) as entries:
+                 for entry in entries:
+                     count += 1; require(count <= 11, 'checkpoint inventory bound')
+                     info = entry.stat(follow_symlinks=False)
+@@ -147,7 +147,7 @@
+         self.lease(); self.root.mkdir()
+         parent, fd = io._open(self.root.parent)
+         try: os.fsync(fd); io._root(parent, fd)
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+         info = self.root.lstat(); self.root_identity = (info.st_dev, info.st_ino)
+         self.retention = None
+         if retention is not None:
+@@ -197,7 +197,7 @@
+                 and io._signature(info) == io._signature(os.fstat(fd))
+                     == io._signature(os.stat(name, dir_fd=self.log.fd, follow_symlinks=False)),
+                 'log event bytes/identity changed before acknowledgement')
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+ 
+     def _save(self, state, a, b, identity, purpose):
+         self._check()
+@@ -213,7 +213,7 @@
+         directory = self.log.checkpoint_path(); directory.mkdir()
+         parent, fd = io._open(directory.parent)
+         try: os.fsync(fd)
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+         root, fd = io._open(directory)
+         try:
+             intent = {'schema_version': 1, 'log_start_sha256': self.log.start_sha,
+@@ -244,7 +244,7 @@
+             _snapshot(directory / 'state', state_sha, identity, self.policy)
+             io._root(root, fd)
+             self._ack_check(expected)
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+ 
+     def __call__(self, purpose, a, b):
+         require(not self.busy and not self.poisoned, 'compact matcher busy or poisoned')
+@@ -279,10 +279,8 @@
+                     self._check()
+                     result = engine.score_only(state, a, b, self.config,
+                         max_buffer_bytes=self.policy['max_score_buffer_bytes'], chunk_edges=self.policy['chunk_edges'])
+-                    try: engine.close(state)
+-                    except BaseException as failure:
+-                        raise CleanupFailure('ranked matcher cleanup unresolved; worker must stop') from failure
+-                    finally: state = None
++                    owned_state=state;state=None
++                    io._cleanup((lambda:engine.close(owned_state),))
+                     self._check()
+                     expected = self._expected_event(1 if result.convergence == 'temperature_complete' else 2,
+                         score=float(result.score), iterations=result.iterations)
+@@ -294,18 +292,17 @@
+                 self._save(state, a, b, identity, purpose)
+             raise CheckpointStop('bounded calls exhausted; checkpoint retained for separately admitted successor')
+         except BaseException as error:
+-            primary = error; self.poisoned = True
++            primary=error;self.poisoned=True
+             retained=_RETENTION.get(self)
+-            if retained is not None:retained.fail(error)
+-            if any('cleanup also failed' in note.lower() for note in getattr(error, '__notes__', ())):
+-                raise CleanupFailure('engine construction/advance reported unresolved cleanup') from error
++            if retained is not None:io._close_after_failure(lambda:retained.fail(error),error)
++            # Legacy engine cleanup notes are uncertainty, not permission to
++            # replace a real MemoryError/SystemExit with a synthetic wrapper.
++            if any('cleanup also failed' in note.lower() for note in getattr(error,'__notes__',())) and not io._fatal(error):
++                def unresolved():raise OSError('engine reported unresolved cleanup')
++                io._cleanup((unresolved,),primary=error)
+             raise
+         finally:
+-            self.busy = False
++            self.busy=False
+             if state is not None:
+-                try: engine.close(state)
+-                except BaseException as error:
+-                    self.poisoned = True
+-                    fatal = CleanupFailure('ranked matcher cleanup unresolved; worker must stop')
+-                    if primary is not None: fatal.add_note('Primary failure: ' + repr(primary))
+-                    raise fatal from error
++                owned_state=state;state=None;self.poisoned=True
++                io._cleanup((lambda:engine.close(owned_state),),primary=primary)

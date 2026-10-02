@@ -1,0 +1,84 @@
+--- a/tradingagents/research/onchain_replication/original_dictionary.py
++++ b/tradingagents/research/onchain_replication/original_dictionary.py
+@@ -173,7 +173,12 @@
+     def check(self):
+         require(self._lock.acquire(False),'concurrent import transition')
+         try:return self._check()
+-        finally:self._lock.release()
++        finally:
++            from . import score_batches as io
++            def release():
++                try:self._lock.release()
++                except BaseException:self._closed=True;raise
++            io._release(release)
+     def with_evidence(self,action):
+         require(self._lock.acquire(False),'concurrent import transition');primary=None;result=None
+         try:
+@@ -182,52 +187,36 @@
+             except BaseException as error:primary=error
+             try:self._check()
+             except BaseException as error:
+-                fatal=lambda x:isinstance(x,MemoryError) or not isinstance(x,Exception)
++                from .score_batches import _fatal as fatal
+                 if primary is None:primary=error
+                 elif fatal(error) and not fatal(primary):error.__cause__=primary;primary=error
+                 else:primary.add_note('post-callback evidence/authority check failed: '+type(error).__name__)
+             if primary is not None:raise primary
+             return result
+-        finally:self._lock.release()
++        finally:
++            from . import score_batches as io
++            def release():
++                try:self._lock.release()
++                except BaseException:self._closed=True;raise
++            io._release(release)
+     def close(self):
+         require(self._lock.acquire(False),'concurrent import transition')
+         try:require(not self._closed,'import capability already closed');self._closed=True
+-        finally:self._lock.release()
++        finally:
++            from . import score_batches as io
++            def release():
++                try:self._lock.release()
++                except BaseException:self._closed=True;raise
++            io._release(release)
+ 
+ def _bind_for_test(policy,reader,lease,owner_identity):
+     """Explicit synthetic metadata boundary. Never an empirical admission API."""
+     return ImportedOriginal(policy,reader,lease,owner_identity)
+ 
+ def _close_owned(descriptors,io):
+-    """Close each descriptor once; select actual fatal errors before wrapping."""
+     import os
+-    import sys
+-    primary=sys.exception();errors=[]
+-    fatal=lambda e:isinstance(e,MemoryError) or not isinstance(e,Exception)
+-    for fd in descriptors:
+-        try:os.close(fd)
+-        except BaseException as error:errors.append(error)
+-    if not errors:return
+-    selected=primary if primary is not None and fatal(primary) else next((e for e in errors if fatal(e)),None)
+-    if selected is not None:
+-        for error in errors:
+-            if error is not selected:selected.add_note('import descriptor close unresolved: '+type(error).__name__)
+-        if selected is primary:return
+-        earlier=errors[:next(i for i,e in enumerate(errors) if e is selected)]
+-        prior=([primary] if primary is not None else [])+earlier
+-        if prior:
+-            cause=prior[0] if len(prior)==1 else ExceptionGroup('prior import body/close failures',prior)
+-            if selected.__cause__ is not None and selected.__cause__ is not cause:
+-                cause=BaseExceptionGroup('prior import evidence and original fatal cause',[cause,selected.__cause__])
+-            selected.__cause__=cause
+-        raise selected
+-    # Only ordinary cleanup errors remain. Construct the terminal wrapper now,
+-    # after every owned descriptor and actual fatal have been considered.
+-    failure=io.CleanupFailure('import descriptor close unresolved')
+-    causes=([primary] if primary is not None else [])+errors
+-    failure.__cause__=causes[0] if len(causes)==1 else ExceptionGroup('import body/close failures',causes)
+-    for error in errors:failure.add_note(type(error).__name__)
+-    raise failure
++    io._cleanup(tuple(lambda fd=fd:os.close(fd) for fd in descriptors))
++
+ 
+ def _read_registered(run,name):
+     """Bounded descriptor-relative exact read with one owned cleanup boundary.

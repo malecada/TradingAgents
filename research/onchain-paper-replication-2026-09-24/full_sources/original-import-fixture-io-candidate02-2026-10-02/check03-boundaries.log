@@ -1,0 +1,27 @@
+F...........
+======================================================================
+FAIL: test_actual_producer_handler_preserves_primary_and_closes_all (__main__.Boundaries.test_actual_producer_handler_preserves_primary_and_closes_all)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 119, in test_actual_producer_handler_preserves_primary_and_closes_all
+    self.assertIs(caught.exception,fatal);self.assertTrue(obj.poisoned);self.assertEqual(seen,['stream','fail','log','marker'])
+                                                                        ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['stream', 'log', 'marker'] != ['stream', 'fail', 'log', 'marker']
+
+First differing element 1:
+'log'
+'fail'
+
+Second list contains 1 additional elements.
+First extra element 3:
+'marker'
+
+- ['stream', 'log', 'marker']
++ ['stream', 'fail', 'log', 'marker']
+?            ++++++++
+
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.066s
+
+FAILED (failures=1)

@@ -1,0 +1,48 @@
+--- a/tradingagents/research/onchain_replication/compact_stage.py
++++ b/tradingagents/research/onchain_replication/compact_stage.py
+@@ -34,7 +34,7 @@
+     path, fd = io._open(root)
+     try:
+         seen = 0
+-        with os.scandir(fd) as entries:
++        with io._closing(os.scandir(fd)) as entries:
+             for entry in entries:
+                 seen += 1
+                 match = re.fullmatch(pattern, entry.name) if pattern else None
+@@ -107,18 +107,18 @@
+         require(state == terminal_record['state'] and head == terminal_record['head']
+             and seen == record['progress_events'], 'matching join terminal differs')
+         io._root(path, fd)
+-    finally: os.close(fd)
++    finally: io._release(lambda: os.close(fd))
+     # Event numbers are sparse; every actual directory must refer to one seen
+     # progress event. Count plus exact verification above rejects extra entries.
+     path, fd = io._open(root / 'checkpoints')
+     try:
+         count = 0
+-        with os.scandir(fd) as entries:
++        with io._closing(os.scandir(fd)) as entries:
+             for entry in entries:
+                 count += 1
+                 require(count <= seen and re.fullmatch(r'event-[0-9]{12}', entry.name), 'extra checkpoint inventory')
+         require(count == seen, 'checkpoint inventory denominator differs'); io._root(path, fd)
+-    finally: os.close(fd)
++    finally: io._release(lambda: os.close(fd))
+     return dict(log_start_sha256=start_sha, matching_scores_sha256=scores.hexdigest(),
+         checkpoints=seen, checkpoint_logical_bytes=logical, checkpoints_sha256=checkpoints.hexdigest())
+ 
+@@ -209,7 +209,7 @@
+         lease(); require(inspect(root, **contract) == value, 'stage changed during seal')
+         require(io._read(fd, 'stage-complete.json', io.META_LIMIT) == raw, 'stage seal bytes changed')
+         io._root(root, fd); return ref
+-    finally: os.close(fd)
++    finally: io._release(lambda: os.close(fd))
+ 
+ 
+ def verify(root, *, expected_sha256, lease, **contract):
+@@ -223,4 +223,4 @@
+         lease(); require(inspect(root, **contract) == value, 'stage changed during verification')
+         require(io._read(fd, 'stage-complete.json', io.META_LIMIT) == raw, 'stage receipt changed')
+         io._root(root, fd); return value
+-    finally: os.close(fd)
++    finally: io._release(lambda: os.close(fd))

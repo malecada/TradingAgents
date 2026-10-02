@@ -1,0 +1,41 @@
+--- a/tradingagents/research/onchain_replication/graph_store.py
++++ b/tradingagents/research/onchain_replication/graph_store.py
+@@ -7,6 +7,7 @@
+ import struct
+ import hashlib
+ import stat
++from .owned_io import _closing
+ import numpy as np
+ from .contracts import GraphSnapshot,validate_graph
+ from .neighborhoods import graph_hash
+@@ -19,17 +20,17 @@
+     arrays={'node_features':graph.node_features,'edge_index':graph.edge_index,'edge_features':graph.edge_features,'node_ids':np.asarray(graph.node_ids)}
+     if graph.edge_aggregates is not None:arrays['edge_aggregates']=graph.edge_aggregates
+     for name,value in arrays.items():
+-        with (directory/(name+'.npy')).open('xb') as stream:np.save(stream,value,allow_pickle=False);stream.flush();os.fsync(stream.fileno())
++        with _closing((directory/(name+'.npy')).open('xb')) as stream:np.save(stream,value,allow_pickle=False);stream.flush();os.fsync(stream.fileno())
+     meta={name:getattr(graph,name) for name in ('asset','start_utc','end_utc','available_at','source_hashes','graph_config_hash','raw_count','admitted_count')}
+     meta['exclusion_counts']=dict(graph.exclusion_counts)
+     manifest={'metadata':meta,'graph_hash':graph_hash(graph),'arrays':{name:{'path':name+'.npy','sha256':file_hash(directory/(name+'.npy')),'bytes':(directory/(name+'.npy')).stat().st_size} for name in arrays}}
+-    with (directory/'manifest.json').open('xb') as stream:stream.write(canonical_bytes(manifest)+b'\n');stream.flush();os.fsync(stream.fileno())
++    with _closing((directory/'manifest.json').open('xb')) as stream:stream.write(canonical_bytes(manifest)+b'\n');stream.flush();os.fsync(stream.fileno())
+     sync_directory(directory);return directory/'manifest.json'
+ 
+ 
+ def _resident_array(member,info):
+     # Admit the actual NPY extent before NumPy can allocate the header's shape.
+-    with member.open('rb') as stream:
++    with _closing(member.open('rb')) as stream:
+         before=os.fstat(stream.fileno())
+         if not stat.S_ISREG(before.st_mode) or before.st_nlink!=1 or type(info['bytes']) is not int or before.st_size!=info['bytes']:
+             raise ValueError('resident graph member extent differs')
+@@ -72,7 +73,8 @@
+     if type(resident) is not bool:raise ValueError("graph residency selection must be boolean")
+     path=Path(manifest_path)
+     if file_hash(path)!=expected_hash:raise ValueError('graph manifest hash differs')
+-    manifest=json.loads(path.read_bytes());arrays={}
++    with _closing(path.open('rb')) as stream:manifest=json.loads(stream.read())
++    arrays={}
+     for name,info in manifest['arrays'].items():
+         if name not in {'node_features','edge_index','edge_features','node_ids','edge_aggregates'} or info['path']!=name+'.npy':raise ValueError('invalid graph member')
+         member=path.parent/info['path']

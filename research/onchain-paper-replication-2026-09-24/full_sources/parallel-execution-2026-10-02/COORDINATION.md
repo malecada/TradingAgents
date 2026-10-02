@@ -1,3 +1,70 @@
+# Current execution checkpoint — October 2, 2026
+
+**Latest 2026-10-02T21:50:42.252356+00:00: selected tiny comparison native release02 pending review;
+identity remains unused, no numerical job has started.**
+Actual source-only verify of native_launcher02/release01 failed before reservation
+because installed uv checkpoint.py is11hardlinks/0664, not singleton. Failedreadback01
+and withheldreviewdea03a1a retained. NEWnative_launcher0349ddb812/release0252fe0fb4
+pins exactinstalledruntime body,72241bytes/nlink11/mode0664 separatelyfromsingleton
+Git source bodies. Actualverify(spec) readback02 PASSED/no Torch or NumPy import/
+no guard/no claim;41same actualvalidator checks on exactfinal03passedgreen05,
+complete archive051865425d retained. All native functions exceptverify AST identical
+to02; NATIVE_CORRECTION02 records pins. No installedpermissions changed orreadonly
+runtime claim. Original scientificmodel/protocol/tolerances/native limits unchanged.
+Rootsoleunusedengineering identity neural-checkpoint-comparison-20261002-01;
+source02reviewd92d6ca3accepted. Await independent native release02 acceptance then
+commit/push/actualremoteHEAD/current+committedsource match and fresh availability
+before ONE 1GiB/120s/twoCPU/4MiBfile/64MiBowned comparison. No reopening04,
+capladder/budget65/paperclaim orfinancialfit. Paperhistory remains36closed,
+coverage77of109/all32Task8resources/all1420financialfits pending.
+IO03 source worker continues both reviewer corrections; frozenIO02review94d45f38
+withheld and allprior sources/results remain unchanged. Nextsafeaction launch
+only independentlyaccepted native release02, preserve/review/backupactualclosure;
+continuegenuineMCMfixture work inparallel.
+
+# Current execution checkpoint — October 2, 2026
+
+**Latest checkpoint 2026-10-02T21:46:18.390471+00:00: no substantial job is active; bounded checkpoint
+comparison source02 is frozen, independent native release review is in progress.**
+Available host memory was8,032,329,728 bytes (~7.48GiB); this exceeds the tiny
+comparison's4GiB startup requirement. It does not establish full-size capacity.
+Neural04 remains permanently FAILED/closed from its3.75GiB native cap; its entire
+closure and fresh remote recovery are independently accepted and backed up at
+9cf4cf815c2aef5b288b1c0eebb99400bbd60854 andef41d5d4e1df8e2c7778a4a8657d8599ab19043e.
+No previous job or namespace is reopened.
+
+NEW engineering comparison preparation protocol01c56c4949/source-manifest02
+91e20276/oracle020a3efd88/coordinator02bacd5e42/manifest028f9e6d7c is frozen.
+Proof01's first-fatal report-assembly defect is preserved with RED evidence;
+source02 reviewd92d6ca3 narrowly accepts the fix without a numerical outcome.
+Root native_launcher02d1b160c5/release01d3634e5f select142Git bodies2697276B,
+251distribution versions and separate installedcheckpoint.py runtime body.
+Actual stdlib validate() corpus: original01 admits40malformed cases; final02
+passesall41 (one valid,40reject). Complete fixtures/logs/archives retained.
+The sole new engineering identity neural-checkpoint-comparison-20261002-01 is
+UNUSED/unreserved:1GiB high=max/zeroSwap/3GiB hostreserve/4GiB startup/120s/twoCPU/
+4MiBfile/64MiBwatchedowned storage/10GiBdiskfloor. Five fixed tiny correctness
+cases plus two fresh profile arms; originalmodel20f451c0 unchanged. Numerical
+execution awaits independent native release acceptance, committed/current/actual
+remoteHEAD equality and fresh resource/dedupe checks. Root is sole launcher.
+No paper-family claim, financial fit, budget65, cap ladder or empirical successor.
+
+Original-import IO02 manifest a764d382 is frozen; review94d45f38 WITHHELD for
+matcher stale primary during finalclose and failure-report assembly outside
+firstactualfatal boundary. The bridge false-success correction is narrowly
+accepted. Worker physical_correction owns NEW IO03 exact corrections/regressions;
+IO02/raw source/results stay immutable. Fullgenuine32motif/two-target fixture,
+resource dispatch/storage offload and allfinancial fits remain unproved.
+
+Accounting unchanged36closed=27complete9failed/highestadopted64/no refunds;
+coverage77of109/all32Task8resources/all45initial+1420totalfits pending.
+Root owns liveintegration/registrations/STATE/commits/verifiedexternalbackup and
+ONE native numerical launcher. Reviewers own proof02/native release reviews;
+source worker owns IO03 only. Next safe action: finish exact native release
+review, commit/push/verify actualsource, execute ONE unused bounded engineering
+comparison if eligible, immediately preserve/review/backup terminal outcome;
+continue independent IO03 and genuinefixture preparation in parallel.
+
 # Latest ownership — closed failure backed; IO correction and checkpoint proof preparation
 
 No numerical job active.04closed FAILED forever;36spent27complete9failed/adopt64.

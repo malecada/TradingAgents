@@ -1,0 +1,27 @@
+test_actual_legacy_worker_terminal_tail_preserves_body_fatal (__main__.Legacy.test_actual_legacy_worker_terminal_tail_preserves_body_fatal) ... FAIL
+
+======================================================================
+FAIL: test_actual_legacy_worker_terminal_tail_preserves_body_fatal (__main__.Legacy.test_actual_legacy_worker_terminal_tail_preserves_body_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_legacy_terminal02.py", line 14, in test_actual_legacy_worker_terminal_tail_preserves_body_fatal
+    try:ns['legacy'](original,phases,args,None,None)
+        ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<actual-legacy-terminal>", line 336, in legacy
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_legacy_terminal02.py", line 11, in fail
+    def fail():raise later
+               ^^^^^^^^^^^
+SystemExit: 17
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_legacy_terminal02.py", line 15, in test_actual_legacy_worker_terminal_tail_preserves_body_fatal
+    except BaseException as caught:self.assertIs(caught,original,'actual prior fatal was replaced during terminal assembly')
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: SystemExit(17) is not MemoryError('body') : actual prior fatal was replaced during terminal assembly
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+FAILED (failures=1)

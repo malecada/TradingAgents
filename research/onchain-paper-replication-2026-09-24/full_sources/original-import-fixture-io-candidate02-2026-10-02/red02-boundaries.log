@@ -1,0 +1,211 @@
+EEFEFEFEEE.F
+======================================================================
+ERROR: test_actual_producer_handler_preserves_primary_and_closes_all (__main__.Boundaries.test_actual_producer_handler_preserves_primary_and_closes_all)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "actual-producer-handler", line 1, in failure
+UnboundLocalError: cannot access local variable 'fatal' where it is not associated with a value
+Failed MCM log terminal: TypeError('throwing.<locals>.action() takes 0 positional arguments but 1 was given')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 118, in test_actual_producer_handler_preserves_primary_and_closes_all
+    with self.assertRaises(MemoryError) as caught:scope['failure']()
+                                                  ~~~~~~~~~~~~~~~~^^
+  File "actual-producer-handler", line 325, in failure
+CleanupFailure: MCM producer cleanup unresolved; worker must stop
+OSError('stream')
+
+======================================================================
+ERROR: test_iterator_body_fatal_with_uncertain_close (__main__.Boundaries.test_iterator_body_fatal_with_uncertain_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 123, in test_iterator_body_fatal_with_uncertain_close
+    with ns['_closing'](types.SimpleNamespace(close=throwing(OSError('scan-close'),seen,1))):raise fatal
+         ~~^^^^^^^^^^^^
+KeyError: '_closing'
+
+======================================================================
+ERROR: test_real_stream_close_all_once (__main__.Boundaries.test_real_stream_close_all_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "selected-IO", line 32, in _cleanup
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 15, in action
+    def action():seen.append(label);raise error
+                                    ^^^^^^^^^^^
+MemoryError: tail-close
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 100, in test_real_stream_close_all_once
+    with self.assertRaises(MemoryError) as caught:scope['close'](obj)
+                                                  ~~~~~~~~~~~~~~^^^^^
+  File "actual-stream-close", line 231, in close
+  File "selected-IO", line 37, in _cleanup
+CleanupFailure: score storage cleanup unresolved; worker must stop
+MemoryError('tail-close')
+OSError('batch-close')
+
+======================================================================
+ERROR: test_first_close_fatal_survives_later_fatal (__main__.IO.test_first_close_fatal_survives_later_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "selected-IO", line 32, in _cleanup
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 15, in action
+    def action():seen.append(label);raise error
+                                    ^^^^^^^^^^^
+MemoryError: first
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 33, in test_first_close_fatal_survives_later_fatal
+    with self.assertRaises(MemoryError) as caught:ns['_cleanup']([throwing(first,seen,1),throwing(SystemExit(2),seen,2)])
+                                                  ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "selected-IO", line 37, in _cleanup
+CleanupFailure: score storage cleanup unresolved; worker must stop
+MemoryError('first')
+SystemExit(2)
+
+======================================================================
+ERROR: test_later_true_fatal_beats_prior_uncertainty (__main__.IO.test_later_true_fatal_beats_prior_uncertainty)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "selected-IO", line 32, in _cleanup
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 15, in action
+    def action():seen.append(label);raise error
+                                    ^^^^^^^^^^^
+OSError: uncertain
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "selected-IO", line 32, in _cleanup
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 28, in first
+    def first():ns['_cleanup']([throwing(OSError('uncertain'),seen,1)])
+                ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "selected-IO", line 37, in _cleanup
+CleanupFailure: score storage cleanup unresolved; worker must stop
+OSError('uncertain')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 29, in test_later_true_fatal_beats_prior_uncertainty
+    with self.assertRaises(SystemExit) as caught:ns['_cleanup']([first,throwing(fatal,seen,2),lambda:seen.append(3)])
+                                                 ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "selected-IO", line 37, in _cleanup
+CleanupFailure: score storage cleanup unresolved; worker must stop
+CleanupFailure('score storage cleanup unresolved; worker must stop')
+SystemExit(17)
+
+======================================================================
+ERROR: test_opened_fdopen_failure_closes_owned_fd (__main__.IO.test_opened_fdopen_failure_closes_owned_fd)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 76, in test_opened_fdopen_failure_closes_owned_fd
+    with ns['_opened'](Path('/irrelevant'),'rb'):pass
+         ~~^^^^^^^^^^^
+KeyError: '_opened'
+
+======================================================================
+ERROR: test_read_descriptor_once_on_fatal (__main__.IO.test_read_descriptor_once_on_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "selected-IO", line 124, in _read
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 52, in fdopen
+    def fdopen(self,*a,**k):raise fatal
+                            ^^^^^^^^^^^
+SystemExit: read
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 56, in test_read_descriptor_once_on_fatal
+    with self.assertRaises(SystemExit) as got:ns['_read'](13,'attempt',123)
+                                              ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "selected-IO", line 133, in _read
+  File "selected-IO", line 52, in _release
+  File "selected-IO", line 45, in _close_after_failure
+  File "selected-IO", line 41, in _close_after_failure
+  File "selected-IO", line 133, in <lambda>
+  File "selected-IO", line 37, in _cleanup
+CleanupFailure: score storage cleanup unresolved; worker must stop
+OSError('close')
+
+======================================================================
+FAIL: test_mapping_invalidated_before_uncertain_close (__main__.Boundaries.test_mapping_invalidated_before_uncertain_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 108, in test_mapping_invalidated_before_uncertain_close
+    self.assertIs(caught.exception,fatal);self.assertFalse(state['safe']);self.assertIsNone(state['order']);scope['close'](state);self.assertEqual(seen,['mapping'])
+                                                                          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: namespace(_mmap=namespace(close=<function throwing.<locals>.action at 0x75a21ff5d1c0>)) is not None
+
+======================================================================
+FAIL: test_first_body_fatal_survives_all_closes (__main__.IO.test_first_body_fatal_survives_all_closes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 22, in test_first_body_fatal_survives_all_closes
+    try:raise fatal
+        ^^^^^^^^^^^
+MemoryError: body
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "selected-IO", line 32, in _cleanup
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 15, in action
+    def action():seen.append(label);raise error
+                                    ^^^^^^^^^^^
+OSError: close
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 23, in test_first_body_fatal_survives_all_closes
+    finally:ns['_cleanup']([throwing(OSError('close'),seen,1),lambda:seen.append(2)])
+            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "selected-IO", line 37, in _cleanup
+CleanupFailure: score storage cleanup unresolved; worker must stop
+OSError('close')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 24, in test_first_body_fatal_survives_all_closes
+    except BaseException as got:self.assertIs(got,fatal)
+                                ~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: CleanupFailure('score storage cleanup unresolved; worker must stop') is not MemoryError('body')
+
+======================================================================
+FAIL: test_fixture_closure_error_not_success (__main__.IO.test_fixture_closure_error_not_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 87, in test_fixture_closure_error_not_success
+    self.assertTrue(any(isinstance(n,ast.Raise) and isinstance(n.exc,ast.Name) and n.exc.id=='primary' for n in ast.walk(ast.Module(body=fn.body[-3:],type_ignores=[]))))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_write_descriptor_once_on_fatal (__main__.IO.test_write_descriptor_once_on_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/test_io01.py", line 46, in test_write_descriptor_once_on_fatal
+    self.assertIs(got.exception,fatal);self.assertEqual(closed,[41])
+                                       ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [41]
+
+Second list contains 1 additional elements.
+First extra element 0:
+41
+
+- []
++ [41]
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.057s
+
+FAILED (failures=4, errors=7)

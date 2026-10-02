@@ -1,0 +1,118 @@
+--- a/oracle01.py
++++ b/oracle02.py
+@@ -33,28 +33,51 @@
+ def encoded(value):return (json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
+ 
+ 
+-def close_once(actions,primary=None):
+-    errors=[]
+-    for action in actions:
+-        try:action()
+-        except BaseException as error:errors.append(error)
+-    if not errors:return
+-    candidates=([primary] if primary is not None else [])+errors
+-    fatal=next((e for e in candidates if isinstance(e,MemoryError) or not isinstance(e,Exception)),None)
+-    selected=fatal or primary or errors[0]
+-    for error in errors:
+-        if error is not selected:selected.add_note('cleanup failed: '+repr(error))
+-    if selected is primary:return
+-    raise selected from primary
++def safe_note(error):
++    # Formatting arbitrary exceptions, and allocating notes, can themselves fail.
++    # Retention diagnostics must never replace an already observed fatal object.
++    try:BaseException.add_note(error,'An additional terminal/cleanup failure occurred; original precedence retained.')
++    except BaseException:pass
+ 
+ 
+ def preserve(primary,error):
+     if primary is None:return error
++    if primary is error:return primary
+     primary_fatal=isinstance(primary,MemoryError) or not isinstance(primary,Exception)
+     error_fatal=isinstance(error,MemoryError) or not isinstance(error,Exception)
+     if not primary_fatal and error_fatal:
+-        error.__cause__=primary;return error
+-    primary.add_note('subsequent failure: '+repr(error));return primary
++        try:BaseException.__setattr__(error,'__cause__',primary)
++        except BaseException:pass
++        return error
++    if primary_fatal:safe_note(primary)
++    return primary
++
++
++def close_once(actions,primary=None):
++    selected=primary
++    for action in actions:
++        try:action()
++        except BaseException as error:selected=preserve(selected,error)
++    if selected is not None and selected is not primary:raise selected
++
++
++def terminal_boundary(primary,close,assemble,publish):
++    """One close, one assembly and (only for a built body) one publication.
++
++    Failed assembly has no complete body to publish. It never triggers a retry
++    or a fabricated PASS receipt. The original actual fatal object wins.
++    """
++    if close is not None:
++        try:close()
++        except BaseException as error:primary=preserve(primary,error)
++    assembled=False;value=None
++    try:value=assemble(primary);assembled=True
++    except BaseException as error:primary=preserve(primary,error)
++    if assembled:
++        try:publish(value)
++        except BaseException as error:primary=preserve(primary,error)
++    if primary is not None:raise primary
++    return 0
+ 
+ 
+ def write_new(root,name,raw):
+@@ -113,8 +136,14 @@
+             cumulative_cgroup_memory_peak_bytes=int((self.cg/'memory.peak').read_text()))
+         write_new(self.root,f'phase-{self.index:04d}.json',encoded(value));self.index+=1
+     def close(self):
+-        self.stop.set();self.thread.join(1);require(not self.thread.is_alive(),'sampler did not stop')
+-        if self.error is not None:raise self.error
++        # Capture a previously observed sampler failure before close operations.
++        primary=self.error
++        for action in (self.stop.set,lambda:self.thread.join(1),
++                       lambda:require(not self.thread.is_alive(),'sampler did not stop')):
++            try:action()
++            except BaseException as error:primary=preserve(primary,error)
++        if self.error is not None:primary=preserve(primary,self.error)
++        if primary is not None:raise primary
+     def report(self):
+         return dict(phase_markers=self.index,samples=copy.deepcopy(self.samples),sample_count=self.count,
+           qualification='10ms sampled maxima of whole cgroup memory.current by phase; can miss short peaks; not process-only; memory.peak is cumulative and never subtracted; sampler adds overhead')
+@@ -305,7 +334,7 @@
+     parser.add_argument('--source-commit',required=True);parser.add_argument('--run-id',required=True);parser.add_argument('--manifest-sha256',required=True);args=parser.parse_args()
+     require(re.fullmatch('[0-9a-f]{40}',args.source_commit) is not None,'source commit required')
+     require(re.fullmatch('[a-z0-9][a-z0-9-]{1,95}',args.run_id) is not None,'new engineering identity required')
+-    manifest_raw=(HERE/'source-manifest01.json').read_bytes();require(sha(manifest_raw)==args.manifest_sha256,'source manifest differs');manifest=json.loads(manifest_raw)
++    manifest_raw=(HERE/'source-manifest02.json').read_bytes();require(sha(manifest_raw)==args.manifest_sha256,'source manifest differs');manifest=json.loads(manifest_raw)
+     for item in manifest['sources']:
+         path=ROOT/item['path'];require(path.resolve()==path and stat.S_ISREG(path.lstat().st_mode),'source redirected')
+         require(path.stat().st_size==item['bytes'] and sha(path.read_bytes())==item['sha256'],'frozen source differs '+item['path'])
+@@ -329,16 +358,10 @@
+         result=run_correctness(root,phases,identity) if args.mode=='correctness' else run_profile(root,phases,identity,args.mode=='profile_true')
+         phases.mark('complete')
+     except BaseException as error:primary=error
+-    try:phases.close()
+-    except BaseException as error:
+-        primary=preserve(primary,error)
+-    terminal=dict(schema_version=1,status='passed' if primary is None else 'failed',mode=args.mode,run_id=args.run_id,
+-        source_commit=args.source_commit,manifest_sha256=args.manifest_sha256,result=result,phases=phases.report(),
+-        error=None if primary is None else dict(type=type(primary).__name__,message=str(primary)))
+-    try:write_new(root,'terminal.json',encoded(terminal))
+-    except BaseException as error:
+-        if primary is None:raise
+-        primary=preserve(primary,error)
+-    if primary is not None:raise primary
+-    return 0
++    def assemble(selected):
++        return dict(schema_version=1,status='passed' if selected is None else 'failed',mode=args.mode,run_id=args.run_id,
++            source_commit=args.source_commit,manifest_sha256=args.manifest_sha256,result=result,phases=phases.report(),
++            error=None if selected is None else dict(type=type(selected).__name__,message=str(selected)))
++    return terminal_boundary(primary,phases.close,assemble,
++        lambda value:write_new(root,'terminal.json',encoded(value)))
+ if __name__=='__main__':raise SystemExit(main())

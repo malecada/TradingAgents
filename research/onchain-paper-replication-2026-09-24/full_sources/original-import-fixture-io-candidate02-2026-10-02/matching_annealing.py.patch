@@ -1,0 +1,66 @@
+--- a/tradingagents/research/onchain_replication/matching_annealing.py
++++ b/tradingagents/research/onchain_replication/matching_annealing.py
+@@ -10,6 +10,7 @@
+ import json
+ import math
+ import os
++from . import score_batches as io
+ import numpy as np
+ from scipy.special import logsumexp
+ from tradingagents.research.onchain_replication.matching_reference import validate_pair,agreement,harden,score_assignment,MatchResult
+@@ -24,7 +25,7 @@
+ def body(value):return (json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
+ def sha(path):
+     h=hashlib.sha256()
+-    with Path(path).open('rb') as f:
++    with io._opened(Path(path),'rb') as f:
+         for block in iter(lambda:f.read(1024**2),b''):h.update(block)
+     return h.hexdigest()
+ 
+@@ -141,7 +142,7 @@
+ def sync(directory):
+     fd=os.open(directory,os.O_RDONLY|os.O_DIRECTORY)
+     try:os.fsync(fd)
+-    finally:os.close(fd)
++    finally: io._release(lambda: os.close(fd))
+ 
+ def save(state,directory,a,b,c,*,max_checkpoint_bytes):
+     check(state,a,b,c)
+@@ -153,12 +154,12 @@
+     files={}
+     for name in NAMES:
+         path=directory/(name+'.npy')
+-        with path.open('xb') as f:np.save(f,state[name],allow_pickle=False);f.flush();os.fsync(f.fileno())
++        with io._opened(path,'xb') as f:np.save(f,state[name],allow_pickle=False);f.flush();os.fsync(f.fileno())
+         files[name]={'sha256':sha(path),'bytes':path.stat().st_size}
+     manifest={**{k:state[k] for k in META},'files':files}
+     raw=body(manifest)
+     if len(raw)>65536 or len(raw)+sum(v['bytes'] for v in files.values())>max_checkpoint_bytes:raise ValueError('checkpoint metadata allowance exceeded')
+-    with (directory/'manifest.json').open('xb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
++    with io._opened(directory/'manifest.json','xb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
+     sync(directory)
+     return hashlib.sha256(raw).hexdigest()
+ 
+@@ -166,17 +167,19 @@
+ def load(directory,a,b,c,*,expected_sha256,max_state_bytes,max_chunk_entries=65536):
+     directory=Path(directory);manifest_path=directory/'manifest.json'
+     if manifest_path.stat().st_size>65536 or sha(manifest_path)!=expected_sha256:raise ValueError('checkpoint manifest differs')
+-    meta=json.loads(manifest_path.read_bytes());n,m=len(a.node_ids),len(b.node_ids);validate_pair(a,b,c);bound(n,m,max_state_bytes)
++    meta=json.loads(io._read_path(manifest_path,65536));n,m=len(a.node_ids),len(b.node_ids);validate_pair(a,b,c);bound(n,m,max_state_bytes)
+     normalization_policy(n,m,max_chunk_entries)
+     if set(meta)!=META|{'files'} or meta['schema_version']!=3 or meta['max_chunk_entries']!=max_chunk_entries or meta['identity']!=identity(a,b,c) or meta['shape']!=[n,m] or set(meta['files'])!=set(NAMES):raise ValueError('checkpoint identity differs')
+     for name in NAMES:
+         path=directory/(name+'.npy');info=meta['files'][name]
+         if path.is_symlink() or path.stat().st_size!=info['bytes'] or path.stat().st_size>8*n*m+10000 or sha(path)!=info['sha256']:raise ValueError('checkpoint array hash/extent differs')
+-        with path.open('rb') as f:
++        with io._opened(path,'rb') as f:
+             if np.lib.format.read_magic(f)!=(1,0):raise ValueError('checkpoint array version differs')
+             shape,fortran,dtype=np.lib.format.read_array_header_1_0(f,max_header_size=10000)
+             if shape!=(n,m) or dtype!=np.dtype(np.float64) or fortran or f.tell()+8*n*m!=path.stat().st_size:raise ValueError('checkpoint array header differs')
+     state={k:meta[k] for k in META}
+-    state.update({name:np.load(directory/(name+'.npy'),allow_pickle=False) for name in NAMES})
++    for name in NAMES:
++        with io._opened(directory/(name+'.npy'),'rb') as stream:
++            state[name]=np.load(stream,allow_pickle=False)
+     check(state,a,b,c)
+     return state

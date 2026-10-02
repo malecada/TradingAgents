@@ -1,0 +1,78 @@
+test_actual_fatal_promoted_over_ordinary_body (__main__.Terminal.test_actual_fatal_promoted_over_ordinary_body) ... FAIL
+test_actual_worker_and_coordinator_route_assembly_inside_boundary (__main__.Terminal.test_actual_worker_and_coordinator_route_assembly_inside_boundary) ... FAIL
+test_error_format_failure_cannot_replace_original (__main__.Terminal.test_error_format_failure_cannot_replace_original) ... FAIL
+test_first_body_fatal_survives_every_later_assembly_failure (__main__.Terminal.test_first_body_fatal_survives_every_later_assembly_failure) ... FAIL
+test_phase_close_and_publication_each_attempted_once (__main__.Terminal.test_phase_close_and_publication_each_attempted_once) ... FAIL
+test_success_and_publication_failure_never_fabricate_pass (__main__.Terminal.test_success_and_publication_failure_never_fabricate_pass) ... FAIL
+
+======================================================================
+FAIL: test_actual_fatal_promoted_over_ordinary_body (__main__.Terminal.test_actual_fatal_promoted_over_ordinary_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 27, in test_actual_fatal_promoted_over_ordinary_body
+    ns=self.helper();first=ValueError('body');fatal=SystemExit(4)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 6, in helper
+    path=HERE/'oracle02.py';self.assertTrue(path.exists(),'corrected terminal boundary missing')
+                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : corrected terminal boundary missing
+
+======================================================================
+FAIL: test_actual_worker_and_coordinator_route_assembly_inside_boundary (__main__.Terminal.test_actual_worker_and_coordinator_route_assembly_inside_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 49, in test_actual_worker_and_coordinator_route_assembly_inside_boundary
+    self.helper()
+    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 6, in helper
+    path=HERE/'oracle02.py';self.assertTrue(path.exists(),'corrected terminal boundary missing')
+                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : corrected terminal boundary missing
+
+======================================================================
+FAIL: test_error_format_failure_cannot_replace_original (__main__.Terminal.test_error_format_failure_cannot_replace_original)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 32, in test_error_format_failure_cannot_replace_original
+    ns=self.helper()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 6, in helper
+    path=HERE/'oracle02.py';self.assertTrue(path.exists(),'corrected terminal boundary missing')
+                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : corrected terminal boundary missing
+
+======================================================================
+FAIL: test_first_body_fatal_survives_every_later_assembly_failure (__main__.Terminal.test_first_body_fatal_survives_every_later_assembly_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 12, in test_first_body_fatal_survives_every_later_assembly_failure
+    ns=self.helper()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 6, in helper
+    path=HERE/'oracle02.py';self.assertTrue(path.exists(),'corrected terminal boundary missing')
+                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : corrected terminal boundary missing
+
+======================================================================
+FAIL: test_phase_close_and_publication_each_attempted_once (__main__.Terminal.test_phase_close_and_publication_each_attempted_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 20, in test_phase_close_and_publication_each_attempted_once
+    ns=self.helper();first=MemoryError('body');calls=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 6, in helper
+    path=HERE/'oracle02.py';self.assertTrue(path.exists(),'corrected terminal boundary missing')
+                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : corrected terminal boundary missing
+
+======================================================================
+FAIL: test_success_and_publication_failure_never_fabricate_pass (__main__.Terminal.test_success_and_publication_failure_never_fabricate_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 41, in test_success_and_publication_failure_never_fabricate_pass
+    ns=self.helper();calls=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_terminal02.py", line 6, in helper
+    path=HERE/'oracle02.py';self.assertTrue(path.exists(),'corrected terminal boundary missing')
+                            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : corrected terminal boundary missing
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=6)

@@ -1,0 +1,54 @@
+# Independent tiny checkpoint native-release review
+
+Disposition: **WITHHELD for the exact native02/release01: installed-runtime link policy refuses the actual pinned environment.** The other source/control findings below are a qualified review of the prospective design, not release acceptance. No invocation, native pass, numerical result, empirical admission or budget increase is established by this review.
+
+## Exact reviewed objects
+
+| Object | SHA-256 |
+|---|---|
+| native_launcher02.py | d1b160c594d81e97617a961ba25b223f5b2112b384917c33aec765b7d7970789 |
+| release01.json | d3634e5f06506a3d2c415e785b1b1ee0448843c218d9634030c3eda42686016e |
+| source-manifest02.json | 91e2027627b8213a746c191117c94a0cb1e1693242e453f8654407100b4418d3 |
+| oracle02.py | 0a3efd885cbecb3019839a8aeed291aff7ac33071726c16efae1129867905530 |
+| coordinator02.py | bacd5e42d0fd0c1ac73fa81de68f9a44a8e043ab161a96b951752dea7912971c |
+| protocol01.json | c56c494966b42a5d15cead7f1bb51e1eb3d9e18cfeab91d2831eb743aa072d1c |
+| separate proof source review02 | d92d6ca383c2e3639542236c496cc86137429af8659f70d857627a06a24f99b6 |
+| selected cleanup helper adapter_launcher04.py | 9355aee602f1090828cd5d17a9716b14d4cd889d4ad22f8ae95fdea64a6c4da8 |
+
+Independent read-only checks rehashed all 142 selected Git-source bodies (2,697,276 bytes), all 17 proof-manifest members and their release-map joins, the separately pinned installed Torch checkpoint implementation, and all 251 installed distribution versions. The source map contains all 126 current onchain-replication Python files plus eight parent-package modules. The runtime file is explicitly outside the Git-source map, so the launcher's committed-source loop will not incorrectly request a Git blob for `.venv/.../torch/utils/checkpoint.py`.
+
+The selected owned path `owned/neural-checkpoint-comparison-20261002-01` was absent. HEAD at inspection was `ef41d5d4e1df8e2c7778a4a8657d8599ab19043e`; this does not attest the future final commit or remote recovery. No source or registration was changed by this review. No imported numerical module, test, native unit, claim, readiness window or network action was executed.
+
+## Material release blocker: NCR1
+
+The actual source-only precheck retained in `prelaunch-source-readback01.log` fails at `native_launcher02.py:68–69` because runtime verification requires `st_nlink == 1`. Independent read-only stat found the pinned installed `.venv/lib/python3.13/site-packages/torch/utils/checkpoint.py` has 11 links, mode 0664 and 72,241 bytes. Its bytes still match the selected hash. Installed uv hard links are distinct from the exclusive singleton Git/owned-evidence policy. Thus exact release01 cannot pass verification on the actual environment, although its synthetic validator corpus passes. This is a fail-closed preparation error, not a numerical or native-job result: no owned reservation or empirical claim was created.
+
+Preserve native02/release01 and the failed source precheck. Prepare new immutable caller/release bytes that explicitly pin the installed runtime body hash, size, type/mode and observed link-count policy, and check that policy both before and after execution. Do not weaken singleton restrictions for Git source bodies or owned evidence. A fresh actual source-only verification and independent correction review are required before execution; existing synthetic validator evidence cannot establish this runtime check. A linked installed file remains mutable through its other aliases, so source/runtime freezing during execution is still required.
+
+## Source, invocation and containment
+
+The launcher verifies its own exact body, helper, proof manifest, selected source bodies and installed distribution/runtime metadata before action. Immediately before the exclusive reservation, it checks every selected Git body against the actual full HEAD and verifies the configured research branch's actual remote HEAD. The root must commit release01 itself and the accepted review evidence in that same backed-up state; the launcher is not a substitute for preserving those release documents externally. The selected source/distribution checks and unchanged HEAD check recur after the guarded run. Source freezing throughout the attempt remains required; these are boundary checks, not continuous attestation of every runtime binary.
+
+There is one hardcoded engineering identity, one exclusive owned-directory birth, one guarded call and no retry path. Worker, three sequential fresh-process arms, checkpoints, logs and configured temporary/cache paths reside inside that owned tree. The caller imports the frozen oracle02 only for its stdlib terminal boundary before the guard. Numerical imports remain in oracle main after inherited native readback. Coordinator02 invokes only oracle02 and starts the next arm only after waiting for the previous arm and checking its terminal.
+
+The actual wrapper retains `resources.guarded_run` and adds native `LimitFSIZE=4194304` and `RuntimeMaxSec=120s` before dispatch. Their systemd properties are read back before the guard can release the worker. The original guard marks dispatch as potentially launched before the wrapped subprocess call, so a wrapper/readback error still enters cleanup of that unique unit. Memory max/high are both 1 GiB, swap is zero, startup availability is 4 GiB and ongoing host reserve is 3 GiB. The registered 120-second guard deadline is supplemented by the native unit deadline. CPU authority is inherited two-CPU affinity with actual thread readback; a CPUQuota property is not treated as proof that the cgroup CPU controller is available.
+
+The original sampled whole-owned-tree watch retains 64 MiB allocated/logical stop thresholds, 12,000 entries, depth 32, a two-second scan bound and a 10 GiB disk floor. These are sampled thresholds, not hard aggregate disk quotas. The 4 MiB per-file limit is native. Child and arm logs reaching that limit cannot pass. Actual result validation rejects breached/missing storage controls and confirms terminal observations are within the recorded sampled peaks. The final launcher-terminal write follows the guard's last storage observation, so the eventual independent complete final inventory must include that tail and all directory allocation; the last sampled observation must not be mislabeled the final retained-tree total.
+
+## Complete evidence denominator and cleanup
+
+The launcher requires a passed coordinator terminal plus exact run/source/manifest joins in coordinator and arm intent/terminal records. A zero process exit alone is insufficient. All three arm dispositions must be present in fixed order with positive PIDs and zero exit codes. The expected cases are the complete ordered 10 correctness rows and two rows in each profile, with exact checkpoint booleans and derived configuration hashes.
+
+The validator reconstructs all 147 correctness phase names and 22 names in each profile. It requires exactly those numbered files, index/mode/name joins, strictly increasing within-arm monotonic times, nondecreasing cumulative cgroup peaks and valid sampled-memory/count bounds. The supplemental actual-result path checks per-case encode/recompute entry counts, saved-diagnostic bounds, tensor comparison accounting, native unit result/status, terminal snapshot/event agreement, storage observations and sampled peaks. Fixed source oracle comparisons themselves enforce the unchanged numerical tolerances; a nonempty comparison list is not independently a substitute for those computations.
+
+The selected helper authenticates the current guard owner and permits stop return code 5 only with its strict successful/inactive/dead/empty-unit evidence. The launcher separately requires all recorded workload/arm PIDs and the original cgroup absent for either accepted stop-code path. It preserves the currently running coordinator/monitor distinction. Native and guard errors, events, log truncation, a missing coordinator/arm terminal or unresolved cleanup prevent success. An actual failure closes this identity permanently; later analysis must preserve attempted and unattempted arms.
+
+The outer caller now uses the accepted oracle02 terminal boundary for result assembly and publication. Missing terminal evidence after assembly or write failure is not fabricated or upgraded. This is the reviewed caller/oracle Python boundary; it is not a universal guarantee about every legacy guard allocation path or execution of Python cleanup after SIGKILL.
+
+## Evidence strength and remaining checks
+
+The exact selected launcher was exercised by the retained synthetic counterexample04 corpus. Independent streaming archive inspection verified SHA-256 `8155525b5944c1d9027541dfc090ef7c3c6ab359c57f7d6760be7358e80c3a55`, all 8,937 members (8,690 regular files and 247 directories), 1,884,025 logical file bytes, safe unique names and summary SHA-256 `f3fe262dbea754b03a3b915ec352fe792d53a8570d91a37145e0b6d62085d2bf`. Its summary binds the exact selected launcher and test source and records all 41 checks passing: one valid control and 40 malformed denominators/phase/identity variants. The actual `validate` function is used; only the separately reviewed cleanup predicate is explicitly stubbed true. Supplemental `validate_observations`, actual native enforcement and launch dispatch are not executed by that corpus. Archive03 binds an earlier launcher hash and is retained intermediate evidence, not whole-file execution evidence for selected02.
+
+Independent AST comparison also verified the 12 claimed unchanged oracle numerical/native/write functions against preserved01. The separate accepted proof source review resolves the earlier first-fatal assembly defect; its qualified six-method synthetic evidence does not establish numerical parity.
+
+Exact native02/release01 must not be invoked. After NCR1 is corrected in new preserved files and separately accepted, commit and back up that exact release, selected source and reviews, recheck unused identity/source/runtime and let actual native startup limits govern. After closure, preserve complete raw owned contents, final inventory/archive, outer records, original PID/cgroup cleanup evidence and all unavailable arms for independent review and external recovery. The outcome can support only this fixed tiny checkpoint comparison/profile question. Saved-storage hooks retain backing allocations and conceal inner checkpoint saves; fresh profile processes share one cumulative cgroup peak, and their second cases inherit allocator/page-cache history. No memory-reduction or speed threshold is introduced. No full-graph capacity, paper agreement, financial fit, empirical successor, budget 65 or resource-cap escalation is approved. The existing 36 closed paper-family attempts and adopted ceiling 64 remain unchanged by this engineering preparation.

@@ -1,0 +1,654 @@
+{
+  "bridge01_sha256": "4e8d619f4710b5e75f8006219c3cafa373eb0ca3e3e132c6d63074c69272932d",
+  "checks": {
+    "final_logs": [
+      "green07-final.log",
+      "parity01.log"
+    ],
+    "io_methods": 16,
+    "numerical_execution": false,
+    "numerical_imports": false,
+    "parity_methods": 5
+  },
+  "empirical_authorization": false,
+  "external_unchanged_source": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py",
+    "sha256": "30a957ad48997a3236203e1af2ccf9e0874b172ffac73773c31efc6bece9fc67"
+  },
+  "files": {
+    "REPORT01.md": {
+      "bytes": 7472,
+      "sha256": "84ecfff0367c9bff42f6bd1d897cbebdaefdaddfeeb89069f65997163c7a4a66"
+    },
+    "array_neighborhoods.py": {
+      "bytes": 7466,
+      "sha256": "4130af3869fb6615ba0898c5b25f1297f236e2df6b4dbe37d705dc2459982d6d"
+    },
+    "array_neighborhoods.py.patch": {
+      "bytes": 2397,
+      "sha256": "0fbbd26f7803ffe7db7623c3ec83b79dfe5157bb35b4fe48cd63cc9f805896bb"
+    },
+    "baseline/array_neighborhoods.py": {
+      "bytes": 6909,
+      "sha256": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f"
+    },
+    "baseline/compact_matcher.py": {
+      "bytes": 18588,
+      "sha256": "75e4b8bad423ed198bef5017fd4c22670ff3c552bcacd2cc967901efa95bed73"
+    },
+    "baseline/compact_mcm.py": {
+      "bytes": 21244,
+      "sha256": "f52d3c4596dd8bab47591e5477fdb5a6c0207efedeccecde94e387e708a42ea2"
+    },
+    "baseline/compact_mcm_output.py": {
+      "bytes": 10275,
+      "sha256": "bd118be0c2f9c44eebb1f459184c676dfc66f0ee46cd7f2c0271dea1db11bc99"
+    },
+    "baseline/compact_mcm_publication.py": {
+      "bytes": 9375,
+      "sha256": "9e2d8c0fc4a59dab9fc573a9c97768e833b75343f2682eae9ace8140fe8e5a83"
+    },
+    "baseline/compact_owner.py": {
+      "bytes": 28391,
+      "sha256": "04a91f0b27f8b1d15af116eb7eaa7bc3302b22b3879195e92fe50226a306de8f"
+    },
+    "baseline/compact_pair_log.py": {
+      "bytes": 15617,
+      "sha256": "4c65ca7f8caf46760eeef23e2bd44e9bc87a64a54bb18a862662be2b15da0089"
+    },
+    "baseline/compact_stage.py": {
+      "bytes": 14072,
+      "sha256": "78a5164a711ee69b3a0406ca63a620e781776798864075c9dd820229ccd4ccc4"
+    },
+    "baseline/feature_journal.py": {
+      "bytes": 16549,
+      "sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665"
+    },
+    "baseline/graph_store.py": {
+      "bytes": 5296,
+      "sha256": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da"
+    },
+    "baseline/import_metadata.py": {
+      "bytes": 6568,
+      "sha256": "87b78e81f07f819ef13943b66b577744b5665fd61d98bf856835167214830634"
+    },
+    "baseline/imported_kernel.py": {
+      "bytes": 4219,
+      "sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287"
+    },
+    "baseline/imported_mcm_identity.py": {
+      "bytes": 6776,
+      "sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1"
+    },
+    "baseline/job.py": {
+      "bytes": 30744,
+      "sha256": "83b502643962a560c486bded2386babe71ef6b148525a607da33f9338ba23f0c"
+    },
+    "baseline/matching_annealing.py": {
+      "bytes": 11075,
+      "sha256": "c1331bf7fd6bc436c2663c626c69c6bcecffcc16a8e56992c9c6bcf520ab0b47"
+    },
+    "baseline/matching_checkpoint.py": {
+      "bytes": 9997,
+      "sha256": "de8f7077e513105719fffcf6ea13e96bfb0199056acf0227ecf744df189ee35c"
+    },
+    "baseline/matching_hardening.py": {
+      "bytes": 7670,
+      "sha256": "c0c4a2eb21ad62d3a966e8619d84370be388e1e4a402f7608fc91abb3f796312"
+    },
+    "baseline/matching_owner.py": {
+      "bytes": 21054,
+      "sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751"
+    },
+    "baseline/mcm_score_stream.py": {
+      "bytes": 13638,
+      "sha256": "a81c7458c1b9438a66d5b71023b260826e24a3f919a14074ac61b7c528b61ed6"
+    },
+    "baseline/original_dictionary.py": {
+      "bytes": 22569,
+      "sha256": "2fbc4e8e83b0cb64311251c7c0ac3272b14575db2310875b4c5e51b5099f2740"
+    },
+    "baseline/original_import_preparation.py": {
+      "bytes": 14091,
+      "sha256": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5"
+    },
+    "baseline/original_import_stage.py": {
+      "bytes": 10626,
+      "sha256": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a"
+    },
+    "baseline/provenance.py": {
+      "bytes": 2398,
+      "sha256": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471"
+    },
+    "baseline/resource_binding.py": {
+      "bytes": 2280,
+      "sha256": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d"
+    },
+    "baseline/resource_fixture.py": {
+      "bytes": 20252,
+      "sha256": "e1bc9dc0471ee898c08f638580f5c53f7c8b07df514010ed388906ba02ae5d31"
+    },
+    "baseline/score_batches.py": {
+      "bytes": 16257,
+      "sha256": "715125e543edd383c4bdeab59d10f7a269faec18f3b5fd16af79013e1bb37555"
+    },
+    "baseline/score_tail.py": {
+      "bytes": 14229,
+      "sha256": "b5e807e022349ca7e0d18c02512812932103865ba0779d641be6877995694870"
+    },
+    "check03-boundaries.log": {
+      "bytes": 1283,
+      "sha256": "c40a9165296f2e92d972f3246a7685fa181d0b9bb00bc7f139ffc8f84fc5a408"
+    },
+    "compact_matcher.py": {
+      "bytes": 18577,
+      "sha256": "8bdf20ac099ba10f4051cb5d89f336b3009b535ed150c8a9d4a94a18eddf67b9"
+    },
+    "compact_matcher.py.patch": {
+      "bytes": 5175,
+      "sha256": "f99e5f2912f83cc2f85819ce19706666f58d39050708fb82ce4b24ed967ca262"
+    },
+    "compact_mcm.py": {
+      "bytes": 20441,
+      "sha256": "ed94415ff1798422d66bb19fc6b7ab72e70afef999101d0fb206e3f65556f93a"
+    },
+    "compact_mcm.py.patch": {
+      "bytes": 4855,
+      "sha256": "d07dd823f1d3eeb649582741436b2b18e4b9870c4ed26c00c113a8a50287dd1f"
+    },
+    "compact_mcm_output.py": {
+      "bytes": 10552,
+      "sha256": "4e31d1f241fc7c1f1ef4b7fc163d27a332ff057378a254e56667d2e7f6d29b11"
+    },
+    "compact_mcm_output.py.patch": {
+      "bytes": 7646,
+      "sha256": "f4c1f2334fca1d7ec7cf66287299bbda71183f0fef0f1130738428ce3b4d50b7"
+    },
+    "compact_mcm_publication.py": {
+      "bytes": 9604,
+      "sha256": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a"
+    },
+    "compact_mcm_publication.py.patch": {
+      "bytes": 1481,
+      "sha256": "34c49dc28971162f44cf0ee0ab85a71d3d021a617e236bf387cafae891bb17fc"
+    },
+    "compact_owner.py": {
+      "bytes": 28651,
+      "sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171"
+    },
+    "compact_owner.py.patch": {
+      "bytes": 2691,
+      "sha256": "7a026b76752518cb96a36a2a514cb63dbcdc67137137447c7a0bdab6874fcca2"
+    },
+    "compact_pair_log.py": {
+      "bytes": 15651,
+      "sha256": "e7b38cbc4a0b13733e0018db897489acab5f7324368c7938addb20f8a9d2392d"
+    },
+    "compact_pair_log.py.patch": {
+      "bytes": 866,
+      "sha256": "ffa8080889fe1a864756db63a7ee6c1903f37d92c209b5698209860dd0e4ee99"
+    },
+    "compact_stage.py": {
+      "bytes": 14182,
+      "sha256": "3e35d200bcd04efa169ec64745ae54bb81ef1a58f3ae160157f00f40f60aad3e"
+    },
+    "compact_stage.py.patch": {
+      "bytes": 2353,
+      "sha256": "57dde684935b9a0e1fa56eed3d3861c0592730fde06fad773ac1d800a7a1638e"
+    },
+    "feature_journal.py": {
+      "bytes": 16549,
+      "sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665"
+    },
+    "graph_store.py": {
+      "bytes": 5398,
+      "sha256": "dcea4265fab07e26fba1c94f56c3fb74b12d872a7378065ed6d4ae431e9e54bd"
+    },
+    "graph_store.py.patch": {
+      "bytes": 2827,
+      "sha256": "92e2b2c08744422b584ab7dca8286cbe7bbd07a95f639895cc8ac666a9232f3e"
+    },
+    "green01.log": {
+      "bytes": 106,
+      "sha256": "55c186a7c91b07575187437a10c5a62ce2057c8e400bda6d4324eb8d90f537e3"
+    },
+    "green02.log": {
+      "bytes": 106,
+      "sha256": "95d1c8f31c1f53a4d2b892f8c4df74b11200a51212a69e23650230f7e5965142"
+    },
+    "green04-boundaries.log": {
+      "bytes": 111,
+      "sha256": "4ae03d3bd70927499bfe9b15fa50445a5d3c78af3b5b5fe09cabe03beb485d8e"
+    },
+    "green05-leaf.log": {
+      "bytes": 111,
+      "sha256": "8cd8a3c0ad4f8d4a6abe5441d91b5436013ea61d7c39522adba06e6a9e7b7ba7"
+    },
+    "green06-composition.log": {
+      "bytes": 115,
+      "sha256": "180f685ac442f4f9b9fa22cf9a83c70c0b285bac87bd08163515ee93f1368ade"
+    },
+    "green07-final.log": {
+      "bytes": 115,
+      "sha256": "089ea9a28239a84c451fa250cbece3bb9748f343028e4c7ad63a9fd83a0a72d4"
+    },
+    "import_metadata.py": {
+      "bytes": 4929,
+      "sha256": "1c9455bc80b8f424bf63d6fdd5b94338ce54c14ead720990a2f787aef9e93dfe"
+    },
+    "import_metadata.py.patch": {
+      "bytes": 1993,
+      "sha256": "bec0b410ef03a807187723cd5379f403b1804e37bf8dc10333d0c7acdd1a7bb3"
+    },
+    "imported_kernel.py": {
+      "bytes": 4219,
+      "sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287"
+    },
+    "imported_mcm_identity.py": {
+      "bytes": 6776,
+      "sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1"
+    },
+    "job.py": {
+      "bytes": 30744,
+      "sha256": "83b502643962a560c486bded2386babe71ef6b148525a607da33f9338ba23f0c"
+    },
+    "matching_annealing.py": {
+      "bytes": 11213,
+      "sha256": "602636b8311431bd2f7d4d28ed59627e9ac576341b0dbcc6f0d41225dc79b7d1"
+    },
+    "matching_annealing.py.patch": {
+      "bytes": 3868,
+      "sha256": "7e7c8524b6f6803b385edd83c49f6977d3a48325beec914112c3e689369fbdf2"
+    },
+    "matching_checkpoint.py": {
+      "bytes": 9932,
+      "sha256": "6ef36f12a8e601177c0dde507f99d80853df80ad46cfd7f0321e5c0d655ab9df"
+    },
+    "matching_checkpoint.py.patch": {
+      "bytes": 2805,
+      "sha256": "368a4dfb7227fcf2540ea0b1b5feba1d07ca7b38166b35979db50c3b5c4d1774"
+    },
+    "matching_hardening.py": {
+      "bytes": 7651,
+      "sha256": "3ed02e0df1508a7f963d3652cfea252b759c701235589ea5855cdd560e520f80"
+    },
+    "matching_hardening.py.patch": {
+      "bytes": 3510,
+      "sha256": "fc33f6e9e9cd8665a3e9c11f22b75c1407680e9e84f3a98dd9238ec0625b87ef"
+    },
+    "matching_owner.py": {
+      "bytes": 21054,
+      "sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751"
+    },
+    "mcm_score_stream.py": {
+      "bytes": 13686,
+      "sha256": "0cb6280571d465bcbd9b721492c5b6297666bbf14c5b5939cb36b4f9f72309fe"
+    },
+    "mcm_score_stream.py.patch": {
+      "bytes": 1929,
+      "sha256": "f10f8b663263235a771a663c9793290588f0f4416c22071d00026702cd514f5e"
+    },
+    "numerical-parity01.json": {
+      "bytes": 7098,
+      "sha256": "1386f60e194b2606d0395b190d90eb83afd3d7b3ca0262756d93388b624b9a9c"
+    },
+    "original_dictionary.py": {
+      "bytes": 21508,
+      "sha256": "cbe571a3758695b2ff63a45031c90840a7358538f9a2c0bad31077db8439a6d9"
+    },
+    "original_dictionary.py.patch": {
+      "bytes": 4226,
+      "sha256": "560c9fc704717bf54fbb8582c1ca4132ce78e43e1ca0c220e487b98d7da9ed83"
+    },
+    "original_import_preparation.py": {
+      "bytes": 14091,
+      "sha256": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5"
+    },
+    "original_import_stage.py": {
+      "bytes": 10626,
+      "sha256": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a"
+    },
+    "owned_io.py": {
+      "bytes": 3049,
+      "sha256": "1d8089f866f8026e2be247b04305433f0b88d4816694b0ad9574ecd568053e42"
+    },
+    "owned_io.py.patch": {
+      "bytes": 3267,
+      "sha256": "d4d5e54b91746dd8c906b16e40fb9444f80d293bd46ac089dbf84f5e732234fe"
+    },
+    "parity01.log": {
+      "bytes": 103,
+      "sha256": "c7bda652e5d33c59422b19bbc4a6fdf0f099ecdd6b6a9a561893f4f6156b93fa"
+    },
+    "provenance.py": {
+      "bytes": 2465,
+      "sha256": "d29f7f5c2fc5d0def6538d3a1eb13dc051c672d8ea38257af333930f87b9ff1b"
+    },
+    "provenance.py.patch": {
+      "bytes": 731,
+      "sha256": "9a87576779782363017470502a483ac61bfd7a9829521bd97a3ca8698174e86f"
+    },
+    "red01.log": {
+      "bytes": 9601,
+      "sha256": "ae8ac2294c58568275e88708c9e6071e173d118937d80d23083ae5baf53e6694"
+    },
+    "red02-boundaries.log": {
+      "bytes": 13801,
+      "sha256": "8d5084e428d5e5c724df7e0b8ce2ea77b4ce17d7e24a9e239f44f0a7d1de2dbb"
+    },
+    "red03-composition.log": {
+      "bytes": 20646,
+      "sha256": "54c8d3aa6a71a27c2fe7acef5ce00208852a7af6a76389704a38bc348c5edcd6"
+    },
+    "resource_binding.py": {
+      "bytes": 2280,
+      "sha256": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d"
+    },
+    "resource_fixture.py": {
+      "bytes": 20293,
+      "sha256": "7d89ebdddffce1fdad230436156463d49d36641eb943b8b5bb81ebe5d32e8802"
+    },
+    "resource_fixture.py.patch": {
+      "bytes": 593,
+      "sha256": "3d25f580fc73d8664a0e055152f46d02560508b994da2a354686848843f7eba0"
+    },
+    "score_batches.py": {
+      "bytes": 15150,
+      "sha256": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45"
+    },
+    "score_batches.py.patch": {
+      "bytes": 5693,
+      "sha256": "81525a402fc836f36d9d8bc1ae8cd4c99201bfcef0097449449912691f278d20"
+    },
+    "score_tail.py": {
+      "bytes": 14257,
+      "sha256": "d18681b36e16bbca604346469d1cb79e14d2ebb1649108334c62356d9f6eb91e"
+    },
+    "score_tail.py.patch": {
+      "bytes": 994,
+      "sha256": "3c3d489f3bd16c1d8e10e087c6894cf422c99fd3319849572443b00512eac117"
+    },
+    "source-audit01.log": {
+      "bytes": 146,
+      "sha256": "076cd7882661b9b7e86c95ba249ccc820d6fc4c0a8155fdfe1a53d4c6dd52649"
+    },
+    "test-source-failed-check03.txt": {
+      "bytes": 8661,
+      "sha256": "0e593529343b00b6b0a6fce3bfab53e46cd750a368ab17612f7e75dae4df55a5"
+    },
+    "test-source-initial01.txt": {
+      "bytes": 4886,
+      "sha256": "47ade708953227a62b9493fbaf968b3dc9e5c67b53d46790e798ac3cbae62d1c"
+    },
+    "test_io01.py": {
+      "bytes": 13252,
+      "sha256": "0cd4010485b1ac48e1da0e09fe1091eee7f8467265a924f09f62f2888bc08041"
+    },
+    "test_parity01.py": {
+      "bytes": 2780,
+      "sha256": "ff09927b462caf8a806301f07585b813eb50093dba25f6ab5b09ba822e8137ff"
+    }
+  },
+  "install": [
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/array_neighborhoods.py",
+      "baseline_sha256": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+      "baseline_snapshot": "baseline/array_neighborhoods.py",
+      "candidate": "array_neighborhoods.py",
+      "changed": true,
+      "sha256": "4130af3869fb6615ba0898c5b25f1297f236e2df6b4dbe37d705dc2459982d6d",
+      "target": "tradingagents/research/onchain_replication/array_neighborhoods.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/compact_matcher.py",
+      "baseline_sha256": "75e4b8bad423ed198bef5017fd4c22670ff3c552bcacd2cc967901efa95bed73",
+      "baseline_snapshot": "baseline/compact_matcher.py",
+      "candidate": "compact_matcher.py",
+      "changed": true,
+      "sha256": "8bdf20ac099ba10f4051cb5d89f336b3009b535ed150c8a9d4a94a18eddf67b9",
+      "target": "tradingagents/research/onchain_replication/compact_matcher.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/compact_mcm.py",
+      "baseline_sha256": "f52d3c4596dd8bab47591e5477fdb5a6c0207efedeccecde94e387e708a42ea2",
+      "baseline_snapshot": "baseline/compact_mcm.py",
+      "candidate": "compact_mcm.py",
+      "changed": true,
+      "sha256": "ed94415ff1798422d66bb19fc6b7ab72e70afef999101d0fb206e3f65556f93a",
+      "target": "tradingagents/research/onchain_replication/compact_mcm.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/compact_mcm_output.py",
+      "baseline_sha256": "bd118be0c2f9c44eebb1f459184c676dfc66f0ee46cd7f2c0271dea1db11bc99",
+      "baseline_snapshot": "baseline/compact_mcm_output.py",
+      "candidate": "compact_mcm_output.py",
+      "changed": true,
+      "sha256": "4e31d1f241fc7c1f1ef4b7fc163d27a332ff057378a254e56667d2e7f6d29b11",
+      "target": "tradingagents/research/onchain_replication/compact_mcm_output.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/compact_mcm_publication.py",
+      "baseline_sha256": "9e2d8c0fc4a59dab9fc573a9c97768e833b75343f2682eae9ace8140fe8e5a83",
+      "baseline_snapshot": "baseline/compact_mcm_publication.py",
+      "candidate": "compact_mcm_publication.py",
+      "changed": true,
+      "sha256": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a",
+      "target": "tradingagents/research/onchain_replication/compact_mcm_publication.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/compact_owner.py",
+      "baseline_sha256": "04a91f0b27f8b1d15af116eb7eaa7bc3302b22b3879195e92fe50226a306de8f",
+      "baseline_snapshot": "baseline/compact_owner.py",
+      "candidate": "compact_owner.py",
+      "changed": true,
+      "sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171",
+      "target": "tradingagents/research/onchain_replication/compact_owner.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/compact_pair_log.py",
+      "baseline_sha256": "4c65ca7f8caf46760eeef23e2bd44e9bc87a64a54bb18a862662be2b15da0089",
+      "baseline_snapshot": "baseline/compact_pair_log.py",
+      "candidate": "compact_pair_log.py",
+      "changed": true,
+      "sha256": "e7b38cbc4a0b13733e0018db897489acab5f7324368c7938addb20f8a9d2392d",
+      "target": "tradingagents/research/onchain_replication/compact_pair_log.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/compact_stage.py",
+      "baseline_sha256": "78a5164a711ee69b3a0406ca63a620e781776798864075c9dd820229ccd4ccc4",
+      "baseline_snapshot": "baseline/compact_stage.py",
+      "candidate": "compact_stage.py",
+      "changed": true,
+      "sha256": "3e35d200bcd04efa169ec64745ae54bb81ef1a58f3ae160157f00f40f60aad3e",
+      "target": "tradingagents/research/onchain_replication/compact_stage.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/feature_journal.py",
+      "baseline_sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+      "baseline_snapshot": "baseline/feature_journal.py",
+      "candidate": "feature_journal.py",
+      "changed": false,
+      "sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+      "target": "tradingagents/research/onchain_replication/feature_journal.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/graph_store.py",
+      "baseline_sha256": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da",
+      "baseline_snapshot": "baseline/graph_store.py",
+      "candidate": "graph_store.py",
+      "changed": true,
+      "sha256": "dcea4265fab07e26fba1c94f56c3fb74b12d872a7378065ed6d4ae431e9e54bd",
+      "target": "tradingagents/research/onchain_replication/graph_store.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/import_metadata.py",
+      "baseline_sha256": "87b78e81f07f819ef13943b66b577744b5665fd61d98bf856835167214830634",
+      "baseline_snapshot": "baseline/import_metadata.py",
+      "candidate": "import_metadata.py",
+      "changed": true,
+      "sha256": "1c9455bc80b8f424bf63d6fdd5b94338ce54c14ead720990a2f787aef9e93dfe",
+      "target": "tradingagents/research/onchain_replication/import_metadata.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py",
+      "baseline_sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287",
+      "baseline_snapshot": "baseline/imported_kernel.py",
+      "candidate": "imported_kernel.py",
+      "changed": false,
+      "sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287",
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_mcm_identity.py",
+      "baseline_sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1",
+      "baseline_snapshot": "baseline/imported_mcm_identity.py",
+      "candidate": "imported_mcm_identity.py",
+      "changed": false,
+      "sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1",
+      "target": "tradingagents/research/onchain_replication/imported_mcm_identity.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/job.py",
+      "baseline_sha256": "83b502643962a560c486bded2386babe71ef6b148525a607da33f9338ba23f0c",
+      "baseline_snapshot": "baseline/job.py",
+      "candidate": "job.py",
+      "changed": false,
+      "sha256": "83b502643962a560c486bded2386babe71ef6b148525a607da33f9338ba23f0c",
+      "target": "tradingagents/research/onchain_replication/job.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/matching_annealing.py",
+      "baseline_sha256": "c1331bf7fd6bc436c2663c626c69c6bcecffcc16a8e56992c9c6bcf520ab0b47",
+      "baseline_snapshot": "baseline/matching_annealing.py",
+      "candidate": "matching_annealing.py",
+      "changed": true,
+      "sha256": "602636b8311431bd2f7d4d28ed59627e9ac576341b0dbcc6f0d41225dc79b7d1",
+      "target": "tradingagents/research/onchain_replication/matching_annealing.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/matching_checkpoint.py",
+      "baseline_sha256": "de8f7077e513105719fffcf6ea13e96bfb0199056acf0227ecf744df189ee35c",
+      "baseline_snapshot": "baseline/matching_checkpoint.py",
+      "candidate": "matching_checkpoint.py",
+      "changed": true,
+      "sha256": "6ef36f12a8e601177c0dde507f99d80853df80ad46cfd7f0321e5c0d655ab9df",
+      "target": "tradingagents/research/onchain_replication/matching_checkpoint.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/matching_hardening.py",
+      "baseline_sha256": "c0c4a2eb21ad62d3a966e8619d84370be388e1e4a402f7608fc91abb3f796312",
+      "baseline_snapshot": "baseline/matching_hardening.py",
+      "candidate": "matching_hardening.py",
+      "changed": true,
+      "sha256": "3ed02e0df1508a7f963d3652cfea252b759c701235589ea5855cdd560e520f80",
+      "target": "tradingagents/research/onchain_replication/matching_hardening.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/matching_owner.py",
+      "baseline_sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+      "baseline_snapshot": "baseline/matching_owner.py",
+      "candidate": "matching_owner.py",
+      "changed": false,
+      "sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+      "target": "tradingagents/research/onchain_replication/matching_owner.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/mcm_score_stream.py",
+      "baseline_sha256": "a81c7458c1b9438a66d5b71023b260826e24a3f919a14074ac61b7c528b61ed6",
+      "baseline_snapshot": "baseline/mcm_score_stream.py",
+      "candidate": "mcm_score_stream.py",
+      "changed": true,
+      "sha256": "0cb6280571d465bcbd9b721492c5b6297666bbf14c5b5939cb36b4f9f72309fe",
+      "target": "tradingagents/research/onchain_replication/mcm_score_stream.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/original_dictionary.py",
+      "baseline_sha256": "2fbc4e8e83b0cb64311251c7c0ac3272b14575db2310875b4c5e51b5099f2740",
+      "baseline_snapshot": "baseline/original_dictionary.py",
+      "candidate": "original_dictionary.py",
+      "changed": true,
+      "sha256": "cbe571a3758695b2ff63a45031c90840a7358538f9a2c0bad31077db8439a6d9",
+      "target": "tradingagents/research/onchain_replication/original_dictionary.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/original_import_preparation.py",
+      "baseline_sha256": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5",
+      "baseline_snapshot": "baseline/original_import_preparation.py",
+      "candidate": "original_import_preparation.py",
+      "changed": false,
+      "sha256": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5",
+      "target": "tradingagents/research/onchain_replication/original_import_preparation.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/original_import_stage.py",
+      "baseline_sha256": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a",
+      "baseline_snapshot": "baseline/original_import_stage.py",
+      "candidate": "original_import_stage.py",
+      "changed": false,
+      "sha256": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a",
+      "target": "tradingagents/research/onchain_replication/original_import_stage.py"
+    },
+    {
+      "baseline_origin": null,
+      "baseline_sha256": null,
+      "baseline_snapshot": null,
+      "candidate": "owned_io.py",
+      "changed": true,
+      "sha256": "1d8089f866f8026e2be247b04305433f0b88d4816694b0ad9574ecd568053e42",
+      "target": "tradingagents/research/onchain_replication/owned_io.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/provenance.py",
+      "baseline_sha256": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+      "baseline_snapshot": "baseline/provenance.py",
+      "candidate": "provenance.py",
+      "changed": true,
+      "sha256": "d29f7f5c2fc5d0def6538d3a1eb13dc051c672d8ea38257af333930f87b9ff1b",
+      "target": "tradingagents/research/onchain_replication/provenance.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/resource_binding.py",
+      "baseline_sha256": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d",
+      "baseline_snapshot": "baseline/resource_binding.py",
+      "candidate": "resource_binding.py",
+      "changed": false,
+      "sha256": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d",
+      "target": "tradingagents/research/onchain_replication/resource_binding.py"
+    },
+    {
+      "baseline_origin": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/resource_fixture.py",
+      "baseline_sha256": "e1bc9dc0471ee898c08f638580f5c53f7c8b07df514010ed388906ba02ae5d31",
+      "baseline_snapshot": "baseline/resource_fixture.py",
+      "candidate": "resource_fixture.py",
+      "changed": true,
+      "sha256": "7d89ebdddffce1fdad230436156463d49d36641eb943b8b5bb81ebe5d32e8802",
+      "target": "tradingagents/research/onchain_replication/resource_fixture.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/score_batches.py",
+      "baseline_sha256": "715125e543edd383c4bdeab59d10f7a269faec18f3b5fd16af79013e1bb37555",
+      "baseline_snapshot": "baseline/score_batches.py",
+      "candidate": "score_batches.py",
+      "changed": true,
+      "sha256": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+      "target": "tradingagents/research/onchain_replication/score_batches.py"
+    },
+    {
+      "baseline_origin": "tradingagents/research/onchain_replication/score_tail.py",
+      "baseline_sha256": "b5e807e022349ca7e0d18c02512812932103865ba0779d641be6877995694870",
+      "baseline_snapshot": "baseline/score_tail.py",
+      "candidate": "score_tail.py",
+      "changed": true,
+      "sha256": "d18681b36e16bbca604346469d1cb79e14d2ebb1649108334c62356d9f6eb91e",
+      "target": "tradingagents/research/onchain_replication/score_tail.py"
+    }
+  ],
+  "remaining": [
+    "independent composed-source review",
+    "outer controlled launcher/final inventory",
+    "actual isolated committed source/runtime/input and two synthetic registrations",
+    "genuine guarded two-target success/failure/mutation proof"
+  ],
+  "schema_version": 1,
+  "status": "frozen-source-candidate-unadmitted"
+}

@@ -1,0 +1,67 @@
+--- a/tradingagents/research/onchain_replication/array_neighborhoods.py
++++ b/tradingagents/research/onchain_replication/array_neighborhoods.py
+@@ -5,6 +5,7 @@
+ validation internals and caller-retained prior outputs require separate admission.
+ No frozen configuration or existing consumer is changed by this component.
+ """
++from .owned_io import _cleanup,_close_after_failure,_release
+ import numpy as np
+ from threading import Lock
+ from .contracts import AttributedGraph
+@@ -39,8 +40,8 @@
+                 counts=np.bincount(endpoints,minlength=n)
+                 np.cumsum(counts,out=offsets[1:]); del counts
+                 self.offsets.append(offsets)
+-        except BaseException:
+-            self.close()
++        except BaseException as error:
++            _close_after_failure(self.close,error)
+             raise
+ 
+     def __enter__(self):
+@@ -48,7 +49,8 @@
+         return self
+ 
+     def __exit__(self,*exc):
+-        self.close()
++        if exc[1] is not None:_close_after_failure(self.close,exc[1])
++        else:_cleanup((self.close,))
+ 
+     def _open(self):
+         if self.closed:
+@@ -60,7 +62,10 @@
+         try:
+             self.orders=[]; self.offsets=[]; self.graph=None; self.closed=True
+         finally:
+-            self._lock.release()
++            def release():
++                try:self._lock.release()
++                except BaseException:self.closed=True;raise
++            _release(release)
+ 
+     def _blocks(self,node,direction):
+         start=int(self.offsets[direction][node]); stop=int(self.offsets[direction][node+1])
+@@ -103,7 +108,10 @@
+             indices,_=self._select(center,config)
+             return indices
+         finally:
+-            self._lock.release()
++            def release():
++                try:self._lock.release()
++                except BaseException:self.closed=True;raise
++            _release(release)
+ 
+     def neighborhood(self,center,config):
+         if not self._lock.acquire(blocking=False):
+@@ -111,7 +119,10 @@
+         try:
+             return self._neighborhood(center,config)
+         finally:
+-            self._lock.release()
++            def release():
++                try:self._lock.release()
++                except BaseException:self.closed=True;raise
++            _release(release)
+ 
+     def _neighborhood(self,center,config):
+         indices,selected=self._select(center,config); g=self.graph

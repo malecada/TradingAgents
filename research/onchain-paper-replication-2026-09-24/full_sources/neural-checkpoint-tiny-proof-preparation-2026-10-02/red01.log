@@ -1,0 +1,68 @@
+test_actual_training_checkpoint_and_exact_continuation_calls (__main__.Source.test_actual_training_checkpoint_and_exact_continuation_calls) ... FAIL
+test_all_modes_and_measurement_separation (__main__.Source.test_all_modes_and_measurement_separation) ... FAIL
+test_frozen_tolerances_cases_and_modes (__main__.Source.test_frozen_tolerances_cases_and_modes) ... FAIL
+test_limits_and_exclusive_no_pytest_path (__main__.Source.test_limits_and_exclusive_no_pytest_path) ... FAIL
+test_no_top_level_numerical_import_or_execution (__main__.Source.test_no_top_level_numerical_import_or_execution) ... FAIL
+
+======================================================================
+FAIL: test_actual_training_checkpoint_and_exact_continuation_calls (__main__.Source.test_actual_training_checkpoint_and_exact_continuation_calls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 26, in test_actual_training_checkpoint_and_exact_continuation_calls
+    text=ast.unparse(self.tree())
+                     ~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 6, in tree
+    p=HERE/'oracle01.py';self.assertTrue(p.exists(),'finite actual-model oracle missing');return ast.parse(p.read_bytes())
+                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : finite actual-model oracle missing
+
+======================================================================
+FAIL: test_all_modes_and_measurement_separation (__main__.Source.test_all_modes_and_measurement_separation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 21, in test_all_modes_and_measurement_separation
+    t=self.tree();functions={n.name:n for n in t.body if isinstance(n,ast.FunctionDef)}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 6, in tree
+    p=HERE/'oracle01.py';self.assertTrue(p.exists(),'finite actual-model oracle missing');return ast.parse(p.read_bytes())
+                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : finite actual-model oracle missing
+
+======================================================================
+FAIL: test_frozen_tolerances_cases_and_modes (__main__.Source.test_frozen_tolerances_cases_and_modes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 11, in test_frozen_tolerances_cases_and_modes
+    self.tree()
+    ~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 6, in tree
+    p=HERE/'oracle01.py';self.assertTrue(p.exists(),'finite actual-model oracle missing');return ast.parse(p.read_bytes())
+                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : finite actual-model oracle missing
+
+======================================================================
+FAIL: test_limits_and_exclusive_no_pytest_path (__main__.Source.test_limits_and_exclusive_no_pytest_path)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 30, in test_limits_and_exclusive_no_pytest_path
+    text=ast.unparse(self.tree());self.assertIn('os.O_EXCL',text);self.assertIn('os.O_NOFOLLOW',text)
+                     ~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 6, in tree
+    p=HERE/'oracle01.py';self.assertTrue(p.exists(),'finite actual-model oracle missing');return ast.parse(p.read_bytes())
+                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : finite actual-model oracle missing
+
+======================================================================
+FAIL: test_no_top_level_numerical_import_or_execution (__main__.Source.test_no_top_level_numerical_import_or_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 13, in test_no_top_level_numerical_import_or_execution
+    t=self.tree()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_source01.py", line 6, in tree
+    p=HERE/'oracle01.py';self.assertTrue(p.exists(),'finite actual-model oracle missing');return ast.parse(p.read_bytes())
+                         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : finite actual-model oracle missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (failures=5)

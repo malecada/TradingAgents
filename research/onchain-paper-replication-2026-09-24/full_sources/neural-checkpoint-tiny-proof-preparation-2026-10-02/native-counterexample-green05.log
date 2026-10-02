@@ -1,0 +1,42 @@
+PASS valid_control
+PASS correctness_missing_cases KeyError: 'cases'
+PASS correctness_wrong_cases RuntimeError: case order/execution flag differs
+PASS correctness_missing_phase_count KeyError: 'phase_markers'
+PASS correctness_wrong_phase_count RuntimeError: phase denominator differs
+PASS correctness_missing_phase_file RuntimeError: phase file denominator differs
+PASS correctness_wrong_phase_index RuntimeError: phase identity/order differs
+PASS correctness_wrong_phase_mode RuntimeError: phase identity/order differs
+PASS correctness_wrong_phase_phase RuntimeError: phase identity/order differs
+PASS correctness_wrong_intent_mode RuntimeError: arm intent identity differs
+PASS correctness_wrong_intent_run_id RuntimeError: arm intent identity differs
+PASS correctness_wrong_intent_source_commit RuntimeError: arm intent identity differs
+PASS correctness_wrong_intent_manifest_sha256 RuntimeError: arm intent identity differs
+PASS profile_false_missing_cases KeyError: 'cases'
+PASS profile_false_wrong_cases RuntimeError: case order/execution flag differs
+PASS profile_false_missing_phase_count KeyError: 'phase_markers'
+PASS profile_false_wrong_phase_count RuntimeError: phase denominator differs
+PASS profile_false_missing_phase_file RuntimeError: phase file denominator differs
+PASS profile_false_wrong_phase_index RuntimeError: phase identity/order differs
+PASS profile_false_wrong_phase_mode RuntimeError: phase identity/order differs
+PASS profile_false_wrong_phase_phase RuntimeError: phase identity/order differs
+PASS profile_false_wrong_intent_mode RuntimeError: arm intent identity differs
+PASS profile_false_wrong_intent_run_id RuntimeError: arm intent identity differs
+PASS profile_false_wrong_intent_source_commit RuntimeError: arm intent identity differs
+PASS profile_false_wrong_intent_manifest_sha256 RuntimeError: arm intent identity differs
+PASS profile_true_missing_cases KeyError: 'cases'
+PASS profile_true_wrong_cases RuntimeError: case order/execution flag differs
+PASS profile_true_missing_phase_count KeyError: 'phase_markers'
+PASS profile_true_wrong_phase_count RuntimeError: phase denominator differs
+PASS profile_true_missing_phase_file RuntimeError: phase file denominator differs
+PASS profile_true_wrong_phase_index RuntimeError: phase identity/order differs
+PASS profile_true_wrong_phase_mode RuntimeError: phase identity/order differs
+PASS profile_true_wrong_phase_phase RuntimeError: phase identity/order differs
+PASS profile_true_wrong_intent_mode RuntimeError: arm intent identity differs
+PASS profile_true_wrong_intent_run_id RuntimeError: arm intent identity differs
+PASS profile_true_wrong_intent_source_commit RuntimeError: arm intent identity differs
+PASS profile_true_wrong_intent_manifest_sha256 RuntimeError: arm intent identity differs
+PASS coordinator_intent_wrong_source_commit RuntimeError: coordinator source/manifest identity differs
+PASS coordinator_intent_wrong_manifest_sha256 RuntimeError: coordinator source/manifest identity differs
+PASS coordinator_terminal_wrong_source_commit RuntimeError: coordinator source/manifest identity differs
+PASS coordinator_terminal_wrong_manifest_sha256 RuntimeError: coordinator source/manifest identity differs
+{"cases": 41, "unexpected_accepts": 0, "unexpected_rejections": 0, "passed": true}

@@ -1,0 +1,28 @@
+--- a/tradingagents/research/onchain_replication/provenance.py
++++ b/tradingagents/research/onchain_replication/provenance.py
+@@ -5,6 +5,7 @@
+ import json
+ from pathlib import Path
+ import re
++from .owned_io import _closing,_release
+ 
+ 
+ def canonical_bytes(value) -> bytes:
+@@ -18,7 +19,7 @@
+ 
+ def file_hash(path: Path) -> str:
+     h = hashlib.sha256()
+-    with path.open('rb') as stream:
++    with _closing(path.open('rb')) as stream:
+         for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+             h.update(chunk)
+     return h.hexdigest()
+@@ -47,7 +48,7 @@
+     try:
+         os.fsync(fd)
+     finally:
+-        os.close(fd)
++        _release(lambda:os.close(fd))
+ 
+ 
+ def durable_mkdir(path: Path) -> None:

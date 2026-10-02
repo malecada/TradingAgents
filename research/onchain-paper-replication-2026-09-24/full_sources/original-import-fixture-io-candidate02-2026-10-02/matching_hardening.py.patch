@@ -1,0 +1,68 @@
+--- a/tradingagents/research/onchain_replication/matching_hardening.py
++++ b/tradingagents/research/onchain_replication/matching_hardening.py
+@@ -7,6 +7,7 @@
+ """
+ from pathlib import Path
+ import hashlib,json,os
++from . import score_batches as io
+ import numpy as np
+ FIELDS={'version','safe','phase','shape','input_sha256','max_pair_entries','max_explicit_bytes','cursor','pairs','order'}
+ META_FIELDS=FIELDS-{'order'}|{'order_sha256','order_bytes'}
+@@ -20,13 +21,13 @@
+         raise ValueError('rank numeric capacity exceeded')
+ def sha(path):
+     h=hashlib.sha256()
+-    with Path(path).open('rb') as f:
++    with io._opened(Path(path),'rb') as f:
+         while b:=f.read(1024**2):h.update(b)
+     return h.hexdigest()
+ def sync(path):
+     fd=os.open(path,os.O_RDONLY|os.O_DIRECTORY)
+     try:os.fsync(fd)
+-    finally:os.close(fd)
++    finally: io._release(lambda: os.close(fd))
+ def body(d):return (json.dumps(d,sort_keys=True,separators=(',',':'))+'\n').encode()
+ 
+ 
+@@ -72,8 +73,8 @@
+     s['safe']=False
+     order=s.get('order')
+     mapping=getattr(order,'_mmap',None)
+-    if mapping is not None:mapping.close()
+     s['order']=None
++    if mapping is not None:io._cleanup((mapping.close,))
+ 
+ 
+ def _accept(s,index,rows,cols):
+@@ -105,17 +106,17 @@
+     if len(body(meta|{'order_sha256':'0'*64,'order_bytes':s['order'].nbytes+128}))>LIMIT:raise ValueError('metadata allowance exceeded')
+     directory=Path(directory);directory.mkdir(exist_ok=False);sync(directory.parent)
+     path=directory/'order.npy'
+-    with path.open('xb') as f:np.save(f,s['order'],allow_pickle=False);f.flush();os.fsync(f.fileno())
++    with io._opened(path,'xb') as f:np.save(f,s['order'],allow_pickle=False);f.flush();os.fsync(f.fileno())
+     if path.stat().st_size!=s['order'].nbytes+128:raise ValueError('NPY extent differs')
+     meta.update(order_sha256=sha(path),order_bytes=path.stat().st_size);raw=body(meta)
+-    with (directory/'manifest.json').open('xb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
++    with io._opened(directory/'manifest.json','xb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
+     sync(directory);return hashlib.sha256(raw).hexdigest()
+ 
+ 
+ def load(directory,*,expected_sha256,input_sha256,max_pair_entries,max_explicit_bytes):
+     directory=Path(directory);manifest=directory/'manifest.json';path=directory/'order.npy'
+     if directory.is_symlink() or manifest.is_symlink() or not manifest.is_file() or manifest.stat().st_size>LIMIT or sha(manifest)!=expected_sha256:raise ValueError('manifest identity differs')
+-    d=json.loads(manifest.read_bytes())
++    d=json.loads(io._read_path(manifest,LIMIT))
+     if not isinstance(d,dict) or set(d)!=META_FIELDS or d['input_sha256']!=input_sha256 or d['max_pair_entries']!=max_pair_entries or d['max_explicit_bytes']!=max_explicit_bytes:raise ValueError('schema, input or policy differs')
+     shape=d['shape']
+     if not isinstance(shape,list) or len(shape)!=2 or any(type(v) is not int or v<0 for v in shape):raise ValueError('invalid shape')
+@@ -129,8 +130,6 @@
+         d['order']=order;check(d);return d
+     except BaseException as error:
+         mapping=getattr(order,'_mmap',None)
+-        if mapping is not None:
+-            try:mapping.close()
+-            except BaseException as cleanup_error:
+-                error.add_note('Mapped-order cleanup also failed: '+type(cleanup_error).__name__)
++        d['order']=None
++        if mapping is not None:io._close_after_failure(mapping.close,error)
+         raise

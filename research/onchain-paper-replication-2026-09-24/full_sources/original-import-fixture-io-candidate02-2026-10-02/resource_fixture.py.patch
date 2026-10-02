@@ -1,0 +1,8 @@
+--- a/tradingagents/research/onchain_replication/resource_fixture.py
++++ b/tradingagents/research/onchain_replication/resource_fixture.py
+@@ -231,4 +231,5 @@
+     def observation():summary['storage_observation']=watch.check()
+     actions=[observation,lambda:run.write_json(item['binding_output'],terminal),lambda:run.write_json(item['journal_output'],terminal),lambda:run.write_json('cell-ledger.json',rows),lambda:run.write_json('resource-summary.json',summary)]
+     retained_actions(primary,actions,import_metadata.close_actions)
++    if primary is not None:raise primary
+     return rows

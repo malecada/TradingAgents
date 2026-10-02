@@ -1,0 +1,15 @@
+test_later_actual_fatal_is_not_swallowed_by_ordinary_primary (__main__.Cleanup.test_later_actual_fatal_is_not_swallowed_by_ordinary_primary) ... FAIL
+
+======================================================================
+FAIL: test_later_actual_fatal_is_not_swallowed_by_ordinary_primary (__main__.Cleanup.test_later_actual_fatal_is_not_swallowed_by_ordinary_primary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-checkpoint-tiny-proof-preparation-2026-10-02/test_cleanup02.py", line 9, in test_later_actual_fatal_is_not_swallowed_by_ordinary_primary
+    with self.assertRaises(MemoryError) as caught:ns['close_once']((fail,),primary)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: MemoryError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=1)

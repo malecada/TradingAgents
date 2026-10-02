@@ -1,0 +1,17 @@
+--- a/tradingagents/research/onchain_replication/compact_pair_log.py
++++ b/tradingagents/research/onchain_replication/compact_pair_log.py
+@@ -260,7 +260,7 @@
+             and digest.hexdigest() == terminal['payload_sha256'], 'compact terminal replay differs')
+         lease(); io._root(root, fd)
+         final = [0, 0, 0]; count = 0
+-        with os.scandir(fd) as entries:
++        with io._closing(os.scandir(fd)) as entries:
+             for entry in entries:
+                 count += 1
+                 require(count <= chunks + 2, 'unexpected compact log inventory')
+@@ -275,4 +275,4 @@
+         io._root(root, fd)
+         return {**state, 'status': terminal['status'], 'record_bytes': total,
+                 'chunks': chunks, 'unacknowledged_bytes': size - events * RECORD_BYTES}
+-    finally: os.close(fd)
++    finally: io._release(lambda: os.close(fd))

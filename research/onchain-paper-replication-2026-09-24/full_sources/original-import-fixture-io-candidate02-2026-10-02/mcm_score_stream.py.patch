@@ -1,0 +1,41 @@
+--- a/tradingagents/research/onchain_replication/mcm_score_stream.py
++++ b/tradingagents/research/onchain_replication/mcm_score_stream.py
+@@ -62,8 +62,7 @@
+         parent, parent_fd = batch._open(root.parent)
+         try:
+             os.fsync(parent_fd); batch._root(parent, parent_fd)
+-        finally:
+-            os.close(parent_fd)
++        finally: batch._release(lambda: os.close(parent_fd))
+         self.root, self.fd = batch._open(root)
+         try:
+             self.batches = batch.ScoreBatches(root / 'batches', scope=self.scope, owner=owner,
+@@ -115,8 +114,7 @@
+             require(batch._hash(header) == link['batch_header_sha256']
+                 and payload == item['values'].tobytes(), 'sealed score bytes/header differ')
+             batch._root(root, fd)
+-        finally:
+-            os.close(fd)
++        finally: batch._release(lambda: os.close(fd))
+         return link
+ 
+     def _history_check(self, terminal, complete_raw):
+@@ -139,7 +137,7 @@
+             directory, fd = batch._open(root)
+             try:
+                 seen = 0
+-                with os.scandir(fd) as entries:
++                with batch._closing(os.scandir(fd)) as entries:
+                     for entry in entries:
+                         seen += 1; match = re.fullmatch(pattern, entry.name)
+                         require(seen <= expected + self.batches.chunks and (entry.name in fixed
+@@ -147,8 +145,7 @@
+                             'unexpected stream inventory')
+                 require(seen == expected + self.batches.chunks, 'incomplete stream inventory')
+                 batch._root(directory, fd)
+-            finally:
+-                os.close(fd)
++            finally: batch._release(lambda: os.close(fd))
+         require(batch._read(self.fd, 'complete.json', batch.META_LIMIT) == complete_raw,
+                 'stream completion changed during verification')
+         batch._root(self.root, self.fd)

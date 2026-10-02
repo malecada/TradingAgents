@@ -1,0 +1,34 @@
+--- a/tradingagents/research/onchain_replication/compact_mcm_publication.py
++++ b/tradingagents/research/onchain_replication/compact_mcm_publication.py
+@@ -25,7 +25,13 @@
+     require(type(owner) is owners.Owner, 'actual compact owner required')
+     require(owner._transition.acquire(blocking=False), 'concurrent compact output transition')
+     try: yield
+-    finally: owner._transition.release()
++    except BaseException:
++        owner.poisoned=True;raise
++    finally:
++        def release():
++            try:owner._transition.release()
++            except BaseException:owner.poisoned=True;raise
++        io._release(release)
+ 
+ 
+ def _output_policy(owner, output_input, pairs):
+@@ -127,14 +133,14 @@
+     try:
+         parent, fd = io._open(attempt.parent)
+         try: os.fsync(fd); io._root(parent, fd)
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+         artifact = output.publish(attempt / 'artifact', **args, lease=lease)
+         owner.boundary(); lease()
+         root, fd = io._open(attempt)
+         try:
+             ref = io._write(fd, 'receipt.json', io._json(proof | {'artifact_sha256': artifact}))
+             _verify(attempt, args, proof, lease, ref); io._root(root, fd)
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+         return {'directory': str(attempt), 'receipt_sha256': ref, 'artifact_sha256': artifact}
+     except BaseException:
+         owner.poisoned = True; raise

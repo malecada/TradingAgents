@@ -1,0 +1,91 @@
+--- a/tradingagents/research/onchain_replication/compact_mcm.py
++++ b/tradingagents/research/onchain_replication/compact_mcm.py
+@@ -207,7 +207,13 @@
+         owner = _owner(self._dictionary)
+         require(owner._transition.acquire(blocking=False),'concurrent MCM check')
+         try: self._check()
+-        finally: owner._transition.release()
++        except BaseException:
++            owner.poisoned=True;raise
++        finally:
++            def release():
++                try:owner._transition.release()
++                except BaseException:owner.poisoned=True;raise
++            io._release(release)
+ 
+ 
+ def produce(dictionary, *, graph_hash, input_name, output_input):
+@@ -301,47 +307,32 @@
+         result = Produced(dictionary,graph,stage,matrix,policy,start,record,root,inode,reference)
+         result._check(); return result
+     except BaseException as primary:
+-        cleanup = []
+-        if claimed:
+-            try:
+-                if stream is not None and not stream.closed:
+-                    try: stream.close()
+-                    except BaseException as failure: cleanup.append(failure)
+-                if log is not None and not log.closed:
+-                    try: log.fail('MCM producer failed')
+-                    except BaseException as failure:
+-                        if isinstance(failure, io.CleanupFailure): cleanup.append(failure)
+-                        primary.add_note('Failed MCM log terminal: '+repr(failure))
+-                        try: log.close()
+-                        except BaseException as failure: cleanup.append(failure)
+-            finally:
+-                owner.poisoned = True
+-                if fd is not None:
+-                    try: io._write(fd,'failed.json',io._json({'schema_version':1,'status':'failed','owner':owner.identity}))
+-                    except (OSError,ValueError) as failure: primary.add_note('Failed MCM marker: '+repr(failure))
+-            if cleanup:
+-                fatal = compact_matcher.CleanupFailure('MCM producer cleanup unresolved; worker must stop')
+-                for failure in cleanup: fatal.add_note(repr(failure))
+-                raise fatal from primary
++        owner.poisoned=True
++        actions=[]
++        if stream is not None and not stream.closed:actions.append(stream.close)
++        if log is not None and not log.closed:
++            actions.append(lambda:log.fail('MCM producer failed'))
++            actions.append(log.close)
++        if claimed and fd is not None:
++            actions.append(lambda:io._write(fd,'failed.json',io._json({'schema_version':1,'status':'failed','owner':owner.identity})))
++        io._cleanup(actions,primary=primary)
+         raise
+     finally:
+-        primary = sys.exception()
+         if fd is not None:
+-            try: io._cleanup((lambda: os.close(fd),))
+-            except BaseException as cleanup:
+-                owner.poisoned = True
+-                # Never retry the ambiguous fd. A fresh descriptor may mark
+-                # only the original pinned attempt, retaining successful
+-                # outputs if cleanup failed after the return was prepared.
+-                try:
+-                    path, fresh = io._open(root)
+-                    try:
+-                        info = os.fstat(fresh)
+-                        require(inode == (info.st_dev,info.st_ino),'MCM failed attempt inode changed')
+-                        if not compact_owner.present(root/'failed.json'):
+-                            io._write(fresh,'failed.json',io._json({'schema_version':1,'status':'failed','owner':owner.identity}))
+-                        io._root(path,fresh)
+-                    finally: io._cleanup((lambda: os.close(fresh),))
+-                except BaseException as marker_error: cleanup.add_note('Failure marker: '+repr(marker_error))
+-                if primary is not None: raise cleanup from primary
+-                raise
++            owned_fd=fd;fd=None
++            def close_owned():
++                try:os.close(owned_fd)
++                except BaseException as close_error:
++                    owner.poisoned=True
++                    def marker():
++                        path,fresh=io._open(root)
++                        try:
++                            info=os.fstat(fresh)
++                            require(inode==(info.st_dev,info.st_ino),'MCM failed attempt inode changed')
++                            if not compact_owner.present(root/'failed.json'):
++                                io._write(fresh,'failed.json',io._json({'schema_version':1,'status':'failed','owner':owner.identity}))
++                            io._root(path,fresh)
++                        finally:io._release(lambda:os.close(fresh))
++                    io._close_after_failure(marker,close_error)
++                    raise
++            io._release(close_owned)

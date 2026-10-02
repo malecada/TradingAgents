@@ -1,0 +1,157 @@
+--- a/tradingagents/research/onchain_replication/compact_mcm_output.py
++++ b/tradingagents/research/onchain_replication/compact_mcm_output.py
+@@ -54,24 +54,24 @@
+     return start
+ 
+ 
+-def _chunks(args, start):
+-    root, fd = io._open(args['stage_root'] / 'stream/batches')
+-    try:
+-        count = start['rows'] * start['motifs']; chunk = start['chunk_cells']
+-        for index, offset in enumerate(range(0, count, chunk)):
+-            size = min(chunk, count - offset)
+-            raw = io._read(fd, f'chunk-{index:012d}.bin', size * 8)
+-            header, _ = stages.read(root, f'chunk-{index:012d}.json')
+-            require(len(raw) == size * 8 and io._hash(raw) == header['payload_sha256'],
+-                    'MCM source score bytes differ')
+-            # O(chunk) scratch, including raw bytes, conversion and byte copies;
+-            # this is not an exact scratch/RSS reservation.
+-            with np.errstate(over='raise', invalid='raise'):
+-                values = np.frombuffer(raw, dtype='<f8').astype('<f4')
+-            require(np.isfinite(values).all(), 'nonfinite MCM output')
+-            io._root(root, fd)
+-            yield values.tobytes()
+-    finally: os.close(fd)
++@contextmanager
++def _chunks(args,start):
++    root,fd=io._open(args['stage_root']/'stream/batches')
++    try:
++        def pieces():
++            count=start['rows']*start['motifs'];chunk=start['chunk_cells']
++            for index,offset in enumerate(range(0,count,chunk)):
++                size=min(chunk,count-offset)
++                raw=io._read(fd,f'chunk-{index:012d}.bin',size*8)
++                header,_=stages.read(root,f'chunk-{index:012d}.json')
++                require(len(raw)==size*8 and io._hash(raw)==header['payload_sha256'],'MCM source score bytes differ')
++                with np.errstate(over='raise',invalid='raise'):
++                    values=np.frombuffer(raw,dtype='<f8').astype('<f4')
++                require(np.isfinite(values).all(),'nonfinite MCM output')
++                io._root(root,fd)
++                yield values.tobytes()
++        yield pieces()
++    finally:io._release(lambda:os.close(fd))
+ 
+ 
+ def _manifest(args, start, digest):
+@@ -91,7 +91,7 @@
+                 'MCM output regular extent differs')
+         return child, io._signature(info)
+     except BaseException:
+-        os.close(child); raise
++        io._release(lambda:os.close(child)); raise
+ 
+ 
+ def _inspect(directory, expected_sha256, args):
+@@ -104,26 +104,27 @@
+         stages.inventory(root, {'matrix.f32', 'manifest.json'})
+         child, signature = _file(fd, 4 * start['rows'] * start['motifs'])
+         try:
+-            for expected in _chunks(args, start):
+-                # Regular-file reads can be short; consume exactly this chunk.
+-                remaining = len(expected); pieces = []
+-                while remaining:
+-                    part = os.read(child, remaining)
+-                    require(bool(part), 'MCM output truncated')
+-                    pieces.append(part); remaining -= len(part)
+-                actual = b''.join(pieces)
+-                require(actual == expected, 'MCM output differs from completed matching scores')
+-                digest.update(actual)
++            with _chunks(args,start) as pieces:
++                for expected in pieces:
++                    # Regular-file reads can be short; consume exactly this chunk.
++                    remaining = len(expected); pieces = []
++                    while remaining:
++                        part = os.read(child, remaining)
++                        require(bool(part), 'MCM output truncated')
++                        pieces.append(part); remaining -= len(part)
++                    actual = b''.join(pieces)
++                    require(actual == expected, 'MCM output differs from completed matching scores')
++                    digest.update(actual)
+             require(signature == io._signature(os.fstat(child)) == io._signature(
+                 os.stat('matrix.f32', dir_fd=fd, follow_symlinks=False)), 'MCM output identity changed')
+-        finally: os.close(child)
++        finally: io._release(lambda: os.close(child))
+         require(value == _manifest(args, start, digest.hexdigest())
+             and raw == io._json(value), 'MCM output metadata binding differs')
+         require(_source(args) == start, 'MCM stage changed during output verification')
+         require(io._read(fd, 'manifest.json', io.META_LIMIT) == raw, 'MCM output manifest changed')
+         stages.inventory(root, {'matrix.f32', 'manifest.json'}); io._root(root, fd)
+         return value, signature
+-    finally: os.close(fd)
++    finally: io._release(lambda: os.close(fd))
+ 
+ 
+ def _verified(directory, expected_sha256, args, lease):
+@@ -145,28 +146,29 @@
+     lease(); root.mkdir()
+     parent, parent_fd = io._open(root.parent)
+     try: os.fsync(parent_fd); io._root(parent, parent_fd)
+-    finally: os.close(parent_fd)
++    finally: io._release(lambda: os.close(parent_fd))
+     root, fd = io._open(root)
+     try:
++        digest = hashlib.sha256()
+         child = os.open('matrix.f32', os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                         0o600, dir_fd=fd)
+-        digest = hashlib.sha256()
+-        with os.fdopen(child, 'wb', buffering=0) as output:
+-            for raw in _chunks(args, start):
+-                lease(); io._root(root, fd)
+-                view = memoryview(raw)
+-                while view:
+-                    written = output.write(view)
+-                    require(written is not None and written > 0, 'MCM output short write')
+-                    view = view[written:]
+-                digest.update(raw)
+-            os.fsync(output.fileno())
++        try:
++            with _chunks(args,start) as pieces:
++                for raw in pieces:
++                    lease();io._root(root,fd)
++                    view=memoryview(raw)
++                    while view:
++                        written=os.write(child,view)
++                        require(written>0,'MCM output short write');view=view[written:]
++                    digest.update(raw)
++                os.fsync(child)
++        finally:io._release(lambda:os.close(child))
+         os.fsync(fd); lease()
+         require(_source(args) == start, 'MCM stage changed during output publication')
+         ref = io._write(fd, 'manifest.json', io._json(_manifest(args, start, digest.hexdigest())))
+         _verified(root, ref, args, lease); io._root(root, fd)
+         return ref
+-    finally: os.close(fd)
++    finally: io._release(lambda: os.close(fd))
+ 
+ 
+ def verify(directory, *, expected_sha256, stage_root, stage_sha256, contract,
+@@ -188,7 +190,9 @@
+     root, fd = io._open(directory)
+     try:
+         child, current = _file(fd, value['array_bytes'])
+-        with os.fdopen(child, 'rb') as source:
++        source=None
++        try:
++            source=os.fdopen(child,'rb',closefd=False)
+             require(current == signature, 'MCM mapped file changed since verification')
+             mapped = np.memmap(source, dtype='<f4', mode='r', shape=(value['rows'], value['motifs']))
+             try:
+@@ -202,5 +206,6 @@
+                     == io._signature(os.stat('matrix.f32', dir_fd=fd, follow_symlinks=False)),
+                     'MCM mapped inode changed during exit verification')
+                 io._root(root, fd)
+-            finally: mapped._mmap.close()
+-    finally: os.close(fd)
++            finally: io._release(mapped._mmap.close)
++        finally:io._cleanup((() if source is None else (source.close,))+(lambda:os.close(child),))
++    finally: io._release(lambda: os.close(fd))

@@ -1,0 +1,36 @@
+--- a/tradingagents/research/onchain_replication/matching_checkpoint.py
++++ b/tradingagents/research/onchain_replication/matching_checkpoint.py
+@@ -6,6 +6,7 @@
+ """
+ from pathlib import Path
+ import hashlib,json
++from . import score_batches as io
+ import numpy as np
+ from tradingagents.research.onchain_replication.matching import MatchScore
+ from . import matching_annealing as ann
+@@ -114,14 +115,14 @@
+     if s['hardening'] is not None:hard_sha=hard.save(s['hardening'],directory/'hardening',max_checkpoint_bytes=hard_allowance)
+     meta={k:s[k] for k in ('version','phase','policy','matrix_sha256')};meta.update(annealing_sha256=inner_sha,hardening_sha256=hard_sha);raw=ann.body(meta)
+     if len(raw)>LIMIT:raise ValueError('outer manifest allowance exceeded')
+-    with (directory/'manifest.json').open('xb') as f:f.write(raw);f.flush();ann.os.fsync(f.fileno())
++    with io._opened(directory/'manifest.json','xb') as f:f.write(raw);f.flush();ann.os.fsync(f.fileno())
+     ann.sync(directory);return hashlib.sha256(raw).hexdigest()
+ 
+ 
+ def load(directory,a,b,c,*,expected_sha256,max_state_bytes,normalization_chunk_entries=65536,hardening_chunk_entries=65536,hardening_buffer_bytes=80*1024**2):
+     directory=Path(directory);manifest=directory/'manifest.json'
+     if directory.is_symlink() or manifest.is_symlink() or not manifest.is_file() or manifest.stat().st_size>LIMIT or ann.sha(manifest)!=expected_sha256:raise ValueError('outer manifest identity differs')
+-    meta=json.loads(manifest.read_bytes());n,m=len(a.node_ids),len(b.node_ids)
++    meta=json.loads(io._read_path(manifest,LIMIT));n,m=len(a.node_ids),len(b.node_ids)
+     p=policy(n,m,c,max_state_bytes=max_state_bytes,normalization_chunk_entries=normalization_chunk_entries,hardening_chunk_entries=hardening_chunk_entries,hardening_buffer_bytes=hardening_buffer_bytes)
+     if not isinstance(meta,dict) or set(meta)!=MANIFEST_FIELDS or type(meta['version']) is not int or meta['version']!=3 or meta['policy']!=p or meta['phase'] not in ('annealing','hardening','done'):raise ValueError('outer schema or policy differs')
+     if meta['phase']=='annealing' and (meta['hardening_sha256'] is not None or meta['matrix_sha256'] is not None):raise ValueError('unexpected pre-ranking metadata')
+@@ -134,7 +135,5 @@
+             inner['M'].flags.writeable=False
+         s=dict(version=3,safe=True,phase=meta['phase'],policy=p,annealing=inner,hardening=h,matrix_sha256=meta['matrix_sha256']);check(s,a,b,c);return s
+     except BaseException as error:
+-        if h is not None:
+-            try:hard.close(h)
+-            except BaseException as cleanup_error:error.add_note('Ranked-state cleanup also failed: '+type(cleanup_error).__name__)
++        if h is not None:io._close_after_failure(lambda:hard.close(h),error)
+         raise
