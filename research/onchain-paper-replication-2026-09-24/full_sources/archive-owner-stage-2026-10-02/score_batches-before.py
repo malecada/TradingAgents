@@ -12,7 +12,6 @@ import os
 from pathlib import Path
 import re
 import stat
-import sys
 
 import numpy as np
 
@@ -43,13 +42,6 @@ def _close_after_failure(close, primary):
         fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')
         if fatal is not error: fatal.add_note(repr(error))
         raise fatal from primary
-
-
-def _release(close):
-    """Close an owned read resource once, retaining any primary failure."""
-    primary = sys.exception()
-    if primary is None: _cleanup((close,))
-    else: _close_after_failure(close, primary)
 
 
 def _require(condition, message):
@@ -118,19 +110,13 @@ def _stamp(name, info):
 
 def _read(fd, name, limit, observations=None):
     child = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=fd)
-    stream = None
-    try:
-        # Keep descriptor ownership explicit even if fdopen construction fails.
-        stream = os.fdopen(child, 'rb', closefd=False)
+    with os.fdopen(child, 'rb') as stream:
         before = os.fstat(stream.fileno())
         _require(stat.S_ISREG(before.st_mode) and before.st_nlink == 1
                  and before.st_size <= limit, 'score file type/size')
         raw = stream.read(limit + 1)
         after = os.fstat(stream.fileno())
         current = os.stat(name, dir_fd=fd, follow_symlinks=False)
-    finally:
-        actions = (() if stream is None else (stream.close,)) + (lambda: os.close(child),)
-        _release(lambda: _cleanup(actions))
     _require(len(raw) == before.st_size and _signature(before) == _signature(after)
              and _signature(current) == _signature(after),
              'score file changed during read')
@@ -344,4 +330,4 @@ def verify(root, *, scope, owner, terminal_sha256, lease):
         return {'status': terminal['status'], 'cells': cells, 'chunks': chunks,
                 'payload_bytes': cells * 8, 'pending_files': sorted(names)}
     finally:
-        _release(lambda: os.close(fd))
+        os.close(fd)

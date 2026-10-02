@@ -15,6 +15,7 @@ import sys
 
 from . import archive_pair_reader as reader, compact_stage as local, compact_policy
 from .cache import cache_key
+from .provenance import freeze
 
 io = reader.io
 require = io._require
@@ -58,7 +59,8 @@ def _trees(root, ref_fd, count, start_sha, policy):
 
 def verify(root, *, owner, scope, policy, kind, pairs, log_terminal_sha256,
            stream_terminal_sha256, archive_complete_sha256, archive_policy,
-           attempt, transport, lease, max_read_metadata_bytes, max_stage_bytes):
+           attempt, transport, lease, max_read_metadata_bytes, max_stage_bytes,
+           on_verified=None):
     """Verify all archived events and join actual local scientific payloads."""
     root = reader.archive._path(root); attempt = reader.archive._fresh(attempt)
     policy = json.loads(io._json(policy));archive_policy = json.loads(io._json(archive_policy))
@@ -67,6 +69,7 @@ def verify(root, *, owner, scope, policy, kind, pairs, log_terminal_sha256,
     io._identity(owner); scope = reader.events._scope(scope)
     for ref in (log_terminal_sha256,archive_complete_sha256):io._identity(ref)
     require(callable(lease),'archived stage live lease required')
+    require(on_verified is None or callable(on_verified),'archived stage finalizer must be callable')
     capacity = compact_policy.validate(policy,kind=kind,pairs=pairs)
     require((kind == 'mcm') == (stream_terminal_sha256 is not None),'archived stream kind differs')
     if stream_terminal_sha256 is not None:io._identity(stream_terminal_sha256)
@@ -165,7 +168,11 @@ def verify(root, *, owner, scope, policy, kind, pairs, log_terminal_sha256,
 
             live();result = inspect()
             raw = io._json(result);io._write(fd,'complete.json',raw)
-            live();require(inspect() == result,'archived stage changed after publication')
+            live()
+            # The finalizer may close a reserved read lease. Its publication is
+            # provisional until the callback-free join and cleanup below pass.
+            if on_verified is not None:on_verified(freeze(result))
+            require(inspect() == result,'archived stage changed after publication')
             reader.archive._inventory(fd,{'intent.json','checkpoint-references.bin','events','complete.json'})
             require(io._read(fd,'complete.json',io.META_LIMIT) == raw,'archived stage completion changed')
             return result

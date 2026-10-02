@@ -1,0 +1,37 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______ test_actual_reserved_stage_read_joins_writer_once[writer_matching] ______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x72085377f380>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x72085377ee40>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7208535aaea0>
+
+    def test_actual_reserved_stage_read_joins_writer_once(admitted,monkeypatch):
+>       from tradingagents.research.onchain_replication import archive_owner_stage as module
+E       ImportError: cannot import name 'archive_owner_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_stage.py:29: ImportError
+____ test_corrupt_archive_spends_read_and_preserves_writer[writer_matching] ____
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7208537cf750>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7208537cee90>)
+
+    def test_corrupt_archive_spends_read_and_preserves_writer(admitted):
+>       from tradingagents.research.onchain_replication import archive_owner_stage as module
+E       ImportError: cannot import name 'archive_owner_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_stage.py:47: ImportError
+__ test_completion_callback_mutation_retains_both_terminals[writer_matching] ___
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x720853338550>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7208537ced50>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7209af92f100>
+
+    def test_completion_callback_mutation_retains_both_terminals(admitted,monkeypatch):
+>       from tradingagents.research.onchain_replication import archive_owner_stage as module
+E       ImportError: cannot import name 'archive_owner_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_stage.py:59: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_stage.py::test_actual_reserved_stage_read_joins_writer_once[writer_matching]
+FAILED tests/research/onchain_replication/test_archive_owner_stage.py::test_corrupt_archive_spends_read_and_preserves_writer[writer_matching]
+FAILED tests/research/onchain_replication/test_archive_owner_stage.py::test_completion_callback_mutation_retains_both_terminals[writer_matching]
+3 failed in 40.69s

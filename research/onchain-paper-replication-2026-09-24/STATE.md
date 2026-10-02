@@ -3,6 +3,48 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Latest handoff — October 2, reserved archived scientific read verified**:
+archive_owner_stage.verify consumes one finite reader claim on the actual active,
+unsealed owner stage. The completed writer reference is independently joined to
+archive scope, policy, matching iterations, exact/capacity pairs and required
+MCM graph. One actual remote replay joins checkpoint identities and score values.
+An immutable finalizer completes the claim before final callback-free content
+checks. The deterministic read directory is a journal sibling, outside strict
+stage and operation inventories. Source and read descriptors remain pinned
+through acknowledgement; failure retains spent reservations and poisons owner.
+This is an additive current-owner read boundary, not a producer switch, stage
+seal, post-owner-close authority or empirical admission.
+
+Evidence: full_sources/archive-owner-stage-2026-10-02/. red01 CLOSED8failed6.36s
+(missing hook); red02 CLOSED3failed40.69s (missing wrapper); check01
+CLOSED28passed173.37s/session47624exit0. Independent AOS1 found missing outer
+stage inventory/lifecycle checks; AOS2 found inherited reader cleanup errors
+were not fatal. review-red01 CLOSED7failed11deselected61.31s/session87150exit1
+reproduced outer-file insertion and six reachable close failures. review-red02
+CLOSED3failed0.18s reproduced shared metadata stream-close/constructor ownership.
+Predecessor sources/tests and all failure logs are retained. Corrected check02
+CLOSED87passed320.80s/session81151exit0 includes finalizer/owner integration,
+archived/local stage joins, matching and score readers. Separate shared-reader
+archive regressions CLOSED121passed6.55s/session61684exit0. Actual-owner tests
+cover dictionary stages; MCM/checkpoint joins use the generic scientific fixture.
+Synthetic filesystem transport and mocked guards; no new external transfer,
+financial fit or actual guarded resource pilot. No active process/source freeze.
+Independent REVIEW_FINAL accepts the bounded contract and closes AOS1/AOS2,
+SHA256 67f207888388f112b51739ef237923137d0cb70759f9023a7882fc6c037f5506.
+
+Predecessor1d16df2c2d25a7ff588792af5345d35a4446d36c is pushed and exact remote
+HEAD verified. Next safe action: finalize independent review and remote backup,
+then integrate explicit producer selection and archived stage seals/publication.
+Existing dictionary/MCM producers hold the owner transition and need explicit
+internal control flow; never call the public locking wrapper from that context.
+Current owner finish/publication/terminal checks still expect local event logs,
+and the terminal journal inventory needs an explicit archive route. Finite
+verification authority after owner closure, immutable upload charging, protocol/
+diagnostic bounds, local checkpoint/score retention and whole-workflow physical
+accounting remain required before resource/hub/budget admission. Coverage77/109,
+32open; all1420financial fits pending; draft60→61 remains unadopted. Latest local
+free21130547200B exceeds the10GiB floor. No historical job was relaunched.
+
 **Latest handoff — October 2, actual reserved archive writer accepted**:
 archive_owner_writer.run now consumes a durable current-owner writer claim and
 executes the actual ArchivePairLog under the captured owner transition. Bound

@@ -27,7 +27,7 @@ def read(root, name, expected=None):
         raw = io._read(fd, name, io.META_LIMIT); io._root(path, fd)
         if expected is not None: require(io._hash(raw) == expected, 'stage metadata hash differs')
         return json.loads(raw), io._hash(raw)
-    finally: io._release(lambda: os.close(fd))
+    finally: os.close(fd)
 
 
 def inventory(root, fixed, pattern=None, count=0):
@@ -42,7 +42,7 @@ def inventory(root, fixed, pattern=None, count=0):
                     or (match is not None and int(match[1]) < count)), 'unexpected stage inventory')
         require(seen == len(fixed) + count, 'incomplete stage inventory')
         io._root(path, fd)
-    finally: io._release(lambda: os.close(fd))
+    finally: os.close(fd)
 
 
 def checkpoint(root, frame, *, start_sha, policy, ordinal):
@@ -168,7 +168,7 @@ def stream(root, *, owner, scope, terminal, policy, pairs):
         try:
             require(io._read(fd, f'chunk-{index:012d}.bin', count * 8) == saved['values'].tobytes(),
                     'retained tail and score batch differ'); io._root(path, fd)
-        finally: io._release(lambda: os.close(fd))
+        finally: os.close(fd)
         for cell in range(count):
             scores.update(SCORE.pack(offset + cell, float(saved['values'][cell]), bytes(saved['purpose_hashes'][cell])))
         previous = ref

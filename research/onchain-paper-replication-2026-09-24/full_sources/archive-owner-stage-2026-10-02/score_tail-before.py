@@ -222,7 +222,7 @@ def verify(root, *, scope, owner, terminal_sha256, lease):
             'acknowledged_cells': acknowledged, 'pending_bytes': size - acknowledged * RECORD_BYTES,
             'values': values, 'purpose_hashes': purposes}
     finally:
-        batch._release(lambda: os.close(fd))
+        os.close(fd)
 
 
 def seal(root, *, terminal_sha256, batches, lease):

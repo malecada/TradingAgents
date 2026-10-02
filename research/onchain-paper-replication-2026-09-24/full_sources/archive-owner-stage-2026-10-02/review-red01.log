@@ -1,0 +1,541 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_____________ test_owned_read_close_uncertainty_is_fatal[metadata] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-114/test_owned_read_close_uncertai0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x734aa2e2f230>
+target = 'metadata'
+
+    @pytest.mark.parametrize('target',['metadata','checkpoint_file','checkpoint_root','score_inventory','score_batch','score_tail'])
+    def test_owned_read_close_uncertainty_is_fatal(tmp_path,monkeypatch,target):
+        import inspect
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd))
+            caller=inspect.currentframe().f_back
+            function=caller.f_code.co_name;filename=caller.f_code.co_filename
+            original(fd)
+            hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+                'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+                'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+            # The helper introduced by the fix changes the direct caller; inspect
+            # the full stack to preserve injection at the same owned boundary.
+            if not hit:
+                stack=inspect.stack()
+                hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'checkpoint_file':path.endswith('/M.npy'),
+                    'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                    'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+            if hit and not injected:
+                injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+        monkeypatch.setattr(module.os,'close',close)
+>       with pytest.raises(module.io.CleanupFailure):module.verify(root,**contract)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_stage.py:114: in verify
+    observed = reader.verify(root/'matching',expected_sha256=archive_complete_sha256,
+tradingagents/research/onchain_replication/archive_pair_reader.py:188: in verify
+    record = replay.verify(start_bytes=source.raw['start.json'],terminal_bytes=source.raw['terminal.json'],
+tradingagents/research/onchain_replication/archived_pair_log.py:77: in verify
+    if on_event is not None: on_event(frame)
+                             ^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:108: in visit
+    start,_ = local.read(root/'matching','start.json')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_stage.py:30: in read
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 16
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd))
+        caller=inspect.currentframe().f_back
+        function=caller.f_code.co_name;filename=caller.f_code.co_filename
+        original(fd)
+        hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+            'checkpoint_file':path.endswith('/M.npy'),
+            'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+            'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+            'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+            'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+        # The helper introduced by the fix changes the direct caller; inspect
+        # the full stack to preserve injection at the same owned boundary.
+        if not hit:
+            stack=inspect.stack()
+            hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+        if hit and not injected:
+>           injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic close uncertainty after actual close
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:67: OSError
+_________ test_owned_read_close_uncertainty_is_fatal[checkpoint_file] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-114/test_owned_read_close_uncertai1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x734aa2e2f100>
+target = 'checkpoint_file'
+
+    @pytest.mark.parametrize('target',['metadata','checkpoint_file','checkpoint_root','score_inventory','score_batch','score_tail'])
+    def test_owned_read_close_uncertainty_is_fatal(tmp_path,monkeypatch,target):
+        import inspect
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd))
+            caller=inspect.currentframe().f_back
+            function=caller.f_code.co_name;filename=caller.f_code.co_filename
+            original(fd)
+            hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+                'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+                'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+            # The helper introduced by the fix changes the direct caller; inspect
+            # the full stack to preserve injection at the same owned boundary.
+            if not hit:
+                stack=inspect.stack()
+                hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'checkpoint_file':path.endswith('/M.npy'),
+                    'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                    'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+            if hit and not injected:
+                injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+        monkeypatch.setattr(module.os,'close',close)
+>       with pytest.raises(module.io.CleanupFailure):module.verify(root,**contract)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_stage.py:114: in verify
+    observed = reader.verify(root/'matching',expected_sha256=archive_complete_sha256,
+tradingagents/research/onchain_replication/archive_pair_reader.py:188: in verify
+    record = replay.verify(start_bytes=source.raw['start.json'],terminal_bytes=source.raw['terminal.json'],
+tradingagents/research/onchain_replication/archived_pair_log.py:77: in verify
+    if on_event is not None: on_event(frame)
+                             ^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:109: in visit
+    local.checkpoint(root/'checkpoints',frame,start_sha=io._hash(io._json(start)),
+tradingagents/research/onchain_replication/compact_stage.py:68: in checkpoint
+    logical = matcher._snapshot(directory / 'state', meta['state_sha256'], intent['identity'], policy['pair'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:89: in _snapshot
+    _file(directory / relative, item['bytes'], item['sha256'])
+tradingagents/research/onchain_replication/compact_matcher.py:60: in _file
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 17
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd))
+        caller=inspect.currentframe().f_back
+        function=caller.f_code.co_name;filename=caller.f_code.co_filename
+        original(fd)
+        hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+            'checkpoint_file':path.endswith('/M.npy'),
+            'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+            'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+            'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+            'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+        # The helper introduced by the fix changes the direct caller; inspect
+        # the full stack to preserve injection at the same owned boundary.
+        if not hit:
+            stack=inspect.stack()
+            hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+        if hit and not injected:
+>           injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic close uncertainty after actual close
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:67: OSError
+_________ test_owned_read_close_uncertainty_is_fatal[checkpoint_root] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-114/test_owned_read_close_uncertai2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x734944e72d50>
+target = 'checkpoint_root'
+
+    @pytest.mark.parametrize('target',['metadata','checkpoint_file','checkpoint_root','score_inventory','score_batch','score_tail'])
+    def test_owned_read_close_uncertainty_is_fatal(tmp_path,monkeypatch,target):
+        import inspect
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd))
+            caller=inspect.currentframe().f_back
+            function=caller.f_code.co_name;filename=caller.f_code.co_filename
+            original(fd)
+            hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+                'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+                'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+            # The helper introduced by the fix changes the direct caller; inspect
+            # the full stack to preserve injection at the same owned boundary.
+            if not hit:
+                stack=inspect.stack()
+                hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'checkpoint_file':path.endswith('/M.npy'),
+                    'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                    'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+            if hit and not injected:
+                injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+        monkeypatch.setattr(module.os,'close',close)
+>       with pytest.raises(module.io.CleanupFailure):module.verify(root,**contract)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_stage.py:114: in verify
+    observed = reader.verify(root/'matching',expected_sha256=archive_complete_sha256,
+tradingagents/research/onchain_replication/archive_pair_reader.py:188: in verify
+    record = replay.verify(start_bytes=source.raw['start.json'],terminal_bytes=source.raw['terminal.json'],
+tradingagents/research/onchain_replication/archived_pair_log.py:77: in verify
+    if on_event is not None: on_event(frame)
+                             ^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:109: in visit
+    local.checkpoint(root/'checkpoints',frame,start_sha=io._hash(io._json(start)),
+tradingagents/research/onchain_replication/compact_stage.py:68: in checkpoint
+    logical = matcher._snapshot(directory / 'state', meta['state_sha256'], intent['identity'], policy['pair'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:75: in _snapshot
+    meta, total = metadata('manifest.json', state_sha)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_matcher.py:72: in metadata
+    finally: os.close(child_fd)
+             ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 17
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd))
+        caller=inspect.currentframe().f_back
+        function=caller.f_code.co_name;filename=caller.f_code.co_filename
+        original(fd)
+        hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+            'checkpoint_file':path.endswith('/M.npy'),
+            'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+            'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+            'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+            'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+        # The helper introduced by the fix changes the direct caller; inspect
+        # the full stack to preserve injection at the same owned boundary.
+        if not hit:
+            stack=inspect.stack()
+            hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+        if hit and not injected:
+>           injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic close uncertainty after actual close
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:67: OSError
+_________ test_owned_read_close_uncertainty_is_fatal[score_inventory] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-114/test_owned_read_close_uncertai3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7349453ffac0>
+target = 'score_inventory'
+
+    @pytest.mark.parametrize('target',['metadata','checkpoint_file','checkpoint_root','score_inventory','score_batch','score_tail'])
+    def test_owned_read_close_uncertainty_is_fatal(tmp_path,monkeypatch,target):
+        import inspect
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd))
+            caller=inspect.currentframe().f_back
+            function=caller.f_code.co_name;filename=caller.f_code.co_filename
+            original(fd)
+            hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+                'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+                'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+            # The helper introduced by the fix changes the direct caller; inspect
+            # the full stack to preserve injection at the same owned boundary.
+            if not hit:
+                stack=inspect.stack()
+                hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'checkpoint_file':path.endswith('/M.npy'),
+                    'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                    'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+            if hit and not injected:
+                injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+        monkeypatch.setattr(module.os,'close',close)
+>       with pytest.raises(module.io.CleanupFailure):module.verify(root,**contract)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_stage.py:114: in verify
+    observed = reader.verify(root/'matching',expected_sha256=archive_complete_sha256,
+tradingagents/research/onchain_replication/archive_pair_reader.py:188: in verify
+    record = replay.verify(start_bytes=source.raw['start.json'],terminal_bytes=source.raw['terminal.json'],
+tradingagents/research/onchain_replication/archived_pair_log.py:77: in verify
+    if on_event is not None: on_event(frame)
+                             ^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:109: in visit
+    local.checkpoint(root/'checkpoints',frame,start_sha=io._hash(io._json(start)),
+tradingagents/research/onchain_replication/compact_stage.py:71: in checkpoint
+    inventory(directory, {'intent.json', 'manifest.json', 'state'})
+tradingagents/research/onchain_replication/compact_stage.py:45: in inventory
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 16
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd))
+        caller=inspect.currentframe().f_back
+        function=caller.f_code.co_name;filename=caller.f_code.co_filename
+        original(fd)
+        hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+            'checkpoint_file':path.endswith('/M.npy'),
+            'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+            'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+            'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+            'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+        # The helper introduced by the fix changes the direct caller; inspect
+        # the full stack to preserve injection at the same owned boundary.
+        if not hit:
+            stack=inspect.stack()
+            hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+        if hit and not injected:
+>           injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic close uncertainty after actual close
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:67: OSError
+___________ test_owned_read_close_uncertainty_is_fatal[score_batch] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-114/test_owned_read_close_uncertai4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7349453fef10>
+target = 'score_batch'
+
+    @pytest.mark.parametrize('target',['metadata','checkpoint_file','checkpoint_root','score_inventory','score_batch','score_tail'])
+    def test_owned_read_close_uncertainty_is_fatal(tmp_path,monkeypatch,target):
+        import inspect
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd))
+            caller=inspect.currentframe().f_back
+            function=caller.f_code.co_name;filename=caller.f_code.co_filename
+            original(fd)
+            hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+                'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+                'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+            # The helper introduced by the fix changes the direct caller; inspect
+            # the full stack to preserve injection at the same owned boundary.
+            if not hit:
+                stack=inspect.stack()
+                hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'checkpoint_file':path.endswith('/M.npy'),
+                    'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                    'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+            if hit and not injected:
+                injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+        monkeypatch.setattr(module.os,'close',close)
+>       with pytest.raises(module.io.CleanupFailure):module.verify(root,**contract)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_stage.py:169: in verify
+    live();result = inspect()
+                    ^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:155: in inspect
+    scores,stream_start = local.stream(root/'stream',owner=owner,scope=scope,
+tradingagents/research/onchain_replication/compact_stage.py:142: in stream
+    batch_start, _ = read(root / 'batches', 'start.json', start['batch_start_sha256'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_stage.py:30: in read
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 14
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd))
+        caller=inspect.currentframe().f_back
+        function=caller.f_code.co_name;filename=caller.f_code.co_filename
+        original(fd)
+        hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+            'checkpoint_file':path.endswith('/M.npy'),
+            'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+            'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+            'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+            'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+        # The helper introduced by the fix changes the direct caller; inspect
+        # the full stack to preserve injection at the same owned boundary.
+        if not hit:
+            stack=inspect.stack()
+            hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+        if hit and not injected:
+>           injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic close uncertainty after actual close
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:67: OSError
+____________ test_owned_read_close_uncertainty_is_fatal[score_tail] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-114/test_owned_read_close_uncertai5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x734944ffe550>
+target = 'score_tail'
+
+    @pytest.mark.parametrize('target',['metadata','checkpoint_file','checkpoint_root','score_inventory','score_batch','score_tail'])
+    def test_owned_read_close_uncertainty_is_fatal(tmp_path,monkeypatch,target):
+        import inspect
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd))
+            caller=inspect.currentframe().f_back
+            function=caller.f_code.co_name;filename=caller.f_code.co_filename
+            original(fd)
+            hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+                'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+                'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+            # The helper introduced by the fix changes the direct caller; inspect
+            # the full stack to preserve injection at the same owned boundary.
+            if not hit:
+                stack=inspect.stack()
+                hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'checkpoint_file':path.endswith('/M.npy'),
+                    'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                    'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                    'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+            if hit and not injected:
+                injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+        monkeypatch.setattr(module.os,'close',close)
+>       with pytest.raises(module.io.CleanupFailure):module.verify(root,**contract)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_stage.py:169: in verify
+    live();result = inspect()
+                    ^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:155: in inspect
+    scores,stream_start = local.stream(root/'stream',owner=owner,scope=scope,
+tradingagents/research/onchain_replication/compact_stage.py:159: in stream
+    saved = tail.verify(root / 'tails' / f'tail-{index:012d}', scope=stream_scope,
+tradingagents/research/onchain_replication/score_tail.py:225: in verify
+    os.close(fd)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 14
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd))
+        caller=inspect.currentframe().f_back
+        function=caller.f_code.co_name;filename=caller.f_code.co_filename
+        original(fd)
+        hit={'metadata':function=='read' and filename.endswith('/compact_stage.py'),
+            'checkpoint_file':path.endswith('/M.npy'),
+            'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+            'score_inventory':function=='inventory' and filename.endswith('/compact_stage.py'),
+            'score_batch':function=='stream' and filename.endswith('/compact_stage.py'),
+            'score_tail':function=='verify' and filename.endswith('/score_tail.py')}[target]
+        # The helper introduced by the fix changes the direct caller; inspect
+        # the full stack to preserve injection at the same owned boundary.
+        if not hit:
+            stack=inspect.stack()
+            hit={'metadata':any(f.function=='read' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'checkpoint_file':path.endswith('/M.npy'),
+                'checkpoint_root':path.endswith('/state') and 'checkpoints' in path,
+                'score_inventory':any(f.function=='inventory' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_batch':path.endswith('/stream/batches') and any(f.function=='stream' and f.filename.endswith('/compact_stage.py') for f in stack),
+                'score_tail':path.endswith('/tail-000000000000') and any(f.function=='verify' and f.filename.endswith('/score_tail.py') for f in stack)}[target]
+        if hit and not injected:
+>           injected.append(path);raise OSError('synthetic close uncertainty after actual close')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic close uncertainty after actual close
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:67: OSError
+_ test_completion_callback_mutation_retains_both_terminals[outer-writer_matching] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7349451012b0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7349453ff240>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x734944ffc950>
+target = 'outer'
+
+    @pytest.mark.parametrize('target',['terminal','outer'])
+    def test_completion_callback_mutation_retains_both_terminals(admitted,monkeypatch,target):
+        from tradingagents.research.onchain_replication import archive_owner_stage as module
+        ledger,stage=written(admitted);owner=ledger.owner;original=owner.lease
+        def lease():
+            original()
+            claim=ledger._operations.get('reader-dictionary-0000')
+            if claim is not None and (claim.root/'complete.json').exists():
+                (stage.root/('matching/terminal.json' if target=='terminal' else 'foreign.bin')).write_bytes(b'{}')
+        monkeypatch.setattr(owner,'lease',lease)
+>       with pytest.raises(ValueError):module.verify(ledger,stage)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_owner_stage.py:68: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_owned_read_close_uncertainty_is_fatal[metadata]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_owned_read_close_uncertainty_is_fatal[checkpoint_file]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_owned_read_close_uncertainty_is_fatal[checkpoint_root]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_owned_read_close_uncertainty_is_fatal[score_inventory]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_owned_read_close_uncertainty_is_fatal[score_batch]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_owned_read_close_uncertainty_is_fatal[score_tail]
+FAILED tests/research/onchain_replication/test_archive_owner_stage.py::test_completion_callback_mutation_retains_both_terminals[outer-writer_matching]
+7 failed, 11 deselected in 61.31s (0:01:01)

@@ -1,0 +1,170 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+____________ test_finalizer_is_immutable_and_does_not_replay_remote ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-111/test_finalizer_is_immutable_an0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76556a637360>
+
+    def test_finalizer_is_immutable_and_does_not_replay_remote(tmp_path,monkeypatch):
+        module,root,contract = fixture(tmp_path,monkeypatch)
+        calls=[];original=contract['transport'].get;final=[]
+        def get(*args,**kwargs):
+            calls.append(args[0]);return original(*args,**kwargs)
+        monkeypatch.setattr(contract['transport'],'get',get)
+        def finalize(result):
+            with pytest.raises(TypeError):result['completed_pairs']=0
+            final.append((result,len(calls)))
+>       result=module.verify(root,**contract,on_verified=finalize)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: verify() got an unexpected keyword argument 'on_verified'
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:15: TypeError
+___________ test_finalizer_mutation_is_not_acknowledged[checkpoint] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-111/test_finalizer_mutation_is_not0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76556a637230>
+target = 'checkpoint'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','read','source','complete'])
+    def test_finalizer_mutation_is_not_acknowledged(tmp_path,monkeypatch,target):
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        def finalize(result):
+            paths={'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':contract['attempt']/'checkpoint-references.bin',
+                'read':contract['attempt']/'events/chunk-000000000000/complete.json',
+                'source':root/'matching/terminal.json','complete':contract['attempt']/'complete.json'}
+            path=paths[target];path.write_bytes(b'x'*path.stat().st_size)
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.verify(root,**contract,on_verified=finalize)
+E           TypeError: verify() got an unexpected keyword argument 'on_verified'
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:30: TypeError
+______________ test_finalizer_mutation_is_not_acknowledged[score] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-111/test_finalizer_mutation_is_not1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x765528c44950>
+target = 'score'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','read','source','complete'])
+    def test_finalizer_mutation_is_not_acknowledged(tmp_path,monkeypatch,target):
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        def finalize(result):
+            paths={'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':contract['attempt']/'checkpoint-references.bin',
+                'read':contract['attempt']/'events/chunk-000000000000/complete.json',
+                'source':root/'matching/terminal.json','complete':contract['attempt']/'complete.json'}
+            path=paths[target];path.write_bytes(b'x'*path.stat().st_size)
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.verify(root,**contract,on_verified=finalize)
+E           TypeError: verify() got an unexpected keyword argument 'on_verified'
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:30: TypeError
+____________ test_finalizer_mutation_is_not_acknowledged[reference] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-111/test_finalizer_mutation_is_not2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x765528a78160>
+target = 'reference'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','read','source','complete'])
+    def test_finalizer_mutation_is_not_acknowledged(tmp_path,monkeypatch,target):
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        def finalize(result):
+            paths={'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':contract['attempt']/'checkpoint-references.bin',
+                'read':contract['attempt']/'events/chunk-000000000000/complete.json',
+                'source':root/'matching/terminal.json','complete':contract['attempt']/'complete.json'}
+            path=paths[target];path.write_bytes(b'x'*path.stat().st_size)
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.verify(root,**contract,on_verified=finalize)
+E           TypeError: verify() got an unexpected keyword argument 'on_verified'
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:30: TypeError
+______________ test_finalizer_mutation_is_not_acknowledged[read] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-111/test_finalizer_mutation_is_not3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7655295fbce0>
+target = 'read'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','read','source','complete'])
+    def test_finalizer_mutation_is_not_acknowledged(tmp_path,monkeypatch,target):
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        def finalize(result):
+            paths={'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':contract['attempt']/'checkpoint-references.bin',
+                'read':contract['attempt']/'events/chunk-000000000000/complete.json',
+                'source':root/'matching/terminal.json','complete':contract['attempt']/'complete.json'}
+            path=paths[target];path.write_bytes(b'x'*path.stat().st_size)
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.verify(root,**contract,on_verified=finalize)
+E           TypeError: verify() got an unexpected keyword argument 'on_verified'
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:30: TypeError
+_____________ test_finalizer_mutation_is_not_acknowledged[source] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-111/test_finalizer_mutation_is_not4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x765528bb8b50>
+target = 'source'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','read','source','complete'])
+    def test_finalizer_mutation_is_not_acknowledged(tmp_path,monkeypatch,target):
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        def finalize(result):
+            paths={'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':contract['attempt']/'checkpoint-references.bin',
+                'read':contract['attempt']/'events/chunk-000000000000/complete.json',
+                'source':root/'matching/terminal.json','complete':contract['attempt']/'complete.json'}
+            path=paths[target];path.write_bytes(b'x'*path.stat().st_size)
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.verify(root,**contract,on_verified=finalize)
+E           TypeError: verify() got an unexpected keyword argument 'on_verified'
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:30: TypeError
+____________ test_finalizer_mutation_is_not_acknowledged[complete] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-111/test_finalizer_mutation_is_not5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x765528bba650>
+target = 'complete'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','read','source','complete'])
+    def test_finalizer_mutation_is_not_acknowledged(tmp_path,monkeypatch,target):
+        module,root,contract=fixture(tmp_path,monkeypatch)
+        def finalize(result):
+            paths={'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':contract['attempt']/'checkpoint-references.bin',
+                'read':contract['attempt']/'events/chunk-000000000000/complete.json',
+                'source':root/'matching/terminal.json','complete':contract['attempt']/'complete.json'}
+            path=paths[target];path.write_bytes(b'x'*path.stat().st_size)
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.verify(root,**contract,on_verified=finalize)
+E           TypeError: verify() got an unexpected keyword argument 'on_verified'
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:30: TypeError
+________________ test_invalid_finalizer_does_not_create_attempt ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-111/test_invalid_finalizer_does_no0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x765528a67020>
+
+    def test_invalid_finalizer_does_not_create_attempt(tmp_path,monkeypatch):
+        module,root,contract=fixture(tmp_path,monkeypatch)
+>       with pytest.raises(ValueError):module.verify(root,**contract,on_verified=1)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: verify() got an unexpected keyword argument 'on_verified'
+
+tests/research/onchain_replication/test_archived_stage_finalizer.py:36: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_finalizer_is_immutable_and_does_not_replay_remote
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_finalizer_mutation_is_not_acknowledged[checkpoint]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_finalizer_mutation_is_not_acknowledged[score]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_finalizer_mutation_is_not_acknowledged[reference]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_finalizer_mutation_is_not_acknowledged[read]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_finalizer_mutation_is_not_acknowledged[source]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_finalizer_mutation_is_not_acknowledged[complete]
+FAILED tests/research/onchain_replication/test_archived_stage_finalizer.py::test_invalid_finalizer_does_not_create_attempt
+8 failed in 6.36s

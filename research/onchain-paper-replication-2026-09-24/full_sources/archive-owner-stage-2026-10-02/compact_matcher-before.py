@@ -57,7 +57,7 @@ def _file(path, size, expected):
             require(bool(block), 'checkpoint truncated'); digest.update(block); remaining -= len(block)
         require(digest.hexdigest() == expected and io._signature(before) == io._signature(os.fstat(fd))
             == io._signature(path.lstat()), 'checkpoint content/identity differs')
-    finally: io._release(lambda: os.close(fd))
+    finally: os.close(fd)
 
 
 def _snapshot(directory, state_sha, identity, policy):
@@ -69,7 +69,7 @@ def _snapshot(directory, state_sha, identity, policy):
             require(path.resolve() == path, 'checkpoint metadata redirected')
             parent, child_fd = io._open(path.parent)
             try: raw = io._read(child_fd, path.name, pair.LIMIT)
-            finally: io._release(lambda: os.close(child_fd))
+            finally: os.close(child_fd)
             require(io._hash(raw) == expected, 'checkpoint metadata hash differs')
             return json.loads(raw), len(raw)
         meta, total = metadata('manifest.json', state_sha)
@@ -115,7 +115,7 @@ def _snapshot(directory, state_sha, identity, policy):
                 'checkpoint inventory/logical bound differs')
         io._root(root, fd)
         return total
-    finally: io._release(lambda: os.close(fd))
+    finally: os.close(fd)
 
 
 class CompactMatcher:
