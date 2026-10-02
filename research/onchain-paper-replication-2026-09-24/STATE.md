@@ -3,6 +3,19 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 concrete smoke release reviewed — one bounded launch ready**:
+Accepted physical source501c9f72175b2e6dada025d578e655d359c2df5a is pushed with
+exact remote HEAD verified. Its131 required source files are copied byte-exact
+into os-smoke-execution01/source/. The exact finalized spec SHA256 is
+8b16be8935aa31f8406c12cf0c89888092f12ff6f65409889966b9ead3ef9d91;
+independent REVIEW_RELEASE SHA256e9518c88a66505c8c070ae0d1b624dc2745546e5232057988f71c8ad1bfed4c2 verifies
+all source/driver bytes, unchanged bounded engineering limits and absence of all
+three experiment roots. Single synthetic-neural-physical-os-20261002-01 is ready
+for execution after final binding backup and immediate host checks. The source
+snapshot remains local; committed source plus complete manifest supports exact
+external reconstruction. No empirical claim or graph/model work is launched by
+this engineering release. Preserve all evidence and no same-identity rerun.
+
 **October 2 accepted physical source — real-guard smoke next**:
 Final candidate04 SHA256476aa1a6c778526f8890397a51e3c603c4d9a803f881065fc27b654b418149c7
 is independently accepted for the selected prospective route, REVIEW_FINAL
