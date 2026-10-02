@@ -123,3 +123,24 @@ explicit writer/seal/publication/terminal dispatch. Finite decoded member
 allowances must be spent before operations, including ambiguous failures, with
 no reopen or refund of terminal identities. Physical accounting, score/checkpoint
 retention and empirical resource admission remain additional dependencies.
+
+## October2 durable operation continuation
+
+archive_owner_operations now consumes the registered selection under the actual
+current owner's transition lock and reserves one writer plus finite later reads
+for actual stage objects. Exclusive intents precede caller control, failures
+retain their allowances, and caller-reference completion is distinguished from
+scientific verification. The prospective policy explicitly budgets control
+metadata; the ledger counts its fixed records and each operation's maximum.
+Evidence in archive-owner-operations-2026-10-02 retains all failures, source
+snapshots, nine baseline passes and five corrected targeted passes separately.
+
+The next code must consume these claims in explicit writer/stage-seal/current-
+owner publication and terminal routing. Public ledger transitions acquire the
+owner lock; the producer already holding that lock needs an explicit internal
+route, not recursive acquisition or bypass of claim checks. The post-owner-close
+reader still needs separately bound phase authority. Actual upload byte charging
+must follow immutable snapshot creation and precede dispatch; generic
+put(source,member) alone cannot ensure this from an earlier stat. Receiver
+diagnostic overread and protocol overhead are additional resource limits.
+Checkpoint/score retention and complete physical accounting remain open.

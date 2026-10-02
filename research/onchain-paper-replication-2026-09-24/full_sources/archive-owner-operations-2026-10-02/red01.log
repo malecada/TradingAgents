@@ -1,0 +1,81 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_actual_stage_reservations_are_exclusive_finite_and_retained _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x77b5b408f8c0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77b5b408ee40>)
+
+    def test_actual_stage_reservations_are_exclusive_finite_and_retained(admitted):
+>       ledger = attach(admitted);owner = admitted[1]
+                 ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_operations.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x77b5b408f8c0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77b5b408ee40>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication import archive_owner_operations as operations
+E       ImportError: cannot import name 'archive_owner_operations' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_operations.py:8: ImportError
+____________ test_ambiguous_failure_never_refunds_or_reopens_claim _____________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x77b5b40df390>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77b5b40dead0>)
+
+    def test_ambiguous_failure_never_refunds_or_reopens_claim(admitted):
+>       ledger = attach(admitted);owner = admitted[1]
+                 ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_operations.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x77b5b40df390>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77b5b40dead0>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication import archive_owner_operations as operations
+E       ImportError: cannot import name 'archive_owner_operations' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_operations.py:8: ImportError
+________ test_changed_claim_or_revoked_owner_cannot_release_reservation ________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x77b5b40dfb10>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77b5b40df4d0>)
+
+    def test_changed_claim_or_revoked_owner_cannot_release_reservation(admitted):
+>       ledger = attach(admitted);owner = admitted[1]
+                 ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_operations.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x77b5b40dfb10>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77b5b40df4d0>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication import archive_owner_operations as operations
+E       ImportError: cannot import name 'archive_owner_operations' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_operations.py:8: ImportError
+___________ test_owner_transition_lock_covers_selection_consumption ____________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x77b5b3ec3ce0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77b5b3ec35c0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77b5b3ec3e10>
+
+    def test_owner_transition_lock_covers_selection_consumption(admitted,monkeypatch):
+        selection = select(admitted);owner = admitted[1];original = owner.boundary
+        attempted = []
+        def boundary():
+            original()
+            with pytest.raises(ValueError,match='concurrent'):
+                owner.begin('dictionary',workload_sha256='d'*64,pairs=0)
+            attempted.append(True)
+        monkeypatch.setattr(owner,'boundary',boundary)
+>       from tradingagents.research.onchain_replication import archive_owner_operations as operations
+E       ImportError: cannot import name 'archive_owner_operations' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_owner_operations.py:74: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_actual_stage_reservations_are_exclusive_finite_and_retained
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_ambiguous_failure_never_refunds_or_reopens_claim
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_changed_claim_or_revoked_owner_cannot_release_reservation
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_owner_transition_lock_covers_selection_consumption
+4 failed in 57.63s

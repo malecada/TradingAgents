@@ -1,0 +1,66 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_failed_marker_uncertain_close_propagates_fatal_primary __________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7b2bfab8f8c0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7b2bfab8ee40>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b2bfa9ce780>
+
+    def test_failed_marker_uncertain_close_propagates_fatal_primary(admitted,monkeypatch):
+        ledger = attach(admitted);owner = admitted[1]
+        stage = owner.begin('dictionary',workload_sha256='d'*64,pairs=0)
+        claim = ledger.writer(stage)
+        from tradingagents.research.onchain_replication import archive_owner_operations as operations
+        close = operations.os.close;injected = []
+        def uncertain(fd):
+            path = operations.os.readlink('/proc/self/fd/'+str(fd));close(fd)
+            if path == str(claim.root) and (claim.root/'failed.json').exists() and not injected:
+                injected.append(True);raise OSError('failure marker close uncertain after real close')
+        primary = OSError('ambiguous transfer')
+        monkeypatch.setattr(operations.os,'close',uncertain)
+>       with pytest.raises(operations.io.CleanupFailure) as caught:claim.fail(primary)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE CleanupFailure
+
+tests/research/onchain_replication/test_archive_owner_operations.py:164: Failed
+______ test_replaced_transition_releases_original_lock_and_refuses_lease _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7b2bfabe39d0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7b2bfabe3110>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b2d56e4b230>
+
+    def test_replaced_transition_releases_original_lock_and_refuses_lease(admitted,monkeypatch):
+        from threading import Lock
+        ledger = attach(admitted);owner = admitted[1]
+        stage = owner.begin('dictionary',workload_sha256='d'*64,pairs=0)
+        claim = ledger.writer(stage);original_lock = ledger._transition;original_lease = owner.lease
+        def lease():
+            original_lease();ledger._transition = Lock()
+        monkeypatch.setattr(owner,'lease',lease)
+        try:
+>           with pytest.raises(ValueError):claim.lease()
+                                           ^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_operations.py:181: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_owner_operations.py:38: in lease
+    def lease(self):self._ledger._lease(self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.archive_owner_operations.Ledger object at 0x7b2bfabe2d50>
+args = (<tradingagents.research.onchain_replication.archive_owner_operations.Operation object at 0x7b2bfa5d6a70>,)
+kwargs = {}
+
+    @wraps(function)
+    def call(self, *args, **kwargs):
+        require(self._transition.acquire(blocking=False), 'concurrent compact owner transition')
+        try: return function(self, *args, **kwargs)
+>       finally: self._transition.release()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: release unlocked lock
+
+tradingagents/research/onchain_replication/compact_owner.py:36: RuntimeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_failed_marker_uncertain_close_propagates_fatal_primary
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_replaced_transition_releases_original_lock_and_refuses_lease
+2 failed, 9 deselected in 66.66s (0:01:06)

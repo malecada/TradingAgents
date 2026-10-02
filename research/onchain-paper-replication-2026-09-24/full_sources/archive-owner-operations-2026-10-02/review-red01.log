@@ -1,0 +1,106 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_public_close_during_operation_lease_cannot_return_live __________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x75526a9b38c0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x75538684a3c0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75526a5b2190>
+
+    def test_public_close_during_operation_lease_cannot_return_live(admitted,monkeypatch):
+        ledger = attach(admitted);owner = admitted[1]
+        stage = owner.begin('dictionary',workload_sha256='d'*64,pairs=0)
+        write = ledger.writer(stage);original = owner.lease
+        def lease():
+            original();ledger.close()
+        monkeypatch.setattr(owner,'lease',lease)
+>       with pytest.raises(ValueError):write.lease()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_owner_operations.py:87: Failed
+______ test_attachment_callback_failure_retains_primary_under_transition _______
+
+self = <tradingagents.research.onchain_replication.archive_owner_operations.Ledger object at 0x75526a7cf250>
+full = True
+
+>   def reject(self,*,full):raise primary
+                            ^^^^^^^^^^^^^
+E   RuntimeError: late attachment rejection
+
+tests/research/onchain_replication/test_archive_owner_operations.py:96: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x75526a7cf890>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x75526a7cefd0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7553c692f230>
+
+    def test_attachment_callback_failure_retains_primary_under_transition(admitted,monkeypatch):
+        selection = select(admitted)
+        from tradingagents.research.onchain_replication import archive_owner_operations as operations
+        primary = RuntimeError('late attachment rejection')
+        def reject(self,*,full):raise primary
+        monkeypatch.setattr(operations.Ledger,'_current',reject)
+>       with pytest.raises(RuntimeError) as caught:operations.attach(selection)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_operations.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_owner_operations.py:232: in attach
+    ledger.close();raise
+    ^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_owner.py:34: in call
+    require(self._transition.acquire(blocking=False), 'concurrent compact owner transition')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'concurrent compact owner transition'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: concurrent compact owner transition
+
+tradingagents/research/onchain_replication/score_batches.py:49: ValueError
+______ test_constructor_uncertain_close_is_fatal_and_releases_transition _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x755269e9ccd0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x75526a7cec10>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75526a204710>
+
+    def test_constructor_uncertain_close_is_fatal_and_releases_transition(admitted,monkeypatch):
+        selection = select(admitted)
+        from tradingagents.research.onchain_replication import archive_owner_operations as operations
+        close = operations.os.close;injected = []
+        def uncertain(fd):
+            path = operations.os.readlink('/proc/self/fd/'+str(fd))
+            close(fd)
+            if path.endswith('/archive-operations') and not injected:
+                injected.append(True);raise OSError('injected after real close')
+        monkeypatch.setattr(operations.os,'close',uncertain)
+>       with pytest.raises(operations.io.CleanupFailure):operations.attach(selection)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_operations.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_owner_operations.py:228: in attach
+    ledger = Ledger(selection);owner._archive_operations = ledger
+             ^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_operations.py:60: in __init__
+    finally:os.close(fd)
+            ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def uncertain(fd):
+        path = operations.os.readlink('/proc/self/fd/'+str(fd))
+        close(fd)
+        if path.endswith('/archive-operations') and not injected:
+>           injected.append(True);raise OSError('injected after real close')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: injected after real close
+
+tests/research/onchain_replication/test_archive_owner_operations.py:113: OSError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_public_close_during_operation_lease_cannot_return_live
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_attachment_callback_failure_retains_primary_under_transition
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_constructor_uncertain_close_is_fatal_and_releases_transition
+3 failed, 6 deselected in 78.94s (0:01:18)

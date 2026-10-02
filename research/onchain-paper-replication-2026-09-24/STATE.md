@@ -3,7 +3,41 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Latest handoff — October 2, registered archive policy gate accepted**:
+**Latest handoff — October 2, archive operation reservations accepted**:
+archive_owner_operations now consumes the registered Selection under the actual
+current owner transition lock. It retains exclusive writer and finite read
+claims for actual stages. Full event-capacity remote/decoded-member allowances
+and logical metadata are reserved before caller control; failed or interrupted
+claims are never refunded or reopened. Completion records only caller-supplied
+references. The prospective policy now includes explicit cumulative operation
+control metadata, including the four fixed records in the spent counter.
+
+Evidence: full_sources/archive-owner-operations-2026-10-02/. Initial red01
+CLOSED4failed57.63s; check01 CLOSED3failed1passed131.14s (metadata key).
+Independent AOO1–5 findings and corrections preserve both review rounds and
+source/test snapshots. Review-red01 CLOSED3failed6deselected78.94s reproduced
+late callback state, attachment error masking and uncertain close handling;
+check02 CLOSED9passed309.78s. Review-red02 CLOSED2failed9deselected66.66s
+exposed swallowed fatal cleanup and wrong-lock release. Corrected check03
+CLOSED5passed6deselected196.09s/session10179exit0. The earlier nine-case run and
+final five targeted cases remain separate; no full final eleven-case or legacy
+suite claim. Independent REVIEW_FINAL accepted AOO1–5, SHA256
+f2f130ae60d1b62888b4c4e11313be4637bd313062f0ac032cbd8300d38dda87.
+No active test/process or source freeze. No empirical job or network transfer was executed.
+
+Predecessor7983ffd2612a1fb35388552e80a99f58627974c9 was committed, pushed and
+exact remote HEAD verified. Next safe action: finish the review/remote checkpoint
+and consume the reservations in explicit archive writer, scientific stage seal,
+current-owner publication and terminal dispatch. Existing producers hold the
+owner lock, so integration needs an explicit internal transition route. Later
+post-owner-close verification needs its own phase authority. Generic upload
+size checks cannot substitute for charging a frozen payload before dispatch;
+diagnostic overread and protocol costs remain additional bounds. Checkpoint/
+score retention and whole-workflow physical accounting still precede reviewed
+resource/hub/budget admission. Coverage77/109;32open; all1420financial fits remain
+pending. Draft60→61 is unadopted. The10GiB free-space floor remains enforced.
+
+**Previous handoff — October 2, registered archive policy gate accepted**:
 archive_owner_policy.select now binds an actual fresh compact owner to the
 registered job, producer plan, descriptor, input bytes, source authority and
 transport identity. Conservative allowances cover the full required stage

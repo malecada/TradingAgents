@@ -75,14 +75,15 @@ def _record(owner, name, transport):
     remote = count*payload
     transfer = remote*(3+policy['max_stage_verifications'])
     # Prospective control metadata margin; not a physical allocation bound.
-    metadata = 8*io.META_LIMIT+count*(policy['max_writer_metadata_bytes']+8*io.META_LIMIT+
+    operation_control = (4+3*count*(1+policy['max_stage_verifications']))*io.META_LIMIT
+    metadata = operation_control+8*io.META_LIMIT+count*(policy['max_writer_metadata_bytes']+8*io.META_LIMIT+
         policy['max_stage_verifications']*policy['max_stage_bytes'])
     require(remote <= policy['max_remote_payload_bytes'] and transfer <= policy['max_decoded_transfer_bytes']
         and metadata <= policy['max_workflow_metadata_bytes'],'archive workflow allowance insufficient')
     result = {'schema_version':1,'backend':BACKEND,'owner':owner.identity,'source_commit':owner.bound.record['source_commit'],
         'policy_input':name,'policy_sha256':reference,'stage_policy_sha256':cache_key(thaw(owner.policy)),
         'required_stages':list(stages),'policy':policy,'capacity':{'stage_count':count,'max_chunks_per_stage':w['max_chunks'],
-            'remote_payload_bytes':remote,'decoded_transfer_bytes':transfer,'metadata_bytes':metadata,
+            'remote_payload_bytes':remote,'decoded_transfer_bytes':transfer,'metadata_bytes':metadata,'operation_control_metadata_bytes':operation_control,
             'checkpoint_reference_bytes_per_read':references},'execution_admitted':False}
     owner.boundary();compact_owner.verify_current(owner)
     require(_inputs(owner,name) == (policy,reference) and writer.archive._transport(transport) == policy['transport_identity'],

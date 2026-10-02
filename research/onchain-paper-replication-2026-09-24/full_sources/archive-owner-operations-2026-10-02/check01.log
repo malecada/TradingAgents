@@ -1,0 +1,99 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+_______ test_actual_stage_reservations_are_exclusive_finite_and_retained _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x72f2359778c0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x72f235976e40>)
+
+    def test_actual_stage_reservations_are_exclusive_finite_and_retained(admitted):
+        ledger = attach(admitted);owner = admitted[1]
+        with pytest.raises((ValueError,FileExistsError)):attach(admitted)
+        stage = owner.begin('dictionary',workload_sha256='d'*64,pairs=0)
+>       write = ledger.writer(stage)
+                ^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_operations.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_owner.py:35: in call
+    try: return function(self, *args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_operations.py:170: in writer
+    def writer(self, stage):return self._claim(stage,'writer')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_operations.py:146: in _claim
+    require(all(totals[name] <= limits['max_'+name] for name in totals),'archive reservation budget exhausted')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <dict_keyiterator object at 0x72f23549f330>
+
+>   require(all(totals[name] <= limits['max_'+name] for name in totals),'archive reservation budget exhausted')
+                                ^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'max_metadata_bytes'
+
+tradingagents/research/onchain_replication/archive_owner_operations.py:146: KeyError
+____________ test_ambiguous_failure_never_refunds_or_reopens_claim _____________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x72f2359c7d90>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x72f2359c74d0>)
+
+    def test_ambiguous_failure_never_refunds_or_reopens_claim(admitted):
+        ledger = attach(admitted);owner = admitted[1]
+        stage = owner.begin('dictionary',workload_sha256='d'*64,pairs=0)
+>       write = ledger.writer(stage);write.fail(OSError('ambiguous upload'))
+                ^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_operations.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_owner.py:35: in call
+    try: return function(self, *args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_operations.py:170: in writer
+    def writer(self, stage):return self._claim(stage,'writer')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_operations.py:146: in _claim
+    require(all(totals[name] <= limits['max_'+name] for name in totals),'archive reservation budget exhausted')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <dict_keyiterator object at 0x72f2353df150>
+
+>   require(all(totals[name] <= limits['max_'+name] for name in totals),'archive reservation budget exhausted')
+                                ^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'max_metadata_bytes'
+
+tradingagents/research/onchain_replication/archive_owner_operations.py:146: KeyError
+________________ test_changed_claim_cannot_release_reservation _________________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x72f2353e4cd0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x72f2359c7ed0>)
+
+    def test_changed_claim_cannot_release_reservation(admitted):
+        ledger = attach(admitted);owner = admitted[1]
+        stage = owner.begin('dictionary',workload_sha256='d'*64,pairs=0)
+>       write = ledger.writer(stage)
+                ^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_operations.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_owner.py:35: in call
+    try: return function(self, *args, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_operations.py:170: in writer
+    def writer(self, stage):return self._claim(stage,'writer')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_operations.py:146: in _claim
+    require(all(totals[name] <= limits['max_'+name] for name in totals),'archive reservation budget exhausted')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <dict_keyiterator object at 0x72f2354524d0>
+
+>   require(all(totals[name] <= limits['max_'+name] for name in totals),'archive reservation budget exhausted')
+                                ^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'max_metadata_bytes'
+
+tradingagents/research/onchain_replication/archive_owner_operations.py:146: KeyError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_actual_stage_reservations_are_exclusive_finite_and_retained
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_ambiguous_failure_never_refunds_or_reopens_claim
+FAILED tests/research/onchain_replication/test_archive_owner_operations.py::test_changed_claim_cannot_release_reservation
+3 failed, 1 passed in 131.14s (0:02:11)
