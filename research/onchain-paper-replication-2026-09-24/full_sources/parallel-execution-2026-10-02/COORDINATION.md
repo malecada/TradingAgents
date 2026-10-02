@@ -1,5 +1,41 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Latest checkpoint — neural02 closed, next independent proof
+
+Neural02/session4945 CLOSED1 after298.890s; exact-unit systemd-oomd journals
+identify userspace pressure kill (71.13%>50% for>20s withreclaim), not kernelOOM.
+All9cells unavailable/0checkpoint/0financialfit; cleanup verified/cgroup absent.
+34consumed/27complete7failed/highestadopted62, neural allocation spent. Never
+rerun closed02, switchcaps on it or refund. Sourcefreeze ends after closedraw
+review/backup; no substantial job currently active. Root owns complete failure
+retention, STATE, commit/remote verification and next distinct two-View release.
+registration_review owns launch/result/retention independent review.
+physical_correction owns only new pressure-diagnosis metadata; the exact23cell
+requirement map is already frozen. physical_review reviews next final two-View
+spec after root selects the newly committed HEAD. No system OOMD edits.
+
+Remaining-resource map requires an actual unmocked resource dispatcher/physical
+admission, originalJanuarydictionary bridge and score-tail offload (55.44GB
+logical local matrices persist).4,207,854 is a hypothetical hub×6 estimate,
+not an observed pair requirement. Complete finite limits/census/amendments
+remain required without sample/neighborhood reduction. Coverage77/109 and
+all1,420financialfits are unchanged.
+
+## Active job and source freeze
+
+Exactly one substantial job is active: neural02/session4945, claimed source
+`78b5a0ecc401f6688068b8d9bd0612db1a9d44b0`, unit
+`onchain-replication-68f9e97c20ef445494594db81063cac1.service`.
+Actual admission, all 16 observations and native 3.75/3.25 GiB/zero-swap
+controls passed; the lifecycle claim exists. Consumed34 = 33 closed + 1 active,
+highest adopted62, neural slot spent. No financial fit or cell result yet.
+Freeze HEAD/source/inputs/runtime/gate/caller until closure. No second substantial
+job, cap escalation, retry or terminal identity reuse. Progress docs stay
+uncommitted. Root owns observation and final integration; registration_review
+verifies the actual launch/result independently. physical_correction writes
+only new remaining-resource requirement metadata outside selected bindings.
+physical_review is available for two-View final release after neural closure.
+
 ## Latest ownership — backed-up owner result, corrected two-View preparation
 
 Current source checkpoint `c51e868f8338ee0a8310251afaefe9e0695daf4f` was pushed

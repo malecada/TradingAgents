@@ -1,0 +1,141 @@
+{
+  "cgroup_absent": true,
+  "checkpoint_results": 0,
+  "claim_sha256": "6d8d454c60041d1c0ac5c11cda1ce1f08fda9e4a4bcb343038b5b480c93d92dd",
+  "cleanup_verified": true,
+  "complete_after": 27,
+  "completed_cell_results": 0,
+  "consumed_after": 34,
+  "current_mechanism_claims_after": 17,
+  "effective_budget_adopted": 62,
+  "experiment": "eth-paper-neural-resource-20261002-02",
+  "failed_after": 7,
+  "files": {
+    "active-controls01.json": {
+      "bytes": 1395,
+      "sha256": "39fde12c9ca1fb51d1f64686ae49713cff85fb100868d360aeea8ec2e35805cd"
+    },
+    "active-unit-properties01.txt": {
+      "bytes": 347,
+      "sha256": "a7ba5390b9f1425b67f6946600a2fb21abc5bbfcd0ec4db51d50b957187e7eea"
+    },
+    "admission01.json": {
+      "bytes": 502,
+      "sha256": "6f0edceabf7c04351589e64d48ee28f5f2686b4e5b240b0f6fea8d16c7f63df8"
+    },
+    "closed-unit-properties01.txt": {
+      "bytes": 80,
+      "sha256": "d7e33e0e604033cdf06d7d5f26a4c39179780b626639e707e20883404082900e"
+    },
+    "launch-intent01.json": {
+      "bytes": 1134,
+      "sha256": "c4792e7e28e4a7c260f0c34c232fd81590800bc4e5176aadb4d2c38f8d7758f8"
+    },
+    "launch01.log": {
+      "bytes": 1403,
+      "sha256": "f2346967482f26037bdd3238e1730828b479259fc80932f534423f9e140c0403"
+    },
+    "oomd-journal01-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "oomd-journal01.txt": {
+      "bytes": 328,
+      "sha256": "90432f74db0cf7c3165218ff0c1a408a4f3625dbe251b6f42f0c1a903693acc6"
+    },
+    "readiness01.json": {
+      "bytes": 2012,
+      "sha256": "50395c0962137bb4b61bbc0f0dacd3e28e01bb6df286141741538a7b20ce6fce"
+    },
+    "retained-tree01.json": {
+      "bytes": 8638,
+      "sha256": "5785244060110608e9100b6d52c8a4661eeb01176de94565e280ae8d06e406d0"
+    },
+    "retained-tree01.tar.gz": {
+      "bytes": 23725,
+      "sha256": "cc2575307c51817d154d537fe6b1a7dfa3b2305de8b1fd81ab3dcab94faac862"
+    },
+    "unit-journal01-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "unit-journal01.txt": {
+      "bytes": 5076,
+      "sha256": "3457c5423aed9ef6ea49c10b3179536001f57a09bb0e75650128c29a77183d4f"
+    }
+  },
+  "financial_fits": 0,
+  "guard_elapsed_seconds": 298.8900878510012,
+  "kill_cause": "systemd-oomd journal identifies exactunit memory-pressure kill: user@1000.service pressure71.13%>50% for>20s withreclaim. Kernelmax/oom/oomkill counters0; not kernelOOM.",
+  "launcher_exit_code": 1,
+  "memory_events_last_retained": {
+    "high": 34646,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "neural_cells": [
+    {
+      "id": "neural_checkpoint-2022-01-03",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2022-06-13",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2022-07-25",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2022-11-07",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2023-06-05",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-01-01",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-03-11",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-08-05",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-12-23",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    }
+  ],
+  "original_pids_absent": true,
+  "preserved_tree": {
+    "allocated_bytes": 212992,
+    "entries": 31,
+    "files": 20,
+    "logical_bytes": 107458
+  },
+  "qualified_inference": "Failure under3.75/3.25GiB contract only, no proof4.5/5/6failure, capacity not established. Sampledpeak not finalkernelpeak. All9unavailable cells retained; oneallocation spent/no retry/refund. Outerlog+metadata outside3roots finite and separately retained.",
+  "sampled_peak_memory_current_bytes": 3600752640,
+  "schema_version": 1,
+  "session": 4945,
+  "source": "78b5a0ecc401f6688068b8d9bd0612db1a9d44b0",
+  "status": "FAILED_CLOSED_NEVER_RERUN",
+  "terminal_sha256": "2723a28ce71e3faee49a24c7f19aef9bf5fca91227dbff4a36495acc21d1356e",
+  "unit": "onchain-replication-68f9e97c20ef445494594db81063cac1.service"
+}

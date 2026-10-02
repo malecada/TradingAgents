@@ -3,6 +3,79 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Neural02 CLOSED failed; pressure-kill cause verified.**
+Session4945 returned1. The original unit journal and systemd-oomd journal identify
+the exact unit killed at 14:32:02 UTC: user-service memory pressure 71.13% exceeded
+50% for more than20s with reclaim activity. This is a userspace pressure kill,
+not a kernel OOM: retained max/oom/oom_kill counters are0, high34646. Sampled
+memory-current peak was3,600,752,640 B (~3.35 GiB); full final kernel peak is
+unknown. Guard elapsed298.890s, cleanupverified, cgroupabsent/PIDsgone. Identity
+`eth-paper-neural-resource-20261002-02` is permanently closed; NEVER rerun it or
+reuse another cap on it. No complete neural cell, checkpoint or financial fit
+was published. All nine cells are retained as unavailable in the original
+postmortem ledger. The failed allocation remains spent:34consumed,27complete/
+7failed,17current+17prior, highest adopted62. No refund or automatic successor.
+
+All raw three-root records are preserved in the original frozen roots and
+retained-tree01.tar.gz (23,725 B, SHA256
+`cc2575307c51817d154d537fe6b1a7dfa3b2305de8b1fd81ab3dcab94faac862`).
+Complete final totals are212,992allocatedB/107,458logicalB/31entries/20files.
+The earlier stdout accounting208,896B/106,370B/30entries preceded the final
+1,088B monitor-failed publication; it is not complete final accounting.
+The raw journals, outer admission/readiness/intent/log and active-control
+observations are separately retained outside those roots. Independent result
+review and external backup are next; no substantial job is active. Source78b5a0ec
+remains exact. Success/capacity at3.75GiB is not established, and this failure
+does not establish4.5/5/6GiB failure or numerical disagreement with the paper.
+
+Next safe action: independently verify and externally preserve the closed
+failure, then release the already reviewed distinct two-View proof at the new
+committed HEAD. In parallel, read-only pressure/allocation diagnosis and the
+concrete remaining23-resource mapping may continue. A neural follow-up needs
+a new cumulative amendment and unused identity before execution; no system
+OOMD policy is changed. No architecture or scientific workload is reduced.
+
+The new remaining-resource map identifies exact additional implementation gaps:
+no unmocked standalone dispatcher for7neighborhood/7matching/9MCMresourcecells,
+physical_policy currently admitted only for neural jobs, and the original
+January3dictionary reuse bridge remains unresolved. Existing pair-event offload
+leaves55,439,818,752logical local score/matrix bytes; score-tail offload is absent.
+The701,309nodes/712,125edges are graph/hub metadata;4,207,854pairs is the
+hypothetical hub×6 calculation, not a measured required pair maximum. Actual
+limits require a complete census or finite justified bound, never truncation.
+The mocked-financial owner fixture does not satisfy these missing real resource
+routes. Empirical coverage remains77/109; all1,420financialfits remain pending.
+
+**ACTIVE single neural capacity job — do not duplicate or change source.**
+The reviewed 3.75 GiB release was committed/pushed at
+`78b5a0ecc401f6688068b8d9bd0612db1a9d44b0`, actual remote HEAD verified.
+One caller invocation is active, session4945, identity
+`eth-paper-neural-resource-20261002-02`, supervisor435179/monitor437539,
+unit `onchain-replication-68f9e97c20ef445494594db81063cac1.service`.
+Actual admission accepted all bindings; claim/RPC sizes are 78,461/80,660 B.
+All 16 fresh observations passed in 30.005 s. Guard release confirms kernel
+controls: memory.max 4,026,531,840 B / memory.high 3,489,660,928 B / swap0,
+two-CPU affinity and unchanged 3 GiB reserve. CPU quota remains unavailable.
+The lifecycle claim was created at 2026-10-02T14:27:21.751899+00:00.
+
+The single neural allocation is now spent: 33 earlier closed claims plus one
+active claim, 34 consumed; 62 is now actually adopted. Original family51/prior17,
+all earlier failures/exposures and 12 body + 15 financial + 1 other resource
+remaining allocations are unchanged. No refund, other cap trial or same-identity
+relaunch is allowed. No cell result or financial fit is claimed yet. This probe
+uses the original nine retained graphs, full architecture and synthetic inputs
+under the explicitly amended resource cap; chronological forecasting remains
+pending. Complete paper scope is unchanged.
+
+Keep selected source, HEAD, inputs, runtime, gate and caller frozen while active;
+no other substantial job. Root may update these progress documents uncommitted.
+The two-View proof is prepared/accepted but unexecuted and cannot start until
+this job closes. Independent remaining-resource preparation writes only new
+metadata outside the selected bindings. Next safe action: observe this existing
+session/guard/checkpoints, retain complete raw/failed or unavailable cells,
+independently verify actual controls/claims/results/cleanup/final accounting,
+then commit/push and continue the next eligible requirement without a user prompt.
+
 **Latest checkpoint: owner proof backed up; second-View correction in progress.**
 The accepted owner proof, complete recovery archive and accepted 4.5 GiB neural
 gate/caller/review were committed and pushed at
