@@ -1,0 +1,89 @@
+E                                                                        [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_actual_reserved_stage_read_joins_writer_once[writer_matching] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-126/test_actual_reserved_stage_rea0')
+request = <SubRequest 'admitted' for <Function test_actual_reserved_stage_read_joins_writer_once[writer_matching]>>
+
+    @pytest.fixture
+    def admitted(tmp_path,request):
+        f = first.Tests(); transport = Transport(tmp_path/'remote')
+        option = getattr(request,'param',None)
+        def prepare(t):
+            p = candidate();t.policy['limits'] = p['pair'];t.input('pair_policy',t.policy)
+            t.descriptor['pair_execution']['policy_sha256'] = t.exp['inputs']['pair_policy']['sha256']
+            t.input('compact_policy',{'schema_version':1,'backend':p['backend'],'stage_policy':p,
+                'max_workflow_retained_logical_bytes':30000000})
+            t.descriptor['compact_execution'] = {'backend':p['backend'],
+                'policy_sha256':t.exp['inputs']['compact_policy']['sha256']}
+            t.descriptor['configs'] = {'matching':{'max_iterations':10}}
+            if option == 'writer_matching':
+                from tests.research.onchain_replication.test_matching_reference import config
+                t.descriptor['configs']['matching'] = config() | {'beta_final':1.}
+            policy = {'schema_version':1,'backend':'compact-archive-events-v1',
+                'transport_identity':transport.identity,'remote_namespace':'synthetic',
+                'local_free_floor_bytes':10*1024**3,'max_stage_verifications':4,
+                'max_writer_metadata_bytes':1000000,'max_read_metadata_bytes':500000,
+                'max_stage_bytes':600000,'max_workflow_metadata_bytes':10000000,
+                'max_remote_payload_bytes':1000000,'max_decoded_transfer_bytes':1000000}
+            if option in policy:policy[option] = 1
+            t.input('archive_policy',policy)
+            t.descriptor['compact_archive_execution'] = {'backend':policy['backend'],
+                'policy_sha256':t.exp['inputs']['archive_policy']['sha256']}
+            for item in (t.item,t.execution['payload']['representation_jobs']['r']):
+                item.update(native_backend=p['backend'],compact_policy_input='compact_policy',
+                    compact_archive_input='archive_policy')
+            if option == 'selection':t.item['compact_archive_input'] = 'sample'
+            if option == 'descriptor':t.descriptor['compact_archive_execution']['policy_sha256'] = '0'*64
+        try:
+>           result = f.fixture(prepare);journal,bound = f.open(result)
+                     ^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_first_owner.py:31: in fixture
+    with patch.object(first.OwnershipTests,'prepare',new=prepare):f.setUp()
+                                                                  ^^^^^^^^^
+tests/research/onchain_replication/test_matching_owner.py:70: in setUp
+    self.prepare()
+tests/research/onchain_replication/test_first_owner.py:19: in prepare
+    if mutate is not None:mutate(f)
+                          ^^^^^^^^^
+tests/research/onchain_replication/test_archive_owner_policy.py:26: in prepare
+    t.descriptor['configs']['matching'] = config() | {'beta_final':1.}
+                                          ^^^^^^^^
+tests/research/onchain_replication/test_matching_reference.py:9: in config
+    def config():return json.loads((Path(__file__).resolve().parents[3]/'research/onchain-paper-replication-2026-09-24/config/matching-stable.json').read_text())
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_s...allel-execution-2026-10-02/profile02-source/research/onchain-paper-replication-2026-09-24/config/matching-stable.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/parallel-execution-2026-10-02/profile02-source/research/onchain-paper-replication-2026-09-24/config/matching-stable.json'
+
+/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+- reviewed profile: 0 encountered files withheld; this is not the full legacy suite -
+============================= slowest 5 durations ==============================
+0.46s setup    tests/research/onchain_replication/test_archive_owner_stage.py::test_actual_reserved_stage_read_joins_writer_once[writer_matching]
+
+(1 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+ERROR tests/research/onchain_replication/test_archive_owner_stage.py::test_actual_reserved_stage_read_joins_writer_once[writer_matching]
+1 error in 10.14s

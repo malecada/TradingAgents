@@ -3,6 +3,24 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Parallel unattended continuation — October 2**: user-authorized parallel
+policy is saved in the ACTIVE15-minute paper-replication-progress automation.
+Root coordinates up to3bounded agents, exclusive file ownership, independent
+review and aggregate resource limits. Inspect existing agents/processes before
+re-dispatch. Current archive_transport worker owns new archive_transport.py,
+new test_archive_transport_production.py and its dated evidence only; no external
+transfer. Resource32-cell dependency and producer/terminal interface investigations
+are complete. Their concrete findings and ownership are retained in
+full_sources/parallel-execution-2026-10-02/COORDINATION.md. Root's fresh single-test
+profile03 runs against an isolated committed-source export (session7403), so
+package changes cannot invalidate its source closure; inspect log/process before
+continuation. profile01 export failed before launch; profile02 closed with one
+fixture setup error from an omitted config. Both failures are retained. No
+empirical job was launched. Accepted b449a2a59549ea500790e95df1615df21b753401 was
+pushed and exact remote HEAD verified. Next: finish transport implementation and
+independent review, collect profile evidence, then advance the coupled producer-
+to-terminal integration while preparing resource amendments independently.
+
 **Latest handoff — October 2, explicit archived stage seals accepted**:
 archive_owner_seal.seal/check and a shared lock-owning archive read entry are
 implemented and independently accepted for the bounded current-owner contract.
