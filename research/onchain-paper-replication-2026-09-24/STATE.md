@@ -1,5 +1,35 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: complete neural03 failure recovered remotely; two corrections advance.**
+Accepted closure/raw/diagnosis were committed and pushed at
+38ef011f5fc07687d56a9b6f6ddf91a867455d9d. Fresh four-blob retrieval from that
+actual remote commit verifies all32archive members,21file bodies and11directory
+modes without extraction/execution. Independent recovery review0f0f5197 accepts
+this limited scope; outer/source/review references were not separately recovered.
+The original failed03 identity remains closed;35spent/adopt63/77of109/all1420fits
+remain unchanged. No substantial job is active.
+
+Original dictionary candidate03 now passes7new close-order sentinels and all
+29distinct metadata/helper methods (combined runner65executions, including
+repeated inherited methods). Source c9dff424/manifest9646acaa and independent
+review7a224562 resolve the final ordinary-close→fatal-close defect. All01/02
+bytes/failures remain preserved. This is metadata acceptance only; actual
+Binding, original26Git/fullancestry, typed numerical import/Owner stage and
+unmocked23-cell resource proof remain outstanding.
+
+The streamed GAT's protocol01 was withheld for incomplete backward saved-tensor
+observation and alias views hiding large backing storage. New frozen oracle02
+74a21db8/protocol02f2700666 retain the same scientific fixtures and tolerances;
+the stdlib alias sentinel passes, but numerical tests have not run. Independent
+oracle02 and exact225-source-pin guarded RED release reviews are in parallel.
+Prepared launcher ced6b2a0/releasec68e839c selects one unused synthetic RED
+identity,1GiBmax=high/zeroSwap/120snativeunit deadline/twoCPU/4MiBfiles/
+3GiBhostreserve/10GiBdisk floor. This is not an empirical capacity probe.
+Next: accept the concrete release, commit+verify external backup, execute the
+single tiny RED counterexample, implement the separate faithful candidate and
+verify GREEN under the same frozen numerical thresholds. No budget64 or full-size
+neural launch is yet admitted; never change/relaunch03 or infer sufficient RAM.
+
 **Latest checkpoint: neural03 CLOSED failed; complete evidence independently accepted.**
 The sole `eth-paper-neural-resource-20261002-03` attempt from source
 `8a295e2391d371193085d00c342f84e06c06fa94` ended at 16:59:12 UTC;

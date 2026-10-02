@@ -1,5 +1,26 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Latest ownership — independent oracle02 and native RED release reviews
+
+No substantial job active. Neural03 complete failure is externally backed at
+38ef011f and fresh remote four-blob/32-member recovery independently accepted.
+Budget35closed/adopt63/coverage77of109/all1420fits unchanged; no neural allowance.
+Dictionary metadata03 c9dff424/9646acaa independently accepted7a224562, with
+29distinct methods passing; actual Binding/typed Owner/MCM proof remains open.
+
+- Root owns exact guard_launcher01/red-release01, source/runtime closure,
+  STATE/backup and the sole forthcoming one-use tiny RED launcher after reviews.
+- registration_review owns ONLY streamed oracle02 independent protocol review.
+- physical_review owns ONLY independent guard/native RED release01 review.
+- physical_correction owns ONLY streamed candidate directory; oracle02 is frozen.
+  No implementation or numerical imports until accepted release and actual RED.
+
+Protocol01 and all old bytes remain preserved;02 observes saves through backward
+and rejects large backing storage hidden by views. Exact science/tolerances are
+unchanged. Tiny engineering limits1GiB/120s/4MiBfile/64MiBsampled storage do not
+prove full-size capacity. After RED, immediately implement and independently
+verify the faithful blocked GAT without a new user prompt or empirical cap ladder.
+
 ## Latest ownership — neural03 closed; faithful forward correction
 
 No substantial job is active. Neural03/session81690 is permanently CLOSED1;

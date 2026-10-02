@@ -1,0 +1,80 @@
+{
+  "actual_public_Binding_or_numerical_imports_executed": false,
+  "distinct_test_methods": [
+    "test_candidate03.py:test_preserves_order_original_identity_and_parent_failure",
+    "test_candidate03.py:test_mutated_body_rejected",
+    "test_candidate03.py:test_representative_reorder_with_repinned_body_rejected",
+    "test_candidate03.py:test_missing_intermediate_graph_join_rejected",
+    "test_candidate03.py:test_capacity_before_parse_and_duplicate_key_refusal",
+    "test_candidate03.py:test_output_copy_cannot_mutate_evidence",
+    "test_candidate03.py:test_original_rng_and_source_mismatch_rejected",
+    "test_candidate03.py:test_live_capability_revocation_and_late_mutation",
+    "test_candidate03.py:test_post_callback_rejoin_and_one_shot_close",
+    "test_candidate03.py:test_original_fatal_preserved_when_postcheck_fails",
+    "test_candidate03.py:test_non_utc_or_naive_availability_rejected",
+    "test_candidate03.py:test_chronology_and_explicit_utc_equivalence",
+    "test_binding03.py:test_public_selection_and_revocation",
+    "test_binding03.py:test_changed_original_bound_record_refused",
+    "test_binding03.py:test_wrong_required_population_refused",
+    "test_binding03.py:test_snapshot_rebaseline_refused",
+    "test_binding03.py:test_run_directory_change_refused",
+    "test_reader03.py:test_body_first_fatal_identity_survives_child_close_error",
+    "test_reader03.py:test_parent_close_first_fatal_identity",
+    "test_reader03.py:test_ordinary_primary_promotes_first_later_fatal",
+    "test_reader03.py:test_success_exact_bytes",
+    "test_reader03.py:test_independent_descriptor_closes_after_first_failure",
+    "test_close03.py:test_ordinary_child_then_first_parent_fatal_identity_and_cause",
+    "test_close03.py:test_body_and_child_ordinary_then_parent_fatal_preserves_both_prior_objects",
+    "test_close03.py:test_first_true_child_fatal_survives_later_fatal",
+    "test_close03.py:test_body_fatal_survives_all_closes",
+    "test_close03.py:test_ordinary_only_uncertainty_is_terminal_wrapper_with_all_evidence",
+    "test_close03.py:test_existing_fatal_cause_survives_new_prior_evidence",
+    "test_close03.py:test_no_cleanup_error_preserves_body_or_success"
+  ],
+  "files": {
+    "REPORT03.md": {
+      "bytes": 2287,
+      "sha256": "2f0f88fa3cc56957a1f76e6c40f9265618e5409cf2b9ba9e3baf6e5546f0b4a8"
+    },
+    "candidate03.py": {
+      "bytes": 22400,
+      "sha256": "c9dff424496c0ea7726a14a9816566f1db8c9be483d21e40940289e675a2ac2e"
+    },
+    "green08.log": {
+      "bytes": 105,
+      "sha256": "0d6653413f55f7cf64dbfab59b6b29c640ade8e63585414ab2a44a0892a5ed0a"
+    },
+    "green09.log": {
+      "bytes": 164,
+      "sha256": "3f41f75dad3e290474e2341d01fa64d28065d3ee97dc0f4342bf1b8ed4791b7e"
+    },
+    "red05.log": {
+      "bytes": 3217,
+      "sha256": "fdb0850f9f76adafc0e1a7cfaa5c78d2074c299aa621afc1158b3f60eb2de026"
+    },
+    "test_binding03.py": {
+      "bytes": 4322,
+      "sha256": "6b474d740bfab51b5194116021d7ea7be2054fe15fb108345dd9aca94ea07352"
+    },
+    "test_candidate03.py": {
+      "bytes": 8855,
+      "sha256": "1a884bd3eec36acb51fb32ec6c39b291790bf8566e663adb012aa66ccaa039aa"
+    },
+    "test_close03.py": {
+      "bytes": 4232,
+      "sha256": "7e78e84f2069709a069e816e3994d34fae26f46b1bac9ca0053c7c89813df4a0"
+    },
+    "test_reader03.py": {
+      "bytes": 4181,
+      "sha256": "1efcc868f2302ff92af384603a92d027969b18576de95965dea6f94d5e584cd8"
+    }
+  },
+  "only_changed_function": "_close_owned",
+  "prior_candidate02_sha256": "65051435efcba33f8258bc9d53adc833d02a45839dee045d0dc2e626801fd7c0",
+  "prior_manifest02_sha256": "ca615a49aba5aca6f2d7dfd1a6c396e45325c3ee21f1513d9d13bba9fb66a4b2",
+  "production_mutations": [],
+  "rest_of_AST_identical": true,
+  "review02_sha256": "07328dc7bf69cde6154a3456493e4b7168a8981294c36c524a1447c0e0109e2b",
+  "schema_version": 1,
+  "status": "frozen_unintegrated_candidate03_independent_review_pending"
+}

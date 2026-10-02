@@ -1,0 +1,41 @@
+F.F..FF
+======================================================================
+FAIL: test_body_and_child_ordinary_then_parent_fatal_preserves_both_prior_objects (__main__.CloseOrder.test_body_and_child_ordinary_then_parent_fatal_preserves_both_prior_objects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_close03.py", line 66, in test_body_and_child_ordinary_then_parent_fatal_preserves_both_prior_objects
+    self.assertIs(error, fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: CleanupFailure('import descriptor close unresolved') is not MemoryError('parent')
+
+======================================================================
+FAIL: test_existing_fatal_cause_survives_new_prior_evidence (__main__.CloseOrder.test_existing_fatal_cause_survives_new_prior_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_close03.py", line 96, in test_existing_fatal_cause_survives_new_prior_evidence
+    self.assertIs(error, fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: CleanupFailure('import descriptor close unresolved') is not SystemExit('parent')
+
+======================================================================
+FAIL: test_ordinary_child_then_first_parent_fatal_identity_and_cause (__main__.CloseOrder.test_ordinary_child_then_first_parent_fatal_identity_and_cause)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_close03.py", line 58, in test_ordinary_child_then_first_parent_fatal_identity_and_cause
+    self.assertIs(error, fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: CleanupFailure('import descriptor close unresolved') is not MemoryError('parent')
+
+======================================================================
+FAIL: test_ordinary_only_uncertainty_is_terminal_wrapper_with_all_evidence (__main__.CloseOrder.test_ordinary_only_uncertainty_is_terminal_wrapper_with_all_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_close03.py", line 87, in test_ordinary_only_uncertainty_is_terminal_wrapper_with_all_evidence
+    self.assertIsInstance(error.__cause__, ExceptionGroup)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError('body') is not an instance of <class 'ExceptionGroup'>
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.007s
+
+FAILED (failures=4)
