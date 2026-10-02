@@ -1,5 +1,77 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: neural03 CLOSED failed; complete evidence independently accepted.**
+The sole `eth-paper-neural-resource-20261002-03` attempt from source
+`8a295e2391d371193085d00c342f84e06c06fa94` ended at 16:59:12 UTC;
+session81690 returned1. The original cgroup and all six observed processes are
+absent. No substantial job is active; the source freeze has ended. The identity
+is permanently closed and must never be relaunched.
+
+The kernel killed the worker at its 3.75GiB memory ceiling. Native counters
+retain max2058/oom2/oom_kill3/oom_group_kill1/high0; sampled peak is
+4,026,396,672 bytes. Host MemAvailable remained above the fixed3GiB reserve.
+This differs from neural02's userspace pressure kill. Nine ordered phase events
+show validation, loading, construction and tensor adaptation returned, followed
+by `forward_before`; no forward-after, backward or checkpoint was published.
+The exact failed allocation and sufficient capacity remain unknown. All nine
+cells are retained unavailable; no numerical result or financial fit exists.
+
+`neural-pressure-successor-release-2026-10-02/execution-result01.json`
+SHA bce1ad25287631ecc1f932cafd2f8a59d262635ae2a3810683ceb987b9ebd386,
+archive SHA78b9b7d216004d0f1baa18bac1a7765eeef1f9114240d793d3781dd6f7d55dbe,
+and independent REVIEW_EXECUTION01 SHA3d75e63d8a7573e87e6a76947ae9fb7fca5447210868aa471308105be9d58530
+verify all21files/11directories/32entries, 225,280 allocated bytes including
+directory blocks and118,094 logical bytes. PID addendum fdfc3892 and launch
+review c9deb569 are separately pinned. Earlier narrower accounting and failed
+runtime-limit assertion remain preserved with explicit corrections. The7,200s
+guard watchdog was not a systemd runtime deadline; CPU affinity is verified,
+while kernel CPU quota enforcement is unavailable on this controller.
+
+Budget:35CLOSED=27complete+8failed; adopted63; remaining12body+15financial+
+1otherresource=28. The extra neural allowance is spent, without refund.
+Coverage remains77/109; nine neural and23other resource cells remain pending.
+All1,420 financial fits, both-asset/history/comparison scope and C01–C18 remain.
+The latest RAM snapshot is about7.7GiB available; it is not a launch permit or
+evidence that the unchanged forward can fit the worker ceiling.
+
+Next safe actions: commit and externally recover the accepted complete failure;
+implement and independently verify a separate streamed GAT variant with node
+attention scores and bounded custom-autograd message blocks, preserving the
+architecture, every edge and gradients. Frozen forward diagnosis155b8117 and
+its ledger identify large edge gathers as a target, without naming the killed
+operator or promising capacity. Tiny output/gradient/optimizer/RNG/storage
+oracles precede any prospective64 amendment, new gate or empirical attempt.
+Parallel original-dictionary import02 review found one remaining ordinary-close
+then fatal-close ordering defect; preserve02 and correct it in new03 bytes.
+The public Binding, typed original import stage, complete ancestry and actual
+23-cell resource dispatcher remain requirements, not completed bridge evidence.
+
+The older ACTIVE and prospective checkpoints below are historical and superseded.
+
+**ACTIVE single neural03resource probe; HEAD/bindings frozen.**
+Actualcorrectedmetadata admission passed from externallyverified
+8a295e2391d371193085d00c342f84e06c06fa94; exactclaim83,960B/RPC86,465B.
+Solecaller/session81690 observation1 passed16reads/30.004s withminimum
+8,037,982,208Bavailable. Newclaimcreated at2026-10-02T16:54:59.992984+00:00;
+claimSHA15a42323fcabd4b3ac1afaa7162c12a921d6edda3fffb9ff388f5f3874469717.
+Effective63is nowadopted;35spent=34closed+1active, no refund. Remaining12body+
+15financial+1other=28;neuralfollowup allowance consumed. Source/gate/caller/
+inputs/runtime are frozen; do notcommit/change them or launchanotherjob.
+Unitonchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service;monitor982615.
+Actualnative3.75GiBmax=high/swap0/8MiBkernel file/twoCPU limits retained in
+active-controls01. UnitRuntimeMaxSec is infinity; registered7,200swall is guard
+watchdog plus original lease, not an additional systemd runtime directive.
+The firstcollector assertion mistakenly expected2hRuntimeMaxSec; rawfailureand
+its wrongfile-limit label remain preserved/corrected in ACTIVE_CONTROLS_ADDENDUM01.
+No unit/source/control was modified. Exactcurrentphase is in retainedproducer
+cell journals; no completedcell/checkpoint/financialfit is presumed.
+Nextsafeaction: inspect EXISTING session/guard/phases, preservefulldenominator/
+raw/controls, independently reviewactual launch/result andverifiedcleanup;
+thenback up closure andcontinue next admittedresource/fit steps. Finalcoverage
+still77/109 untilactualacceptedresource evidence;all1420financialfits pending.
+Paralleloriginaldictionaryimport02readonlyreview/candidateprotocol work remains
+outsidefrozen package; no numerical/guard competition or actualMCMjobreleased.
+
 **Correction02 independently accepted; no empirical attempt.**
 REVIEW_GATE02 SHA3c94130f1e09f206f7ce06f9d9760026c4ca40cab4b305f80c4b6357de336b19
 confirms exactly2acceptedbudget sourcepins added andall3callback metadata docs

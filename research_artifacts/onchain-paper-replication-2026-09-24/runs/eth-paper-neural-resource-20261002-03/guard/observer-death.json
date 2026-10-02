@@ -1,0 +1,160 @@
+{
+  "boot_id": "8c389743-c1c9-4eba-be5d-c19699d52d0a",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service",
+  "child_exit_code": null,
+  "cleanup_stop_returncode": 0,
+  "cleanup_unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "9",
+    "Result": "oom-kill",
+    "SubState": "failed"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research.onchain_replication.job",
+    "--mode",
+    "worker",
+    "--root",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "--registration",
+    "research/onchain-paper-replication-2026-09-24/full_sources/neural-pressure-successor-release-2026-10-02/gate.json",
+    "--experiment",
+    "eth-paper-neural-resource-20261002-03",
+    "--source",
+    "8a295e2391d371193085d00c342f84e06c06fa94",
+    "--physical-anchor",
+    "83ad539661370fd546ecb13aa90f49f7d3471f1086765fbf875ca959f03164d3"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {},
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 20194484224
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+  ],
+  "elapsed_seconds": 270.8305208130005,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 5507342336,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "4026531840",
+    "memory.max": "4026531840",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": "RuntimeError: child or unit failed: {'Result': 'oom-kill', 'ExecMainStatus': '9', 'ControlGroup': '/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service', 'ActiveState': 'deactivating', 'SubState': 'final-sigkill'}",
+  "live_sha256": "007c495feb179bd56e0a16b16d7c9d4d1656df3d8974dfbd0727c43ce886f4b5",
+  "memory_current_bytes": 2716356608,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 2058,
+    "oom": 2,
+    "oom_group_kill": 1,
+    "oom_kill": 3
+  },
+  "memory_high_bytes": 4026531840,
+  "memory_max_bytes": 4026531840,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 982615,
+  "monotonic_seconds": 21380.852645971,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 2696159232,
+      "file_bytes": 12288,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service",
+      "pressure": "some avg10=0.18 avg60=0.03 avg300=0.00 total=82925\nfull avg10=0.18 avg60=0.03 avg300=0.00 total=82505",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 9072664576,
+      "file_bytes": 3261882368,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=26527587\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=25801197",
+      "swap_current_bytes": 118902784,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": {
+    "experiment": "eth-paper-neural-resource-20261002-03",
+    "monitor_pid": 982615,
+    "monitor_start_ticks": "2110305",
+    "nonce": "00ef87ee4f5a4e2caf4981037a5cb7d7",
+    "source_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+    "supervisor_pid": 980072
+  },
+  "peak_sampled_memory_current_bytes": 4026396672,
+  "phase": "failed",
+  "physical_final_observation": {
+    "allocated_bytes": 184320,
+    "claim_sha256": "15a42323fcabd4b3ac1afaa7162c12a921d6edda3fffb9ff388f5f3874469717",
+    "entries": 24,
+    "files": 13,
+    "logical_bytes": 101248,
+    "qualification": "sampled allocated accounting; not filesystem quota; kernel file-size and bounded metadata writes required",
+    "roles": [
+      "control",
+      "lifecycle",
+      "producer"
+    ]
+  },
+  "physical_observation": {
+    "allocated_bytes": 184320,
+    "claim_sha256": "15a42323fcabd4b3ac1afaa7162c12a921d6edda3fffb9ff388f5f3874469717",
+    "entries": 24,
+    "files": 13,
+    "logical_bytes": 101443,
+    "qualification": "sampled allocated accounting; not filesystem quota; kernel file-size and bounded metadata writes required",
+    "roles": [
+      "control",
+      "lifecycle",
+      "producer"
+    ]
+  },
+  "physical_policy": {
+    "max_allocated_bytes": 167772160,
+    "max_entries": 128,
+    "max_file_bytes": 8388608,
+    "max_json_bytes": 262144,
+    "max_logical_bytes": 134217728,
+    "schema_version": 1,
+    "tail_reserve_bytes": 33554432
+  },
+  "qualification": "owned cgroup death verified by observer; not a successful resource run",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-neural-resource-20261002-03/guard",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 7247757312,
+  "unit": "onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service",
+  "unit_properties": {
+    "ActiveState": "deactivating",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service",
+    "ExecMainStatus": "9",
+    "Result": "oom-kill",
+    "SubState": "final-sigkill"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 7200
+}

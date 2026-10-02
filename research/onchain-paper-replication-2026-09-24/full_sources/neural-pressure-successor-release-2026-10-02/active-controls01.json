@@ -1,0 +1,38 @@
+{
+  "cgroup_readback": {
+    "cgroup.procs": "985140\n985143\n1040730\n",
+    "memory.current": "337879040\n",
+    "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+    "memory.high": "4026531840\n",
+    "memory.max": "4026531840\n",
+    "memory.swap.max": "0\n"
+  },
+  "claim_exists_at_observation": true,
+  "identity": "eth-paper-neural-resource-20261002-03",
+  "monitor_pid": 982615,
+  "observed_utc": "2026-10-02T16:56:58.681275+00:00",
+  "per_process_limits": {
+    "1040730": "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             8388608              8388608              bytes     \nMax data size             unlimited            unlimited            bytes     \nMax stack size            8388608              unlimited            bytes     \nMax core file size        0                    unlimited            bytes     \nMax resident set          unlimited            unlimited            bytes     \nMax processes             61024                61024                processes \nMax open files            1024                 1048576              files     \nMax locked memory         2016972800           2016972800           bytes     \nMax address space         unlimited            unlimited            bytes     \nMax file locks            unlimited            unlimited            locks     \nMax pending signals       61024                61024                signals   \nMax msgqueue size         819200               819200               bytes     \nMax nice priority         0                    0                    \nMax realtime priority     0                    0                    \nMax realtime timeout      unlimited            unlimited            us        \n",
+    "985140": "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             8388608              8388608              bytes     \nMax data size             unlimited            unlimited            bytes     \nMax stack size            8388608              unlimited            bytes     \nMax core file size        0                    unlimited            bytes     \nMax resident set          unlimited            unlimited            bytes     \nMax processes             61024                61024                processes \nMax open files            1024                 1048576              files     \nMax locked memory         2016972800           2016972800           bytes     \nMax address space         unlimited            unlimited            bytes     \nMax file locks            unlimited            unlimited            locks     \nMax pending signals       61024                61024                signals   \nMax msgqueue size         819200               819200               bytes     \nMax nice priority         0                    0                    \nMax realtime priority     0                    0                    \nMax realtime timeout      unlimited            unlimited            us        \n",
+    "985143": "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             8388608              8388608              bytes     \nMax data size             unlimited            unlimited            bytes     \nMax stack size            8388608              unlimited            bytes     \nMax core file size        0                    unlimited            bytes     \nMax resident set          unlimited            unlimited            bytes     \nMax processes             61024                61024                processes \nMax open files            1024                 1048576              files     \nMax locked memory         2016972800           2016972800           bytes     \nMax address space         unlimited            unlimited            bytes     \nMax file locks            unlimited            unlimited            locks     \nMax pending signals       61024                61024                signals   \nMax msgqueue size         819200               819200               bytes     \nMax nice priority         0                    0                    \nMax realtime priority     0                    0                    \nMax realtime timeout      unlimited            unlimited            us        \n"
+  },
+  "properties": {
+    "ActiveState": "active",
+    "CPUQuotaPerSecUSec": "2s",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service",
+    "LimitFSIZE": "8388608",
+    "LimitFSIZESoft": "8388608",
+    "MainPID": "985140",
+    "MemoryHigh": "4026531840",
+    "MemoryMax": "4026531840",
+    "MemorySwapMax": "0",
+    "Result": "success",
+    "RuntimeMaxUSec": "infinity",
+    "SubState": "running"
+  },
+  "properties_raw": "RuntimeMaxUSec=infinity\nMainPID=985140\nResult=success\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service\nCPUQuotaPerSecUSec=2s\nMemoryHigh=4026531840\nMemoryMax=4026531840\nMemorySwapMax=0\nLimitFSIZE=8388608\nLimitFSIZESoft=8388608\nActiveState=active\nSubState=running\n",
+  "qualification": "Actual readbacks, not asserted systemd unit file/runtime directives. Neural physical scope applies child RLIMIT separately; sampled guard wall timer is distinct from systemd RuntimeMaxSec.",
+  "source": "8a295e2391d371193085d00c342f84e06c06fa94",
+  "systemctl_returncode": 0,
+  "unit": "onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service"
+}

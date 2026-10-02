@@ -1,0 +1,984 @@
+{
+  "accounting": {
+    "closed_identity_reusable": false,
+    "financial_fits_run": 0,
+    "highest_adopted_budget": 63,
+    "spent": 35,
+    "this_followup_allocation_spent": true
+  },
+  "checkpointing": false,
+  "claim_terminal": {
+    "claim_sha256": "15a42323fcabd4b3ac1afaa7162c12a921d6edda3fffb9ff388f5f3874469717",
+    "ended_at": "2026-10-02T16:59:11.720241+00:00",
+    "experiment_id": "eth-paper-neural-resource-20261002-03",
+    "output_sha256": {},
+    "reason": "outer observer verified owned cgroup death; complete denominator retained",
+    "status": "failed"
+  },
+  "closed_identity": "eth-paper-neural-resource-20261002-03",
+  "exact_sources": {
+    "tradingagents/research/onchain_replication/contracts.py": {
+      "bytes": 8253,
+      "current_bytes_match": true,
+      "exact_closed_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+      "sha256": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a"
+    },
+    "tradingagents/research/onchain_replication/gat.py": {
+      "bytes": 2882,
+      "current_bytes_match": true,
+      "exact_closed_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+      "sha256": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6"
+    },
+    "tradingagents/research/onchain_replication/graph_store.py": {
+      "bytes": 5296,
+      "current_bytes_match": true,
+      "exact_closed_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+      "sha256": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da"
+    },
+    "tradingagents/research/onchain_replication/model.py": {
+      "bytes": 4525,
+      "current_bytes_match": true,
+      "exact_closed_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+      "sha256": "ed4d5417202bb13ebc682d88d56942db74201feddc1b4d20511e54684fc252a0"
+    },
+    "tradingagents/research/onchain_replication/neural_phases.py": {
+      "bytes": 6366,
+      "current_bytes_match": true,
+      "exact_closed_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+      "sha256": "60c6e6532a62034ec859b22c22902fee84f21428410c2cb5b86796a51b97d48c"
+    },
+    "tradingagents/research/onchain_replication/neural_resource.py": {
+      "bytes": 20689,
+      "current_bytes_match": true,
+      "exact_closed_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+      "sha256": "a21505fe40dabba5da82d940e01229979ce26c6757910e729a76f6813f6a1164"
+    },
+    "tradingagents/research/onchain_replication/pooling.py": {
+      "bytes": 838,
+      "current_bytes_match": true,
+      "exact_closed_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+      "sha256": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303"
+    },
+    "tradingagents/research/onchain_replication/temporal.py": {
+      "bytes": 2397,
+      "current_bytes_match": true,
+      "exact_closed_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+      "sha256": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226"
+    }
+  },
+  "graph_headers": {
+    "edge_aggregates": {
+      "body_rehashed_or_parsed": false,
+      "bytes": 50913008,
+      "header": {
+        "descr": "<f8",
+        "fortran_order": false,
+        "shape": [
+          3182055,
+          2
+        ]
+      },
+      "header_sha256": "b918dc8d3d87940d5e967057ccf3f99a1052dfb03ac4bf6ad5ee9f0045e85593",
+      "manifest_sha256": "d5f42611b11c9dc4ff8b242933d69d7f295fd89be37081acedc8036be3c2e084",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/edge_aggregates.npy"
+    },
+    "edge_features": {
+      "body_rehashed_or_parsed": false,
+      "bytes": 50913008,
+      "header": {
+        "descr": "<f8",
+        "fortran_order": false,
+        "shape": [
+          3182055,
+          2
+        ]
+      },
+      "header_sha256": "b918dc8d3d87940d5e967057ccf3f99a1052dfb03ac4bf6ad5ee9f0045e85593",
+      "manifest_sha256": "5362d72b90a376aa8fc2b5b4e81dd61083101b3a0bf50ac6cdc27ad2d39a6047",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/edge_features.npy"
+    },
+    "edge_index": {
+      "body_rehashed_or_parsed": false,
+      "bytes": 50913008,
+      "header": {
+        "descr": "<i8",
+        "fortran_order": false,
+        "shape": [
+          2,
+          3182055
+        ]
+      },
+      "header_sha256": "f9673d024c7aaf02ed0dc98a3cf8bf0359ab108d05a428892576d5864b588d8e",
+      "manifest_sha256": "7ecfa723379dcbcfde6eb29acd62a06eb42c8527dd80fc860581d6187f75d376",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/edge_index.npy"
+    },
+    "node_features": {
+      "body_rehashed_or_parsed": false,
+      "bytes": 65571168,
+      "header": {
+        "descr": "<f8",
+        "fortran_order": false,
+        "shape": [
+          2049095,
+          4
+        ]
+      },
+      "header_sha256": "3b1a531cfa1f5fa4eb6b400a316d9fa8dd4411cd1d48fb0d117e7240633eaa63",
+      "manifest_sha256": "c843b5abe04a219edfe0c96222041ef4676c2ca238a3df535d0fe7e1a1e4087c",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/node_features.npy"
+    },
+    "node_ids": {
+      "body_rehashed_or_parsed": false,
+      "bytes": 344248088,
+      "header": {
+        "descr": "<U42",
+        "fortran_order": false,
+        "shape": [
+          2049095
+        ]
+      },
+      "header_sha256": "8046336762ea704ba3f0834a1d3c0ca08bbeb0a623932f5b58805b7800c4ee91",
+      "manifest_sha256": "e25556bf0c376a693c2422cbb1a5e10932f05b28729412c1e836e0c9bbaf6b38",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/node_ids.npy"
+    }
+  },
+  "guard_terminal": {
+    "boot_id": "8c389743-c1c9-4eba-be5d-c19699d52d0a",
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service",
+    "child_exit_code": null,
+    "cleanup_stop_returncode": 0,
+    "cleanup_unit_properties": {
+      "ActiveState": "failed",
+      "ControlGroup": "",
+      "ExecMainStatus": "9",
+      "Result": "oom-kill",
+      "SubState": "failed"
+    },
+    "cleanup_verified": true,
+    "command": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "-m",
+      "tradingagents.research.onchain_replication.job",
+      "--mode",
+      "worker",
+      "--root",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "--registration",
+      "research/onchain-paper-replication-2026-09-24/full_sources/neural-pressure-successor-release-2026-10-02/gate.json",
+      "--experiment",
+      "eth-paper-neural-resource-20261002-03",
+      "--source",
+      "8a295e2391d371193085d00c342f84e06c06fa94",
+      "--physical-anchor",
+      "83ad539661370fd546ecb13aa90f49f7d3471f1086765fbf875ca959f03164d3"
+    ],
+    "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+    "cpu_quota_controller_available": false,
+    "cpu_thread_readback": {},
+    "cpus": [
+      0,
+      1
+    ],
+    "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "disk_floor_bytes": 10737418240,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 20194484224
+    },
+    "disk_paths": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ],
+    "elapsed_seconds": 270.8305208130005,
+    "elapsed_time_kill": false,
+    "host_mem_available_bytes": 5507342336,
+    "initial_memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "kernel_controls": {
+      "memory.high": "4026531840",
+      "memory.max": "4026531840",
+      "memory.swap.max": "0"
+    },
+    "lease_seconds": 15.0,
+    "limit_reason": "RuntimeError: child or unit failed: {'Result': 'oom-kill', 'ExecMainStatus': '9', 'ControlGroup': '/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service', 'ActiveState': 'deactivating', 'SubState': 'final-sigkill'}",
+    "memory_current_bytes": 2716356608,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 2058,
+      "oom": 2,
+      "oom_group_kill": 1,
+      "oom_kill": 3
+    },
+    "memory_high_bytes": 4026531840,
+    "memory_max_bytes": 4026531840,
+    "memory_swap_max_bytes": 0,
+    "monitor_pid": 982615,
+    "monotonic_seconds": 21380.852645971,
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 2696159232,
+        "file_bytes": 12288,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service",
+        "pressure": "some avg10=0.18 avg60=0.03 avg300=0.00 total=82925\nfull avg10=0.18 avg60=0.03 avg300=0.00 total=82505",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 9072664576,
+        "file_bytes": 3261882368,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=26527587\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=25801197",
+        "swap_current_bytes": 118902784,
+        "unavailable": {}
+      }
+    },
+    "owner_identity": {
+      "experiment": "eth-paper-neural-resource-20261002-03",
+      "monitor_pid": 982615,
+      "monitor_start_ticks": "2110305",
+      "nonce": "00ef87ee4f5a4e2caf4981037a5cb7d7",
+      "source_commit": "8a295e2391d371193085d00c342f84e06c06fa94",
+      "supervisor_pid": 980072
+    },
+    "peak_sampled_memory_current_bytes": 4026396672,
+    "phase": "failed",
+    "physical_final_observation": {
+      "allocated_bytes": 184320,
+      "claim_sha256": "15a42323fcabd4b3ac1afaa7162c12a921d6edda3fffb9ff388f5f3874469717",
+      "entries": 24,
+      "files": 13,
+      "logical_bytes": 101248,
+      "qualification": "sampled allocated accounting; not filesystem quota; kernel file-size and bounded metadata writes required",
+      "roles": [
+        "control",
+        "lifecycle",
+        "producer"
+      ]
+    },
+    "physical_observation": {
+      "allocated_bytes": 184320,
+      "claim_sha256": "15a42323fcabd4b3ac1afaa7162c12a921d6edda3fffb9ff388f5f3874469717",
+      "entries": 24,
+      "files": 13,
+      "logical_bytes": 101443,
+      "qualification": "sampled allocated accounting; not filesystem quota; kernel file-size and bounded metadata writes required",
+      "roles": [
+        "control",
+        "lifecycle",
+        "producer"
+      ]
+    },
+    "physical_policy": {
+      "max_allocated_bytes": 167772160,
+      "max_entries": 128,
+      "max_file_bytes": 8388608,
+      "max_json_bytes": 262144,
+      "max_logical_bytes": 134217728,
+      "schema_version": 1,
+      "tail_reserve_bytes": 33554432
+    },
+    "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-neural-resource-20261002-03/guard",
+    "reserve_bytes": 3221225472,
+    "retry": false,
+    "sample_seconds": 0.25,
+    "start_reserve_bytes": 7247757312,
+    "unit": "onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service",
+    "unit_properties": {
+      "ActiveState": "deactivating",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service",
+      "ExecMainStatus": "9",
+      "Result": "oom-kill",
+      "SubState": "final-sigkill"
+    },
+    "wait_seconds": 30.0,
+    "wall_seconds": 7200
+  },
+  "model_config": {
+    "attention": "v^T tanh(W_query*h_last + W_key*h_j + bias); mask pads before softmax",
+    "attention_width": 32,
+    "edge_feature_count": 2,
+    "embedding_cache": "no learned embedding reuse across weight updates",
+    "gat_activation": [
+      "elu",
+      "identity"
+    ],
+    "gat_concatenate": [
+      true,
+      false
+    ],
+    "gat_dropout": 0.0,
+    "gat_heads": [
+      4,
+      1
+    ],
+    "gat_layers": 2,
+    "gat_neighbors": "incoming edges plus self exactly once",
+    "gat_widths": [
+      16,
+      32
+    ],
+    "gradient_path": "joint MLP,GAT,LSTM,attention,head; dictionary and raw similarities fixed",
+    "graph_vector_width": 32,
+    "heads": {
+      "classification": 2,
+      "regression": 1
+    },
+    "initialization": {
+      "attention": "linear rule above; final vector Xavier uniform gain1",
+      "gat_attention_vectors": "uniform(-sqrt(6/(2*head_width+1)),sqrt(6/(2*head_width+1)))",
+      "gat_projection": "Xavier uniform gain1",
+      "linear": "Xavier uniform gain1; biases zero",
+      "recurrent": "every weight uniform(-1/sqrt(hidden_width),+1/sqrt(hidden_width)); all biases zero, including forget gates",
+      "seed_derivation": "reset Python random, numpy PCG64 and torch manual_seed to cell seed before constructing fixed model module order; CUDA all devices same seed; dictionary has separate PCG64 seeded same value"
+    },
+    "leaky_relu_slope": 0.2,
+    "lookback_days": 28,
+    "lstm_depth": 1,
+    "lstm_width": 64,
+    "mcm_input": 32,
+    "mlp_activation": "relu",
+    "mlp_widths": [
+      64,
+      32
+    ],
+    "node_feature_count": 4,
+    "pooling": "arithmetic mean of valid node vectors after final GAT",
+    "price_input_width": 1,
+    "schema_version": 1
+  },
+  "phase_journal": {
+    "events": [
+      {
+        "elapsed_seconds": 0.004215790002490394,
+        "event": "graph_validation_before",
+        "observation": {
+          "anon_bytes": 331296768,
+          "file_bytes": 3465216,
+          "memory_current_bytes": 337739776,
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+          "unavailable": []
+        }
+      },
+      {
+        "elapsed_seconds": 63.41375307999988,
+        "event": "graph_validation_after",
+        "observation": {
+          "anon_bytes": 364986368,
+          "file_bytes": 566579200,
+          "memory_current_bytes": 934809600,
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+          "unavailable": []
+        }
+      },
+      {
+        "elapsed_seconds": 63.432025219000934,
+        "event": "graph_load_before",
+        "observation": {
+          "anon_bytes": 364986368,
+          "file_bytes": 566579200,
+          "memory_current_bytes": 934805504,
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+          "unavailable": []
+        }
+      },
+      {
+        "elapsed_seconds": 110.13727992400163,
+        "event": "graph_load_after",
+        "observation": {
+          "anon_bytes": 779411456,
+          "file_bytes": 566579200,
+          "memory_current_bytes": 1349783552,
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+          "unavailable": []
+        }
+      },
+      {
+        "elapsed_seconds": 110.19419122900217,
+        "event": "model_before",
+        "observation": {
+          "anon_bytes": 779411456,
+          "file_bytes": 566579200,
+          "memory_current_bytes": 1349779456,
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+          "unavailable": []
+        }
+      },
+      {
+        "elapsed_seconds": 112.78639236000163,
+        "event": "model_after",
+        "observation": {
+          "anon_bytes": 821121024,
+          "file_bytes": 566583296,
+          "memory_current_bytes": 1391931392,
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+          "unavailable": []
+        }
+      },
+      {
+        "elapsed_seconds": 112.7999119030028,
+        "event": "tensor_adapter_before",
+        "observation": {
+          "anon_bytes": 821121024,
+          "file_bytes": 566583296,
+          "memory_current_bytes": 1391927296,
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+          "unavailable": []
+        }
+      },
+      {
+        "elapsed_seconds": 113.00680371800263,
+        "event": "tensor_adapter_after",
+        "observation": {
+          "anon_bytes": 1134456832,
+          "file_bytes": 566587392,
+          "memory_current_bytes": 1705848832,
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+          "unavailable": []
+        }
+      },
+      {
+        "elapsed_seconds": 113.03136132800137,
+        "event": "forward_before",
+        "observation": {
+          "anon_bytes": 1134456832,
+          "file_bytes": 566587392,
+          "memory_current_bytes": 1705840640,
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+          "unavailable": []
+        }
+      }
+    ],
+    "identity": {
+      "cell_id": "neural_checkpoint-2022-01-03",
+      "claim_sha256": "15a42323fcabd4b3ac1afaa7162c12a921d6edda3fffb9ff388f5f3874469717",
+      "graph_manifest_sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98",
+      "model_config_sha256": "80c1377afce47e917a518918bf239e63a2f9e86204a00b824b3b7aff76ab8d6f",
+      "plan_sha256": "6b4d7192961aa7e305ccf933c953df2faec48c1abacc1c1241d4d35fea5c81dd",
+      "source_commit": "8a295e2391d371193085d00c342f84e06c06fa94"
+    },
+    "physical_anchor_sha256": "83ad539661370fd546ecb13aa90f49f7d3471f1086765fbf875ca959f03164d3",
+    "qualification": "before marks intent; after marks returned stage; no cell outcome or retry authority",
+    "schema_version": 1
+  },
+  "physical_final": {
+    "scope": "three roots after observer/lifecycle tail; final receipt checked after write",
+    "self_receipt_reserved_bytes": 270336,
+    "snapshot_before_receipt": {
+      "allocated_bytes": 217088,
+      "claim_sha256": "15a42323fcabd4b3ac1afaa7162c12a921d6edda3fffb9ff388f5f3874469717",
+      "entries": 30,
+      "files": 19,
+      "logical_bytes": 116422,
+      "qualification": "sampled allocated accounting; not filesystem quota; kernel file-size and bounded metadata writes required",
+      "roles": [
+        "control",
+        "lifecycle",
+        "producer"
+      ]
+    },
+    "status": "accounted"
+  },
+  "postmortem_cells": [
+    {
+      "id": "neural_checkpoint-2022-01-03",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2022-06-13",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2022-07-25",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2022-11-07",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2023-06-05",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-01-01",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-03-11",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-08-05",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-12-23",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    }
+  ],
+  "refs": {
+    "research/onchain-paper-replication-2026-09-24/config/model.json": {
+      "bytes": 1628,
+      "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json": {
+      "bytes": 1604,
+      "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-neural-resource-20261002-03/guard/final.json": {
+      "bytes": 5674,
+      "sha256": "007c495feb179bd56e0a16b16d7c9d4d1656df3d8974dfbd0727c43ce886f4b5"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-neural-resource-20261002-03/physical-final.json": {
+      "bytes": 584,
+      "sha256": "f1577f10e6472207ec9c0dfd0416d51f1e515708a1d56b3ca9b7dec6523fcf09"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-neural-resource-20261002-03/postmortem-cells.json": {
+      "bytes": 1416,
+      "sha256": "6dbd72199969d91180e00f1e15f00709335fae17d48e2dea3afc085cf6858663"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-neural-resource-20261002-03/cell-00/phase-journal.json": {
+      "bytes": 5128,
+      "sha256": "591d4a1d6161611ad2ec343e9faec3b25197c87ad54e5b511b63cf6858453e87"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-neural-resource-20261002-03/intent.json": {
+      "bytes": 5202,
+      "sha256": "afc8b8071558599322861cff6f5ffb5b26e73e64906e956cd2d1c229c2c6f374"
+    },
+    "research_runs/eth-paper-neural-resource-20261002-03/claim.json": {
+      "bytes": 83960,
+      "sha256": "15a42323fcabd4b3ac1afaa7162c12a921d6edda3fffb9ff388f5f3874469717"
+    },
+    "research_runs/eth-paper-neural-resource-20261002-03/failed.json": {
+      "bytes": 333,
+      "sha256": "8a5f0b846189a3b6131f72848f7aed3caeca166aee0ca28792208277ee7d5b01"
+    }
+  },
+  "registered_cells": [
+    {
+      "cell_id": "neural_checkpoint-2022-01-03",
+      "expected_edges": 3182055,
+      "expected_nodes": 2049095,
+      "graph_config_hash": "01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d",
+      "graph_hash": "67ffff78a83d67b77d3fefce1bc7f6dc3a7cab0c80ac68d8c72e0c99a30022b8",
+      "graph_input": "graph_2022_01_03",
+      "node_order_sha256": "e25556bf0c376a693c2422cbb1a5e10932f05b28729412c1e836e0c9bbaf6b38",
+      "week": "2022-01-03"
+    },
+    {
+      "cell_id": "neural_checkpoint-2022-06-13",
+      "expected_edges": 2518332,
+      "expected_nodes": 1768268,
+      "graph_config_hash": "01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d",
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "graph_input": "graph_2022_06_13",
+      "node_order_sha256": "e8f1a8e04d0a0167bdb45b112aaacaea66af6f241ca91fef4b3e6f88a9ec850e",
+      "week": "2022-06-13"
+    },
+    {
+      "cell_id": "neural_checkpoint-2022-07-25",
+      "expected_edges": 3504159,
+      "expected_nodes": 2764221,
+      "graph_config_hash": "01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d",
+      "graph_hash": "dfdaebb2566f10f1f705b8b5ef76f0aa7440e24444b7e8b054cb313613fc2c5b",
+      "graph_input": "graph_2022_07_25",
+      "node_order_sha256": "bd003c96cf106666647ba9f1a7f31bbb5da54b6d3a4f12c64bf145b6edf7ab16",
+      "week": "2022-07-25"
+    },
+    {
+      "cell_id": "neural_checkpoint-2022-11-07",
+      "expected_edges": 2107009,
+      "expected_nodes": 1635871,
+      "graph_config_hash": "01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d",
+      "graph_hash": "738f559e780109522baacea87b1cb2310f0d1896b030016ae9fd152210b5cb20",
+      "graph_input": "graph_2022_11_07",
+      "node_order_sha256": "49962625e8989a38775f885eae8597f2d00bc3d642011a23f1f2f36dbafedf2f",
+      "week": "2022-11-07"
+    },
+    {
+      "cell_id": "neural_checkpoint-2023-06-05",
+      "expected_edges": 2509313,
+      "expected_nodes": 1837248,
+      "graph_config_hash": "01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d",
+      "graph_hash": "cd70b436ed2c62eedbefc5b1a72026b0b313fde759843995fc1dfe3b40cd43fc",
+      "graph_input": "graph_2023_06_05",
+      "node_order_sha256": "d35ce1a53fafcd0c88bd7952bb0e5af0dcf0b00461bc5bb5720801e03a8cf094",
+      "week": "2023-06-05"
+    },
+    {
+      "cell_id": "neural_checkpoint-2024-01-01",
+      "expected_edges": 2559152,
+      "expected_nodes": 1832447,
+      "graph_config_hash": "01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d",
+      "graph_hash": "5f64c66647bd034c9b4c2731b831b1899b9a821b57c4eb690db390381cb8fdff",
+      "graph_input": "graph_2024_01_01",
+      "node_order_sha256": "0d0f7eca0b2739ec68d6128e9c6bcf5fb09f302f295806de1463d103de000def",
+      "week": "2024-01-01"
+    },
+    {
+      "cell_id": "neural_checkpoint-2024-03-11",
+      "expected_edges": 2990664,
+      "expected_nodes": 2306140,
+      "graph_config_hash": "01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d",
+      "graph_hash": "f2b6131c55a967fe0464bc82648a7ad0b79a927c24033ebffe536fef9f95caea",
+      "graph_input": "graph_2024_03_11",
+      "node_order_sha256": "f523e62a35632f6b7d652b77790116a6497cc773824619c173a5126ea74c0488",
+      "week": "2024-03-11"
+    },
+    {
+      "cell_id": "neural_checkpoint-2024-08-05",
+      "expected_edges": 2215129,
+      "expected_nodes": 1705509,
+      "graph_config_hash": "01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d",
+      "graph_hash": "3a1bd175ab673bc8a9a5df34392c5057b67748a227da0b291501e9596cc3a067",
+      "graph_input": "graph_2024_08_05",
+      "node_order_sha256": "a5585fd77f6800a4685b307f6d390382c9e998f8ddc40b25fb46e929039de390",
+      "week": "2024-08-05"
+    },
+    {
+      "cell_id": "neural_checkpoint-2024-12-23",
+      "expected_edges": 2795884,
+      "expected_nodes": 2148017,
+      "graph_config_hash": "01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d",
+      "graph_hash": "f97ef5f6289bfe69397f752d867484dc2b26cfd902ef396bf0409101c158c3b7",
+      "graph_input": "graph_2024_12_23",
+      "node_order_sha256": "aa7291dc807fbdcf5e94362b3d1094c0d2e44a50d99fad1fd8f3a6b7899d95e4",
+      "week": "2024-12-23"
+    }
+  ],
+  "schema_version": 1,
+  "source": "8a295e2391d371193085d00c342f84e06c06fa94",
+  "status": "bounded-source-and-retained-metadata-diagnosis-no-execution",
+  "tensor_size_ledger": [
+    {
+      "E": 3182055,
+      "N": 2049095,
+      "edge_index_after_filter_and_selfloop_2Eprime_bounds": [
+        50912880,
+        83698400
+      ],
+      "effective_edge_formula": "E - original_self_loops + N; original_self_loops unknown, bounded0..min(N,E)",
+      "effective_edges_bounds": [
+        3182055,
+        5231150
+      ],
+      "float32_gat1_edge_scalar_E4_bounds": [
+        50912880,
+        83698400
+      ],
+      "float32_gat1_node_scalar_N4": 32785520,
+      "float32_gat1_projection_N4x16": 524568320,
+      "float32_gat1_single_gather_or_message_bounds": [
+        814606080,
+        1339174400
+      ],
+      "float32_gat2_projection_N1x32": 262284160,
+      "float32_gat2_single_gather_or_message_bounds": [
+        407303040,
+        669587200
+      ],
+      "float32_mcm_N32": 262284160,
+      "float32_mlp_N32": 262284160,
+      "float32_mlp_N64": 524568320,
+      "int64_edge_input_2E": 50912880,
+      "week": "2022-01-03"
+    },
+    {
+      "E": 2518332,
+      "N": 1768268,
+      "edge_index_after_filter_and_selfloop_2Eprime_bounds": [
+        40293312,
+        68585600
+      ],
+      "effective_edge_formula": "E - original_self_loops + N; original_self_loops unknown, bounded0..min(N,E)",
+      "effective_edges_bounds": [
+        2518332,
+        4286600
+      ],
+      "float32_gat1_edge_scalar_E4_bounds": [
+        40293312,
+        68585600
+      ],
+      "float32_gat1_node_scalar_N4": 28292288,
+      "float32_gat1_projection_N4x16": 452676608,
+      "float32_gat1_single_gather_or_message_bounds": [
+        644692992,
+        1097369600
+      ],
+      "float32_gat2_projection_N1x32": 226338304,
+      "float32_gat2_single_gather_or_message_bounds": [
+        322346496,
+        548684800
+      ],
+      "float32_mcm_N32": 226338304,
+      "float32_mlp_N32": 226338304,
+      "float32_mlp_N64": 452676608,
+      "int64_edge_input_2E": 40293312,
+      "week": "2022-06-13"
+    },
+    {
+      "E": 3504159,
+      "N": 2764221,
+      "edge_index_after_filter_and_selfloop_2Eprime_bounds": [
+        56066544,
+        100294080
+      ],
+      "effective_edge_formula": "E - original_self_loops + N; original_self_loops unknown, bounded0..min(N,E)",
+      "effective_edges_bounds": [
+        3504159,
+        6268380
+      ],
+      "float32_gat1_edge_scalar_E4_bounds": [
+        56066544,
+        100294080
+      ],
+      "float32_gat1_node_scalar_N4": 44227536,
+      "float32_gat1_projection_N4x16": 707640576,
+      "float32_gat1_single_gather_or_message_bounds": [
+        897064704,
+        1604705280
+      ],
+      "float32_gat2_projection_N1x32": 353820288,
+      "float32_gat2_single_gather_or_message_bounds": [
+        448532352,
+        802352640
+      ],
+      "float32_mcm_N32": 353820288,
+      "float32_mlp_N32": 353820288,
+      "float32_mlp_N64": 707640576,
+      "int64_edge_input_2E": 56066544,
+      "week": "2022-07-25"
+    },
+    {
+      "E": 2107009,
+      "N": 1635871,
+      "edge_index_after_filter_and_selfloop_2Eprime_bounds": [
+        33712144,
+        59886080
+      ],
+      "effective_edge_formula": "E - original_self_loops + N; original_self_loops unknown, bounded0..min(N,E)",
+      "effective_edges_bounds": [
+        2107009,
+        3742880
+      ],
+      "float32_gat1_edge_scalar_E4_bounds": [
+        33712144,
+        59886080
+      ],
+      "float32_gat1_node_scalar_N4": 26173936,
+      "float32_gat1_projection_N4x16": 418782976,
+      "float32_gat1_single_gather_or_message_bounds": [
+        539394304,
+        958177280
+      ],
+      "float32_gat2_projection_N1x32": 209391488,
+      "float32_gat2_single_gather_or_message_bounds": [
+        269697152,
+        479088640
+      ],
+      "float32_mcm_N32": 209391488,
+      "float32_mlp_N32": 209391488,
+      "float32_mlp_N64": 418782976,
+      "int64_edge_input_2E": 33712144,
+      "week": "2022-11-07"
+    },
+    {
+      "E": 2509313,
+      "N": 1837248,
+      "edge_index_after_filter_and_selfloop_2Eprime_bounds": [
+        40149008,
+        69544976
+      ],
+      "effective_edge_formula": "E - original_self_loops + N; original_self_loops unknown, bounded0..min(N,E)",
+      "effective_edges_bounds": [
+        2509313,
+        4346561
+      ],
+      "float32_gat1_edge_scalar_E4_bounds": [
+        40149008,
+        69544976
+      ],
+      "float32_gat1_node_scalar_N4": 29395968,
+      "float32_gat1_projection_N4x16": 470335488,
+      "float32_gat1_single_gather_or_message_bounds": [
+        642384128,
+        1112719616
+      ],
+      "float32_gat2_projection_N1x32": 235167744,
+      "float32_gat2_single_gather_or_message_bounds": [
+        321192064,
+        556359808
+      ],
+      "float32_mcm_N32": 235167744,
+      "float32_mlp_N32": 235167744,
+      "float32_mlp_N64": 470335488,
+      "int64_edge_input_2E": 40149008,
+      "week": "2023-06-05"
+    },
+    {
+      "E": 2559152,
+      "N": 1832447,
+      "edge_index_after_filter_and_selfloop_2Eprime_bounds": [
+        40946432,
+        70265584
+      ],
+      "effective_edge_formula": "E - original_self_loops + N; original_self_loops unknown, bounded0..min(N,E)",
+      "effective_edges_bounds": [
+        2559152,
+        4391599
+      ],
+      "float32_gat1_edge_scalar_E4_bounds": [
+        40946432,
+        70265584
+      ],
+      "float32_gat1_node_scalar_N4": 29319152,
+      "float32_gat1_projection_N4x16": 469106432,
+      "float32_gat1_single_gather_or_message_bounds": [
+        655142912,
+        1124249344
+      ],
+      "float32_gat2_projection_N1x32": 234553216,
+      "float32_gat2_single_gather_or_message_bounds": [
+        327571456,
+        562124672
+      ],
+      "float32_mcm_N32": 234553216,
+      "float32_mlp_N32": 234553216,
+      "float32_mlp_N64": 469106432,
+      "int64_edge_input_2E": 40946432,
+      "week": "2024-01-01"
+    },
+    {
+      "E": 2990664,
+      "N": 2306140,
+      "edge_index_after_filter_and_selfloop_2Eprime_bounds": [
+        47850624,
+        84748864
+      ],
+      "effective_edge_formula": "E - original_self_loops + N; original_self_loops unknown, bounded0..min(N,E)",
+      "effective_edges_bounds": [
+        2990664,
+        5296804
+      ],
+      "float32_gat1_edge_scalar_E4_bounds": [
+        47850624,
+        84748864
+      ],
+      "float32_gat1_node_scalar_N4": 36898240,
+      "float32_gat1_projection_N4x16": 590371840,
+      "float32_gat1_single_gather_or_message_bounds": [
+        765609984,
+        1355981824
+      ],
+      "float32_gat2_projection_N1x32": 295185920,
+      "float32_gat2_single_gather_or_message_bounds": [
+        382804992,
+        677990912
+      ],
+      "float32_mcm_N32": 295185920,
+      "float32_mlp_N32": 295185920,
+      "float32_mlp_N64": 590371840,
+      "int64_edge_input_2E": 47850624,
+      "week": "2024-03-11"
+    },
+    {
+      "E": 2215129,
+      "N": 1705509,
+      "edge_index_after_filter_and_selfloop_2Eprime_bounds": [
+        35442064,
+        62730208
+      ],
+      "effective_edge_formula": "E - original_self_loops + N; original_self_loops unknown, bounded0..min(N,E)",
+      "effective_edges_bounds": [
+        2215129,
+        3920638
+      ],
+      "float32_gat1_edge_scalar_E4_bounds": [
+        35442064,
+        62730208
+      ],
+      "float32_gat1_node_scalar_N4": 27288144,
+      "float32_gat1_projection_N4x16": 436610304,
+      "float32_gat1_single_gather_or_message_bounds": [
+        567073024,
+        1003683328
+      ],
+      "float32_gat2_projection_N1x32": 218305152,
+      "float32_gat2_single_gather_or_message_bounds": [
+        283536512,
+        501841664
+      ],
+      "float32_mcm_N32": 218305152,
+      "float32_mlp_N32": 218305152,
+      "float32_mlp_N64": 436610304,
+      "int64_edge_input_2E": 35442064,
+      "week": "2024-08-05"
+    },
+    {
+      "E": 2795884,
+      "N": 2148017,
+      "edge_index_after_filter_and_selfloop_2Eprime_bounds": [
+        44734144,
+        79102416
+      ],
+      "effective_edge_formula": "E - original_self_loops + N; original_self_loops unknown, bounded0..min(N,E)",
+      "effective_edges_bounds": [
+        2795884,
+        4943901
+      ],
+      "float32_gat1_edge_scalar_E4_bounds": [
+        44734144,
+        79102416
+      ],
+      "float32_gat1_node_scalar_N4": 34368272,
+      "float32_gat1_projection_N4x16": 549892352,
+      "float32_gat1_single_gather_or_message_bounds": [
+        715746304,
+        1265638656
+      ],
+      "float32_gat2_projection_N1x32": 274946176,
+      "float32_gat2_single_gather_or_message_bounds": [
+        357873152,
+        632819328
+      ],
+      "float32_mcm_N32": 274946176,
+      "float32_mlp_N32": 274946176,
+      "float32_mlp_N64": 549892352,
+      "int64_edge_input_2E": 44734144,
+      "week": "2024-12-23"
+    }
+  ],
+  "unknowns": [
+    "original self-loop count (array body uninspected)",
+    "individual forward operator or GAT layer at kill",
+    "exact PyTorch saved-tensor set/lifetimes/backend workspace",
+    "true unsampled allocation peak and allocator fragmentation",
+    "prospective streamed/checkpointed peak or runtime/capacity",
+    "gradient and optimizer equivalence of proposed implementation"
+  ]
+}

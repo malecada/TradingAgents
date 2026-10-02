@@ -1,5 +1,42 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Latest ownership — neural03 closed; faithful forward correction
+
+No substantial job is active. Neural03/session81690 is permanently CLOSED1;
+kernel OOM at3.75GiB, all9cells unavailable, all6observed PIDs/cgroup absent.
+Complete raw/closure independently accepted at REVIEW_EXECUTION01 SHA3d75e63d.
+Source freeze ended after verified closure. Never reuse03 or reopen old claims.
+35closed=27complete8failed/adopt63; no remaining neural allowance,77/109coverage,
+all1420financialfits pending. Full paper scope remains unchanged.
+
+- Root owns STATE/coordination, complete closure backup/fresh recovery and NEW
+  dictionary candidate03 fatal-order correction; no empirical release yet.
+- physical_correction owns ONLY new neural-streamed-gat-candidate-2026-10-02/
+  protocol/tests/source. Frozen diagnosis155b8117 is preserved. Numerical
+  imports/execution require the exact finite tiny-oracle protocol review first.
+- physical_review owns ONLY dictionary02 independent review and later separate
+  root03 review. Frozen02 is withheld for ordinary-close then actual-fatal order;
+  actual Binding/numerical materialization/Owner/MCM proof remains outstanding.
+- registration_review accepted closed neural03 evidence and is available for
+  fresh remote recovery and the streamed GAT numerical-oracle protocol review.
+
+Implement node attention dot products and bounded message recomputation without
+sampling/truncation/dtype or architecture substitution. Compare outputs, all
+gradients, Adam/RNG/reload and saved storage on tiny fixtures before any new64
+budget/gate/probe. One substantial launcher at a time; no silent cap escalation.
+
+
+## Active neural03 and source freeze
+
+Soleeth-paper-neural-resource-20261002-03/session81690/unitonchain-replication-7865ffe1f92d4524a65c06d03b744aa6.service/monitor982615 active from source8a295e23.
+Rootowns existingjobobservation/STATE/retention/cleanup/backup. ExactHEAD/package/
+inputs/runtime/gate/caller frozen; no commits or additional substantialjobs.
+registration_review owns only actual-launch/result review. physical_review owns
+only dictionaryimport02read-onlyreview; physical_correction owns only dated
+candidate/protocolwork; no package edits/numericalimports/tests/claims/jobs.
+Effective63nowadopted/35spent34closed+1active;no financialfit yet. Neverduplicate
+caller/unit orrelaunchclosedhistoricalidentity. Afterclosure immediatelyfollow
+thenextreviewedeligibleaction withoutnewuserprompt.
 
 ## Latest ownership — neural03 finalgate accepted, single launch next
 
