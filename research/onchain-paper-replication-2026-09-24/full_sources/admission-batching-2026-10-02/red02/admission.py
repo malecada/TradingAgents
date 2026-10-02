@@ -122,7 +122,7 @@ def _source_files(root, source, design_source, files):
             current, frozen = recorded[2 * index:2 * index + 2]
             if local_path(root, name).read_bytes() != current:
                 raise ValueError(f"committed source differs: {name}")
-            if expected is not None and digest(current) != expected:
+            if digest(current) != expected:
                 raise ValueError(f"registered source hash differs: {name}")
             if digest(frozen) != expected:
                 raise ValueError("source differs from design freeze")

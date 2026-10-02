@@ -1,0 +1,1976 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                      [100%]
+=================================== FAILURES ===================================
+___________ test_binary_paths_and_fresh_distinct_commits[False-sha1] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_binary_paths_and_fresh_di0')
+object_format = 'sha1', distinct = False
+
+    @pytest.mark.parametrize("object_format", ["sha1", "sha256"])
+    @pytest.mark.parametrize("distinct", [False, True])
+    def test_binary_paths_and_fresh_distinct_commits(tmp_path, object_format, distinct):
+        files = {"empty": b"", "space name": b"a\x00b\n", "tab\tname": b"\xff\xfe",
+                 "unicode-π": b"a" * 40 + b" blob 9\nheader\n", "line\nbreak": b"line",
+                 "raw-\udcff": b"raw"}
+        source, hashes = repository(tmp_path, files, object_format)
+        design = source
+        if distinct:
+            source = commit(tmp_path)
+>       assert check(tmp_path, source, hashes, design) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_admission_batching.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_binary_paths_and_fresh_di0')
+source = 'a1b23c89c12940a7623571fce3b38134d5aa9ed7'
+files = {'empty': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'space name': '3a100994c4e38751871e6e8ee...49ef9252f0cdc839e9ee347409a2209', 'unicode-π': 'd5cbf655949ccc1b85dafadc20fbe9ce6247a15ee698f7ad2db6855849603643', ...}
+design = 'a1b23c89c12940a7623571fce3b38134d5aa9ed7'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__________ test_binary_paths_and_fresh_distinct_commits[False-sha256] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_binary_paths_and_fresh_di1')
+object_format = 'sha256', distinct = False
+
+    @pytest.mark.parametrize("object_format", ["sha1", "sha256"])
+    @pytest.mark.parametrize("distinct", [False, True])
+    def test_binary_paths_and_fresh_distinct_commits(tmp_path, object_format, distinct):
+        files = {"empty": b"", "space name": b"a\x00b\n", "tab\tname": b"\xff\xfe",
+                 "unicode-π": b"a" * 40 + b" blob 9\nheader\n", "line\nbreak": b"line",
+                 "raw-\udcff": b"raw"}
+        source, hashes = repository(tmp_path, files, object_format)
+        design = source
+        if distinct:
+            source = commit(tmp_path)
+>       assert check(tmp_path, source, hashes, design) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_admission_batching.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_binary_paths_and_fresh_di1')
+source = '7aa6e291bbbb31dd2824c8c56e10564872374078d819a090f65fdfd1f9023744'
+files = {'empty': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'space name': '3a100994c4e38751871e6e8ee...49ef9252f0cdc839e9ee347409a2209', 'unicode-π': 'd5cbf655949ccc1b85dafadc20fbe9ce6247a15ee698f7ad2db6855849603643', ...}
+design = '7aa6e291bbbb31dd2824c8c56e10564872374078d819a090f65fdfd1f9023744'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+___________ test_binary_paths_and_fresh_distinct_commits[True-sha1] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_binary_paths_and_fresh_di2')
+object_format = 'sha1', distinct = True
+
+    @pytest.mark.parametrize("object_format", ["sha1", "sha256"])
+    @pytest.mark.parametrize("distinct", [False, True])
+    def test_binary_paths_and_fresh_distinct_commits(tmp_path, object_format, distinct):
+        files = {"empty": b"", "space name": b"a\x00b\n", "tab\tname": b"\xff\xfe",
+                 "unicode-π": b"a" * 40 + b" blob 9\nheader\n", "line\nbreak": b"line",
+                 "raw-\udcff": b"raw"}
+        source, hashes = repository(tmp_path, files, object_format)
+        design = source
+        if distinct:
+            source = commit(tmp_path)
+>       assert check(tmp_path, source, hashes, design) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_admission_batching.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_binary_paths_and_fresh_di2')
+source = 'd184aae9be94c8ed72504d8a9f99394729f742f9'
+files = {'empty': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'space name': '3a100994c4e38751871e6e8ee...49ef9252f0cdc839e9ee347409a2209', 'unicode-π': 'd5cbf655949ccc1b85dafadc20fbe9ce6247a15ee698f7ad2db6855849603643', ...}
+design = 'a1b23c89c12940a7623571fce3b38134d5aa9ed7'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__________ test_binary_paths_and_fresh_distinct_commits[True-sha256] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_binary_paths_and_fresh_di3')
+object_format = 'sha256', distinct = True
+
+    @pytest.mark.parametrize("object_format", ["sha1", "sha256"])
+    @pytest.mark.parametrize("distinct", [False, True])
+    def test_binary_paths_and_fresh_distinct_commits(tmp_path, object_format, distinct):
+        files = {"empty": b"", "space name": b"a\x00b\n", "tab\tname": b"\xff\xfe",
+                 "unicode-π": b"a" * 40 + b" blob 9\nheader\n", "line\nbreak": b"line",
+                 "raw-\udcff": b"raw"}
+        source, hashes = repository(tmp_path, files, object_format)
+        design = source
+        if distinct:
+            source = commit(tmp_path)
+>       assert check(tmp_path, source, hashes, design) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_admission_batching.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_binary_paths_and_fresh_di3')
+source = '6cf8d7a27ada58da1cb0a2d1619aa59473063af01b3649f400eeb617868be974'
+files = {'empty': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', 'space name': '3a100994c4e38751871e6e8ee...49ef9252f0cdc839e9ee347409a2209', 'unicode-π': 'd5cbf655949ccc1b85dafadc20fbe9ce6247a15ee698f7ad2db6855849603643', ...}
+design = '7aa6e291bbbb31dd2824c8c56e10564872374078d819a090f65fdfd1f9023744'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+________ test_source_rejections[worktree-size-committed source differs] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_worktre0')
+mutation = 'worktree-size', message = 'committed source differs'
+
+    @pytest.mark.parametrize("mutation, message", [
+        ("worktree-size", "committed source differs"),
+        ("worktree-bytes", "committed source differs"),
+        ("hash", "registered source hash differs"),
+        ("design", "source differs from design freeze"),
+        ("missing-source", "cannot be verified"),
+        ("missing-design", "cannot be verified"),
+    ])
+    def test_source_rejections(tmp_path, mutation, message):
+        design, hashes = repository(tmp_path, {"file": b"old"})
+        source = design
+        if mutation == "worktree-size":
+            (tmp_path / "file").write_bytes(b"longer")
+        elif mutation == "worktree-bytes":
+            (tmp_path / "file").write_bytes(b"new")
+        elif mutation == "hash":
+            hashes["file"] = "0" * 64
+        elif mutation == "design":
+            (tmp_path / "file").write_bytes(b"new")
+            source = commit(tmp_path)
+            hashes["file"] = hashlib.sha256(b"new").hexdigest()
+        elif mutation == "missing-source":
+            (tmp_path / "file").unlink()
+            source = commit(tmp_path)
+            (tmp_path / "file").write_bytes(b"old")
+        else:
+            (tmp_path / "extra").write_bytes(b"extra")
+            source = commit(tmp_path)
+            hashes["extra"] = hashlib.sha256(b"extra").hexdigest()
+        with pytest.raises(ValueError, match=message):
+>           check(tmp_path, source, hashes, design)
+
+tests/research/test_admission_batching.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_worktre0')
+source = '40d6025a9bed5ab3e65d5c3a9c02a35af8e8c4a7'
+files = {'file': 'cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4'}
+design = '40d6025a9bed5ab3e65d5c3a9c02a35af8e8c4a7'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_______ test_source_rejections[worktree-bytes-committed source differs] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_worktre1')
+mutation = 'worktree-bytes', message = 'committed source differs'
+
+    @pytest.mark.parametrize("mutation, message", [
+        ("worktree-size", "committed source differs"),
+        ("worktree-bytes", "committed source differs"),
+        ("hash", "registered source hash differs"),
+        ("design", "source differs from design freeze"),
+        ("missing-source", "cannot be verified"),
+        ("missing-design", "cannot be verified"),
+    ])
+    def test_source_rejections(tmp_path, mutation, message):
+        design, hashes = repository(tmp_path, {"file": b"old"})
+        source = design
+        if mutation == "worktree-size":
+            (tmp_path / "file").write_bytes(b"longer")
+        elif mutation == "worktree-bytes":
+            (tmp_path / "file").write_bytes(b"new")
+        elif mutation == "hash":
+            hashes["file"] = "0" * 64
+        elif mutation == "design":
+            (tmp_path / "file").write_bytes(b"new")
+            source = commit(tmp_path)
+            hashes["file"] = hashlib.sha256(b"new").hexdigest()
+        elif mutation == "missing-source":
+            (tmp_path / "file").unlink()
+            source = commit(tmp_path)
+            (tmp_path / "file").write_bytes(b"old")
+        else:
+            (tmp_path / "extra").write_bytes(b"extra")
+            source = commit(tmp_path)
+            hashes["extra"] = hashlib.sha256(b"extra").hexdigest()
+        with pytest.raises(ValueError, match=message):
+>           check(tmp_path, source, hashes, design)
+
+tests/research/test_admission_batching.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_worktre1')
+source = '40d6025a9bed5ab3e65d5c3a9c02a35af8e8c4a7'
+files = {'file': 'cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4'}
+design = '40d6025a9bed5ab3e65d5c3a9c02a35af8e8c4a7'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_________ test_source_rejections[hash-registered source hash differs] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_hash_re0')
+mutation = 'hash', message = 'registered source hash differs'
+
+    @pytest.mark.parametrize("mutation, message", [
+        ("worktree-size", "committed source differs"),
+        ("worktree-bytes", "committed source differs"),
+        ("hash", "registered source hash differs"),
+        ("design", "source differs from design freeze"),
+        ("missing-source", "cannot be verified"),
+        ("missing-design", "cannot be verified"),
+    ])
+    def test_source_rejections(tmp_path, mutation, message):
+        design, hashes = repository(tmp_path, {"file": b"old"})
+        source = design
+        if mutation == "worktree-size":
+            (tmp_path / "file").write_bytes(b"longer")
+        elif mutation == "worktree-bytes":
+            (tmp_path / "file").write_bytes(b"new")
+        elif mutation == "hash":
+            hashes["file"] = "0" * 64
+        elif mutation == "design":
+            (tmp_path / "file").write_bytes(b"new")
+            source = commit(tmp_path)
+            hashes["file"] = hashlib.sha256(b"new").hexdigest()
+        elif mutation == "missing-source":
+            (tmp_path / "file").unlink()
+            source = commit(tmp_path)
+            (tmp_path / "file").write_bytes(b"old")
+        else:
+            (tmp_path / "extra").write_bytes(b"extra")
+            source = commit(tmp_path)
+            hashes["extra"] = hashlib.sha256(b"extra").hexdigest()
+        with pytest.raises(ValueError, match=message):
+>           check(tmp_path, source, hashes, design)
+
+tests/research/test_admission_batching.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_hash_re0')
+source = '40d6025a9bed5ab3e65d5c3a9c02a35af8e8c4a7'
+files = {'file': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = '40d6025a9bed5ab3e65d5c3a9c02a35af8e8c4a7'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_______ test_source_rejections[design-source differs from design freeze] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_design_0')
+mutation = 'design', message = 'source differs from design freeze'
+
+    @pytest.mark.parametrize("mutation, message", [
+        ("worktree-size", "committed source differs"),
+        ("worktree-bytes", "committed source differs"),
+        ("hash", "registered source hash differs"),
+        ("design", "source differs from design freeze"),
+        ("missing-source", "cannot be verified"),
+        ("missing-design", "cannot be verified"),
+    ])
+    def test_source_rejections(tmp_path, mutation, message):
+        design, hashes = repository(tmp_path, {"file": b"old"})
+        source = design
+        if mutation == "worktree-size":
+            (tmp_path / "file").write_bytes(b"longer")
+        elif mutation == "worktree-bytes":
+            (tmp_path / "file").write_bytes(b"new")
+        elif mutation == "hash":
+            hashes["file"] = "0" * 64
+        elif mutation == "design":
+            (tmp_path / "file").write_bytes(b"new")
+            source = commit(tmp_path)
+            hashes["file"] = hashlib.sha256(b"new").hexdigest()
+        elif mutation == "missing-source":
+            (tmp_path / "file").unlink()
+            source = commit(tmp_path)
+            (tmp_path / "file").write_bytes(b"old")
+        else:
+            (tmp_path / "extra").write_bytes(b"extra")
+            source = commit(tmp_path)
+            hashes["extra"] = hashlib.sha256(b"extra").hexdigest()
+        with pytest.raises(ValueError, match=message):
+>           check(tmp_path, source, hashes, design)
+
+tests/research/test_admission_batching.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_design_0')
+source = '0806b533739db8e6b40b594a8b729f0d99792edf'
+files = {'file': '11507a0e2f5e69d5dfa40a62a1bd7b6ee57e6bcd85c67c9b8431b36fff21c437'}
+design = '40d6025a9bed5ab3e65d5c3a9c02a35af8e8c4a7'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__________ test_source_rejections[missing-source-cannot be verified] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_missing0')
+mutation = 'missing-source', message = 'cannot be verified'
+
+    @pytest.mark.parametrize("mutation, message", [
+        ("worktree-size", "committed source differs"),
+        ("worktree-bytes", "committed source differs"),
+        ("hash", "registered source hash differs"),
+        ("design", "source differs from design freeze"),
+        ("missing-source", "cannot be verified"),
+        ("missing-design", "cannot be verified"),
+    ])
+    def test_source_rejections(tmp_path, mutation, message):
+        design, hashes = repository(tmp_path, {"file": b"old"})
+        source = design
+        if mutation == "worktree-size":
+            (tmp_path / "file").write_bytes(b"longer")
+        elif mutation == "worktree-bytes":
+            (tmp_path / "file").write_bytes(b"new")
+        elif mutation == "hash":
+            hashes["file"] = "0" * 64
+        elif mutation == "design":
+            (tmp_path / "file").write_bytes(b"new")
+            source = commit(tmp_path)
+            hashes["file"] = hashlib.sha256(b"new").hexdigest()
+        elif mutation == "missing-source":
+            (tmp_path / "file").unlink()
+            source = commit(tmp_path)
+            (tmp_path / "file").write_bytes(b"old")
+        else:
+            (tmp_path / "extra").write_bytes(b"extra")
+            source = commit(tmp_path)
+            hashes["extra"] = hashlib.sha256(b"extra").hexdigest()
+        with pytest.raises(ValueError, match=message):
+>           check(tmp_path, source, hashes, design)
+
+tests/research/test_admission_batching.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_missing0')
+source = '5ee37a05eea5a6f028872c1e1adfedcd66b6e685'
+files = {'file': 'cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4'}
+design = '40d6025a9bed5ab3e65d5c3a9c02a35af8e8c4a7'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__________ test_source_rejections[missing-design-cannot be verified] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_missing1')
+mutation = 'missing-design', message = 'cannot be verified'
+
+    @pytest.mark.parametrize("mutation, message", [
+        ("worktree-size", "committed source differs"),
+        ("worktree-bytes", "committed source differs"),
+        ("hash", "registered source hash differs"),
+        ("design", "source differs from design freeze"),
+        ("missing-source", "cannot be verified"),
+        ("missing-design", "cannot be verified"),
+    ])
+    def test_source_rejections(tmp_path, mutation, message):
+        design, hashes = repository(tmp_path, {"file": b"old"})
+        source = design
+        if mutation == "worktree-size":
+            (tmp_path / "file").write_bytes(b"longer")
+        elif mutation == "worktree-bytes":
+            (tmp_path / "file").write_bytes(b"new")
+        elif mutation == "hash":
+            hashes["file"] = "0" * 64
+        elif mutation == "design":
+            (tmp_path / "file").write_bytes(b"new")
+            source = commit(tmp_path)
+            hashes["file"] = hashlib.sha256(b"new").hexdigest()
+        elif mutation == "missing-source":
+            (tmp_path / "file").unlink()
+            source = commit(tmp_path)
+            (tmp_path / "file").write_bytes(b"old")
+        else:
+            (tmp_path / "extra").write_bytes(b"extra")
+            source = commit(tmp_path)
+            hashes["extra"] = hashlib.sha256(b"extra").hexdigest()
+        with pytest.raises(ValueError, match=message):
+>           check(tmp_path, source, hashes, design)
+
+tests/research/test_admission_batching.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_source_rejections_missing1')
+source = '1bfea0a7fbdbe87ae082efc1ed9c533777c5b26f'
+files = {'file': 'cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4', 'extra': 'c8dee78f8c7b466c881847accc196998bad00e2b96c5ef913dfbe454d3807c96'}
+design = '40d6025a9bed5ab3e65d5c3a9c02a35af8e8c4a7'
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+________ test_forbidden_names_are_refused_before_batch_process[keys/a] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624dee0b00>
+name = 'keys/a'
+
+    @pytest.mark.parametrize("name", ["keys/a", "apis/a", ".env", ".env.local", "hf_token.txt",
+                                      "../outside", "/absolute", "nul\x00path"])
+    def test_forbidden_names_are_refused_before_batch_process(tmp_path, monkeypatch, name):
+        def forbidden(*args, **kwargs):
+            pytest.fail("invalid path reached Git")
+        monkeypatch.setattr(a.subprocess, "run", forbidden)
+        with pytest.raises(ValueError):
+>           check(tmp_path, "a" * 40, {name: "0" * 64})
+
+tests/research/test_admission_batching.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus0')
+source = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+files = {'keys/a': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+________ test_forbidden_names_are_refused_before_batch_process[apis/a] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624dee1e00>
+name = 'apis/a'
+
+    @pytest.mark.parametrize("name", ["keys/a", "apis/a", ".env", ".env.local", "hf_token.txt",
+                                      "../outside", "/absolute", "nul\x00path"])
+    def test_forbidden_names_are_refused_before_batch_process(tmp_path, monkeypatch, name):
+        def forbidden(*args, **kwargs):
+            pytest.fail("invalid path reached Git")
+        monkeypatch.setattr(a.subprocess, "run", forbidden)
+        with pytest.raises(ValueError):
+>           check(tmp_path, "a" * 40, {name: "0" * 64})
+
+tests/research/test_admission_batching.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus1')
+source = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+files = {'apis/a': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_________ test_forbidden_names_are_refused_before_batch_process[.env] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e085b50>
+name = '.env'
+
+    @pytest.mark.parametrize("name", ["keys/a", "apis/a", ".env", ".env.local", "hf_token.txt",
+                                      "../outside", "/absolute", "nul\x00path"])
+    def test_forbidden_names_are_refused_before_batch_process(tmp_path, monkeypatch, name):
+        def forbidden(*args, **kwargs):
+            pytest.fail("invalid path reached Git")
+        monkeypatch.setattr(a.subprocess, "run", forbidden)
+        with pytest.raises(ValueError):
+>           check(tmp_path, "a" * 40, {name: "0" * 64})
+
+tests/research/test_admission_batching.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus2')
+source = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+files = {'.env': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+______ test_forbidden_names_are_refused_before_batch_process[.env.local] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e013f00>
+name = '.env.local'
+
+    @pytest.mark.parametrize("name", ["keys/a", "apis/a", ".env", ".env.local", "hf_token.txt",
+                                      "../outside", "/absolute", "nul\x00path"])
+    def test_forbidden_names_are_refused_before_batch_process(tmp_path, monkeypatch, name):
+        def forbidden(*args, **kwargs):
+            pytest.fail("invalid path reached Git")
+        monkeypatch.setattr(a.subprocess, "run", forbidden)
+        with pytest.raises(ValueError):
+>           check(tmp_path, "a" * 40, {name: "0" * 64})
+
+tests/research/test_admission_batching.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus3')
+source = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+files = {'.env.local': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_____ test_forbidden_names_are_refused_before_batch_process[hf_token.txt] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e054270>
+name = 'hf_token.txt'
+
+    @pytest.mark.parametrize("name", ["keys/a", "apis/a", ".env", ".env.local", "hf_token.txt",
+                                      "../outside", "/absolute", "nul\x00path"])
+    def test_forbidden_names_are_refused_before_batch_process(tmp_path, monkeypatch, name):
+        def forbidden(*args, **kwargs):
+            pytest.fail("invalid path reached Git")
+        monkeypatch.setattr(a.subprocess, "run", forbidden)
+        with pytest.raises(ValueError):
+>           check(tmp_path, "a" * 40, {name: "0" * 64})
+
+tests/research/test_admission_batching.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus4')
+source = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+files = {'hf_token.txt': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+______ test_forbidden_names_are_refused_before_batch_process[../outside] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624ddc1b50>
+name = '../outside'
+
+    @pytest.mark.parametrize("name", ["keys/a", "apis/a", ".env", ".env.local", "hf_token.txt",
+                                      "../outside", "/absolute", "nul\x00path"])
+    def test_forbidden_names_are_refused_before_batch_process(tmp_path, monkeypatch, name):
+        def forbidden(*args, **kwargs):
+            pytest.fail("invalid path reached Git")
+        monkeypatch.setattr(a.subprocess, "run", forbidden)
+        with pytest.raises(ValueError):
+>           check(tmp_path, "a" * 40, {name: "0" * 64})
+
+tests/research/test_admission_batching.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus5')
+source = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+files = {'../outside': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_______ test_forbidden_names_are_refused_before_batch_process[/absolute] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624ddc1e50>
+name = '/absolute'
+
+    @pytest.mark.parametrize("name", ["keys/a", "apis/a", ".env", ".env.local", "hf_token.txt",
+                                      "../outside", "/absolute", "nul\x00path"])
+    def test_forbidden_names_are_refused_before_batch_process(tmp_path, monkeypatch, name):
+        def forbidden(*args, **kwargs):
+            pytest.fail("invalid path reached Git")
+        monkeypatch.setattr(a.subprocess, "run", forbidden)
+        with pytest.raises(ValueError):
+>           check(tmp_path, "a" * 40, {name: "0" * 64})
+
+tests/research/test_admission_batching.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus6')
+source = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+files = {'/absolute': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+______ test_forbidden_names_are_refused_before_batch_process[nul\x00path] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df99130>
+name = 'nul\x00path'
+
+    @pytest.mark.parametrize("name", ["keys/a", "apis/a", ".env", ".env.local", "hf_token.txt",
+                                      "../outside", "/absolute", "nul\x00path"])
+    def test_forbidden_names_are_refused_before_batch_process(tmp_path, monkeypatch, name):
+        def forbidden(*args, **kwargs):
+            pytest.fail("invalid path reached Git")
+        monkeypatch.setattr(a.subprocess, "run", forbidden)
+        with pytest.raises(ValueError):
+>           check(tmp_path, "a" * 40, {name: "0" * 64})
+
+tests/research/test_admission_batching.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_forbidden_names_are_refus7')
+source = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+files = {'nul\x00path': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+______________________ test_symlink_to_secret_is_refused _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_symlink_to_secret_is_refu0')
+
+    def test_symlink_to_secret_is_refused(tmp_path):
+        (tmp_path / "keys").mkdir()
+        (tmp_path / "alias").symlink_to("keys/a")
+        with pytest.raises(ValueError, match="secret"):
+>           check(tmp_path, "a" * 40, {"alias": "0" * 64})
+
+tests/research/test_admission_batching.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_symlink_to_secret_is_refu0')
+source = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+files = {'alias': '0000000000000000000000000000000000000000000000000000000000000000'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_________________ test_original_design_name_is_not_normalized __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_original_design_name_is_n0')
+
+    def test_original_design_name_is_not_normalized(tmp_path):
+        source, hashes = repository(tmp_path, {"dir/file": b"body"})
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, {"dir//file": hashes["dir/file"]})
+
+tests/research/test_admission_batching.py:104: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_original_design_name_is_n0')
+source = '344328834fb9690a05f8672080b4daf2b48ccb03'
+files = {'dir//file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+____ test_count_and_byte_thresholds_bound_processes_and_oversize_falls_back ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_count_and_byte_thresholds0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624dee6d50>
+
+    def test_count_and_byte_thresholds_bound_processes_and_oversize_falls_back(tmp_path, monkeypatch):
+        source, hashes = repository(tmp_path, {str(i): b"abcd" for i in range(7)} | {"big": b"x" * 20})
+        monkeypatch.setattr(a, "_SOURCE_BATCH_FILES", 2, raising=False)
+        monkeypatch.setattr(a, "_SOURCE_BATCH_BYTES", 16, raising=False)
+        real_run = subprocess.run
+        calls = []
+        def observe(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if "cat-file" in args[0]:
+                calls.append((args[0], kwargs["input"], result.stdout))
+            return result
+        monkeypatch.setattr(a.subprocess, "run", observe)
+>       assert check(tmp_path, source, hashes) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_admission_batching.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_count_and_byte_thresholds0')
+source = '230d8805dfa179e395ad23d493e41e1c68a30f9c'
+files = {'0': '88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589', '1': '88d4266fd4e6338d13b845fcf289579d209c89...289579d209c897823b9217da3e161936f031589', '3': '88d4266fd4e6338d13b845fcf289579d209c897823b9217da3e161936f031589', ...}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+___________ test_malformed_git_responses_fail_closed[---batch-check] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e074210>
+phase = '--batch-check', bad = b''
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f0')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+______________ test_malformed_git_responses_fail_closed[---batch] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e074d70>
+phase = '--batch', bad = b''
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f1')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__ test_malformed_git_responses_fail_closed[missing missing\n---batch-check] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624ddbcd50>
+phase = '--batch-check', bad = b'missing missing\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f2')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_____ test_malformed_git_responses_fail_closed[missing missing\n---batch] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624dff3710>
+phase = '--batch', bad = b'missing missing\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f3')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[ambiguous ambiguous\n---batch-check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624dff2690>
+phase = '--batch-check', bad = b'ambiguous ambiguous\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f4')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+___ test_malformed_git_responses_fail_closed[ambiguous ambiguous\n---batch] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df9ea40>
+phase = '--batch', bad = b'ambiguous ambiguous\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f5')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa tree 0\n---batch-check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df9edb0>
+phase = '--batch-check'
+bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa tree 0\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f6')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa tree 0\n---batch] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e040690>
+phase = '--batch', bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa tree 0\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f7')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[gggggggggggggggggggggggggggggggggggggggg blob 0\n---batch-check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e043110>
+phase = '--batch-check'
+bad = b'gggggggggggggggggggggggggggggggggggggggg blob 0\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f8')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[gggggggggggggggggggggggggggggggggggggggg blob 0\n---batch] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f9')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e037bf0>
+phase = '--batch', bad = b'gggggggggggggggggggggggggggggggggggggggg blob 0\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f9')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\n---batch-check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f10')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e04cfd0>
+phase = '--batch-check'
+bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f10')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\n---batch] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f11')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e04c6d0>
+phase = '--batch', bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f11')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob -1\n---batch-check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f12')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df4bc40>
+phase = '--batch-check'
+bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob -1\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f12')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob -1\n---batch] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f13')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df4b380>
+phase = '--batch', bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob -1\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f13')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1.0\n---batch-check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f14')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df49cc0>
+phase = '--batch-check'
+bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1.0\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f14')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1.0\n---batch] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f15')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df4a350>
+phase = '--batch', bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1.0\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f15')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\nextra\n---batch-check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f16')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df4b850>
+phase = '--batch-check'
+bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\nextra\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f16')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_ test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\nextra\n---batch] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f17')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df90440>
+phase = '--batch'
+bad = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\nextra\n'
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("bad", [b"", b"missing missing\n", b"ambiguous ambiguous\n",
+        b"a" * 40 + b" tree 0\n", b"g" * 40 + b" blob 0\n", b"a" * 41 + b" blob 0\n",
+        b"a" * 40 + b" blob -1\n", b"a" * 40 + b" blob 1.0\n",
+        b"a" * 40 + b" blob 0\nextra\n"])
+    def test_malformed_git_responses_fail_closed(tmp_path, monkeypatch, phase, bad):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if phase in args[0]:
+                result.stdout = bad
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_malformed_git_responses_f17')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_______________ test_body_framing_matches_size_query[truncated] ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df900c0>
+corruption = 'truncated'
+
+    @pytest.mark.parametrize("corruption", ["truncated", "extra", "delimiter", "oid", "size"])
+    def test_body_framing_matches_size_query(tmp_path, monkeypatch, corruption):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if "--batch" in args[0]:
+                if corruption == "truncated":
+                    result.stdout = result.stdout[:-1]
+                elif corruption == "extra":
+                    result.stdout += b"extra"
+                elif corruption == "delimiter":
+                    result.stdout = result.stdout[:-1] + b"x"
+                elif corruption == "oid":
+                    result.stdout = b"0" * 40 + result.stdout[40:]
+                else:
+                    result.stdout = result.stdout.replace(b" blob 4\n", b" blob 5\n", 1)
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size0')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_________________ test_body_framing_matches_size_query[extra] __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df902f0>
+corruption = 'extra'
+
+    @pytest.mark.parametrize("corruption", ["truncated", "extra", "delimiter", "oid", "size"])
+    def test_body_framing_matches_size_query(tmp_path, monkeypatch, corruption):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if "--batch" in args[0]:
+                if corruption == "truncated":
+                    result.stdout = result.stdout[:-1]
+                elif corruption == "extra":
+                    result.stdout += b"extra"
+                elif corruption == "delimiter":
+                    result.stdout = result.stdout[:-1] + b"x"
+                elif corruption == "oid":
+                    result.stdout = b"0" * 40 + result.stdout[40:]
+                else:
+                    result.stdout = result.stdout.replace(b" blob 4\n", b" blob 5\n", 1)
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size1')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_______________ test_body_framing_matches_size_query[delimiter] ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df90a60>
+corruption = 'delimiter'
+
+    @pytest.mark.parametrize("corruption", ["truncated", "extra", "delimiter", "oid", "size"])
+    def test_body_framing_matches_size_query(tmp_path, monkeypatch, corruption):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if "--batch" in args[0]:
+                if corruption == "truncated":
+                    result.stdout = result.stdout[:-1]
+                elif corruption == "extra":
+                    result.stdout += b"extra"
+                elif corruption == "delimiter":
+                    result.stdout = result.stdout[:-1] + b"x"
+                elif corruption == "oid":
+                    result.stdout = b"0" * 40 + result.stdout[40:]
+                else:
+                    result.stdout = result.stdout.replace(b" blob 4\n", b" blob 5\n", 1)
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size2')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__________________ test_body_framing_matches_size_query[oid] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df4b380>
+corruption = 'oid'
+
+    @pytest.mark.parametrize("corruption", ["truncated", "extra", "delimiter", "oid", "size"])
+    def test_body_framing_matches_size_query(tmp_path, monkeypatch, corruption):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if "--batch" in args[0]:
+                if corruption == "truncated":
+                    result.stdout = result.stdout[:-1]
+                elif corruption == "extra":
+                    result.stdout += b"extra"
+                elif corruption == "delimiter":
+                    result.stdout = result.stdout[:-1] + b"x"
+                elif corruption == "oid":
+                    result.stdout = b"0" * 40 + result.stdout[40:]
+                else:
+                    result.stdout = result.stdout.replace(b" blob 4\n", b" blob 5\n", 1)
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size3')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__________________ test_body_framing_matches_size_query[size] __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624e02d400>
+corruption = 'size'
+
+    @pytest.mark.parametrize("corruption", ["truncated", "extra", "delimiter", "oid", "size"])
+    def test_body_framing_matches_size_query(tmp_path, monkeypatch, corruption):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def corrupt(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if "--batch" in args[0]:
+                if corruption == "truncated":
+                    result.stdout = result.stdout[:-1]
+                elif corruption == "extra":
+                    result.stdout += b"extra"
+                elif corruption == "delimiter":
+                    result.stdout = result.stdout[:-1] + b"x"
+                elif corruption == "oid":
+                    result.stdout = b"0" * 40 + result.stdout[40:]
+                else:
+                    result.stdout = result.stdout.replace(b" blob 4\n", b" blob 5\n", 1)
+            return result
+        monkeypatch.setattr(a.subprocess, "run", corrupt)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_body_framing_matches_size4')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__________ test_process_failures_are_converted[error0---batch-check] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_process_failures_are_conv0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df900c0>
+phase = '--batch-check', error = OSError('synthetic process unavailable')
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("error", [OSError("synthetic process unavailable"),
+                                         subprocess.CalledProcessError(1, "git")])
+    def test_process_failures_are_converted(tmp_path, monkeypatch, phase, error):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def fail(*args, **kwargs):
+            if phase in args[0]:
+                raise error
+            return real_run(*args, **kwargs)
+        monkeypatch.setattr(a.subprocess, "run", fail)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:181: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_process_failures_are_conv0')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_____________ test_process_failures_are_converted[error0---batch] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_process_failures_are_conv1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df901a0>
+phase = '--batch', error = OSError('synthetic process unavailable')
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("error", [OSError("synthetic process unavailable"),
+                                         subprocess.CalledProcessError(1, "git")])
+    def test_process_failures_are_converted(tmp_path, monkeypatch, phase, error):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def fail(*args, **kwargs):
+            if phase in args[0]:
+                raise error
+            return real_run(*args, **kwargs)
+        monkeypatch.setattr(a.subprocess, "run", fail)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:181: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_process_failures_are_conv1')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__________ test_process_failures_are_converted[error1---batch-check] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_process_failures_are_conv2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df92040>
+phase = '--batch-check', error = CalledProcessError(1, 'git')
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("error", [OSError("synthetic process unavailable"),
+                                         subprocess.CalledProcessError(1, "git")])
+    def test_process_failures_are_converted(tmp_path, monkeypatch, phase, error):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def fail(*args, **kwargs):
+            if phase in args[0]:
+                raise error
+            return real_run(*args, **kwargs)
+        monkeypatch.setattr(a.subprocess, "run", fail)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:181: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_process_failures_are_conv2')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_____________ test_process_failures_are_converted[error1---batch] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_process_failures_are_conv3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df92970>
+phase = '--batch', error = CalledProcessError(1, 'git')
+
+    @pytest.mark.parametrize("phase", ["--batch-check", "--batch"])
+    @pytest.mark.parametrize("error", [OSError("synthetic process unavailable"),
+                                         subprocess.CalledProcessError(1, "git")])
+    def test_process_failures_are_converted(tmp_path, monkeypatch, phase, error):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def fail(*args, **kwargs):
+            if phase in args[0]:
+                raise error
+            return real_run(*args, **kwargs)
+        monkeypatch.setattr(a.subprocess, "run", fail)
+        with pytest.raises(ValueError, match="cannot be verified"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:181: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_process_failures_are_conv3')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+____________________ test_size_mismatch_refuses_body_fetch _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_size_mismatch_refuses_bod0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df933f0>
+
+    def test_size_mismatch_refuses_body_fetch(tmp_path, monkeypatch):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        (tmp_path / "file").write_bytes(b"short")
+        real_run = subprocess.run
+        def observe(*args, **kwargs):
+            assert "--batch" not in args[0], "body fetched despite mismatched extent"
+            return real_run(*args, **kwargs)
+        monkeypatch.setattr(a.subprocess, "run", observe)
+        with pytest.raises(ValueError, match="committed source differs"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:193: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_size_mismatch_refuses_bod0')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+_________________ test_mutation_during_body_fetch_is_detected __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_mutation_during_body_fetc0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78624df90d00>
+
+    def test_mutation_during_body_fetch_is_detected(tmp_path, monkeypatch):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        real_run = subprocess.run
+        def mutate(*args, **kwargs):
+            result = real_run(*args, **kwargs)
+            if "--batch" in args[0]:
+                (tmp_path / "file").write_bytes(b"evil")
+            return result
+        monkeypatch.setattr(a.subprocess, "run", mutate)
+        with pytest.raises(ValueError, match="committed source differs"):
+>           check(tmp_path, source, hashes)
+
+tests/research/test_admission_batching.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_mutation_during_body_fetc0')
+source = '54d1738007e36b40ca285446f5da2d034c99c667'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+__________ test_checks_are_fresh_and_concurrent_calls_are_independent __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_checks_are_fresh_and_conc0')
+
+    def test_checks_are_fresh_and_concurrent_calls_are_independent(tmp_path):
+        source, hashes = repository(tmp_path, {"file": b"body"})
+        with ThreadPoolExecutor(max_workers=4) as pool:
+>           assert list(pool.map(lambda _: check(tmp_path, source, hashes), range(8))) == [None] * 8
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_admission_batching.py:212: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py:619: in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py:317: in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py:449: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/thread.py:59: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/test_admission_batching.py:212: in <lambda>
+    assert list(pool.map(lambda _: check(tmp_path, source, hashes), range(8))) == [None] * 8
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-132/test_checks_are_fresh_and_conc0')
+source = '69d32e7f8df92305ba68bed611de0b18d17f9c95'
+files = {'file': '230d8358dc8e8890b4c58deeb62912ee2f20357ae92a5cc861b98e68fe31acb5'}
+design = None
+
+    def check(root, source, files, design=None):
+>       assert hasattr(a, "_source_files"), "bounded fresh source-file verification is missing"
+E       AssertionError: bounded fresh source-file verification is missing
+E       assert False
+E        +  where False = hasattr(a, '_source_files')
+
+tests/research/test_admission_batching.py:34: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/test_admission_batching.py::test_binary_paths_and_fresh_distinct_commits[False-sha1]
+FAILED tests/research/test_admission_batching.py::test_binary_paths_and_fresh_distinct_commits[False-sha256]
+FAILED tests/research/test_admission_batching.py::test_binary_paths_and_fresh_distinct_commits[True-sha1]
+FAILED tests/research/test_admission_batching.py::test_binary_paths_and_fresh_distinct_commits[True-sha256]
+FAILED tests/research/test_admission_batching.py::test_source_rejections[worktree-size-committed source differs]
+FAILED tests/research/test_admission_batching.py::test_source_rejections[worktree-bytes-committed source differs]
+FAILED tests/research/test_admission_batching.py::test_source_rejections[hash-registered source hash differs]
+FAILED tests/research/test_admission_batching.py::test_source_rejections[design-source differs from design freeze]
+FAILED tests/research/test_admission_batching.py::test_source_rejections[missing-source-cannot be verified]
+FAILED tests/research/test_admission_batching.py::test_source_rejections[missing-design-cannot be verified]
+FAILED tests/research/test_admission_batching.py::test_forbidden_names_are_refused_before_batch_process[keys/a]
+FAILED tests/research/test_admission_batching.py::test_forbidden_names_are_refused_before_batch_process[apis/a]
+FAILED tests/research/test_admission_batching.py::test_forbidden_names_are_refused_before_batch_process[.env]
+FAILED tests/research/test_admission_batching.py::test_forbidden_names_are_refused_before_batch_process[.env.local]
+FAILED tests/research/test_admission_batching.py::test_forbidden_names_are_refused_before_batch_process[hf_token.txt]
+FAILED tests/research/test_admission_batching.py::test_forbidden_names_are_refused_before_batch_process[../outside]
+FAILED tests/research/test_admission_batching.py::test_forbidden_names_are_refused_before_batch_process[/absolute]
+FAILED tests/research/test_admission_batching.py::test_forbidden_names_are_refused_before_batch_process[nul\x00path]
+FAILED tests/research/test_admission_batching.py::test_symlink_to_secret_is_refused
+FAILED tests/research/test_admission_batching.py::test_original_design_name_is_not_normalized
+FAILED tests/research/test_admission_batching.py::test_count_and_byte_thresholds_bound_processes_and_oversize_falls_back
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[---batch-check]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[---batch]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[missing missing\n---batch-check]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[missing missing\n---batch]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[ambiguous ambiguous\n---batch-check]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[ambiguous ambiguous\n---batch]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa tree 0\n---batch-check]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa tree 0\n---batch]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[gggggggggggggggggggggggggggggggggggggggg blob 0\n---batch-check]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[gggggggggggggggggggggggggggggggggggggggg blob 0\n---batch]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\n---batch-check]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\n---batch]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob -1\n---batch-check]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob -1\n---batch]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1.0\n---batch-check]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 1.0\n---batch]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\nextra\n---batch-check]
+FAILED tests/research/test_admission_batching.py::test_malformed_git_responses_fail_closed[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa blob 0\nextra\n---batch]
+FAILED tests/research/test_admission_batching.py::test_body_framing_matches_size_query[truncated]
+FAILED tests/research/test_admission_batching.py::test_body_framing_matches_size_query[extra]
+FAILED tests/research/test_admission_batching.py::test_body_framing_matches_size_query[delimiter]
+FAILED tests/research/test_admission_batching.py::test_body_framing_matches_size_query[oid]
+FAILED tests/research/test_admission_batching.py::test_body_framing_matches_size_query[size]
+FAILED tests/research/test_admission_batching.py::test_process_failures_are_converted[error0---batch-check]
+FAILED tests/research/test_admission_batching.py::test_process_failures_are_converted[error0---batch]
+FAILED tests/research/test_admission_batching.py::test_process_failures_are_converted[error1---batch-check]
+FAILED tests/research/test_admission_batching.py::test_process_failures_are_converted[error1---batch]
+FAILED tests/research/test_admission_batching.py::test_size_mismatch_refuses_body_fetch
+FAILED tests/research/test_admission_batching.py::test_mutation_during_body_fetch_is_detected
+FAILED tests/research/test_admission_batching.py::test_checks_are_fresh_and_concurrent_calls_are_independent
+51 failed in 0.87s

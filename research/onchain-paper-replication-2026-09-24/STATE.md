@@ -3,34 +3,54 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Parallel unattended continuation — October 2**: user-authorized parallel
-policy is saved in the ACTIVE15-minute paper-replication-progress automation.
-Root coordinates up to3bounded agents, exclusive file ownership, independent
-review and aggregate resource limits. Inspect existing agents/processes before
-re-dispatch. archive_transport implementation owns new archive_transport.py,
-new test_archive_transport_production.py and its dated evidence only; focused
-check02 CLOSED29passed1.12s/session67854. Independent review found cleanup can
-mask primary failures/skip remaining releases and publish complete before output
-close. Acceptance withheld; archive_transport is reproducing/correcting with
-retained initial sources/tests and fresh logs. No external transfer. Resource32-cell dependency and producer/terminal interface investigations
-are complete. Their concrete findings and ownership are retained in
-full_sources/parallel-execution-2026-10-02/COORDINATION.md. Root's fresh single-test
-profile03 CLOSED1passed118.12s/session7403 against an isolated committed-source
-export; no profiling process remains. It found22874 subprocess calls, mostly
-repeated per-file Git verification. Timings include cProfile overhead; no measured
-speedup yet. Read-only review yielded ADMISSION_BATCHING.md. The independent
-admission_batching worker now owns ONLY base tradingagents/research/admission.py,
-new tests/research/test_admission_batching.py and its dated evidence. It must
-preserve all checks and newline-path fallback, without cross-call caching.
-owner_closure_review owns REVIEW files only. Root owns STATE/coordination; no
-shared-source actual-owner test can run while either implementation changes its
-package closure. Reuse these workers rather than duplicate assignments. profile01 export failed before launch; profile02 closed with one
-fixture setup error from an omitted config. Both failures are retained. No
-empirical job was launched. Accepted b449a2a59549ea500790e95df1615df21b753401 was
-pushed and exact remote HEAD verified. Next: finish transport implementation and
-independent review, collect profile evidence, finish behavior-preserving admission batching and independent review, then
-advance the coupled producer-to-terminal integration while preparing resource
-amendments independently. Parallel policy is durable, not limited to this turn.
+**Parallel unattended continuation — October 2, reviewed transport and faster verification**:
+The ACTIVE15-minute automation retains user-authorized parallel work with up to3
+bounded agents plus root coordination, exclusive file ownership, independent
+review, aggregate limits and the10GiB floor. Inspect agents/processes before
+redispatch. No empirical job is active; coverage77/109 and1420pending fits remain.
+
+Maintained archive_transport.py is independently accepted for bounded transport/
+direct cleanup. Initial29pass was insufficient: ATP1/ATP2 yielded15reproduced
+failures, then check03 CLOSED44passed1.28s/session94153exit0. Full logs/XML and
+initial/corrected snapshots remain. REVIEW_FINAL SHA256
+83073bdd2945a06b175893cb30cbb3598566391533c781385e0a8ad28d4caf9e.
+No SSH/network/descendant-termination/whole-pipeline claim follows.
+
+Base admission.py now batches fresh source/design Git reads while preserving
+all worktree/hash/design/lifecycle checks and newline/oversized fallbacks; no
+cross-call cache. check02 CLOSED102passed4.19s/session87045exit0 (65new+37lifecycle).
+Both red histories and exact snapshots remain. Independent REVIEW_FINAL SHA256
+1ccff00fc17383df79921bd4ee8edd2695f89fac7e8fb74734dd5b45e47ffed1 accepts the bounded
+change. The same isolated synthetic owner fixture passed sequential unprofiled
+baseline04/candidate05:57.81→26.33wall seconds, about2.2×; maxRSS710376→712008KiB.
+This is one observation per version, not a general model-training speedup. Logs,
+immutable export manifests and TIMING_COMPARISON are retained under
+full_sources/parallel-execution-2026-10-02/. Both timing processes are closed
+(session72881/14342); independent REVIEW_TIMING accepts this narrow comparison,
+SHA256 fa61cacb8e9c96d848af2449497c915196377051b337607ca3ebcb5d596ea077.
+Additional isolated budget/claim/independent corruption regression06 CLOSED45passed
+7.16s/session84133exit0. The earlier profile03 remains instrumented evidence.
+
+Active implementation: archive_transport agent now owns the coupled archive
+producer-to-terminal integration source files listed in COORDINATION.md plus
+archive_owner_operations.py; new test_archive_producer_integration.py and dated
+evidence. No other source owner may edit that scope. Its red01 CLOSED3failed
+1deselected8.66s/session38703exit1 reproduced missing archive transport/private
+entry APIs. The source freeze is released; implementation is active. Root owns
+STATE/coordination. No root test process remains.
+The admission_batching agent now owns ONLY new resource-parallel-preparation-
+2026-10-02 drafts: exact32-cell mapping, cumulative61 reconciliation and physical
+accounting with unresolved values explicit. It must not adopt registrations or
+execute empirical work. Both reviewed transport/admission source files stay
+frozen. owner_closure_review and admission_review own review files only.
+
+Next safe action: checkpoint reviewed transport/batching plus timing, obtain
+integration red01 closure then implement the coherent producer/publication/
+terminal route. Prepare resource/budget/hub contracts independently; original
+synthetic neural requirements do not depend on numerical MCM completion. Exact
+original dictionary reuse and score/checkpoint placement remain unresolved.
+Do not recursively acquire public owner locks or skip post-close authority.
+Do not launch empirical jobs until complete reviewed source/gates/budgets exist.
 
 **Latest handoff — October 2, explicit archived stage seals accepted**:
 archive_owner_seal.seal/check and a shared lock-owning archive read entry are

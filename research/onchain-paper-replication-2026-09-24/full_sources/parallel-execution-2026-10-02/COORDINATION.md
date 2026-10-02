@@ -112,3 +112,33 @@ may scan shared mutable package sources; isolated snapshots or global source
 freeze are required. Root owns coordination/state and final acceptance/backup.
 No actual empirical job or external transfer is active. Inspect agents before
 redispatch. One completed investigation is not an active implementation worker.
+
+## Reviewed components and new integration scope
+
+Transport corrections accepted:44pass1.28s, independent review
+83073bdd2945a06b175893cb30cbb3598566391533c781385e0a8ad28d4caf9e.
+Admission batching accepted:102pass4.19s, independent review
+1ccff00fc17383df79921bd4ee8edd2695f89fac7e8fb74734dd5b45e47ffed1.
+Unprofiled isolated baseline04/candidate05 both passed,57.81→26.33wall seconds;
+REVIEW_TIMING accepts the single-fixture observation. Regression06 adds45passed
+budget and independent claim-corruption cases. All root tests are terminal.
+
+archive_transport agent is now the sole integration owner for:
+compact_native_producer.py, compact_training.py, compact_dictionary.py,
+compact_mcm.py, compact_mcm_publication.py, compact_mcm_output.py, compact_owner.py,
+compact_terminal.py, archive_owner_writer.py, archive_owner_stage.py,
+archive_owner_seal.py, archive_owner_operations.py, new
+ test_archive_producer_integration.py, and its dated integration evidence.
+All production names are within tradingagents/research/onchain_replication/.
+Initial integration red01 CLOSED3failed1deselected8.66s/session38703; implementation
+is active. Public APIs must not fake lock ownership; serialized content pins
+must be anchored by previously validated references before terminal phase checks.
+The agent's old transport source scope is frozen after acceptance.
+
+admission_batching agent has moved to docs-only resource-parallel-preparation-
+2026-10-02/: exact32-cell/hash/population mapping, prospective61 budget and
+physical worksheet. Adoption, unresolved source/policy selection and empirical
+execution remain prohibited pending actual reviewed gates. Base admission.py
+and its accepted tests stay frozen. Root owns state/integration decisions;
+reviewers own REVIEW files only. Source-admitted tests require explicit freeze
+or immutable snapshots; no current root test competes for resources.

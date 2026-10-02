@@ -1,0 +1,19 @@
+....................................................F............        [100%]
+=================================== FAILURES ===================================
+_______________ test_none_hash_retains_original_design_rejection _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-134/test_none_hash_retains_origina0')
+
+    def test_none_hash_retains_original_design_rejection(tmp_path):
+        source, _ = repository(tmp_path, {"file": b"body"})
+>       with pytest.raises(ValueError, match="source differs from design freeze"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'source differs from design freeze'
+E         Actual message: 'registered source hash differs: file'
+
+tests/research/test_admission_batching.py:223: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/test_admission_batching.py::test_none_hash_retains_original_design_rejection
+1 failed, 64 passed in 1.05s

@@ -65,113 +65,6 @@ def _committed(root, source, name, expected=None):
     return recorded
 
 
-_SOURCE_BATCH_FILES = 128
-_SOURCE_BATCH_BYTES = 8 * 1024 * 1024
-
-
-def _source_git_batch(root, requests, *, bodies=False):
-    """One finite, reaped process; no state survives an admission call."""
-    try:
-        return subprocess.run(
-            ["git", "cat-file", "--batch" if bodies else "--batch-check"],
-            cwd=root, input=b"\n".join(requests) + b"\n",
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout
-    except (OSError, subprocess.CalledProcessError) as exc:
-        raise ValueError("committed source/registration cannot be verified") from exc
-
-
-def _source_batch_parse(raw, count, *, extents=None):
-    """Parse headers separately from binary extents, rejecting extra responses."""
-    result = []
-    offset = 0
-    for index in range(count):
-        end = raw.find(b"\n", offset)
-        header = raw[offset:end] if end >= 0 else b""
-        match = re.fullmatch(rb"([0-9a-f]{40}|[0-9a-f]{64}) blob (0|[1-9][0-9]*)", header)
-        if match is None:
-            raise ValueError("committed source/registration cannot be verified")
-        oid, size = match[1], int(match[2])
-        offset = end + 1
-        if extents is None:
-            result.append((oid, size))
-        else:
-            if (oid, size) != extents[index] or raw[offset + size:offset + size + 1] != b"\n":
-                raise ValueError("committed source/registration cannot be verified")
-            result.append(raw[offset:offset + size])
-            offset += size + 1
-    if offset != len(raw):
-        raise ValueError("committed source/registration cannot be verified")
-    return result
-
-
-def _source_files(root, source, design_source, files):
-    """Fresh bounded Git reads for the source_files loop alone.
-
-    Size queries bound body batches. Unrepresentable line-protocol requests and
-    oversized pairs retain the original argv-based per-file checks.
-    """
-    def single(name, expected):
-        _committed(root, source, name, expected)
-        if digest(_git(root, "show", f"{design_source}:{name}")) != expected:
-            raise ValueError("source differs from design freeze")
-
-    def bodies(entries, extents):
-        raw = _source_git_batch(root, [oid for oid, _ in extents], bodies=True)
-        recorded = _source_batch_parse(raw, len(extents), extents=extents)
-        for index, (name, expected, _) in enumerate(entries):
-            current, frozen = recorded[2 * index:2 * index + 2]
-            if local_path(root, name).read_bytes() != current:
-                raise ValueError(f"committed source differs: {name}")
-            if expected is not None and digest(current) != expected:
-                raise ValueError(f"registered source hash differs: {name}")
-            if digest(frozen) != expected:
-                raise ValueError("source differs from design freeze")
-
-    def batch(entries):
-        requests = [request for _, _, pair in entries for request in pair]
-        extents = _source_batch_parse(_source_git_batch(root, requests), len(requests))
-        pending, sizes, total = [], [], 0
-        for index, (name, expected, pair) in enumerate(entries):
-            current, frozen = extents[2 * index:2 * index + 2]
-            if len(local_path(root, name).read_bytes()) != current[1]:
-                raise ValueError(f"committed source differs: {name}")
-            size = current[1] + frozen[1]
-            if pending and total + size > _SOURCE_BATCH_BYTES:
-                bodies(pending, sizes)
-                pending, sizes, total = [], [], 0
-            if size > _SOURCE_BATCH_BYTES:
-                single(name, expected)
-            else:
-                pending.append((name, expected, pair))
-                sizes.extend((current, frozen))
-                total += size
-        if pending:
-            bodies(pending, sizes)
-
-    pending = []
-    for name, expected in files.items():
-        local_path(root, name)
-        requests = (f"{source}:{Path(name).as_posix()}", f"{design_source}:{name}")
-        if any("\x00" in request for request in requests):
-            raise ValueError("committed source/registration cannot be verified")
-        try:
-            pair = tuple(request.encode("utf-8") for request in requests)
-        except UnicodeEncodeError:
-            pair = None
-        if pair is None or any(b"\n" in request or b"\r" in request for request in pair):
-            if pending:
-                batch(pending)
-                pending = []
-            single(name, expected)
-        else:
-            pending.append((name, expected, pair))
-            if len(pending) == _SOURCE_BATCH_FILES:
-                batch(pending)
-                pending = []
-    if pending:
-        batch(pending)
-
-
 def _window(window):
     start, end = utc(window["start"]), utc(window["end"])
     if start >= end:
@@ -291,7 +184,10 @@ def admit(*, root, registration, experiment, source, design_source=None, binding
             raise ValueError("selection differs from design freeze")
     if not exp["source_files"] or exp["runtime_hashes"] != runtime_hashes():
         raise ValueError("source files/runtime hashes are missing or changed")
-    _source_files(root, source, design_source, exp["source_files"])
+    for name, expected in exp["source_files"].items():
+        _committed(root, source, name, expected)
+        if digest(_git(root, "show", f"{design_source}:{name}")) != expected:
+            raise ValueError("source differs from design freeze")
     for key in ("cells", "outputs"):
         names = exp[key]
         if not names or len(names) != len(set(names)):

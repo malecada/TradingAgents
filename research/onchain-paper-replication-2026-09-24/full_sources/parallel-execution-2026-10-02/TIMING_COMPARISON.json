@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "claim": "single synthetic owner-fixture observational speed comparison",
+  "baseline": {
+    "id": "baseline04",
+    "pytest_seconds": 56.57,
+    "wall_seconds": 57.81,
+    "max_rss_kib": 710376,
+    "passed": 1,
+    "exit_code": 0,
+    "session": 72881
+  },
+  "candidate": {
+    "id": "candidate05",
+    "pytest_seconds": 24.98,
+    "wall_seconds": 26.33,
+    "max_rss_kib": 712008,
+    "passed": 1,
+    "exit_code": 0,
+    "session": 14342
+  },
+  "wall_speed_ratio": 2.195594379035321,
+  "wall_reduction_fraction": 0.5445424667012628,
+  "source_base": "b449a2a59549ea500790e95df1615df21b753401",
+  "candidate_overlay": {
+    "tradingagents/research/admission.py": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd"
+  },
+  "limitations": [
+    "one observation each; not randomized/repeated",
+    "same host with uncontrolled background load",
+    "same exact test and exported baseline, sequential execution",
+    "OS guard mocked; no network/financial/full-model performance claim",
+    "all original source checks retained; no cross-call cache"
+  ],
+  "artifacts": {
+    "baseline04.log": "00323f8b23aa66684a12dd9437733d9e0696d1bb62063152d282281f2e803f59",
+    "baseline04-time.txt": "4838fb6cb93256ca507f5a7c83a0d23be5e91020f205f7d2fb92e9e3d722476c",
+    "baseline04-manifest.json": "c382645de24ff1fa249c8d43db43b41dbe4c46937cb2dcb063b2168ee0f8d5dd",
+    "candidate05.log": "4abfa3c2d1a43ccdd70772b491f81d8bce6bfa4093f39722bd128a5e944cbc34",
+    "candidate05-time.txt": "b405bd8b48304697d01b57ba13357eec06dda91115dd0fb877584db73ddf8299",
+    "candidate05-manifest.json": "8355954cf1a01b04d3e1804ef0cf2b7e3e34c9f61537d17403b982087eb113d2"
+  }
+}

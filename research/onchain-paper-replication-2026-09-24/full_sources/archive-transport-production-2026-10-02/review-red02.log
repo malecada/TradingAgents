@@ -1,0 +1,1408 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+__ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-kill] ___
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe9ba1480>
+target = 'kill', primary = False
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:116: in receive_diagnostic
+    try: os.killpg(proc.pid, signal.SIGKILL)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (1460287, <Signals.SIGKILL: 9>)
+
+    def kill(*args):
+        calls.append('kill')
+        try: original_kill(*args)
+        except ProcessLookupError: pass
+>       if target == 'kill': raise OSError('uncertain kill')
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: uncertain kill
+
+tests/research/onchain_replication/test_archive_transport_production.py:249: OSError
+__ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-wait] ___
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe9e429e0>
+target = 'wait', primary = False
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:118: in receive_diagnostic
+    proc.wait(timeout=10)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (), kwargs = {'timeout': 10}
+
+    def waiting(*args, **kwargs):
+        result = wait(*args, **kwargs)
+        if kwargs.get('timeout') == 10:
+            calls.append('wait')
+>           if target == 'wait': raise OSError('uncertain wait')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: uncertain wait
+
+tests/research/onchain_replication/test_archive_transport_production.py:241: OSError
+_ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-stdout] __
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe7552d50>
+target = 'stdout', primary = False
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:124: in receive_diagnostic
+    proc.stdout.close(); proc.stderr.close()
+    ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.research.onchain_replication.test_archive_transport_production.test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary.<locals>.Stream object at 0x705fe75fcb90>
+
+    def close(self):
+        calls.append(self.name)
+        self.stream.close()
+>       if self.name == target: raise OSError('uncertain ' + self.name)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: uncertain stdout
+
+tests/research/onchain_replication/test_archive_transport_production.py:231: OSError
+_ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-stderr] __
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe75d0490>
+target = 'stderr', primary = False
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:124: in receive_diagnostic
+    proc.stdout.close(); proc.stderr.close()
+                         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.research.onchain_replication.test_archive_transport_production.test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary.<locals>.Stream object at 0x705fe7523b10>
+
+    def close(self):
+        calls.append(self.name)
+        self.stream.close()
+>       if self.name == target: raise OSError('uncertain ' + self.name)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: uncertain stderr
+
+tests/research/onchain_replication/test_archive_transport_production.py:231: OSError
+_ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-output] __
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe75d0d10>
+target = 'output', primary = False
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:68: in receive_diagnostic
+    with destination.open('xb') as output:
+         ^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_archive_transport_production.py:227: in __exit__
+    def __exit__(self, *args): self.close()
+                               ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.research.onchain_replication.test_archive_transport_production.test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary.<locals>.Stream object at 0x705fe753ea50>
+
+    def close(self):
+        calls.append(self.name)
+        self.stream.close()
+>       if self.name == target: raise OSError('uncertain ' + self.name)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: uncertain output
+
+tests/research/onchain_replication/test_archive_transport_production.py:231: OSError
+___ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-kill] ___
+
+command = ['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', 'import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")', 'dd', 'if=object/payload.bin', ...]
+destination = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal5/diagnostics/get-0000.bin')
+expected_bytes = 2, max_seconds = 30, bytes_per_second = 4194304
+lease_callback = <function adapter.<locals>.<lambda> at 0x705fe712ce00>
+
+    def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
+                           bytes_per_second, lease_callback):
+        """Receive exact bytes, retaining a partial file and bounded diagnostic tail.
+    
+        Deadline covers child execution and throttling; forced cleanup gets a
+        separate ten-second wait. Each child owns a process group so pipe-holding
+        descendants cannot survive adapter cleanup. A live lease is checked before
+        spawn and during polling; the outer guard remains the ultimate authority.
+        """
+        if (type(expected_bytes) is not int or not 0 <= expected_bytes <= archive.MAX_BYTES
+                or not _positive_finite(max_seconds) or not _positive_finite(bytes_per_second)
+                or not callable(lease_callback)):
+            raise ValueError('invalid receive bounds or live lease')
+        destination = Path(destination)
+        receipt = Path(str(destination) + '.transport.json')
+        if os.path.lexists(receipt):
+            raise FileExistsError(receipt)
+        began = time.monotonic(); received = 0; seen = 0; tail = b''
+        proc = None; error_type = None
+        with destination.open('xb') as output:
+            try:
+                lease_callback()
+                proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        start_new_session=True)
+                stdout = proc.stdout.fileno(); stderr = proc.stderr.fileno()
+                streams = {stdout, stderr}
+                for fd in streams:
+                    os.set_blocking(fd, False)
+                while streams:
+                    lease_callback()
+                    elapsed = time.monotonic() - began
+                    remaining = max_seconds - elapsed
+                    if remaining <= 0:
+                        raise TimeoutError('bounded download deadline')
+                    # Continue draining stderr while stdout is rate-limited.
+                    delay = max(0., received / bytes_per_second - elapsed)
+                    watched = streams - {stdout} if delay else streams
+                    ready, _, _ = select.select(list(watched), [], [],
+                                                min(0.1, remaining, delay or 0.1))
+                    for fd in ready:
+                        chunk = os.read(fd, 65536 if fd == stderr else
+                                        min(65536, expected_bytes - received + 1))
+                        if not chunk:
+                            streams.remove(fd)
+                            continue
+                        if fd == stderr:
+                            seen += len(chunk); tail = (tail + chunk)[-STDERR_TAIL_BYTES:]
+                        else:
+                            received += len(chunk)
+                            if received > expected_bytes:
+>                               raise ValueError('download size exceeds expected bytes')
+E                               ValueError: download size exceeds expected bytes
+
+tradingagents/research/onchain_replication/archive_transport.py:99: ValueError
+
+During handling of the above exception, another exception occurred:
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe75b1c50>
+target = 'kill', primary = True
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:116: in receive_diagnostic
+    try: os.killpg(proc.pid, signal.SIGKILL)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (1460296, <Signals.SIGKILL: 9>)
+
+    def kill(*args):
+        calls.append('kill')
+        try: original_kill(*args)
+        except ProcessLookupError: pass
+>       if target == 'kill': raise OSError('uncertain kill')
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: uncertain kill
+
+tests/research/onchain_replication/test_archive_transport_production.py:249: OSError
+___ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-wait] ___
+
+command = ['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', 'import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")', 'dd', 'if=object/payload.bin', ...]
+destination = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal6/diagnostics/get-0000.bin')
+expected_bytes = 2, max_seconds = 30, bytes_per_second = 4194304
+lease_callback = <function adapter.<locals>.<lambda> at 0x705fe712dc60>
+
+    def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
+                           bytes_per_second, lease_callback):
+        """Receive exact bytes, retaining a partial file and bounded diagnostic tail.
+    
+        Deadline covers child execution and throttling; forced cleanup gets a
+        separate ten-second wait. Each child owns a process group so pipe-holding
+        descendants cannot survive adapter cleanup. A live lease is checked before
+        spawn and during polling; the outer guard remains the ultimate authority.
+        """
+        if (type(expected_bytes) is not int or not 0 <= expected_bytes <= archive.MAX_BYTES
+                or not _positive_finite(max_seconds) or not _positive_finite(bytes_per_second)
+                or not callable(lease_callback)):
+            raise ValueError('invalid receive bounds or live lease')
+        destination = Path(destination)
+        receipt = Path(str(destination) + '.transport.json')
+        if os.path.lexists(receipt):
+            raise FileExistsError(receipt)
+        began = time.monotonic(); received = 0; seen = 0; tail = b''
+        proc = None; error_type = None
+        with destination.open('xb') as output:
+            try:
+                lease_callback()
+                proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        start_new_session=True)
+                stdout = proc.stdout.fileno(); stderr = proc.stderr.fileno()
+                streams = {stdout, stderr}
+                for fd in streams:
+                    os.set_blocking(fd, False)
+                while streams:
+                    lease_callback()
+                    elapsed = time.monotonic() - began
+                    remaining = max_seconds - elapsed
+                    if remaining <= 0:
+                        raise TimeoutError('bounded download deadline')
+                    # Continue draining stderr while stdout is rate-limited.
+                    delay = max(0., received / bytes_per_second - elapsed)
+                    watched = streams - {stdout} if delay else streams
+                    ready, _, _ = select.select(list(watched), [], [],
+                                                min(0.1, remaining, delay or 0.1))
+                    for fd in ready:
+                        chunk = os.read(fd, 65536 if fd == stderr else
+                                        min(65536, expected_bytes - received + 1))
+                        if not chunk:
+                            streams.remove(fd)
+                            continue
+                        if fd == stderr:
+                            seen += len(chunk); tail = (tail + chunk)[-STDERR_TAIL_BYTES:]
+                        else:
+                            received += len(chunk)
+                            if received > expected_bytes:
+>                               raise ValueError('download size exceeds expected bytes')
+E                               ValueError: download size exceeds expected bytes
+
+tradingagents/research/onchain_replication/archive_transport.py:99: ValueError
+
+During handling of the above exception, another exception occurred:
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe75b2150>
+target = 'wait', primary = True
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:118: in receive_diagnostic
+    proc.wait(timeout=10)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (), kwargs = {'timeout': 10}
+
+    def waiting(*args, **kwargs):
+        result = wait(*args, **kwargs)
+        if kwargs.get('timeout') == 10:
+            calls.append('wait')
+>           if target == 'wait': raise OSError('uncertain wait')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: uncertain wait
+
+tests/research/onchain_replication/test_archive_transport_production.py:241: OSError
+__ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-stdout] __
+
+command = ['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', 'import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")', 'dd', 'if=object/payload.bin', ...]
+destination = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal7/diagnostics/get-0000.bin')
+expected_bytes = 2, max_seconds = 30, bytes_per_second = 4194304
+lease_callback = <function adapter.<locals>.<lambda> at 0x705fe712e980>
+
+    def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
+                           bytes_per_second, lease_callback):
+        """Receive exact bytes, retaining a partial file and bounded diagnostic tail.
+    
+        Deadline covers child execution and throttling; forced cleanup gets a
+        separate ten-second wait. Each child owns a process group so pipe-holding
+        descendants cannot survive adapter cleanup. A live lease is checked before
+        spawn and during polling; the outer guard remains the ultimate authority.
+        """
+        if (type(expected_bytes) is not int or not 0 <= expected_bytes <= archive.MAX_BYTES
+                or not _positive_finite(max_seconds) or not _positive_finite(bytes_per_second)
+                or not callable(lease_callback)):
+            raise ValueError('invalid receive bounds or live lease')
+        destination = Path(destination)
+        receipt = Path(str(destination) + '.transport.json')
+        if os.path.lexists(receipt):
+            raise FileExistsError(receipt)
+        began = time.monotonic(); received = 0; seen = 0; tail = b''
+        proc = None; error_type = None
+        with destination.open('xb') as output:
+            try:
+                lease_callback()
+                proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        start_new_session=True)
+                stdout = proc.stdout.fileno(); stderr = proc.stderr.fileno()
+                streams = {stdout, stderr}
+                for fd in streams:
+                    os.set_blocking(fd, False)
+                while streams:
+                    lease_callback()
+                    elapsed = time.monotonic() - began
+                    remaining = max_seconds - elapsed
+                    if remaining <= 0:
+                        raise TimeoutError('bounded download deadline')
+                    # Continue draining stderr while stdout is rate-limited.
+                    delay = max(0., received / bytes_per_second - elapsed)
+                    watched = streams - {stdout} if delay else streams
+                    ready, _, _ = select.select(list(watched), [], [],
+                                                min(0.1, remaining, delay or 0.1))
+                    for fd in ready:
+                        chunk = os.read(fd, 65536 if fd == stderr else
+                                        min(65536, expected_bytes - received + 1))
+                        if not chunk:
+                            streams.remove(fd)
+                            continue
+                        if fd == stderr:
+                            seen += len(chunk); tail = (tail + chunk)[-STDERR_TAIL_BYTES:]
+                        else:
+                            received += len(chunk)
+                            if received > expected_bytes:
+>                               raise ValueError('download size exceeds expected bytes')
+E                               ValueError: download size exceeds expected bytes
+
+tradingagents/research/onchain_replication/archive_transport.py:99: ValueError
+
+During handling of the above exception, another exception occurred:
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe75972f0>
+target = 'stdout', primary = True
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:124: in receive_diagnostic
+    proc.stdout.close(); proc.stderr.close()
+    ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.research.onchain_replication.test_archive_transport_production.test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary.<locals>.Stream object at 0x705fe75fce10>
+
+    def close(self):
+        calls.append(self.name)
+        self.stream.close()
+>       if self.name == target: raise OSError('uncertain ' + self.name)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: uncertain stdout
+
+tests/research/onchain_replication/test_archive_transport_production.py:231: OSError
+__ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-stderr] __
+
+command = ['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', 'import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")', 'dd', 'if=object/payload.bin', ...]
+destination = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal8/diagnostics/get-0000.bin')
+expected_bytes = 2, max_seconds = 30, bytes_per_second = 4194304
+lease_callback = <function adapter.<locals>.<lambda> at 0x705fe712f560>
+
+    def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
+                           bytes_per_second, lease_callback):
+        """Receive exact bytes, retaining a partial file and bounded diagnostic tail.
+    
+        Deadline covers child execution and throttling; forced cleanup gets a
+        separate ten-second wait. Each child owns a process group so pipe-holding
+        descendants cannot survive adapter cleanup. A live lease is checked before
+        spawn and during polling; the outer guard remains the ultimate authority.
+        """
+        if (type(expected_bytes) is not int or not 0 <= expected_bytes <= archive.MAX_BYTES
+                or not _positive_finite(max_seconds) or not _positive_finite(bytes_per_second)
+                or not callable(lease_callback)):
+            raise ValueError('invalid receive bounds or live lease')
+        destination = Path(destination)
+        receipt = Path(str(destination) + '.transport.json')
+        if os.path.lexists(receipt):
+            raise FileExistsError(receipt)
+        began = time.monotonic(); received = 0; seen = 0; tail = b''
+        proc = None; error_type = None
+        with destination.open('xb') as output:
+            try:
+                lease_callback()
+                proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        start_new_session=True)
+                stdout = proc.stdout.fileno(); stderr = proc.stderr.fileno()
+                streams = {stdout, stderr}
+                for fd in streams:
+                    os.set_blocking(fd, False)
+                while streams:
+                    lease_callback()
+                    elapsed = time.monotonic() - began
+                    remaining = max_seconds - elapsed
+                    if remaining <= 0:
+                        raise TimeoutError('bounded download deadline')
+                    # Continue draining stderr while stdout is rate-limited.
+                    delay = max(0., received / bytes_per_second - elapsed)
+                    watched = streams - {stdout} if delay else streams
+                    ready, _, _ = select.select(list(watched), [], [],
+                                                min(0.1, remaining, delay or 0.1))
+                    for fd in ready:
+                        chunk = os.read(fd, 65536 if fd == stderr else
+                                        min(65536, expected_bytes - received + 1))
+                        if not chunk:
+                            streams.remove(fd)
+                            continue
+                        if fd == stderr:
+                            seen += len(chunk); tail = (tail + chunk)[-STDERR_TAIL_BYTES:]
+                        else:
+                            received += len(chunk)
+                            if received > expected_bytes:
+>                               raise ValueError('download size exceeds expected bytes')
+E                               ValueError: download size exceeds expected bytes
+
+tradingagents/research/onchain_replication/archive_transport.py:99: ValueError
+
+During handling of the above exception, another exception occurred:
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe7597980>
+target = 'stderr', primary = True
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:124: in receive_diagnostic
+    proc.stdout.close(); proc.stderr.close()
+                         ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.research.onchain_replication.test_archive_transport_production.test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary.<locals>.Stream object at 0x705fe75fd1d0>
+
+    def close(self):
+        calls.append(self.name)
+        self.stream.close()
+>       if self.name == target: raise OSError('uncertain ' + self.name)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: uncertain stderr
+
+tests/research/onchain_replication/test_archive_transport_production.py:231: OSError
+__ test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-output] __
+
+command = ['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', 'import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")', 'dd', 'if=object/payload.bin', ...]
+destination = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal9/diagnostics/get-0000.bin')
+expected_bytes = 2, max_seconds = 30, bytes_per_second = 4194304
+lease_callback = <function adapter.<locals>.<lambda> at 0x705fe712efc0>
+
+    def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
+                           bytes_per_second, lease_callback):
+        """Receive exact bytes, retaining a partial file and bounded diagnostic tail.
+    
+        Deadline covers child execution and throttling; forced cleanup gets a
+        separate ten-second wait. Each child owns a process group so pipe-holding
+        descendants cannot survive adapter cleanup. A live lease is checked before
+        spawn and during polling; the outer guard remains the ultimate authority.
+        """
+        if (type(expected_bytes) is not int or not 0 <= expected_bytes <= archive.MAX_BYTES
+                or not _positive_finite(max_seconds) or not _positive_finite(bytes_per_second)
+                or not callable(lease_callback)):
+            raise ValueError('invalid receive bounds or live lease')
+        destination = Path(destination)
+        receipt = Path(str(destination) + '.transport.json')
+        if os.path.lexists(receipt):
+            raise FileExistsError(receipt)
+        began = time.monotonic(); received = 0; seen = 0; tail = b''
+        proc = None; error_type = None
+        with destination.open('xb') as output:
+            try:
+                lease_callback()
+                proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        start_new_session=True)
+                stdout = proc.stdout.fileno(); stderr = proc.stderr.fileno()
+                streams = {stdout, stderr}
+                for fd in streams:
+                    os.set_blocking(fd, False)
+                while streams:
+                    lease_callback()
+                    elapsed = time.monotonic() - began
+                    remaining = max_seconds - elapsed
+                    if remaining <= 0:
+                        raise TimeoutError('bounded download deadline')
+                    # Continue draining stderr while stdout is rate-limited.
+                    delay = max(0., received / bytes_per_second - elapsed)
+                    watched = streams - {stdout} if delay else streams
+                    ready, _, _ = select.select(list(watched), [], [],
+                                                min(0.1, remaining, delay or 0.1))
+                    for fd in ready:
+                        chunk = os.read(fd, 65536 if fd == stderr else
+                                        min(65536, expected_bytes - received + 1))
+                        if not chunk:
+                            streams.remove(fd)
+                            continue
+                        if fd == stderr:
+                            seen += len(chunk); tail = (tail + chunk)[-STDERR_TAIL_BYTES:]
+                        else:
+                            received += len(chunk)
+                            if received > expected_bytes:
+>                               raise ValueError('download size exceeds expected bytes')
+E                               ValueError: download size exceeds expected bytes
+
+tradingagents/research/onchain_replication/archive_transport.py:99: ValueError
+
+During handling of the above exception, another exception occurred:
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_receiver_cleanup_is_fatal9')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe75759b0>
+target = 'output', primary = True
+
+    @pytest.mark.parametrize('target', ['kill', 'wait', 'stdout', 'stderr', 'output'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('import sys;sys.stdout.buffer.write(b"excess" if sys.argv[-1]=="count=1" else b"ok")'
+                              if primary else 'import sys;sys.stdout.buffer.write(b"ok")')
+        calls = []
+        original_popen = module.subprocess.Popen
+        original_kill = module.os.killpg
+        original_open = Path.open
+        stage = tmp_path / 'diagnostics/get-0000.bin'
+        class Stream:
+            def __init__(self, stream, name): self.stream = stream; self.name = name
+            def __getattr__(self, name): return getattr(self.stream, name)
+            def __enter__(self): return self
+            def __exit__(self, *args): self.close()
+            def close(self):
+                calls.append(self.name)
+                self.stream.close()
+                if self.name == target: raise OSError('uncertain ' + self.name)
+        def popen(*args, **kwargs):
+            proc = original_popen(*args, **kwargs)
+            proc.stdout = Stream(proc.stdout, 'stdout')
+            proc.stderr = Stream(proc.stderr, 'stderr')
+            wait = proc.wait
+            def waiting(*args, **kwargs):
+                result = wait(*args, **kwargs)
+                if kwargs.get('timeout') == 10:
+                    calls.append('wait')
+                    if target == 'wait': raise OSError('uncertain wait')
+                return result
+            proc.wait = waiting
+            return proc
+        def kill(*args):
+            calls.append('kill')
+            try: original_kill(*args)
+            except ProcessLookupError: pass
+            if target == 'kill': raise OSError('uncertain kill')
+        def opened(path, *args, **kwargs):
+            stream = original_open(path, *args, **kwargs)
+            return Stream(stream, 'output') if path == stage else stream
+        monkeypatch.setattr(module.subprocess, 'Popen', popen)
+        monkeypatch.setattr(module.os, 'killpg', kill)
+        monkeypatch.setattr(Path, 'open', opened)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:257: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:68: in receive_diagnostic
+    with destination.open('xb') as output:
+         ^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_archive_transport_production.py:227: in __exit__
+    def __exit__(self, *args): self.close()
+                               ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.research.onchain_replication.test_archive_transport_production.test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary.<locals>.Stream object at 0x705fe753e3c0>
+
+    def close(self):
+        calls.append(self.name)
+        self.stream.close()
+>       if self.name == target: raise OSError('uncertain ' + self.name)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: uncertain output
+
+tests/research/onchain_replication/test_archive_transport_production.py:231: OSError
+__ test_upload_close_uncertainty_is_fatal_and_primary_aware[False-directory] ___
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_upload_close_uncertainty_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe7577770>
+target = 'directory', primary = False
+
+    @pytest.mark.parametrize('target', ['directory', 'memfd'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_upload_close_uncertainty_is_fatal_and_primary_aware(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.scp = child('pass')
+        source = tmp_path / 'source'; source.write_bytes(b'payload')
+        original_close = module.os.close
+        original_read = module.archive.io._read
+        injected = []
+        def close(fd):
+            name = module.os.readlink('/proc/self/fd/' + str(fd))
+            original_close(fd)
+            selected = name == str(tmp_path) if target == 'directory' else name.startswith('/memfd:archive-upload')
+            if selected:
+                injected.append(fd)
+                raise OSError('uncertain ' + target)
+        def read(*args):
+            if primary and target == 'directory': raise ValueError('primary source failure')
+            return original_read(*args)
+        def run(*args):
+            if primary and target == 'memfd': raise ValueError('primary upload failure')
+        monkeypatch.setattr(module.os, 'close', close)
+        monkeypatch.setattr(module.archive.io, '_read', read)
+        monkeypatch.setattr(transport, 'run', run)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.put(source, 'object/payload.bin')
+
+tests/research/onchain_replication/test_archive_transport_production.py:292: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:212: in put
+    finally: os.close(descriptor)
+             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        name = module.os.readlink('/proc/self/fd/' + str(fd))
+        original_close(fd)
+        selected = name == str(tmp_path) if target == 'directory' else name.startswith('/memfd:archive-upload')
+        if selected:
+            injected.append(fd)
+>           raise OSError('uncertain ' + target)
+E           OSError: uncertain directory
+
+tests/research/onchain_replication/test_archive_transport_production.py:282: OSError
+____ test_upload_close_uncertainty_is_fatal_and_primary_aware[False-memfd] _____
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_upload_close_uncertainty_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe75bba00>
+target = 'memfd', primary = False
+
+    @pytest.mark.parametrize('target', ['directory', 'memfd'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_upload_close_uncertainty_is_fatal_and_primary_aware(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.scp = child('pass')
+        source = tmp_path / 'source'; source.write_bytes(b'payload')
+        original_close = module.os.close
+        original_read = module.archive.io._read
+        injected = []
+        def close(fd):
+            name = module.os.readlink('/proc/self/fd/' + str(fd))
+            original_close(fd)
+            selected = name == str(tmp_path) if target == 'directory' else name.startswith('/memfd:archive-upload')
+            if selected:
+                injected.append(fd)
+                raise OSError('uncertain ' + target)
+        def read(*args):
+            if primary and target == 'directory': raise ValueError('primary source failure')
+            return original_read(*args)
+        def run(*args):
+            if primary and target == 'memfd': raise ValueError('primary upload failure')
+        monkeypatch.setattr(module.os, 'close', close)
+        monkeypatch.setattr(module.archive.io, '_read', read)
+        monkeypatch.setattr(transport, 'run', run)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.put(source, 'object/payload.bin')
+
+tests/research/onchain_replication/test_archive_transport_production.py:292: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:233: in put
+    finally: os.close(frozen)
+             ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        name = module.os.readlink('/proc/self/fd/' + str(fd))
+        original_close(fd)
+        selected = name == str(tmp_path) if target == 'directory' else name.startswith('/memfd:archive-upload')
+        if selected:
+            injected.append(fd)
+>           raise OSError('uncertain ' + target)
+E           OSError: uncertain memfd
+
+tests/research/onchain_replication/test_archive_transport_production.py:282: OSError
+___ test_upload_close_uncertainty_is_fatal_and_primary_aware[True-directory] ___
+
+args = (12, 'source', 8388608)
+
+    def read(*args):
+>       if primary and target == 'directory': raise ValueError('primary source failure')
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: primary source failure
+
+tests/research/onchain_replication/test_archive_transport_production.py:284: ValueError
+
+During handling of the above exception, another exception occurred:
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_upload_close_uncertainty_2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe757ea50>
+target = 'directory', primary = True
+
+    @pytest.mark.parametrize('target', ['directory', 'memfd'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_upload_close_uncertainty_is_fatal_and_primary_aware(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.scp = child('pass')
+        source = tmp_path / 'source'; source.write_bytes(b'payload')
+        original_close = module.os.close
+        original_read = module.archive.io._read
+        injected = []
+        def close(fd):
+            name = module.os.readlink('/proc/self/fd/' + str(fd))
+            original_close(fd)
+            selected = name == str(tmp_path) if target == 'directory' else name.startswith('/memfd:archive-upload')
+            if selected:
+                injected.append(fd)
+                raise OSError('uncertain ' + target)
+        def read(*args):
+            if primary and target == 'directory': raise ValueError('primary source failure')
+            return original_read(*args)
+        def run(*args):
+            if primary and target == 'memfd': raise ValueError('primary upload failure')
+        monkeypatch.setattr(module.os, 'close', close)
+        monkeypatch.setattr(module.archive.io, '_read', read)
+        monkeypatch.setattr(transport, 'run', run)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.put(source, 'object/payload.bin')
+
+tests/research/onchain_replication/test_archive_transport_production.py:292: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:212: in put
+    finally: os.close(descriptor)
+             ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        name = module.os.readlink('/proc/self/fd/' + str(fd))
+        original_close(fd)
+        selected = name == str(tmp_path) if target == 'directory' else name.startswith('/memfd:archive-upload')
+        if selected:
+            injected.append(fd)
+>           raise OSError('uncertain ' + target)
+E           OSError: uncertain directory
+
+tests/research/onchain_replication/test_archive_transport_production.py:282: OSError
+_____ test_upload_close_uncertainty_is_fatal_and_primary_aware[True-memfd] _____
+
+args = (['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', 'pass', '/proc/1460260/fd/12', 'synthetic@archive.invalid:object/payload.bin'],)
+
+    def run(*args):
+>       if primary and target == 'memfd': raise ValueError('primary upload failure')
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: primary upload failure
+
+tests/research/onchain_replication/test_archive_transport_production.py:287: ValueError
+
+During handling of the above exception, another exception occurred:
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_upload_close_uncertainty_3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe757eb10>
+target = 'memfd', primary = True
+
+    @pytest.mark.parametrize('target', ['directory', 'memfd'])
+    @pytest.mark.parametrize('primary', [False, True])
+    def test_upload_close_uncertainty_is_fatal_and_primary_aware(
+            module, tmp_path, monkeypatch, target, primary):
+        transport = adapter(module, tmp_path)
+        transport.scp = child('pass')
+        source = tmp_path / 'source'; source.write_bytes(b'payload')
+        original_close = module.os.close
+        original_read = module.archive.io._read
+        injected = []
+        def close(fd):
+            name = module.os.readlink('/proc/self/fd/' + str(fd))
+            original_close(fd)
+            selected = name == str(tmp_path) if target == 'directory' else name.startswith('/memfd:archive-upload')
+            if selected:
+                injected.append(fd)
+                raise OSError('uncertain ' + target)
+        def read(*args):
+            if primary and target == 'directory': raise ValueError('primary source failure')
+            return original_read(*args)
+        def run(*args):
+            if primary and target == 'memfd': raise ValueError('primary upload failure')
+        monkeypatch.setattr(module.os, 'close', close)
+        monkeypatch.setattr(module.archive.io, '_read', read)
+        monkeypatch.setattr(transport, 'run', run)
+        with pytest.raises(module.archive.io.CleanupFailure) as caught:
+>           transport.put(source, 'object/payload.bin')
+
+tests/research/onchain_replication/test_archive_transport_production.py:292: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:233: in put
+    finally: os.close(frozen)
+             ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        name = module.os.readlink('/proc/self/fd/' + str(fd))
+        original_close(fd)
+        selected = name == str(tmp_path) if target == 'directory' else name.startswith('/memfd:archive-upload')
+        if selected:
+            injected.append(fd)
+>           raise OSError('uncertain ' + target)
+E           OSError: uncertain memfd
+
+tests/research/onchain_replication/test_archive_transport_production.py:282: OSError
+_____________ test_failed_diagnostic_publication_preserves_primary _____________
+
+command = ['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', 'print("excess")', 'dd', 'if=object/payload.bin', ...]
+destination = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_failed_diagnostic_publica0/diagnostics/get-0000.bin')
+expected_bytes = 2, max_seconds = 30, bytes_per_second = 4194304
+lease_callback = <function adapter.<locals>.<lambda> at 0x705fe75e3600>
+
+    def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
+                           bytes_per_second, lease_callback):
+        """Receive exact bytes, retaining a partial file and bounded diagnostic tail.
+    
+        Deadline covers child execution and throttling; forced cleanup gets a
+        separate ten-second wait. Each child owns a process group so pipe-holding
+        descendants cannot survive adapter cleanup. A live lease is checked before
+        spawn and during polling; the outer guard remains the ultimate authority.
+        """
+        if (type(expected_bytes) is not int or not 0 <= expected_bytes <= archive.MAX_BYTES
+                or not _positive_finite(max_seconds) or not _positive_finite(bytes_per_second)
+                or not callable(lease_callback)):
+            raise ValueError('invalid receive bounds or live lease')
+        destination = Path(destination)
+        receipt = Path(str(destination) + '.transport.json')
+        if os.path.lexists(receipt):
+            raise FileExistsError(receipt)
+        began = time.monotonic(); received = 0; seen = 0; tail = b''
+        proc = None; error_type = None
+        with destination.open('xb') as output:
+            try:
+                lease_callback()
+                proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        start_new_session=True)
+                stdout = proc.stdout.fileno(); stderr = proc.stderr.fileno()
+                streams = {stdout, stderr}
+                for fd in streams:
+                    os.set_blocking(fd, False)
+                while streams:
+                    lease_callback()
+                    elapsed = time.monotonic() - began
+                    remaining = max_seconds - elapsed
+                    if remaining <= 0:
+                        raise TimeoutError('bounded download deadline')
+                    # Continue draining stderr while stdout is rate-limited.
+                    delay = max(0., received / bytes_per_second - elapsed)
+                    watched = streams - {stdout} if delay else streams
+                    ready, _, _ = select.select(list(watched), [], [],
+                                                min(0.1, remaining, delay or 0.1))
+                    for fd in ready:
+                        chunk = os.read(fd, 65536 if fd == stderr else
+                                        min(65536, expected_bytes - received + 1))
+                        if not chunk:
+                            streams.remove(fd)
+                            continue
+                        if fd == stderr:
+                            seen += len(chunk); tail = (tail + chunk)[-STDERR_TAIL_BYTES:]
+                        else:
+                            received += len(chunk)
+                            if received > expected_bytes:
+>                               raise ValueError('download size exceeds expected bytes')
+E                               ValueError: download size exceeds expected bytes
+
+tradingagents/research/onchain_replication/archive_transport.py:99: ValueError
+
+During handling of the above exception, another exception occurred:
+
+module = <module 'tradingagents.research.onchain_replication.archive_transport' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py'>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-130/test_failed_diagnostic_publica0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x705fe75cb3e0>
+
+    def test_failed_diagnostic_publication_preserves_primary(module, tmp_path, monkeypatch):
+        transport = adapter(module, tmp_path)
+        transport.ssh = child('print("excess")')
+        def failed(*args, **kwargs): raise OSError('receipt publication failed')
+        monkeypatch.setattr(module, '_immutable', failed)
+        with pytest.raises(ValueError, match='exceeds expected bytes') as caught:
+>           transport.get('object/payload.bin', tmp_path / 'result', expected_bytes=2)
+
+tests/research/onchain_replication/test_archive_transport_production.py:304: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_transport.py:245: in get
+    receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+tradingagents/research/onchain_replication/archive_transport.py:125: in receive_diagnostic
+    _immutable(receipt, {'status': 'failed' if error_type else 'complete',
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (PosixPath('/tmp/pytest-of-malecada/pytest-130/test_failed_diagnostic_publica0/diagnostics/get-0000.bin.transport.json'), {'status': 'failed', 'error_type': 'ValueError', 'pid': 1460301, 'returncode': -9, ...})
+kwargs = {}
+
+>   def failed(*args, **kwargs): raise OSError('receipt publication failed')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   OSError: receipt publication failed
+
+tests/research/onchain_replication/test_archive_transport_production.py:301: OSError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-kill]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-wait]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-stdout]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-stderr]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[False-output]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-kill]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-wait]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-stdout]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-stderr]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_receiver_cleanup_is_fatal_one_shot_and_preserves_primary[True-output]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_upload_close_uncertainty_is_fatal_and_primary_aware[False-directory]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_upload_close_uncertainty_is_fatal_and_primary_aware[False-memfd]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_upload_close_uncertainty_is_fatal_and_primary_aware[True-directory]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_upload_close_uncertainty_is_fatal_and_primary_aware[True-memfd]
+FAILED tests/research/onchain_replication/test_archive_transport_production.py::test_failed_diagnostic_publication_preserves_primary
+15 failed, 24 deselected in 0.78s
