@@ -1,0 +1,75 @@
+{
+  "status": "frozen AD1-AD5 correction; independent acceptance pending",
+  "prior_candidate_sha256": "a71f0ed0c7f82c2e893ec9349850038e3eb95ad707bf2bb5091720421baf89d1",
+  "sources": [
+    {
+      "path": "tradingagents/research/onchain_replication/archive_dispatch.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/onchain_replication/archive_dispatch.py",
+      "sha256": "05eafe349dfafefe0b17ed8b8efaa3a480eff0f943988212846cabcec414f953",
+      "bytes": 29207,
+      "changed_from_candidate01": true
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/job_payload.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/onchain_replication/job_payload.py",
+      "sha256": "0303ea2e516e57e1d4a850b3eadf13b3b23ee047b48df1417e8ae559ff171ab0",
+      "bytes": 16938,
+      "changed_from_candidate01": true
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_owner_writer.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/onchain_replication/archive_owner_writer.py",
+      "sha256": "7980139206c4b2a0e8b11763f44d23a73c4e9f067d9c10799a081664c42135d1",
+      "bytes": 6709,
+      "changed_from_candidate01": false
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_owner_stage.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/onchain_replication/archive_owner_stage.py",
+      "sha256": "21a1f134c4ed0d4f57c266f21d4dd130d61241117b11e7f66a6466db3ddec39c",
+      "bytes": 9354,
+      "changed_from_candidate01": false
+    },
+    {
+      "path": "tests/research/onchain_replication/test_archive_dispatch.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/snapshots/candidate02/tests/research/onchain_replication/test_archive_dispatch.py",
+      "sha256": "5df23d04f642377ce89d6e87a25dff137380aa142425a625c6bb89828394cab3",
+      "bytes": 23420,
+      "changed_from_candidate01": true
+    }
+  ],
+  "new_evidence": [
+    {
+      "path": "red05.log",
+      "sha256": "acffd23f753e2662a829bb9483f2e065cc49aae976c87644efabb6a81c3fde35",
+      "bytes": 27069
+    },
+    {
+      "path": "check09.log",
+      "sha256": "469c8bd72122479e035a73e056ab2f84c7f72f43945fc7d2ec1fc04b8df8444c",
+      "bytes": 186
+    },
+    {
+      "path": "check10.log",
+      "sha256": "a96f16dbfd1ecca4e6a53f7f3f09acb89cc3056bcb0f504e519b180f9daedca1",
+      "bytes": 186
+    },
+    {
+      "path": "check11.log",
+      "sha256": "96921b5ca7f108a909a85c2c952abf15c3e09edc7bec9cda10eed291ba09ca05",
+      "bytes": 186
+    },
+    {
+      "path": "check12.log",
+      "sha256": "d817467e5c4f21ce7ef9d11d73d592721d49ef1720c04e7a353dbadccd99f655",
+      "bytes": 199
+    }
+  ],
+  "final_tiny_check": "check11:44 passed3.97s",
+  "related_regressions": [
+    "check10:39 low-level transport passed1.19s",
+    "check12:6 existing transition/failed-ledger passed2.57s;7 source-admitted owner cases deselected"
+  ],
+  "complete_dynamic_source_closure": false,
+  "execution_admitted": false
+}

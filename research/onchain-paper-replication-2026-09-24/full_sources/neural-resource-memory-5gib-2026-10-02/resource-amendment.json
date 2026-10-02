@@ -1,0 +1,77 @@
+{
+  "changed_resource_fields": [
+    "memory_max_bytes",
+    "memory_high_bytes",
+    "start_reserve_bytes"
+  ],
+  "disk_floor_unchanged_bytes": 10737418240,
+  "experiment": "eth-paper-neural-resource-20261002-02",
+  "failure_qualification": "A5GiB refusal/OOM does not establish6GiB failure. Once claimed, this spends the same single neural allocation; latercells remainfailed/unavailable asregistered, no automaticretry/refund. Anyfollowupneedsnewcumulativereview.",
+  "first_adopter_replaced_again": false,
+  "host_reserve_unchanged_bytes": 3221225472,
+  "new_resources": {
+    "disk_floor_bytes": 10737418240,
+    "disk_paths": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ],
+    "memory_high_bytes": 4831838208,
+    "memory_max_bytes": 5368709120,
+    "physical_policy": {
+      "max_allocated_bytes": 167772160,
+      "max_entries": 128,
+      "max_file_bytes": 8388608,
+      "max_json_bytes": 262144,
+      "max_logical_bytes": 134217728,
+      "schema_version": 1,
+      "tail_reserve_bytes": 33554432
+    },
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 8589934592,
+    "wall_seconds": 7200
+  },
+  "old_resources": {
+    "disk_floor_bytes": 10737418240,
+    "disk_paths": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ],
+    "memory_high_bytes": 5368709120,
+    "memory_max_bytes": 6442450944,
+    "physical_policy": {
+      "max_allocated_bytes": 167772160,
+      "max_entries": 128,
+      "max_file_bytes": 8388608,
+      "max_json_bytes": 262144,
+      "max_logical_bytes": 134217728,
+      "schema_version": 1,
+      "tail_reserve_bytes": 33554432
+    },
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 9663676416,
+    "wall_seconds": 7200
+  },
+  "preserved_prior_preparation": {
+    "charter": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-successor-preparation-2026-10-02/CHARTER.md",
+      "sha256": "67fbdf534801d74517f6374d2d7f465f3b4a7037eabaf55e6c658abb78a5c52a"
+    },
+    "job": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-successor-preparation-2026-10-02/execution-job.json",
+      "sha256": "d38d70e12848223c1e381f8d45ee25b6ea131ae0a02f4e336ccb8996444de70f"
+    },
+    "review": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-successor-preparation-2026-10-02/REVIEW_CANDIDATE01.md",
+      "sha256": "131d4c7f98262111d0c4bb4554773a6135db438738721b94f5bc99b1c22f72ef"
+    },
+    "scheduling": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-successor-preparation-2026-10-02/launch_scheduling.json",
+      "sha256": "f43541845d30a7b6d069647da8096718844375a7429d0e73516aa1a325987369"
+    }
+  },
+  "reason": "The user reports the practical localRAM ceiling. Read-only recent observations8.43/8.51/8.46GiB do not meet the original9GiB startup. Task8 calls6GiB a cautious starting limit, not a paper requirement. A stricter5GiB worker cap fits the maintained positivehigh<=max<=6GiB and startup>=max+3GiB contract. No workload/model outcome has been observed and no test-result tuning occurs. The architecture/model/numericalinputs remain exactly unchanged.",
+  "schema_version": 1,
+  "startup_margin_unchanged_bytes": 268435456,
+  "status": "prospective resource variant, not execution admission",
+  "success_qualification": "Success establishes this original synthetic singlegraph workload executed with the measured5GiB/4.5GiBhigh contract within a<=6GiB ceiling. It does not measure the old6GiB/5GiBhigh reclaim/timing behavior, chronological multiweek fitting or accuracy.",
+  "terminal_predecessor_reopened": false,
+  "unchanged_model_science_cells_inputs": true
+}

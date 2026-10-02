@@ -1,0 +1,620 @@
+..EEEEEEEEEEEEEEE                                                        [100%]
+==================================== ERRORS ====================================
+_____ ERROR at setup of test_preflight_refusals_allocate_nothing[missing] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a21be300640>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca0/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca0/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+_____ ERROR at setup of test_preflight_refusals_allocate_nothing[mismatch] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2251d37100>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca1/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca1/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+_____ ERROR at setup of test_preflight_refusals_allocate_nothing[endpoint] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a22519e7ad0>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca2/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca2/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+______ ERROR at setup of test_preflight_refusals_allocate_nothing[budget] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5a0de10>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca3/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca3/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+_____ ERROR at setup of test_preflight_refusals_allocate_nothing[outputs] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5a0e360>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca4/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_preflight_refusals_alloca4/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+____ ERROR at setup of test_shared_capacity_is_not_reset_per_representation ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_shared_capacity_is_not_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5a99a50>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_shared_capacity_is_not_re0/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_shared_capacity_is_not_re0/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+____ ERROR at setup of test_direct_use_without_reserved_capability_refuses _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_direct_use_without_reserv0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5a99f50>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_direct_use_without_reserv0/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_direct_use_without_reserv0/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+_____ ERROR at setup of test_mutable_transport_configuration_refused[ssh] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5a728a0>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu0/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu0/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+_____ ERROR at setup of test_mutable_transport_configuration_refused[scp] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5a73200>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu1/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu1/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+____ ERROR at setup of test_mutable_transport_configuration_refused[budget] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5acbe70>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu2/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu2/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+_____ ERROR at setup of test_mutable_transport_configuration_refused[live] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5aca970>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu3/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu3/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+_ ERROR at setup of test_mutable_transport_configuration_refused[diagnostics] __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5ae75f0>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu4/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu4/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+___ ERROR at setup of test_mutable_transport_configuration_refused[counter] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5a51910>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu5/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_mutable_transport_configu5/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+_ ERROR at setup of test_actual_local_child_transfers_keep_rounded_reservations _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_actual_local_child_transf0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e5a51fd0>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_actual_local_child_transf0/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_actual_local_child_transf0/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+_________ ERROR at setup of test_failed_child_spends_and_stops_context _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_failed_child_spends_and_s0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a20e56319c0>
+
+    @pytest.fixture
+    def synthetic(tmp_path,monkeypatch):
+        import json
+        from types import SimpleNamespace
+        from tradingagents.research.lifecycle import ResearchRun
+        from tradingagents.research.onchain_replication import archive_dispatch as d,compact_training
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,freeze
+        run=object.__new__(ResearchRun);run._claim_sha256='c'*64
+        connection={'host':'synthetic.invalid','user':'invented','port':23,'identity_file':'/unopened/key','known_hosts_file':'/unopened/hosts'}
+        config={'schema_version':1,'format':d.FORMAT,'connection':connection,'rate_kbit':32768,'max_seconds':2,
+            'max_payload_bytes':1000000,'max_commands':20,'max_diagnostic_bytes':10000000,'max_control_bytes':20000000,
+            'namespace':'invented','receipt_output':'archive-start.json','terminal_output':'archive-terminal.json'}
+        job={'operation':'produce','plan_input':'plan','producer':'proposed','compact_archive_input':'archive',d.KEY:'transport',
+            'compact_policy_input':'compact','descriptor':{'required_graphs':['g']}}
+        payload={'representation_jobs':{'proposed':job}}
+        from tradingagents.research.onchain_replication import job as outer
+        base=tmp_path/outer.PREFIX/'runs/invented';base.mkdir(parents=True)
+>       (tmp_path/'research_artifacts').mkdir();run.directory=tmp_path/'research_runs/invented';(run.directory/'outputs').mkdir(parents=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-9/test_failed_child_spends_and_s0/research_artifacts')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileExistsError: [Errno 17] File exists: '/tmp/pytest-of-malecada/pytest-9/test_failed_child_spends_and_s0/research_artifacts'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:722: FileExistsError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_preflight_refusals_allocate_nothing[missing]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_preflight_refusals_allocate_nothing[mismatch]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_preflight_refusals_allocate_nothing[endpoint]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_preflight_refusals_allocate_nothing[budget]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_preflight_refusals_allocate_nothing[outputs]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_shared_capacity_is_not_reset_per_representation
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_direct_use_without_reserved_capability_refuses
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_mutable_transport_configuration_refused[ssh]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_mutable_transport_configuration_refused[scp]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_mutable_transport_configuration_refused[budget]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_mutable_transport_configuration_refused[live]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_mutable_transport_configuration_refused[diagnostics]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_mutable_transport_configuration_refused[counter]
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_actual_local_child_transfers_keep_rounded_reservations
+ERROR tests/research/onchain_replication/test_archive_dispatch.py::test_failed_child_spends_and_stops_context
+2 passed, 15 errors in 2.91s

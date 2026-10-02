@@ -38,12 +38,9 @@ def population_from_record(record):
 
 def execute_fit_payload(run, payload, *, job_input='execution_job'):
     from . import archive_dispatch, compact_native_producer, native_reuse
-    registered=json.loads(run.read_input(job_input))
-    if registered['kind']!='fit' or canonical_bytes(registered['payload'])!=canonical_bytes(payload):
-        raise ValueError('fit job payload differs from registration')
     routes={name:False if native_reuse.selected(run,name,job) else compact_native_producer.selected(run,name,job)
         for name,job in payload['representation_jobs'].items()}
-    plan=archive_dispatch.preflight(run,payload,routes,job_input=job_input)
+    plan=archive_dispatch.preflight(run,payload,routes)
     if plan is None:return _execute_fit_payload(run,payload,job_input=job_input)
     context=archive_dispatch.Context(plan)
     try:

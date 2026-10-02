@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_constructor_failure_preserves_claim_and_original_fatal __________
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x721262135d00>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7212623df5c0>
+
+    def test_constructor_failure_preserves_claim_and_original_fatal(synthetic,monkeypatch):
+        d,run,inputs,payload,refresh=synthetic;primary=MemoryError('transport construction failed')
+        def fail(*args,**kwargs):raise primary
+        monkeypatch.setattr(d,'_Transport',fail)
+        with pytest.raises(MemoryError) as caught:d.Context(d.preflight(run,payload,{'proposed':True}))
+        assert caught.value is primary
+        root=run.admission.root/'research_artifacts/archive-dispatch-invented'
+>       assert (root/'intent.json').exists() and (root/'constructor-failed.json').exists()
+E       AssertionError: assert (True and False)
+E        +  where True = exists()
+E        +    where exists = (PosixPath('/tmp/pytest-of-malecada/pytest-16/test_constructor_failure_prese0/research_artifacts/archive-dispatch-invented') / 'intent.json').exists
+E        +  and   False = exists()
+E        +    where exists = (PosixPath('/tmp/pytest-of-malecada/pytest-16/test_constructor_failure_prese0/research_artifacts/archive-dispatch-invented') / 'constructor-failed.json').exists
+
+tests/research/onchain_replication/test_archive_dispatch.py:236: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_constructor_failure_preserves_claim_and_original_fatal
+1 failed, 29 deselected in 2.31s

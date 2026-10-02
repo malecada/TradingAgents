@@ -1,0 +1,33 @@
+.......F.........                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_shared_capacity_is_not_reset_per_representation _____________
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ducer': 'second', 'compact_archive_input': 'archive2', ...}}}, <function synthetic.<locals>.refresh at 0x7909986b23e0>)
+
+    def test_shared_capacity_is_not_reset_per_representation(synthetic):
+        import copy
+        d,run,inputs,payload,refresh=synthetic
+        other=copy.deepcopy(payload['representation_jobs']['proposed']);other['compact_archive_input']='archive2';other['producer']='second'
+        inputs['archive2']={**inputs['archive'],'remote_namespace':'other'}
+        inputs['plan']['producers']['second']=copy.deepcopy(other);payload['representation_jobs']['second']=other
+>       refresh();plan=d.preflight(run,payload,{'proposed':True,'second':True})
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_dispatch.py:105: in preflight
+    require(total['rounded_bytes']<=config['max_payload_bytes'] and total['commands']<=config['max_commands'],'insufficient whole-job rounded transport allowance')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'insufficient whole-job rounded transport allowance'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: insufficient whole-job rounded transport allowance
+
+tradingagents/research/onchain_replication/archive_dispatch.py:28: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_shared_capacity_is_not_reset_per_representation
+1 failed, 16 passed in 2.46s

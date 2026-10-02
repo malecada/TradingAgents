@@ -1,0 +1,300 @@
+FFFFFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+_______ test_exact_margin_requires_all_sixteen_reads_and_thirty_seconds ________
+
+    def test_exact_margin_requires_all_sixteen_reads_and_thirty_seconds():
+        clock = Clock()
+        reads = []
+        def memory():
+            reads.append(clock.now())
+            return policy()['minimum_available_bytes']
+>       result = module().observe(policy(), mem_available=memory, clock=clock.now, sleep=clock.sleep)
+                 ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+__________ test_one_low_read_refuses_without_waiting_for_recovery[0] ___________
+
+failed_index = 0
+
+    @pytest.mark.parametrize('failed_index', [0, 7, 15])
+    def test_one_low_read_refuses_without_waiting_for_recovery(failed_index):
+        clock = Clock()
+        reads = []
+        def memory():
+            index = len(reads)
+            reads.append(index)
+            return policy()['minimum_available_bytes'] - (index == failed_index)
+>       result = module().observe(policy(), mem_available=memory, clock=clock.now, sleep=clock.sleep)
+                 ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+__________ test_one_low_read_refuses_without_waiting_for_recovery[7] ___________
+
+failed_index = 7
+
+    @pytest.mark.parametrize('failed_index', [0, 7, 15])
+    def test_one_low_read_refuses_without_waiting_for_recovery(failed_index):
+        clock = Clock()
+        reads = []
+        def memory():
+            index = len(reads)
+            reads.append(index)
+            return policy()['minimum_available_bytes'] - (index == failed_index)
+>       result = module().observe(policy(), mem_available=memory, clock=clock.now, sleep=clock.sleep)
+                 ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+__________ test_one_low_read_refuses_without_waiting_for_recovery[15] __________
+
+failed_index = 15
+
+    @pytest.mark.parametrize('failed_index', [0, 7, 15])
+    def test_one_low_read_refuses_without_waiting_for_recovery(failed_index):
+        clock = Clock()
+        reads = []
+        def memory():
+            index = len(reads)
+            reads.append(index)
+            return policy()['minimum_available_bytes'] - (index == failed_index)
+>       result = module().observe(policy(), mem_available=memory, clock=clock.now, sleep=clock.sleep)
+                 ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+__________________ test_slow_read_cannot_make_the_window_pass __________________
+
+    def test_slow_read_cannot_make_the_window_pass():
+        clock = Clock()
+        def memory():
+            clock.seconds += 61
+            return policy()['minimum_available_bytes']
+>       result = module().observe(policy(), mem_available=memory, clock=clock.now, sleep=clock.sleep)
+                 ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+_______________ test_observation_expires_before_a_delayed_launch _______________
+
+    def test_observation_expires_before_a_delayed_launch():
+        clock = Clock()
+>       result = module().observe(policy(), mem_available=lambda: policy()['minimum_available_bytes'],
+                 ^^^^^^^^
+                                  clock=clock.now, sleep=clock.sleep)
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+_____________ test_truncated_or_altered_observations_are_not_ready _____________
+
+    def test_truncated_or_altered_observations_are_not_ready():
+        clock = Clock()
+>       result = module().observe(policy(), mem_available=lambda: policy()['minimum_available_bytes'],
+                 ^^^^^^^^
+                                  clock=clock.now, sleep=clock.sleep)
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+_______________ test_invalid_memory_readback_never_passes[True] ________________
+
+value = True
+
+    @pytest.mark.parametrize('value', [True, -1, 1.5])
+    def test_invalid_memory_readback_never_passes(value):
+        clock = Clock()
+        with pytest.raises(ValueError, match='memory readback'):
+>           module().observe(policy(), mem_available=lambda: value, clock=clock.now, sleep=clock.sleep)
+            ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+________________ test_invalid_memory_readback_never_passes[-1] _________________
+
+value = -1
+
+    @pytest.mark.parametrize('value', [True, -1, 1.5])
+    def test_invalid_memory_readback_never_passes(value):
+        clock = Clock()
+        with pytest.raises(ValueError, match='memory readback'):
+>           module().observe(policy(), mem_available=lambda: value, clock=clock.now, sleep=clock.sleep)
+            ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+________________ test_invalid_memory_readback_never_passes[1.5] ________________
+
+value = 1.5
+
+    @pytest.mark.parametrize('value', [True, -1, 1.5])
+    def test_invalid_memory_readback_never_passes(value):
+        clock = Clock()
+        with pytest.raises(ValueError, match='memory readback'):
+>           module().observe(policy(), mem_available=lambda: value, clock=clock.now, sleep=clock.sleep)
+            ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+______________ test_original_fatal_from_observation_is_preserved _______________
+
+    def test_original_fatal_from_observation_is_preserved():
+        clock = Clock()
+        original = MemoryError('readback unavailable')
+        def memory():
+            raise original
+        with pytest.raises(MemoryError) as caught:
+>           module().observe(policy(), mem_available=memory, clock=clock.now, sleep=clock.sleep)
+            ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+__________________ test_weaker_or_unbounded_policy_is_refused __________________
+
+    def test_weaker_or_unbounded_policy_is_refused():
+        clock = Clock()
+        for name, value in [('minimum_available_bytes', 8589934592),
+                            ('observation_count', 1), ('maximum_window_seconds', float('inf')),
+                            ('automatic_launch_retry', True)]:
+            changed = policy()
+            changed[name] = value
+            with pytest.raises(ValueError, match='scheduling policy'):
+>               module().observe(changed, mem_available=lambda: 10**12, clock=clock.now, sleep=clock.sleep)
+                ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = PREP / 'readiness.py'
+>       assert path.is_file(), 'finite prelaunch observer is missing'
+E       AssertionError: finite prelaunch observer is missing
+E       assert False
+E        +  where False = is_file()
+E        +    where is_file = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py').is_file
+
+tests/research/onchain_replication/test_neural_launch_readiness_5gib.py:14: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_exact_margin_requires_all_sixteen_reads_and_thirty_seconds
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_one_low_read_refuses_without_waiting_for_recovery[0]
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_one_low_read_refuses_without_waiting_for_recovery[7]
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_one_low_read_refuses_without_waiting_for_recovery[15]
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_slow_read_cannot_make_the_window_pass
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_observation_expires_before_a_delayed_launch
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_truncated_or_altered_observations_are_not_ready
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_invalid_memory_readback_never_passes[True]
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_invalid_memory_readback_never_passes[-1]
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_invalid_memory_readback_never_passes[1.5]
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_original_fatal_from_observation_is_preserved
+FAILED tests/research/onchain_replication/test_neural_launch_readiness_5gib.py::test_weaker_or_unbounded_policy_is_refused
+12 failed in 0.12s

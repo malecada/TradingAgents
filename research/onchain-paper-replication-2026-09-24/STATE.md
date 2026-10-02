@@ -3,6 +3,40 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 accepted stricter local resource contract — final gate next**:
+Independent REVIEW_RESOURCE_VARIANT01 accepts exact extension141ffbc0c8a88fa8297a67b73e36daf2f20d17804113e3e0e90a19e177aeab43
+and reviewdee74d0f06252916b5fa8e95a438951a954e4a269086034fd67c76e5ff963f64 in
+neural-resource-memory-5gib-2026-10-02/. This explicitly changes the prospective
+02 job to5GiB memory.max/4.5GiB memory.high/8GiB startup with unchanged3GiB
+host reserve, model, all nine cells, numerical inputs,10GiBfloor and other limits.
+Task8's6GiB was a cautious starting limit, not a paper requirement. Original6GiB
+preparations/reviews and the closed01 launch are preserved. Same33spent/62ceiling,
+unusedinitial02 and category allocation remain; no refund or added fit/trial.
+
+Scheduling requires8.25GiB at16 observations2s apart within60s and last age<=1s.
+New helperd2609b5a0f90cce953d501b08fec2be60723fd40a977adf3f6bd8a90f8727af4
+differs only in two exact constants;12 missing-helper RED cases then24 GREEN
+cases cover both versions. The exact jobdd8955e7aa133f385e884951b6d7cfcb7aaf31fe3e06bbd4408f461adf9ada61
+changes only memory_max, memory_high and startup sum. No actual readiness window
+or model was run. Success supports observed unchanged workload within a<=6GiB
+ceiling but does not measure original reclaim/timing; failure at5GiB does NOT
+establish failure at6GiB. Once claimed, the allocation is spent and another
+empirical successor needs cumulative review. Complete source/gate/coordinator
+review and actual controls remain release conditions; no empirical process active.
+
+Archive correctedcandidate02 manifestecb69937bbb424aff0fad06b819f5655664a5d5bbfc200c18de990d4105eb6c2
+is independently accepted for bounded engineering in REVIEW_CANDIDATE02.md.
+AD1–5 are closed;44dispatch/39transport/6token-ledger checks are separate scopes,
+not a combined actual-owner proof. Production mutations have ceased. Prepared
+three-case actual-owner outer fixture remains unexecuted pending exact isolated
+source/spec/limits. It covers one representation per case; actual second-view
+spending remains unproved. Real SSH/whole-route physical admission and broader
+offline validation remain separate. Root prioritizes the independently executable
+neural-capacity release before that heavy fixture: commit/back up exact accepted
+source/amendments, freeze/review final02 gate/runtime/helper bindings, then actual
+admit/readiness and one guarded launch. One substantial job at a time; source and
+HEAD must remain frozen while active. Coverage77/109 and1,420 financial fits remain.
+
 **October 2 parallel implementation checkpoint — archive review corrections pending**:
 Archive outer-dispatch candidate01 is frozen at manifesta71f0ed0c7f82c2e893ec9349850038e3eb95ad707bf2bb5091720421baf89d1
 and freeze01f5c56e52e27782b44a7ebca06feb7011eba171a88787ea842d3ffd6eb6ebc4e3;

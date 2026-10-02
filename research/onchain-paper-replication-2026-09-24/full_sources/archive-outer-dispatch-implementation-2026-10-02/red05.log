@@ -1,0 +1,433 @@
+FFFFFFF.FFF                                                              [100%]
+=================================== FAILURES ===================================
+____________ test_ad1_nondefault_local_input_needs_no_execution_job ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x738234947bb0>
+
+    def test_ad1_nondefault_local_input_needs_no_execution_job(monkeypatch):
+        from types import SimpleNamespace
+        from tradingagents.research.onchain_replication import job_payload,native_reuse,compact_native_producer
+        payload={'representation_jobs':{}}
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes
+        calls=[]
+        def read(name):
+            calls.append(name)
+            if name!='alternate':raise ValueError('unrelated execution_job absent')
+            return canonical_bytes({'kind':'fit','payload':payload})
+        run=SimpleNamespace(read_input=read)
+        monkeypatch.setattr(job_payload,'_execute_fit_payload',lambda *a,**kw:('local',kw['job_input']))
+>       assert job_payload.execute_fit_payload(run,payload,job_input='alternate')==('local','alternate')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:252: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:43: in execute_fit_payload
+    plan=archive_dispatch.preflight(run,payload,routes)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_dispatch.py:77: in preflight
+    require(isinstance(run,ResearchRun),'actual archive dispatch ResearchRun required');run._active()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'actual archive dispatch ResearchRun required'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: actual archive dispatch ResearchRun required
+
+tradingagents/research/onchain_replication/archive_dispatch.py:28: ValueError
+______ test_ad1_different_requested_job_refuses_before_routes_or_context _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x738234946780>
+
+    def test_ad1_different_requested_job_refuses_before_routes_or_context(monkeypatch):
+        from types import SimpleNamespace
+        from tradingagents.research.onchain_replication import job_payload,archive_dispatch,compact_native_producer,native_reuse
+        from tradingagents.research.onchain_replication.provenance import canonical_bytes
+        payload={'representation_jobs':{'x':{}}};calls=[]
+        run=SimpleNamespace(read_input=lambda name:canonical_bytes({'kind':'fit','payload':{'representation_jobs':{}}}))
+        monkeypatch.setattr(native_reuse,'selected',lambda *a:calls.append('route') or False)
+        monkeypatch.setattr(compact_native_producer,'selected',lambda *a:True)
+        monkeypatch.setattr(archive_dispatch,'preflight',lambda *a,**kw:'selected')
+        monkeypatch.setattr(archive_dispatch,'Context',lambda *a:calls.append('context'))
+        monkeypatch.setattr(job_payload,'_execute_fit_payload',lambda *a,**kw:None)
+>       with pytest.raises(ValueError,match='registration'):job_payload.execute_fit_payload(run,payload,job_input='alternate')
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:267: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = namespace(read_input=<function test_ad1_different_requested_job_refuses_before_routes_or_context.<locals>.<lambda> at 0x7380cc8cdd00>)
+payload = {'representation_jobs': {'x': {}}}, job_input = 'alternate'
+
+    def execute_fit_payload(run, payload, *, job_input='execution_job'):
+        from . import archive_dispatch, compact_native_producer, native_reuse
+        routes={name:False if native_reuse.selected(run,name,job) else compact_native_producer.selected(run,name,job)
+            for name,job in payload['representation_jobs'].items()}
+        plan=archive_dispatch.preflight(run,payload,routes)
+        if plan is None:return _execute_fit_payload(run,payload,job_input=job_input)
+        context=archive_dispatch.Context(plan)
+        try:
+            result=_execute_fit_payload(run,payload,job_input=job_input,archive_context=context)
+        except BaseException as error:
+            context.close(error)
+            raise
+>       context.close()
+        ^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'close'
+
+tradingagents/research/onchain_replication/job_payload.py:51: AttributeError
+_____ test_ad2_terminal_callback_cannot_replace_original_evidence[intent] ______
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x7380cc2554e0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7380cc48c830>
+target = 'intent'
+
+    @pytest.mark.parametrize('target',['intent','terminal','output'])
+    def test_ad2_terminal_callback_cannot_replace_original_evidence(synthetic,monkeypatch,target):
+        d,run,inputs,payload,refresh=synthetic;c=d.Context(d.preflight(run,payload,{'proposed':True}));write=run.write_json
+        def changed(name,value):
+            write(name,value)
+            path=(run.directory/'outputs'/name) if target=='output' else c.root/('intent.json' if target=='intent' else 'terminal.json')
+            path.write_bytes(b'{}')
+        monkeypatch.setattr(run,'write_json',changed)
+>       with pytest.raises(ValueError):c.close()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_dispatch.py:279: Failed
+____ test_ad2_terminal_callback_cannot_replace_original_evidence[terminal] _____
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x7380cc255760>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7380cc8dbbd0>
+target = 'terminal'
+
+    @pytest.mark.parametrize('target',['intent','terminal','output'])
+    def test_ad2_terminal_callback_cannot_replace_original_evidence(synthetic,monkeypatch,target):
+        d,run,inputs,payload,refresh=synthetic;c=d.Context(d.preflight(run,payload,{'proposed':True}));write=run.write_json
+        def changed(name,value):
+            write(name,value)
+            path=(run.directory/'outputs'/name) if target=='output' else c.root/('intent.json' if target=='intent' else 'terminal.json')
+            path.write_bytes(b'{}')
+        monkeypatch.setattr(run,'write_json',changed)
+>       with pytest.raises(ValueError):c.close()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_dispatch.py:279: Failed
+_____ test_ad2_terminal_callback_cannot_replace_original_evidence[output] ______
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x7380cc2553a0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7380cc394270>
+target = 'output'
+
+    @pytest.mark.parametrize('target',['intent','terminal','output'])
+    def test_ad2_terminal_callback_cannot_replace_original_evidence(synthetic,monkeypatch,target):
+        d,run,inputs,payload,refresh=synthetic;c=d.Context(d.preflight(run,payload,{'proposed':True}));write=run.write_json
+        def changed(name,value):
+            write(name,value)
+            path=(run.directory/'outputs'/name) if target=='output' else c.root/('intent.json' if target=='intent' else 'terminal.json')
+            path.write_bytes(b'{}')
+        monkeypatch.setattr(run,'write_json',changed)
+>       with pytest.raises(ValueError):c.close()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_dispatch.py:279: Failed
+_ test_ad3_owned_close_preserves_first_fatal_or_promotes_ordinary[MemoryError] _
+
+a = (12, 'injected.json', b'{}')
+
+>   monkeypatch.setattr(d.low.archive.io,'_write',lambda *a:(_ for _ in ()).throw(primary))
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <tuple_iterator object at 0x7380cc98a950>
+
+>   monkeypatch.setattr(d.low.archive.io,'_write',lambda *a:(_ for _ in ()).throw(primary))
+E   MemoryError: original publication failure
+
+tests/research/onchain_replication/test_archive_dispatch.py:289: MemoryError
+
+The above exception was the direct cause of the following exception:
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x7380cc40d1c0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7380cc4a6b50>
+primary_type = <class 'MemoryError'>
+
+    @pytest.mark.parametrize('primary_type',[MemoryError,SystemExit,ValueError])
+    def test_ad3_owned_close_preserves_first_fatal_or_promotes_ordinary(synthetic,monkeypatch,primary_type):
+        import os
+        d,run,inputs,payload,refresh=synthetic;c=d.Context(d.preflight(run,payload,{'proposed':True}));primary=primary_type('original publication failure')
+        close=os.close;calls=[]
+        def uncertain(fd):close(fd);calls.append(fd);raise OSError('real close uncertain')
+        monkeypatch.setattr(d.low.archive.io,'_write',lambda *a:(_ for _ in ()).throw(primary))
+        monkeypatch.setattr(os,'close',uncertain)
+        expected=primary_type if primary_type is not ValueError else d.low.archive.io.CleanupFailure
+>       with pytest.raises(expected) as caught:c._publish('injected.json',{})
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:292: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_dispatch.py:231: in _publish
+    finally:low.archive.io._release(lambda:os.close(fd))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/score_batches.py:52: in _release
+    else: _close_after_failure(close, primary)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+close = <function Context._publish.<locals>.<lambda> at 0x7380cc40ca40>
+primary = MemoryError('original publication failure')
+
+    def _close_after_failure(close, primary):
+        try: close()
+        except BaseException as error:
+            fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')
+            if fatal is not error: fatal.add_note(repr(error))
+>           raise fatal from primary
+E           tradingagents.research.onchain_replication.score_batches.CleanupFailure: score cleanup unresolved; worker must stop
+E           OSError('real close uncertain')
+
+tradingagents/research/onchain_replication/score_batches.py:45: CleanupFailure
+_ test_ad3_owned_close_preserves_first_fatal_or_promotes_ordinary[SystemExit] __
+
+a = (12, 'injected.json', b'{}')
+
+>   monkeypatch.setattr(d.low.archive.io,'_write',lambda *a:(_ for _ in ()).throw(primary))
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <tuple_iterator object at 0x7380cd4bdae0>
+
+>   monkeypatch.setattr(d.low.archive.io,'_write',lambda *a:(_ for _ in ()).throw(primary))
+E   SystemExit: original publication failure
+
+tests/research/onchain_replication/test_archive_dispatch.py:289: SystemExit
+
+The above exception was the direct cause of the following exception:
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x7380cc2554e0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7380cc4a6a50>
+primary_type = <class 'SystemExit'>
+
+    @pytest.mark.parametrize('primary_type',[MemoryError,SystemExit,ValueError])
+    def test_ad3_owned_close_preserves_first_fatal_or_promotes_ordinary(synthetic,monkeypatch,primary_type):
+        import os
+        d,run,inputs,payload,refresh=synthetic;c=d.Context(d.preflight(run,payload,{'proposed':True}));primary=primary_type('original publication failure')
+        close=os.close;calls=[]
+        def uncertain(fd):close(fd);calls.append(fd);raise OSError('real close uncertain')
+        monkeypatch.setattr(d.low.archive.io,'_write',lambda *a:(_ for _ in ()).throw(primary))
+        monkeypatch.setattr(os,'close',uncertain)
+        expected=primary_type if primary_type is not ValueError else d.low.archive.io.CleanupFailure
+>       with pytest.raises(expected) as caught:c._publish('injected.json',{})
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:292: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_dispatch.py:231: in _publish
+    finally:low.archive.io._release(lambda:os.close(fd))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/score_batches.py:52: in _release
+    else: _close_after_failure(close, primary)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+close = <function Context._publish.<locals>.<lambda> at 0x7380cc40c860>
+primary = SystemExit('original publication failure')
+
+    def _close_after_failure(close, primary):
+        try: close()
+        except BaseException as error:
+            fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')
+            if fatal is not error: fatal.add_note(repr(error))
+>           raise fatal from primary
+E           tradingagents.research.onchain_replication.score_batches.CleanupFailure: score cleanup unresolved; worker must stop
+E           OSError('real close uncertain')
+
+tradingagents/research/onchain_replication/score_batches.py:45: CleanupFailure
+_______ test_ad3_nested_descriptor_closes_preserve_original_memoryerror ________
+
+a = (13, 1)
+
+>   monkeypatch.setattr(os,'read',lambda *a:(_ for _ in ()).throw(primary))
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:304: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <tuple_iterator object at 0x7380ccd944f0>
+
+>   monkeypatch.setattr(os,'read',lambda *a:(_ for _ in ()).throw(primary))
+E   MemoryError: original nested read fatal
+
+tests/research/onchain_replication/test_archive_dispatch.py:304: MemoryError
+
+The above exception was the direct cause of the following exception:
+
+self = <tradingagents.research.onchain_replication.archive_dispatch.Context object at 0x7380cc1c20d0>
+
+    def _diagnostics(self):
+        root,fd=low.archive.io._open(self.root/'diagnostics');result={};total=0
+        try:
+            require(low.archive.io._signature(os.fstat(fd))[:2]==self._diag_inode,'original archive diagnostics directory changed')
+            for name in os.listdir(fd):
+                require(re.fullmatch(r'(?:command|get)-[0-9]{4,}\.bin(?:\.transport\.json)?',name),'foreign archive diagnostic')
+                require(len(result)<2*self._spent['commands'],'archive diagnostic count exceeded')
+                child=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=fd)
+                try:
+                    before=os.fstat(child);signature=low.archive.io._signature(before)
+                    limit=META if name.endswith('.json') else self._limits['max_payload_bytes']
+                    require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_size<=limit,'archive diagnostic type/extent changed')
+                    total+=before.st_size;require(total<=self._limits['max_diagnostic_bytes'],'archive diagnostic cumulative allowance exceeded')
+                    h=hashlib.sha256();remaining=before.st_size
+                    while remaining:
+                        raw=os.read(child,min(65536,remaining));require(raw,'archive diagnostic truncated');h.update(raw);remaining-=len(raw)
+                    require(not os.read(child,1) and low.archive.io._signature(os.fstat(child))==signature
+                        and low.archive.io._signature(os.stat(name,dir_fd=fd,follow_symlinks=False))==signature,'archive diagnostic changed while reading')
+                    result[name]={'signature':list(signature),'sha256':h.hexdigest(),'bytes':before.st_size}
+>               finally:low.archive.io._release(lambda:os.close(child))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tradingagents/research/onchain_replication/archive_dispatch.py:277: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/score_batches.py:52: in _release
+    else: _close_after_failure(close, primary)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+close = <function Context._diagnostics.<locals>.<lambda> at 0x7380cc40c0e0>
+primary = MemoryError('original nested read fatal')
+
+    def _close_after_failure(close, primary):
+        try: close()
+        except BaseException as error:
+            fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')
+            if fatal is not error: fatal.add_note(repr(error))
+>           raise fatal from primary
+E           tradingagents.research.onchain_replication.score_batches.CleanupFailure: score cleanup unresolved; worker must stop
+E           OSError('actual close uncertain')
+
+tradingagents/research/onchain_replication/score_batches.py:45: CleanupFailure
+
+The above exception was the direct cause of the following exception:
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x7380cc40dee0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7380cc3c89b0>
+
+    def test_ad3_nested_descriptor_closes_preserve_original_memoryerror(synthetic,monkeypatch):
+        import os
+        d,run,inputs,payload,refresh=synthetic;c=d.Context(d.preflight(run,payload,{'proposed':True}))
+        c._spent['commands']=1;c._spent_pin=d.canonical_bytes(c._spent)
+        (c.root/'diagnostics/command-0000.bin').write_bytes(b'x')
+        primary=MemoryError('original nested read fatal');closed=[];close=os.close
+        monkeypatch.setattr(os,'read',lambda *a:(_ for _ in ()).throw(primary))
+        def uncertain(fd):close(fd);closed.append(fd);raise OSError('actual close uncertain')
+        monkeypatch.setattr(os,'close',uncertain)
+>       with pytest.raises(MemoryError) as caught:c._diagnostics()
+                                                  ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:307: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_dispatch.py:279: in _diagnostics
+    finally:low.archive.io._release(lambda:os.close(fd))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/score_batches.py:52: in _release
+    else: _close_after_failure(close, primary)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+close = <function Context._diagnostics.<locals>.<lambda> at 0x7380cc40d3a0>
+primary = CleanupFailure('score cleanup unresolved; worker must stop')
+
+    def _close_after_failure(close, primary):
+        try: close()
+        except BaseException as error:
+            fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')
+            if fatal is not error: fatal.add_note(repr(error))
+>           raise fatal from primary
+E           tradingagents.research.onchain_replication.score_batches.CleanupFailure: score cleanup unresolved; worker must stop
+E           OSError('actual close uncertain')
+
+tradingagents/research/onchain_replication/score_batches.py:45: CleanupFailure
+______ test_ad4_parent_sync_precedes_intent_and_failure_retains_namespace ______
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x7380cc40e660>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7380cc24ac10>
+
+    def test_ad4_parent_sync_precedes_intent_and_failure_retains_namespace(synthetic,monkeypatch):
+        import os
+        d,run,inputs,payload,refresh=synthetic;sync=os.fsync;write=d.low.archive.io._write;events=[]
+        def synced(fd):
+            path=os.readlink('/proc/self/fd/'+str(fd))
+            if path==str(run.admission.root/'research_artifacts'):events.append('parent-sync')
+            return sync(fd)
+        def published(fd,name,raw):
+            if name=='intent.json':events.append('intent')
+            return write(fd,name,raw)
+        monkeypatch.setattr(os,'fsync',synced);monkeypatch.setattr(d.low.archive.io,'_write',published)
+        d.Context(d.preflight(run,payload,{'proposed':True}))
+>       assert events[:2]==['parent-sync','intent']
+E       AssertionError: assert ['intent'] == ['parent-sync', 'intent']
+E         
+E         At index 0 diff: 'intent' != 'parent-sync'
+E         Right contains one more item: 'intent'
+E         Use -v to get more diff
+
+tests/research/onchain_replication/test_archive_dispatch.py:323: AssertionError
+_______ test_ad5_overlimit_diagnostic_enumeration_stops_before_remainder _______
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x7380cc40e3e0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7382345e3770>
+
+    def test_ad5_overlimit_diagnostic_enumeration_stops_before_remainder(synthetic,monkeypatch):
+        from types import SimpleNamespace
+        d,run,inputs,payload,refresh=synthetic;c=d.Context(d.preflight(run,payload,{'proposed':True}))
+        c._spent['commands']=1;c._spent_pin=d.canonical_bytes(c._spent)
+        names=['command-0000.bin','command-0000.bin.transport.json','command-0001.bin']
+        for name in names:(c.root/'diagnostics'/name).write_bytes(b'')
+        consumed=[];closed=[]
+        class Stream:
+            def __iter__(self):
+                for name in names:consumed.append(name);yield SimpleNamespace(name=name)
+                raise AssertionError('consumed over-limit remainder')
+            def close(self):closed.append(True)
+        monkeypatch.setattr(d.os,'scandir',lambda fd:Stream())
+        monkeypatch.setattr(d.os,'listdir',lambda fd:(_ for _ in ()).throw(AssertionError('unbounded listdir')))
+>       with pytest.raises(ValueError,match='count'):c._diagnostics()
+                                                     ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_dispatch.py:340: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_dispatch.py:262: in _diagnostics
+    for name in os.listdir(fd):
+                ^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_archive_dispatch.py:339: in <lambda>
+    monkeypatch.setattr(d.os,'listdir',lambda fd:(_ for _ in ()).throw(AssertionError('unbounded listdir')))
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <tuple_iterator object at 0x7380cc988580>
+
+>   monkeypatch.setattr(d.os,'listdir',lambda fd:(_ for _ in ()).throw(AssertionError('unbounded listdir')))
+E   AssertionError: unbounded listdir
+
+tests/research/onchain_replication/test_archive_dispatch.py:339: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad1_nondefault_local_input_needs_no_execution_job
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad1_different_requested_job_refuses_before_routes_or_context
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad2_terminal_callback_cannot_replace_original_evidence[intent]
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad2_terminal_callback_cannot_replace_original_evidence[terminal]
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad2_terminal_callback_cannot_replace_original_evidence[output]
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad3_owned_close_preserves_first_fatal_or_promotes_ordinary[MemoryError]
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad3_owned_close_preserves_first_fatal_or_promotes_ordinary[SystemExit]
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad3_nested_descriptor_closes_preserve_original_memoryerror
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad4_parent_sync_precedes_intent_and_failure_retains_namespace
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_ad5_overlimit_diagnostic_enumeration_stops_before_remainder
+10 failed, 1 passed, 30 deselected in 2.61s

@@ -1,0 +1,22 @@
+..........................F                                              [100%]
+=================================== FAILURES ===================================
+____________ test_original_completed_diagnostic_cannot_be_replaced _____________
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x710f83f15080>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x710f83f201a0>
+
+    def test_original_completed_diagnostic_cannot_be_replaced(synthetic,monkeypatch):
+        import sys
+        d,run,inputs,payload,refresh=synthetic;c=d.Context(d.preflight(run,payload,{'proposed':True}));v=activate(c);receive=d.low.receive_diagnostic
+        monkeypatch.setattr(d.low,'receive_diagnostic',lambda command,destination,**kw:receive([sys.executable,'-B','-c','pass'],destination,**kw))
+        v.mkdir('invented-000000000000')
+        receipt=next((c.root/'diagnostics').glob('*.transport.json'));receipt.write_bytes(b'{}')
+>       with pytest.raises(ValueError,match='diagnostic'):v.mkdir('invented-000000000001')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_dispatch.py:200: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_original_completed_diagnostic_cannot_be_replaced
+1 failed, 26 passed in 3.88s

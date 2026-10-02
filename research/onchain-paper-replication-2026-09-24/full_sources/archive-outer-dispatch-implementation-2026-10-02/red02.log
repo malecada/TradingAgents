@@ -1,0 +1,27 @@
+.................F..                                                     [100%]
+=================================== FAILURES ===================================
+___________ test_rejected_postclose_transport_cannot_poison_terminal ___________
+
+synthetic = (<module 'tradingagents.research.onchain_replication.archive_dispatch' from '/home/malecada/master_thesis/TradingAgent...ucer': 'proposed', 'compact_archive_input': 'archive', ...}}}, <function synthetic.<locals>.refresh at 0x79afeb5bb100>)
+
+    def test_rejected_postclose_transport_cannot_poison_terminal(synthetic):
+        d,run,inputs,payload,refresh=synthetic;c=d.Context(d.preflight(run,payload,{'proposed':True}));v=c.view('proposed');c.close()
+        before={str(p):p.read_bytes() for p in c.root.rglob('*') if p.is_file()}
+        with pytest.raises(ValueError,match='closed'):v.mkdir('invented')
+>       assert {str(p):p.read_bytes() for p in c.root.rglob('*') if p.is_file()}==before
+E       assert {'/tmp/pytest...d_bytes":0}}'} == {'/tmp/pytest...ured":false}'}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'/tmp/pytest-of-malecada/pytest-11/test_rejected_postclose_transp0/research_artifacts/archive-dispatch-invented/command-failed-00000000.json': b'{"er'
+E                                                                                                                                                         b'ror_'
+E                                                                                                                                                         b'type'
+E                                                               ...
+E         
+E         ...Full output truncated (20 lines hidden), use '-vv' to show
+
+tests/research/onchain_replication/test_archive_dispatch.py:144: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_dispatch.py::test_rejected_postclose_transport_cannot_poison_terminal
+1 failed, 19 passed in 2.50s
