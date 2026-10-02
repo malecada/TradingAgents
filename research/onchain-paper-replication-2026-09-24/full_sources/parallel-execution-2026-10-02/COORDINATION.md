@@ -142,3 +142,40 @@ execution remain prohibited pending actual reviewed gates. Base admission.py
 and its accepted tests stay frozen. Root owns state/integration decisions;
 reviewers own REVIEW files only. Source-admitted tests require explicit freeze
 or immutable snapshots; no current root test competes for resources.
+
+
+## Current continuation checkpoint — resource drafts and archive integration
+
+This subsection supersedes earlier active assignments and sampler-floor wording.
+Reviewed resource drafts and claim reconciliation are backed up at
+`a26cc968fff7e2a3b6cc64641446305336c6aa1b`, verified against remote branch HEAD.
+All 32 pending cells and 43 input references remain; the draft cumulative budget
+is 61, including 33 consumed claims (27 complete and six failed). Neither these
+drafts nor their reviews admit execution.
+
+The selected compact sampler is `resident-leased-v1`, with a direct vector bound
+of 16 bytes per center plus unresolved retained samples, index and choice scratch.
+The optional mapped sampler's 20 GiB reserve is not applicable to that selected
+route. The user 10 GiB free-space floor remains unchanged.
+
+The archive integration owner has a closed full injected archive pass (check03,
+282.06 seconds) and 12 closed late-failure/public-interface passes (check04,
+366.83 seconds). Original failures remain preserved. Two review corrections are
+pending: poisoned closure of a still-open archive ledger on native failure with
+original fatal errors preserved, and independent original authority for closed
+ledger metadata. At this checkpoint review-red01 is active as session66432;
+all package source is frozen until its terminal. Obtain fresh agent status before
+changing source or launching checks. There is no empirical run or transfer.
+
+Ownership remains exclusive: archive_transport owns the integration source/tests;
+owner_closure_review owns review files; root owns state, checkpoints and decisions.
+admission_batching has completed the retention requirements audit and now owns
+only `bounded-retention-contract-2026-10-02/` draft documentation. Its first proposed
+slice bounds future successful matching restart generations. Historical artifacts,
+current archive variant, final scores and required replay/failure evidence remain
+preserved. This is not yet an adopted policy or capacity result. Pair-event offload
+alone still leaves 55,439,818,752 logical local score/matrix bytes across the nine
+resource graphs before checkpoint/other costs. Outer dispatcher transport injection,
+shared transfer accounting, physical containment and actual admission remain separate
+required work. Continue independent preparation while tests run, then immediately
+advance corrected implementation and independent review.

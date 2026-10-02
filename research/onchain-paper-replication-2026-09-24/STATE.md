@@ -52,6 +52,9 @@ Historical source/outcome checks were not replayed.
 Parallel tasks: archive_transport owns integration source/tests/evidence;
 admission_batching completed archive-retention-readiness-2026-10-02/REPORT.md
 (SHA256 e0508bfa0b3302ffaa2ae440828851bdae2647098dd6529ac9789b36a5df9c23).
+Independent requirements review accepted the narrow investigation, REVIEW SHA256
+9c9d88a8dae8725461e02f46990903da7eb329c4221eedfddd7ad0c28f097aae; no
+retention policy, disposal, capacity or execution is adopted by this review.
 Pair offload still leaves55,439,818,752 logical score/matrix bytes across nine
 32-motif graphs, before checkpoint and other costs; this is not a physical cap.
 The agent now owns documentation-only bounded-retention-contract-2026-10-02
