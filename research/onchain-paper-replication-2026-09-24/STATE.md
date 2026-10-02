@@ -3,6 +3,62 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 RAM steering — waiting for paused work to release memory**:
+The user is pausing other work to free RAM. No substantial job is running here;
+ownerfixture release has not been invoked. Latest immediate MemAvailable was
+7,775,195,136B (~7.24GiB), below both5GiBvariant's8.25GiB schedule and newly
+accepted4.5GiBvariant's7.75GiB schedule. This checkpoint is not a launch permit.
+Prefer existing reviewed5GiB gate when newmeaningfulavailability improvement
+supports its full16-readwindow. If not, independently finalize the accepted
+4.5GiB resource variant before using it. Never reduce3GiB hostreserve or use
+savedreadiness evidence. No automaticidentityretry/closedclaimreuse. Meanwhile
+reviewedlowerRAM3GiB ownerfixture prep canadvance; one substantialjob at a time.
+
+**October 2 independent owner launcher accepted — final single release next**:
+Independent owner-release-preparation01/REVIEW_LAUNCHER02 accepts exact candidate
+6e2da88566d5bdd0a2870b5d8bcda15a151368a9b96d40f456d2cc40b9737676,
+launcherb15e84e91000f209a74c877aad4fd91f9674f4694ac6d58914790c3a1bbfb1b8,
+all11 evidence references and actual1,873-file immutable export. Eight missing-
+implementation RED cases and8GREEN0.033s plus metadata-only isolated runtime
+mapping are retained; no guard/Torch/owner fixture has run. Oldquota-only proposal
+and its five RED failures stay preserved, superseded rather than called passed.
+
+Selected controls are3GiBmax/2GiBhigh/swap0,6GiB TOTAL startup (including3GiB
+reserve),3GiB runtime hostreserve and1800s hard unit lifetime. This is not a hard
+complete preflight/postflight wall guarantee. LimitFSIZE4MiB applies to EVERY
+regular-file write in the unit, including combined childlog/Git/arrays; compatibility
+with actual fixture is unproved. Added systemd properties are checked before
+workload release but their raw show output is not separately persisted yet.
+Sampled1GiB allocated/logical stop thresholds and10GiBfree floor cover ownedroot;
+12000entries/depth32/2s traversal bounds do not bound uninterruptible metadata
+calls. No continuous quota, arbitrary filesystem sandbox or complete physical
+transport proof is claimed. Final accounting must include later guard/launcher
+publications. Source snapshot/runtime origins and final exact expected shared
+HEAD require fresh checks. Finalreleasedspec must be distinct, preserveprepared
+spec02 and change only release status plus current committed coordinator HEAD.
+After exact finalspec review, root invokes at mostONEreserved owner identity.
+
+In parallel, read-only RESOURCE_ASSESSMENT_4_5GIB accepts permissibility in
+principle of an explicitly stricter neural contract, since recent available RAM
+8,650,506,240B (~8.06GiB) is below5GiBvariant's8.25GiB scheduling. NewNONEXECUTABLE
+preparation in neural-resource-memory-4_5gib-2026-10-02/ selects4.5GiBmax/4GiBhigh,
+unchanged3GiB reserve,7.5GiBhardstartup/7.75GiBscheduling with SAME256MiBmargin,
+nine cells, model, seed, checkpointfalse and one unusedneural allocation. Exact
+newjob differs inthree resourcefields, helperonlytwo constants. Acceptedexisting
+12behavioral checks reusedagainst newpolicy allpass0.10s; no new mirroredtests,
+actualRAMwindow or model. REVIEW_RESOURCE_VARIANT01 accepts exactnewresource/extension/allocation;
+machine review95f1f4248ec026390a75d9868915f6b3de835f21a2290cdcac63701d875d6764.
+Finalgate/caller/source/admission/nativechecks remain required.
+Successcapacityonly; failure4.5GiB doesnotestablish5/6GiBfailure. Allold5/6objects,
+33spent/16currenthistory/deferredproof remain. No reserve/model/sample simplification.
+Neuralactualrelease waitsownerclosure and newfullsource/gate/caller review/admission.
+
+Next safe action: commit/back up acceptedowner controls and prospective neural
+prep, freeze currentHEAD, finalize/review ownerreleasedspec, then one guarded
+isolated three-case owner proof. Continue bounded neuralmetadata review while
+that proof runs. No empirical model/financial fit is active;77/109coverage and
+all1,420 financial fits remain pending.
+
 **October 2 actual neural02 scheduling DEFERRED — independent work continues**:
 Final corrected caller/gate/reviews committed and backed up at
 `91b45091966ab37e1f70aec6d8a04e5a62d340e9`, exact remote HEAD verified. Actual

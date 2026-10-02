@@ -1,0 +1,97 @@
+{
+  "changed_resource_fields": [
+    "memory_max_bytes",
+    "memory_high_bytes",
+    "start_reserve_bytes"
+  ],
+  "disk_floor_unchanged_bytes": 10737418240,
+  "experiment": "eth-paper-neural-resource-20261002-02",
+  "failure_qualification": "Failure4.5GiB doesnotestablish5/6GiBfailure; onceclaimed sameoneallocation spent, noautomaticfollowup/refund.",
+  "first_adopter_replaced_again": false,
+  "host_reserve_unchanged_bytes": 3221225472,
+  "new_resources": {
+    "disk_floor_bytes": 10737418240,
+    "disk_paths": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ],
+    "memory_high_bytes": 4294967296,
+    "memory_max_bytes": 4831838208,
+    "physical_policy": {
+      "max_allocated_bytes": 167772160,
+      "max_entries": 128,
+      "max_file_bytes": 8388608,
+      "max_json_bytes": 262144,
+      "max_logical_bytes": 134217728,
+      "schema_version": 1,
+      "tail_reserve_bytes": 33554432
+    },
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 8053063680,
+    "wall_seconds": 7200
+  },
+  "old_resources": {
+    "disk_floor_bytes": 10737418240,
+    "disk_paths": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ],
+    "memory_high_bytes": 4831838208,
+    "memory_max_bytes": 5368709120,
+    "physical_policy": {
+      "max_allocated_bytes": 167772160,
+      "max_entries": 128,
+      "max_file_bytes": 8388608,
+      "max_json_bytes": 262144,
+      "max_logical_bytes": 134217728,
+      "schema_version": 1,
+      "tail_reserve_bytes": 33554432
+    },
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 8589934592,
+    "wall_seconds": 7200
+  },
+  "preserved_prior_preparation": {
+    "CHARTER.md": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/CHARTER.md",
+      "sha256": "87402f96257a59af36d2402b7632116d60cf46beb6bdb3e77a8cb63b605df2ca"
+    },
+    "RESOURCE_ASSESSMENT_4_5GIB.md": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/RESOURCE_ASSESSMENT_4_5GIB.md",
+      "sha256": "12d17d060b9852128ccf687266608eb9b5b0725ac90de5f60543cf1933ab1a85"
+    },
+    "REVIEW_OBSERVATION01.md": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/REVIEW_OBSERVATION01.md",
+      "sha256": "8259895b36fd62f09b1c4dc58b1d0ffcf5fa0ef21bb3ceb526ab4cb0ab22a7be"
+    },
+    "coordinator-result01.json": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/coordinator-result01.json",
+      "sha256": "166fba5fdb306bbe04945539c20b095f614a4ccbce63eee6b7f8db41edd586d0"
+    },
+    "execution-job.json": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/execution-job.json",
+      "sha256": "dd8955e7aa133f385e884951b6d7cfcb7aaf31fe3e06bbd4408f461adf9ada61"
+    },
+    "extension.json": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/extension.json",
+      "sha256": "141ffbc0c8a88fa8297a67b73e36daf2f20d17804113e3e0e90a19e177aeab43"
+    },
+    "launch_scheduling.json": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/launch_scheduling.json",
+      "sha256": "a8931b6e6c9d98c3839b2e86845c1d8ecf9058176213186102a9600dbd880f83"
+    },
+    "readiness.py": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py",
+      "sha256": "d2609b5a0f90cce953d501b08fec2be60723fd40a977adf3f6bd8a90f8727af4"
+    },
+    "review.json": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/review.json",
+      "sha256": "dee74d0f06252916b5fa8e95a438951a954e4a269086034fd67c76e5ff963f64"
+    }
+  },
+  "reason": "Practical host ceiling and documented5GiB scheduling deferral; subsequentavailable8650506240B below8.25GiB. Choose stricter4.5GiBworker while retaining3GiBreserve and256MiBmargin; no empiricalrealgraph/model/financialoutcome seen.",
+  "schema_version": 1,
+  "startup_margin_unchanged_bytes": 268435456,
+  "status": "prospective resource-only preparation, no model/claim",
+  "success_qualification": "Observed unchangedsyntheticworkload within4.5GiB only; supports<=6GiBcapacity, not5/6reclaim/timing or chronologicalfinancial/GPUaccuracy.",
+  "terminal_predecessor_reopened": false,
+  "unchanged_model_science_cells_inputs": true
+}

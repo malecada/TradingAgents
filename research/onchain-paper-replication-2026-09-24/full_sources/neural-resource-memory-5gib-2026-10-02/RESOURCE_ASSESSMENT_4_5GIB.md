@@ -1,0 +1,35 @@
+# Prospective assessment of a 4.5 GiB local worker cap
+
+Disposition: a separately registered4.5GiB worker variant is compatible with authorized Task8 and the maintained resource contract. This is an assessment of admissibility in principle, **not acceptance of any new registration or execution**. Existing5GiB approvals must not be silently reused for different resource values.
+
+Task8 describes6GiB as a cautious initial engineering limit rather than a paper parameter. Current `job.resource_policy` requires positive integer resources, memory.high≤memory.max≤6GiB, host reserve≥3GiB and startup≥maximum+reserve. The worker independently checks those bounds and exact kernel readback. The proposed values satisfy that contract without numerical-source changes:
+
+| Field | Existing reviewed5GiB variant | Proposed4.5GiB variant |
+| --- | ---: | ---: |
+| memory_max_bytes | 5,368,709,120 | 4,831,838,208 |
+| memory_high_bytes | 4,831,838,208 | 4,294,967,296 |
+| reserve_bytes | 3,221,225,472 | 3,221,225,472 |
+| start_reserve_bytes | 8,589,934,592 | 8,053,063,680 |
+| scheduling minimum_available_bytes | 8,858,370,048 | 8,321,499,136 |
+
+The scheduling margin remains256MiB, with all16 observations at two-second spacing within60 seconds and final freshness≤one second. Swap remains zero. The stricter worker cap lowers the required combined worker-plus-host availability; it does not reduce the3GiB host reserve. The coordinator-reported current8,650,506,240-byte snapshot is329,007,104 bytes above the proposed scheduling threshold, but was not independently remeasured here and cannot establish a sustained passing window or future setup availability.
+
+The original01 launch stopped before workload release; the5GiB02 observation stopped before any launch. No real retained-graph neural resource cell has supplied an outcome to tune against. Existing tiny synthetic implementation tests are separate engineering evidence and must not be described as nonexistent model execution. Successive resource preparations are visible operational history, not extra fresh scientific samples. Choosing an enforceable local worker ceiling before the first real-graph workload is permissible; reducing it does not improve the model's mathematical memory requirements and may increase the chance of a cap refusal.
+
+A read-only current scan found the same16 relevant claims, highest adopted ceiling60 and absent02 lifecycle/launch/producer namespaces. Combined with the retained17 prior lineage claims, consumed history remains33. The same02 identity and still-unused single neural allocation may be proposed, with62=33+12body+15financial+1neural+1other unchanged, provided those facts remain true at final admission. This is not a new grant, refund or permission to reuse the closed01 identity. No actual adoption of62 is implied by a preparation or admission-only result.
+
+## Required immutable amendment trail
+
+1. Preserve the original6GiB and5GiB charters/jobs/policies/helpers/gates, accepted reviews, exact budget proposals, original01 terminal evidence and02 deferred observation/admission. Add a new dated/versioned resource-amendment object giving the explicit old/new three job fields, two scheduling/helper constants, practical-host rationale and inference restrictions.
+2. Create new charter, execution job, scheduling policy and frozen helper bytes selecting4.5GiB/4GiB-high/7.5GiB-startup/7.75GiB-coordinator. Retain3GiB reserve,10GiB disk floor,600s cooperative cell limit,7200s whole-job limit, CPU/zero-swap controls and every physical/checkpoint/output limit. Preserve all original nine cells, input hashes/windows, seed11, CPUfloat32, full model, synthetic data construction, one optimizer step/reload and false activation checkpointing. A new helper must retain the bounded-reader/freshness behavior and receive focused verification of its exact policy constants.
+3. Create revised allocation metadata explicitly pinning this resource amendment and revised extension metadata pointing to that allocation. Preserve original family51/prior17, all16 closed-claim snapshot records, consumed33, ceiling62, initial adopter02, category counts and1,420-fit ceiling. The new allocation/extension hashes require a new independent exact five-field accepted review. The older5GiB allocation/review cannot establish acceptance of the changed resources.
+4. After the currently planned lower-memory archive fixture closes, freeze the complete selected source/runtime closure and assemble a new exact gate retaining the complete original ancestor chain and all numerical/provenance inputs. Pin the new charter/job/policy/helper/amendment/allocation/extension/review and retained predecessor/deferred-observation evidence. Adapt and pin the concrete one-launch caller's exact registration path; preserve its after-log-open freshness check and no-retry behavior. Review the concrete result, commit/back up exact bytes, and obtain actual full-HEAD admission plus full claim/RPC extent checks.
+5. Refresh claim population, namespace absence, workspace/environment/input identity and disk/OS conditions. Run a new in-process readiness window only at this final release point, using a new observation identity and preserving any failed window. The guard must then read back the actual4.5GiB/4GiB-high/zero-swap controls and enforce7.5GiB startup/3GiB runtime host reserve. No old kernel receipt proves these future settings. No simultaneous substantial fixture/model execution or automatic observation/launch retry follows from this assessment.
+
+## Interpretation and stopping
+
+Successful unchanged workload under4.5GiB supports that observed execution within a≤5GiB or≤6GiB maximum ceiling. It does not measure the former memory.high policies, reclaim behavior, timing, or counterfactual success under the old exact configurations. Capacity evidence still concerns the synthetic repeated-one-graph update, not chronological multiweek training, complete dictionary/MCM production, accuracy or economic performance.
+
+A refusal/OOM/time-limit failure at4.5GiB does not establish failure at5GiB or6GiB. Once a ResearchRun claim is created, the single neural allocation is consumed even on failure; later registered cells remain failed/unavailable under the unchanged stop policy. No automatic resource escalation, second empirical attempt, same-identity relaunch or refund is allowed. A further empirical successor needs cumulative reconciliation and independent review. Missing terminal evidence after authority loss retains the existing best-effort/recovery limitations and cannot receive successful coverage credit.
+
+Remaining blockers are the new exact amendment/review, closure of the independent active fixture, complete final source/gate/caller freeze and review, actual admission, sustained readiness and native control checks. No current contract defect prohibits the proposed values in principle. This assessment changes no files other than this report, launches nothing, and grants no paid/external compute, credential, author/provider-contact or trading authority.

@@ -1,0 +1,101 @@
+test_added_unit_limits_are_finite_and_environment_explicit (__main__.Tests.test_added_unit_limits_are_finite_and_environment_explicit) ... FAIL
+test_conflicting_unit_property_refused (__main__.Tests.test_conflicting_unit_property_refused) ... FAIL
+test_duplicate_reservation_preserves_original (__main__.Tests.test_duplicate_reservation_preserves_original) ... FAIL
+test_infinite_or_soft_limit_mismatch_refused_before_release (__main__.Tests.test_infinite_or_soft_limit_mismatch_refused_before_release) ... FAIL
+test_preparation_spec_cannot_launch (__main__.Tests.test_preparation_spec_cannot_launch) ... FAIL
+test_primary_fatal_survives_later_cleanup (__main__.Tests.test_primary_fatal_survives_later_cleanup) ... FAIL
+test_snapshot_mutation_refused (__main__.Tests.test_snapshot_mutation_refused) ... FAIL
+test_symlink_and_unlisted_python_refused (__main__.Tests.test_symlink_and_unlisted_python_refused) ... FAIL
+
+======================================================================
+FAIL: test_added_unit_limits_are_finite_and_environment_explicit (__main__.Tests.test_added_unit_limits_are_finite_and_environment_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 33, in test_added_unit_limits_are_finite_and_environment_explicit
+    api=self.api();args=api.unit_arguments(['systemd-run','--user','--unit=x','/python','-B','child'],{'TMPDIR':'/owned/tmp'})
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 11, in api
+    self.assertTrue(PATH.exists(),'launcher02 missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher02 missing
+
+======================================================================
+FAIL: test_conflicting_unit_property_refused (__main__.Tests.test_conflicting_unit_property_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 39, in test_conflicting_unit_property_refused
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 11, in api
+    self.assertTrue(PATH.exists(),'launcher02 missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher02 missing
+
+======================================================================
+FAIL: test_duplicate_reservation_preserves_original (__main__.Tests.test_duplicate_reservation_preserves_original)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 15, in test_duplicate_reservation_preserves_original
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 11, in api
+    self.assertTrue(PATH.exists(),'launcher02 missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher02 missing
+
+======================================================================
+FAIL: test_infinite_or_soft_limit_mismatch_refused_before_release (__main__.Tests.test_infinite_or_soft_limit_mismatch_refused_before_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 42, in test_infinite_or_soft_limit_mismatch_refused_before_release
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 11, in api
+    self.assertTrue(PATH.exists(),'launcher02 missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher02 missing
+
+======================================================================
+FAIL: test_preparation_spec_cannot_launch (__main__.Tests.test_preparation_spec_cannot_launch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 48, in test_preparation_spec_cannot_launch
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 11, in api
+    self.assertTrue(PATH.exists(),'launcher02 missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher02 missing
+
+======================================================================
+FAIL: test_primary_fatal_survives_later_cleanup (__main__.Tests.test_primary_fatal_survives_later_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 51, in test_primary_fatal_survives_later_cleanup
+    api=self.api();fatal=MemoryError('first');later=KeyboardInterrupt('later')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 11, in api
+    self.assertTrue(PATH.exists(),'launcher02 missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher02 missing
+
+======================================================================
+FAIL: test_snapshot_mutation_refused (__main__.Tests.test_snapshot_mutation_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 22, in test_snapshot_mutation_refused
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 11, in api
+    self.assertTrue(PATH.exists(),'launcher02 missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher02 missing
+
+======================================================================
+FAIL: test_symlink_and_unlisted_python_refused (__main__.Tests.test_symlink_and_unlisted_python_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 27, in test_symlink_and_unlisted_python_refused
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher02.py", line 11, in api
+    self.assertTrue(PATH.exists(),'launcher02 missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher02 missing
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+FAILED (failures=8)

@@ -1,0 +1,65 @@
+test_aggregate_includes_source_and_control_reserve (__main__.AdmissionTests.test_aggregate_includes_source_and_control_reserve) ... FAIL
+test_host_partition_cannot_be_mistaken_for_dedicated_cap (__main__.AdmissionTests.test_host_partition_cannot_be_mistaken_for_dedicated_cap) ... FAIL
+test_log_ceiling_never_appends_overflow (__main__.AdmissionTests.test_log_ceiling_never_appends_overflow) ... FAIL
+test_one_shot_marker_preserved_and_duplicate_refused (__main__.AdmissionTests.test_one_shot_marker_preserved_and_duplicate_refused) ... FAIL
+test_tmpfs_rejected_even_when_small (__main__.AdmissionTests.test_tmpfs_rejected_even_when_small) ... FAIL
+
+======================================================================
+FAIL: test_aggregate_includes_source_and_control_reserve (__main__.AdmissionTests.test_aggregate_includes_source_and_control_reserve)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 29, in test_aggregate_includes_source_and_control_reserve
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 11, in api
+    self.assertTrue(PATH.is_file(),'launcher implementation missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher implementation missing
+
+======================================================================
+FAIL: test_host_partition_cannot_be_mistaken_for_dedicated_cap (__main__.AdmissionTests.test_host_partition_cannot_be_mistaken_for_dedicated_cap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 17, in test_host_partition_cannot_be_mistaken_for_dedicated_cap
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 11, in api
+    self.assertTrue(PATH.is_file(),'launcher implementation missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher implementation missing
+
+======================================================================
+FAIL: test_log_ceiling_never_appends_overflow (__main__.AdmissionTests.test_log_ceiling_never_appends_overflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 47, in test_log_ceiling_never_appends_overflow
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 11, in api
+    self.assertTrue(PATH.is_file(),'launcher implementation missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher implementation missing
+
+======================================================================
+FAIL: test_one_shot_marker_preserved_and_duplicate_refused (__main__.AdmissionTests.test_one_shot_marker_preserved_and_duplicate_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 38, in test_one_shot_marker_preserved_and_duplicate_refused
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 11, in api
+    self.assertTrue(PATH.is_file(),'launcher implementation missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher implementation missing
+
+======================================================================
+FAIL: test_tmpfs_rejected_even_when_small (__main__.AdmissionTests.test_tmpfs_rejected_even_when_small)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 23, in test_tmpfs_rejected_even_when_small
+    api=self.api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/owner-release-preparation01/test_launcher01.py", line 11, in api
+    self.assertTrue(PATH.is_file(),'launcher implementation missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : launcher implementation missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (failures=5)
