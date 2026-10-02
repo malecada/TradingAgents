@@ -1,0 +1,108 @@
+"""Actual-source boundary fragments, tiny files and injected OS/caller controls.
+No scientific objects, native guards, numerical imports or real jobs.
+"""
+import ast,copy,importlib.util,json,os,sys,tempfile,types,unittest
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+SOURCE=Path(sys.argv.pop(1)) if len(sys.argv)>1 and not sys.argv[1].startswith('-') else HERE
+
+def module(name):
+ spec=importlib.util.spec_from_file_location('tested_'+name,SOURCE/(name+'.py'));m=importlib.util.module_from_spec(spec);sys.modules[spec.name]=m;spec.loader.exec_module(m);return m
+
+def function(file,name):return next(n for n in ast.parse((SOURCE/file).read_text()).body if isinstance(n,ast.FunctionDef) and n.name==name)
+def invoke_fragment(nodes,ns):
+ t=ast.fix_missing_locations(ast.Module(body=copy.deepcopy(nodes),type_ignores=[]));exec(compile(t,str(SOURCE),'exec'),ns)
+def require(value,message):
+ if not value:raise ValueError(message)
+
+def publication_fragment():
+ f=function('compact_cold_features.py','prepare');body=next(n.body for n in f.body if isinstance(n,ast.Try) and n.handlers)
+ start=next(i for i,n in enumerate(body) if isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and ast.unparse(n.value.func)=='cold_files.write_once' and "'complete.json'" in ast.unparse(n))
+ end=next(i for i,n in enumerate(body[start:],start) if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='authority' for t in n.targets))
+ return body[start:end]
+class Evidence(unittest.TestCase):
+ def check_late_mutation(self,kind):
+  cold=module('cold_files')
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);old=root/'old';old.mkdir();(old/'receipt').write_bytes(b'original');new=root/'new';new.mkdir();(new/'start.json').write_bytes(b'start')
+   limits=dict(max_files=10,max_directories=10,max_total_bytes=10000,max_file_bytes=10000,max_depth=4,chunk_bytes=32)
+   original=cold.capture(root,('old',),limits);info=new.stat()
+   def publish(*args):
+    if kind=='failed':(old/'failed.json').write_bytes(b'failed')
+    elif kind=='old-body':(old/'receipt').write_bytes(b'replaced')
+    elif kind=='new-body':(new/'complete.json').write_bytes(b'forged')
+   ns=dict(cold_files=cold,directory=new,inode=(info.st_dev,info.st_ino),raw=b'{}',start_raw=b'start',policy={'max_metadata_bytes':10000},
+     run=types.SimpleNamespace(write_json=publish),output='registered.json',record={},snapshot=original,ad=types.SimpleNamespace(root=root),expected=['old'],limits=limits)
+   with self.assertRaises(ValueError):invoke_fragment(publication_fragment(),ns);ns['snapshot'].check(full=True)
+ def test_late_failed_marker_refused(self):self.check_late_mutation('failed')
+ def test_late_original_body_mutation_refused(self):self.check_late_mutation('old-body')
+ def test_new_handoff_wrong_bytes_refused(self):self.check_late_mutation('new-body')
+class Guard(unittest.TestCase):
+ def check_pid(self,pid):
+  owner={'monitor_pid':19,'monitor_start_ticks':'123'};p={'disk_paths':['/tmp'],'wall_seconds':10,'memory_max_bytes':100,'memory_high_bytes':100,'disk_floor_bytes':100}
+  policy={'watch':{'root':'/tmp','limits':{}}};live={**p,'owner_identity':owner,'storage_budget':policy['watch'],'monitor_pid':pid}
+  ad=types.SimpleNamespace(root=Path('/tmp'),registration='r',experiment_id='e',source='s');run=types.SimpleNamespace(admission=ad)
+  ns=dict(Path=Path,SimpleNamespace=types.SimpleNamespace,require=require,canonical_bytes=lambda x:json.dumps(x,sort_keys=True).encode(),
+    resources=types.SimpleNamespace(assert_guarded_worker=lambda *a,**k:live),job_module=types.SimpleNamespace(_command=lambda *a:[],same_process_alive=lambda *a:True))
+  invoke_fragment([function('compact_cold_features.py','_guard')],ns)
+  ns['_guard'](run,{'resources':p,'owner':owner,'base':'/tmp'},policy)
+ def test_wrong_monitor_refused(self):
+  with self.assertRaises(ValueError):self.check_pid(20)
+ def test_boolean_monitor_refused(self):
+  with self.assertRaises(ValueError):self.check_pid(True)
+ def test_exact_monitor_accepted(self):self.check_pid(19)
+class DurableBirth(unittest.TestCase):
+ def test_parent_sync_failure_precedes_any_handoff_file(self):
+  cold=module('cold_files');f=function('compact_cold_features.py','prepare');body=next(n.body for n in f.body if isinstance(n,ast.Try) and n.handlers)
+  start=next(i for i,n in enumerate(body) if 'durable_mkdir(directory.parent)'==ast.unparse(n))
+  end=next(i for i,n in enumerate(body[start:],start) if ast.unparse(n)=='terminal.lease()')
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);directory=root/'handoff';seen=[];original=cold.os.fsync;failure=MemoryError('parent-sync')
+   def fail(fd):seen.append(Path(os.readlink('/proc/self/fd/'+str(fd))));raise failure
+   cold.os.fsync=fail
+   try:
+    ns=dict(cold_files=cold,directory=directory,durable_mkdir=lambda p:None,canonical_bytes=lambda x:json.dumps(x).encode(),
+      KIND='synthetic',input_name='policy',owner=types.SimpleNamespace(identity='owner'),policy={'max_metadata_bytes':10000})
+    with self.assertRaises(MemoryError) as caught:invoke_fragment(body[start:end],ns)
+    self.assertIs(caught.exception,failure);self.assertTrue(directory.is_dir());self.assertFalse((directory/'start.json').exists())
+    self.assertEqual(seen,[root])
+   finally:cold.os.fsync=original
+
+def caller_case(error,via_finalize=False,raw_caller=False):
+ producer=ast.parse((SOURCE/'compact_native_producer.py').read_text());klass=next(n for n in producer.body if isinstance(n,ast.ClassDef) and n.name=='CompactProducerError')
+ prod=next(n for n in producer.body if isinstance(n,ast.FunctionDef) and n.name=='produce');handler=next(n.handlers[0] for n in prod.body if isinstance(n,ast.Try) and n.handlers)
+ body=[ast.Try(body=[ast.Raise(exc=ast.Name(id='injected',ctx=ast.Load()),cause=None)],handlers=[copy.deepcopy(handler)],orelse=[],finalbody=[])]
+ inner=ast.FunctionDef(name='inner',args=ast.arguments(posonlyargs=[],args=[],kwonlyargs=[],kw_defaults=[],defaults=[]),body=body,decorator_list=[])
+ trace=[];ns=dict(json=json,injected=error,handoff_started=True,owner=types.SimpleNamespace(poisoned=False),compact_cold_features=types.SimpleNamespace(cold_files=module('cold_files')))
+ invoke_fragment([klass,inner],ns)
+ if via_finalize:
+  Feature=type('Feature',(),{});prepared=types.SimpleNamespace(features=Feature())
+  def fail(value):raise error
+  ns['compact_cold_features']._Features=Feature;ns['compact_cold_features'].finalize=fail;ns['require']=require
+  invoke_fragment([function('compact_native_producer.py','finalize')],ns)
+  ns['inner']=lambda:ns['finalize'](prepared)
+ if raw_caller:
+  def fail_caller():raise error
+  ns['inner']=fail_caller
+ payload=function('job_payload.py','_execute_fit_payload')
+ block=next(n for n in ast.walk(payload) if isinstance(n,ast.Try) and any('CompactProducerError' in ast.unparse(h.type) for h in n.handlers))
+ outer=ast.Try(body=[ast.Expr(value=ast.Call(func=ast.Name(id='inner',ctx=ast.Load()),args=[],keywords=[]))],handlers=copy.deepcopy(block.handlers),orelse=[],finalbody=[])
+ execute=next(n for n in ast.walk(payload) if isinstance(n,ast.Assign) and isinstance(n.value,ast.Call) and ast.unparse(n.value.func)=='execute_batch')
+ ns.update(GraphPopulationCleanupError=type('GraphPopulationCleanupError',(Exception,),{}),native_producer=types.SimpleNamespace(NativeProducerCleanupError=type('Cleanup',(Exception,),{})),
+  compact_native_producer=types.SimpleNamespace(CompactProducerError=ns['CompactProducerError']),run=types.SimpleNamespace(write_json=lambda *a:trace.append('unavailable'),_published_outputs={},read_input=lambda n:json.dumps({'producers':{'p':{'journal_output':'journal'}}})),
+  reference={'failure_output':'failure','output':'binding'},name='representation',job={'operation':'produce','plan_input':'plan','producer':'p','compact_cold_handoff_input':'selected-cold'},populations={},prepared={},payload={'batch_plan_input':'plan'},execute_batch=lambda *a,**k:trace.append('execute_batch'))
+ caught=None
+ try:invoke_fragment([outer,execute],ns)
+ except BaseException as e:caught=e
+ return caught,trace,ns['CompactProducerError']
+class FailStop(unittest.TestCase):
+ def test_claimed_value_error_is_not_unavailable(self):
+  caught,trace,kind=caller_case(ValueError('handoff'));self.assertIsInstance(caught,kind);self.assertEqual(trace,[])
+ def test_finalize_oserror_stops_actual_caller(self):
+  caught,trace,kind=caller_case(OSError('finalize'),True);self.assertIsInstance(caught,kind);self.assertEqual(trace,[])
+ def test_post_handoff_caller_io_error_is_fail_stop(self):
+  caught,trace,kind=caller_case(OSError('caller output'),raw_caller=True);self.assertIsInstance(caught,kind);self.assertEqual(trace,[])
+ def test_fatal_identities_survive(self):
+  for e in (MemoryError(),RecursionError(),SystemExit(),KeyboardInterrupt()):
+   with self.subTest(kind=type(e).__name__):caught,trace,_=caller_case(e);self.assertIs(caught,e);self.assertEqual(trace,[])
+if __name__=='__main__':unittest.main(verbosity=2)

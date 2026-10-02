@@ -1,0 +1,10 @@
+--- cold01/job_payload.py
++++ cold02/job_payload.py
+@@ -206,6 +206,7 @@
+             # Cannot mark this merely unavailable and proceed with live maps.
+             raise
+         except (ValueError, RuntimeError, OSError) as error:
++            if job.get('compact_cold_handoff_input') is not None and isinstance(error,RecursionError):raise
+             reason = type(error).__name__+': '+str(error)
+             # Completed numerical journals/partial outputs remain untouched.
+             run.write_json(reference['failure_output'], {'status': 'failed', 'representation': name, 'reason': reason})

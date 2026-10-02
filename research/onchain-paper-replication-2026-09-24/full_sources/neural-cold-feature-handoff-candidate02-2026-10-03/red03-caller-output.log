@@ -1,0 +1,25 @@
+test_parent_sync_failure_precedes_any_handoff_file (__main__.DurableBirth.test_parent_sync_failure_precedes_any_handoff_file) ... ok
+test_late_failed_marker_refused (__main__.Evidence.test_late_failed_marker_refused) ... ok
+test_late_original_body_mutation_refused (__main__.Evidence.test_late_original_body_mutation_refused) ... ok
+test_new_handoff_wrong_bytes_refused (__main__.Evidence.test_new_handoff_wrong_bytes_refused) ... ok
+test_claimed_value_error_is_not_unavailable (__main__.FailStop.test_claimed_value_error_is_not_unavailable) ... ok
+test_fatal_identities_survive (__main__.FailStop.test_fatal_identities_survive) ... ok
+test_finalize_oserror_stops_actual_caller (__main__.FailStop.test_finalize_oserror_stops_actual_caller) ... ok
+test_post_handoff_caller_io_error_is_fail_stop (__main__.FailStop.test_post_handoff_caller_io_error_is_fail_stop) ... FAIL
+test_boolean_monitor_refused (__main__.Guard.test_boolean_monitor_refused) ... ok
+test_exact_monitor_accepted (__main__.Guard.test_exact_monitor_accepted) ... ok
+test_wrong_monitor_refused (__main__.Guard.test_wrong_monitor_refused) ... ok
+
+======================================================================
+FAIL: test_post_handoff_caller_io_error_is_fail_stop (__main__.FailStop.test_post_handoff_caller_io_error_is_fail_stop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 104, in test_post_handoff_caller_io_error_is_fail_stop
+    caught,trace,kind=caller_case(OSError('caller output'),raw_caller=True);self.assertIsInstance(caught,kind);self.assertEqual(trace,[])
+                                                                            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: NameError("name 'json' is not defined") is not an instance of <class 'CompactProducerError'>
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.141s
+
+FAILED (failures=1)

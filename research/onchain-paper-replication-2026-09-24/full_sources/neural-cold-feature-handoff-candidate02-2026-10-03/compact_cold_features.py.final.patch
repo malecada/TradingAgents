@@ -1,0 +1,39 @@
+--- cold01/compact_cold_features.py
++++ cold02/compact_cold_features.py
+@@ -68,6 +68,7 @@
+     require(canonical_bytes(live.get('owner_identity'))==canonical_bytes(owner)
+         and all(k in live and canonical_bytes(live[k])==canonical_bytes(v) for k,v in p.items()),'cold guard identity/policy differs')
+     require(live.get('storage_budget')==policy['watch'],'cold complete storage watch differs')
++    require(type(live.get('monitor_pid')) is int and live['monitor_pid']==owner['monitor_pid'],'cold live monitor identity differs')
+     require(job_module.same_process_alive(owner['monitor_pid'],owner['monitor_start_ticks']),'cold monitor disappeared')
+ 
+ 
+@@ -98,6 +99,9 @@
+             for namespace in NAMESPACES:
+                 path=ad.root/'research_artifacts'/namespace/record['workflow_identity']
+                 require(not path.is_symlink() and path.resolve()==path and path.exists()==(str(path.relative_to(ad.root)) in expected), 'cold namespace population changed')
++            original_dirs,original_files=cold_files.original_subset(self._snapshot,tuple(record['policy']['evidence_roots']))
++            require(canonical_bytes(original_dirs)==canonical_bytes(record['directory_pins'])
++                and canonical_bytes(original_files)==canonical_bytes(record['file_pins']),'cold authority lost original evidence pins')
+             self._snapshot.check(full=full)
+             with lifecycle._lock(ad.root):
+                 run._active();registry=dict(run._published_outputs)
+@@ -206,13 +210,14 @@
+         require(len(snapshot.files)+2<=limits['max_files'] and len(snapshot.directories)+1<=limits['max_directories']
+             and sum(pin[1][4] for pin in snapshot.files)+2*len(encoded)+policy['max_metadata_bytes']<=limits['max_total_bytes'],
+             'cold receipt reservation exceeds finite evidence allowance')
+-        durable_mkdir(directory.parent);directory.mkdir();claimed=True
+-        info=directory.lstat();inode=(info.st_dev,info.st_ino)
+-        cold_files.write_once(directory,inode,'start.json',canonical_bytes({'kind':KIND,'input':input_name,'owner':owner.identity}),policy['max_metadata_bytes'])
++        durable_mkdir(directory.parent)
++        inode=cold_files.durable_birth(directory);claimed=True
++        start_raw=canonical_bytes({'kind':KIND,'input':input_name,'owner':owner.identity})
++        cold_files.write_once(directory,inode,'start.json',start_raw,policy['max_metadata_bytes'])
+         terminal.lease();terminal._verify(full=True);snapshot.check(full=True)
+         cold_files.write_once(directory,inode,'complete.json',raw,policy['max_metadata_bytes']);run.write_json(output,record)
+         # The new immutable receipt is also within the permanent file authority.
+-        snapshot=cold_files.capture(ad.root,tuple(expected)+(str(directory.relative_to(ad.root)),),limits)
++        snapshot=cold_files.extend(snapshot,directory,inode,{'start.json':start_raw,'complete.json':raw})
+         authority=Authority(_KEY,run,record,snapshot,guard,stages,dict(run._published_outputs))
+         m=compact_native_features._api()
+         mapping=m._NativeMap(ad.root,thaw(resident.features._mapping._refs),thaw(resident.features._mapping._policy),

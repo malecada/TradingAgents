@@ -1,0 +1,52 @@
+--- cold01/cold_files.py
++++ cold02/cold_files.py
+@@ -126,3 +126,49 @@
+             try:os.close(descriptor)
+             except BaseException as error:primary=preserve(primary,error)
+     if primary is not None:raise primary
++
++
++def original_subset(snapshot,roots):
++    def included(name):return any(Path(name).is_relative_to(Path(root)) for root in roots)
++    return (tuple(item for item in snapshot.directories if included(item[0])),
++            tuple(item for item in snapshot.files if included(item[0])))
++
++
++def extend(original,directory,inode,expected):
++    """Only append exact newly written evidence; never rebaseline old roots."""
++    relative=str(Path(directory).relative_to(original.root))
++    expanded=capture(original.root,original.roots+(relative,),dict(original.bounds))
++    require(original_subset(expanded,original.roots)==(original.directories,original.files),
++        'authenticated original evidence changed during handoff publication')
++    new_dirs,new_files=original_subset(expanded,(relative,))
++    require(len(new_dirs)==1 and new_dirs[0][0]==relative and new_dirs[0][1][:2]==inode
++        and set(new_dirs[0][2])==set(expected),'new handoff directory identity/membership differs')
++    require({str(Path(name).relative_to(relative)):sha for name,signature,sha in new_files}
++        =={name:hashlib.sha256(raw).hexdigest() for name,raw in expected.items()},
++        'new handoff saved bytes differ from published bodies')
++    original.check(full=True);expanded.check(full=True)
++    return expanded
++
++
++def durable_birth(directory):
++    """Exclusively reserve and fsync the held parent before exposing file outputs."""
++    directory=Path(directory);parent=directory.parent
++    require(directory.resolve()==directory and parent.resolve()==parent,'handoff parent redirected')
++    before=parent.lstat();require(stat.S_ISDIR(before.st_mode),'handoff parent not directory')
++    fd=os.open(parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);primary=None;inode=None
++    try:
++        require(signature(os.fstat(fd))==signature(before),'handoff parent changed before open')
++        os.mkdir(directory.name,mode=0o700,dir_fd=fd)
++        info=os.stat(directory.name,dir_fd=fd,follow_symlinks=False)
++        require(stat.S_ISDIR(info.st_mode) and info.st_dev==before.st_dev,'handoff birth layout differs')
++        inode=(info.st_dev,info.st_ino)
++        os.fsync(fd)
++        held=os.fstat(fd);current=parent.lstat();child=directory.lstat()
++        require((held.st_dev,held.st_ino)==(current.st_dev,current.st_ino)==(before.st_dev,before.st_ino)
++            and parent.resolve()==parent and directory.resolve()==directory and (child.st_dev,child.st_ino)==inode,
++            'handoff parent/birth changed during synchronization')
++    except BaseException as error:primary=error
++    try:os.close(fd)
++    except BaseException as later:primary=preserve(primary,later)
++    if primary is not None:raise primary
++    return inode

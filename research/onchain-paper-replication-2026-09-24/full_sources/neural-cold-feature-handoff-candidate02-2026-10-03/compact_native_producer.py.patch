@@ -1,0 +1,24 @@
+--- cold01/compact_native_producer.py
++++ cold02/compact_native_producer.py
+@@ -154,7 +154,8 @@
+     except BaseException as error:
+         if handoff_started:
+             owner.poisoned = True
+-            raise
++            if compact_cold_features.cold_files.fatal(error):raise
++            raise CompactProducerError('claimed cold handoff failed; preserve evidence and stop enclosing job') from error
+         cleanup = []
+         if owner is not None:owner.poisoned = True
+         if ledger is not None and not ledger._closed:
+@@ -201,7 +202,10 @@
+ def finalize(prepared):
+     """Full evidence rejoin before outer acceptance, including after all fits."""
+     if type(prepared.features) is compact_cold_features._Features:
+-        return compact_cold_features.finalize(prepared)
++        try:return compact_cold_features.finalize(prepared)
++        except BaseException as error:
++            if compact_cold_features.cold_files.fatal(error):raise
++            raise CompactProducerError('cold finalization failed; preserve evidence and stop enclosing job') from error
+     require(type(prepared.features) is compact_native_features._Features,'actual compact native features required')
+     terminal = prepared.features._terminal
+     terminal.check()

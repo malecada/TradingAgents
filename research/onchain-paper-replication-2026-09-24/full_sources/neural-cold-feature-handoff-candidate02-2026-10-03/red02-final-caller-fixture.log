@@ -1,0 +1,106 @@
+test_parent_sync_failure_precedes_any_handoff_file (__main__.DurableBirth.test_parent_sync_failure_precedes_any_handoff_file) ... FAIL
+test_late_failed_marker_refused (__main__.Evidence.test_late_failed_marker_refused) ... FAIL
+test_late_original_body_mutation_refused (__main__.Evidence.test_late_original_body_mutation_refused) ... FAIL
+test_new_handoff_wrong_bytes_refused (__main__.Evidence.test_new_handoff_wrong_bytes_refused) ... FAIL
+test_claimed_value_error_is_not_unavailable (__main__.FailStop.test_claimed_value_error_is_not_unavailable) ... FAIL
+test_fatal_identities_survive (__main__.FailStop.test_fatal_identities_survive) ... 
+  test_fatal_identities_survive (__main__.FailStop.test_fatal_identities_survive) (kind='RecursionError') ... FAIL
+test_finalize_oserror_stops_actual_caller (__main__.FailStop.test_finalize_oserror_stops_actual_caller) ... FAIL
+test_boolean_monitor_refused (__main__.Guard.test_boolean_monitor_refused) ... FAIL
+test_exact_monitor_accepted (__main__.Guard.test_exact_monitor_accepted) ... ok
+test_wrong_monitor_refused (__main__.Guard.test_wrong_monitor_refused) ... FAIL
+
+======================================================================
+FAIL: test_parent_sync_failure_precedes_any_handoff_file (__main__.DurableBirth.test_parent_sync_failure_precedes_any_handoff_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 67, in test_parent_sync_failure_precedes_any_handoff_file
+    self.assertIs(caught.exception,failure);self.assertTrue(directory.is_dir());self.assertFalse((directory/'start.json').exists())
+                                                                                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_late_failed_marker_refused (__main__.Evidence.test_late_failed_marker_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 37, in test_late_failed_marker_refused
+    def test_late_failed_marker_refused(self):self.check_late_mutation('failed')
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 36, in check_late_mutation
+    with self.assertRaises(ValueError):invoke_fragment(publication_fragment(),ns);ns['snapshot'].check(full=True)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_late_original_body_mutation_refused (__main__.Evidence.test_late_original_body_mutation_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 38, in test_late_original_body_mutation_refused
+    def test_late_original_body_mutation_refused(self):self.check_late_mutation('old-body')
+                                                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 36, in check_late_mutation
+    with self.assertRaises(ValueError):invoke_fragment(publication_fragment(),ns);ns['snapshot'].check(full=True)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_new_handoff_wrong_bytes_refused (__main__.Evidence.test_new_handoff_wrong_bytes_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 39, in test_new_handoff_wrong_bytes_refused
+    def test_new_handoff_wrong_bytes_refused(self):self.check_late_mutation('new-body')
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 36, in check_late_mutation
+    with self.assertRaises(ValueError):invoke_fragment(publication_fragment(),ns);ns['snapshot'].check(full=True)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_claimed_value_error_is_not_unavailable (__main__.FailStop.test_claimed_value_error_is_not_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 97, in test_claimed_value_error_is_not_unavailable
+    caught,trace,kind=caller_case(ValueError('handoff'));self.assertIsInstance(caught,kind);self.assertEqual(trace,[])
+                                                         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: NameError("name 'json' is not defined") is not an instance of <class 'CompactProducerError'>
+
+======================================================================
+FAIL: test_fatal_identities_survive (__main__.FailStop.test_fatal_identities_survive) (kind='RecursionError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 102, in test_fatal_identities_survive
+    with self.subTest(kind=type(e).__name__):caught,trace,_=caller_case(e);self.assertIs(caught,e);self.assertEqual(trace,[])
+                                                                           ~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: NameError("name 'json' is not defined") is not RecursionError()
+
+======================================================================
+FAIL: test_finalize_oserror_stops_actual_caller (__main__.FailStop.test_finalize_oserror_stops_actual_caller)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 99, in test_finalize_oserror_stops_actual_caller
+    caught,trace,kind=caller_case(OSError('finalize'),True);self.assertIsInstance(caught,kind);self.assertEqual(trace,[])
+                                                            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: NameError("name 'json' is not defined") is not an instance of <class 'CompactProducerError'>
+
+======================================================================
+FAIL: test_boolean_monitor_refused (__main__.Guard.test_boolean_monitor_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 52, in test_boolean_monitor_refused
+    with self.assertRaises(ValueError):self.check_pid(True)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_monitor_refused (__main__.Guard.test_wrong_monitor_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate02-2026-10-03/test_review_boundaries01.py", line 50, in test_wrong_monitor_refused
+    with self.assertRaises(ValueError):self.check_pid(20)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.114s
+
+FAILED (failures=9)
