@@ -15,9 +15,17 @@ The full archive path and six-cell MCM check passed with post-close remote calls
 forbidden. These tests use an injected filesystem transport and mocked guards;
 registered outer dispatcher, actual SSH and physical admission remain required.
 
-Root is committing this reviewed source and evidence before releasing ownership.
-The next executable engineering slice is the new restart-retention helper and
-synthetic tests, subject to the independent frozen contract review now active.
+Reviewed integration is backed up at d8911beb98605faa408754783a247cfee81a9b1e,
+with exact remote branch HEAD verified. The integration source ownership is closed.
+Independent design review accepted the next unselected synthetic helper slice,
+REVIEW SHA2565fac107395e0b83813eb38b4e3e2772382b9b166c84ccf47e6cd908e1bc94770.
+archive_transport is now ACTIVE on only new restart_retention.py, new
+test_restart_retention.py and full_sources/restart-retention-primitive-2026-10-02/.
+Existing package files stay untouched. The selected first replay snapshot must
+be copied/verified into separately reserved replay storage before any superseded
+retirement of that generation. This engineering assignment does not adopt an
+empirical retention policy or permit deleting any existing artifact. Tests-first
+red/green evidence and independent primitive review remain required.
 The other worker is preparing neural-only resource readiness and a distinct
 nonexecutable budget-split proposal: 62 = 33 spent + 12 body + 15 financial +
 2 resource claims (nine neural cells independently schedulable from 23 remaining

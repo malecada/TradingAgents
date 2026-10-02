@@ -1,0 +1,131 @@
+{
+  "criteria": [
+    {
+      "acceptance": "Freeze nondegenerate square/rectangular/tie/zero-edge fixtures; independently evaluate scores/objective/feasibility from raw fixture inputs. Preserve C05/C06 tolerances. Expected numbers cannot come from the retention implementation or its verifier.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR01",
+      "requirement": "Independent arithmetic and assignment oracle",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Same immutable scientific inputs/config/seed/cadence under old retention and new candidate; force at least three snapshot generations and annealing/hardening states. Exact numerical array hashes, scalar scores, iterations, convergence, RNG and semantic scientific identities match. Each variant independently validates its own provenance. Expected source/retention-policy/workload/owner/receipt and metadata-file hash changes are explicitly listed; do not require impossible equality of provenance-bearing artifact hashes or permit numeric changes.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR02",
+      "requirement": "Unchanged numerical trajectory",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Apply REPLAY_RULE.draft.md: freeze first/last distinct stage pair ordinals when exact schedule is known; for adaptive dictionary use frozen first/last initial eligible sample ordered-pair identifiers, not capacity or discovered completed count. Retain first scheduled safe checkpoint if any; explicit early-completion/absence/reuse/failure disposition, no extra cadence or substitution. Full input/config/source/runtime and exact score evidence required. Independently frozen synthetic corpus separately covers largest-shape and phase-boundary/tie/zero-edge cases; empirical endpoints do not claim that coverage.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR03",
+      "requirement": "Deterministic replay set",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Recompute preselected pair scores using independent reference arithmetic from retained raw/protocol inputs; independently validate full output shape/denominator/order/finite values and exact event-to-score-to-MCM joins. Do not call manifest agreement alone independent numerical validation. Report which cells were independently recomputed and which had integrity-only checks.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR04",
+      "requirement": "Independent final numeric/replay verification",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Retrieve/hash full mandatory replay/output bytes and execute bounded offline replay in clean locked environment; retired scratch hashes cannot satisfy availability. Preserve C13/C14 neural/metric outputs and C16 recovery obligations.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR05",
+      "requirement": "Replay recoverability",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Across more than two rotations, never create third heavy active generation before retired predecessor completion; replay exemptions separately reserved. Verify full per-checkpoint immutable metadata remains and retired bodies are explicitly unavailable.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR06",
+      "requirement": "Two-generation lifecycle",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Inject interruption before/after candidate save/fsync, progress event/proof, retire-intent, each unlink, descriptor close, parent fsync and retirement completion. Every gap is either a fully verified transition or visible incomplete failure; no false success or old-identity restart.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR07",
+      "requirement": "Crash matrix",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Inject read/write/fsync/unlink/close and callback-revocation errors, including compound errors. Preserve primary+cleanup evidence, poison owner, stop outer job, retain surviving state, prevent acknowledgement and refund.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR08",
+      "requirement": "Primary and cleanup failures",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Reject wrong source/runtime/owner/stage/purpose/order/generation/extent/hash, rehashed untrusted proofs, symlink/hardlink/cross-device replacement, extra/missing members and equal-byte inode substitution through final callbacks.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR09",
+      "requirement": "Identity and filesystem attacks",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Old local and current archived-stage variants continue requiring every referenced tree; absent new extension behaves identically. New retirement receipt cannot upgrade/reopen an old claim or weaken old verifiers.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR10",
+      "requirement": "Historical compatibility",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Fresh version binds original writer/progress/retirement/replay claims into stage and owner seal. Postclose local check succeeds with remote fetch forbidden, rejects mutation of retained receipts/outputs, and makes no fresh-remote-availability claim.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR11",
+      "requirement": "Anchored new postclose verification",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Reserve positive count/logical/control/write/replay/failure/physical/outer limits before mutation; exhaustion preserves failure and every attempted/unavailable cell. Cumulative counters never shrink after successful retirement; current floor and aggregate guard readback remain enforced.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR12",
+      "requirement": "Budget and exhaustion",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Actual dictionary and MCM producers, saved output, graph publication, owner and terminal completion exercise new version; include late failure, selected replay exemption and local/current archive regressions. No production empirical data.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR13",
+      "requirement": "Full synthetic producer-to-terminal path",
+      "status": "NOT_RUN"
+    },
+    {
+      "acceptance": "Reviewer independently checks C01\u2013C18 mappings, numerical/replay evidence, old-byte hashes, ledger counts, source/runtime/policy closure and crash outcomes; all critical findings closed before committing prospective registration/assumptions amendment.",
+      "evidence_sha256": null,
+      "evidence_sha256_reason": "Documentation-only proposal; implementation and release tests not performed.",
+      "id": "BR14",
+      "requirement": "Independent release and preservation audit",
+      "status": "NOT_RUN"
+    }
+  ],
+  "criteria_authority": {
+    "C11": "research/onchain-paper-replication-2026-09-24/REPLICATION_SPEC.md:200",
+    "C13": "research/onchain-paper-replication-2026-09-24/REPLICATION_SPEC.md:202",
+    "C14": "research/onchain-paper-replication-2026-09-24/REPLICATION_SPEC.md:203",
+    "C16": "research/onchain-paper-replication-2026-09-24/REPLICATION_SPEC.md:205",
+    "C18": "research/onchain-paper-replication-2026-09-24/REPLICATION_SPEC.md:207"
+  },
+  "document_revision": 2,
+  "execution_admitted": false,
+  "fixture_seed_and_identity_selection": "Freeze empirical endpoint selectors and separate synthetic phase/shape fixtures before affected numeric outcomes; no favorable selection. See proposed rule, subject to independent acceptance.",
+  "kind": "required_release_acceptance_draft",
+  "prospective_variant": "bounded-matching-restart-v1",
+  "schema_version": 1,
+  "status": "NONEXECUTABLE_UNADOPTED_DRAFT",
+  "tests_run": false
+}

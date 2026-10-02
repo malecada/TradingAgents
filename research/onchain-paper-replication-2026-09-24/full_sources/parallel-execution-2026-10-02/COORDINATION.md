@@ -179,3 +179,28 @@ resource graphs before checkpoint/other costs. Outer dispatcher transport inject
 shared transfer accounting, physical containment and actual admission remain separate
 required work. Continue independent preparation while tests run, then immediately
 advance corrected implementation and independent review.
+
+
+## Accepted integration and immediate next implementation
+
+Integration candidate04 is accepted (REVIEW_FINAL SHA256
+8fa5c0f7a7efb12913a171e3aa39c4cdc5ff712078b1e3834b8d53cbfc361724), committed and
+remotely verified at d8911beb98605faa408754783a247cfee81a9b1e. All integration
+attempts are terminal; final review-green01 passed 11 selected cases in 456.13s.
+Those source files are no longer open for implementation edits.
+
+archive_transport now owns ONLY new restart_retention.py, new
+ test_restart_retention.py, and full_sources/restart-retention-primitive-2026-10-02/.
+The independent design reviewer accepted this unselected tiny synthetic component
+scope with finite fixture limits; empirical null bounds remain admission blockers.
+Selected first replay snapshots must be copied and verified before any superseded
+retirement. No actual-owner fixtures or old-path deletion are authorized by this
+helper assignment. Independent tests-first evidence and review are required.
+
+admission_batching owns documentation-only neural-resource-readiness-2026-10-02/,
+including a distinct nonexecutable 62-claim split proposal. Its nine synthetic
+neural resource requirements can be separately scheduled from the other 23;
+a maintained runner, current physical limits and committed review/admission are
+still required. owner_closure_review owns review files for retention design,
+neural readiness and subsequent helper implementation. Root owns STATE and
+checkpoints. Preserve existing 61 drafts and all spent identities.

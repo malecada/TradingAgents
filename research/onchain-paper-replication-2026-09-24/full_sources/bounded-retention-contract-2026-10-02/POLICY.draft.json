@@ -1,0 +1,206 @@
+{
+  "adopted_policy_sha256": null,
+  "adopted_policy_sha256_reason": "This is an unadopted document, not a registered policy input.",
+  "authority_pins": [
+    {
+      "bytes": 21111,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/archive-retention-readiness-2026-10-02/REPORT.md",
+      "sha256": "e0508bfa0b3302ffaa2ae440828851bdae2647098dd6529ac9789b36a5df9c23"
+    },
+    {
+      "bytes": 19904,
+      "path": "research/onchain-paper-replication-2026-09-24/REPLICATION_SPEC.md",
+      "sha256": "8ffb0cb8729ed0792bab79491a7dbbb72ac7ed482d1e52fbc819cb92eeb14921"
+    },
+    {
+      "bytes": 8272,
+      "path": "research/onchain-paper-replication-2026-09-24/PROTOCOL.md",
+      "sha256": "7a9fc2d68d197ea827a3e65b440bfd83ead7e03885816343f23fd684f1776e28"
+    },
+    {
+      "bytes": 3481,
+      "path": "research/onchain-paper-replication-2026-09-24/IMPLEMENTATION_ASSUMPTIONS.md",
+      "sha256": "fa2555665d9c760b77677d46ebc6a8fe45181e46f71224ad9a4b26b363eb7d96"
+    }
+  ],
+  "document_revision": 2,
+  "execution_admitted": false,
+  "failure": {
+    "attempt_refund": false,
+    "automatic_resume": false,
+    "automatic_retry": false,
+    "cleanup_uncertainty": "fatal_preserve_surviving_bodies_poison_owner_stop_outer_job",
+    "crash_after_unlink_before_completion": "incomplete_disposition_never_automatic_success",
+    "reconciliation": "read_only_available_body_and_last_verified_progress_record",
+    "reuse_failed_identity": false,
+    "successor": "separately_reviewed_committed_registration_fresh_identity_and_budget"
+  },
+  "invariants": [
+    "exact_graph_sample_motif_and_cell_population",
+    "matching_equations_initialization_and_temperature",
+    "hardening_order_ties_and_comparison_direction",
+    "floating_point_precision_and_tolerances",
+    "all_RNG_states_and_sampling_provenance",
+    "checkpoint_cadence",
+    "all_final_scientific_scores_outputs_and_failure_dispositions",
+    "unchanged_old_local_and_archived_variants"
+  ],
+  "kind": "matching_restart_retention_policy_draft",
+  "limits": {
+    "max_cumulative_generations": {
+      "reason": "Freeze whole-stage progress count; no increase in allowed numerical work implicit.",
+      "value": null
+    },
+    "max_cumulative_written_bytes": {
+      "reason": "Freeze serialization/write budget; successful retirement gives no refund.",
+      "value": null
+    },
+    "max_failed_evidence_bytes": {
+      "reason": "Account failure retaining candidate/current/partial bodies and old failed claims.",
+      "value": null
+    },
+    "max_generation_logical_bytes": {
+      "reason": "Bound complete M/Q/V and optional hardening state for unchanged largest admitted pair.",
+      "value": null
+    },
+    "max_outer_rss_bytes": {
+      "reason": "Live engine arrays, serialization copies, parentgraphs, sampler, model, NumPy/Python, pagecache unknown.",
+      "value": null
+    },
+    "max_peak_local_growth_bytes": {
+      "reason": "Physical blocks, current/candidate, replay/failure bodies, metadata and staging unknown.",
+      "value": null
+    },
+    "max_replay_body_bytes": {
+      "reason": "Deterministic preselected replay population and required bodies unresolved.",
+      "value": null
+    },
+    "max_replay_body_count": {
+      "reason": "Independent label-free selection rule must be frozen before numeric outcomes.",
+      "value": null
+    },
+    "max_retained_control_metadata_bytes": {
+      "reason": "Bound immutable proof and transition ledger growth across all generations.",
+      "value": null
+    },
+    "max_wall_seconds": {
+      "reason": "Registered whole-job containment/cadence and verification cost unresolved.",
+      "value": null
+    }
+  },
+  "logical_bound": "active_saved_restart_payload <= 2 * max_generation_logical_bytes; replay/failure/control and transient copies excluded",
+  "objects": {
+    "active_restart_scratch": {
+      "body_retention": "current_plus_candidate",
+      "logical_only": true,
+      "max_simultaneous_generations": 2,
+      "retirement_allowed": true
+    },
+    "control_evidence": {
+      "body_retention": "all_immutable_progress_transition_and_terminal_records",
+      "retirement_allowed": false
+    },
+    "failed_evidence": {
+      "automatic_resume": false,
+      "body_retention": "all_surviving_and_partial_bodies_at_failure",
+      "retirement_allowed": false
+    },
+    "replay_evidence": {
+      "body_retention": "full_recoverable_preselected_bytes",
+      "retirement_allowed": false
+    },
+    "scientific_outputs": {
+      "body_retention": "complete_immutable_existing_contracts",
+      "retirement_allowed": false
+    }
+  },
+  "physical_upper_bound_bytes": null,
+  "physical_upper_bound_bytes_reason": "Two-generation cap is logical saved payload only, not live arrays/copy/fs-blocks/RSS or whole-workflow allocation.",
+  "preserved_current_local_score_matrix_payload_bytes": 55439818752,
+  "proposed_replay_rule_document_pin": {
+    "bytes": 6919,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/bounded-retention-contract-2026-10-02/REPLAY_RULE.draft.md",
+    "sha256": "9e0f97292cfefa182af9ace72a3c71b22b47704df26d2b7f029d2a47fc851705"
+  },
+  "proposed_replay_selection": {
+    "absent_or_reused_member": "retain exact absence/reuse reason and source-score lineage; never substitute or create comparison",
+    "adaptive_dictionary": {
+      "capacity_is_exact_denominator": false,
+      "claims_last_realized_whole_stage_comparison": false,
+      "later_actual_denominator": "output verified against full algorithm/reuse/matrix provenance; never disguised as preknown",
+      "selection": "first_and_last_distinct(left_sample_id,right_sample_id) with initial block ordinal/subset hash",
+      "selector_population": "deterministically ordered initial eligible sample ordered-pair identifiers from frozen seeded initial partitions"
+    },
+    "checkpoint": "first_unchanged_scheduled_safe_checkpoint_if_any",
+    "coverage_claim": {
+      "empirical": "endpoints_only",
+      "max_shape_and_phase_boundaries": "fixed_independent_synthetic_corpus",
+      "maximum_shape_empirical_member_selected": false
+    },
+    "dictionary_single_block": {
+      "exact_denominator": "n*(n-1)",
+      "loop": "i ascending, j < i ascending, directions(i,j),(j,i)",
+      "n512_exact_count": 261632,
+      "n512_ordinals": [
+        0,
+        261631
+      ],
+      "n512_sample_pairs": [
+        [
+          1,
+          0
+        ],
+        [
+          510,
+          511
+        ]
+      ]
+    },
+    "early_complete_disposition": "completed_before_first_scheduled_checkpoint",
+    "force_extra_checkpoint": false,
+    "general": "first_and_last_distinct_ordered_pair_identities_deduplicated",
+    "mcm": {
+      "exact_denominator": "N*K from frozen actual nodes and ordered motifs",
+      "one_pair": "select_once",
+      "ordinals": [
+        "0",
+        "N*K-1"
+      ]
+    },
+    "outcome_based_substitution": false,
+    "retained_inputs": "exact neighborhood/config/source/runtime/RNG and completed score for bounded independent from-start replay",
+    "status": "PROPOSED_FOR_INDEPENDENT_REVIEW"
+  },
+  "prospective_source_sha256": null,
+  "prospective_source_sha256_reason": "No implementation/source freeze exists for this proposed retention version.",
+  "prospective_variant": "bounded-matching-restart-v1",
+  "replay_selection_rule_sha256": null,
+  "replay_selection_rule_sha256_reason": "Outcome-independent proposed rule is pinned separately; independently adopted executable rule/selection manifest remains unadopted.",
+  "rotation": {
+    "acknowledgement_after": "fsync_exact_inventory_descriptor_rejoin_and_retirement_completion",
+    "candidate_before_retire": "full_snapshot_verification_plus_durable_progress_event_and_proof",
+    "completed_retire_anchor": "durable_exact_ordered_completion_event",
+    "hash_only_recoverability_claim_allowed": false,
+    "max_active_pairs": 1,
+    "max_saved_active_generations": 2,
+    "max_unacknowledged_transitions": 1,
+    "metadata_per_checkpoint": "retain_manifest_hashes_extents_identity_progress_and_disposition",
+    "retired_flags": {
+      "body_available": false,
+      "historical_intermediate_replay_available": false,
+      "restart_eligible": false
+    },
+    "superseded_retire_anchor": "verified_current_progress_proof",
+    "third_generation_before_retirement_completion": false
+  },
+  "route": {
+    "absent_extension": "retain_existing_variant_exactly",
+    "descriptor_extension": "compact_restart_retention",
+    "selection_input": "compact_restart_retention_input",
+    "supported_first_slice": "explicitly selected archived matching-event route",
+    "unsupported_route": "reject_before_claim"
+  },
+  "schema_version": 1,
+  "status": "NONEXECUTABLE_UNADOPTED_DRAFT",
+  "user_minimum_local_free_bytes": 10737418240
+}
