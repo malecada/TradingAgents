@@ -3,6 +3,35 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 distinct first-adopter reconciliation accepted — not a launch**:
+Closed-launch raw evidence, independent review and checkpoint are committed at
+`a512f066e5102941fb896da8e26123964206e423`, pushed with exact remote HEAD verified.
+Independent budget-first-adopter-reconciliation-2026-10-02/REVIEW.md accepts
+replacement extension SHA256862db54184e08a5fe3efefdba2efc9b0b35890637b54afcda71d66859967c89e,
+allocationfd5210d66b524dc27c1c199be3da889f6e85285e0793e8505daab28d4f569c5d and machine
+review2f0752e5405a44c908282fbb98d777bd39934b2bc372454d2f6cef30cf54d29f.
+The unused first-adopter designation explicitly changes to distinct
+`eth-paper-neural-resource-20261002-02`; original62 objects and the closed01
+identity are preserved. All33 historical claim/terminal hashes and16 current
+mechanism joins were independently rechecked. Highest actually adopted ceiling
+is60; neither original nor replacement62 proposal has been adopted. No refund,
+claim, namespace reservation or model/resource change occurs. Counts remain
+33+12body+15financial+1neuralresource+1otherresource=62.
+
+Successor preparation in neural-resource-successor-preparation-2026-10-02/ is
+NONEXECUTABLE, with source/runtime fields intentionally null while archive code
+is mutable. Original9cells/9windows/48inputpins/completeancestorchain retained;
+execution-job bytes remain d38d70e12848223c1e381f8d45ee25b6ea131ae0a02f4e336ccb8996444de70f.
+Three metadata inputs add predecessor result/review and conservative scheduling:
+16 observations2s apart at least9.25GiB within60s, including immediately before
+launch. This adds256MiB scheduling margin above the unchanged9GiB guard startup
+check; it is not a kernel reservation or fit guarantee. Readiness failure creates
+no namespace, and another observation requires meaningful availability improvement.
+There is no automatic retry or identity cycling. Independent preparation review,
+complete source/runtime freeze, final gate review/commit and fresh actual admission
+remain before any launch. No empirical process is active; archive implementation
+and independent reviews continue in parallel under the ownership below.
+
 **October 2 neural launch CLOSED before admission — no model running**:
 Actual metadata admission at source `560401500be2b1d774ca8443a7fb2108aadaa1ea`
 passed: effective budget62, serialized claim61,535B and request63,410B below
