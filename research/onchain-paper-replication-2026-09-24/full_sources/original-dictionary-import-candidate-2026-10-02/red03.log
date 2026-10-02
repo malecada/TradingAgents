@@ -1,0 +1,77 @@
+.....FFF.......FF.....FFF......
+======================================================================
+FAIL: test_non_utc_or_naive_availability_rejected (__main__.BindingTests.test_non_utc_or_naive_availability_rejected) (value='2025-12-31T23:00:00-12:00')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_candidate02.py", line 105, in test_non_utc_or_naive_availability_rejected
+    with self.assertRaises(ValueError):self.m.validate(p,b)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_non_utc_or_naive_availability_rejected (__main__.BindingTests.test_non_utc_or_naive_availability_rejected) (value='2022-01-11T00:00:00')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_candidate02.py", line 105, in test_non_utc_or_naive_availability_rejected
+    with self.assertRaises(ValueError):self.m.validate(p,b)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_non_utc_or_naive_availability_rejected (__main__.BindingTests.test_non_utc_or_naive_availability_rejected) (value='0000-malformed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_candidate02.py", line 105, in test_non_utc_or_naive_availability_rejected
+    with self.assertRaises(ValueError):self.m.validate(p,b)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_run_directory_change_refused (__main__.BindingTests.test_run_directory_change_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_binding02.py", line 59, in test_run_directory_change_refused
+    with self.assertRaises(ValueError):cap.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_snapshot_rebaseline_refused (__main__.BindingTests.test_snapshot_rebaseline_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_binding02.py", line 54, in test_snapshot_rebaseline_refused
+    with self.assertRaises(ValueError):cap.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_non_utc_or_naive_availability_rejected (test_candidate02.Candidate.test_non_utc_or_naive_availability_rejected) (value='2025-12-31T23:00:00-12:00')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_candidate02.py", line 105, in test_non_utc_or_naive_availability_rejected
+    with self.assertRaises(ValueError):self.m.validate(p,b)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_non_utc_or_naive_availability_rejected (test_candidate02.Candidate.test_non_utc_or_naive_availability_rejected) (value='2022-01-11T00:00:00')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_candidate02.py", line 105, in test_non_utc_or_naive_availability_rejected
+    with self.assertRaises(ValueError):self.m.validate(p,b)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_non_utc_or_naive_availability_rejected (test_candidate02.Candidate.test_non_utc_or_naive_availability_rejected) (value='0000-malformed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_candidate02.py", line 105, in test_non_utc_or_naive_availability_rejected
+    with self.assertRaises(ValueError):self.m.validate(p,b)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.043s
+
+FAILED (failures=8)

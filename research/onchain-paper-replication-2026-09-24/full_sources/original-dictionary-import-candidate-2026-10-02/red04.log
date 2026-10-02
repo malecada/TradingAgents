@@ -1,0 +1,59 @@
+....FFF......FFF.
+======================================================================
+FAIL: test_non_utc_or_naive_availability_rejected (test_candidate02.Candidate.test_non_utc_or_naive_availability_rejected) (value='2025-12-31T23:00:00-12:00')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_candidate02.py", line 105, in test_non_utc_or_naive_availability_rejected
+    with self.assertRaises(ValueError):self.m.validate(p,b)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_non_utc_or_naive_availability_rejected (test_candidate02.Candidate.test_non_utc_or_naive_availability_rejected) (value='2022-01-11T00:00:00')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_candidate02.py", line 105, in test_non_utc_or_naive_availability_rejected
+    with self.assertRaises(ValueError):self.m.validate(p,b)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_non_utc_or_naive_availability_rejected (test_candidate02.Candidate.test_non_utc_or_naive_availability_rejected) (value='0000-malformed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_candidate02.py", line 105, in test_non_utc_or_naive_availability_rejected
+    with self.assertRaises(ValueError):self.m.validate(p,b)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_body_first_fatal_identity_survives_child_close_error (__main__.Reader.test_body_first_fatal_identity_survives_child_close_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_reader02.py", line 57, in test_body_first_fatal_identity_survives_child_close_error
+    self.assertIs(error,fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: CleanupFailure('score storage cleanup unresolved; worker must stop') is not MemoryError('body')
+
+======================================================================
+FAIL: test_ordinary_primary_promotes_first_later_fatal (__main__.Reader.test_ordinary_primary_promotes_first_later_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_reader02.py", line 63, in test_ordinary_primary_promotes_first_later_fatal
+    self.assertIs(error,fatal);self.assertIs(error.__cause__,primary)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: CleanupFailure('score storage cleanup unresolved; worker must stop') is not MemoryError('child close')
+
+======================================================================
+FAIL: test_parent_close_first_fatal_identity (__main__.Reader.test_parent_close_first_fatal_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_reader02.py", line 60, in test_parent_close_first_fatal_identity
+    self.assertIs(error,fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: CleanupFailure('import metadata parent close unresolved') is not MemoryError('parent close')
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.034s
+
+FAILED (failures=6)

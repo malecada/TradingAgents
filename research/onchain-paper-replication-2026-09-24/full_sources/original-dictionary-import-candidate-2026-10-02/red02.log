@@ -1,0 +1,23 @@
+.F..........F..........
+======================================================================
+FAIL: test_changed_original_bound_record_refused (__main__.BindingTests.test_changed_original_bound_record_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_binding01.py", line 39, in test_changed_original_bound_record_refused
+    with self.assertRaises(ValueError):cap.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_required_population_refused (__main__.BindingTests.test_wrong_required_population_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-candidate-2026-10-02/test_binding01.py", line 48, in test_wrong_required_population_refused
+    with self.assertRaises(ValueError):m.admit(bound,input_name='control',job_input='job')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.033s
+
+FAILED (failures=2)

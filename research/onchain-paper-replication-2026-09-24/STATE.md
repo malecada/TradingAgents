@@ -1,5 +1,26 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: exact neural03gate independently accepted; actual admission next.**
+New neural-pressure-successor-release-2026-10-02/gate.json SHAd6cbe22b2e85e83ae75859232d8523646b52815c555930b8e4743a40fc404d56
+binds all9originalcells/graphs/order/config/windows, complete133Python/7runtime/
+212total sourcepins and77metadatainputs. REVIEW_SOURCE01 SHA19ee3d5f23f9970f8f88816b18c89b9c503af20d711b072d56694c2fe9c2893d and
+REVIEW_GATE01 SHA18cf0504e7fd24433446b622cdc402211b8742c8f9d584c47b2b689679066d04
+independently accept unchangednumerics, correctedcaller,3declaredimplementation
+changes, original immutable3ancestorobjects and exactprospective63budgetbytes.
+Conservative claimpreview83,552B/RPC86,053B fit256KiB; actualcommittedHEAD
+admission and exactsizing stillrequired. Independentpopulation34spent=27complete/
+7failed,highest actuallyadopted62;63notyetadopted,03namespacesunused.
+Closedphaseproof/source backed at7ba35d82fc46cd7b5d34167d4fb3a6f8a47e4712;
+fresh4blob recoveryd5852308 verifies273bodies/89directorymodes/362members.
+No substantialjobactive. Nextsafeaction: back up exactgate, actualfullHEAD
+metadataadmission/sizing, fresh16x2sRAMreadiness andnativecontrols, then atmost
+ONEunusedeth-paper-neural-resource-20261002-03 probe. Current7.9GiBavailable
+snapshot exceeds7GiBscheduling but is not a savedpermit. Limits stay3.75GiBmax/
+high=fixed3GiBreserve/zeroSwap/10GiBdisk/twoCPU;systemOOMDunchanged.
+Originaldictionaryimport01 withheld for3concretevalidation/fatalcleanupissues;
+corrected02separate/pure22cases passes, independentreviewpending. No production
+importbridge oractual23resourcejob released. Full109/all1420fits/paperscope stays.
+
 **Latest checkpoint: phase proof independently accepted and exact modules integrated.**
 REVIEW_EXECUTION01 SHA6099e2a8b3eceb0715534b4c50ecad2ede2ad78ca0d1cdc24886084d92628a40
 verifies allfivecases/180markers/realchildauthority/complete9celldenominators/
