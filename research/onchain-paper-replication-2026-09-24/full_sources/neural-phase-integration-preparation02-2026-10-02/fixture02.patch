@@ -1,0 +1,90 @@
+--- preparation01/fixture01.py
++++ preparation02/fixture02.py
+@@ -5,8 +5,9 @@
+ from pathlib import Path
+ import resource
+ import sys
+-
+-CASES=('success','fatal','publication_refusal','near_cap')
++import subprocess
++
++CASES=('success','fatal','publication_refusal','near_cap','entry_cap')
+ GIB=1024**3
+ POLICY={'schema_version':1,'max_file_bytes':4*1024**2,'max_json_bytes':256*1024,
+         'max_allocated_bytes':160*1024**2,'max_logical_bytes':128*1024**2,
+@@ -59,6 +60,35 @@
+     result=scope.check()
+     assert result['logical_bytes']==target and result['entries']<112
+     return {'before':before,'after':result,'target_logical_bytes':target,'padding_files':count}
++
++
++def child_bridge(scope,root,cgroup):
++    script=Path(__file__).resolve().with_name('child_scope.py')
++    command=[sys.executable,'-B',str(script),str(root),scope.anchor['experiment'],SOURCE,scope.anchor_hash,str(cgroup),sha(script),str(os.getpid())]
++    stdout=root/'child.stdout';stderr=root/'child.stderr'
++    immutable(root/'child-command.json',{'command':command,'source_sha256':sha(script),'timeout_seconds':10,'inherited_unit':str(cgroup),'kernel_per_stream_file_limit_bytes':4194304,'accepted_readback_bytes_per_stream':8192,'qualification':'raw streams retained under inherited file-size cap; oversized result is failure, never truncated into success'})
++    with stdout.open('xb') as out,stderr.open('xb') as err:
++        result=subprocess.run(command,stdout=out,stderr=err,timeout=10,check=False)
++    for path in (stdout,stderr):
++        if path.stat().st_size>8192:raise ValueError('child output exceeds bounded result envelope')
++    if result.returncode!=0:raise ValueError('child authority command failed; captured streams retained')
++    raw=stdout.read_bytes();value=json.loads(raw)
++    receipt=scope.roots['producer']/'child-authority.json';record=json.loads(receipt.read_bytes())
++    assert value['status']=='published' and value['receipt_sha256']==sha(receipt)
++    assert record['pid']==value['pid'] and record['pid']!=os.getpid() and record['ppid']==os.getpid()
++    assert record['original_authority_pid']==os.getpid() and record['cgroup']==str(cgroup)
++    assert record['file_size_limit']==[4194304,4194304] and record['claim_sha256']==scope.check()['claim_sha256']
++    return {'command':command,'child_pid':value['pid'],'receipt_sha256':sha(receipt),'stdout_sha256':sha(stdout),'stderr_sha256':sha(stderr),'exit_code':result.returncode,'timeout_seconds':10,'same_unit':True,'same_file_limit':True}
++
++
++def fill_entry_cap(scope):
++    before=scope.check();target=POLICY['max_entries']-18
++    count=0
++    while scope.check()['entries']<target:
++        standin(scope.roots['producer']/f'entry-cap-{count:03d}.bin',1);count+=1
++        if count>111:raise ValueError('finite entry padding exceeded')
++    after=scope.check();assert after['entries']==110
++    return {'before':before,'after':after,'target_entries':target,'padding_files':count,'next_publication_reserved_entries':2}
+ 
+ 
+ def run_case(root,case,cgroup):
+@@ -81,6 +111,7 @@
+             producer=client.birth('producer')
+             claim_sha=sha(life/'claim.json')
+             client.immutable(producer/'intent.json',{'case':case,'claim_sha256':claim_sha,'synthetic':True})
++            bridge=child_bridge(client,root,cgroup) if case=='success' else None
+             rows=[];failure=None;last_journal=None;saved_prefix=None;cap=None;scratch=None
+             for index,week in enumerate(WEEKS):
+                 cell='neural_checkpoint-'+week
+@@ -102,12 +133,12 @@
+                                     scratch=sub/'.physical-phase-journal.json';standin(scratch,37)
+                                     journal.record('forward_after')
+                                     raise AssertionError('publication unexpectedly accepted existing scratch')
+-                                cap=fill_near_cap(client)
++                                cap=fill_entry_cap(client) if case=='entry_cap' else fill_near_cap(client)
+                                 journal.record('forward_after')
+                                 raise AssertionError('active reserved publication unexpectedly accepted near cap')
+                         row={'id':cell,'status':'complete','result':{'synthetic_checkpoint_standin':True,'events':len(EVENTS)}}
+                     except (SystemExit,FileExistsError,ValueError) as error:
+-                        expected=(case=='fatal' and type(error) is SystemExit) or (case=='publication_refusal' and type(error) is FileExistsError) or (case=='near_cap' and type(error) is ValueError and 'budget' in str(error))
++                        expected=(case=='fatal' and type(error) is SystemExit) or (case=='publication_refusal' and type(error) is FileExistsError) or (case in ('near_cap','entry_cap') and type(error) is ValueError and 'budget' in str(error))
+                         if not expected:raise
+                         failure={'type':type(error).__name__,'message':str(error)}
+                         row={'id':cell,'status':'failed','reason':failure}
+@@ -137,6 +168,7 @@
+                 else:
+                     assert len(journals)==1 and [x['status'] for x in rows]==['failed']+['unavailable']*8
+                     assert not (producer/'cell-01').exists()
++                if bridge:assert str((producer/'child-authority.json').relative_to(root)) in artifacts
+                 if scratch:assert scratch.read_bytes()==b'X'*37 and str(scratch.relative_to(root)) in artifacts
+                 terminal='complete' if failure is None else 'failed'
+                 client.immutable(life/(terminal+'.json'),{'status':terminal,'synthetic':True,'claim_sha256':claim_sha,'cells':rows})
+@@ -151,7 +183,7 @@
+                 except RuntimeError as stopped:assert 'authority unavailable' in str(stopped)
+                 else:raise AssertionError('journal wrote after original parent authority closed')
+                 assert inventory(client.roots)==measured
+-            answer={'case':case,'status':'expected_behavior_verified','summary':summary,'three_root_final':measured,'scope_final':final,'near_cap':cap,'retained_last_prefix_sha256':None if saved_prefix is None else hashlib.sha256(saved_prefix).hexdigest(),'authority_revocation_checked_after_tail':case=='fatal'}
++            answer={'child_bridge':bridge,'case':case,'status':'expected_behavior_verified','summary':summary,'three_root_final':measured,'scope_final':final,'near_cap':cap,'retained_last_prefix_sha256':None if saved_prefix is None else hashlib.sha256(saved_prefix).hexdigest(),'authority_revocation_checked_after_tail':case=='fatal'}
+     except BaseException as error:primary=error
+     finally:
+         if not closed:

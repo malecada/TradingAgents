@@ -1,5 +1,29 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: stricter entry-tail reserve implemented;56physical checks pass.**
+The independently accepted one-line neural_physical change holds18active entries
+instead of16, while total128/terminal mode/two publication slots are unchanged.
+A new real-authority RED case shows original16 allowed an active publication at
+110entries. After exact integration, it refuses that write and retains all17
+closure publications through physical-final at127entries. Named physical tests
+passed56checks in18.63s, separately from the previous67storage/guard checks.
+No scientific/model/array operation changed. No substantial empirical job active.
+
+Budget-only independent review accepted exact prospective63extension3cc6e3eb
+and allocation39612b1f, refreshed all34closed claims/terminals and unused03
+namespaces. Machine review948c4fd7f015d35ff4f3751db36b0e7530e52d1268780eac14abea08e09b8c73
+is retained separately from the original pending proposal. This does not adopt63
+or approve execution: highest actually adopted62 and34spent remain unchanged.
+
+Phase proof02 release was withheld for a new child stream-close path that could
+mask an earlier fatal. Corrected03 bridge/source snapshot/pure failure sentinels
+are being prepared separately; original02 is preserved. Exact corrected release
+review/backup and the actual five-case Scope/journal/child proof remain required.
+Next: freeze/back up accepted source and corrected proof; release at most one
+new unused engineering identity, independently review complete raw output, then
+finish the exact03gate/runtime/source/claim-RPC/caller registration and launch
+under a fresh readiness window. Full109resource/1,420fits/paper scope persists.
+
 **Latest checkpoint: storage scanner correction integrated;67 named checks pass.**
 Accepted candidate03 integrates exactly workflow_storage.py and resources.py:
 complete rescans remain bounded to3attempts under one deadline, hardlink-only

@@ -1,0 +1,26 @@
+--- fixture02.py
++++ fixture03.py
+@@ -67,8 +67,22 @@
+     command=[sys.executable,'-B',str(script),str(root),scope.anchor['experiment'],SOURCE,scope.anchor_hash,str(cgroup),sha(script),str(os.getpid())]
+     stdout=root/'child.stdout';stderr=root/'child.stderr'
+     immutable(root/'child-command.json',{'command':command,'source_sha256':sha(script),'timeout_seconds':10,'inherited_unit':str(cgroup),'kernel_per_stream_file_limit_bytes':4194304,'accepted_readback_bytes_per_stream':8192,'qualification':'raw streams retained under inherited file-size cap; oversized result is failure, never truncated into success'})
+-    with stdout.open('xb') as out,stderr.open('xb') as err:
++    def retain(primary,error):
++        if primary is None or primary is error:return error
++        if isinstance(primary,Exception) and not isinstance(primary,MemoryError) and (not isinstance(error,Exception) or isinstance(error,MemoryError)):
++            error.__cause__=primary;return error
++        primary.add_note('additional child stream cleanup failure: '+repr(error));return primary
++    out=err=None;primary=None
++    try:
++        out=stdout.open('xb');err=stderr.open('xb')
+         result=subprocess.run(command,stdout=out,stderr=err,timeout=10,check=False)
++    except BaseException as error:primary=error
++    finally:
++        for stream in (err,out):
++            if stream is not None:
++                try:stream.close()
++                except BaseException as error:primary=retain(primary,error)
++    if primary is not None:raise primary
+     for path in (stdout,stderr):
+         if path.stat().st_size>8192:raise ValueError('child output exceeds bounded result envelope')
+     if result.returncode!=0:raise ValueError('child authority command failed; captured streams retained')

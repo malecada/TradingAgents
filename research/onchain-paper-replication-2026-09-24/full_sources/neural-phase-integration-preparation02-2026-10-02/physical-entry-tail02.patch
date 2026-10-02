@@ -1,0 +1,11 @@
+--- baseline/neural_physical.py
++++ candidate/neural_physical.py
+@@ -295,7 +295,7 @@
+                     if info.st_nlink!=1:raise ValueError('physical unexpected hardlink')
+                     logical+=info.st_size;files+=1
+                     if info.st_size>self.policy['max_file_bytes']:raise ValueError('physical file write limit exceeded')
+-                if entries+(2 if reserve else 0)>self.policy['max_entries']-(0 if tail else 16):raise ValueError('physical entry budget exceeded')
++                if entries+(2 if reserve else 0)>self.policy['max_entries']-(0 if tail else 18):raise ValueError('physical entry budget exceeded')
+             identity=lambda info:[info.st_dev,info.st_ino]
+             def visit(fd,depth):
+                 account(os.fstat(fd))

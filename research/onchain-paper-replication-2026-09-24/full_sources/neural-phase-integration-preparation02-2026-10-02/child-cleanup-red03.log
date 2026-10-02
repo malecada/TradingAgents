@@ -1,0 +1,65 @@
+test_first_cleanup_fatal_promoted_over_ordinary_and_preserved (__main__.Check.test_first_cleanup_fatal_promoted_over_ordinary_and_preserved) ... FAIL
+test_later_systemexit_does_not_replace_primary_memoryerror (__main__.Check.test_later_systemexit_does_not_replace_primary_memoryerror) ... FAIL
+test_memoryerror_survives_all_close_errors (__main__.Check.test_memoryerror_survives_all_close_errors) ... FAIL
+test_original_ordinary_error_retained_with_later_ordinary_closes (__main__.Check.test_original_ordinary_error_retained_with_later_ordinary_closes) ... FAIL
+test_stderr_open_fatal_closes_stdout_without_masking (__main__.Check.test_stderr_open_fatal_closes_stdout_without_masking) ... FAIL
+test_systemexit_survives_close_error (__main__.Check.test_systemexit_survives_close_error) ... FAIL
+
+======================================================================
+FAIL: test_first_cleanup_fatal_promoted_over_ordinary_and_preserved (__main__.Check.test_first_cleanup_fatal_promoted_over_ordinary_and_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/check_child_cleanup03.py", line 46, in test_first_cleanup_fatal_promoted_over_ordinary_and_preserved
+    result=self.exercise(ordinary,fatal,later);self.assertIs(result,fatal);self.assertIs(result.__cause__,ordinary)
+                                               ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: SystemExit('stdout') is not MemoryError('stderr')
+
+======================================================================
+FAIL: test_later_systemexit_does_not_replace_primary_memoryerror (__main__.Check.test_later_systemexit_does_not_replace_primary_memoryerror)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/check_child_cleanup03.py", line 52, in test_later_systemexit_does_not_replace_primary_memoryerror
+    first=MemoryError('body');self.assertIs(self.exercise(first,SystemExit('stderr'),OSError('stdout')),first)
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: OSError('stdout') is not MemoryError('body')
+
+======================================================================
+FAIL: test_memoryerror_survives_all_close_errors (__main__.Check.test_memoryerror_survives_all_close_errors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/check_child_cleanup03.py", line 41, in test_memoryerror_survives_all_close_errors
+    first=MemoryError('original');self.assertIs(self.exercise(first,OSError('stderr'),OSError('stdout')),first)
+                                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: OSError('stdout') is not MemoryError('original')
+
+======================================================================
+FAIL: test_original_ordinary_error_retained_with_later_ordinary_closes (__main__.Check.test_original_ordinary_error_retained_with_later_ordinary_closes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/check_child_cleanup03.py", line 50, in test_original_ordinary_error_retained_with_later_ordinary_closes
+    first=ValueError('body');self.assertIs(self.exercise(first,OSError('stderr'),OSError('stdout')),first)
+                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: OSError('stdout') is not ValueError('body')
+
+======================================================================
+FAIL: test_stderr_open_fatal_closes_stdout_without_masking (__main__.Check.test_stderr_open_fatal_closes_stdout_without_masking)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/check_child_cleanup03.py", line 48, in test_stderr_open_fatal_closes_stdout_without_masking
+    first=MemoryError('stderr open');self.assertIs(self.exercise(ValueError('must not execute'),out_close=OSError('stdout'),err_open=first),first)
+                                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: OSError('stdout') is not MemoryError('stderr open')
+
+======================================================================
+FAIL: test_systemexit_survives_close_error (__main__.Check.test_systemexit_survives_close_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/check_child_cleanup03.py", line 43, in test_systemexit_survives_close_error
+    first=SystemExit('original');self.assertIs(self.exercise(first,OSError('stderr')),first)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: OSError('stderr') is not SystemExit('original')
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.023s
+
+FAILED (failures=6)

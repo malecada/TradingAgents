@@ -1,0 +1,220 @@
+{
+  "candidate03_overlay": {
+    "candidate": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate03.json",
+      "sha256": "b07fa054b97d3801a4d5f5197f3a828812a7ba293a70d62f083e0d23461b313f"
+    },
+    "guard_diagnostics": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate-resources03.py",
+      "sha256": "b58a85744df475d267bf59a06130649bb66ef8e83d2ec0d57233b26355853047"
+    },
+    "qualification": "exact candidate03 bytes, separately reviewed observation policy; persistent hardlinks still fatal, shared total deadline and bounded diagnostics, no suppressed scan",
+    "traversal": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate03.py",
+      "sha256": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554"
+    }
+  },
+  "checks": {
+    "Scope_socket_child_guard_executed": false,
+    "log": "green03.log",
+    "pure_checks": 9,
+    "runtime_metadata": "runtime-check02.log"
+  },
+  "child_bridge": {
+    "accepted_output_bytes_per_stream": 8192,
+    "argv": [
+      "{locked_python}",
+      "-B",
+      "{source}/child_scope.py",
+      "{case_root}",
+      "{case_experiment}",
+      "e0cb08b6bf763ffec0bb4058d5d1d89bd3977486",
+      "{original_anchor_sha256}",
+      "{actual_same_unit_cgroup}",
+      "7c0a796db6145692df833d708eb26903efb0397fca37a516ae7ea11338a3b891",
+      "{original_parent_pid}"
+    ],
+    "case": "success",
+    "inherited_RLIMIT_FSIZE_bytes": 4194304,
+    "qualification": "single child, no shell, same unit and inherited file limit; parent keeps actual Scope server alive; raw streams retained on failure",
+    "raw_stderr_max_bytes": 4194304,
+    "raw_stdout_max_bytes": 4194304,
+    "receipt": "producer/child-authority.json",
+    "receipt_in_artifact_index": true,
+    "script": "child_scope.py",
+    "source_sha256": "7c0a796db6145692df833d708eb26903efb0397fca37a516ae7ea11338a3b891",
+    "timeout_seconds": 10
+  },
+  "entry_policy": {
+    "accepted": false,
+    "active_hold_after": 18,
+    "active_hold_before": 16,
+    "entry_target": 110,
+    "expected_final_entries": 127,
+    "max_entries_unchanged": 128,
+    "patch": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/physical-entry-tail02.patch",
+      "sha256": "1c9bc49398a1b77fe206c2cde8298fd1b63fd894c629ef1ee50447a32f7cca54"
+    },
+    "publication_reserve_unchanged": 2,
+    "source": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/candidate-neural_physical02.py",
+      "sha256": "8891e3ed52142f23ae987b8985cd4ee8e09caf86658623e43a37df7140dfe190"
+    },
+    "tail_entries_count": 17
+  },
+  "files": {
+    "PREPARATION02.md": {
+      "bytes": 7699,
+      "sha256": "7cc7f88d7e9feb5ee9bcc8b7d3b65a3ae02fbc4ad8ad7599ad51bd1c70d4b1c8"
+    },
+    "PROSPECTIVE03_ADDENDUM02.md": {
+      "bytes": 1701,
+      "sha256": "bc9036e27e6d901843a6607d1d62a8988e4558a308b15aecb8cbacf11caee0db"
+    },
+    "baseline/REVIEW_PREPARATION01.md": {
+      "bytes": 9050,
+      "sha256": "41a1b96fcca54f1bf70b5656d38759a42786e616e0ac3311e3c73a7af956a4d4"
+    },
+    "baseline/fixture01.py": {
+      "bytes": 13043,
+      "sha256": "d1111714f166a0eb3c487caeb065442dba4dc586da7abb88e22a91db470e59d0"
+    },
+    "baseline/launcher01.py": {
+      "bytes": 10416,
+      "sha256": "ef021e13bba5068c895b9265137247a65d062c979b9bdf4bb1a68c046aef23cd"
+    },
+    "baseline/neural_physical.py": {
+      "bytes": 23746,
+      "sha256": "3862e91a72ed2998ca5175560622c2c74a224ad60f54580ec3e5ed00f28fc03b"
+    },
+    "baseline/preparation01.json": {
+      "bytes": 4845,
+      "sha256": "5cb69363e6c9ca9d698d4b516d69762cd0b8db55f4d76a26ad0720b02b989a8f"
+    },
+    "baseline/prospective-spec01.json": {
+      "bytes": 12203,
+      "sha256": "e59b4beb14b3203f55efd918cdb88ff038c2d815bb24886523afaaec3af96df4"
+    },
+    "candidate-neural_physical02.py": {
+      "bytes": 23746,
+      "sha256": "8891e3ed52142f23ae987b8985cd4ee8e09caf86658623e43a37df7140dfe190"
+    },
+    "check_preparation02.py": {
+      "bytes": 2988,
+      "sha256": "25f732f38f74cc53d58b997958c10bb34a15dce6fcfa3addae743224780ecdad"
+    },
+    "check_preparation03.py": {
+      "bytes": 5621,
+      "sha256": "81899bb2d5fe8113520245824b0bb3ea94b3a12e61e466d41d910f8bc860626a"
+    },
+    "child_scope02.py": {
+      "bytes": 2632,
+      "sha256": "7c0a796db6145692df833d708eb26903efb0397fca37a516ae7ea11338a3b891"
+    },
+    "fixture02.patch": {
+      "bytes": 6699,
+      "sha256": "bb6a6ec33ee1ca66e7e7121c3a4a7d941eb82a7d50dbd6a9374650da6091d7d2"
+    },
+    "fixture02.py": {
+      "bytes": 15636,
+      "sha256": "017163956211e464f97d696cd09574e9dc205e680626a09863dc83092fdad2e0"
+    },
+    "green03.log": {
+      "bytes": 1055,
+      "sha256": "3862e96aced74f99ac7e60daaafbe4f739f234af8b8d68db2668d05be5f7b5f6"
+    },
+    "launcher02.py": {
+      "bytes": 10428,
+      "sha256": "97c2bf830cb8a9046a93cac3f25f1a29f3ac79cdc1593b25c05d5cec6169e248"
+    },
+    "namespace-check02.json": {
+      "bytes": 213,
+      "sha256": "b166766d5985fa7d00d88270db364ae58df2ba38986f1129046bd1e448dee7dd"
+    },
+    "physical-entry-tail02.patch": {
+      "bytes": 778,
+      "sha256": "1c9bc49398a1b77fe206c2cde8298fd1b63fd894c629ef1ee50447a32f7cca54"
+    },
+    "prospective-spec02.json": {
+      "bytes": 16755,
+      "sha256": "434a18c08fc63b59e4e49d25390221b0b28f0674ea500171192f99ffeab5a691"
+    },
+    "red01.log": {
+      "bytes": 1818,
+      "sha256": "59c18f494ea0d578aa182c4e0ea85293addbe6f9a876e7d42c163418c362c79a"
+    },
+    "runtime-check02.log": {
+      "bytes": 653,
+      "sha256": "6742bb84bcfa0245a632333b44f648826c838004f1fdd7dd0bd03dc56da31b43"
+    },
+    "source/child_scope.py": {
+      "bytes": 2632,
+      "sha256": "7c0a796db6145692df833d708eb26903efb0397fca37a516ae7ea11338a3b891"
+    },
+    "source/phase_fixture.py": {
+      "bytes": 15636,
+      "sha256": "017163956211e464f97d696cd09574e9dc205e680626a09863dc83092fdad2e0"
+    },
+    "source/pyproject.toml": {
+      "bytes": 2312,
+      "sha256": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9"
+    },
+    "source/tradingagents/__init__.py": {
+      "bytes": 51,
+      "sha256": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5"
+    },
+    "source/tradingagents/research/__init__.py": {
+      "bytes": 220,
+      "sha256": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af"
+    },
+    "source/tradingagents/research/admission.py": {
+      "bytes": 19911,
+      "sha256": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd"
+    },
+    "source/tradingagents/research/lifecycle.py": {
+      "bytes": 10509,
+      "sha256": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc"
+    },
+    "source/tradingagents/research/onchain_replication/__init__.py": {
+      "bytes": 83,
+      "sha256": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1"
+    },
+    "source/tradingagents/research/onchain_replication/neural_authority.py": {
+      "bytes": 7060,
+      "sha256": "eed5f79f4c34819fb64ac2d79069ff56e4b24d175f2d391da9856f9d50186fb2"
+    },
+    "source/tradingagents/research/onchain_replication/neural_phases.py": {
+      "bytes": 6366,
+      "sha256": "60c6e6532a62034ec859b22c22902fee84f21428410c2cb5b86796a51b97d48c"
+    },
+    "source/tradingagents/research/onchain_replication/neural_physical.py": {
+      "bytes": 23746,
+      "sha256": "8891e3ed52142f23ae987b8985cd4ee8e09caf86658623e43a37df7140dfe190"
+    },
+    "source/tradingagents/research/onchain_replication/neural_resource.py": {
+      "bytes": 20689,
+      "sha256": "a21505fe40dabba5da82d940e01229979ce26c6757910e729a76f6813f6a1164"
+    },
+    "source/tradingagents/research/onchain_replication/resources.py": {
+      "bytes": 31074,
+      "sha256": "b58a85744df475d267bf59a06130649bb66ef8e83d2ec0d57233b26355853047"
+    },
+    "source/tradingagents/research/onchain_replication/workflow_storage.py": {
+      "bytes": 9345,
+      "sha256": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554"
+    },
+    "source/uv.lock": {
+      "bytes": 1326335,
+      "sha256": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+    }
+  },
+  "identity": "neural-phase-integration-20261002-01",
+  "release_accepted": false,
+  "schema_version": 1,
+  "shared_baseline_not_final_source": "aff909645ac341b3cd8f004f8c39987ac1ae7fff",
+  "snapshot_files": 15,
+  "snapshot_logical_bytes": 1475969,
+  "source_base": "e0cb08b6bf763ffec0bb4058d5d1d89bd3977486",
+  "status": "FROZEN_UNEXECUTED_PREPARATION02"
+}
