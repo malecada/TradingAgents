@@ -97,3 +97,18 @@ Evidence routes: resource-coverage-05-2026-09-30/coverage.json;
 native-resource-admission-2026-10-01/{inputs02.json,INPUTS_REVIEW.md,REQUIREMENTS.md,budget-allocation.draft.json};
 compact-workflow-accounting-2026-10-02/ASSESSMENT.md; historical
 pilot_successor_02/phase.py (read only; never rerun); registered-hub-edges-2026-09-30/.
+
+## Updated active assignments after profiling
+
+Transport check02 closed29passed1.12s/session67854; independent review withheld
+acceptance for cleanup/early-success-receipt defects. archive_transport is active
+on reproductions and correction, same exclusive file ownership. Initial source/
+test snapshots and XML remain retained. owner_closure_review owns REVIEW*.md only.
+
+admission_batching is active on base tradingagents/research/admission.py, new
+tests/research/test_admission_batching.py and its dated evidence. The exact scope
+and compatibility requirements are in ADMISSION_BATCHING.md. No full-owner tests
+may scan shared mutable package sources; isolated snapshots or global source
+freeze are required. Root owns coordination/state and final acceptance/backup.
+No actual empirical job or external transfer is active. Inspect agents before
+redispatch. One completed investigation is not an active implementation worker.
