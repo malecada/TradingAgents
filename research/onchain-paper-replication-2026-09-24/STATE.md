@@ -3,6 +3,65 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Active parallel checkpoint — October 2, full injected archive route passed**:
+The coherent native producer→dictionary→MCM→saved output→publication→closed
+owner/ledger/terminal path passed check03:1passed6deselected282.06s/session2341exit0.
+Synthetic5-sample reuse completed20dictionary comparisons under22capacity; both
+required MCM stages finished. Post-close checks forbid remote access, preserve
+claims/spending on duplicate invocation, and refuse changed stage authority and
+foreign archive namespaces. This is injected filesystem transport with mocked
+guards, not registered dispatcher/SSH/resource admission. job_payload still does
+not pass archive_transport; that outer route remains explicit next work.
+
+Evidence full_sources/archive-producer-integration-2026-10-02/: check01 CLOSED
+3failed4passed240.63s/session60475 (fixture floor1B wrongly below production10GiB;
+local whole-native route, descriptor refusal and token cases passed). check02
+CLOSED1failed6deselected33.41s/session79543 (five-sample fixture metadata allowance
+still sized for three). Only fresh synthetic fixture bounds were corrected; no
+production limit relaxed. check03 passed as above. check04 CLOSED12passed366.83s/
+session30978 includes two late-failure paths, independent4-cell MCM count, public
+entry/duplicate/fatal cleanup and final-callback namespace regressions.
+
+Integration remains unaccepted. The archive_transport agent preserves candidates
+and is adding two approved corrections: finalize still-open archive ledger as
+poisoned on native failure, preserving original fatal errors and all successful
+claim bytes/spending; and reject coherent mutation of closed.json plus runtime
+_expected against original terminal authority. New negatives and a fresh full
+archive pass are required after those changes; never reopen closed attempts.
+review-red01 is active in session66432; whole-package source is frozen until its
+terminal. Inspect agent status before any package edit/test. Other source owners
+remain frozen.
+
+Resource draft revision02 independently accepted as NONEXECUTABLE mapping and
+conditional accounting; REVIEW_FINAL SHA256
+ e1d8106a86b994c3697cbb04345a53816b2d86a5fccfb3e6c25924931789eedb.
+Use resource-parallel-preparation-2026-10-02/REVISION02.md and revision02/ outputs;
+original drafts/logs/scripts remain byte-identical. All32cells/43pins preserved.
+The optional mapped sampler's20GiB+workspace rule does NOT apply to the selected
+resident-leased-v1 compact sampler. Resident direct vectors require16bytes/center;
+retained samples/index/NumPy choice/parents/RSS still need accounting. User10GiB
+floor is unchanged. No mapped guard was relaxed or empirical coverage increased.
+
+Root's new read-only budget-recount-2026-10-02/recount01.json joins actual17prior+
+16replication claims, all33terminal(27complete6failed), with34history metadata
+hashes unchanged and no duplicate. Draft33+12+15+1=61 remains unadopted. Independent
+metadata review accepted this narrow count, REVIEW SHA256
+ e195721e9cbb9d023b176a724c6332b97a08e7af127b6ee71745a2ba8fa3e7a6.
+Historical source/outcome checks were not replayed.
+
+Parallel tasks: archive_transport owns integration source/tests/evidence;
+admission_batching completed archive-retention-readiness-2026-10-02/REPORT.md
+(SHA256 e0508bfa0b3302ffaa2ae440828851bdae2647098dd6529ac9789b36a5df9c23).
+Pair offload still leaves55,439,818,752 logical score/matrix bytes across nine
+32-motif graphs, before checkpoint and other costs; this is not a physical cap.
+The agent now owns documentation-only bounded-retention-contract-2026-10-02
+prospective drafts to distinguish future restart scratch from required scientific
+outputs, independently verified replay and failed evidence. Existing artifacts
+and the current archive variant remain untouched; no amendment adopted; owner_closure_review owns independent review records. Root owns STATE
+and coordination. No new empirical job/external transfer. All1420fits pending,
+coverage77/109; latest free19764666368B exceeds10GiB. Continue current tests/review,
+checkpoint accepted docs, then outer transport dispatch/accounting integration.
+
 **Parallel unattended continuation — October 2, reviewed transport and faster verification**:
 The ACTIVE15-minute automation retains user-authorized parallel work with up to3
 bounded agents plus root coordination, exclusive file ownership, independent

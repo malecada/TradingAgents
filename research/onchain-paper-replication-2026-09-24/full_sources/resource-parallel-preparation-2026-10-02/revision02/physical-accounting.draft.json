@@ -1,0 +1,577 @@
+{
+  "admission_equations": [
+    "local_free_at_admission - max_t(incremental_local_retained(t) + local_scratch(t) + local_transfer_staging(t) + concurrent_reservations(t)) >= effective_floor_bytes",
+    "remote_free_at_admission >= remote_retained_growth_peak + remote_partial_staging_peak + other_remote_reservations",
+    "local_peak = max_t(sum(coexisting objects at t)); never sum all sequential maxima as though observed peak",
+    "transfer_total = upload_bytes + verification_download_bytes + terminal_replay_bytes + retry_bytes; count each physical transfer",
+    "aggregate_RSS_reservations + host_reserve <= currently_available_RAM"
+  ],
+  "allowances": {
+    "cpu_limit": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "cumulative_checkpoint_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "cumulative_transfer_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "host_reserve_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "local_retained_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "peak_local_scratch_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "peak_local_total_growth_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "remote_peak_staging_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "remote_retained_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "retained_sampler_sample_ram_bytes": {
+      "reason": "Resident sampler retains neighborhood arrays; prospective bound and coexistence lifetime unresolved.",
+      "value": null
+    },
+    "retained_score_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "rss_per_worker_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "sampler_numpy_choice_scratch_bytes": {
+      "reason": "Resident16bytes-per-center direct-array bound does not bound NumPychoice scratch or peak RSS.",
+      "value": null
+    },
+    "verification_read_bytes": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    },
+    "wall_seconds": {
+      "reason": "No reviewed physical/lifetime/aggregate reservation yet; null is not zero.",
+      "value": null
+    }
+  },
+  "assumption": [
+    "all nine recorded graphs each receive one 32-motif MCM",
+    "every pair completes with begin and completion events",
+    "all completed pair events and score tails/batches remain retained",
+    "MCM output and graph feature artifact each retain one float32 MCM copy"
+  ],
+  "components": [
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": 4779690416,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": "sum(saved_array_file_bytes for nine pinned graphs)",
+      "name": "saved_graph_five_arrays",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Manifest-declared file-byte sum; current physical allocation, saved-edge duplication and staging overlap unmeasured."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": 194039365632,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": "577498112 * 2 * 168",
+      "name": "minimum_pair_events",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Logical begin+completion payload; header/metadata/checkpoint events, retries and archive allocation excluded; placement unresolved."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": 46199848960,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": "577498112 * 80",
+      "name": "score_tails",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Tail lifetime/placement not adopted; moving pair events alone does not remove these bytes."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": 4619984896,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": "577498112 * 8",
+      "name": "float64_score_batches",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Batch lifetime, local/remote staging, headers and failure copies unresolved."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": 4619984896,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": "577498112 * 4 * 2",
+      "name": "two_saved_float32_mcm_copies",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Saved output plus graph feature copy; dtype arithmetic only, physical allocation and lifetime unresolved."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": 289177600,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": "(8816 + 9) * 32768",
+      "name": "score_metadata_prior_logical_allowance",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Prior static allowance, not measured overhead or an adopted admission cap."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": null,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": null,
+      "name": "dictionary_samples_matrices_events",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Exact population-dependent lifetime, physical bytes and retained/peak/cumulative allowance remain unknown and must be measured or conservatively bounded before admission."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": null,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": null,
+      "name": "matching_workspaces_and_snapshots",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Exact population-dependent lifetime, physical bytes and retained/peak/cumulative allowance remain unknown and must be measured or conservatively bounded before admission."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": null,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": null,
+      "name": "checkpoint_progress_event_growth",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Exact population-dependent lifetime, physical bytes and retained/peak/cumulative allowance remain unknown and must be measured or conservatively bounded before admission."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": null,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": null,
+      "name": "model_optimizer_checkpoint_files",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Exact population-dependent lifetime, physical bytes and retained/peak/cumulative allowance remain unknown and must be measured or conservatively bounded before admission."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": null,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": null,
+      "name": "graph_saved_edge_artifacts",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Exact population-dependent lifetime, physical bytes and retained/peak/cumulative allowance remain unknown and must be measured or conservatively bounded before admission."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": null,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": null,
+      "name": "guard_logs_partial_writes_prior_attempts",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Exact population-dependent lifetime, physical bytes and retained/peak/cumulative allowance remain unknown and must be measured or conservatively bounded before admission."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": null,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": null,
+      "name": "archive_upload_download_replay_staging",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Exact population-dependent lifetime, physical bytes and retained/peak/cumulative allowance remain unknown and must be measured or conservatively bounded before admission."
+    },
+    {
+      "checkpoint_allowance_bytes": null,
+      "conditional_logical_bytes": null,
+      "cumulative_growth_allowance_bytes": null,
+      "logical_formula": null,
+      "name": "filesystem_allocation_headers_metadata",
+      "peak_local_scratch_bytes": null,
+      "physical_local_retained_bytes": null,
+      "physical_remote_retained_bytes": null,
+      "retention_policy_sha256": null,
+      "retention_policy_sha256_reason": "No prospective placement/lifetime/disposition policy adopted.",
+      "transfer_allowance_bytes": null,
+      "unknown_reason": "Exact population-dependent lifetime, physical bytes and retained/peak/cumulative allowance remain unknown and must be measured or conservatively bounded before admission."
+    }
+  ],
+  "concurrency_reason": "Historical8.4GiB available is below two3GiB workers plus3GiB host reserve; fresh aggregate measurements/reservations still required.",
+  "coverage_credit_granted": 0,
+  "default_resource_heavy_concurrency": 1,
+  "draft_revision": 2,
+  "execution_admitted": false,
+  "execution_route_decision": "UNRESOLVED",
+  "free_space_observation": {
+    "filesystem_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "free_bytes": 19766280192,
+    "observed_at_utc": "2026-10-02T07:18:40.404463+00:00",
+    "qualification": "Point-in-time free space only; no reservation, capacity guarantee or launch authorization."
+  },
+  "historical_source_pin_qualification": "These identify the retained calculation, not current mutable integration source or a prospective run closure.",
+  "input_pins": [
+    {
+      "bytes": 28990,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/native-resource-admission-2026-10-01/inputs02.json",
+      "sha256": "dc4c267c1cd8ce98ec14b49bc5b5c3253598f0380e3d23efdbc6a4286d3d322b"
+    },
+    {
+      "bytes": 4936,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/compact-workflow-accounting-2026-10-02/lower-bound01.json",
+      "sha256": "cae2eaa2b7ae503eb0921fd0d1b95ef73bedc745a1578a8791683dcd26151255"
+    },
+    {
+      "bytes": 3729,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/score-tail-2026-10-01/accounting01.json",
+      "sha256": "d3dfa6ece6acccd76c5afc9863261c0ac8fb9b40e3dc60f78cd1f5e690bac044"
+    }
+  ],
+  "not_in_selected_total": [
+    "checkpoint/progress events and snapshot files",
+    "all metadata, headers and filesystem allocation",
+    "dictionary events, sampled neighborhoods and dictionary matrices",
+    "graph inputs and saved edge arrays",
+    "model, batch and live matching scratch",
+    "guard/application logs and all prior attempts",
+    "backup/offload staging and failed partial writes"
+  ],
+  "physical_measurement_status": "NOT_MEASURED",
+  "prospective_source_closure_sha256": null,
+  "prospective_source_closure_sha256_reason": "Shared producer-to-terminal implementation is being edited; no frozen admitted source closure exists.",
+  "registration_adopted": false,
+  "revision01_manifest_sha256": "4bf3fdb8e3bc1b7ee53b8cc01bf3004e325051837e375ee80f0e45664599a074",
+  "rows_by_week": [
+    {
+      "cells": 65571040,
+      "minimum_pair_events": 131142080,
+      "minimum_pair_log_payload_bytes": 22031869440,
+      "retained_score_payload_bytes": 5770251520,
+      "selected_persistent_payload_lower_bound_bytes": 28326689280,
+      "two_saved_float32_mcm_payloads_bytes": 524568320,
+      "week": "2022-01-03"
+    },
+    {
+      "cells": 56584576,
+      "minimum_pair_events": 113169152,
+      "minimum_pair_log_payload_bytes": 19012417536,
+      "retained_score_payload_bytes": 4979442688,
+      "selected_persistent_payload_lower_bound_bytes": 24444536832,
+      "two_saved_float32_mcm_payloads_bytes": 452676608,
+      "week": "2022-06-13"
+    },
+    {
+      "cells": 88455072,
+      "minimum_pair_events": 176910144,
+      "minimum_pair_log_payload_bytes": 29720904192,
+      "retained_score_payload_bytes": 7784046336,
+      "selected_persistent_payload_lower_bound_bytes": 38212591104,
+      "two_saved_float32_mcm_payloads_bytes": 707640576,
+      "week": "2022-07-25"
+    },
+    {
+      "cells": 52347872,
+      "minimum_pair_events": 104695744,
+      "minimum_pair_log_payload_bytes": 17588884992,
+      "retained_score_payload_bytes": 4606612736,
+      "selected_persistent_payload_lower_bound_bytes": 22614280704,
+      "two_saved_float32_mcm_payloads_bytes": 418782976,
+      "week": "2022-11-07"
+    },
+    {
+      "cells": 58791936,
+      "minimum_pair_events": 117583872,
+      "minimum_pair_log_payload_bytes": 19754090496,
+      "retained_score_payload_bytes": 5173690368,
+      "selected_persistent_payload_lower_bound_bytes": 25398116352,
+      "two_saved_float32_mcm_payloads_bytes": 470335488,
+      "week": "2023-06-05"
+    },
+    {
+      "cells": 58638304,
+      "minimum_pair_events": 117276608,
+      "minimum_pair_log_payload_bytes": 19702470144,
+      "retained_score_payload_bytes": 5160170752,
+      "selected_persistent_payload_lower_bound_bytes": 25331747328,
+      "two_saved_float32_mcm_payloads_bytes": 469106432,
+      "week": "2024-01-01"
+    },
+    {
+      "cells": 73796480,
+      "minimum_pair_events": 147592960,
+      "minimum_pair_log_payload_bytes": 24795617280,
+      "retained_score_payload_bytes": 6494090240,
+      "selected_persistent_payload_lower_bound_bytes": 31880079360,
+      "two_saved_float32_mcm_payloads_bytes": 590371840,
+      "week": "2024-03-11"
+    },
+    {
+      "cells": 54576288,
+      "minimum_pair_events": 109152576,
+      "minimum_pair_log_payload_bytes": 18337632768,
+      "retained_score_payload_bytes": 4802713344,
+      "selected_persistent_payload_lower_bound_bytes": 23576956416,
+      "two_saved_float32_mcm_payloads_bytes": 436610304,
+      "week": "2024-08-05"
+    },
+    {
+      "cells": 68736544,
+      "minimum_pair_events": 137473088,
+      "minimum_pair_log_payload_bytes": 23095478784,
+      "retained_score_payload_bytes": 6048815872,
+      "selected_persistent_payload_lower_bound_bytes": 29694187008,
+      "two_saved_float32_mcm_payloads_bytes": 549892352,
+      "week": "2024-12-23"
+    }
+  ],
+  "sampler_observed_source_pin": {
+    "bytes": 5747,
+    "path": "tradingagents/research/onchain_replication/sampling_weights.py",
+    "sha256": "5f1837f93fe0523d7c851654390584fc6c04fb803f2025fd027e74a5da8318d1"
+  },
+  "sampler_observed_source_pin_qualification": "This retained pin identifies only optional MappedWeights implementation, not the selected compact resident kernel.",
+  "sampler_routes": {
+    "conditional_nine_graph_union_direct_array_bytes": 288749056,
+    "direct_array_arithmetic_by_single_graph": [
+      {
+        "centers": 2049095,
+        "week": "2022-01-03",
+        "weights_plus_probability_bytes": 32785520
+      },
+      {
+        "centers": 1768268,
+        "week": "2022-06-13",
+        "weights_plus_probability_bytes": 28292288
+      },
+      {
+        "centers": 2764221,
+        "week": "2022-07-25",
+        "weights_plus_probability_bytes": 44227536
+      },
+      {
+        "centers": 1635871,
+        "week": "2022-11-07",
+        "weights_plus_probability_bytes": 26173936
+      },
+      {
+        "centers": 1837248,
+        "week": "2023-06-05",
+        "weights_plus_probability_bytes": 29395968
+      },
+      {
+        "centers": 1832447,
+        "week": "2024-01-01",
+        "weights_plus_probability_bytes": 29319152
+      },
+      {
+        "centers": 2306140,
+        "week": "2024-03-11",
+        "weights_plus_probability_bytes": 36898240
+      },
+      {
+        "centers": 1705509,
+        "week": "2024-08-05",
+        "weights_plus_probability_bytes": 27288144
+      },
+      {
+        "centers": 2148017,
+        "week": "2024-12-23",
+        "weights_plus_probability_bytes": 34368272
+      }
+    ],
+    "optional_mapped_route": {
+      "activation_condition": "weight_workspace is not None",
+      "entrypoint": "neighborhoods.sample_neighborhoods",
+      "floor_bytes": 21474836480,
+      "free_space_requirement_formula": "free_bytes >= 20GiB + reserved_workspace_bytes",
+      "mapped_20gib_floor_applies_only_when_activated": true,
+      "mapped_weights_instantiated_when_condition_true": true,
+      "policy_decision_if_selected": "Preserve existing20GiB+workspace guard or prospectively review an explicit amendment;10GiB user floor is never relaxed.",
+      "reserved_workspace_bytes": {
+        "reason": "Mapped route not selected; center count, filesystem allocation and metadata allowance not adopted.",
+        "value": null
+      },
+      "selected_by_current_compact_sampler": false,
+      "workspace_arrays": [
+        "weights",
+        "probability",
+        "cdf"
+      ],
+      "workspace_formula": "3 * ceil(count * 8 / filesystem_block_bytes) * filesystem_block_bytes + metadata_bytes"
+    },
+    "qualification": "Read-only source-route observation, not executable source admission, an empirical measurement or a gate change.",
+    "route_choice_for_future_admission": {
+      "reason": "Current code selects resident kernel; future exact executable registration and complete route policy remain unadopted.",
+      "value": null
+    },
+    "selected_compact_route": {
+      "active_index_ram_allowance_bytes": {
+        "reason": "Active graph index footprint depends on prospective bounded neighborhood policy.",
+        "value": null
+      },
+      "center_limit_formula": "sample_count <= total_centers <= policy.limits.max_centers",
+      "direct_array_bytes_per_center": 16,
+      "direct_array_limit_formula": "16 * total_centers <= policy.limits.max_direct_weight_bytes",
+      "direct_array_requirement_formula": "16 * total_centers_in_admitted_training_graph_union",
+      "direct_weight_allowance_bytes": {
+        "reason": "Prospective training graph union and sampler policy remain unadopted.",
+        "value": null
+      },
+      "kernel": "resident-leased-v1",
+      "mapped_20gib_floor_applies": false,
+      "mapped_weights_instantiated": false,
+      "not_covered_by_direct_weight_bound": [
+        "NumPychoice scratch",
+        "parentgraphs",
+        "retainedsample arrays",
+        "active neighborhood index",
+        "selected-index and offset arrays",
+        "Python objects",
+        "model/autograd",
+        "other working buffers"
+      ],
+      "numpy_choice_scratch_bytes": {
+        "reason": "16bytes per center accounts only weights/probability, not NumPychoice scratch/RSS.",
+        "value": null
+      },
+      "retained_sample_limit_formula": "sum(sample_array_bytes(selected_neighborhoods)) <= neighborhood.max_sample_array_bytes",
+      "retained_sample_ram_allowance_bytes": {
+        "reason": "Selected512neighborhood arrays and lifetime require complete prospective bound; no measured retained RAM.",
+        "value": null
+      },
+      "retains_sample_graphs_in_memory": true,
+      "sample_metadata_disk_formula": "(sample_count + 3) * max_metadata_bytes <= max_attempt_bytes",
+      "selector": "compact_sampler._prepare requires policy.kernel == resident-leased-v1",
+      "storage": "resident NumPy arrays",
+      "whole_sampler_disk_allowance_bytes": {
+        "reason": "Metadata/sample publication/archive/checkpoint/transfer allowances remain unresolved; absence of mapped floor is not disk feasibility.",
+        "value": null
+      },
+      "whole_sampler_peak_rss_bytes": {
+        "reason": "Must include all coexisting parentgraphs, retained samples, index, arrays, Python and guard overhead.",
+        "value": null
+      }
+    },
+    "source_observation_pins": {
+      "compact_sampler": {
+        "bytes": 13974,
+        "path": "tradingagents/research/onchain_replication/compact_sampler.py",
+        "sha256": "7820254d9a9ac287e55b0d20d2c26e1907b625dd743e194fae0602110593a608"
+      },
+      "leased_core": {
+        "bytes": 5192,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py",
+        "sha256": "07428fc777ec7224f199d245aee10658b8f4e74520732f6c85dcc7d8d2a37bc6"
+      },
+      "mapped_weights": {
+        "bytes": 5747,
+        "path": "tradingagents/research/onchain_replication/sampling_weights.py",
+        "sha256": "5f1837f93fe0523d7c851654390584fc6c04fb803f2025fd027e74a5da8318d1"
+      },
+      "neighborhoods": {
+        "bytes": 8860,
+        "path": "tradingagents/research/onchain_replication/neighborhoods.py",
+        "sha256": "b53901125dc20dbb8a38b6e0e539866fb04109053afbcba0d75b2a2a8dc38271"
+      }
+    },
+    "union_qualification": "Arithmetic only; nine-graph union is not selected here and per-week original resource population is unchanged.",
+    "user_minimum_local_free_bytes_all_routes": 10737418240
+  },
+  "schema_version": 1,
+  "scope": "Conditional logical arithmetic and explicit physical-accounting gaps; no final budget or measured peak claim.",
+  "score_plus_matrix_formula": "50819833856 + 4619984896",
+  "score_plus_matrix_payload_after_pair_event_offload_bytes": 55439818752,
+  "selected_payload_lower_bound_bytes": 249479184384,
+  "selected_payload_totals": {
+    "cells": 577498112,
+    "minimum_pair_events": 1154996224,
+    "minimum_pair_log_payload_bytes": 194039365632,
+    "retained_score_payload_bytes": 50819833856,
+    "selected_persistent_payload_lower_bound_bytes": 249479184384,
+    "two_saved_float32_mcm_payloads_bytes": 4619984896
+  },
+  "source_pins_from_historical_arithmetic": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/score-tail-2026-10-01/accounting01.json": "d3dfa6ece6acccd76c5afc9863261c0ac8fb9b40e3dc60f78cd1f5e690bac044",
+    "tradingagents/research/onchain_replication/compact_graph_artifacts.py": "fd1395b0c274b1b51dc26365fd0c2954f904492cf77ddb3d553ce40c6dc6bf8a",
+    "tradingagents/research/onchain_replication/compact_mcm_publication.py": "068707321e7b2b05213e2dc0aeb06ea5f56e865eff5c2b2e03ea7dbd33828688",
+    "tradingagents/research/onchain_replication/compact_pair_log.py": "de8f5544d1689029b05e9e7978506dd8597da5e930308d1f1ae1c2788fffe860"
+  },
+  "status": "NONEXECUTABLE_DRAFT",
+  "supersedes_revision01_only_for": "Sampler route applicability and associated RAM/disk prerequisites; historical populations, counts, arithmetic, budgets and all execution refusals unchanged.",
+  "user_minimum_local_free_bytes": 10737418240
+}
