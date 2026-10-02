@@ -3,6 +3,48 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Latest handoff — October 2, anchored archived proof local checks verified**:
+archived_stage.verify now emits explicit v2 receipts anchoring the stage intent
+and event-read intent/completion. New read-only archived_stage.check validates
+that trusted earlier replay observation against current local archive metadata,
+checkpoint references/trees and MCM score streams, without fetching or publishing
+anything. A common content join enforces policy/caps, exact replay consistency,
+canonical numeric types, bounded exact inventories and original open descriptor
+identities through the final callback-free check. Legacy v1 evidence is retained;
+local revalidation rejects it rather than upgrading or rerunning a closed job.
+This supplies a content-check prerequisite for producer/publication evidence
+checks without spending another remote pass on every .check call. It does not
+establish current remote availability, owner authority, a stage seal, a producer
+switch, post-owner-close authority or empirical admission.
+
+Evidence: full_sources/archived-stage-check-2026-10-02/. red01 CLOSED15failed
+40.64s/session20515exit1 (missing check API); check01 CLOSED46passed121.03s/
+session13486exit0. Independent ASC1–3 found missing minimum read metadata,
+late refusal of invalid attempt inventory, and Python equality accepting numeric
+type aliases in caller-rehashed malformed receipts. review-red01 CLOSED4failed
+3passed15deselected8.18s/session14953exit1 reproduced the defects; three owned
+cleanup injections already passed. Corrected check02 CLOSED57passed340.17s/
+session4454exit0:22new local checks,17archived stages,14finalizer cases and4actual-
+owner dictionary regressions under v2. Sources/tests and all failures remain
+preserved. No active test/source freeze. Independent REVIEW_FINAL accepts the
+bounded content-check contract and closes ASC1–3, SHA256
+032714b3eb879362aaa8cdc73409eabd5473bd60492e5ee4454de1c7e5533f0f.
+
+Predecessora23a691d52c81e21aad63cfadeeafa5fbf6a5184 is pushed and exact remote
+HEAD verified. Next safe action: finalize review/remote checkpoint, then consume
+this trusted v2 proof in explicit archived stage seals and producer evidence
+routing. Preserve the real owner transition lock through internal control flow;
+public archive wrappers cannot be nested inside the existing locked producers.
+Stage receipt trust must bind the retained writer/read reservations, actual stage
+intent/inode, deterministic read path, exact scientific contract and v2 hash.
+Integrating callers still own outer stage membership and source/admission checks.
+Current owner finish, dictionary/MCM evidence and terminal journal inventories
+still use local-event contracts and need explicit dispatch. Post-owner-close
+phase authority, transport metering, physical accounting and reviewed resource/
+hub/budget admission remain. Coverage77/109,32open; all1420financial fits pending;
+draft60→61 unadopted. Latest local free20962693120B exceeds10GiB. No empirical
+job or new external transfer, and no closed historical identity was relaunched.
+
 **Latest handoff — October 2, reserved archived scientific read verified**:
 archive_owner_stage.verify consumes one finite reader claim on the actual active,
 unsealed owner stage. The completed writer reference is independently joined to

@@ -1,0 +1,135 @@
+FFFF...                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_caller_rehashed_proof_keeps_reader_caps_and_exact_numeric_schema[read_capacity] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-120/test_caller_rehashed_proof_kee0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d15124b360>
+target = 'read_capacity'
+
+    @pytest.mark.parametrize('target',['read_capacity','noncanonical_count'])
+    def test_caller_rehashed_proof_keeps_reader_caps_and_exact_numeric_schema(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        if target=='read_capacity':
+            for name,key in (('intent.json','stage_read_intent_sha256'),('events/intent.json','event_read_intent_sha256')):
+                p=c['attempt']/name;value=json.loads(p.read_bytes());value['max_read_metadata_bytes']=1
+                raw=module.io._json(value);p.write_bytes(raw);result[key]=module.io._hash(raw)
+        else:result['completed_pairs']=float(result['completed_pairs'])
+        raw=module.io._json(result);(c['attempt']/'complete.json').write_bytes(raw)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archived_stage_check.py:80: Failed
+_ test_caller_rehashed_proof_keeps_reader_caps_and_exact_numeric_schema[noncanonical_count] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-120/test_caller_rehashed_proof_kee1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d15124b100>
+target = 'noncanonical_count'
+
+    @pytest.mark.parametrize('target',['read_capacity','noncanonical_count'])
+    def test_caller_rehashed_proof_keeps_reader_caps_and_exact_numeric_schema(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        if target=='read_capacity':
+            for name,key in (('intent.json','stage_read_intent_sha256'),('events/intent.json','event_read_intent_sha256')):
+                p=c['attempt']/name;value=json.loads(p.read_bytes());value['max_read_metadata_bytes']=1
+                raw=module.io._json(value);p.write_bytes(raw);result[key]=module.io._hash(raw)
+        else:result['completed_pairs']=float(result['completed_pairs'])
+        raw=module.io._json(result);(c['attempt']/'complete.json').write_bytes(raw)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archived_stage_check.py:80: Failed
+______ test_failed_attempt_is_refused_before_expensive_local_join[before] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-120/test_failed_attempt_is_refused0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d10f7543b0>
+when = 'before'
+
+    @pytest.mark.parametrize('when',['before','final_lease'])
+    def test_failed_attempt_is_refused_before_expensive_local_join(tmp_path,monkeypatch,when):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch);calls=[]
+        original=module._trees
+        def trees(*args,**kwargs):
+            if (c['attempt']/'failed.json').exists():raise AssertionError('invalid attempt reached checkpoint traversal')
+            return original(*args,**kwargs)
+        def lease():
+            calls.append(1)
+            if when=='final_lease' and len(calls)==2:(c['attempt']/'failed.json').write_bytes(b'{}')
+        if when=='before':(c['attempt']/'failed.json').write_bytes(b'{}')
+        monkeypatch.setattr(module,'_trees',trees)
+        with pytest.raises(ValueError):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+
+tests/research/onchain_replication/test_archived_stage_check.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_stage.py:274: in check
+    inspect();lease();inspect()
+    ^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:269: in inspect
+    got=_inspect(root,attempt,fd,ref_fd,ref_identity,intent,read_intent_raw,read_complete_raw,transport)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:124: in _inspect
+    logical = _trees(root/'checkpoints',ref_fd,count,start_sha,policy)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (PosixPath('/tmp/pytest-of-malecada/pytest-120/test_failed_attempt_is_refused0/source/checkpoints'), 14, 15, '9ce8bbbf...nk_edges': 2, 'hardening_buffer_bytes': 4096, 'hardening_chunk_entries': 2, 'max_checkpoint_bytes': 400000, ...}, ...})
+kwargs = {}
+
+    def trees(*args,**kwargs):
+>       if (c['attempt']/'failed.json').exists():raise AssertionError('invalid attempt reached checkpoint traversal')
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: invalid attempt reached checkpoint traversal
+
+tests/research/onchain_replication/test_archived_stage_check.py:90: AssertionError
+___ test_failed_attempt_is_refused_before_expensive_local_join[final_lease] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-120/test_failed_attempt_is_refused1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d10f5e49e0>
+when = 'final_lease'
+
+    @pytest.mark.parametrize('when',['before','final_lease'])
+    def test_failed_attempt_is_refused_before_expensive_local_join(tmp_path,monkeypatch,when):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch);calls=[]
+        original=module._trees
+        def trees(*args,**kwargs):
+            if (c['attempt']/'failed.json').exists():raise AssertionError('invalid attempt reached checkpoint traversal')
+            return original(*args,**kwargs)
+        def lease():
+            calls.append(1)
+            if when=='final_lease' and len(calls)==2:(c['attempt']/'failed.json').write_bytes(b'{}')
+        if when=='before':(c['attempt']/'failed.json').write_bytes(b'{}')
+        monkeypatch.setattr(module,'_trees',trees)
+        with pytest.raises(ValueError):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+
+tests/research/onchain_replication/test_archived_stage_check.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_stage.py:274: in check
+    inspect();lease();inspect()
+                      ^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:269: in inspect
+    got=_inspect(root,attempt,fd,ref_fd,ref_identity,intent,read_intent_raw,read_complete_raw,transport)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archived_stage.py:124: in _inspect
+    logical = _trees(root/'checkpoints',ref_fd,count,start_sha,policy)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (PosixPath('/tmp/pytest-of-malecada/pytest-120/test_failed_attempt_is_refused1/source/checkpoints'), 14, 15, '9ce8bbbf...nk_edges': 2, 'hardening_buffer_bytes': 4096, 'hardening_chunk_entries': 2, 'max_checkpoint_bytes': 400000, ...}, ...})
+kwargs = {}
+
+    def trees(*args,**kwargs):
+>       if (c['attempt']/'failed.json').exists():raise AssertionError('invalid attempt reached checkpoint traversal')
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: invalid attempt reached checkpoint traversal
+
+tests/research/onchain_replication/test_archived_stage_check.py:90: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_caller_rehashed_proof_keeps_reader_caps_and_exact_numeric_schema[read_capacity]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_caller_rehashed_proof_keeps_reader_caps_and_exact_numeric_schema[noncanonical_count]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_failed_attempt_is_refused_before_expensive_local_join[before]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_failed_attempt_is_refused_before_expensive_local_join[final_lease]
+4 failed, 3 passed, 15 deselected in 8.18s

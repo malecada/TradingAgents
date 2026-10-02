@@ -1,0 +1,404 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+___________ test_local_check_never_fetches_or_publishes[dictionary] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_local_check_never_fetches0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65f2847360>
+kind = 'dictionary'
+
+    @pytest.mark.parametrize('kind',['dictionary','mcm'])
+    def test_local_check_never_fetches_or_publishes(tmp_path,monkeypatch,kind):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch,kind)
+        before=tree(tmp_path)
+        def forbidden(*args,**kwargs):raise AssertionError('local check must not transfer or publish')
+        for name in ('get','put','mkdir'):monkeypatch.setattr(c['transport'],name,forbidden)
+        monkeypatch.setattr(module.io,'_write',forbidden)
+>       got=module.check(root,attempt=c['attempt'],expected_sha256=expected,
+            ^^^^^^^^^^^^
+            transport=c['transport'],lease=lambda:None)
+E       AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:25: AttributeError
+_______________ test_local_check_never_fetches_or_publishes[mcm] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_local_check_never_fetches1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65f2847100>
+kind = 'mcm'
+
+    @pytest.mark.parametrize('kind',['dictionary','mcm'])
+    def test_local_check_never_fetches_or_publishes(tmp_path,monkeypatch,kind):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch,kind)
+        before=tree(tmp_path)
+        def forbidden(*args,**kwargs):raise AssertionError('local check must not transfer or publish')
+        for name in ('get','put','mkdir'):monkeypatch.setattr(c['transport'],name,forbidden)
+        monkeypatch.setattr(module.io,'_write',forbidden)
+>       got=module.check(root,attempt=c['attempt'],expected_sha256=expected,
+            ^^^^^^^^^^^^
+            transport=c['transport'],lease=lambda:None)
+E       AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:25: AttributeError
+______ test_final_lease_mutation_rejects_without_rewriting_proof[intent] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_final_lease_mutation_reje0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0e59490>
+target = 'intent'
+
+    @pytest.mark.parametrize('target',['intent','event_intent','event_complete','checkpoint','score','reference','source','extra','failed'])
+    def test_final_lease_mutation_rejects_without_rewriting_proof(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        calls=[];mutated=[]
+        def lease():
+            calls.append(1)
+            if len(calls)!=2:return
+            paths={'intent':c['attempt']/'intent.json','event_intent':c['attempt']/'events/intent.json',
+                'event_complete':c['attempt']/'events/complete.json',
+                'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':c['attempt']/'checkpoint-references.bin','source':root/'matching/terminal.json',
+                'extra':c['attempt']/'unexpected','failed':c['attempt']/'failed.json'}
+            paths[target].write_bytes(b'{}');mutated.append(tree(tmp_path))
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+            ^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:46: AttributeError
+___ test_final_lease_mutation_rejects_without_rewriting_proof[event_intent] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_final_lease_mutation_reje1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0ca2580>
+target = 'event_intent'
+
+    @pytest.mark.parametrize('target',['intent','event_intent','event_complete','checkpoint','score','reference','source','extra','failed'])
+    def test_final_lease_mutation_rejects_without_rewriting_proof(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        calls=[];mutated=[]
+        def lease():
+            calls.append(1)
+            if len(calls)!=2:return
+            paths={'intent':c['attempt']/'intent.json','event_intent':c['attempt']/'events/intent.json',
+                'event_complete':c['attempt']/'events/complete.json',
+                'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':c['attempt']/'checkpoint-references.bin','source':root/'matching/terminal.json',
+                'extra':c['attempt']/'unexpected','failed':c['attempt']/'failed.json'}
+            paths[target].write_bytes(b'{}');mutated.append(tree(tmp_path))
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+            ^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:46: AttributeError
+__ test_final_lease_mutation_rejects_without_rewriting_proof[event_complete] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_final_lease_mutation_reje2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0ca3ce0>
+target = 'event_complete'
+
+    @pytest.mark.parametrize('target',['intent','event_intent','event_complete','checkpoint','score','reference','source','extra','failed'])
+    def test_final_lease_mutation_rejects_without_rewriting_proof(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        calls=[];mutated=[]
+        def lease():
+            calls.append(1)
+            if len(calls)!=2:return
+            paths={'intent':c['attempt']/'intent.json','event_intent':c['attempt']/'events/intent.json',
+                'event_complete':c['attempt']/'events/complete.json',
+                'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':c['attempt']/'checkpoint-references.bin','source':root/'matching/terminal.json',
+                'extra':c['attempt']/'unexpected','failed':c['attempt']/'failed.json'}
+            paths[target].write_bytes(b'{}');mutated.append(tree(tmp_path))
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+            ^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:46: AttributeError
+____ test_final_lease_mutation_rejects_without_rewriting_proof[checkpoint] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_final_lease_mutation_reje3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0e41350>
+target = 'checkpoint'
+
+    @pytest.mark.parametrize('target',['intent','event_intent','event_complete','checkpoint','score','reference','source','extra','failed'])
+    def test_final_lease_mutation_rejects_without_rewriting_proof(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        calls=[];mutated=[]
+        def lease():
+            calls.append(1)
+            if len(calls)!=2:return
+            paths={'intent':c['attempt']/'intent.json','event_intent':c['attempt']/'events/intent.json',
+                'event_complete':c['attempt']/'events/complete.json',
+                'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':c['attempt']/'checkpoint-references.bin','source':root/'matching/terminal.json',
+                'extra':c['attempt']/'unexpected','failed':c['attempt']/'failed.json'}
+            paths[target].write_bytes(b'{}');mutated.append(tree(tmp_path))
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+            ^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:46: AttributeError
+_______ test_final_lease_mutation_rejects_without_rewriting_proof[score] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_final_lease_mutation_reje4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0e42050>
+target = 'score'
+
+    @pytest.mark.parametrize('target',['intent','event_intent','event_complete','checkpoint','score','reference','source','extra','failed'])
+    def test_final_lease_mutation_rejects_without_rewriting_proof(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        calls=[];mutated=[]
+        def lease():
+            calls.append(1)
+            if len(calls)!=2:return
+            paths={'intent':c['attempt']/'intent.json','event_intent':c['attempt']/'events/intent.json',
+                'event_complete':c['attempt']/'events/complete.json',
+                'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':c['attempt']/'checkpoint-references.bin','source':root/'matching/terminal.json',
+                'extra':c['attempt']/'unexpected','failed':c['attempt']/'failed.json'}
+            paths[target].write_bytes(b'{}');mutated.append(tree(tmp_path))
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+            ^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:46: AttributeError
+_____ test_final_lease_mutation_rejects_without_rewriting_proof[reference] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_final_lease_mutation_reje5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0ce7b60>
+target = 'reference'
+
+    @pytest.mark.parametrize('target',['intent','event_intent','event_complete','checkpoint','score','reference','source','extra','failed'])
+    def test_final_lease_mutation_rejects_without_rewriting_proof(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        calls=[];mutated=[]
+        def lease():
+            calls.append(1)
+            if len(calls)!=2:return
+            paths={'intent':c['attempt']/'intent.json','event_intent':c['attempt']/'events/intent.json',
+                'event_complete':c['attempt']/'events/complete.json',
+                'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':c['attempt']/'checkpoint-references.bin','source':root/'matching/terminal.json',
+                'extra':c['attempt']/'unexpected','failed':c['attempt']/'failed.json'}
+            paths[target].write_bytes(b'{}');mutated.append(tree(tmp_path))
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+            ^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:46: AttributeError
+______ test_final_lease_mutation_rejects_without_rewriting_proof[source] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_final_lease_mutation_reje6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0ce4aa0>
+target = 'source'
+
+    @pytest.mark.parametrize('target',['intent','event_intent','event_complete','checkpoint','score','reference','source','extra','failed'])
+    def test_final_lease_mutation_rejects_without_rewriting_proof(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        calls=[];mutated=[]
+        def lease():
+            calls.append(1)
+            if len(calls)!=2:return
+            paths={'intent':c['attempt']/'intent.json','event_intent':c['attempt']/'events/intent.json',
+                'event_complete':c['attempt']/'events/complete.json',
+                'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':c['attempt']/'checkpoint-references.bin','source':root/'matching/terminal.json',
+                'extra':c['attempt']/'unexpected','failed':c['attempt']/'failed.json'}
+            paths[target].write_bytes(b'{}');mutated.append(tree(tmp_path))
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+            ^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:46: AttributeError
+_______ test_final_lease_mutation_rejects_without_rewriting_proof[extra] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_final_lease_mutation_reje7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0d13a10>
+target = 'extra'
+
+    @pytest.mark.parametrize('target',['intent','event_intent','event_complete','checkpoint','score','reference','source','extra','failed'])
+    def test_final_lease_mutation_rejects_without_rewriting_proof(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        calls=[];mutated=[]
+        def lease():
+            calls.append(1)
+            if len(calls)!=2:return
+            paths={'intent':c['attempt']/'intent.json','event_intent':c['attempt']/'events/intent.json',
+                'event_complete':c['attempt']/'events/complete.json',
+                'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':c['attempt']/'checkpoint-references.bin','source':root/'matching/terminal.json',
+                'extra':c['attempt']/'unexpected','failed':c['attempt']/'failed.json'}
+            paths[target].write_bytes(b'{}');mutated.append(tree(tmp_path))
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+            ^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:46: AttributeError
+______ test_final_lease_mutation_rejects_without_rewriting_proof[failed] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_final_lease_mutation_reje8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0d13770>
+target = 'failed'
+
+    @pytest.mark.parametrize('target',['intent','event_intent','event_complete','checkpoint','score','reference','source','extra','failed'])
+    def test_final_lease_mutation_rejects_without_rewriting_proof(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        calls=[];mutated=[]
+        def lease():
+            calls.append(1)
+            if len(calls)!=2:return
+            paths={'intent':c['attempt']/'intent.json','event_intent':c['attempt']/'events/intent.json',
+                'event_complete':c['attempt']/'events/complete.json',
+                'checkpoint':next((root/'checkpoints').glob('*/state/annealing/M.npy')),
+                'score':root/'stream/batches/chunk-000000000000.bin',
+                'reference':c['attempt']/'checkpoint-references.bin','source':root/'matching/terminal.json',
+                'extra':c['attempt']/'unexpected','failed':c['attempt']/'failed.json'}
+            paths[target].write_bytes(b'{}');mutated.append(tree(tmp_path))
+        with pytest.raises((ValueError,UnicodeError)):
+>           module.check(root,attempt=c['attempt'],expected_sha256=expected,transport=c['transport'],lease=lease)
+            ^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:46: AttributeError
+____________ test_even_caller_rehashed_invalid_proof_is_refused[v1] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_even_caller_rehashed_inva0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0e01cc0>
+target = 'v1'
+
+    @pytest.mark.parametrize('target',['v1','unknown','policy','replay'])
+    def test_even_caller_rehashed_invalid_proof_is_refused(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        path=c['attempt']/'complete.json'
+        if target=='v1':result['schema_version']=1;result['format']='archived-compact-stage-v1'
+        if target=='unknown':result['unrecognized']=True
+        if target=='policy':
+            intent=json.loads((c['attempt']/'intent.json').read_bytes());intent['max_stage_bytes']=1
+            raw=module.io._json(intent);(c['attempt']/'intent.json').write_bytes(raw)
+            result['stage_read_intent_sha256']=module.io._hash(raw)
+        if target=='replay':
+            item=c['attempt']/'events/complete.json';record=json.loads(item.read_bytes())
+            record['replay']['completed_pairs']+=1;raw=module.io._json(record);item.write_bytes(raw)
+            result['event_read_complete_sha256']=module.io._hash(raw)
+        raw=module.io._json(result);path.write_bytes(raw);before=tree(tmp_path)
+        with pytest.raises(ValueError):
+>           module.check(root,attempt=c['attempt'],expected_sha256=module.io._hash(raw),
+            ^^^^^^^^^^^^
+                transport=c['transport'],lease=lambda:None)
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:66: AttributeError
+_________ test_even_caller_rehashed_invalid_proof_is_refused[unknown] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_even_caller_rehashed_inva1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0e95850>
+target = 'unknown'
+
+    @pytest.mark.parametrize('target',['v1','unknown','policy','replay'])
+    def test_even_caller_rehashed_invalid_proof_is_refused(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        path=c['attempt']/'complete.json'
+        if target=='v1':result['schema_version']=1;result['format']='archived-compact-stage-v1'
+        if target=='unknown':result['unrecognized']=True
+        if target=='policy':
+            intent=json.loads((c['attempt']/'intent.json').read_bytes());intent['max_stage_bytes']=1
+            raw=module.io._json(intent);(c['attempt']/'intent.json').write_bytes(raw)
+            result['stage_read_intent_sha256']=module.io._hash(raw)
+        if target=='replay':
+            item=c['attempt']/'events/complete.json';record=json.loads(item.read_bytes())
+            record['replay']['completed_pairs']+=1;raw=module.io._json(record);item.write_bytes(raw)
+            result['event_read_complete_sha256']=module.io._hash(raw)
+        raw=module.io._json(result);path.write_bytes(raw);before=tree(tmp_path)
+        with pytest.raises(ValueError):
+>           module.check(root,attempt=c['attempt'],expected_sha256=module.io._hash(raw),
+            ^^^^^^^^^^^^
+                transport=c['transport'],lease=lambda:None)
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:66: AttributeError
+__________ test_even_caller_rehashed_invalid_proof_is_refused[policy] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_even_caller_rehashed_inva2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b17b7f50>
+target = 'policy'
+
+    @pytest.mark.parametrize('target',['v1','unknown','policy','replay'])
+    def test_even_caller_rehashed_invalid_proof_is_refused(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        path=c['attempt']/'complete.json'
+        if target=='v1':result['schema_version']=1;result['format']='archived-compact-stage-v1'
+        if target=='unknown':result['unrecognized']=True
+        if target=='policy':
+            intent=json.loads((c['attempt']/'intent.json').read_bytes());intent['max_stage_bytes']=1
+            raw=module.io._json(intent);(c['attempt']/'intent.json').write_bytes(raw)
+            result['stage_read_intent_sha256']=module.io._hash(raw)
+        if target=='replay':
+            item=c['attempt']/'events/complete.json';record=json.loads(item.read_bytes())
+            record['replay']['completed_pairs']+=1;raw=module.io._json(record);item.write_bytes(raw)
+            result['event_read_complete_sha256']=module.io._hash(raw)
+        raw=module.io._json(result);path.write_bytes(raw);before=tree(tmp_path)
+        with pytest.raises(ValueError):
+>           module.check(root,attempt=c['attempt'],expected_sha256=module.io._hash(raw),
+            ^^^^^^^^^^^^
+                transport=c['transport'],lease=lambda:None)
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:66: AttributeError
+__________ test_even_caller_rehashed_invalid_proof_is_refused[replay] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-118/test_even_caller_rehashed_inva3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7c65b0c981b0>
+target = 'replay'
+
+    @pytest.mark.parametrize('target',['v1','unknown','policy','replay'])
+    def test_even_caller_rehashed_invalid_proof_is_refused(tmp_path,monkeypatch,target):
+        module,root,c,result,expected=verified(tmp_path,monkeypatch)
+        path=c['attempt']/'complete.json'
+        if target=='v1':result['schema_version']=1;result['format']='archived-compact-stage-v1'
+        if target=='unknown':result['unrecognized']=True
+        if target=='policy':
+            intent=json.loads((c['attempt']/'intent.json').read_bytes());intent['max_stage_bytes']=1
+            raw=module.io._json(intent);(c['attempt']/'intent.json').write_bytes(raw)
+            result['stage_read_intent_sha256']=module.io._hash(raw)
+        if target=='replay':
+            item=c['attempt']/'events/complete.json';record=json.loads(item.read_bytes())
+            record['replay']['completed_pairs']+=1;raw=module.io._json(record);item.write_bytes(raw)
+            result['event_read_complete_sha256']=module.io._hash(raw)
+        raw=module.io._json(result);path.write_bytes(raw);before=tree(tmp_path)
+        with pytest.raises(ValueError):
+>           module.check(root,attempt=c['attempt'],expected_sha256=module.io._hash(raw),
+            ^^^^^^^^^^^^
+                transport=c['transport'],lease=lambda:None)
+E           AttributeError: module 'tradingagents.research.onchain_replication.archived_stage' has no attribute 'check'
+
+tests/research/onchain_replication/test_archived_stage_check.py:66: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_local_check_never_fetches_or_publishes[dictionary]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_local_check_never_fetches_or_publishes[mcm]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_final_lease_mutation_rejects_without_rewriting_proof[intent]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_final_lease_mutation_rejects_without_rewriting_proof[event_intent]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_final_lease_mutation_rejects_without_rewriting_proof[event_complete]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_final_lease_mutation_rejects_without_rewriting_proof[checkpoint]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_final_lease_mutation_rejects_without_rewriting_proof[score]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_final_lease_mutation_rejects_without_rewriting_proof[reference]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_final_lease_mutation_rejects_without_rewriting_proof[source]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_final_lease_mutation_rejects_without_rewriting_proof[extra]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_final_lease_mutation_rejects_without_rewriting_proof[failed]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_even_caller_rehashed_invalid_proof_is_refused[v1]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_even_caller_rehashed_invalid_proof_is_refused[unknown]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_even_caller_rehashed_invalid_proof_is_refused[policy]
+FAILED tests/research/onchain_replication/test_archived_stage_check.py::test_even_caller_rehashed_invalid_proof_is_refused[replay]
+15 failed in 40.64s

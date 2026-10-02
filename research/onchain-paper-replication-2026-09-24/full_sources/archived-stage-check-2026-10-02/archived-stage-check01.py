@@ -89,8 +89,8 @@ def _inspect(root,attempt,fd,ref_fd,ref_identity,intent,read_intent_raw,read_com
         'archive_complete_sha256':archive_complete_sha256,'owner':owner,'scope':scope,
         'archive_policy':archive_policy,'max_read_metadata_bytes':c['max_read_metadata_bytes']}),
         'archived event read intent binding differs')
-    require(read_complete_raw==io._json({'schema_version':1,'archive_complete_sha256':archive_complete_sha256,
-        'replay':record,'execution_admitted':False}) and type(count) is int
+    require(observed=={'schema_version':1,'archive_complete_sha256':archive_complete_sha256,
+        'replay':record,'execution_admitted':False} and type(count) is int
         and 0<=count<=policy['schedule']['max_total_checkpoints']
         and record['completed_pairs']==record['started_pairs']==pairs and record['pending'] is None,
         'archived stage matching denominator differs')
@@ -98,11 +98,8 @@ def _inspect(root,attempt,fd,ref_fd,ref_identity,intent,read_intent_raw,read_com
     path,sfd = io._open(root/'matching')
     try:
         source = reader._Snapshot(path,sfd,archive_complete_sha256,owner,scope,archive_policy,transport)
-        require((3*source.policy['max_chunks']+8)*io.META_LIMIT <= c['max_read_metadata_bytes'],
-            'archived event read metadata allowance insufficient')
         require(source.complete['terminal_sha256'] == log_terminal_sha256
-            and source.start['limits'] == policy['log']
-            and io._json(source.complete['replay']) == io._json(record) and scope['policy'] == cache_key({
+            and source.start['limits'] == policy['log'] and source.complete['replay'] == record and scope['policy'] == cache_key({
                 'pair':policy['pair'],'schedule':policy['schedule']}), 'archived scientific policy/terminal differs')
         reader._inventory(attempt/'events',{'intent.json','complete.json'},r'chunk-([0-9]{12})',source.count)
         rpath,rfd = io._open(attempt/'events')
@@ -247,9 +244,7 @@ def check(root, *, attempt, expected_sha256, transport, lease):
     io._identity(expected_sha256);require(callable(lease),'archived local check live lease required')
     lease();fd=ref_fd=source_fd=None
     try:
-        path,fd=io._open(attempt)
-        reader.archive._inventory(fd,{'intent.json','checkpoint-references.bin','events','complete.json'})
-        source,source_fd=io._open(root/'matching')
+        path,fd=io._open(attempt);source,source_fd=io._open(root/'matching')
         raw=io._read(fd,'complete.json',io.META_LIMIT)
         require(io._hash(raw)==expected_sha256,'archived local completion hash differs')
         result=json.loads(raw)
@@ -271,9 +266,8 @@ def check(root, *, attempt, expected_sha256, transport, lease):
         ref_fd=os.open('checkpoint-references.bin',os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=fd)
         ref_identity=io._signature(os.fstat(ref_fd))[:2]
         def inspect():
-            reader.archive._inventory(fd,{'intent.json','checkpoint-references.bin','events','complete.json'})
             got=_inspect(root,attempt,fd,ref_fd,ref_identity,intent,read_intent_raw,read_complete_raw,transport)
-            require(io._json(got)==raw,'archived local scientific result differs')
+            require(got==result,'archived local scientific result differs')
             reader.archive._inventory(fd,{'intent.json','checkpoint-references.bin','events','complete.json'})
             require(io._read(fd,'complete.json',io.META_LIMIT)==raw,'archived local completion changed')
             io._root(path,fd);io._root(source,source_fd)
