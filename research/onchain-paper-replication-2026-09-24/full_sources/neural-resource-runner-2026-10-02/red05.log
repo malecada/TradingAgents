@@ -1,0 +1,147 @@
+...........FFFFF                                                         [100%]
+=================================== FAILURES ===================================
+_________ test_fatal_propagates_after_full_failed_denominator[fatal0] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-164/test_fatal_propagates_after_fu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e832db92050>
+fatal = SystemExit('synthetic stop')
+
+    @pytest.mark.parametrize('fatal',[SystemExit('synthetic stop'),MemoryError('synthetic memory exhausted')])
+    def test_fatal_propagates_after_full_failed_denominator(tmp_path,monkeypatch,fatal):
+        n=module();run,_=synthetic_run(tmp_path,monkeypatch)
+        def fail(*a,**kw):raise fatal
+        monkeypatch.setattr(n,'run_cell',fail)
+>       with pytest.raises(type(fatal)) as caught:n.produce_registered_neural_resource(run,'plan')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE SystemExit
+
+tests/research/onchain_replication/test_neural_resource.py:189: Failed
+_________ test_fatal_propagates_after_full_failed_denominator[fatal1] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-164/test_fatal_propagates_after_fu1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e8321d1d400>
+fatal = MemoryError('synthetic memory exhausted')
+
+    @pytest.mark.parametrize('fatal',[SystemExit('synthetic stop'),MemoryError('synthetic memory exhausted')])
+    def test_fatal_propagates_after_full_failed_denominator(tmp_path,monkeypatch,fatal):
+        n=module();run,_=synthetic_run(tmp_path,monkeypatch)
+        def fail(*a,**kw):raise fatal
+        monkeypatch.setattr(n,'run_cell',fail)
+>       with pytest.raises(type(fatal)) as caught:n.produce_registered_neural_resource(run,'plan')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE MemoryError
+
+tests/research/onchain_replication/test_neural_resource.py:189: Failed
+______________ test_failed_publication_cannot_mask_primary_fatal _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-164/test_failed_publication_cannot0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e8321d1d7c0>
+
+    def test_failed_publication_cannot_mask_primary_fatal(tmp_path,monkeypatch):
+        n=module();run,_=synthetic_run(tmp_path,monkeypatch);primary=SystemExit('primary interruption')
+        original=n._immutable;writes=[]
+        def write(path,value):
+            writes.append(path.name)
+            if path.name.startswith('neural_checkpoint-'):raise OSError('secondary publication unavailable')
+            return original(path,value)
+        monkeypatch.setattr(n,'_immutable',write)
+        def fail(*a,**kw):raise primary
+        monkeypatch.setattr(n,'run_cell',fail)
+>       with pytest.raises(SystemExit) as caught:n.produce_registered_neural_resource(run,'plan')
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_resource.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neural_resource.py:184: in produce_registered_neural_resource
+    rows.append(row);_immutable(directory/(cell['cell_id']+'.json'),row)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-malecada/pytest-164/test_failed_publication_cannot0/research_artifacts/onchain-paper-replication-2026-09-24/sources/synthetic-neural/neural_checkpoint-2022-01-03.json')
+value = {'id': 'neural_checkpoint-2022-01-03', 'status': 'failed', 'reason': 'SystemExit: primary interruption', 'reason_sha256': 'b8fc65b6f64fb881f65fd09e6a9d4d0913fdbe3098f727145d6f548b74810781'}
+
+    def write(path,value):
+        writes.append(path.name)
+>       if path.name.startswith('neural_checkpoint-'):raise OSError('secondary publication unavailable')
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: secondary publication unavailable
+
+tests/research/onchain_replication/test_neural_resource.py:201: OSError
+__________ test_checkpoint_close_is_once_and_preserves_original_fatal __________
+
+a = ({'model': OrderedDict({'graph.mlp.0.weight': tensor([[ 0.1703, -0.2329, -0.0392,  ...,  0.1172, -0.2284, -0.2093],
+  ...'epoch': 1, ...}, <tradingagents.research.onchain_replication.neural_resource._BoundedWriter object at 0x7e846a5ccf30>)
+kw = {}
+
+>   def fail(*a,**kw):raise primary
+                      ^^^^^^^^^^^^^
+E   tradingagents.research.onchain_replication.score_batches.CleanupFailure: primary write cleanup uncertainty
+
+tests/research/onchain_replication/test_neural_resource.py:226: CleanupFailure
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-164/test_checkpoint_close_is_once_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e846a5ce430>
+
+    def test_checkpoint_close_is_once_and_preserves_original_fatal(tmp_path,monkeypatch):
+        n=module();from tradingagents.research.onchain_replication.score_batches import CleanupFailure
+        primary=CleanupFailure('primary write cleanup uncertainty');closes=[]
+        original=Path.open
+        class UncertainClose:
+            def __init__(self,stream):self.stream=stream
+            def __getattr__(self,name):return getattr(self.stream,name)
+            def __enter__(self):return self
+            def __exit__(self,*args):self.close()
+            def close(self):
+                closes.append(True);self.stream.close();raise OSError('secondary close uncertainty')
+        def opened(path,*a,**kw):
+            stream=original(path,*a,**kw)
+            return UncertainClose(stream) if path.name=='checkpoint.pt' and a==('xb',) else stream
+        monkeypatch.setattr(Path,'open',opened)
+        def fail(*a,**kw):raise primary
+        monkeypatch.setattr(torch,'save',fail)
+        import numpy as np
+        graph=SimpleNamespace(node_ids=('a','b'),edge_index=np.array([[0],[1]],dtype='int64'))
+>       with pytest.raises(CleanupFailure) as caught:n.run_cell(graph,cfg(),tmp_path,{},max_checkpoint_bytes=1024**2,cooperative_seconds=60)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_resource.py:230: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neural_resource.py:122: in run_cell
+    with path.open('xb') as stream:
+         ^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_neural_resource.py:219: in __exit__
+    def __exit__(self,*args):self.close()
+                             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.research.onchain_replication.test_neural_resource.test_checkpoint_close_is_once_and_preserves_original_fatal.<locals>.UncertainClose object at 0x7e832da0acf0>
+
+    def close(self):
+>       closes.append(True);self.stream.close();raise OSError('secondary close uncertainty')
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: secondary close uncertainty
+
+tests/research/onchain_replication/test_neural_resource.py:221: OSError
+_________ test_producer_requires_selected_execution_plan_before_output _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-164/test_producer_requires_selecte0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e846a5cc9f0>
+
+    def test_producer_requires_selected_execution_plan_before_output(tmp_path,monkeypatch):
+        n=module();run,_=synthetic_run(tmp_path,monkeypatch)
+        # There is no execution_job input in this intentionally unbound fixture.
+>       with pytest.raises((KeyError,ValueError),match='execution|unregistered'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (KeyError, ValueError)
+
+tests/research/onchain_replication/test_neural_resource.py:238: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_fatal_propagates_after_full_failed_denominator[fatal0]
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_fatal_propagates_after_full_failed_denominator[fatal1]
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_failed_publication_cannot_mask_primary_fatal
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_checkpoint_close_is_once_and_preserves_original_fatal
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_producer_requires_selected_execution_plan_before_output
+5 failed, 11 passed in 13.15s

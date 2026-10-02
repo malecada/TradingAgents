@@ -272,7 +272,6 @@ def worker(args):
             cells = [{**c, 'id': lifecycle_cell_id(c['id']), 'scientific_id': c['id']} for c in scientific]
         if any(c['status'] == 'failed' for c in cells):
             run.fail('one or more finite cells failed; complete ledger retained')
-            if job['kind']=='neural_resource':raise RuntimeError('neural resource job failed; no retry')
         else:
             run.finish(cells)
 

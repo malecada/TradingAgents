@@ -72,9 +72,9 @@ def resource_policy(value, root):
 
 
 def job_schema(job):
-    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource'):
+    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census'):
         raise ValueError('execution job schema/kind differs')
-    if job['kind'] in ('graphs','neighborhood_census','hub_edge_census','neural_resource') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
+    if job['kind'] in ('graphs','neighborhood_census','hub_edge_census') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
         raise ValueError('graph/census job requires an explicit registered plan input')
     if job['kind'] in ('neighborhood_census','hub_edge_census') and (type(job['resources'].get('wall_seconds')) is not int or not 0<job['resources']['wall_seconds']<=540):
         raise ValueError('census whole-job wall limit must not exceed 540 seconds')
@@ -251,17 +251,9 @@ def worker(args):
     signal.signal(signal.SIGINT, stop)
     with ResearchRun.start(root=root, registration=args.registration, experiment=args.experiment, source=args.source) as run:
         from .environment import inventory
-        if inventory(root, include_torch=job['kind'] in ('fit','neural_resource')) != json.loads(run.read_input(job['environment_input'])):
+        if inventory(root, include_torch=job['kind'] == 'fit') != json.loads(run.read_input(job['environment_input'])):
             raise ValueError('registered execution environment differs')
-        if job['kind'] == 'neural_resource':
-            from .neural_resource import produce_registered_neural_resource, finalize_storage
-            cells, summary, directory = produce_registered_neural_resource(run, job['payload']['plan_input'])
-            run.write_json('cell-ledger.json', cells)
-            run.write_json('resource-summary.json', summary)
-            run.write_json('artifact-index.json', {str(p.relative_to(root)): {'sha256': file_hash(p), 'bytes': p.stat().st_size}
-                for p in directory.rglob('*') if p.is_file()})
-            finalize_storage(run, directory, job['payload']['plan_input'])
-        elif job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census'):
+        if job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census'):
             cells = execute_source_job(run, job['kind'], job['payload'])
         else:
             import torch
@@ -272,7 +264,6 @@ def worker(args):
             cells = [{**c, 'id': lifecycle_cell_id(c['id']), 'scientific_id': c['id']} for c in scientific]
         if any(c['status'] == 'failed' for c in cells):
             run.fail('one or more finite cells failed; complete ledger retained')
-            if job['kind']=='neural_resource':raise RuntimeError('neural resource job failed; no retry')
         else:
             run.finish(cells)
 

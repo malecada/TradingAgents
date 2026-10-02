@@ -1,0 +1,21 @@
+..........F                                                              [100%]
+=================================== FAILURES ===================================
+__________ test_plan_rejects_wrong_graph_week_end_and_boolean_limits ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-154/test_plan_rejects_wrong_graph_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e3da7ebad50>
+
+    def test_plan_rejects_wrong_graph_week_end_and_boolean_limits(tmp_path,monkeypatch):
+        n=module();run,plan=synthetic_run(tmp_path,monkeypatch)
+        from tradingagents.research.onchain_replication.provenance import file_hash
+        path=tmp_path/'g0/manifest.json';manifest=json.loads(path.read_bytes())
+        manifest['metadata']['end_utc']='2022-01-11T00:00:00Z';path.write_text(json.dumps(manifest));run.admission.inputs['g0']['sha256']=file_hash(path)
+>       with pytest.raises(ValueError,match='week'):n.registered_plan(run,'plan')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_resource.py:178: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_plan_rejects_wrong_graph_week_end_and_boolean_limits
+1 failed, 10 passed in 8.24s

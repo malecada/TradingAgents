@@ -3,6 +3,36 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 continuation — neural runner accepted; stage integration active**:
+Neural candidate03 is independently accepted for bounded synthetic engineering.
+REVIEW_FINAL SHA256b3871fc9ca140e160b2c76b33392fc746bf714dba25c94a3b9c5a174abd9a5ab.
+All NR1–NR3 and the final publication-ordering gap are closed. Prior candidate02
+coverage is36 passed/one CUDA skip; the targeted candidate03 correction is6 passed,
+21 deselected in2.82s. These are separate suites, not a claimed combined rerun.
+Exact candidate03.json SHA2566c682f87fa862bd12b6c88a7eafad2ab4f1df8a5d94a8f6c5962cec69194cd76.
+All failed attempts and source snapshots remain retained. Full-size resource,
+CUDA and empirical admission are outside this acceptance.
+
+The exact13-file neural registration draft is independently accepted as
+NONEXECUTABLE preparation only, REVIEW SHA256
+51efb9ee86cf0d1113750940cbf22504bba43c7ed65b00e358787dad6ccb62a9.
+The nine original cells/windows/configurations,43 metadata pins, nine graph proof
+references and33 terminal claim records were independently reconstructed.
+Final identity/source/runtime/environment/workspace and accepted actual extension
+bindings, original body-byte admission and whole-job physical accounting remain.
+The proposed6GiB worker requires9GiB available at startup; current snapshot is
+below that. This is not permission to reduce the model or host reserve.
+
+archive_transport has completed neural review and started tests-first archived
+stage retention integration under its explicit ownership in COORDINATION.md.
+admission_batching owns only neural-resource-physical-admission-2026-10-02/
+for a source-backed report on concrete guard/log/lifecycle/storage enforcement
+and remaining bounds. owner_closure_review is available for independent report
+and eventual integration review. Root owns final registrations and durable state.
+No empirical run has started;77/109 resource coverage and1,420 pending financial
+fits remain unchanged. Continue independent integration while resource admission
+is prepared; never relaunch the closed synthetic or historical identities.
+
 **October 2 continuation — restart primitive accepted; neural registration prepared**:
 Restart-retention candidate06 is independently accepted for the unselected,
 fresh-root one-pair helper. All RRP1–RRP4 findings are closed; check09 CLOSED:
@@ -32,6 +62,16 @@ owner_closure_review owns its independent preparation review. Proposed limits ar
 cooperative per cell, 4MiB per checkpoint and64MiB outputs. The small synthetic
 checkpoint was493,424 bytes; this is not a full-graph RAM bound. Initial draft
 preparation observed6,074,048,512 available RAM bytes, below9GiB startup.
+
+Accepted primitive checkpoint4ce2ac9c246bbfaab971898ad537ef3a10d6ccb1 is pushed;
+exact remote branch HEAD was verified. Fresh host metadata reports6,100,250,624
+available RAM bytes and19,754,901,504 free disk bytes. The existing15-minute
+heartbeat remains configured ACTIVE, but an attempted prompt update and subsequent
+view both failed with Codex app MCP request errors. Its existing prompt already
+requires reading this STATE first. The new prompt revision is not claimed saved;
+retry the existing automation tool after service recovery, never edit its TOML
+manually or create a duplicate. Current source/review ownership above supersedes
+stale candidate descriptions in that prompt.
 
 No empirical job is active. Resource coverage remains77/109; all1,420 financial
 fits remain pending. After the accepted helper is backed up, continue the explicit

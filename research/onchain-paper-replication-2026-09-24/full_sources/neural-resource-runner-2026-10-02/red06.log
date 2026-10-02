@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_finalization_refuses_replaced_owned_directory ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-167/test_finalization_refuses_repl0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x732243a37360>
+
+    def test_finalization_refuses_replaced_owned_directory(tmp_path,monkeypatch):
+        import shutil
+        n=module();run,_=synthetic_run(tmp_path,monkeypatch)
+        def fail(*a,**kw):raise ValueError('synthetic no allocation')
+        monkeypatch.setattr(n,'run_cell',fail)
+        _,_,directory=n.produce_registered_neural_resource(run,'plan')
+        outputs=run.directory/'outputs';outputs.mkdir(parents=True)
+        old=directory.with_name('old-owned-directory');directory.rename(old);shutil.copytree(old,directory)
+>       with pytest.raises(ValueError,match='owned|identity'):n.finalize_storage(run,directory,'plan')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_resource.py:300: Failed
+----------------------------- Captured stdout call -----------------------------
+{"kind": "neural_resource_final_storage", "allocated_bytes": 65536, "maximum_bytes": 134217728, "scope": "producer and lifecycle outputs; guard/claim/terminal excluded"}
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_finalization_refuses_replaced_owned_directory
+1 failed, 23 deselected in 1.69s

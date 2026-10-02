@@ -204,3 +204,46 @@ a maintained runner, current physical limits and committed review/admission are
 still required. owner_closure_review owns review files for retention design,
 neural readiness and subsequent helper implementation. Root owns STATE and
 checkpoints. Preserve existing 61 drafts and all spent identities.
+
+
+## Accepted primitive and next coherent stage slice
+
+This section supersedes earlier ownership. The accepted primitive candidate06,
+62 passing checks and all correction attempts are backed up at
+4ce2ac9c246bbfaab971898ad537ef3a10d6ccb1 with exact remote HEAD verified.
+The primitive remains unselected and does not establish aggregate stage capacity.
+
+- archive_transport first completes the independent neural correction review,
+  then immediately owns the new archived-stage restart-retention integration
+  described in restart-retention-integration-2026-10-02/INTEGRATION_REVIEW.md.
+  Ownership covers new bridge/controller/reader modules and integration tests;
+  compact_matcher, compact_training, compact_native_producer, compact_dictionary,
+  compact_mcm, compact_policy, compact_owner, archived_stage, archive_owner_stage
+  and archive_owner_seal. Narrow compact_terminal/archive_owner_policy changes
+  are allowed only when the source-backed integration requires them. The
+  primitive, neural/job code and numerical engine remain outside this scope.
+- admission_batching owns the remaining neural candidate02 failure-reporting
+  correction, its tests and evidence. Source ownership stays neural_resource.py,
+  job.py and test_neural_resource.py. Candidate02 passed36 checks with one CUDA
+  skip, but summary publication must be attempted independently when failure
+  ledger publication fails. Corrected frozen source receives independent review.
+- owner_closure_review owns REVIEW files for root's nonexecutable neural
+  registration draft. Root owns draft revisions, final source/gate/budget
+  bindings, STATE and checkpoints. The frozen13-file draft manifest SHA256 is
+  05f3e0e89abd0a8e4bdd1984b8672ffd09539cf675f548b541de1fc7f7c1b012.
+
+Integration must use an explicitly selected new archived format, lazy stores
+only at scheduled checkpoints, acyclic actual binary-frame joins, stage-wide
+cumulative/live budgets without refunds, and FIRST replay copied before
+retirement. Preserve the old strict format and all historical files. The
+full actual-owner dictionary/MCM/terminal fixture requires an immutable isolated
+complete package snapshot or an explicitly agreed full source freeze. Parallel
+synthetic helper checks do not relax that rule.
+
+No empirical process is running. The resource claim remains nonexecutable;
+current available RAM is below its9GiB startup requirement and the10GiB disk
+floor remains in effect. All nine neural resource cells,23 other pending resource
+cells and1,420 financial fits retain their original status. The existing ACTIVE
+heartbeat still reads STATE, but its prompt update/view tool currently errors;
+retry through the app tool after recovery, without manual TOML changes or a
+duplicate automation. Continue next executable work without another user prompt.

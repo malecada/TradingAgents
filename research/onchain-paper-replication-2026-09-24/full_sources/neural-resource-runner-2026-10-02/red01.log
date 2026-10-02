@@ -1,0 +1,153 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_______________ test_explicit_job_kind_and_no_payload_overrides ________________
+
+    def test_explicit_job_kind_and_no_payload_overrides():
+        value={'schema_version':1,'kind':'neural_resource','resources':{},'environment_input':'env','payload':{'plan_input':'plan'}}
+>       job.job_schema(value)
+
+tests/research/onchain_replication/test_neural_resource.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job = {'schema_version': 1, 'kind': 'neural_resource', 'resources': {}, 'environment_input': 'env', ...}
+
+    def job_schema(job):
+        if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census'):
+>           raise ValueError('execution job schema/kind differs')
+E           ValueError: execution job schema/kind differs
+
+tradingagents/research/onchain_replication/job.py:76: ValueError
+_________ test_original_population_has_one_update_and_real_checkpoint __________
+
+    def module():
+>       try:return importlib.import_module('tradingagents.research.onchain_replication.neural_resource')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_resource.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.neural_resource'
+import_ = <function _gcd_import at 0x7edb0ab5c4a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.neural_resource'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-146/test_original_population_has_o0')
+
+    def test_original_population_has_one_update_and_real_checkpoint(tmp_path):
+>       n=module();torch.set_num_threads(2)
+          ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_resource.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        try:return importlib.import_module('tradingagents.research.onchain_replication.neural_resource')
+>       except ModuleNotFoundError:pytest.fail('maintained neural resource runner missing')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: maintained neural resource runner missing
+
+tests/research/onchain_replication/test_neural_resource.py:14: Failed
+___________ test_checkpoint_limit_preserves_partial_bytes_and_stops ____________
+
+    def module():
+>       try:return importlib.import_module('tradingagents.research.onchain_replication.neural_resource')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_resource.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.neural_resource'
+import_ = <function _gcd_import at 0x7edb0ab5c4a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.neural_resource'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-146/test_checkpoint_limit_preserve0')
+
+    def test_checkpoint_limit_preserves_partial_bytes_and_stops(tmp_path):
+>       n=module();torch.set_num_threads(2)
+          ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_resource.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        try:return importlib.import_module('tradingagents.research.onchain_replication.neural_resource')
+>       except ModuleNotFoundError:pytest.fail('maintained neural resource runner missing')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: maintained neural resource runner missing
+
+tests/research/onchain_replication/test_neural_resource.py:14: Failed
+____________________ test_no_silent_architecture_shrinking _____________________
+
+    def module():
+>       try:return importlib.import_module('tradingagents.research.onchain_replication.neural_resource')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_resource.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.neural_resource'
+import_ = <function _gcd_import at 0x7edb0ab5c4a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.neural_resource'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_no_silent_architecture_shrinking():
+>       n=module()
+          ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_resource.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        try:return importlib.import_module('tradingagents.research.onchain_replication.neural_resource')
+>       except ModuleNotFoundError:pytest.fail('maintained neural resource runner missing')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: maintained neural resource runner missing
+
+tests/research/onchain_replication/test_neural_resource.py:14: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_explicit_job_kind_and_no_payload_overrides
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_original_population_has_one_update_and_real_checkpoint
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_checkpoint_limit_preserves_partial_bytes_and_stops
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_no_silent_architecture_shrinking
+4 failed in 1.41s

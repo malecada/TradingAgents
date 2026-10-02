@@ -1,0 +1,33 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_terminal_evidence_attempts_are_independent_and_preserve_fatal[failure-ledger.json] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-172/test_terminal_evidence_attempt0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d51a0f2f360>
+failed_name = 'failure-ledger.json'
+
+    @pytest.mark.parametrize('failed_name',['failure-ledger.json','result.json'])
+    def test_terminal_evidence_attempts_are_independent_and_preserve_fatal(tmp_path,monkeypatch,failed_name):
+        n=module();run,_=synthetic_run(tmp_path,monkeypatch)
+        primary=SystemExit('original interruption');cause=ValueError('original cause')
+        original=n._immutable;attempts=[]
+        def fail(*a,**kw):raise primary from cause
+        def write(path,value):
+            if path.name in ('failure-ledger.json','result.json'):
+                attempts.append(path.name)
+                if path.name==failed_name:raise OSError('injected '+failed_name+' publication failure')
+            return original(path,value)
+        monkeypatch.setattr(n,'run_cell',fail);monkeypatch.setattr(n,'_immutable',write)
+        with pytest.raises(SystemExit) as caught:n.produce_registered_neural_resource(run,'plan')
+        assert caught.value is primary and primary.__cause__ is cause
+>       assert attempts==['failure-ledger.json','result.json']
+E       AssertionError: assert ['failure-ledger.json'] == ['failure-led...'result.json']
+E         
+E         Right contains one more item: 'result.json'
+E         Use -v to get more diff
+
+tests/research/onchain_replication/test_neural_resource.py:331: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_resource.py::test_terminal_evidence_attempts_are_independent_and_preserve_fatal[failure-ledger.json]
+1 failed, 1 passed, 25 deselected in 1.89s
