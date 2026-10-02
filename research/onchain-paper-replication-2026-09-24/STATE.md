@@ -32,16 +32,30 @@ No independent optimizer/RNG equality or resumed-update parity; no full
 evaluate_cell/execute_batch/actual OS guard or financial fit claim. Two motifs/
 two steps/two epochs are explicit fixture settings. Source freeze is released.
 
-Next bounded engineering has begun: archive_chunks.py and synthetic tests under
-full_sources/archive-chunks-2026-10-02/. Exclusive upload/readback and fresh
-retrieval bind trusted member hash/extent, scientific scope and transport
-identity. No source disposal, compact reader substitution or remote transfer
-has occurred. red01 CLOSED16missing-module failures0.17s; check01 CLOSED16passed
-0.25s, filesystem-backed synthetic transport only. Independent review pending.
-Root owns source/tests/state; reviewer only REVIEW*.md. No active numerical job.
-Next safe action: resolve archive review and verify bounded remote copy/recovery;
-then integrate sealed-chunk retention with full current-owner terminal checks
-and bounded scratch before any eviction or empirical release.
+Archive chunk copy/readback and fresh retrieval are implemented in archive_chunks.py.
+Independent AC1/AC2 findings (late publication checks and exact inventory/failure
+refusal) were reproduced by15failures and corrected; check02 CLOSED31passed1.19s,
+REVIEW02 099ef122062893413e3a940dccd6599b7c308a6f14ecc44de7b2bb3f73d88e40.
+No source disposal or compact reader substitution. The component trusts caller
+closure/scope admission and is not an empirical storage release.
+
+Next step underway: storage/archive-chunk-smoke-2026-10-02-01/ contains a
+prebound 1MiB external synthetic copy/readback/fresh-transport retrieval contract.
+Real guard512MiB maximum/384MiB high/zero swap/two CPUs/180s/10GiB floor;
+30s transport deadlines and4MiB decoded-payload reservations. AT1/AT2 transport
+lease/upload-cap findings reproduced and fixed. Upload now uses a kernel-sealed
+memory snapshot opened through /proc; late source growth cannot exceed reserved
+member bytes. Pinned Python lacks memfd/seal names; checked Linux libc/ABI route
+passes the actual local subprocess regression. check04 CLOSED36passed0.57s
+(session54293exit0), network-free. Prior failures/logs/source snapshots retained.
+External release REVIEW9b88745c088ef41d0ecbd150e2e080f2d4bb671797fffa826bf4dc0bb1857b3a
+accepted conditional committed unchanged gate. No remote files written by this
+new attempt yet. Source/contract inventory binds120files.
+Root owns code/tests/state, reviewer REVIEW*.md. No active numerical job.
+Next safe action: finish external release review, commit/push the unchanged gate,
+then launch this fresh identity once under guard and verify full readback/cleanup.
+After that, integrate sealed-chunk retention with full current-owner terminal
+checks and bounded scratch before any eviction or empirical release.
 
 Reviewed conditional selected-payload lower bound249479184384B across9recorded
 resource graphs now includes compact pair events. Smallest graph22614280704B

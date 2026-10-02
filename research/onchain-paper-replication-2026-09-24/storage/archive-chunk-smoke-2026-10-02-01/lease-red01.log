@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_revoked_after_mkdir_prevents_upload_process _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-65/test_revoked_after_mkdir_preve0')
+
+    def test_revoked_after_mkdir_prevents_upload_process(tmp_path):
+        module = load()
+        def live():
+            if getattr(live, 'revoked', False): raise RuntimeError('guard revoked')
+>       adapter = module.Transport(tmp_path / 'diagnostics', module.Budget(100000), lease_callback=live)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Transport.__init__() got an unexpected keyword argument 'lease_callback'
+
+tests/research/onchain_replication/test_archive_transport.py:56: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_transport.py::test_revoked_after_mkdir_prevents_upload_process
+1 failed, 3 deselected in 0.16s

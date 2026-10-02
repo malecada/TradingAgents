@@ -1,0 +1,86 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_______ test_fresh_adapter_reads_prebound_extent_and_retains_diagnostic ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-62/test_fresh_adapter_reads_prebo0')
+
+    def test_fresh_adapter_reads_prebound_extent_and_retains_diagnostic(tmp_path):
+>       module = load()
+                 ^^^^^^
+
+tests/research/onchain_replication/test_archive_transport.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_archive_transport.py:13: in load
+    mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap_external>:1019: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1156: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e32e8173770>
+path = '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/archive-chunk-smoke-2026-10-02-01/run.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/archive-chunk-smoke-2026-10-02-01/run.py'
+
+<frozen importlib._bootstrap_external>:1214: FileNotFoundError
+_______________ test_receiver_excess_bytes_and_budget_are_fatal ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-62/test_receiver_excess_bytes_and0')
+
+    def test_receiver_excess_bytes_and_budget_are_fatal(tmp_path):
+>       module = load()
+                 ^^^^^^
+
+tests/research/onchain_replication/test_archive_transport.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_archive_transport.py:13: in load
+    mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap_external>:1019: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1156: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e32e81f3b30>
+path = '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/archive-chunk-smoke-2026-10-02-01/run.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/archive-chunk-smoke-2026-10-02-01/run.py'
+
+<frozen importlib._bootstrap_external>:1214: FileNotFoundError
+___________________ test_upload_does_not_accept_unsafe_names ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-62/test_upload_does_not_accept_un0')
+
+    def test_upload_does_not_accept_unsafe_names(tmp_path):
+>       module = load()
+                 ^^^^^^
+
+tests/research/onchain_replication/test_archive_transport.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_archive_transport.py:13: in load
+    mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap_external>:1019: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1156: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x7e32e80d84d0>
+path = '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/archive-chunk-smoke-2026-10-02-01/run.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/archive-chunk-smoke-2026-10-02-01/run.py'
+
+<frozen importlib._bootstrap_external>:1214: FileNotFoundError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_transport.py::test_fresh_adapter_reads_prebound_extent_and_retains_diagnostic
+FAILED tests/research/onchain_replication/test_archive_transport.py::test_receiver_excess_bytes_and_budget_are_fatal
+FAILED tests/research/onchain_replication/test_archive_transport.py::test_upload_does_not_accept_unsafe_names
+3 failed in 0.11s

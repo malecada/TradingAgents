@@ -1,0 +1,425 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+___ test_publication_callback_cannot_return_false_success[revoked-preserve] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_publication_callback_cann0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e8e74647360>
+operation = 'preserve', failure = 'revoked'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve'])
+    @pytest.mark.parametrize('failure', ['revoked', 'payload', 'complete'])
+    def test_publication_callback_cannot_return_false_success(tmp_path, monkeypatch, operation, failure):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation == 'retrieve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation == 'preserve' else tmp_path / 'read01'
+        original = archive.io._write
+        def lease():
+            if getattr(lease, 'revoked', False): raise RuntimeError('lease revoked')
+        kwargs['lease'] = lease
+        def write(fd, name, body):
+            result = original(fd, name, body)
+            if name == 'complete.json':
+                if failure == 'revoked': lease.revoked = True
+                if failure == 'payload':
+                    (target / ('readback.bin' if operation == 'preserve' else 'payload.bin')).write_bytes(b'corrupt')
+                if failure == 'complete': (target / name).write_bytes(b'{}')
+            return result
+        monkeypatch.setattr(archive.io, '_write', write)
+>       with pytest.raises((ValueError, RuntimeError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (ValueError, RuntimeError)
+
+tests/research/onchain_replication/test_archive_chunks.py:159: Failed
+___ test_publication_callback_cannot_return_false_success[revoked-retrieve] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_publication_callback_cann1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e8e74647100>
+operation = 'retrieve', failure = 'revoked'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve'])
+    @pytest.mark.parametrize('failure', ['revoked', 'payload', 'complete'])
+    def test_publication_callback_cannot_return_false_success(tmp_path, monkeypatch, operation, failure):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation == 'retrieve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation == 'preserve' else tmp_path / 'read01'
+        original = archive.io._write
+        def lease():
+            if getattr(lease, 'revoked', False): raise RuntimeError('lease revoked')
+        kwargs['lease'] = lease
+        def write(fd, name, body):
+            result = original(fd, name, body)
+            if name == 'complete.json':
+                if failure == 'revoked': lease.revoked = True
+                if failure == 'payload':
+                    (target / ('readback.bin' if operation == 'preserve' else 'payload.bin')).write_bytes(b'corrupt')
+                if failure == 'complete': (target / name).write_bytes(b'{}')
+            return result
+        monkeypatch.setattr(archive.io, '_write', write)
+>       with pytest.raises((ValueError, RuntimeError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (ValueError, RuntimeError)
+
+tests/research/onchain_replication/test_archive_chunks.py:159: Failed
+___ test_publication_callback_cannot_return_false_success[payload-preserve] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_publication_callback_cann2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e8e74592330>
+operation = 'preserve', failure = 'payload'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve'])
+    @pytest.mark.parametrize('failure', ['revoked', 'payload', 'complete'])
+    def test_publication_callback_cannot_return_false_success(tmp_path, monkeypatch, operation, failure):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation == 'retrieve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation == 'preserve' else tmp_path / 'read01'
+        original = archive.io._write
+        def lease():
+            if getattr(lease, 'revoked', False): raise RuntimeError('lease revoked')
+        kwargs['lease'] = lease
+        def write(fd, name, body):
+            result = original(fd, name, body)
+            if name == 'complete.json':
+                if failure == 'revoked': lease.revoked = True
+                if failure == 'payload':
+                    (target / ('readback.bin' if operation == 'preserve' else 'payload.bin')).write_bytes(b'corrupt')
+                if failure == 'complete': (target / name).write_bytes(b'{}')
+            return result
+        monkeypatch.setattr(archive.io, '_write', write)
+>       with pytest.raises((ValueError, RuntimeError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (ValueError, RuntimeError)
+
+tests/research/onchain_replication/test_archive_chunks.py:159: Failed
+___ test_publication_callback_cannot_return_false_success[payload-retrieve] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_publication_callback_cann3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e8e71db6ad0>
+operation = 'retrieve', failure = 'payload'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve'])
+    @pytest.mark.parametrize('failure', ['revoked', 'payload', 'complete'])
+    def test_publication_callback_cannot_return_false_success(tmp_path, monkeypatch, operation, failure):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation == 'retrieve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation == 'preserve' else tmp_path / 'read01'
+        original = archive.io._write
+        def lease():
+            if getattr(lease, 'revoked', False): raise RuntimeError('lease revoked')
+        kwargs['lease'] = lease
+        def write(fd, name, body):
+            result = original(fd, name, body)
+            if name == 'complete.json':
+                if failure == 'revoked': lease.revoked = True
+                if failure == 'payload':
+                    (target / ('readback.bin' if operation == 'preserve' else 'payload.bin')).write_bytes(b'corrupt')
+                if failure == 'complete': (target / name).write_bytes(b'{}')
+            return result
+        monkeypatch.setattr(archive.io, '_write', write)
+>       with pytest.raises((ValueError, RuntimeError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (ValueError, RuntimeError)
+
+tests/research/onchain_replication/test_archive_chunks.py:159: Failed
+___ test_publication_callback_cannot_return_false_success[complete-preserve] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_publication_callback_cann4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e8e71db7350>
+operation = 'preserve', failure = 'complete'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve'])
+    @pytest.mark.parametrize('failure', ['revoked', 'payload', 'complete'])
+    def test_publication_callback_cannot_return_false_success(tmp_path, monkeypatch, operation, failure):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation == 'retrieve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation == 'preserve' else tmp_path / 'read01'
+        original = archive.io._write
+        def lease():
+            if getattr(lease, 'revoked', False): raise RuntimeError('lease revoked')
+        kwargs['lease'] = lease
+        def write(fd, name, body):
+            result = original(fd, name, body)
+            if name == 'complete.json':
+                if failure == 'revoked': lease.revoked = True
+                if failure == 'payload':
+                    (target / ('readback.bin' if operation == 'preserve' else 'payload.bin')).write_bytes(b'corrupt')
+                if failure == 'complete': (target / name).write_bytes(b'{}')
+            return result
+        monkeypatch.setattr(archive.io, '_write', write)
+>       with pytest.raises((ValueError, RuntimeError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (ValueError, RuntimeError)
+
+tests/research/onchain_replication/test_archive_chunks.py:159: Failed
+___ test_publication_callback_cannot_return_false_success[complete-retrieve] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_publication_callback_cann5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e8e71dc3750>
+operation = 'retrieve', failure = 'complete'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve'])
+    @pytest.mark.parametrize('failure', ['revoked', 'payload', 'complete'])
+    def test_publication_callback_cannot_return_false_success(tmp_path, monkeypatch, operation, failure):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation == 'retrieve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation == 'preserve' else tmp_path / 'read01'
+        original = archive.io._write
+        def lease():
+            if getattr(lease, 'revoked', False): raise RuntimeError('lease revoked')
+        kwargs['lease'] = lease
+        def write(fd, name, body):
+            result = original(fd, name, body)
+            if name == 'complete.json':
+                if failure == 'revoked': lease.revoked = True
+                if failure == 'payload':
+                    (target / ('readback.bin' if operation == 'preserve' else 'payload.bin')).write_bytes(b'corrupt')
+                if failure == 'complete': (target / name).write_bytes(b'{}')
+            return result
+        monkeypatch.setattr(archive.io, '_write', write)
+>       with pytest.raises((ValueError, RuntimeError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (ValueError, RuntimeError)
+
+tests/research/onchain_replication/test_archive_chunks.py:159: Failed
+_ test_exact_inventory_rejects_conflict_and_foreign_bytes[failed.json-preserve] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_exact_inventory_rejects_c0')
+operation = 'preserve', foreign = 'failed.json'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve', 'receipt'])
+    @pytest.mark.parametrize('foreign', ['failed.json', 'foreign.bin', 'dangling-failure'])
+    def test_exact_inventory_rejects_conflict_and_foreign_bytes(tmp_path, operation, foreign):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation != 'preserve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation in ('preserve', 'receipt') else tmp_path / 'read01'
+        def inject():
+            if foreign == 'dangling-failure': (target / 'failed.json').symlink_to(target / 'missing')
+            else: (target / foreign).write_bytes(b'foreign')
+        if operation == 'receipt': inject()
+        else:
+            original_get = transport.get
+            def get(*args, **options):
+                original_get(*args, **options); inject()
+            transport.get = get
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_chunks.py:183: Failed
+_ test_exact_inventory_rejects_conflict_and_foreign_bytes[failed.json-retrieve] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_exact_inventory_rejects_c1')
+operation = 'retrieve', foreign = 'failed.json'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve', 'receipt'])
+    @pytest.mark.parametrize('foreign', ['failed.json', 'foreign.bin', 'dangling-failure'])
+    def test_exact_inventory_rejects_conflict_and_foreign_bytes(tmp_path, operation, foreign):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation != 'preserve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation in ('preserve', 'receipt') else tmp_path / 'read01'
+        def inject():
+            if foreign == 'dangling-failure': (target / 'failed.json').symlink_to(target / 'missing')
+            else: (target / foreign).write_bytes(b'foreign')
+        if operation == 'receipt': inject()
+        else:
+            original_get = transport.get
+            def get(*args, **options):
+                original_get(*args, **options); inject()
+            transport.get = get
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_chunks.py:183: Failed
+_ test_exact_inventory_rejects_conflict_and_foreign_bytes[failed.json-receipt] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_exact_inventory_rejects_c2')
+operation = 'receipt', foreign = 'failed.json'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve', 'receipt'])
+    @pytest.mark.parametrize('foreign', ['failed.json', 'foreign.bin', 'dangling-failure'])
+    def test_exact_inventory_rejects_conflict_and_foreign_bytes(tmp_path, operation, foreign):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation != 'preserve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation in ('preserve', 'receipt') else tmp_path / 'read01'
+        def inject():
+            if foreign == 'dangling-failure': (target / 'failed.json').symlink_to(target / 'missing')
+            else: (target / foreign).write_bytes(b'foreign')
+        if operation == 'receipt': inject()
+        else:
+            original_get = transport.get
+            def get(*args, **options):
+                original_get(*args, **options); inject()
+            transport.get = get
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_chunks.py:183: Failed
+_ test_exact_inventory_rejects_conflict_and_foreign_bytes[foreign.bin-preserve] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_exact_inventory_rejects_c3')
+operation = 'preserve', foreign = 'foreign.bin'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve', 'receipt'])
+    @pytest.mark.parametrize('foreign', ['failed.json', 'foreign.bin', 'dangling-failure'])
+    def test_exact_inventory_rejects_conflict_and_foreign_bytes(tmp_path, operation, foreign):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation != 'preserve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation in ('preserve', 'receipt') else tmp_path / 'read01'
+        def inject():
+            if foreign == 'dangling-failure': (target / 'failed.json').symlink_to(target / 'missing')
+            else: (target / foreign).write_bytes(b'foreign')
+        if operation == 'receipt': inject()
+        else:
+            original_get = transport.get
+            def get(*args, **options):
+                original_get(*args, **options); inject()
+            transport.get = get
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_chunks.py:183: Failed
+_ test_exact_inventory_rejects_conflict_and_foreign_bytes[foreign.bin-retrieve] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_exact_inventory_rejects_c4')
+operation = 'retrieve', foreign = 'foreign.bin'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve', 'receipt'])
+    @pytest.mark.parametrize('foreign', ['failed.json', 'foreign.bin', 'dangling-failure'])
+    def test_exact_inventory_rejects_conflict_and_foreign_bytes(tmp_path, operation, foreign):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation != 'preserve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation in ('preserve', 'receipt') else tmp_path / 'read01'
+        def inject():
+            if foreign == 'dangling-failure': (target / 'failed.json').symlink_to(target / 'missing')
+            else: (target / foreign).write_bytes(b'foreign')
+        if operation == 'receipt': inject()
+        else:
+            original_get = transport.get
+            def get(*args, **options):
+                original_get(*args, **options); inject()
+            transport.get = get
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_chunks.py:183: Failed
+_ test_exact_inventory_rejects_conflict_and_foreign_bytes[foreign.bin-receipt] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_exact_inventory_rejects_c5')
+operation = 'receipt', foreign = 'foreign.bin'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve', 'receipt'])
+    @pytest.mark.parametrize('foreign', ['failed.json', 'foreign.bin', 'dangling-failure'])
+    def test_exact_inventory_rejects_conflict_and_foreign_bytes(tmp_path, operation, foreign):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation != 'preserve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation in ('preserve', 'receipt') else tmp_path / 'read01'
+        def inject():
+            if foreign == 'dangling-failure': (target / 'failed.json').symlink_to(target / 'missing')
+            else: (target / foreign).write_bytes(b'foreign')
+        if operation == 'receipt': inject()
+        else:
+            original_get = transport.get
+            def get(*args, **options):
+                original_get(*args, **options); inject()
+            transport.get = get
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_chunks.py:183: Failed
+_ test_exact_inventory_rejects_conflict_and_foreign_bytes[dangling-failure-preserve] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_exact_inventory_rejects_c6')
+operation = 'preserve', foreign = 'dangling-failure'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve', 'receipt'])
+    @pytest.mark.parametrize('foreign', ['failed.json', 'foreign.bin', 'dangling-failure'])
+    def test_exact_inventory_rejects_conflict_and_foreign_bytes(tmp_path, operation, foreign):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation != 'preserve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation in ('preserve', 'receipt') else tmp_path / 'read01'
+        def inject():
+            if foreign == 'dangling-failure': (target / 'failed.json').symlink_to(target / 'missing')
+            else: (target / foreign).write_bytes(b'foreign')
+        if operation == 'receipt': inject()
+        else:
+            original_get = transport.get
+            def get(*args, **options):
+                original_get(*args, **options); inject()
+            transport.get = get
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_chunks.py:183: Failed
+_ test_exact_inventory_rejects_conflict_and_foreign_bytes[dangling-failure-retrieve] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_exact_inventory_rejects_c7')
+operation = 'retrieve', foreign = 'dangling-failure'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve', 'receipt'])
+    @pytest.mark.parametrize('foreign', ['failed.json', 'foreign.bin', 'dangling-failure'])
+    def test_exact_inventory_rejects_conflict_and_foreign_bytes(tmp_path, operation, foreign):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation != 'preserve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation in ('preserve', 'receipt') else tmp_path / 'read01'
+        def inject():
+            if foreign == 'dangling-failure': (target / 'failed.json').symlink_to(target / 'missing')
+            else: (target / foreign).write_bytes(b'foreign')
+        if operation == 'receipt': inject()
+        else:
+            original_get = transport.get
+            def get(*args, **options):
+                original_get(*args, **options); inject()
+            transport.get = get
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_chunks.py:183: Failed
+_ test_exact_inventory_rejects_conflict_and_foreign_bytes[dangling-failure-receipt] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-60/test_exact_inventory_rejects_c8')
+operation = 'receipt', foreign = 'dangling-failure'
+
+    @pytest.mark.parametrize('operation', ['preserve', 'retrieve', 'receipt'])
+    @pytest.mark.parametrize('foreign', ['failed.json', 'foreign.bin', 'dangling-failure'])
+    def test_exact_inventory_rejects_conflict_and_foreign_bytes(tmp_path, operation, foreign):
+        archive, source, transport, kwargs = fixture(tmp_path)
+        if operation != 'preserve': ref = archive.preserve(**kwargs)
+        target = kwargs['attempt'] if operation in ('preserve', 'receipt') else tmp_path / 'read01'
+        def inject():
+            if foreign == 'dangling-failure': (target / 'failed.json').symlink_to(target / 'missing')
+            else: (target / foreign).write_bytes(b'foreign')
+        if operation == 'receipt': inject()
+        else:
+            original_get = transport.get
+            def get(*args, **options):
+                original_get(*args, **options); inject()
+            transport.get = get
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_chunks.py:183: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_publication_callback_cannot_return_false_success[revoked-preserve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_publication_callback_cannot_return_false_success[revoked-retrieve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_publication_callback_cannot_return_false_success[payload-preserve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_publication_callback_cannot_return_false_success[payload-retrieve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_publication_callback_cannot_return_false_success[complete-preserve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_publication_callback_cannot_return_false_success[complete-retrieve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_exact_inventory_rejects_conflict_and_foreign_bytes[failed.json-preserve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_exact_inventory_rejects_conflict_and_foreign_bytes[failed.json-retrieve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_exact_inventory_rejects_conflict_and_foreign_bytes[failed.json-receipt]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_exact_inventory_rejects_conflict_and_foreign_bytes[foreign.bin-preserve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_exact_inventory_rejects_conflict_and_foreign_bytes[foreign.bin-retrieve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_exact_inventory_rejects_conflict_and_foreign_bytes[foreign.bin-receipt]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_exact_inventory_rejects_conflict_and_foreign_bytes[dangling-failure-preserve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_exact_inventory_rejects_conflict_and_foreign_bytes[dangling-failure-retrieve]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_exact_inventory_rejects_conflict_and_foreign_bytes[dangling-failure-receipt]
+15 failed, 16 deselected in 0.53s

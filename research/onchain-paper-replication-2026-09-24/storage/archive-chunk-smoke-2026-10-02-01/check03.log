@@ -1,0 +1,45 @@
+...................................F                                     [100%]
+=================================== FAILURES ===================================
+_________ test_upload_reservation_cannot_be_exceeded_by_source_growth __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-67/test_upload_reservation_cannot0')
+
+    def test_upload_reservation_cannot_be_exceeded_by_source_growth(tmp_path):
+        module = load()
+        source = tmp_path / 'source'; source.write_bytes(b'original')
+        uploaded = tmp_path / 'uploaded'
+        class GrowingBudget(module.Budget):
+            def reserve(self, size):
+                super().reserve(size)
+                source.write_bytes(b'replacement much larger than reserved extent')
+        budget = GrowingBudget(100000)
+        adapter = module.Transport(tmp_path / 'diagnostics', budget, lease_callback=lambda: None)
+        adapter.scp = [sys.executable, '-c',
+            'from pathlib import Path;import sys;Path(' + repr(str(uploaded)) + ').write_bytes(Path(sys.argv[-2]).read_bytes())']
+>       adapter.put(source, 'object/payload.bin')
+
+tests/research/onchain_replication/test_archive_transport.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <archive_smoke.Transport object at 0x7aaf325e6900>
+source = PosixPath('/tmp/pytest-of-malecada/pytest-67/test_upload_reservation_cannot0/source')
+path = 'object/payload.bin'
+
+    def put(self, source, path):
+        path = self.remote_path(path); source = Path(source)
+        self.live()
+        root, descriptor = archive.io._open(source.parent)
+        try:
+            raw = archive.io._read(descriptor, source.name, archive.MAX_BYTES)
+            archive.io._root(root, descriptor)
+        finally: os.close(descriptor)
+        if not raw: raise ValueError('positive upload extent required')
+>       frozen = os.memfd_create('archive-upload', os.MFD_CLOEXEC | os.MFD_ALLOW_SEALING)
+                 ^^^^^^^^^^^^^^^
+E       AttributeError: module 'os' has no attribute 'memfd_create'. Did you mean: 'timerfd_create'?
+
+research/onchain-paper-replication-2026-09-24/storage/archive-chunk-smoke-2026-10-02-01/run.py:67: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_transport.py::test_upload_reservation_cannot_be_exceeded_by_source_growth
+1 failed, 35 passed in 0.58s

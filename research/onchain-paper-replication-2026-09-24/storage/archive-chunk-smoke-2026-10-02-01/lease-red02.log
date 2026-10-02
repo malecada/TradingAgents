@@ -1,0 +1,52 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______________ test_revoked_after_mkdir_prevents_upload_process _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-66/test_revoked_after_mkdir_preve0')
+
+    def test_revoked_after_mkdir_prevents_upload_process(tmp_path):
+        module = load()
+        def live():
+            if getattr(live, 'revoked', False): raise RuntimeError('guard revoked')
+        adapter = module.Transport(tmp_path / 'diagnostics', module.Budget(100000))
+        adapter.live = live
+        adapter.ssh = [sys.executable, '-c', 'pass']
+        adapter.mkdir('fresh-object')
+        live.revoked = True
+        sentinel = tmp_path / 'upload-started'
+        adapter.scp = [sys.executable, '-c', 'from pathlib import Path;Path(' + repr(str(sentinel)) + ').touch()']
+        source = tmp_path / 'source'; source.write_bytes(b'payload')
+>       with pytest.raises(RuntimeError, match='guard revoked'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/research/onchain_replication/test_archive_transport.py:64: Failed
+_________ test_upload_reservation_cannot_be_exceeded_by_source_growth __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-66/test_upload_reservation_cannot0')
+
+    def test_upload_reservation_cannot_be_exceeded_by_source_growth(tmp_path):
+        module = load()
+        source = tmp_path / 'source'; source.write_bytes(b'original')
+        uploaded = tmp_path / 'uploaded'
+        class GrowingBudget(module.Budget):
+            def reserve(self, size):
+                super().reserve(size)
+                source.write_bytes(b'replacement much larger than reserved extent')
+        budget = GrowingBudget(100000)
+        adapter = module.Transport(tmp_path / 'diagnostics', budget)
+        adapter.scp = [sys.executable, '-c',
+            'from pathlib import Path;import sys;Path(' + repr(str(uploaded)) + ').write_bytes(Path(sys.argv[-2]).read_bytes())']
+        adapter.put(source, 'object/payload.bin')
+>       assert uploaded.read_bytes() == b'original'
+E       AssertionError: assert b'replacement...served extent' == b'original'
+E         
+E         At index 0 diff: b'r' != b'o'
+E         Use -v to get more diff
+
+tests/research/onchain_replication/test_archive_transport.py:83: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_transport.py::test_revoked_after_mkdir_prevents_upload_process
+FAILED tests/research/onchain_replication/test_archive_transport.py::test_upload_reservation_cannot_be_exceeded_by_source_growth
+2 failed, 3 deselected in 0.29s

@@ -1,0 +1,337 @@
+FFFFFFFFFFFFFFFF                                                         [100%]
+=================================== FAILURES ===================================
+________________ test_preserve_and_fresh_read_without_original _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preserve_and_fresh_read_w0')
+
+    def test_preserve_and_fresh_read_without_original(tmp_path):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preserve_and_fresh_read_w0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+_________ test_failed_attempt_retains_bytes_and_cannot_replay[corrupt] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_failed_attempt_retains_by0')
+failure = 'corrupt'
+
+    @pytest.mark.parametrize('failure', ['corrupt', 'put', 'source_mutation', 'lease'])
+    def test_failed_attempt_retains_bytes_and_cannot_replay(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_failed_attempt_retains_by0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+___________ test_failed_attempt_retains_bytes_and_cannot_replay[put] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_failed_attempt_retains_by1')
+failure = 'put'
+
+    @pytest.mark.parametrize('failure', ['corrupt', 'put', 'source_mutation', 'lease'])
+    def test_failed_attempt_retains_bytes_and_cannot_replay(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_failed_attempt_retains_by1')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+_____ test_failed_attempt_retains_bytes_and_cannot_replay[source_mutation] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_failed_attempt_retains_by2')
+failure = 'source_mutation'
+
+    @pytest.mark.parametrize('failure', ['corrupt', 'put', 'source_mutation', 'lease'])
+    def test_failed_attempt_retains_bytes_and_cannot_replay(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_failed_attempt_retains_by2')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+__________ test_failed_attempt_retains_bytes_and_cannot_replay[lease] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_failed_attempt_retains_by3')
+failure = 'lease'
+
+    @pytest.mark.parametrize('failure', ['corrupt', 'put', 'source_mutation', 'lease'])
+    def test_failed_attempt_retains_bytes_and_cannot_replay(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_failed_attempt_retains_by3')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+__________________ test_preflight_refuses_before_claim[hash] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_0')
+failure = 'hash'
+
+    @pytest.mark.parametrize('failure', ['hash', 'size', 'oversize', 'symlink', 'hardlink', 'floor', 'remote'])
+    def test_preflight_refuses_before_claim(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+__________________ test_preflight_refuses_before_claim[size] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_1')
+failure = 'size'
+
+    @pytest.mark.parametrize('failure', ['hash', 'size', 'oversize', 'symlink', 'hardlink', 'floor', 'remote'])
+    def test_preflight_refuses_before_claim(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_1')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+________________ test_preflight_refuses_before_claim[oversize] _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_2')
+failure = 'oversize'
+
+    @pytest.mark.parametrize('failure', ['hash', 'size', 'oversize', 'symlink', 'hardlink', 'floor', 'remote'])
+    def test_preflight_refuses_before_claim(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_2')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+_________________ test_preflight_refuses_before_claim[symlink] _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_3')
+failure = 'symlink'
+
+    @pytest.mark.parametrize('failure', ['hash', 'size', 'oversize', 'symlink', 'hardlink', 'floor', 'remote'])
+    def test_preflight_refuses_before_claim(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_3')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+________________ test_preflight_refuses_before_claim[hardlink] _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_4')
+failure = 'hardlink'
+
+    @pytest.mark.parametrize('failure', ['hash', 'size', 'oversize', 'symlink', 'hardlink', 'floor', 'remote'])
+    def test_preflight_refuses_before_claim(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_4')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+__________________ test_preflight_refuses_before_claim[floor] __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_5')
+failure = 'floor'
+
+    @pytest.mark.parametrize('failure', ['hash', 'size', 'oversize', 'symlink', 'hardlink', 'floor', 'remote'])
+    def test_preflight_refuses_before_claim(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_5')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+_________________ test_preflight_refuses_before_claim[remote] __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_6')
+failure = 'remote'
+
+    @pytest.mark.parametrize('failure', ['hash', 'size', 'oversize', 'symlink', 'hardlink', 'floor', 'remote'])
+    def test_preflight_refuses_before_claim(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:102: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_preflight_refuses_before_6')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+______________ test_fresh_read_refuses_changed_evidence[receipt] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_fresh_read_refuses_change0')
+failure = 'receipt'
+
+    @pytest.mark.parametrize('failure', ['receipt', 'transport', 'remote_bytes'])
+    def test_fresh_read_refuses_changed_evidence(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_fresh_read_refuses_change0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+_____________ test_fresh_read_refuses_changed_evidence[transport] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_fresh_read_refuses_change1')
+failure = 'transport'
+
+    @pytest.mark.parametrize('failure', ['receipt', 'transport', 'remote_bytes'])
+    def test_fresh_read_refuses_changed_evidence(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_fresh_read_refuses_change1')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+____________ test_fresh_read_refuses_changed_evidence[remote_bytes] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_fresh_read_refuses_change2')
+failure = 'remote_bytes'
+
+    @pytest.mark.parametrize('failure', ['receipt', 'transport', 'remote_bytes'])
+    def test_fresh_read_refuses_changed_evidence(tmp_path, failure):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_fresh_read_refuses_change2')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+____________________ test_existing_remote_never_overwritten ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_existing_remote_never_ove0')
+
+    def test_existing_remote_never_overwritten(tmp_path):
+>       archive, source, transport, kwargs = fixture(tmp_path)
+                                             ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_chunks.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-58/test_existing_remote_never_ove0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_chunks as archive
+E       ImportError: cannot import name 'archive_chunks' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_chunks.py:43: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_preserve_and_fresh_read_without_original
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_failed_attempt_retains_bytes_and_cannot_replay[corrupt]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_failed_attempt_retains_bytes_and_cannot_replay[put]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_failed_attempt_retains_bytes_and_cannot_replay[source_mutation]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_failed_attempt_retains_bytes_and_cannot_replay[lease]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_preflight_refuses_before_claim[hash]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_preflight_refuses_before_claim[size]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_preflight_refuses_before_claim[oversize]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_preflight_refuses_before_claim[symlink]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_preflight_refuses_before_claim[hardlink]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_preflight_refuses_before_claim[floor]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_preflight_refuses_before_claim[remote]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_fresh_read_refuses_changed_evidence[receipt]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_fresh_read_refuses_changed_evidence[transport]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_fresh_read_refuses_changed_evidence[remote_bytes]
+FAILED tests/research/onchain_replication/test_archive_chunks.py::test_existing_remote_never_overwritten
+16 failed in 0.17s
