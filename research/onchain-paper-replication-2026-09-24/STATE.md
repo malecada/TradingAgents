@@ -1,5 +1,35 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: corrected candidate child passes all13; controller ownership correction verified in pure tests.**
+The one-use GREEN02/session52336 from7d42f1410c1f15e52e2598f37444a7fb6c311bad
+closed18:37:28UTC. Child0 passed all13 unchanged numerical/storage assertions:
+fullmodel/allgradients/Adam/RNG/reload, float64derivatives, blocks/firstorder and
+no full-edge-width saved extent. Reported deduplicated backing storage falls
+29714945→2778881bytes; omitted alias identities make grouping source-derived,
+not an independently reconstructible allocation census or process-peak measure.
+Independent review5c686bbc accepts this finite child proof, not fullsizecapacity.
+
+Parent remains permanentlyFAILED: guard03 required recorded monitor_pid absent,
+but resources.guarded_run sets it to os.getpid(), the still-active caller doing
+validation. No numerical rerun or retroactive terminal upgrade. Native1GiB
+high=max/swap0/120s/twoCPU/4MiBfile, events0, sampledpeak426430464 and verified
+cleanup are preserved. Three distinct recordedPIDs and originalcgroup are absent
+postclosure; sourcefreezeended. Exactstop5reason remains unknown. Complete
+10files/5dirs/15members,32406logical/81920allocated incldirs are archived.
+
+New guard04 authenticates the current monitor owner against os.getpid(), retains
+its necessary live caller, and requires actual workload/unit PID+cgroup absence
+for stop5 with success0/inactive/dead/emptyunitproperties. Ten pure sentinels show
+old03RED2fails/new04GREEN10pass; alloldsource/outcomes remain frozen. A separate
+stdlib37-byte native cleanup-owner smoke is prepared at exact released28e50b8,
+257pins/2034210bytes, same1GiB/120s/native reserve/disk/file envelope and no
+numerical model execution. Independent release review pending. Next: accept,
+commit/externalverify/freshcheck, ONE unused cleanup-owner identity, retain/review
+closure, then immediately implement the explicitly declared streamed production
+route and prepare prospective64/fullneural04 without a new userprompt.
+Current production is still unchanged; all1420fits/9neural+23other resourcecells
+remain pending,77of109coverage/35spent/highestadopted63 unchanged.
+
 **Latest checkpoint: diagnostic causal evidence accepted; minimal corrected GREEN02 prepared.**
 The one-use diagnostic/session33910 fromdba18089034416baadfa0019dfd03eb1c8ee38f2
 closed18:24:53UTC. All four arms were observed; only the two einsum arms disagree.

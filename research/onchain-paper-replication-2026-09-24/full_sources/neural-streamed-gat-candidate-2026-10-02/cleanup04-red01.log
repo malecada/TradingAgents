@@ -1,0 +1,33 @@
+test_collected_success_stop5 (__main__.CleanupAdmission.test_collected_success_stop5) ... ok
+test_failed_native_terminal_refused (__main__.CleanupAdmission.test_failed_native_terminal_refused) ... ok
+test_live_cgroup_refused (__main__.CleanupAdmission.test_live_cgroup_refused) ... ok
+test_live_current_owner_is_authenticated (__main__.CleanupAdmission.test_live_current_owner_is_authenticated) ... FAIL
+test_live_original_pid_refused (__main__.CleanupAdmission.test_live_original_pid_refused) ... ok
+test_missing_original_process_proof_refused (__main__.CleanupAdmission.test_missing_original_process_proof_refused) ... ok
+test_normal_stop (__main__.CleanupAdmission.test_normal_stop) ... ok
+test_other_stop_code_refused (__main__.CleanupAdmission.test_other_stop_code_refused) ... ok
+test_unrelated_live_or_dead_monitor_refused (__main__.CleanupAdmission.test_unrelated_live_or_dead_monitor_refused) ... FAIL
+test_unverified_cleanup_refused (__main__.CleanupAdmission.test_unverified_cleanup_refused) ... ok
+
+======================================================================
+FAIL: test_live_current_owner_is_authenticated (__main__.CleanupAdmission.test_live_current_owner_is_authenticated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/test_cleanup04.py", line 55, in test_live_current_owner_is_authenticated
+    self.assertTrue(self.decision(*self.envelope(),exists=lambda p:str(p)=='/proc/'+str(os.getpid())))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_unrelated_live_or_dead_monitor_refused (__main__.CleanupAdmission.test_unrelated_live_or_dead_monitor_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/test_cleanup04.py", line 59, in test_unrelated_live_or_dead_monitor_refused
+    self.assertFalse(self.decision(result,proof))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.001s
+
+FAILED (failures=2)
