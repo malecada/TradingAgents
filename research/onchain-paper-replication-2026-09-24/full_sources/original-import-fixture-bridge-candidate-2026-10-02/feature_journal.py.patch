@@ -1,0 +1,15 @@
+--- a/tradingagents/research/onchain_replication/feature_journal.py
++++ b/tradingagents/research/onchain_replication/feature_journal.py
+@@ -112,6 +112,12 @@
+                 'sha256':file_hash(path),'binding':binding}
+         _immutable(self.directory/f'event-{index:06d}.json',record)
+         self.records.append(record)
++
++    def resource_complete(self,proof):
++        """Explicit resource terminal, not a scientific representation."""
++        self._resource_check()
++        from .resource_fixture import complete_journal
++        return complete_journal(self,proof)
+ 
+     def seal(self,status,*,reason=None):
+         if hasattr(self,'_resource_pin'):self._resource_check()

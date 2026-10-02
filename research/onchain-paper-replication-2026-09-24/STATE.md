@@ -33,8 +33,12 @@ cgroup are absent; additive pid-closure-addendum04.json corrects the collector
 regex omission of the kernel task=python,pid=1228799 form. Original result bytes
 remain unchanged; current native unit has empty ControlGroup/MainPID0. Cleanup was
 verified/stop0. Source/HEAD freeze has ended. Independent closure review943e7fb9 accepted the retained failed outcome, all
-source/input/runtime pins, final archive and five-PID cleanup. External recovery
-verification is the immediate remaining closure work.
+source/input/runtime pins, final archive and five-PID cleanup. External backup9cf4cf815c2aef5b288b1c0eebb99400bbd60854 was pushed and
+actualremoteHEAD matched. Fresh remote recovery25selectedclosure/release blobs
+plusall32raw archived members completed; REMOTE_FAILURE_RECOVERY04_01.json SHA
+599d9ab0ca2c8f69a73b338ccc93efb71db4d2a448c9b453187b871f05272552.
+Independent recovery review627186a6 accepted all25selectedblobs/32archive members
+within declared scope; original failure dispositions remain unchanged.
 
 Actual claim adopted ceiling64;36consumed are now36closed=27complete9failed
 (19current14complete5failed +17prior13complete4failed). No refund, category
@@ -53,7 +57,25 @@ rehash cost, remote transport and whole-local capacity remain unproved. physical
 original-import fixture bridge; no live integration or actual fixture claim.
 physical_review owns actual04 independent closure review. Root owns STATE,
 registrations/live integration/commits/externalbackup and the sole numerical
-launcher. Next safe action: complete failure review/backup/recovery, continue
+launcher. Fixturebridge01 frozen4e8d619f/15coordinatedsources/8pureAST checks
+implements the genuine two-target source route; reviewa32b2ce0 WITHHELD whole
+execution because ordinary Owner/journal closure failure aftertwo completedcells
+can falsely call lifecyclefinish. Completedtargetrecords must remain preserved;
+overallfailure must propagate afterretention. Downstream fatalIO remains withheld. Worker immediately owns
+NEW original-import-fixture-io-candidate02 correction; no live changes/jobs.
+Memory investigationae5f37cf examines whole-graph checkpoint forward and
+recompute-backward separately; availability does not authorize increasing the cap.
+Its source-derived first-GAT live-local illustration is2.286–2.408GiB before
+observed1.587GiB pre-forward baseline; file-cache reclamation/allocator/storage
+lifetimes are unknown, so these are not a predicted sufficient-capacity bound.
+Worker now owns NEW neural-checkpoint-tiny-proof-preparation protocol/caller only,
+explicit streamedfalse/true whole-graph recomputation with fixed tolerances,
+actual fullupdate/reload/continuation/RNG checks and separate fresh-process
+uninstrumented phase observations. No numerical proof has run; exactnative
+release/source/review is required. Existing scientificconfig20f451c0 unchanged. Actual
+training batch graph-hash census is needed:28dailypositions are not28distinct
+weekly graphs, and gaps prevent assuming a fixed7graph batch.
+Next safe action: complete independent recovery review/backup, continue
 independent MCM/storage corrections and investigate bounded full-graph memory
 reductions without fitting or relaxing scientific settings/test criteria.
 

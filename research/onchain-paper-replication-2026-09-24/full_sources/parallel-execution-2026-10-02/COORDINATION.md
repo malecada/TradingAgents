@@ -1,3 +1,18 @@
+# Latest ownership — closed failure backed; IO correction and checkpoint proof preparation
+
+No numerical job active.04closed FAILED forever;36spent27complete9failed/adopt64.
+Failed04raw archive/review backed9cf4cf81; fresh25blob/32member recovery accepted
+627186a6. Root owns STATE/nativecaller/source release/solelauncher/live/backup.
+physical_correction owns ONLY NEW original-import-fixture-io-candidate02 reachable
+lifetime/error propagation plus overallfailedclosure; bridge01WITHHELD a32b2ce0.
+score_tail_correction02 owns ONLY NEW neural-checkpoint-tiny-proof-preparation
+protocol/oracle/coordinator/pureAST; no numericimports/jobs. Fixed tinyconstructor
+question exercises fullupdates/RNG/checkpointcontinuation, not merelyinitialization.
+physical_review completed memoryinvestigationae5f37cf andisavailable forproofsource
+review. registration_review completed recovery/bridge reviews andisavailable.
+Sourcefreeze onlywhenactualnativejob starts; no empirical05/budget65/capladder.
+Bothassets/fullhistory/all1420fits remain; sourceworkdoesnotprove resourcecapacity.
+
 # Latest ownership — neural04 closed kernel OOM; source freeze ended
 
 Root verified complete04closure and all5recorded/journalPIDs/cgroup absence (kernelPIDaddendum retained).

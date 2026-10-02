@@ -1,0 +1,41 @@
+EEEE
+======================================================================
+ERROR: test_duplicate_or_reordered_complete_refused (__main__.Boundaries.test_duplicate_or_reordered_complete_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/test_bridge02.py", line 18, in test_duplicate_or_reordered_complete_refused
+    f=functions()['validate_records'];keys=['a','b'];counts={'a':2,'b':3}
+      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'validate_records'
+
+======================================================================
+ERROR: test_exact_missing_denominator (__main__.Boundaries.test_exact_missing_denominator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/test_bridge02.py", line 13, in test_exact_missing_denominator
+    f=functions()['failure_rows'];out=f([],ValueError('stop'))
+      ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'failure_rows'
+
+======================================================================
+ERROR: test_ordinary_body_only_retains_return (__main__.Boundaries.test_ordinary_body_only_retains_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/test_bridge02.py", line 39, in test_ordinary_body_only_retains_return
+    f=functions()['retained_actions'];seen=[]
+      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'retained_actions'
+
+======================================================================
+ERROR: test_retained_actions_first_fatal_and_all_callbacks (__main__.Boundaries.test_retained_actions_first_fatal_and_all_callbacks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/test_bridge02.py", line 29, in test_retained_actions_first_fatal_and_all_callbacks
+    f=functions()['retained_actions'];seen=[];fatal=MemoryError('body')
+      ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'retained_actions'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.018s
+
+FAILED (errors=4)

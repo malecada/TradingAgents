@@ -1,0 +1,12 @@
+--- a/tradingagents/research/onchain_replication/compact_mcm_publication.py
++++ b/tradingagents/research/onchain_replication/compact_mcm_publication.py
+@@ -117,6 +117,9 @@
+ def _publish(owner, stage, *, output_input, expected_scope):
+     """Caller holds the owner transition lock."""
+     attempt, args, proof, lease = _prepare(owner, stage, output_input, expected_scope)
++    if owner.bound.record.get('resource_only') is True:
++        from .resource_fixture import publication_boundary
++        publication_boundary(owner,stage)
+     require(not owners.present(attempt), 'compact output namespace already claimed')
+     lease(); durable_mkdir(attempt.parent)
+     require(attempt.resolve() == attempt, 'compact output parent redirected')
