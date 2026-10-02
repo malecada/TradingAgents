@@ -1,5 +1,19 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: exact tiny GREEN source/release independently accepted.**
+Review61d0f8bc accepts candidate01/oracle02/guard02/green-release01dbb77a31,
+234sourcepins/1,819,280bytes and unchanged numerical/native envelope, conditional
+on actual committed/external backup and fresh launch controls. RED raw and source
+are pushed atf7eb22402fbd551327b56b5bf05c045eb24ec024. Fresh remote four-blob
+retrieval includes accepted RED review and complete15member/10file/5directory
+archive. A metadata-only recovery01 count-constant error is preserved; readback02
+correctly verifies33678logical/81920originalallocated bytes without refetch or
+content execution. Independent recovery review is pending. No numerical GREEN
+or full-size/financial job has run. Next: commit reviewed release/source, verify
+remote HEAD and fresh exclusive/readiness checks, execute ONE tiny GREEN identity,
+then preserve/review outcome and immediately advance eligible integration work.
+All source/HEAD bindings freeze only during actual numerical activity.
+
 **Latest checkpoint: tiny RED closed and independently accepted; faithful streamed GAT implemented.**
 The one-use `neural-streamed-gat-oracle-red-20261002-01` from remotely verified
 48cff10a92b715a1e15272d05cf697106ef634ff closed at17:51:49UTC. All11 numerical
