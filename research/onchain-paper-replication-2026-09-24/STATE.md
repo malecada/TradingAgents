@@ -1,5 +1,29 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: fixed four-arm diagnosis independently released; one execution next.**
+Review7c60b68c accepts exact diagnostic01 f28c343d/protocol01 97ad6cad/
+launcher02 6f5ba9dd/release02 5688a9ed,255sourcepins/1,956,644bytes.
+Four prescribed arms preserve fixture, fullmodel, seed/RNG, Adam and original
+thresholds. Named gradients/updated-state/Adam moment observations distinguish
+attention and aggregation changes; observed agreement/disagreement is only a
+diagnostic disposition. Parent requires actual clean native envelope and all
+four complete observations with exact initial/RNG/moment reconstruction.
+Unchanged1GiBhigh=max/swap0/120s/twoCPU/3GiBreserve/10GiBfloor/4MiBfile/
+64MiBsampled storage limits; report<=1MiB. Unused diagnostic02 and launcher01/
+release01 remain preserved. Next: commit review/externalHEADverification andfresh
+source/runtime/namespace/process/RAM/disk checks, ONE unused
+`neural-streamed-gat-diagnostic-20261002-01`, then retain/review actual outcome.
+
+GREEN01 complete failed result/review backed9b1ad313; fresh four-blob remote
+retrieval verifies10filebodies/5dirmodes/15members,20680logical/original69632
+allocated bytes without extraction/execution. Independent recovery review pending.
+GREEN01 and RED remain permanently closed. Import kernel adapter03 received
+independent contract acceptance262e40e4; genuine imported execution implementation
+and guarded fixture remain outstanding. CompactMatcher is the actual direct
+route, not a PairSession instance; that review qualifies earlier contract wording.
+No numerical variant is production integrated, no empirical04 is released and
+35spent/adopt63/77of109/all1420fits remain unchanged.
+
 **Latest checkpoint: tiny GREEN01 CLOSED failed; causal diagnostic preparation underway.**
 The sole `neural-streamed-gat-oracle-green-20261002-01` from externally verified
 f3fbf80c0bd69613530c34a8b5f4c9a613551de6 ended18:09:28UTC; session35146
