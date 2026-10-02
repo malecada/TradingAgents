@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="7" time="240.626" timestamp="2026-10-02T09:27:50.216516+02:00" hostname="malecada-Zenbook-UM3402YA-UM3402YA"><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_actual_archive_dictionary_mcm_publication_and_postclose_checks[capacity]" time="17.180"><failure message="tradingagents.research.onchain_replication.compact_native_producer.CompactProducerError: compact producer attempt failed; preserve partial evidence and stop enclosing job">run = &lt;tradingagents.research.lifecycle.ResearchRun object at 0x7a0bf56a6a50&gt;
+representation = 'r'
+job = {'binding_output': 'binding.json', 'compact_archive_input': 'archive_policy', 'compact_closure_input': 'compact_closure', 'compact_denominator_input': 'compact_denominator', ...}
+graphs = (GraphSnapshot(asset='ETH', start_utc='2024-01-15T00:00:00Z', end_utc='2024-01-22T00:00:00Z', available_at='2024-01-23... shape=(0, 2), dtype=float64), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None))
+examples = ExampleManifest(train=(Example(decision_at='2024-01-30T00:00:00Z', label_start='2024-01-30T00:00:00Z', label_end='2024...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'), fold_hash='e3bbc4d2a4a3f555d0c48899d37cf989a7eebdbfc2f5f7b4ca7434cde568bd45')
+archive_transport = &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a0d61d930e0&gt;
+
+    def produce(run,representation,job,graphs,examples,*,archive_transport=None):
+        require(selected(run,representation,job),'compact production must be explicitly selected')
+        graphs = tuple(graphs);d = job['descriptor'];fold = Fold(**d['fold'])
+        require(graphs and all(type(g) is GraphSnapshot for g in graphs),'compact resident graph snapshots required')
+        actual = representation_descriptor(graphs,examples,fold,'proposed',d['seed'],d['configs'])
+        actual.update({k:d[k] for k in ('pair_execution','compact_execution','compact_training')})
+        item=json.loads(run.read_input(job['plan_input']))['producers'][job['producer']]
+        extension=compact_training._archive_extension(run,job,item)
+        actual.update(extension)
+        require(bool(extension)==(archive_transport is not None),
+            'explicit selected archive transport required; local route cannot accept one')
+        require(canonical_bytes(actual) == canonical_bytes(d),'compact actual representation differs before claim')
+        m = compact_native_features._api()
+        m.minimum_capacity({graph_hash(g):g for g in graphs},d['required_graphs'],d['configs']['dictionary']['size'],
+            m.policy(json.loads(run.read_input(job['compact_native_features_input']))))
+        journal = owner = None
+        try:
+            journal,bound = matching_owner.open_first(run,representation=representation,plan_input=job['plan_input'],
+                producer=job['producer'],policy_input=job['pair_checkpoint_input'])
+            owner = compact_owner.attach(bound,policy_input=job['compact_policy_input'])
+            if extension:
+                from . import archive_owner_policy, archive_owner_operations
+&gt;               archive_owner_operations.attach(archive_owner_policy.select(owner,
+                    input_name=job['compact_archive_input'],transport=archive_transport))
+
+tradingagents/research/onchain_replication/compact_native_producer.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_owner_policy.py:112: in select
+    result = _record(owner,input_name,transport)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_policy.py:68: in _record
+    w = writer._policy(_writer(owner,policy,stages[0]),limits,transport)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_pair_writer.py:31: in _policy
+    require(type(result['max_chunks']) is int and result['max_chunks'] == count
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'archive writer allowance'
+
+    def _require(condition, message):
+        if not condition:
+&gt;           raise ValueError(message)
+E           ValueError: archive writer allowance
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+
+The above exception was the direct cause of the following exception:
+
+admitted = (&lt;tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...2f5f7b4ca7434cde568bd45'), &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a0d61d930e0&gt;)
+
+    @pytest.mark.parametrize('admitted', ['capacity'], indirect=True)
+    def test_actual_archive_dictionary_mcm_publication_and_postclose_checks(admitted):
+        t, job, graphs, examples, transport = admitted
+        m = native.api()
+&gt;       prepared, terminal = m.produce(t.run, 'r', job, graphs, examples, archive_transport=transport)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_producer_integration.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = &lt;tradingagents.research.lifecycle.ResearchRun object at 0x7a0bf56a6a50&gt;
+representation = 'r'
+job = {'binding_output': 'binding.json', 'compact_archive_input': 'archive_policy', 'compact_closure_input': 'compact_closure', 'compact_denominator_input': 'compact_denominator', ...}
+graphs = (GraphSnapshot(asset='ETH', start_utc='2024-01-15T00:00:00Z', end_utc='2024-01-22T00:00:00Z', available_at='2024-01-23... shape=(0, 2), dtype=float64), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None))
+examples = ExampleManifest(train=(Example(decision_at='2024-01-30T00:00:00Z', label_start='2024-01-30T00:00:00Z', label_end='2024...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'), fold_hash='e3bbc4d2a4a3f555d0c48899d37cf989a7eebdbfc2f5f7b4ca7434cde568bd45')
+archive_transport = &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a0d61d930e0&gt;
+
+    def produce(run,representation,job,graphs,examples,*,archive_transport=None):
+        require(selected(run,representation,job),'compact production must be explicitly selected')
+        graphs = tuple(graphs);d = job['descriptor'];fold = Fold(**d['fold'])
+        require(graphs and all(type(g) is GraphSnapshot for g in graphs),'compact resident graph snapshots required')
+        actual = representation_descriptor(graphs,examples,fold,'proposed',d['seed'],d['configs'])
+        actual.update({k:d[k] for k in ('pair_execution','compact_execution','compact_training')})
+        item=json.loads(run.read_input(job['plan_input']))['producers'][job['producer']]
+        extension=compact_training._archive_extension(run,job,item)
+        actual.update(extension)
+        require(bool(extension)==(archive_transport is not None),
+            'explicit selected archive transport required; local route cannot accept one')
+        require(canonical_bytes(actual) == canonical_bytes(d),'compact actual representation differs before claim')
+        m = compact_native_features._api()
+        m.minimum_capacity({graph_hash(g):g for g in graphs},d['required_graphs'],d['configs']['dictionary']['size'],
+            m.policy(json.loads(run.read_input(job['compact_native_features_input']))))
+        journal = owner = None
+        try:
+            journal,bound = matching_owner.open_first(run,representation=representation,plan_input=job['plan_input'],
+                producer=job['producer'],policy_input=job['pair_checkpoint_input'])
+            owner = compact_owner.attach(bound,policy_input=job['compact_policy_input'])
+            if extension:
+                from . import archive_owner_policy, archive_owner_operations
+                archive_owner_operations.attach(archive_owner_policy.select(owner,
+                    input_name=job['compact_archive_input'],transport=archive_transport))
+            training = compact_training.admit(owner,input_name=job['compact_training_input'],graphs=graphs,
+                examples=examples,fold=fold,seed=d['seed'],configs=d['configs'])
+            denominator = compact_denominator.admit(training,input_name=job['compact_denominator_input'])
+            draws = compact_sampler.produce(training,input_name=job['compact_sampler_input'])
+            saved = compact_samples.publish(draws,input_name=job['compact_samples_input'])
+            proof = compact_sample_proof.admit(saved)
+            dictionary = compact_dictionary.produce(proof,input_name=job['compact_dictionary_input'])
+            artifacts = []
+            for h in d['required_graphs']:
+                mcm = compact_mcm.produce(dictionary,graph_hash=h,input_name=job['compact_mcm_input'],
+                    output_input=job['compact_mcm_output_input'])
+                features = compact_features.prepare(mcm,input_name=job['compact_feature_input'])
+                artifacts.append(compact_graph_artifacts.publish(features,input_name=job['compact_graph_output_input']))
+            closure = compact_closure.admit(dictionary,denominator,artifacts,input_name=job['compact_closure_input'])
+            published = compact_publication.publish(closure,input_name=job['compact_publication_input'])
+            terminal = compact_terminal.finish(published,input_name=job['compact_terminal_input'])
+            prepared = compact_native_features.prepare(terminal,input_name=job['compact_native_features_input'])
+            finalize(prepared)
+            return prepared,terminal
+        except BaseException as error:
+            cleanup = []
+            if owner is not None:owner.poisoned = True
+            if journal is not None:
+                if not journal.sealed:
+                    try:journal.seal('failed',reason=type(error).__name__+': '+str(error))
+                    except BaseException as failure:cleanup.append(failure)
+                try:_immutable(journal.directory/'attempt-failed.json',{
+                    'reason':type(error).__name__+': '+str(error),
+                    'compact_terminal_present':(journal.directory/'complete.json').exists(),
+                    'cleanup_errors':[str(e) for e in cleanup]})
+                except BaseException as failure:cleanup.append(failure)
+&gt;           raise CompactProducerError('compact producer attempt failed; preserve partial evidence and stop enclosing job'
+                + ('; cleanup failed' if cleanup else '')) from error
+E           tradingagents.research.onchain_replication.compact_native_producer.CompactProducerError: compact producer attempt failed; preserve partial evidence and stop enclosing job
+
+tradingagents/research/onchain_replication/compact_native_producer.py:153: CompactProducerError</failure></testcase><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_archive_descriptor_hash_refused_before_claim[hash]" time="8.041" /><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_late_archive_mcm_mutation_preserves_spent_claims" time="17.163"><failure message="KeyError: 'ledger'">admitted = (&lt;tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...2f5f7b4ca7434cde568bd45'), &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a0bf55aee90&gt;)
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7a0bf558e8d0&gt;
+
+    def test_late_archive_mcm_mutation_preserves_spent_claims(admitted, monkeypatch):
+        t, job, graphs, examples, transport = admitted
+        from tradingagents.research.onchain_replication import archive_owner_stage, compact_mcm
+        original = archive_owner_stage._execute_locked
+        holder = {}
+        kernel = compact_mcm._kernel(); numerical = kernel.mcm
+        def calculate(*args, **kwargs):
+            result = numerical(*args, **kwargs); holder['matrix'] = result['mcm']; return result
+        def seal(ledger, stage, **kwargs):
+            value = original(ledger, stage, **kwargs)
+            if stage.kind == 'mcm':
+                holder['ledger'] = ledger; holder['stage'] = stage
+                holder['spending']=dict(ledger.reserved)
+                holder['claims']={p:p.read_bytes() for op in ledger._operations.values()
+                    if op._stage is stage for p in op.root.glob('*.json')}
+                holder['matrix'][0, 0] += .125
+            return value
+        monkeypatch.setattr(kernel, 'mcm', calculate)
+        monkeypatch.setattr(compact_mcm, '_kernel', lambda: kernel)
+        monkeypatch.setattr(archive_owner_stage, '_execute_locked', seal)
+        with pytest.raises(native.api().CompactProducerError):
+            native.api().produce(t.run, 'r', job, graphs, examples, archive_transport=transport)
+&gt;       ledger = holder['ledger']; stage = holder['stage']
+                 ^^^^^^^^^^^^^^^^
+E       KeyError: 'ledger'
+
+tests/research/onchain_replication/test_archive_producer_integration.py:124: KeyError</failure></testcase><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_writer_completion_cannot_bless_changed_dictionary_matrix" time="17.060"><failure message="AssertionError: assert 'writer completion' in 'archive writer allowance'&#10; +  where 'archive writer allowance' = str(ValueError('archive writer allowance'))&#10; +    where ValueError('archive writer allowance') = CompactProducerError('compact producer attempt failed; preserve partial evidence and stop enclosing job').__cause__&#10; +      where CompactProducerError('compact producer attempt failed; preserve partial evidence and stop enclosing job') = &lt;ExceptionInfo CompactProducerError('compact producer attempt failed; preserve partial evidence and stop enclosing job') tblen=2&gt;.value">admitted = (&lt;tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...2f5f7b4ca7434cde568bd45'), &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a0bf5434770&gt;)
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7a0d61b148d0&gt;
+
+    def test_writer_completion_cannot_bless_changed_dictionary_matrix(admitted, monkeypatch):
+        t,job,graphs,examples,transport=admitted
+        from tradingagents.research.onchain_replication import archive_owner_writer,compact_dictionary
+        original=archive_owner_writer._run_locked;holder={}
+        def changed(ledger,stage,produce,**kwargs):
+            value,receipt=original(ledger,stage,produce,**kwargs)
+            if stage.kind=='dictionary':
+                holder['ledger']=ledger;holder['stage']=stage
+                value[0]['matrices'][0]['matrix'][0,0]+=.125
+            return value,receipt
+        monkeypatch.setattr(archive_owner_writer,'_run_locked',changed)
+        with pytest.raises(native.api().CompactProducerError) as caught:
+            native.api().produce(t.run,'r',job,graphs,examples,archive_transport=transport)
+&gt;       assert 'writer completion' in str(caught.value.__cause__)
+E       AssertionError: assert 'writer completion' in 'archive writer allowance'
+E        +  where 'archive writer allowance' = str(ValueError('archive writer allowance'))
+E        +    where ValueError('archive writer allowance') = CompactProducerError('compact producer attempt failed; preserve partial evidence and stop enclosing job').__cause__
+E        +      where CompactProducerError('compact producer attempt failed; preserve partial evidence and stop enclosing job') = &lt;ExceptionInfo CompactProducerError('compact producer attempt failed; preserve partial evidence and stop enclosing job') tblen=2&gt;.value
+
+tests/research/onchain_replication/test_archive_producer_integration.py:147: AssertionError</failure></testcase><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_existing_local_route_has_no_archive_ledger[local]" time="178.871" /><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_captured_transition_expires_and_cannot_cross_thread" time="0.002" /><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_invalidated_transition_cannot_mask_fatal_primary" time="0.001" /></testsuite></testsuites>

@@ -164,11 +164,6 @@ def _journal_members(owner):
         and ledger.root==owner.root.parent/'archive-operations'
         and not ledger._poisoned and ledger._active is None,
         'archive terminal ledger authority differs')
-    expected={'start.json':io._json(thaw(ledger.record))}
-    if ledger._closed:
-        expected['closed.json']=io._json({'schema_version':1,'reserved':thaw(ledger.reserved),
-            'poisoned':False,'execution_admitted':False})
-    require(ledger._expected==expected,'archive terminal canonical ledger metadata differs')
     ledger._evidence()
     require(set(ledger._writers)==set(owner.required),'archive required writers incomplete')
     names={ledger.root.name};claims={}

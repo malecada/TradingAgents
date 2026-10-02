@@ -110,15 +110,14 @@ def produce(run,representation,job,graphs,examples,*,archive_transport=None):
     m = compact_native_features._api()
     m.minimum_capacity({graph_hash(g):g for g in graphs},d['required_graphs'],d['configs']['dictionary']['size'],
         m.policy(json.loads(run.read_input(job['compact_native_features_input']))))
-    journal = owner = ledger = archive_lock = None
+    journal = owner = None
     try:
         journal,bound = matching_owner.open_first(run,representation=representation,plan_input=job['plan_input'],
             producer=job['producer'],policy_input=job['pair_checkpoint_input'])
         owner = compact_owner.attach(bound,policy_input=job['compact_policy_input'])
         if extension:
             from . import archive_owner_policy, archive_owner_operations
-            archive_lock = owner._transition
-            ledger = archive_owner_operations.attach(archive_owner_policy.select(owner,
+            archive_owner_operations.attach(archive_owner_policy.select(owner,
                 input_name=job['compact_archive_input'],transport=archive_transport))
         training = compact_training.admit(owner,input_name=job['compact_training_input'],graphs=graphs,
             examples=examples,fold=fold,seed=d['seed'],configs=d['configs'])
@@ -142,9 +141,6 @@ def produce(run,representation,job,graphs,examples,*,archive_transport=None):
     except BaseException as error:
         cleanup = []
         if owner is not None:owner.poisoned = True
-        if ledger is not None and not ledger._closed:
-            try:_close_failed_archive(owner,ledger,archive_lock)
-            except BaseException as failure:cleanup.append(failure)
         if journal is not None:
             if not journal.sealed:
                 try:journal.seal('failed',reason=type(error).__name__+': '+str(error))
@@ -154,33 +150,8 @@ def produce(run,representation,job,graphs,examples,*,archive_transport=None):
                 'compact_terminal_present':(journal.directory/'complete.json').exists(),
                 'cleanup_errors':[str(e) for e in cleanup]})
             except BaseException as failure:cleanup.append(failure)
-        for failure in cleanup:error.add_note('compact failure cleanup: '+repr(failure))
-        if not isinstance(error,Exception):raise
-        for failure in cleanup:
-            if not isinstance(failure,Exception):raise failure from error
         raise CompactProducerError('compact producer attempt failed; preserve partial evidence and stop enclosing job'
             + ('; cleanup failed' if cleanup else '')) from error
-
-
-
-def _close_failed_archive(owner,ledger,lock):
-    """Revoke and close only the original ledger under its captured transition."""
-    from . import archive_owner_operations
-    require(type(ledger) is archive_owner_operations.Ledger
-        and ledger.owner is owner and ledger.selection._owner is owner
-        and getattr(owner,'_archive_operations',None) is ledger
-        and owner._transition is lock and ledger._transition is lock,
-        'failed archive ledger authority changed')
-    with compact_owner._held(owner) as held:
-        held.check(owner)
-        require(held.lock is lock,'failed archive captured transition changed')
-        if ledger._closed:return
-        # Revocation is safe once identity is established. Replaced evidence
-        # cannot authorize a physical write, but must not retain live authority.
-        ledger._poisoned = True
-        ledger._evidence()
-        held.check(owner)
-        compact_owner.io._cleanup((ledger._close,))
 
 
 def finalize(prepared):

@@ -1,0 +1,105 @@
+{
+  "attempts": {
+    "review-green01": {
+      "deselected": 2,
+      "exit_code": 0,
+      "passed": 11,
+      "pytest_seconds": 456.13,
+      "session": 50473
+    },
+    "review-red01": {
+      "deselected": 5,
+      "exit_code": 1,
+      "failed": 3,
+      "pytest_seconds": 413.84,
+      "session": 66432
+    }
+  },
+  "candidate": "candidate04",
+  "command": "env -u PYTEST_ADDOPTS PYTHONPATH=. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 RUN_ONLINE_TESTS=0 .venv/bin/python -B -m pytest -q -p no:cacheprovider --import-mode=importlib tests/research/onchain_replication/test_archive_producer_integration.py -k 'not existing_local and not writer_completion' --junitxml=research/onchain-paper-replication-2026-09-24/full_sources/archive-producer-integration-2026-10-02/review-green01.xml > research/onchain-paper-replication-2026-09-24/full_sources/archive-producer-integration-2026-10-02/review-green01.log 2>&1",
+  "evidence_sha256": {
+    "candidate04/manifest.json": "1d816a8d3d9ede6748816688131e95b6462aa9adf3149e8e363cc3b767f00ca3",
+    "check04.log": "9e28480f76862d773fa496be59f9eaf8cac38a7ba3327601a4bd440a8d4668ad",
+    "check04.xml": "98dc05c44b87b1b428b08fcd4f64414b768af277f36f3b378081da1877262a7e",
+    "review-green01.log": "69a04dced0e9555f15dfc8e9cf1106ccdb211a5ca6a0aa962801a4eb2a5fe440",
+    "review-green01.xml": "ad9c79029c889410480e5a0ffedf27caf4b0c28cb1d3f89cb290266c3b35034b",
+    "review-red01-source/manifest.json": "508f56aaeddb1e63ecb8d8742fadceba20a7034200cc865dc6d366c0eba4cc7c",
+    "review-red01.log": "03d84148fd85ecd700901fc271bf076489a35dd0a6c185157be67bc91a6ac6c5",
+    "review-red01.xml": "1f903e66cc8f3468793cbda5b720a1ec547b7c96d568c111b0abf8b4052b9c84"
+  },
+  "green_cases": [
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_actual_archive_dictionary_mcm_publication_and_postclose_checks[capacity]",
+      "time": "298.762"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_archive_descriptor_hash_refused_before_claim[hash]",
+      "time": "9.316"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_late_archive_mcm_mutation_preserves_spent_claims",
+      "time": "91.693"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_captured_transition_expires_and_cannot_cross_thread",
+      "time": "0.002"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_invalidated_transition_cannot_mask_fatal_primary",
+      "time": "0.001"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_native_failure_preserves_primary_fatal_despite_ledger_close_error[True]",
+      "time": "26.736"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_native_failure_preserves_primary_fatal_despite_ledger_close_error[False]",
+      "time": "26.865"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_failed_ledger_refuses_untrusted_authority_and_never_recloses[binding]",
+      "time": "0.001"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_failed_ledger_refuses_untrusted_authority_and_never_recloses[lock]",
+      "time": "0.001"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_failed_ledger_refuses_untrusted_authority_and_never_recloses[evidence]",
+      "time": "0.001"
+    },
+    {
+      "classname": "tests.research.onchain_replication.test_archive_producer_integration",
+      "name": "test_failed_ledger_refuses_untrusted_authority_and_never_recloses[closed]",
+      "time": "0.001"
+    }
+  ],
+  "runtime": "3.13.13 (main, Apr 14 2026, 14:28:56) [Clang 22.1.3 ]",
+  "scope": "in-process injected local transport; mocked guards; no outer dispatcher/SSH/empirical admission",
+  "source_manifest": {
+    "tests/research/onchain_replication/test_archive_producer_integration.py": "94f769a3e19168bfdb02ba1ea4cd4485305a18d0024da028ac4b8888d70b92cb",
+    "tradingagents/research/onchain_replication/archive_owner_seal.py": "d38a2a03f8273e5afbe9fa20004590ba3a38c3ae5b62b717b026e36907cacee9",
+    "tradingagents/research/onchain_replication/archive_owner_stage.py": "b943ded129163ac10e9be4a19d4ce917c55beda3634741ee68bfef55613d1bd7",
+    "tradingagents/research/onchain_replication/archive_owner_writer.py": "b94d0141845661c5e4cda3592078c05d0cd527425be550829e7d3f22f4576e08",
+    "tradingagents/research/onchain_replication/compact_dictionary.py": "4a5f00b4a6ca1a94ef35e95946c04363203fb2e9fb20f647648339d937e83294",
+    "tradingagents/research/onchain_replication/compact_mcm.py": "c7ef88520092c6be6df0e7f1d31b4b9b6140ff56b06c533e4cf98af0aa93f364",
+    "tradingagents/research/onchain_replication/compact_mcm_output.py": "bd118be0c2f9c44eebb1f459184c676dfc66f0ee46cd7f2c0271dea1db11bc99",
+    "tradingagents/research/onchain_replication/compact_mcm_publication.py": "d80315a270fab3c4a349e22cd114fa46041c121cdbfccbdc47ae7ce4b04edd25",
+    "tradingagents/research/onchain_replication/compact_native_producer.py": "10fb95f82fb8a92730123b0168ddb0146115498412aa9750e7b7be7369774d7c",
+    "tradingagents/research/onchain_replication/compact_owner.py": "b200608dffd5a81078251ccdccc3070e5f6b366b4ec18420d4ec06f73289e3a1",
+    "tradingagents/research/onchain_replication/compact_terminal.py": "72e2604eb4f2829e15de6afac58966d0cc82ff88c91c15335ef0e66dde932328",
+    "tradingagents/research/onchain_replication/compact_training.py": "0bb799ca47a62146367315ffce988153b5699a1312a6b650a18fa889ad39fe04"
+  },
+  "source_unchanged": true,
+  "status": "CLOSED"
+}

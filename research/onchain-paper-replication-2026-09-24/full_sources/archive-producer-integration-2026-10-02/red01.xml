@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="8.070" timestamp="2026-10-02T09:15:18.066935+02:00" hostname="malecada-Zenbook-UM3402YA-UM3402YA"><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_actual_archive_dictionary_mcm_publication_and_postclose_checks" time="1.607"><failure message="TypeError: produce() got an unexpected keyword argument 'archive_transport'">admitted = (&lt;tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...2f5f7b4ca7434cde568bd45'), &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x73f266d070e0&gt;)
+
+    def test_actual_archive_dictionary_mcm_publication_and_postclose_checks(admitted):
+        t, job, graphs, examples, transport = admitted
+        m = native.api()
+&gt;       prepared, terminal = m.produce(t.run, 'r', job, graphs, examples, archive_transport=transport)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: produce() got an unexpected keyword argument 'archive_transport'
+
+tests/research/onchain_replication/test_archive_producer_integration.py:45: TypeError</failure></testcase><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_archive_descriptor_hash_refused_before_claim[hash]" time="1.882"><failure message="TypeError: produce() got an unexpected keyword argument 'archive_transport'">admitted = (&lt;tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...2f5f7b4ca7434cde568bd45'), &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x73f0faf3bc50&gt;)
+
+    @pytest.mark.parametrize('admitted', ['hash'], indirect=True)
+    def test_archive_descriptor_hash_refused_before_claim(admitted):
+        t, job, graphs, examples, transport = admitted
+        with pytest.raises(ValueError):
+&gt;           native.api().produce(t.run, 'r', job, graphs, examples, archive_transport=transport)
+E           TypeError: produce() got an unexpected keyword argument 'archive_transport'
+
+tests/research/onchain_replication/test_archive_producer_integration.py:74: TypeError</failure></testcase><testcase classname="tests.research.onchain_replication.test_archive_producer_integration" name="test_late_archive_mcm_mutation_preserves_spent_claims" time="1.929"><failure message="AttributeError: module 'tradingagents.research.onchain_replication.archive_owner_stage' has no attribute '_execute_locked'">admitted = (&lt;tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...2f5f7b4ca7434cde568bd45'), &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x73f0fa805d10&gt;)
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x73f0fa8a4950&gt;
+
+    def test_late_archive_mcm_mutation_preserves_spent_claims(admitted, monkeypatch):
+        t, job, graphs, examples, transport = admitted
+        from tradingagents.research.onchain_replication import archive_owner_stage, compact_mcm
+&gt;       original = archive_owner_stage._execute_locked
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'tradingagents.research.onchain_replication.archive_owner_stage' has no attribute '_execute_locked'
+
+tests/research/onchain_replication/test_archive_producer_integration.py:81: AttributeError</failure></testcase></testsuite></testsuites>

@@ -3,6 +3,27 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Latest accepted implementation — October 2, corrected archive integration**:
+Candidate04 is independently accepted for injected producer-to-terminal archive
+integration. REVIEW_FINAL SHA256
+8fa5c0f7a7efb12913a171e3aa39c4cdc5ff712078b1e3834b8d53cbfc361724.
+Final review-green01 CLOSED: 11 passed, 2 deselected, 456.13 seconds, session50473
+exit0. Original three red failures and all earlier attempts remain preserved.
+The correction safely closes failed ledgers, preserves fatal cleanup errors and
+original spent claims, and binds closed metadata to original terminal authority.
+The full archive path and six-cell MCM check passed with post-close remote calls
+forbidden. These tests use an injected filesystem transport and mocked guards;
+registered outer dispatcher, actual SSH and physical admission remain required.
+
+Root is committing this reviewed source and evidence before releasing ownership.
+The next executable engineering slice is the new restart-retention helper and
+synthetic tests, subject to the independent frozen contract review now active.
+The other worker is preparing neural-only resource readiness and a distinct
+nonexecutable budget-split proposal: 62 = 33 spent + 12 body + 15 financial +
+2 resource claims (nine neural cells independently schedulable from 23 remaining
+resource cells). Existing 61 drafts are preserved; no amendment is adopted and
+no new empirical identity is reserved. All 1,420 financial fits remain pending.
+
 **Active parallel checkpoint — October 2, full injected archive route passed**:
 The coherent native producer→dictionary→MCM→saved output→publication→closed
 owner/ledger/terminal path passed check03:1passed6deselected282.06s/session2341exit0.
@@ -28,9 +49,17 @@ poisoned on native failure, preserving original fatal errors and all successful
 claim bytes/spending; and reject coherent mutation of closed.json plus runtime
 _expected against original terminal authority. New negatives and a fresh full
 archive pass are required after those changes; never reopen closed attempts.
-review-red01 is active in session66432; whole-package source is frozen until its
-terminal. Inspect agent status before any package edit/test. Other source owners
-remain frozen.
+review-red01 CLOSED in session66432, exit1:3failed5deselected413.84s. It
+reproduced all three review gaps: altered closed.json plus _expected accepted,
+late ledger left open, and fatal training CleanupFailure wrapped as ordinary
+CompactProducerError. Exact source/log/XML remain retained. Integration owner
+implemented the corrections in candidate04, manifest SHA256
+1d816a8d3d9ede6748816688131e95b6462aa9adf3149e8e363cc3b767f00ca3.
+review-green01 CLOSED session50473 exit0:11passed2deselected456.13s. The
+corrected full route includes an independent six-cell MCM denominator and
+closed.json/_expected mutation refusal; late poisoned close, fatal cleanup and
+authority tests passed. Whole-package source remains frozen through independent
+final review/checkpoint; no test process remains. Do not relaunch this identity.
 
 Resource draft revision02 independently accepted as NONEXECUTABLE mapping and
 conditional accounting; REVIEW_FINAL SHA256
@@ -57,10 +86,14 @@ Independent requirements review accepted the narrow investigation, REVIEW SHA256
 retention policy, disposal, capacity or execution is adopted by this review.
 Pair offload still leaves55,439,818,752 logical score/matrix bytes across nine
 32-motif graphs, before checkpoint and other costs; this is not a physical cap.
-The agent now owns documentation-only bounded-retention-contract-2026-10-02
-prospective drafts to distinguish future restart scratch from required scientific
-outputs, independently verified replay and failed evidence. Existing artifacts
-and the current archive variant remain untouched; no amendment adopted; owner_closure_review owns independent review records. Root owns STATE
+The bounded-retention-contract-2026-10-02 draft is now frozen for review:
+CONTRACT SHA256970635ccd982f23360397e3d5d7feda6b41f1a6a896cf4d9860d7d12a44d0fd4;
+SHA256SUMS74395c1bf4f286ad663dc872c870ca55e2798c1d2490d27b62d82cdddcae35c7.
+It proposes at most two active future restart generations, retained scientific
+outputs/failure evidence and outcome-independent replay selection. Existing
+artifacts and current archive variant remain untouched; no amendment adopted.
+admission_batching now owns read-only neural-resource-readiness-2026-10-02: exact
+independent neural-only fresh runner/registration/memory/budget prerequisites; owner_closure_review owns independent review records. Root owns STATE
 and coordination. No new empirical job/external transfer. All1420fits pending,
 coverage77/109; latest free19764666368B exceeds10GiB. Continue current tests/review,
 checkpoint accepted docs, then outer transport dispatch/accounting integration.
