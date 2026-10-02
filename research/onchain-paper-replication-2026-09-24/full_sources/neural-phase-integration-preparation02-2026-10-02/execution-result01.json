@@ -1,0 +1,285 @@
+{
+  "cgroup_absent": true,
+  "cleanup_verified": true,
+  "financial_fits": 0,
+  "five_cases": {
+    "entry_cap": {
+      "authority_revocation_checked_after_tail": false,
+      "child_bridge": null,
+      "parent_authority_thread_closed": true,
+      "receipt": {
+        "bytes": 20229,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/owned/attempts/entry_cap/case-result.json",
+        "sha256": "263bcaf1989fc425dabc803bbf6532ac7d48f78118324e64a72722756abe629a"
+      },
+      "retained_last_prefix_sha256": "07e8066d58f2a7b8f35cd5a7ccb23ecf1efc141bc4d4334fad34d3f9477d2710",
+      "summary": {
+        "complete": 0,
+        "failed": 1,
+        "failure": {
+          "message": "physical entry budget exceeded",
+          "type": "ValueError"
+        },
+        "synthetic": true,
+        "unavailable": 8
+      },
+      "three_root_final": {
+        "allocated_bytes": 540672,
+        "entries": 127,
+        "files": 118,
+        "logical_bytes": 37769
+      }
+    },
+    "fatal": {
+      "authority_revocation_checked_after_tail": true,
+      "child_bridge": null,
+      "parent_authority_thread_closed": true,
+      "receipt": {
+        "bytes": 4989,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/owned/attempts/fatal/case-result.json",
+        "sha256": "6c40ee3201ee2da8a90aef32652ef68e0409aaf8a7cbab0610aa2fd87a5c3ef7"
+      },
+      "retained_last_prefix_sha256": "66a705f0a1eb16c91850f520edbc58b821d04b7394b36791d33f91af5777f30d",
+      "summary": {
+        "complete": 0,
+        "failed": 1,
+        "failure": {
+          "message": "controlled fatal after durable forward_before",
+          "type": "SystemExit"
+        },
+        "synthetic": true,
+        "unavailable": 8
+      },
+      "three_root_final": {
+        "allocated_bytes": 135168,
+        "entries": 33,
+        "files": 24,
+        "logical_bytes": 16765
+      }
+    },
+    "near_cap": {
+      "authority_revocation_checked_after_tail": false,
+      "child_bridge": null,
+      "parent_authority_thread_closed": true,
+      "receipt": {
+        "bytes": 9676,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/owned/attempts/near_cap/case-result.json",
+        "sha256": "1ceb7d06029307eca775d14673126033b144893919a96a442bedd86b5b4f2e34"
+      },
+      "retained_last_prefix_sha256": "1cd448d81698952793fbb9cf8524d88549e9be7c4238bc55feadab2d876a2a58",
+      "summary": {
+        "complete": 0,
+        "failed": 1,
+        "failure": {
+          "message": "physical scoped storage budget exceeded",
+          "type": "ValueError"
+        },
+        "synthetic": true,
+        "unavailable": 8
+      },
+      "three_root_final": {
+        "allocated_bytes": 100704256,
+        "entries": 57,
+        "files": 48,
+        "logical_bytes": 100546933
+      }
+    },
+    "publication_refusal": {
+      "authority_revocation_checked_after_tail": false,
+      "child_bridge": null,
+      "parent_authority_thread_closed": true,
+      "receipt": {
+        "bytes": 5502,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/owned/attempts/publication_refusal/case-result.json",
+        "sha256": "1dc9a91add0c6ec9048c028fa1a03cac76c2b4582c70ee872d97c65e7bc897ee"
+      },
+      "retained_last_prefix_sha256": "5bf0bb9d6c87aa880d20469e3da044f14a0fff47f4fa1a3472d55ad74ada7d7b",
+      "summary": {
+        "complete": 0,
+        "failed": 1,
+        "failure": {
+          "message": "[Errno 17] File exists: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/owned/attempts/publication_refusal/research_artifacts/onchain-paper-replication-2026-09-24/sources/phase-integration-01-publication_refusal/cell-00/.physical-phase-journal.json'",
+          "type": "FileExistsError"
+        },
+        "synthetic": true,
+        "unavailable": 8
+      },
+      "three_root_final": {
+        "allocated_bytes": 139264,
+        "entries": 34,
+        "files": 25,
+        "logical_bytes": 19345
+      }
+    },
+    "success": {
+      "authority_revocation_checked_after_tail": false,
+      "child_bridge": {
+        "child_pid": 950644,
+        "command": [
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+          "-B",
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/source03/child_scope.py",
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/owned/attempts/success",
+          "phase-integration-01-success",
+          "e0cb08b6bf763ffec0bb4058d5d1d89bd3977486",
+          "95071b0cbd6120c36434663baf56768d1c6eda4fa5c359cf329ce6efe1b6fbcb",
+          "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-a07318442c3e4dbfa15fbbe9203b529d.service",
+          "7c0a796db6145692df833d708eb26903efb0397fca37a516ae7ea11338a3b891",
+          "950640"
+        ],
+        "exit_code": 0,
+        "receipt_sha256": "3bccd6da9639320e1db38572d2143019249f76f5d394ec9f1416eefad16b06ad",
+        "same_file_limit": true,
+        "same_unit": true,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "9e396face97bb9bcc92ff46acedb2daee2c4ce8f25ba65cc1f071084381d1e38",
+        "timeout_seconds": 10
+      },
+      "parent_authority_thread_closed": true,
+      "receipt": {
+        "bytes": 8872,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/owned/attempts/success/case-result.json",
+        "sha256": "55892077851d4d369f88b2ca94db4814c4e84f103da58f32dc388d9a1a2af2b5"
+      },
+      "retained_last_prefix_sha256": null,
+      "summary": {
+        "complete": 9,
+        "failed": 0,
+        "failure": null,
+        "synthetic": true,
+        "unavailable": 0
+      },
+      "three_root_final": {
+        "allocated_bytes": 311296,
+        "entries": 58,
+        "files": 41,
+        "logical_bytes": 109604
+      }
+    }
+  },
+  "guard_elapsed_seconds": 6.104274703000556,
+  "guard_final": {
+    "bytes": 7145,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/owned/guard/final.json",
+    "sha256": "4313c17cf4a4aaf5cb1af1a2c7ee5d6df06f420c584a50209f25b55fda9268f8"
+  },
+  "guard_peak_sampled_memory_bytes": 135835648,
+  "identity": "neural-phase-integration-20261002-01",
+  "isolated_base": "e0cb08b6bf763ffec0bb4058d5d1d89bd3977486",
+  "kernel_controls": {
+    "memory.high": "2147483648",
+    "memory.max": "3221225472",
+    "memory.swap.max": "0"
+  },
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "numerical_imports": false,
+  "original_pids_absent": [
+    950633,
+    950636,
+    950640,
+    950714,
+    950644
+  ],
+  "owner_totals": {
+    "directories_including_root": 89,
+    "entries_including_root": 362,
+    "file_allocated_bytes": 101724160,
+    "files": 273,
+    "logical_bytes": 100800827
+  },
+  "qualifications": [
+    "synthetic Scope and retention integration, not numerical neural capacity or forecasting",
+    "unit LimitFSIZE/RuntimeMaxSec readback returned and launcher validated, but its property text was not durably archived during this six-second run",
+    "near_cap deliberately exceeds64MiB neural-output bound solely to exercise physical refusal",
+    "authority revocation checked after legitimate closure; no publication guarantee after parent authority loss",
+    "sampled guard storage is not kernel filesystem quota"
+  ],
+  "refs": {
+    "REVIEW_RELEASE01.md": {
+      "bytes": 5815,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/REVIEW_RELEASE01.md",
+      "sha256": "f4e4b4f93586849288975615c91845c628747905c2f49e30279d2817749709a3"
+    },
+    "coordinator-result01.json": {
+      "bytes": 286,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/coordinator-result01.json",
+      "sha256": "e72195abb0302af31c1afeb1243fb05e082e5da7e61feb14ec1ccb12d7d7c45c"
+    },
+    "coordinator01.log": {
+      "bytes": 0,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/coordinator01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "launch-intent01.json": {
+      "bytes": 1252,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/launch-intent01.json",
+      "sha256": "ee17b6086dc49f7df16e7407a1534b6024597409684fc88b0c2cda09275def40"
+    },
+    "postclosure-unit-properties01.json": {
+      "bytes": 385,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/postclosure-unit-properties01.json",
+      "sha256": "e62b7f6b03d810f3bc5534fe0368c11fb6fdf8918d4797766edd8f4ba7f02a9a"
+    },
+    "release-manifest01.json": {
+      "bytes": 3676,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/release-manifest01.json",
+      "sha256": "c91797c5c65d5ce6bcc2e77a6dca36f67ec7649962fc50a0b458c8441da17ba5"
+    },
+    "release-runtime-check01.log": {
+      "bytes": 657,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/release-runtime-check01.log",
+      "sha256": "72bfbd7b2f0a7e15ff54b56346409d77998d95ec773e8cdf3fb9a51a85ece462"
+    },
+    "released-spec01.json": {
+      "bytes": 16996,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/released-spec01.json",
+      "sha256": "e0965ebdac620e96d10d9580eebe34a4875ffe6fff8fb00e27b27f02c797c1b9"
+    },
+    "retained-tree01.json": {
+      "bytes": 104781,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/retained-tree01.json",
+      "sha256": "faae358cea2b0726ec382674ecfab0233917a42829c855ca34dd1486505d2500"
+    },
+    "retained-tree01.tar.gz": {
+      "bytes": 145420,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/retained-tree01.tar.gz",
+      "sha256": "382487d91766cedba123c8572edc75f2f1db714809f43e5d80f2a1974c8cc601"
+    },
+    "unit-journal01.txt": {
+      "bytes": 2409,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation02-2026-10-02/unit-journal01.txt",
+      "sha256": "b164217e8326e79d5287d637dda993c6ca8a5ed85a800935cd51aab04ebaf40f"
+    }
+  },
+  "retry": false,
+  "schema_version": 1,
+  "session": 88928,
+  "source_backup_commit": "550acc8ee0d1260bb301b6d9a5aa640a8e76afbb",
+  "source_files": {
+    "child_scope.py": "7c0a796db6145692df833d708eb26903efb0397fca37a516ae7ea11338a3b891",
+    "phase_fixture.py": "2078320a564d178413e050b6f857aeaaf4be26048bba3c2ba09ee5d5e5750fc1",
+    "pyproject.toml": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9",
+    "tradingagents/__init__.py": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5",
+    "tradingagents/research/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+    "tradingagents/research/admission.py": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd",
+    "tradingagents/research/lifecycle.py": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+    "tradingagents/research/onchain_replication/__init__.py": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1",
+    "tradingagents/research/onchain_replication/neural_authority.py": "eed5f79f4c34819fb64ac2d79069ff56e4b24d175f2d391da9856f9d50186fb2",
+    "tradingagents/research/onchain_replication/neural_phases.py": "60c6e6532a62034ec859b22c22902fee84f21428410c2cb5b86796a51b97d48c",
+    "tradingagents/research/onchain_replication/neural_physical.py": "8891e3ed52142f23ae987b8985cd4ee8e09caf86658623e43a37df7140dfe190",
+    "tradingagents/research/onchain_replication/neural_resource.py": "a21505fe40dabba5da82d940e01229979ce26c6757910e729a76f6813f6a1164",
+    "tradingagents/research/onchain_replication/resources.py": "b58a85744df475d267bf59a06130649bb66ef8e83d2ec0d57233b26355853047",
+    "tradingagents/research/onchain_replication/workflow_storage.py": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554",
+    "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+  },
+  "status": "closed_complete_author_review_pending",
+  "success_phase_markers": 180,
+  "unit": "onchain-replication-a07318442c3e4dbfa15fbbe9203b529d.service"
+}

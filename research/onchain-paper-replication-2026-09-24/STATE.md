@@ -1,5 +1,47 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: phase proof independently accepted and exact modules integrated.**
+REVIEW_EXECUTION01 SHA6099e2a8b3eceb0715534b4c50ecad2ede2ad78ca0d1cdc24886084d92628a40
+verifies allfivecases/180markers/realchildauthority/complete9celldenominators/
+raw273files89directories and complete102,088,704allocatedB/100,800,827logicalB.
+The original manifest's erroneous excludes-root wording is preserved and
+corrected by RETENTION_ADDENDUM01 SHA5388a067d51e5d861dc8037c309c4027d708020aa33d0e1b25a51bf52d21cb64.
+Exact accepted neural_resource/neural_phases candidate01 bytes are integrated.
+New neural-pressure-successor-release-2026-10-02/ binds the actual133Python
+closure and7runtime hashes, all3implementation changes, exactbudget-only63
+accepted bytes and corrected identity03caller. source-manifest01
+SHAf06013ba8227781feadb2ad8a73efe82757fd4bb4a09ff6c09c7ba0c513752c1.
+No gate/admission/claim03 yet; no substantial jobactive. Root backs up proof/
+source then obtains independent finalsource review, creates concretegate and
+reviews/admission/readiness beforeONEprobe.34spent/adopt62/77of109/all1420fits
+remain. Dictionary importcandidate is separate and independently reviewed.
+
+**Latest checkpoint: phase integration01 CLOSED complete; independent raw review pending.**
+The sole released neural-phase-integration-20261002-01/session88928 returned0
+at2026-10-02T16:22:21.816547Z (~6.4s). Allfive cases exercised the real Scope:
+success retained180markers and original-authority child publication; controlled
+fatal/publication refusal/near-byte/entry-cap cases retained1failed+8unavailable.
+Entry-cap preserved closure at127entries; interrupted37B scratch remains.
+Guard3GiBmax/2GiBhigh/swap0/twoCPU controls read back; sampledpeak135,835,648B
+and memoryevents0. Original cgroup/PIDs absent and cleanupverified. Actual unit
+file/runtime property readback passed through the launcher; its rawtext was not
+retained during the six-second lifetime and postclosure defaults are not evidence.
+Fullowner273files/89directories includingroot/362entries/100,800,827logicalB
+is preserved in retained-tree01.tar.gz (145,420B; SHA382487d91766cedba123c8572edc75f2f1db714809f43e5d80f2a1974c8cc601).
+Execution-result01 SHAc0ad6c9f82538e546b7c22b17225df99825f830b2df4cfdb380c0d73c42a8693.
+Sourcefreeze ended after verified closure; identity01 is permanently closed.
+No numerical imports, neural capacity result or financial fit. Highest adopted62,
+34spent, coverage77/109 and all1,420fits remain unchanged. Budget-only63accepted
+but unadopted. Root prepares exact03release; physical_review verifies complete
+raw; physical_correction owns a separate typed original-dictionary import candidate.
+Original512samples/32representatives/order and dictionary body/semantic hashes
+have been verified; largestmotif24nodes/40edges implies16,831,416pairs for the
+observed701,309node neighborhood, replacing the earlier hypotheticalhub×6 bound.
+Nextsafeaction: complete independent proof review/backup, integrate exact phase
+sources, finish final03charter/amend/gate/caller/source/runtime/claim-RPC and
+independent review, commit+external backup, then fresh admission/readiness and
+ONE neural probe. Continue independent23cell executor preparation in parallel.
+
 **Latest checkpoint: stricter entry-tail reserve implemented;56physical checks pass.**
 The independently accepted one-line neural_physical change holds18active entries
 instead of16, while total128/terminal mode/two publication slots are unchanged.

@@ -146,7 +146,11 @@ def _state_hash(value):
     visit(value);return h.hexdigest()
 
 
-def run_cell(graph,config,directory,identity,*,max_checkpoint_bytes,cooperative_seconds):
+def _phase(phases,event):
+    if phases is not None:phases.record(event)
+
+
+def run_cell(graph,config,directory,identity,*,max_checkpoint_bytes,cooperative_seconds,phases=None):
     """One unchanged synthetic update; helper callers must supply outer admission."""
     import numpy as np
     import torch
@@ -155,18 +159,27 @@ def run_cell(graph,config,directory,identity,*,max_checkpoint_bytes,cooperative_
     begin=time.monotonic()
     def check():
         if time.monotonic()-begin>cooperative_seconds:raise TimeoutError('neural cooperative cell budget exceeded; not a hard per-call deadline')
+    _phase(phases,'model_before')
     rng=seed_all(11);model=ReplicationModel(config,'classification')
+    _phase(phases,'model_after')
+    _phase(phases,'tensor_adapter_before')
     item={'mcm':torch.from_numpy(rng.random((len(graph.node_ids),32),dtype=np.float32)),
           'edge_index':torch.tensor(graph.edge_index.copy(),dtype=torch.long)}
     prices=torch.linspace(-1,1,16*28).reshape(16,28,1);labels=torch.arange(16)%2
     optimizer=torch.optim.Adam(model.parameters(),lr=.001)
-    check();out=model([[item]*28 for _ in range(16)],prices)
+    _phase(phases,'tensor_adapter_after')
+    check();_phase(phases,'forward_before');out=model([[item]*28 for _ in range(16)],prices)
+    _phase(phases,'forward_after')
+    _phase(phases,'loss_before')
     loss=torch.nn.functional.cross_entropy(out,labels)
     if not torch.isfinite(loss):raise ValueError('nonfinite resource loss')
-    check();loss.backward();check();optimizer.step();check()
+    _phase(phases,'loss_after')
+    check();_phase(phases,'backward_before');loss.backward();_phase(phases,'backward_after');check()
+    _phase(phases,'optimizer_before');optimizer.step();_phase(phases,'optimizer_after');check()
     step_seconds=time.monotonic()-begin
     # Free autograd/large graph tensors before checkpoint serialization.
     loss_value=float(loss.detach());del out,loss,item,prices,labels
+    _phase(phases,'checkpoint_before')
     state={'model':model.state_dict(),'optimizer':optimizer.state_dict(),'rng':capture_rng(rng),
            'epoch':1,'batch':0,'identity':identity,'loss':loss_value}
     expected=_state_hash(state);path=Path(directory)/'checkpoint.pt';io=time.monotonic()
@@ -179,13 +192,15 @@ def run_cell(graph,config,directory,identity,*,max_checkpoint_bytes,cooperative_
         if _fatal(primary):raise primary
         raise ValueError('checkpoint serialization failed; partial bytes retained') from primary
     sync_directory(path.parent);del state
-    check();loaded=torch.load(path,map_location='cpu',weights_only=True)
+    _phase(phases,'checkpoint_after')
+    check();_phase(phases,'reload_before');loaded=torch.load(path,map_location='cpu',weights_only=True)
     if _state_hash(loaded)!=expected:raise ValueError('checkpoint exact state differs after load')
     model.load_state_dict(loaded['model'],strict=True);optimizer.load_state_dict(loaded['optimizer']);restore_rng(loaded['rng'],rng)
     if _state_hash({'model':model.state_dict(),'optimizer':optimizer.state_dict(),'rng':capture_rng(rng),
                    'epoch':1,'batch':0,'identity':identity,'loss':loss_value})!=expected:
         raise ValueError('checkpoint restored model/optimizer/RNG differs')
     check()
+    _phase(phases,'reload_after')
     return {'synthetic':True,'unique_graphs':1,'batch':16,'lookback':28,'optimizer_steps':1,
         'forward_backward_step_seconds':step_seconds,'checkpoint_seconds':time.monotonic()-io,
         'checkpoint_bytes':path.stat().st_size,'checkpoint_sha256':file_hash(path),
@@ -223,17 +238,25 @@ def produce_registered_neural_resource(run,plan_input):
             sub=directory/f'cell-{index:02d}';sub.mkdir();sync_directory(directory)
             try:
                 _namespace(root,directory,owned)
-                run._active();run._check_source();_bound_worker(run,plan_input);run.read_input(cell['graph_input'])
+                run._active();run._check_source();live=_bound_worker(run,plan_input);run.read_input(cell['graph_input'])
                 info=run.admission.inputs[cell['graph_input']]
+                phases=None
+                if scope is not None:
+                    from .neural_phases import PhaseJournal
+                    phases=PhaseJournal(scope,sub,{**identity,'cell_id':cell['cell_id'],'graph_manifest_sha256':info['sha256']},Path(live['cgroup']))
                 cell_begin=time.monotonic()
+                _phase(phases,'graph_validation_before')
                 with open_mapped_graph(root/info['path'],info['sha256'],max_mapped_bytes=p['limits']['max_graph_bytes']) as mapped:
                     if len(mapped.node_ids)!=cell['expected_nodes'] or mapped.edge_index.shape[1]!=cell['expected_edges']:raise ValueError('neural mapped graph count differs before resident load')
+                _phase(phases,'graph_validation_after')
                 if time.monotonic()-cell_begin>p['limits']['cooperative_cell_seconds']:raise TimeoutError('neural cooperative graph validation budget exceeded')
+                _phase(phases,'graph_load_before')
                 graph=load_graph(root/info['path'],info['sha256'])
                 try:
                     if len(graph.node_ids)!=cell['expected_nodes'] or graph.edge_index.shape[1]!=cell['expected_edges']:raise ValueError('neural loaded graph count differs')
+                    _phase(phases,'graph_load_after')
                     result=run_cell(graph,config,sub,{**identity,'cell_id':cell['cell_id'],'graph_manifest_sha256':info['sha256']},
-                        max_checkpoint_bytes=p['limits']['max_checkpoint_bytes'],cooperative_seconds=p['limits']['cooperative_cell_seconds'])
+                        max_checkpoint_bytes=p['limits']['max_checkpoint_bytes'],cooperative_seconds=p['limits']['cooperative_cell_seconds'],phases=phases)
                 finally:del graph
                 gc.collect()
                 if time.monotonic()-cell_begin>p['limits']['cooperative_cell_seconds']:raise TimeoutError('neural cooperative whole-cell budget exceeded')
