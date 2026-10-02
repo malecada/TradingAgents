@@ -1,0 +1,300 @@
+FFFFFFFFFFFFFF                                                           [100%]
+=================================== FAILURES ===================================
+_________ test_actual_archive_consumer_replays_full_and_partial_chunks _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_actual_archive_consumer_r0')
+
+    def test_actual_archive_consumer_replays_full_and_partial_chunks(tmp_path):
+        from tradingagents.research.onchain_replication import archive_chunks,archive_consume
+        spec=importlib.util.spec_from_file_location('archive_fixture',Path(__file__).with_name('test_archive_chunks.py'))
+        base=importlib.util.module_from_spec(spec);spec.loader.exec_module(base)
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_actual_archive_consumer_r0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+___________ test_bad_or_revoked_chunk_never_returns_success[corrupt] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve0')
+failure = 'corrupt'
+
+    @pytest.mark.parametrize('failure',['corrupt','swapped','short','mutable','missing','lease'])
+    def test_bad_or_revoked_chunk_never_returns_success(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+___________ test_bad_or_revoked_chunk_never_returns_success[swapped] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve1')
+failure = 'swapped'
+
+    @pytest.mark.parametrize('failure',['corrupt','swapped','short','mutable','missing','lease'])
+    def test_bad_or_revoked_chunk_never_returns_success(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve1')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+____________ test_bad_or_revoked_chunk_never_returns_success[short] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve2')
+failure = 'short'
+
+    @pytest.mark.parametrize('failure',['corrupt','swapped','short','mutable','missing','lease'])
+    def test_bad_or_revoked_chunk_never_returns_success(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve2')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+___________ test_bad_or_revoked_chunk_never_returns_success[mutable] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve3')
+failure = 'mutable'
+
+    @pytest.mark.parametrize('failure',['corrupt','swapped','short','mutable','missing','lease'])
+    def test_bad_or_revoked_chunk_never_returns_success(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve3')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+___________ test_bad_or_revoked_chunk_never_returns_success[missing] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve4')
+failure = 'missing'
+
+    @pytest.mark.parametrize('failure',['corrupt','swapped','short','mutable','missing','lease'])
+    def test_bad_or_revoked_chunk_never_returns_success(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve4')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+____________ test_bad_or_revoked_chunk_never_returns_success[lease] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve5')
+failure = 'lease'
+
+    @pytest.mark.parametrize('failure',['corrupt','swapped','short','mutable','missing','lease'])
+    def test_bad_or_revoked_chunk_never_returns_success(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_bad_or_revoked_chunk_neve5')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+______________ test_invalid_header_or_denominator_refused[owner] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin0')
+failure = 'owner'
+
+    @pytest.mark.parametrize('failure',['owner','scope','terminal_hash','failed','chunks','state','extra'])
+    def test_invalid_header_or_denominator_refused(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+______________ test_invalid_header_or_denominator_refused[scope] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin1')
+failure = 'scope'
+
+    @pytest.mark.parametrize('failure',['owner','scope','terminal_hash','failed','chunks','state','extra'])
+    def test_invalid_header_or_denominator_refused(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin1')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+__________ test_invalid_header_or_denominator_refused[terminal_hash] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin2')
+failure = 'terminal_hash'
+
+    @pytest.mark.parametrize('failure',['owner','scope','terminal_hash','failed','chunks','state','extra'])
+    def test_invalid_header_or_denominator_refused(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin2')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+______________ test_invalid_header_or_denominator_refused[failed] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin3')
+failure = 'failed'
+
+    @pytest.mark.parametrize('failure',['owner','scope','terminal_hash','failed','chunks','state','extra'])
+    def test_invalid_header_or_denominator_refused(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin3')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+______________ test_invalid_header_or_denominator_refused[chunks] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin4')
+failure = 'chunks'
+
+    @pytest.mark.parametrize('failure',['owner','scope','terminal_hash','failed','chunks','state','extra'])
+    def test_invalid_header_or_denominator_refused(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin4')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+______________ test_invalid_header_or_denominator_refused[state] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin5')
+failure = 'state'
+
+    @pytest.mark.parametrize('failure',['owner','scope','terminal_hash','failed','chunks','state','extra'])
+    def test_invalid_header_or_denominator_refused(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin5')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+______________ test_invalid_header_or_denominator_refused[extra] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin6')
+failure = 'extra'
+
+    @pytest.mark.parametrize('failure',['owner','scope','terminal_hash','failed','chunks','state','extra'])
+    def test_invalid_header_or_denominator_refused(tmp_path,failure):
+>       reader,root,chunks,kwargs=fixture(tmp_path)
+                                  ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_pair_log.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-74/test_invalid_header_or_denomin6')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archived_pair_log as reader
+E       ImportError: cannot import name 'archived_pair_log' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_pair_log.py:17: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_actual_archive_consumer_replays_full_and_partial_chunks
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_bad_or_revoked_chunk_never_returns_success[corrupt]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_bad_or_revoked_chunk_never_returns_success[swapped]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_bad_or_revoked_chunk_never_returns_success[short]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_bad_or_revoked_chunk_never_returns_success[mutable]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_bad_or_revoked_chunk_never_returns_success[missing]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_bad_or_revoked_chunk_never_returns_success[lease]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_invalid_header_or_denominator_refused[owner]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_invalid_header_or_denominator_refused[scope]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_invalid_header_or_denominator_refused[terminal_hash]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_invalid_header_or_denominator_refused[failed]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_invalid_header_or_denominator_refused[chunks]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_invalid_header_or_denominator_refused[state]
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_invalid_header_or_denominator_refused[extra]
+14 failed in 0.30s

@@ -1,0 +1,45 @@
+.........F............................................                   [100%]
+=================================== FAILURES ===================================
+_________ test_download_failure_retains_attempt_and_original[symlink] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-70/test_download_failure_retains_2')
+kind = 'symlink'
+
+    @pytest.mark.parametrize('kind', ['corrupt','foreign','symlink','revoked'])
+    def test_download_failure_retains_attempt_and_original(tmp_path, kind):
+        mod, archive, source, transport, values, kwargs = fixture(tmp_path)
+        original = transport.get
+        def get(*args, **options):
+            original(*args, **options)
+            if kind == 'corrupt': args[1].write_bytes(b'corrupt')
+            if kind == 'foreign': (kwargs['attempt'] / 'failed.json').write_bytes(b'foreign')
+            if kind == 'symlink':
+                args[1].unlink();args[1].symlink_to(source)
+            if kind == 'revoked': live.revoked = True
+        def live():
+            if getattr(live,'revoked',False): raise RuntimeError('revoked')
+        transport.get = get;kwargs['lease'] = live
+>       with pytest.raises((ValueError,RuntimeError)): mod.consume(**kwargs)
+                                                       ^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_consume.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_consume.py:58: in consume
+    archive._read(attempt / 'payload.bin', receipt['bytes'], receipt['source_sha256'])
+tradingagents/research/onchain_replication/archive_chunks.py:61: in _read
+    raw = io._read(fd, path.name, size)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 13, name = 'payload.bin', limit = 65792, observations = None
+
+    def _read(fd, name, limit, observations=None):
+>       child = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=fd)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: [Errno 40] Too many levels of symbolic links: 'payload.bin'
+
+tradingagents/research/onchain_replication/score_batches.py:112: OSError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_consume.py::test_download_failure_retains_attempt_and_original[symlink]
+1 failed, 53 passed in 0.83s

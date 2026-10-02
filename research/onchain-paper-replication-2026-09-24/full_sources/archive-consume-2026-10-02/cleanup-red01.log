@@ -1,0 +1,153 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_final_owned_close_uncertainty_is_fatal_recorded_and_not_retried[False] __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-72/test_final_owned_close_uncerta0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x732ca6b2f360>
+primary = False
+
+    @pytest.mark.parametrize('primary',[False,True])
+    def test_final_owned_close_uncertainty_is_fatal_recorded_and_not_retried(tmp_path,monkeypatch,primary):
+        mod, archive, source, transport, values, kwargs=fixture(tmp_path)
+        claimed={};real_claim=archive._claim;real_close=mod.os.close
+        def claim(path):
+            fd=real_claim(path);claimed['fd']=fd;return fd
+        def close(fd):
+            if fd==claimed.get('fd') and not claimed.get('injected'):
+                claimed['injected']=True;real_close(fd)
+                raise OSError('ambiguous final close')
+            return real_close(fd)
+        monkeypatch.setattr(archive,'_claim',claim)
+        monkeypatch.setattr(mod.os,'close',close)
+        if primary:transport.corrupt=True
+>       with pytest.raises(archive.io.CleanupFailure) as error:mod.consume(**kwargs)
+                                                               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_consume.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_consume.py:80: in consume
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        if fd==claimed.get('fd') and not claimed.get('injected'):
+            claimed['injected']=True;real_close(fd)
+>           raise OSError('ambiguous final close')
+E           OSError: ambiguous final close
+
+tests/research/onchain_replication/test_archive_consume.py:128: OSError
+__ test_final_owned_close_uncertainty_is_fatal_recorded_and_not_retried[True] __
+
+receipt_bytes = b'{"bytes":65792,"format":"archive-chunk-v1","member":"object-0001/payload.bin","remote":"object-0001","schema_version...768ea3f60473b209f1bfb091df","transport_identity":"91faa056c869b3b2ef9c772a3974125aba413f193b4bc69c83a49705476b7ff1"}\n'
+receipt_sha256 = '579e93a747f3710f4a64ea759dbb5e092966299a6c4213cd5aeca81abfb89d38'
+expected_scope = '73b0e836f612b64f7885ebade60e58a91ced8937754fe7e76e14f81e9c7c153d'
+attempt = PosixPath('/tmp/pytest-of-malecada/pytest-72/test_final_owned_close_uncerta1/cache')
+transport = <archive_fixture.Transport object at 0x732ca45a5810>
+lease = <function fixture.<locals>.<lambda> at 0x732ca45eaca0>
+free_floor_bytes = 0
+
+    def consume(*, receipt_bytes, receipt_sha256, expected_scope, attempt, transport,
+                lease, free_floor_bytes):
+        """Return immutable verified bytes, retaining metadata but no success payload."""
+        attempt = archive._fresh(attempt)
+        io._identity(receipt_sha256); io._identity(expected_scope)
+        require(type(receipt_bytes) is bytes and len(receipt_bytes) <= io.META_LIMIT
+            and io._hash(receipt_bytes) == receipt_sha256, 'trusted bounded receipt bytes required')
+        receipt = json.loads(receipt_bytes)
+        require(isinstance(receipt, dict) and set(receipt) == {'schema_version', 'format',
+            'transport_identity', 'remote', 'member', 'scope', 'source_sha256', 'bytes'}
+            and type(receipt['schema_version']) is int and receipt['schema_version'] == 1
+            and receipt['format'] == 'archive-chunk-v1' and io._json(receipt) == receipt_bytes,
+            'canonical archive receipt schema required')
+        identity = archive._transport(transport)
+        require(receipt['scope'] == expected_scope and receipt['transport_identity'] == identity
+            and receipt['member'] == archive._remote(receipt['remote']), 'archive scope/endpoint/member differs')
+        archive._extent(receipt['bytes'], receipt['source_sha256'])
+        require(callable(lease), 'mandatory archive consumption lease')
+        lease(); archive._capacity(attempt.parent, free_floor_bytes, 1, receipt['bytes'])
+        intent = io._json({'schema_version': 1, 'format': 'archive-consume-v1',
+            'receipt_sha256': receipt_sha256, 'receipt': receipt})
+        verified = io._json({'schema_version': 1, 'intent_sha256': io._hash(intent),
+            'bytes': receipt['bytes'], 'payload_sha256': receipt['source_sha256']})
+        complete = io._json({'schema_version': 1, 'verified_sha256': io._hash(verified),
+            'owned_cache_disposed': True})
+        fd = archive._claim(attempt)
+        try:
+            io._write(fd, 'intent.json', intent)
+            archive._check(attempt, fd, lease, transport, identity)
+            transport.get(receipt['member'], attempt / 'payload.bin', expected_bytes=receipt['bytes'])
+            archive._check(attempt, fd, lease, transport, identity)
+    
+            def evidence(bodies, payload):
+                names = set(bodies) | ({'payload.bin'} if payload else set())
+                archive._inventory(fd, names)
+                for name, body in bodies.items():
+                    require(io._read(fd, name, io.META_LIMIT) == body, 'archive consumption metadata changed')
+                io._root(attempt, fd)
+    
+            evidence({'intent.json': intent}, True)
+            # Validate before publishing a verified receipt; final callback checks repeat it.
+>           archive._read(attempt / 'payload.bin', receipt['bytes'], receipt['source_sha256'])
+
+tradingagents/research/onchain_replication/archive_consume.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_chunks.py:64: in _read
+    require(len(raw) == size and io._hash(raw) == digest, 'archive content extent/hash differs')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'archive content extent/hash differs'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: archive content extent/hash differs
+
+tradingagents/research/onchain_replication/score_batches.py:49: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-72/test_final_owned_close_uncerta1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x732ca6b2f100>
+primary = True
+
+    @pytest.mark.parametrize('primary',[False,True])
+    def test_final_owned_close_uncertainty_is_fatal_recorded_and_not_retried(tmp_path,monkeypatch,primary):
+        mod, archive, source, transport, values, kwargs=fixture(tmp_path)
+        claimed={};real_claim=archive._claim;real_close=mod.os.close
+        def claim(path):
+            fd=real_claim(path);claimed['fd']=fd;return fd
+        def close(fd):
+            if fd==claimed.get('fd') and not claimed.get('injected'):
+                claimed['injected']=True;real_close(fd)
+                raise OSError('ambiguous final close')
+            return real_close(fd)
+        monkeypatch.setattr(archive,'_claim',claim)
+        monkeypatch.setattr(mod.os,'close',close)
+        if primary:transport.corrupt=True
+>       with pytest.raises(archive.io.CleanupFailure) as error:mod.consume(**kwargs)
+                                                               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_consume.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_consume.py:80: in consume
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        if fd==claimed.get('fd') and not claimed.get('injected'):
+            claimed['injected']=True;real_close(fd)
+>           raise OSError('ambiguous final close')
+E           OSError: ambiguous final close
+
+tests/research/onchain_replication/test_archive_consume.py:128: OSError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_consume.py::test_final_owned_close_uncertainty_is_fatal_recorded_and_not_retried[False]
+FAILED tests/research/onchain_replication/test_archive_consume.py::test_final_owned_close_uncertainty_is_fatal_recorded_and_not_retried[True]
+2 failed, 18 deselected in 0.26s

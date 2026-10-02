@@ -38,3 +38,19 @@ cost including this route and all remaining graph/sample/dictionary/MCM/model
 objects; independently review and commit the resource/budget/hub amendments.
 The conditional 249,479,184,384-byte lower bound is neither an upper bound nor a
 new admitted pilot population. Existing remote capacity is not reserved.
+
+## October2 implementation update
+
+archive_consume.consume now accepts trusted immutable receipt bytes/hash/scope,
+fetches a bounded member and disposes only its freshly owned download cache.
+Metadata remains cumulative and caller-budgeted. archived_pair_log.verify now
+streams these bytes while checking full event/terminal semantics and ordered
+score/checkpoint-reference digests. A concrete synthetic full/partial-chunk
+integration passes with disposable local originals absent. These close the
+basic archive readback/cache and event-replay engineering pieces of item2 above.
+
+Remaining: sealed-chunk writer/manifest and source disposition, actual checkpoint
+and score-stream joins, explicit new stage/owner/terminal route, cumulative
+metadata/transport/physical accounting and guarded pipeline admission. Neither
+new helper authorizes deletion of any old source or substitution beneath a local
+receipt. See their separate evidence directories for precise test/review scope.

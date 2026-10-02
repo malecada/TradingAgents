@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_previous_chunk_reference_released_before_next_fetch ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-78/test_previous_chunk_reference_0')
+
+    def test_previous_chunk_reference_released_before_next_fetch(tmp_path):
+        import sys
+        reader,root,chunks,kwargs=fixture(tmp_path)
+        expected=sys.getrefcount(chunks[0])
+        def read(index,extent):
+            if index==1:
+                actual=sys.getrefcount(chunks[0])
+                assert actual==expected
+            return chunks[index]
+        kwargs['read_chunk']=read
+>       reader.verify(**kwargs)
+
+tests/research/onchain_replication/test_archived_pair_log.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_pair_log.py:64: in verify
+    raw = read_chunk(index, extent)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 1, extent = 336
+
+    def read(index,extent):
+        if index==1:
+            actual=sys.getrefcount(chunks[0])
+>           assert actual==expected
+E           assert 3 == 2
+
+tests/research/onchain_replication/test_archived_pair_log.py:111: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_previous_chunk_reference_released_before_next_fetch
+1 failed, 14 deselected in 0.29s

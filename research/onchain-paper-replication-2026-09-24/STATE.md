@@ -3,7 +3,48 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Latest handoff — October 2, maintained fit accepted; external archive recovery completed**:
+**Latest handoff — October 2, bounded archive consumption and event replay**:
+Prior external archive recovery checkpoint6f2f617fb073923dc26361373fefad97a73e6d0b
+is committed/pushed and exact remote HEAD was verified. No old empirical or
+external identity was replayed. Two additive storage components now implemented:
+
+- archive_consume.py verifies a trusted archive receipt/hash/scope and complete
+  fetched bytes, returning immutable bytes while disposing only its newly owned
+  downloaded cache. Original source/copy directories are never removed by it.
+  Intent/verified/complete metadata remains; failure attempts cannot reopen.
+  ACC1 descriptor-close uncertainty was reproduced and fixed using fatal cleanup,
+  preserved primary cause and a fresh inode-pinned evidence descriptor.
+  check03 CLOSED56passed0.87s; REVIEW accepted
+  9f8b048e81fc10168a55325e3e6ef7bdf1cfdbd658f66a9facc507501529352e.
+  Caller still bounds total reads/metadata, parallel calls, return-buffer lifetime,
+  transport scratch and actual guard/physical resources.
+- archived_pair_log.py replays unchanged compact event bytes through an explicit
+  bounded reader. Trusted terminal/owner/scope/start, full/partial extents, every
+  hash-chain/event/ordinal/purpose/score/iteration, complete counts and full
+  payload hash are checked; ordered score/reference digests support later joins.
+  Actual synthetic PairLog->archive copy->cache consumption integration passes
+  with disposable synthetic originals absent and no retained success cache.
+  check01 CLOSED70passed1.01s accepted REVIEW
+  63d55b82ccb8d4ef24b144e5001f3a0112939b443dd3892efe8879a0eec417ac.
+  Subsequent one-line prior-chunk release verified with a corrected reference-
+  count regression (retention-red02 failed on original source); final check03
+  CLOSED71passed1.03s. Initial assertion-rewriting artifact and all snapshots/
+  failed logs retained. Narrow REVIEW_RETENTION accepted
+  0a3c6625e8f595f0755514c239b256ade8d61470f61f980a99b4dc2f6cf227eb.
+  Actual checkpoint trees/MCM score streams/current-owner admission remain open.
+
+Evidence in full_sources/archive-consume-2026-10-02/ and
+full_sources/archived-pair-log-2026-10-02/. No active process or source freeze.
+Next safe action: back up this accepted checkpoint, then implement the
+archive-aware sealed-chunk writer/manifest and actual checkpoint/score-stage
+joins with explicit current-owner/terminal selection. Keep the historical local
+route unchanged. Do not evict original empirical sources under these helpers.
+Cumulative metadata and all other score/checkpoint/dictionary/graph/scratch costs
+need whole-workflow physical accounting before the resource/budget release.
+Coverage77/109,32open; all1420financial fits still pending. No empirical admission
+was granted and60→61 remains an unadopted draft.
+
+**Previous handoff — October 2, maintained fit accepted; external archive recovery completed**:
 Terminal/native feature checkpoint26ea4fa329d66d93c0daa5e5c22e0e83a6623252 was
 committed, pushed and exact remote HEAD verified. Complete fresh compact producer
 and executor dispatch now independently accepted, REVIEW

@@ -1,0 +1,37 @@
+..............F........................................................  [100%]
+=================================== FAILURES ===================================
+___________ test_previous_chunk_reference_released_before_next_fetch ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-77/test_previous_chunk_reference_0')
+
+    def test_previous_chunk_reference_released_before_next_fetch(tmp_path):
+        import sys
+        reader,root,chunks,kwargs=fixture(tmp_path)
+        expected=sys.getrefcount(chunks[0])
+        def read(index,extent):
+            if index==1:assert sys.getrefcount(chunks[0])==expected
+            return chunks[index]
+        kwargs['read_chunk']=read
+>       reader.verify(**kwargs)
+
+tests/research/onchain_replication/test_archived_pair_log.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_pair_log.py:64: in verify
+    raw = read_chunk(index, extent)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = 1, extent = 336
+
+    def read(index,extent):
+>       if index==1:assert sys.getrefcount(chunks[0])==expected
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 3 == 2
+E        +  where 3 = <built-in function getrefcount>(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00...0\x00\x00\x00\x00\x00\x00\x00\x89\xae\xad\xa5\x16\xaew\xda\xf5\x02#hY\xb0w\x17|\xden\xfdJK"\x1f,\xdcS\xb9\xd7\x8b\x08s')
+E        +    where <built-in function getrefcount> = <module 'sys' (built-in)>.getrefcount
+
+tests/research/onchain_replication/test_archived_pair_log.py:109: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archived_pair_log.py::test_previous_chunk_reference_released_before_next_fetch
+1 failed, 70 passed in 1.06s
