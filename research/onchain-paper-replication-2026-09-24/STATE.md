@@ -3,6 +3,32 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Latest budget checkpoint — exact future extension accepted**:
+The frozen62-slot extension is independently accepted for budget metadata only.
+full_sources/budget-extension-62-2026-10-02/extension.json SHA256
+ d5104e0b2be17af97e1bbfc622a3bf081e1156829dd2d034021795b06b968cd5;
+review.json SHA256
+ 0bae2075a5ab7133fc76541576f48afdb33e7a647835ef9053ae2dcaf5921985;
+REVIEW.md SHA256e02a15a92cb1e6510b82bb5117478ad65578a0565e69c087d13e36aadf36c3f0.
+Root's fresh check01 invoked the real effective_budget function with the exact
+review/extension/allocation and current16 same-mechanism claims: returned62.
+No full admission, lifecycle or source/design-commit validation was invoked.
+All three namespaces for eth-paper-neural-resource-20261002-01 remain absent.
+The reviewed extension is ready to pin in the final committed gate; adoption has
+not occurred. Category sublimits12/15/1/1 need explicit preservation in future
+registrations and substantive reviews; the metadata parser itself only checks
+the allocation object/pin, not those category sublimits. All33 spent claims,
+77/109 resource coverage and1,420 pending fits remain unchanged.
+
+Parallel implementation continues: archive_transport owns the archived retention
+stage; admission_batching owns the explicit physical-policy route including the
+announced lifecycle metadata_scope hook. owner_closure_review is available for
+independent candidate reviews. Latest physical report checkpoint
+ d108d4fa6bdea454046e82cd4cd58f479d353460 was pushed and exact remote HEAD verified;
+the ACTIVE15-minute automation was updated successfully with current ownership.
+Do not freeze the final empirical source while these implementations are mutable;
+use isolated snapshots for actual-owner tests. No empirical process is active.
+
 **October 2 continued execution — two implementation tracks and exact budget review**:
 The physical-admission gap report is independently accepted as an engineering
 handoff, REVIEW SHA256c767bbb674613c2b5398a57d23e4d7636a7406825c395bd569c3da34732d6f49.

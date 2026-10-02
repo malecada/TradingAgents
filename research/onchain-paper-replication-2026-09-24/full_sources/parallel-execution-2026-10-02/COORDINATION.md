@@ -247,3 +247,26 @@ cells and1,420 financial fits retain their original status. The existing ACTIVE
 heartbeat still reads STATE, but its prompt update/view tool currently errors;
 retry through the app tool after recovery, without manual TOML changes or a
 duplicate automation. Continue next executable work without another user prompt.
+
+
+## Active physical implementation and reviewed budget
+
+The accepted physical gap report has advanced to implementation owned by
+admission_batching: job.py, resources.py, new scoped-storage/bounded-I/O helpers,
+new focused tests and neural-resource-physical-implementation-2026-10-02 evidence.
+The predeclared narrow lifecycle.py metadata_scope ContextVar hook is authorized;
+default _immutable behavior remains unchanged outside that selected scope. Exact
+three-root identity/claim birth, capped logs and metadata, publication locking,
+finite temporary/failure reserves and final observer tail are one coherent route.
+Existing StorageWatch, numerical/model code and historical guard profiles remain
+outside this change. archive_transport's archived-retention ownership is unchanged.
+
+Root's exact62 extension in budget-extension-62-2026-10-02 is independently
+accepted, review.json SHA2560bae2075a5ab7133fc76541576f48afdb33e7a647835ef9053ae2dcaf5921985.
+Actual metadata-only effective_budget check01 returned62; full source/physical
+admission and first adoption remain pending. The designated first identity is
+eth-paper-neural-resource-20261002-01, absent at all three creation namespaces.
+Root owns final gates, not the two source implementations. owner_closure_review
+is available for independent frozen-candidate reviews. Parallel helper tests are
+permitted within aggregate limits; actual-owner tests need an isolated full source
+snapshot because both workers are editing admission-sensitive source closure.
