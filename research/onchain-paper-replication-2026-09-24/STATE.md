@@ -1,5 +1,37 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: diagnostic causal evidence accepted; minimal corrected GREEN02 prepared.**
+The one-use diagnostic/session33910 fromdba18089034416baadfa0019dfd03eb1c8ee38f2
+closed18:24:53UTC. All four arms were observed; only the two einsum arms disagree.
+Eager attention with streamed messages matches all124recorded tensors exactly.
+Both einsum arms share three updated-parameter mismatches. Measured named LSTM
+weight_ih_l0[136,9] gradients are2.750311978e-9 baseline versus2.368324203e-9;
+first-step Adam moments/update reconstruct exactly, confirming epsilon1e-8
+amplification. One baseline execution was self-compared, not repeated for
+independent determinism. Independent review34c9d06f accepts the observations.
+
+Overall parent remains permanently FAILED: child0/guardcomplete/native success,
+verified cleanup, allPIDs/cgroup absent, but strict launcher required stopreturn0
+while actual stopreturn5 was recorded. The precise reason for5 is not retained.
+No retroactive pass or rerun. Complete10files/5dirs/15members,
+175021logical/225280allocated bytes incldirs archived; all255sourcepins verified.
+Events0/sampledpeak372998144. Collector01 syntaxfailure beforebody is preserved;
+new02corrects onequote and completes retention. Source freeze ended at closure.
+
+Candidate02 e8355dc4/manifest5cb39303 changes only two node einsum expressions to
+original multiply-then-sum, preserving streamed aggregation and allarchitecture/
+RNG/fullneighbors/dtype/checkpointfalse. A524568320B first-graph node-product
+transient remains; no3.75GiB capacity promise. Oracle03 differs fromaccepted02
+only candidate filename; original thresholds and all13checks remain unchanged.
+Guard03 admits stop5 only with actual success0/inactive/dead/emptyunitcgroups and
+originalPID/cgroup absence, retaining all other controls. Eight pure cleanup
+sentinels show oldconditionRED1fail and newGREEN8pass. Exactgreen-release02f38adfce
+binds248sources/1971052bytes; independent exactrelease review is pending.
+Next: accept source/release, commit+verify externalbackup/freshchecks, ONE unused
+neural-streamed-gat-oracle-green-20261002-02, preserve/review outcome, immediately
+advance eligible production integration/resource preparation without a newprompt.
+35spent/adopt63/conditional64-not-adopted/77of109/all1420financialfits unchanged.
+
 **Latest checkpoint: fixed four-arm diagnosis independently released; one execution next.**
 Review7c60b68c accepts exact diagnostic01 f28c343d/protocol01 97ad6cad/
 launcher02 6f5ba9dd/release02 5688a9ed,255sourcepins/1,956,644bytes.

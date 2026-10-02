@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-diagnosis-2026-10-02/diagnostic_launcher02.py", line 291, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-diagnosis-2026-10-02/diagnostic_launcher02.py", line 288, in main
+    return launch(path,spec,args.sha256) if args.mode=='--run' else worker(spec)
+           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-diagnosis-2026-10-02/diagnostic_launcher02.py", line 279, in launch
+    raise primary
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-diagnosis-2026-10-02/diagnostic_launcher02.py", line 258, in launch
+    validate_result(spec['mode'],result,report,proof)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-diagnosis-2026-10-02/diagnostic_launcher02.py", line 100, in validate_result
+    require(result['cleanup_verified'] is True and type(result['cleanup_stop_returncode']) is int and result['cleanup_stop_returncode']==0,'descendant cleanup unverified')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-diagnosis-2026-10-02/diagnostic_launcher02.py", line 96, in require
+    if not value:raise RuntimeError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: descendant cleanup unverified
