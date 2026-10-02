@@ -24,7 +24,12 @@ an optional nonexistent tests/__init__.py path was supplied; failure is retained
 profile02 closed with one fixture setup error because the export omitted the
 required matching config; the failed log/profile and result record are retained.
 profile03 includes the committed configs and is the fresh synthetic single-test
-cost profile, session7403. Inspect profile03.log/process before further action. No historical empirical
+cost profile, session7403. Inspect profile03.log/process before further action. The run subsequently CLOSED1passed
+118.12s/session7403; no active profile remains. Summary/result/hash records are
+retained. cProfile observed22874 subprocess.check_output calls (84.75s cumulative),
+with60admit calls (99.95s) dominated by fresh per-file Git source/design checks.
+This supports investigating batched fresh reads, not bypassing checks or caching
+across admission calls. Profiling overhead prevents an unprofiled speedup claim. No historical empirical
 identity was reopened. The snapshot is retained locally; its tracked manifest
 and source commit identify reproducible bytes, not an empirical result.
 

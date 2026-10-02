@@ -1,0 +1,55 @@
+Fri Oct  2 08:54:13 2026    research/onchain-paper-replication-2026-09-24/full_sources/parallel-execution-2026-10-02/profile03.pstats
+
+         24349471 function calls (23816456 primitive calls) in 122.125 seconds
+
+   Ordered by: cumulative time
+   List reduced from 8902 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000  109.431  109.431 main.py:397(pytest_runtestloop)
+        1    0.000    0.000  109.431  109.431 runner.py:115(pytest_runtest_protocol)
+        1    0.000    0.000  109.429  109.429 runner.py:123(runtestprotocol)
+        3    0.000    0.000  109.429   36.476 runner.py:236(call_and_report)
+        3    0.000    0.000  109.427   36.476 runner.py:250(<lambda>)
+       60    0.106    0.002   99.948    1.666 admission.py:121(admit)
+       58    0.005    0.000   97.548    1.682 lifecycle.py:110(_check_source)
+    22874    0.258    0.000   84.753    0.004 subprocess.py:423(check_output)
+    22874    0.396    0.000   84.374    0.004 subprocess.py:512(run)
+        1    0.000    0.000   80.261   80.261 runner.py:173(pytest_runtest_call)
+        1    0.000    0.000   80.261   80.261 python.py:1705(runtest)
+        1    0.000    0.000   80.261   80.261 python.py:160(pytest_pyfunc_call)
+        1    0.000    0.000   80.260   80.260 test_archive_owner_stage.py:28(test_actual_reserved_stage_read_joins_writer_once)
+  237/126    0.004    0.000   79.909    0.634 _ops.py:349(fallthrough)
+        7    0.001    0.000   73.889   10.556 archive_owner_policy.py:52(_record)
+       39    0.001    0.000   65.759    1.686 lifecycle.py:121(read_input)
+        6    0.000    0.000   63.272   10.545 archive_owner_policy.py:101(check)
+        1    0.000    0.000   57.662   57.662 test_archive_owner_stage.py:14(written)
+    15420    0.080    0.000   57.046    0.004 admission.py:51(_git)
+       14    0.001    0.000   47.142    3.367 archive_owner_policy.py:33(_inputs)
+    22874    0.236    0.000   42.058    0.002 subprocess.py:1178(communicate)
+     7620    0.155    0.000   41.850    0.005 admission.py:58(_committed)
+    22863    1.526    0.000   41.489    0.002 subprocess.py:2094(_communicate)
+    22874    0.443    0.000   41.360    0.002 subprocess.py:817(__init__)
+    22874    1.971    0.000   38.795    0.002 subprocess.py:1827(_execute_child)
+       83    0.003    0.000   35.193    0.424 archive_owner_operations.py:113(_current)
+    50570    0.465    0.000   34.103    0.001 selectors.py:385(select)
+        1    0.000    0.000   33.521   33.521 test_archive_owner_writer.py:15(setup)
+    50570   33.419    0.001   33.419    0.001 {method 'poll' of 'select.poll' objects}
+       17    0.001    0.000   31.683    1.864 matching_owner.py:103(check)
+       20    0.001    0.000   30.529    1.526 _jit_internal.py:1023(_overload)
+48391/35684    0.160    0.000   29.432    0.001 {built-in method builtins.next}
+        2    0.000    0.000   29.147   14.574 test_archive_owner_policy.py:12(admitted)
+        1    0.000    0.000   29.071   29.071 runner.py:168(pytest_runtest_setup)
+        1    0.000    0.000   29.071   29.071 runner.py:520(setup)
+        1    0.000    0.000   29.071   29.071 python.py:1709(setup)
+        1    0.000    0.000   29.071   29.071 fixtures.py:802(_fillfixtures)
+     10/5    0.000    0.000   29.071    5.814 fixtures.py:604(getfixturevalue)
+     15/5    0.000    0.000   29.071    5.814 fixtures.py:647(_get_active_fixturedef)
+      4/3    0.000    0.000   29.070    9.690 fixtures.py:1171(execute)
+        4    0.000    0.000   29.068    7.267 fixtures.py:1305(pytest_fixture_setup)
+        4    0.000    0.000   29.067    7.267 fixtures.py:991(call_fixture_func)
+       60    0.005    0.000   28.676    0.478 admission.py:81(claims)
+       58    0.091    0.002   28.625    0.494 verify.py:28(verify_claim)
+     7424    0.176    0.000   28.398    0.004 verify.py:15(_blob)
+
+
