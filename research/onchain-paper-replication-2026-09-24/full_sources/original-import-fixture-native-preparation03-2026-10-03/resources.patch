@@ -1,0 +1,204 @@
+--- native02/resources.py
++++ native03/resources.py
+@@ -260,6 +260,67 @@
+         try:snapshot=_snapshot(_own_cgroup());snapshot_error=None
+         except Exception as error:snapshot=None;snapshot_error=repr(error)
+         _atomic(receipt/'child_exit.json',{'exit_code':code,'reason':reason,'workload_pid':None if process is None else process.pid,'terminal_memory_snapshot':snapshot,'snapshot_error':snapshot_error})
++
++
++def _native_select(primary,later,io):
++    """First actual fatal precedes synthetic cleanup uncertainty and ordinary errors."""
++    if primary is not None and io._fatal(primary):return primary
++    try:
++        causes=io._flatten(tuple(e for e in (primary,later) if e is not None))
++        actual=next((e for e in causes if io._fatal(e)),None)
++        if actual is not None:return actual
++        if isinstance(primary,io.CleanupFailure):return primary
++        if isinstance(later,io.CleanupFailure):return later
++        return primary if primary is not None else later
++    except BaseException as selection_error:
++        if later is not None and io._fatal(later):return later
++        return selection_error
++
++
++def _native_reason(state,error,io):
++    # Store the original before any diagnostic formatting or attachment.
++    selected=error
++    try:
++        state['phase']='failed'
++        state['limit_reason']=state.get('limit_reason') or 'selected native guard failed; see raised exception'
++        text=type(error).__name__+': '+str(error)
++        if state['limit_reason']=='selected native guard failed; see raised exception':state['limit_reason']=text
++    except BaseException as diagnostic:selected=_native_select(selected,diagnostic,io)
++    return selected
++
++
++def _native_finalize(state,primary,actions,io):
++    """Attempt every independent action once; retain the original actual fatal."""
++    failed=False
++    for name,action in actions:
++        try:
++            state['phase']='complete' if primary is None and state.get('limit_reason') is None else 'failed'
++            action()
++        except BaseException as error:
++            failed=True
++            primary=_native_select(primary,error,io)
++            primary=_native_select(primary,_native_reason(state,error,io),io)
++    if primary is not None:state['phase']='failed'
++    return primary,failed
++
++
++def _native_write(path,state,io):
++    with io._opened(path,'xb') as stream:
++        raw=json.dumps(state,indent=2,sort_keys=True).encode()+b'\n'
++        stream.write(raw);stream.flush();os.fsync(stream.fileno())
++
++
++def _native_sync(path,io):
++    fd=os.open(path,os.O_RDONLY|os.O_DIRECTORY)
++    try:os.fsync(fd)
++    finally:io._cleanup((lambda:os.close(fd),))
++
++
++def _native_atomic(path,state,io):
++    temporary=path.with_suffix('.tmp')
++    _native_write(temporary,state,io)
++    temporary.replace(path)
++    _native_sync(path.parent,io)
+ 
+ 
+ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
+@@ -333,6 +394,8 @@
+     selected_primary = None
+     selected_body_error = None
+     selected_finalization_failed = False
++    if native_unit_limits is not None:
++        from tradingagents.research.onchain_replication import owned_io as native_io
+ 
+     if storage_watch is not None:
+         state['storage_budget']={'root':str(storage_watch.root),'limits':dict(storage_watch.limits)}
+@@ -344,6 +407,12 @@
+         try:
+             observation=storage_watch.check()
+         except BaseException as error:
++            if native_unit_limits is not None:
++                selected=_native_reason(state,error,native_io)
++                try:
++                    if hasattr(error,'observation'):state.setdefault('storage_breach',dict(error.observation))
++                except BaseException as diagnostic:selected=_native_select(selected,diagnostic,native_io)
++                raise selected
+             try:
+                 state['storage_last_error']=type(error).__name__+': '+str(error)
+                 if hasattr(error,'observation'):state.setdefault('storage_breach',dict(error.observation))
+@@ -370,14 +439,19 @@
+         if time.monotonic()-begin>wall_seconds:raise RuntimeError('registered wall-clock limit exceeded')
+ 
+     def stopped(signum,frame):raise InterruptedError('guard received signal '+str(signum))
+-    prior_signals={sig:signal.signal(sig,stopped) for sig in (signal.SIGTERM,signal.SIGINT)}
++    if native_unit_limits is not None:prior_signals={}
++    else:prior_signals={sig:signal.signal(sig,stopped) for sig in (signal.SIGTERM,signal.SIGINT)}
+ 
+     def publish():
+         state['monotonic_seconds'] = time.monotonic()
+         state['elapsed_seconds'] = time.monotonic() - begin
+-        _atomic(receipt / 'live.json', state)
++        if native_unit_limits is not None:_native_atomic(receipt/'live.json',state,native_io)
++        else:_atomic(receipt / 'live.json', state)
+ 
+     try:
++        if native_unit_limits is not None:
++            prior_signals={sig:signal.getsignal(sig) for sig in (signal.SIGTERM,signal.SIGINT)}
++            for sig in (signal.SIGTERM,signal.SIGINT):signal.signal(sig,stopped)
+         while True:
+             boundaries()
+             state['host_mem_available_bytes'] = mem_available()
+@@ -452,7 +526,8 @@
+         boundaries()
+         state['phase'] = 'running'
+         publish()
+-        _atomic(receipt / 'release.json', {'kernel_controls_verified': True})
++        if native_unit_limits is not None:_native_atomic(receipt/'release.json',{'kernel_controls_verified':True},native_io)
++        else:_atomic(receipt / 'release.json', {'kernel_controls_verified': True})
+         while True:
+             boundaries()
+             props = _properties(unit)
+@@ -487,10 +562,14 @@
+                 raise RuntimeError('host runtime memory reserve breached')
+             time.sleep(sample_seconds)
+     except BaseException as exc:
+-        state['limit_reason'] = f'{type(exc).__name__}: {exc}'
+-        if physical_policy is not None:
+-            selected_primary=exc
+-            selected_body_error=exc
++        if native_unit_limits is not None:
++            selected_primary=selected_body_error=exc
++            selected_primary=_native_reason(state,selected_primary,native_io)
++        else:
++            state['limit_reason'] = f'{type(exc).__name__}: {exc}'
++            if physical_policy is not None:
++                selected_primary=exc
++                selected_body_error=exc
+     finally:
+         if physical_policy is not None:
+             from tradingagents.research.onchain_replication.neural_physical import _sync
+@@ -530,6 +609,49 @@
+             for sig,previous in prior_signals.items():
+                 try:signal.signal(sig,previous)
+                 except BaseException as error:retain(error)
++        elif native_unit_limits is not None:
++            # Signals, stop, readback, storage, evidence and restores are separate
++            # cleanup attempts. No physical scope is fabricated for this route.
++            actions=[]
++            for sig in (signal.SIGTERM,signal.SIGINT):
++                actions.append(('ignore-signal-'+str(sig),lambda sig=sig:signal.signal(sig,signal.SIG_IGN)))
++            stop_state={}
++            if launched:
++                state['cleanup_verified']=False
++                def stop_unit():
++                    result=_systemctl('stop',unit,check=False)
++                    state['cleanup_stop_returncode']=result.returncode;stop_state['stop']=True
++                def read_unit():
++                    after=_properties(unit);state['cleanup_unit_properties']=after
++                    if after.get('ActiveState') not in ('inactive','failed'):raise RuntimeError('native unit did not stop')
++                    stop_state['unit']=True
++                def read_cgroup():
++                    if cgroup is not None and cgroup.exists() and 'populated 1' in (cgroup/'cgroup.events').read_text():
++                        raise RuntimeError('native unit cgroup remains populated after stop')
++                    stop_state['cgroup']=True
++                def verify_stop():
++                    if set(stop_state)!={'stop','unit','cgroup'}:raise RuntimeError('native stop/readback is incomplete')
++                    state['cleanup_verified']=True
++                actions.extend((('stop-unit',stop_unit),('read-unit',read_unit),('read-cgroup',read_cgroup),('verify-stop',verify_stop)))
++            actions.append(('observe-storage',observe_storage))
++            def final_disk():
++                state['disk_free_bytes']={str(p):shutil.disk_usage(p).free for p in disk_paths}
++                if any(v<disk_floor_bytes for v in state['disk_free_bytes'].values()):raise RuntimeError('native final disk floor breached')
++            actions.append(('final-disk-floor',final_disk))
++            actions.append(('publish',publish))
++            # Restore signals before the immutable final attempt, so failures
++            # already known at that boundary are represented as failed.
++            for sig,previous in prior_signals.items():
++                actions.append(('restore-signal-'+str(sig),lambda sig=sig,previous=previous:signal.signal(sig,previous)))
++            actions.extend((('final-receipt',lambda:_native_write(receipt/'final.json',state,native_io)),
++                ('directory-sync',lambda:_native_sync(receipt,native_io))))
++            selected_primary,selected_finalization_failed=_native_finalize(state,selected_primary,actions,native_io)
++            if selected_finalization_failed:
++                # An immutable final body may precede a late close/fsync error.
++                # It never overrides this failed invocation and additive marker.
++                tail=(('failed-live',publish),('failed-marker',lambda:_native_write(receipt/'native-finalization-failed.json',state,native_io)),
++                    ('failed-directory-sync',lambda:_native_sync(receipt,native_io)))
++                selected_primary,_=_native_finalize(state,selected_primary,tail,native_io)
+         else:
+             signal.signal(signal.SIGTERM,signal.SIG_IGN);signal.signal(signal.SIGINT,signal.SIG_IGN)
+             if launched:
+@@ -560,6 +682,10 @@
+                 os.fsync(stream.fileno())
+     if physical_policy is not None:
+         if selected_primary is not None and (selected_finalization_failed or selected_primary is not selected_body_error or not isinstance(selected_primary,Exception) or isinstance(selected_primary,MemoryError)):
++            raise selected_primary
++    elif native_unit_limits is not None:
++        if selected_primary is not None and (selected_finalization_failed or selected_primary is not selected_body_error
++                or native_io._fatal(selected_primary) or isinstance(selected_primary,native_io.CleanupFailure)):
+             raise selected_primary
+     else:
+         fd=os.open(receipt,os.O_RDONLY|os.O_DIRECTORY)

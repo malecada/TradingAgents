@@ -1,0 +1,19 @@
+test_both_fixed_lifecycle_dispositions_accept_complete_fake_observations (__main__.PositiveObservations.test_both_fixed_lifecycle_dispositions_accept_complete_fake_observations) ... ok
+test_final_tail_is_joined_and_late_failure_remains_fatal (__main__.PositiveObservations.test_final_tail_is_joined_and_late_failure_remains_fatal) ... ok
+test_missing_breached_or_wrong_positive_evidence_is_refused (__main__.PositiveObservations.test_missing_breached_or_wrong_positive_evidence_is_refused) ... ok
+test_missing_child_snapshot_error_field_is_not_assumed_success (__main__.PositiveObservations.test_missing_child_snapshot_error_field_is_not_assumed_success) ... FAIL
+test_native_late_failure_marker_overrides_earlier_complete_body (__main__.PositiveObservations.test_native_late_failure_marker_overrides_earlier_complete_body) ... ok
+
+======================================================================
+FAIL: test_missing_child_snapshot_error_field_is_not_assumed_success (__main__.PositiveObservations.test_missing_child_snapshot_error_field_is_not_assumed_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation03-2026-10-03/test_positive_observations01.py", line 68, in test_missing_child_snapshot_error_field_is_not_assumed_success
+    with self.assertRaises(ValueError):parser.authenticate(root,'success',release)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.073s
+
+FAILED (failures=1)

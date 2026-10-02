@@ -1,0 +1,11 @@
+--- job.baseline01.py
++++ job.py
+@@ -233,6 +233,8 @@
+     if expected!={'file_size_bytes':readback['rlimit_fsize']}:raise ValueError('registered process file limit differs')
+     if role=='worker' and (live is None or live.get('native_unit_limits')!=expected):raise ValueError('worker native authority missing')
+     value={'schema_version':1,'experiment':args.experiment,'source_commit':args.source,'role':role,'pid':os.getpid(),'file_size_limit':[readback['rlimit_fsize']]*2,'before_claim':True,'native_unit':None if live is None else live['unit'],'native_cgroup':None if live is None else live['cgroup']}
++    value['native_environment']={key:os.environ.get(key) for key in resources._native_owned_env(Path(args.root))}
++    if value['native_environment']!=resources._native_owned_env(Path(args.root)):raise ValueError('actual process environment differs from owned routing')
+     resources._native_receipt(_base(args),role+'-file-limit.json',value)
+ 
+ 

@@ -1,0 +1,15 @@
+test_unselected_cold_policy_is_not_silently_ignored (__main__.Route.test_unselected_cold_policy_is_not_silently_ignored) ... FAIL
+
+======================================================================
+FAIL: test_unselected_cold_policy_is_not_silently_ignored (__main__.Route.test_unselected_cold_policy_is_not_silently_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_policy05.py", line 11, in test_unselected_cold_policy_is_not_silently_ignored
+    self.assertEqual(len(guards),2,'job and planned unselected cold policies need explicit refusal')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 2 : job and planned unselected cold policies need explicit refusal
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=1)

@@ -1,0 +1,370 @@
+{
+  "actual_claims": 0,
+  "actual_guards": 0,
+  "cases": [
+    {
+      "before_any_target_publication": true,
+      "case": "kind",
+      "claim_cardinality_max": 0,
+      "expected_exception": "ValueError",
+      "expected_stage": "admission-before-claim",
+      "identity": "original-import-refusal-01-20261003-01",
+      "message_fragment": "native-only file limits require compact_resource",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "job-input",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-02-20261003-01",
+      "message_fragment": "import job input differs",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "job-hash",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-03-20261003-01",
+      "message_fragment": "import job hash differs",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "policy-bool",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-04-20261003-01",
+      "message_fragment": "import numeric limit",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "policy-unknown",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-05-20261003-01",
+      "message_fragment": "import policy fields",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "matching-swap",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-06-20261003-01",
+      "message_fragment": "original numeric evidence changed",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "source",
+      "claim_cardinality_max": 0,
+      "expected_exception": "ValueError",
+      "expected_stage": "admission-before-claim",
+      "identity": "original-import-refusal-07-20261003-01",
+      "message_fragment": "registered source hash differs",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "kernel",
+      "claim_cardinality_max": 0,
+      "expected_exception": "ValueError",
+      "expected_stage": "admission-before-claim",
+      "identity": "original-import-refusal-08-20261003-01",
+      "message_fragment": "registered source hash differs",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "helper",
+      "claim_cardinality_max": 0,
+      "expected_exception": "ValueError",
+      "expected_stage": "admission-before-claim",
+      "identity": "original-import-refusal-09-20261003-01",
+      "message_fragment": "registered source hash differs",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "motif-order",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-10-20261003-01",
+      "message_fragment": "original object replaced",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "motif-identity",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-11-20261003-01",
+      "message_fragment": "original Dictionary identity changed",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "target-mapping",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-12-20261003-01",
+      "message_fragment": "complete distinct target mapping required",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "node-order",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-13-20261003-01",
+      "message_fragment": "import target objects changed",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "target-array",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-14-20261003-01",
+      "message_fragment": "import target objects changed",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "receipt-copy",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-15-20261003-01",
+      "message_fragment": "import stage membership changed",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "capability-copy",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-16-20261003-01",
+      "message_fragment": "import execution authority replaced",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "owner-death",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-17-20261003-01",
+      "message_fragment": "representation terminal marker exists",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "lease-terminal",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-18-20261003-01",
+      "message_fragment": "representation journal is terminal",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "post-lease-mutation",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-19-20261003-01",
+      "message_fragment": "import target objects changed",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "wrong-purpose",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-20-20261003-01",
+      "message_fragment": "exact MCM purpose differs",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "wrong-ack",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-21-20261003-01",
+      "message_fragment": "matcher returned another purpose",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "wrong-matrix",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-22-20261003-01",
+      "message_fragment": "MCM matrix",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "wrong-count",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-23-20261003-01",
+      "message_fragment": "MCM completed denominator differs",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "reservation",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-24-20261003-01",
+      "message_fragment": "both target pair reservations required",
+      "owner_cardinality_max": 0,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "legacy-backend",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-25-20261003-01",
+      "message_fragment": "dictionary/backend/matching identity differs",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "journal-scientific",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-26-20261003-01",
+      "message_fragment": "resource journal numerical component publication not admitted",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    },
+    {
+      "before_any_target_publication": true,
+      "case": "financial-closure",
+      "claim_cardinality_max": 1,
+      "expected_exception": "ValueError",
+      "expected_stage": "registered-worker-after-claim-before-publication",
+      "identity": "original-import-refusal-27-20261003-01",
+      "message_fragment": "actual compact dictionary and denominator required",
+      "owner_cardinality_max": 1,
+      "schema_version": 1
+    }
+  ],
+  "class_count": 16,
+  "groups": {
+    "bool-unknown-policy": [
+      "policy-bool",
+      "policy-unknown"
+    ],
+    "copied-import": [
+      "receipt-copy",
+      "capability-copy"
+    ],
+    "financial-closure": [
+      "financial-closure"
+    ],
+    "journal-scientific": [
+      "journal-scientific"
+    ],
+    "legacy-backend": [
+      "legacy-backend"
+    ],
+    "matching-swap": [
+      "matching-swap"
+    ],
+    "matrix-count": [
+      "wrong-matrix",
+      "wrong-count"
+    ],
+    "motif-order-identity": [
+      "motif-order",
+      "motif-identity"
+    ],
+    "owner-lease-death": [
+      "owner-death",
+      "lease-terminal"
+    ],
+    "post-lease-mutation": [
+      "post-lease-mutation"
+    ],
+    "purpose-ack": [
+      "wrong-purpose",
+      "wrong-ack"
+    ],
+    "reservation": [
+      "reservation"
+    ],
+    "source-kernel-helper": [
+      "source",
+      "kernel",
+      "helper"
+    ],
+    "target-mapping-order-array": [
+      "target-mapping",
+      "node-order",
+      "target-array"
+    ],
+    "wrong-job-input-hash": [
+      "job-input",
+      "job-hash"
+    ],
+    "wrong-kind": [
+      "kind"
+    ]
+  },
+  "max_claims": 23,
+  "max_owners": 17,
+  "numerical_imports": false,
+  "status": "source-candidate-not-registered",
+  "variant_count": 27
+}

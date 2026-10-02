@@ -1,0 +1,61 @@
+--- resources.baseline01.py
++++ resources.py
+@@ -168,6 +168,11 @@
+     return dict(value)
+ 
+ 
++def _native_owned_env(cwd):
++    root=Path(cwd);base=root/'fixture_runtime'
++    return {'PYTHONPATH':str(root),'TMPDIR':str(base/'tmp'),'XDG_CACHE_HOME':str(base/'cache'),'TORCH_HOME':str(base/'torch'),'MPLCONFIGDIR':str(base/'matplotlib'),'HF_HOME':str(base/'hf'),'TORCH_EXTENSIONS_DIR':str(base/'torch-extensions'),'PYTHONDONTWRITEBYTECODE':'1','PYTEST_DISABLE_PLUGIN_AUTOLOAD':'1','OPENBLAS_NUM_THREADS':'2','OMP_NUM_THREADS':'2','MKL_NUM_THREADS':'2','NUMEXPR_NUM_THREADS':'2'}
++
++
+ def _native_seconds(text):
+     factors={'us':0.000001,'ms':0.001,'s':1,'min':60,'h':3600}
+     total=0
+@@ -179,8 +184,9 @@
+     return total
+ 
+ 
+-def _native_ready(policy,ready,properties,wall_seconds):
++def _native_ready(policy,ready,properties,wall_seconds,cwd):
+     policy=_native_policy(policy);expected=policy['file_size_bytes']
++    if ready.get('native_environment')!=_native_owned_env(cwd):raise ValueError('native child environment differs')
+     limits=ready.get('file_size_limit')
+     if ready.get('native_unit_limits')!=policy or type(limits) is not list or len(limits)!=2 or any(type(v) is not int or v!=expected for v in limits):
+         raise ValueError('native child file limit readback differs')
+@@ -229,6 +235,8 @@
+             expected=_native_policy(native_unit_limits)['file_size_bytes']
+             if ready['file_size_limit']!=[expected,expected]:raise ValueError('inherited native file limit differs')
+             ready['native_unit_limits']=dict(native_unit_limits)
++            ready['native_environment']={key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}
++            if ready['native_environment']!=_native_owned_env(Path.cwd()):raise ValueError('inherited native environment differs')
+         _atomic(receipt/'cpu_ready.json',ready)
+         signal.signal(signal.SIGTERM,stop);signal.signal(signal.SIGINT,stop)
+         while not stopping:
+@@ -404,7 +412,7 @@
+             args[position:position]=['--physical','--physical-context',json.dumps(context,sort_keys=True)]
+         if native_unit_limits is not None:
+             position=args.index(sys.executable)
+-            args[position:position]=['--property=LimitFSIZE='+str(native_unit_limits['file_size_bytes']),'--property=RuntimeMaxSec='+str(wall_seconds),'--setenv=PYTHONPATH='+str(cwd)]
++            args[position:position]=['--property=LimitFSIZE='+str(native_unit_limits['file_size_bytes']),'--property=RuntimeMaxSec='+str(wall_seconds)]+['--setenv='+key+'='+value for key,value in _native_owned_env(cwd).items()]
+             position=args.index('--',args.index('--lease'))
+             args[position:position]=['--native-file-limit',str(native_unit_limits['file_size_bytes'])]
+         # Even an uncertain dispatch is cleaned up using this unique identity.
+@@ -429,7 +437,8 @@
+         if native_unit_limits is not None:
+             selected=_systemctl('show',unit,'--property=LimitFSIZE,LimitFSIZESoft,RuntimeMaxUSec')
+             state['native_unit_properties']=dict(line.split('=',1) for line in selected.stdout.splitlines() if '=' in line)
+-            _native_ready(native_unit_limits,ready,state['native_unit_properties'],wall_seconds)
++            _native_ready(native_unit_limits,ready,state['native_unit_properties'],wall_seconds,cwd)
++            state['native_environment']=ready['native_environment']
+         state['kernel_controls'] = _read_controls(cgroup)
+         _verify_controls(state['kernel_controls'], memory_max_bytes, memory_high_bytes, memory_swap_max_bytes)
+         state.update(_snapshot(cgroup))
+@@ -590,6 +599,7 @@
+         import resource
+         expected=_native_policy(live['native_unit_limits'])['file_size_bytes']
+         if resource.getrlimit(resource.RLIMIT_FSIZE)!=(expected,expected):raise RuntimeError('native worker file limit differs')
++        if {key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}!=_native_owned_env(Path.cwd()):raise RuntimeError('native worker environment differs')
+     return live
+ 
+ 

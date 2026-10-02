@@ -1,0 +1,33 @@
+test_actual_hooks_delegate_once_and_only_selected_mutation (__main__.Source.test_actual_hooks_delegate_once_and_only_selected_mutation) ... ok
+test_class_variant_claim_owner_denominators (__main__.Source.test_class_variant_claim_owner_denominators) ... FAIL
+test_exact_observer_no_wrong_failure_or_success (__main__.Source.test_exact_observer_no_wrong_failure_or_success) ... ok
+test_real_selection_accepts_all_finite_refusal_cases (__main__.Source.test_real_selection_accepts_all_finite_refusal_cases) ... ERROR
+
+======================================================================
+ERROR: test_real_selection_accepts_all_finite_refusal_cases (__main__.Source.test_real_selection_accepts_all_finite_refusal_cases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate01-2026-10-03/test_source01.py", line 17, in test_real_selection_accepts_all_finite_refusal_cases
+    ns['selection']({'payload':{'representation_jobs':{'r':selected}}})
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation-2026-10-03/resource_fixture.py", line 32, in selection
+    require(f['case'] in ('success','second_target_publication_failure') and f['data_kind']=='synthetic-targets-original-dictionary','explicit synthetic case required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation-2026-10-03/resource_fixture.py", line 20, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: explicit synthetic case required
+
+======================================================================
+FAIL: test_class_variant_claim_owner_denominators (__main__.Source.test_class_variant_claim_owner_denominators)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate01-2026-10-03/test_source01.py", line 10, in test_class_variant_claim_owner_denominators
+    self.assertEqual(len(cases.GROUPS),16);self.assertEqual(len(cases.NAMES),29);self.assertEqual(len(set(map(cases.identity,cases.NAMES))),29)
+                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 27 != 29
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.016s
+
+FAILED (failures=1, errors=1)

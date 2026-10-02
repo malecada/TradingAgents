@@ -1,0 +1,85 @@
+test_authority_has_no_producer_retention_fields (__main__.Dispatch.test_authority_has_no_producer_retention_fields) ... FAIL
+test_candidate_has_explicit_dispatch_and_keeps_finalizations (__main__.Dispatch.test_candidate_has_explicit_dispatch_and_keeps_finalizations) ... FAIL
+test_duplicate_and_escape_roots (__main__.Files.test_duplicate_and_escape_roots) ... FAIL
+test_extra_and_missing_members (__main__.Files.test_extra_and_missing_members) ... FAIL
+test_inode_swap_refused (__main__.Files.test_inode_swap_refused) ... FAIL
+test_roundtrip_and_content_mutation (__main__.Files.test_roundtrip_and_content_mutation) ... FAIL
+test_symlink_hardlink_and_capacity (__main__.Files.test_symlink_hardlink_and_capacity) ... FAIL
+
+======================================================================
+FAIL: test_authority_has_no_producer_retention_fields (__main__.Dispatch.test_authority_has_no_producer_retention_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 46, in test_authority_has_no_producer_retention_fields
+    p=HERE/'compact_cold_features.py';self.assertTrue(p.exists(),'detached authority absent')
+                                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : detached authority absent
+
+======================================================================
+FAIL: test_candidate_has_explicit_dispatch_and_keeps_finalizations (__main__.Dispatch.test_candidate_has_explicit_dispatch_and_keeps_finalizations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 41, in test_candidate_has_explicit_dispatch_and_keeps_finalizations
+    p=HERE/'compact_native_producer.py';self.assertTrue(p.exists(),'detached dispatch absent')
+                                        ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : detached dispatch absent
+
+======================================================================
+FAIL: test_duplicate_and_escape_roots (__main__.Files.test_duplicate_and_escape_roots)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 36, in test_duplicate_and_escape_roots
+    m=self.module();r=self.setup_tree()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 12, in module
+    self.assertTrue(p.exists(),'detached file verifier is absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : detached file verifier is absent
+
+======================================================================
+FAIL: test_extra_and_missing_members (__main__.Files.test_extra_and_missing_members)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 21, in test_extra_and_missing_members
+    m=self.module();r=self.setup_tree();s=m.capture(r,('a',),self.bounds());(r/'a'/'y').write_bytes(b'x')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 12, in module
+    self.assertTrue(p.exists(),'detached file verifier is absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : detached file verifier is absent
+
+======================================================================
+FAIL: test_inode_swap_refused (__main__.Files.test_inode_swap_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 33, in test_inode_swap_refused
+    m=self.module();r=self.setup_tree();s=m.capture(r,('a',),self.bounds());(r/'a'/'z').write_bytes(b'abcd');(r/'a'/'z').replace(r/'a'/'x')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 12, in module
+    self.assertTrue(p.exists(),'detached file verifier is absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : detached file verifier is absent
+
+======================================================================
+FAIL: test_roundtrip_and_content_mutation (__main__.Files.test_roundtrip_and_content_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 18, in test_roundtrip_and_content_mutation
+    m=self.module();r=self.setup_tree();s=m.capture(r,('a',),self.bounds());s.check(full=True);(r/'a'/'x').write_bytes(b'zzzz')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 12, in module
+    self.assertTrue(p.exists(),'detached file verifier is absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : detached file verifier is absent
+
+======================================================================
+FAIL: test_symlink_hardlink_and_capacity (__main__.Files.test_symlink_hardlink_and_capacity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 26, in test_symlink_hardlink_and_capacity
+    m=self.module();r=self.setup_tree();(r/'a'/'y').symlink_to('x')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_source01.py", line 12, in module
+    self.assertTrue(p.exists(),'detached file verifier is absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : detached file verifier is absent
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (failures=7)

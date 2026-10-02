@@ -1,0 +1,29 @@
+test_exclusive_exact_bytes (__main__.Write.test_exclusive_exact_bytes) ... FAIL
+test_wrong_inode_and_oversize_leave_no_file (__main__.Write.test_wrong_inode_and_oversize_leave_no_file) ... FAIL
+
+======================================================================
+FAIL: test_exclusive_exact_bytes (__main__.Write.test_exclusive_exact_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_write03.py", line 12, in test_exclusive_exact_bytes
+    m=self.module()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_write03.py", line 10, in module
+    self.assertTrue(hasattr(m,'write_once'),'held exclusive writer absent');return m
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : held exclusive writer absent
+
+======================================================================
+FAIL: test_wrong_inode_and_oversize_leave_no_file (__main__.Write.test_wrong_inode_and_oversize_leave_no_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_write03.py", line 19, in test_wrong_inode_and_oversize_leave_no_file
+    m=self.module()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-candidate01-2026-10-03/test_write03.py", line 10, in module
+    self.assertTrue(hasattr(m,'write_once'),'held exclusive writer absent');return m
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : held exclusive writer absent
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.006s
+
+FAILED (failures=2)

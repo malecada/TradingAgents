@@ -1,0 +1,45 @@
+test_actual_post_tail_check_enforces_disk_floor (__main__.CallerCorrection.test_actual_post_tail_check_enforces_disk_floor) ... FAIL
+test_missing_positive_native_observations_are_refused (__main__.CallerCorrection.test_missing_positive_native_observations_are_refused) ... FAIL
+test_partial_stop_observations_survive_first_inspection_failure (__main__.CallerCorrection.test_partial_stop_observations_survive_first_inspection_failure) ... FAIL
+test_receipt_cleanup_class_cannot_mask_later_actual_fatal (__main__.CallerCorrection.test_receipt_cleanup_class_cannot_mask_later_actual_fatal) ... FAIL
+
+======================================================================
+FAIL: test_actual_post_tail_check_enforces_disk_floor (__main__.CallerCorrection.test_actual_post_tail_check_enforces_disk_floor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation03-2026-10-03/test_caller_correction01.py", line 107, in test_actual_post_tail_check_enforces_disk_floor
+    self.assertIsNotNone(helper,'actual caller has no final disk-floor boundary')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : actual caller has no final disk-floor boundary
+
+======================================================================
+FAIL: test_missing_positive_native_observations_are_refused (__main__.CallerCorrection.test_missing_positive_native_observations_are_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation03-2026-10-03/test_caller_correction01.py", line 77, in test_missing_positive_native_observations_are_refused
+    with self.assertRaises((ValueError, KeyError)):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'KeyError'>) not raised
+
+======================================================================
+FAIL: test_partial_stop_observations_survive_first_inspection_failure (__main__.CallerCorrection.test_partial_stop_observations_survive_first_inspection_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation03-2026-10-03/test_caller_correction01.py", line 98, in test_partial_stop_observations_survive_first_inspection_failure
+    self.assertTrue(observations, 'original attempted stop evidence was discarded')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : original attempted stop evidence was discarded
+
+======================================================================
+FAIL: test_receipt_cleanup_class_cannot_mask_later_actual_fatal (__main__.CallerCorrection.test_receipt_cleanup_class_cannot_mask_later_actual_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation03-2026-10-03/test_caller_correction01.py", line 66, in test_receipt_cleanup_class_cannot_mask_later_actual_fatal
+    self.assertIs(outer.select(failure.exception, later, chosen.CleanupFailure), later)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CleanupFailure('score storage cleanup unresolved; worker must stop') is not MemoryError('actual fatal')
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.031s
+
+FAILED (failures=4)

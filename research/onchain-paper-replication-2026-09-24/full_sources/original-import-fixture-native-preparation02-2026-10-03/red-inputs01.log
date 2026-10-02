@@ -1,0 +1,38 @@
+FFF
+======================================================================
+FAIL: test_graph_bytes_deterministic (__main__.Inputs.test_graph_bytes_deterministic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation02-2026-10-03/test_inputs01.py", line 21, in test_graph_bytes_deterministic
+    m=module();self.assertEqual(m.graphs(),m.graphs())
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation02-2026-10-03/test_inputs01.py", line 6, in module
+    p=D/'generate_inputs01.py';assert p.exists(),'deterministic input generator missing'
+                                      ~~~~~~~~^^
+AssertionError: deterministic input generator missing
+
+======================================================================
+FAIL: test_graph_recipe_denominator_and_members (__main__.Inputs.test_graph_recipe_denominator_and_members)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation02-2026-10-03/test_inputs01.py", line 14, in test_graph_recipe_denominator_and_members
+    m=module();graphs,files=m.graphs();self.assertEqual(sorted(x['nodes'] for x in graphs),[2,3]);self.assertEqual(sum(x['nodes']*32 for x in graphs),160)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation02-2026-10-03/test_inputs01.py", line 6, in module
+    p=D/'generate_inputs01.py';assert p.exists(),'deterministic input generator missing'
+                                      ~~~~~~~~^^
+AssertionError: deterministic input generator missing
+
+======================================================================
+FAIL: test_safe_npy_exact_header_extent (__main__.Inputs.test_safe_npy_exact_header_extent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation02-2026-10-03/test_inputs01.py", line 10, in test_safe_npy_exact_header_extent
+    m=module();raw=m.npy('<f8',(2,2),[1.,0.,0.,1.]);self.assertEqual(raw[:8],b'\x93NUMPY\x01\x00')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation02-2026-10-03/test_inputs01.py", line 6, in module
+    p=D/'generate_inputs01.py';assert p.exists(),'deterministic input generator missing'
+                                      ~~~~~~~~^^
+AssertionError: deterministic input generator missing
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)
