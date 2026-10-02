@@ -1,0 +1,117 @@
+{
+  "all_member_count": 5109,
+  "archive_and_manifest_independently_retrieved": true,
+  "archive_extracted": false,
+  "commands": [
+    {
+      "elapsed_seconds": 1.5068602139999712,
+      "exit_code": 0,
+      "label": "capabilities",
+      "stderr_bytes": 0,
+      "stdout_bytes": 98
+    },
+    {
+      "elapsed_seconds": 0.10291556399897672,
+      "exit_code": 0,
+      "label": "init",
+      "stderr_bytes": 485,
+      "stdout_bytes": 141
+    },
+    {
+      "elapsed_seconds": 2.22298328999932,
+      "exit_code": 0,
+      "label": "fetch",
+      "stderr_bytes": 115,
+      "stdout_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.10377258700100356,
+      "exit_code": 0,
+      "label": "fetched-commit",
+      "stderr_bytes": 0,
+      "stdout_bytes": 41
+    },
+    {
+      "elapsed_seconds": 0.10345075799887127,
+      "exit_code": 0,
+      "label": "commit-count",
+      "stderr_bytes": 0,
+      "stdout_bytes": 2
+    },
+    {
+      "elapsed_seconds": 2.9325629449995176,
+      "exit_code": 0,
+      "label": "retrieve-retained-tree01-tar-gz",
+      "stderr_bytes": 0,
+      "stdout_bytes": 10494538
+    },
+    {
+      "elapsed_seconds": 1.7196254739992582,
+      "exit_code": 0,
+      "label": "retrieve-retained-tree01-json",
+      "stderr_bytes": 0,
+      "stdout_bytes": 948060
+    },
+    {
+      "elapsed_seconds": 1.417389522999656,
+      "exit_code": 0,
+      "label": "retrieve-execution-result01-json",
+      "stderr_bytes": 0,
+      "stdout_bytes": 3051
+    }
+  ],
+  "directory_members_verified": 1287,
+  "fetched_commit": "c51e868f8338ee0a8310251afaefe9e0695daf4f",
+  "isolated_total_bytes": 23827625,
+  "isolated_verification_root": "/home/malecada/master_thesis/onchain-fixture-isolation/owner-backup-verification-20261002-01",
+  "limits": {
+    "command_stderr_bytes": 1048576,
+    "isolated_file_bytes": 67108864,
+    "packet_trace_bytes": 1048576,
+    "per_command_seconds": 120,
+    "total_isolated_bytes": 134217728
+  },
+  "logical_member_bytes": 31547239,
+  "object_inventory": {
+    "blob_sizes": [
+      3051,
+      948060,
+      10494538
+    ],
+    "bytes": 190200,
+    "counts": {
+      "blob": 3,
+      "commit": 1,
+      "tree": 3832
+    },
+    "qualification": "Read-only existing object inventory with lazy fetch disabled; exactly the three requested blobs are present.",
+    "sha256": "856e92502f4efd6d169fd195fd785c869300e96624adebde4fd7179423c47edb"
+  },
+  "qualification": "Fresh shallow filtered fetch from configured origin, Git object validation plus full archive/member hashes. No extraction, code execution, financial work or shared-owner mutation. Does not establish backup service permanence or fresh-environment reproducibility.",
+  "raw_result_sha256": "20b132d3c761a01c88a063152589db267df470dab4649a906c4bf9b8bc317b99",
+  "regular_members_rehashed": 3822,
+  "remote_branch_commit_at_capability_check": "c51e868f8338ee0a8310251afaefe9e0695daf4f",
+  "remote_branch_matches_requested_at_check": true,
+  "requested_commit": "c51e868f8338ee0a8310251afaefe9e0695daf4f",
+  "restored_code_executed": false,
+  "retrieved": {
+    "execution-result01.json": {
+      "bytes": 3051,
+      "sha256": "c64c7949d8bcea5a020ee7779597740ccb1ae933896d8276670d2580c27ef379"
+    },
+    "retained-tree01.json": {
+      "bytes": 948060,
+      "sha256": "bf6faa8b80b36e0cd5e7a35bc12e098789648f5c3da51cfbe3553f58fcbecada"
+    },
+    "retained-tree01.tar.gz": {
+      "bytes": 10494538,
+      "sha256": "82529f2e17a1535620e30898265f31f8b235c749d34189e14cc299eec64ef8bd"
+    }
+  },
+  "schema_version": 1,
+  "server_filter_advertised": true,
+  "shallow_commit_count": 1,
+  "shared_repository_mutated": false,
+  "status": "verified",
+  "verifier_sha256": "fa0377dd513fa7cd2f4e178a31d2b4dc9249f589f9f72066d51ec958196daef5"
+}

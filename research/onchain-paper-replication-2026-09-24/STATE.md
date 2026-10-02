@@ -3,6 +3,50 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Latest checkpoint: owner proof backed up; second-View correction in progress.**
+The accepted owner proof, complete recovery archive and accepted 4.5 GiB neural
+gate/caller/review were committed and pushed at
+`c51e868f8338ee0a8310251afaefe9e0695daf4f`; the actual remote HEAD matched.
+This supersedes the earlier pending-backup and active-job statements below.
+Owner `archive-outer-owner-20261002-01` is closed permanently. No substantial
+job is active. Fresh independent remote recovery is verified in
+owner-release-preparation01/REMOTE_RECOVERY01.json and .md: an isolated
+depth-one filtered fetch retrieved the exact archive and two metadata blobs
+from that remote commit. All 3,822 regular archive members and 1,287 directories
+match the independently retrieved manifest. No restored code was executed.
+
+After the user paused other work, observed MemAvailable was 7,700,017,152 B
+(7.17 GiB), below the reviewed neural scheduling minimum of 8,321,499,136 B
+(7.75 GiB). Pausing has not yet provided a sufficient observed memory window.
+The exact 4.5 GiB gate and caller are ready for actual admission and a new
+16-observation window after a meaningful availability improvement. The fixed
+3 GiB host reserve and architecture remain unchanged. No neural namespace,
+claim or model has been created; the unused identity remains available.
+An explicitly stricter 3.75 GiB worker variant is being prepared and reviewed
+independently. It retains the complete workload and fixed 3 GiB reserve, with
+6.75 GiB hard startup plus the unchanged 256 MiB scheduling margin (7 GiB).
+All earlier variants and operational evidence remain immutable. No execution
+is authorized by this preparation; exact metadata, budget, gate/caller review,
+commit/backup, actual admission and fresh controls remain required.
+
+Independent static review of the unexecuted two-View candidate identified two
+fixture gaps: failure-case remote namespace strings exceed the existing
+20-character limit, and the failure route does not assert preservation of the
+first owner's complete/publication outputs or exact ledger membership.
+Candidate01 is retained unchanged. A corrected candidate02, distinct launcher,
+isolated source snapshot and resource spec are being prepared under exclusive
+ownership, with independent review before release. Production code is unchanged.
+The proposed new identity is `archive-outer-two-view-20261002-01`; it has not
+been reserved or executed. The one-View result does not establish this coverage.
+
+Next safe action: finalize and review the corrected two-View preparation and
+remote recovery evidence, commit/push before a new release, then execute one
+eligible reviewed proof. A neural release takes priority if a fresh memory
+window becomes eligible before another substantial job starts. Never run both
+substantial jobs concurrently or rerun a closed identity. The automation now
+records the closed owner proof, backed-up neural gate and parallel next steps.
+Empirical coverage remains 77/109; all 1,420 financial fits remain pending.
+
 **October 2 isolated owner proof CLOSED and independently accepted**:
 Singlearchive-outer-owner-20261002-01 session82081 CLOSEDexit0:3cases passed in
 731.72s; guard733.704s, sampledmemory-current peak507,359,232B (483.86MiB),

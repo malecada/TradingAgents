@@ -1,5 +1,38 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Latest ownership — backed-up owner result, corrected two-View preparation
+
+Current source checkpoint `c51e868f8338ee0a8310251afaefe9e0695daf4f` was pushed
+and actual remote HEAD verified. Owner01 is permanently closed. Its full raw
+recovery archive and the accepted 4.5 GiB neural gate/caller are externally
+committed. No substantial job is active; source freeze has ended.
+
+- Root owns STATE, coordination, automation, integration, registrations,
+  commits and the single next release.
+- physical_correction owns only new second-view-preparation01 successor
+  candidate/launcher/spec/pure checks and a new isolated snapshot (now frozen),
+  followed by new 3.75 GiB neural resource metadata/helper/pure checks only.
+  Candidate01 is preserved; production and frozen owner01 raw tree are untouched.
+- physical_review owns independent static candidate and subsequent launcher,
+  release and result reviews. Candidate01 is withheld for namespace length,
+  second-representation output naming and missing first scientific publication
+  and exact ledger membership preservation checks.
+- registration_review owns bounded independent remote retrieval of the committed
+  owner recovery archive and metadata (now verified for all 3,822 files), then
+  independent 3.75 GiB resource admissibility and exact metadata review.
+
+Observed available RAM is 7.17 GiB, below the accepted neural 7.75 GiB
+scheduling minimum. No neural claim/namespace exists. Await a meaningful
+availability improvement before actual admission and a fresh finite window;
+preserve the fixed 3 GiB reserve. Meanwhile prepare, review and execute the
+distinct two-View proof when eligible, with one substantial job at a time.
+The newly proposed 3.75 GiB variant retains the full workload, hard startup
+6.75 GiB and unchanged 256 MiB margin, giving a 7 GiB scheduling threshold.
+It requires its own exact resource/budget/source/gate/caller review and backup;
+this checkpoint does not authorize execution or reuse of earlier approvals.
+No terminal identity is reopened. Resource coverage and financial fit counts
+remain unchanged.
+
 ## Current checkpoint — owner proof closed, neural and two-View releases next
 
 Ownerarchive-outer-owner-20261002-01 is CLOSEDforever,3passed731.72s/externalguard

@@ -1,0 +1,23 @@
+test_added_unit_limits_are_finite_and_environment_explicit (__main__.Tests.test_added_unit_limits_are_finite_and_environment_explicit) ... ok
+test_conflicting_unit_property_refused (__main__.Tests.test_conflicting_unit_property_refused) ... ok
+test_duplicate_reservation_preserves_original (__main__.Tests.test_duplicate_reservation_preserves_original) ... ok
+test_infinite_or_soft_limit_mismatch_refused_before_release (__main__.Tests.test_infinite_or_soft_limit_mismatch_refused_before_release) ... ok
+test_old_identity_spec_is_refused_without_namespace_reservation (__main__.Tests.test_old_identity_spec_is_refused_without_namespace_reservation) ... FAIL
+test_preparation_spec_cannot_launch (__main__.Tests.test_preparation_spec_cannot_launch) ... ok
+test_primary_fatal_survives_later_cleanup (__main__.Tests.test_primary_fatal_survives_later_cleanup) ... ok
+test_snapshot_mutation_refused (__main__.Tests.test_snapshot_mutation_refused) ... ok
+test_symlink_and_unlisted_python_refused (__main__.Tests.test_symlink_and_unlisted_python_refused) ... ok
+
+======================================================================
+FAIL: test_old_identity_spec_is_refused_without_namespace_reservation (__main__.Tests.test_old_identity_spec_is_refused_without_namespace_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/second-view-preparation01/test_launcher_baseline01.py", line 53, in test_old_identity_spec_is_refused_without_namespace_reservation
+    with self.assertRaises(ValueError):api.load_spec(path,api.sha(path))
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.041s
+
+FAILED (failures=1)
