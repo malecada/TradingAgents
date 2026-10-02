@@ -1,0 +1,9 @@
+--- compact_matcher.baseline02.py
++++ compact_matcher.py
+@@ -305,4 +305,5 @@
+             self.busy=False
+             if state is not None:
+                 owned_state=state;state=None;self.poisoned=True
+-                io._cleanup((lambda:engine.close(owned_state),),primary=primary)
++                # The active exception may have been promoted by retained.fail.
++                io._cleanup((lambda:engine.close(owned_state),))

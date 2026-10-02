@@ -1,0 +1,98 @@
+--- resource_fixture.baseline02.py
++++ resource_fixture.py
+@@ -5,6 +5,7 @@
+ from pathlib import Path
+ import resource
+ import subprocess
++from .owned_io import _fatal
+ 
+ GIB=1024**3
+ FILE_MAX=4*1024**2
+@@ -178,6 +179,21 @@
+         if isinstance(primary,MemoryError) or not isinstance(primary,Exception):raise
+ 
+ 
++def _preserve_terminal(primary,later):
++    """Assembly cannot replace the first actual fatal or fabricate success."""
++    if primary is None:return later
++    selected=primary
++    if not _fatal(primary) and (_fatal(later) or (isinstance(primary,Exception) and not isinstance(later,Exception))):
++        selected=later
++        try:
++            if later.__cause__ is None:later.__cause__=primary
++            elif later.__cause__ is not primary:later.__cause__=BaseExceptionGroup('prior terminal failure and original cause',[primary,later.__cause__])
++        except BaseException:pass
++    try:BaseException.add_note(selected,'Additional diagnostic/retention failure retained; first actual fatal precedence applies.')
++    except BaseException:pass
++    return selected
++
++
+ def execute(run,payload,*,job_input='execution_job'):
+     from . import resource_binding,original_import_preparation,original_import_stage,compact_mcm,compact_owner,import_metadata
+     from .imported_mcm_identity import Target
+@@ -195,6 +211,36 @@
+     ledger=run.admission.root/'research_artifacts/onchain-paper-replication-2026-09-24/sources'/run.admission.experiment_id
+     durable_mkdir(ledger.parent);import_metadata.birth(ledger)
+     journal=owner=None;targets=[];rows=[];primary=None
++    pending=[];terminal=summary=None
++    # Construct the finite independent actions before any primary failure exists.
++    def missing():
++        nonlocal pending
++        pending=failure_rows(rows,primary);rows.extend(pending)
++    def disposition(index):
++        if index<len(pending):
++            row=pending[index];import_metadata.write(ledger,row['id']+'.json',canonical_bytes(row))
++    def failed_seal():
++        if journal is not None and not journal.sealed:
++            journal.seal('failed',reason=type(primary).__name__+': '+str(primary)[:1024])
++    def retained(index):
++        if index<len(targets):verify_retained(targets[index],owner)
++    def failed_terminal():
++        nonlocal terminal
++        terminal={'schema_version':2,'kind':'original-import-resource-terminal','status':'failed','resource_only':True,'financial_representation_admitted':False,'reason':type(primary).__name__+': '+str(primary)[:1024]}
++    def assemble_summary():
++        nonlocal summary
++        summary={'schema_version':1,'resource_only':True,'financial_representation_admitted':False,'case':f['case'],'original_source_blobs':source_rows,'original_dictionary':ORIGINAL,'original_motifs':32,'cells':rows,'file_limit':resource.getrlimit(resource.RLIMIT_FSIZE),'final_outer_inventory_required':True}
++    def observation():
++        require(summary is not None,'summary assembly failed')
++        summary['storage_observation']=watch.check()
++    def publish_terminal(name):
++        require(terminal is not None,'resource terminal assembly failed')
++        run.write_json(name,terminal)
++    def publish_summary():
++        require(summary is not None,'resource summary assembly failed')
++        run.write_json('resource-summary.json',summary)
++    failure_actions=(missing,lambda:disposition(0),lambda:disposition(1),failed_seal,lambda:retained(0),lambda:retained(1),failed_terminal)
++    output_actions=(assemble_summary,observation,lambda:publish_terminal(item['binding_output']),lambda:publish_terminal(item['journal_output']),lambda:run.write_json('cell-ledger.json',rows),publish_summary)
+     try:
+         journal,bound=resource_binding.open_first(run,representation=name,plan_input=s['plan_input'],producer=s['producer'],policy_input=s['pair_checkpoint_input'],job_input=job_input)
+         prepared=original_import_preparation.prepare(bound,input_name=s['original_dictionary_input'],job_input=job_input)
+@@ -217,19 +263,14 @@
+         proof=_Completion(journal,owner,tuple(targets),reference,records,canonical_bytes(thaw(bound.record)),_seal=_COMPLETION_SEAL)
+         terminal=journal.resource_complete(proof)
+     except BaseException as error:
+-        primary=error;pending=failure_rows(rows,error);rows.extend(pending)
+-        actions=[lambda row=row:import_metadata.write(ledger,row['id']+'.json',canonical_bytes(row)) for row in pending]
+-        if journal is not None and not journal.sealed:
+-            actions.append(lambda:journal.seal('failed',reason=type(error).__name__+': '+str(error)[:1024]))
+-        actions.extend(lambda target=target:verify_retained(target,owner) for target in targets)
+-        try:retained_actions(error,actions,import_metadata.close_actions)
+-        except BaseException as selected_error:primary=selected_error
+-        terminal={'schema_version':2,'kind':'original-import-resource-terminal','status':'failed','resource_only':True,'financial_representation_admitted':False,'reason':type(error).__name__+': '+str(error)[:1024]}
+-    # Output/tail failures never replace an already selected actual fatal. Every
+-    # independent declared output is attempted exactly once; no rewrite/retry.
+-    summary={'schema_version':1,'resource_only':True,'financial_representation_admitted':False,'case':f['case'],'original_source_blobs':source_rows,'original_dictionary':ORIGINAL,'original_motifs':32,'cells':rows,'file_limit':resource.getrlimit(resource.RLIMIT_FSIZE),'final_outer_inventory_required':True}
+-    def observation():summary['storage_observation']=watch.check()
+-    actions=[observation,lambda:run.write_json(item['binding_output'],terminal),lambda:run.write_json(item['journal_output'],terminal),lambda:run.write_json('cell-ledger.json',rows),lambda:run.write_json('resource-summary.json',summary)]
+-    retained_actions(primary,actions,import_metadata.close_actions)
++        primary=error
++        for action in failure_actions:
++            try:action()
++            except BaseException as secondary:primary=_preserve_terminal(primary,secondary)
++    # Assembly, formatting and every independently possible publication are
++    # protected equally. Completed target rows are never reclassified/retried.
++    for action in output_actions:
++        try:action()
++        except BaseException as secondary:primary=_preserve_terminal(primary,secondary)
+     if primary is not None:raise primary
+     return rows

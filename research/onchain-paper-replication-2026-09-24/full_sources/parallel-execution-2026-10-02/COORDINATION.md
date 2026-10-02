@@ -1,5 +1,64 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest 2026-10-02T22:00:54.468298+00:00: tiny checkpoint comparison01 is CLOSED outerFAILED;
+all three numerical/profile components PASSED and are independently verified.**
+No substantial job is active. Sourcefreeze ended after all8known original PIDs
+and cgroup were proved absent. Identity neural-checkpoint-comparison-20261002-01
+is permanently closed/reserved and must never be rerun. Source09f2a2066a445d7399dac3165014e0ffd0019269,
+release0252fe0fb4 were actualremoteHEADverified before singlelaunch/session85714.
+The native guard completed/child0 in17.208608seconds, sampledpeak419049472B,
+allkernelmemoryevents0/zeroSwap,1GiBhigh=max/3GiBreserve/10GiBdiskfloor/120s/
+twoCPUaffinity/4MiBnativefilelimit/64MiBownedwatch. Native CPU quota controller
+unavailable was qualified; actual inherited affinity/threadreadbacks held.
+Actual allthreeprocess worker native() RLIMIT readbacks andunitLimitFSIZE held.
+
+Actual original outer exit1/KeyError('file_size_limit') occurred AFTER all3arms
+passed: cpu_ready contains onlycpus+pid when no physical_policy is selected.
+The prospective source review andsyntheticcorpus missed this optional schema.
+Originallauncherterminal/traceback/ready bytes remain unchanged. This is a
+failed outer verifier, never relabeled PASS. Metadata-only collector/review
+independently verifies actualnativefilelimit usingoriginalunit+workerreadbacks;
+no synthetic ready field inserted, no checkpoint deserialization/numericreplay.
+Correctness10fixedcases/147markers/3823tensorcomparisons allbitwiseequal/max_abs0;
+all outputs/gradients/Adam/RNG/reload/continuation andencode/recompute assertions
+completed on actualselectedstreamedmodel. Profilefalse/true each2cases/22markers,
+freshPIDs. Phase-sampled current maxima416833536/418226176B do notdemonstrate
+memorysaving. Sameunitcumulativepeak419291136B includespriorarms andcannotbe
+subtracted. Saved-hookdeduplicatedstorage observations haveinstrumentedsemantics,
+notprocesspeaks. Tinygraphs do notestablishfull701309-node/batchcapacity or
+paperaccuracy. Scientificmodel20f451c0/protocol/tolerances unchanged.
+
+Frozenexecution-result01SHA85d8bef932d6079a81d0ade096f98f93f034d9df5b40d3fdff704b400862059d,
+inventory845bc057ceae7b9c1f82fd67e0ce313b3c27e9709ee4ac29dfeb5d2bf3b5bb7f,
+archive124ae811761a9bc87e6388420dd5c391f78180db8f7478162f29ab73eb7e5f45,
+collector ea490c685413ef8d497cfb6db21a9f824585499d91472c1207995838313967b5
+retain245regularfiles+37directories=282members,7539340logical/8581120allocatedB.
+Completefinaltree exceeds lastsample by9025logical/12288allocatedB/3entries,
+explicitlate-tail qualification. All142Git/current source+installedruntime pins
+match. All8PIDs1393712,1393878,1393883,1393885,1393994,1394080,1394084,1394136 and
+originalCGabsent. Independentreviewaf9d487a accepts retainedouterFAILEDclosure
+andpassedcomponents withlimits, no full-sizecapacity/memory-saving inference.
+Externalbackup/freshselectedblobs+rawarchivedmemberrecovery isnext; no rerun.
+
+ParallelIO03manifest87330228/reportf171b35e fixesearlierIO2call/assembly gaps,
+sevenqualifiedregressions passed; review86379d51 WITHHELD forowned_io optional
+annotation/cause construction masking firstactualfatal andresourcefixture note
+allocation swallowing firstfatal afterordinaryerror. Workerphysical_correction
+ownsNEWIO04 minimaldiagnostic reducer correction; all03/02 bytes preserved.
+Genuineisolated original32motif/two-targetMCM, full23resourcedispatch/offload and
+actualfinancialexecution/batchcapacity remainunproved. Rootsolelauncher/STATE/
+registration/liveintegration/commit/backup owner; reviewersownreports.
+
+Paperfamily accounting unchanged36closed=27complete9failed/highestadopted64;
+this separatelynamed tinyengineering attempt hasno paperclaim/financialfit/
+budgetrefund/categorytransfer/capladder or65grant. Coverage77of109/all32Task8
+requirements/all45initial+1420financialfits pending. Nextsafeaction: verified
+externalbackup/freshrecovery of closedtinyproof, immediateindependentIO04review
+andgenuineMCMfixture nativecontroller/registration preparation; useactualtiny
+checkpointcomponent proof onlywithin itsdeclaredscope forfuturememoryengineering.
+
+# Current execution checkpoint — October 2, 2026
+
 **Latest 2026-10-02T21:50:42.252356+00:00: selected tiny comparison native release02 pending review;
 identity remains unused, no numerical job has started.**
 Actual source-only verify of native_launcher02/release01 failed before reservation

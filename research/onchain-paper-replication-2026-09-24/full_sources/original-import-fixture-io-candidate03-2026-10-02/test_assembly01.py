@@ -1,0 +1,50 @@
+"""Exact diagnostic tail after injected numerical-body failure; no authority proof."""
+import ast,copy,json,types,unittest,os
+from test_active_fatal01 import helpers
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+
+def require(v,m):
+    if not v:raise ValueError(m)
+
+def function(ns):
+    tree=ast.parse((HERE/('resource_fixture.baseline02.py' if os.environ.get('ASSEMBLY_BASELINE')=='1' else 'resource_fixture.py')).read_text());original=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='execute')
+    start=next(i for i,n in enumerate(original.body) if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='journal' for t in n.targets))
+    body=copy.deepcopy(original.body[start:]);attempt=next(n for n in body if isinstance(n,ast.Try))
+    attempt.body=ast.parse('rows.extend(completed)\njournal=journal_probe\nraise body_error').body
+    node=ast.FunctionDef(name='actual_diagnostic_tail',args=ast.arguments(posonlyargs=[],args=[],kwonlyargs=[],kw_defaults=[],defaults=[]),body=body,decorator_list=[])
+    helpers=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ('_preserve_terminal','failure_rows','retained_actions')]
+    exec(compile(ast.fix_missing_locations(ast.Module(body=helpers+[node],type_ignores=[])),'actual-execute-diagnostic-tail','exec'),ns)
+    return ns['actual_diagnostic_tail']
+
+class Assembly(unittest.TestCase):
+    def scenario(self,where,body_error,assembly_error):
+        outputs=[];sealed=[]
+        ns={'_fatal':helpers()._fatal,'CELLS':['import-target-01','import-target-02'],'ORIGINAL':'original','canonical_bytes':lambda x:json.dumps(x).encode(),'ledger':Path('/not-used'),'source_rows':[],'f':{'case':'success'},'item':{'binding_output':'binding','journal_output':'journal'},'require':require,'verify_retained':lambda *a:None,'completed':[{'id':'import-target-01','status':'complete'},{'id':'import-target-02','status':'complete'}],'body_error':body_error}
+        ns['run']=types.SimpleNamespace(write_json=lambda name,value:outputs.append((name,copy.deepcopy(value))))
+        ns['journal_probe']=types.SimpleNamespace(sealed=False,seal=lambda *a,**k:sealed.append('seal'))
+        def check():return {'test_only':True}
+        def limit(*args):
+            if where=='summary':raise assembly_error
+            return (4194304,4194304)
+        ns['watch']=types.SimpleNamespace(check=check);ns['resource']=types.SimpleNamespace(RLIMIT_FSIZE=1,getrlimit=limit)
+        ns['import_metadata']=types.SimpleNamespace(write=lambda *a:None,close_actions=lambda actions:[a() for a in actions])
+        call=function(ns)
+        if where=='pending':
+            def bad(*args):raise assembly_error
+            ns['failure_rows']=bad
+        with self.assertRaises(type(body_error)) as caught:call()
+        self.assertIs(caught.exception,body_error)
+        # Independently possible raw cell publication must retain both successes.
+        self.assertEqual(dict(outputs)['cell-ledger.json'],ns['completed'])
+        if where!='format':self.assertEqual(sealed,['seal'])
+        self.assertFalse(any(name in ('binding','journal') and value is None for name,value in outputs))
+    def test_ordinary_complete_cells_closure_failure_stays_failed(self):self.scenario('none',ValueError('owner close failed'),None)
+    def test_first_memoryerror_survives_pending_builder_systemexit(self):self.scenario('pending',MemoryError('first'),SystemExit(19))
+    def test_first_systemexit_survives_summary_memoryerror(self):self.scenario('summary',SystemExit(21),MemoryError('later'))
+    def test_original_fatal_survives_its_broken_formatting(self):
+        class Fatal(SystemExit):
+            def __str__(self):raise MemoryError('diagnostic formatting')
+        self.scenario('format',Fatal(23),None)
+
+if __name__=='__main__':unittest.main()

@@ -1,0 +1,282 @@
+{
+  "baseline_manifest": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/manifest01.json",
+    "sha256": "a764d38233e7bdaa9c59c71db049e6f6623a0dabe1920d924931b4952afaa963"
+  },
+  "baseline_review_sha256": "94d45f386185ebc00ec5600895604acd0df29f8d128c8daf62ba88a2b5e6155a",
+  "checks": {
+    "assembly": 4,
+    "matcher": 3,
+    "no_numerical_imports_or_execution": true,
+    "parity_log": "parity02.log"
+  },
+  "empirical_authorization": false,
+  "external_unchanged_source": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py",
+    "sha256": "30a957ad48997a3236203e1af2ccf9e0874b172ffac73773c31efc6bece9fc67"
+  },
+  "files": {
+    "REPORT01.md": {
+      "bytes": 4346,
+      "sha256": "f171b35e4137980f6913b85c656cfd53553609a7c2566a7fb82ec9e59f2e0bec"
+    },
+    "check_parity01.py": {
+      "bytes": 1734,
+      "sha256": "3a09d736bb6652452edff8b6d546acfb35001a8f1276133a34681561eb8c8840"
+    },
+    "compact_matcher.baseline02.py": {
+      "bytes": 18577,
+      "sha256": "8bdf20ac099ba10f4051cb5d89f336b3009b535ed150c8a9d4a94a18eddf67b9"
+    },
+    "compact_matcher.py": {
+      "bytes": 18641,
+      "sha256": "6a7e6e0c1918db7a42edc8fe8737f2b77497c0e32583c184e338e286fa47ad70"
+    },
+    "compact_matcher.py.patch": {
+      "bytes": 435,
+      "sha256": "06028818e81f8ce62097ffc1b7a6bcada91d17fe813b9b01f916cff3c640c463"
+    },
+    "green01.log": {
+      "bytes": 101,
+      "sha256": "239573c1665ba0d20880d981ec7058ee3d44a42932e841724fdcee3ca672055d"
+    },
+    "green02-assembly.log": {
+      "bytes": 344,
+      "sha256": "da382bd4b2ea3c20a13df8e8c88a6f311a44dd38d757de08e683bc159c771e8f"
+    },
+    "green03-assembly.log": {
+      "bytes": 101,
+      "sha256": "3bd43e1a0ffec9d494a6228cb440cca7e30f232cf60a41553f8eb87538a8d2a8"
+    },
+    "green04-assembly-final.log": {
+      "bytes": 102,
+      "sha256": "119eb158af9c8a17b35e94789e871de6f57880473f2db9e480f799d8e7a49d2d"
+    },
+    "manifest-build-failure01.log": {
+      "bytes": 163,
+      "sha256": "c5498c5c96d1b3df1e27917756da7a7c4d6215bd7a2313566c0dd50960d36902"
+    },
+    "parity-harness-failure01.log": {
+      "bytes": 244,
+      "sha256": "e14ba4b064b4d6e05c1fa7d5538e291b59a02a8e47c6e57529c3ed2976105a57"
+    },
+    "parity02.log": {
+      "bytes": 134,
+      "sha256": "c71401aae79d52709621f82cbc8c3d096acd17bb1d00417bdec62d7c2622a31e"
+    },
+    "red01.log": {
+      "bytes": 8829,
+      "sha256": "33d478e0048fd3dcb436e5494ff173ebe251f883ce2f8f71a4161babe905c59d"
+    },
+    "red02-assembly.log": {
+      "bytes": 344,
+      "sha256": "da382bd4b2ea3c20a13df8e8c88a6f311a44dd38d757de08e683bc159c771e8f"
+    },
+    "red03-actual-assembly.log": {
+      "bytes": 5233,
+      "sha256": "abd36084df54fed1322d3fdb8fc22b18c999884974c7076c84b391529a0a1f08"
+    },
+    "resource_fixture.baseline02.py": {
+      "bytes": 20293,
+      "sha256": "7d89ebdddffce1fdad230436156463d49d36641eb943b8b5bb81ebe5d32e8802"
+    },
+    "resource_fixture.py": {
+      "bytes": 21976,
+      "sha256": "27dc8e99bf06117acf3e538db5b785d87c4665a782cfcbfb13e7d7cf988e26d5"
+    },
+    "resource_fixture.py.patch": {
+      "bytes": 6467,
+      "sha256": "1d7eb4abd0c36adb89b2694a9cc9aaad9c82a39d5ec52dcf96229ecb4261e1fd"
+    },
+    "test_active_fatal01.py": {
+      "bytes": 3539,
+      "sha256": "64cf29e64c89c6ba4fc78db47e1229c934627b3d057525ead7b1ade08726f8ef"
+    },
+    "test_assembly.syntax-failure01.txt": {
+      "bytes": 3615,
+      "sha256": "a0610fe8114b70dd9398c21987f3d913e10bcea555c75d134f7b788feaacb37d"
+    },
+    "test_assembly01.py": {
+      "bytes": 3825,
+      "sha256": "64ac963abbbfe10ca980e5d243be7cb34a2436d918ad9deaade7e55c28a316e5"
+    }
+  },
+  "install_map": [
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/array_neighborhoods.py",
+      "overrides_io02": false,
+      "sha256": "4130af3869fb6615ba0898c5b25f1297f236e2df6b4dbe37d705dc2459982d6d",
+      "target": "tradingagents/research/onchain_replication/array_neighborhoods.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/compact_matcher.py",
+      "overrides_io02": true,
+      "sha256": "6a7e6e0c1918db7a42edc8fe8737f2b77497c0e32583c184e338e286fa47ad70",
+      "target": "tradingagents/research/onchain_replication/compact_matcher.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/compact_mcm.py",
+      "overrides_io02": false,
+      "sha256": "ed94415ff1798422d66bb19fc6b7ab72e70afef999101d0fb206e3f65556f93a",
+      "target": "tradingagents/research/onchain_replication/compact_mcm.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/compact_mcm_output.py",
+      "overrides_io02": false,
+      "sha256": "4e31d1f241fc7c1f1ef4b7fc163d27a332ff057378a254e56667d2e7f6d29b11",
+      "target": "tradingagents/research/onchain_replication/compact_mcm_output.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/compact_mcm_publication.py",
+      "overrides_io02": false,
+      "sha256": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a",
+      "target": "tradingagents/research/onchain_replication/compact_mcm_publication.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/compact_owner.py",
+      "overrides_io02": false,
+      "sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171",
+      "target": "tradingagents/research/onchain_replication/compact_owner.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/compact_pair_log.py",
+      "overrides_io02": false,
+      "sha256": "e7b38cbc4a0b13733e0018db897489acab5f7324368c7938addb20f8a9d2392d",
+      "target": "tradingagents/research/onchain_replication/compact_pair_log.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/compact_stage.py",
+      "overrides_io02": false,
+      "sha256": "3e35d200bcd04efa169ec64745ae54bb81ef1a58f3ae160157f00f40f60aad3e",
+      "target": "tradingagents/research/onchain_replication/compact_stage.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/feature_journal.py",
+      "overrides_io02": false,
+      "sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+      "target": "tradingagents/research/onchain_replication/feature_journal.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/graph_store.py",
+      "overrides_io02": false,
+      "sha256": "dcea4265fab07e26fba1c94f56c3fb74b12d872a7378065ed6d4ae431e9e54bd",
+      "target": "tradingagents/research/onchain_replication/graph_store.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/import_metadata.py",
+      "overrides_io02": false,
+      "sha256": "1c9455bc80b8f424bf63d6fdd5b94338ce54c14ead720990a2f787aef9e93dfe",
+      "target": "tradingagents/research/onchain_replication/import_metadata.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/imported_kernel.py",
+      "overrides_io02": false,
+      "sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287",
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/imported_mcm_identity.py",
+      "overrides_io02": false,
+      "sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1",
+      "target": "tradingagents/research/onchain_replication/imported_mcm_identity.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/job.py",
+      "overrides_io02": false,
+      "sha256": "83b502643962a560c486bded2386babe71ef6b148525a607da33f9338ba23f0c",
+      "target": "tradingagents/research/onchain_replication/job.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/matching_annealing.py",
+      "overrides_io02": false,
+      "sha256": "602636b8311431bd2f7d4d28ed59627e9ac576341b0dbcc6f0d41225dc79b7d1",
+      "target": "tradingagents/research/onchain_replication/matching_annealing.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/matching_checkpoint.py",
+      "overrides_io02": false,
+      "sha256": "6ef36f12a8e601177c0dde507f99d80853df80ad46cfd7f0321e5c0d655ab9df",
+      "target": "tradingagents/research/onchain_replication/matching_checkpoint.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/matching_hardening.py",
+      "overrides_io02": false,
+      "sha256": "3ed02e0df1508a7f963d3652cfea252b759c701235589ea5855cdd560e520f80",
+      "target": "tradingagents/research/onchain_replication/matching_hardening.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/matching_owner.py",
+      "overrides_io02": false,
+      "sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+      "target": "tradingagents/research/onchain_replication/matching_owner.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/mcm_score_stream.py",
+      "overrides_io02": false,
+      "sha256": "0cb6280571d465bcbd9b721492c5b6297666bbf14c5b5939cb36b4f9f72309fe",
+      "target": "tradingagents/research/onchain_replication/mcm_score_stream.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/original_dictionary.py",
+      "overrides_io02": false,
+      "sha256": "cbe571a3758695b2ff63a45031c90840a7358538f9a2c0bad31077db8439a6d9",
+      "target": "tradingagents/research/onchain_replication/original_dictionary.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/original_import_preparation.py",
+      "overrides_io02": false,
+      "sha256": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5",
+      "target": "tradingagents/research/onchain_replication/original_import_preparation.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/original_import_stage.py",
+      "overrides_io02": false,
+      "sha256": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a",
+      "target": "tradingagents/research/onchain_replication/original_import_stage.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/owned_io.py",
+      "overrides_io02": false,
+      "sha256": "1d8089f866f8026e2be247b04305433f0b88d4816694b0ad9574ecd568053e42",
+      "target": "tradingagents/research/onchain_replication/owned_io.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/provenance.py",
+      "overrides_io02": false,
+      "sha256": "d29f7f5c2fc5d0def6538d3a1eb13dc051c672d8ea38257af333930f87b9ff1b",
+      "target": "tradingagents/research/onchain_replication/provenance.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/resource_binding.py",
+      "overrides_io02": false,
+      "sha256": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d",
+      "target": "tradingagents/research/onchain_replication/resource_binding.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/resource_fixture.py",
+      "overrides_io02": true,
+      "sha256": "27dc8e99bf06117acf3e538db5b785d87c4665a782cfcbfb13e7d7cf988e26d5",
+      "target": "tradingagents/research/onchain_replication/resource_fixture.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/score_batches.py",
+      "overrides_io02": false,
+      "sha256": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+      "target": "tradingagents/research/onchain_replication/score_batches.py"
+    },
+    {
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/score_tail.py",
+      "overrides_io02": false,
+      "sha256": "d18681b36e16bbca604346469d1cb79e14d2ebb1649108334c62356d9f6eb91e",
+      "target": "tradingagents/research/onchain_replication/score_tail.py"
+    }
+  ],
+  "remaining": [
+    "independent composed-source review",
+    "outer controlled launcher/final inventory",
+    "actual isolated committed source/runtime/input and two synthetic registrations",
+    "genuine guarded two-target success/failure/mutation proof"
+  ],
+  "schema_version": 1,
+  "status": "frozen-source-candidate-unadmitted"
+}

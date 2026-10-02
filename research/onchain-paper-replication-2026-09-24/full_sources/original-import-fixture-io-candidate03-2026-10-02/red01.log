@@ -1,0 +1,111 @@
+EEE
+======================================================================
+ERROR: test_retained_memoryerror_before_ordinary_close (__main__.ActiveFatal.test_retained_memoryerror_before_ordinary_close)
+----------------------------------------------------------------------
+  | ExceptionGroup: body/cleanup failures (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "actual-candidate-CompactMatcher.__call__", line 276, in __call__
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 23, in advance
+    |     def advance(self,*a,**k):seen.append('advance');raise body
+    |                                                     ^^^^^^^^^^
+    | ValueError: ordinary advance failure
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "actual-candidate-CompactMatcher.__call__", line 297, in __call__
+    |   File "frozen-IO02-helper", line 53, in _close_after_failure
+    |   File "frozen-IO02-helper", line 46, in _cleanup
+    |   File "frozen-IO02-helper", line 34, in _cleanup
+    |   File "actual-candidate-CompactMatcher.__call__", line 297, in <lambda>
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 29, in fail
+    |     self.original=error;seen.append('retained-fail');raise retained_error
+    |                                                      ^^^^^^^^^^^^^^^^^^^^
+    | MemoryError: first actual fatal
+    | owned cleanup evidence: ValueError
+    | 
+    | During handling of the above exception, another exception occurred:
+    | 
+    | Traceback (most recent call last):
+    |   File "frozen-IO02-helper", line 34, in _cleanup
+    |   File "actual-candidate-CompactMatcher.__call__", line 308, in <lambda>
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 24, in close
+    |     def close(self,state):seen.append('engine-close');raise close_error
+    |                                                       ^^^^^^^^^^^^^^^^^
+    | OSError: close
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 40, in test_retained_memoryerror_before_ordinary_close
+    def test_retained_memoryerror_before_ordinary_close(self):self.run_case(MemoryError('first actual fatal'),OSError('close'))
+                                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 36, in run_case
+    ns['__call__'](obj,{'schema_version':1,'kind':'mcm','workload_sha256':'w','typed_graphs':['a','b']},'a','b')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "actual-candidate-CompactMatcher.__call__", line 308, in __call__
+  File "frozen-IO02-helper", line 50, in _cleanup
+CleanupFailure: score storage cleanup unresolved; worker must stop
+
+======================================================================
+ERROR: test_retained_memoryerror_before_systemexit_close (__main__.ActiveFatal.test_retained_memoryerror_before_systemexit_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "actual-candidate-CompactMatcher.__call__", line 276, in __call__
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 23, in advance
+    def advance(self,*a,**k):seen.append('advance');raise body
+                                                    ^^^^^^^^^^
+ValueError: ordinary advance failure
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 42, in test_retained_memoryerror_before_systemexit_close
+    def test_retained_memoryerror_before_systemexit_close(self):self.run_case(MemoryError('first actual fatal'),SystemExit(23))
+                                                                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 36, in run_case
+    ns['__call__'](obj,{'schema_version':1,'kind':'mcm','workload_sha256':'w','typed_graphs':['a','b']},'a','b')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "actual-candidate-CompactMatcher.__call__", line 308, in __call__
+  File "frozen-IO02-helper", line 46, in _cleanup
+  File "frozen-IO02-helper", line 34, in _cleanup
+  File "actual-candidate-CompactMatcher.__call__", line 308, in <lambda>
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 24, in close
+    def close(self,state):seen.append('engine-close');raise close_error
+                                                      ^^^^^^^^^^^^^^^^^
+SystemExit: 23
+owned cleanup evidence: ValueError
+
+======================================================================
+ERROR: test_retained_systemexit_before_memoryerror_close (__main__.ActiveFatal.test_retained_systemexit_before_memoryerror_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "actual-candidate-CompactMatcher.__call__", line 276, in __call__
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 23, in advance
+    def advance(self,*a,**k):seen.append('advance');raise body
+                                                    ^^^^^^^^^^
+ValueError: ordinary advance failure
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 41, in test_retained_systemexit_before_memoryerror_close
+    def test_retained_systemexit_before_memoryerror_close(self):self.run_case(SystemExit(19),MemoryError('second actual fatal'))
+                                                                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 36, in run_case
+    ns['__call__'](obj,{'schema_version':1,'kind':'mcm','workload_sha256':'w','typed_graphs':['a','b']},'a','b')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "actual-candidate-CompactMatcher.__call__", line 308, in __call__
+  File "frozen-IO02-helper", line 46, in _cleanup
+  File "frozen-IO02-helper", line 34, in _cleanup
+  File "actual-candidate-CompactMatcher.__call__", line 308, in <lambda>
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_active_fatal01.py", line 24, in close
+    def close(self,state):seen.append('engine-close');raise close_error
+                                                      ^^^^^^^^^^^^^^^^^
+MemoryError: second actual fatal
+owned cleanup evidence: ValueError
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.020s
+
+FAILED (errors=3)

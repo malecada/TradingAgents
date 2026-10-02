@@ -1,0 +1,66 @@
+EEE
+======================================================================
+ERROR: test_first_memoryerror_survives_pending_builder_systemexit (__main__.Assembly.test_first_memoryerror_survives_pending_builder_systemexit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "actual-execute-diagnostic-tail", line 3, in actual_diagnostic_tail
+MemoryError: first
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_assembly01.py", line 42, in test_first_memoryerror_survives_pending_builder_systemexit
+    def test_first_memoryerror_survives_pending_builder_systemexit(self):self.scenario('pending',MemoryError('first'),SystemExit(19))
+                                                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_assembly01.py", line 36, in scenario
+    with self.assertRaises(type(body_error)) as caught:call()
+                                                       ~~~~^^
+  File "actual-execute-diagnostic-tail", line 220, in actual_diagnostic_tail
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_assembly01.py", line 34, in bad
+    def bad(*args):raise assembly_error
+                   ^^^^^^^^^^^^^^^^^^^^
+SystemExit: 19
+
+======================================================================
+ERROR: test_first_systemexit_survives_summary_memoryerror (__main__.Assembly.test_first_systemexit_survives_summary_memoryerror)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_assembly01.py", line 43, in test_first_systemexit_survives_summary_memoryerror
+    def test_first_systemexit_survives_summary_memoryerror(self):self.scenario('summary',SystemExit(21),MemoryError('later'))
+                                                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_assembly01.py", line 36, in scenario
+    with self.assertRaises(type(body_error)) as caught:call()
+                                                       ~~~~^^
+  File "actual-execute-diagnostic-tail", line 230, in actual_diagnostic_tail
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_assembly01.py", line 28, in limit
+    if where=='summary':raise assembly_error
+                        ^^^^^^^^^^^^^^^^^^^^
+MemoryError: later
+
+======================================================================
+ERROR: test_original_fatal_survives_its_broken_formatting (__main__.Assembly.test_original_fatal_survives_its_broken_formatting)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "actual-execute-diagnostic-tail", line 175, in retained_actions
+  File "actual-execute-diagnostic-tail", line 3, in actual_diagnostic_tail
+Assembly.test_original_fatal_survives_its_broken_formatting.<locals>.Fatal: <exception str() failed>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_assembly01.py", line 47, in test_original_fatal_survives_its_broken_formatting
+    self.scenario('format',Fatal(23),None)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_assembly01.py", line 36, in scenario
+    with self.assertRaises(type(body_error)) as caught:call()
+                                                       ~~~~^^
+  File "actual-execute-diagnostic-tail", line 227, in actual_diagnostic_tail
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/test_assembly01.py", line 46, in __str__
+    def __str__(self):raise MemoryError('diagnostic formatting')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+MemoryError: diagnostic formatting
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.030s
+
+FAILED (errors=3)
