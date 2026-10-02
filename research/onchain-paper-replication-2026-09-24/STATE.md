@@ -1,5 +1,24 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: production adapter02 PASSED and independently accepted.**
+One-use65517 fromb853adf73e5b41b5f8e816c976e132dcb56c9ad7 closed19:31:21.467UTC/0
+in6.826s. Allfourtests/12PASSphases/13progressrecords and actualtiny selected
+update/checkpoint/reload/identityrefusal passed; mockedsource/guard admission
+qualification remains. Parent/child/guardPASS, native1GiBhigh=max/zeroSwap/
+120s/twoCPU/4MiBfiles/events0/sampledpeak383930368B. Actualstop5 ownercheck
+passed/allfivePIDs+originalcgroup absent; exact5reasonunknown. Whole193files/
+59dirs/0links/252members,605418logical/1536000allocated incldirs retained.
+Independentreview79cf9b5f accepts actualproof/completearchive/original285Gitpins;
+finaltail+8991logical/+12288allocated/+2nonrootentries. Adapter01failedpreserved.
+Sourcefreezeended afterverifiedclosure. Next: backup/freshfivecase remote recovery,
+prepare exactprospective64/fullneural04gate andindependentreview/admission.
+AvailableRAM~6.8–6.9GiB; prospective schedulingminimum6.75GiB removesonlyextra
+256MiB buffer, unchanged3GiBreserve/3.75GiBcap/16x2s/fresh<=1s; separately reviewed
+amendment pending. No empirical04claim/budget64adoption/capacity/financialfit yet.
+35spent/adopt63/77of109/all1420fits unchanged. Originalimport02 withheldf9b1c206
+job/Binding join andfatalIO; newauthoritycorrection03 inprogress. TypedMCMcandidate03
+remains unusable until correctedauthority+genuineguardednumericfixture accepted.
+
 **Latest release: adapter02 source/release05 independently accepted.**
 Reviewd293ed6c accepts23378194/285pins2256432B, worker04d3df59ec/launcher04
 9355aee6, samefourtests/nativebounds; ownedregularfixture and13normalprogress

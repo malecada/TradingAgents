@@ -1,0 +1,11 @@
+--- a/tradingagents/research/onchain_replication/compact_mcm_publication.py
++++ b/tradingagents/research/onchain_replication/compact_mcm_publication.py
+@@ -31,7 +31,7 @@
+ def _output_policy(owner, output_input, pairs):
+     """Selected output reservation, usable before numerical stage creation."""
+     run = owner.bound._run; record = owner.bound.record
+-    selected = json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][record['representation']]
++    selected = json.loads(run.read_input(record.get('job_input','execution_job')))['payload']['representation_jobs'][record['representation']]
+     plan = json.loads(run.read_input(selected['plan_input']))['producers'][record['producer']]
+     require(type(output_input) is str and output_input in run.admission.inputs
+         and selected.get('compact_mcm_output_input') == plan.get('compact_mcm_output_input') == output_input

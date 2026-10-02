@@ -1,0 +1,52 @@
+--- a/tradingagents/research/onchain_replication/mcm_score_stream.py
++++ b/tradingagents/research/onchain_replication/mcm_score_stream.py
+@@ -22,14 +22,22 @@
+ 
+ class MCMScoreStream:
+     def __init__(self, root, *, graph, dictionary, matching_config, workflow,
+-                 backend, owner, chunk_cells, compute, lease):
++                 backend, owner, chunk_cells, compute, lease, _imported=None):
+         batch._identity(workflow); batch._identity(owner)
+         require(callable(compute) and callable(lease), 'compute and live lease required')
+         require(cache_key(backend) == cache_key(BACKEND), 'explicit scalar backend required')
+-        require(dictionary_hash(dictionary) == dictionary.identity
+-            and cache_key(dictionary.config.get('pair_execution')) == cache_key(backend)
+-            and dictionary.matching_config_hash == cache_key({'config': matching_config, 'backend': backend}),
+-            'dictionary/backend/matching identity differs')
++        self._imported=self._imported_pin=_imported
++        if _imported is None:
++            require(dictionary_hash(dictionary) == dictionary.identity
++                and cache_key(dictionary.config.get('pair_execution')) == cache_key(backend)
++                and dictionary.matching_config_hash == cache_key({'config': matching_config, 'backend': backend}),
++                'dictionary/backend/matching identity differs')
++        else:
++            from .imported_mcm_identity import Target
++            require(type(_imported) is Target,'genuine imported target required')
++            _imported.check()
++            require(graph is _imported.graph and dictionary is _imported.dictionary and owner==_imported.owner.identity and workflow==_imported.owner.bound.record['workflow_identity'],'imported stream authority differs')
++            require(cache_key(matching_config)==cache_key(thaw(_imported.owner.matching)),'imported stream matching differs')
+         self.nodes = graph.node_ids; self.motifs = tuple(graph_identity(m) for m in dictionary.representatives)
+         self.n = len(self.nodes); self.k = len(self.motifs)
+         batch._shape(self.n, self.k, chunk_cells)
+@@ -42,6 +50,10 @@
+         self.scope = {'graph': self.parent, 'node_order': node_order,
+             'dictionary': dictionary.identity, 'ordered_motifs': cache_key(list(self.motifs)),
+             'matching': dictionary.matching_config_hash, 'workflow': self.workload}
++        if _imported is not None:
++            expected=_imported.derive_scope()
++            require(expected==_imported.scope,'imported stream independently derived workload differs')
++            self.scope=expected;self.workload=expected['workflow']
+         self.owner = owner; self.compute = compute; self.lease = lease
+         self.cells = 0; self.closed = False; self.active = None; self.batches = None
+         root = Path(root)
+@@ -69,6 +81,10 @@
+     def _check(self):
+         require(not self.closed, 'score stream is closed')
+         self.lease(); batch._root(self.root, self.fd)
++        require(self._imported is self._imported_pin,'imported stream authority replaced')
++        if self._imported is not None:
++            self._imported.final(full_graph=False)
++            require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')
+ 
+     def _seal_check(self, index, expected_sha):
+         """Callback-free bounded verification of one tail/link/destination."""

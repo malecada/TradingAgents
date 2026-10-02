@@ -1,0 +1,78 @@
+--- a/tradingagents/research/onchain_replication/compact_owner.py
++++ b/tradingagents/research/onchain_replication/compact_owner.py
+@@ -65,6 +65,9 @@
+ 
+ def _stage_content(stage):
+     """Callback-free content only; callers supply active or terminal authority."""
++    if getattr(stage,'kind',None)=='dictionary-import':
++        from .original_import_stage import content
++        return content(stage)
+     contract = thaw(stage.contract)
+     if 'archive' not in contract:
+         return compact_stage.verify(stage.root, expected_sha256=stage.reference,
+@@ -158,13 +161,21 @@
+ 
+ 
+ class Owner:
+-    def __init__(self, bound, policy_input, envelope, descriptor):
++    def __init__(self, bound, policy_input, envelope, descriptor, *, imported=None):
+         self.bound = bound; self.policy = freeze(envelope['stage_policy'])
+         self._bound = bound; self._run = bound._run
+         self._binding_sha256 = cache_key(self.binding_value())
+         self.maximum = envelope['max_workflow_retained_logical_bytes']
+         self.matching = freeze(descriptor['configs']['matching'])
+-        self.required = ('dictionary',) + tuple('mcm-' + h for h in descriptor['required_graphs'])
++        if imported is None:
++            require('dictionary_origin' not in descriptor,'imported stage requires typed prebirth preparation')
++            self.required = ('dictionary',) + tuple('mcm-' + h for h in descriptor['required_graphs'])
++        else:
++            from .original_import_preparation import PreparedImport
++            require(type(imported) is PreparedImport and imported._bound is bound,'actual original preparation required')
++            contract=imported.stage_contract()
++            require(contract['descriptor_sha256']==bound.record['workflow_identity'],'imported owner descriptor differs')
++            self.required=tuple(contract['required_stages'])
+         require(len(set(self.required)) == len(self.required), 'duplicate compact required stage')
+         self.root = Path(bound.record['journal_directory']) / 'compact'
+         self.active = None; self.stages = {}; self.reserved = self._reserved = OWNER_BYTES
+@@ -175,6 +186,7 @@
+             'context': thaw(bound.context), 'policy_input': policy_input,
+             'policy_sha256': bound._run.admission.inputs[policy_input]['sha256'],
+             'required_stages': list(self.required), 'maximum_retained_logical_bytes': self.maximum}
++        if imported is not None:record['original_import']=contract
+         self.identity = cache_key(record); self.start = body(record)
+         self.configuration_sha256 = cache_key(self.configuration())
+         bound.check(); self.root.mkdir()
+@@ -266,8 +278,10 @@
+         self.boundary()
+         require(self.active is None and name in self.required and name not in self.stages,
+                 'compact stage absent, active or already claimed')
+-        require(name == 'dictionary' or ('dictionary' in self.stages and self.stages['dictionary'].closed),
+-                'dictionary must complete before MCM stage')
++        prerequisite=self.required[0]
++        require(name!='dictionary-import','use actual imported stage constructor')
++        require(name == 'dictionary' or (prerequisite in self.stages and self.stages[prerequisite].closed),
++                'dictionary/import must complete before MCM stage')
+         io._identity(workload_sha256)
+         kind = 'dictionary' if name == 'dictionary' else 'mcm'
+         require(('restart_retention' in self.policy)==(retention_selection is not None),
+@@ -322,6 +336,8 @@
+             self.poisoned = True; raise
+ 
+     def _stage_bindings(self, stage):
++        if stage.kind=='dictionary-import':
++            _stage_content(stage);return
+         if stage.count_policy is not None:
+             require(stage.kind == 'dictionary' and thaw(stage.count_policy) == self._dictionary_count_policy()
+                 and stage.pairs == stage.count_policy['capacity']['max_pairs'],
+@@ -341,6 +357,11 @@
+         digest = hashlib.sha256(); count = pairs = 0
+         for name in self.required:
+             stage = self.stages[name]
++            if stage.kind=='dictionary-import':
++                result=_stage_content(stage)
++                digest.update(body({'stage':name,'receipt_sha256':stage.reference}));count+=1
++                require(result['completed_pairs']==0,'import cannot credit historical pairs')
++                continue
+             self._stage_bindings(stage)
+             exact(stage.root, 'intent.json', stage.intent)
+             entries(stage.root, {'intent.json', 'matching', 'checkpoints', 'stage-complete.json'} |

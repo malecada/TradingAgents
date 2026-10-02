@@ -1,0 +1,40 @@
+--- preserved/mcm-array-kernel-2026-10-01/kernel.py
++++ NEW/imported_kernel.py
+@@ -28,20 +28,22 @@
+     require(output_bytes+policy['max_buffer_bytes']<=policy['max_numeric_bytes'],'MCM combined numeric allowance exceeded')
+     return dict(policy)
+ 
+-def mcm(graph,dictionary,matching_config,*,workflow,backend,max_entries,score_pair,policy,lease):
++def mcm(graph,dictionary,matching_config,*,workflow,backend,max_entries,score_pair,policy,lease,imported):
+     workload.common(workflow,backend,max_entries,score_pair)
+     require(callable(lease),'mandatory MCM lease required')
+     lease()
+-    require(dictionary_hash(dictionary)==dictionary.identity,'dictionary identity differs')
+-    require(cache_key(dictionary.config.get('pair_execution'))==cache_key(backend),'dictionary scalar backend differs')
+-    require(dictionary.matching_config_hash==cache_key({'config':matching_config,'backend':backend}),'dictionary matching differs')
++    from tradingagents.research.onchain_replication.imported_mcm_identity import Target
++    require(type(imported) is Target,'actual imported target capability required')
++    imported.check()
++    require(graph is imported.graph and dictionary is imported.dictionary and workflow==imported.owner.bound.record['workflow_identity'],'imported kernel object/workflow differs')
++    require(cache_key(matching_config)==cache_key(dict(imported.owner.matching)),'imported kernel matching config differs')
++    expected=imported.derive_scope()
++    require(expected==imported.scope,'imported kernel workload differs')
+     n=len(graph.node_ids);motifs=dictionary.representatives;k=len(motifs)
+     require(n>0 and k>0 and n*k<=max_entries,'MCM matrix capacity exceeded')
+     policy=validate_policy(policy,n*k)
+     typed=[graph_identity(m) for m in motifs];parent=graph_hash(graph)
+-    scope=cache_key({'schema_version':1,'kind':'mcm','workflow':workflow,'backend':backend,
+-        'graph':parent,'node_order':node_order_hash(graph.node_ids),'dictionary':dictionary.identity,
+-        'ordered_motifs':typed,'matching':matching_config,'dtype':'float32'})
++    scope=expected['workflow']
+     lease();rows=0;cells=0
+     with ArrayNeighborhoodIndex(graph,max_buffer_bytes=policy['max_buffer_bytes'],edge_chunk=policy['edge_chunk']) as index:
+         lease()
+@@ -63,6 +65,6 @@
+                 # the next neighborhood uses its single-output scratch budget.
+                 del local
+     require(rows==n and cells==n*k,'incomplete MCM output')
+-    lease()
++    lease();imported.final()
+     return {'mcm':result,'completed_rows':rows,'completed_cells':cells,
+         'output_bytes':result.nbytes,'workload_sha256':scope}

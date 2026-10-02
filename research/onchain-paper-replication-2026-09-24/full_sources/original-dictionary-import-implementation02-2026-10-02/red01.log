@@ -1,0 +1,36 @@
+FFF
+======================================================================
+FAIL: test_no_fresh_matching_receipt_for_import (__main__.Contract.test_no_fresh_matching_receipt_for_import)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/test_contract01.py", line 25, in test_no_fresh_matching_receipt_for_import
+    self.assertTrue(p.exists(),'real stage implementation required')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : real stage implementation required
+
+======================================================================
+FAIL: test_reserved_import_stage_policy (__main__.Contract.test_reserved_import_stage_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/test_contract01.py", line 19, in test_reserved_import_stage_policy
+    f=function('import_policy');v={'schema_version':1,'max_numeric_bytes':65536,'max_stage_bytes':131072}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/test_contract01.py", line 8, in function
+    if not p.exists():raise AssertionError('resource admission absent')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: resource admission absent
+
+======================================================================
+FAIL: test_resource_kind_and_payload_no_fake_fit (__main__.Contract.test_resource_kind_and_payload_no_fake_fit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/test_contract01.py", line 14, in test_resource_kind_and_payload_no_fake_fit
+    f=function('validate_job');v={'schema_version':1,'kind':'compact_resource','resources':{},'environment_input':'env','payload':{'representation_jobs':{'r':{}}}}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/test_contract01.py", line 8, in function
+    if not p.exists():raise AssertionError('resource admission absent')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: resource admission absent
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (failures=3)

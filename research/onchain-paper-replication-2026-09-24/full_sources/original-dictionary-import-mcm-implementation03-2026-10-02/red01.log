@@ -1,0 +1,25 @@
+FF
+======================================================================
+FAIL: test_both_identity_families_and_order_affect_workload (__main__.Contract.test_both_identity_families_and_order_affect_workload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-mcm-implementation03-2026-10-02/test_contract01.py", line 17, in test_both_identity_families_and_order_affect_workload
+    f=load();args=dict(workflow='w',backend={'v':1},graph='g',node_order='n',dictionary='d',ordered_motifs=['a','b'],matching={'x':1},original_matching='o',execution_matching='e',execution_identity='i')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-mcm-implementation03-2026-10-02/test_contract01.py", line 10, in load
+    if not p.exists():raise AssertionError('authenticated workload source absent')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: authenticated workload source absent
+
+======================================================================
+FAIL: test_historical_numeric_loop_ast_unchanged (__main__.Contract.test_historical_numeric_loop_ast_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-mcm-implementation03-2026-10-02/test_contract01.py", line 24, in test_historical_numeric_loop_ast_unchanged
+    self.assertTrue(newfile.exists(),'typed imported kernel missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : typed imported kernel missing
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (failures=2)

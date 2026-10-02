@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_every_emitted_provenance_field_and_identity_pinned (__main__.Pins.test_every_emitted_provenance_field_and_identity_pinned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/test_materialization_pins01.py", line 17, in test_every_emitted_provenance_field_and_identity_pinned
+    ns=load();e=SimpleNamespace(dictionary_identity='d',sample_identity='s',representative_indices=(2,1),original_terminal='failed',original_claim='old',_dictionary_bytes=b'body',bundle_sha256='bundle')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-implementation02-2026-10-02/test_materialization_pins01.py", line 12, in load
+    if len(nodes)!=3:raise AssertionError('complete materialization provenance pin absent')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: complete materialization provenance pin absent
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=1)
