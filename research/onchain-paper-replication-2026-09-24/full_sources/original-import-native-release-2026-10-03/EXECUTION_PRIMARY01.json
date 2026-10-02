@@ -1,0 +1,83 @@
+{
+  "cells": [
+    {
+      "id": "import-target-01",
+      "reason": "ValueError: compact metadata bound",
+      "resource_only": true,
+      "status": "failed"
+    },
+    {
+      "id": "import-target-02",
+      "reason": "ValueError: compact metadata bound",
+      "resource_only": true,
+      "status": "unavailable"
+    }
+  ],
+  "claim_sha256": "f475dd6c04d7dfc5e9d94bba30b5d3e686d1b71b5f5394dfa1aa0b174797f61e",
+  "closed_engineering_attempts": 1,
+  "completed_mcm_targets": 0,
+  "engineering_attempt_budget": 2,
+  "identity": "original-import-native-success-20261003-01",
+  "kernel_controls": {
+    "memory.high": "3221225472",
+    "memory.max": "3221225472",
+    "memory.swap.max": "0"
+  },
+  "native_child_exit_code": 1,
+  "native_elapsed_seconds": 96.97978778999823,
+  "native_observations": {
+    "native_disk_free_bytes": 19836350464,
+    "native_elapsed_seconds": 96.97978778999823,
+    "qualification": "Sampled guard observations precede outer tail; no kernel aggregate filesystem quota or full-size capacity inference.",
+    "sampled_memory_current_bytes": 33050624,
+    "sampled_memory_peak_bytes": 415043584,
+    "storage_observation": {
+      "aggregate_entry_visit_bound": 98304,
+      "allocated_bytes": 7348224,
+      "directories": 206,
+      "elapsed_seconds": 0.00834187100554118,
+      "entries": 687,
+      "hardlink_observations": [],
+      "logical_file_bytes": 5305184,
+      "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+      "regular_files": 482,
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-release-2026-10-03/capsule01",
+      "root_device": 66310,
+      "root_inode": 10409962,
+      "scan_attempts": 1
+    }
+  },
+  "native_sampled_peak_bytes": 415043584,
+  "original_cgroup_absent": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7062a962d28749989ace762161fb4b43.service",
+  "original_dictionary_import_complete_sha256": "98c6953c79b31af1431815f0f3d64422aa9bc7471fd3a637528c51855a9bd4f7",
+  "original_outer_unresolved_pid_absence_preserved": true,
+  "outer_exit_code": 1,
+  "paper_closed_attempts": 36,
+  "paper_highest_adopted_budget": 64,
+  "parent_failure_reason": "ValueError: compact metadata bound",
+  "qualification": "Actual genuine imported dictionary stage completed but metadata preflight failed before any MCM stage. Both resource cells retained failed/unavailable. Native control/cleanup readback is separate root metadata evidence; original outer cleanup.json unresolved flag is unchanged. No full-sized capacity, MCM correctness, financial fit or paper agreement inferred. Full raw archive not yet externally recovered.",
+  "recorded_pids_absent": [
+    1507456,
+    1507460,
+    1507635,
+    1507652,
+    1507666,
+    1507678
+  ],
+  "release_sha256": "9024da28d3016c41292103f327eb12d0b80f1329dd02675c605db0d4579f2548",
+  "repeat_allowed": false,
+  "retention_sha256": "23efc546928547341204b0a31d570af4b9d2b9f8c1cd57a53e6b28a84fc5d8c7",
+  "scalar_reference_comparisons": 0,
+  "schema_version": 1,
+  "source_commit": "529c7a3769fcfea28d3a617270b3025aebbce1f5",
+  "source_freeze_ended": true,
+  "status": "failed",
+  "unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "verified_utc": "2026-10-02T23:55:03.926552+00:00"
+}
