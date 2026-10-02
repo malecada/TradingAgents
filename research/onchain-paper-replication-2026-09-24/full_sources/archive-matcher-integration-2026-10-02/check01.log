@@ -1,0 +1,32 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_actual_matching_scores_and_checkpoint_trees_survive_archive_rotation[True] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-86/test_actual_matching_scores_an1')
+checkpoints = True
+
+    @pytest.mark.parametrize('checkpoints', [False, True])
+    def test_actual_matching_scores_and_checkpoint_trees_survive_archive_rotation(tmp_path, checkpoints):
+>       matcher, log, transport, a, b, c, purpose, policy, schedule = fixture(tmp_path, checkpoints=checkpoints)
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_matcher_integration.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_archive_matcher_integration.py:37: in fixture
+    matcher = compact_matcher.CompactMatcher(log, config=c, context=CONTEXT, policy=policy,
+tradingagents/research/onchain_replication/compact_matcher.py:134: in __init__
+    require(schedule['max_checkpoints'] <= policy['max_publications'], 'checkpoint count exceeds pair policy')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'checkpoint count exceeds pair policy'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: checkpoint count exceeds pair policy
+
+tradingagents/research/onchain_replication/score_batches.py:49: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_matcher_integration.py::test_actual_matching_scores_and_checkpoint_trees_survive_archive_rotation[True]
+1 failed, 1 passed in 0.57s

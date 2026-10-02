@@ -54,3 +54,26 @@ and score-stream joins, explicit new stage/owner/terminal route, cumulative
 metadata/transport/physical accounting and guarded pipeline admission. Neither
 new helper authorizes deletion of any old source or substitution beneath a local
 receipt. See their separate evidence directories for precise test/review scope.
+
+## October2 writer and matcher continuation
+
+The explicit ArchivePairLog now closes the fresh sealed-chunk writer/manifest
+and owned-source disposition component of item1. It retains the last event
+locally until the next append, preserving the existing numerical acknowledgement
+contract. Its own completion fully replays the archive. Independent APW1–5
+corrections and 95 focused passes are recorded in archive-pair-writer-2026-10-02.
+
+Actual CompactMatcher integration is accepted separately: two synthetic cases
+exercise exact reference scores, full and partial chunk rotation, intermediate
+checkpoints and their real saved trees. Direct remote-event decoding and the
+existing checkpoint validator agree with independently packed ordered digests.
+See archive-matcher-integration-2026-10-02. This demonstrates composition, but
+does not implement a reusable archived stage or current-owner reader.
+
+The next concrete boundary is cold verification from a trusted archive-complete
+hash, expected owner/scope/policy and ordered manifest, using fresh bounded
+consumption namespaces. It must not reopen the closed writer or reuse its reads
+attempts. Then integrate actual checkpoint and score-stream joins into an
+explicit new stage route and bind that route through owner/publication/terminal
+verification. Retained score/checkpoint storage, aggregate metadata and physical
+budgets remain separate requirements. No historical-source eviction follows.

@@ -1,0 +1,324 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+______ test_rollover_disposes_only_sealed_owned_chunks_and_finish_replays ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_rollover_disposes_only_se0')
+
+    def test_rollover_disposes_only_sealed_owned_chunks_and_finish_replays(tmp_path):
+>       module,transport,kwargs=fixture(tmp_path)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_rollover_disposes_only_se0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+_____ test_rollover_failure_preserves_chunk_and_poisoned_attempt[corrupt] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_rollover_failure_preserve0')
+failure = 'corrupt'
+
+    @pytest.mark.parametrize('failure',['corrupt','put','changed_chunk'])
+    def test_rollover_failure_preserves_chunk_and_poisoned_attempt(tmp_path,failure):
+>       module,transport,kwargs=fixture(tmp_path);log=module.ArchivePairLog(**kwargs);first(log)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_rollover_failure_preserve0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+_______ test_rollover_failure_preserves_chunk_and_poisoned_attempt[put] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_rollover_failure_preserve1')
+failure = 'put'
+
+    @pytest.mark.parametrize('failure',['corrupt','put','changed_chunk'])
+    def test_rollover_failure_preserves_chunk_and_poisoned_attempt(tmp_path,failure):
+>       module,transport,kwargs=fixture(tmp_path);log=module.ArchivePairLog(**kwargs);first(log)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_rollover_failure_preserve1')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+__ test_rollover_failure_preserves_chunk_and_poisoned_attempt[changed_chunk] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_rollover_failure_preserve2')
+failure = 'changed_chunk'
+
+    @pytest.mark.parametrize('failure',['corrupt','put','changed_chunk'])
+    def test_rollover_failure_preserves_chunk_and_poisoned_attempt(tmp_path,failure):
+>       module,transport,kwargs=fixture(tmp_path);log=module.ArchivePairLog(**kwargs);first(log)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_rollover_failure_preserve2')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+_______ test_manifest_final_callback_prevents_source_disposal[metadata] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_manifest_final_callback_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b0a2bd67100>
+failure = 'metadata'
+
+    @pytest.mark.parametrize('failure',['metadata','foreign','revoked'])
+    def test_manifest_final_callback_prevents_source_disposal(tmp_path,monkeypatch,failure):
+>       module,transport,kwargs=fixture(tmp_path)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_manifest_final_callback_p0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+________ test_manifest_final_callback_prevents_source_disposal[foreign] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_manifest_final_callback_p1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b0a2bd67950>
+failure = 'foreign'
+
+    @pytest.mark.parametrize('failure',['metadata','foreign','revoked'])
+    def test_manifest_final_callback_prevents_source_disposal(tmp_path,monkeypatch,failure):
+>       module,transport,kwargs=fixture(tmp_path)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_manifest_final_callback_p1')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+________ test_manifest_final_callback_prevents_source_disposal[revoked] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_manifest_final_callback_p2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b0a2b92d130>
+failure = 'revoked'
+
+    @pytest.mark.parametrize('failure',['metadata','foreign','revoked'])
+    def test_manifest_final_callback_prevents_source_disposal(tmp_path,monkeypatch,failure):
+>       module,transport,kwargs=fixture(tmp_path)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_manifest_final_callback_p2')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+_ test_terminal_replay_and_final_publication_refuse_changed_evidence[remote_corrupt] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_terminal_replay_and_final0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b0a2b944af0>
+failure = 'remote_corrupt'
+
+    @pytest.mark.parametrize('failure',['remote_corrupt','mapping','final_revoke'])
+    def test_terminal_replay_and_final_publication_refuse_changed_evidence(tmp_path,monkeypatch,failure):
+>       module,transport,kwargs=fixture(tmp_path)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_terminal_replay_and_final0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+_ test_terminal_replay_and_final_publication_refuse_changed_evidence[mapping] __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_terminal_replay_and_final1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b0a2b945370>
+failure = 'mapping'
+
+    @pytest.mark.parametrize('failure',['remote_corrupt','mapping','final_revoke'])
+    def test_terminal_replay_and_final_publication_refuse_changed_evidence(tmp_path,monkeypatch,failure):
+>       module,transport,kwargs=fixture(tmp_path)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_terminal_replay_and_final1')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+_ test_terminal_replay_and_final_publication_refuse_changed_evidence[final_revoke] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_terminal_replay_and_final2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b0a2b93d550>
+failure = 'final_revoke'
+
+    @pytest.mark.parametrize('failure',['remote_corrupt','mapping','final_revoke'])
+    def test_terminal_replay_and_final_publication_refuse_changed_evidence(tmp_path,monkeypatch,failure):
+>       module,transport,kwargs=fixture(tmp_path)
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_terminal_replay_and_final2')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+______________ test_bad_policy_refused_before_local_claim[floor] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before0')
+failure = 'floor'
+
+    @pytest.mark.parametrize('failure',['floor','metadata','chunks','prefix','transport'])
+    def test_bad_policy_refused_before_local_claim(tmp_path,failure):
+>       module,transport,kwargs=fixture(tmp_path);policy=kwargs['archive_policy']
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before0')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+_____________ test_bad_policy_refused_before_local_claim[metadata] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before1')
+failure = 'metadata'
+
+    @pytest.mark.parametrize('failure',['floor','metadata','chunks','prefix','transport'])
+    def test_bad_policy_refused_before_local_claim(tmp_path,failure):
+>       module,transport,kwargs=fixture(tmp_path);policy=kwargs['archive_policy']
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before1')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+______________ test_bad_policy_refused_before_local_claim[chunks] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before2')
+failure = 'chunks'
+
+    @pytest.mark.parametrize('failure',['floor','metadata','chunks','prefix','transport'])
+    def test_bad_policy_refused_before_local_claim(tmp_path,failure):
+>       module,transport,kwargs=fixture(tmp_path);policy=kwargs['archive_policy']
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before2')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+______________ test_bad_policy_refused_before_local_claim[prefix] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before3')
+failure = 'prefix'
+
+    @pytest.mark.parametrize('failure',['floor','metadata','chunks','prefix','transport'])
+    def test_bad_policy_refused_before_local_claim(tmp_path,failure):
+>       module,transport,kwargs=fixture(tmp_path);policy=kwargs['archive_policy']
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before3')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+____________ test_bad_policy_refused_before_local_claim[transport] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before4')
+failure = 'transport'
+
+    @pytest.mark.parametrize('failure',['floor','metadata','chunks','prefix','transport'])
+    def test_bad_policy_refused_before_local_claim(tmp_path,failure):
+>       module,transport,kwargs=fixture(tmp_path);policy=kwargs['archive_policy']
+                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-80/test_bad_policy_refused_before4')
+
+    def fixture(tmp_path):
+>       from tradingagents.research.onchain_replication import archive_pair_writer as writer
+E       ImportError: cannot import name 'archive_pair_writer' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archive_pair_writer.py:15: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_rollover_disposes_only_sealed_owned_chunks_and_finish_replays
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_rollover_failure_preserves_chunk_and_poisoned_attempt[corrupt]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_rollover_failure_preserves_chunk_and_poisoned_attempt[put]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_rollover_failure_preserves_chunk_and_poisoned_attempt[changed_chunk]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_manifest_final_callback_prevents_source_disposal[metadata]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_manifest_final_callback_prevents_source_disposal[foreign]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_manifest_final_callback_prevents_source_disposal[revoked]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_terminal_replay_and_final_publication_refuse_changed_evidence[remote_corrupt]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_terminal_replay_and_final_publication_refuse_changed_evidence[mapping]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_terminal_replay_and_final_publication_refuse_changed_evidence[final_revoke]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_bad_policy_refused_before_local_claim[floor]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_bad_policy_refused_before_local_claim[metadata]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_bad_policy_refused_before_local_claim[chunks]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_bad_policy_refused_before_local_claim[prefix]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_bad_policy_refused_before_local_claim[transport]
+15 failed in 0.35s

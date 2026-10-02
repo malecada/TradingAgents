@@ -3,7 +3,49 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Latest handoff — October 2, bounded archive consumption and event replay**:
+**Latest handoff — October 2, archive writer and actual matcher integration**:
+Prior checkpointa6ee5c94078d8b1fe07385763ac09c4b6e38eb7f remains the externally
+verified predecessor. ArchivePairLog now implements the explicit fresh archive
+writer without changing the historical local PairLog. Full chunks remain local
+through latest-event acknowledgement, then copy/readback and an ordered manifest
+precede disposal of only newly owned payloads. Finish archives the partial chunk
+and fetches/replays every event before completion. Original descriptor ownership,
+post-callback acknowledgement, constructor/fatal cleanup and failure markers were
+corrected after independent review. Duplicate terminal calls preserve closed
+successful namespaces. All failed logs and preceding source snapshots remain.
+
+Writer check03 CLOSED95passed1.55s/session88212exit0 (24writer+71archive cases).
+Final independent REVIEW accepted APW1–5, SHA
+968618155e1332ad9e86e35f410258d8a9a7d55b5a5f084f4fa942109a8064bb.
+Evidence: full_sources/archive-pair-writer-2026-10-02/.
+
+The next actual integration was also executed: CompactMatcher/checkpoint engine
+plus ArchivePairLog, two purposes, exact reference scores, full/partial rotation
+and actual progress checkpoints. Direct remote-frame decoding and maintained
+checkpoint-tree verification agree with independently packed score/reference
+digests. check01 retained1pass1fixture-failure (checkpoint publication allowance
+was inconsistent); corrected explicit fixture check02 CLOSED2passed0.58s,
+session95269exit0. Independent REVIEW accepted SHA
+13c7883b73e50f588aa6b5f3cb49bf1ed5a78c00a067ced24ebdd7f73c8ce204.
+Evidence: full_sources/archive-matcher-integration-2026-10-02/.
+Two-node graphs/beta_final1 are synthetic fixture settings. Reference scores and
+checkpoint validation share maintained components; not an independent paper
+implementation. Filesystem transport only; no new actual network or OS guard.
+
+No process or source freeze remains active at this checkpoint. Root owns source,
+tests and STATE; independent reviewer owns REVIEW*.md. No historical empirical
+data was disposed and no terminal job replayed. Next safe action: preserve this
+reviewed checkpoint remotely, then implement an explicit cold archive manifest
+reader and generic archived matching-stage join (checkpoint trees plus score
+stream ordinals/purposes/values), followed by current-owner/terminal selection.
+Writer finish is verified but does not replace later current-owner verification;
+the integration test's direct tiny remote reads are not a production reader.
+Score tails/batches, checkpoints and remaining graph/dictionary/scratch objects
+still need compatible retention and whole-workflow physical accounting. The
+10GiB local floor remains. Coverage77/109,32open; all1420financialfits pending.
+No empirical admission;60→61 remains an unadopted draft.
+
+**Previous handoff — October 2, bounded archive consumption and event replay**:
 Prior external archive recovery checkpoint6f2f617fb073923dc26361373fefad97a73e6d0b
 is committed/pushed and exact remote HEAD was verified. No old empirical or
 external identity was replayed. Two additive storage components now implemented:

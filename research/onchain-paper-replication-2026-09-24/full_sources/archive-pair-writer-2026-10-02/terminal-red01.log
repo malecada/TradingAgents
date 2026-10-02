@@ -1,0 +1,43 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_terminal_call_never_mutates_closed_success[finish] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-82/test_terminal_call_never_mutat0')
+operation = 'finish'
+
+    @pytest.mark.parametrize('operation',['finish','fail'])
+    def test_terminal_call_never_mutates_closed_success(tmp_path,operation):
+        module,transport,kwargs=fixture(tmp_path);log=module.ArchivePairLog(**kwargs);first(log);log.finish()
+        before={str(p.relative_to(log.root)):sha(p.read_bytes()) for p in log.root.rglob('*') if p.is_file()}
+        with pytest.raises(ValueError):
+            if operation=='finish':log.finish()
+            else:log.fail('duplicate')
+        after={str(p.relative_to(log.root)):sha(p.read_bytes()) for p in log.root.rglob('*') if p.is_file()}
+>       assert after==before
+E       AssertionError: assert {'chunk-00000...372061f', ...} == {'chunk-00000...372061f', ...}
+E         
+E         Omitting 11 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'failed.json': '672e2406cad1ee5afca1e5921a3d9c5f25179e66889a02ebaee46d71ad9a5ed9'}
+E         Use -v to get more diff
+
+tests/research/onchain_replication/test_archive_pair_writer.py:129: AssertionError
+____________ test_terminal_call_never_mutates_closed_success[fail] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-82/test_terminal_call_never_mutat1')
+operation = 'fail'
+
+    @pytest.mark.parametrize('operation',['finish','fail'])
+    def test_terminal_call_never_mutates_closed_success(tmp_path,operation):
+        module,transport,kwargs=fixture(tmp_path);log=module.ArchivePairLog(**kwargs);first(log);log.finish()
+        before={str(p.relative_to(log.root)):sha(p.read_bytes()) for p in log.root.rglob('*') if p.is_file()}
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_pair_writer.py:125: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_terminal_call_never_mutates_closed_success[finish]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_terminal_call_never_mutates_closed_success[fail]
+2 failed, 15 deselected in 0.35s

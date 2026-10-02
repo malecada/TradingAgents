@@ -1,0 +1,233 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+___________ test_post_append_lease_cannot_corrupt_acknowledged_event ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-84/test_post_append_lease_cannot_0')
+
+    def test_post_append_lease_cannot_corrupt_acknowledged_event(tmp_path):
+        module,transport,kwargs=fixture(tmp_path);box={}
+        def lease():
+            log=box.get('log')
+            if log is not None and log.events==1:
+                (log.root/events._name(0)).write_bytes(b'corrupt')
+        kwargs['lease']=lease;log=module.ArchivePairLog(**kwargs);box['log']=log
+>       with pytest.raises(ValueError):log.begin(sha(b'p'),sha(b'i'))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_pair_writer.py:139: Failed
+_ test_constructor_failure_closes_owned_root_without_missing_identity[start_write] _
+
+fd = 14, name = 'start.json'
+raw = b'{"format":"<QB7xQdQ32s32s32s32s","limits":{"chunk_events":3,"max_events":12,"max_logical_bytes":18400,"max_pairs":4}...104603057c88704863ca38e7cd188fda812","workflow":"da7f739f627198465eeab537a6f7a435dc4a0c332f9e4a8462293eb3f4ab7ee0"}}\n'
+
+    def write(fd,name,raw):
+        result=original_write(fd,name,raw)
+>       if phase=='start_write' and name=='start.json':raise RuntimeError('fixture start publication')
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: fixture start publication
+
+tests/research/onchain_replication/test_archive_pair_writer.py:152: RuntimeError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-84/test_constructor_failure_close0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b318f35a3f0>
+phase = 'start_write'
+
+    @pytest.mark.parametrize('phase',['start_write','post_start_lease'])
+    def test_constructor_failure_closes_owned_root_without_missing_identity(tmp_path,monkeypatch,phase):
+        module,transport,kwargs=fixture(tmp_path);opened=[];original_open=events.io._open;original_write=events.io._write
+        def opening(path):
+            result=original_open(path)
+            if Path(path)==kwargs['root']:opened.append(result[1])
+            return result
+        def write(fd,name,raw):
+            result=original_write(fd,name,raw)
+            if phase=='start_write' and name=='start.json':raise RuntimeError('fixture start publication')
+            return result
+        def lease():
+            if phase=='post_start_lease' and (kwargs['root']/'start.json').exists():raise RuntimeError('fixture start publication')
+        monkeypatch.setattr(events.io,'_open',opening);monkeypatch.setattr(events.io,'_write',write);kwargs['lease']=lease
+        try:
+>           with pytest.raises(RuntimeError,match='fixture start publication'):module.ArchivePairLog(**kwargs)
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_pair_writer.py:53: in __init__
+    super().__init__(root, owner=owner, scope=scope, limits=limits,
+tradingagents/research/onchain_replication/compact_pair_log.py:96: in __init__
+    io._close_after_failure(self.close, primary)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+close = <bound method ArchivePairLog.close of <tradingagents.research.onchain_replication.archive_pair_writer.ArchivePairLog object at 0x7b318f3dda90>>
+primary = RuntimeError('fixture start publication')
+
+    def _close_after_failure(close, primary):
+        try: close()
+        except BaseException as error:
+            fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')
+            if fatal is not error: fatal.add_note(repr(error))
+>           raise fatal from primary
+E           tradingagents.research.onchain_replication.score_batches.CleanupFailure: score cleanup unresolved; worker must stop
+E           AttributeError("'ArchivePairLog' object has no attribute 'root_identity'")
+
+tradingagents/research/onchain_replication/score_batches.py:44: CleanupFailure
+_ test_constructor_failure_closes_owned_root_without_missing_identity[post_start_lease] _
+
+    def lease():
+>       if phase=='post_start_lease' and (kwargs['root']/'start.json').exists():raise RuntimeError('fixture start publication')
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: fixture start publication
+
+tests/research/onchain_replication/test_archive_pair_writer.py:155: RuntimeError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-84/test_constructor_failure_close1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b319192f230>
+phase = 'post_start_lease'
+
+    @pytest.mark.parametrize('phase',['start_write','post_start_lease'])
+    def test_constructor_failure_closes_owned_root_without_missing_identity(tmp_path,monkeypatch,phase):
+        module,transport,kwargs=fixture(tmp_path);opened=[];original_open=events.io._open;original_write=events.io._write
+        def opening(path):
+            result=original_open(path)
+            if Path(path)==kwargs['root']:opened.append(result[1])
+            return result
+        def write(fd,name,raw):
+            result=original_write(fd,name,raw)
+            if phase=='start_write' and name=='start.json':raise RuntimeError('fixture start publication')
+            return result
+        def lease():
+            if phase=='post_start_lease' and (kwargs['root']/'start.json').exists():raise RuntimeError('fixture start publication')
+        monkeypatch.setattr(events.io,'_open',opening);monkeypatch.setattr(events.io,'_write',write);kwargs['lease']=lease
+        try:
+>           with pytest.raises(RuntimeError,match='fixture start publication'):module.ArchivePairLog(**kwargs)
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_pair_writer.py:53: in __init__
+    super().__init__(root, owner=owner, scope=scope, limits=limits,
+tradingagents/research/onchain_replication/compact_pair_log.py:96: in __init__
+    io._close_after_failure(self.close, primary)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+close = <bound method ArchivePairLog.close of <tradingagents.research.onchain_replication.archive_pair_writer.ArchivePairLog object at 0x7b318f3de710>>
+primary = RuntimeError('fixture start publication')
+
+    def _close_after_failure(close, primary):
+        try: close()
+        except BaseException as error:
+            fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')
+            if fatal is not error: fatal.add_note(repr(error))
+>           raise fatal from primary
+E           tradingagents.research.onchain_replication.score_batches.CleanupFailure: score cleanup unresolved; worker must stop
+E           AttributeError("'ArchivePairLog' object has no attribute 'root_identity'")
+
+tradingagents/research/onchain_replication/score_batches.py:44: CleanupFailure
+____________ test_equal_byte_replacement_is_not_owned_sealed_chunk _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-84/test_equal_byte_replacement_is0')
+
+    def test_equal_byte_replacement_is_not_owned_sealed_chunk(tmp_path):
+        module,transport,kwargs=fixture(tmp_path);log=module.ArchivePairLog(**kwargs);first(log)
+        path=log.root/events._name(0);raw=path.read_bytes();replacement=tmp_path/'replacement'
+        replacement.write_bytes(raw);replacement.replace(path)
+>       with pytest.raises(ValueError):log.begin(sha(b'p1'),sha(b'i1'))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_pair_writer.py:172: Failed
+________ test_conflicting_root_failure_blocks_disposition[failed.json] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-84/test_conflicting_root_failure_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b318ef05130>
+name = 'failed.json'
+
+    @pytest.mark.parametrize('name',['failed.json','cleanup-failed.json'])
+    def test_conflicting_root_failure_blocks_disposition(tmp_path,monkeypatch,name):
+        module,transport,kwargs=fixture(tmp_path);log=module.ArchivePairLog(**kwargs);first(log)
+        original=events.io._write
+        def write(fd,member,raw):
+            result=original(fd,member,raw)
+            if member=='chunk-000000000000.json':(log.root/name).symlink_to(log.root/'missing')
+            return result
+        monkeypatch.setattr(events.io,'_write',write)
+>       with pytest.raises(ValueError):log.begin(sha(b'p1'),sha(b'i1'))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_pair_writer.py:186: Failed
+____ test_conflicting_root_failure_blocks_disposition[cleanup-failed.json] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-84/test_conflicting_root_failure_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b318f397570>
+name = 'cleanup-failed.json'
+
+    @pytest.mark.parametrize('name',['failed.json','cleanup-failed.json'])
+    def test_conflicting_root_failure_blocks_disposition(tmp_path,monkeypatch,name):
+        module,transport,kwargs=fixture(tmp_path);log=module.ArchivePairLog(**kwargs);first(log)
+        original=events.io._write
+        def write(fd,member,raw):
+            result=original(fd,member,raw)
+            if member=='chunk-000000000000.json':(log.root/name).symlink_to(log.root/'missing')
+            return result
+        monkeypatch.setattr(events.io,'_write',write)
+>       with pytest.raises(ValueError):log.begin(sha(b'p1'),sha(b'i1'))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_pair_writer.py:186: Failed
+_________________ test_owned_child_close_uncertainty_is_fatal __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-84/test_owned_child_close_uncerta0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b318f3968b0>
+
+    def test_owned_child_close_uncertainty_is_fatal(tmp_path,monkeypatch):
+        module,transport,kwargs=fixture(tmp_path);log=module.ArchivePairLog(**kwargs);first(log)
+        original_open=events.io._open;original_close=module.os.close;target={}
+        def opening(path):
+            result=original_open(path)
+            if Path(path)==log.root/'copies' and not target.get('done'):target['fd']=result[1]
+            return result
+        def close(fd):
+            if fd==target.get('fd') and not target.get('done'):
+                target['done']=True;original_close(fd);raise OSError('uncertain child close')
+            return original_close(fd)
+        monkeypatch.setattr(events.io,'_open',opening);monkeypatch.setattr(module.os,'close',close)
+>       with pytest.raises(events.io.CleanupFailure):log.begin(sha(b'p1'),sha(b'i1'))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_pair_writer.py:202: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_pair_log.py:159: in begin
+    self._append(0, purpose=purpose_sha256, identity=identity_sha256)
+tradingagents/research/onchain_replication/archive_pair_writer.py:107: in _append
+    self._archive_check()
+tradingagents/research/onchain_replication/archive_pair_writer.py:84: in _archive_check
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 22
+
+    def close(fd):
+        if fd==target.get('fd') and not target.get('done'):
+>           target['done']=True;original_close(fd);raise OSError('uncertain child close')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: uncertain child close
+
+tests/research/onchain_replication/test_archive_pair_writer.py:199: OSError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_post_append_lease_cannot_corrupt_acknowledged_event
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_constructor_failure_closes_owned_root_without_missing_identity[start_write]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_constructor_failure_closes_owned_root_without_missing_identity[post_start_lease]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_equal_byte_replacement_is_not_owned_sealed_chunk
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_conflicting_root_failure_blocks_disposition[failed.json]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_conflicting_root_failure_blocks_disposition[cleanup-failed.json]
+FAILED tests/research/onchain_replication/test_archive_pair_writer.py::test_owned_child_close_uncertainty_is_fatal
+7 failed, 17 deselected in 0.52s
