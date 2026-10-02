@@ -3,7 +3,42 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Latest handoff — October 2, archive writer and actual matcher integration**:
+**Latest handoff — October 2, cold archive event reader accepted**:
+Writer/matcher checkpoint766fb0e693c54bd8dd0921299300aabfad474270 was committed,
+pushed and exact remote HEAD verified. archive_pair_reader.verify now implements
+the cold event/manifest route: trusted archive-complete hash plus expected owner,
+scope and exact archive policy; original ordered mappings/copy/read receipts and
+inventory checks; a fresh exclusive consumption namespace; full remote-event
+replay; final source/new-read metadata checks after completion publication and
+the last callback. Closed writer/source evidence remains read-only. No source
+writer is reopened and old read claims are not reused.
+
+Initial check01 CLOSED112passed2.57s. Independent APR1–4 findings were reproduced
+by5failures0.59s against preserved reader-check01.py. Corrections preserve primary
+cause through fatal source-fd cleanup, refuse source/attempt failure markers
+before the next transfer, refresh lease plus full source checks immediately
+before claim and reserve8fixed metadata records beyond3per possible chunk.
+Final check02 CLOSED117passed9.55s/session68256exit0 (22reader+95priorarchive).
+Independent REVIEW_FINAL accepted SHA
+1274180206dbbc07900c6075465e2ca9e5421014edba78d7e576470c2c4a071f.
+Evidence: full_sources/archive-pair-reader-2026-10-02/. Earlier failures and source
+snapshots remain. Synthetic filesystem transport; no new network request or
+empirical exposure. Cleanup error injection follows a real close, not a kernel
+descriptor leak. Metadata is logically bounded, not a physical/transport quota.
+The original local manifest tree is still required; loss of that tree is not
+covered by cold-read acceptance.
+
+No process or source freeze remains active. Next safe action: preserve this
+reviewed checkpoint remotely, then implement the generic archived matching-stage
+checkpoint-tree and score-stream ordinal/purpose/value joins, and explicit
+current-owner/publication/terminal selection. Retention of score tails/batches,
+checkpoints and all other graph/dictionary/MCM/scratch costs still needs complete
+physical accounting and a compatible route. Read counts/concurrency/transport
+and actual guard remain caller obligations. Existing local stage/owner routes
+remain unchanged. Coverage77/109,32open; all1420financialfits pending. No
+empirical admission;60→61 remains an unadopted draft. The10GiB floor remains.
+
+**Previous handoff — October 2, archive writer and actual matcher integration**:
 Prior checkpointa6ee5c94078d8b1fe07385763ac09c4b6e38eb7f remains the externally
 verified predecessor. ArchivePairLog now implements the explicit fresh archive
 writer without changing the historical local PairLog. Full chunks remain local

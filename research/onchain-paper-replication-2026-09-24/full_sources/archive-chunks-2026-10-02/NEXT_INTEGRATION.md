@@ -77,3 +77,18 @@ attempts. Then integrate actual checkpoint and score-stream joins into an
 explicit new stage route and bind that route through owner/publication/terminal
 verification. Retained score/checkpoint storage, aggregate metadata and physical
 budgets remain separate requirements. No historical-source eviction follows.
+
+## October2 cold reader continuation
+
+archive_pair_reader.verify now implements that cold event/manifest boundary:
+trusted completion/owner/scope/policy, ordered manifests and original receipts,
+fresh read attempts, every event fetched and replayed, and final checks after
+the last callback/publication. Independent APR1–4 corrections are accepted;
+117 focused passes and retained earlier failures are recorded in
+archive-pair-reader-2026-10-02. It leaves the source read-only and cannot reopen
+old attempts. Original local manifest metadata remains required.
+
+Next: generic archived scientific-stage joins for checkpoint trees and retained
+score streams, explicit owner/publication/terminal selection, and a compatible
+retention/resource route for score/checkpoint payloads. Neither this cold reader
+nor writer completion admits a scientific stage or supplies these missing joins.
