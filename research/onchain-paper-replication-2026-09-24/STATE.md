@@ -3,6 +3,42 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Latest handoff — October 2, explicit archived stage seals accepted**:
+archive_owner_seal.seal/check and a shared lock-owning archive read entry are
+implemented and independently accepted for the bounded current-owner contract.
+Sealing performs a fresh full reserved scientific
+read, binds writer/read claims and v2 proof into the existing stage metadata
+allowance, and defers stage acknowledgement until evidence joins and descriptor
+cleanup finish. Public sealed checking is local-only; failed checks preserve
+historical successful read claims and record a new owner-level failure in the
+fixed ledger metadata allowance. Scientific producer and whole-owner/terminal
+dispatch remain unchanged and still require explicit integration.
+Evidence: full_sources/archive-owner-seal-2026-10-02/. red01 CLOSED5failed70.69s/
+session21412exit1 (missing module). check01 CLOSED1failed4passed247.68s/
+session75712exit1: inherited owner metadata raw-close uncertainty escaped as
+ordinary OSError. Independent AOSL1 confirms exact/entries reader cleanup; AOSL2
+requires rejoining the original matching/read descriptors after publication
+callbacks. Initial sources/tests/review retained. review-red01 CLOSED5failed5deselected53.50s/session69452exit1 reproduced
+four owner-reader close cases and equal-byte matching namespace replacement.
+Corrections use primary-aware owner reader cleanup and rejoin original source/
+read descriptors after publication callbacks, with final lifecycle checks before
+acknowledgement. check02 CLOSED14passed501.05s/session38115exit0:6seal+4focused
+cleanup+4existing owner-stage cases. No matching pytest process remains; the
+source/test freeze is released. Independent REVIEW_FINAL closes AOSL1/AOSL2,
+SHA256 4835385271a60e99e9fea67f3a67f1953d173912a6d333090f87be24f1b3136a.
+Actual-owner fixtures cover dictionary only, with filesystem transport and mocked
+guards; actual-owner MCM/capacity seal integration remains untested. The sealed-check mutation
+case now explicitly targets the second/final owner callback. No empirical job or new external
+transfer. Next safe action: commit/push and verify this reviewed checkpoint,
+then integrate accepted seals into dictionary/MCM producers and current-owner
+evidence routing, including actual MCM/capacity integration coverage. Preserve
+the existing owner transition lock through explicit internal control flow; do
+not recursively call public lock-owning wrappers. Whole-owner publication,
+terminal/post-owner-close authority and end-to-end archive execution remain.
+Local free21199908864B exceeds the10GiB floor.
+Predecessor76d76baf5b2d29b4f6414d77aac3e3daed9d44a7 is pushed and exact remote
+HEAD verified. Coverage77/109,32open and1420pending fits remain unchanged.
+
 **Latest handoff — October 2, anchored archived proof local checks verified**:
 archived_stage.verify now emits explicit v2 receipts anchoring the stage intent
 and event-read intent/completion. New read-only archived_stage.check validates

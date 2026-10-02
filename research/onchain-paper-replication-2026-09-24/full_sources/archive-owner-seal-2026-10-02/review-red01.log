@@ -1,0 +1,224 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_____ test_owner_reader_close_preserves_primary_and_is_fatal[False-exact] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-124/test_owner_reader_close_preser0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71b3ee7c28b0>
+function = 'exact', body_fails = False
+
+    @pytest.mark.parametrize('function',['exact','entries'])
+    @pytest.mark.parametrize('body_fails',[False,True])
+    def test_owner_reader_close_preserves_primary_and_is_fatal(tmp_path,monkeypatch,function,body_fails):
+        (tmp_path/'intent.json').write_bytes(b'original');original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd));original(fd)
+            if path==str(tmp_path):
+                injected.append(fd);raise OSError('synthetic owner reader close uncertainty')
+        monkeypatch.setattr(module.os,'close',close)
+        with pytest.raises(module.io.CleanupFailure) as caught:
+>           if function=='exact':module.exact(tmp_path,'intent.json',b'wrong' if body_fails else b'original')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner_read_cleanup.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_owner.py:65: in exact
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd));original(fd)
+        if path==str(tmp_path):
+>           injected.append(fd);raise OSError('synthetic owner reader close uncertainty')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic owner reader close uncertainty
+
+tests/research/onchain_replication/test_compact_owner_read_cleanup.py:13: OSError
+____ test_owner_reader_close_preserves_primary_and_is_fatal[False-entries] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-124/test_owner_reader_close_preser1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71b54ac33100>
+function = 'entries', body_fails = False
+
+    @pytest.mark.parametrize('function',['exact','entries'])
+    @pytest.mark.parametrize('body_fails',[False,True])
+    def test_owner_reader_close_preserves_primary_and_is_fatal(tmp_path,monkeypatch,function,body_fails):
+        (tmp_path/'intent.json').write_bytes(b'original');original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd));original(fd)
+            if path==str(tmp_path):
+                injected.append(fd);raise OSError('synthetic owner reader close uncertainty')
+        monkeypatch.setattr(module.os,'close',close)
+        with pytest.raises(module.io.CleanupFailure) as caught:
+            if function=='exact':module.exact(tmp_path,'intent.json',b'wrong' if body_fails else b'original')
+>           else:module.entries(tmp_path,{'wrong' if body_fails else 'intent.json'},required={'intent.json'})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner_read_cleanup.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_owner.py:57: in entries
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd));original(fd)
+        if path==str(tmp_path):
+>           injected.append(fd);raise OSError('synthetic owner reader close uncertainty')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic owner reader close uncertainty
+
+tests/research/onchain_replication/test_compact_owner_read_cleanup.py:13: OSError
+______ test_owner_reader_close_preserves_primary_and_is_fatal[True-exact] ______
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-124/test_owner_reader_close_preser2')
+name = 'intent.json', expected = b'wrong'
+
+    def exact(root, name, expected):
+        path, fd = io._open(root)
+        try:
+>           require(io._read(fd, name, LIMIT) == expected, 'compact owner metadata changed')
+
+tradingagents/research/onchain_replication/compact_owner.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'compact owner metadata changed'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: compact owner metadata changed
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-124/test_owner_reader_close_preser2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71b3ee48ef90>
+function = 'exact', body_fails = True
+
+    @pytest.mark.parametrize('function',['exact','entries'])
+    @pytest.mark.parametrize('body_fails',[False,True])
+    def test_owner_reader_close_preserves_primary_and_is_fatal(tmp_path,monkeypatch,function,body_fails):
+        (tmp_path/'intent.json').write_bytes(b'original');original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd));original(fd)
+            if path==str(tmp_path):
+                injected.append(fd);raise OSError('synthetic owner reader close uncertainty')
+        monkeypatch.setattr(module.os,'close',close)
+        with pytest.raises(module.io.CleanupFailure) as caught:
+>           if function=='exact':module.exact(tmp_path,'intent.json',b'wrong' if body_fails else b'original')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner_read_cleanup.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_owner.py:65: in exact
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd));original(fd)
+        if path==str(tmp_path):
+>           injected.append(fd);raise OSError('synthetic owner reader close uncertainty')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic owner reader close uncertainty
+
+tests/research/onchain_replication/test_compact_owner_read_cleanup.py:13: OSError
+_____ test_owner_reader_close_preserves_primary_and_is_fatal[True-entries] _____
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-124/test_owner_reader_close_preser3')
+allowed = {'wrong'}, required = {'intent.json'}
+
+    def entries(root, allowed, *, required):
+        path, fd = io._open(root)
+        try:
+            seen = set()
+            with os.scandir(fd) as iterator:
+                for entry in iterator:
+>                   require(len(seen) < len(allowed) and entry.name in allowed, 'foreign compact owner inventory')
+
+tradingagents/research/onchain_replication/compact_owner.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'foreign compact owner inventory'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: foreign compact owner inventory
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-124/test_owner_reader_close_preser3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71b3ee4a3130>
+function = 'entries', body_fails = True
+
+    @pytest.mark.parametrize('function',['exact','entries'])
+    @pytest.mark.parametrize('body_fails',[False,True])
+    def test_owner_reader_close_preserves_primary_and_is_fatal(tmp_path,monkeypatch,function,body_fails):
+        (tmp_path/'intent.json').write_bytes(b'original');original=module.os.close;injected=[]
+        def close(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd));original(fd)
+            if path==str(tmp_path):
+                injected.append(fd);raise OSError('synthetic owner reader close uncertainty')
+        monkeypatch.setattr(module.os,'close',close)
+        with pytest.raises(module.io.CleanupFailure) as caught:
+            if function=='exact':module.exact(tmp_path,'intent.json',b'wrong' if body_fails else b'original')
+>           else:module.entries(tmp_path,{'wrong' if body_fails else 'intent.json'},required={'intent.json'})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner_read_cleanup.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_owner.py:57: in entries
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 12
+
+    def close(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd));original(fd)
+        if path==str(tmp_path):
+>           injected.append(fd);raise OSError('synthetic owner reader close uncertainty')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic owner reader close uncertainty
+
+tests/research/onchain_replication/test_compact_owner_read_cleanup.py:13: OSError
+_ test_seal_final_callback_cannot_replace_original_matching_namespace[writer_matching] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x71b3ee4e0d70>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x71b3ee983b60>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71b3ee4a18c0>
+
+    def test_seal_final_callback_cannot_replace_original_matching_namespace(admitted,monkeypatch):
+        import shutil
+        from tradingagents.research.onchain_replication import archive_owner_seal as module
+        ledger,stage=written(admitted);original=ledger.owner.lease;replaced=[]
+        def lease():
+            original()
+            if not replaced and (stage.root/'stage-complete.json').exists():
+                previous=ledger.root.parent/'preserved-original-matching'
+                (stage.root/'matching').rename(previous)
+                shutil.copytree(previous,stage.root/'matching');replaced.append(previous)
+        monkeypatch.setattr(ledger.owner,'lease',lease)
+>       with pytest.raises(ValueError):module.seal(ledger,stage)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_owner_seal.py:96: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_owner_read_cleanup.py::test_owner_reader_close_preserves_primary_and_is_fatal[False-exact]
+FAILED tests/research/onchain_replication/test_compact_owner_read_cleanup.py::test_owner_reader_close_preserves_primary_and_is_fatal[False-entries]
+FAILED tests/research/onchain_replication/test_compact_owner_read_cleanup.py::test_owner_reader_close_preserves_primary_and_is_fatal[True-exact]
+FAILED tests/research/onchain_replication/test_compact_owner_read_cleanup.py::test_owner_reader_close_preserves_primary_and_is_fatal[True-entries]
+FAILED tests/research/onchain_replication/test_archive_owner_seal.py::test_seal_final_callback_cannot_replace_original_matching_namespace[writer_matching]
+5 failed, 5 deselected in 53.50s

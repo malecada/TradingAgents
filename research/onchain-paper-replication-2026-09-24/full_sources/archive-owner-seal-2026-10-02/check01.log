@@ -1,0 +1,58 @@
+...F.                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_seal_failure_keeps_marker_and_read_spent_before_stage_ack[close-writer_matching] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x73958d570640>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x73958d9b35c0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73958d72a690>
+failure = 'close'
+
+    @pytest.mark.parametrize('failure',['callback','close'])
+    def test_seal_failure_keeps_marker_and_read_spent_before_stage_ack(admitted,monkeypatch,failure):
+        from tradingagents.research.onchain_replication import archive_owner_seal as module
+        ledger,stage=written(admitted);owner=ledger.owner;original=owner.lease;close=module.os.close;injected=[]
+        def lease():
+            original()
+            if failure=='callback' and (stage.root/'stage-complete.json').exists():
+                (stage.root/'stage-complete.json').write_bytes(b'{}')
+        def uncertain(fd):
+            path=module.os.readlink('/proc/self/fd/'+str(fd));close(fd)
+            if failure=='close' and not injected and path==str(stage.root) and (stage.root/'stage-complete.json').exists():
+                injected.append(1);raise OSError('synthetic stage close uncertainty')
+        monkeypatch.setattr(owner,'lease',lease);monkeypatch.setattr(module.os,'close',uncertain)
+>       with pytest.raises(ValueError if failure=='callback' else module.io.CleanupFailure):module.seal(ledger,stage)
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_seal.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archive_owner_seal.py:106: in seal
+    return reads._execute(ledger,stage,stream_terminal_sha256=stream_terminal_sha256,publish=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_stage.py:105: in _execute
+    sealed=archive_owner_seal._publish(ledger,stage,claim,result,lock)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_owner_seal.py:99: in _publish
+    ledger._current(full=False)
+tradingagents/research/onchain_replication/archive_owner_operations.py:123: in _current
+    owners.verify_current(self.owner)
+tradingagents/research/onchain_replication/compact_owner.py:360: in verify_current
+    stage.integrity();exact(stage.root,'intent.json',stage.intent);total += stage.reservation
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_owner.py:65: in exact
+    finally: os.close(fd)
+             ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 14
+
+    def uncertain(fd):
+        path=module.os.readlink('/proc/self/fd/'+str(fd));close(fd)
+        if failure=='close' and not injected and path==str(stage.root) and (stage.root/'stage-complete.json').exists():
+>           injected.append(1);raise OSError('synthetic stage close uncertainty')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           OSError: synthetic stage close uncertainty
+
+tests/research/onchain_replication/test_archive_owner_seal.py:61: OSError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_seal.py::test_seal_failure_keeps_marker_and_read_spent_before_stage_ack[close-writer_matching]
+1 failed, 4 passed in 247.68s (0:04:07)

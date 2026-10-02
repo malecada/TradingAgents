@@ -103,14 +103,6 @@ def _execute(ledger,stage,*,stream_terminal_sha256,publish):
             if publish:
                 from . import archive_owner_seal
                 sealed=archive_owner_seal._publish(ledger,stage,claim,result,lock)
-                # Publication invokes one final owner callback. Rejoin the
-                # original source/read handles, not only freshly opened copies.
-                snapshot.check();io._root(attempt,attempt_fd)
-                ledger._evidence();operations.owners.verify_current(owner)
-                require(owner.active is stage and stage.closing and not stage.closed
-                    and owner._transition is lock and ledger._transition is lock and lock.locked()
-                    and not ledger._closed and not ledger._poisoned and ledger._active is None
-                    and set(claim._terminal)=={'complete.json'},'archived seal final transition differs')
         finally:
             # Independent descriptors each close once even if an earlier close
             # is uncertain. No success escapes an unresolved owned descriptor.
@@ -120,13 +112,6 @@ def _execute(ledger,stage,*,stream_terminal_sha256,publish):
                 if source_fd is not None:operations._close_descriptor(source_fd)
         # No stage acknowledgement escapes unsuccessful owned cleanup.
         if sealed is not None:
-            require(owner.active is stage and stage.closing and not stage.closed
-                and stage.reference is None and stage.contract is None and not owner.poisoned
-                and not owner.closed and owner._transition is lock and ledger._transition is lock
-                and lock.locked() and not ledger._closed and not ledger._poisoned
-                and ledger._active is None and set(claim._terminal)=={'complete.json'},
-                'archived seal authority changed during cleanup')
-            stage.integrity()
             stage.reference,stage.contract=sealed
             stage.closed=True;stage.closing=False;owner.active=None
             return stage.reference

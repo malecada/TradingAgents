@@ -54,7 +54,7 @@ def entries(root, allowed, *, required):
                 require(len(seen) < len(allowed) and entry.name in allowed, 'foreign compact owner inventory')
                 seen.add(entry.name)
         require(required <= seen, 'missing compact owner inventory'); io._root(path, fd)
-    finally: io._release(lambda: os.close(fd))
+    finally: os.close(fd)
 
 
 def exact(root, name, expected):
@@ -62,7 +62,7 @@ def exact(root, name, expected):
     try:
         require(io._read(fd, name, LIMIT) == expected, 'compact owner metadata changed')
         io._root(path, fd)
-    finally: io._release(lambda: os.close(fd))
+    finally: os.close(fd)
 
 
 class Stage:
