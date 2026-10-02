@@ -3,6 +3,40 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 continued execution — two implementation tracks and exact budget review**:
+The physical-admission gap report is independently accepted as an engineering
+handoff, REVIEW SHA256c767bbb674613c2b5398a57d23e4d7636a7406825c395bd569c3da34732d6f49.
+It establishes missing log/metadata/terminal-tail bounds, not physical feasibility.
+admission_batching is now implementing the explicitly selected prospective route
+in job.py, resources.py, new scoped-storage/bounded-I/O helpers and focused tests.
+The narrow optional lifecycle.py metadata_scope ContextVar API is authorized:
+_immutable delegates only within the selected scope, with default historical
+behavior preserved. Scope covers exact three fresh root identities, claim binding
+after claim birth, bounded writes/logs, publication-scan coordination and terminal
+observer tail. Finite synthetic checks precede independent review; no empirical
+run or old guard profile is launched. Evidence belongs to
+neural-resource-physical-implementation-2026-10-02/.
+
+archive_transport continues archived-stage retention wiring. red01 CLOSED two
+expected missing-keyword failures; check01 CLOSED two fixture type errors; check02
+CLOSED2passed after using actual local AttributedGraph replay inputs. Both FIRST
+replay retention and zero-checkpoint lazy stores passed. These are tiny non-owner
+checks; original seal/read/terminal integration and isolated full-owner verification
+remain in progress. All source/old artifacts stay under their stated owners.
+
+Root prepared exact budget-extension-62-2026-10-02/ metadata. The designated
+first adopter eth-paper-neural-resource-20261002-01 has no claim/launch/producer
+namespace reserved. preparation01 reverified all33 preserved terminal claim
+bindings, exact16 currently recorded same-mechanism claims and62=33+12+15+2.
+The original family, nine/23 resource split and1,420 unique financial fits are
+unchanged. Frozen manifest SHA256
+bc6d0b1d4cc71333858edd42456e857824cc71955260d400b9c4034f43b92bd6.
+owner_closure_review independently reviews this exact future-adoption extension;
+root has not fabricated an accepted review or invoked admission. Final source,
+physical policy, environment/workspace and fresh RAM remain required. Current
+available RAM snapshot9,137,033,216B is below9,663,676,416B startup; free disk
+19,751,530,496B exceeds10GiB floor. No empirical process active;77/109 remains.
+
 **Latest durable handoff — accepted source saved; parallel next steps running**:
 Accepted neural runner and registration preparation are committed at
  ec7d9d659396bd3af215a1960e4d749c6d8dbae8 and the exact remote HEAD was verified.
