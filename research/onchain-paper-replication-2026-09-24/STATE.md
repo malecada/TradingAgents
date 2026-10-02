@@ -3,6 +3,36 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 autonomous continuation — candidates under independent correction**:
+No empirical job or transfer is active. Current available RAM snapshot is
+7,381,233,664 bytes, below the 9 GiB startup requirement for a 6 GiB worker plus
+3 GiB reserve; free workspace 19,779,747,840 bytes remains above the 10 GiB floor.
+
+Neural readiness and the nonexecutable 62-slot split are independently accepted
+as preparation only, REVIEW SHA256
+807d6d61eec2fdb309e00fbfcb2a78bf4f9bb391b6f4fc75ce44933f04007b7c.
+The nine/23 partition and old 61-draft preservation were checked. No budget or
+execution gate is adopted and coverage remains 77/109, all 1,420 fits pending.
+
+Both engineering candidates completed tests but are NOT accepted yet:
+- Restart primitive candidate05: check07 CLOSED44passed2.05s/session98399.
+  owner_closure_review found missing exact generation-wrapper membership and
+  absent post-callback poisoned/closed checks. archive_transport retains source
+  ownership and will preserve candidate05, reproduce and correct these findings.
+- Neural runner candidate01: check03 CLOSED22passed1CUDA-skipped9.01s; its 11
+  runner tests and existing activation-checkpointing checks are bounded synthetic
+  evidence. archive_transport independently found primary/fatal cleanup loss;
+  current-job/plan/guard binding is also under review. admission_batching owns
+  preserved red/correction in neural_resource.py, job.py and its test/evidence.
+  Its docs-only neural-resource-registration-2026-10-02 preparation is secondary
+  while correction is needed. No retained-data bodies may be opened/executed.
+
+Reviewers own only REVIEW files: owner_closure_review reviews restart primitive;
+archive_transport reviews the other worker's neural runner before resuming its
+own primitive correction. Root owns STATE and accepted evidence checkpoints.
+No shared owner/admission test scans are active. Inspect current agent/process
+status before any fresh test; never rerun the closed identities above.
+
 **Active next implementation checkpoint — October 2**:
 Latest reviewed design/ownership backup is 2fa40adae1663468fcb0bdd7154be700432997ed,
 with exact remote HEAD verified. No empirical run is active. Parallel ownership:

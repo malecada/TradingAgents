@@ -1,0 +1,347 @@
+{
+  "activation_checkpointing_in_pinned_model_config": false,
+  "budget": {
+    "body": 12,
+    "ceiling_unadopted": 61,
+    "financial": 15,
+    "new_slots_granted": 0,
+    "resource_proposed": 1,
+    "spent": 33
+  },
+  "count": 9,
+  "coverage_unchanged": {
+    "supported": 77,
+    "total": 109
+  },
+  "created_at_utc": "2026-10-02T08:16:59.106920+00:00",
+  "execution_admitted": false,
+  "fresh_6gib_job_startup_minimum_bytes": 9663676416,
+  "host_observation": {
+    "MemAvailable_bytes": 7844708352,
+    "MemTotal_bytes": 16135794688,
+    "local_free_bytes": 19753005056,
+    "qualification": "point-in-time only, not guard readback or reservation"
+  },
+  "known_unknowns": {
+    "checkpoint_disk_bytes": null,
+    "checkpoint_serialization_peak_bytes": null,
+    "effective_graph_array_availability": null,
+    "fresh_registration_sha256": null,
+    "fresh_runner_source_sha256": null,
+    "peak_rss_bytes": null
+  },
+  "neural_cells": [
+    {
+      "directed_edges": 3182055,
+      "edge_index_int64_copy_payload_bytes": 50912880,
+      "first_gat_projected_node_payload_bytes": 524568320,
+      "first_gat_single_gather_or_message_at_max_effective_edges_bytes": 1339174400,
+      "formula_qualification": "Single tensor payload at effective edge-count upper bound E+N, not peak RSS, simultaneous allocation sum or feasibility bound. Self-edge count not read.",
+      "graph_hash": "67ffff78a83d67b77d3fefce1bc7f6dc3a7cab0c80ac68d8c72e0c99a30022b8",
+      "graph_manifest": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+      "graph_manifest_sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98",
+      "historical_heuristic_bytes": 10713395200,
+      "nodes": 2049095,
+      "original_requirement": {
+        "date": "2022-01-03",
+        "original_id": "neural_checkpoint-2022-01-03",
+        "original_reason": "ValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 10713395200",
+        "original_status": "unavailable",
+        "requirement_evidence": "remaining",
+        "stage": "neural_checkpoint",
+        "supported": false
+      },
+      "saved_graph_file_bytes": 562558280,
+      "unique_synthetic_mcm_float32_bytes": 262284160,
+      "week": "2022-01-03"
+    },
+    {
+      "directed_edges": 2518332,
+      "edge_index_int64_copy_payload_bytes": 40293312,
+      "first_gat_projected_node_payload_bytes": 452676608,
+      "first_gat_single_gather_or_message_at_max_effective_edges_bytes": 1097369600,
+      "formula_qualification": "Single tensor payload at effective edge-count upper bound E+N, not peak RSS, simultaneous allocation sum or feasibility bound. Self-edge count not read.",
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "graph_manifest": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+      "graph_manifest_sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59",
+      "historical_heuristic_bytes": 8778956800,
+      "nodes": 1768268,
+      "original_requirement": {
+        "date": "2022-06-13",
+        "original_id": "neural_checkpoint-2022-06-13",
+        "original_reason": "ValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 8778956800",
+        "original_status": "unavailable",
+        "requirement_evidence": "remaining",
+        "stage": "neural_checkpoint",
+        "supported": false
+      },
+      "saved_graph_file_bytes": 474534176,
+      "unique_synthetic_mcm_float32_bytes": 226338304,
+      "week": "2022-06-13"
+    },
+    {
+      "directed_edges": 3504159,
+      "edge_index_int64_copy_payload_bytes": 56066544,
+      "first_gat_projected_node_payload_bytes": 707640576,
+      "first_gat_single_gather_or_message_at_max_effective_edges_bytes": 1604705280,
+      "formula_qualification": "Single tensor payload at effective edge-count upper bound E+N, not peak RSS, simultaneous allocation sum or feasibility bound. Self-edge count not read.",
+      "graph_hash": "dfdaebb2566f10f1f705b8b5ef76f0aa7440e24444b7e8b054cb313613fc2c5b",
+      "graph_manifest": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/manifest.json",
+      "graph_manifest_sha256": "9db059698fa84a9a3b460c58cdcd0ab35e97db0f4f2f8246504c7241c13b1a49",
+      "historical_heuristic_bytes": 12837642240,
+      "nodes": 2764221,
+      "original_requirement": {
+        "date": "2022-07-25",
+        "original_id": "neural_checkpoint-2022-07-25",
+        "original_reason": "workload terminated before durable cell disposition; no retry",
+        "original_status": "unavailable",
+        "requirement_evidence": "remaining",
+        "stage": "neural_checkpoint",
+        "supported": false
+      },
+      "saved_graph_file_bytes": 721044472,
+      "unique_synthetic_mcm_float32_bytes": 353820288,
+      "week": "2022-07-25"
+    },
+    {
+      "directed_edges": 2107009,
+      "edge_index_int64_copy_payload_bytes": 33712144,
+      "first_gat_projected_node_payload_bytes": 418782976,
+      "first_gat_single_gather_or_message_at_max_effective_edges_bytes": 958177280,
+      "formula_qualification": "Single tensor payload at effective edge-count upper bound E+N, not peak RSS, simultaneous allocation sum or feasibility bound. Self-edge count not read.",
+      "graph_hash": "738f559e780109522baacea87b1cb2310f0d1896b030016ae9fd152210b5cb20",
+      "graph_manifest": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/manifest.json",
+      "graph_manifest_sha256": "b031945115b041acf1581c124f19d856e25d445d45a7438322986c13bf61e83c",
+      "historical_heuristic_bytes": 7665418240,
+      "nodes": 1635871,
+      "original_requirement": {
+        "date": "2022-11-07",
+        "original_id": "neural_checkpoint-2022-11-07",
+        "original_reason": "workload terminated before durable cell disposition; no retry",
+        "original_status": "unavailable",
+        "requirement_evidence": "remaining",
+        "stage": "neural_checkpoint",
+        "supported": false
+      },
+      "saved_graph_file_bytes": 428311272,
+      "unique_synthetic_mcm_float32_bytes": 209391488,
+      "week": "2022-11-07"
+    },
+    {
+      "directed_edges": 2509313,
+      "edge_index_int64_copy_payload_bytes": 40149008,
+      "first_gat_projected_node_payload_bytes": 470335488,
+      "first_gat_single_gather_or_message_at_max_effective_edges_bytes": 1112719616,
+      "formula_qualification": "Single tensor payload at effective edge-count upper bound E+N, not peak RSS, simultaneous allocation sum or feasibility bound. Self-edge count not read.",
+      "graph_hash": "cd70b436ed2c62eedbefc5b1a72026b0b313fde759843995fc1dfe3b40cd43fc",
+      "graph_manifest": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/manifest.json",
+      "graph_manifest_sha256": "f00ed07085e06fbe048faa06450baf417c72bec298a5e54ea95312b4039d182d",
+      "historical_heuristic_bytes": 8901756928,
+      "nodes": 1837248,
+      "original_requirement": {
+        "date": "2023-06-05",
+        "original_id": "neural_checkpoint-2023-06-05",
+        "original_reason": "workload terminated before durable cell disposition; no retry",
+        "original_status": "unavailable",
+        "requirement_evidence": "remaining",
+        "stage": "neural_checkpoint",
+        "supported": false
+      },
+      "saved_graph_file_bytes": 487897264,
+      "unique_synthetic_mcm_float32_bytes": 235167744,
+      "week": "2023-06-05"
+    },
+    {
+      "directed_edges": 2559152,
+      "edge_index_int64_copy_payload_bytes": 40946432,
+      "first_gat_projected_node_payload_bytes": 469106432,
+      "first_gat_single_gather_or_message_at_max_effective_edges_bytes": 1124249344,
+      "formula_qualification": "Single tensor payload at effective edge-count upper bound E+N, not peak RSS, simultaneous allocation sum or feasibility bound. Self-edge count not read.",
+      "graph_hash": "5f64c66647bd034c9b4c2731b831b1899b9a821b57c4eb690db390381cb8fdff",
+      "graph_manifest": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/manifest.json",
+      "graph_manifest_sha256": "f716708e2dcf026fd230d2c9ba80455ccd25858377c8c6d6a9985c8750a0186d",
+      "historical_heuristic_bytes": 8993994752,
+      "nodes": 1832447,
+      "original_requirement": {
+        "date": "2024-01-01",
+        "original_id": "neural_checkpoint-2024-01-01",
+        "original_reason": "workload terminated before durable cell disposition; no retry",
+        "original_status": "unavailable",
+        "requirement_evidence": "remaining",
+        "stage": "neural_checkpoint",
+        "supported": false
+      },
+      "saved_graph_file_bytes": 489329336,
+      "unique_synthetic_mcm_float32_bytes": 234553216,
+      "week": "2024-01-01"
+    },
+    {
+      "directed_edges": 2990664,
+      "edge_index_int64_copy_payload_bytes": 47850624,
+      "first_gat_projected_node_payload_bytes": 590371840,
+      "first_gat_single_gather_or_message_at_max_effective_edges_bytes": 1355981824,
+      "formula_qualification": "Single tensor payload at effective edge-count upper bound E+N, not peak RSS, simultaneous allocation sum or feasibility bound. Self-edge count not read.",
+      "graph_hash": "f2b6131c55a967fe0464bc82648a7ad0b79a927c24033ebffe536fef9f95caea",
+      "graph_manifest": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/manifest.json",
+      "graph_manifest_sha256": "136713c0f63bd9e1e6756dc07c2d4891f563d1193d6cb883cd1d33b34f74aff9",
+      "historical_heuristic_bytes": 10847854592,
+      "nodes": 2306140,
+      "original_requirement": {
+        "date": "2024-03-11",
+        "original_id": "neural_checkpoint-2024-03-11",
+        "original_reason": "workload terminated before durable cell disposition; no retry",
+        "original_status": "unavailable",
+        "requirement_evidence": "remaining",
+        "stage": "neural_checkpoint",
+        "supported": false
+      },
+      "saved_graph_file_bytes": 604780512,
+      "unique_synthetic_mcm_float32_bytes": 295185920,
+      "week": "2024-03-11"
+    },
+    {
+      "directed_edges": 2215129,
+      "edge_index_int64_copy_payload_bytes": 35442064,
+      "first_gat_projected_node_payload_bytes": 436610304,
+      "first_gat_single_gather_or_message_at_max_effective_edges_bytes": 1003683328,
+      "formula_qualification": "Single tensor payload at effective edge-count upper bound E+N, not peak RSS, simultaneous allocation sum or feasibility bound. Self-edge count not read.",
+      "graph_hash": "3a1bd175ab673bc8a9a5df34392c5057b67748a227da0b291501e9596cc3a067",
+      "graph_manifest": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/manifest.json",
+      "graph_manifest_sha256": "4ec80b6ed0d28f4e778745dee44ff7332685b0aed3155f8b2010272a296a97c3",
+      "historical_heuristic_bytes": 8029466624,
+      "nodes": 1705509,
+      "original_requirement": {
+        "date": "2024-08-05",
+        "original_id": "neural_checkpoint-2024-08-05",
+        "original_reason": "workload terminated before durable cell disposition; no retry",
+        "original_status": "unavailable",
+        "requirement_evidence": "remaining",
+        "stage": "neural_checkpoint",
+        "supported": false
+      },
+      "saved_graph_file_bytes": 447428632,
+      "unique_synthetic_mcm_float32_bytes": 218305152,
+      "week": "2024-08-05"
+    },
+    {
+      "directed_edges": 2795884,
+      "edge_index_int64_copy_payload_bytes": 44734144,
+      "first_gat_projected_node_payload_bytes": 549892352,
+      "first_gat_single_gather_or_message_at_max_effective_edges_bytes": 1265638656,
+      "formula_qualification": "Single tensor payload at effective edge-count upper bound E+N, not peak RSS, simultaneous allocation sum or feasibility bound. Self-edge count not read.",
+      "graph_hash": "f97ef5f6289bfe69397f752d867484dc2b26cfd902ef396bf0409101c158c3b7",
+      "graph_manifest": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/manifest.json",
+      "graph_manifest_sha256": "7cc89f84a22986fa82ecba90755a1ae98c245fdb5f4803dff5c0c49b5dab1690",
+      "historical_heuristic_bytes": 10125109248,
+      "nodes": 2148017,
+      "original_requirement": {
+        "date": "2024-12-23",
+        "original_id": "neural_checkpoint-2024-12-23",
+        "original_reason": "workload terminated before durable cell disposition; no retry",
+        "original_status": "unavailable",
+        "requirement_evidence": "remaining",
+        "stage": "neural_checkpoint",
+        "supported": false
+      },
+      "saved_graph_file_bytes": 563806472,
+      "unique_synthetic_mcm_float32_bytes": 274946176,
+      "week": "2024-12-23"
+    }
+  ],
+  "numerical_mcm_dependency": false,
+  "remaining_requirements_unchanged": 32,
+  "source_pins": [
+    {
+      "bytes": 4525,
+      "path": "tradingagents/research/onchain_replication/model.py",
+      "sha256": "ed4d5417202bb13ebc682d88d56942db74201feddc1b4d20511e54684fc252a0",
+      "snapshot": "observed-source/00-model.py"
+    },
+    {
+      "bytes": 2882,
+      "path": "tradingagents/research/onchain_replication/gat.py",
+      "sha256": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6",
+      "snapshot": "observed-source/01-gat.py"
+    },
+    {
+      "bytes": 26018,
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "sha256": "3716646a0b753c72854982b88432aed867e0561157cb117b7a2e5bcdae55124f",
+      "snapshot": "observed-source/02-job.py"
+    },
+    {
+      "bytes": 23115,
+      "path": "tradingagents/research/onchain_replication/resources.py",
+      "sha256": "3962f2d5abd1e29e53108b76f3b14cebed9cb8217ee4b73fa4fe0bd2734f05ef",
+      "snapshot": "observed-source/03-resources.py"
+    },
+    {
+      "bytes": 4227,
+      "path": "tradingagents/research/onchain_replication/checkpoints.py",
+      "sha256": "74e7bd16d4331cbac45143884e1f35a52687b19280c214457834b0cf19a457bc",
+      "snapshot": "observed-source/04-checkpoints.py"
+    },
+    {
+      "bytes": 5296,
+      "path": "tradingagents/research/onchain_replication/graph_store.py",
+      "sha256": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da",
+      "snapshot": "observed-source/05-graph_store.py"
+    },
+    {
+      "bytes": 15800,
+      "path": "tradingagents/research/onchain_replication/job_payload.py",
+      "sha256": "0ed0d982c91b0ba1336770401d94781067c5b4cb4cc0ce4386109625b822da57",
+      "snapshot": "observed-source/06-job_payload.py"
+    },
+    {
+      "bytes": 804,
+      "path": "tradingagents/research/onchain_replication/environment.py",
+      "sha256": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+      "snapshot": "observed-source/07-environment.py"
+    },
+    {
+      "bytes": 5022,
+      "path": "tradingagents/research/onchain_replication/workflow_storage.py",
+      "sha256": "a0b1bd5e3f73f22f3c5922740a8bddde0437c3c635ea372a6853d4d504e7751f",
+      "snapshot": "observed-source/08-workflow_storage.py"
+    },
+    {
+      "bytes": 10125,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py",
+      "sha256": "0bc95f7e33d97485cd9e2fba6802dde168c26aa162b987ef762f9e28ee3a1522",
+      "snapshot": "observed-source/09-phase.py"
+    },
+    {
+      "bytes": 528,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/resource-contract-v4.json",
+      "sha256": "b8e72b0a082e3d3431658cd6f22ccf2ded8ff819d78d9b623592a5287241c6ec",
+      "snapshot": "observed-source/10-resource-contract-v4.json"
+    },
+    {
+      "bytes": 1628,
+      "path": "research/onchain-paper-replication-2026-09-24/config/model.json",
+      "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d",
+      "snapshot": "observed-source/11-model.json"
+    },
+    {
+      "bytes": 28990,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/native-resource-admission-2026-10-01/inputs02.json",
+      "sha256": "dc4c267c1cd8ce98ec14b49bc5b5c3253598f0380e3d23efdbc6a4286d3d322b",
+      "snapshot": "observed-source/12-inputs02.json"
+    },
+    {
+      "bytes": 1498,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/native-resource-admission-2026-10-01/budget-allocation.draft.json",
+      "sha256": "63fb322378f074bfef4bf4c0fd6cc61f97dd5d3987a8cd444bcd20d63f0b58ab",
+      "snapshot": "observed-source/13-budget-allocation.draft.json"
+    },
+    {
+      "bytes": 7408,
+      "path": "tests/research/onchain_replication/test_activation_checkpointing.py",
+      "sha256": "0976c5dd8a464a766feec27c908886e08254b30a0e3bbd75b59386172222ed60",
+      "snapshot": "observed-source/14-test_activation_checkpointing.py"
+    }
+  ],
+  "status": "READ_ONLY_NONEXECUTABLE",
+  "unknown_reason": "No fresh maintained neural resource runner/gate, adopted population/resource policy, array reread or measured full-size peak exists for this proposed separate route."
+}
