@@ -1,0 +1,23 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_callback_lock_replacement_cannot_mask_fatal_or_leave_original_held ____
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...0db462ca0>, <function fixture.<locals>.publish at 0x7670db462b60>, <function fixture.<locals>.store at 0x7670db462d40>)
+
+    def test_callback_lock_replacement_cannot_mask_fatal_or_leave_original_held(fixture):
+        from threading import Lock
+        a,b,c,state,publish,create=fixture;s=state();store=create();original=store.lock
+        primary=m.io.CleanupFailure('original publication cleanup failure')
+        def replaced(expected):store.lock=Lock();raise primary
+        with pytest.raises(m.io.CleanupFailure) as caught:store.checkpoint(s,a,b,c,publish_progress=replaced)
+>       assert caught.value is primary and not original.locked() and store.poisoned
+E       AssertionError: assert (CleanupFailure('original publication cleanup failure') is CleanupFailure('original publication cleanup failure') and not True)
+E        +  where CleanupFailure('original publication cleanup failure') = <ExceptionInfo CleanupFailure('original publication cleanup failure') tblen=3>.value
+E        +  and   True = <built-in method locked of _thread.lock object at 0x7670db4c6e50>()
+E        +    where <built-in method locked of _thread.lock object at 0x7670db4c6e50> = <locked _thread.lock object at 0x7670db4c6e50>.locked
+
+tests/research/onchain_replication/test_restart_retention.py:334: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_callback_lock_replacement_cannot_mask_fatal_or_leave_original_held
+1 failed, 43 deselected in 0.46s

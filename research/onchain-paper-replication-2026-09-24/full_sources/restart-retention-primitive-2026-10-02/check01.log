@@ -1,0 +1,290 @@
+FFFFFF.....F.F.F..                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_three_rotations_replay_before_retirement_and_independent_score ______
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...3f2d10400>, <function fixture.<locals>.publish at 0x7a13f2d102c0>, <function fixture.<locals>.store at 0x7a13f2d104a0>)
+
+    def test_three_rotations_replay_before_retirement_and_independent_score(fixture):
+        a,b,c,state,publish,create=fixture;s=state();baseline=state();store=create();proofs=[]
+        for _ in range(3):
+            engine.advance(s,a,b,c,max_operations=1)
+>           proofs.append(store.checkpoint(s,a,b,c,publish_progress=publish))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/restart_retention.py:230: in checkpoint
+    self._guard()
+tradingagents/research/onchain_replication/restart_retention.py:176: in _guard
+    self.lease();self._local()
+                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/restart_retention.py:168: in _local
+    require(_pin(path)==proof['generation_inode'],'retention generation replaced')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'retention generation replaced'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: retention generation replaced
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+_________ test_completion_requires_independent_exact_event[score-0.4] __________
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...3f2d2fd80>, <function fixture.<locals>.publish at 0x7a13f2d2f920>, <function fixture.<locals>.store at 0x7a13f2d2ef20>)
+field = 'score', value = 0.4
+
+    @pytest.mark.parametrize('field,value',[('score',.4),('iterations',2),('convergence','temperature_complete'),('event_ordinal',99),('pair',{})])
+    def test_completion_requires_independent_exact_event(fixture,field,value):
+        a,b,c,state,publish,create=fixture;s=state();store=create()
+>       store.checkpoint(s,a,b,c,publish_progress=publish);result=finish_engine(s,a,b,c)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/restart_retention.py:230: in checkpoint
+    self._guard()
+tradingagents/research/onchain_replication/restart_retention.py:176: in _guard
+    self.lease();self._local()
+                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/restart_retention.py:168: in _local
+    require(_pin(path)==proof['generation_inode'],'retention generation replaced')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'retention generation replaced'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: retention generation replaced
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+________ test_completion_requires_independent_exact_event[iterations-2] ________
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...3f2d2e7a0>, <function fixture.<locals>.publish at 0x7a13f2d2ff60>, <function fixture.<locals>.store at 0x7a13f2d2f100>)
+field = 'iterations', value = 2
+
+    @pytest.mark.parametrize('field,value',[('score',.4),('iterations',2),('convergence','temperature_complete'),('event_ordinal',99),('pair',{})])
+    def test_completion_requires_independent_exact_event(fixture,field,value):
+        a,b,c,state,publish,create=fixture;s=state();store=create()
+>       store.checkpoint(s,a,b,c,publish_progress=publish);result=finish_engine(s,a,b,c)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/restart_retention.py:230: in checkpoint
+    self._guard()
+tradingagents/research/onchain_replication/restart_retention.py:176: in _guard
+    self.lease();self._local()
+                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/restart_retention.py:168: in _local
+    require(_pin(path)==proof['generation_inode'],'retention generation replaced')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'retention generation replaced'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: retention generation replaced
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+_ test_completion_requires_independent_exact_event[convergence-temperature_complete] _
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...3f2d10040>, <function fixture.<locals>.publish at 0x7a13f2d99620>, <function fixture.<locals>.store at 0x7a13f2d99940>)
+field = 'convergence', value = 'temperature_complete'
+
+    @pytest.mark.parametrize('field,value',[('score',.4),('iterations',2),('convergence','temperature_complete'),('event_ordinal',99),('pair',{})])
+    def test_completion_requires_independent_exact_event(fixture,field,value):
+        a,b,c,state,publish,create=fixture;s=state();store=create()
+>       store.checkpoint(s,a,b,c,publish_progress=publish);result=finish_engine(s,a,b,c)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/restart_retention.py:230: in checkpoint
+    self._guard()
+tradingagents/research/onchain_replication/restart_retention.py:176: in _guard
+    self.lease();self._local()
+                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/restart_retention.py:168: in _local
+    require(_pin(path)==proof['generation_inode'],'retention generation replaced')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'retention generation replaced'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: retention generation replaced
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+______ test_completion_requires_independent_exact_event[event_ordinal-99] ______
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...3f2d9a5c0>, <function fixture.<locals>.publish at 0x7a13f2d99e40>, <function fixture.<locals>.store at 0x7a13f2d9a8e0>)
+field = 'event_ordinal', value = 99
+
+    @pytest.mark.parametrize('field,value',[('score',.4),('iterations',2),('convergence','temperature_complete'),('event_ordinal',99),('pair',{})])
+    def test_completion_requires_independent_exact_event(fixture,field,value):
+        a,b,c,state,publish,create=fixture;s=state();store=create()
+>       store.checkpoint(s,a,b,c,publish_progress=publish);result=finish_engine(s,a,b,c)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/restart_retention.py:230: in checkpoint
+    self._guard()
+tradingagents/research/onchain_replication/restart_retention.py:176: in _guard
+    self.lease();self._local()
+                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/restart_retention.py:168: in _local
+    require(_pin(path)==proof['generation_inode'],'retention generation replaced')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'retention generation replaced'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: retention generation replaced
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+________ test_completion_requires_independent_exact_event[pair-value4] _________
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...3f2d9ac00>, <function fixture.<locals>.publish at 0x7a13f2d9b060>, <function fixture.<locals>.store at 0x7a13f2d9b7e0>)
+field = 'pair', value = {}
+
+    @pytest.mark.parametrize('field,value',[('score',.4),('iterations',2),('convergence','temperature_complete'),('event_ordinal',99),('pair',{})])
+    def test_completion_requires_independent_exact_event(fixture,field,value):
+        a,b,c,state,publish,create=fixture;s=state();store=create()
+>       store.checkpoint(s,a,b,c,publish_progress=publish);result=finish_engine(s,a,b,c)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/restart_retention.py:230: in checkpoint
+    self._guard()
+tradingagents/research/onchain_replication/restart_retention.py:176: in _guard
+    self.lease();self._local()
+                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/restart_retention.py:168: in _local
+    require(_pin(path)==proof['generation_inode'],'retention generation replaced')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'retention generation replaced'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: retention generation replaced
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+___ test_limits_spent_before_allocation_and_never_refunded[max_generations] ____
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...3f2dd3d80>, <function fixture.<locals>.publish at 0x7a13f2d807c0>, <function fixture.<locals>.store at 0x7a13f2d80360>)
+limit = 'max_generations'
+
+    @pytest.mark.parametrize('limit',['max_generations','max_control_bytes','max_cumulative_bytes','max_replay_bytes','max_replays','max_generation_bytes'])
+    def test_limits_spent_before_allocation_and_never_refunded(fixture,limit):
+        a,b,c,state,publish,create=fixture;s=state()
+        caps=LIMITS|{limit:1};store=create(limits=caps) if limit!='max_control_bytes' else None
+        if store is None:
+            with pytest.raises(ValueError):create(limits=caps)
+            return
+        if limit in ('max_generations','max_replays'):
+>           store.checkpoint(s,a,b,c,publish_progress=publish)
+
+tests/research/onchain_replication/test_restart_retention.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/restart_retention.py:230: in checkpoint
+    self._guard()
+tradingagents/research/onchain_replication/restart_retention.py:176: in _guard
+    self.lease();self._local()
+                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/restart_retention.py:168: in _local
+    require(_pin(path)==proof['generation_inode'],'retention generation replaced')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'retention generation replaced'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: retention generation replaced
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+_ test_limits_spent_before_allocation_and_never_refunded[max_cumulative_bytes] _
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...3f2dd2c00>, <function fixture.<locals>.publish at 0x7a13f2dd2d40>, <function fixture.<locals>.store at 0x7a13f2dd27a0>)
+limit = 'max_cumulative_bytes'
+
+    @pytest.mark.parametrize('limit',['max_generations','max_control_bytes','max_cumulative_bytes','max_replay_bytes','max_replays','max_generation_bytes'])
+    def test_limits_spent_before_allocation_and_never_refunded(fixture,limit):
+        a,b,c,state,publish,create=fixture;s=state()
+>       caps=LIMITS|{limit:1};store=create(limits=caps) if limit!='max_control_bytes' else None
+                                    ^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_restart_retention.py:42: in store
+    return m.Store(tmp_path/'store',**options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/restart_retention.py:144: in __init__
+    require(limits['max_control_bytes']>=CONTROL and limits['max_cumulative_bytes']>=CONTROL,'retention claim capacity')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'retention claim capacity'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: retention claim capacity
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+_____ test_limits_spent_before_allocation_and_never_refunded[max_replays] ______
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...3f2d99e40>, <function fixture.<locals>.publish at 0x7a13f2d9bce0>, <function fixture.<locals>.store at 0x7a13f2d99c60>)
+limit = 'max_replays'
+
+    @pytest.mark.parametrize('limit',['max_generations','max_control_bytes','max_cumulative_bytes','max_replay_bytes','max_replays','max_generation_bytes'])
+    def test_limits_spent_before_allocation_and_never_refunded(fixture,limit):
+        a,b,c,state,publish,create=fixture;s=state()
+        caps=LIMITS|{limit:1};store=create(limits=caps) if limit!='max_control_bytes' else None
+        if store is None:
+            with pytest.raises(ValueError):create(limits=caps)
+            return
+        if limit in ('max_generations','max_replays'):
+>           store.checkpoint(s,a,b,c,publish_progress=publish)
+
+tests/research/onchain_replication/test_restart_retention.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/restart_retention.py:230: in checkpoint
+    self._guard()
+tradingagents/research/onchain_replication/restart_retention.py:176: in _guard
+    self.lease();self._local()
+                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/restart_retention.py:168: in _local
+    require(_pin(path)==proof['generation_inode'],'retention generation replaced')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'retention generation replaced'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: retention generation replaced
+
+tradingagents/research/onchain_replication/score_batches.py:57: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_three_rotations_replay_before_retirement_and_independent_score
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_completion_requires_independent_exact_event[score-0.4]
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_completion_requires_independent_exact_event[iterations-2]
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_completion_requires_independent_exact_event[convergence-temperature_complete]
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_completion_requires_independent_exact_event[event_ordinal-99]
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_completion_requires_independent_exact_event[pair-value4]
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_limits_spent_before_allocation_and_never_refunded[max_generations]
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_limits_spent_before_allocation_and_never_refunded[max_cumulative_bytes]
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_limits_spent_before_allocation_and_never_refunded[max_replays]
+9 failed, 9 passed in 0.97s

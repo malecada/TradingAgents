@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_retained_engine_metadata_has_independent_control_reservation _______
+
+fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...05e0f2ac0>, <function fixture.<locals>.publish at 0x78f05e0f2980>, <function fixture.<locals>.store at 0x78f05e0f2b60>)
+
+    def test_retained_engine_metadata_has_independent_control_reservation(fixture):
+        a,b,c,state,publish,create=fixture;store=create();store.checkpoint(state(),a,b,c,publish_progress=publish)
+>       assert store.spent['control_bytes']>=2*m.CONTROL+8*m.CONTROL+3*engine.LIMIT
+E       assert 163840 >= (((2 * 16384) + (8 * 16384)) + (3 * 65536))
+E        +  where 16384 = m.CONTROL
+E        +  and   16384 = m.CONTROL
+E        +  and   65536 = engine.LIMIT
+
+tests/research/onchain_replication/test_restart_retention.py:325: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_restart_retention.py::test_retained_engine_metadata_has_independent_control_reservation
+1 failed, 42 deselected in 0.48s

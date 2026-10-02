@@ -3,6 +3,42 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 continuation — restart primitive accepted; neural registration prepared**:
+Restart-retention candidate06 is independently accepted for the unselected,
+fresh-root one-pair helper. All RRP1–RRP4 findings are closed; check09 CLOSED:
+62 passed in 3.18 seconds/session98486. REVIEW_FINAL SHA256
+115f78410a8e3cf693a822e16a047b9a8394b741ff00d10563adf0c9980ab104;
+source SHA25615e7b2090ce87081b0cd6e2338b4d62d348d779082947729cacf0210d3c6dc7d.
+All red attempts and candidate snapshots remain retained. This acceptance does
+not establish stage-wide accounting, archived-frame joins or physical capacity.
+The next coherent implementation slice is recorded in restart-retention-integration-
+2026-10-02/INTEGRATION_REVIEW.md (SHA256
+498010fdf6f3b597a194ee8270189e37eb6a4aca941dde69782d0d3b2ff712ea).
+
+The neural candidate02 passed 36 checks with one CUDA-only skip in 9.55 seconds.
+Its reviewer accepted the direct guard/plan binding and original output-path
+corrections. One remaining correction requires independent attempts to preserve
+the failure ledger and summary when the first publication fails. admission_batching
+owns that correction; archive_transport owns its independent final review. No
+empirical runner acceptance or launch is asserted yet.
+
+Root owns neural-resource-registration-2026-10-02/. The exact nine-week draft,
+charter, execution job and cumulative62 extension passed metadata-only preparation01
+and validation01. All43 original compact pins and nine graph proof references
+remain bound. The draft is deliberately NONEXECUTABLE: identity, source/runtime,
+environment/workspace closure and accepted extension review are unfinished.
+owner_closure_review owns its independent preparation review. Proposed limits are
+6GiB worker +3GiB host reserve, 10GiB free disk floor, 7200s whole job, 600s
+cooperative per cell, 4MiB per checkpoint and64MiB outputs. The small synthetic
+checkpoint was493,424 bytes; this is not a full-graph RAM bound. Initial draft
+preparation observed6,074,048,512 available RAM bytes, below9GiB startup.
+
+No empirical job is active. Resource coverage remains77/109; all1,420 financial
+fits remain pending. After the accepted helper is backed up, continue the explicit
+new archived-stage integration while completing neural review/registration. No
+closed identity is relaunched; actual-owner checks require a frozen full dynamic
+source closure or an immutable isolated snapshot. Root owns STATE/checkpoints.
+
 **October 2 autonomous continuation — candidates under independent correction**:
 No empirical job or transfer is active. Current available RAM snapshot is
 7,381,233,664 bytes, below the 9 GiB startup requirement for a 6 GiB worker plus

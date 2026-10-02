@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="12" skipped="0" tests="16" time="25.261" timestamp="2026-10-02T11:15:52.588373+02:00" hostname="malecada-Zenbook-UM3402YA-UM3402YA"><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_wrapper_foreign_member_is_rejected" time="1.429"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b686200&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b686340&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b686160&gt;)
+
+    def test_review_wrapper_foreign_member_is_rejected(fixture):
+        a,b,c,state,publish,create=fixture;store=create()
+        def foreign(expected):
+            ref=publish(expected)
+            (store.root/'generation-00000000000000000000'/'foreign').write_bytes(b'unreserved')
+            return ref
+&gt;       with pytest.raises(ValueError):store.checkpoint(state(),a,b,c,publish_progress=foreign)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:343: Failed</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_final_lease_revocation_prevents_ack[checkpoint-poisoned]" time="0.969"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b684a40&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b685120&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b684720&gt;)
+flag = 'poisoned', operation = 'checkpoint'
+
+    @pytest.mark.parametrize('flag',['poisoned','closed'])
+    @pytest.mark.parametrize('operation',['checkpoint','finish'])
+    def test_review_final_lease_revocation_prevents_ack(fixture,flag,operation):
+        a,b,c,state,publish,create=fixture;store=create();s=state();calls=[]
+        if operation=='finish':
+            store.checkpoint(s,a,b,c,publish_progress=publish)
+            result=finish_engine(s,a,b,c);expected=completed(store,result);ref=publish(expected)
+        def revoke():
+            calls.append(1)
+            if (operation=='checkpoint' and len(calls)==4) or (operation=='finish' and store.current is None):
+                setattr(store,flag,True)
+        store.lease=revoke
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:359: Failed</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_final_lease_revocation_prevents_ack[checkpoint-closed]" time="0.738"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b686e80&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b49be20&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b49bec0&gt;)
+flag = 'closed', operation = 'checkpoint'
+
+    @pytest.mark.parametrize('flag',['poisoned','closed'])
+    @pytest.mark.parametrize('operation',['checkpoint','finish'])
+    def test_review_final_lease_revocation_prevents_ack(fixture,flag,operation):
+        a,b,c,state,publish,create=fixture;store=create();s=state();calls=[]
+        if operation=='finish':
+            store.checkpoint(s,a,b,c,publish_progress=publish)
+            result=finish_engine(s,a,b,c);expected=completed(store,result);ref=publish(expected)
+        def revoke():
+            calls.append(1)
+            if (operation=='checkpoint' and len(calls)==4) or (operation=='finish' and store.current is None):
+                setattr(store,flag,True)
+        store.lease=revoke
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:359: Failed</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_final_lease_revocation_prevents_ack[finish-poisoned]" time="1.088"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b57d1c0&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b57e0c0&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b57c7c0&gt;)
+flag = 'poisoned', operation = 'finish'
+
+    @pytest.mark.parametrize('flag',['poisoned','closed'])
+    @pytest.mark.parametrize('operation',['checkpoint','finish'])
+    def test_review_final_lease_revocation_prevents_ack(fixture,flag,operation):
+        a,b,c,state,publish,create=fixture;store=create();s=state();calls=[]
+        if operation=='finish':
+            store.checkpoint(s,a,b,c,publish_progress=publish)
+            result=finish_engine(s,a,b,c);expected=completed(store,result);ref=publish(expected)
+        def revoke():
+            calls.append(1)
+            if (operation=='checkpoint' and len(calls)==4) or (operation=='finish' and store.current is None):
+                setattr(store,flag,True)
+        store.lease=revoke
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:359: Failed</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_final_lease_revocation_prevents_ack[finish-closed]" time="1.594"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b57f240&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b57f420&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b57f1a0&gt;)
+flag = 'closed', operation = 'finish'
+
+    @pytest.mark.parametrize('flag',['poisoned','closed'])
+    @pytest.mark.parametrize('operation',['checkpoint','finish'])
+    def test_review_final_lease_revocation_prevents_ack(fixture,flag,operation):
+        a,b,c,state,publish,create=fixture;store=create();s=state();calls=[]
+        if operation=='finish':
+            store.checkpoint(s,a,b,c,publish_progress=publish)
+            result=finish_engine(s,a,b,c);expected=completed(store,result);ref=publish(expected)
+        def revoke():
+            calls.append(1)
+            if (operation=='checkpoint' and len(calls)==4) or (operation=='finish' and store.current is None):
+                setattr(store,flag,True)
+        store.lease=revoke
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:359: Failed</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_replaced_runtime_authority_cannot_allocate[limits]" time="1.244"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b5745e0&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b574180&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b574680&gt;)
+change = 'limits'
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_replaced_runtime_a0')
+
+    @pytest.mark.parametrize('change',['limits','spent','pair','policy','proofs','expected','root'])
+    def test_review_replaced_runtime_authority_cannot_allocate(fixture,change,tmp_path):
+        a,b,c,state,publish,create=fixture;store=create(limits=LIMITS|{'max_generations':1});s=state()
+        store.checkpoint(s,a,b,c,publish_progress=publish)
+        original_root=store.root;original_spent=dict(store.spent)
+        foreign=tmp_path/'borrowed';foreign.mkdir()
+        def altered():
+            if change=='limits':store.limits={**thaw(store.limits),'max_generations':2}
+            elif change=='spent':store.spent={**store.spent,'generations':0,'cumulative_bytes':0}
+            elif change=='pair':store.pair={**thaw(store.pair),'purpose_sha256':'e'*64}
+            elif change=='policy':store.policy={**thaw(store.policy),'max_checkpoint_bytes':524288}
+            elif change=='proofs':store.proofs=[]
+            elif change=='expected':store.expected={}
+            else:store.root=foreign;store.inode=m._pin(foreign)
+        store.lease=altered
+&gt;       with pytest.raises(ValueError):store.checkpoint(s,a,b,c,publish_progress=publish)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:380: Failed</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_replaced_runtime_authority_cannot_allocate[spent]" time="1.151"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b57e200&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b57ef20&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b57dc60&gt;)
+change = 'spent'
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_replaced_runtime_a1')
+
+    @pytest.mark.parametrize('change',['limits','spent','pair','policy','proofs','expected','root'])
+    def test_review_replaced_runtime_authority_cannot_allocate(fixture,change,tmp_path):
+        a,b,c,state,publish,create=fixture;store=create(limits=LIMITS|{'max_generations':1});s=state()
+        store.checkpoint(s,a,b,c,publish_progress=publish)
+        original_root=store.root;original_spent=dict(store.spent)
+        foreign=tmp_path/'borrowed';foreign.mkdir()
+        def altered():
+            if change=='limits':store.limits={**thaw(store.limits),'max_generations':2}
+            elif change=='spent':store.spent={**store.spent,'generations':0,'cumulative_bytes':0}
+            elif change=='pair':store.pair={**thaw(store.pair),'purpose_sha256':'e'*64}
+            elif change=='policy':store.policy={**thaw(store.policy),'max_checkpoint_bytes':524288}
+            elif change=='proofs':store.proofs=[]
+            elif change=='expected':store.expected={}
+            else:store.root=foreign;store.inode=m._pin(foreign)
+        store.lease=altered
+&gt;       with pytest.raises(ValueError):store.checkpoint(s,a,b,c,publish_progress=publish)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:380: Failed</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_replaced_runtime_authority_cannot_allocate[pair]" time="2.171" /><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_replaced_runtime_authority_cannot_allocate[policy]" time="1.006" /><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_replaced_runtime_authority_cannot_allocate[proofs]" time="0.789" /><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_replaced_runtime_authority_cannot_allocate[expected]" time="0.889" /><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_replaced_runtime_authority_cannot_allocate[root]" time="1.264"><failure message="AssertionError: assert (not [PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_replaced_runtime_a6/borrowed/failure.json')])&#10; +  where [PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_replaced_runtime_a6/borrowed/failure.json')] = list(&lt;map object at 0x7fac6b4cf730&gt;)&#10; +    where &lt;map object at 0x7fac6b4cf730&gt; = iterdir()&#10; +      where iterdir = PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_replaced_runtime_a6/borrowed').iterdir">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b3e8a40&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b3e8040&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b3e8680&gt;)
+change = 'root'
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_replaced_runtime_a6')
+
+    @pytest.mark.parametrize('change',['limits','spent','pair','policy','proofs','expected','root'])
+    def test_review_replaced_runtime_authority_cannot_allocate(fixture,change,tmp_path):
+        a,b,c,state,publish,create=fixture;store=create(limits=LIMITS|{'max_generations':1});s=state()
+        store.checkpoint(s,a,b,c,publish_progress=publish)
+        original_root=store.root;original_spent=dict(store.spent)
+        foreign=tmp_path/'borrowed';foreign.mkdir()
+        def altered():
+            if change=='limits':store.limits={**thaw(store.limits),'max_generations':2}
+            elif change=='spent':store.spent={**store.spent,'generations':0,'cumulative_bytes':0}
+            elif change=='pair':store.pair={**thaw(store.pair),'purpose_sha256':'e'*64}
+            elif change=='policy':store.policy={**thaw(store.policy),'max_checkpoint_bytes':524288}
+            elif change=='proofs':store.proofs=[]
+            elif change=='expected':store.expected={}
+            else:store.root=foreign;store.inode=m._pin(foreign)
+        store.lease=altered
+        with pytest.raises(ValueError):store.checkpoint(s,a,b,c,publish_progress=publish)
+        assert not (original_root/'generation-00000000000000000001').exists()
+&gt;       assert not list(foreign.iterdir()) and store.poisoned
+E       AssertionError: assert (not [PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_replaced_runtime_a6/borrowed/failure.json')])
+E        +  where [PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_replaced_runtime_a6/borrowed/failure.json')] = list(&lt;map object at 0x7fac6b4cf730&gt;)
+E        +    where &lt;map object at 0x7fac6b4cf730&gt; = iterdir()
+E        +      where iterdir = PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_replaced_runtime_a6/borrowed').iterdir
+
+tests/research/onchain_replication/test_restart_retention.py:382: AssertionError</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_constructor_callback_cannot_rebind_claim" time="0.090"><failure message="AssertionError: assert ({'max_generat... 4194304, ...} == {'max_generat... 4194304, ...}&#10;  &#10;  Omitting 5 identical items, use -vv to show&#10;  Differing items:&#10;  {'max_generations': 100} != {'max_generations': 8}&#10;  Use -v to get more diff)">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b686200&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b686660&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b686340&gt;)
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-165/test_review_constructor_callba0')
+
+    def test_review_constructor_callback_cannot_rebind_claim(fixture,tmp_path):
+        a,b,c,state,publish,create=fixture;limits=dict(LIMITS);bindings=dict(BINDINGS)
+        pair=dict(ordinal=0,purpose_sha256='a'*64,numeric_identity=engine.ann.identity(a,b,c))
+        original_limits=dict(limits);original_bindings=dict(bindings);original_pair=json.loads(body(pair))
+        def alter():limits['max_generations']=100;bindings['source']='e'*64;pair['ordinal']=99
+        store=m.Store(tmp_path/'constructor',bindings=bindings,pair=pair,policy=POLICY,limits=limits,replay_first=True,lease=alter)
+&gt;       assert thaw(store.claim)['limits']==original_limits and thaw(store.limits)==original_limits
+E       AssertionError: assert ({'max_generat... 4194304, ...} == {'max_generat... 4194304, ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Differing items:
+E         {'max_generations': 100} != {'max_generations': 8}
+E         Use -v to get more diff)
+
+tests/research/onchain_replication/test_restart_retention.py:391: AssertionError</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_original_external_event_rechecked_after_late_lease[progress]" time="0.756"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b462980&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b4623e0&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b462c00&gt;)
+kind = 'progress'
+
+    @pytest.mark.parametrize('kind',['progress','completion_before_retire','completion_final'])
+    def test_review_original_external_event_rechecked_after_late_lease(fixture,kind):
+        a,b,c,state,publish,create=fixture;s=state();store=create();holder={};calls=[]
+        def event(expected):holder['ref']=publish(expected);return holder['ref']
+        if kind!='progress':
+            store.checkpoint(s,a,b,c,publish_progress=publish);result=finish_engine(s,a,b,c)
+            expected=completed(store,result);holder['ref']=publish(expected)
+        def tamper():
+            calls.append(1)
+            armed=(kind=='progress' and 'ref' in holder) or (kind=='completion_before_retire' and any(store.root.glob('retire-*-intent.json'))) or (kind=='completion_final' and store.current is None)
+            if armed:holder['ref'].path.write_bytes(b'{}\n')
+        store.lease=tamper
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:407: Failed</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_original_external_event_rechecked_after_late_lease[completion_before_retire]" time="1.416"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b460720&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b4600e0&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b4609a0&gt;)
+kind = 'completion_before_retire'
+
+    @pytest.mark.parametrize('kind',['progress','completion_before_retire','completion_final'])
+    def test_review_original_external_event_rechecked_after_late_lease(fixture,kind):
+        a,b,c,state,publish,create=fixture;s=state();store=create();holder={};calls=[]
+        def event(expected):holder['ref']=publish(expected);return holder['ref']
+        if kind!='progress':
+            store.checkpoint(s,a,b,c,publish_progress=publish);result=finish_engine(s,a,b,c)
+            expected=completed(store,result);holder['ref']=publish(expected)
+        def tamper():
+            calls.append(1)
+            armed=(kind=='progress' and 'ref' in holder) or (kind=='completion_before_retire' and any(store.root.glob('retire-*-intent.json'))) or (kind=='completion_final' and store.current is None)
+            if armed:holder['ref'].path.write_bytes(b'{}\n')
+        store.lease=tamper
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:407: Failed</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention" name="test_review_original_external_event_rechecked_after_late_lease[completion_final]" time="1.017"><failure message="Failed: DID NOT RAISE ValueError">fixture = (GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09...c6b49bec0&gt;, &lt;function fixture.&lt;locals&gt;.publish at 0x7fac6b54f380&gt;, &lt;function fixture.&lt;locals&gt;.store at 0x7fac6b54ef20&gt;)
+kind = 'completion_final'
+
+    @pytest.mark.parametrize('kind',['progress','completion_before_retire','completion_final'])
+    def test_review_original_external_event_rechecked_after_late_lease(fixture,kind):
+        a,b,c,state,publish,create=fixture;s=state();store=create();holder={};calls=[]
+        def event(expected):holder['ref']=publish(expected);return holder['ref']
+        if kind!='progress':
+            store.checkpoint(s,a,b,c,publish_progress=publish);result=finish_engine(s,a,b,c)
+            expected=completed(store,result);holder['ref']=publish(expected)
+        def tamper():
+            calls.append(1)
+            armed=(kind=='progress' and 'ref' in holder) or (kind=='completion_before_retire' and any(store.root.glob('retire-*-intent.json'))) or (kind=='completion_final' and store.current is None)
+            if armed:holder['ref'].path.write_bytes(b'{}\n')
+        store.lease=tamper
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_restart_retention.py:407: Failed</failure></testcase></testsuite></testsuites>
