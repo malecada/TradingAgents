@@ -1,0 +1,11 @@
+# Independent narrow ancestry correction review
+
+Accepted correction: final gate SHA256 `3437a132997837c7528d05184350a10af8b0472ac6391318c56a3f89e2944883`. This supersedes REVIEW_GATE's gate hash only; its scientific/resource scope and remaining committed-admission requirements continue to apply.
+
+The earlier review checked the exact immediate-parent object but missed that its own ancestor was absent. The actual admission validator correctly refused at `tradingagents/research/admission.py:273`, before lifecycle start. The original gate is preserved byte-for-byte as gate.before-ancestry-correction.json with hash `c0fc6a40f995d71e0c0aade489de06437af84839dedc6111d9f8b746afbc92e7`, together with admission01.failed.json. That metadata-admission failure is not a financial/resource claim or a spent experiment identity.
+
+Independent parsed comparison confirms the sole change is adding the original `eth-paper-resource-pilot-20260924` experiment object. It exactly equals the experiment in its immutable claim, whose independently rehashed SHA256 is `3665f38999319e5c7076d7379d85addf2e336e1dd906c6615ac9d6c2c5d0ac43`. All old experiment objects and every other registry field are unchanged. In particular, the new experiment's charter, cells, inputs, source/runtime maps, outputs, windows, model/configuration and cumulative extension remain unchanged.
+
+The complete independently traversed chain is neural-resource-20261002-01 → resource-pilot-20260924-02 → resource-pilot-20260924 → null, with the full `eth-paper-` prefix on each identity. There are no repeats or missing entries; all three use the same `paper` family. Both historical objects and their family objects agree with their original claims. No historical registration, terminal or ledger was rewritten.
+
+The three proposed experiment namespaces remained absent, including dangling symlinks. The correction adds no claim, allocation, fit or sample exposure. Committed admission must now be rerun against the exact corrected gate and full current HEAD. Exact Admission claim/RPC extents and fresh startup checks remain required; adding a registry ancestor does not by itself prove their success. No model, array, lifecycle start, admission API, network operation or financial experiment was executed by this reviewer.

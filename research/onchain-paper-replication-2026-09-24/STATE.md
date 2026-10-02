@@ -3,6 +3,23 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 actual-admission ancestry correction — no claim consumed**:
+The first actual metadata-only admit at full source18610d913805c21d06c6dd5caf9f23ec768f5322
+refused invalid parent ancestry. The immediate retained resource parent itself
+points to original eth-paper-resource-pilot-20260924, which had not been copied
+into the prepared registry. admission01.failed.json and exact pre-correction
+gate bytes are preserved. No lifecycle/launch/producer namespace or empirical
+attempt was started;33 spent history remains unchanged.
+
+The sole additive correction copies that original immutable ancestor experiment
+object. Corrected gate SHA2563437a132997837c7528d05184350a10af8b0472ac6391318c56a3f89e2944883
+is independently accepted, REVIEW_ANCESTRY_CORRECTION SHA2568a828b065285494c96c2a714747b3518666d9b19c10a28188f0bc1d74275942c.
+The full three-node same-family ancestry reaches null; all original registry/new
+experiment/source/runtime/science/limits fields remain unchanged. Next safe step:
+commit/back up this correction and repeat actual admission under fresh metadata
+check02, then measure final claim/RPC and release if fresh host/guard checks pass.
+No source-package or numerical change was made by this correction.
+
 **October 2 real guard passed — final nine-cell gate accepted**:
 Single synthetic-neural-physical-os-20261002-01 CLOSED controllerexit0 with the
 expected failed guard, exact64KiB log cap, kernel memory controls, retained final
