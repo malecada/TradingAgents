@@ -1,0 +1,30 @@
+{
+  "files": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-successor-preparation-2026-10-02/launch_scheduling.json": {
+      "bytes": 727,
+      "sha256": "f43541845d30a7b6d069647da8096718844375a7429d0e73516aa1a325987369"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-successor-preparation-2026-10-02/readiness-check01.log": {
+      "bytes": 186,
+      "sha256": "ddeaef742db651b2597005ee10c8c440e250a920bff32d6bd858ecd863ffc05a"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-successor-preparation-2026-10-02/readiness-red01.log": {
+      "bytes": 16069,
+      "sha256": "f81fd33aa9904e2ff4a1aaf7aec19a2b8e927f1f06027c364c751278495afc85"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-successor-preparation-2026-10-02/readiness.py": {
+      "bytes": 5968,
+      "sha256": "95ba99b35af0d06aca1092e9ce42ec19e88a898b883d9b8d43603fb06d97dc1c"
+    },
+    "tests/research/onchain_replication/test_neural_launch_readiness.py": {
+      "bytes": 4698,
+      "sha256": "76bae21c82bff9647c4d5f5a9503709983548541fd013c1c0dadf96cddbf0e44"
+    }
+  },
+  "green_seconds": 0.1,
+  "green_tests_passed": 12,
+  "qualification": "Pure fake-clock/readback tests; no sleep, RAM observation, source/gate admission, subprocess or model run. Helper never launches a workload; final coordinator integration must use a new in-process observation after actual admission, reject expiry beyond1second immediately before CLI invocation and retain exact source/policy binding. These tests do not establish entire final coordinator integration or future host readiness. Named whole offline suite remains after source freeze, not run against current mutable package.",
+  "red_tests_failed": 12,
+  "schema_version": 1,
+  "status": "frozen finite observation helper, independent implementation review pending; no actual observation or workload executed"
+}

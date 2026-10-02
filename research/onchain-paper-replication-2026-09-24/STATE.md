@@ -3,6 +3,41 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 parallel implementation checkpoint — archive review corrections pending**:
+Archive outer-dispatch candidate01 is frozen at manifesta71f0ed0c7f82c2e893ec9349850038e3eb95ad707bf2bb5091720421baf89d1
+and freeze01f5c56e52e27782b44a7ebca06feb7011eba171a88787ea842d3ffd6eb6ebc4e3;
+final tiny check08 passed30 cases3.83s, preserving all prior failures/red logs.
+It implements explicit transport selection, shared durable rounded reservations,
+held-operation binding and fit injection within the assigned files. It is NOT
+accepted yet: independent review found hardcoded execution_job selection that
+ignores the public job_input argument, and new fd finalizers that can supersede
+an existing fatal. Final findings and narrow reproductions/corrections remain.
+No heavy owner fixture, SSH, actual archive/fit or empirical job is active.
+The worker prepares an unexecuted isolated actual-owner outer fixture while
+the reviewer completes the frozen-source review. Keep originalcandidate01.
+
+Successor NONEXECUTABLE preparation is independently accepted in
+neural-resource-successor-preparation-2026-10-02/REVIEW_CANDIDATE01.md. Its
+standalone readiness.py SHA25695ba99b35af0d06aca1092e9ce42ec19e88a898b883d9b8d43603fb06d97dc1c
+is independently accepted in REVIEW_READINESS01.md:12 meaningful RED failures
+then12 fake-clock/readback GREEN cases0.10s, no model/RAM window/namespace work.
+The helper observes16 times2s apart at9.25GiB over a60s acceptance window and
+defines immediate readiness as no more than1s since the last observation. A
+retained receipt is not a future permit. Synchronous read/sleep deadlines are
+cooperative, and arbitrary policy files are outside the exact small pinned-input
+scope. The helper never invokes a job; final coordinator integration, complete
+source/gate and actual fresh host/admission checks are still required.
+
+Accepted budget reconciliation is now committed at
+`fb744af52ba595d5d735720f83fd43d5901ec69a`, pushed with exact remote HEAD verified.
+The closed01 launch remains terminal; successor02 is unreserved/unadmitted.
+No model work is running, all77/109 coverage and1,420 financial fits remain.
+Next safe action: finish complete archive review and implement only its material
+corrections, freeze/verify the exact source, then perform the admitted isolated
+outer-owner engineering proof and complete final successor gate. No source-admitted
+fixture may read the moving package. Independent work continues at the user's
+practical RAM ceiling without relaxing model,9GiB startup,3GiB reserve or10GiB floor.
+
 **October 2 distinct first-adopter reconciliation accepted — not a launch**:
 Closed-launch raw evidence, independent review and checkpoint are committed at
 `a512f066e5102941fb896da8e26123964206e423`, pushed with exact remote HEAD verified.
