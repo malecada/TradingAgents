@@ -3,6 +3,51 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 active correction checkpoint — full archive route passed, physical review open**:
+The isolated owner04 archive-retention fixture CLOSED with1passed/1deselected in
+408.86s, session3928. It covers20 actual dictionary comparisons under22 capacity,
+all six MCM cells, FIRST replay retention, later zero-checkpoint members, owner/
+ledger/terminal closure and remote-forbidden post-close verification. Its advance
+wrapper deliberately forces multiple checkpoint boundaries; this fixture does not
+prove unchanged production cadence. Separate unwrapped tiny checks cover that
+cadence. owner01 lacked snapshot scripts and failed before collection; owner02
+found the missing native descriptor join; owner03 exhausted its finite checkpoint
+fixture allowance. All attempts/source snapshots remain preserved. Corrected
+callback hardening passed tiny check06:10passed1.56s, but owner04 predates it, so a
+fresh isolated full-owner correction check remains required before final review.
+archive_transport now also owns the narrow compact_stage.py refusal of the new
+retention policy at the old-format public verifier; old behavior stays strict.
+
+Physical implementation acceptance is withheld: REVIEW_INITIAL records NPH1–4
+for mutable root/claim authority, process reopen rebasing, descriptor/final joins
+and bounded control reads. admission_batching owns corrections in the selected
+future route, including narrow neural_resource.py root-birth/command binding and
+lifecycle selected-scope creation hooks. No model/numerical behavior is changed.
+The coordinator approved bounded local abstract-Unix-socket original-parent
+binding authority, with no secret key in argv/logs or new external service.
+The original live parent exclusively creates lifecycle/producer roots and
+publishes the bounded claim, capturing original identities itself. Clients may
+not supply/rebaseline them. Exact original PID/start/UID/socket peer joins,
+bounded messages/timeouts, no lock inversion, explicit parent-thread failure and
+fail-closed loss of authority are required. No mutable-disk recovery baseline is
+allowed. The authority owner must survive the selected launch through observer
+closure; default historical launch semantics remain unchanged. This is approved
+engineering scope, not accepted implementation or empirical admission.
+
+Root revision02 environment/workspace/parent/budget bindings are independently
+accepted as metadata only, REVIEW_BINDINGS SHA256
+876d672dad95b1e391a4605babf72cbeed8585d71ab09cf88981a45dcbed85a9.
+Capture01 CLOSED exit0; no model, graph bodies, admission or reserved namespace.
+The original parent experiment exactly matches its immutable failed claim; the
+current CPU runtime reports CUDA unavailable. Manifest SHA256
+21366ccc1cfc837a9986c36e8f915b6677935b7f00575f9df945b65498e0e37e.
+Actual final source/runtime closure, physical limits and final gate remain open.
+The tentative physical refusal caps (not adopted or success bounds) are8MiB/file,
+256KiB/JSON,160MiB allocated,128MiB logical,128 entries and32MiB reserved tail.
+Current observed RAM8,886,022,144B remains below9GiB startup; free19,689,828,352B
+exceeds10GiB floor. No empirical job is active; coverage77/109 and1,420 pending
+financial fits are unchanged. Continue both source owners and independent reviews.
+
 **Latest budget checkpoint — exact future extension accepted**:
 The frozen62-slot extension is independently accepted for budget metadata only.
 full_sources/budget-extension-62-2026-10-02/extension.json SHA256
