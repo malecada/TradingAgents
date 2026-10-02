@@ -1,8 +1,9 @@
 # External synthetic check status
 
-Pre-execution: independent gate release accepted, REVIEW
-9b88745c088ef41d0ecbd150e2e080f2d4bb671797fffa826bf4dc0bb1857b3a. No network action under this
-identity has occurred. All120source/contract/test bindings are prepared.
+external01 CLOSED session40021 exit0: actual1MiB upload plus two verified
+readbacks (second through fresh transport). Guard complete/childexit0/cleanuptrue.
+Never rerun this identity. See RESULT.md and guard01/final.json. Independent
+result REVIEW accepted, SHA2410e76d0fce640d61ba997328628c2709a988199d9c488670196f3f78e3ef2a. Package freeze is released.
 
 Local verification:
 - red01: missing runner,3failed0.11s.

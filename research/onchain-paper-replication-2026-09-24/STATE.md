@@ -3,7 +3,7 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Latest handoff — October 2, maintained fit accepted; archive prototype under review**:
+**Latest handoff — October 2, maintained fit accepted; external archive recovery completed**:
 Terminal/native feature checkpoint26ea4fa329d66d93c0daa5e5c22e0e83a6623252 was
 committed, pushed and exact remote HEAD verified. Complete fresh compact producer
 and executor dispatch now independently accepted, REVIEW
@@ -49,13 +49,24 @@ member bytes. Pinned Python lacks memfd/seal names; checked Linux libc/ABI route
 passes the actual local subprocess regression. check04 CLOSED36passed0.57s
 (session54293exit0), network-free. Prior failures/logs/source snapshots retained.
 External release REVIEW9b88745c088ef41d0ecbd150e2e080f2d4bb671797fffa826bf4dc0bb1857b3a
-accepted conditional committed unchanged gate. No remote files written by this
-new attempt yet. Source/contract inventory binds120files.
-Root owns code/tests/state, reviewer REVIEW*.md. No active numerical job.
-Next safe action: finish external release review, commit/push the unchanged gate,
-then launch this fresh identity once under guard and verify full readback/cleanup.
-After that, integrate sealed-chunk retention with full current-owner terminal
-checks and bounded scratch before any eviction or empirical release.
+accepted. Gate committed/pushed6bbcc0a9a006b9e22b0df8127d96bf3ca3f83ff2; exact
+remote HEAD verified before execution. External01 CLOSED session40021 exit0:
+one1MiB synthetic upload and two exact readbacks, second through a fresh
+Transport instance. Four retained files SHAfbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83.
+Guard complete/childexit0/cleanuptrue; kernel limits matched, OOM0, oldcgroupabsent.
+No failed markers. Independent REVIEW_RESULT accepted
+2410e76d0fce640d61ba997328628c2709a988199d9c488670196f3f78e3ef2a.
+Fresh Transport recovery is within the same guarded worker, not a new-process
+restore. Source freeze released;
+no active engineering or empirical process. All original research data intact.
+This is bounded external recoverability, not pipeline storage integration or
+fullrawbackup. No space has been freed by this check.
+Root owns code/tests/state, reviewer REVIEW*.md. Next safe action: complete
+result review/backup then implement archive-aware sealed event chunks and
+bounded retrieval scratch, preserving full matching/checkpoint/score joins
+and current-owner terminal checks. Exact interfaces/dependencies documented in
+full_sources/archive-chunks-2026-10-02/NEXT_INTEGRATION.md. Full physical
+accounting and reviewed resource amendments still precede empirical admission.
 
 Reviewed conditional selected-payload lower bound249479184384B across9recorded
 resource graphs now includes compact pair events. Smallest graph22614280704B
