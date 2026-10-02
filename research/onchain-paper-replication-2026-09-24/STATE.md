@@ -26,7 +26,13 @@ both affected tests,37deselected8.95s, with unchanged production source. Final
 synthetic totals were4,644,864 allocated bytes /4,476,682 logical /51entries across
 three owned roots. This is mocked-guard tiny-model evidence, not actual user-unit
 or full graph feasibility. Original live-parent authority, bounded metadata and
-configured scratch containment are implemented but not yet independently accepted.
+configured scratch containment address prior NPH1–4. Independent acceptance remains
+withheld for NPH5–7: an in-flight fatal can be overwritten during authority join,
+construction cleanup can downgrade a fatal, and selected guard cleanup can lose
+fatal identity. Narrow candidate02 corrections and focused red/green evidence are
+authorized under the original source ownership; candidate01 remains preserved.
+REVIEW_CANDIDATE01 SHA256
+9b2056dd94ffa1c6579a814997f833ffd30c9ec3d2a5a5c2b14d2775b27e6559.
 Original-parent loss refuses disk-only recovery; durable terminal/remaining-cell
 publication can be unavailable. Raw/partial evidence remains retained. The author
 prepares the smallest fresh OS smoke without executing it while review continues.
@@ -39,19 +45,37 @@ candidate01 files and the correction are preserved. All nine cells/windows,
 43 provenance metadata pins/nine graph proofs, accepted exact62 budget and
 revision02 environment/workspace/parent bindings are retained. Source/runtime
 fields remain null; physical caps are proposed only, no namespaces are reserved
-and no admission occurred. Independent preparation review remains pending.
+and no admission occurred. Independent preparation review accepted this scope,
+REVIEW_CANDIDATE02 SHA256
+bf088b912c8819c465607b8bd70a64950ce354aea108ea9e0be0288cec5e6cc3.
+All48 input hashes and current absence of all three namespaces were verified.
 
 A separate read-only fidelity check compared20 model/numerical/config files
 against accepted ec7d9d65: all byte-identical. Evidence is
 full_sources/parallel-numerical-preservation-2026-10-02/check01.json SHA256
 34feb1c1ca48930f519384663442e815ae930685fc9f995e02626f2c0fb536ee.
-This supports unchanged selected files only, not changed wrapper equivalence.
+Independent numerical-preservation REVIEW SHA256
+e9a1e096264a93644fb108de827c8d5dd25d92b636c9b9bb529e75c3e7e12a55
+verified all20 exact Git blobs/current bytes. This supports unchanged selected
+files only, not changed wrapper equivalence.
 Latest RAM8,892,375,040B remains below9,663,676,416B startup; free disk
 19,661,029,376B exceeds10GiB floor. No empirical process is active. Coverage77/109
 and all1,420 pending financial fits remain unchanged. Next safe action: finish
 independent source/preparation reviews, checkpoint accepted evidence, then review
 and execute a fresh bounded OS smoke with complete frozen source before assembling
 the exact final empirical gate. Continue independent work if RAM admission fails.
+
+Accepted archive source/evidence checkpoint
+ed87418d219f52f9cc3c80bcb027f2c904abee5e is pushed with exact remote HEAD verified.
+The15-minute autonomous continuation remains ACTIVE and was updated with this
+checkpoint, physical correction ownership, accepted registration preparation and
+next smoke requirements. archive_transport continues a read-only assessment of
+outer job_payload archive transport injection/admission under
+full_sources/archive-outer-admission-2026-10-02/. admission_batching also prepares
+an unexecuted bounded actual-guard smoke proposal: invented8KiB artifact,64KiB
+file cap and bounded68KiB output attempt, no graph/Torch/ResearchRun. This targets
+kernel/guard failure-tail integration, not real neural capacity; it requires
+corrected-source acceptance and independent release review before execution.
 
 **October 2 active correction checkpoint — full archive route passed, physical review open**:
 The isolated owner04 archive-retention fixture CLOSED with1passed/1deselected in
