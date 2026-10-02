@@ -1,5 +1,39 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: storage scanner correction integrated;67 named checks pass.**
+Accepted candidate03 integrates exactly workflow_storage.py and resources.py:
+complete rescans remain bounded to3attempts under one deadline, hardlink-only
+rechecks retain each partial observation, accepted scans are single-link only,
+and first fatal failures/cleanup uncertainty remain terminal. The guard now
+persists fatal storage diagnostics before re-raising. Reviewed hashes match;
+67 named engineering tests pass in0.58s (26 encountered files withheld, not a
+full legacy-suite claim). No numerical or resource limits changed.
+
+Closed two-View proof01 raw/reviews were backed at
+`aff909645ac341b3cd8f004f8c39987ac1ae7fff`, exact remoteHEAD verified; fresh
+remote three-blob retrieval independently verified all3,764files/1,182directories.
+The initial verifier's incorrect archive-prefix assumption and correction are
+preserved; no fetch/workload was repeated. Recovery scope excludes separately
+retrieving the12outer evidence pins. Original failed identity remains closed.
+
+A new phase02 integration proposal adds a real child-process original Scope
+publication and an entry-limit refusal case to the accepted four-case protocol.
+Its proposed entry-tail hold increases16→18 (stricter active budget, same128entry
+cap), because closure needs17final entries plus publication headroom. Original
+16entry source/proposal is preserved. This additional source correction still
+requires independent review and actual bounded proof; production neural_physical
+and neural phase candidate have not been integrated yet. One unused engineering
+identity will be reserved only after exact release review/backup. No substantial
+job active. Exact neural03/63 draft metadata exists but remains intentionally
+blocked by final source/runtime/proof/gate/review/admission requirements.
+
+Next safe action: accept the precise phase02/entry-reserve source, run named
+physical checks, back up the exact release, then immediately execute the new
+bounded five-case Scope/journal integration proof. Complete the03registration in
+parallel and launch only after independent review.34spent/highest adopted62;
+coverage77/109/all1,420financialfits still pending. All13tasks/C01–C18/fullpaper
+scope remain authorized; neither closed failure nor lower accuracy vetoes it.
+
 **Latest checkpoint: no substantial job active; archive proof01 closed failed.**
 Session14698 returned1 after1,131.801s. Guard stopped the unit on
 `ValueError: storage hardlink refused`, with cleanupverified and no surviving

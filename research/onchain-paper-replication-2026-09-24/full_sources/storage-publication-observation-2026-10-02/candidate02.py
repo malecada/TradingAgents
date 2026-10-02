@@ -33,7 +33,7 @@ class HardlinkObservation(ValueError):
         self.history=[]
         super().__init__('storage hardlink refused: '+json.dumps(self.evidence,sort_keys=True))
 
-class StorageCleanupFailure(RuntimeError):pass
+class StorageCleanupFailure(BaseException):pass
 
 
 def _cleanup(action,primary=None):
@@ -42,7 +42,7 @@ def _cleanup(action,primary=None):
         if primary is not None:
             primary.add_note('storage descriptor close uncertainty: '+repr(error))
             if not isinstance(primary,Exception) or isinstance(primary,MemoryError):raise primary
-        if not isinstance(error,Exception) or isinstance(error,MemoryError):raise error from primary
+        if not isinstance(error,Exception) or isinstance(error,MemoryError):raise error
         failure=StorageCleanupFailure('storage owned close uncertain; no scan retry')
         failure.add_note(repr(error));raise failure from primary
 
@@ -73,19 +73,13 @@ class StorageWatch:
 
     def check(self):
         begin=time.monotonic();history=[]
-        try:return self._check(begin,history)
-        except BaseException as error:
-            prior=getattr(error.__cause__ or error.__context__,'observation',{})
-            _annotate(error,prior,history);raise
-
-    def _check(self,begin,history):
         for attempt in range(3):
             if time.monotonic()-begin>self.limits['max_scan_seconds']:
                 raise StorageLimit('time',{'hardlink_observations':history})
             try:
                 result=self._scan(begin)
             except HardlinkObservation as error:
-                history.append({**error.evidence,'partial_counts':{k:v for k,v in getattr(error,'observation',{}).items() if k in ('allocated_bytes','logical_file_bytes','regular_files','directories','entries')}});error.history=list(history)
+                history.append(error.evidence);error.history=list(history)
                 _annotate(error,{},history)
                 if attempt==2:raise
                 remaining=self.limits['max_scan_seconds']-(time.monotonic()-begin)
@@ -94,7 +88,7 @@ class StorageWatch:
                 time.sleep(min(.005,remaining))
                 continue
             except BaseException as error:
-                prior=getattr(error.__cause__ or error.__context__,'observation',{})
+                prior=getattr(error.__cause__,'observation',{})
                 _annotate(error,prior,history);raise
             result['scan_attempts']=attempt+1
             result['hardlink_observations']=history

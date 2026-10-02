@@ -1,0 +1,23 @@
+test_distinct_identity_cases (__main__.Checks.test_distinct_identity_cases) ... FAIL
+test_exact_source_membership (__main__.Checks.test_exact_source_membership) ... ok
+test_first_fatal_is_retained (__main__.Checks.test_first_fatal_is_retained) ... ok
+test_fixture_policy_near_cap_and_no_numerical_imports (__main__.Checks.test_fixture_policy_near_cap_and_no_numerical_imports) ... ok
+test_prepared_not_released (__main__.Checks.test_prepared_not_released) ... ok
+test_real_control_vector_and_refusal (__main__.Checks.test_real_control_vector_and_refusal) ... ok
+
+======================================================================
+FAIL: test_distinct_identity_cases (__main__.Checks.test_distinct_identity_cases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-phase-integration-preparation-2026-10-02/check_preparation01.py", line 17, in test_distinct_identity_cases
+    self.assertEqual(launcher.IDENTITY,'neural-phase-integration-20261002-01')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'archive-outer-owner-20261002-01' != 'neural-phase-integration-20261002-01'
+- archive-outer-owner-20261002-01
++ neural-phase-integration-20261002-01
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.027s
+
+FAILED (failures=1)

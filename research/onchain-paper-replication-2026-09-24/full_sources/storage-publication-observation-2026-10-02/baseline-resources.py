@@ -272,14 +272,9 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
         if storage_watch is None:return
         try:
             observation=storage_watch.check()
-        except BaseException as error:
-            try:
-                state['storage_last_error']=type(error).__name__+': '+str(error)
-                if hasattr(error,'observation'):state.setdefault('storage_breach',dict(error.observation))
-            except BaseException as diagnostic:
-                if not isinstance(error,Exception) or isinstance(error,MemoryError):raise error
-                if not isinstance(diagnostic,Exception) or isinstance(diagnostic,MemoryError):raise diagnostic from error
-                error.add_note('storage failure diagnostics unavailable: '+repr(diagnostic))
+        except Exception as error:
+            state['storage_last_error']=type(error).__name__+': '+str(error)
+            if hasattr(error,'observation'):state.setdefault('storage_breach',dict(error.observation))
             raise
         state['storage_observation']=observation
         for key in ('allocated_bytes','logical_file_bytes','entries'):

@@ -1,0 +1,54 @@
+E..E...E...............
+======================================================================
+ERROR: test_backoff_fatal_preserves_prior_history_and_partial_counts (__main__.Checks.test_backoff_fatal_preserves_prior_history_and_partial_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check03.py", line 180, in test_backoff_fatal_preserves_prior_history_and_partial_counts
+    obs=fatal.observation;self.assertEqual(obs['directories'],1)
+        ^^^^^^^^^^^^^^^^^
+AttributeError: 'KeyboardInterrupt' object has no attribute 'observation'
+
+======================================================================
+ERROR: test_exact_guard_capture_persists_fatal_diagnostics_and_reraises (__main__.Checks.test_exact_guard_capture_persists_fatal_diagnostics_and_reraises)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check03.py", line 207, in test_exact_guard_capture_persists_fatal_diagnostics_and_reraises
+    self.assertEqual(json.loads(json.dumps(state['storage_breach'])),fatal.observation)
+                                           ~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'storage_breach'
+
+======================================================================
+ERROR: test_later_first_real_fatal_promoted_after_ordinary_iterator_cleanup (__main__.Checks.test_later_first_real_fatal_promoted_after_ordinary_iterator_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check03.py", line 192, in test_later_first_real_fatal_promoted_after_ordinary_iterator_cleanup
+    with self.assertRaises(MemoryError) as caught:watch.check()
+                                                  ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate02.py", line 80, in check
+    result=self._scan(begin)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate02.py", line 157, in _scan
+    finally:_close(root_fd,primary)
+            ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate02.py", line 49, in _close
+    def _close(fd,primary=None):return _cleanup(lambda:os.close(fd),primary)
+                                       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate02.py", line 44, in _cleanup
+    if not isinstance(primary,Exception) or isinstance(primary,MemoryError):raise primary
+                                                                            ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate02.py", line 147, in _scan
+    visit(root_fd,0,Path('.'))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate02.py", line 141, in visit
+    finally:_cleanup(entries.close,iterator_primary)
+            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate02.py", line 47, in _cleanup
+    failure.add_note(repr(error));raise failure from primary
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+selected_watch.StorageCleanupFailure: storage owned close uncertain; no scan retry
+OSError('ordinary iterator close')
+storage descriptor close uncertainty: MemoryError('first real fatal')
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.022s
+
+FAILED (errors=3)

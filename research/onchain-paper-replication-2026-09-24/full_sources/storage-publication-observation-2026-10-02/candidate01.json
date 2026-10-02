@@ -1,0 +1,35 @@
+{
+  "accepted_scan": "every observed regular file singly linked; partial attempts discarded",
+  "aggregate_entry_visit_bound": "at most 3 * max_entries (max_entries remains per complete scan)",
+  "attempts": 3,
+  "baseline_source": "e0cb08b6bf763ffec0bb4058d5d1d89bd3977486",
+  "files": {
+    "baseline.py": {
+      "bytes": 5022,
+      "sha256": "a0b1bd5e3f73f22f3c5922740a8bddde0437c3c635ea372a6853d4d504e7751f"
+    },
+    "candidate.py": {
+      "bytes": 7624,
+      "sha256": "6a457acf1232b5f5a9543500565bfb9964bde9d96a21b73131a718ae67d468ef"
+    },
+    "check01.py": {
+      "bytes": 6528,
+      "sha256": "6ba496f764e5d28f8701207a16df11516c51a874f895f23e4d8ef69704873331"
+    },
+    "green01.log": {
+      "bytes": 111,
+      "sha256": "a9a62c93b51eee640410bdd1924c2eb7632ed5f8a5eac2ea425b405c1a8a196c"
+    },
+    "red01.log": {
+      "bytes": 10712,
+      "sha256": "0e7aa8018210cee5b2983967fdcab89db2c5991ad3008e04b4375782bb380a40"
+    }
+  },
+  "hardlink_only_rescans": 2,
+  "integration_target": "tradingagents/research/onchain_replication/workflow_storage.py",
+  "qualification": "Prospective observation policy change; no guarantee of no transient links or inter-sample growth. No source integration, admitted job or empirical result.",
+  "schema_version": 1,
+  "shared_deadline": "existing max_scan_seconds, including all traversals/waits/cleanup",
+  "status": "unintegrated_candidate_awaiting_independent_review",
+  "wait_seconds_per_retry": 0.005
+}

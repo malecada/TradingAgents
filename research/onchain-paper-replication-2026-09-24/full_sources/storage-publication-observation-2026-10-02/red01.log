@@ -1,0 +1,135 @@
+.EEEEFE..EEE
+======================================================================
+ERROR: test_first_fatal_retained_when_close_uncertain (__main__.Checks.test_first_fatal_retained_when_close_uncertain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/baseline.py", line 74, in check
+    info=os.fstat(root_fd)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+MemoryError: original fatal
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 94, in test_first_fatal_retained_when_close_uncertain
+    with self.assertRaises(MemoryError) as caught:watch.check()
+                                                  ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/baseline.py", line 85, in check
+    finally:os.close(root_fd)
+            ~~~~~~~~^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 92, in uncertain
+    def uncertain(fd):real(fd);raise OSError('later close')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: later close
+
+======================================================================
+ERROR: test_link_diagnostics_bounded_with_full_path_hash (__main__.Checks.test_link_diagnostics_bounded_with_full_path_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 104, in test_link_diagnostics_bounded_with_full_path_hash
+    self.pair();path='z'*2000;error=m.HardlinkObservation(path,(self.root/'a').stat())
+                                    ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'selected_watch' has no attribute 'HardlinkObservation'
+
+======================================================================
+ERROR: test_one_shared_deadline_includes_wait (__main__.Checks.test_one_shared_deadline_includes_wait)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 53, in test_one_shared_deadline_includes_wait
+    with mock.patch.object(m.time,'monotonic',side_effect=lambda:now[0]),mock.patch.object(m.time,'sleep',side_effect=advance),mock.patch.object(watch,'_scan',wraps=watch._scan) as scan:
+                                                                                                                                                                     ^^^^^^^^^^^
+AttributeError: 'StorageWatch' object has no attribute '_scan'
+
+======================================================================
+ERROR: test_persistent_link_refused_with_exact_bounded_evidence (__main__.Checks.test_persistent_link_refused_with_exact_bounded_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 43, in test_persistent_link_refused_with_exact_bounded_evidence
+    with self.assertRaises(m.HardlinkObservation) as caught:watch.check()
+                           ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'selected_watch' has no attribute 'HardlinkObservation'
+
+======================================================================
+ERROR: test_single_link_normal_scan_unchanged_accounting (__main__.Checks.test_single_link_normal_scan_unchanged_accounting)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 99, in test_single_link_normal_scan_unchanged_accounting
+    self.assertEqual(result['scan_attempts'],1);self.assertEqual(result['hardlink_observations'],[])
+                     ~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'scan_attempts'
+
+======================================================================
+ERROR: test_transient_link_requires_fresh_complete_single_link_scan (__main__.Checks.test_transient_link_requires_fresh_complete_single_link_scan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 26, in test_transient_link_requires_fresh_complete_single_link_scan
+    result=watch.check()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/baseline.py", line 77, in check
+    visit(root_fd,0)
+    ~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/baseline.py", line 71, in visit
+    else:account(before)
+         ~~~~~~~^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/baseline.py", line 48, in account
+    if info.st_nlink!=1:raise ValueError('storage hardlink refused')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: storage hardlink refused
+
+======================================================================
+ERROR: test_two_transient_links_need_third_fresh_scan (__main__.Checks.test_two_transient_links_need_third_fresh_scan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 36, in test_two_transient_links_need_third_fresh_scan
+    result=watch.check()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/baseline.py", line 77, in check
+    visit(root_fd,0)
+    ~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/baseline.py", line 71, in visit
+    else:account(before)
+         ~~~~~~~^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/baseline.py", line 48, in account
+    if info.st_nlink!=1:raise ValueError('storage hardlink refused')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: storage hardlink refused
+
+======================================================================
+ERROR: test_uncertain_close_refuses_retry_and_closes_real_descriptor (__main__.Checks.test_uncertain_close_refuses_retry_and_closes_real_descriptor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 88, in test_uncertain_close_refuses_retry_and_closes_real_descriptor
+    with self.assertRaises(m.StorageCleanupFailure):watch.check()
+                           ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'selected_watch' has no attribute 'StorageCleanupFailure'
+
+======================================================================
+FAIL: test_root_replacement_during_retry_refused (__main__.Checks.test_root_replacement_during_retry_refused)
+----------------------------------------------------------------------
+ValueError: storage hardlink refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check01.py", line 61, in test_root_replacement_during_retry_refused
+    with self.assertRaisesRegex(ValueError,'root replaced'):watch.check()
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "root replaced" does not match "storage hardlink refused"
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.017s
+
+FAILED (failures=1, errors=8)

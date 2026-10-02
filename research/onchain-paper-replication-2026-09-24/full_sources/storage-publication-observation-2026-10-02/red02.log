@@ -1,0 +1,88 @@
+F.E./home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate.py:103: ResourceWarning: unclosed scandir iterator <posix.ScandirIterator object at 0x75daadc17e30>
+  with os.scandir(fd) as entries:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+E..E.EE........F
+======================================================================
+ERROR: test_first_close_fatal_preserved (__main__.Checks.test_first_close_fatal_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check02.py", line 118, in test_first_close_fatal_preserved
+    with self.assertRaises(MemoryError) as caught:watch.check()
+                                                  ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate.py", line 67, in check
+    result=self._scan(begin)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate.py", line 134, in _scan
+    finally:_close(root_fd,primary)
+            ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate.py", line 46, in _close
+    failure.add_note(repr(error));raise failure from primary
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+selected_watch.StorageCleanupFailure: storage owned close uncertain; no scan retry
+MemoryError('first fatal at close')
+
+======================================================================
+ERROR: test_first_iterator_body_fatal_survives_iterator_close_error (__main__.Checks.test_first_iterator_body_fatal_survives_iterator_close_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check02.py", line 128, in test_first_iterator_body_fatal_survives_iterator_close_error
+    with self.assertRaises(KeyboardInterrupt) as caught:watch.check()
+                                                        ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate.py", line 67, in check
+    result=self._scan(begin)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate.py", line 125, in _scan
+    visit(root_fd,0,Path('.'))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/candidate.py", line 103, in visit
+    with os.scandir(fd) as entries:
+         ~~~~~~~~~~^^^^
+TypeError: 'Iterator' object does not support the context manager protocol
+
+======================================================================
+ERROR: test_persistent_history_and_partial_counts_guard_serializable (__main__.Checks.test_persistent_history_and_partial_counts_guard_serializable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check02.py", line 135, in test_persistent_history_and_partial_counts_guard_serializable
+    obs=caught.exception.observation
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'HardlinkObservation' object has no attribute 'observation'
+
+======================================================================
+ERROR: test_prior_link_history_survives_next_root_failure (__main__.Checks.test_prior_link_history_survives_next_root_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check02.py", line 145, in test_prior_link_history_survives_next_root_failure
+    self.assertEqual(len(caught.exception.observation['hardlink_observations']),1)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ValueError' object has no attribute 'observation'
+
+======================================================================
+ERROR: test_quota_after_link_retains_prior_link_history (__main__.Checks.test_quota_after_link_retains_prior_link_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check02.py", line 174, in test_quota_after_link_retains_prior_link_history
+    self.assertEqual(len(caught.exception.observation['hardlink_observations']),1)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'hardlink_observations'
+
+======================================================================
+FAIL: test_deadline_checked_after_successful_descriptor_cleanup (__main__.Checks.test_deadline_checked_after_successful_descriptor_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check02.py", line 112, in test_deadline_checked_after_successful_descriptor_cleanup
+    with self.assertRaises(m.StorageLimit) as caught:watch.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: StorageLimit not raised
+
+======================================================================
+FAIL: test_wait_clamped_to_remaining_common_budget (__main__.Checks.test_wait_clamped_to_remaining_common_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/storage-publication-observation-2026-10-02/check02.py", line 160, in test_wait_clamped_to_remaining_common_budget
+    self.assertEqual(len(waits),1);self.assertLessEqual(waits[0],.001000001)
+                                   ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0.005 not less than or equal to 0.001000001
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.024s
+
+FAILED (failures=2, errors=5)

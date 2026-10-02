@@ -1,0 +1,245 @@
+{
+  "extracted": false,
+  "fetch_commands": [
+    {
+      "elapsed_seconds": 1.5071505609994347,
+      "exit_code": 0,
+      "label": "capabilities",
+      "stderr_bytes": 0,
+      "stdout_bytes": 98
+    },
+    {
+      "elapsed_seconds": 0.10240038199845003,
+      "exit_code": 0,
+      "label": "init",
+      "stderr_bytes": 485,
+      "stdout_bytes": 152
+    },
+    {
+      "elapsed_seconds": 2.0233518880013435,
+      "exit_code": 0,
+      "label": "fetch",
+      "stderr_bytes": 115,
+      "stdout_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.10298013400097261,
+      "exit_code": 0,
+      "label": "fetched-commit",
+      "stderr_bytes": 0,
+      "stdout_bytes": 41
+    },
+    {
+      "elapsed_seconds": 0.10323400700144703,
+      "exit_code": 0,
+      "label": "commit-count",
+      "stderr_bytes": 0,
+      "stdout_bytes": 2
+    },
+    {
+      "elapsed_seconds": 3.0318025150008907,
+      "exit_code": 0,
+      "label": "retrieve-retained-tree01-tar-gz",
+      "stderr_bytes": 0,
+      "stdout_bytes": 10259036
+    },
+    {
+      "elapsed_seconds": 1.72068394300004,
+      "exit_code": 0,
+      "label": "retrieve-retained-tree01-json",
+      "stderr_bytes": 0,
+      "stdout_bytes": 1136382
+    },
+    {
+      "elapsed_seconds": 1.5181675469975744,
+      "exit_code": 0,
+      "label": "retrieve-execution-result01-json",
+      "stderr_bytes": 0,
+      "stdout_bytes": 4469
+    }
+  ],
+  "fetched_commit": "aff909645ac341b3cd8f004f8c39987ac1ae7fff",
+  "initial_verification_disposition": {
+    "correction": "Wrong assumed archive prefix; preserved original verifier and raw result. Offline second verifier used exact retained/ prefix on same remotely retrieved blobs. No new fetch.",
+    "error": "noncanonical or foreign archive member",
+    "status": "failed"
+  },
+  "isolated_directory": "/home/malecada/master_thesis/onchain-fixture-isolation/archive-two-view-backup-verification-20261002-01",
+  "limits": {
+    "command_stderr_bytes": 1048576,
+    "isolated_file_bytes": 67108864,
+    "packet_trace_bytes": 1048576,
+    "per_command_seconds": 120,
+    "total_isolated_bytes": 134217728
+  },
+  "member_verification": {
+    "all_member_count": 4946,
+    "archive_and_manifest_independently_retrieved": true,
+    "archive_extracted": false,
+    "commands": [
+      {
+        "elapsed_seconds": 0.10415474099863786,
+        "exit_code": 0,
+        "label": "object-inventory",
+        "stderr_bytes": 0,
+        "stdout_bytes": 19217
+      }
+    ],
+    "correction": "Initial verifier incorrectly expected fixture identity as archive prefix; exact actual archive prefix is retained. No network retry or blob substitution.",
+    "directory_members_verified": 1182,
+    "inherited_retrieved": {
+      "execution-result01.json": {
+        "bytes": 4469,
+        "sha256": "b94424c117df8b38929cda6c76f56cbdeecf660a5af36f198e22e92fa1f863eb"
+      },
+      "retained-tree01.json": {
+        "bytes": 1136382,
+        "sha256": "2fe57891f77ea4298082ed055e9711c3c65b0b42b6eb8b99008584e520049616"
+      },
+      "retained-tree01.tar.gz": {
+        "bytes": 10259036,
+        "sha256": "d95e68f8c88ed72495ef99ff72437967c93aa75f5665dd7c837eb5314d90de24"
+      }
+    },
+    "isolated_total_bytes": 23583046,
+    "limits": {
+      "command_stderr_bytes": 1048576,
+      "isolated_file_bytes": 67108864,
+      "packet_trace_bytes": 1048576,
+      "per_command_seconds": 120,
+      "total_isolated_bytes": 134217728
+    },
+    "logical_member_bytes": 27956390,
+    "network_operations": 0,
+    "object_counts": {
+      "blob": 3,
+      "commit": 1,
+      "tree": 3839
+    },
+    "original_remote_retrieval_result_sha256": "ecb67e9f42235455616ddf0425487cf26b8c828f40fb9437f1bddc5582fa0510",
+    "qualification": "Fresh shallow filtered fetch from configured origin, Git object validation plus full archive/member hashes. No extraction, code execution, financial work or shared-owner mutation. Does not establish backup service permanence or fresh-environment reproducibility.",
+    "regular_members_rehashed": 3764,
+    "requested_commit": "aff909645ac341b3cd8f004f8c39987ac1ae7fff",
+    "restored_code_executed": false,
+    "schema_version": 1,
+    "shared_repository_mutated": false,
+    "status": "verified"
+  },
+  "observed_at_utc": "2026-10-02T15:42:34.634366+00:00",
+  "qualified_scope": "Three remotely retrieved blobs only. All 3764 regular contents and 1182 directory modes verified. Outer12 result references not independently downloaded. Source, HEAD, runtime, inputs, original owner and empirical state untouched.",
+  "remote_branch_commit_at_check": "aff909645ac341b3cd8f004f8c39987ac1ae7fff",
+  "requested_commit": "aff909645ac341b3cd8f004f8c39987ac1ae7fff",
+  "restored_code_executed": false,
+  "retained_local_evidence": {
+    "capabilities.packet": {
+      "bytes": 6250,
+      "sha256": "e883803f1b231818a7be6bba1a9e3c5001fe17edeeeee0758b21e0c960775af1"
+    },
+    "capabilities.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "capabilities.stdout": {
+      "bytes": 98,
+      "sha256": "d2b7b6e90d349d5e7e7a351130ea557230bf103e5f43d0f8439481fec449f8d9"
+    },
+    "commit-count.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "commit-count.stdout": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "execution-result01.json": {
+      "bytes": 4469,
+      "sha256": "b94424c117df8b38929cda6c76f56cbdeecf660a5af36f198e22e92fa1f863eb"
+    },
+    "fetch.stderr": {
+      "bytes": 115,
+      "sha256": "3df0a51390bd456464eac966a10ad56f2d51d3555a4e57b7e1b7a7285670a63e"
+    },
+    "fetch.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fetched-commit.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fetched-commit.stdout": {
+      "bytes": 41,
+      "sha256": "ef9282e440e91a634b8690171c6b7399a720e1d5d5568d422c4bc8ac607f2a41"
+    },
+    "init.stderr": {
+      "bytes": 485,
+      "sha256": "7cc74f74cc8a8f9938bd00571e2c171ce3c59d048f2242a836ccca722182d430"
+    },
+    "init.stdout": {
+      "bytes": 152,
+      "sha256": "f328655a87af04bede84cbb87fe00f5e8f6b82bf2ddad49ee07551dfb6d52bce"
+    },
+    "object-inventory.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "object-inventory.stdout": {
+      "bytes": 19217,
+      "sha256": "a51af8758794e1665053f62435d80f78f9f5c027936768239befc607b61ea467"
+    },
+    "retained-tree01.json": {
+      "bytes": 1136382,
+      "sha256": "2fe57891f77ea4298082ed055e9711c3c65b0b42b6eb8b99008584e520049616"
+    },
+    "retained-tree01.tar.gz": {
+      "bytes": 10259036,
+      "sha256": "d95e68f8c88ed72495ef99ff72437967c93aa75f5665dd7c837eb5314d90de24"
+    },
+    "retrieve-execution-result01-json.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "retrieve-retained-tree01-json.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "retrieve-retained-tree01-tar-gz.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verification-members02-result.json": {
+      "bytes": 1975,
+      "sha256": "4e4a67d03c3db2ca41c5a27fb00d131890c61ba7e4cc60c8de61d081d8a2a863"
+    },
+    "verification-result.json": {
+      "bytes": 2595,
+      "sha256": "ecb67e9f42235455616ddf0425487cf26b8c828f40fb9437f1bddc5582fa0510"
+    },
+    "verify_members02.py": {
+      "bytes": 8388,
+      "sha256": "a14ab9e3f44dba12cd8fb9f1719e0180b0ff9eb383ad015340a87b33249364b2"
+    },
+    "verify_remote.py": {
+      "bytes": 10529,
+      "sha256": "3a31687dc6d1b1c63d3a590be2901ca10762f5f87d1fea27257b824c9c6eef79"
+    }
+  },
+  "retrieved": {
+    "execution-result01.json": {
+      "bytes": 4469,
+      "sha256": "b94424c117df8b38929cda6c76f56cbdeecf660a5af36f198e22e92fa1f863eb"
+    },
+    "retained-tree01.json": {
+      "bytes": 1136382,
+      "sha256": "2fe57891f77ea4298082ed055e9711c3c65b0b42b6eb8b99008584e520049616"
+    },
+    "retained-tree01.tar.gz": {
+      "bytes": 10259036,
+      "sha256": "d95e68f8c88ed72495ef99ff72437967c93aa75f5665dd7c837eb5314d90de24"
+    }
+  },
+  "schema_version": 1,
+  "server_filter_advertised": true,
+  "shallow_commit_count": 1,
+  "status": "verified"
+}

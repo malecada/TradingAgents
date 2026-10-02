@@ -1,0 +1,40 @@
+--- closed02/execution-job.json
++++ prospective03/execution-job.json
+@@ -9,7 +9,7 @@
+     "disk_paths": [
+       "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+     ],
+-    "memory_high_bytes": 3489660928,
++    "memory_high_bytes": 4026531840,
+     "memory_max_bytes": 4026531840,
+     "physical_policy": {
+       "max_allocated_bytes": 167772160,
+--- closed02/launch_scheduling.json
++++ prospective03/launch_scheduling.json
+@@ -7,6 +7,6 @@
+   "minimum_available_bytes": 7516192768,
+   "observation_count": 16,
+   "observation_interval_seconds": 2,
+-  "qualification": "Explicit stricter3.75GiBworker plus unchanged3GiBhostreserve=6.75GiBhardstartup; unchanged256MiBschedulingmargin gives7GiB. Same16fresh observations2sapartwithin60s,lastage<=1s immediately beforeONElaunch. Not a kernelreservation or fitguarantee. Prior4.5/5/6preparations and all failed/deferred attempts preserved. No actualRAM observation or claim by preparation; exact review/fullcommittedsource/gate/admission required; noautomaticretry.",
++  "qualification": "Prospective03 pressure-policy follow-up: 7GiB sustained availability, unchanged256MiB above6.75GiB guard startup and fixed3GiB reserve;16 observations2seconds apart within60seconds, last age<=1second. memory.high=max3.75GiB raises the old3.25GiB soft threshold; model/cells unchanged. Closed02 is spent. No saved readiness permit, retry or identity cycling.",
+   "schema_version": 1
+ }
+--- closed02/launch_once.py
++++ prospective03/launch_once.draft.py
+@@ -13,7 +13,7 @@
+ 
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+-EXPERIMENT='eth-paper-neural-resource-20261002-02'
++EXPERIMENT='eth-paper-neural-resource-20261002-03'
+ REGISTRATION=str((HERE/'gate.json').relative_to(ROOT))
+ 
+ 
+@@ -36,6 +36,7 @@
+ 
+ 
+ def main():
++    raise RuntimeError('UNRELEASED preparation: final source, exact independent budget/gate reviews and proof required')
+     parser=argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--source',required=True)
+     parser.add_argument('--observation',required=True,type=int)

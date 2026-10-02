@@ -33,30 +33,17 @@ class HardlinkObservation(ValueError):
         self.history=[]
         super().__init__('storage hardlink refused: '+json.dumps(self.evidence,sort_keys=True))
 
-class StorageCleanupFailure(RuntimeError):pass
+class StorageCleanupFailure(BaseException):pass
 
 
-def _cleanup(action,primary=None):
-    try:action()
+def _close(fd,primary=None):
+    try:os.close(fd)
     except BaseException as error:
         if primary is not None:
             primary.add_note('storage descriptor close uncertainty: '+repr(error))
             if not isinstance(primary,Exception) or isinstance(primary,MemoryError):raise primary
-        if not isinstance(error,Exception) or isinstance(error,MemoryError):raise error from primary
         failure=StorageCleanupFailure('storage owned close uncertain; no scan retry')
         failure.add_note(repr(error));raise failure from primary
-
-def _close(fd,primary=None):return _cleanup(lambda:os.close(fd),primary)
-
-
-def _annotate(error,observed,history):
-    try:
-        old=getattr(error,'observation',observed)
-        error.observation={**dict(old),'hardlink_observations':list(history)}
-    except BaseException as secondary:
-        if not isinstance(error,Exception) or isinstance(error,MemoryError):raise error
-        if not isinstance(secondary,Exception) or isinstance(secondary,MemoryError):raise secondary from error
-        error.add_note('storage diagnostic attachment unavailable: '+repr(secondary))
 
 class StorageWatch:
     def __init__(self,root,limits):
@@ -73,35 +60,23 @@ class StorageWatch:
 
     def check(self):
         begin=time.monotonic();history=[]
-        try:return self._check(begin,history)
-        except BaseException as error:
-            prior=getattr(error.__cause__ or error.__context__,'observation',{})
-            _annotate(error,prior,history);raise
-
-    def _check(self,begin,history):
         for attempt in range(3):
             if time.monotonic()-begin>self.limits['max_scan_seconds']:
                 raise StorageLimit('time',{'hardlink_observations':history})
             try:
                 result=self._scan(begin)
             except HardlinkObservation as error:
-                history.append({**error.evidence,'partial_counts':{k:v for k,v in getattr(error,'observation',{}).items() if k in ('allocated_bytes','logical_file_bytes','regular_files','directories','entries')}});error.history=list(history)
-                _annotate(error,{},history)
-                if attempt==2:raise
-                remaining=self.limits['max_scan_seconds']-(time.monotonic()-begin)
-                if remaining<=0:raise StorageLimit('time',error.observation) from error
-                # Close completed before retry; no interrupted scan is accepted.
-                time.sleep(min(.005,remaining))
+                history.append(error.evidence);error.history=list(history)
+                if attempt==2:
+                    error.add_note('all bounded hardlink observations: '+json.dumps(history,sort_keys=True))
+                    raise
+                # Descriptor cleanup already completed. This delay and every
+                # full re-scan share the original deadline; no link is admitted.
+                time.sleep(.005)
                 continue
-            except BaseException as error:
-                prior=getattr(error.__cause__ or error.__context__,'observation',{})
-                _annotate(error,prior,history);raise
             result['scan_attempts']=attempt+1
             result['hardlink_observations']=history
             result['aggregate_entry_visit_bound']=3*self.limits['max_entries']
-            elapsed=time.monotonic()-begin  # Includes final descriptor cleanup.
-            result['elapsed_seconds']=elapsed
-            if elapsed>self.limits['max_scan_seconds']:raise StorageLimit('time',result)
             result['qualification']+=' At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.'
             return result
         raise AssertionError('unreachable storage retry state')
@@ -125,8 +100,7 @@ class StorageWatch:
         flags=os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC
         def visit(fd,depth,relative):
             info=os.fstat(fd);account(info,relative)
-            entries=os.scandir(fd);iterator_primary=None
-            try:
+            with os.scandir(fd) as entries:
                 for entry in entries:
                     observed['entries']+=1;enforce()
                     before=os.stat(entry.name,dir_fd=fd,follow_symlinks=False)
@@ -143,8 +117,6 @@ class StorageWatch:
                         except BaseException as error:primary=error;raise
                         finally:_close(child,primary)
                     else:account(before,relative/entry.name)
-            except BaseException as error:iterator_primary=error;raise
-            finally:_cleanup(entries.close,iterator_primary)
         root_fd=os.open(self.root,flags);primary=None
         try:
             info=os.fstat(root_fd)
@@ -158,6 +130,5 @@ class StorageWatch:
             return {**observed,'elapsed_seconds':time.monotonic()-begin,'root':str(self.root),
                 'root_device':self.identity[0],'root_inode':self.identity[1],
                 'qualification':'Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee.'}
-        except BaseException as error:
-            primary=error;_annotate(error,observed,[]);raise
+        except BaseException as error:primary=error;raise
         finally:_close(root_fd,primary)

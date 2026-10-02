@@ -1,0 +1,108 @@
+{
+  "baseline_byte_equivalent_to_e0": true,
+  "baseline_source": "aff909645ac341b3cd8f004f8c39987ac1ae7fff",
+  "checks": {
+    "green_log": "green03.log",
+    "prior_failures_preserved": [
+      "red01.log",
+      "red02.log",
+      "red03.log"
+    ],
+    "pure_checks_passed": 23
+  },
+  "durable_failure_bridge": "resources.observe_storage captures BaseException diagnostics then re-raises the same first fatal; no suppression/dispatch retry",
+  "files": {
+    "REVIEW_CANDIDATE01.md": {
+      "bytes": 5979,
+      "sha256": "8dab0beeabe0a89ee0c0861ef0660dc9dac336cbac74f9b9f69d503e50f74672"
+    },
+    "REVIEW_CANDIDATE02.md": {
+      "bytes": 4707,
+      "sha256": "d940c4c9b14b98728acfa4cd9109992cae23551deb65eab8ef4f91f2d315b015"
+    },
+    "baseline-resources.py": {
+      "bytes": 30686,
+      "sha256": "3fef15ba0c26f3eefb85f7210a11180252dfde820c86c66296457ed41bb0707a"
+    },
+    "baseline.py": {
+      "bytes": 5022,
+      "sha256": "a0b1bd5e3f73f22f3c5922740a8bddde0437c3c635ea372a6853d4d504e7751f"
+    },
+    "candidate-resources03.py": {
+      "bytes": 31074,
+      "sha256": "b58a85744df475d267bf59a06130649bb66ef8e83d2ec0d57233b26355853047"
+    },
+    "candidate.py": {
+      "bytes": 7624,
+      "sha256": "6a457acf1232b5f5a9543500565bfb9964bde9d96a21b73131a718ae67d468ef"
+    },
+    "candidate01.json": {
+      "bytes": 1463,
+      "sha256": "4032113332cf328ad3f3c5a2d064a70d67859b37850052854cdf86fcec3e768e"
+    },
+    "candidate02.py": {
+      "bytes": 8893,
+      "sha256": "45b302f40d6dd6f3a8dedb53727ced6319345793ec4407097e572caa5d4db219"
+    },
+    "candidate03.py": {
+      "bytes": 9345,
+      "sha256": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554"
+    },
+    "check01.py": {
+      "bytes": 6528,
+      "sha256": "6ba496f764e5d28f8701207a16df11516c51a874f895f23e4d8ef69704873331"
+    },
+    "check02.py": {
+      "bytes": 10922,
+      "sha256": "a113e018439ba98b30206d58b929b1f64428193aff702f7b33861f7fe8bdc513"
+    },
+    "check03.py": {
+      "bytes": 13323,
+      "sha256": "e6d45c8230123ce71ccbb47affd3a083a43d8a64b5df39c242cd52a07a95fa47"
+    },
+    "green01.log": {
+      "bytes": 111,
+      "sha256": "a9a62c93b51eee640410bdd1924c2eb7632ed5f8a5eac2ea425b405c1a8a196c"
+    },
+    "green02.log": {
+      "bytes": 119,
+      "sha256": "31503230e36d8e43e62ace46f2caf83387e5a1dff128bbd85d8ac4daa732ad6a"
+    },
+    "green03.log": {
+      "bytes": 122,
+      "sha256": "327b3345ea30051e7d047286bca03afb9dcb72d56852460bd6c0cdad948e0e10"
+    },
+    "red01.log": {
+      "bytes": 10712,
+      "sha256": "0e7aa8018210cee5b2983967fdcab89db2c5991ad3008e04b4375782bb380a40"
+    },
+    "red02.log": {
+      "bytes": 7297,
+      "sha256": "bc7095c733d7d347ad364fdbe0a4f317e14b27c4f1fc656f43fb3f610e3ca8e6"
+    },
+    "red03.log": {
+      "bytes": 4705,
+      "sha256": "d3d08a9b1d5b6832a4e495e591c1252c188aed1a9d5d519eb5db866559ed4eee"
+    }
+  },
+  "limits": {
+    "backoff_seconds_at_most": 0.005,
+    "common_deadline": "max_scan_seconds includes traversal, all backoffs and final cleanup",
+    "entry_visit_bound": "3 * max_entries, per complete scan entry cap unchanged",
+    "hardlink_only_rescans": 2,
+    "max_attempts": 3
+  },
+  "qualifications": [
+    "Only a fresh complete single-link scan can be accepted; observed discarded links retained with each partial count set",
+    "Persistent links fatal; quota/type/path/root/fatal/uncertain-cleanup failures never retried",
+    "Common scan deadline can detect slow metadata syscalls after return, cannot preempt blocked syscall",
+    "Sampled non-atomic accounting; no hardquota/inter-sample-growth/no-transient-link guarantee",
+    "Two original source modules change; numerical code, Scope/lifecycle/transport publication and all resource limits unchanged"
+  ],
+  "schema_version": 1,
+  "selected_sources": {
+    "tradingagents/research/onchain_replication/resources.py": "b58a85744df475d267bf59a06130649bb66ef8e83d2ec0d57233b26355853047",
+    "tradingagents/research/onchain_replication/workflow_storage.py": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554"
+  },
+  "status": "unintegrated_candidate03_awaiting_independent_review"
+}
