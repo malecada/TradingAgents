@@ -1,3 +1,16 @@
+# Latest ownership — full04 unclaimed readiness deferral; parallel candidates
+
+No substantialjobactive/sourcefreezeENDED. Rootowns STATE/backup/full04exactgate
+andsolelaunch. Actualadmissionf689passed;observation01failed6.22<6.75GiB before
+job/claim/NS/budget.01immutable,next02freshcurrentHEADadmission+16x2s.35spent/adopt63.
+registration_review acceptedobservation01/recovery454f38ae andisavailablefornext
+release review. physical_correction ownsisolatedfinancial-streamed-execution
+candidateonly; physical_review ownsits independentsourcereview (authority04 narrow
+sourceacceptedd860). score_tail_archive ownsonlyNEW score-tail-archive-candidate
+source/bytefixtures/heldadapter, no live/SSH/numericjobs. Existingeventauthority
+cannotauthorize newtailpopulation; refuseduntilrealjoin. Alllive134sourceclosure
+staysreadyexactlypinned forneural04. No financialroute enabled/fit/C15capacityclaim.
+
 # Latest ownership — full04 release and phase identity correction
 
 No substantialnumericaljobactive/sourcefreeze. Root owns STATE/coordination,

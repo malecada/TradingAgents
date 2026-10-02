@@ -1,0 +1,11 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/original_import_stage.py
++++ tradingagents/research/onchain_replication/original_import_stage.py
+@@ -55,7 +55,7 @@
+         info=self.root.lstat();require((info.st_dev,info.st_ino)==self.inode,'import stage inode changed')
+         import_metadata.exact(self.root,'intent.json',self.intent)
+         expected={'intent.json'}|({'import-complete.json'} if self.closed else set())
+-        owners.entries(self.root,expected,required=expected)
++        owners.entries(self.root,expected,required=expected,_imported=True)
+         if self.closed:
+             require(self.materialized is self._materialized_pin,'materialized original replaced')
+             require(self.materialized._integrity()==self._numeric_record,'imported numeric/provenance changed')

@@ -1,0 +1,57 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate-2026-10-02/baseline/evaluation.py
++++ tradingagents/research/onchain_replication/evaluation.py
+@@ -13,6 +13,7 @@
+ from .dataset import example_binding
+ from .contracts import Prediction
+ from .model_registry import build_model,PRICE_ARMS,VECTOR_WIDTHS
++from . import financial_execution as financial
+ from .training import fit_cell,predict_cell,_reserve
+ from .cells import lifecycle_cell_id
+ from .cache import read_artifact
+@@ -40,8 +41,10 @@
+     return batch
+ 
+ 
+-def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config,provenance,*,expected_test_mask,feature_binding,output_directory=None,feature_binding_input=None,feature_binding_output=None,example_binding_input=None,example_binding_output=None,continuation=None,completed_fit=None):
++def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config,provenance,*,expected_test_mask,feature_binding,output_directory=None,feature_binding_input=None,feature_binding_output=None,example_binding_input=None,example_binding_output=None,continuation=None,completed_fit=None,execution=None):
+     """The caller admits graph/dictionary artifacts; this function enforces their binding."""
++    execution=financial.for_run(run,execution)
++    if financial.identity(provenance.get('model_execution'))!=execution or ('model_execution' in provenance)!=(execution is not None):raise ValueError('evaluation execution provenance differs')
+     examples.require_test_mask(expected_test_mask)
+     validate_scientific_cell(cell)
+     registered_id=lifecycle_cell_id(cell['id'])
+@@ -78,7 +81,7 @@
+     durable_mkdir(directory.parent);directory.mkdir(exist_ok=False);sync_directory(directory.parent)
+     _immutable(directory/'claim.json',{'scientific_id':cell['id'],'lifecycle_id':registered_id,'provenance':provenance,'test_mask_hash':expected_test_mask})
+     try:
+-        arm=cell['arm'];task=cell['task'];factory=lambda:build_model(arm,task,model_config)
++        arm=cell['arm'];task=cell['task'];factory=lambda:build_model(arm,task,model_config) if execution is None else build_model(arm,task,model_config,execution=execution)
+         train=batch_factory(arm,task,examples.train,scaler,features,permuted=arm=='training_label_permutation')
+         test=batch_factory(arm,task,examples.test,scaler,features)
+         if completed_fit is not None:
+@@ -88,6 +91,7 @@
+                 x,_=test(list(range(len(examples.test))));x=x['x'].numpy().reshape(len(examples.test),-1)
+                 prediction=expit(model.decision_function(x)) if task=='direction' else scaler.inverse(model.predict(x))
+             else:
++                financial.check_model(model,execution)
+                 output=predict_cell(model,test,len(examples.test),training_config['batch_size'])
+                 prediction=torch.softmax(output,1)[:,1].numpy() if task=='direction' else scaler.inverse(output[:,0].numpy())
+         elif arm=='svm':
+@@ -110,6 +114,7 @@
+                 raise
+         else:
+             fitted=fit_cell(run,registered_id,provenance,factory,train,len(examples.train),'classification' if task=='direction' else 'regression',cell['seed'],training_config,continuation=continuation)
++            financial.check_model(fitted.model,execution)
+             output=predict_cell(fitted.model,test,len(examples.test),training_config['batch_size']);checkpoint_hash=fitted.checkpoint_hash
+             prediction=torch.softmax(output,1)[:,1].numpy() if task=='direction' else scaler.inverse(output[:,0].numpy())
+         rows=[]
+@@ -173,7 +178,8 @@
+         model=joblib.load(checkpoint)
+     else:
+         data=read_artifact(checkpoint,old);state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True)
+-        model=factory();model.load_state_dict(state['model'],strict=True)
++        financial.validate_state(state,old)
++        model=factory();financial.check_model(model,old.get('model_execution'));model.load_state_dict(state['model'],strict=True)
+     return model,file_hash(checkpoint)
+ 
+ 

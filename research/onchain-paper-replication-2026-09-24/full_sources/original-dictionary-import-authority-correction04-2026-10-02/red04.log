@@ -1,0 +1,88 @@
+EEEFFF
+======================================================================
+ERROR: test_held_body_and_release_mixed_errors (__main__.ReviewChecks.test_held_body_and_release_mixed_errors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "exact_owner_boundaries", line 55, in _held
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/test_review04.py", line 61, in test_held_body_and_release_mixed_errors
+    with ns['_held'](owner):raise primary
+                            ^^^^^^^^^^^^^
+MemoryError: body
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/test_review04.py", line 61, in test_held_body_and_release_mixed_errors
+    with ns['_held'](owner):raise primary
+         ~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "exact_owner_boundaries", line 63, in _held
+owners.<locals>.CleanupFailure: compact transition release unresolved; worker must stop
+OSError('release')
+
+======================================================================
+ERROR: test_inventory_body_fatal_iterator_and_fd_close_once (__main__.ReviewChecks.test_inventory_body_fatal_iterator_and_fd_close_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/test_review04.py", line 40, in test_inventory_body_fatal_iterator_and_fd_close_once
+    with self.assertRaises(MemoryError) as got:ns['entries'](Path(tmp),{'x'},required=set(),_imported=True)
+                                               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: entries() got an unexpected keyword argument '_imported'
+
+======================================================================
+ERROR: test_inventory_ordinary_iterator_then_first_fd_fatal (__main__.ReviewChecks.test_inventory_ordinary_iterator_then_first_fd_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/test_review04.py", line 49, in test_inventory_ordinary_iterator_then_first_fd_fatal
+    with self.assertRaises(SystemExit) as got:ns['entries'](Path(tmp),set(),required=set(),_imported=True)
+                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: entries() got an unexpected keyword argument '_imported'
+
+======================================================================
+FAIL: test_journal_nested_owner_and_start_bytes_refused (__main__.ReviewChecks.test_journal_nested_owner_and_start_bytes_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/test_review04.py", line 87, in test_journal_nested_owner_and_start_bytes_refused
+    with self.assertRaises(ValueError):journal.seal('failed')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_journal_replaced_root_refused (__main__.ReviewChecks.test_journal_replaced_root_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/test_review04.py", line 68, in test_journal_replaced_root_refused
+    with self.assertRaises(ValueError):journal.seal('failed')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_journal_role_path_and_configuration_refused (__main__.ReviewChecks.test_journal_role_path_and_configuration_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/test_review04.py", line 78, in test_journal_role_path_and_configuration_refused
+    with self.assertRaises(ValueError):journal.seal('failed')
+                                       ~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/feature_journal.py", line 93, in seal
+    self._publish(path,{'schema_version':1,'status':status,'reason':reason,'owner':self.owner,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'workflow_identity':self.identity,'events':self.records,'parent':self.parent,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'required_graphs':self.required})
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/feature_journal.py", line 72, in _publish
+    elif self._metadata_role is None:_immutable(path,value)
+                                     ~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/test_corrections01.py", line 97, in <lambda>
+    ns['_immutable']=lambda *a:(_ for _ in ()).throw(AssertionError('legacy writer'))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction04-2026-10-02/test_corrections01.py", line 97, in <genexpr>
+    ns['_immutable']=lambda *a:(_ for _ in ()).throw(AssertionError('legacy writer'))
+AssertionError: legacy writer
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.100s
+
+FAILED (failures=3, errors=3)

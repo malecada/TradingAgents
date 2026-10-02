@@ -1,0 +1,79 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-authority-correction03-2026-10-02/compact_owner.py
++++ tradingagents/research/onchain_replication/compact_owner.py
+@@ -48,6 +48,9 @@
+ def _held(owner):
+     """Own one exact transition; its token cannot outlive or cross this scope."""
+     require(type(owner) is Owner, 'actual compact owner required')
++    if owner.required[0]=='dictionary-import':
++        with _held_import(owner) as token:yield token
++        return
+     lock = owner._transition
+     require(lock.acquire(blocking=False), 'concurrent compact owner transition')
+     token = _HeldTransition(owner, lock); owner._held_transition = token
+@@ -63,6 +66,27 @@
+             fatal.add_note(repr(error)); raise fatal from (primary if primary is not None else error)
+ 
+ 
++@contextmanager
++def _held_import(owner):
++    from . import import_metadata as import_io
++    lock=owner._transition
++    require(lock.acquire(blocking=False),'concurrent compact owner transition')
++    token=None
++    def release():
++        try:lock.release()
++        except BaseException:
++            owner.poisoned=True
++            raise
++    try:
++        token=_HeldTransition(owner,lock);owner._held_transition=token
++        token.check(owner);yield token;token.check(owner)
++    finally:
++        if token is not None:
++            object.__setattr__(token,'active',False)
++            if getattr(owner,'_held_transition',None) is token:del owner._held_transition
++        import_io.close_actions((release,))
++
++
+ def _stage_content(stage):
+     """Callback-free content only; callers supply active or terminal authority."""
+     if getattr(stage,'kind',None)=='dictionary-import':
+@@ -93,7 +117,10 @@
+     return raw
+ 
+ 
+-def entries(root, allowed, *, required):
++def entries(root, allowed, *, required,_imported=False):
++    if _imported:
++        from . import import_metadata as import_io
++        return import_io.entries(root,allowed,required=required)
+     path, fd = io._open(root)
+     try:
+         seen = set()
+@@ -245,7 +272,7 @@
+         self.bound.check(); self.lease()
+         allowed = {'owner.json'} | set(self.stages)
+         if self.closing: allowed.add('complete.json')
+-        entries(self.root, allowed, required={'owner.json'} | set(self.stages))
++        entries(self.root, allowed, required={'owner.json'} | set(self.stages),_imported=self.required[0]=='dictionary-import')
+         total = OWNER_BYTES
+         for name, stage in self.stages.items():
+             require(name == stage.name and stage.owner is self, 'compact stage membership changed')
+@@ -435,7 +462,7 @@
+         'current run terminal marker exists')
+     journal = Path(owner.bound.record['journal_directory'])
+     require(owner.bound._ancestry_arguments is None,'fresh compact owner required')
+-    entries(journal.parent,{journal.name},required={journal.name})
++    entries(journal.parent,{journal.name},required={journal.name},_imported=owner.required[0]=='dictionary-import')
+     require(not any(present(journal/name) for name in ('failed.json','complete.json')),
+         'representation terminal marker exists')
+     reader=matching_owner.metadata
+@@ -453,7 +480,7 @@
+         import_exact(owner.root,'owner.json',owner.start)
+     else:exact(owner.root,'owner.json',owner.start)
+     expected = {'owner.json'} | set(owner.stages)
+-    entries(owner.root,expected,required=expected)
++    entries(owner.root,expected,required=expected,_imported=owner.required[0]=='dictionary-import')
+     total = OWNER_BYTES
+     for name,stage in owner.stages.items():
+         require(name == stage.name and stage.owner is owner,'compact stage membership changed')
