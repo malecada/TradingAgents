@@ -3,6 +3,50 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 neural launch CLOSED before admission — no model running**:
+Actual metadata admission at source `560401500be2b1d774ca8443a7fb2108aadaa1ea`
+passed: effective budget62, serialized claim61,535B and request63,410B below
+256KiB. admission02.failed.json retains an earlier post-admission host check
+failure with no claim; admission03.json retains the successful check. A single
+launch of `eth-paper-neural-resource-20261002-01` then CLOSED launcherexit1,
+session34468. The OS guard refused `host reserve fell during cgroup setup`:
+9,648,578,560B available versus9,663,676,416B required, short15,097,856B
+(14.4MiB). The bootstrap exited125 before release; workload PID is null and
+no lifecycle claim/producer root was created. No graph/model/financial work ran.
+All nine neural requirements remain pending; coverage77/109 and1,420 financial
+fits remain unchanged. This is an availability refusal, not measured neural
+capacity or numerical disagreement.
+
+Kernel readback retained6GiB memory.max/5GiB memory.high/swap0 and two-CPU
+affinity; CPUQuota remains unavailable. Cleanup verified, cgroup absent, local
+unit failed with empty ControlGroup. Guard13.7MB sampled memory is bootstrap
+only. Physical pre-self65,536allocated/13,571logical/16entries and launcher
+post-self69,632/14,091/17 exclude the later518B monitor-failed receipt. The
+independent final retained-root reconstruction is73,728allocated/14,609logical/
+18entries. This qualification is recorded; the earlier sample is not described
+as complete final storage. Raw receipts and full_sources/neural-resource-release-
+2026-10-02/launch-result01.json are preserved for independent review.
+
+The launch/control namespace is terminal and reserved: NEVER relaunch this
+identity, despite no ResearchRun claim. The33 spent claims (27complete/6failed)
+and16 current mechanism claims are unchanged, with no refunds or fresh samples.
+The unused exact62 extension still names this identity as first adopter; a
+distinct successor needs explicit cumulative/first-adopter reconciliation,
+independent review, committed fresh source/gate and unchanged physical checks.
+The user's current RAM is the practical host ceiling; no smaller model or
+reduced reserve is authorized by that observation.
+
+No empirical process is active. Source freeze is released. physical_correction
+exclusively implements the accepted archive-outer-admission boundary in new
+archive_dispatch.py plus job_payload.py/archive_owner_writer.py/archive_owner_stage.py,
+new focused tests and dated evidence. Local tiny RED→GREEN checks only; no SSH,
+financial claim or heavy fixture until frozen review. physical_review owns the
+launch independent review, then archive review. Root owns state, outcome evidence,
+budget/successor preparation and backup. This supersedes all earlier ready-to-
+launch or active-agent wording below. Next safe action: close/review/back up this
+refusal, continue archive integration and prepare a reviewed distinct release
+without retrying the closed identity or changing its model/limits.
+
 **October 2 actual-admission ancestry correction — no claim consumed**:
 The first actual metadata-only admit at full source18610d913805c21d06c6dd5caf9f23ec768f5322
 refused invalid parent ancestry. The immediate retained resource parent itself

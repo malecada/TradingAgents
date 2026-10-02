@@ -1,5 +1,43 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Current owners after the closed neural launch
+
+This section supersedes all historical assignments below. Source `560401500be2b1d774ca8443a7fb2108aadaa1ea`
+was committed and externally verified before the single neural-capacity launch.
+`eth-paper-neural-resource-20261002-01` CLOSED not_admitted, launcherexit1,
+session34468: guard availability short15,097,856B during setup, no workload release
+or lifecycle claim. No empirical process is active; this identity is terminal and
+must never be relaunched. Independent launch review is accepted in
+neural-resource-release-2026-10-02/REVIEW_LAUNCH01.md. Later launcher failure
+publication was physically accounted/enforced; earlier final-observation totals
+preceded that publication and are explicitly qualified. No source fix is needed
+for enforcement on that evidence. Final retained root73,728allocated/14,609logical/
+18entries. Source freeze has been released.
+
+- Root: STATE, closed-launch manifest/backup, prospective successor/budget
+  reconciliation and final source/gate release. No current source edits.
+- physical_correction: new archive_dispatch.py, narrow job_payload.py,
+  archive_owner_writer.py, archive_owner_stage.py, NEW focused tests and
+  archive-outer-dispatch-implementation-2026-10-02/ evidence. Accepted
+  archive-outer-admission PATCH_BOUNDARY/REVIEW defines the task. Tiny local
+  engineering only; no SSH/empirical run or heavy owner fixture before freeze.
+- physical_review: launch review completed; available for independent archive
+  candidate review. Only independent review documents, no source ownership.
+- registration_review: independent review of budget-first-adopter-reconciliation-
+  2026-10-02/. New proposed identity `eth-paper-neural-resource-20261002-02` remains
+  unreserved and unadmitted. Original exact62 objects are preserved. Review must
+  prove unchanged full33-spent population and no prior adoption/refund before
+  accepting the explicitly changed first adopter. Current source is mutable and
+  supplies no release proof.
+
+The user's current RAM is the practical host ceiling. Existing6GiBworker,
+3GiBhostreserve/9GiBstartup and10GiBdiskfloor remain. A successor can only start
+after reviewed cumulative reconciliation, complete frozen source/gate and fresh
+host/OS checks; no silent model/reserve reduction or closed-identity retry.
+Continue independent work while availability blocks. All77/109 coverage and
+1,420 pending financial fits remain. Source-admitted tests require an immutable
+full-package snapshot; one substantial resource fixture at a time.
+
 The user explicitly requested parallel unattended continuation. The existing
 paper-replication-progress heartbeat was updated through the app tool, preserving
 ACTIVE status, 15-minute cadence, thread target and quiet routine notifications.
