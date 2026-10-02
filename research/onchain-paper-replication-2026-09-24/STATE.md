@@ -3,7 +3,7 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Latest handoff — October 2, compact executor accepted; training check active**:
+**Latest handoff — October 2, compact executor accepted; maintained fit check active**:
 Terminal/native feature checkpoint26ea4fa329d66d93c0daa5e5c22e0e83a6623252 was
 committed, pushed and exact remote HEAD verified. Complete fresh compact producer
 and executor dispatch now independently accepted, REVIEW
@@ -14,16 +14,24 @@ by preflight-check01 CLOSED2passed69.42s. Dispatch/old-route check01 CLOSED
 producer test claim. Dispatch tests stub fitting, while producer tests use the
 actual synthetic compact chain and a mocked OS guard.
 
-Next independent verification already started: full_sources/compact-native-training-2026-10-02/
-check01.log, session56350, one actual compact producer -> native features -> full
-trainable MLP/GAT/attention-LSTM forward/backward/Adam update. Two motifs and two
-time steps are explicit synthetic fixture dimensions; production512samples,
-32motifs,28days,100epochs and all financial cells remain unchanged. This is not
-an empirical fit or actual OS-guarded full executor check. **Package source freeze
-until session56350 terminates.** Do not duplicate it. Root owns this job/source;
-independent reviewer owns REVIEW*.md. Next safe action: inspect this same check,
-resolve findings, then continue feasible storage/resource preparation and guarded
-synthetic integration before empirical admission.
+Full-model gradient check full_sources/compact-native-training-2026-10-02/
+check01.log CLOSED1passed413.72s/session56350exit0. Independent REVIEW accepted
+749677ba1dcaadd7fe399c6015fc601d4f531df75519b0af740b843da20238f4.
+Actual compact inputs pass forward/backward/Adam and full finalization. This is
+one direction step with manual /100 scaling, aggregate graph/temporal updates
+and a mocked OS guard; not maintained scaler/fit/checkpoint or empirical evidence.
+
+Next verification immediately started: full_sources/compact-native-fit-2026-10-02/
+check01.log, ACTIVE session24496. Actual fresh compact features feed both registered
+synthetic classification/regression cells through maintained fit_scaler,
+batch_factory, fit_cell (two epochs), predictions and checkpoint reload, duplicate
+claim refusal, storage release and terminal fullfinalize. Two motifs/two steps/
+two epochs are explicit fixture dimensions; production512samples/32motifs/
+28days/100epochs unchanged. OS guard is mocked, not a guarded executor claim.
+**Package source freeze until session24496 terminates.** Do not duplicate it.
+Root owns source/tests/state; reviewer owns REVIEW*.md. Next safe action: inspect
+that same check, resolve findings, then feasible storage/resource preparation
+and actual guarded synthetic integration before empirical admission.
 
 Reviewed conditional selected-payload lower bound249479184384B across9recorded
 resource graphs now includes compact pair events. Smallest graph22614280704B
