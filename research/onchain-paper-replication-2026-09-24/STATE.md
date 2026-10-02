@@ -37,8 +37,12 @@ Reviewed conditional selected-payload lower bound249479184384B across9recorded
 resource graphs now includes compact pair events. Smallest graph22614280704B
 before omitted checkpoint/dictionary/graph/header/scratch/physical costs. Both
 existing local volumes have only about21–22GB free, and10GiB floor remains.
-Storage Box archive capacity does not satisfy the current local same-device
-reader/writer contract. Prepare and verify a retained-evidence storage/disposition
+Read-only strict-key SSH capacity check now confirms Storage Box available
+5356308398080B (about5.36TB decimal), exit0; exact output and receipt in
+full_sources/compact-workflow-accounting-2026-10-02/remote-capacity01.*.
+No remote files written or capacity reserved. Archive capacity is sufficient
+for the selected249GB lower bound, but does not satisfy the current local
+same-device reader/writer contract. Prepare and verify a retained-evidence storage/disposition
 route compatible with final full-content checks, or document the exact external
 capacity needed; never delete prior evidence or silently drop per-pair history.
 Continue independently executable engineering when storage blocks empirical work.
