@@ -3,6 +3,35 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Latest durable handoff — accepted source saved; parallel next steps running**:
+Accepted neural runner and registration preparation are committed at
+ ec7d9d659396bd3af215a1960e4d749c6d8dbae8 and the exact remote HEAD was verified.
+The app automation service recovered: paper-replication-progress was successfully
+updated through the tool, preserving ACTIVE15-minute cadence and thread target.
+Its prompt now records current accepted source, parallel integration/physical
+accounting ownership, unresolved admission and quiet routine behavior.
+The earlier tool errors below are preserved history, not the current status.
+
+archive_transport started restart-retention-integration red01 against tiny
+invented graphs and the real matching engine/archive log, with no actual-owner
+source scan. It targets FIRST replay before bounded stop and lazy zero-checkpoint
+behavior; inspect its red01 evidence/agent before any further invocation. The
+closed earlier attempts remain closed. Source ownership is in COORDINATION.md.
+
+The independent physical-admission investigation identified concrete remaining
+work: the existing single-root storage watcher needs a root that already exists,
+whereas the exact launch base must be created once by launch. Producer outputs,
+lifecycle receipts and guard logs occupy three separate roots. The64MiB plan
+ceiling covers producer and lifecycle outputs only; child.log currently has no
+byte cap. These source-backed findings await a frozen report and independent
+review by owner_closure_review before any correction is adopted. No full-workflow
+physical admission follows from available free disk. Latest investigator's
+stat-only observation:9,220,202,496 RAM bytes available, still below9,663,676,416
+required for the proposed worker and reserve. No empirical process was launched.
+Root continues final registration preparation after the physical route is reviewed;
+archive-stage implementation continues independently. Coverage remains77/109 and
+all1,420 financial fits pending.
+
 **October 2 continuation — neural runner accepted; stage integration active**:
 Neural candidate03 is independently accepted for bounded synthetic engineering.
 REVIEW_FINAL SHA256b3871fc9ca140e160b2c76b33392fc746bf714dba25c94a3b9c5a174abd9a5ab.
