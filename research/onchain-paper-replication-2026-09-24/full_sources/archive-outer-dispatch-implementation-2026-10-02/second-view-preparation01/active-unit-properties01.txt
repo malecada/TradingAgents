@@ -1,0 +1,12 @@
+TimeoutStopUSec=2s
+RuntimeMaxUSec=30min
+ControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-1f96db3a9f2548cfb995676f5ccf0080.service
+MemoryHigh=2147483648
+MemoryMax=3221225472
+MemorySwapMax=0
+LimitFSIZE=4194304
+LimitFSIZESoft=4194304
+KillMode=control-group
+SendSIGKILL=yes
+ActiveState=active
+SubState=running

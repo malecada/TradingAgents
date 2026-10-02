@@ -1,7 +1,87 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: no substantial job active; archive proof01 closed failed.**
+Session14698 returned1 after1,131.801s. Guard stopped the unit on
+`ValueError: storage hardlink refused`, with cleanupverified and no surviving
+cgroup or original PIDs. Sampled peak546,107,392B; all memory event counters0.
+The final tree contains no surviving hardlink; the offending transient path was
+not recorded and remains unknown. Existing lifecycle/transport immutable
+publication briefly creates multiple links, so a scan/publication conflict is
+plausible, not uniquely proved. First-case owners and outer completed, but the
+fixture expected20 dictionary comparisons for both seeds while seed13 produced22.
+The only pytest text is F; no final traceback/summary survives. Second-case
+injected download failure occurred, but guard interruption prevented complete
+outer/lifecycle closure. This proof has not passed; identity01 is permanently
+closed. Financial fitting was mocked; zero model fits.
+
+All3,764files/1,182directories/4,946entries are retained unchanged, including
+partial failures, original source and nested synthetic Git stores. Complete
+42,303,488allocatedB/27,956,390logicalB snapshot and full recovery archive
+(10,259,036B; SHA256 d95e68f8c88ed72495ef99ff72437967c93aa75f5665dd7c837eb5314d90de24)
+are in second-view-preparation01. Independent execution review and external
+backup are in progress. Original sampled accounting is not final accounting.
+Sourcefreeze ended after verified closure; no old identity will be reopened.
+
+Parallel ownership: root prepares only a new storage-observation candidate;
+physical_correction prepares a tiny real-Scope/parent-socket phase-journal proof;
+physical_review verifies the failed archive tree; registration_review identifies
+exact prospective03 registration requirements. The accepted phase candidate is
+still unintegrated: all20 markers across9cells, original authority, complete
+artifact/tail accounting and fatal/refusal preservation need actual synthetic
+integration proof. A bounded fresh-scan policy is an explicit prospective change:
+only link observations may trigger at most2 rescans, with one shared time budget;
+accepted scans still refuse every multiple-link file, persistent links remain
+fatal, no quota/type/path/fatal error is retried, and aggregate entry visits can
+reach3times the per-scan bound. Candidate source/tests remain separate.
+
+Next safe action: review/push/recover closed evidence, independently review and
+integrate the storage-observation correction, then execute one distinct bounded
+phase-journal proof. Prepare the exact neural03 charter/63 allocation/history/gate/
+caller in parallel; no empirical successor is currently registered or admitted.
+34closed/27complete7failed/highestadopted62, coverage77/109 and all1,420fits remain
+unchanged. The full architecture and both-assets/history/comparison scope remain.
+No system OOMD settings change, no refunds, and no automatic cap escalation.
+
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
+
+**ACTIVE single two-View archive proof; neural failure externally recovered.**
+The closed neural raw/reviews and exact23-resource map were committed/pushed at
+`e0cb08b6bf763ffec0bb4058d5d1d89bd3977486`, actual remote HEAD verified.
+Fresh independent recovery retrieved its archive/manifest/result and verified
+all20files/11directories without extraction or execution. Recovery reports
+remain uncommitted while the next source-bound job runs. This establishes
+retention of the failed attempt, not neural capacity or model accuracy.
+
+The accepted distinct two-View release is now running, session14698, identity
+`archive-outer-two-view-20261002-01`, monitor511886, unit
+`onchain-replication-1f96db3a9f2548cfb995676f5ccf0080.service`.
+Released-spec01 SHA256
+`b45c937a514ecc51f7aa967a7521828297820c8513d5472a3e07ce1ce4fa130f`
+differs from accepted preparation only in release status and expected shared
+HEADe0cb08b6. REVIEW_RELEASE01 accepted all bindings. The isolated1,883-file
+source remains c51Gitbase plus the declared corrected fixture. A single
+invocation reserved the new root; no historical identity was reused.
+Native controls read back3GiBmax/2GiBhigh/swap0,4MiBhard+softfile and30minunit
+deadline. First case is in progress; no final two-View result is claimed.
+Financial execution remains mocked, zero forecasting fits. No other substantial
+job. Keep HEAD/source/inputs/runtime/spec/launcher frozen until closure;
+progress/recovery reports stay uncommitted. Retain all raw/failed attempts and
+verify complete final accounting/cleanup before backup and next execution.
+
+In parallel, bounded phase-receipt implementation is being prepared exclusively
+as dated candidate source/tests, without editing the active checkout's package
+or selected inputs. The pressure diagnosis confirms shared graph encoding is
+already cached once per forward; no additional deduplication is assumed.
+Allocation pressure could occur during graph copies/validation or GAT/autograd;
+the exact killed phase is unknown because no phase receipt was durable.
+Before a further neural probe, bounded phase journals and independent review are
+required. A prospective high=max3.75GiB resource variant with unused identity03
+would require NEWceiling63=34spent+12body+15financial+1neuralfollowup+1other,
+full history/repeat-source disclosure and exact pre-execution review/backup.
+It is not registered/admitted by this checkpoint; OOMD remains unchanged, no
+capacity guarantee or refund. No source or gate change occurs while this proof
+is active. Full109resource/1,420financialfit/paperasset-history scope persists.
 
 **Neural02 CLOSED failed; pressure-kill cause verified.**
 Session4945 returned1. The original unit journal and systemd-oomd journal identify

@@ -1,0 +1,9 @@
+# Independent bounded active observation
+
+The registered two-case invocation was still active during this read-only observation. Its combined child log contained only `F`; no pytest summary or traceback was yet available. No final acceptance, failure-cause classification, resource verdict or retry follows from this note.
+
+The first case's retained outer terminal is complete with 50 commands, 806,400 logical reserved bytes and 1,005,216 rounded reserved bytes. Both scientific owner completion markers are present. All ledger/publication hashes in first-view-carry-forward.json still match their original files at observation. The first synthetic ResearchRun has its deliberate fixture-teardown failed.json. The second case had begun and remained in its first representation.
+
+A concrete candidate assertion mismatch is visible: the first representation's dictionary stage-complete contract has 20 pairs, whereas the second representation's contract has 22 pairs. Each completed representation has two MCM stages of six pairs. The reviewed fixture's success branch requires dictionary pairs equal20 for every representation, although it changes the second representation's seed from12 to13. This difference is consistent with the first failure indicator; the eventual traceback must establish which assertion actually failed. The previously successful seed12 count is not an independently derived invariant for seed13. Production numerical behavior and the admitted source must remain unchanged while the invocation finishes.
+
+Inspection read only named small JSON evidence and the current child log. No source/spec/HEAD changes, imports, tests, numerical work, guard actions, job dispatch, SSH or owned-tree mutation occurred. Final raw preservation and independent result/accounting review remain necessary after closure.

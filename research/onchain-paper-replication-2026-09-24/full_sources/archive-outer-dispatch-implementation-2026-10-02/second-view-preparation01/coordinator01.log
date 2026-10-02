@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/second-view-preparation01/launcher02.py", line 187, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/second-view-preparation01/launcher02.py", line 185, in main
+    return worker(path,spec,args.sha256) if args.mode=='--worker' else launch(path,spec,args.sha256)
+                                                                       ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/second-view-preparation01/launcher02.py", line 175, in launch
+    if primary is not None:raise primary
+                           ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/second-view-preparation01/launcher02.py", line 168, in launch
+    if result.get('phase')!='complete' or not result.get('cleanup_verified'):raise RuntimeError('guard did not complete with verified cleanup')
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: guard did not complete with verified cleanup

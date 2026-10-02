@@ -1,0 +1,112 @@
+{
+  "actual_model_financial_fits": 0,
+  "archive_members_rehashed": 3764,
+  "automatic_retry": false,
+  "cleanup_verified": true,
+  "coordinator_elapsed_seconds": 1131.8010370990014,
+  "coordinator_source": "e0cb08b6bf763ffec0bb4058d5d1d89bd3977486",
+  "exact_transient_hardlink_path": "unknown; not recorded by original scanner",
+  "exit_code": 1,
+  "final_allocated_bytes": 42303488,
+  "final_entries": 4946,
+  "final_logical_file_bytes": 27956390,
+  "final_minus_last_sample_allocated_bytes": 12288,
+  "fixture_cases_passed": 0,
+  "full_retained_directories": 1182,
+  "full_retained_files": 3764,
+  "full_retained_manifest_sha256": "2fe57891f77ea4298082ed055e9711c3c65b0b42b6eb8b99008584e520049616",
+  "guard_elapsed_seconds": 1131.0633667809998,
+  "guard_last_storage_observation": {
+    "allocated_bytes": 42291200,
+    "directories": 1182,
+    "elapsed_seconds": 0.055994235999605735,
+    "entries": 4943,
+    "logical_file_bytes": 27950311,
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee.",
+    "regular_files": 3762,
+    "root": "/home/malecada/master_thesis/onchain-fixture-isolation/archive-outer-two-view-20261002-01",
+    "root_device": 66310,
+    "root_inode": 10357147
+  },
+  "identity": "archive-outer-two-view-20261002-01",
+  "known_original_pids_absent": true,
+  "limit_reason": "ValueError: storage hardlink refused",
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "original_identity_closed_forever": true,
+  "outer_evidence": {
+    "REVIEW_ACTIVE_OBSERVATION01.md": {
+      "bytes": 1827,
+      "sha256": "51e2bcddc47e7ba1a0a17311c6c997fb943eae27b999d685d05914043b1fb45a"
+    },
+    "REVIEW_RELEASE01.md": {
+      "bytes": 4261,
+      "sha256": "6c3ae3ee6e7402abd830e8a5f411ed35e80f2c675c4f60b4a4c935b886b7048b"
+    },
+    "active-controls01.json": {
+      "bytes": 837,
+      "sha256": "b2a706841ee83996ea8fa562033c7c4d4f23042fcbbcf5761f6ff96c11e844fd"
+    },
+    "active-unit-properties01.txt": {
+      "bytes": 346,
+      "sha256": "9ef80d7c0c639b40ad1babeb9726cf29e1975ac428dea83a593528218ff65204"
+    },
+    "closed-unit-properties01.txt": {
+      "bytes": 85,
+      "sha256": "437540ca034328f152f879a7356e047af4b24094570ddc1ad8b7ededb0228146"
+    },
+    "coordinator-result01.json": {
+      "bytes": 240,
+      "sha256": "26ef9a0e69ea482c43b2c1fef9db228dccd08bf7d2b3ae9c832383b13c3562ff"
+    },
+    "coordinator01.log": {
+      "bytes": 1703,
+      "sha256": "f8944747bf171f713559b7600a0b9006f4f9f1c9e84c759b6909941e90071913"
+    },
+    "launch-intent01.json": {
+      "bytes": 1243,
+      "sha256": "7b10c7a25cee5555ab336d36fbc77371c54dfc6af3c3e003b10f903c63ae192f"
+    },
+    "launcher02.py": {
+      "bytes": 10797,
+      "sha256": "9d38e03cec4e8235552c9b401b6f4022460394d3737685a6415be99d909ec35a"
+    },
+    "release-manifest01.json": {
+      "bytes": 1486,
+      "sha256": "bfa0da00f5a4ebf001764a8d75c70b8188109ed78201af59c72e5d5ad3a5e990"
+    },
+    "released-spec01.json": {
+      "bytes": 312987,
+      "sha256": "b45c937a514ecc51f7aa967a7521828297820c8513d5472a3e07ce1ce4fa130f"
+    },
+    "test_second_view_candidate02.py": {
+      "bytes": 17374,
+      "sha256": "3ca94fab417b6fb5a518037f5391d81d650f97ba4eec6f4a7819d2c1611722a7"
+    }
+  },
+  "pytest_log": "F\\n only; final traceback and summary absent after guard interruption",
+  "qualification": "Failed synthetic two-View outer-owner integration. First case owners and outer completed before an F, but fixture success not established; second case interrupted. Financial/internal guard mocked and local children replace SSH. Exact F traceback unavailable. Full original raw/source/nested Git/partial failures retained.",
+  "real_SSH_or_transport_capacity_proven": false,
+  "recovery_archive_bytes": 10259036,
+  "recovery_archive_sha256": "d95e68f8c88ed72495ef99ff72437967c93aa75f5665dd7c837eb5314d90de24",
+  "sampled_peak_memory_bytes": 546107392,
+  "schema_version": 1,
+  "second_case_complete": false,
+  "session": 14698,
+  "source_snapshot_commit": "c51e868f8338ee0a8310251afaefe9e0695daf4f",
+  "status": "failed_pending_independent_execution_review",
+  "unit": "onchain-replication-1f96db3a9f2548cfb995676f5ccf0080.service",
+  "unit_current_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "125",
+    "Result": "exit-code",
+    "SubState": "failed"
+  }
+}

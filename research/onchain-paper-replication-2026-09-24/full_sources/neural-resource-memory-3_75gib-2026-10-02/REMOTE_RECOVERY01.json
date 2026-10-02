@@ -1,0 +1,206 @@
+{
+  "all_member_count": 31,
+  "archive_and_manifest_independently_retrieved": true,
+  "archive_extracted": false,
+  "commands": [
+    {
+      "elapsed_seconds": 1.5083643379985006,
+      "exit_code": 0,
+      "label": "capabilities",
+      "stderr_bytes": 0,
+      "stdout_bytes": 98
+    },
+    {
+      "elapsed_seconds": 0.10299508000025526,
+      "exit_code": 0,
+      "label": "init",
+      "stderr_bytes": 485,
+      "stdout_bytes": 142
+    },
+    {
+      "elapsed_seconds": 2.1215359509988048,
+      "exit_code": 0,
+      "label": "fetch",
+      "stderr_bytes": 115,
+      "stdout_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.10275363799883053,
+      "exit_code": 0,
+      "label": "fetched-commit",
+      "stderr_bytes": 0,
+      "stdout_bytes": 41
+    },
+    {
+      "elapsed_seconds": 0.1034677660009038,
+      "exit_code": 0,
+      "label": "commit-count",
+      "stderr_bytes": 0,
+      "stdout_bytes": 2
+    },
+    {
+      "elapsed_seconds": 1.5173865090000618,
+      "exit_code": 0,
+      "label": "retrieve-retained-tree01-tar-gz",
+      "stderr_bytes": 0,
+      "stdout_bytes": 23725
+    },
+    {
+      "elapsed_seconds": 1.5169654340006673,
+      "exit_code": 0,
+      "label": "retrieve-retained-tree01-json",
+      "stderr_bytes": 0,
+      "stdout_bytes": 8638
+    },
+    {
+      "elapsed_seconds": 1.5189278359994205,
+      "exit_code": 0,
+      "label": "retrieve-execution-result01-json",
+      "stderr_bytes": 0,
+      "stdout_bytes": 4998
+    },
+    {
+      "elapsed_seconds": 0.10281663600108004,
+      "exit_code": 0,
+      "label": "object-inventory",
+      "stderr_bytes": 80,
+      "stdout_bytes": 19192
+    }
+  ],
+  "directory_members_verified": 11,
+  "execution_session": {
+    "exit_code": 0,
+    "id": 79182
+  },
+  "fetched_commit": "e0cb08b6bf763ffec0bb4058d5d1d89bd3977486",
+  "isolated_directory": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-backup-verification-20261002-01",
+  "isolated_raw_result_sha256": "301019f426974cf66313c5a41c23a76756ec62e2c759c318d8b9cb6f1997a1db",
+  "isolated_total_bytes": 1790681,
+  "limits": {
+    "command_stderr_bytes": 1048576,
+    "isolated_file_bytes": 67108864,
+    "packet_trace_bytes": 1048576,
+    "per_command_seconds": 120,
+    "total_isolated_bytes": 134217728
+  },
+  "logical_member_bytes": 107458,
+  "object_counts": {
+    "blob": 3,
+    "commit": 1,
+    "tree": 3834
+  },
+  "observed_at_utc": "2026-10-02T14:49:07.621721+00:00",
+  "qualification": "Fresh shallow filtered fetch from configured origin, Git object validation plus full archive/member hashes. No extraction, code execution, financial work or shared-owner mutation. Does not establish backup service permanence or fresh-environment reproducibility.",
+  "regular_members_rehashed": 20,
+  "remote_branch_commit_at_capability_check": "e0cb08b6bf763ffec0bb4058d5d1d89bd3977486",
+  "remote_branch_matches_requested_at_check": true,
+  "requested_commit": "e0cb08b6bf763ffec0bb4058d5d1d89bd3977486",
+  "restored_code_executed": false,
+  "retained_local_evidence": {
+    "capabilities.packet": {
+      "bytes": 6250,
+      "sha256": "720883565ad5ae6561884ba84d389d1d476653c3330a9014ea707d86a71523a6"
+    },
+    "capabilities.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "capabilities.stdout": {
+      "bytes": 98,
+      "sha256": "af2805459b537604b5232d784b776045cceee63b14d1d3c4a2193dcc20aae1f1"
+    },
+    "commit-count.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "commit-count.stdout": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "execution-result01.json": {
+      "bytes": 4998,
+      "sha256": "f01e981f0864ebcd37c202764a07ea13039121c0fdfa6766200f998716dabdfe"
+    },
+    "fetch.stderr": {
+      "bytes": 115,
+      "sha256": "f53a15a9832d351bbce8779f9d2b0e3eac6c8c94df7a77239ed9883aacd31cf3"
+    },
+    "fetch.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fetched-commit.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fetched-commit.stdout": {
+      "bytes": 41,
+      "sha256": "e4cb9b4588dba6fd357e3a3e0c3009603f1741d27d511dd55eee5e33211a0215"
+    },
+    "init.stderr": {
+      "bytes": 485,
+      "sha256": "7cc74f74cc8a8f9938bd00571e2c171ce3c59d048f2242a836ccca722182d430"
+    },
+    "init.stdout": {
+      "bytes": 142,
+      "sha256": "e739b3cf84fa33330fbf86d53e6ea1aec659a3b62f1c189fbd60857803399cdc"
+    },
+    "object-inventory.stderr": {
+      "bytes": 80,
+      "sha256": "e9c1e943ba36926d8826ec0e39b9c3ed51ed7e2e7378647493a6f81ccb4c7e01"
+    },
+    "object-inventory.stdout": {
+      "bytes": 19192,
+      "sha256": "e6774262f03d51927a04a77f159b93cb9b97efb2fca55547815b8b19eeefa110"
+    },
+    "retained-tree01.json": {
+      "bytes": 8638,
+      "sha256": "5785244060110608e9100b6d52c8a4661eeb01176de94565e280ae8d06e406d0"
+    },
+    "retained-tree01.tar.gz": {
+      "bytes": 23725,
+      "sha256": "cc2575307c51817d154d537fe6b1a7dfa3b2305de8b1fd81ab3dcab94faac862"
+    },
+    "retrieve-execution-result01-json.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "retrieve-retained-tree01-json.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "retrieve-retained-tree01-tar-gz.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verification-result.json": {
+      "bytes": 3252,
+      "sha256": "301019f426974cf66313c5a41c23a76756ec62e2c759c318d8b9cb6f1997a1db"
+    },
+    "verify_remote.py": {
+      "bytes": 10375,
+      "sha256": "1937282f83f74066e210f0b24065c1130f6e9ec929736a00c5abc749d84ab9ce"
+    }
+  },
+  "retrieved": {
+    "execution-result01.json": {
+      "bytes": 4998,
+      "sha256": "f01e981f0864ebcd37c202764a07ea13039121c0fdfa6766200f998716dabdfe"
+    },
+    "retained-tree01.json": {
+      "bytes": 8638,
+      "sha256": "5785244060110608e9100b6d52c8a4661eeb01176de94565e280ae8d06e406d0"
+    },
+    "retained-tree01.tar.gz": {
+      "bytes": 23725,
+      "sha256": "cc2575307c51817d154d537fe6b1a7dfa3b2305de8b1fd81ab3dcab94faac862"
+    }
+  },
+  "schema_version": 1,
+  "scope": "Only new recovery reports are added to the shared checkout; source, HEAD, registrations, runtime and empirical roots remain unchanged.",
+  "server_filter_advertised": true,
+  "shallow_commit_count": 1,
+  "shared_repository_mutated": false,
+  "status": "verified",
+  "verification_script_sha256": "1937282f83f74066e210f0b24065c1130f6e9ec929736a00c5abc749d84ab9ce"
+}

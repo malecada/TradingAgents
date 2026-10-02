@@ -1,0 +1,196 @@
+--- a/tradingagents/research/onchain_replication/neural_resource.py
++++ b/tradingagents/research/onchain_replication/neural_resource.py
+@@ -146,7 +146,11 @@
+     visit(value);return h.hexdigest()
+ 
+ 
+-def run_cell(graph,config,directory,identity,*,max_checkpoint_bytes,cooperative_seconds):
++def _phase(phases,event):
++    if phases is not None:phases.record(event)
++
++
++def run_cell(graph,config,directory,identity,*,max_checkpoint_bytes,cooperative_seconds,phases=None):
+     """One unchanged synthetic update; helper callers must supply outer admission."""
+     import numpy as np
+     import torch
+@@ -155,18 +159,27 @@
+     begin=time.monotonic()
+     def check():
+         if time.monotonic()-begin>cooperative_seconds:raise TimeoutError('neural cooperative cell budget exceeded; not a hard per-call deadline')
++    _phase(phases,'model_before')
+     rng=seed_all(11);model=ReplicationModel(config,'classification')
++    _phase(phases,'model_after')
++    _phase(phases,'tensor_adapter_before')
+     item={'mcm':torch.from_numpy(rng.random((len(graph.node_ids),32),dtype=np.float32)),
+           'edge_index':torch.tensor(graph.edge_index.copy(),dtype=torch.long)}
+     prices=torch.linspace(-1,1,16*28).reshape(16,28,1);labels=torch.arange(16)%2
+     optimizer=torch.optim.Adam(model.parameters(),lr=.001)
+-    check();out=model([[item]*28 for _ in range(16)],prices)
++    _phase(phases,'tensor_adapter_after')
++    check();_phase(phases,'forward_before');out=model([[item]*28 for _ in range(16)],prices)
++    _phase(phases,'forward_after')
++    _phase(phases,'loss_before')
+     loss=torch.nn.functional.cross_entropy(out,labels)
+     if not torch.isfinite(loss):raise ValueError('nonfinite resource loss')
+-    check();loss.backward();check();optimizer.step();check()
++    _phase(phases,'loss_after')
++    check();_phase(phases,'backward_before');loss.backward();_phase(phases,'backward_after');check()
++    _phase(phases,'optimizer_before');optimizer.step();_phase(phases,'optimizer_after');check()
+     step_seconds=time.monotonic()-begin
+     # Free autograd/large graph tensors before checkpoint serialization.
+     loss_value=float(loss.detach());del out,loss,item,prices,labels
++    _phase(phases,'checkpoint_before')
+     state={'model':model.state_dict(),'optimizer':optimizer.state_dict(),'rng':capture_rng(rng),
+            'epoch':1,'batch':0,'identity':identity,'loss':loss_value}
+     expected=_state_hash(state);path=Path(directory)/'checkpoint.pt';io=time.monotonic()
+@@ -179,13 +192,15 @@
+         if _fatal(primary):raise primary
+         raise ValueError('checkpoint serialization failed; partial bytes retained') from primary
+     sync_directory(path.parent);del state
+-    check();loaded=torch.load(path,map_location='cpu',weights_only=True)
++    _phase(phases,'checkpoint_after')
++    check();_phase(phases,'reload_before');loaded=torch.load(path,map_location='cpu',weights_only=True)
+     if _state_hash(loaded)!=expected:raise ValueError('checkpoint exact state differs after load')
+     model.load_state_dict(loaded['model'],strict=True);optimizer.load_state_dict(loaded['optimizer']);restore_rng(loaded['rng'],rng)
+     if _state_hash({'model':model.state_dict(),'optimizer':optimizer.state_dict(),'rng':capture_rng(rng),
+                    'epoch':1,'batch':0,'identity':identity,'loss':loss_value})!=expected:
+         raise ValueError('checkpoint restored model/optimizer/RNG differs')
+     check()
++    _phase(phases,'reload_after')
+     return {'synthetic':True,'unique_graphs':1,'batch':16,'lookback':28,'optimizer_steps':1,
+         'forward_backward_step_seconds':step_seconds,'checkpoint_seconds':time.monotonic()-io,
+         'checkpoint_bytes':path.stat().st_size,'checkpoint_sha256':file_hash(path),
+@@ -223,17 +238,25 @@
+             sub=directory/f'cell-{index:02d}';sub.mkdir();sync_directory(directory)
+             try:
+                 _namespace(root,directory,owned)
+-                run._active();run._check_source();_bound_worker(run,plan_input);run.read_input(cell['graph_input'])
++                run._active();run._check_source();live=_bound_worker(run,plan_input);run.read_input(cell['graph_input'])
+                 info=run.admission.inputs[cell['graph_input']]
++                phases=None
++                if scope is not None:
++                    from .neural_phases import PhaseJournal
++                    phases=PhaseJournal(scope,sub,{**identity,'cell_id':cell['cell_id'],'graph_manifest_sha256':info['sha256']},Path(live['cgroup']))
+                 cell_begin=time.monotonic()
++                _phase(phases,'graph_validation_before')
+                 with open_mapped_graph(root/info['path'],info['sha256'],max_mapped_bytes=p['limits']['max_graph_bytes']) as mapped:
+                     if len(mapped.node_ids)!=cell['expected_nodes'] or mapped.edge_index.shape[1]!=cell['expected_edges']:raise ValueError('neural mapped graph count differs before resident load')
++                _phase(phases,'graph_validation_after')
+                 if time.monotonic()-cell_begin>p['limits']['cooperative_cell_seconds']:raise TimeoutError('neural cooperative graph validation budget exceeded')
++                _phase(phases,'graph_load_before')
+                 graph=load_graph(root/info['path'],info['sha256'])
+                 try:
+                     if len(graph.node_ids)!=cell['expected_nodes'] or graph.edge_index.shape[1]!=cell['expected_edges']:raise ValueError('neural loaded graph count differs')
++                    _phase(phases,'graph_load_after')
+                     result=run_cell(graph,config,sub,{**identity,'cell_id':cell['cell_id'],'graph_manifest_sha256':info['sha256']},
+-                        max_checkpoint_bytes=p['limits']['max_checkpoint_bytes'],cooperative_seconds=p['limits']['cooperative_cell_seconds'])
++                        max_checkpoint_bytes=p['limits']['max_checkpoint_bytes'],cooperative_seconds=p['limits']['cooperative_cell_seconds'],phases=phases)
+                 finally:del graph
+                 gc.collect()
+                 if time.monotonic()-cell_begin>p['limits']['cooperative_cell_seconds']:raise TimeoutError('neural cooperative whole-cell budget exceeded')
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/neural_phases.py
+@@ -0,0 +1,103 @@
++"""Bounded diagnostic markers; no numerical values, retry or resource authority."""
++import hashlib
++import math
++import os
++from pathlib import Path
++import re
++import time
++from ..lifecycle import current_metadata_scope
++from .neural_physical import _bounded_encode, _close
++
++MAX_BYTES=65536
++PHASES=('graph_validation','graph_load','model','tensor_adapter','forward','loss','backward','optimizer','checkpoint','reload')
++EVENTS=tuple(phase+'_'+position for phase in PHASES for position in ('before','after'))
++WEEKS=('2022-01-03','2022-06-13','2022-07-25','2022-11-07','2023-06-05','2024-01-01','2024-03-11','2024-08-05','2024-12-23')
++IDENTITY_KEYS={'plan_sha256','claim_sha256','source_commit','model_config_sha256','cell_id','graph_manifest_sha256'}
++
++
++def _read(path,maximum):
++    # Kernel metadata only. Never array/model files and never an unbounded read.
++    fd=os.open(path,os.O_RDONLY|os.O_CLOEXEC|os.O_NOFOLLOW|os.O_NONBLOCK);primary=None
++    try:
++        data=b''
++        while len(data)<=maximum:
++            block=os.read(fd,maximum+1-len(data))
++            if not block:break
++            data+=block
++        if len(data)>maximum:raise ValueError('phase metadata read bound exceeded')
++        value=data.decode('ascii')
++    except BaseException as error:primary=error
++    finally:_close(fd,primary)
++    if primary is not None:raise primary
++    return value
++
++
++def _sample(cgroup):
++    value={'memory_current_bytes':None,'anon_bytes':None,'file_bytes':None,
++           'pressure':None,'unavailable':[],
++           'qualification':'instantaneous unit metadata, not peak or phase attribution; unknown is not zero'}
++    def integer(text):
++        result=int(text)
++        if not 0<=result<2**63:raise ValueError('metadata integer outside finite range')
++        return result
++    try:value['memory_current_bytes']=integer(_read(cgroup/'memory.current',64).strip())
++    except (OSError,ValueError,UnicodeError):value['unavailable'].append('memory_current')
++    try:
++        stats=dict(line.split() for line in _read(cgroup/'memory.stat',16384).splitlines())
++        anon,file=integer(stats['anon']),integer(stats['file'])
++        value['anon_bytes'],value['file_bytes']=anon,file
++    except (OSError,ValueError,UnicodeError,KeyError):value['unavailable'].append('memory_stat')
++    try:value['pressure']=_read(cgroup/'memory.pressure',512).strip()
++    except (OSError,ValueError,UnicodeError):value['unavailable'].append('pressure')
++    return value
++
++
++class PhaseJournal:
++    """Original physical scope owns every durable replacement and its scratch file."""
++    def __init__(self,scope,directory,identity,cgroup):
++        if scope is None or current_metadata_scope() is not scope:raise ValueError('original phase metadata authority required')
++        if type(identity) is not dict or set(identity)!=IDENTITY_KEYS:raise ValueError('phase identity schema differs')
++        for key in IDENTITY_KEYS-{'cell_id'}:
++            width=40 if key=='source_commit' else 64
++            if type(identity[key]) is not str or re.fullmatch('[0-9a-f]{'+str(width)+'}',identity[key]) is None:raise ValueError('phase identity hash differs')
++        cells=tuple('neural_checkpoint-'+week for week in WEEKS)
++        if identity['cell_id'] not in cells:raise ValueError('phase cell outside fixed population')
++        directory=Path(directory);expected=scope.roots['producer']/f'cell-{cells.index(identity["cell_id"]):02d}'
++        if directory!=expected or directory.resolve()!=directory or not directory.is_dir():raise ValueError('phase original cell directory differs')
++        if identity['source_commit']!=scope.anchor['source']:raise ValueError('phase source differs from original authority')
++        self._scope=scope;self._directory=directory;self._inode=self._directory_identity()
++        self._path=directory/'phase-journal.json';self._identity=dict(identity)
++        self._anchor=scope.anchor_hash;self._events=[];self._last=None;self._poisoned=False
++        self._cgroup=Path(cgroup)
++        if not self._cgroup.is_absolute() or not self._cgroup.is_relative_to('/sys/fs/cgroup') or '..' in self._cgroup.parts or len(str(self._cgroup))>4096:raise ValueError('phase cgroup path differs')
++        self._maximum=min(MAX_BYTES,scope.policy['max_json_bytes']);self._begin=time.monotonic()
++        if os.path.lexists(self._path) or os.path.lexists(directory/'.physical-phase-journal.json'):raise FileExistsError('phase journal identity already used; no retry')
++        self._check()
++
++    def _directory_identity(self):
++        info=self._directory.stat();return info.st_dev,info.st_ino
++
++    def _check(self):
++        if current_metadata_scope() is not self._scope or self._scope.anchor_hash!=self._anchor:raise ValueError('phase original authority changed')
++        if self._directory.resolve()!=self._directory or self._directory_identity()!=self._inode:raise ValueError('phase cell directory replaced')
++        observed=self._scope.check()
++        if observed['claim_sha256']!=self._identity['claim_sha256']:raise ValueError('phase original claim differs')
++
++    def record(self,event):
++        if self._poisoned:raise ValueError('phase journal stopped; no retry')
++        self._poisoned=True
++        if len(self._events)>=len(EVENTS) or event!=EVENTS[len(self._events)]:raise ValueError('phase event out of order or duplicate')
++        self._check()
++        if self._last is None:
++            if os.path.lexists(self._path):raise FileExistsError('phase journal already exists')
++        elif hashlib.sha256(_bounded_encode(self._scope.read_metadata(self._path),self._maximum)).hexdigest()!=self._last:
++            raise ValueError('phase previous receipt changed')
++        elapsed=time.monotonic()-self._begin
++        if not math.isfinite(elapsed) or not 0<=elapsed<=7*86400:raise ValueError('phase elapsed outside finite bound')
++        events=[*self._events,{'event':event,'elapsed_seconds':elapsed,'observation':_sample(self._cgroup)}]
++        value={'schema_version':1,'identity':self._identity,'physical_anchor_sha256':self._anchor,
++               'events':events,'qualification':'before marks intent; after marks returned stage; no cell outcome or retry authority'}
++        encoded=_bounded_encode(value,self._maximum)
++        self._scope.atomic(self._path,value)
++        self._check()
++        self._events=events;self._last=hashlib.sha256(encoded).hexdigest();self._poisoned=False

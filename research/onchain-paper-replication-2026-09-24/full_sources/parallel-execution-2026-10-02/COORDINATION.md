@@ -1,5 +1,42 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Latest ownership — closed archive failure, bounded integration preparation
+
+Archive-two-View01/session14698 CLOSED1; storage-link refusal/cleanupverified/
+no memory events. No substantial job active. Raw tree frozen; root owns full
+retention/STATE/automation/backup and future single release. physical_review owns
+independent closed-tree/result review. physical_correction owns ONLY new dated
+real-Scope phase integration preparation. registration_review owns exact03
+registration requirements and later independent candidate reviews. Root owns
+new dated storage-observation candidate and production integration after review.
+No shared production mutation yet. No identity01 reuse or empirical budget change;
+34closed/highestadopted62,63 remains prospective. Back up the closed raw and
+reviewed candidates, then immediately continue the next independently admitted
+engineering proof. Full scientific/paper scope persists.
+
+## Active two-View proof and independent candidate work
+
+Singlearchive-outer-two-view-20261002-01/session14698/monitor511886/unit
+onchain-replication-1f96db3a9f2548cfb995676f5ccf0080.service is ACTIVE.
+SharedHEADe0cb08b6 is frozen; isolatedc51+overlay/all1,883files/specb45c937a
+and launcher are unchanged. Real3GiB/2GiB/swap0/4MiBfile/30minunit controls
+verified. Root owns existing-job observation, final raw/cleanup/accounting and
+backup. No other substantial job or commits/source/input/runtime mutation.
+
+- physical_review owns finalrelease/result independent review, prepared release
+  accepted; result pending actualtwo-case proof.
+- physical_correction owns only NEW dated phase-receipt candidate source/patch/
+  fake tests/evidence outside active bindings; shared package untouched.
+- registration_review verified exact neuralfailedraw remote recovery (uncommitted
+  reports) and owns readonly newhigh=max3.75/resource63 admissibility assessment.
+
+The next neural identity03/ceiling63 remain proposals, not approvals. Any new
+trial needs phasecandidate integration/review, all34closedhistory, exactresource/
+budget/source/gate/caller acceptance and backup, actualadmission/freshreadback.
+No reuse/refund/automatic cap escalation, no system OOMD edits. Progress docs
+and independent candidates may remain uncommitted until this source-bound proof
+closes. Continue next eligible work after closure, without a user prompt.
+
 ## Latest checkpoint — neural02 closed, next independent proof
 
 Neural02/session4945 CLOSED1 after298.890s; exact-unit systemd-oomd journals
