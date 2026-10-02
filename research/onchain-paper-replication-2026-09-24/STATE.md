@@ -1,5 +1,30 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: corrected tiny RED release accepted; single execution next.**
+Oracle02 reviewb16e4c53 and concrete native launcher02/release02 review9d5dd8b0
+accept the bounded synthetic preparation. Guard source3f8f49f2 and release
+10e0d34c bind227sourcepins/1,781,134bytes; seven pure guard tests pass. Late
+storage/cleanup failures and missing native evidence now reject expected-RED
+classification. Exclusive descriptor publication preserves the first fatal,
+syncs file and parent and checks the original directory. All withheld01 source,
+specifications and failures remain preserved. No numerical oracle has run yet.
+Next safe action: commit/push/verify exact release, fresh namespace/process/RAM/
+disk/source/runtime checks, then ONE unused
+`neural-streamed-gat-oracle-red-20261002-01` engineering execution. Freeze HEAD
+and all selected sources while active; preserve complete raw/control/cleanup,
+then immediately implement the faithful GAT candidate if the expected resource
+sentinel follows all numerical checks. No financial or full-size probe is released.
+
+Budget-only64 is independently accepted at review4a3f6d1e/machine0ff87a42 for
+extension02 SHA72561ea7/allocation02d238ffd0/population0393831fc2. All35closed
+claim/terminal pairs and same12body/15financial/1newneural/1other split were
+verified. A copied stale17-current snapshot is preserved and corrected in new
+population03; original metadata builder failure is also retained. This grants
+one conditional future04 computational-execution question, without adoption,
+refund, cap ladder or financial scope change. Highest adopted remains63 and
+all source/oracle/integration/registration/backup/admission/readiness/capacity
+requirements precede any empirical04 claim. Coverage77/109/all1420fits unchanged.
+
 **Latest checkpoint: complete neural03 failure recovered remotely; two corrections advance.**
 Accepted closure/raw/diagnosis were committed and pushed at
 38ef011f5fc07687d56a9b6f6ddf91a867455d9d. Fresh four-blob retrieval from that

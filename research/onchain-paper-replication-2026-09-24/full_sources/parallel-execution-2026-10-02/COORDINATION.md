@@ -1,5 +1,18 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Latest ownership — concrete tiny RED accepted; immediate single release
+
+Root owns guard02/release02 commit+remote verification, fresh dedupe/resources,
+ONE unused neural-streamed-gat-oracle-red-20261002-01 launcher and raw retention.
+Physical_review accepted exact source/spec9d5dd8b0; registration_review accepted
+oracle02b16e4c53 and budget-only64 for corrected extension02/review0ff87a42.
+No substantial job or numerical oracle active yet. Freeze HEAD/selected bindings
+at actual launch; no concurrent numerical job or commit. physical_correction
+owns candidate source ONLY after actual expected RED; no production mutation.
+Reviewers own independent actual result and subsequent candidate verification.
+Neural03 permanentlyclosed/35spent/adopt63/77of109/all1420fits unchanged.
+64 is conditional prospective allocation only, no empirical04 permit/adoption.
+
 ## Latest ownership — independent oracle02 and native RED release reviews
 
 No substantial job active. Neural03 complete failure is externally backed at

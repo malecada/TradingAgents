@@ -1,0 +1,50 @@
+FFFsFF.
+======================================================================
+FAIL: test_expected_red_cannot_hide_final_storage_breach (__main__.Tests.test_expected_red_cannot_hide_final_storage_breach)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/test_guard02.py", line 42, in test_expected_red_cannot_hide_final_storage_breach
+    with self.assertRaises((RuntimeError,ValueError)):m.validate_result('red',result,report,proof)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'RuntimeError'>, <class 'ValueError'>) not raised
+
+======================================================================
+FAIL: test_immutable_file_and_parent_synced_and_no_overwrite (__main__.Tests.test_immutable_file_and_parent_synced_and_no_overwrite)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/test_guard02.py", line 80, in test_immutable_file_and_parent_synced_and_no_overwrite
+    self.assertEqual(json.loads(path.read_bytes()),{'x':1});self.assertEqual(len(calls),2)
+                                                            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: 1 != 2
+
+======================================================================
+FAIL: test_immutable_first_fatal_survives_close (__main__.Tests.test_immutable_first_fatal_survives_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/test_guard02.py", line 74, in test_immutable_first_fatal_survives_close
+    self.assertIs(caught,fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: OSError('close later') is not MemoryError('write first')
+
+======================================================================
+FAIL: test_missing_controls_events_or_cpu_rejected (__main__.Tests.test_missing_controls_events_or_cpu_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/test_guard02.py", line 48, in test_missing_controls_events_or_cpu_rejected
+    with self.assertRaises((RuntimeError,ValueError,KeyError)):m.validate_result('red',result,report,proof)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'RuntimeError'>, <class 'ValueError'>, <class 'KeyError'>) not raised
+
+======================================================================
+FAIL: test_terminal_and_truncation_rejected (__main__.Tests.test_terminal_and_truncation_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/test_guard02.py", line 52, in test_terminal_and_truncation_rejected
+    with self.assertRaises((RuntimeError,ValueError)):m.validate_result('red',result,report,proof)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'RuntimeError'>, <class 'ValueError'>) not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+FAILED (failures=5, skipped=1)
