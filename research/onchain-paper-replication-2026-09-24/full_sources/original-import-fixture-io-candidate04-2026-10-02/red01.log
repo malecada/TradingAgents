@@ -1,0 +1,47 @@
+F..E.
+======================================================================
+ERROR: test_terminal_does_not_attempt_fallible_annotation_on_ordinary (__main__.AnnotationTests.test_terminal_does_not_attempt_fallible_annotation_on_ordinary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate04-2026-10-02/test_annotations01.py", line 47, in test_terminal_does_not_attempt_fallible_annotation_on_ordinary
+    self.assertIs(ns['_preserve_terminal'](original,later),original)
+                  ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "actual-terminal-reducer", line 192, in _preserve_terminal
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate04-2026-10-02/test_annotations01.py", line 44, in add_note
+    def add_note(*args):calls.append('note');raise fatal
+                                             ^^^^^^^^^^^
+MemoryError: simulated annotation allocation
+
+======================================================================
+FAIL: test_cleanup_does_not_invoke_overridden_note (__main__.AnnotationTests.test_cleanup_does_not_invoke_overridden_note)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate04-2026-10-02/test_annotations01.py", line 25, in test_cleanup_does_not_invoke_overridden_note
+    try:raise first
+        ^^^^^^^^^^^
+AnnotationTests.test_cleanup_does_not_invoke_overridden_note.<locals>.First: 8
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate04-2026-10-02/test_annotations01.py", line 26, in test_cleanup_does_not_invoke_overridden_note
+    finally:ns['_cleanup']((close1,close2))
+            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "actual-owned-io", line 41, in _cleanup
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate04-2026-10-02/test_annotations01.py", line 20, in add_note
+    def add_note(self,note):calls.append('note');raise later
+                                                 ^^^^^^^^^^^
+MemoryError: later annotation failure
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate04-2026-10-02/test_annotations01.py", line 27, in test_cleanup_does_not_invoke_overridden_note
+    except BaseException as result:self.assertIs(result,first)
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: MemoryError('later annotation failure') is not First(8)
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.028s
+
+FAILED (failures=1, errors=1)

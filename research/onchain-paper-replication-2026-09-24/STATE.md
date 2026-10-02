@@ -1,3 +1,57 @@
+# Current execution checkpoint — October 3, 2026
+
+**Latest 2026-10-02T22:13:39.604595+00:00: closed tiny comparison fully reviewed/backed/recovered;
+IO05 narrow source correction accepted, genuine MCM native integration source
+preparation is running in parallel. No substantial numerical process is active.**
+This checkpoint supersedes older pending-release/active-tiny messages below.
+Actualtinyidentityneural-checkpoint-comparison-20261002-01 is permanentlyclosed
+outerFAILED(exit1/KeyError optionalcpu_ready.file_size_limit) withthree actual
+PASSEDnumeric/profilecomponents. Reviewaf9d487a preservesboth dispositions.
+3823bitwiseexacttensorchecks/10+2+2cases/147+22+22markers;17.209s/1GiBcap/zeroSwap/
+3GiBreserve/twoCPU/4MiBunitfile/64MiBowned/10GiBdiskfloor. All8PIDs+CG absent,
+sourcefreezeended; originalmetadata neverfabricated, no numericalrerun. Sampled
+false/true416833536/418226176B andcumulativeunit419291136B donotprove savings or
+fullgraph/batchcapacity. CurrentavailableRAMobserved~6.44GiB, startup eligibility
+mustbecheckedfresh; do notaskforunavailableadditionalRAM orrelaxfixedguards.
+
+Actualsuccessfulpush/remoteHEADreadback3a56c4b28c1d05595c765cd93046496104c7ecb2
+preserves entireclosedproof andIO03sources/review. Fresh independentbarefetch
+fromthatactualremote recovered155selectedblobs/all142originalGit sourcebodies,
+all282rawarchivedmembers245files+37dirs/7539340B withnames/modes/hashes. Receipt
+REMOTE_EXECUTION_RECOVERY01.jsonSHA5e91cb4aa2aab9cba204ad7dc78ddea9676ed0dd4d587747b6eb04102e1cd990;
+independentremote reviewea306df190a95e5c03e03f9ba67c6d8e882d99bc3d612049be840d2c75ce2ab1
+acceptsexactscope, no installedruntime/empiricalinput remote-recovery claim.
+Rawlogs/patches retain originalwhitespace: fullraw-inclusivecheckdoesnotpass;
+code/docscheck excludingimmutable .log/.patch passes, qualifiedreceiptretained.
+
+IO04manifest5c69625c/reviewbd447fb2 WITHHELD syntheticuncertaintycauseattachment
+couldintroduce/discardfirstactualMemoryError. NEWIO05manifest2148d10f/resource
+f552550a+threeactualsource RED04→GREEN05checks condition optionalcauseonalready
+selectedactualfatal, preserving allother numerical/authority/preflightAST.
+Independentreview8705dfe9 accepts narrowIO05source/all28maps/dependencies;
+all04/03/02sources/results remainpreserved. Workerphysical_correction owns ONLY
+original-import-fixture-native-preparation-2026-10-03 capsule/controller/native
+filelimits sourcecandidate. Correct completepackage inventory is142Pythonfiles
+(134baseline+8newmodules), not134plusonlyowned_io. Proposed explicitnative_unit
+filelimit/readback seam must preserve compact_resource physical_policy refusal,
+truthfulcpu_ready schema andactualworker4MiB RLIMITbeforeResearchRun.start.
+Actualgenuinejob._command/Binding/Owner/importedoriginal32motifs+closed512sample
+proof/two-targetscalarreference/retainedpublicationfailure/prospective separate
+engineeringclaims/fullsource-runtime-input-registration nativewatch stillrequired.
+Rootownsactualregistration/liveintegration/commits/backup and solelauncher;
+physical_review ownsindependentIO05/source-releasereviews; registration_review
+acceptedclosedproof/freshrecovery. No fixture job/claim/numericalarrays produced.
+
+Paperhistoryremains36closed=27complete9failed/highestadopted64/no refund/
+categorytransfer/capladder or65authority; neural04 FAILEDforever. Coverage77of109,
+all32Task8requirements/all45initial+1420financialfits stillpending. Fullarchitecture,
+asset/history/comparison scope and paper numericalagreement remain separate.
+Nextsafeaction: preserve/review/commit verifiedcurrentfrozen sources/recovery;
+finish/review genuineMCM nativecapsule+prospectiveengineeringregistration, then
+ONE newfixedadmittedfixture ifeligible, preservingallfailure/success dispositions.
+Continuememoryengineering/financial/storage candidates whenindependently executable;
+no paid/provider/authorcontact/trading/deployment/credentials/VPSsystemdSSH.
+
 # Current execution checkpoint — October 2, 2026
 
 **Latest 2026-10-02T22:00:54.468298+00:00: tiny checkpoint comparison01 is CLOSED outerFAILED;

@@ -1,0 +1,27 @@
+{
+  "original_full_diff_check": "failed_expected_retained_raw_whitespace",
+  "paths": [
+    {
+      "lines": [
+        25,
+        27
+      ],
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate03-2026-10-02/red01.log",
+      "reason": "Original unittest exception-group traceback whitespace retained verbatim"
+    }
+  ],
+  "qualification": "No raw evidence/log/patch was normalized. Full raw-inclusive whitespace check does not pass; code/document check excludes those immutable outputs.",
+  "schema_version": 1,
+  "source_and_docs_command": [
+    "git",
+    "diff",
+    "HEAD^",
+    "HEAD",
+    "--check",
+    "--",
+    ".",
+    ":(exclude)**/*.patch",
+    ":(exclude)**/*.log"
+  ],
+  "source_and_docs_diff_check": "passed"
+}

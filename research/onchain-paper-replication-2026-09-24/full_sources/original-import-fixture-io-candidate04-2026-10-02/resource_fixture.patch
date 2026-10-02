@@ -1,0 +1,11 @@
+--- resource_fixture.baseline.py
++++ resource_fixture.py
+@@ -189,8 +189,6 @@
+             if later.__cause__ is None:later.__cause__=primary
+             elif later.__cause__ is not primary:later.__cause__=BaseExceptionGroup('prior terminal failure and original cause',[primary,later.__cause__])
+         except BaseException:pass
+-    try:BaseException.add_note(selected,'Additional diagnostic/retention failure retained; first actual fatal precedence applies.')
+-    except BaseException:pass
+     return selected
+ 
+ 

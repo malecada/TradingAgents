@@ -1,0 +1,19 @@
+--- owned_io.baseline.py
++++ owned_io.py
+@@ -38,11 +38,13 @@
+     selected=next((error for error in causes if _fatal(error)),None)
+     if selected is not None:
+         others=[error for error in causes if error is not selected]
+-        for error in others:selected.add_note('owned cleanup evidence: '+type(error).__name__)
+         if selected is primary:return
+         if others:
+-            if selected.__cause__ is not None and all(selected.__cause__ is not e for e in others):others.append(selected.__cause__)
+-            selected.__cause__=others[0] if len(others)==1 else BaseExceptionGroup('prior body/cleanup evidence',others)
++            # Optional evidence attachment must never replace the selected fatal.
++            try:
++                if selected.__cause__ is not None and all(selected.__cause__ is not e for e in others):others.append(selected.__cause__)
++                selected.__cause__=others[0] if len(others)==1 else BaseExceptionGroup('prior body/cleanup evidence',others)
++            except BaseException:pass
+         raise selected
+     failure=CleanupFailure('score storage cleanup unresolved; worker must stop')
+     failure.failures=tuple(causes)

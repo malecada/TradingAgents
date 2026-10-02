@@ -1,0 +1,20 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate04-2026-10-02/resource_fixture.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate05-2026-10-03/resource_fixture.py
+@@ -185,10 +185,13 @@
+     selected=primary
+     if not _fatal(primary) and (_fatal(later) or (isinstance(primary,Exception) and not isinstance(later,Exception))):
+         selected=later
+-        try:
+-            if later.__cause__ is None:later.__cause__=primary
+-            elif later.__cause__ is not primary:later.__cause__=BaseExceptionGroup('prior terminal failure and original cause',[primary,later.__cause__])
+-        except BaseException:pass
++        if _fatal(later):
++            # Optional cause evidence may fail only after an actual fatal has
++            # already been selected. Synthetic uncertainty does not run it.
++            try:
++                if later.__cause__ is None:later.__cause__=primary
++                elif later.__cause__ is not primary:later.__cause__=BaseExceptionGroup('prior terminal failure and original cause',[primary,later.__cause__])
++            except BaseException:pass
+     return selected
+ 
+ 

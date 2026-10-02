@@ -1,0 +1,21 @@
+..F
+======================================================================
+FAIL: test_synthetic_uncertainty_does_not_run_fallible_cause_attachment (__main__.Tests.test_synthetic_uncertainty_does_not_run_fallible_cause_attachment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate05-2026-10-03/test_terminal_uncertainty01.py", line 25, in test_synthetic_uncertainty_does_not_run_fallible_cause_attachment
+    self.assertEqual(seen,[],'Synthetic uncertainty must not introduce then discard first actual fatal')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['cause'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'cause'
+
+- ['cause']
++ [] : Synthetic uncertainty must not introduce then discard first actual fatal
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.019s
+
+FAILED (failures=1)
