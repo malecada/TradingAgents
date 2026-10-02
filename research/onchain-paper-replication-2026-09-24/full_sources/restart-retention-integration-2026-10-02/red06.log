@@ -1,0 +1,49 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_______ test_review_refunded_counter_refuses_next_pair_before_begin[10] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-217/test_review_refunded_counter_r1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa7717a28b0>
+total = 10
+
+    @pytest.mark.parametrize('total',[4,10])
+    def test_review_refunded_counter_refuses_next_pair_before_begin(tmp_path,monkeypatch,total):
+        matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress='complete',
+            schedule_override={'max_total_checkpoints':total})
+        original=matcher_module.engine.advance;calls=0
+        def advance(state,a,b,config,*,max_operations):
+            nonlocal calls
+            amount=1 if calls<12 else max_operations;calls+=1
+            return original(state,a,b,config,max_operations=amount)
+        monkeypatch.setattr(matcher_module.engine,'advance',advance)
+        try:
+            matcher(purpose,a,b)
+            assert matcher.retention.spent['generations']==3
+            events=log.events;spent=dict(matcher.retention.spent)
+            matcher.checkpoints=0
+            def forbidden(*args,**kwargs):raise AssertionError('numerical allocation after stage cap')
+            monkeypatch.setattr(matcher_module.engine,'create',forbidden)
+>           with pytest.raises(ValueError):matcher(purpose,a,b)
+                                           ^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention_integration.py:308: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_matcher.py:272: in __call__
+    state = engine.create(a, b, self.config, **{k: self.policy[k] for k in pair.ENGINE_FIELDS})
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (AttributedGraph(node_ids=('0', '1'), node_features=array([[0. ],
+       [0.3]]), edge_index=array([[0],
+       [1]]),...aaaaaa', center_id='0'), {'alpha': 1.0, 'amendment': 'matching-precision-v2.md', 'beta0': 1.0, 'beta_final': 1.0, ...})
+kwargs = {'hardening_chunk_entries': 2, 'normalization_chunk_entries': 4, 'max_state_bytes': 100000, 'hardening_buffer_bytes': 4096}
+
+>   def forbidden(*args,**kwargs):raise AssertionError('numerical allocation after stage cap')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: numerical allocation after stage cap
+
+tests/research/onchain_replication/test_restart_retention_integration.py:306: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_review_refunded_counter_refuses_next_pair_before_begin[10]
+1 failed, 1 passed, 21 deselected in 1.26s

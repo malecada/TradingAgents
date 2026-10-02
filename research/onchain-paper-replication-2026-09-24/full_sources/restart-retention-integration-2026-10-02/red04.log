@@ -1,0 +1,108 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__ test_old_stage_format_refuses_new_retention_policy_before_any_io[inspect] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-198/test_old_stage_format_refuses_0')
+entry = 'inspect'
+
+    @pytest.mark.parametrize('entry',['inspect','seal','verify'])
+    def test_old_stage_format_refuses_new_retention_policy_before_any_io(tmp_path,entry):
+        from tradingagents.research.onchain_replication import compact_stage
+        from tests.research.onchain_replication.test_compact_policy import candidate
+        policy=candidate();policy['restart_retention']=retention_policy();policy['max_retained_logical_bytes']=100000000
+        kwargs=dict(owner='a'*64,scope={k:'b'*64 for k in ('workflow','config','policy','context','numerical_source')},
+            policy=policy,kind='dictionary',pairs=0,log_terminal_sha256='c'*64,stream_terminal_sha256=None)
+        def forbidden():raise AssertionError('old format lease called for new format')
+        if entry!='inspect':kwargs['lease']=forbidden
+        if entry=='verify':kwargs['expected_sha256']='d'*64
+        with pytest.raises(ValueError,match='old stage format'):
+>           getattr(compact_stage,entry)(tmp_path/'absent',**kwargs)
+
+tests/research/onchain_replication/test_restart_retention_integration.py:201: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_stage.py:186: in inspect
+    joined = matching(root, owner=owner, scope=scope, terminal=log_terminal_sha256, policy=policy, pairs=pairs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_stage.py:76: in matching
+    record = events.verify(root / 'matching', owner=owner, scope=scope,
+tradingagents/research/onchain_replication/compact_pair_log.py:213: in verify
+    lease(); root, fd = io._open(root)
+                        ^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-198/test_old_stage_format_refuses_0/absent/matching')
+
+    def _open(root):
+        root = Path(root)
+        _require(root.is_absolute() and root.resolve() == root, 'canonical score root required')
+>       fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-malecada/pytest-198/test_old_stage_format_refuses_0/absent/matching'
+
+tradingagents/research/onchain_replication/score_batches.py:147: FileNotFoundError
+____ test_old_stage_format_refuses_new_retention_policy_before_any_io[seal] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-198/test_old_stage_format_refuses_1')
+entry = 'seal'
+
+    @pytest.mark.parametrize('entry',['inspect','seal','verify'])
+    def test_old_stage_format_refuses_new_retention_policy_before_any_io(tmp_path,entry):
+        from tradingagents.research.onchain_replication import compact_stage
+        from tests.research.onchain_replication.test_compact_policy import candidate
+        policy=candidate();policy['restart_retention']=retention_policy();policy['max_retained_logical_bytes']=100000000
+        kwargs=dict(owner='a'*64,scope={k:'b'*64 for k in ('workflow','config','policy','context','numerical_source')},
+            policy=policy,kind='dictionary',pairs=0,log_terminal_sha256='c'*64,stream_terminal_sha256=None)
+        def forbidden():raise AssertionError('old format lease called for new format')
+        if entry!='inspect':kwargs['lease']=forbidden
+        if entry=='verify':kwargs['expected_sha256']='d'*64
+        with pytest.raises(ValueError,match='old stage format'):
+>           getattr(compact_stage,entry)(tmp_path/'absent',**kwargs)
+
+tests/research/onchain_replication/test_restart_retention_integration.py:201: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_stage.py:200: in seal
+    require(callable(lease), 'live stage owner lease required'); lease()
+                                                                 ^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   def forbidden():raise AssertionError('old format lease called for new format')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: old format lease called for new format
+
+tests/research/onchain_replication/test_restart_retention_integration.py:197: AssertionError
+___ test_old_stage_format_refuses_new_retention_policy_before_any_io[verify] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-198/test_old_stage_format_refuses_2')
+entry = 'verify'
+
+    @pytest.mark.parametrize('entry',['inspect','seal','verify'])
+    def test_old_stage_format_refuses_new_retention_policy_before_any_io(tmp_path,entry):
+        from tradingagents.research.onchain_replication import compact_stage
+        from tests.research.onchain_replication.test_compact_policy import candidate
+        policy=candidate();policy['restart_retention']=retention_policy();policy['max_retained_logical_bytes']=100000000
+        kwargs=dict(owner='a'*64,scope={k:'b'*64 for k in ('workflow','config','policy','context','numerical_source')},
+            policy=policy,kind='dictionary',pairs=0,log_terminal_sha256='c'*64,stream_terminal_sha256=None)
+        def forbidden():raise AssertionError('old format lease called for new format')
+        if entry!='inspect':kwargs['lease']=forbidden
+        if entry=='verify':kwargs['expected_sha256']='d'*64
+        with pytest.raises(ValueError,match='old stage format'):
+>           getattr(compact_stage,entry)(tmp_path/'absent',**kwargs)
+
+tests/research/onchain_replication/test_restart_retention_integration.py:201: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_stage.py:215: in verify
+    lease(); root, fd = io._open(root)
+    ^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   def forbidden():raise AssertionError('old format lease called for new format')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: old format lease called for new format
+
+tests/research/onchain_replication/test_restart_retention_integration.py:197: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_old_stage_format_refuses_new_retention_policy_before_any_io[inspect]
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_old_stage_format_refuses_new_retention_policy_before_any_io[seal]
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_old_stage_format_refuses_new_retention_policy_before_any_io[verify]
+3 failed, 10 deselected in 0.44s

@@ -1,0 +1,128 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+______ test_review_duplicate_terminal_preserves_original_success[finish] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-215/test_review_duplicate_terminal0')
+action = 'finish'
+
+    @pytest.mark.parametrize('action',['finish','fail'])
+    def test_review_duplicate_terminal_preserves_original_success(tmp_path,action):
+        matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress=False)
+        try:
+            matcher(purpose,a,b);controller=matcher.retention
+            reference=controller.finish_stage()
+            root=tmp_path/'checkpoints'
+            before={str(p.relative_to(root)):p.read_bytes() for p in root.rglob('*') if p.is_file()}
+            spent=dict(controller.spent)
+            if action=='finish':
+                with pytest.raises(ValueError):controller.finish_stage()
+            else:controller.fail(RuntimeError('downstream owner failure'))
+>           assert controller.closed and not controller.poisoned
+E           assert (True and not True)
+E            +  where True = <tradingagents.research.onchain_replication.stage_retention.Controller object at 0x777284742660>.closed
+E            +  and   True = <tradingagents.research.onchain_replication.stage_retention.Controller object at 0x777284742660>.poisoned
+
+tests/research/onchain_replication/test_restart_retention_integration.py:256: AssertionError
+_______ test_review_duplicate_terminal_preserves_original_success[fail] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-215/test_review_duplicate_terminal1')
+action = 'fail'
+
+    @pytest.mark.parametrize('action',['finish','fail'])
+    def test_review_duplicate_terminal_preserves_original_success(tmp_path,action):
+        matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress=False)
+        try:
+            matcher(purpose,a,b);controller=matcher.retention
+            reference=controller.finish_stage()
+            root=tmp_path/'checkpoints'
+            before={str(p.relative_to(root)):p.read_bytes() for p in root.rglob('*') if p.is_file()}
+            spent=dict(controller.spent)
+            if action=='finish':
+                with pytest.raises(ValueError):controller.finish_stage()
+            else:controller.fail(RuntimeError('downstream owner failure'))
+>           assert controller.closed and not controller.poisoned
+E           assert (True and not True)
+E            +  where True = <tradingagents.research.onchain_replication.stage_retention.Controller object at 0x7772846856d0>.closed
+E            +  and   True = <tradingagents.research.onchain_replication.stage_retention.Controller object at 0x7772846856d0>.poisoned
+
+tests/research/onchain_replication/test_restart_retention_integration.py:256: AssertionError
+________ test_review_checkpoint_stage_count_refuses_before_reservation _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-215/test_review_checkpoint_stage_c0')
+
+    def test_review_checkpoint_stage_count_refuses_before_reservation(tmp_path):
+        from tradingagents.research.onchain_replication import matching_pair as pair
+        from tradingagents.research.onchain_replication.cache import cache_key
+        matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress=True,
+            schedule_override={'max_checkpoints':1,'max_total_checkpoints':1})
+        state=None
+        try:
+            identity=matcher.pair_identity(a,b)
+            expected=matcher._expected_event(0,purpose=cache_key(purpose),identity=pair.digest(identity))
+            log.begin(cache_key(purpose),pair.digest(identity));matcher._ack_check(expected)
+            matcher.retention.begin(purpose,a,b,identity,expected)
+            state=matcher_module.engine.create(a,b,config,**{k:tiny.POLICY[k] for k in pair.ENGINE_FIELDS})
+            matcher_module.engine.advance(state,a,b,config,max_operations=1)
+            matcher._save(state,a,b,identity,purpose)
+            spent=dict(matcher.retention.spent);reservations=matcher.retention.reservations
+            matcher.checkpoints=0  # A mutable public counter cannot refund the original stage cap.
+            with pytest.raises(ValueError):matcher._save(state,a,b,identity,purpose)
+>           assert matcher.retention.spent==spent
+E           AssertionError: assert {'stores': 1,... 2299344, ...} == {'stores': 1,... 1506128, ...}
+E             
+E             Omitting 4 identical items, use -vv to show
+E             Differing items:
+E             {'control_bytes': 1081344} != {'control_bytes': 688128}
+E             {'generations': 2} != {'generations': 1}
+E             {'cumulative_bytes': 2299344} != {'cumulative_bytes': 1506128}
+E             Use -v to get more diff
+
+tests/research/onchain_replication/test_restart_retention_integration.py:283: AssertionError
+_________ test_review_refunded_counter_refuses_next_pair_before_begin __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-215/test_review_refunded_counter_r0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7772847ae3f0>
+
+    def test_review_refunded_counter_refuses_next_pair_before_begin(tmp_path,monkeypatch):
+        matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress='complete',
+            schedule_override={'max_total_checkpoints':4})
+        original=matcher_module.engine.advance;calls=0
+        def advance(state,a,b,config,*,max_operations):
+            nonlocal calls
+            amount=1 if calls<12 else max_operations;calls+=1
+            return original(state,a,b,config,max_operations=amount)
+        monkeypatch.setattr(matcher_module.engine,'advance',advance)
+        try:
+            matcher(purpose,a,b)
+            assert matcher.retention.spent['generations']==3
+            events=log.events;spent=dict(matcher.retention.spent)
+            matcher.checkpoints=0
+            def forbidden(*args,**kwargs):raise AssertionError('numerical allocation after stage cap')
+            monkeypatch.setattr(matcher_module.engine,'create',forbidden)
+>           with pytest.raises(ValueError):matcher(purpose,a,b)
+                                           ^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention_integration.py:307: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_matcher.py:271: in __call__
+    state = engine.create(a, b, self.config, **{k: self.policy[k] for k in pair.ENGINE_FIELDS})
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (AttributedGraph(node_ids=('0', '1'), node_features=array([[0. ],
+       [0.3]]), edge_index=array([[0],
+       [1]]),...aaaaaa', center_id='0'), {'alpha': 1.0, 'amendment': 'matching-precision-v2.md', 'beta0': 1.0, 'beta_final': 1.0, ...})
+kwargs = {'hardening_buffer_bytes': 4096, 'max_state_bytes': 100000, 'normalization_chunk_entries': 4, 'hardening_chunk_entries': 2}
+
+>   def forbidden(*args,**kwargs):raise AssertionError('numerical allocation after stage cap')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: numerical allocation after stage cap
+
+tests/research/onchain_replication/test_restart_retention_integration.py:305: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_review_duplicate_terminal_preserves_original_success[finish]
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_review_duplicate_terminal_preserves_original_success[fail]
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_review_checkpoint_stage_count_refuses_before_reservation
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_review_refunded_counter_refuses_next_pair_before_begin
+4 failed, 18 deselected in 1.10s

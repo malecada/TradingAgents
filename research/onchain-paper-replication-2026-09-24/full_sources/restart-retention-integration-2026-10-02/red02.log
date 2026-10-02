@@ -1,0 +1,18 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_actual_binary_read_anchors_no_checkpoint_selection_and_rejects_rehashed_seal _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-177/test_actual_binary_read_anchor0')
+
+    def test_actual_binary_read_anchors_no_checkpoint_selection_and_rejects_rehashed_seal(tmp_path):
+        matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress=False)
+        try:
+            matcher(purpose,a,b);reference=matcher.retention.finish_stage();terminal=log.finish()
+>           from tradingagents.research.onchain_replication import stage_retention_reader as reader
+E           ImportError: cannot import name 'stage_retention_reader' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_restart_retention_integration.py:82: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_actual_binary_read_anchors_no_checkpoint_selection_and_rejects_rehashed_seal
+1 failed, 2 deselected in 0.45s

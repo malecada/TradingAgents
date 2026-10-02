@@ -1,0 +1,75 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_three_scheduled_snapshots_retire_only_superseded_arrays_and_copy_first __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-175/test_three_scheduled_snapshots0')
+
+    def test_three_scheduled_snapshots_retire_only_superseded_arrays_and_copy_first(tmp_path):
+        # Removing retirement or copying FIRST only at completion breaks this test.
+        matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress=True)
+        try:
+>           with pytest.raises(matcher_module.CheckpointStop):matcher(purpose,a,b)
+                                                              ^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention_integration.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_matcher.py:264: in __call__
+    if self.retention is not None:self.retention.begin(purpose,a,b,identity,expected)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/stage_retention.py:145: in begin
+    self._inputs(selected,a,b)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.stage_retention.Controller object at 0x7cff2d15de80>
+index = 0
+a = GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09T..., edge_features=array([[0.1]]), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None)
+b = GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09T..., edge_features=array([[0.4]]), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None)
+
+    def _inputs(self,index,a,b):
+        encoded=[];graphs=[]
+        for direction,g in enumerate((a,b)):
+>           item={'node_ids':list(g.node_ids),'parent_hash':g.parent_hash,'center_id':g.center_id,
+                                                            ^^^^^^^^^^^^^
+                'typed_identity':graph_identity(g),'files':{}}
+E           AttributeError: 'GraphSnapshot' object has no attribute 'parent_hash'
+
+tradingagents/research/onchain_replication/stage_retention.py:151: AttributeError
+___ test_completion_before_cadence_keeps_selected_inputs_without_pair_store ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-175/test_completion_before_cadence0')
+
+    def test_completion_before_cadence_keeps_selected_inputs_without_pair_store(tmp_path):
+        # Eager stores for all comparisons or forced snapshots break this test.
+        matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress=False)
+        try:
+>           result=matcher(purpose,a,b)
+                   ^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention_integration.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_matcher.py:264: in __call__
+    if self.retention is not None:self.retention.begin(purpose,a,b,identity,expected)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/stage_retention.py:145: in begin
+    self._inputs(selected,a,b)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.stage_retention.Controller object at 0x7cff2d0a91d0>
+index = 0
+a = GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09T..., edge_features=array([[0.1]]), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None)
+b = GraphSnapshot(asset='ETH', start_utc='2024-01-01T00:00:00Z', end_utc='2024-01-08T00:00:00Z', available_at='2024-01-09T..., edge_features=array([[0.4]]), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None)
+
+    def _inputs(self,index,a,b):
+        encoded=[];graphs=[]
+        for direction,g in enumerate((a,b)):
+>           item={'node_ids':list(g.node_ids),'parent_hash':g.parent_hash,'center_id':g.center_id,
+                                                            ^^^^^^^^^^^^^
+                'typed_identity':graph_identity(g),'files':{}}
+E           AttributeError: 'GraphSnapshot' object has no attribute 'parent_hash'
+
+tradingagents/research/onchain_replication/stage_retention.py:151: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_three_scheduled_snapshots_retire_only_superseded_arrays_and_copy_first
+FAILED tests/research/onchain_replication/test_restart_retention_integration.py::test_completion_before_cadence_keeps_selected_inputs_without_pair_store
+2 failed in 0.46s

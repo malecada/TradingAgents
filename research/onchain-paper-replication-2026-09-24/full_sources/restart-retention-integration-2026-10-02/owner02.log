@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_actual_owner_retention_dictionary_mcm_terminal_and_original_pins _____
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...2f5f7b4ca7434cde568bd45'), <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x74551028f0e0>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x745510241350>
+
+    def test_actual_owner_retention_dictionary_mcm_terminal_and_original_pins(admitted,monkeypatch):
+        t,job,graphs,examples,transport=admitted
+        from tradingagents.research.onchain_replication import compact_matcher,stage_retention
+        from tradingagents.research.onchain_replication.provenance import thaw
+        original=compact_matcher.engine.advance;calls=0
+        def advance(state,a,b,config,*,max_operations):
+            nonlocal calls
+            # Same real engine, fewer than the admitted maximum on three calls.
+            # No forced save or changed matcher cadence is introduced.
+            amount=1 if calls<3 else max_operations;calls+=1
+            return original(state,a,b,config,max_operations=amount)
+        monkeypatch.setattr(compact_matcher.engine,'advance',advance)
+>       prepared,terminal=archive.native.api().produce(t.run,'r',job,graphs,examples,archive_transport=transport)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention_owner_integration.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_native_producer.py:110: in produce
+    require(canonical_bytes(actual) == canonical_bytes(d),'compact actual representation differs before claim')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = False, message = 'compact actual representation differs before claim'
+
+    def require(value,message):
+>       if not value:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: compact actual representation differs before claim
+
+tradingagents/research/onchain_replication/compact_native_producer.py:40: ValueError
+- reviewed profile: 0 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_restart_retention_owner_integration.py::test_actual_owner_retention_dictionary_mcm_terminal_and_original_pins
+1 failed, 1 deselected in 13.48s

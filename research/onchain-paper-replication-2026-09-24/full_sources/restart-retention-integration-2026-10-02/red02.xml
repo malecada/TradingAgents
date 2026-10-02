@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.451" timestamp="2026-10-02T11:48:19.951611+02:00" hostname="malecada-Zenbook-UM3402YA-UM3402YA"><testcase classname="tests.research.onchain_replication.test_restart_retention_integration" name="test_actual_binary_read_anchors_no_checkpoint_selection_and_rejects_rehashed_seal" time="0.077"><failure message="ImportError: cannot import name 'stage_retention_reader' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)">tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-177/test_actual_binary_read_anchor0')
+
+    def test_actual_binary_read_anchors_no_checkpoint_selection_and_rejects_rehashed_seal(tmp_path):
+        matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress=False)
+        try:
+            matcher(purpose,a,b);reference=matcher.retention.finish_stage();terminal=log.finish()
+&gt;           from tradingagents.research.onchain_replication import stage_retention_reader as reader
+E           ImportError: cannot import name 'stage_retention_reader' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_restart_retention_integration.py:82: ImportError</failure></testcase></testsuite></testsuites>

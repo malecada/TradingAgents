@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="71.601" timestamp="2026-10-02T12:08:18.393739+02:00" hostname="malecada-Zenbook-UM3402YA-UM3402YA"><testcase classname="tests.research.onchain_replication.test_restart_retention_owner_integration" name="test_actual_owner_retention_dictionary_mcm_terminal_and_original_pins" time="69.194"><failure message="tradingagents.research.onchain_replication.compact_native_producer.CompactProducerError: compact producer attempt failed; preserve partial evidence and stop enclosing job">run = &lt;tradingagents.research.lifecycle.ResearchRun object at 0x776132b7d010&gt;
+representation = 'r'
+job = {'binding_output': 'binding.json', 'compact_archive_input': 'archive_policy', 'compact_closure_input': 'compact_closure', 'compact_denominator_input': 'compact_denominator', ...}
+graphs = (GraphSnapshot(asset='ETH', start_utc='2024-01-15T00:00:00Z', end_utc='2024-01-22T00:00:00Z', available_at='2024-01-23... shape=(0, 2), dtype=float64), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None))
+examples = ExampleManifest(train=(Example(decision_at='2024-01-30T00:00:00Z', label_start='2024-01-30T00:00:00Z', label_end='2024...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'), fold_hash='e3bbc4d2a4a3f555d0c48899d37cf989a7eebdbfc2f5f7b4ca7434cde568bd45')
+archive_transport = &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77629f28f0e0&gt;
+
+    def produce(run,representation,job,graphs,examples,*,archive_transport=None):
+        require(selected(run,representation,job),'compact production must be explicitly selected')
+        graphs = tuple(graphs);d = job['descriptor'];fold = Fold(**d['fold'])
+        require(graphs and all(type(g) is GraphSnapshot for g in graphs),'compact resident graph snapshots required')
+        actual = representation_descriptor(graphs,examples,fold,'proposed',d['seed'],d['configs'])
+        actual.update({k:d[k] for k in ('pair_execution','compact_execution','compact_training')})
+        item=json.loads(run.read_input(job['plan_input']))['producers'][job['producer']]
+        extension=compact_training._archive_extension(run,job,item)
+        actual.update(extension)
+        actual.update(compact_training._retention_extension(run,job,item))
+        require(bool(extension)==(archive_transport is not None),
+            'explicit selected archive transport required; local route cannot accept one')
+        require(canonical_bytes(actual) == canonical_bytes(d),'compact actual representation differs before claim')
+        m = compact_native_features._api()
+        m.minimum_capacity({graph_hash(g):g for g in graphs},d['required_graphs'],d['configs']['dictionary']['size'],
+            m.policy(json.loads(run.read_input(job['compact_native_features_input']))))
+        journal = owner = ledger = archive_lock = None
+        try:
+            journal,bound = matching_owner.open_first(run,representation=representation,plan_input=job['plan_input'],
+                producer=job['producer'],policy_input=job['pair_checkpoint_input'])
+            owner = compact_owner.attach(bound,policy_input=job['compact_policy_input'])
+            if extension:
+                from . import archive_owner_policy, archive_owner_operations
+                archive_lock = owner._transition
+                ledger = archive_owner_operations.attach(archive_owner_policy.select(owner,
+                    input_name=job['compact_archive_input'],transport=archive_transport))
+            training = compact_training.admit(owner,input_name=job['compact_training_input'],graphs=graphs,
+                examples=examples,fold=fold,seed=d['seed'],configs=d['configs'])
+            denominator = compact_denominator.admit(training,input_name=job['compact_denominator_input'])
+            draws = compact_sampler.produce(training,input_name=job['compact_sampler_input'])
+            saved = compact_samples.publish(draws,input_name=job['compact_samples_input'])
+            proof = compact_sample_proof.admit(saved)
+&gt;           dictionary = compact_dictionary.produce(proof,input_name=job['compact_dictionary_input'])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tradingagents/research/onchain_replication/compact_native_producer.py:131: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_dictionary.py:199: in produce
+    return _produce_locked(proof, input_name=input_name, held=held)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_dictionary.py:252: in _produce_locked
+    (actual,numeric_pin), writer_receipt = archive_owner_writer._run_locked(ledger,stage,compute,
+tradingagents/research/onchain_replication/archive_owner_writer.py:78: in _run_locked
+    value = produce(log,lease)
+            ^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_dictionary.py:239: in compute
+    actual = kernel.fit(proof.samples,thaw(owner.matching),thaw(proof._published._draws._training.settings),
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:106: in fit
+    centers,groups=reduce(list(range(n)),{i:[i] for i in range(n)},0)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:97: in reduce
+    centers,groups=cluster_medoids(distances(part,owners,{'level':level,'partition_start':start}),min(k,len(part)))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:87: in distances
+    values.append(score(score_pair,purpose,graphs[left],graphs[right]))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py:36: in score
+    result=callback(thaw(purpose),a,b)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;tradingagents.research.onchain_replication.compact_matcher.CompactMatcher object at 0x776132b7f230&gt;
+purpose = {'schema_version': 1, 'kind': 'dictionary', 'workload_sha256': 'c17fff6047d99e0ca2e7c6cc7046812306749aafb5b5baf93517bf06e5d8b625', 'block_sha256': '66596bed3074fe151a8838ae050479f8d1cd91e6ea7ae1fe1cf6f6a7b7d39745', ...}
+a = AttributedGraph(node_ids=('a',), node_features=array([[1., 1., 1., 1.]]), edge_index=array([], shape=(2, 0), dtype=int...=(0, 2), dtype=float64), parent_hash='43ff6f46ec22ade720dc6f118a57541a35648e0a1e740471d7f49a780c32b244', center_id='a')
+b = AttributedGraph(node_ids=('c',), node_features=array([[1., 1., 1., 1.]]), edge_index=array([], shape=(2, 0), dtype=int...=(0, 2), dtype=float64), parent_hash='b58f616ee3935d2d7bfa572da3198893eedb02311cb38da510f0362310ec1c4a', center_id='c')
+
+    def __call__(self, purpose, a, b):
+        require(not self.busy and not self.poisoned, 'compact matcher busy or poisoned')
+        self.busy = True; state = None; primary = None
+        try:
+            self._check(); purpose = copy.deepcopy(purpose)
+            require(purpose.get('schema_version') == 1 and purpose.get('kind') in ('mcm', 'dictionary')
+                and purpose.get('workload_sha256') == self.workload
+                and purpose.get('typed_graphs') == [graph_identity(a), graph_identity(b)], 'compact matcher purpose differs')
+            pair.policy_check(a, b, self.config, self.policy)
+            require(self.log.events + 2 + self.schedule['max_checkpoints'] &lt;= self.log.start['limits']['max_events'],
+                    'insufficient completion/progress event capacity')
+            reserved = self.policy['max_checkpoint_bytes'] + 2 * io.META_LIMIT
+            require(self.checkpoints + self.schedule['max_checkpoints'] &lt;= self.schedule['max_total_checkpoints']
+                and self.reserved_bytes + self.schedule['max_checkpoints'] * reserved
+                    &lt;= self.schedule['max_total_checkpoint_bytes'],
+                'insufficient cumulative checkpoint capacity before allocation')
+            identity = self.pair_identity(a, b)
+            expected = self._expected_event(0, purpose=cache_key(purpose), identity=pair.digest(identity))
+            self.log.begin(cache_key(purpose), pair.digest(identity))
+            self._check()
+            self._ack_check(expected)
+            if self.retention is not None:self.retention.begin(purpose,a,b,identity,expected)
+            state = engine.create(a, b, self.config, **{k: self.policy[k] for k in pair.ENGINE_FIELDS})
+            for _ in range(self.schedule['max_checkpoints']):
+                for _ in range(self.schedule['calls_per_checkpoint']):
+                    self._check()
+                    engine.advance(state, a, b, self.config, max_operations=self.schedule['operations_per_call'])
+                    if state['phase'] == 'done': break
+                if state['phase'] == 'done':
+                    self._check()
+                    result = engine.score_only(state, a, b, self.config,
+                        max_buffer_bytes=self.policy['max_score_buffer_bytes'], chunk_edges=self.policy['chunk_edges'])
+                    try: engine.close(state)
+                    except BaseException as failure:
+                        raise CleanupFailure('ranked matcher cleanup unresolved; worker must stop') from failure
+                    finally: state = None
+                    self._check()
+                    expected = self._expected_event(1 if result.convergence == 'temperature_complete' else 2,
+                        score=float(result.score), iterations=result.iterations)
+                    answer = self.log.complete(float(result.score), result.convergence, result.iterations)
+                    self._check(); self._ack_check(expected)
+                    if self.retention is not None:
+                        self.retention.complete(expected,float(result.score),result.iterations,result.convergence)
+                    return answer
+                self._save(state, a, b, identity, purpose)
+&gt;           raise CheckpointStop('bounded calls exhausted; checkpoint retained for separately admitted successor')
+E           tradingagents.research.onchain_replication.compact_matcher.CheckpointStop: bounded calls exhausted; checkpoint retained for separately admitted successor
+
+tradingagents/research/onchain_replication/compact_matcher.py:294: CheckpointStop
+
+The above exception was the direct cause of the following exception:
+
+admitted = (&lt;tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...2f5f7b4ca7434cde568bd45'), &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77629f28f0e0&gt;)
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x77629f241350&gt;
+
+    def test_actual_owner_retention_dictionary_mcm_terminal_and_original_pins(admitted,monkeypatch):
+        t,job,graphs,examples,transport=admitted
+        from tradingagents.research.onchain_replication import compact_matcher,stage_retention
+        from tradingagents.research.onchain_replication.provenance import thaw
+        original=compact_matcher.engine.advance;calls=0
+        def advance(state,a,b,config,*,max_operations):
+            nonlocal calls
+            # Same real engine, fewer than the admitted maximum on three calls.
+            # No forced save or changed matcher cadence is introduced.
+            amount=1 if calls&lt;3 else max_operations;calls+=1
+            return original(state,a,b,config,max_operations=amount)
+        monkeypatch.setattr(compact_matcher.engine,'advance',advance)
+&gt;       prepared,terminal=archive.native.api().produce(t.run,'r',job,graphs,examples,archive_transport=transport)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention_owner_integration.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = &lt;tradingagents.research.lifecycle.ResearchRun object at 0x776132b7d010&gt;
+representation = 'r'
+job = {'binding_output': 'binding.json', 'compact_archive_input': 'archive_policy', 'compact_closure_input': 'compact_closure', 'compact_denominator_input': 'compact_denominator', ...}
+graphs = (GraphSnapshot(asset='ETH', start_utc='2024-01-15T00:00:00Z', end_utc='2024-01-22T00:00:00Z', available_at='2024-01-23... shape=(0, 2), dtype=float64), raw_count=1, admitted_count=1, exclusion_counts=mappingproxy({}), edge_aggregates=None))
+examples = ExampleManifest(train=(Example(decision_at='2024-01-30T00:00:00Z', label_start='2024-01-30T00:00:00Z', label_end='2024...bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'), fold_hash='e3bbc4d2a4a3f555d0c48899d37cf989a7eebdbfc2f5f7b4ca7434cde568bd45')
+archive_transport = &lt;tests.research.onchain_replication.test_archive_chunks.Transport object at 0x77629f28f0e0&gt;
+
+    def produce(run,representation,job,graphs,examples,*,archive_transport=None):
+        require(selected(run,representation,job),'compact production must be explicitly selected')
+        graphs = tuple(graphs);d = job['descriptor'];fold = Fold(**d['fold'])
+        require(graphs and all(type(g) is GraphSnapshot for g in graphs),'compact resident graph snapshots required')
+        actual = representation_descriptor(graphs,examples,fold,'proposed',d['seed'],d['configs'])
+        actual.update({k:d[k] for k in ('pair_execution','compact_execution','compact_training')})
+        item=json.loads(run.read_input(job['plan_input']))['producers'][job['producer']]
+        extension=compact_training._archive_extension(run,job,item)
+        actual.update(extension)
+        actual.update(compact_training._retention_extension(run,job,item))
+        require(bool(extension)==(archive_transport is not None),
+            'explicit selected archive transport required; local route cannot accept one')
+        require(canonical_bytes(actual) == canonical_bytes(d),'compact actual representation differs before claim')
+        m = compact_native_features._api()
+        m.minimum_capacity({graph_hash(g):g for g in graphs},d['required_graphs'],d['configs']['dictionary']['size'],
+            m.policy(json.loads(run.read_input(job['compact_native_features_input']))))
+        journal = owner = ledger = archive_lock = None
+        try:
+            journal,bound = matching_owner.open_first(run,representation=representation,plan_input=job['plan_input'],
+                producer=job['producer'],policy_input=job['pair_checkpoint_input'])
+            owner = compact_owner.attach(bound,policy_input=job['compact_policy_input'])
+            if extension:
+                from . import archive_owner_policy, archive_owner_operations
+                archive_lock = owner._transition
+                ledger = archive_owner_operations.attach(archive_owner_policy.select(owner,
+                    input_name=job['compact_archive_input'],transport=archive_transport))
+            training = compact_training.admit(owner,input_name=job['compact_training_input'],graphs=graphs,
+                examples=examples,fold=fold,seed=d['seed'],configs=d['configs'])
+            denominator = compact_denominator.admit(training,input_name=job['compact_denominator_input'])
+            draws = compact_sampler.produce(training,input_name=job['compact_sampler_input'])
+            saved = compact_samples.publish(draws,input_name=job['compact_samples_input'])
+            proof = compact_sample_proof.admit(saved)
+            dictionary = compact_dictionary.produce(proof,input_name=job['compact_dictionary_input'])
+            artifacts = []
+            for h in d['required_graphs']:
+                mcm = compact_mcm.produce(dictionary,graph_hash=h,input_name=job['compact_mcm_input'],
+                    output_input=job['compact_mcm_output_input'])
+                features = compact_features.prepare(mcm,input_name=job['compact_feature_input'])
+                artifacts.append(compact_graph_artifacts.publish(features,input_name=job['compact_graph_output_input']))
+            closure = compact_closure.admit(dictionary,denominator,artifacts,input_name=job['compact_closure_input'])
+            published = compact_publication.publish(closure,input_name=job['compact_publication_input'])
+            terminal = compact_terminal.finish(published,input_name=job['compact_terminal_input'])
+            prepared = compact_native_features.prepare(terminal,input_name=job['compact_native_features_input'])
+            finalize(prepared)
+            return prepared,terminal
+        except BaseException as error:
+            cleanup = []
+            if owner is not None:owner.poisoned = True
+            if ledger is not None and not ledger._closed:
+                try:_close_failed_archive(owner,ledger,archive_lock)
+                except BaseException as failure:cleanup.append(failure)
+            if journal is not None:
+                if not journal.sealed:
+                    try:journal.seal('failed',reason=type(error).__name__+': '+str(error))
+                    except BaseException as failure:cleanup.append(failure)
+                try:_immutable(journal.directory/'attempt-failed.json',{
+                    'reason':type(error).__name__+': '+str(error),
+                    'compact_terminal_present':(journal.directory/'complete.json').exists(),
+                    'cleanup_errors':[str(e) for e in cleanup]})
+                except BaseException as failure:cleanup.append(failure)
+            for failure in cleanup:error.add_note('compact failure cleanup: '+repr(failure))
+            if not isinstance(error,Exception):raise
+            for failure in cleanup:
+                if not isinstance(failure,Exception):raise failure from error
+&gt;           raise CompactProducerError('compact producer attempt failed; preserve partial evidence and stop enclosing job'
+                + ('; cleanup failed' if cleanup else '')) from error
+E           tradingagents.research.onchain_replication.compact_native_producer.CompactProducerError: compact producer attempt failed; preserve partial evidence and stop enclosing job
+
+tradingagents/research/onchain_replication/compact_native_producer.py:163: CompactProducerError</failure></testcase></testsuite></testsuites>

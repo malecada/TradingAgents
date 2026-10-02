@@ -3,6 +3,56 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 frozen candidates — full archive check closed; final reviews active**:
+owner05 CLOSED exit0 with3passed543.85s, session4135, against immutable
+candidate01 source manifest81bd6e0963dc28f47c3c3208d99bca8124bcf504824a2803e7c89ecbc36f00a5.
+The full successful owner path, bad-descriptor preclaim refusal and late MCM
+retirement failure all passed. Final candidate03 adds only original checkpoint
+spend/counter and successful-close guards, with reproduced red05/red06 and
+check09:33passed4.90s plus check10:6passed18deselected1.60s. These are separate
+scopes; owner05 does not claim to have run final later guard bytes. Candidate03
+manifest88d350c1c9d302e4091a173e15026d901e058121b65ff9564d04ad61f8b709a2
+is independently accepted for bounded synthetic engineering, REVIEW_FINAL SHA256
+7ca7b7d6f79a7ed240e6ed3eb6e41e9d9b0c7033880566172a96e83e334d0caa.
+No further heavy fixture is required for this narrow guard correction. No archive
+test remains active. All owner01–05
+full snapshots remain local; compact committed-base replay bundles retain exact
+changed files for external backup without duplicating every unchanged source.
+
+Physical candidate01 is frozen, manifest
+25cca87b0664b235a26485e477196de896490ba8e7f022d175fedad1bb80b9ea.
+check13 produced141passed plus one fixture API typo; corrected check14 passed
+both affected tests,37deselected8.95s, with unchanged production source. Final
+synthetic totals were4,644,864 allocated bytes /4,476,682 logical /51entries across
+three owned roots. This is mocked-guard tiny-model evidence, not actual user-unit
+or full graph feasibility. Original live-parent authority, bounded metadata and
+configured scratch containment are implemented but not yet independently accepted.
+Original-parent loss refuses disk-only recovery; durable terminal/remaining-cell
+publication can be unavailable. Raw/partial evidence remains retained. The author
+prepares the smallest fresh OS smoke without executing it while review continues.
+
+Root revision03 preparation is frozen at manifest02 SHA256
+3054ad029d9ba5392bffdabe8605707ff791aed004e968acd277d6eb8dcc3151.
+Selected CHARTER.candidate02.md /gate-candidate02.NONEXECUTABLE.json explicitly
+qualify best-effort observer publication after authority loss. Both previous
+candidate01 files and the correction are preserved. All nine cells/windows,
+43 provenance metadata pins/nine graph proofs, accepted exact62 budget and
+revision02 environment/workspace/parent bindings are retained. Source/runtime
+fields remain null; physical caps are proposed only, no namespaces are reserved
+and no admission occurred. Independent preparation review remains pending.
+
+A separate read-only fidelity check compared20 model/numerical/config files
+against accepted ec7d9d65: all byte-identical. Evidence is
+full_sources/parallel-numerical-preservation-2026-10-02/check01.json SHA256
+34feb1c1ca48930f519384663442e815ae930685fc9f995e02626f2c0fb536ee.
+This supports unchanged selected files only, not changed wrapper equivalence.
+Latest RAM8,892,375,040B remains below9,663,676,416B startup; free disk
+19,661,029,376B exceeds10GiB floor. No empirical process is active. Coverage77/109
+and all1,420 pending financial fits remain unchanged. Next safe action: finish
+independent source/preparation reviews, checkpoint accepted evidence, then review
+and execute a fresh bounded OS smoke with complete frozen source before assembling
+the exact final empirical gate. Continue independent work if RAM admission fails.
+
 **October 2 active correction checkpoint — full archive route passed, physical review open**:
 The isolated owner04 archive-retention fixture CLOSED with1passed/1deselected in
 408.86s, session3928. It covers20 actual dictionary comparisons under22 capacity,

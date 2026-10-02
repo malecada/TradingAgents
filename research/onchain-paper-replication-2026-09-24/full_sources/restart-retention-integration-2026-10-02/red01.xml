@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="0.402" timestamp="2026-10-02T11:40:08.861632+02:00" hostname="malecada-Zenbook-UM3402YA-UM3402YA"><testcase classname="tests.research.onchain_replication.test_restart_retention_integration" name="test_three_scheduled_snapshots_retire_only_superseded_arrays_and_copy_first" time="0.015"><failure message="TypeError: CompactMatcher.__init__() got an unexpected keyword argument 'retention'">tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-174/test_three_scheduled_snapshots0')
+
+    def test_three_scheduled_snapshots_retire_only_superseded_arrays_and_copy_first(tmp_path):
+        # Removing retirement or copying FIRST only at completion breaks this test.
+&gt;       matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress=True)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention_integration.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-174/test_three_scheduled_snapshots0')
+progress = True
+
+    def fixture(tmp_path, *, progress):
+        writer,transport,kwargs=archive_fixture(tmp_path)
+        a=tiny.graph([[0.],[.3]],[(0,1,.1)]);b=tiny.graph([[.2],[.7]],[(1,0,.4)])
+        config=tiny.config()|{'beta_final':1.}
+        schedule=tiny.SCHEDULE|({'operations_per_call':1,'calls_per_checkpoint':1,'max_checkpoints':3} if progress else {})
+        kwargs['scope']=matcher_module.scope(config,tiny.CONTEXT,tiny.POLICY,'f'*64,schedule)
+        kwargs['max_iterations']=config['max_iterations']
+        kwargs['limits']={'chunk_events':2,'max_events':32,'max_pairs':4,'max_logical_bytes':100000}
+        kwargs['archive_policy'].update(max_chunks=16,max_metadata_bytes=2000000)
+        log=writer.ArchivePairLog(**kwargs)
+        purpose={'schema_version':1,'kind':'mcm','workload_sha256':'f'*64,
+            'typed_graphs':[graph_identity(a),graph_identity(b)],'center_index':0,'motif_index':0}
+        selection={'kind':'mcm','population':{'nodes':1,'motifs':1},'members':[[0,0]]}
+        try:
+&gt;           matcher=matcher_module.CompactMatcher(log,config=config,context=tiny.CONTEXT,
+                policy=tiny.POLICY,workload_sha256='f'*64,schedule=schedule,lease=lambda:None,
+                retention={'policy':retention_policy(),'selection':selection,'stage':'e'*64})
+E               TypeError: CompactMatcher.__init__() got an unexpected keyword argument 'retention'
+
+tests/research/onchain_replication/test_restart_retention_integration.py:32: TypeError</failure></testcase><testcase classname="tests.research.onchain_replication.test_restart_retention_integration" name="test_completion_before_cadence_keeps_selected_inputs_without_pair_store" time="0.006"><failure message="TypeError: CompactMatcher.__init__() got an unexpected keyword argument 'retention'">tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-174/test_completion_before_cadence0')
+
+    def test_completion_before_cadence_keeps_selected_inputs_without_pair_store(tmp_path):
+        # Eager stores for all comparisons or forced snapshots break this test.
+&gt;       matcher,log,a,b,config,purpose,transport=fixture(tmp_path,progress=False)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_restart_retention_integration.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-174/test_completion_before_cadence0')
+progress = False
+
+    def fixture(tmp_path, *, progress):
+        writer,transport,kwargs=archive_fixture(tmp_path)
+        a=tiny.graph([[0.],[.3]],[(0,1,.1)]);b=tiny.graph([[.2],[.7]],[(1,0,.4)])
+        config=tiny.config()|{'beta_final':1.}
+        schedule=tiny.SCHEDULE|({'operations_per_call':1,'calls_per_checkpoint':1,'max_checkpoints':3} if progress else {})
+        kwargs['scope']=matcher_module.scope(config,tiny.CONTEXT,tiny.POLICY,'f'*64,schedule)
+        kwargs['max_iterations']=config['max_iterations']
+        kwargs['limits']={'chunk_events':2,'max_events':32,'max_pairs':4,'max_logical_bytes':100000}
+        kwargs['archive_policy'].update(max_chunks=16,max_metadata_bytes=2000000)
+        log=writer.ArchivePairLog(**kwargs)
+        purpose={'schema_version':1,'kind':'mcm','workload_sha256':'f'*64,
+            'typed_graphs':[graph_identity(a),graph_identity(b)],'center_index':0,'motif_index':0}
+        selection={'kind':'mcm','population':{'nodes':1,'motifs':1},'members':[[0,0]]}
+        try:
+&gt;           matcher=matcher_module.CompactMatcher(log,config=config,context=tiny.CONTEXT,
+                policy=tiny.POLICY,workload_sha256='f'*64,schedule=schedule,lease=lambda:None,
+                retention={'policy':retention_policy(),'selection':selection,'stage':'e'*64})
+E               TypeError: CompactMatcher.__init__() got an unexpected keyword argument 'retention'
+
+tests/research/onchain_replication/test_restart_retention_integration.py:32: TypeError</failure></testcase></testsuite></testsuites>
