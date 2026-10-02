@@ -3,7 +3,43 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Latest handoff — October 2, cold archive event reader accepted**:
+**Latest handoff — October 2, archived scientific-stage joins accepted**:
+Cold reader checkpoint9639917aba0c311d20549875b813eda3d8cdfd9a was committed,
+pushed and exact remote HEAD verified. archived_stage.verify now explicitly
+joins every cold-replayed matching event with actual local checkpoint trees and
+retained MCM score streams. Optional immutable verified-event visitors preserve
+the old archive result schema and default behavior. Actual progress frames are
+checked against checkpoint intent/state before retaining40-byte event/reference
+records. Final indexed scans join ordinal/manifest/tree content and ordered
+score purposes/values; post-publication callbacks are followed by full local
+source/read/reference/checkpoint/score checks. The original local stage route is
+unchanged; the new attempt remains separate and source evidence read-only.
+
+Independent AS1/AS2 findings were reproduced by4failures8.04s: internally valid
+archives pointing at foreign-purpose/identity checkpoints, and callback-mutated
+scientific/archive policies. Corrected actual-frame binding and private canonical
+policy snapshots pass check03 CLOSED146passed64.53s/session18140exit0. This is
+17newstage+2visitor+117priorarchive+2matcherintegration+8oldlocalstage cases.
+Independent REVIEW_FINAL accepted SHA
+6e8be268ed88f040fef80c8b40461d1d4b393baad803e30e656baaede5174110.
+Evidence: full_sources/archived-stage-2026-10-02/. Initial15fail0.91s,
+check01 15pass13.26s, check02 142pass57.46s and source/test snapshots remain.
+Fixtures execute actual tiny dictionary/MCM/checkpoint engines, with a first
+one-operation advance to force a checkpoint and filesystem archive transport.
+No scientific production parameter changed, financial fit or network request.
+
+No active process or source freeze remains. Next safe action: preserve reviewed
+checkpoint remotely, then implement explicit archive-backed current-owner,
+publication and terminal selection with source/policy binding and fresh finite
+read attempts. compact_owner.begin/seal/_verified_stages, compact_mcm_output
+and compact_terminal still select the old local route; do not silently replace
+their readers or claim archived-stage content checks alone admit an owner.
+Checkpoint/score payloads and archive manifest metadata remain local. Their
+compatible retention and whole-workflow physical/transport/metadata accounting
+still precede resource/hub/budget release. Coverage77/109,32open; all1420financial
+fits pending. No empirical admission;60→61 unadopted. The10GiB floor remains.
+
+**Previous handoff — October 2, cold archive event reader accepted**:
 Writer/matcher checkpoint766fb0e693c54bd8dd0921299300aabfad474270 was committed,
 pushed and exact remote HEAD verified. archive_pair_reader.verify now implements
 the cold event/manifest route: trusted archive-complete hash plus expected owner,

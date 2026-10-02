@@ -24,10 +24,11 @@ def _metadata(raw):
     return result
 
 
-def verify(*, start_bytes, terminal_bytes, terminal_sha256, owner, scope, read_chunk, lease):
+def verify(*, start_bytes, terminal_bytes, terminal_sha256, owner, scope, read_chunk, lease, on_event=None):
     """Stream every full/partial chunk and preserve pair event semantics."""
     io._identity(owner); io._identity(terminal_sha256); scope = events._scope(scope)
     require(callable(read_chunk) and callable(lease), 'bounded archive reader and live lease required')
+    require(on_event is None or callable(on_event), 'optional event visitor must be callable')
     lease()
     terminal = _metadata(terminal_bytes)
     require(io._hash(terminal_bytes) == terminal_sha256, 'archive event terminal hash differs')
@@ -73,6 +74,7 @@ def verify(*, start_bytes, terminal_bytes, terminal_sha256, owner, scope, read_c
             frame = events.FRAME.unpack(body)
             if frame[1] in (1, 2): scores.update(SCORE.pack(frame[2], frame[3], frame[5]))
             elif frame[1] == 3: references.update(CHECKPOINT.pack(frame[0], frame[7]))
+            if on_event is not None: on_event(frame)
         del raw  # Release this full chunk before the next archive read allocates.
     require(state == expected and head == terminal['head'] and total == size
         and digest.hexdigest() == terminal['payload_sha256'], 'archive event terminal replay differs')

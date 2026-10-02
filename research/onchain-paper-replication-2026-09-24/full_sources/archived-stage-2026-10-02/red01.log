@@ -1,0 +1,338 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+_ test_actual_archived_stage_joins_checkpoints_and_full_score_stream[dictionary] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_actual_archived_stage_joi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d361e23100>
+kind = 'dictionary'
+
+    @pytest.mark.parametrize('kind',['dictionary','mcm'])
+    def test_actual_archived_stage_joins_checkpoints_and_full_score_stream(tmp_path,monkeypatch,kind):
+>       module,root,contract = fixture(tmp_path,monkeypatch,kind)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_actual_archived_stage_joi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d361e23100>
+kind = 'dictionary', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+___ test_actual_archived_stage_joins_checkpoints_and_full_score_stream[mcm] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_actual_archived_stage_joi1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d3a2b13100>
+kind = 'mcm'
+
+    @pytest.mark.parametrize('kind',['dictionary','mcm'])
+    def test_actual_archived_stage_joins_checkpoints_and_full_score_stream(tmp_path,monkeypatch,kind):
+>       module,root,contract = fixture(tmp_path,monkeypatch,kind)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_actual_archived_stage_joi1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d3a2b13100>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+_______ test_corruption_or_wrong_denominator_cannot_complete[checkpoint] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_corruption_or_wrong_denom0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d361e2ab10>
+target = 'checkpoint'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','extra_checkpoint','denominator'])
+    def test_corruption_or_wrong_denominator_cannot_complete(tmp_path,monkeypatch,target):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_corruption_or_wrong_denom0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d361e2ab10>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+_________ test_corruption_or_wrong_denominator_cannot_complete[score] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_corruption_or_wrong_denom1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360f4ef10>
+target = 'score'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','extra_checkpoint','denominator'])
+    def test_corruption_or_wrong_denominator_cannot_complete(tmp_path,monkeypatch,target):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_corruption_or_wrong_denom1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360f4ef10>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+____ test_corruption_or_wrong_denominator_cannot_complete[extra_checkpoint] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_corruption_or_wrong_denom2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360f4f8a0>
+target = 'extra_checkpoint'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','extra_checkpoint','denominator'])
+    def test_corruption_or_wrong_denominator_cannot_complete(tmp_path,monkeypatch,target):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_corruption_or_wrong_denom2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360f4f8a0>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+______ test_corruption_or_wrong_denominator_cannot_complete[denominator] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_corruption_or_wrong_denom3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360fb6550>
+target = 'denominator'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','extra_checkpoint','denominator'])
+    def test_corruption_or_wrong_denominator_cannot_complete(tmp_path,monkeypatch,target):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_corruption_or_wrong_denom3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360fb6550>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+______ test_valid_score_stream_with_wrong_score_refuses_exact_event_join _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_valid_score_stream_with_w0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360fb6c50>
+
+    def test_valid_score_stream_with_wrong_score_refuses_exact_event_join(tmp_path,monkeypatch):
+>       module,root,contract = fixture(tmp_path,monkeypatch,wrong_score=True)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_valid_score_stream_with_w0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360fb6c50>
+kind = 'mcm', wrong_score = True
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+___________ test_final_callback_mutation_refuses_return[checkpoint] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360ff2990>
+target = 'checkpoint'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','source','read'])
+    def test_final_callback_mutation_refuses_return(tmp_path,monkeypatch,target):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360ff2990>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+______________ test_final_callback_mutation_refuses_return[score] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360ff24e0>
+target = 'score'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','source','read'])
+    def test_final_callback_mutation_refuses_return(tmp_path,monkeypatch,target):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360ff24e0>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+____________ test_final_callback_mutation_refuses_return[reference] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360efcbb0>
+target = 'reference'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','source','read'])
+    def test_final_callback_mutation_refuses_return(tmp_path,monkeypatch,target):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360efcbb0>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+_____________ test_final_callback_mutation_refuses_return[source] ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360eff3f0>
+target = 'source'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','source','read'])
+    def test_final_callback_mutation_refuses_return(tmp_path,monkeypatch,target):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360eff3f0>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+______________ test_final_callback_mutation_refuses_return[read] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360d0ca10>
+target = 'read'
+
+    @pytest.mark.parametrize('target',['checkpoint','score','reference','source','read'])
+    def test_final_callback_mutation_refuses_return(tmp_path,monkeypatch,target):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_final_callback_mutation_r4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360d0ca10>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+___________ test_reference_and_metadata_budget_refuses_before_claim ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_reference_and_metadata_bu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360d67110>
+
+    def test_reference_and_metadata_budget_refuses_before_claim(tmp_path,monkeypatch):
+>       module,root,contract = fixture(tmp_path,monkeypatch)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_reference_and_metadata_bu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76d360d67110>
+kind = 'mcm', wrong_score = False
+
+    def fixture(tmp_path, monkeypatch, kind='mcm', wrong_score=False):
+>       from tradingagents.research.onchain_replication import archived_stage as module
+E       ImportError: cannot import name 'archived_stage' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_archived_stage.py:13: ImportError
+_____ test_verified_event_visitor_is_ordered_and_receives_immutable_frames _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_verified_event_visitor_is0')
+
+    def test_verified_event_visitor_is_ordered_and_receives_immutable_frames(tmp_path):
+        module,transport,log,contract = fixture(tmp_path); frames=[]
+>       result=module.verify(**contract,on_event=frames.append)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: verify() got an unexpected keyword argument 'on_event'
+
+tests/research/onchain_replication/test_archive_event_visitor.py:7: TypeError
+________________ test_visitor_error_retains_failed_read_attempt ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_visitor_error_retains_fai0')
+
+    def test_visitor_error_retains_failed_read_attempt(tmp_path):
+        module,transport,log,contract=fixture(tmp_path)
+        def visit(frame):raise RuntimeError('visitor failure')
+>       with pytest.raises(RuntimeError,match='visitor failure'):module.verify(**contract,on_event=visit)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: verify() got an unexpected keyword argument 'on_event'
+
+tests/research/onchain_replication/test_archive_event_visitor.py:17: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_actual_archived_stage_joins_checkpoints_and_full_score_stream[dictionary]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_actual_archived_stage_joins_checkpoints_and_full_score_stream[mcm]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_corruption_or_wrong_denominator_cannot_complete[checkpoint]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_corruption_or_wrong_denominator_cannot_complete[score]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_corruption_or_wrong_denominator_cannot_complete[extra_checkpoint]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_corruption_or_wrong_denominator_cannot_complete[denominator]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_valid_score_stream_with_wrong_score_refuses_exact_event_join
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_final_callback_mutation_refuses_return[checkpoint]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_final_callback_mutation_refuses_return[score]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_final_callback_mutation_refuses_return[reference]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_final_callback_mutation_refuses_return[source]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_final_callback_mutation_refuses_return[read]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_reference_and_metadata_budget_refuses_before_claim
+FAILED tests/research/onchain_replication/test_archive_event_visitor.py::test_verified_event_visitor_is_ordered_and_receives_immutable_frames
+FAILED tests/research/onchain_replication/test_archive_event_visitor.py::test_visitor_error_retains_failed_read_attempt
+15 failed in 0.91s

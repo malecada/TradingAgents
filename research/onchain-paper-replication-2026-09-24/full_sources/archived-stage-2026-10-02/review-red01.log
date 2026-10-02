@@ -1,0 +1,155 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_valid_archive_referencing_foreign_pair_checkpoint_is_rejected[purpose] __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-95/test_valid_archive_referencing0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71890f32f360>
+field = 'purpose'
+
+    @pytest.mark.parametrize('field',['purpose','identity'])
+    def test_valid_archive_referencing_foreign_pair_checkpoint_is_rejected(tmp_path,monkeypatch,field):
+        module,root,contract = fixture(tmp_path,monkeypatch,kind='dictionary')
+        clone = tmp_path/'foreign';clone.mkdir()
+        shutil.copytree(root/'checkpoints',clone/'checkpoints')
+        transport = Transport(tmp_path/'foreign-remote')
+        start = json.loads((root/'matching/start.json').read_bytes())
+        log = writer.ArchivePairLog(clone/'matching',owner=contract['owner'],scope=contract['scope'],
+            limits=start['limits'],max_iterations=start['max_iterations'],lease=lambda:None,
+            transport=transport,archive_policy=contract['archive_policy'])
+        assert log.start_sha == hashlib.sha256((root/'matching/start.json').read_bytes()).hexdigest()
+        # Re-encode a valid new event chain; copied checkpoints retain the old pair.
+        for payload in sorted(contract['transport'].root.glob('*/payload.bin')):
+            raw = payload.read_bytes()
+            for offset in range(0,len(raw),writer.events.RECORD_BYTES):
+                frame = writer.events.FRAME.unpack(raw[offset:offset+writer.events.FRAME.size])
+                if frame[1] == 0:
+                    purpose = '0'*64 if frame[2] == 0 and field == 'purpose' else frame[5].hex()
+                    identity = '0'*64 if frame[2] == 0 and field == 'identity' else frame[6].hex()
+                    log.begin(purpose,identity)
+                elif frame[1] == 3:log.progress(frame[7].hex())
+                else:log.complete(frame[3],'temperature_complete' if frame[1] == 1 else 'iteration_cap',frame[4])
+        terminal = log.finish()
+        from tradingagents.research.onchain_replication import archive_pair_reader
+        proof = archive_pair_reader.verify(clone/'matching',expected_sha256=log.archive_complete_sha,
+            owner=contract['owner'],scope=contract['scope'],archive_policy=contract['archive_policy'],
+            attempt=tmp_path/'foreign-cold',transport=transport,lease=lambda:None,
+            max_read_metadata_bytes=contract['max_read_metadata_bytes'])
+        assert proof['replay']['completed_pairs'] == contract['pairs']
+        updated = contract | {'log_terminal_sha256':terminal,'archive_complete_sha256':log.archive_complete_sha,
+            'transport':transport,'attempt':tmp_path/'foreign-stage'}
+>       with pytest.raises(ValueError,match='checkpoint intent binding'):module.verify(clone,**updated)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archived_stage.py:127: Failed
+_ test_valid_archive_referencing_foreign_pair_checkpoint_is_rejected[identity] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-95/test_valid_archive_referencing1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71890f32f100>
+field = 'identity'
+
+    @pytest.mark.parametrize('field',['purpose','identity'])
+    def test_valid_archive_referencing_foreign_pair_checkpoint_is_rejected(tmp_path,monkeypatch,field):
+        module,root,contract = fixture(tmp_path,monkeypatch,kind='dictionary')
+        clone = tmp_path/'foreign';clone.mkdir()
+        shutil.copytree(root/'checkpoints',clone/'checkpoints')
+        transport = Transport(tmp_path/'foreign-remote')
+        start = json.loads((root/'matching/start.json').read_bytes())
+        log = writer.ArchivePairLog(clone/'matching',owner=contract['owner'],scope=contract['scope'],
+            limits=start['limits'],max_iterations=start['max_iterations'],lease=lambda:None,
+            transport=transport,archive_policy=contract['archive_policy'])
+        assert log.start_sha == hashlib.sha256((root/'matching/start.json').read_bytes()).hexdigest()
+        # Re-encode a valid new event chain; copied checkpoints retain the old pair.
+        for payload in sorted(contract['transport'].root.glob('*/payload.bin')):
+            raw = payload.read_bytes()
+            for offset in range(0,len(raw),writer.events.RECORD_BYTES):
+                frame = writer.events.FRAME.unpack(raw[offset:offset+writer.events.FRAME.size])
+                if frame[1] == 0:
+                    purpose = '0'*64 if frame[2] == 0 and field == 'purpose' else frame[5].hex()
+                    identity = '0'*64 if frame[2] == 0 and field == 'identity' else frame[6].hex()
+                    log.begin(purpose,identity)
+                elif frame[1] == 3:log.progress(frame[7].hex())
+                else:log.complete(frame[3],'temperature_complete' if frame[1] == 1 else 'iteration_cap',frame[4])
+        terminal = log.finish()
+        from tradingagents.research.onchain_replication import archive_pair_reader
+        proof = archive_pair_reader.verify(clone/'matching',expected_sha256=log.archive_complete_sha,
+            owner=contract['owner'],scope=contract['scope'],archive_policy=contract['archive_policy'],
+            attempt=tmp_path/'foreign-cold',transport=transport,lease=lambda:None,
+            max_read_metadata_bytes=contract['max_read_metadata_bytes'])
+        assert proof['replay']['completed_pairs'] == contract['pairs']
+        updated = contract | {'log_terminal_sha256':terminal,'archive_complete_sha256':log.archive_complete_sha,
+            'transport':transport,'attempt':tmp_path/'foreign-stage'}
+>       with pytest.raises(ValueError,match='checkpoint intent binding'):module.verify(clone,**updated)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archived_stage.py:127: Failed
+_______ test_policy_inputs_are_frozen_before_external_callbacks[policy] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-95/test_policy_inputs_are_frozen_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7188cd894cb0>
+target = 'policy'
+
+    @pytest.mark.parametrize('target',['policy','archive_policy'])
+    def test_policy_inputs_are_frozen_before_external_callbacks(tmp_path,monkeypatch,target):
+        module,root,contract = fixture(tmp_path,monkeypatch)
+        original = json.loads(writer.io._json(contract[target]))
+        def lease():
+            contract[target]['max_retained_logical_bytes' if target == 'policy' else 'max_metadata_bytes'] = 1
+        contract['lease'] = lease
+        result = module.verify(root,**contract)
+        intent = json.loads((contract['attempt']/'intent.json').read_bytes())
+>       assert intent[target] == original
+E       AssertionError: assert {'backend': '...00, ...}, ...} == {'backend': '...00, ...}, ...}
+E         
+E         Omitting 6 identical items, use -vv to show
+E         Differing items:
+E         {'max_retained_logical_bytes': 1} != {'max_retained_logical_bytes': 80000000}
+E         Use -v to get more diff
+
+tests/research/onchain_replication/test_archived_stage.py:139: AssertionError
+___ test_policy_inputs_are_frozen_before_external_callbacks[archive_policy] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-95/test_policy_inputs_are_frozen_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7188cd730490>
+target = 'archive_policy'
+
+    @pytest.mark.parametrize('target',['policy','archive_policy'])
+    def test_policy_inputs_are_frozen_before_external_callbacks(tmp_path,monkeypatch,target):
+        module,root,contract = fixture(tmp_path,monkeypatch)
+        original = json.loads(writer.io._json(contract[target]))
+        def lease():
+            contract[target]['max_retained_logical_bytes' if target == 'policy' else 'max_metadata_bytes'] = 1
+        contract['lease'] = lease
+>       result = module.verify(root,**contract)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archived_stage.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/archived_stage.py:107: in verify
+    observed = reader.verify(root/'matching',expected_sha256=archive_complete_sha256,
+tradingagents/research/onchain_replication/archive_pair_reader.py:159: in verify
+    source = _Snapshot(root,source_fd,expected_sha256,owner,scope,archive_policy,transport)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_pair_reader.py:75: in __init__
+    self.policy = writer._policy(policy, self.limits, transport)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/archive_pair_writer.py:31: in _policy
+    require(type(result['max_chunks']) is int and result['max_chunks'] == count
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'archive writer allowance'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: archive writer allowance
+
+tradingagents/research/onchain_replication/score_batches.py:49: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_valid_archive_referencing_foreign_pair_checkpoint_is_rejected[purpose]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_valid_archive_referencing_foreign_pair_checkpoint_is_rejected[identity]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_policy_inputs_are_frozen_before_external_callbacks[policy]
+FAILED tests/research/onchain_replication/test_archived_stage.py::test_policy_inputs_are_frozen_before_external_callbacks[archive_policy]
+4 failed, 13 deselected in 8.04s

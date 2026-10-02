@@ -92,3 +92,20 @@ Next: generic archived scientific-stage joins for checkpoint trees and retained
 score streams, explicit owner/publication/terminal selection, and a compatible
 retention/resource route for score/checkpoint payloads. Neither this cold reader
 nor writer completion admits a scientific stage or supplies these missing joins.
+
+## October2 scientific-stage continuation
+
+The explicit archived_stage.verify content join is now implemented and reviewed.
+Actual verified progress frames bind retained checkpoint intents/state trees;
+a bounded disk reference index supports the final ordinal/hash/tree scan. The
+maintained score-stream validator joins full ordinal/purpose/value digests to
+archived matching events. Post-publication local source/read/reference/tree/score
+checks and immutable policy snapshots close reviewed AS1/AS2 findings. Evidence
+in archived-stage-2026-10-02 records146focused passes and every prior failure.
+
+Next is explicit archive-backed current-owner/publication/terminal selection,
+including source/policy binding, prospective finite read claims and resource
+allowances. The current compact_owner stage writer/sealer/verifier and downstream
+compact_mcm_output/compact_terminal still select local stage contracts. Those
+contracts must remain intact. Checkpoint and score payload retention, whole-
+workflow physical accounting and scientific admission are still separate gaps.

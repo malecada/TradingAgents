@@ -146,11 +146,12 @@ class _Snapshot:
 
 
 def verify(root, *, expected_sha256, owner, scope, archive_policy, attempt, transport, lease,
-           max_read_metadata_bytes):
+           max_read_metadata_bytes, on_event=None):
     """Return a fully replayed observation; never reopen or mutate source evidence."""
     io._identity(expected_sha256); io._identity(owner); scope = events._scope(scope)
     attempt = archive._fresh(attempt)
     require(callable(lease),'cold archive live lease required')
+    require(on_event is None or callable(on_event),'optional event visitor must be callable')
     lease(); root, source_fd = io._open(root)
     fd = None; identity = None
     try:
@@ -185,7 +186,8 @@ def verify(root, *, expected_sha256, owner, scope, archive_policy, attempt, tran
                     lease=live,free_floor_bytes=source.policy['local_free_floor_bytes'])
 
             record = replay.verify(start_bytes=source.raw['start.json'],terminal_bytes=source.raw['terminal.json'],
-                terminal_sha256=source.complete['terminal_sha256'],owner=owner,scope=scope,read_chunk=fetch,lease=live)
+                terminal_sha256=source.complete['terminal_sha256'],owner=owner,scope=scope,read_chunk=fetch,
+                lease=live,on_event=on_event)
             require(record == source.complete['replay'],'cold archive replay/completion differs')
             result = {'schema_version':1,'archive_complete_sha256':expected_sha256,
                 'replay':record,'execution_admitted':False}
