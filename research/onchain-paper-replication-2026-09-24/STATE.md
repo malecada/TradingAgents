@@ -1,5 +1,37 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: tiny GREEN01 CLOSED failed; causal diagnostic preparation underway.**
+The sole `neural-streamed-gat-oracle-green-20261002-01` from externally verified
+f3fbf80c0bd69613530c34a8b5f4c9a613551de6 ended18:09:28UTC; session35146
+returned1. Mixed/self/isolated, zero-edge, mask, float64, dropout/RNG and duplicate
+checks passed. The full16x28-model updated-state comparison failed unchanged
+float32 tolerance:1of8448elements, coordinate(136,9), absolute2.42218375e-5,
+relative0.000267409. Trace/source suggests temporal.lstm.weight_ih_l0; this name
+is inferred rather than newly measured. The launcher refused the failed worker.
+No aggregation derivatives, saved-storage diagnostic or full-size probe followed.
+
+All original PIDs/cgroup are absent, cleanup verified, source freeze ended.
+Native1GiBhigh=max/swap0/120s and twoCPU affinity remain verified; events all0,
+sampledpeak372,649,984bytes. Complete10files/5dirs/15entries,
+20,680logical/69,632allocated bytes including directories are preserved in
+new green-retained-tree01 manifest/archive and green-execution-result01.
+Independent closed-result review is underway. GREEN01/candidate01/oracle02 and
+all outcomes are immutable; never relaunch this identity or relax tolerances.
+No production candidate or full-size capacity is accepted.
+
+Next safe action: independently review/back up complete failure; prepare and
+review ONE finite four-arm causal diagnostic on the unchanged tiny fixture:
+eager/eager, einsum/eager, eager/streamed, einsum/streamed. Record exact parameter
+path, gradients/Adamstate/update/mismatch origin, preserving original thresholds
+and frozen sources. This isolates attention versus aggregation accumulation;
+no implementation fix is selected before that evidence. Meanwhile the explicit
+original-dictionary genuine Binding/imported Owner/MCM contract is frozen and
+independently reviewed. A scientific-versus-execution matching-hash adapter needs
+an explicit contract; silently relabeling the original dictionary is prohibited.
+35spent/adopted63/conditional64-not-adopted/77of109/all1420fits remain unchanged.
+The additional free host RAM does not remedy the failed tiny numerical agreement
+or prove the unchanged3.75GiB full graph capacity.
+
 **Latest checkpoint: exact tiny GREEN source/release independently accepted.**
 Review61d0f8bc accepts candidate01/oracle02/guard02/green-release01dbb77a31,
 234sourcepins/1,819,280bytes and unchanged numerical/native envelope, conditional

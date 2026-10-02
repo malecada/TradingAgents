@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/guard_launcher02.py", line 283, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/guard_launcher02.py", line 280, in main
+    return launch(path,spec,args.sha256) if args.mode=='--run' else worker(spec)
+           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/guard_launcher02.py", line 271, in launch
+    raise primary
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/guard_launcher02.py", line 250, in launch
+    validate_result(spec['mode'],result,report,proof)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/guard_launcher02.py", line 133, in validate_result
+    require(result['child_exit_code']==child['exit_code']==code and type(result['child_exit_code']) is int and type(child['exit_code']) is int,'child terminal code differs')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/guard_launcher02.py", line 96, in require
+    if not value:raise RuntimeError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: child terminal code differs

@@ -1,0 +1,120 @@
+{
+  "budget": {
+    "highest_adopted_ceiling": 63,
+    "new_empirical_claims": 0,
+    "new_financial_fits": 0,
+    "spent_empirical": 35
+  },
+  "cgroup_absent": true,
+  "cleanup_verified": true,
+  "closed_at_utc": "2026-10-02T18:14:10.004980+00:00",
+  "complete_retained_tree": {
+    "allocated_bytes_including_directories": 69632,
+    "directories_including_each_root": 5,
+    "entries_including_each_root": 15,
+    "files": 10,
+    "identity": "neural-streamed-gat-oracle-green-20261002-01",
+    "logical_bytes": 20680,
+    "schema_version": 1
+  },
+  "coordinator_exit_code": 1,
+  "guard_elapsed_seconds": 5.093866651001008,
+  "guard_unit": "onchain-replication-bdfc04d211d843809c86d63ef365dec3.service",
+  "guard_worker_exit_code": 1,
+  "identity": "neural-streamed-gat-oracle-green-20261002-01",
+  "launcher_failure": "RuntimeError('child terminal code differs')",
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "numerical_failure": {
+    "message": "Tensor-likes are not close!\n\nMismatched elements: 1 / 8448 (0.0%)\nGreatest absolute difference: 2.4221837520599365e-05 at index (136, 9) (up to 1e-06 allowed)\nGreatest relative difference: 0.00026740931207314134 at index (136, 9) (up to 1e-05 allowed)",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/oracle02.py\", line 179, in main\n    baseline=model_run(BaselineLayer);actual=model_run(selected_layer);compare(baseline,actual);compare(baseline['initial'],actual['initial'],{'rtol':0,'atol':0});mark('full_model_16x28_all_gradients_Adam_RNG_reload')\n                                                                       ~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/oracle02.py\", line 97, in compare\n    for k in a:compare(a[k],b[k],tol)\n               ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/oracle02.py\", line 97, in compare\n    for k in a:compare(a[k],b[k],tol)\n               ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/oracle02.py\", line 97, in compare\n    for k in a:compare(a[k],b[k],tol)\n               ~~~~~~~^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/oracle02.py\", line 93, in compare\n    torch.testing.assert_close(a,b,**tol)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/torch/testing/_comparison.py\", line 1600, in assert_close\n    raise error_metas[0].to_error(msg)\nAssertionError: Tensor-likes are not close!\n\nMismatched elements: 1 / 8448 (0.0%)\nGreatest absolute difference: 2.4221837520599365e-05 at index (136, 9) (up to 1e-06 allowed)\nGreatest relative difference: 0.00026740931207314134 at index (136, 9) (up to 1e-05 allowed)\n",
+    "type": "AssertionError"
+  },
+  "passed_checks": [
+    "layer_mixed_self_isolated",
+    "layer_zero_edges",
+    "layer_masked",
+    "layer_float64",
+    "dropout_rng",
+    "duplicate_refusal"
+  ],
+  "peak_sampled_memory_bytes": 372649984,
+  "pids_absent": {
+    "1097187": true,
+    "1097439": true,
+    "1097443": true
+  },
+  "qualification": "Failed tiny synthetic candidate agreement, never a GREEN pass. Six precursor checks passed; full-model updated-state comparison exceeded unchanged tolerance. Parameter attribution and cause need a new bounded diagnostic; no saved-storage diagnostic was reached. Launcher correctly refused failed child code. Complete final owned tree preserved; overwritten intermediate live states are not separately recovered. Sampled peak is not kernel lifetime peak; original allocated bytes do not describe tar media. No empirical data, capacity or paper numerical-agreement claim.",
+  "refs": {
+    "PROTOCOL02.md": {
+      "bytes": 9278,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/PROTOCOL02.md",
+      "sha256": "f27006664e9170cf4f5876779cab799bee04e631589bd523a506f65a17322724"
+    },
+    "REVIEW_GREEN_RELEASE01.md": {
+      "bytes": 8689,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/REVIEW_GREEN_RELEASE01.md",
+      "sha256": "61d0f8bc8e6d0005ab8c520ce0ef0407a5b00e57c8c8f8013132ad4e80a8023f"
+    },
+    "candidate-manifest01.json": {
+      "bytes": 2654,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/candidate-manifest01.json",
+      "sha256": "d4561bb2dcf371ac3207f1ec8144c20bc84cfdeaa3eec8e2961209b05067ffce"
+    },
+    "candidate01.py": {
+      "bytes": 8099,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/candidate01.py",
+      "sha256": "0cb820710876a4cb59b94b43f1aa8e3e80429d69c35c40a579067eead3ff91b2"
+    },
+    "green-coordinator-result01.json": {
+      "bytes": 253,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/green-coordinator-result01.json",
+      "sha256": "30f8f6bee2f8d16085e3ae149bd6b0f76f21e1c150f0ea00701036443055ed38"
+    },
+    "green-coordinator01.log": {
+      "bytes": 2059,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/green-coordinator01.log",
+      "sha256": "8232dc6ccc28598bafbffe8f41575b4bc621d419ebaa1aa2af073af41bbd75fe"
+    },
+    "green-launch-intent01.json": {
+      "bytes": 1206,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/green-launch-intent01.json",
+      "sha256": "7ddabebbbbd403741480d9894f2b41db47396b250bcb5beaa2311f18b7e1bfa8"
+    },
+    "green-release01.json": {
+      "bytes": 45823,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/green-release01.json",
+      "sha256": "dbb77a314e351eee054bce3b4dfd4a8c8da1b7a54ba5e5e56f43eba1642ceaa9"
+    },
+    "green-retained-tree01.json": {
+      "bytes": 3443,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/green-retained-tree01.json",
+      "sha256": "d251314e8d2d3f15f14ea21b5f377d13cb6248a207d278c66541ebf13734a6e7"
+    },
+    "green-retained-tree01.tar.gz": {
+      "bytes": 3716,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/green-retained-tree01.tar.gz",
+      "sha256": "646853efcccfe23e5bb5a6d99198015c97416252071491cd0b16a40f701f3ed0"
+    },
+    "guard_launcher02.py": {
+      "bytes": 18850,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/guard_launcher02.py",
+      "sha256": "3f8f49f21274381a4a081bba021eff2d0420517399825702193e758e0c0112db"
+    },
+    "oracle02.py": {
+      "bytes": 15666,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/oracle02.py",
+      "sha256": "74a21db805cb1ab8e5f7c42a8d54b5f90400b4d794eebb0fbf7d438b41d655ee"
+    }
+  },
+  "schema_version": 1,
+  "session": 35146,
+  "source": "f3fbf80c0bd69613530c34a8b5f4c9a613551de6",
+  "status": "closed_failed_numerical_independent_review_pending"
+}

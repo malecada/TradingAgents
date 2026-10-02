@@ -1,5 +1,18 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Latest ownership — GREEN01 failed and closed; causal diagnostic and import contract
+
+No substantial job active; all GREEN01 PIDs/cgroup absent and sourcefreeze ended.
+Root owns complete GREEN01 retention/STATE/commit+backup and NEW exact finite
+four-arm diagnostic launcher/release; no tolerance change/production integration.
+physical_review owns actual GREEN01 independent closed-result review.
+physical_correction owns ONLY NEW neural-streamed-gat-diagnosis-2026-10-02/
+protocol/diagnostic/arm/source-manifest; no numericalimports/jobs or frozenedits.
+registration_review owns ONLY original-dictionary REVIEW_IMPORT_STAGE_CONTRACT01.
+Original import contract dd30ae84 completed; original-vs-execution matching-hash
+adapter identified as an explicit implementation requirement. Preserve all prior
+GREEN/RED/metadata failures and unused empirical04.35spent/adopt63/77of109/allfits.
+
 ## Latest ownership — closed RED accepted; single GREEN preparation
 
 No substantial job active. RED/session98481 is permanently CLOSED expected;

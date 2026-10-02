@@ -1,0 +1,35 @@
+# Finite four-arm streamed-GAT diagnosis02
+
+Unexecuted preparation. This is a synthetic mechanism diagnosis following the closed GREEN01 mismatch, not a new acceptance oracle, empirical experiment or capacity measurement. Baseline and candidate01 sources, oracle02 tolerances and all original outcomes remain frozen.
+
+## Fixed design
+
+Execute exactly once in order: eager attention/eager aggregation; node-score einsum/eager aggregation; eager attention/streamed aggregation; node-score einsum/streamed aggregation. Arms1/4 are byte copies of the actual frozen baseline/candidate01. Arm2 replaces only baseline attention scoring with the candidate three node-score lines. Arm3 replaces only those three lines in the candidate with baseline eager edge-score expression. Candidate block_edges=7 is unchanged from the failed tiny oracle. All arm source is frozen before invocation. No alternative is selected based on outcomes in this diagnostic.
+
+The original full-model synthetic fixture is retained: seed11 resets Python/NumPy/Torch; graphs11/17 nodes with the same deterministic edge generator, MCM32, original full architecture, repeated16×28, same two padded positions, original prices/labels/cross entropy, CPUfloat32, Adam lr0.001/default betas/epsilon, one backward/step, checkpoint=false and in-memory save/reload. RNG digests before forward and after step/reload, initial exact equality and parameter-name→optimizer-ID mapping are retained. No training/fitting loop, empirical graph, label or financial outcome is used. No fresh pooled-vector hooks/extra forward are added: pooled vectors are deliberately omitted to preserve the original model path.
+
+The previous traceback suggests updated.model.temporal.lstm.weight_ih_l0[136,9], whose shape256×33 contains8448 elements. This remains a source inference until named diagnostic records confirm it. That coordinate is fixed before execution, not chosen from new results.
+
+## Observations, not a loosened gate
+
+Comparisons use exactly rtol1e-5/atol1e-6 with candidate as the reference-magnitude side, matching original assert_close(a,b). For every initial/output/loss/input-gradient/parameter-gradient/updated-parameter/Adam-state tensor, retain path, shape, mismatch count, max absolute error and first four mismatching coordinates in deterministic flattened order. At most512 tensor records per arm and64 named parameters; unexpected cardinality refuses. Exact initial equality and RNG equality are separately reported. Comparison disagreement does not abort later arms and is never converted to acceptance by a different threshold.
+
+For the fixed LSTM coordinate retain original parameter, gradient, first-step m/v/step, updated parameter/delta, optimizer name-ID, lr/betas/epsilon. Independently reconstruct the first-step m/v/update using float32 scalar tensor operations in Adam scalar update order, and record exact m/v equality and update discrepancy. Also record binary64 closed-form p-lr*g/(abs(g)+eps); this expresses epsilon amplification and is not expected to be bit-identical to float32 implementation. No reconstructed result overwrites an observed tensor. Baseline/all arms have identical constructor/RNG seeds. Resource limits and finite first-order custom-autograd semantics remain unchanged.
+
+All four arms run once under normal conditions. An ordinary diagnostic exception is retained and later prescribed arms still run; any fatal BaseException/MemoryError stops further allocations and marks incomplete. An infrastructure kill may prevent a diagnostic JSON; parent raw/terminal evidence is authoritative and retained. No local retry. Nested results.diagnostic_status is observed_disagreement, observed_agreement or diagnostic_incomplete; even observed_agreement is not full oracle acceptance. For compatibility with the reviewed native guard validator, CLI requires --mode green --report PATH and the outer envelope is schema_version1/mode green/status passed only for complete diagnostic work with four required markers and error null. This outer operational status is NOT candidate GREEN acceptance. Complete observation exits0 whether numerical agreement or disagreement; unexpected exceptions, initial/RNG inequality or incomplete diagnostic work produce status failed/code1. The distinct diagnostic identity/spec must retain this qualification.
+
+## Native release and bounded evidence
+
+All numerical imports follow the unchanged oracle02 native_envelope function, copied AST-exact: actual1GiB memory.max/high, swap0, two CPU affinity, inherited4MiB RLIMIT_FSIZE, new owned report path and10GiB floor. Root supplies verified120s external systemd deadline, fixed3GiB host reserve/4GiB startup,64MiB sampled owned-storage stop with overshoot qualification, source/runtime closure and complete descendant cleanup. These parent controls are not proved by child readback alone. No invocation before independent source/launcher/spec review and coordinator release.
+
+One report is bounded to1MiB, below inherited4MiB file cap; all logs are separately bounded by parent. Four tiny sequential models and baseline comparison tensors are retained only as needed. This is a finite proposal, not a measured memory/time claim. No external I/O, graph loading, model/data download or SSH. The root launcher writes one-use identity and retains every failure. Existing GREEN01 and its closed namespace are never reused.
+
+## Preparation checks and limitations
+
+Preparation used only source reads, stdlib AST parsing, copy/diff assertions and SHA256 hashes in the checkout-local interpreter. No numerical modules, tests, models, guard or claim were executed. Copied baseline/candidate/model files are byte checked; mixed arms must reduce exactly to their corresponding copied parent after reverting the single declared score-expression replacement. Native envelope is AST-equal to oracle02. Syntax validation is not numerical evidence.
+
+The four arms separate the two implementation choices under one fixed tiny workload. Interaction is possible; a difference seen only when both are changed does not identify one primitive as faulty. Tolerated gradients can be near Adam epsilon and amplify an update difference, but this is a hypothesis requiring the recorded values. Disagreement cannot justify relaxing the original oracle, changing model/math/seed/dtype or introducing checkpointing. Any fix and future oracle invocation need distinct frozen source and identity.
+
+## Compatible envelope02
+
+The four exact markers, emitted only after complete corresponding work, are `four_arms_exact_initial_RNG`, `four_arms_all_parameter_diagnostics`, `first_Adam_step_reconstruction`, `fixed_tolerance_disagreement_recorded`. Reconstruction marker confirms finite first-step observations/replay were computed; recorded equality/delta fields determine agreement, not the marker alone. Tolerance disagreements remain unchanged inside results and never fail operational diagnostic completion. Existing01 remains preserved; only diagnostic02/PROTOCOL02/source-manifest02 select this interface. Any arm exception leaves the whole diagnostic failed even if later arms finish.
