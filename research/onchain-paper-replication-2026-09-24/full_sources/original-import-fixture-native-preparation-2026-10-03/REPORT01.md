@@ -1,0 +1,33 @@
+# Native original-import preparation01
+
+Frozen source-only candidate; not registered, committed, installed, admitted or executed. No NumPy/Torch import, empirical arrays, guard, claim, numerical test or network operation occurred. Shared production/history/IO01–05 remain unchanged. IO05 narrow source acceptance8705dfe9229e11afaf726c8c2c60e97683b8c9d9d55282f09cf98a5800f76934 is inherited; new native source and outer interfaces require independent review.
+
+## Implemented source slice
+
+New resources.py/job.py/resource_fixture.py snapshots add selected compact_resource native unit file enforcement while preserving physical_policy refusal. Optional native_unit_limits validates a strict bounded file_size_bytes integer. The actual systemd unit receives LimitFSIZE and RuntimeMaxSec; the actual child reads inherited hard/soft RLIMIT before cpu_ready; the monitor verifies both unit LimitFSIZE fields, parsed RuntimeMaxUSec and original selected child policy/readback before release. The current worker rechecks its limit through assert_guarded_worker. Actual monitor and worker publish exclusive bounded source/experiment/role/PID readbacks; worker publication is after genuine guard validation but before ResearchRun.start. Pure metadata writer uses descriptor-relative exclusive creation, file/parent fsync, original inode/path rejoin and accepted IO cleanup. It avoids importing import_metadata/score_batches (and therefore NumPy) in the unguarded monitor. No physical Scope or scientific capability is forged.
+
+Legacy native_unit_limits=None leaves previous ready schema and enforcement unchanged. Selected policy cannot combine with physical_policy and only compact_resource job schema accepts it. Every numerical/authority function in resource_fixture except its explicit native selection schema is AST-identical to accepted IO05. parity01.json records unchanged resource functions outside the four explicit native guard wiring functions. Native OS behavior is unexecuted; passing source tests does not certify systemd configuration.
+
+Capsule builder validates all bodies/hashes/declared committed baseline before population, exports only to a new root, retains partial failure, and does not commit/admit. Original object exporter imports only34 original commit/tree/blob objects needed for26 exact source path lookups into a coordinator-created local.git. No external Git alternates or historical replay. Root must disable opportunistic packing or verify every pack under4MiB; loose objects are bounded and all.git bytes count in the whole-tree watch. runtime_gate01 describes explicit shared locked runtime and capsule import origins, not a symlinked venv or a wrong-root standard runtime checker. Distribution RECORD metadata is pinned; this does not freshly hash every installed dependency body.
+
+Controller01 is intentionally a source interface with no execution entrypoint: it produces the genuine job CLI only after a released complete spec and checks mandatory observation fields. It is not yet a raw-evidence authenticator or full one-use launcher. No caller-supplied boolean may certify native authority. These missing executable pieces are assigned to a subsequent separate candidate, not claimed here.
+
+## Concrete measured inventories and limits
+
+source_inventory01.json contains150 eventual installed files, 2,753,979 logical bytes:142 package sources (134baseline plus eight new imported-route modules), two dated numerical identity/helper sources, three infrastructure files, and three fixture tools. The initial147-file production/infrastructure inventory was2,740,230bytes before the final path-rejoin correction and three tools; inventory01.log is retained as the earlier observation. Original11JSON bodies957,811bytes and34Gitobjects129,529bytes were bounded-hashed. No original graph array bodies were parsed. Capsule source export was not performed; only tiny temporary synthetic source files were exported by tests.
+
+Native proposal:3GiB max=high, swap0, fixed3GiBhost reserve/start6GiB, two CPUs,1800s unit wall,4MiB file/log,1GiB sampled whole-tree logical/allocated stop,10GiB free floor,32768entries/depth32/scan5s. No aggregate kernel quota or whole-invocation wall guarantee is claimed. All capsule source/input/Git/lifecycle/artifacts/cache/tmp/outer and childlogs must be observed. Proposed initial baseline≤128MiB leaves headroom; actual baseline allocation must be measured after materialization. PROTOCOL01 retains unchanged original32 motifs/512sample history and defines two160-cell synthetic comparison attempts; actual hash-sorted node ordering, all policy values and refusal owner denominator need frozen generation/registration.
+
+## Checks and failures
+
+- Four exact-source native policy/readback/worker-before-claim tests: retained baseline RED then green01, green02, final green03.
+- Three extracted actual receipt-writer tests: exclusive durable write/refusal, fatal body plus both descriptor closes once, oversize/redirect refusal. receipt-check02-final passes.
+- Four tiny builder/controller-refusal tests pass in capsule-check02-final. These are source export/exception semantics, no authority mocks claiming actual ownership.
+- Source-envelope01 validates all150 current source bodies, committed baseline joins and totals without population. All candidate Python ASTs parse.
+- Initial inventory preparation failed because IO05 inherited the external helper pin rather than repeating external_unchanged_source; inspection-failure01.log preserves this. The next bounded inventory used explicit IO04 dependency. All previous logs/adapted IO04 source and baseline bytes remain.
+
+Eleven focused test methods pass. No genuine OS/native, Binding, imported MCM or scalar-reference numerical proof has occurred.
+
+## Remaining executable requirements
+
+The exact source patches and all dependency maps require review. Next candidate must implement authenticated raw native receipt parsing and actual one-use outer supervisor with first-fatal terminal/assembly handling, independent cleanup, all writable-root bounds, final inventory and original PID/cgroup absence. It must generate deterministic genuine GraphSnapshot inputs and complete exact input-policy/registration templates without numerical imports, then validate loaders only inside the future guard. Source/runtime/registration commits and all generated hashes remain root-owned. Two primary engineering claims do not discharge the16 specified mutation/legacy refusal classes: fresh owner semantics and exact admitted suite cardinality remain required. Full23 empirical resource cells, archive/offload, full graph capacity and financial fits remain separate.

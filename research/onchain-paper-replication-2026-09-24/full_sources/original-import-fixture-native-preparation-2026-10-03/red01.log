@@ -1,0 +1,46 @@
+EFFF
+======================================================================
+ERROR: test_actual_worker_readback_before_claim (__main__.Native.test_actual_worker_readback_before_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation-2026-10-03/test_native_source01.py", line 28, in test_actual_worker_readback_before_claim
+    capture=next(n for n in calls if isinstance(n.func,ast.Name) and n.func.id=='_resource_limit_receipt')
+StopIteration
+
+======================================================================
+FAIL: test_native_options_only_optin (__main__.Native.test_native_options_only_optin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation-2026-10-03/test_native_source01.py", line 33, in test_native_options_only_optin
+    self.assertIn('native_unit_limits',[a.arg for a in guard.args.kwonlyargs])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'native_unit_limits' not found in ['cwd', 'receipt_dir', 'memory_max_bytes', 'memory_high_bytes', 'memory_swap_max_bytes', 'reserve_bytes', 'start_reserve_bytes', 'sample_seconds', 'lease_seconds', 'wait_seconds', 'disk_paths', 'disk_floor_bytes', 'wall_seconds', 'owner_identity', 'storage_budget', 'physical_policy']
+
+======================================================================
+FAIL: test_native_readback_refuses_missing_or_wrong (__main__.Native.test_native_readback_refuses_missing_or_wrong)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation-2026-10-03/test_native_source01.py", line 19, in test_native_readback_refuses_missing_or_wrong
+    f=functions(['_native_policy','_native_ready'])['_native_ready'];p={'file_size_bytes':4194304}
+      ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation-2026-10-03/test_native_source01.py", line 8, in functions
+    assert {n.name for n in nodes}==set(names),'actual native seam missing'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual native seam missing
+
+======================================================================
+FAIL: test_policy_strictness_and_legacy_none (__main__.Native.test_policy_strictness_and_legacy_none)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation-2026-10-03/test_native_source01.py", line 14, in test_policy_strictness_and_legacy_none
+    f=functions(['_native_policy'])['_native_policy'];self.assertIsNone(f(None))
+      ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-native-preparation-2026-10-03/test_native_source01.py", line 8, in functions
+    assert {n.name for n in nodes}==set(names),'actual native seam missing'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual native seam missing
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.029s
+
+FAILED (failures=3, errors=1)

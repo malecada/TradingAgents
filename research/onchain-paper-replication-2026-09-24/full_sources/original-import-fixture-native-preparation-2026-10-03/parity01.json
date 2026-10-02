@@ -1,0 +1,25 @@
+{
+  "resource_fixture_nonnative_schema_functions_classes_exact_io05": true,
+  "resources_exact_existing_functions": [
+    "mem_available",
+    "_atomic",
+    "_systemctl",
+    "_properties",
+    "_read_controls",
+    "_verify_controls",
+    "_snapshot",
+    "_telemetry",
+    "_own_cgroup",
+    "_terminal_snapshot",
+    "verify_cpu_tree",
+    "bind_parent_death"
+  ],
+  "resources_changed_functions": [
+    "_child",
+    "_child_legacy",
+    "assert_guarded_worker",
+    "guarded_run"
+  ],
+  "numerical_execution": false,
+  "qualification": "new guard/native behavior remains unexecuted; AST parity does not prove OS controls"
+}

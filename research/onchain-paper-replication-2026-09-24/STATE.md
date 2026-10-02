@@ -1,5 +1,82 @@
 # Current execution checkpoint — October 3, 2026
 
+**Latest 2026-10-02T22:31:14.874036+00:00: native MCM preparation01 narrowly accepted; genuine
+successor executor/input generation and cold-feature handoff audit are active.**
+Native preparationmanifestc93c4395/150sourceentries142package2753979B/11original
+inputs/34originalGitobjects/251runtimeRECORDpins hasindependentnarrow source
+acceptance0fa8145fd29b5dc7c03d6db053143f20323ec93bda0ac1c1856cfa3fc9d1cf38.
+No genuinejob/claim yet. Remaining native execution requirements areexplicit
+systemd-forwardedcache/tmp/environment policy (onlyPYTHONPATH in01), real
+one-use outersupervisor/authenticated rawreceipts/fullwritablewatch+PID/CGclosure,
+generatedsortedtwo-targetinputs/completepolicies andprospectivefinitegenuine
+engineeringregistration/capsulecommit/baselineallocation/refusaldenominator.
+physical_correction implements these immediately inNEWsuccessor;01immutable.
+Rootsoleactualregistration/launcher/liveintegration/STATE/commit/backup owner.
+
+Frozenactualbatch investigationa0a06fca66a2afdefcb035721d5bc58092f3fedefaf1be80617b8ca9a6ae64e8
+andmetadata5a7f0dd2ce2af033244e3b4491fba3f316fb42d8d5512fc384c26f496417400d
+establishes exactroute/missingpopulation andninegraphmetadata; it isnot completed
+realbatchcensus. Batch16usesconsecutiveadmittedrows; missing/lateweeks remove
+entireexamples, calendar gapsmatter; source-onlyupperunion80beforededup isnot
+observed cardinality. Graphobjectidentity reuseandparentgraphpopulationholds
+mustbeaccounted separatelyfromselectedMCM/edgebytes. registration_review now
+ownsNEW boundedread-only neural-cold-feature-handoff-investigation-2026-10-03,
+exactauthenticatedcompletedcomponent/cold-reuse interface; no sourcechanges/
+numericalimports/arrays/testlabels/job/claim/capladder orbudgetchanges. Resources
+withheld/currentdatapopulationstillrequired; fullmodelscientificarchitecture and
+allasset/history/comparison obligations unchanged. UsermaximumphysicalRAM is
+respected; measuredsource-lifetime reduction is investigatedbeforecapacityclaims.
+
+Closedtiny01 remainsouterFAILED andthreecomponentsPASS/3823bitwiseequalchecks,
+reviewed/backed/fresh155blob+282rawmember recoveryaccepted. Neural04 FAILEDforever;
+all8tinyPIDs+CGabsent/noheavyjob. Paperfamily36closed/64/no refund/transfer/65,
+coverage77/109/all32Task8requirements/all45initial+1420fits stillpending.
+Nextsafeaction: preserveacceptednativepreparation+census, completesuccessor
+source/input/registration/rawparser reviews, startONEfreshadmittedgenuinefixture
+onlyafterexactrelease, andcontinueindependentcoldfeaturehandoff audit. No paid/
+provider/authorcontact/trading/deployment/credentials/VPSsystemdSSH.
+
+# Current execution checkpoint — October 3, 2026
+
+**Latest 2026-10-02T22:23:29.226026+00:00: native MCM source preparation01 frozen, review in progress;
+source worker immediately implements the successor executor/input generator.**
+No numericaljob isactive. Currentreviewedbackup09f2/3a56/6963 actualremoteheads
+preserve closedtiny01(all3numericalcomponentsPASS/outerFAILED) andacceptedIO05.
+No closedjob/namespace is reopened; paper accounting36closed/64 unchanged.
+
+NEWoriginal-import-fixture-native-preparation-2026-10-03 manifestc93c43959eaf3b30ca9917918bfcc8c3bb1b2d684e359798972443ffbfe7704e:
+resources/job/resourcefixture snapshots implement explicit selectednative_unit
+LimitFSIZE/RuntimeMaxSec, actualchild RLIMIT/cpu_ready policy/readback before
+release, genuinecompactworker exclusive before-claim receipt. LegacyNone and
+compactphysical_policy refusal are preserved. Eleven focusedstdlib/AST/dry
+builder methods pass;150eventual sourceentries/142package/2753979logicalB,
+11originalJSON inputs957811B/34originalGitobjects129529B inventoried. This is
+source-only UNADMITTED, no actualOS/control/Binding/Owner/MCM proof. Rootsole
+registration/launcher; physical_review independently audits frozen01 only.
+physical_correction ownsNEWsuccessor implementation forauthenticated rawreceipt
+parser/one-use outersupervisor andcomplete deterministic synthetic inputs/
+engineeringregistration templates. This is active implementation, not permission
+to run an interface/template. Exactprospective finiteclaim/refusaldenominators,
+all generated hashes/runtime/source/Git paths/completewatch/baselineallocation
+androotreviewedregistration remain required before any genuinefixtureclaim.
+
+registration_review owns bounded read-only batchgraphcensus investigation;
+initialsource audit finds realtraining uses training/evaluation.batch_factory/
+FixedFeatureMap/_NativeMap andjob_payload, not assumed filenames. Missing or
+late requiredweeklygraphs exclude entiredailyexamples; consecutiveadmitted
+indices cancrosscalendar gaps. Model caches byobjectidentity, so graphhash
+cardinalityalone doesnotproveactualresident holds. Actual04 hasonlynine
+nonconsecutiveweeklygraphs and no complete genuinepopulation/batch/split input.
+A complete actualbatch census/currentpopulation andretainedparentgraph bytes
+are required; no assumption28distinct/fixed7. Await frozen exactreport/table.
+All1420financialfits/fullscope/32Task8requirements remainpending, coverage77/109.
+Nextsafeaction finishfrozenreviews andbackuppreparation, completesuccessor
+source+inputs/registration/review and ONE freshgenuinefixture wheneligible;
+continueindependentactualbatch/memoryavailability preparation. No paidresources,
+provider/authorcontact/trading/deployment/credentials/VPSsystemdSSH.
+
+# Current execution checkpoint — October 3, 2026
+
 **Latest 2026-10-02T22:13:39.604595+00:00: closed tiny comparison fully reviewed/backed/recovered;
 IO05 narrow source correction accepted, genuine MCM native integration source
 preparation is running in parallel. No substantial numerical process is active.**

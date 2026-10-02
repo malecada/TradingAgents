@@ -1,0 +1,10 @@
+--- resource_fixture.baseline05.py
++++ resource_fixture.py
+@@ -40,6 +40,7 @@
+     selection(job);p=job['resources']
+     require(type(p) is dict and 'physical_policy' not in p and 'storage_budget' in p,'whole-workspace sampled storage guard required; neural scope forbidden')
+     require(type(p.get('wall_seconds')) is int and 0<p['wall_seconds']<=1800 and type(p.get('memory_max_bytes')) is int and 0<p['memory_max_bytes']<=3*GIB,'finite engineering unit envelope required')
++    require(p.get('native_unit_limits')=={'file_size_bytes':FILE_MAX} and type(p['native_unit_limits']['file_size_bytes']) is int,'registered native file cap required')
+     budget=p['storage_budget'];limits=budget['limits']
+     require(type(budget) is dict and set(budget)=={'root','limits'} and type(limits) is dict and set(limits)=={'max_allocated_bytes','max_logical_bytes','max_entries','max_depth','max_scan_seconds'},'sampled budget schema differs')
+     require(all(type(v) is int and v>0 for v in limits.values()) and limits['max_allocated_bytes']<=GIB and limits['max_logical_bytes']<=GIB and limits['max_entries']<=32768 and limits['max_depth']<=32 and limits['max_scan_seconds']<=5,'finite whole-tree inventory ceiling differs')
