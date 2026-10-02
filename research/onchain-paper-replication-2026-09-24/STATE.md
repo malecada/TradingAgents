@@ -16,13 +16,19 @@ execution gate is adopted and coverage remains 77/109, all 1,420 fits pending.
 
 Both engineering candidates completed tests but are NOT accepted yet:
 - Restart primitive candidate05: check07 CLOSED44passed2.05s/session98399.
-  owner_closure_review found missing exact generation-wrapper membership and
-  absent post-callback poisoned/closed checks. archive_transport retains source
-  ownership and will preserve candidate05, reproduce and correct these findings.
+  owner_closure_review withheld acceptance for four findings: exact generation
+  wrapper membership; post-callback poisoned/closed checks; original limits and
+  spending binding before allocation; and final external-event byte joins before
+  retirement/acknowledgement. REVIEW_INITIAL SHA256
+  e565edb6267eba13ea0002fa34e112b3481a640b3de9d106098e039ca8fea02f.
+  archive_transport retains ownership and is preserving candidate05, reproducing
+  and correcting all four findings.
 - Neural runner candidate01: check03 CLOSED22passed1CUDA-skipped9.01s; its 11
   runner tests and existing activation-checkpointing checks are bounded synthetic
-  evidence. archive_transport independently found primary/fatal cleanup loss;
-  current-job/plan/guard binding is also under review. admission_batching owns
+  evidence. archive_transport withheld acceptance for primary/fatal cleanup loss, missing
+  direct current-job/plan/live-guard binding and missing same-device output
+  admission. REVIEW_INITIAL SHA256
+  91706bbd6b52bdbd855b0bbcd5857fd8356b4a591c827fcd7fbd189626d563e9. admission_batching owns
   preserved red/correction in neural_resource.py, job.py and its test/evidence.
   Its docs-only neural-resource-registration-2026-10-02 preparation is secondary
   while correction is needed. No retained-data bodies may be opened/executed.
