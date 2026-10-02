@@ -3,6 +3,38 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Active next implementation checkpoint — October 2**:
+Latest reviewed design/ownership backup is 2fa40adae1663468fcb0bdd7154be700432997ed,
+with exact remote HEAD verified. No empirical run is active. Parallel ownership:
+
+- archive_transport: new restart_retention.py, test_restart_retention.py and
+  restart-retention-primitive-2026-10-02 evidence only. red01 CLOSED exit2 in
+  0.51s, expected missing-module collection failure; implementation is active.
+  No old package files or artifacts are in its mutation scope.
+- admission_batching: new neural_resource.py, existing job.py for explicit
+  neural_resource schema/dispatch/Torch environment, new test_neural_resource.py
+  and neural-resource-runner-2026-10-02 evidence only. Tests-first engineering
+  assignment is active; tiny invented graphs, no empirical graph bodies or runs.
+  Preserve model/GAT/config/old runner bytes. Actual registration remains blocked
+  on reviewed source, scopes, cumulative budget and physical limits.
+- owner_closure_review: independent neural readiness/budget review, then helper
+  and runner code/evidence review. Review files only. Root owns STATE/checkpoints.
+
+The frozen neural-resource-readiness REPORT SHA256 is
+ e44ef0b716a53e3d119393a147ed8d605daa0eacac4f1645c0e1b23e788e7043;
+budget-split.draft SHA256
+ debd66f8fbbe22341036faebbcdd0acc01203501f5c29dace652e473b72e00a9.
+Its exact nine/23 split and62 arithmetic passed metadata checks, independent
+review pending. Current 6 GiB job ceiling requires at least9 GiB startup available
+RAM under the3 GiB host reserve; the recent available snapshot was below this.
+Full single-graph GAT peak remains unmeasured. No historic capacity gate is relaxed.
+
+These two new test slices have no actual-owner/admission fixtures. If any broader
+source-admitted check becomes necessary, freeze the entire dynamic source closure
+or use an immutable isolated snapshot before launch. Never run closed test IDs.
+Continue implementation and independent review immediately, without waiting for
+another user prompt; no empirical launch is implied by these assignments.
+
 **Latest accepted implementation — October 2, corrected archive integration**:
 Candidate04 is independently accepted for injected producer-to-terminal archive
 integration. REVIEW_FINAL SHA256
