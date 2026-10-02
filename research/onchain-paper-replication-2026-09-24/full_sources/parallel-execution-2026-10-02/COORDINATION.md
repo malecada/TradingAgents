@@ -1,5 +1,28 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Current checkpoint — owner proof closed, neural and two-View releases next
+
+Ownerarchive-outer-owner-20261002-01 is CLOSEDforever,3passed731.72s/externalguard
+complete733.704s/cleanuptrue/events0/samplepeak507359232B. REVIEW_EXECUTION01
+acceptslimitedone-Viewcases/rawjoins/source/roundedspend/failure/localroute and
+complete3822-file recoveryarchive. Noactualfinancial/model fits; syntheticlifecycle
+failedteardown remainsqualified. Rawtreefrozen, no substantialjobactive. Source
+freeze released afterclosure; rootbacksupbundle/review andfinalneuralgate.
+
+- Root owns STATE/result/registrations/sourceintegration/backup andsinglelaunch.
+- physical_review owns closedproofindependentreview, availablefornextrelease.
+- registration_review accepts4.5GiBvariantfinalgate221pins/54inputs/132closure;
+  actualnewcommittedsource/admit/freshRAM/nativechecksremaintoexecute.
+- physical_correction preparedNEWunexecuted two-Viewtestcandidate only; noactive
+  source mutation. Nextneedsnewexactisolatedsource/launcher/spec/review, notold
+  hardcodedlauncher02orreservedidentity. Financialboundariesremainmocked.
+
+CurrentpracticalRAMfreeatlastpreclose~7.3GiB, thresholds7.75GiB(new4.5max) or
+8.25GiB(existing5max), each16readsx2s/fresh<=1s plus unchanged3GiB reserve.
+Userpausingotherwork; freshOSstateisdecisive. Noautomaticlow-RAMretry, nosaved
+permit, noclosedidentityreuse. Oneheavyjobatonce; commitsonlyafterclosure. All
+broaderstudyrequirements/resource77of109/1420financialfits remainpending.
+
 ## Current operational checkpoint — neural scheduling deferred
 
 Corrected neural caller at committed/pushed91b45091966ab37e1f70aec6d8a04e5a62d340e9

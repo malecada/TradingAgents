@@ -3,6 +3,92 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 isolated owner proof CLOSED and independently accepted**:
+Singlearchive-outer-owner-20261002-01 session82081 CLOSEDexit0:3cases passed in
+731.72s; guard733.704s, sampledmemory-current peak507,359,232B (483.86MiB),
+allhigh/max/OOMevents0, cleanupverified. Unitinactive/emptycgroup, originalPIDs
+gone; identityreservedforever, NEVERrerun. Directactivecontrols confirm3GiBmax/
+2GiBhigh/swap0/4MiBhard+softfile/30minunitdeadline/control-groupkill/2sstop.
+Postcleanuptransientunitshowreturnsinfinitydefaults; thisisnotactiveenforcement
+orfullkernelpeak. Interimkernelpeak426,352,640Bwasnotfinal. CPUaffinitytwo,
+quotaunavailable. Source/runtime/launcher/spec/sharedHEADbindings remainexact.
+
+REVIEW_EXECUTION01 SHA256cb2b3ee0882d2fabfa49dc6855948f9bc672e3b7398b6c5011325b81d8cfa735
+independentlyacceptslimitedproof:exact3822retainedfiles/archive/source, original
+claims/inputs/outputs/ownerjoins, cumulative logical/roundedno-refundreservations,
+retainedsecondstagefailure returncode19, localnoarchive route andcleanup. All
+threeResearchRun fixtures deliberatelyhavefailed.json reason 'synthetic first-owner
+fixture closed'; threepassingtestcases andcompact/outerownercompletions are
+separatefrommockedfinanciallifecycleclosure. Outerterminalcopiesequivalent
+semantically; canonicalbyteformatidentity isnotclaimed. Actualfitcount remains0.
+
+Completepostpublicationownedtree46,133,248allocatedB/31,547,239logicalB/5109entries
+includes3822filesand1287directories,20480allocatedB overguardlastsample. Full
+retained-tree01.json manifest and10,494,538B retained-tree01.tar.gz preserveall
+source/rawgraphs/arrays/syntheticGit/claims/failures/unit/outputs. Everyarchivemember
+wasrehashed; archiveSHA25682529f2e17a1535620e30898265f31f8b235c749d34189e14cc299eec64ef8bd.
+Localarchiveisnotyetexternalbackup; commit/push/actualremoteverification next.
+Rawownedtreeisstoppedandfrozen; nojobactive. Selectedcontrolsarequalifiedsampled
+storage/finiteunit/per-file; nohardaggregatequota/wholeinvocationhardwallclaim.
+
+OnlyoneViewpercaseisproved. Newsecond-view-preparation01 unexecutedcandidate
+ca11be6fbfd2a81616d616d9f02261dcfa84e2d804b564b5a22f61dd11c841d0 proposes
+actualtwoViews/representations sharingoriginalContext/cumulativebudget, success
+andsecond-view-failurecases. Distinctnamespace/scientifickeys/seeds preserve
+firstclosedledgerwhenlaterfails. Noimports/tests/job orprodchangeshaveoccurred;
+oldlauncher02hardcodesfirstidentity/test/env andcannotrunitunchanged. Newexact
+sourceoverlay/snapshot/launcher/spec/review/freshidentity required. RealSSH/full
+transportphysicalcapacity/second-Viewproof and77/109resourcecoverage remainopen.
+
+Nextsafeaction: commitandexternallyverify acceptedownerrawbundle/review plus
+accepted4.5GiBfinalgate/caller/source, thenactualmetadataadmissionandnew16-read
+window beforeONEneurallaunch ifRAMsupports7.75GiB. Existing5GiBgate remains
+availableifhostsupports8.25GiB. Noautomaticrepeatedobservation/identitycycling,
+fixed3GiBreserve. Ifbothremainbelowavailability, continuedirectlywithfreshbounded
+two-Viewproofpreparation/execution instead. All13tasks/C01–C18/broaderassets/history/
+comparisons and1,420financialfits stay in scope; no numerical/economicclaim.
+
+**October 2 isolated owner proof ACTIVE — one substantial job**:
+Exact archive-outer-owner-20261002-01 release is independently accepted in
+owner-release-preparation01/REVIEW_RELEASE01.md: releasedspecb1081a673ebe1ee51f6b4f149ddaa96aa4874f609f42b347ce0791a5877d3c40,
+onlystatus/currentHEAD changes from preservedprep02. Prepared controls, snapshot,
+reviews and prospective4.5GiB resource amendment were committed/pushed at
+`a5dd23cb77594e07a7a7e8282f4b8d3be6807d01`, exactremoteHEAD verified. Finalowner
+release JSON/review and activeSTATE remain uncommitted to keep expectedHEADfixed.
+
+One guarded invocation is active, toolsession82081, controllerPID144048 and unit
+onchain-replication-671ac41e11ac4dfa92aa568f500a2c18.service. Source is isolated
+exact824489a read-only export, shared runtime explicitly mapped. First success
+case has begun; no case result is yet claimed. Outerfixturefinancial execution
+remains mocked: zero realmodel/financialfits. DO NOT duplicate/relaunch this
+reserved identity or startanother substantialjob while it runs.
+
+Actualdirectreadback in ownedroot/unit-properties-active01.txt confirms3GiBmax,
+2GiBhigh/swap0, hard+soft4MiBfilelimit,30minunitlifetime,KillModecontrol-group,
+SIGKILLenabled and2sstop. GuardCPUaffinity[0,1], quotaunavailable. Additional
+active-evidence01.json capturedkernelmemorypeak426,352,640B (406.6MiB), events
+high/max/OOMall0. This is an interimpeak, not a finalcapacityfigure. Sampledowned
+allocation about30.7MB; sampled1GiBthreshold/10GiBfreefloor remainqualified,
+not continuousquota. Source/postclosure/finalaccounting/cleanup awaitcompletion.
+
+In parallel REVIEW_FINAL_GATE01 accepts exact4.5GiB prospective gate
+30775a23ea602ea5395d169d8379f9623df30b60088c4f7ef4f177fa637e60ee andcaller
+1eed0987e53686fdd83152ff1f29c6dfc6790140e89a3bdfd09f4fb5d5a31665:
+221livepins/54inputs/132Pythonclosure(full124+7+1), unchanged206priorpins,
+originalcells/numericals/ancestry/family33spent16current/highestadopted60 and
+absent02namespaces. Previewclaim71,251B/RPC73,310B<256KiB. Preparation03clarifies
+subpackage124versuscompleteexecutionclosure132; previousrecordsarepreserved.
+This is conditional onownerclosure/finalcommit/actualadmit/freshRAM/nativechecks;
+no modelhasrun. User-pausedotherwork latest7.27GiBavailable beforeownerlaunch,
+below both neural scheduling thresholds; futurefreshavailability is decisive.
+
+Next safe action: observeexistingowner session/guard/cases withoutheavytesting,
+keep source/spec/launcher/sharedHEADfrozen, preserveallrawattempts andupdates
+uncommitted. Afterclosure, independently verifyallcases/ownerandouterterminals/
+spending/sourceclosure/kernelcontrols/cleanup/finalallocatedbytes, commitbackup,
+then proceedto the eligible exactreviewed neuralgate with freshadmission/window.
+Sameall13tasks/C01–C18/77of109resourcecoverage and1,420financialfit scope remain.
+
 **October 2 RAM steering — waiting for paused work to release memory**:
 The user is pausing other work to free RAM. No substantial job is running here;
 ownerfixture release has not been invoked. Latest immediate MemAvailable was

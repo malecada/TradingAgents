@@ -1,0 +1,57 @@
+{
+  "status": "UNEXECUTED_PREPARATION_NOT_RELEASED",
+  "identity": "archive-outer-two-view-20261002-01",
+  "candidate_file": "research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/second-view-preparation01/test_second_view_candidate01.py",
+  "candidate_sha256": "0bfbe97acfe6e39d4ecb1a1f6b64451193ff9b9cca3da7f480ab7b0dca2ce597",
+  "intended_isolated_path": "tests/research/onchain_replication/test_archive_dispatch_second_view_proposal.py",
+  "source_base_commit": "824489afa2aa5eba39ebf1af456681120ac9e0fb",
+  "cases": [
+    "success",
+    "second_view_failure"
+  ],
+  "representations_per_case": [
+    "r",
+    "r2"
+  ],
+  "separate_scientific_seeds": [
+    12,
+    13
+  ],
+  "shared_transport_input": "outer_transport",
+  "separate_archive_policy_inputs": [
+    "archive_policy",
+    "archive_policy_r2"
+  ],
+  "distinct_producers": [
+    "p",
+    "p2"
+  ],
+  "financial_fits": 0,
+  "tests_run": false,
+  "candidate_imported_or_compiled": false,
+  "prospective_limits": {
+    "memory_max_bytes": 3221225472,
+    "swap_bytes": 0,
+    "wall_seconds": 1800,
+    "per_file_bytes": 4194304,
+    "sampled_owned_allocated_stop_bytes": 1073741824,
+    "sampled_owned_logical_stop_bytes": 1073741824,
+    "sampled_free_floor_bytes": 10737418240
+  },
+  "capacity_note": "At most four tiny scientific representation attempts across two cases; second-view failure stops at its first download. Timing unmeasured; use current one-view results for fresh release decision.",
+  "transport_allowances": {
+    "max_payload_bytes": 67108864,
+    "max_commands": 512,
+    "max_diagnostic_bytes": 134217728,
+    "max_control_bytes": 285212672
+  },
+  "required_before_release": [
+    "Finish and preserve current one-view job.",
+    "Independent static review; candidate has not been parsed/imported/tested.",
+    "Fresh source admission closure including candidate test and all fixture dependencies; new immutable snapshot and exact source binding.",
+    "New reviewed launcher/spec supports new identity, two cases, new test path and ARCHIVE_OUTER_SECOND_VIEW_RELEASE environment; current launcher02 hardcodes old identity/test and must not be reused unmodified.",
+    "Verify different scientific/cache and remote namespaces before any claim.",
+    "Reconcile cumulative resource cost with finite limits and actual one-view measurements.",
+    "Actual one-shot execution and independent review of retained raw accounting/terminal evidence."
+  ]
+}
