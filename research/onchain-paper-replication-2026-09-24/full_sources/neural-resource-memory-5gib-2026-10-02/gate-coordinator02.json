@@ -1,0 +1,1813 @@
+{
+  "datasets": {
+    "eth": {
+      "exposures": [
+        {
+          "end": "2025-01-01T00:00:00Z",
+          "start": "2022-01-01T00:00:00Z",
+          "state": "spent"
+        }
+      ],
+      "history_reference": "research/onchain-paper-replication-2026-09-24/history.json",
+      "identity": "ethereum-native-top-level-transactions-chain-1"
+    }
+  },
+  "experiments": {
+    "eth-paper-neural-resource-20261002-02": {
+      "cells": [
+        "neural_checkpoint-2022-01-03",
+        "neural_checkpoint-2022-06-13",
+        "neural_checkpoint-2022-07-25",
+        "neural_checkpoint-2022-11-07",
+        "neural_checkpoint-2023-06-05",
+        "neural_checkpoint-2024-01-01",
+        "neural_checkpoint-2024-03-11",
+        "neural_checkpoint-2024-08-05",
+        "neural_checkpoint-2024-12-23"
+      ],
+      "charter": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/CHARTER.md",
+        "sha256": "87402f96257a59af36d2402b7632116d60cf46beb6bdb3e77a8cb63b605df2ca"
+      },
+      "cumulative_budget_extension": {
+        "extension": {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/extension.json",
+          "sha256": "141ffbc0c8a88fa8297a67b73e36daf2f20d17804113e3e0e90a19e177aeab43"
+        },
+        "review": {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/review.json",
+          "sha256": "dee74d0f06252916b5fa8e95a438951a954e4a269086034fd67c76e5ff963f64"
+        }
+      },
+      "family": "paper",
+      "inputs": {
+        "environment": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-registration-2026-10-02/revision02/environment.json",
+          "sha256": "3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc"
+        },
+        "execution_job": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/execution-job.json",
+          "sha256": "dd8955e7aa133f385e884951b6d7cfcb7aaf31fe3e06bbd4408f461adf9ada61"
+        },
+        "execution_workspace": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-registration-2026-10-02/revision02/execution-workspace.json",
+          "sha256": "beb469c0d9e8255e1a021005b2b93849a4efd53b52af9e3768732cfe5c70711f"
+        },
+        "graph_2022_01_03": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+          "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+        },
+        "graph_2022_06_13": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        "graph_2022_07_25": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/manifest.json",
+          "sha256": "9db059698fa84a9a3b460c58cdcd0ab35e97db0f4f2f8246504c7241c13b1a49"
+        },
+        "graph_2022_11_07": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/manifest.json",
+          "sha256": "b031945115b041acf1581c124f19d856e25d445d45a7438322986c13bf61e83c"
+        },
+        "graph_2023_06_05": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/manifest.json",
+          "sha256": "f00ed07085e06fbe048faa06450baf417c72bec298a5e54ea95312b4039d182d"
+        },
+        "graph_2024_01_01": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/manifest.json",
+          "sha256": "f716708e2dcf026fd230d2c9ba80455ccd25858377c8c6d6a9985c8750a0186d"
+        },
+        "graph_2024_03_11": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/manifest.json",
+          "sha256": "136713c0f63bd9e1e6756dc07c2d4891f563d1193d6cb883cd1d33b34f74aff9"
+        },
+        "graph_2024_08_05": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/manifest.json",
+          "sha256": "4ec80b6ed0d28f4e778745dee44ff7332685b0aed3155f8b2010272a296a97c3"
+        },
+        "graph_2024_12_23": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/manifest.json",
+          "sha256": "7cc89f84a22986fa82ecba90755a1ae98c245fdb5f4803dff5c0c49b5dab1690"
+        },
+        "launch_scheduling": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/launch_scheduling.json",
+          "sha256": "a8931b6e6c9d98c3839b2e86845c1d8ecf9058176213186102a9600dbd880f83"
+        },
+        "model": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/model.json",
+          "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+        },
+        "neural_plan": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-registration-2026-10-02/plan.draft.json",
+          "sha256": "6b4d7192961aa7e305ccf933c953df2faec48c1abacc1c1241d4d35fea5c81dd"
+        },
+        "predecessor_launch_result": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-release-2026-10-02/launch-result01.json",
+          "sha256": "0cec4ad455443d89c05c6db3db503aed66f0cdda2e89c43229397d09e6aec7ba"
+        },
+        "predecessor_launch_review": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-release-2026-10-02/REVIEW_LAUNCH01.md",
+          "sha256": "6e470235c84742fa40e4bdb2b94725df6529625974aa062a91e85cb411252965"
+        },
+        "provenance_00": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/dictionary.json",
+          "sha256": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff"
+        },
+        "provenance_01": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/matching-stable.json",
+          "sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e"
+        },
+        "provenance_02": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-04-2026-09-30/result.json",
+          "sha256": "8fcda8fe206cd35fdde384506cd2797e0bcaf8dc655339a4e963987d99253748"
+        },
+        "provenance_03": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/closure-review.json",
+          "sha256": "916078d9e97c7c0619f59e01f77203d8b3fc54d53f465a5962277509b34d04d7"
+        },
+        "provenance_04": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/result.json",
+          "sha256": "18c9f599fc31c572022abd8fc1fce6cd8073295c19083d5886bdaab21429bd48"
+        },
+        "provenance_05": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-06-2026-09-30/closure-review.json",
+          "sha256": "4fa4a337dafa25a09f83a6feb7491b651cd4e5ed55c93846aa2db897322602ed"
+        },
+        "provenance_06": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-06-2026-09-30/result.json",
+          "sha256": "6fd863f098b5c4f597f361598caee9e8b15e82420113b4103cdc22728e084a4b"
+        },
+        "provenance_07": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/closure-review.json",
+          "sha256": "7c396c2c3bfc668539c4a423470550eecf344e69c15e6d295d3c3b14b9480160"
+        },
+        "provenance_08": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/result.json",
+          "sha256": "52a98f0cdb1881e1f9bfa10b50e4acc0808d2733c4890dd912d06cb700fd9c82"
+        },
+        "provenance_09": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/closure-review.json",
+          "sha256": "f6faf3938b02f09fdfec1d2cc3e7279413c05a9d9d7dd9b9b7d4ae05e1f76003"
+        },
+        "provenance_10": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/result.json",
+          "sha256": "4d105bdc992478b46efad1917c250b5ba1fad9772379ab7a01ffa5f111710457"
+        },
+        "provenance_11": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-10-2026-09-30/CLOSURE_REVIEW.md",
+          "sha256": "17285d7585018d4ef96a15a12b20f8877d15092aa84d253f73684d5ce2777144"
+        },
+        "provenance_12": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-10-2026-09-30/result.json",
+          "sha256": "f2a7bcfb8f385bf3059fdda079139cb8dc5be8172a2cc4108b39311c7eb5862d"
+        },
+        "provenance_13": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-2026-09-29/result.json",
+          "sha256": "26155a1d82716880d9343396cfa7f9014729c05c96559049d58c704f31f7285b"
+        },
+        "provenance_14": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/closure01.json",
+          "sha256": "fe8c53ccd9384b5fc5283c9e15eea711fcb8a723a57d64a88dabea912f65f4fc"
+        },
+        "provenance_15": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/verification01/payload/2022-01-03.json",
+          "sha256": "9e5feba798b150971fc280e8292b9f62e5d14e1dc8bea00d13d284f756552d0d"
+        },
+        "provenance_16": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/verification01/payload/2022-06-13.json",
+          "sha256": "39044ede6b35759362748bf04dfd5fdef71007ceb32c210062ed0631da6d3f0c"
+        },
+        "provenance_17": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/resource-coverage-05-2026-09-30/coverage.json",
+          "sha256": "c7a0faf724b2f7507e2113e58dfdd590c254ce550d6b407cd699dc899b308e6f"
+        },
+        "provenance_19": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+          "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+        },
+        "provenance_21": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+          "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+        },
+        "provenance_22": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/coverage.json",
+          "sha256": "66e8c6fe28a4a9bfd02a1da95395b3e1bbfaf31341b14d9601c02e76215474a4"
+        },
+        "provenance_24": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json",
+          "sha256": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692"
+        },
+        "provenance_26": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json",
+          "sha256": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8"
+        },
+        "provenance_28": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json",
+          "sha256": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355"
+        },
+        "provenance_30": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json",
+          "sha256": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd"
+        },
+        "provenance_32": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json",
+          "sha256": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a"
+        },
+        "provenance_34": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json",
+          "sha256": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b"
+        },
+        "provenance_36": {
+          "dataset": "eth",
+          "path": "research_runs/eth-paper-graph-resource-20260929-03/complete.json",
+          "sha256": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b"
+        },
+        "provenance_37": {
+          "dataset": "eth",
+          "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+          "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+        },
+        "provenance_38": {
+          "dataset": "eth",
+          "path": "research_runs/eth-paper-graph-resource-20260930-05/complete.json",
+          "sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+        },
+        "provenance_39": {
+          "dataset": "eth",
+          "path": "research_runs/eth-paper-graph-resource-20260930-06/complete.json",
+          "sha256": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4"
+        },
+        "provenance_40": {
+          "dataset": "eth",
+          "path": "research_runs/eth-paper-graph-resource-20260930-07/complete.json",
+          "sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+        },
+        "provenance_41": {
+          "dataset": "eth",
+          "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+          "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+        },
+        "provenance_42": {
+          "dataset": "eth",
+          "path": "research_runs/eth-paper-graph-resource-20260930-10/complete.json",
+          "sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+        },
+        "resource_amendment": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/resource-amendment.json",
+          "sha256": "a95bd3d245f0858fb5acd9b538114a15b2f2e8f5204df34b27c44bad56a8fedf"
+        }
+      },
+      "outputs": [
+        "cell-ledger.json",
+        "resource-summary.json",
+        "artifact-index.json"
+      ],
+      "parent": "eth-paper-resource-pilot-20260924-02",
+      "question": "Can the nine retained weekly graphs complete the original one-graph synthetic neural update and exact checkpoint roundtrip under the fresh enforced resource contract?",
+      "reuse": "exploratory",
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd",
+        "budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+        "verify.py": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439"
+      },
+      "selection": null,
+      "source_files": {
+        "research/onchain-paper-replication-2026-09-24/config/dictionary.json": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff",
+        "research/onchain-paper-replication-2026-09-24/config/matching-stable.json": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e",
+        "research/onchain-paper-replication-2026-09-24/config/model.json": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d",
+        "research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/REVIEW_CANDIDATE02.md": "27d9c37bf94c65466424cabe5d5a044408e8524a1b72207d25af925f6f908edc",
+        "research/onchain-paper-replication-2026-09-24/full_sources/archive-outer-dispatch-implementation-2026-10-02/candidate02.json": "ecb69937bbb424aff0fad06b819f5655664a5d5bbfc200c18de990d4105eb6c2",
+        "research/onchain-paper-replication-2026-09-24/full_sources/budget-extension-62-2026-10-02/allocation.json": "98936c0eb8da31b3054191e12228ab35872d9d41f35c250968b6d7cf0fe511c9",
+        "research/onchain-paper-replication-2026-09-24/full_sources/budget-extension-62-2026-10-02/extension.json": "d5104e0b2be17af97e1bbfc622a3bf081e1156829dd2d034021795b06b968cd5",
+        "research/onchain-paper-replication-2026-09-24/full_sources/budget-extension-62-2026-10-02/review.json": "0bae2075a5ab7133fc76541576f48afdb33e7a647835ef9053ae2dcaf5921985",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-04-2026-09-30/result.json": "8fcda8fe206cd35fdde384506cd2797e0bcaf8dc655339a4e963987d99253748",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/closure-review.json": "916078d9e97c7c0619f59e01f77203d8b3fc54d53f465a5962277509b34d04d7",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/result.json": "18c9f599fc31c572022abd8fc1fce6cd8073295c19083d5886bdaab21429bd48",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-06-2026-09-30/closure-review.json": "4fa4a337dafa25a09f83a6feb7491b651cd4e5ed55c93846aa2db897322602ed",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-06-2026-09-30/result.json": "6fd863f098b5c4f597f361598caee9e8b15e82420113b4103cdc22728e084a4b",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/closure-review.json": "7c396c2c3bfc668539c4a423470550eecf344e69c15e6d295d3c3b14b9480160",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/result.json": "52a98f0cdb1881e1f9bfa10b50e4acc0808d2733c4890dd912d06cb700fd9c82",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/closure-review.json": "f6faf3938b02f09fdfec1d2cc3e7279413c05a9d9d7dd9b9b7d4ae05e1f76003",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/result.json": "4d105bdc992478b46efad1917c250b5ba1fad9772379ab7a01ffa5f111710457",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-10-2026-09-30/CLOSURE_REVIEW.md": "17285d7585018d4ef96a15a12b20f8877d15092aa84d253f73684d5ce2777144",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-10-2026-09-30/result.json": "f2a7bcfb8f385bf3059fdda079139cb8dc5be8172a2cc4108b39311c7eb5862d",
+        "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-2026-09-29/result.json": "26155a1d82716880d9343396cfa7f9014729c05c96559049d58c704f31f7285b",
+        "research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/closure01.json": "fe8c53ccd9384b5fc5283c9e15eea711fcb8a723a57d64a88dabea912f65f4fc",
+        "research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/verification01/payload/2022-01-03.json": "9e5feba798b150971fc280e8292b9f62e5d14e1dc8bea00d13d284f756552d0d",
+        "research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/verification01/payload/2022-06-13.json": "39044ede6b35759362748bf04dfd5fdef71007ceb32c210062ed0631da6d3f0c",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/CHARTER.md": "87402f96257a59af36d2402b7632116d60cf46beb6bdb3e77a8cb63b605df2ca",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/REVIEW_RESOURCE_VARIANT01.md": "1947c219d640069d64d47e25a0eb106132a1efc5195c06efa115124ecde75fbf",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/allocation.json": "dc43ea26c8c350f8f40609e1517ea5c80ed4d15c9129db3556641331a4165773",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/execution-job.json": "dd8955e7aa133f385e884951b6d7cfcb7aaf31fe3e06bbd4408f461adf9ada61",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/extension.json": "141ffbc0c8a88fa8297a67b73e36daf2f20d17804113e3e0e90a19e177aeab43",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/launch_once_v2.py": "857437fee5423ac6ee29ed519ded4fcf5cefdfef7b39f47d9ef15acce31f50d7",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/launch_scheduling.json": "a8931b6e6c9d98c3839b2e86845c1d8ecf9058176213186102a9600dbd880f83",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/preparation01.json": "173a63d4ced4ccc2a70f906fed155efa2b88289f101dcd68be2f95f20a20ba9d",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/readiness.py": "d2609b5a0f90cce953d501b08fec2be60723fd40a977adf3f6bd8a90f8727af4",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/resource-amendment.json": "a95bd3d245f0858fb5acd9b538114a15b2f2e8f5204df34b27c44bad56a8fedf",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-memory-5gib-2026-10-02/review.json": "dee74d0f06252916b5fa8e95a438951a954e4a269086034fd67c76e5ff963f64",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/REVIEW_FINAL.md": "406ca499dee7220d97d2582ccf426a608373826aeeec05b77042ff4a44266a9b",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/REVIEW_RELEASE.md": "e9518c88a66505c8c070ae0d1b624dc2745546e5232057988f71c8ad1bfed4c2",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/REVIEW_RESULT.md": "0261282e362e16c40baa58a0fd2fb241e335ba214dd5432c927b2e3b61f07bd8",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/result01.json": "1695e721b32942d33bb4e855c0395a7e42d508d87b6ba2ebc3f2d2000190441e",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/smoke.py": "fa92db5acd82b1af754a9c83e837c9e0c4e3d3f28d13e7f8f776f2b495e86e4b",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/spec.json": "8b16be8935aa31f8406c12cf0c89888092f12ff6f65409889966b9ead3ef9d91",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-preparation/REVIEW_CANDIDATE02.md": "56d164596da8f084fcc6945ce975e6f75b824371c416660231730c58dddcac62",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-registration-2026-10-02/plan.draft.json": "6b4d7192961aa7e305ccf933c953df2faec48c1abacc1c1241d4d35fea5c81dd",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-registration-2026-10-02/revision02/environment.json": "3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-registration-2026-10-02/revision02/execution-workspace.json": "beb469c0d9e8255e1a021005b2b93849a4efd53b52af9e3768732cfe5c70711f",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-registration-2026-10-02/revision03/CHARTER.candidate02.md": "f2daa84dd3dc586525d348a6c84a486a23f879f6edf64d9b4cbf722b6f08833e",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-release-2026-10-02/CHARTER.md": "1c01ba3feeeb95e5982d6e59b359d8013e4392b5ec371b572e2d2f6bc61887b5",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-release-2026-10-02/REVIEW_LAUNCH01.md": "6e470235c84742fa40e4bdb2b94725df6529625974aa062a91e85cb411252965",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-release-2026-10-02/execution-job.json": "d38d70e12848223c1e381f8d45ee25b6ea131ae0a02f4e336ccb8996444de70f",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-release-2026-10-02/launch-result01.json": "0cec4ad455443d89c05c6db3db503aed66f0cdda2e89c43229397d09e6aec7ba",
+        "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-successor-preparation-2026-10-02/REVIEW_READINESS01.md": "225b9cfbdc260ee511c875144d74213cb9125b058a6059ef56fdc0ffb88386c4",
+        "research/onchain-paper-replication-2026-09-24/full_sources/resource-coverage-05-2026-09-30/coverage.json": "c7a0faf724b2f7507e2113e58dfdd590c254ce550d6b407cd699dc899b308e6f",
+        "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98",
+        "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7",
+        "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59",
+        "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/manifest.json": "b031945115b041acf1581c124f19d856e25d445d45a7438322986c13bf61e83c",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/manifest.json": "f00ed07085e06fbe048faa06450baf417c72bec298a5e54ea95312b4039d182d",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/manifest.json": "f716708e2dcf026fd230d2c9ba80455ccd25858377c8c6d6a9985c8750a0186d",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/manifest.json": "136713c0f63bd9e1e6756dc07c2d4891f563d1193d6cb883cd1d33b34f74aff9",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/manifest.json": "4ec80b6ed0d28f4e778745dee44ff7332685b0aed3155f8b2010272a296a97c3",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b",
+        "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/manifest.json": "7cc89f84a22986fa82ecba90755a1ae98c245fdb5f4803dff5c0c49b5dab1690",
+        "research_runs/eth-paper-graph-resource-20260929-03/complete.json": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b",
+        "research_runs/eth-paper-graph-resource-20260930-04/complete.json": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba",
+        "research_runs/eth-paper-graph-resource-20260930-05/complete.json": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b",
+        "research_runs/eth-paper-graph-resource-20260930-06/complete.json": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4",
+        "research_runs/eth-paper-graph-resource-20260930-07/complete.json": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68",
+        "research_runs/eth-paper-graph-resource-20260930-08/complete.json": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1",
+        "research_runs/eth-paper-graph-resource-20260930-10/complete.json": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9",
+        "tradingagents/__init__.py": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5",
+        "tradingagents/research/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "tradingagents/research/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "tradingagents/research/admission.py": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd",
+        "tradingagents/research/budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+        "tradingagents/research/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "tradingagents/research/lifecycle.py": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+        "tradingagents/research/onchain_replication/__init__.py": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1",
+        "tradingagents/research/onchain_replication/aggregation.py": "768c2ca743b2146fcc6bf606e4fa0bf41273ac15d06344d3a25a6aac78e8038f",
+        "tradingagents/research/onchain_replication/archive_chunks.py": "f26f1cb62334497494f9b02579f53be9e2238889a81f56c04fd4e781542b38fe",
+        "tradingagents/research/onchain_replication/archive_consume.py": "9cfa242b77e42c2385e3c4cb8e51086965cc7d42768f2c52364fa3fd4ec77dc5",
+        "tradingagents/research/onchain_replication/archive_dispatch.py": "05eafe349dfafefe0b17ed8b8efaa3a480eff0f943988212846cabcec414f953",
+        "tradingagents/research/onchain_replication/archive_owner_operations.py": "5882578d065e94af588511356071b8f575aa1e8a1bbd7a9ab116e5853eb4c83f",
+        "tradingagents/research/onchain_replication/archive_owner_policy.py": "81b0e2fa4220c45461ffad850209e92819b65a56a7037887d1d7ba92c97956c9",
+        "tradingagents/research/onchain_replication/archive_owner_seal.py": "7c8c01ce43756605e4765f8e04e1cbbf1665d651d076b36eab74340acb0b07fa",
+        "tradingagents/research/onchain_replication/archive_owner_stage.py": "21a1f134c4ed0d4f57c266f21d4dd130d61241117b11e7f66a6466db3ddec39c",
+        "tradingagents/research/onchain_replication/archive_owner_writer.py": "7980139206c4b2a0e8b11763f44d23a73c4e9f067d9c10799a081664c42135d1",
+        "tradingagents/research/onchain_replication/archive_pair_reader.py": "11aedf0b9e5e8698831854952033f36db185c0cb4948f226912731ffc68d16df",
+        "tradingagents/research/onchain_replication/archive_pair_writer.py": "c714c350f372be1b4e3c7840b5187deb7f72ee80549edfed4e48450e2d0ca052",
+        "tradingagents/research/onchain_replication/archive_transport.py": "ef0fdc052a354af5b83e487cbc2d2cf92170149d64f90117adcb5ee37e3b572d",
+        "tradingagents/research/onchain_replication/archived_pair_log.py": "e01d267c54be8bc786478d5647c90505f75f66dd96e1d57349ba3f76e6259b3f",
+        "tradingagents/research/onchain_replication/archived_stage.py": "1e4b09210a0a9384b778a71e1573298cb923711bcf7c7dcd3b464460001dc407",
+        "tradingagents/research/onchain_replication/array_neighborhoods.py": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+        "tradingagents/research/onchain_replication/baselines.py": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a",
+        "tradingagents/research/onchain_replication/btc.py": "775838b3fc00534849d747f38c942f13187762b81c35ef5b1af52d67882a2dd0",
+        "tradingagents/research/onchain_replication/btc_source.py": "deb5f4003ab63a69f945756f1e40fdd6212733331b2ef0133bab2ba0f69acead",
+        "tradingagents/research/onchain_replication/btc_store.py": "79f78d1bfc46d3e975f506407f3fcea102835235b5aa5b68cf6b1d7674c10452",
+        "tradingagents/research/onchain_replication/btc_subsets.py": "79f1cc4de5b5bf52e491201d05941bbe0ff29555d814f343294411f4591ed736",
+        "tradingagents/research/onchain_replication/btc_weekly.py": "6d52650e2bc6225c73da9841e51ab03be33ba8f3dd32a5ae504d6b76908c4aed",
+        "tradingagents/research/onchain_replication/cache.py": "5fbbe0df14cfc1802dd1df4da6c8bdbd1153a9fcbb4c89dd202e791d1811ddba",
+        "tradingagents/research/onchain_replication/calendar.py": "c96e984a7d3482500a3a98231d859da1678cae4ca63960f33515a06dbda760f2",
+        "tradingagents/research/onchain_replication/cells.py": "1a15e33377030b6f3c533fd498bf75825778a59c35f2b0b8702cfaf79bb9bcfd",
+        "tradingagents/research/onchain_replication/census_production.py": "37ec0a081edaf2928146fab3984e362f1241809af43009eb05de307f247665b1",
+        "tradingagents/research/onchain_replication/checkpoints.py": "74e7bd16d4331cbac45143884e1f35a52687b19280c214457834b0cf19a457bc",
+        "tradingagents/research/onchain_replication/coinmetrics_prices.py": "5e14eae6fafccdfe562ab07c73ac3854f5e86751d74e468807b82be0a3a0a62f",
+        "tradingagents/research/onchain_replication/compact_closure.py": "d59dc91c8aaeba381d104cd065adc2eeeb4698360a58009492ec8dd7730c22bf",
+        "tradingagents/research/onchain_replication/compact_denominator.py": "6579c4aa57804ecfd35010beb81df0e81f722285bea9fda856d1a7f8e466b372",
+        "tradingagents/research/onchain_replication/compact_dictionary.py": "1c2618cc3706f4bdbfaba0ec957e1fb908f63857403bbdcc9341181effe313dc",
+        "tradingagents/research/onchain_replication/compact_features.py": "584268806ac6b6ea713737e4f54a6ba0bd923397165c089f2f359dfb3d916752",
+        "tradingagents/research/onchain_replication/compact_graph_artifacts.py": "fd1395b0c274b1b51dc26365fd0c2954f904492cf77ddb3d553ce40c6dc6bf8a",
+        "tradingagents/research/onchain_replication/compact_matcher.py": "75e4b8bad423ed198bef5017fd4c22670ff3c552bcacd2cc967901efa95bed73",
+        "tradingagents/research/onchain_replication/compact_mcm.py": "5858ad9fe26c2f9937dbfdf520a503b91157b4840083580ee8d6d6920c89548a",
+        "tradingagents/research/onchain_replication/compact_mcm_output.py": "bd118be0c2f9c44eebb1f459184c676dfc66f0ee46cd7f2c0271dea1db11bc99",
+        "tradingagents/research/onchain_replication/compact_mcm_publication.py": "d80315a270fab3c4a349e22cd114fa46041c121cdbfccbdc47ae7ce4b04edd25",
+        "tradingagents/research/onchain_replication/compact_native_features.py": "34a6f63125ac048df2d0f4a2b354ff2c6808ee8fc0dcc4b6a04bff1eeeb6e136",
+        "tradingagents/research/onchain_replication/compact_native_producer.py": "e8f46a63eb5893736daa4bc4acac19072e8137e53c4a971dd88610b9b23ec862",
+        "tradingagents/research/onchain_replication/compact_owner.py": "f4ff82b6405af36175509431440ee93e70787f46a8e3ab844ee2bccece6cfb51",
+        "tradingagents/research/onchain_replication/compact_pair_log.py": "4c65ca7f8caf46760eeef23e2bd44e9bc87a64a54bb18a862662be2b15da0089",
+        "tradingagents/research/onchain_replication/compact_policy.py": "4f4e4f91df881249540e8f7b0e33029f21e680bf7595fb0bbe075a8d8aee9d7d",
+        "tradingagents/research/onchain_replication/compact_publication.py": "a620e5f84c2ec5095ae1715aae4a7962e64180075d139e424c671a2d486e935a",
+        "tradingagents/research/onchain_replication/compact_sample_proof.py": "cb94729af806f10b1c719cc240ec8c2546a1aa2a79591ef62cbf852c29256893",
+        "tradingagents/research/onchain_replication/compact_sampler.py": "7820254d9a9ac287e55b0d20d2c26e1907b625dd743e194fae0602110593a608",
+        "tradingagents/research/onchain_replication/compact_samples.py": "f14a11212edd281901aab69fbe9b1164251988472baa65da6b319d50ff436d7b",
+        "tradingagents/research/onchain_replication/compact_stage.py": "78a5164a711ee69b3a0406ca63a620e781776798864075c9dd820229ccd4ccc4",
+        "tradingagents/research/onchain_replication/compact_terminal.py": "72e2604eb4f2829e15de6afac58966d0cc82ff88c91c15335ef0e66dde932328",
+        "tradingagents/research/onchain_replication/compact_training.py": "ef70263e79cf743aff6a389866a7fd86615b5bcdbd5b834ebe922ffd420bebd3",
+        "tradingagents/research/onchain_replication/comparison.py": "b157f41b2b98517c67152209bac46fbedf3a2eb9471fd27f9c588a41e60c8c23",
+        "tradingagents/research/onchain_replication/component_store.py": "ba0cf44dd7cf5af8c0b99cbe129f107ef7b40833a76b8162ae9d91512b566b68",
+        "tradingagents/research/onchain_replication/contracts.py": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a",
+        "tradingagents/research/onchain_replication/dataset.py": "c8d701b5646395bb94e5037aefcc2d0d29a55de95cca05e019ce35d3f53561df",
+        "tradingagents/research/onchain_replication/dictionary.py": "32e27a4a17dc2aa993d1440d6486c75b0d4dcff341969dbf99bdff412dd7e446",
+        "tradingagents/research/onchain_replication/environment.py": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+        "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+        "tradingagents/research/onchain_replication/evaluation.py": "b3af7cf6b71f8adcdd762eb471abb66d8fdd00f20087aeff377447d51a854b29",
+        "tradingagents/research/onchain_replication/feature_journal.py": "d997b27bf3c5d5a1db0c77a6ce5bf9ed696800a4c88300634eec3efed349ff59",
+        "tradingagents/research/onchain_replication/feature_pipeline.py": "19ebe96275095ded92743a1a1bcadc4178f85cd5d39f1ed23786fba279b5fa41",
+        "tradingagents/research/onchain_replication/feature_residency.py": "4ea5370958b65edf0d37950f12d358ab562291c786f28a287514c77c3838ddcd",
+        "tradingagents/research/onchain_replication/gat.py": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6",
+        "tradingagents/research/onchain_replication/graph_baselines.py": "f284a85a0ce3aa5dee24c748c6a376d9d44a2d775409b874540215ff0e594907",
+        "tradingagents/research/onchain_replication/graph_production.py": "ef5ee5e2c8f6438e4e334d1a468397ad6f60e176d157e7849b7132737c7c85e8",
+        "tradingagents/research/onchain_replication/graph_residency.py": "1ded72ad7c25135780a718455b430eafa020e8f3de6ca608b04e005b798609a6",
+        "tradingagents/research/onchain_replication/graph_store.py": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da",
+        "tradingagents/research/onchain_replication/hub_census_production.py": "b9c406f19c32f2b78409b9a3260edebcad0ced042e9e4d187ff44e574d763d2a",
+        "tradingagents/research/onchain_replication/hub_edges.py": "e5858170437f6d9f0a994315e2b2aa30d502844cf0a1c1b8ec782a1e693887e9",
+        "tradingagents/research/onchain_replication/job.py": "d41518c7a7feaac03f66b50e7fce296ce3061e65d740b3117b34d34a6c99aa96",
+        "tradingagents/research/onchain_replication/job_payload.py": "0303ea2e516e57e1d4a850b3eadf13b3b23ee047b48df1417e8ae559ff171ab0",
+        "tradingagents/research/onchain_replication/journal_recovery.py": "1f5a280789572a01d943e80081930e324e621127b742ef67b6d93b6041ed009d",
+        "tradingagents/research/onchain_replication/mapped_graph.py": "c5e93b325599a82bf65e5b31074e9c76a73b25d479ddea7d3ff3687e75f7b197",
+        "tradingagents/research/onchain_replication/matching.py": "e5a4cb7966a53522532158a13ef7293d4d081a26cffba56c2eb0761a628c72a6",
+        "tradingagents/research/onchain_replication/matching_ancestry.py": "51221522256e3f1babb03512a8dad4d293d12638c4579d4bddcf92945db5e4bc",
+        "tradingagents/research/onchain_replication/matching_annealing.py": "c1331bf7fd6bc436c2663c626c69c6bcecffcc16a8e56992c9c6bcf520ab0b47",
+        "tradingagents/research/onchain_replication/matching_checkpoint.py": "de8f7077e513105719fffcf6ea13e96bfb0199056acf0227ecf744df189ee35c",
+        "tradingagents/research/onchain_replication/matching_death.py": "f76a96274e77d4f728d9d7e0b93db2a8bb4e663654ae59c0480f6c66192c3ff8",
+        "tradingagents/research/onchain_replication/matching_hardening.py": "c0c4a2eb21ad62d3a966e8619d84370be388e1e4a402f7608fc91abb3f796312",
+        "tradingagents/research/onchain_replication/matching_identity.py": "f011658abf3b56b04a0ec33a7bdfed2c68e2e2e79791aa96c5ca7f8fd1653f89",
+        "tradingagents/research/onchain_replication/matching_owner.py": "36b43349bdcca5f36bd47181f47af6b03987d59fd2f20ac73472d648a58fbf97",
+        "tradingagents/research/onchain_replication/matching_pair.py": "3fc8a0666b2b4bf334411a85decd7dbf484b038827255714c6727ffe3846621c",
+        "tradingagents/research/onchain_replication/matching_policy.py": "5d552673fb772f61344d212606a5d9d2c22c91c8de44dfa501d57422c9b4e739",
+        "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332",
+        "tradingagents/research/onchain_replication/matching_sparse.py": "06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e",
+        "tradingagents/research/onchain_replication/mcm.py": "d2527cdc34f1032f6ed9a3ff175fd1e7c21412e19e1d449ac53f773bd582f9df",
+        "tradingagents/research/onchain_replication/mcm_score_stream.py": "c70b23d4f8d16aa418109647bdba7ccd2139a2c1ef910b5acad8535aeebde1d7",
+        "tradingagents/research/onchain_replication/metrics.py": "9476c2052e02be278c01360fa598a3a136a791ffaa90d90f1fde992c8a27c84b",
+        "tradingagents/research/onchain_replication/model.py": "ed4d5417202bb13ebc682d88d56942db74201feddc1b4d20511e54684fc252a0",
+        "tradingagents/research/onchain_replication/model_registry.py": "c0e2202578ae708e2fc0406ece5726541952bf40f29df9dc81812c177c334543",
+        "tradingagents/research/onchain_replication/native_producer.py": "5b7dff71ffe2b1e6c0570b859020d82af337d753665ae77cbea95ff07d1914ed",
+        "tradingagents/research/onchain_replication/native_reuse.py": "a84274b035278fb5d840f58420cdc4d70eb7c5d8ca2ee5247392cf6bb29b2bbb",
+        "tradingagents/research/onchain_replication/neighborhood_census.py": "be4704d1b19028c2ce734c35483986d6b49d7eecd6f6bd9048c96208b51c02a9",
+        "tradingagents/research/onchain_replication/neighborhood_policy.py": "f86e19de0bedd4c12ef73fe2ba243990256f592c604c083d8e772ce8131bc12a",
+        "tradingagents/research/onchain_replication/neighborhoods.py": "b53901125dc20dbb8a38b6e0e539866fb04109053afbcba0d75b2a2a8dc38271",
+        "tradingagents/research/onchain_replication/neural_authority.py": "eed5f79f4c34819fb64ac2d79069ff56e4b24d175f2d391da9856f9d50186fb2",
+        "tradingagents/research/onchain_replication/neural_physical.py": "3862e91a72ed2998ca5175560622c2c74a224ad60f54580ec3e5ed00f28fc03b",
+        "tradingagents/research/onchain_replication/neural_resource.py": "73e63fb1873ce8cbc04e0ebe52e8436272894e97c400594f133bbd1a3d6c512e",
+        "tradingagents/research/onchain_replication/parquet_ranges.py": "482c0686e552aae3157bf6cf12f802e0d284c68ce14d879000253b895450b044",
+        "tradingagents/research/onchain_replication/pooling.py": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303",
+        "tradingagents/research/onchain_replication/population_assembly.py": "da65f5168c9d03cf8518f8dac1717482ff48c047ac451563f8728a7afe5c528f",
+        "tradingagents/research/onchain_replication/preservation.py": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+        "tradingagents/research/onchain_replication/price_source.py": "66af531218352999667f2cac88c8393e70ddcf956b8e9f05db16a52c6b2f6e74",
+        "tradingagents/research/onchain_replication/prices.py": "5f44f1e689b614121c4b9cab5da75e17322074a9ec9f2a30a174ac353093798f",
+        "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+        "tradingagents/research/onchain_replication/range_source.py": "5f1e004a89e2339d1f21c941415dc3976e9523f509a1d1591f23a8ea7a836bd7",
+        "tradingagents/research/onchain_replication/registered_features.py": "8a79c459336773bd139f377fe44fe1006796378651d30a8eb22c966c72f7b267",
+        "tradingagents/research/onchain_replication/replay.py": "37cb3925ac1e4a453ed385fd560b463e88f1ddb91cf00af338c08230ed244691",
+        "tradingagents/research/onchain_replication/resources.py": "3fef15ba0c26f3eefb85f7210a11180252dfde820c86c66296457ed41bb0707a",
+        "tradingagents/research/onchain_replication/restart_retention.py": "15e7b2090ce87081b0cd6e2338b4d62d348d779082947729cacf0210d3c6dc7d",
+        "tradingagents/research/onchain_replication/run.py": "d44fa28991f05bedf228de22975399847dd97404b1f3dba8390be7bd720f73de",
+        "tradingagents/research/onchain_replication/sampling_policy.py": "79d1253009e6ba5e8815f82fdf3422113d5559b92e5e0e36bfec84fc2963354d",
+        "tradingagents/research/onchain_replication/sampling_weights.py": "5f1837f93fe0523d7c851654390584fc6c04fb803f2025fd027e74a5da8318d1",
+        "tradingagents/research/onchain_replication/score_batches.py": "715125e543edd383c4bdeab59d10f7a269faec18f3b5fd16af79013e1bb37555",
+        "tradingagents/research/onchain_replication/score_tail.py": "b5e807e022349ca7e0d18c02512812932103865ba0779d641be6877995694870",
+        "tradingagents/research/onchain_replication/serialization.py": "f711a0a931fe9fb91aadf0ad7ba6e68b638f3874e736790e05edd21acdefc65b",
+        "tradingagents/research/onchain_replication/source_footers.py": "65005ceca3072760befb09680f9c7aa469d5aaa5ab3f2af6a741d4ed2fef660e",
+        "tradingagents/research/onchain_replication/source_inventory.py": "6d868efe77d4d84af97fdb1657585ad86fda15866b44541f111656d3e09759db",
+        "tradingagents/research/onchain_replication/stage_retention.py": "2f608ba1735fd07fdf18eab8969854f61e9769603b84b16869a008cde108b478",
+        "tradingagents/research/onchain_replication/stage_retention_reader.py": "c2ae559de8721bea87a3520d9d13591f6c47ee6cad9971c7166c2c63937736f5",
+        "tradingagents/research/onchain_replication/subsets.py": "59a17cb12711d8ec518f6f25ec4518f143647b79c3ef3286399dada114b7a22c",
+        "tradingagents/research/onchain_replication/temporal.py": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226",
+        "tradingagents/research/onchain_replication/training.py": "5c0380de62c670d356ea3546c7b81eed4ccab55a886bc27b6a1bbfd75c2c3369",
+        "tradingagents/research/onchain_replication/verification.py": "c492cc9be2eb0956035800c26bde5d6cc2999844cd7466eb151bd3ea82815873",
+        "tradingagents/research/onchain_replication/weekly.py": "079a427f212738759109b31da23933549a8b7751851e3033703cdd03dc5f054a",
+        "tradingagents/research/onchain_replication/workflow_storage.py": "a0b1bd5e3f73f22f3c5922740a8bddde0437c3c635ea372a6853d4d504e7751f",
+        "tradingagents/research/verify.py": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439"
+      },
+      "stage": "development",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2022-01-10T00:00:00Z",
+          "start": "2022-01-03T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2022-06-20T00:00:00Z",
+          "start": "2022-06-13T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2022-08-01T00:00:00Z",
+          "start": "2022-07-25T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2022-11-14T00:00:00Z",
+          "start": "2022-11-07T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2023-06-12T00:00:00Z",
+          "start": "2023-06-05T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2024-01-08T00:00:00Z",
+          "start": "2024-01-01T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2024-03-18T00:00:00Z",
+          "start": "2024-03-11T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2024-08-12T00:00:00Z",
+          "start": "2024-08-05T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2024-12-30T00:00:00Z",
+          "start": "2024-12-23T00:00:00Z"
+        }
+      ]
+    },
+    "eth-paper-resource-pilot-20260924": {
+      "cells": [
+        "decode_graph-2022-01-03",
+        "neighborhoods-2022-01-03",
+        "matching-2022-01-03",
+        "neural_checkpoint-2022-01-03",
+        "dictionary-2022-01-03",
+        "mcm-2022-01-03",
+        "decode_graph-2022-06-13",
+        "neighborhoods-2022-06-13",
+        "matching-2022-06-13",
+        "neural_checkpoint-2022-06-13",
+        "mcm-2022-06-13",
+        "decode_graph-2022-07-25",
+        "neighborhoods-2022-07-25",
+        "matching-2022-07-25",
+        "neural_checkpoint-2022-07-25",
+        "mcm-2022-07-25",
+        "decode_graph-2022-11-07",
+        "neighborhoods-2022-11-07",
+        "matching-2022-11-07",
+        "neural_checkpoint-2022-11-07",
+        "mcm-2022-11-07",
+        "decode_graph-2023-06-05",
+        "neighborhoods-2023-06-05",
+        "matching-2023-06-05",
+        "neural_checkpoint-2023-06-05",
+        "mcm-2023-06-05",
+        "decode_graph-2024-01-01",
+        "neighborhoods-2024-01-01",
+        "matching-2024-01-01",
+        "neural_checkpoint-2024-01-01",
+        "mcm-2024-01-01",
+        "decode_graph-2024-03-11",
+        "neighborhoods-2024-03-11",
+        "matching-2024-03-11",
+        "neural_checkpoint-2024-03-11",
+        "mcm-2024-03-11",
+        "decode_graph-2024-08-05",
+        "neighborhoods-2024-08-05",
+        "matching-2024-08-05",
+        "neural_checkpoint-2024-08-05",
+        "mcm-2024-08-05",
+        "decode_graph-2024-12-23",
+        "neighborhoods-2024-12-23",
+        "matching-2024-12-23",
+        "neural_checkpoint-2024-12-23",
+        "mcm-2024-12-23",
+        "source-2022-01-03",
+        "source-2022-01-04",
+        "source-2022-01-05",
+        "source-2022-01-06",
+        "source-2022-01-07",
+        "source-2022-01-08",
+        "source-2022-01-09",
+        "source-2022-06-13",
+        "source-2022-06-14",
+        "source-2022-06-15",
+        "source-2022-06-16",
+        "source-2022-06-17",
+        "source-2022-06-18",
+        "source-2022-06-19",
+        "source-2022-07-25",
+        "source-2022-07-26",
+        "source-2022-07-27",
+        "source-2022-07-28",
+        "source-2022-07-29",
+        "source-2022-07-30",
+        "source-2022-07-31",
+        "source-2022-11-07",
+        "source-2022-11-08",
+        "source-2022-11-09",
+        "source-2022-11-10",
+        "source-2022-11-11",
+        "source-2022-11-12",
+        "source-2022-11-13",
+        "source-2023-06-05",
+        "source-2023-06-06",
+        "source-2023-06-07",
+        "source-2023-06-08",
+        "source-2023-06-09",
+        "source-2023-06-10",
+        "source-2023-06-11",
+        "source-2024-01-01",
+        "source-2024-01-02",
+        "source-2024-01-03",
+        "source-2024-01-04",
+        "source-2024-01-05",
+        "source-2024-01-06",
+        "source-2024-01-07",
+        "source-2024-03-11",
+        "source-2024-03-12",
+        "source-2024-03-13",
+        "source-2024-03-14",
+        "source-2024-03-15",
+        "source-2024-03-16",
+        "source-2024-03-17",
+        "source-2024-08-05",
+        "source-2024-08-06",
+        "source-2024-08-07",
+        "source-2024-08-08",
+        "source-2024-08-09",
+        "source-2024-08-10",
+        "source-2024-08-11",
+        "source-2024-12-23",
+        "source-2024-12-24",
+        "source-2024-12-25",
+        "source-2024-12-26",
+        "source-2024-12-27",
+        "source-2024-12-28",
+        "source-2024-12-29"
+      ],
+      "charter": {
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/CHARTER-v2.md",
+        "sha256": "3c02ece63c57f458fc4236cde73b4a000041dba8923738635f2f1b9e109ff3d8"
+      },
+      "family": "paper",
+      "inputs": {
+        "binding_1": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/history.json",
+          "sha256": "68e4ea2f328996cef6966f2ec9f35c494b38f38182e33ae0fb7697383750aae0"
+        },
+        "binding_10": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/calendar.json",
+          "sha256": "f1bf849b768a274a3f616e0bfaa08ad9db7794dba69471de02b12a8e9cccdae3"
+        },
+        "binding_11": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/dictionary.json",
+          "sha256": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff"
+        },
+        "binding_12": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/graph.json",
+          "sha256": "c91f8eeb1d317a310ef0f90f40a78ccf60bdd2437532f5e909f7dfd079d7fc20"
+        },
+        "binding_13": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/matching-stable.json",
+          "sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e"
+        },
+        "binding_14": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/matching.json",
+          "sha256": "dab81b4e6a4ffa43739215fcaec44419fe644190752d9c4cf32cac9e42fb4824"
+        },
+        "binding_15": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/model.json",
+          "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+        },
+        "binding_16": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/resources-affinity.json",
+          "sha256": "cd2f6f07231564e95871c02dc28a7643298f4caa8f4ab6f501a3259027f486ee"
+        },
+        "binding_17": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/resources.json",
+          "sha256": "9b16ba2fc240a8b466bb1012468cb5dd7f8217625525ad17d6ee13d2bdce0713"
+        },
+        "binding_18": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/training.json",
+          "sha256": "d5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0"
+        },
+        "binding_19": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-03.json",
+          "sha256": "b098614ab0a18199811bbf2040dbbceef8518cc8b8a24e186b1fa1b20fa8f00f"
+        },
+        "binding_2": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/budget-amendment.proposed.json",
+          "sha256": "53807814cc9ba2f89d31aecc61f8934a095f01e89cea0c6ec10f3631ad8a450e"
+        },
+        "binding_20": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-04.json",
+          "sha256": "0e3f9d58ed26f9b29de00cf6d89bb1ba313042f09f04a08311942f40d644eb7b"
+        },
+        "binding_21": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-05.json",
+          "sha256": "cc77d75545687596abd9d3fe1da328edaee2d08360492448a4f8b8ace9be3551"
+        },
+        "binding_22": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-06.json",
+          "sha256": "73f0f8204ef195d6e0167a49ff35a2d10a81a83e372f2f56a20c8291199c70a2"
+        },
+        "binding_23": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-07.json",
+          "sha256": "5825ebb0b91352a7094edbd462aca119069892b895fc883f9b8bd6fb4e2671c8"
+        },
+        "binding_24": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-08.json",
+          "sha256": "5f14077caafc721d527463603cc416f4c9f3c0a67b013b0012ea70912304fcdc"
+        },
+        "binding_25": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-09.json",
+          "sha256": "40afba994707cdd5b74f734b822c9dc534b27c419573085a19221b46137926c6"
+        },
+        "binding_26": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-13.json",
+          "sha256": "89a337e96f886bcf0cc076562d4bbe7ee9f58ee55ce0034e792577911bcf04b3"
+        },
+        "binding_27": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-14.json",
+          "sha256": "d20442fbcb8b455fed90d1390ec56bc24e5d3b2bd369e96b785c79c789b80ad7"
+        },
+        "binding_28": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-15.json",
+          "sha256": "238fb121b282dce970ca7cbdaff102769a11817ebe42cfac16b85e5584dfc6f7"
+        },
+        "binding_29": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-16.json",
+          "sha256": "3c221307faaa331561d8251630874befc885872e1f06e9fed2821141999edc5d"
+        },
+        "binding_3": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze-v3.json",
+          "sha256": "625918f95b19a2632bf83d3ac2fdd150bc8557cef3cbeeed560120489d991c93"
+        },
+        "binding_30": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-17.json",
+          "sha256": "42afe182bbf8e9a3689008a01f65ea43e986602c03ad058e89a37c72d3de4151"
+        },
+        "binding_31": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-18.json",
+          "sha256": "a9eaea951a39f052cfc75dc87b80427ef60688653fb1cdef18fcbbf3426cafe2"
+        },
+        "binding_32": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-19.json",
+          "sha256": "6f97d58f35f84c7e302b22b9076819a5ed14f94175037d6ec57d9d7bf72119a2"
+        },
+        "binding_33": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-25.json",
+          "sha256": "37c81e6ffa8ab59b3f9410a0d1ae43055f633a89bede81baafab74c46b051094"
+        },
+        "binding_34": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-26.json",
+          "sha256": "bc27304dd19aa7064a806539dc7181a3ad4b00dc68018af68884677c4aefc4ec"
+        },
+        "binding_35": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-27.json",
+          "sha256": "13c45eb3b1d17a7925d2446ec9193f06e8df22de484ae18a1b88704ece5f27a6"
+        },
+        "binding_36": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-28.json",
+          "sha256": "7d73c1e1bfd4fc1bed57fc7438495b7836e7028c4947c07c8262d8502a6f326d"
+        },
+        "binding_37": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-29.json",
+          "sha256": "b9aabfb8b4c5bd710031abaf6177947e4fcdf053c65a295ddfa22b1344403c9a"
+        },
+        "binding_38": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-30.json",
+          "sha256": "4477c69239e4288d56c7e332e57c18e35d0014a60338ad6185c962ece2b52b56"
+        },
+        "binding_39": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-31.json",
+          "sha256": "7ee7e4a16bbb66a4d68a3ff13ebd651522ea7891040cc5bb4503aead3ac88d8f"
+        },
+        "binding_4": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze-v2.json",
+          "sha256": "bfabbcde014fae5d77bf86a7b4aaa76152a9095f1563b49af9b040600d360589"
+        },
+        "binding_40": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-07.json",
+          "sha256": "806a4e689d51e8850248bcc55a0618c2e2af790f54c03ca40d1317a966f61882"
+        },
+        "binding_41": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-08.json",
+          "sha256": "465cfdd579603aee070c172b6cdf462a807679cf89b2e9cdb206ee95944cf76d"
+        },
+        "binding_42": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-09.json",
+          "sha256": "d508e6054ce84b4bd46180db535039ffd69a779194975253a8c880d67dbc8598"
+        },
+        "binding_43": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-10.json",
+          "sha256": "be7026ac02b242eae30b8bbb873654cf7b6ce246502c51abf07ba2763bece45b"
+        },
+        "binding_44": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-11.json",
+          "sha256": "369cc2896f5dfcd1729f0b1bfffc1d3b77e3ec11b4ad050d71ecd66efd887387"
+        },
+        "binding_45": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-12.json",
+          "sha256": "83ec8c69e60bc1bcb5afe88d0ce94c86838176d05848b2ca3ff7996100d0bad0"
+        },
+        "binding_46": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-13.json",
+          "sha256": "76be910d33298b3913b4e49cc3aa922a411246286ed5a4917565e0565f7fef06"
+        },
+        "binding_47": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-05.json",
+          "sha256": "fa78c6daa30a10a1c16e14592a149936b33ae209befd19c636cc17b7edbae338"
+        },
+        "binding_48": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-06.json",
+          "sha256": "b2ab4e529261d904813de1ed87b740728b1016f9d012023e7a14ce8d872c9fd8"
+        },
+        "binding_49": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-07.json",
+          "sha256": "db24f638292a3a4f60b40b85a7f54d1c0d0951031dad84ee5b292dc59225b72d"
+        },
+        "binding_5": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze.json",
+          "sha256": "d5b2be9769068566d8568850b6b29b3fb64eec537356c1c8771a79953b007e6c"
+        },
+        "binding_50": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-08.json",
+          "sha256": "0ffce7e9aa790bafb30f59ae10f4e08dd5d8af9dc791353c6f7cb923467a7d15"
+        },
+        "binding_51": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-09.json",
+          "sha256": "649fc9d55cd9ebfe5d3eade58100da4316349c59e333a6db86da06582e8357bb"
+        },
+        "binding_52": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-10.json",
+          "sha256": "c73d44006713a8d31558a4f41146e74a6121286819fa005ce2f1b3eef07ec2ea"
+        },
+        "binding_53": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-11.json",
+          "sha256": "8ba90f9b1811857c93e8196d53713bb626b5d81fb59d687ef8efa5515e5e8fb1"
+        },
+        "binding_54": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-01.json",
+          "sha256": "f88a874a22558489f76ebe42c708312e9c8ba9a31c851c88c183da4f9296bf8b"
+        },
+        "binding_55": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-02.json",
+          "sha256": "3452da59c60cd8f30a321ad7c6decfac6d6b362caeef4730398ec7c65059643d"
+        },
+        "binding_56": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-03.json",
+          "sha256": "4dc10864ffc1c54e622deaced8808b9f080d8fe65fd2ff0687c03e0d49a91d06"
+        },
+        "binding_57": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-04.json",
+          "sha256": "b19aa03b321bfe5020b66b4218ae905fdfcf7125f8cdd4b6efb5219dc1457c4e"
+        },
+        "binding_58": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-05.json",
+          "sha256": "acedb3fe8f6150bdb7c0c44469172122a92256af88477c51756fa579e74e6bdf"
+        },
+        "binding_59": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-06.json",
+          "sha256": "363b1f7c8d89ffbaf37523d966fc400fcc71c0bf201f14e9b7d2ec845838350a"
+        },
+        "binding_6": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/environment.json",
+          "sha256": "9c67b3d6c6f31dd2705c1467471ff60c22a3d431fcd4f04cd3f467888854cd88"
+        },
+        "binding_60": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-07.json",
+          "sha256": "92003be6a33a25348efcdc0d1b720df5c5c5a789077c6861984f948054add5c6"
+        },
+        "binding_61": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-11.json",
+          "sha256": "30245db775071f534737c15a4b0f83923db36b3dd4f01393bfa790a45e65e9ef"
+        },
+        "binding_62": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-12.json",
+          "sha256": "8f30bec3c74901980e7931d3712143d07bc7ca8c7b3740ce75b1ceaed5480ba3"
+        },
+        "binding_63": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-13.json",
+          "sha256": "15f75306e9c826d8e3a525d9a2402c90b45d18aa36cbc757a88fd6e3e2defde2"
+        },
+        "binding_64": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-14.json",
+          "sha256": "c906498eea34a69d97b8db079c5d90b152a2dd853b4815a3d72df906a6b16d60"
+        },
+        "binding_65": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-15.json",
+          "sha256": "decd6cb69fecd75ae99e62eb8e93fbee2aa44853e96194dde8755c316296b5bb"
+        },
+        "binding_66": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-16.json",
+          "sha256": "552694ce06193d0d627e0e76791a3e55c521ea691f30841683f4a5f144888c63"
+        },
+        "binding_67": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-17.json",
+          "sha256": "6959e667df6823766f03d1c4b2f3c9b61a85157e2f165f9b27740ace29bb42df"
+        },
+        "binding_68": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-05.json",
+          "sha256": "4b6016bbc3fe6688cda004d9664522106fd2a4b8507fa2c3c1dc7fb3829720e6"
+        },
+        "binding_69": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-06.json",
+          "sha256": "2a0e877f2266c7844828c186bfec0c114b898554f08ba894b11625274226757b"
+        },
+        "binding_7": {
+          "dataset": "eth",
+          "path": "uv.lock",
+          "sha256": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+        },
+        "binding_70": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-07.json",
+          "sha256": "4a023bc123123dfd7f7eed9231ca284668795a670e830ddac6c1fcadc7e471ee"
+        },
+        "binding_71": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-08.json",
+          "sha256": "8b138dc8ec9a21b1ff23d95b88c8a610565c6b4276c9d41f33335942d8a9ce68"
+        },
+        "binding_72": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-09.json",
+          "sha256": "a53e3b4cc7388aa0e975dbdff638c6c5a3b04130f0d4eb540403b6369781cdff"
+        },
+        "binding_73": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-10.json",
+          "sha256": "23baf7a9f2f4f9ac18d24d05569060428b35c061ebace78a05a3721293c8d888"
+        },
+        "binding_74": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-11.json",
+          "sha256": "66029f02f29da04fc57d8ebf7a36ce90c88ff3510568edccdc31359630979c8b"
+        },
+        "binding_75": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-23.json",
+          "sha256": "442059260ea1ffcecdd22ea00211838716b6327c271b78662a16820e0c36882e"
+        },
+        "binding_76": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-24.json",
+          "sha256": "311460f539374e18998b23521511438e1085fb4518d9d595a34c6da53abe888b"
+        },
+        "binding_77": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-25.json",
+          "sha256": "9d1459468515755dc0f80dbd793c3793ad5a6ffcb1a760193a94cb41c269d055"
+        },
+        "binding_78": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-26.json",
+          "sha256": "45252cb298d717533b42e38ae617c0173a3ff7e3bd5b334424fa58e016aa3e2e"
+        },
+        "binding_79": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-27.json",
+          "sha256": "a788fcf24dc502b8b37ebfb42f7041c46a969fa7cef03027076c84e204b327bb"
+        },
+        "binding_8": {
+          "dataset": "eth",
+          "path": "pyproject.toml",
+          "sha256": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9"
+        },
+        "binding_80": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-28.json",
+          "sha256": "e293cb716bd273261ae2837578e62468595661877eab94e7f44ae83a0256cde5"
+        },
+        "binding_81": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-29.json",
+          "sha256": "092504846ccfef9f5e1966d62dfcc7d8e8767cceb82d65620971b010ecb779bb"
+        },
+        "binding_82": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze-v4.json",
+          "sha256": "67b3fd3450ed7392e1e28215be6f3c32e7d34fdb793e054f37b5c1458d65964e"
+        },
+        "binding_83": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/resource-cap-v4.md",
+          "sha256": "ae1ab3f0428fceb366feb9f07eede3db1cea6a8d41d2781587ce8c85113a0ed7"
+        },
+        "binding_84": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/resource-contract-v4.json",
+          "sha256": "b8e72b0a082e3d3431658cd6f22ccf2ded8ff819d78d9b623592a5287241c6ec"
+        },
+        "binding_9": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/baselines.json",
+          "sha256": "a120054bd0e19b710cd23160aec41809ab92a0b54ab554900b653afd73cb4026"
+        },
+        "source_index": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-index.json",
+          "sha256": "18f2548bdec2602995935d951075162537b6369b8bf18647cdc7a96962cffc1a"
+        }
+      },
+      "outputs": [
+        "cell-ledger.json",
+        "artifact-index.json",
+        "capacity-forecast.json"
+      ],
+      "parent": null,
+      "question": "Measured full-graph implementation resource cost; synthetic labels only; no predictive outcome",
+      "reuse": "exploratory",
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "selection": null,
+      "source_files": {
+        "research/onchain-paper-replication-2026-09-24/pilot/launch.py": "97fbad082fa9ef071e9c7c8e8392a74efc904b4e30e3148a160b615a481bd530",
+        "research/onchain-paper-replication-2026-09-24/pilot/monitor.py": "6429547c77dd647cda48d533bd595fc5040f661295e3f6710fc950fcb781ee02",
+        "research/onchain-paper-replication-2026-09-24/pilot/phase.py": "83dd55e8e9dbefb5c0b3d806e708ec65f51ba58d9266b0768dc281ab9fcc989d",
+        "research/onchain-paper-replication-2026-09-24/pilot/prepare_gate.py": "bfe5cd61b0d6fb0c12b4ee132c3e43a6c4ebdcff9c15af7996b515c0a6fa05cc",
+        "research/onchain-paper-replication-2026-09-24/pilot/reconcile.py": "f41866160676de41cecee1e3328df40b0aab145c1e08cada34ecce892eb71b1c",
+        "research/onchain-paper-replication-2026-09-24/pilot/run.py": "07410a998ca78efd5a91b01a626c17f3649e875543d2e977a94bde69e93caad3",
+        "tradingagents/research/onchain_replication/__init__.py": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1",
+        "tradingagents/research/onchain_replication/cache.py": "5fbbe0df14cfc1802dd1df4da6c8bdbd1153a9fcbb4c89dd202e791d1811ddba",
+        "tradingagents/research/onchain_replication/checkpoints.py": "74e7bd16d4331cbac45143884e1f35a52687b19280c214457834b0cf19a457bc",
+        "tradingagents/research/onchain_replication/contracts.py": "7c92029d8eb1bdb50f6eea3d02423dd9265d6ba6606bcb7ea3255e11c9447e0a",
+        "tradingagents/research/onchain_replication/dictionary.py": "32e27a4a17dc2aa993d1440d6486c75b0d4dcff341969dbf99bdff412dd7e446",
+        "tradingagents/research/onchain_replication/environment.py": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+        "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+        "tradingagents/research/onchain_replication/gat.py": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6",
+        "tradingagents/research/onchain_replication/graph_store.py": "bf10aae3b1532e7b687b5febc5803cbf3e9f695c8b086294bcc92fcd811be379",
+        "tradingagents/research/onchain_replication/matching.py": "8198d3505bf250152e7f6949372efb38b7d83837c1067194b862958e17923280",
+        "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332",
+        "tradingagents/research/onchain_replication/mcm.py": "3825d424496927dcb9f27935a12e00502f19d04b864017a7419954c2d5b4aeae",
+        "tradingagents/research/onchain_replication/model.py": "199ce63ee56a76deae60495598a4ca4ac6306d7d7f24cf6483a7d1f89feb4944",
+        "tradingagents/research/onchain_replication/neighborhoods.py": "cffeac41c84f2e94059a3c8a3833dfb96168f6279c88c34c1b0d3d0d96875e70",
+        "tradingagents/research/onchain_replication/pooling.py": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303",
+        "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+        "tradingagents/research/onchain_replication/resources.py": "bc4676f3ad566d68bad9c66a7e7dd0b8e630c3a79b5a10b9200959ecea029791",
+        "tradingagents/research/onchain_replication/serialization.py": "f711a0a931fe9fb91aadf0ad7ba6e68b638f3874e736790e05edd21acdefc65b",
+        "tradingagents/research/onchain_replication/temporal.py": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226",
+        "tradingagents/research/onchain_replication/weekly.py": "99df9c97685fe7c56702db7583af2d6b18342e657e2f13c53337c03c64e5e0a3"
+      },
+      "stage": "development",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2025-01-01T00:00:00Z",
+          "start": "2022-01-01T00:00:00Z"
+        }
+      ]
+    },
+    "eth-paper-resource-pilot-20260924-02": {
+      "cells": [
+        "decode_graph-2022-01-03",
+        "neighborhoods-2022-01-03",
+        "matching-2022-01-03",
+        "neural_checkpoint-2022-01-03",
+        "dictionary-2022-01-03",
+        "mcm-2022-01-03",
+        "decode_graph-2022-06-13",
+        "neighborhoods-2022-06-13",
+        "matching-2022-06-13",
+        "neural_checkpoint-2022-06-13",
+        "mcm-2022-06-13",
+        "decode_graph-2022-07-25",
+        "neighborhoods-2022-07-25",
+        "matching-2022-07-25",
+        "neural_checkpoint-2022-07-25",
+        "mcm-2022-07-25",
+        "decode_graph-2022-11-07",
+        "neighborhoods-2022-11-07",
+        "matching-2022-11-07",
+        "neural_checkpoint-2022-11-07",
+        "mcm-2022-11-07",
+        "decode_graph-2023-06-05",
+        "neighborhoods-2023-06-05",
+        "matching-2023-06-05",
+        "neural_checkpoint-2023-06-05",
+        "mcm-2023-06-05",
+        "decode_graph-2024-01-01",
+        "neighborhoods-2024-01-01",
+        "matching-2024-01-01",
+        "neural_checkpoint-2024-01-01",
+        "mcm-2024-01-01",
+        "decode_graph-2024-03-11",
+        "neighborhoods-2024-03-11",
+        "matching-2024-03-11",
+        "neural_checkpoint-2024-03-11",
+        "mcm-2024-03-11",
+        "decode_graph-2024-08-05",
+        "neighborhoods-2024-08-05",
+        "matching-2024-08-05",
+        "neural_checkpoint-2024-08-05",
+        "mcm-2024-08-05",
+        "decode_graph-2024-12-23",
+        "neighborhoods-2024-12-23",
+        "matching-2024-12-23",
+        "neural_checkpoint-2024-12-23",
+        "mcm-2024-12-23",
+        "source-2022-01-03",
+        "source-2022-01-04",
+        "source-2022-01-05",
+        "source-2022-01-06",
+        "source-2022-01-07",
+        "source-2022-01-08",
+        "source-2022-01-09",
+        "source-2022-06-13",
+        "source-2022-06-14",
+        "source-2022-06-15",
+        "source-2022-06-16",
+        "source-2022-06-17",
+        "source-2022-06-18",
+        "source-2022-06-19",
+        "source-2022-07-25",
+        "source-2022-07-26",
+        "source-2022-07-27",
+        "source-2022-07-28",
+        "source-2022-07-29",
+        "source-2022-07-30",
+        "source-2022-07-31",
+        "source-2022-11-07",
+        "source-2022-11-08",
+        "source-2022-11-09",
+        "source-2022-11-10",
+        "source-2022-11-11",
+        "source-2022-11-12",
+        "source-2022-11-13",
+        "source-2023-06-05",
+        "source-2023-06-06",
+        "source-2023-06-07",
+        "source-2023-06-08",
+        "source-2023-06-09",
+        "source-2023-06-10",
+        "source-2023-06-11",
+        "source-2024-01-01",
+        "source-2024-01-02",
+        "source-2024-01-03",
+        "source-2024-01-04",
+        "source-2024-01-05",
+        "source-2024-01-06",
+        "source-2024-01-07",
+        "source-2024-03-11",
+        "source-2024-03-12",
+        "source-2024-03-13",
+        "source-2024-03-14",
+        "source-2024-03-15",
+        "source-2024-03-16",
+        "source-2024-03-17",
+        "source-2024-08-05",
+        "source-2024-08-06",
+        "source-2024-08-07",
+        "source-2024-08-08",
+        "source-2024-08-09",
+        "source-2024-08-10",
+        "source-2024-08-11",
+        "source-2024-12-23",
+        "source-2024-12-24",
+        "source-2024-12-25",
+        "source-2024-12-26",
+        "source-2024-12-27",
+        "source-2024-12-28",
+        "source-2024-12-29"
+      ],
+      "charter": {
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/CHARTER-v2.md",
+        "sha256": "6b3b294f7becf2e0a4dd47d7749df67c03dd7a6f03830b6c06392d4e84f15646"
+      },
+      "family": "paper",
+      "inputs": {
+        "binding_1": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/history.json",
+          "sha256": "68e4ea2f328996cef6966f2ec9f35c494b38f38182e33ae0fb7697383750aae0"
+        },
+        "binding_10": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/calendar.json",
+          "sha256": "f1bf849b768a274a3f616e0bfaa08ad9db7794dba69471de02b12a8e9cccdae3"
+        },
+        "binding_11": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/dictionary.json",
+          "sha256": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff"
+        },
+        "binding_12": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/graph.json",
+          "sha256": "c91f8eeb1d317a310ef0f90f40a78ccf60bdd2437532f5e909f7dfd079d7fc20"
+        },
+        "binding_13": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/matching-stable.json",
+          "sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e"
+        },
+        "binding_14": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/matching.json",
+          "sha256": "dab81b4e6a4ffa43739215fcaec44419fe644190752d9c4cf32cac9e42fb4824"
+        },
+        "binding_15": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/model.json",
+          "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+        },
+        "binding_16": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/resources-affinity.json",
+          "sha256": "cd2f6f07231564e95871c02dc28a7643298f4caa8f4ab6f501a3259027f486ee"
+        },
+        "binding_17": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/resources.json",
+          "sha256": "9b16ba2fc240a8b466bb1012468cb5dd7f8217625525ad17d6ee13d2bdce0713"
+        },
+        "binding_18": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/training.json",
+          "sha256": "d5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0"
+        },
+        "binding_19": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-03.json",
+          "sha256": "b098614ab0a18199811bbf2040dbbceef8518cc8b8a24e186b1fa1b20fa8f00f"
+        },
+        "binding_2": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/budget-amendment.proposed.json",
+          "sha256": "53807814cc9ba2f89d31aecc61f8934a095f01e89cea0c6ec10f3631ad8a450e"
+        },
+        "binding_20": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-04.json",
+          "sha256": "0e3f9d58ed26f9b29de00cf6d89bb1ba313042f09f04a08311942f40d644eb7b"
+        },
+        "binding_21": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-05.json",
+          "sha256": "cc77d75545687596abd9d3fe1da328edaee2d08360492448a4f8b8ace9be3551"
+        },
+        "binding_22": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-06.json",
+          "sha256": "73f0f8204ef195d6e0167a49ff35a2d10a81a83e372f2f56a20c8291199c70a2"
+        },
+        "binding_23": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-07.json",
+          "sha256": "5825ebb0b91352a7094edbd462aca119069892b895fc883f9b8bd6fb4e2671c8"
+        },
+        "binding_24": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-08.json",
+          "sha256": "5f14077caafc721d527463603cc416f4c9f3c0a67b013b0012ea70912304fcdc"
+        },
+        "binding_25": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-09.json",
+          "sha256": "40afba994707cdd5b74f734b822c9dc534b27c419573085a19221b46137926c6"
+        },
+        "binding_26": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-13.json",
+          "sha256": "89a337e96f886bcf0cc076562d4bbe7ee9f58ee55ce0034e792577911bcf04b3"
+        },
+        "binding_27": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-14.json",
+          "sha256": "d20442fbcb8b455fed90d1390ec56bc24e5d3b2bd369e96b785c79c789b80ad7"
+        },
+        "binding_28": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-15.json",
+          "sha256": "238fb121b282dce970ca7cbdaff102769a11817ebe42cfac16b85e5584dfc6f7"
+        },
+        "binding_29": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-16.json",
+          "sha256": "3c221307faaa331561d8251630874befc885872e1f06e9fed2821141999edc5d"
+        },
+        "binding_3": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze-v3.json",
+          "sha256": "625918f95b19a2632bf83d3ac2fdd150bc8557cef3cbeeed560120489d991c93"
+        },
+        "binding_30": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-17.json",
+          "sha256": "42afe182bbf8e9a3689008a01f65ea43e986602c03ad058e89a37c72d3de4151"
+        },
+        "binding_31": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-18.json",
+          "sha256": "a9eaea951a39f052cfc75dc87b80427ef60688653fb1cdef18fcbbf3426cafe2"
+        },
+        "binding_32": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-19.json",
+          "sha256": "6f97d58f35f84c7e302b22b9076819a5ed14f94175037d6ec57d9d7bf72119a2"
+        },
+        "binding_33": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-25.json",
+          "sha256": "37c81e6ffa8ab59b3f9410a0d1ae43055f633a89bede81baafab74c46b051094"
+        },
+        "binding_34": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-26.json",
+          "sha256": "bc27304dd19aa7064a806539dc7181a3ad4b00dc68018af68884677c4aefc4ec"
+        },
+        "binding_35": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-27.json",
+          "sha256": "13c45eb3b1d17a7925d2446ec9193f06e8df22de484ae18a1b88704ece5f27a6"
+        },
+        "binding_36": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-28.json",
+          "sha256": "7d73c1e1bfd4fc1bed57fc7438495b7836e7028c4947c07c8262d8502a6f326d"
+        },
+        "binding_37": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-29.json",
+          "sha256": "b9aabfb8b4c5bd710031abaf6177947e4fcdf053c65a295ddfa22b1344403c9a"
+        },
+        "binding_38": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-30.json",
+          "sha256": "4477c69239e4288d56c7e332e57c18e35d0014a60338ad6185c962ece2b52b56"
+        },
+        "binding_39": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-07-31.json",
+          "sha256": "7ee7e4a16bbb66a4d68a3ff13ebd651522ea7891040cc5bb4503aead3ac88d8f"
+        },
+        "binding_4": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze-v2.json",
+          "sha256": "bfabbcde014fae5d77bf86a7b4aaa76152a9095f1563b49af9b040600d360589"
+        },
+        "binding_40": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-07.json",
+          "sha256": "806a4e689d51e8850248bcc55a0618c2e2af790f54c03ca40d1317a966f61882"
+        },
+        "binding_41": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-08.json",
+          "sha256": "465cfdd579603aee070c172b6cdf462a807679cf89b2e9cdb206ee95944cf76d"
+        },
+        "binding_42": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-09.json",
+          "sha256": "d508e6054ce84b4bd46180db535039ffd69a779194975253a8c880d67dbc8598"
+        },
+        "binding_43": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-10.json",
+          "sha256": "be7026ac02b242eae30b8bbb873654cf7b6ce246502c51abf07ba2763bece45b"
+        },
+        "binding_44": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-11.json",
+          "sha256": "369cc2896f5dfcd1729f0b1bfffc1d3b77e3ec11b4ad050d71ecd66efd887387"
+        },
+        "binding_45": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-12.json",
+          "sha256": "83ec8c69e60bc1bcb5afe88d0ce94c86838176d05848b2ca3ff7996100d0bad0"
+        },
+        "binding_46": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-11-13.json",
+          "sha256": "76be910d33298b3913b4e49cc3aa922a411246286ed5a4917565e0565f7fef06"
+        },
+        "binding_47": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-05.json",
+          "sha256": "fa78c6daa30a10a1c16e14592a149936b33ae209befd19c636cc17b7edbae338"
+        },
+        "binding_48": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-06.json",
+          "sha256": "b2ab4e529261d904813de1ed87b740728b1016f9d012023e7a14ce8d872c9fd8"
+        },
+        "binding_49": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-07.json",
+          "sha256": "db24f638292a3a4f60b40b85a7f54d1c0d0951031dad84ee5b292dc59225b72d"
+        },
+        "binding_5": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze.json",
+          "sha256": "d5b2be9769068566d8568850b6b29b3fb64eec537356c1c8771a79953b007e6c"
+        },
+        "binding_50": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-08.json",
+          "sha256": "0ffce7e9aa790bafb30f59ae10f4e08dd5d8af9dc791353c6f7cb923467a7d15"
+        },
+        "binding_51": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-09.json",
+          "sha256": "649fc9d55cd9ebfe5d3eade58100da4316349c59e333a6db86da06582e8357bb"
+        },
+        "binding_52": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-10.json",
+          "sha256": "c73d44006713a8d31558a4f41146e74a6121286819fa005ce2f1b3eef07ec2ea"
+        },
+        "binding_53": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2023-06-11.json",
+          "sha256": "8ba90f9b1811857c93e8196d53713bb626b5d81fb59d687ef8efa5515e5e8fb1"
+        },
+        "binding_54": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-01.json",
+          "sha256": "f88a874a22558489f76ebe42c708312e9c8ba9a31c851c88c183da4f9296bf8b"
+        },
+        "binding_55": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-02.json",
+          "sha256": "3452da59c60cd8f30a321ad7c6decfac6d6b362caeef4730398ec7c65059643d"
+        },
+        "binding_56": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-03.json",
+          "sha256": "4dc10864ffc1c54e622deaced8808b9f080d8fe65fd2ff0687c03e0d49a91d06"
+        },
+        "binding_57": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-04.json",
+          "sha256": "b19aa03b321bfe5020b66b4218ae905fdfcf7125f8cdd4b6efb5219dc1457c4e"
+        },
+        "binding_58": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-05.json",
+          "sha256": "acedb3fe8f6150bdb7c0c44469172122a92256af88477c51756fa579e74e6bdf"
+        },
+        "binding_59": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-06.json",
+          "sha256": "363b1f7c8d89ffbaf37523d966fc400fcc71c0bf201f14e9b7d2ec845838350a"
+        },
+        "binding_6": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/environment.json",
+          "sha256": "9c67b3d6c6f31dd2705c1467471ff60c22a3d431fcd4f04cd3f467888854cd88"
+        },
+        "binding_60": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-01-07.json",
+          "sha256": "92003be6a33a25348efcdc0d1b720df5c5c5a789077c6861984f948054add5c6"
+        },
+        "binding_61": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-11.json",
+          "sha256": "30245db775071f534737c15a4b0f83923db36b3dd4f01393bfa790a45e65e9ef"
+        },
+        "binding_62": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-12.json",
+          "sha256": "8f30bec3c74901980e7931d3712143d07bc7ca8c7b3740ce75b1ceaed5480ba3"
+        },
+        "binding_63": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-13.json",
+          "sha256": "15f75306e9c826d8e3a525d9a2402c90b45d18aa36cbc757a88fd6e3e2defde2"
+        },
+        "binding_64": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-14.json",
+          "sha256": "c906498eea34a69d97b8db079c5d90b152a2dd853b4815a3d72df906a6b16d60"
+        },
+        "binding_65": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-15.json",
+          "sha256": "decd6cb69fecd75ae99e62eb8e93fbee2aa44853e96194dde8755c316296b5bb"
+        },
+        "binding_66": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-16.json",
+          "sha256": "552694ce06193d0d627e0e76791a3e55c521ea691f30841683f4a5f144888c63"
+        },
+        "binding_67": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-03-17.json",
+          "sha256": "6959e667df6823766f03d1c4b2f3c9b61a85157e2f165f9b27740ace29bb42df"
+        },
+        "binding_68": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-05.json",
+          "sha256": "4b6016bbc3fe6688cda004d9664522106fd2a4b8507fa2c3c1dc7fb3829720e6"
+        },
+        "binding_69": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-06.json",
+          "sha256": "2a0e877f2266c7844828c186bfec0c114b898554f08ba894b11625274226757b"
+        },
+        "binding_7": {
+          "dataset": "eth",
+          "path": "uv.lock",
+          "sha256": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+        },
+        "binding_70": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-07.json",
+          "sha256": "4a023bc123123dfd7f7eed9231ca284668795a670e830ddac6c1fcadc7e471ee"
+        },
+        "binding_71": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-08.json",
+          "sha256": "8b138dc8ec9a21b1ff23d95b88c8a610565c6b4276c9d41f33335942d8a9ce68"
+        },
+        "binding_72": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-09.json",
+          "sha256": "a53e3b4cc7388aa0e975dbdff638c6c5a3b04130f0d4eb540403b6369781cdff"
+        },
+        "binding_73": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-10.json",
+          "sha256": "23baf7a9f2f4f9ac18d24d05569060428b35c061ebace78a05a3721293c8d888"
+        },
+        "binding_74": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-08-11.json",
+          "sha256": "66029f02f29da04fc57d8ebf7a36ce90c88ff3510568edccdc31359630979c8b"
+        },
+        "binding_75": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-23.json",
+          "sha256": "442059260ea1ffcecdd22ea00211838716b6327c271b78662a16820e0c36882e"
+        },
+        "binding_76": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-24.json",
+          "sha256": "311460f539374e18998b23521511438e1085fb4518d9d595a34c6da53abe888b"
+        },
+        "binding_77": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-25.json",
+          "sha256": "9d1459468515755dc0f80dbd793c3793ad5a6ffcb1a760193a94cb41c269d055"
+        },
+        "binding_78": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-26.json",
+          "sha256": "45252cb298d717533b42e38ae617c0173a3ff7e3bd5b334424fa58e016aa3e2e"
+        },
+        "binding_79": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-27.json",
+          "sha256": "a788fcf24dc502b8b37ebfb42f7041c46a969fa7cef03027076c84e204b327bb"
+        },
+        "binding_8": {
+          "dataset": "eth",
+          "path": "pyproject.toml",
+          "sha256": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9"
+        },
+        "binding_80": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-28.json",
+          "sha256": "e293cb716bd273261ae2837578e62468595661877eab94e7f44ae83a0256cde5"
+        },
+        "binding_81": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-29.json",
+          "sha256": "092504846ccfef9f5e1966d62dfcc7d8e8767cceb82d65620971b010ecb779bb"
+        },
+        "binding_82": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze-v4.json",
+          "sha256": "67b3fd3450ed7392e1e28215be6f3c32e7d34fdb793e054f37b5c1458d65964e"
+        },
+        "binding_83": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/resource-cap-v4.md",
+          "sha256": "ae1ab3f0428fceb366feb9f07eede3db1cea6a8d41d2781587ce8c85113a0ed7"
+        },
+        "binding_84": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/resource-contract-v4.json",
+          "sha256": "b8e72b0a082e3d3431658cd6f22ccf2ded8ff819d78d9b623592a5287241c6ec"
+        },
+        "binding_85": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/budget-allocation.proposed.json",
+          "sha256": "bd8e1654098ded8056f64b440b76a8743f5ae20d713cf675eebf8f774d75ab02"
+        },
+        "binding_86": {
+          "dataset": "eth",
+          "path": "research_runs/eth-paper-resource-pilot-20260924/claim.json",
+          "sha256": "3665f38999319e5c7076d7379d85addf2e336e1dd906c6615ac9d6c2c5d0ac43"
+        },
+        "binding_87": {
+          "dataset": "eth",
+          "path": "research_runs/eth-paper-resource-pilot-20260924/failed.json",
+          "sha256": "da08129d8e983047829180efec3fb01e6fb8c9fee6af316d9f83a450c6bd18d8"
+        },
+        "binding_9": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/config/baselines.json",
+          "sha256": "a120054bd0e19b710cd23160aec41809ab92a0b54ab554900b653afd73cb4026"
+        },
+        "source_index": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/source-index.json",
+          "sha256": "18f2548bdec2602995935d951075162537b6369b8bf18647cdc7a96962cffc1a"
+        }
+      },
+      "outputs": [
+        "cell-ledger.json",
+        "artifact-index.json",
+        "capacity-forecast.json"
+      ],
+      "parent": "eth-paper-resource-pilot-20260924",
+      "question": "Measured full-graph implementation resource cost; synthetic labels only; no predictive outcome",
+      "reuse": "exploratory",
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "selection": null,
+      "source_files": {
+        "research/onchain-paper-replication-2026-09-24/pilot_successor_02/launch.py": "02dfdd2f2e5e007cc891ba9248d6aef835314e89aeb1cdc6e159fbcd79a680e6",
+        "research/onchain-paper-replication-2026-09-24/pilot_successor_02/monitor.py": "8245db8bdeeca148b1b90345b8bf29a6d477356b27b80d11198dd638e58021ed",
+        "research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py": "0bc95f7e33d97485cd9e2fba6802dde168c26aa162b987ef762f9e28ee3a1522",
+        "research/onchain-paper-replication-2026-09-24/pilot_successor_02/prepare_gate.py": "0631c604dfd4a367a4b17220668cb97b5f12060eab9b3adfe50993114031fa82",
+        "research/onchain-paper-replication-2026-09-24/pilot_successor_02/reconcile.py": "5102a055a5b958a20ff36ecd9d26cb8301565e3c66728aedc9a81c0ba3875845",
+        "research/onchain-paper-replication-2026-09-24/pilot_successor_02/run.py": "90dc7fc1fb6780174502e395db073d27c511a30aea8762ea968f256e4820c5e6",
+        "tradingagents/research/onchain_replication/__init__.py": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1",
+        "tradingagents/research/onchain_replication/cache.py": "5fbbe0df14cfc1802dd1df4da6c8bdbd1153a9fcbb4c89dd202e791d1811ddba",
+        "tradingagents/research/onchain_replication/checkpoints.py": "74e7bd16d4331cbac45143884e1f35a52687b19280c214457834b0cf19a457bc",
+        "tradingagents/research/onchain_replication/contracts.py": "7c92029d8eb1bdb50f6eea3d02423dd9265d6ba6606bcb7ea3255e11c9447e0a",
+        "tradingagents/research/onchain_replication/dictionary.py": "32e27a4a17dc2aa993d1440d6486c75b0d4dcff341969dbf99bdff412dd7e446",
+        "tradingagents/research/onchain_replication/environment.py": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+        "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+        "tradingagents/research/onchain_replication/gat.py": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6",
+        "tradingagents/research/onchain_replication/graph_store.py": "bf10aae3b1532e7b687b5febc5803cbf3e9f695c8b086294bcc92fcd811be379",
+        "tradingagents/research/onchain_replication/matching.py": "8198d3505bf250152e7f6949372efb38b7d83837c1067194b862958e17923280",
+        "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332",
+        "tradingagents/research/onchain_replication/mcm.py": "3825d424496927dcb9f27935a12e00502f19d04b864017a7419954c2d5b4aeae",
+        "tradingagents/research/onchain_replication/model.py": "199ce63ee56a76deae60495598a4ca4ac6306d7d7f24cf6483a7d1f89feb4944",
+        "tradingagents/research/onchain_replication/neighborhoods.py": "cffeac41c84f2e94059a3c8a3833dfb96168f6279c88c34c1b0d3d0d96875e70",
+        "tradingagents/research/onchain_replication/pooling.py": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303",
+        "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+        "tradingagents/research/onchain_replication/resources.py": "bc4676f3ad566d68bad9c66a7e7dd0b8e630c3a79b5a10b9200959ecea029791",
+        "tradingagents/research/onchain_replication/serialization.py": "f711a0a931fe9fb91aadf0ad7ba6e68b638f3874e736790e05edd21acdefc65b",
+        "tradingagents/research/onchain_replication/temporal.py": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226",
+        "tradingagents/research/onchain_replication/weekly.py": "99df9c97685fe7c56702db7583af2d6b18342e657e2f13c53337c03c64e5e0a3"
+      },
+      "stage": "development",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2025-01-01T00:00:00Z",
+          "start": "2022-01-01T00:00:00Z"
+        }
+      ]
+    }
+  },
+  "families": {
+    "paper": {
+      "attempt_budget": 51,
+      "history_reference": "research/onchain-paper-replication-2026-09-24/history.json; correlated earlier screen17claims included; explicit cumulative proposal budget-amendment.proposed.json; no fresh-sample assertion",
+      "mechanism_id": "celik-sefer-transaction-graph-full-neural-replication",
+      "prior_attempts": 17
+    }
+  },
+  "program_id": "onchain-paper-replication-2026-09-24",
+  "schema_version": 1
+}

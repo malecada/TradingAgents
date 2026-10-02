@@ -3,6 +3,40 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 final neural launch caller accepted — actual admission next**:
+Accepted archive/resource preparation is committed at
+`824489afa2aa5eba39ebf1af456681120ac9e0fb`, pushed with exact remote HEAD verified.
+REVIEW_FINAL_GATE01 accepts base gate9750069291c2eb4255df087a959d3c5278bd1c767c4624a798207552bdc928f0,
+205 source pins,52 inputs, complete ancestor chain, current16 claim joins and
+unchanged33-spent history. Actual admission and fresh launch controls remain.
+
+Concrete caller candidate01 and gate-coordinator01 are preserved. Review found
+that the exclusive outer-log open occurred after the last freshness check;
+filesystem delay could expire the observation before invocation. Corrected
+launch_once_v2.py857437fee5423ac6ee29ed519ded4fcf5cefdfef7b39f47d9ef15acce31f50d7
+repeats freshness inside the opened-log context directly before subprocess.call.
+Expiry returns3 with no CLI/namespace creation and retains the empty outer log.
+Intended gate-coordinator02.json3253cc3ce36e24a644c48e3a0d880785b803d57bc8e97414aa3560018e19c02f
+contains base205pins plus this exact caller only; inputs/model/resources unchanged.
+REVIEW_COORDINATOR01 withholds the original caller; REVIEW_COORDINATOR02
+accepts the exact corrected caller/gate conditional on final commit, actual
+admission and fresh readiness/guard readbacks. No real readiness window,
+namespace reservation, claim or model has run. Source package is frozen; other
+agents may only prepare bounded read-only owner-fixture metadata. Current
+available RAM fluctuates around8.25GiB; the finite actual observation is decisive.
+
+Next safe action: commit/push the accepted exact gate/caller/reviews
+and checkpoint, verify remote HEAD, then run the exact v2 caller once with that
+full committed source. It performs actual admission, encoded claim/RPC bound,
+all-three-namespace absence, fresh16-read scheduling, disk/HEAD checks and at most
+one guarded CLI. No saved readiness permit or automatic retry. During any active
+job, retain admitted source/inputs/HEAD unchanged and update STATE uncommitted.
+Unexecuted outer-owner fixture preparation can proceed in parallel; its heavy
+proof waits until the neural process is closed or readiness defers without claim.
+The app heartbeat now uses the accepted5GiB contract and archivecandidate02,
+preserving15-minute cadence and quiet unchanged polling. Coverage77/109 and
+all1,420 financial fits remain pending.
+
 **October 2 accepted stricter local resource contract — final gate next**:
 Independent REVIEW_RESOURCE_VARIANT01 accepts exact extension141ffbc0c8a88fa8297a67b73e36daf2f20d17804113e3e0e90a19e177aeab43
 and reviewdee74d0f06252916b5fa8e95a438951a954e4a269086034fd67c76e5ff963f64 in

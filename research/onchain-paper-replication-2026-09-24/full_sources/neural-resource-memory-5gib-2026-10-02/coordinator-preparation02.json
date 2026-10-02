@@ -1,0 +1,15 @@
+{
+  "coordinator_sha256": "857437fee5423ac6ee29ed519ded4fcf5cefdfef7b39f47d9ef15acce31f50d7",
+  "correction": "Candidate02 checks freshness again inside the already-open log context directly before subprocess.call. Expiry returns3 without CLI/namespace creation; empty outer log retained. New file and gate preserve original candidates.",
+  "execution_performed": false,
+  "finding": "Candidate01 final freshness check precedes exclusive outer-log open; a delayed open can expire readiness before invocation.",
+  "gate_sha256": "3253cc3ce36e24a644c48e3a0d880785b803d57bc8e97414aa3560018e19c02f",
+  "only_gate_delta_from_base": "one sourcepin for exact corrected coordinator; science/model/inputs/resources/ancestors unchanged",
+  "preserved_candidate01_caller_sha256": "8da3ca4103d71a3f1b8725f629918a2aaf8434c2c07edff5cbba793238a5cf71",
+  "preserved_candidate01_gate_sha256": "ee8ac4c1ea7ef53fbad9abc484c606fec58937a9aa7032e58544d22455c6a41c",
+  "prior_gate_sha256": "9750069291c2eb4255df087a959d3c5278bd1c767c4624a798207552bdc928f0",
+  "schema_version": 1,
+  "source_count": 206,
+  "status": "corrected final coordinator for independent review; unexecuted",
+  "syntax_parse": "passed without import/execution"
+}

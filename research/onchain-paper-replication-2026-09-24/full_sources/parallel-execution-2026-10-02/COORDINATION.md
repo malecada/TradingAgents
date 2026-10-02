@@ -1,5 +1,33 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Current release checkpoint — accepted source and practical RAM ceiling
+
+This section supersedes assignments and resource statements below. Accepted
+archivecandidate02 and the explicitly reviewed5GiB neural resource contract are
+committed/pushed at824489afa2aa5eba39ebf1af456681120ac9e0fb, exact remote HEAD
+verified. Package source is FROZEN through final caller review and neural02 job.
+No empirical process is active. Closed neural01 must never be reused.
+
+- Root owns final gates/caller/STATE/integration/commits and actual neural02
+  admission, fresh readiness and at most one guarded launch. Corrected v2 caller
+  fixes a freshness check that preceded the outer log open; candidate01 preserved.
+- registration_review owns independent final-caller review only. Base205pins/52
+  inputs/full ancestry/history and corrected206-pin gate/caller are accepted,
+  conditional on final commit/actual admission/fresh readiness/guard checks.
+- physical_correction owns only new bounded read-only isolated-owner fixture
+  manifest/spec metadata now. No production/test changes or heavy execution.
+- physical_review is available for independent isolated-owner release review.
+
+The accepted prospective02 variant is5GiBworker/4.5GiBhigh/3GiBhostreserve,
+8GiBhardstartup plus8.25GiB finite scheduling threshold. Nine cells and architecture
+are unchanged; failure5GiB is not failure6GiB. Original6GiB records and33spent
+history remain. No added empirical fit allocation. One substantial job at a time;
+no commits or source/input mutation while a real source-bound process is active.
+Failed readiness creates no namespace; later observation needs meaningful RAM
+improvement, no automatic polling/retry. The outer-owner heavy proof remains
+unexecuted until exact full isolated source/spec/limits are reviewed and neural
+work closes or defers. All77/109 coverage and1,420 fits remain pending.
+
 ## Current owners after the closed neural launch
 
 This section supersedes all historical assignments below. Source `560401500be2b1d774ca8443a7fb2108aadaa1ea`
