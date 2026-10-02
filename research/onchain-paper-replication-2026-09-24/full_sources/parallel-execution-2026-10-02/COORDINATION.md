@@ -1,5 +1,17 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Latest ownership — closed RED accepted; single GREEN preparation
+
+No substantial job active. RED/session98481 is permanently CLOSED expected;
+complete raw/result34087dce/archive3910edd1/review1172f4a6 accepted. Freeze ended.
+Root owns STATE/commit+backup, exact green-release01 and ONE numerical launcher.
+registration_review owns independent frozen candidate01/oracle02/guard02/exact
+GREEN source release review. physical_correction owns ONLY NEW original-dictionary
+IMPORT_STAGE_CONTRACT01.md (read-only production inspection); frozen neural
+candidate01 must not change. physical_review remains available for actual GREEN
+result/recovery review. No concurrent numerical jobs or commit during active GREEN.
+Unchanged35spent/adopt63/conditional64/77of109/all1420fits; no empirical04 released.
+
 ## Latest ownership — concrete tiny RED accepted; immediate single release
 
 Root owns guard02/release02 commit+remote verification, fresh dedupe/resources,

@@ -1,0 +1,79 @@
+{
+  "baseline_source": "8a295e2391d371193085d00c342f84e06c06fa94",
+  "checks": {
+    "candidate_module_import": false,
+    "constructor_AST_equal_after_only_block_policy_removed": true,
+    "numerical_execution": false,
+    "production_mutation": false,
+    "stdlib_AST_syntax": true
+  },
+  "files": {
+    "CANDIDATE01.md": {
+      "bytes": 4507,
+      "sha256": "58586dc14a7d5f447748d395568f33b5e8d30ec64c3531a88dfccf340f1de67b"
+    },
+    "candidate01.py": {
+      "bytes": 8099,
+      "sha256": "0cb820710876a4cb59b94b43f1aa8e3e80429d69c35c40a579067eead3ff91b2"
+    }
+  },
+  "implemented": [
+    "node-level einsum attention scores",
+    "custom first-order bounded weighted aggregate"
+  ],
+  "limitations": [
+    "CPU float32/float64 only",
+    "first derivatives only",
+    "floating reduction order may differ",
+    "no empirical-capacity claim",
+    "GREEN not yet executed"
+  ],
+  "references": {
+    "PROTOCOL02.md": {
+      "bytes": 9278,
+      "sha256": "f27006664e9170cf4f5876779cab799bee04e631589bd523a506f65a17322724"
+    },
+    "baseline/gat.py": {
+      "bytes": 2882,
+      "sha256": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6"
+    },
+    "baseline/model.py": {
+      "bytes": 4525,
+      "sha256": "ed4d5417202bb13ebc682d88d56942db74201feddc1b4d20511e54684fc252a0"
+    },
+    "baseline/pooling.py": {
+      "bytes": 838,
+      "sha256": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303"
+    },
+    "baseline/temporal.py": {
+      "bytes": 2397,
+      "sha256": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226"
+    },
+    "guard_launcher02.py": {
+      "bytes": 18850,
+      "sha256": "3f8f49f21274381a4a081bba021eff2d0420517399825702193e758e0c0112db"
+    },
+    "model.json": {
+      "bytes": 1628,
+      "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+    },
+    "oracle02.py": {
+      "bytes": 15666,
+      "sha256": "74a21db805cb1ab8e5f7c42a8d54b5f90400b4d794eebb0fbf7d438b41d655ee"
+    },
+    "owned/neural-streamed-gat-oracle-red-20261002-01/guard/final.json": {
+      "bytes": 7451,
+      "sha256": "3b6383fdcae0f7ad89d1c4d7a3574929ae3d869d853e8602dfa7db6f39e51482"
+    },
+    "owned/neural-streamed-gat-oracle-red-20261002-01/launcher-terminal.json": {
+      "bytes": 289,
+      "sha256": "274c0988527e29700ea1710cbfb24e82813534be0cd7fce6def94f4a3d97f25e"
+    },
+    "owned/neural-streamed-gat-oracle-red-20261002-01/oracle-report.json": {
+      "bytes": 16227,
+      "sha256": "5b51cfba0c0fef5fbfe6ecd2590a78197dfffee131c662a6e83b6272341ba64e"
+    }
+  },
+  "schema_version": 1,
+  "status": "isolated-source-frozen-awaiting-reviewed-GREEN"
+}

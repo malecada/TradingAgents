@@ -1,0 +1,116 @@
+{
+  "budget": {
+    "highest_adopted_ceiling": 63,
+    "new_empirical_claims": 0,
+    "new_financial_fits": 0,
+    "prospective64_budget_only": true,
+    "spent_empirical": 35
+  },
+  "cgroup_absent": true,
+  "cleanup_verified": true,
+  "closed_at_utc": "2026-10-02T17:54:57.312328+00:00",
+  "complete_retained_tree": {
+    "allocated_bytes_including_directories": 81920,
+    "directories_including_each_root": 5,
+    "entries_including_each_root": 15,
+    "files": 10,
+    "identity": "neural-streamed-gat-oracle-red-20261002-01",
+    "logical_bytes": 33678,
+    "schema_version": 1
+  },
+  "coordinator_exit_code": 0,
+  "expected_failure": "RESOURCE_EDGE_WIDE_SAVED_TENSORS",
+  "guard_elapsed_seconds": 5.325499145001231,
+  "guard_expected_worker_exit_code": 1,
+  "guard_unit": "onchain-replication-9a65ce4fae6f49cfa4875f005441fbd8.service",
+  "identity": "neural-streamed-gat-oracle-red-20261002-01",
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "passed_numerical_checks": [
+    "layer_mixed_self_isolated",
+    "layer_zero_edges",
+    "layer_masked",
+    "layer_float64",
+    "dropout_rng",
+    "duplicate_refusal",
+    "full_model_16x28_all_gradients_Adam_RNG_reload",
+    "aggregation_output_all_gradients",
+    "independent_gradcheck",
+    "independent_central_difference",
+    "invalid_block_refusal"
+  ],
+  "peak_sampled_memory_bytes": 414412800,
+  "pids_absent": {
+    "1084165": true,
+    "1084410": true,
+    "1084414": true
+  },
+  "qualification": "Actual tiny copied-baseline mathematics/gradients/Adam/RNG/reload/derivative checks passed before only the named retained-memory assertion. Source/references and complete owned raw are preserved. Guard phase failed reflects expected workerexit1; coordinator expectedRED result is not a passing memory variant or full-size capacity. Stored diagnostic records omit raw backing-storage identitygroups; reviewed dedup aggregates remain. No actual modelcheckpoint file or empirical graph/label was used. Allocation describes original host, not tar media.",
+  "refs": {
+    "PROTOCOL02.md": {
+      "bytes": 9278,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/PROTOCOL02.md",
+      "sha256": "f27006664e9170cf4f5876779cab799bee04e631589bd523a506f65a17322724"
+    },
+    "REVIEW_PROTOCOL02.md": {
+      "bytes": 6439,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/REVIEW_PROTOCOL02.md",
+      "sha256": "b16e4c53036745671d2d6f9667a641600751080b14498cbd44b87a0db1dc55e0"
+    },
+    "REVIEW_RED_RELEASE02.md": {
+      "bytes": 8589,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/REVIEW_RED_RELEASE02.md",
+      "sha256": "9d5dd8b08fbf7fdfcfcf302cefab69c553ce41dbf948e0db183a8a6a1c11330b"
+    },
+    "guard_launcher02.py": {
+      "bytes": 18850,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/guard_launcher02.py",
+      "sha256": "3f8f49f21274381a4a081bba021eff2d0420517399825702193e758e0c0112db"
+    },
+    "oracle02.py": {
+      "bytes": 15666,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/oracle02.py",
+      "sha256": "74a21db805cb1ab8e5f7c42a8d54b5f90400b4d794eebb0fbf7d438b41d655ee"
+    },
+    "red-coordinator-result01.json": {
+      "bytes": 301,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/red-coordinator-result01.json",
+      "sha256": "ba767e7ca50386c84aeec6bdf9815bdfc3af70f1f96c148639332cf84707b5c0"
+    },
+    "red-coordinator01.log": {
+      "bytes": 0,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/red-coordinator01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "red-launch-intent01.json": {
+      "bytes": 1133,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/red-launch-intent01.json",
+      "sha256": "144222d70834cb3075a952518208b622ea2c6b1685b63a8d76324a685a19fca9"
+    },
+    "red-release02.json": {
+      "bytes": 44286,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/red-release02.json",
+      "sha256": "10e0d34c6cd854e1541ddcb8993cdd7569f5306fc6e21c35f945f087ba23ee0f"
+    },
+    "red-retained-tree01.json": {
+      "bytes": 3443,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/red-retained-tree01.json",
+      "sha256": "22c961c5c5f958ac43c8acc54ffb73f409c8fe9a5fe4ca96c9577469d6c3ce35"
+    },
+    "red-retained-tree01.tar.gz": {
+      "bytes": 4556,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-gat-candidate-2026-10-02/red-retained-tree01.tar.gz",
+      "sha256": "3910edd1d85ed085be062d12385ec26bdcc185d68da0187c8ae7d9646166e260"
+    }
+  },
+  "schema_version": 1,
+  "session": 98481,
+  "source": "48cff10a92b715a1e15272d05cf697106ef634ff",
+  "status": "expected_red_closed_independent_review_pending"
+}

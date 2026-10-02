@@ -1,5 +1,39 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: tiny RED closed and independently accepted; faithful streamed GAT implemented.**
+The one-use `neural-streamed-gat-oracle-red-20261002-01` from remotely verified
+48cff10a92b715a1e15272d05cf697106ef634ff closed at17:51:49UTC. All11 numerical
+checks passed before the exact RESOURCE_EDGE_WIDE_SAVED_TENSORS assertion.
+Coordinator exit0 accepts expected RED; actual worker exit1 is preserved.
+Native1GiB high=max/zeroSwap/120s/readback, twoCPU affinity and cleanup are
+verified, with all memory events0 and sampled peak414,412,800bytes. All original
+processes/cgroup are absent. Complete10files/5directories/15members,
+33,678logical/81,920allocated bytes are archived at3910edd1; result34087dce and
+independent review1172f4a6 verify all11outer refs and227sources. Four saved
+records each expose6,750,464 backing bytes; distinct identity grouping is not
+independently reconstructible because raw identities were omitted. Preserve
+this CLOSED identity and all failures; no rerun or empirical budget charge.
+
+Separate frozen candidate01 SHA0cb82071/manifestd4561bb2 implements node-dot
+attention before edge gathering and custom first-order aggregation/backward
+recomputation in contiguous blocks<=65,536edges. All architecture, learned
+parameters, initialization/RNG, full neighbors, CPUfloat32/64 and checkpoint=false
+remain declared unchanged. Floating reduction-order and CPU/first-order limits
+are explicit. Exact GREEN release/source review is pending; no candidate
+numerical run, production integration or full-size capacity claim exists yet.
+Next safe action: accept exact GREEN release, commit/push and verify external
+backup, check unused identity/current processes/source/runtime/RAM/disk, then
+ONE native guarded tiny GREEN. Preserve and independently review its complete
+outcome before any empirical04 preparation/admission. Parallel original-dictionary
+work advances the explicit genuine Binding/imported Owner/MCM contract.
+
+Fresh host snapshot at this checkpoint:7,915,446,272available memory bytes and
+20,175,048,704diskfree bytes. These exceed tiny startup requirements but do not
+prove the full graph fits3.75GiB; neural03 permanently closed at kernelOOM.
+35empirical attempts remain spent, highest adopted63, conditional prospective64
+accepted without adoption. Coverage77/109;9neural+23other resource cells and
+all1,420financialfits remain pending. Full13tasks/C01–C18 scope remains.
+
 **Latest checkpoint: corrected tiny RED release accepted; single execution next.**
 Oracle02 reviewb16e4c53 and concrete native launcher02/release02 review9d5dd8b0
 accept the bounded synthetic preparation. Guard source3f8f49f2 and release
