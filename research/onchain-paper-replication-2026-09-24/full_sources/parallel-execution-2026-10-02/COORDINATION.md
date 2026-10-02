@@ -33,6 +33,18 @@ this checkpoint does not authorize execution or reuse of earlier approvals.
 No terminal identity is reopened. Resource coverage and financial fit counts
 remain unchanged.
 
+The explicit 3.75 GiB protocol and final gate/caller are now independently
+accepted: gate `ca0f5a59d11cb908c4735e479909f5b3388fd8d2b186f8bb70dd64de8b71f490`,
+241 source pins / 59 inputs; caller unchanged from accepted 4.5 GiB bytes.
+Root commits/verifies the release, then performs actual admission and one new
+7 GiB window/guard invocation. No empirical namespace exists yet. Source,
+inputs, runtime and HEAD are frozen through an active source-bound job.
+physical_correction now owns only NEW remaining-resource-release-preparation-
+2026-10-02/ requirement-map01.json and REQUIREMENTS01.md, without imports,
+array bodies, jobs or any mutation of the selected 241 pins / 59 inputs.
+physical_review is available for the distinct final two-View release after
+neural closure/defer; registration_review owns neural release/result verification.
+
 ## Current checkpoint — owner proof closed, neural and two-View releases next
 
 Ownerarchive-outer-owner-20261002-01 is CLOSEDforever,3passed731.72s/externalguard

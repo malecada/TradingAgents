@@ -47,6 +47,32 @@ substantial jobs concurrently or rerun a closed identity. The automation now
 records the closed owner proof, backed-up neural gate and parallel next steps.
 Empirical coverage remains 77/109; all 1,420 financial fits remain pending.
 
+**Preparation advancement:** corrected two-View candidate02 and fresh remote
+recovery reports are now committed/pushed at
+`35c56b8ff289216eb96ce43b72175ac8404abab7`, actual remote HEAD verified.
+The two-View spec is still deliberately nonexecutable; its fresh identity remains
+unused. REVIEW_RELEASE_PREPARATION02 independently accepted all 12 frozen
+references, the 1,882 committed source blobs plus one explicit fixture overlay,
+and the unchanged guard controls. All three static findings are resolved.
+
+REVIEW_RESOURCE_VARIANT01 separately accepted the exact 3.75 GiB amendment and
+new cumulative-budget review (`f1e18347b7bd1036b86c2b05afeb79c0fd0297d650f2e6e5664dc19bdd4bf95f`).
+Only three job fields and two readiness constants changed; 12 existing pure
+checks passed. The new final gate is
+`ca0f5a59d11cb908c4735e479909f5b3388fd8d2b186f8bb70dd64de8b71f490`,
+with 241 source pins and 59 inputs. All earlier 221 source pins, original
+science/ancestry/cells and history remain unchanged. The concrete caller is
+byte-identical to the accepted 4.5 GiB caller. REVIEW_FINAL_GATE01 now accepts
+the exact gate/caller, full 132-file Python closure, runtime, history and ancestry.
+Independent previews are 78,461 B claim / 80,660 B nested request, both below
+256 KiB; actual final Admission sizing remains required. Commit and external
+verification precede the caller's actual admission and first new 7 GiB window.
+No neural workload, namespace, claim or financial fit has run. The next selected
+single job is this exact 3.75 GiB neural probe if fresh readiness and guard checks
+pass; otherwise the unused two-View proof may proceed. Independent preparation
+of the remaining 23 resource requirements is confined to new metadata. The
+selected source, inputs, runtime, gate and caller freeze through any active job.
+
 **October 2 isolated owner proof CLOSED and independently accepted**:
 Singlearchive-outer-owner-20261002-01 session82081 CLOSEDexit0:3cases passed in
 731.72s; guard733.704s, sampledmemory-current peak507,359,232B (483.86MiB),
