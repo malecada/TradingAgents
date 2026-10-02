@@ -1,0 +1,53 @@
+EFFF
+======================================================================
+ERROR: test_exact_candidate_source (__main__.ExecutionContract.test_exact_candidate_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_streamed_execution_contract.py", line 40, in test_exact_candidate_source
+    self.assertEqual((PACKAGE/'streamed_gat.py').read_bytes(),candidate.read_bytes())
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/streamed_gat.py'
+
+======================================================================
+FAIL: test_resource_versions_explicit (__main__.ExecutionContract.test_resource_versions_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_streamed_execution_contract.py", line 31, in test_resource_versions_explicit
+    schema=function('neural_resource.py','_plan_schema')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_streamed_execution_contract.py", line 13, in function
+    if node is None:raise AssertionError('missing selected validator '+name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: missing selected validator _plan_schema
+
+======================================================================
+FAIL: test_selector_exact_and_detached (__main__.ExecutionContract.test_selector_exact_and_detached)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_streamed_execution_contract.py", line 20, in test_selector_exact_and_detached
+    validate=function('model.py','validate_execution');source=dict(POLICY)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_streamed_execution_contract.py", line 13, in function
+    if node is None:raise AssertionError('missing selected validator '+name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: missing selected validator validate_execution
+
+======================================================================
+FAIL: test_selector_refusals (__main__.ExecutionContract.test_selector_refusals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_streamed_execution_contract.py", line 25, in test_selector_refusals
+    validate=function('model.py','validate_execution')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_streamed_execution_contract.py", line 13, in function
+    if node is None:raise AssertionError('missing selected validator '+name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: missing selected validator validate_execution
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.010s
+
+FAILED (failures=3, errors=1)

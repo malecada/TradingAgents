@@ -1,5 +1,46 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest release: exact adapter03 accepted; sole native invocation next.**
+Reviewacd1e3c7 accepts final release03 867feec8/worker03 1e793c84/launcher03
+31d894ba,276pins2160644B/all134productionPython and implicitpytestclosure.
+Release01 withheld wrongscope/missingconfig/env;02unaccepted missingempty
+scripts/init; all preserved. Three findings corrected without changing tests,
+science, nativebounds or consuming identity. No substantialjobactive. Next:
+commit/push/exactremote+freshchecks, ONE adapter01, retain/review then04gate.
+
+**Latest checkpoint: native cleanup smoke accepted; explicit streamed production adapter under release review.**
+Cleanup-owner01/session95298 from c894b9aed3ac9e48c15b5da16f5a93432ff8c1fa
+closed18:48:13UTC/0 in1.735s. Actual naturally observed stop5 passed corrected
+owner check; the live monitor caller was authenticated and all three recorded
+PIDs plus originalcgroup were absent postclosure. Native1GiBhigh=max/zeroSwap/
+120s/twoCPU/4MiBfile, events0, sampledpeak24555520B and37-byte scratch readback
+passed. Complete11files/4dirs/15members,17767logical/65536allocated incldirs
+preserved; independent actual review68f56ae4 accepted. Precise reason forstop5
+remains unknown. GREEN02 parent FAILED stays immutable despite child13PASS.
+
+Production candidate02 e8355dc4 is now copied byte-exact to streamed_gat.py.
+Explicit optional model execution preserves eager default; schema2 resource plan
+requires streamed-gat-mulsum-v1/block65536/checkpointfalse and source/policy
+identity through every cell/checkpoint. Scientific model.json unchanged.
+Source integration manifestc0890ab3 and independent reviewbb32820d accepted;
+four pure contract checks passed. Four new actual numerical adapter checks are
+UNEXECUTED and use qualified mocked admission plus real tiny checkpoint update.
+Root prepared new adapter_tests02 71d7f2b6/launcher02 779522dc/release01 409f20d6,
+272pins/2147756B, same finite1GiB native envelope/64MiB sampledowned storage.
+Generation01 quote SyntaxError before execution/reservation is preserved;
+02 fixes only newline escaping, not test/scientific criteria. Exact release
+review pending; no adapter identity reserved and no substantial job active.
+
+Available RAM measured7453446144B (~6.94GiB), diskfree20203802624B at resumption;
+fresh actual launch readings remain required. Next: accept exact adapter release,
+commit/push/verify remote currentHEAD and sources/runtime/namespace/process/RAM/
+disk, ONE unused neural-streamed-production-adapter-20261002-01; retain/review
+result and immediately prepare exact prospective64/fullneural04 gate. Original
+import bridge implementation candidate proceeds independently in a new dated
+source directory; accepted contracts alone do not prove genuine Binding/Owner/
+MCM execution.23other+9neural resourcecells/all1420financialfits remain pending;
+77of109coverage/35spent/highestadopted63 unchanged, conditional64 not adopted.
+
 **Latest checkpoint: corrected candidate child passes all13; controller ownership correction verified in pure tests.**
 The one-use GREEN02/session52336 from7d42f1410c1f15e52e2598f37444a7fb6c311bad
 closed18:37:28UTC. Child0 passed all13 unchanged numerical/storage assertions:

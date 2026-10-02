@@ -82,12 +82,36 @@ def validate_model(config, checkpointing):
     return {**value,'graph_activation_checkpointing':checkpointing}
 
 
+def _plan_schema(p):
+    fields={'schema_version','model_input','graph_activation_checkpointing','cells','limits'}
+    if type(p) is not dict or type(p.get('schema_version')) is not int or p['schema_version'] not in (1,2):
+        raise ValueError('neural plan schema differs')
+    if set(p)!=(fields if p['schema_version']==1 else fields|{'model_execution'}):
+        raise ValueError('neural plan schema fields differ')
+
+
+def _execution_identity(run,p):
+    """Authenticate exact selected implementation before namespace/model birth."""
+    if p['schema_version']==1:return None
+    from .model import validate_execution
+    selected=validate_execution(p['model_execution'])
+    if selected is None or selected['block_edges']!=65536 or p['graph_activation_checkpointing'] is not False:
+        raise ValueError('resource streamed execution/checkpoint policy differs')
+    name='tradingagents/research/onchain_replication/streamed_gat.py'
+    expected='e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f'
+    path=Path(__file__).resolve().parent/'streamed_gat.py'
+    if path!=run.admission.root/name or path.resolve()!=path or run.admission.experiment['source_files'].get(name)!=expected or file_hash(path)!=expected:
+        raise ValueError('streamed execution admitted source differs')
+    return {'policy':dict(selected),'policy_sha256':digest(canonical_bytes(dict(selected))),
+            'source_path':name,'source_sha256':expected,'candidate_sha256':expected}
+
+
 def registered_plan(run,name):
     raw=run.read_input(name);p=json.loads(raw)
-    if type(p) is not dict or set(p)!={'schema_version','model_input','graph_activation_checkpointing','cells','limits'} or type(p['schema_version']) is not int or p['schema_version']!=1:
-        raise ValueError('neural plan schema differs')
+    _plan_schema(p)
     if type(p['model_input']) is not str or not p['model_input']:raise ValueError('registered model input required')
     config=validate_model(json.loads(run.read_input(p['model_input'])),p['graph_activation_checkpointing'])
+    _execution_identity(run,p)
     limits=p['limits'];keys={'max_graph_bytes','max_checkpoint_bytes','max_output_bytes','cooperative_cell_seconds'}
     if type(limits) is not dict or set(limits)!=keys or any(type(limits[k]) is not int or limits[k]<=0 for k in keys):raise ValueError('finite neural limits required')
     if limits['cooperative_cell_seconds']>28800 or limits['max_graph_bytes']>6*1024**3 or limits['max_checkpoint_bytes']>1024**3:
@@ -150,17 +174,32 @@ def _phase(phases,event):
     if phases is not None:phases.record(event)
 
 
-def run_cell(graph,config,directory,identity,*,max_checkpoint_bytes,cooperative_seconds,phases=None):
+def run_cell(graph,config,directory,identity,*,max_checkpoint_bytes,cooperative_seconds,phases=None,execution=None):
     """One unchanged synthetic update; helper callers must supply outer admission."""
     import numpy as np
     import torch
     from .checkpoints import seed_all,capture_rng,restore_rng
     from .model import ReplicationModel
+    from .model import validate_execution
+    selected=validate_execution(execution)
+    if selected is None and 'model_execution' in identity:
+        raise ValueError('resource execution/checkpoint identity differs')
+    if selected is not None:
+        expected_policy=dict(selected)
+        evidence=identity.get('model_execution')
+        source='tradingagents/research/onchain_replication/streamed_gat.py'
+        source_sha='e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f'
+        expected={'policy':expected_policy,'policy_sha256':digest(canonical_bytes(expected_policy)),
+                  'source_path':source,'source_sha256':source_sha,'candidate_sha256':source_sha}
+        if evidence!=expected or selected['block_edges']!=65536:
+            raise ValueError('resource execution/checkpoint identity differs')
+        if config.get('graph_activation_checkpointing',False) is not False:
+            raise ValueError('streamed resource checkpoint policy differs')
     begin=time.monotonic()
     def check():
         if time.monotonic()-begin>cooperative_seconds:raise TimeoutError('neural cooperative cell budget exceeded; not a hard per-call deadline')
     _phase(phases,'model_before')
-    rng=seed_all(11);model=ReplicationModel(config,'classification')
+    rng=seed_all(11);model=ReplicationModel(config,'classification',**({} if selected is None else {'execution':dict(selected)}))
     _phase(phases,'model_after')
     _phase(phases,'tensor_adapter_before')
     item={'mcm':torch.from_numpy(rng.random((len(graph.node_ids),32),dtype=np.float32)),
@@ -215,6 +254,7 @@ def produce_registered_neural_resource(run,plan_input):
     if not isinstance(run,ResearchRun):raise ValueError('admitted neural resource run required')
     run._active();run._check_source();_bound_worker(run,plan_input)
     p,config,plan_hash=registered_plan(run,plan_input)
+    execution_identity=_execution_identity(run,p)
     root=run.admission.root;directory=root/PREFIX/run.admission.experiment_id
     _namespace(root,directory)
     scope=current_metadata_scope()
@@ -225,6 +265,7 @@ def produce_registered_neural_resource(run,plan_input):
     _namespace(root,directory,owned)
     identity={'plan_sha256':plan_hash,'claim_sha256':run._claim_sha256,'source_commit':run.admission.source,
               'model_config_sha256':digest(canonical_bytes(config))}
+    if execution_identity is not None:identity['model_execution']=execution_identity
     _immutable(directory/'intent.json',{'identity':identity,'plan':p,'qualification':'synthetic MCM and labels; one graph repeated16x28; no financial fit'})
     run._neural_resource_output=(str(directory),owned,file_hash(directory/'intent.json'))
     rows=[];failure=None;primary=None;publication_errors=[];begin=time.monotonic()
@@ -239,6 +280,10 @@ def produce_registered_neural_resource(run,plan_input):
             try:
                 _namespace(root,directory,owned)
                 run._active();run._check_source();live=_bound_worker(run,plan_input);run.read_input(cell['graph_input'])
+                if execution_identity is not None:
+                    checked,checked_config,checked_hash=registered_plan(run,plan_input)
+                    if checked_hash!=plan_hash or checked_config!=config or _execution_identity(run,checked)!=execution_identity:
+                        raise ValueError('selected streamed plan/identity changed before cell')
                 info=run.admission.inputs[cell['graph_input']]
                 phases=None
                 if scope is not None:
@@ -256,7 +301,8 @@ def produce_registered_neural_resource(run,plan_input):
                     if len(graph.node_ids)!=cell['expected_nodes'] or graph.edge_index.shape[1]!=cell['expected_edges']:raise ValueError('neural loaded graph count differs')
                     _phase(phases,'graph_load_after')
                     result=run_cell(graph,config,sub,{**identity,'cell_id':cell['cell_id'],'graph_manifest_sha256':info['sha256']},
-                        max_checkpoint_bytes=p['limits']['max_checkpoint_bytes'],cooperative_seconds=p['limits']['cooperative_cell_seconds'],phases=phases)
+                        max_checkpoint_bytes=p['limits']['max_checkpoint_bytes'],cooperative_seconds=p['limits']['cooperative_cell_seconds'],phases=phases,
+                        **({} if execution_identity is None else {'execution':dict(execution_identity['policy'])}))
                 finally:del graph
                 gc.collect()
                 if time.monotonic()-cell_begin>p['limits']['cooperative_cell_seconds']:raise TimeoutError('neural cooperative whole-cell budget exceeded')

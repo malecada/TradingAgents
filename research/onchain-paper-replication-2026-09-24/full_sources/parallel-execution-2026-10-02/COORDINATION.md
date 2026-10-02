@@ -1,5 +1,20 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Latest ownership — streamed production integration and one-use adapter release
+
+No substantial numerical job active. Cleanup-owner01 closedpassed/actualstop5
+independentlyaccepted68f56ae4; GREEN02 parentFAILED remains unchanged/child13PASS.
+Root owns STATE/registration/complete retention/commits/externalbackup, exact
+adapter_tests02/launcher02/release01 and ONE forthcoming adapter numerical job.
+registration_review owns ONLY source/release reviews in new neural-streamed-
+integration-2026-10-02; sourcebb32820d accepted, exactrelease409f20d6 pending.
+physical_correction owns ONLY new original-dictionary-import-implementation-
+2026-10-02 candidate/source/patch/tests/report, no live production writes.
+physical_review available for actual adapter/recovery review. Root sole numerical
+launcher; no source/HEAD mutation during actual job. Preserve all old/failure
+identities and source bytes. Explicit production resource backend only; no
+financial route silentlyenabled.35spent/adopt63/77of109/all1420fits unchanged.
+
 ## Latest ownership — causal diagnostic closed; minimal corrected GREEN02
 
 No substantial numericaljobactive. All diagnostic originalPIDs/cgroupgone;

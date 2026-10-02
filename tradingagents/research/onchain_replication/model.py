@@ -1,6 +1,7 @@
 """Full trainable MLP→GAT→pooled graph/price→attention LSTM path."""
 from __future__ import annotations
 import torch
+from types import MappingProxyType
 from torch import nn
 from torch.utils.checkpoint import checkpoint
 from .gat import GraphAttention
@@ -8,9 +9,27 @@ from .pooling import mean_pool
 from .temporal import TemporalHead,initialize_linear
 
 
+def validate_execution(value):
+    """Explicit execution metadata, separate from scientific model config."""
+    if value is None:return None
+    if type(value) is not dict or set(value)!={'schema_version','backend','block_edges'}:
+        raise ValueError('model execution policy fields differ')
+    if type(value['schema_version']) is not int or value['schema_version']!=1 or value['backend']!='streamed-gat-mulsum-v1':
+        raise ValueError('model execution backend/schema differs')
+    if type(value['block_edges']) is not int or not 0<value['block_edges']<=65536:
+        raise ValueError('model execution block bound differs')
+    return MappingProxyType(dict(value))
+
+
 class GraphEncoder(nn.Module):
-    def __init__(self,config):
+    def __init__(self,config,*,execution=None):
+        selected=validate_execution(execution)
         super().__init__();self.config=dict(config)
+        self.execution=selected
+        layer=GraphAttention;extra={}
+        if selected is not None:
+            from .streamed_gat import GraphAttention as StreamedGraphAttention
+            layer=StreamedGraphAttention;extra={'block_edges':selected['block_edges']}
         widths=[config['mcm_input'],*config['mlp_widths']]
         blocks=[]
         for a,b in zip(widths,widths[1:]):
@@ -18,7 +37,7 @@ class GraphEncoder(nn.Module):
         self.mlp=nn.Sequential(*blocks)
         layers=[];width=widths[-1]
         for heads,out,concat,activation in zip(config['gat_heads'],config['gat_widths'],config['gat_concatenate'],config['gat_activation'],strict=True):
-            layers.append(GraphAttention(width,out,heads,concat=concat,activation=activation,dropout=config['gat_dropout'],slope=config['leaky_relu_slope']))
+            layers.append(layer(width,out,heads,concat=concat,activation=activation,dropout=config['gat_dropout'],slope=config['leaky_relu_slope'],**extra))
             width=out*heads if concat else out
         if width!=config['graph_vector_width']:raise ValueError('graph output width mismatch')
         self.gat=nn.ModuleList(layers)
@@ -35,9 +54,11 @@ class GraphEncoder(nn.Module):
 
 
 class ReplicationModel(nn.Module):
-    def __init__(self,config,task):
+    def __init__(self,config,task,*,execution=None):
+        selected=validate_execution(execution)
         super().__init__();self._configure(config,task)
-        self.graph=GraphEncoder(config)
+        self.execution=selected
+        self.graph=GraphEncoder(config,execution=None if selected is None else dict(selected))
         self.temporal=TemporalHead(config['graph_vector_width']+config['price_input_width'],config['lstm_width'],config['attention_width'],task,config['lstm_depth'])
 
     def _configure(self,config,task):
