@@ -14,7 +14,7 @@ import time
 from types import SimpleNamespace
 from .score_batches import CleanupFailure
 
-from ..lifecycle import ResearchRun, _immutable, current_metadata_scope
+from ..lifecycle import ResearchRun, _immutable
 from .provenance import canonical_bytes, digest, file_hash, durable_mkdir, sync_directory, require_hash, utc
 
 WEEKS=('2022-01-03','2022-06-13','2022-07-25','2022-11-07','2023-06-05','2024-01-01','2024-03-11','2024-08-05','2024-12-23')
@@ -48,11 +48,6 @@ def _bound_worker(run,plan_input):
     if not job.required_sources()<=set(run.admission.experiment['source_files']):raise ValueError('neural dependency source closure missing')
     if Path(__file__).resolve()!=root/'tradingagents/research/onchain_replication/neural_resource.py':raise ValueError('neural producer imported outside admitted source root')
     args=SimpleNamespace(root=root,registration=run.admission.registration,experiment=run.admission.experiment_id,source=run.admission.source)
-    scope=current_metadata_scope()
-    if 'physical_policy' in policy:
-        if scope is None or scope.root!=root or scope.anchor['experiment']!=args.experiment or scope.anchor['source']!=args.source or scope.policy!=policy['physical_policy']:
-            raise ValueError('neural original physical authority required')
-        scope.check();args.physical_anchor=scope.anchor_hash
     base=job._base(args);owner=json.loads((base/'owner.json').read_bytes())
     live=resources.assert_guarded_worker(base/'guard',job._command(args,'worker'),
         required_paths=[Path(x) for x in policy['disk_paths']],wall_seconds=policy['wall_seconds'],
@@ -202,10 +197,7 @@ def produce_registered_neural_resource(run,plan_input):
     p,config,plan_hash=registered_plan(run,plan_input)
     root=run.admission.root;directory=root/PREFIX/run.admission.experiment_id
     _namespace(root,directory)
-    scope=current_metadata_scope()
-    if scope is None:
-        durable_mkdir(directory.parent);directory.mkdir(exist_ok=False);sync_directory(directory.parent)
-    elif scope.birth('producer')!=directory:raise ValueError('neural original producer birth differs')
+    durable_mkdir(directory.parent);directory.mkdir(exist_ok=False);sync_directory(directory.parent)
     owned=(directory.stat().st_dev,directory.stat().st_ino)
     _namespace(root,directory,owned)
     identity={'plan_sha256':plan_hash,'claim_sha256':run._claim_sha256,'source_commit':run.admission.source,

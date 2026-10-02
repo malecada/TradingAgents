@@ -1,0 +1,26 @@
+..............F...........                                               [100%]
+=================================== FAILURES ===================================
+_____ test_cross_process_scope_writers_share_original_lock_and_accounting ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-203/test_cross_process_scope_write0')
+
+    def test_cross_process_scope_writers_share_original_lock_and_accounting(tmp_path):
+        import subprocess,sys
+        scope,base=fresh(tmp_path)
+        script="""import json,sys
+    from pathlib import Path
+    from tradingagents.research.onchain_replication.neural_physical import Scope
+    root=Path(sys.argv[1]);policy=json.loads(sys.argv[2]);scope=Scope.open(root,'invented','a'*40,policy,original_anchor=sys.argv[4])
+    for i in range(3):scope.immutable(scope.base/(sys.argv[3]+str(i)+'.json'),{'writer':sys.argv[3],'i':i})
+    """
+        children=[subprocess.Popen([sys.executable,'-B','-c',script,str(tmp_path),json.dumps(limits()),prefix,scope.anchor_hash]) for prefix in ('a','b')]
+        assert [p.wait(timeout=10) for p in children]==[0,0]
+        assert len(list(base.glob('a?.json')))==len(list(base.glob('b?.json')))==3
+>       assert scope.check()['files']>=9
+E       assert 8 >= 9
+
+tests/research/onchain_replication/test_neural_physical.py:242: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_cross_process_scope_writers_share_original_lock_and_accounting
+1 failed, 25 passed, 2 deselected in 5.05s

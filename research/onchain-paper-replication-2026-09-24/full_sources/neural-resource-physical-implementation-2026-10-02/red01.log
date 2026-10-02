@@ -1,0 +1,235 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________ test_no_precreated_claim_or_producer_roots __________________
+
+    def module():
+>       try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.neural_physical'
+import_ = <function _gcd_import at 0x7324981184a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.neural_physical'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-178/test_no_precreated_claim_or_pr0')
+
+    def test_no_precreated_claim_or_producer_roots(tmp_path):
+>       n=module();base=tmp_path/n.PREFIX/'runs'/'invented';base.mkdir(parents=True)
+          ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+>       except ModuleNotFoundError:pytest.fail('selected physical route missing')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: selected physical route missing
+
+tests/research/onchain_replication/test_neural_physical.py:10: Failed
+_____________ test_three_root_birth_claim_and_terminal_accounting ______________
+
+    def module():
+>       try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.neural_physical'
+import_ = <function _gcd_import at 0x7324981184a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.neural_physical'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-178/test_three_root_birth_claim_an0')
+
+    def test_three_root_birth_claim_and_terminal_accounting(tmp_path):
+>       scope,base=fresh(tmp_path);n=module()
+                   ^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_neural_physical.py:19: in fresh
+    n=module();base=tmp_path/n.PREFIX/'runs'/'invented';base.mkdir(parents=True)
+      ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+>       except ModuleNotFoundError:pytest.fail('selected physical route missing')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: selected physical route missing
+
+tests/research/onchain_replication/test_neural_physical.py:10: Failed
+______ test_metadata_limit_refuses_before_creating_file_and_keeps_history ______
+
+    def module():
+>       try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.neural_physical'
+import_ = <function _gcd_import at 0x7324981184a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.neural_physical'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-178/test_metadata_limit_refuses_be0')
+
+    def test_metadata_limit_refuses_before_creating_file_and_keeps_history(tmp_path):
+>       scope,base=fresh(tmp_path)
+                   ^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_neural_physical.py:19: in fresh
+    n=module();base=tmp_path/n.PREFIX/'runs'/'invented';base.mkdir(parents=True)
+      ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+>       except ModuleNotFoundError:pytest.fail('selected physical route missing')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: selected physical route missing
+
+tests/research/onchain_replication/test_neural_physical.py:10: Failed
+___________ test_root_replacement_symlink_and_foreign_claim_refused ____________
+
+    def module():
+>       try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.neural_physical'
+import_ = <function _gcd_import at 0x7324981184a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.neural_physical'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-178/test_root_replacement_symlink_0')
+
+    def test_root_replacement_symlink_and_foreign_claim_refused(tmp_path):
+>       scope,base=fresh(tmp_path)
+                   ^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_neural_physical.py:19: in fresh
+    n=module();base=tmp_path/n.PREFIX/'runs'/'invented';base.mkdir(parents=True)
+      ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+>       except ModuleNotFoundError:pytest.fail('selected physical route missing')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: selected physical route missing
+
+tests/research/onchain_replication/test_neural_physical.py:10: Failed
+__________________ test_exact_file_limit_readback_is_required __________________
+
+    def module():
+>       try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.neural_physical'
+import_ = <function _gcd_import at 0x7324981184a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.neural_physical'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_exact_file_limit_readback_is_required():
+>       n=module()
+          ^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        try:return importlib.import_module('tradingagents.research.onchain_replication.neural_physical')
+>       except ModuleNotFoundError:pytest.fail('selected physical route missing')
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: selected physical route missing
+
+tests/research/onchain_replication/test_neural_physical.py:10: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_no_precreated_claim_or_producer_roots
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_three_root_birth_claim_and_terminal_accounting
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_metadata_limit_refuses_before_creating_file_and_keeps_history
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_root_replacement_symlink_and_foreign_claim_refused
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_exact_file_limit_readback_is_required
+5 failed in 0.13s

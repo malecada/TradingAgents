@@ -127,10 +127,8 @@ def _base(args):
 
 
 def _command(args, mode):
-    command=[sys.executable, '-B', '-m', MODULE, '--mode', mode, '--root', str(Path(args.root).resolve()),
+    return [sys.executable, '-B', '-m', MODULE, '--mode', mode, '--root', str(Path(args.root).resolve()),
             '--registration', args.registration, '--experiment', args.experiment, '--source', args.source]
-    if getattr(args,'physical_anchor',None):command+=['--physical-anchor',args.physical_anchor]
-    return command
 
 
 def _once(path, value):
@@ -173,8 +171,8 @@ def _physical_scope(args,job,*,create=False,launcher=None):
     if policy is None:return None
     from .neural_physical import Scope
     if create:return Scope.create(args.root,args.experiment,args.source,policy,launcher)
-    scope=Scope.open(args.root,args.experiment,args.source,policy,original_anchor=getattr(args,'physical_anchor',None))
-    launch_record=scope.read_metadata(_base(args)/'launch.json')
+    scope=Scope.open(args.root,args.experiment,args.source,policy)
+    launch_record=json.loads((_base(args)/'launch.json').read_bytes())
     if scope.anchor['launcher']!={k:launch_record[k] for k in ('nonce','supervisor_pid')}:
         raise ValueError('physical original launcher differs')
     return scope
@@ -188,34 +186,19 @@ def launch(args):
     sync_directory(base.parent)
     nonce = uuid.uuid4().hex
     scope=_physical_scope(args,job,create=True,launcher={'nonce':nonce,'supervisor_pid':os.getpid()})
-    if scope is not None:args.physical_anchor=scope.anchor_hash
-    primary=None
-    try:
-        with metadata_scope(scope):
-            _immutable(base/'launch.json', {'experiment': args.experiment, 'source_commit': args.source,
-                                          'supervisor_pid': os.getpid(), 'nonce': nonce})
-            monitor = subprocess.Popen(_command(args, 'monitor')+['--owner-pid', str(os.getpid()), '--nonce', nonce], cwd=args.root)
-            def stop(signum, frame):
-                if monitor.poll() is None:
-                    monitor.terminate()
-            signal.signal(signal.SIGTERM, stop)
-            signal.signal(signal.SIGINT, stop)
-            monitor_exit=monitor.wait()
-            result = reconcile(args)
-            if scope is not None and monitor_exit!=0:
-                result={'status':'monitor_failed','monitor_exit_code':monitor_exit,'reconciled_disposition':result}
-                with scope.terminal_tail():_immutable(base/'monitor-failed.json',result)
-            print(json.dumps(result, sort_keys=True), flush=True)
-            return 0 if result['status'] == 'complete' else 1
-    except BaseException as error:primary=error;raise
-    finally:
-        if scope is not None:
-            try:scope.close_authority()
-            except BaseException as error:
-                if primary is not None:
-                    primary.add_note('physical authority shutdown: '+repr(error))
-                    if isinstance(primary,Exception) and not isinstance(primary,MemoryError) and (not isinstance(error,Exception) or isinstance(error,MemoryError)):raise error from primary
-                else:raise
+    with metadata_scope(scope):
+        _immutable(base/'launch.json', {'experiment': args.experiment, 'source_commit': args.source,
+                                      'supervisor_pid': os.getpid(), 'nonce': nonce})
+        monitor = subprocess.Popen(_command(args, 'monitor')+['--owner-pid', str(os.getpid()), '--nonce', nonce], cwd=args.root)
+        def stop(signum, frame):
+            if monitor.poll() is None:
+                monitor.terminate()
+        signal.signal(signal.SIGTERM, stop)
+        signal.signal(signal.SIGINT, stop)
+        monitor.wait()
+        result = reconcile(args)
+        print(json.dumps(result, sort_keys=True), flush=True)
+        return 0 if result['status'] == 'complete' else 1
 
 
 def monitor(args):
@@ -277,7 +260,6 @@ def execute_source_job(run, kind, payload):
 def worker(args):
     admitted, job = _admitted(args)
     scope=_physical_scope(args,job)
-    if scope is not None:scope.verify_environment()
     with metadata_scope(scope):
         root, base = admitted.root, _base(args)
         policy = job['resources']
@@ -344,9 +326,14 @@ def _incomplete_representation(directory,root):
 
 def reconcile(args):
     if current_metadata_scope() is not None:return _reconcile(args)
-    if getattr(args,'physical_anchor',None) or os.path.lexists(_base(args)/'physical-anchor.json'):
-        raise ValueError('physical external reconciliation lacks original live parent scope; no disk authority fallback')
-    return _reconcile(args)
+    anchor=_base(args)/'physical-anchor.json'
+    if not anchor.exists():return _reconcile(args)
+    from .neural_physical import Scope
+    value=json.loads(anchor.read_bytes())
+    scope=Scope.open(args.root,args.experiment,args.source,value['policy'])
+    with metadata_scope(scope):
+        scope.tail=True
+        return _reconcile(args)
 
 
 def _reconcile(args):
@@ -499,7 +486,6 @@ if __name__ == '__main__':
     parser.add_argument('--source', required=True)
     parser.add_argument('--owner-pid', type=int)
     parser.add_argument('--nonce')
-    parser.add_argument('--physical-anchor')
     args = parser.parse_args()
     result = globals()[args.mode](args)
     if isinstance(result, dict):

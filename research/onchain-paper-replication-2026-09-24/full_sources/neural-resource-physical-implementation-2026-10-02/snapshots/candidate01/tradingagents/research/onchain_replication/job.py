@@ -200,11 +200,8 @@ def launch(args):
                     monitor.terminate()
             signal.signal(signal.SIGTERM, stop)
             signal.signal(signal.SIGINT, stop)
-            monitor_exit=monitor.wait()
+            monitor.wait()
             result = reconcile(args)
-            if scope is not None and monitor_exit!=0:
-                result={'status':'monitor_failed','monitor_exit_code':monitor_exit,'reconciled_disposition':result}
-                with scope.terminal_tail():_immutable(base/'monitor-failed.json',result)
             print(json.dumps(result, sort_keys=True), flush=True)
             return 0 if result['status'] == 'complete' else 1
     except BaseException as error:primary=error;raise
@@ -214,7 +211,7 @@ def launch(args):
             except BaseException as error:
                 if primary is not None:
                     primary.add_note('physical authority shutdown: '+repr(error))
-                    if isinstance(primary,Exception) and not isinstance(primary,MemoryError) and (not isinstance(error,Exception) or isinstance(error,MemoryError)):raise error from primary
+                    if isinstance(primary,Exception) and (not isinstance(error,Exception) or isinstance(error,MemoryError)):raise error from primary
                 else:raise
 
 

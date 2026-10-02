@@ -1,0 +1,61 @@
+.............F..{"physical_final_accounting": {"allocated_bytes": 49152, "claim_sha256": null, "entries": 13, "files": 7, "logical_bytes": 2159, "qualification": "sampled allocated accounting; not filesystem quota; kernel file-size and bounded metadata writes required", "roles": ["control", "lifecycle", "producer"], "terminal_tail_included": true}}
+.............{"status": "complete"}
+.......{"evidence": "invented-three-node-original-model-one-update-checkpoint", "checkpoint_bytes": 493424, "state_sha256": "41498bed274896646f0d1106c0fbdd28c0dddd772eaa068b1b2af683c5220cbc", "qualification": "finite synthetic serialized size; not full-graph peak memory"}
+.................................... [ 71%]
+.............................                                            [100%]
+=================================== FAILURES ===================================
+______ test_selected_worker_counts_real_model_outputs_and_lifecycle_tail _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-210/test_selected_worker_counts_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72d49af53410>
+
+    def test_selected_worker_counts_real_model_outputs_and_lifecycle_tail(tmp_path,monkeypatch):
+        from contextlib import contextmanager
+        from types import SimpleNamespace
+        from tests.research.onchain_replication.test_neural_resource import synthetic_run
+        from tradingagents.research.onchain_replication import job,resources
+        from tradingagents.research.onchain_replication.provenance import file_hash
+        from tradingagents.research import lifecycle
+        n=module();run,plan=synthetic_run(tmp_path,monkeypatch)
+        physical={**limits(),'max_file_bytes':8*1024**2,'max_json_bytes':256*1024,
+                  'max_allocated_bytes':160*1024**2,'max_logical_bytes':128*1024**2,'tail_reserve_bytes':32*1024**2}
+        path=tmp_path/'execution.json';value=json.loads(path.read_bytes());value['resources']['physical_policy']=physical;path.write_text(json.dumps(value));run.admission.inputs['execution_job']['sha256']=file_hash(path)
+        args=SimpleNamespace(root=tmp_path,experiment=run.admission.experiment_id,source=run.admission.source,registration=run.admission.registration)
+        base=job._base(args);(tmp_path/'research_runs').mkdir(exist_ok=True);(tmp_path/n.PREFIX/'sources').mkdir(exist_ok=True)
+        scope=n.Scope.create(tmp_path,args.experiment,args.source,physical,{'nonce':'synthetic','supervisor_pid':1})
+        args.physical_anchor=scope.anchor_hash
+        for key,value in scope.environment().items():monkeypatch.setenv(key,value)
+        scope.immutable(base/'launch.json',{'nonce':'synthetic','supervisor_pid':1})
+        scope.birth('lifecycle');(run.directory/'outputs').mkdir()
+        scope.immutable(run.directory/'claim.json',{'experiment_id':args.experiment,'source':args.source})
+        run._claim_sha256=file_hash(run.directory/'claim.json');run.admission.registration_sha256='a'*64
+        owner=json.loads((base/'owner.json').read_bytes())
+        monkeypatch.setattr(resources,'assert_guarded_worker',lambda *a,**kw:{**value['resources'],'owner_identity':owner})
+        monkeypatch.setattr(job,'_admitted',lambda a:(run.admission,value))
+        monkeypatch.setattr(job.signal,'signal',lambda *a:None)
+        @contextmanager
+        def start(**kw):yield run
+        monkeypatch.setattr(job.ResearchRun,'start',start)
+>       job.worker(args)
+
+tests/research/onchain_replication/test_neural_physical.py:211: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job.py:276: in worker
+    scope=_physical_scope(args,job)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = namespace(root=PosixPath('/tmp/pytest-of-malecada/pytest-210/test_selected_worker_counts_re0'), experiment='synthetic-...istration='synthetic-registration', physical_anchor='97dd8315bf5431a372e44d32dd277e4ee8dc2bf5070f0c0d3bafbd2cf08e5fcc')
+job = '/tmp/pytest-of-malecada/pytest-210/test_selected_worker_counts_re0/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural/scratch/torch'
+create = False, launcher = None
+
+    def _physical_scope(args,job,*,create=False,launcher=None):
+>       policy=job['resources'].get('physical_policy')
+               ^^^^^^^^^^^^^^^^
+E       TypeError: string indices must be integers, not 'str'
+
+tradingagents/research/onchain_replication/job.py:172: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_selected_worker_counts_real_model_outputs_and_lifecycle_tail
+1 failed, 100 passed in 19.30s

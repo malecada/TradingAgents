@@ -1,0 +1,180 @@
+.FFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_____________ test_authority_missing_claim_cannot_be_acknowledged ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-197/test_authority_missing_claim_c0')
+
+    def test_authority_missing_claim_cannot_be_acknowledged(tmp_path):
+        scope,base=fresh(tmp_path);life=scope.roots['lifecycle'];life.mkdir(parents=True)
+        scope.immutable(life/'claim.json',{'experiment_id':'invented','source':'a'*40})
+        (life/'claim.json').rename(life/'retained-claim.json')
+>       with pytest.raises(ValueError,match='claim'):scope.check()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:266: Failed
+_____________ test_authority_mutable_state_cannot_reset_root_birth _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-197/test_authority_mutable_state_c0')
+
+    def test_authority_mutable_state_cannot_reset_root_birth(tmp_path):
+        scope,base=fresh(tmp_path);life=scope.roots['lifecycle'];life.mkdir(parents=True)
+        scope.immutable(life/'claim.json',{'experiment_id':'invented','source':'a'*40})
+        life.rename(life.with_name('preserved-first'));life.mkdir()
+        (life/'claim.json').write_text(json.dumps({'experiment_id':'invented','source':'a'*40,'rewritten':True}))
+        (base/'physical-state.json').write_text(json.dumps({'identities':{'control':scope.anchor['control_identity']},'claim_sha256':None}))
+>       with pytest.raises(ValueError,match='original|birth'):scope.check()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:275: Failed
+_______________ test_authority_dangling_role_entry_is_not_absent _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-197/test_authority_dangling_role_e0')
+
+    def test_authority_dangling_role_entry_is_not_absent(tmp_path):
+        scope,base=fresh(tmp_path);life=scope.roots['lifecycle'];life.parent.mkdir()
+        life.symlink_to(tmp_path/'never-created',target_is_directory=True)
+>       with pytest.raises(ValueError,match='root|entry|redirect'):scope.check()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:281: Failed
+________ test_authority_root_replacement_during_descriptor_scan_refuses ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-197/test_authority_root_replacemen0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75531afde190>
+
+    def test_authority_root_replacement_during_descriptor_scan_refuses(tmp_path,monkeypatch):
+        import os
+        scope,base=fresh(tmp_path);life=scope.roots['lifecycle'];life.mkdir(parents=True)
+        scope.immutable(life/'claim.json',{'experiment_id':'invented','source':'a'*40})
+        original=os.scandir;replaced=False
+        def swap(path):
+            nonlocal replaced
+            if isinstance(path,int) and os.fstat(path).st_ino==life.stat().st_ino and not replaced:
+                replaced=True;life.rename(life.with_name('preserved-during-scan'));life.mkdir()
+            return original(path)
+        monkeypatch.setattr(os,'scandir',swap)
+>       with pytest.raises(ValueError,match='changed|replaced'):scope.check()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:295: Failed
+_______ test_bounded_control_read_refuses_oversized_anchor_before_decode _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-197/test_bounded_control_read_refu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75531afde650>
+
+    def test_bounded_control_read_refuses_oversized_anchor_before_decode(tmp_path,monkeypatch):
+        scope,base=fresh(tmp_path);n=module();(base/'physical-anchor.json').write_bytes(b'x'*10000)
+        def decoded(*a,**kw):pytest.fail('oversized control file decoded before admission')
+        monkeypatch.setattr(n.json,'loads',decoded)
+>       with pytest.raises(ValueError,match='extent|limit'):n.Scope.open(tmp_path,'invented','a'*40,limits())
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:303: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neural_physical.py:133: in open
+    raw=(base/'physical-anchor.json').read_bytes();anchor=json.loads(raw)
+                                                          ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (b'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',)
+kw = {}
+
+>   def decoded(*a,**kw):pytest.fail('oversized control file decoded before admission')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: oversized control file decoded before admission
+
+tests/research/onchain_replication/test_neural_physical.py:301: Failed
+________ test_bounded_control_read_actual_fifo_refuses_without_blocking ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-197/test_bounded_control_read_actu0')
+
+    def test_bounded_control_read_actual_fifo_refuses_without_blocking(tmp_path):
+        import os,subprocess,sys
+        scope,base=fresh(tmp_path);path=base/'physical-anchor.json';path.rename(base/'preserved-anchor.json');os.mkfifo(path)
+        script="""import json,sys
+    from pathlib import Path
+    from tradingagents.research.onchain_replication.neural_physical import Scope
+    try:Scope.open(Path(sys.argv[1]),'invented','a'*40,json.loads(sys.argv[2]))
+    except ValueError as e:
+     assert 'regular' in str(e) or 'type' in str(e)
+    else:raise AssertionError('FIFO accepted')
+    """
+        process=subprocess.Popen([sys.executable,'-B','-c',script,str(tmp_path),json.dumps(limits())])
+>       try:assert process.wait(timeout=2)==0
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:318: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:1280: in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Popen: returncode: -9 args: ['/home/malecada/master_thesis/TradingAgents-au...>
+timeout = 2
+
+    def _wait(self, timeout):
+        """Internal implementation of wait() on POSIX."""
+        if self.returncode is not None:
+            return self.returncode
+    
+        if timeout is not None:
+            endtime = _time() + timeout
+            # Enter a busy loop if we have a timeout.  This busy loop was
+            # cribbed from Lib/threading.py in Thread.wait() at r71065.
+            delay = 0.0005 # 500 us -> initial delay of 1 ms
+            while True:
+                if self._waitpid_lock.acquire(False):
+                    try:
+                        if self.returncode is not None:
+                            break  # Another thread waited.
+                        (pid, sts) = self._try_wait(os.WNOHANG)
+                        assert pid == self.pid or pid == 0
+                        if pid == self.pid:
+                            self._handle_exitstatus(sts)
+                            break
+                    finally:
+                        self._waitpid_lock.release()
+                remaining = self._remaining_time(endtime)
+                if remaining <= 0:
+>                   raise TimeoutExpired(self.args, timeout)
+E                   subprocess.TimeoutExpired: Command '['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', "import json,sys\nfrom pathlib import Path\nfrom tradingagents.research.onchain_replication.neural_physical import Scope\ntry:Scope.open(Path(sys.argv[1]),'invented','a'*40,json.loads(sys.argv[2]))\nexcept ValueError as e:\n assert 'regular' in str(e) or 'type' in str(e)\nelse:raise AssertionError('FIFO accepted')\n", '/tmp/pytest-of-malecada/pytest-197/test_bounded_control_read_actu0', '{"schema_version": 1, "max_file_bytes": 65536, "max_json_bytes": 8192, "max_allocated_bytes": 2097152, "max_logical_bytes": 1048576, "max_entries": 128, "tail_reserve_bytes": 131072}']' timed out after 2 seconds
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:2077: TimeoutExpired
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-197/test_bounded_control_read_actu0')
+
+    def test_bounded_control_read_actual_fifo_refuses_without_blocking(tmp_path):
+        import os,subprocess,sys
+        scope,base=fresh(tmp_path);path=base/'physical-anchor.json';path.rename(base/'preserved-anchor.json');os.mkfifo(path)
+        script="""import json,sys
+    from pathlib import Path
+    from tradingagents.research.onchain_replication.neural_physical import Scope
+    try:Scope.open(Path(sys.argv[1]),'invented','a'*40,json.loads(sys.argv[2]))
+    except ValueError as e:
+     assert 'regular' in str(e) or 'type' in str(e)
+    else:raise AssertionError('FIFO accepted')
+    """
+        process=subprocess.Popen([sys.executable,'-B','-c',script,str(tmp_path),json.dumps(limits())])
+        try:assert process.wait(timeout=2)==0
+        except subprocess.TimeoutExpired:
+>           process.kill();process.wait();pytest.fail('control FIFO blocked before regular-file admission')
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: control FIFO blocked before regular-file admission
+
+tests/research/onchain_replication/test_neural_physical.py:320: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_authority_missing_claim_cannot_be_acknowledged
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_authority_mutable_state_cannot_reset_root_birth
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_authority_dangling_role_entry_is_not_absent
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_authority_root_replacement_during_descriptor_scan_refuses
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_bounded_control_read_refuses_oversized_anchor_before_decode
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_bounded_control_read_actual_fifo_refuses_without_blocking
+6 failed, 1 passed, 17 deselected in 2.29s

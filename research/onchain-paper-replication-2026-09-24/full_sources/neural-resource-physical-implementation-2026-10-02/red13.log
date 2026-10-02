@@ -1,0 +1,97 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_____________ test_parent_close_retains_inflight_fatal_after_join ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7abdf2e2f360>
+
+    def test_parent_close_retains_inflight_fatal_after_join(monkeypatch):
+        import threading
+        from tradingagents.research.onchain_replication import neural_authority as a
+        entered=threading.Event();release=threading.Event();sentinel=SystemExit('fatal-during-original-join')
+        def handler(value):entered.set();assert release.wait(2);raise sentinel
+        parent=a.ParentAuthority(8192,handler);failures=[]
+        def client():
+            try:a.request(parent.identity,'a'*64,{'op':'get'},8192)
+            except BaseException as error:failures.append(error)
+        caller=threading.Thread(target=client);caller.start();assert entered.wait(2)
+        original_join=parent.thread.join
+        def join(*args,**kwargs):release.set();return original_join(*args,**kwargs)
+        monkeypatch.setattr(parent.thread,'join',join)
+        try:
+>           with pytest.raises(SystemExit) as caught:parent.close()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE SystemExit
+
+tests/research/onchain_replication/test_neural_physical.py:553: Failed
+______ test_scope_create_promotes_uncertain_cleanup_over_ordinary_primary ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-220/test_scope_create_promotes_unc0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7abdf29f6d70>
+
+    def test_scope_create_promotes_uncertain_cleanup_over_ordinary_primary(tmp_path,monkeypatch):
+        from tradingagents.research.onchain_replication import neural_authority as a
+        n=module();base=tmp_path/n.PREFIX/'runs/invented';base.mkdir(parents=True)
+        (tmp_path/'research_runs').mkdir();(tmp_path/n.PREFIX/'sources').mkdir()
+        original=n._write;primary=ValueError('anchor-write-primary');fatal=n.PhysicalCleanupFailure('authority-close-uncertain')
+        def write(path,*args,**kwargs):
+            if path.name=='physical-anchor.json':raise primary
+            return original(path,*args,**kwargs)
+        close=a.ParentAuthority.close
+        def uncertain(self):close(self);raise fatal
+        monkeypatch.setattr(n,'_write',write);monkeypatch.setattr(a.ParentAuthority,'close',uncertain)
+>       with pytest.raises(n.PhysicalCleanupFailure) as caught:n.Scope.create(tmp_path,'invented','a'*40,limits(),{})
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:570: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_neural_physical.py:22: in create
+    result=original(*args,**kwargs);created.append(result);return result
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neural_physical.py:185: in create
+    _write(base/'physical-anchor.json',data)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-malecada/pytest-220/test_scope_create_promotes_unc0/research_artifacts/onchain-paper-replication-2026-09-24/runs/invented/physical-anchor.json')
+args = (b'{\n  "control_identity": [\n    66310,\n    11409129\n  ],\n  "experiment": "invented",\n  "launcher": {},\n  "lock...6-09-24/sources/invented"\n  },\n  "schema_version": 1,\n  "source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"\n}\n',)
+kwargs = {}
+
+    def write(path,*args,**kwargs):
+>       if path.name=='physical-anchor.json':raise primary
+                                             ^^^^^^^^^^^^^
+E       ValueError: anchor-write-primary
+E       physical authority close: PhysicalCleanupFailure('authority-close-uncertain')
+
+tests/research/onchain_replication/test_neural_physical.py:565: ValueError
+_______ test_selected_guard_rethrows_local_fatal_after_stop_and_receipts _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-220/test_selected_guard_rethrows_l0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7abdf2dd2210>
+
+    def test_selected_guard_rethrows_local_fatal_after_stop_and_receipts(tmp_path,monkeypatch):
+        from tests.research.onchain_replication.test_resources import mock_unit
+        from tradingagents.research.onchain_replication import resources
+        from tradingagents.research import lifecycle
+        scope,base=fresh(tmp_path);receipt,calls=mock_unit(base,monkeypatch,completed=True)
+        sentinel=module().PhysicalCleanupFailure('local physical client close uncertain');original=resources._atomic;once=[]
+        def atomic(path,value):
+            if value.get('phase')=='running' and not once:once.append(True);raise sentinel
+            return original(path,value)
+        run=resources.subprocess.run
+        def dispatch(args,**kwargs):
+            result=run(args,**kwargs)
+            if args[0]=='systemd-run':
+                path=receipt/'cpu_ready.json';v=json.loads(path.read_bytes());v['file_size_limit']=[65536,65536];path.write_text(json.dumps(v))
+            return result
+        monkeypatch.setattr(resources,'_atomic',atomic);monkeypatch.setattr(resources.subprocess,'run',dispatch)
+        with lifecycle.metadata_scope(scope):
+>           with pytest.raises(module().PhysicalCleanupFailure) as caught:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE PhysicalCleanupFailure
+
+tests/research/onchain_replication/test_neural_physical.py:591: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_parent_close_retains_inflight_fatal_after_join
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_scope_create_promotes_uncertain_cleanup_over_ordinary_primary
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_selected_guard_rethrows_local_fatal_after_stop_and_receipts
+3 failed, 39 deselected in 0.67s

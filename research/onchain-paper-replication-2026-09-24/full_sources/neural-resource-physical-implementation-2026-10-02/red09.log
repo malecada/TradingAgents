@@ -1,0 +1,38 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+________ test_parent_transition_fatal_is_preserved_at_launcher_boundary ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-206/test_parent_transition_fatal_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b3df5fd260>
+
+    def test_parent_transition_fatal_is_preserved_at_launcher_boundary(tmp_path,monkeypatch):
+        scope,base=fresh(tmp_path);n=module();sentinel=SystemExit('original-birth-fatal');original=n._write
+        def write(path,*a,**kw):
+            if path.name=='physical-birth-lifecycle.json':raise sentinel
+            return original(path,*a,**kw)
+        monkeypatch.setattr(n,'_write',write)
+        with pytest.raises(RuntimeError,match='authority'):scope.birth('lifecycle')
+>       with pytest.raises(SystemExit) as caught:scope.close_authority()
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:433: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neural_physical.py:225: in close_authority
+    self._server.close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.neural_authority.ParentAuthority object at 0x73b3df647100>
+
+    def close(self):
+        self.stopping.set();self.thread.join(timeout=3)
+        self.socket.close()
+        if self.thread.is_alive():raise RuntimeError('physical parent authority thread did not stop')
+>       if self.failure is not None:raise RuntimeError('physical parent authority failed: '+self.failure)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: physical parent authority failed: SystemExit: original-birth-fatal
+
+tradingagents/research/onchain_replication/neural_authority.py:74: RuntimeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_parent_transition_fatal_is_preserved_at_launcher_boundary
+1 failed, 3 passed, 28 deselected in 1.18s

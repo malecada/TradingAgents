@@ -1,0 +1,136 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_authority_ordinary_handler_promotes_client_close_fatal __________
+
+value = {'anchor_sha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'op': 'get'}
+
+>   def handler(value):raise primary
+                       ^^^^^^^^^^^^^
+E   ValueError: handler primary
+E   authority transport cleanup: PhysicalCleanupFailure('accepted client close uncertainty')
+
+tests/research/onchain_replication/test_neural_physical.py:732: ValueError
+
+The above exception was the direct cause of the following exception:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ea0268c10f0>
+
+    def test_authority_ordinary_handler_promotes_client_close_fatal(monkeypatch):
+        import threading
+        from tradingagents.research.onchain_replication import neural_authority as a
+        primary=ValueError('handler primary');fatal=module().PhysicalCleanupFailure('accepted client close uncertainty')
+        def handler(value):raise primary
+        parent=a.ParentAuthority(8192,handler);original=a._close_socket;observed=threading.Event()
+        def close(sock,error=None):
+            original(sock,error)
+            if threading.current_thread() is parent.thread:
+                observed.set();raise fatal
+        monkeypatch.setattr(a,'_close_socket',close)
+        with pytest.raises(RuntimeError):a.request(parent.identity,'a'*64,{'op':'get'},8192)
+        assert observed.wait(2)
+>       with pytest.raises(module().PhysicalCleanupFailure) as caught:parent.close()
+                                                                      ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:741: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.neural_authority.ParentAuthority object at 0x7ea026990980>
+
+    def close(self):
+        if not self.closed:
+            primary=self.failure;self.stopping.set();self.closed=True
+            try:self.thread.join(timeout=3)
+            except BaseException as error:
+                if primary is None:primary=error
+                else:primary.add_note('physical authority thread join failed: '+repr(error))
+            # The handler may have failed after shutdown began but before join returned.
+            joined=self.failure
+            if joined is not None and joined is not primary:
+                if primary is None:primary=joined
+                elif isinstance(primary,Exception) and not isinstance(primary,MemoryError) and (not isinstance(joined,Exception) or isinstance(joined,MemoryError)):
+                    joined.add_note('earlier authority shutdown failure: '+repr(primary));joined.__cause__=primary;primary=joined
+                else:primary.add_note('in-flight authority failure: '+repr(joined))
+            if self.thread.is_alive():
+                error=RuntimeError('physical parent authority thread did not stop')
+                if primary is None:primary=error
+                else:primary.add_note(str(error))
+            try:_close_socket(self.socket,primary)
+            except BaseException as error:primary=error
+            self.failure=primary
+        if self.failure is not None:
+            if not isinstance(self.failure,Exception) or isinstance(self.failure,MemoryError):raise self.failure
+>           raise RuntimeError('physical parent authority failed: '+str(self.failure)[:512]) from self.failure
+E           RuntimeError: physical parent authority failed: handler primary
+
+tradingagents/research/onchain_replication/neural_authority.py:124: RuntimeError
+___________ test_authority_join_fatal_promotes_over_stored_ordinary ____________
+ValueError: prior authority error
+physical authority thread join failed: MemoryError('join fatal')
+
+The above exception was the direct cause of the following exception:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ea0271de8b0>
+
+    def test_authority_join_fatal_promotes_over_stored_ordinary(monkeypatch):
+        from tradingagents.research.onchain_replication import neural_authority as a
+        primary=ValueError('prior authority error');fatal=MemoryError('join fatal')
+        parent=a.ParentAuthority(8192,lambda value:{});parent.failure=primary;join=parent.thread.join
+        def fail(*args,**kwargs):join(*args,**kwargs);raise fatal
+        monkeypatch.setattr(parent.thread,'join',fail)
+>       with pytest.raises(MemoryError) as caught:parent.close()
+                                                  ^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:751: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.neural_authority.ParentAuthority object at 0x7ea026955a90>
+
+    def close(self):
+        if not self.closed:
+            primary=self.failure;self.stopping.set();self.closed=True
+            try:self.thread.join(timeout=3)
+            except BaseException as error:
+                if primary is None:primary=error
+                else:primary.add_note('physical authority thread join failed: '+repr(error))
+            # The handler may have failed after shutdown began but before join returned.
+            joined=self.failure
+            if joined is not None and joined is not primary:
+                if primary is None:primary=joined
+                elif isinstance(primary,Exception) and not isinstance(primary,MemoryError) and (not isinstance(joined,Exception) or isinstance(joined,MemoryError)):
+                    joined.add_note('earlier authority shutdown failure: '+repr(primary));joined.__cause__=primary;primary=joined
+                else:primary.add_note('in-flight authority failure: '+repr(joined))
+            if self.thread.is_alive():
+                error=RuntimeError('physical parent authority thread did not stop')
+                if primary is None:primary=error
+                else:primary.add_note(str(error))
+            try:_close_socket(self.socket,primary)
+            except BaseException as error:primary=error
+            self.failure=primary
+        if self.failure is not None:
+            if not isinstance(self.failure,Exception) or isinstance(self.failure,MemoryError):raise self.failure
+>           raise RuntimeError('physical parent authority failed: '+str(self.failure)[:512]) from self.failure
+E           RuntimeError: physical parent authority failed: prior authority error
+
+tradingagents/research/onchain_replication/neural_authority.py:124: RuntimeError
+____________ test_authority_accept_failure_preserves_existing_fatal ____________
+
+    def test_authority_accept_failure_preserves_existing_fatal():
+        import threading
+        from tradingagents.research.onchain_replication import neural_authority as a
+        primary=MemoryError('original handler fatal')
+        class ClosedAcceptor:
+            def accept(self):raise OSError('accept failed')
+        parent=object.__new__(a.ParentAuthority)
+        parent.stopping=threading.Event();parent.failure=primary;parent.socket=ClosedAcceptor()
+        parent._serve()
+>       assert parent.failure is primary and primary.__notes__
+E       AssertionError: assert (RuntimeError('authority accept failed') is MemoryError('original handler fatal'))
+E        +  where RuntimeError('authority accept failed') = <tradingagents.research.onchain_replication.neural_authority.ParentAuthority object at 0x7ea026955bd0>.failure
+
+tests/research/onchain_replication/test_neural_physical.py:764: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_authority_ordinary_handler_promotes_client_close_fatal
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_authority_join_fatal_promotes_over_stored_ordinary
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_authority_accept_failure_preserves_existing_fatal
+3 failed, 52 deselected in 0.63s

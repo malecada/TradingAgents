@@ -1,0 +1,46 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+__ test_selected_guard_ordinary_primary_survives_late_cleanup_promotion[True] __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_selected_guard_ordinary_p1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7abb69e428b0>
+cleanup_uncertain = True
+
+    @pytest.mark.parametrize('cleanup_uncertain',[False,True])
+    def test_selected_guard_ordinary_primary_survives_late_cleanup_promotion(tmp_path,monkeypatch,cleanup_uncertain):
+        import os
+        from tests.research.onchain_replication.test_resources import mock_unit
+        from tradingagents.research.onchain_replication import resources
+        from tradingagents.research import lifecycle
+        scope,base=fresh(tmp_path);receipt,calls=mock_unit(base,monkeypatch,completed=True)
+        primary=ValueError('original ordinary guard body');atomic=resources._atomic;once=[];closed=[]
+        def write(path,value):
+            if value.get('phase')=='running' and not once:once.append(True);raise primary
+            return atomic(path,value)
+        dispatch=resources.subprocess.run
+        def run(args,**kwargs):
+            result=dispatch(args,**kwargs)
+            if args[0]=='systemd-run':
+                p=receipt/'cpu_ready.json';v=json.loads(p.read_bytes());v['file_size_limit']=[65536,65536];p.write_text(json.dumps(v))
+            return result
+        original_close=os.close
+        def close(fd):
+            path=os.readlink('/proc/self/fd/'+str(fd));original_close(fd)
+            if cleanup_uncertain and path==str(receipt) and (receipt/'final.json').exists() and not closed:
+                closed.append(fd);raise OSError('one-shot actual owned directory close uncertainty')
+        monkeypatch.setattr(resources,'_atomic',write);monkeypatch.setattr(resources.subprocess,'run',run);monkeypatch.setattr(os,'close',close)
+        kwargs={'cwd':tmp_path,'receipt_dir':receipt,'disk_paths':[tmp_path],'disk_floor_bytes':1,
+                'physical_policy':limits(),'owner_identity':{'experiment':'invented','source_commit':'a'*40}}
+        with lifecycle.metadata_scope(scope):
+            if cleanup_uncertain:
+                with pytest.raises(module().PhysicalCleanupFailure) as caught:resources.guarded_run(['true'],**kwargs)
+>               assert caught.value.__cause__ is primary and len(closed)==1
+E               AssertionError: assert (None is ValueError('original ordinary guard body'))
+E                +  where None = PhysicalCleanupFailure('physical owned close uncertain; no descriptor retry').__cause__
+E                +    where PhysicalCleanupFailure('physical owned close uncertain; no descriptor retry') = <ExceptionInfo PhysicalCleanupFailure('physical owned close uncertain; no descriptor retry') tblen=7>.value
+
+tests/research/onchain_replication/test_neural_physical.py:680: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_selected_guard_ordinary_primary_survives_late_cleanup_promotion[True]
+1 failed, 1 passed, 45 deselected in 0.62s

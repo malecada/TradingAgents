@@ -1,0 +1,97 @@
+{
+  "status": "frozen candidate02 for NPH5-7 independent delta review",
+  "prior_candidate_sha256": "25cca87b0664b235a26485e477196de896490ba8e7f022d175fedad1bb80b9ea",
+  "sources": [
+    {
+      "path": "tradingagents/research/onchain_replication/neural_physical.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/onchain_replication/neural_physical.py",
+      "sha256": "375151b3f134d59f4659a470afed6ebe0e3b138b079ee9b486582cedbbcbc68e",
+      "bytes": 23706,
+      "changed_from_candidate01": true
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/neural_authority.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/onchain_replication/neural_authority.py",
+      "sha256": "bba0f1bc1fd0ec4f82cc2cc7db7b90aa1696017088ffd6369783ffc0bd4a44f2",
+      "bytes": 6996,
+      "changed_from_candidate01": true
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/onchain_replication/job.py",
+      "sha256": "dac87b5694b5099bc94f4492b13a88ca922f23745bd60276fba5d69d3b1a8a1a",
+      "bytes": 30018,
+      "changed_from_candidate01": true
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/resources.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/onchain_replication/resources.py",
+      "sha256": "03c8a30b321e06158184677ff5d2ad23d2090f65d32d55eff9a789fd6c72244d",
+      "bytes": 30316,
+      "changed_from_candidate01": true
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/neural_resource.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/onchain_replication/neural_resource.py",
+      "sha256": "73e63fb1873ce8cbc04e0ebe52e8436272894e97c400594f133bbd1a3d6c512e",
+      "bytes": 19527,
+      "changed_from_candidate01": false
+    },
+    {
+      "path": "tradingagents/research/lifecycle.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/snapshots/candidate02/tradingagents/research/lifecycle.py",
+      "sha256": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+      "bytes": 10509,
+      "changed_from_candidate01": false
+    },
+    {
+      "path": "tests/research/onchain_replication/test_neural_physical.py",
+      "snapshot": "research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/snapshots/candidate02/tests/research/onchain_replication/test_neural_physical.py",
+      "sha256": "76c58750b98ee3fb4aefc8ab5d879363752a67ff0d9bd017a48281cf5fbf48d4",
+      "bytes": 36765,
+      "changed_from_candidate01": true
+    }
+  ],
+  "new_logs": [
+    {
+      "path": "red13.log",
+      "sha256": "e3fd2c6bcd2b4e012ef4586ba600de2f12e50807a4ef096cf03c058dff5824f7",
+      "bytes": 6306
+    },
+    {
+      "path": "check15.log",
+      "sha256": "287a68ba8fa4e539bdb492ab27cd33458e749c431e9b60ee146cb6db2c1c5697",
+      "bytes": 200
+    },
+    {
+      "path": "red14.log",
+      "sha256": "9005563df5b5a4d7ebd618b915a6c62e0243d256e9fd3fecbeec5584cc39529b",
+      "bytes": 2757
+    },
+    {
+      "path": "check16.log",
+      "sha256": "27670cf784c9d2d42edea9a1ad5a228a4a012e3e138057cc6665e83c59c3d424",
+      "bytes": 201
+    },
+    {
+      "path": "check17.log",
+      "sha256": "a11828dbb154acf339f020d1d2c10c7728ddce5867dd89ceb3cafca17c1b3f85",
+      "bytes": 186
+    }
+  ],
+  "commands": {
+    "red13/check15": "PYTHONPATH=. .venv/bin/python -B -m pytest -q tests/research/onchain_replication/test_neural_physical.py -k 'inflight_fatal or promotes_uncertain or rethrows_local_fatal'",
+    "red14": "PYTHONPATH=. .venv/bin/python -B -m pytest -q tests/research/onchain_replication/test_neural_physical.py -k 'launcher_reports_nonzero or final_directory_close or rethrows_local_fatal'",
+    "check16": "PYTHONPATH=. .venv/bin/python -B -m pytest -q tests/research/onchain_replication/test_neural_physical.py -k 'inflight_fatal or promotes_uncertain or rethrows_local_fatal or launcher_reports_nonzero or final_directory_close or selected_launch or guard_requires_file_limit or parent_original_fatal or constructor_closes or client_primary' tests/research/onchain_replication/test_resources.py",
+    "check17": "PYTHONPATH=. .venv/bin/python -B -m pytest -q tests/research/onchain_replication/test_resources.py"
+  },
+  "results": {
+    "red13": "3 failed",
+    "check15": "3 passed",
+    "red14": "1 failed,3 passed",
+    "check16": "11 passed,73 deselected",
+    "check17": "39 passed"
+  },
+  "physical_policy_unchanged": true,
+  "empirical_or_user_unit_launched": false
+}

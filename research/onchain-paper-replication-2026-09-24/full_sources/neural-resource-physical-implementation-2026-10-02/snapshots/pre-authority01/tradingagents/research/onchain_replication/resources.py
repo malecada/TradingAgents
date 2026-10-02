@@ -135,18 +135,14 @@ def verify_cpu_tree(cgroup,cpus):
     return observed
 
 
-def _child(receipt,cpus,lease_seconds,command,physical=False,physical_context=None):
+def _child(receipt,cpus,lease_seconds,command,physical=False):
     if not physical:return _child_legacy(receipt,cpus,lease_seconds,command)
     from tradingagents.research.lifecycle import metadata_scope
     from tradingagents.research.onchain_replication.neural_physical import Scope,verify_file_limit
     import resource
-    if not isinstance(physical_context,str) or len(physical_context)>8192:raise ValueError('physical original child context missing/bounded extent differs')
-    context=json.loads(physical_context);policy=context['policy']
-    scope=Scope.open(Path.cwd(),context['experiment'],context['source'],policy,original_anchor=context['anchor'])
-    scope.verify_environment()
-    live=scope.read_metadata(receipt/'live.json')
-    if live['physical_policy']!=policy:raise ValueError('physical child policy differs from original context')
+    live=json.loads((receipt/'live.json').read_bytes());owner=live['owner_identity'];policy=live['physical_policy']
     verify_file_limit(policy['max_file_bytes'],resource.getrlimit(resource.RLIMIT_FSIZE))
+    scope=Scope.open(Path.cwd(),owner['experiment'],owner['source_commit'],policy)
     with metadata_scope(scope):return _child_legacy(receipt,cpus,lease_seconds,command)
 
 
@@ -259,9 +255,6 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
     if physical_policy is not None:state['physical_policy']=physical_policy
     launched = False
     cgroup = None
-    selected_primary = None
-    selected_body_error = None
-    selected_finalization_failed = False
 
     if storage_watch is not None:
         state['storage_budget']={'root':str(storage_watch.root),'limits':dict(storage_watch.limits)}
@@ -329,11 +322,9 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
         if physical_policy is not None:
             position=args.index(sys.executable)
             args[position:position]=['--property=LimitFSIZE='+str(physical_policy['max_file_bytes']),
-                                     '--setenv=PYTHONPATH='+str(cwd)]+['--setenv='+key+'='+value for key,value in physical_scope.environment().items()]
+                                     '--setenv=PYTHONPATH='+str(cwd)]
             position=args.index('--',args.index('--lease'))
-            context={'experiment':physical_scope.anchor['experiment'],'source':physical_scope.anchor['source'],
-                     'policy':physical_policy,'anchor':physical_scope.anchor_hash}
-            args[position:position]=['--physical','--physical-context',json.dumps(context,sort_keys=True)]
+            args.insert(position,'--physical')
         # Even an uncertain dispatch is cleaned up using this unique identity.
         launched = True
         subprocess.run(args, check=True, capture_output=True, text=True, timeout=10)
@@ -402,84 +393,41 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
             time.sleep(sample_seconds)
     except BaseException as exc:
         state['limit_reason'] = f'{type(exc).__name__}: {exc}'
-        if physical_policy is not None:
-            selected_primary=exc
-            selected_body_error=exc
     finally:
-        if physical_policy is not None:
-            from tradingagents.research.onchain_replication.neural_physical import _sync
-            physical_scope.tail=True
-            def retain(error):
-                nonlocal selected_primary, selected_finalization_failed
-                selected_finalization_failed = True
-                if selected_primary is None:selected_primary=error
-                elif error is not selected_primary:
-                    if isinstance(selected_primary,Exception) and not isinstance(selected_primary,MemoryError) and (not isinstance(error,Exception) or isinstance(error,MemoryError)):
-                        error.__cause__=selected_primary;selected_primary=error
-                    else:selected_primary.add_note('selected guard finalization failure: '+repr(error))
-                state['limit_reason']=state['limit_reason'] or type(error).__name__+': '+str(error)
-                state['phase']='failed'
-            for sig in (signal.SIGTERM,signal.SIGINT):
-                try:signal.signal(sig,signal.SIG_IGN)
-                except BaseException as error:retain(error)
-            if launched:
-                try:
-                    stopped=_systemctl('stop',unit,check=False);after=_properties(unit)
-                    if after.get('ActiveState') not in ('inactive','failed'):raise RuntimeError('unit did not stop: '+str(after))
-                    state['cleanup_unit_properties']=after;state['cleanup_stop_returncode']=stopped.returncode
-                    if cgroup is not None and cgroup.exists() and 'populated 1' in (cgroup/'cgroup.events').read_text():raise RuntimeError('unit cgroup remains populated after stop')
-                    state['cleanup_verified']=True
-                except BaseException as error:
-                    state['cleanup_verified']=False;state['cleanup_error']=str(error);retain(error)
-            try:state['physical_final_observation']=physical_scope.check(tail=True)
-            except BaseException as error:retain(error)
-            state['phase']='complete' if state['limit_reason'] is None else 'failed'
-            # Every independent evidence action is attempted, even after fatal cleanup.
-            try:publish()
-            except BaseException as error:retain(error)
-            try:physical_scope.immutable(receipt/'final.json',state)
-            except BaseException as error:retain(error)
-            try:_sync(receipt)
-            except BaseException as error:retain(error)
-            for sig,previous in prior_signals.items():
-                try:signal.signal(sig,previous)
-                except BaseException as error:retain(error)
+        if physical_policy is not None:physical_scope.tail=True
+        signal.signal(signal.SIGTERM,signal.SIG_IGN);signal.signal(signal.SIGINT,signal.SIG_IGN)
+        if launched:
+            try:
+                stopped = _systemctl('stop', unit, check=False)
+                after = _properties(unit)
+                if after.get('ActiveState') not in ('inactive', 'failed'):
+                    raise RuntimeError('unit did not stop: ' + str(after))
+                state['cleanup_unit_properties'] = after
+                state['cleanup_stop_returncode'] = stopped.returncode
+                if cgroup is not None and cgroup.exists():
+                    events = (cgroup / 'cgroup.events').read_text()
+                    if 'populated 1' in events:
+                        raise RuntimeError('unit cgroup remains populated after stop')
+                state['cleanup_verified'] = True
+            except Exception as exc:
+                state['cleanup_verified'] = False
+                state['cleanup_error'] = str(exc)
+                state['limit_reason'] = state['limit_reason'] or 'unit cleanup failed'
+        try:observe_storage()
+        except Exception as exc:state['limit_reason']=state['limit_reason'] or f'{type(exc).__name__}: {exc}'
+        state['phase'] = 'complete' if state['limit_reason'] is None else 'failed'
+        publish()
+        if physical_policy is not None:physical_scope.immutable(receipt/'final.json',state)
         else:
-            signal.signal(signal.SIGTERM,signal.SIG_IGN);signal.signal(signal.SIGINT,signal.SIG_IGN)
-            if launched:
-                try:
-                    stopped = _systemctl('stop', unit, check=False)
-                    after = _properties(unit)
-                    if after.get('ActiveState') not in ('inactive', 'failed'):
-                        raise RuntimeError('unit did not stop: ' + str(after))
-                    state['cleanup_unit_properties'] = after
-                    state['cleanup_stop_returncode'] = stopped.returncode
-                    if cgroup is not None and cgroup.exists():
-                        events = (cgroup / 'cgroup.events').read_text()
-                        if 'populated 1' in events:
-                            raise RuntimeError('unit cgroup remains populated after stop')
-                    state['cleanup_verified'] = True
-                except Exception as exc:
-                    state['cleanup_verified'] = False
-                    state['cleanup_error'] = str(exc)
-                    state['limit_reason'] = state['limit_reason'] or 'unit cleanup failed'
-            try:observe_storage()
-            except Exception as exc:state['limit_reason']=state['limit_reason'] or f'{type(exc).__name__}: {exc}'
-            state['phase'] = 'complete' if state['limit_reason'] is None else 'failed'
-            publish()
             with (receipt / 'final.json').open('x') as stream:
                 json.dump(state, stream, indent=2, sort_keys=True)
                 stream.write('\n')
                 stream.flush()
                 os.fsync(stream.fileno())
-    if physical_policy is not None:
-        if selected_primary is not None and (selected_finalization_failed or selected_primary is not selected_body_error or not isinstance(selected_primary,Exception) or isinstance(selected_primary,MemoryError)):
-            raise selected_primary
-    else:
-        fd=os.open(receipt,os.O_RDONLY|os.O_DIRECTORY)
-        try:os.fsync(fd)
-        finally:os.close(fd)
-        for sig,previous in prior_signals.items():signal.signal(sig,previous)
+    fd=os.open(receipt,os.O_RDONLY|os.O_DIRECTORY)
+    try:os.fsync(fd)
+    finally:os.close(fd)
+    for sig,previous in prior_signals.items():signal.signal(sig,previous)
     return state
 
 
@@ -518,11 +466,10 @@ if __name__ == '__main__':
     parser.add_argument('--cpus', required=True)
     parser.add_argument('--lease', type=float, required=True)
     parser.add_argument('--physical', action='store_true')
-    parser.add_argument('--physical-context')
     parser.add_argument('command', nargs=argparse.REMAINDER)
     arguments = parser.parse_args()
     command = arguments.command[1:] if arguments.command[:1] == ['--'] else arguments.command
-    raise SystemExit(_child(arguments.child, [int(cpu) for cpu in arguments.cpus.split(',')], arguments.lease, command, arguments.physical, arguments.physical_context))
+    raise SystemExit(_child(arguments.child, [int(cpu) for cpu in arguments.cpus.split(',')], arguments.lease, command, arguments.physical))
 
 
 def bind_parent_death(owner_pid):

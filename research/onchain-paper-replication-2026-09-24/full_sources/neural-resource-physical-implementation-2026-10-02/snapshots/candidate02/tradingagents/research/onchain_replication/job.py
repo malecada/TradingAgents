@@ -214,7 +214,7 @@ def launch(args):
             except BaseException as error:
                 if primary is not None:
                     primary.add_note('physical authority shutdown: '+repr(error))
-                    if isinstance(primary,Exception) and not isinstance(primary,MemoryError) and (not isinstance(error,Exception) or isinstance(error,MemoryError)):raise error from primary
+                    if isinstance(primary,Exception) and (not isinstance(error,Exception) or isinstance(error,MemoryError)):raise error from primary
                 else:raise
 
 

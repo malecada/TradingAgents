@@ -43,7 +43,7 @@ def metadata_scope(scope):
         yield
         return
     from .onchain_replication.neural_physical import Scope
-    if type(scope) is not Scope:
+    if not isinstance(scope, Scope):
         raise ValueError("bounded metadata scope authority required")
     previous = _METADATA_SCOPE.get()
     if previous is not None and previous.anchor_hash != scope.anchor_hash:
@@ -105,12 +105,7 @@ class ResearchRun:
         with _lock(admitted.root):
             admitted = admit(**arguments)
             run = cls(admitted)
-            scope=current_metadata_scope()
-            if scope is None:run.directory.mkdir(exist_ok=False)
-            else:
-                if scope.root!=admitted.root or scope.anchor['experiment']!=experiment or scope.anchor['source']!=source:
-                    raise ValueError("physical lifecycle original run authority differs")
-                scope.birth('lifecycle')
+            run.directory.mkdir(exist_ok=False)
             (run.directory / "outputs").mkdir()
             exposures = [{**item, "identity": info["identity"]}
                          for info in admitted.spec["datasets"].values() for item in info["exposures"]]

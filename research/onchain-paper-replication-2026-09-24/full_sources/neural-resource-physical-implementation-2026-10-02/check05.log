@@ -1,0 +1,18 @@
+..............F.                                                         [100%]
+=================================== FAILURES ===================================
+________ test_failure_tail_can_publish_after_active_budget_is_exhausted ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-189/test_failure_tail_can_publish_0')
+
+    def test_failure_tail_can_publish_after_active_budget_is_exhausted(tmp_path):
+        scope,base=fresh(tmp_path)
+        for i in range(14):(base/f'data-{i}').write_bytes(b'x'*60000)
+>       with pytest.raises(ValueError,match='budget'):scope.immutable(base/'ordinary.json',{'body':'no remaining active space'})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:210: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_failure_tail_can_publish_after_active_budget_is_exhausted
+1 failed, 15 passed in 6.70s

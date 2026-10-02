@@ -1,0 +1,48 @@
+........FF                                                               [100%]
+=================================== FAILURES ===================================
+_________________ test_new_policy_is_explicit_and_neural_only __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-183/test_new_policy_is_explicit_an0')
+
+    def test_new_policy_is_explicit_and_neural_only(tmp_path):
+        from tradingagents.research.onchain_replication import job
+        resource={'memory_max_bytes':6*1024**3,'memory_high_bytes':5*1024**3,'reserve_bytes':3*1024**3,
+                  'start_reserve_bytes':9*1024**3,'disk_floor_bytes':10*1024**3,'disk_paths':[str(tmp_path)],'wall_seconds':60,'physical_policy':limits()}
+>       assert job.resource_policy(resource,tmp_path)==resource
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 3221225472, 'start_reserve_bytes': 9663676416, ...}
+root = PosixPath('/tmp/pytest-of-malecada/pytest-183/test_new_policy_is_explicit_an0')
+
+    def resource_policy(value, root):
+        required = {'memory_max_bytes', 'memory_high_bytes', 'reserve_bytes', 'start_reserve_bytes',
+                    'disk_floor_bytes', 'disk_paths', 'wall_seconds'}
+        if set(value) not in (required,required|{'storage_budget'}):
+>           raise ValueError('execution resource policy fields differ')
+E           ValueError: execution resource policy fields differ
+
+tradingagents/research/onchain_replication/job.py:48: ValueError
+________ test_guard_atomic_uses_selected_bound_and_old_route_unchanged _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-183/test_guard_atomic_uses_selecte0')
+
+    def test_guard_atomic_uses_selected_bound_and_old_route_unchanged(tmp_path):
+        from tradingagents.research import lifecycle
+        from tradingagents.research.onchain_replication import resources
+        scope,base=fresh(tmp_path);guard=base/'guard';guard.mkdir()
+        with lifecycle.metadata_scope(scope):
+            resources._atomic(guard/'live.json',{'phase':'running'})
+            before=(guard/'live.json').read_bytes()
+>           with pytest.raises(ValueError,match='JSON'):resources._atomic(guard/'live.json',{'oversize':'x'*10000})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:127: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_new_policy_is_explicit_and_neural_only
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_guard_atomic_uses_selected_bound_and_old_route_unchanged
+2 failed, 8 passed in 0.22s

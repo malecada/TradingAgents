@@ -1,0 +1,31 @@
+..........FF.                                                            [100%]
+=================================== FAILURES ===================================
+_____________ test_lifecycle_output_requires_original_claim_birth ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-186/test_lifecycle_output_requires0')
+
+    def test_lifecycle_output_requires_original_claim_birth(tmp_path):
+        scope,base=fresh(tmp_path)
+        output=tmp_path/'research_runs/invented/outputs/summary.json';output.parent.mkdir(parents=True)
+>       with pytest.raises(ValueError,match='claim'):scope.immutable(output,{'not_admitted':True})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:136: Failed
+____________ test_fresh_role_ancestor_cannot_redirect_before_birth _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-186/test_fresh_role_ancestor_canno0')
+
+    def test_fresh_role_ancestor_cannot_redirect_before_birth(tmp_path):
+        n=module();base=tmp_path/n.PREFIX/'runs'/'invented';base.mkdir(parents=True)
+        external=tmp_path/'redirect';external.mkdir();(tmp_path/'research_runs').symlink_to(external,target_is_directory=True)
+>       with pytest.raises(ValueError,match='ancestor|redirect'):n.Scope.create(tmp_path,'invented','a'*40,limits(),{})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:143: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_lifecycle_output_requires_original_claim_birth
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_fresh_role_ancestor_cannot_redirect_before_birth
+2 failed, 11 passed in 0.28s

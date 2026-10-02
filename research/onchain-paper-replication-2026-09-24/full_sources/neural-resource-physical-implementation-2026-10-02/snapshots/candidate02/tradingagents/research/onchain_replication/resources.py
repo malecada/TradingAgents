@@ -260,8 +260,6 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
     launched = False
     cgroup = None
     selected_primary = None
-    selected_body_error = None
-    selected_finalization_failed = False
 
     if storage_watch is not None:
         state['storage_budget']={'root':str(storage_watch.root),'limits':dict(storage_watch.limits)}
@@ -402,19 +400,16 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
             time.sleep(sample_seconds)
     except BaseException as exc:
         state['limit_reason'] = f'{type(exc).__name__}: {exc}'
-        if physical_policy is not None:
-            selected_primary=exc
-            selected_body_error=exc
+        if physical_policy is not None and (not isinstance(exc,Exception) or isinstance(exc,MemoryError)):selected_primary=exc
     finally:
         if physical_policy is not None:
             from tradingagents.research.onchain_replication.neural_physical import _sync
             physical_scope.tail=True
             def retain(error):
-                nonlocal selected_primary, selected_finalization_failed
-                selected_finalization_failed = True
+                nonlocal selected_primary
                 if selected_primary is None:selected_primary=error
                 elif error is not selected_primary:
-                    if isinstance(selected_primary,Exception) and not isinstance(selected_primary,MemoryError) and (not isinstance(error,Exception) or isinstance(error,MemoryError)):
+                    if isinstance(selected_primary,Exception) and (not isinstance(error,Exception) or isinstance(error,MemoryError)):
                         error.__cause__=selected_primary;selected_primary=error
                     else:selected_primary.add_note('selected guard finalization failure: '+repr(error))
                 state['limit_reason']=state['limit_reason'] or type(error).__name__+': '+str(error)
@@ -473,8 +468,7 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
                 stream.flush()
                 os.fsync(stream.fileno())
     if physical_policy is not None:
-        if selected_primary is not None and (selected_finalization_failed or selected_primary is not selected_body_error or not isinstance(selected_primary,Exception) or isinstance(selected_primary,MemoryError)):
-            raise selected_primary
+        if selected_primary is not None:raise selected_primary
     else:
         fd=os.open(receipt,os.O_RDONLY|os.O_DIRECTORY)
         try:os.fsync(fd)

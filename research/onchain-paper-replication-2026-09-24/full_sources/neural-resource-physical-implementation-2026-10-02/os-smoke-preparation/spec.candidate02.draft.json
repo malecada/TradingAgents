@@ -1,0 +1,37 @@
+{
+  "status": "NONEXECUTABLE_DRAFT",
+  "experiment": "synthetic-neural-physical-os-20261002-01",
+  "classification": "new engineering containment fixture; no empirical registration/budget slot",
+  "isolated_root": null,
+  "source_commit": null,
+  "source_files": null,
+  "unresolved_reason": "final independently accepted committed physical source and full isolated source closure not frozen; no root reserved",
+  "driver_sha256": "fa92db5acd82b1af754a9c83e837c9e0c4e3d3f28d13e7f8f776f2b495e86e4b",
+  "physical_policy": {
+    "schema_version": 1,
+    "max_file_bytes": 65536,
+    "max_json_bytes": 16384,
+    "max_allocated_bytes": 2097152,
+    "max_logical_bytes": 1048576,
+    "max_entries": 128,
+    "tail_reserve_bytes": 262144
+  },
+  "guard": {
+    "memory_max_bytes": 268435456,
+    "memory_high_bytes": 201326592,
+    "memory_swap_max_bytes": 0,
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 3489660928,
+    "sample_seconds": 0.25,
+    "lease_seconds": 5,
+    "wait_seconds": 0,
+    "disk_floor_bytes": 10737418240,
+    "wall_seconds": 20
+  },
+  "expected_result": "guard failure due to child log cap; cleanup verified; after-guard observer and physical final retained",
+  "max_fake_payload_bytes": 8192,
+  "max_stdout_attempted_bytes": 69632,
+  "max_stdout_retained_bytes": 65536,
+  "attempts": 1,
+  "automatic_retry": false
+}

@@ -1,0 +1,125 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______ test_parent_original_fatal_survives_real_socket_close_uncertainty _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-211/test_parent_original_fatal_sur0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x754e2ee37360>
+
+    def test_parent_original_fatal_survives_real_socket_close_uncertainty(tmp_path,monkeypatch):
+        scope,base=fresh(tmp_path);n=module();sentinel=SystemExit('owned-handler-primary');original=n._write
+        def write(path,*a,**kw):
+            if path.name=='physical-birth-lifecycle.json':raise sentinel
+            return original(path,*a,**kw)
+        monkeypatch.setattr(n,'_write',write)
+        with pytest.raises(RuntimeError):scope.birth('lifecycle')
+        server=scope._server;original_socket=server.socket;calls=[]
+        class CloseUncertain:
+            def __getattr__(self,name):return getattr(original_socket,name)
+            def close(self):
+                calls.append('close');original_socket.close();raise OSError('owned socket close uncertain')
+        server.socket=CloseUncertain()
+>       with pytest.raises(SystemExit) as caught:scope.close_authority()
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:488: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neural_physical.py:247: in close_authority
+    self._server.close()
+tradingagents/research/onchain_replication/neural_authority.py:77: in close
+    self.socket.close()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tests.research.onchain_replication.test_neural_physical.test_parent_original_fatal_survives_real_socket_close_uncertainty.<locals>.CloseUncertain object at 0x754e2ee87380>
+
+    def close(self):
+>       calls.append('close');original_socket.close();raise OSError('owned socket close uncertain')
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OSError: owned socket close uncertain
+
+tests/research/onchain_replication/test_neural_physical.py:486: OSError
+________ test_authority_constructor_closes_owned_socket_on_bind_failure ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x754e2ee37230>
+
+    def test_authority_constructor_closes_owned_socket_on_bind_failure(monkeypatch):
+        from tradingagents.research.onchain_replication import neural_authority as a
+        original=a.socket.socket;created=[];sentinel=RuntimeError('original bind failure')
+        class FailingSocket(original):
+            def __init__(self,*args,**kw):super().__init__(*args,**kw);self.closes=0;created.append(self)
+            def bind(self,address):super().bind(address);raise sentinel
+            def close(self):self.closes+=1;super().close()
+        monkeypatch.setattr(a.socket,'socket',FailingSocket)
+        with pytest.raises(RuntimeError) as caught:a.ParentAuthority(8192,lambda request:{})
+>       assert caught.value is sentinel and created[0].closes==1 and created[0].fileno()==-1
+E       AssertionError: assert (RuntimeError('original bind failure') is RuntimeError('original bind failure') and 0 == 1)
+E        +  where RuntimeError('original bind failure') = <ExceptionInfo RuntimeError('original bind failure') tblen=3>.value
+E        +  and   0 = <tests.research.onchain_replication.test_neural_physical.test_authority_constructor_closes_owned_socket_on_bind_failure.<locals>.FailingSocket fd=12, family=1, type=1, proto=0, laddr=b'\x00neural-physical-3bd83c3b31a4479183353a5add98f802'>.closes
+
+tests/research/onchain_replication/test_neural_physical.py:504: AssertionError
+___________ test_client_primary_is_promoted_on_uncertain_owned_close ___________
+
+self = <tests.research.onchain_replication.test_neural_physical.test_client_primary_is_promoted_on_uncertain_owned_close.<locals>.FailingSocket [closed] fd=-1, family=1, type=1, proto=0>
+address = '\x00invented-no-server'
+
+>   def connect(self,address):raise ValueError('original connect refusal')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: original connect refusal
+
+tests/research/onchain_replication/test_neural_physical.py:512: ValueError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.research.onchain_replication.test_neural_physical.test_client_primary_is_promoted_on_uncertain_owned_close.<locals>.FailingSocket [closed] fd=-1, family=1, type=1, proto=0>
+
+>   def close(self):self.closes+=1;super().close();raise OSError('uncertain actual client close')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   OSError: uncertain actual client close
+
+tests/research/onchain_replication/test_neural_physical.py:513: OSError
+
+The above exception was the direct cause of the following exception:
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x754e2ed83650>
+
+    def test_client_primary_is_promoted_on_uncertain_owned_close(monkeypatch):
+        from tradingagents.research.onchain_replication import neural_authority as a
+        original=a.socket.socket;created=[]
+        class FailingSocket(original):
+            def __init__(self,*args,**kw):super().__init__(*args,**kw);self.closes=0;created.append(self)
+            def connect(self,address):raise ValueError('original connect refusal')
+            def close(self):self.closes+=1;super().close();raise OSError('uncertain actual client close')
+        monkeypatch.setattr(a.socket,'socket',FailingSocket)
+        identity={'pid':__import__('os').getpid(),'start_ticks':a.process_start(__import__('os').getpid()),'uid':__import__('os').getuid(),'address':'invented-no-server'}
+>       with pytest.raises(module().PhysicalCleanupFailure) as caught:a.request(identity,'a'*64,{'op':'get'},8192)
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:516: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+identity = {'pid': 2492072, 'start_ticks': '15595070', 'uid': 1000, 'address': 'invented-no-server'}
+anchor_hash = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+value = {'op': 'get'}, maximum = 8192
+
+    def request(identity,anchor_hash,value,maximum):
+        try:
+            if process_start(identity['pid'])!=identity['start_ticks']:raise ValueError('physical original parent process replaced')
+            with socket.socket(socket.AF_UNIX,socket.SOCK_STREAM) as client:
+                client.settimeout(2);client.connect('\0'+identity['address'])
+                pid,uid,_=struct.unpack('3i',client.getsockopt(socket.SOL_SOCKET,socket.SO_PEERCRED,12))
+                if pid!=identity['pid'] or uid!=identity['uid'] or process_start(pid)!=identity['start_ticks']:
+                    raise ValueError('physical original parent authority peer differs')
+                _send(client,{'anchor_sha256':anchor_hash,**value},maximum)
+                response=_receive(client,maximum)
+            if 'error' in response:raise RuntimeError('physical parent authority refused: '+response['error'])
+            return response['result']
+        except (OSError,KeyError,json.JSONDecodeError) as error:
+>           raise RuntimeError('physical original parent authority unavailable; no disk fallback') from error
+E           RuntimeError: physical original parent authority unavailable; no disk fallback
+
+tradingagents/research/onchain_replication/neural_authority.py:97: RuntimeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_parent_original_fatal_survives_real_socket_close_uncertainty
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_authority_constructor_closes_owned_socket_on_bind_failure
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_client_primary_is_promoted_on_uncertain_owned_close
+3 failed, 35 deselected in 0.44s

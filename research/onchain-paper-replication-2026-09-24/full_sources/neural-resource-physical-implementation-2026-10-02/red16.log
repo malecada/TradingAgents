@@ -1,0 +1,87 @@
+...F                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_selected_guard_ordinary_primary_survives_late_cleanup_promotion[MemoryError-True] _
+
+path = PosixPath('/tmp/pytest-of-malecada/pytest-2/test_selected_guard_ordinary_p3/research_artifacts/onchain-paper-replication-2026-09-24/runs/invented/r/live.json')
+value = {'unit': 'onchain-replication-9fcc3fe50a9341268be2381b92061465.service', 'receipt_dir': '/tmp/pytest-of-malecada/pytes.../runs/invented/r', 'command': ['true'], 'cwd': '/tmp/pytest-of-malecada/pytest-2/test_selected_guard_ordinary_p3', ...}
+
+    def write(path,value):
+>       if value.get('phase')=='running' and not once:once.append(True);raise primary
+                                                                        ^^^^^^^^^^^^^
+E       MemoryError: original ordinary guard body
+
+tests/research/onchain_replication/test_neural_physical.py:662: MemoryError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-2/test_selected_guard_ordinary_p3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cb091a149e0>
+cleanup_uncertain = True, primary_type = <class 'MemoryError'>
+
+    @pytest.mark.parametrize('cleanup_uncertain',[False,True])
+    @pytest.mark.parametrize('primary_type',[ValueError,MemoryError])
+    def test_selected_guard_ordinary_primary_survives_late_cleanup_promotion(tmp_path,monkeypatch,cleanup_uncertain,primary_type):
+        import os
+        from tests.research.onchain_replication.test_resources import mock_unit
+        from tradingagents.research.onchain_replication import resources
+        from tradingagents.research import lifecycle
+        scope,base=fresh(tmp_path);receipt,calls=mock_unit(base,monkeypatch,completed=True)
+        primary=primary_type('original ordinary guard body');atomic=resources._atomic;once=[];closed=[]
+        def write(path,value):
+            if value.get('phase')=='running' and not once:once.append(True);raise primary
+            return atomic(path,value)
+        dispatch=resources.subprocess.run
+        def run(args,**kwargs):
+            result=dispatch(args,**kwargs)
+            if args[0]=='systemd-run':
+                p=receipt/'cpu_ready.json';v=json.loads(p.read_bytes());v['file_size_limit']=[65536,65536];p.write_text(json.dumps(v))
+            return result
+        original_close=os.close
+        def close(fd):
+            path=os.readlink('/proc/self/fd/'+str(fd));original_close(fd)
+            if cleanup_uncertain and path==str(receipt) and (receipt/'final.json').exists() and not closed:
+                closed.append(fd);raise OSError('one-shot actual owned directory close uncertainty')
+        monkeypatch.setattr(resources,'_atomic',write);monkeypatch.setattr(resources.subprocess,'run',run);monkeypatch.setattr(os,'close',close)
+        kwargs={'cwd':tmp_path,'receipt_dir':receipt,'disk_paths':[tmp_path],'disk_floor_bytes':1,
+                'physical_policy':limits(),'owner_identity':{'experiment':'invented','source_commit':'a'*40}}
+        with lifecycle.metadata_scope(scope):
+            if primary_type is MemoryError:
+>               with pytest.raises(MemoryError) as caught:resources.guarded_run(['true'],**kwargs)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neural_physical.py:680: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/resources.py:475: in guarded_run
+    raise selected_primary
+tradingagents/research/onchain_replication/resources.py:438: in guarded_run
+    try:physical_scope.immutable(receipt/'final.json',state)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neural_physical.py:366: in immutable
+    def immutable(self,path,value):self._publish(path,value,False)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neural_physical.py:360: in _publish
+    _sync(path.parent)
+tradingagents/research/onchain_replication/neural_physical.py:111: in _sync
+    finally:_close(fd,primary)
+            ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+fd = 14, primary = None
+
+    def _close(fd,primary=None):
+        try:os.close(fd)
+        except BaseException as error:
+            if primary is not None:
+                primary.add_note('physical close uncertainty: '+repr(error))
+                if not isinstance(primary,Exception) or isinstance(primary,MemoryError):raise primary
+            failure=PhysicalCleanupFailure('physical owned close uncertain; no descriptor retry')
+>           failure.add_note(repr(error));raise failure from primary
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           tradingagents.research.onchain_replication.neural_physical.PhysicalCleanupFailure: physical owned close uncertain; no descriptor retry
+E           OSError('one-shot actual owned directory close uncertainty')
+
+tradingagents/research/onchain_replication/neural_physical.py:104: PhysicalCleanupFailure
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_selected_guard_ordinary_primary_survives_late_cleanup_promotion[MemoryError-True]
+1 failed, 3 passed, 45 deselected in 1.10s

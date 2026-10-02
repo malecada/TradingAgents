@@ -1,0 +1,21 @@
+..F....                                                                  [100%]
+=================================== FAILURES ===================================
+_____________ test_authority_mutable_state_cannot_reset_root_birth _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-199/test_authority_mutable_state_c0')
+
+    def test_authority_mutable_state_cannot_reset_root_birth(tmp_path):
+        scope,base=fresh(tmp_path);life=scope.roots['lifecycle'];life.mkdir(parents=True)
+        scope.immutable(life/'claim.json',{'experiment_id':'invented','source':'a'*40})
+        life.rename(life.with_name('preserved-first'));life.mkdir()
+        (life/'claim.json').write_text(json.dumps({'experiment_id':'invented','source':'a'*40,'rewritten':True}))
+        (base/'physical-state.json').write_text(json.dumps({'identities':{'control':scope.anchor['control_identity']},'claim_sha256':None}))
+>       with pytest.raises(ValueError,match='original|birth'):scope.check()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:275: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_authority_mutable_state_cannot_reset_root_birth
+1 failed, 6 passed, 17 deselected in 0.31s

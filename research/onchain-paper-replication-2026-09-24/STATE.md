@@ -3,6 +3,53 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 accepted physical source — real-guard smoke next**:
+Final candidate04 SHA256476aa1a6c778526f8890397a51e3c603c4d9a803f881065fc27b654b418149c7
+is independently accepted for the selected prospective route, REVIEW_FINAL
+SHA256406ca499dee7220d97d2582ccf426a608373826aeeec05b77042ff4a44266a9b. NPH5–8 are closed by bounded
+error/cleanup corrections with exact original fatal and ordinary cause retention.
+Final check23 passed19 targeted cases,36deselected3.56s. Separate check20 passed39
+default resource regressions plus3 pure smoke-draft cases. These separate scopes
+are not a combined model or OS verification. All candidate01–04 snapshots and
+failed red/check attempts remain preserved. Source mutations have ceased.
+
+Corrected smoke candidate02 manifest836815bb6fa8d5b0774c122b5ef86644b8bf51d0685e5012f49888c33899de56
+is independently accepted as nonexecutable preparation only, REVIEW_CANDIDATE02
+SHA25656d164596da8f084fcc6945ce975e6f75b824371c416660231730c58dddcac62. Root next binds the full committed
+source closure and fresh isolated namespace in a finalized spec for review before
+one bounded real systemd/kernel/log-limit test. No old identity or empirical slot
+is reused. The final neural registration still requires exact committed source/
+runtime maps and independent concrete gate review after smoke evidence.
+
+Root prerelease metadata audit is independently accepted, REVIEW_PRERELEASE
+SHA256c6c99ef71169ffa1e51e311433a5b3e2b20cf9e871bc72ff57f72468655ab05d:
+48 inputs,33 terminal historical claims(27complete/6failed),16 current mechanism
+claims and all three fresh namespaces independently checked. Final serialized
+claim and nested authority RPC envelope must each remain below256KiB. Available
+RAM currently clears9GiB startup; fresh guard checks still apply. No empirical
+process is active;77/109 coverage and1,420 pending financial fits remain unchanged.
+
+**October 2 host availability — memory startup threshold cleared**:
+After the user's latest RAM reduction, a live observation found10,367,586,304B
+available (9.66GiB), above the unchanged9,663,676,416B (9GiB) startup threshold.
+Free disk20,638,670,848B also exceeds the10GiB floor. A fresh metadata-only
+observation is retained in full_sources/neural-resource-release-2026-10-02/host01.json;
+this does not replace release-time admission. The local systemd user manager is
+reachable (249.11-0ubuntu3.22), without launching or changing any unit.
+
+Prior ephemeral agents are no longer live. Two explicitly bounded replacement
+agents resume the physical-source correction and independent review, with original
+exclusive file ownership and all earlier snapshots/logs preserved. Candidate02
+fixed the original NPH5/6 and fatal monitor-disposition problems; selected ordinary
+primary cause retention still needs final review. Fresh red15 reproduced that
+cause gap; check18 passed9 focused cases,77deselected2.05s. This evidence does not
+mean final source acceptance or OS execution. The separate smoke draft is being
+corrected to preserve fatal priority across terminal publication errors. Root owns
+STATE, final source/registration and release checkpoints. No empirical job is active.
+Next action: independently accept/freeze the corrected source, commit and back it
+up, then finalize/review and execute the small fresh real-guard smoke before the
+nine-cell capacity gate. All77/109 coverage and1,420 pending financial fits remain.
+
 **October 2 frozen candidates — full archive check closed; final reviews active**:
 owner05 CLOSED exit0 with3passed543.85s, session4135, against immutable
 candidate01 source manifest81bd6e0963dc28f47c3c3208d99bca8124bcf504824a2803e7c89ecbc36f00a5.

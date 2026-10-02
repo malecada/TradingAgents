@@ -1,0 +1,36 @@
+..F.                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_selected_launcher_reports_nonzero_monitor_even_after_complete_reconciliation _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-222/test_selected_launcher_reports0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7057c18c1b50>
+capsys = <_pytest.capture.CaptureFixture object at 0x7057c197fa10>
+
+    def test_selected_launcher_reports_nonzero_monitor_even_after_complete_reconciliation(tmp_path,monkeypatch,capsys):
+        from types import SimpleNamespace
+        from tradingagents.research import lifecycle
+        from tradingagents.research.onchain_replication import job
+        n=module();(tmp_path/'research_runs').mkdir();(tmp_path/n.PREFIX/'sources').mkdir(parents=True)
+        args=SimpleNamespace(root=tmp_path,experiment='invented',source='a'*40,registration='synthetic')
+        monkeypatch.setattr(job,'_admitted',lambda a:(None,{'resources':{'physical_policy':limits()}}))
+        monkeypatch.setattr(job.signal,'signal',lambda *a:None);retained=[]
+        class Monitor:
+            def __init__(self,*a,**kw):retained.append(lifecycle.current_metadata_scope())
+            def wait(self):return 23
+            def poll(self):return 23
+        monkeypatch.setattr(job.subprocess,'Popen',Monitor)
+        def reconcile(a):
+            scope=retained[0];scope.immutable(scope.base/'observer.json',{'status':'complete'});return {'status':'complete'}
+        monkeypatch.setattr(job,'reconcile',reconcile)
+>       assert job.launch(args)==1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = <function launch at 0x7057c18bc7c0>(namespace(root=PosixPath('/tmp/pytest-of-malecada/pytest-222/test_selected_launcher_reports0'), experiment='invented',...aaaaaaa', registration='synthetic', physical_anchor='e6a0f7bc2007a962d2ef6a339d49582c7ffba7a5ff6dd87ec9cf636886e96dd8'))
+E        +    where <function launch at 0x7057c18bc7c0> = <module 'tradingagents.research.onchain_replication.job' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job.py'>.launch
+
+tests/research/onchain_replication/test_neural_physical.py:616: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "complete"}
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_selected_launcher_reports_nonzero_monitor_even_after_complete_reconciliation
+1 failed, 3 passed, 41 deselected in 1.21s

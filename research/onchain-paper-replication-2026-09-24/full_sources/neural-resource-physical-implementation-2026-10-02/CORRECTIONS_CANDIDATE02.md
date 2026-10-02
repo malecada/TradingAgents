@@ -1,0 +1,15 @@
+# Candidate02 — fatal-preservation corrections only
+
+Candidate01, its snapshots, all26raw attempts, smoke preparation and the independent REVIEW_CANDIDATE01 remain unchanged. Candidate02 adds five closed raw logs and seven fresh source/test snapshots. No OS user unit or empirical work was launched. Physical-policy caps, root/source joins, model/scientific population, scratch mapping and old omitted-policy behavior remain unchanged.
+
+NPH5: ParentAuthority.close now merges the handler failure observed after join, preserving the actual fatal object even if it arose during shutdown. A bounded event-coordinated real handler regression reproduced the stale pre-join overwrite, then passed.
+
+NPH6: Scope.create retains an existing fatal primary; otherwise a fatal authority-close uncertainty is promoted and explicitly chained to the ordinary creation failure. The regression forces an ordinary anchor write failure followed by uncertain authority cleanup and verifies exact fatal identity/cause.
+
+NPH7: The selected guard retains fatal objects instead of reducing them to a reason string. Its selected finalization independently attempts unit stop/empty checks, physical final observation, live receipt, immutable final receipt, primary-aware directory synchronization and signal restoration. Secondary failures become notes on an existing fatal or promote fatal cleanup over an ordinary failure. The original fatal is rethrown after these attempts. The legacy omitted-policy branch retains its original behavior. Regressions cover fatal local client failure, a simultaneous independent final-live publication failure, and actual owned directory close followed by injected close uncertainty.
+
+A directly related selected launcher correction records the monitor wait result. A nonzero monitor exit produces a retained `monitor-failed.json`, prints `status=monitor_failed` with the original reconciled disposition and returns nonzero even if earlier immutable lifecycle/guard records say complete. Existing complete observer bytes remain preserved. No replacement physical-final receipt is invented after uncertain monitor cleanup. The original authority still closes through the existing finally path. A focused regression first reproduced an unqualified complete/zero return, then passed.
+
+Red13: three expected failures. Check15: three passed. Red14: one expected launcher failure and three passing selected cleanup cases. Check16: eleven selected affected/control tests passed,73deselected. Since its `-k` filter also excluded default resource tests, check17 explicitly ran that file separately:39passed. No numerical or heavy model rerun was necessary for this delta. Candidate01's tiny-model allocation figures remain observations of that earlier synthetic fixture, not a new candidate02 physical measurement or real-job bound.
+
+The smoke package under os-smoke-preparation remains a nonexecutable draft and depends on corrected independent acceptance and exact final source binding. The whole-route source/admission/availability conditions and live-parent-loss recovery limits in IMPLEMENTATION_CANDIDATE01 still apply.

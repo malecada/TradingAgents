@@ -1,0 +1,18 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+____ test_terminal_entry_reserve_refuses_ordinary_publication_before_write _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-208/test_terminal_entry_reserve_re0')
+
+    def test_terminal_entry_reserve_refuses_ordinary_publication_before_write(tmp_path):
+        scope,base=fresh(tmp_path)
+        for i in range(110):(base/f'empty-{i}').touch()
+>       with pytest.raises(ValueError,match='entry'):scope.immutable(base/'ordinary.json',{})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:445: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_terminal_entry_reserve_refuses_ordinary_publication_before_write
+1 failed, 1 passed, 32 deselected in 0.54s

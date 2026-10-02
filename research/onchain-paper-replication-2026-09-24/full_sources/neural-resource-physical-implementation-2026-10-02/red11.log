@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_selected_scratch_mapping_is_propagated_and_cached_tempdir_reset _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-209/test_selected_scratch_mapping_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f6e46713360>
+
+    def test_selected_scratch_mapping_is_propagated_and_cached_tempdir_reset(tmp_path,monkeypatch):
+        import tempfile
+        scope,base=fresh(tmp_path)
+        expected={'TMPDIR':str(base/'scratch/tmp'),'TMP':str(base/'scratch/tmp'),'TEMP':str(base/'scratch/tmp'),
+                  'XDG_CACHE_HOME':str(base/'scratch/cache'),'TORCH_HOME':str(base/'scratch/torch')}
+>       assert scope.environment()==expected
+               ^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Scope' object has no attribute 'environment'
+
+tests/research/onchain_replication/test_neural_physical.py:462: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_selected_scratch_mapping_is_propagated_and_cached_tempdir_reset
+1 failed, 34 deselected in 0.32s

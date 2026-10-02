@@ -1,0 +1,38 @@
+................F...........                                             [100%]
+=================================== FAILURES ===================================
+_____ test_monitor_final_accounting_includes_observer_after_guard_returns ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-204/test_monitor_final_accounting_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7207cb9747d0>
+
+    def test_monitor_final_accounting_includes_observer_after_guard_returns(tmp_path,monkeypatch):
+        from types import SimpleNamespace
+        from tradingagents.research import lifecycle
+        from tradingagents.research.onchain_replication import job,resources
+        scope,base=fresh(tmp_path)
+        args=SimpleNamespace(root=tmp_path,experiment='invented',source='a'*40,registration='synthetic',owner_pid=1,nonce='invented',physical_anchor=scope.anchor_hash)
+        launch={'experiment':'invented','source_commit':'a'*40,'supervisor_pid':1,'nonce':'invented'}
+        scope.immutable(base/'launch.json',launch)
+        spec={'resources':{'physical_policy':limits()}}
+        monkeypatch.setattr(job,'_admitted',lambda a:(None,spec));monkeypatch.setattr(resources,'bind_parent_death',lambda p:None)
+        monkeypatch.setattr(job.signal,'signal',lambda *a:None)
+        def guarded(*a,**kw):
+            directory=base/'guard';directory.mkdir()
+            lifecycle._immutable(directory/'final.json',{'phase':'complete','cleanup_verified':True})
+            return {'phase':'complete'}
+        def reconcile(a):
+            lifecycle._immutable(base/'observer.json',{'status':'complete','after_guard':True})
+            return {'status':'complete'}
+        monkeypatch.setattr(resources,'guarded_run',guarded);monkeypatch.setattr(job,'reconcile',reconcile)
+        assert job.monitor(args)==0
+        snapshot=json.loads((base/'physical-final.json').read_bytes())
+>       assert snapshot['snapshot_before_receipt']['files']>=7
+E       assert 6 >= 7
+
+tests/research/onchain_replication/test_neural_physical.py:266: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"physical_final_accounting": {"allocated_bytes": 32768, "claim_sha256": null, "entries": 9, "files": 7, "logical_bytes": 2158, "qualification": "sampled allocated accounting; not filesystem quota; kernel file-size and bounded metadata writes required", "roles": ["control", "lifecycle", "producer"], "terminal_tail_included": true}}
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_monitor_final_accounting_includes_observer_after_guard_returns
+1 failed, 27 passed in 14.99s

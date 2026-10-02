@@ -1,0 +1,30 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_reopen_requires_original_anchor_and_rejects_coherent_control_replacement _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-200/test_reopen_requires_original_0')
+
+    def test_reopen_requires_original_anchor_and_rejects_coherent_control_replacement(tmp_path):
+        scope,base=fresh(tmp_path);n=module();original=scope.anchor_hash
+>       with pytest.raises(ValueError,match='original'):n.Scope.open(tmp_path,'invented','a'*40,limits())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neural_physical.py:325: Failed
+__________ test_public_authority_fields_cannot_be_coherently_rebound ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-200/test_public_authority_fields_c0')
+
+    def test_public_authority_fields_cannot_be_coherently_rebound(tmp_path):
+        scope,base=fresh(tmp_path)
+        replacement={**scope.anchor,'policy':{**scope.policy,'max_file_bytes':65537}}
+>       with pytest.raises((AttributeError,ValueError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (AttributeError, ValueError)
+
+tests/research/onchain_replication/test_neural_physical.py:338: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_reopen_requires_original_anchor_and_rejects_coherent_control_replacement
+FAILED tests/research/onchain_replication/test_neural_physical.py::test_public_authority_fields_cannot_be_coherently_rebound
+2 failed, 24 deselected in 0.15s

@@ -1,0 +1,9 @@
+# Independent bounded assessment review
+
+The corrected assessment is accepted as preparation for a separate engineering task. It does not admit an archive job, establish SSH interoperability or demonstrate physical feasibility. No material error was found in the inspected missing-dispatch, lease or transfer-accounting claims.
+
+Read-only reconstruction verified all 16 source/report hashes against both current bytes and committed `ed87418d219f52f9cc3c80bcb027f2c904abee5e`, plus all 49 metadata-file hashes. The preserved draft and corrected report match `correction01.json`; their only difference changes the reported scan count from 46 to 49. Corrected report SHA256: `3d25dad22b31c84a7f3f214092094d852abf1d051a8e5ce6e0f35436ddb013fd`.
+
+Source inspection confirms that `job_payload.py` calls the compact producer without its archive transport keyword, while archive-selected production requires that transport. The report correctly identifies the current injected-fixture boundary. The actual adapter reserves upload length and `32768 * (floor(length / 32768) + 1)` for a download; those reservations exclude SSH framing and diagnostic traffic. Its mutable remaining-budget field is not a durable original-owner ledger. Existing writer/read wrappers hold typed owner transitions and expose private live callbacks, so recursively acquiring the public operation lease is unsuitable for the proposed adapter.
+
+The proposed new input selector and dispatch module are prospective design choices. They require implementation, independently checked aggregate reservations, source closure and focused evidence before acceptance. The assessment does not establish complete registration coverage outside its enumerated 49 files, remote retained capacity, descendant cleanup, kernel enforcement for the future archive worker or numerical equivalence of an unimplemented dispatch layer. No reviewer test, graph/financial execution, network operation or credential read occurred.
