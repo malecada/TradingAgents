@@ -1,0 +1,24 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_______________ test_late_valid_stage_creation_refuses_selection _______________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x748cbf8ce350>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x748cbf8cee90>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x748cbf6b69e0>
+
+    def test_late_valid_stage_creation_refuses_selection(admitted,monkeypatch):
+        owner = admitted[1];original = owner.boundary;calls = 0
+        def boundary():
+            nonlocal calls
+            calls += 1;original()
+            if calls == 2:
+                owner.begin('dictionary',workload_sha256='d'*64,pairs=0)
+        monkeypatch.setattr(owner,'boundary',boundary)
+>       with pytest.raises(ValueError,match='fresh'):select(admitted)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_archive_owner_policy.py:111: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_late_valid_stage_creation_refuses_selection
+1 failed, 1 passed, 14 deselected in 35.13s

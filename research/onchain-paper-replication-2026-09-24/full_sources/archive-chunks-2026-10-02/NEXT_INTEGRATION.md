@@ -109,3 +109,17 @@ allowances. The current compact_owner stage writer/sealer/verifier and downstrea
 compact_mcm_output/compact_terminal still select local stage contracts. Those
 contracts must remain intact. Checkpoint and score payload retention, whole-
 workflow physical accounting and scientific admission are still separate gaps.
+
+## October2 registered policy continuation
+
+archive_owner_policy.select now supplies the prospective registered selection
+prerequisite: actual fresh owner, exact job/plan/descriptor/input/source/endpoint
+and conservative complete-stage logical allowances. Independent AOP1 correction
+is accepted; baseline14 and corrected targeted3 passes are separately retained
+in archive-owner-policy-2026-10-02. No writer or read claim is installed.
+
+Next: durable finite operation reservations, owner transition authority and
+explicit writer/seal/publication/terminal dispatch. Finite decoded member
+allowances must be spent before operations, including ambiguous failures, with
+no reopen or refund of terminal identities. Physical accounting, score/checkpoint
+retention and empirical resource admission remain additional dependencies.

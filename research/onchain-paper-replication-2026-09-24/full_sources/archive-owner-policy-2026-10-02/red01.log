@@ -1,0 +1,270 @@
+FFFFFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+_ test_registered_policy_binds_actual_owner_and_full_required_stage_population _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862b1778c0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862b176e40>)
+
+    def test_registered_policy_binds_actual_owner_and_full_required_stage_population(admitted):
+>       selection = select(admitted);selection.check()
+                    ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862b1778c0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862b176e40>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_____ test_wrong_registration_or_underreserved_envelope_refuses[selection] _____
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862b1c34d0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862b1c2c10>)
+
+    @pytest.mark.parametrize('admitted',['selection','descriptor','max_writer_metadata_bytes',
+        'max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes',
+        'max_remote_payload_bytes','max_decoded_transfer_bytes','local_free_floor_bytes'],indirect=True)
+    def test_wrong_registration_or_underreserved_envelope_refuses(admitted):
+>       with pytest.raises(ValueError):select(admitted)
+                                       ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862b1c34d0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862b1c2c10>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+____ test_wrong_registration_or_underreserved_envelope_refuses[descriptor] _____
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862b1c3ed0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862b1c2ad0>)
+
+    @pytest.mark.parametrize('admitted',['selection','descriptor','max_writer_metadata_bytes',
+        'max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes',
+        'max_remote_payload_bytes','max_decoded_transfer_bytes','local_free_floor_bytes'],indirect=True)
+    def test_wrong_registration_or_underreserved_envelope_refuses(admitted):
+>       with pytest.raises(ValueError):select(admitted)
+                                       ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862b1c3ed0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862b1c2ad0>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_ test_wrong_registration_or_underreserved_envelope_refuses[max_writer_metadata_bytes] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862afabbb0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862afab490>)
+
+    @pytest.mark.parametrize('admitted',['selection','descriptor','max_writer_metadata_bytes',
+        'max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes',
+        'max_remote_payload_bytes','max_decoded_transfer_bytes','local_free_floor_bytes'],indirect=True)
+    def test_wrong_registration_or_underreserved_envelope_refuses(admitted):
+>       with pytest.raises(ValueError):select(admitted)
+                                       ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862afabbb0>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862afab490>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_ test_wrong_registration_or_underreserved_envelope_refuses[max_read_metadata_bytes] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862ac1c770>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862afab360>)
+
+    @pytest.mark.parametrize('admitted',['selection','descriptor','max_writer_metadata_bytes',
+        'max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes',
+        'max_remote_payload_bytes','max_decoded_transfer_bytes','local_free_floor_bytes'],indirect=True)
+    def test_wrong_registration_or_underreserved_envelope_refuses(admitted):
+>       with pytest.raises(ValueError):select(admitted)
+                                       ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862ac1c770>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862afab360>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+__ test_wrong_registration_or_underreserved_envelope_refuses[max_stage_bytes] __
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862aa58950>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862ab69130>)
+
+    @pytest.mark.parametrize('admitted',['selection','descriptor','max_writer_metadata_bytes',
+        'max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes',
+        'max_remote_payload_bytes','max_decoded_transfer_bytes','local_free_floor_bytes'],indirect=True)
+    def test_wrong_registration_or_underreserved_envelope_refuses(admitted):
+>       with pytest.raises(ValueError):select(admitted)
+                                       ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862aa58950>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862ab69130>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_ test_wrong_registration_or_underreserved_envelope_refuses[max_workflow_metadata_bytes] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862aa90050>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862ad279b0>)
+
+    @pytest.mark.parametrize('admitted',['selection','descriptor','max_writer_metadata_bytes',
+        'max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes',
+        'max_remote_payload_bytes','max_decoded_transfer_bytes','local_free_floor_bytes'],indirect=True)
+    def test_wrong_registration_or_underreserved_envelope_refuses(admitted):
+>       with pytest.raises(ValueError):select(admitted)
+                                       ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862aa90050>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862ad279b0>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_ test_wrong_registration_or_underreserved_envelope_refuses[max_remote_payload_bytes] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862aa90d10>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862aa90270>)
+
+    @pytest.mark.parametrize('admitted',['selection','descriptor','max_writer_metadata_bytes',
+        'max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes',
+        'max_remote_payload_bytes','max_decoded_transfer_bytes','local_free_floor_bytes'],indirect=True)
+    def test_wrong_registration_or_underreserved_envelope_refuses(admitted):
+>       with pytest.raises(ValueError):select(admitted)
+                                       ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862aa90d10>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862aa90270>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_ test_wrong_registration_or_underreserved_envelope_refuses[max_decoded_transfer_bytes] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862abd5b50>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862abd5750>)
+
+    @pytest.mark.parametrize('admitted',['selection','descriptor','max_writer_metadata_bytes',
+        'max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes',
+        'max_remote_payload_bytes','max_decoded_transfer_bytes','local_free_floor_bytes'],indirect=True)
+    def test_wrong_registration_or_underreserved_envelope_refuses(admitted):
+>       with pytest.raises(ValueError):select(admitted)
+                                       ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862abd5b50>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862abd5750>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_ test_wrong_registration_or_underreserved_envelope_refuses[local_free_floor_bytes] _
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862abd6650>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862abd6250>)
+
+    @pytest.mark.parametrize('admitted',['selection','descriptor','max_writer_metadata_bytes',
+        'max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes',
+        'max_remote_payload_bytes','max_decoded_transfer_bytes','local_free_floor_bytes'],indirect=True)
+    def test_wrong_registration_or_underreserved_envelope_refuses(admitted):
+>       with pytest.raises(ValueError):select(admitted)
+                                       ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862abd6650>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862abd6250>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_________ test_saved_input_change_or_terminal_owner_revokes_selection __________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862abd6d50>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862aaacb90>)
+
+    def test_saved_input_change_or_terminal_owner_revokes_selection(admitted):
+>       selection = select(admitted)
+                    ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862abd6d50>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862aaacb90>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_______________ test_transport_endpoint_change_revokes_selection _______________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862abd7250>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862aaad310>)
+
+    def test_transport_endpoint_change_revokes_selection(admitted):
+>       selection = select(admitted);admitted[2].identity = '0'*64
+                    ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_archive_owner_policy.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862abd7250>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862aaad310>)
+
+    def select(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:47: ModuleNotFoundError
+_______ test_selection_requires_exact_current_owner_and_registered_input _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...object at 0x7a862abd7750>, <tests.research.onchain_replication.test_archive_chunks.Transport object at 0x7a862c211630>)
+
+    def test_selection_requires_exact_current_owner_and_registered_input(admitted):
+>       from tradingagents.research.onchain_replication.archive_owner_policy import select
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.archive_owner_policy'
+
+tests/research/onchain_replication/test_archive_owner_policy.py:90: ModuleNotFoundError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_registered_policy_binds_actual_owner_and_full_required_stage_population
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_wrong_registration_or_underreserved_envelope_refuses[selection]
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_wrong_registration_or_underreserved_envelope_refuses[descriptor]
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_wrong_registration_or_underreserved_envelope_refuses[max_writer_metadata_bytes]
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_wrong_registration_or_underreserved_envelope_refuses[max_read_metadata_bytes]
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_wrong_registration_or_underreserved_envelope_refuses[max_stage_bytes]
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_wrong_registration_or_underreserved_envelope_refuses[max_workflow_metadata_bytes]
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_wrong_registration_or_underreserved_envelope_refuses[max_remote_payload_bytes]
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_wrong_registration_or_underreserved_envelope_refuses[max_decoded_transfer_bytes]
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_wrong_registration_or_underreserved_envelope_refuses[local_free_floor_bytes]
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_saved_input_change_or_terminal_owner_revokes_selection
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_transport_endpoint_change_revokes_selection
+FAILED tests/research/onchain_replication/test_archive_owner_policy.py::test_selection_requires_exact_current_owner_and_registered_input
+13 failed in 168.21s (0:02:48)

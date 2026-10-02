@@ -3,7 +3,34 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Latest handoff — October 2, archived scientific-stage joins accepted**:
+**Latest handoff — October 2, registered archive policy gate accepted**:
+archive_owner_policy.select now binds an actual fresh compact owner to the
+registered job, producer plan, descriptor, input bytes, source authority and
+transport identity. Conservative allowances cover the full required stage
+population, remote event bytes, decoded transfers and finite verification
+metadata. This is a prospective selection prerequisite; it creates no remote
+namespace and installs no writer or operation meter.
+
+Evidence: full_sources/archive-owner-policy-2026-10-02/. Initial red01 CLOSED
+13 missing-module failures168.21s; check01 CLOSED14passed252.86s. Independent
+AOP1 review exposed a late-stage freshness race, reproduced by review-red01
+CLOSED1failed1passed14deselected35.13s. The callback-free final freshness
+postcondition passes targeted check02 CLOSED3passed13deselected73.92s,
+session14361exit0. These are separate baseline and corrected targeted results,
+not a combined final16-case suite. Independent REVIEW_FINAL SHA256
+5b7720ada60ffe504ac5f9adcdf65423f597c1b9857c56e464363bfb6137803a.
+Earlier source/test snapshots and failures remain preserved.
+
+No active process or source freeze remains. Next safe action: implement durable
+finite write/read operation reservations and explicit archive-backed owner,
+producer, publication and terminal routing. Selection must be consumed under
+owner transition authority; sampled freshness alone is not an execution claim.
+Checkpoint/score retention and complete physical/transport accounting still
+precede reviewed resource/hub/budget admission. Coverage77/109;32open; all1420
+financial fits pending. No empirical admission;60→61 remains unadopted. The
+10GiB local free floor remains.
+
+**Previous handoff — October 2, archived scientific-stage joins accepted**:
 Cold reader checkpoint9639917aba0c311d20549875b813eda3d8cdfd9a was committed,
 pushed and exact remote HEAD verified. archived_stage.verify now explicitly
 joins every cold-replayed matching event with actual local checkpoint trees and
