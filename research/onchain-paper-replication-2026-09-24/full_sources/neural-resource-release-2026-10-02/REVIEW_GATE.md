@@ -1,0 +1,27 @@
+# Independent final neural-capacity registration review
+
+The concrete registration is accepted for the stated prospective capacity measurement, subject to successful committed lifecycle admission and immediate launch checks. No material discrepancy was found in the reviewed metadata joins. This acceptance does not itself create a claim, reserve an identity or establish real-graph capacity.
+
+Exact reviewed objects:
+
+| Object | SHA256 |
+| --- | --- |
+| gate.json | c0fc6a40f995d71e0c0aade489de06437af84839dedc6111d9f8b746afbc92e7 |
+| CHARTER.md | 1c01ba3feeeb95e5982d6e59b359d8013e4392b5ec371b572e2d2f6bc61887b5 |
+| execution-job.json | d38d70e12848223c1e381f8d45ee25b6ea131ae0a02f4e336ccb8996444de70f |
+
+All 189 registered source-file hashes were independently compared with current bytes. They include the complete 131-file Python closure required by the maintained job selector and the accepted physical/authority implementation. All seven parent research runtime-helper hashes also match. The 48 original input metadata hashes match. The execution job is byte-identical to the reviewed revision03 candidate, while its input path now names the final file. The remaining experiment changes relative to reviewed candidate02 are the final charter binding and populated source/runtime maps. The cells, windows, outputs, question, parent, family, stage, reuse, model and plan retain their original values.
+
+The selected parent experiment exactly equals its immutable original claim's experiment object. Family and dataset objects equal the earlier reviewed preparation. All nine original neural requirement IDs and seven-day windows remain represented, with existing spent ETH exposure explicitly exploratory. The planned computation remains CPU float32, seed11, synthetic MCM(N,32), the same graph-item object repeated over 16×28 inputs, one Adam update and exact checkpoint roundtrip. Graph activation checkpointing remains false. These are capacity observations; actual dictionary/MCM production, chronological multiweek fitting and all 1,420 financial fits remain pending.
+
+A new read-only scan finds exactly the 16 same-mechanism claims in the accepted extension snapshot. Their claim and terminal hashes match. The earlier prerelease reconstruction independently verified the full 33-claim lineage (27 complete, six failed). No intervening relevant claim was found. All three designated lifecycle/launch/producer namespaces remained absent, including dangling symlinks. These observations are point-in-time checks, not reservations. The exact62 allocation remains 33 spent +12 body +15 financial +one neural resource +one other resource; this experiment consumes only the neural slot. The parser does not enforce category sublimits automatically, so this substantive classification remains necessary. No refund or old-identity reuse is granted.
+
+Independent reconstruction from the final gate and actual lifecycle claim shape gives 61,535 serialized claim bytes and 63,410 serialized nested authority-request bytes, using fixed-length 40-character commit fields, 64-character hashes and a six-digit-microsecond UTC timestamp. Both fit 262,144 bytes. This reconstruction includes duplicated resolved inputs, full experiment/source/runtime maps, family, exposures and resolved windows. It agrees with preparation03 without running the preparation script or publication API. Root must still measure the actual committed Admission object before launch; no placeholder identity is an execution binding.
+
+The gate binds accepted physical-source review and the separately accepted invented-payload OS-smoke release/result evidence. Their claims remain appropriately bounded: the smoke demonstrated the exercised 64 KiB file limit, kernel memory readback, expected guard failure and retained closure; it did not measure real neural memory. CPU containment is the reviewed inherited two-CPU affinity, not a demonstrated CPUQuota controller. This review verified the registered review/evidence hashes and their substantive scopes, and did not duplicate the separate physical-source or raw OS-evidence reviews.
+
+Registered limits remain 6 GiB memory maximum, 5 GiB high threshold, 3 GiB host reserve, 9 GiB startup availability, 10 GiB disk floor and 7,200 seconds for the whole job. The 600-second per-cell allowance is cooperative. The 4 MiB checkpoint/64 MiB output limits and selected 8 MiB file/256 KiB JSON/160 MiB allocated/128 MiB logical/128-entry/32 MiB tail limits are refusal ceilings, not success bounds. Parent-authority loss still prevents disk-only mutation recovery; terminal and remaining-cell publication is best effort. Missing evidence cannot receive successful denominator credit or authorize a retry.
+
+Required release operations remain the actual full-HEAD committed admission check, exact claim/RPC extent measurement from that admission, unchanged input/source/runtime validation and fresh RAM/disk/namespace/guard checks. Any source/configuration change or intervening relevant claim requires reconciliation before launch. No review conclusion lowers the admitted host reserves.
+
+No array body, model, Torch/CUDA probe, financial experiment, lifecycle start, ledger mutation, historical rerun or network operation was executed by this reviewer. Numerical agreement, timing leakage, PnL conventions, fees/funding, multiweek model feasibility and economic edge were not tested. Implementation acceptance, paper-scope coverage and numerical agreement remain distinct.

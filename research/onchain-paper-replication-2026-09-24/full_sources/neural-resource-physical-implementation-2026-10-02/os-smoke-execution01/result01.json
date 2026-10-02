@@ -1,0 +1,116 @@
+{
+  "child_log_bytes": 65536,
+  "child_log_limit_reached": true,
+  "classification": "Single real systemd/kernel/log-limit engineering probe; no model/empirical experiment",
+  "cleanup_verified": true,
+  "controller_exit_code": 0,
+  "expected_containment_observed": true,
+  "experiment": "synthetic-neural-physical-os-20261002-01",
+  "guard_phase": "failed",
+  "kernel_controls": {
+    "memory.high": "201326592",
+    "memory.max": "268435456",
+    "memory.swap.max": "0"
+  },
+  "peak_sampled_memory_current_bytes": 14209024,
+  "qualification": "Small fixed invented payload and expected log saturation. No inference of 6GiB/full-graph or chronological training feasibility.",
+  "raw_files": [
+    {
+      "bytes": 65536,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/guard/child.log",
+      "sha256": "d2d5af5c0316f5c2b119635386239edc87abce035f851c3f6ee127e6c3cbf435"
+    },
+    {
+      "bytes": 1250,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/guard/child_exit.json",
+      "sha256": "cb9066a47c07d5f4489df014a1d7777f7de83b8ca146b594afc4fb5a9c02d733"
+    },
+    {
+      "bytes": 98,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/guard/cpu_ready.json",
+      "sha256": "092f11a8727e13ed37c174452c736880772e35d92f26f4c3bd8dffff50ce2971"
+    },
+    {
+      "bytes": 6114,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/guard/final.json",
+      "sha256": "cad8757c016fdf18c7954acc0ec5a1dfaaa5b638d186a0fbb50a9144bb933156"
+    },
+    {
+      "bytes": 6114,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/guard/live.json",
+      "sha256": "cad8757c016fdf18c7954acc0ec5a1dfaaa5b638d186a0fbb50a9144bb933156"
+    },
+    {
+      "bytes": 39,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/guard/release.json",
+      "sha256": "82560e2694628ad002f9cc4b76fe2cd7b1b545cc825269f01057f04c6fe268b5"
+    },
+    {
+      "bytes": 299,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/launch.json",
+      "sha256": "7bb384f427fcaf6a0d0d6f0ff6158cd062be7ca02812a29a26f6c514077a0d2e"
+    },
+    {
+      "bytes": 214,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/observer.json",
+      "sha256": "d8a80cb1c980848278db4b297a8f40b779335b4a8c2c7e0ec30866002feffb7b"
+    },
+    {
+      "bytes": 259,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/owner.json",
+      "sha256": "5e96df5fd6934790648a2854f04f4b74662fe7eff8053f3a6952c06f8b5042a3"
+    },
+    {
+      "bytes": 1850,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/physical-anchor.json",
+      "sha256": "7a0d7dcebdd8b09534cea0b702e2958a0bb6e96c4ab068c61040677f94d20f42"
+    },
+    {
+      "bytes": 157,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/physical-birth-lifecycle.json",
+      "sha256": "80793289e74c1ca739a8e9a449ef6a972051520228b9ca68da345060646512e2"
+    },
+    {
+      "bytes": 156,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/physical-birth-producer.json",
+      "sha256": "89de40a1a6ff8f69e84e215a342d93088a7c19c38e82037b699ce29b75bf1821"
+    },
+    {
+      "bytes": 582,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/physical-final.json",
+      "sha256": "34bd7ea7da02175e8fd697e39f21745848a131735b4c01f692ca3be8cb224e75"
+    },
+    {
+      "bytes": 0,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/physical.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 208,
+      "path": "source/research_runs/synthetic-neural-physical-os-20261002-01/claim.json",
+      "sha256": "f4722c8b4532fedf69d581839346620552f9be25ce7d60e8dcff8e4c0785477d"
+    },
+    {
+      "bytes": 214,
+      "path": "source/research_runs/synthetic-neural-physical-os-20261002-01/failed.json",
+      "sha256": "d8a80cb1c980848278db4b297a8f40b779335b4a8c2c7e0ec30866002feffb7b"
+    },
+    {
+      "bytes": 115,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/sources/synthetic-neural-physical-os-20261002-01/after-log-probe.json",
+      "sha256": "877771e6912c0548fb8a5388365e0205b4dda0e139ffa0d3b47784dfa0cd4515"
+    },
+    {
+      "bytes": 2047,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/sources/synthetic-neural-physical-os-20261002-01/before-log-probe.json",
+      "sha256": "f61b4b50202a341cebfc6ef2c135e7837896c6b2e07eafa0722ddbc741e454c4"
+    },
+    {
+      "bytes": 8192,
+      "path": "source/research_artifacts/onchain-paper-replication-2026-09-24/sources/synthetic-neural-physical-os-20261002-01/invented.bin",
+      "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47"
+    }
+  ],
+  "source_commit": "501c9f72175b2e6dada025d578e655d359c2df5a",
+  "spec_sha256": "8b16be8935aa31f8406c12cf0c89888092f12ff6f65409889966b9ead3ef9d91"
+}

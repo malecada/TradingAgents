@@ -1,0 +1,158 @@
+{
+  "boot_id": "8c389743-c1c9-4eba-be5d-c19699d52d0a",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-73551384ebb2467480bda5a8a071d74b.service",
+  "child_exit_code": null,
+  "child_log_limit_reached": true,
+  "cleanup_stop_returncode": 0,
+  "cleanup_unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/smoke.py",
+    "--spec",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/spec.json",
+    "--spec-sha256",
+    "8b16be8935aa31f8406c12cf0c89888092f12ff6f65409889966b9ead3ef9d91",
+    "--worker",
+    "--anchor",
+    "7a0d7dcebdd8b09534cea0b702e2958a0bb6e96c4ab068c61040677f94d20f42"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "30794": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/source",
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/source": 20622045184
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/source"
+  ],
+  "elapsed_seconds": 0.4339242449998437,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 10701770752,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "201326592",
+    "memory.max": "268435456",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 5,
+  "limit_reason": "RuntimeError: bounded child.log file limit reached; output may be incomplete",
+  "memory_current_bytes": 13787136,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 201326592,
+  "memory_max_bytes": 268435456,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 30791,
+  "monotonic_seconds": 1350.109772131,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 13590528,
+      "file_bytes": 4096,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-73551384ebb2467480bda5a8a071d74b.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 4048207872,
+      "file_bytes": 8063971328,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=28267\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=28014",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": {
+    "experiment": "synthetic-neural-physical-os-20261002-01",
+    "monitor_pid": 30791,
+    "monitor_start_ticks": "134958",
+    "nonce": "b2d56e19a299422281f3d1f4f9967eb4",
+    "source_commit": "501c9f72175b2e6dada025d578e655d359c2df5a",
+    "supervisor_pid": 30791
+  },
+  "peak_sampled_memory_current_bytes": 14209024,
+  "phase": "failed",
+  "physical_final_observation": {
+    "allocated_bytes": 159744,
+    "claim_sha256": "f4722c8b4532fedf69d581839346620552f9be25ce7d60e8dcff8e4c0785477d",
+    "entries": 23,
+    "files": 15,
+    "logical_bytes": 85496,
+    "qualification": "sampled allocated accounting; not filesystem quota; kernel file-size and bounded metadata writes required",
+    "roles": [
+      "control",
+      "lifecycle",
+      "producer"
+    ]
+  },
+  "physical_observation": {
+    "allocated_bytes": 159744,
+    "claim_sha256": "f4722c8b4532fedf69d581839346620552f9be25ce7d60e8dcff8e4c0785477d",
+    "entries": 23,
+    "files": 15,
+    "logical_bytes": 85496,
+    "qualification": "sampled allocated accounting; not filesystem quota; kernel file-size and bounded metadata writes required",
+    "roles": [
+      "control",
+      "lifecycle",
+      "producer"
+    ]
+  },
+  "physical_policy": {
+    "max_allocated_bytes": 2097152,
+    "max_entries": 128,
+    "max_file_bytes": 65536,
+    "max_json_bytes": 16384,
+    "max_logical_bytes": 1048576,
+    "schema_version": 1,
+    "tail_reserve_bytes": 262144
+  },
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-resource-physical-implementation-2026-10-02/os-smoke-execution01/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/synthetic-neural-physical-os-20261002-01/guard",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 3489660928,
+  "unit": "onchain-replication-73551384ebb2467480bda5a8a071d74b.service",
+  "unit_properties": {
+    "ActiveState": "active",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-73551384ebb2467480bda5a8a071d74b.service",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "running"
+  },
+  "wait_seconds": 0,
+  "wall_seconds": 20
+}

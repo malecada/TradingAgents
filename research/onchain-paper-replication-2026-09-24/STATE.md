@@ -3,6 +3,29 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 real guard passed — final nine-cell gate accepted**:
+Single synthetic-neural-physical-os-20261002-01 CLOSED controllerexit0 with the
+expected failed guard, exact64KiB log cap, kernel memory controls, retained final
+receipts and inactive cleaned-up unit. Independent REVIEW_RESULT accepted all19
+raw files,131 source hashes and independently reconciled post-self physical totals
+180,224allocated/93,444logical/27entries. Two-CPU affinity was proven; CPUQuota
+controller enforcement is unavailable and is not claimed. This invented8KiB
+probe establishes the exercised control mechanism, not original-graph capacity.
+
+Concrete full_sources/neural-resource-release-2026-10-02/gate.json SHA256
+c0fc6a40f995d71e0c0aade489de06437af84839dedc6111d9f8b746afbc92e7 is independently
+accepted for the prospective nine-cell capacity measurement, REVIEW_GATE SHA256
+371d78a29c649e69a8467bbd58ac6b812a76fbec8c952d1a5fef72401839e595. All189 source pins,48 metadata inputs,
+131 Python closure files/seven runtime hashes, original model/plan/parent/family,
+16 current mechanism claims and unused identity were independently checked.
+Reconstructed claim/RPC61,535/63,410B fit256KiB. Exact committed Admission and
+actual serialization/availability checks remain before launch. The source is
+frozen; no other source worker may mutate the admitted package while active.
+No claim exists yet for eth-paper-neural-resource-20261002-01. Next safe action:
+commit/back up the reviewed gate/OSevidence, invoke actual full-HEAD admission,
+measure claim/RPC, then launch the owned6GiB/9GiBstartup/10GiBfloor/7200s route.
+All historical jobs remain closed; all1,420 financial fits are still pending.
+
 **October 2 concrete smoke release reviewed — one bounded launch ready**:
 Accepted physical source501c9f72175b2e6dada025d578e655d359c2df5a is pushed with
 exact remote HEAD verified. Its131 required source files are copied byte-exact
