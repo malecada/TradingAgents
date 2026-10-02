@@ -1,5 +1,101 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest checkpoint: neural resource04 is closed FAILED; no substantial job is active.**
+The extra available RAM admitted the trial. The fresh 16-reading window passed
+with a minimum 7,272,259,584 bytes over 30.006 seconds. The trial then hit its
+native 3.75 GiB high=max limit during the first full graph forward computation.
+This is a demonstrated per-job capacity failure, not an outstanding startup-RAM
+check. No returned forward, backward, optimizer step or checkpoint is proved.
+
+Identity `eth-paper-neural-resource-20261002-04` is permanently closed and must
+never be relaunched. Source 8631cbcce34cf827f0551dad04f6822ca8e1e1ec and claim
+SHA a14c14a320475942ec45a9423ae20626e235b08b3cf4de21cf8a8f04f0098bfd are retained.
+The lifecycle ended 2026-10-02T20:42:23.889467+00:00; coordinator82271 returned1.
+Native Result=oom-kill/ExecMainStatus9, peak sampled4,026,531,840 bytes;
+memory events max2181/oom2/oom_kill3/oom_group_kill1/high0. Zero unit swap,
+3 GiB host reserve, 10 GiB disk floor and7200second limit were retained. Child
+exit receipt is unavailable/null; native SIGKILL evidence does not invent one.
+The nine schema2 phase markers end at forward_before115.433seconds. Exact
+allocating suboperation and sufficient larger memory capacity remain unknown.
+All nine registered cell IDs are retained as unavailable, without retry.
+
+Complete final three-root evidence is frozen in
+`full_sources/neural-streamed-resource-release-2026-10-02/execution-result04.json`
+SHAc6471bcf5ce7ed042f510dfb6326628adbc2f3e6a63d0a436f5ebcbf48b89129
+and retained-tree04.json/.tar.gz:21regular files,11directories,32members,
+145,567logical and249,856allocated bytes, no symlinks. Original launcher final
+accounting preceded monitor-failed.json; the complete retained tree includes
+that additional1,088-byte/4KiB terminal receipt. Collector01's read-only mapping
+TypeError and source are preserved; metadata-only collector02 completed without
+an empirical rerun. All249 committed/current source,109input and7runtime hashes
+match. Recorded/journal PIDs1223250,1226015,1228796,1228799,1282829 and original
+cgroup are absent; additive pid-closure-addendum04.json corrects the collector
+regex omission of the kernel task=python,pid=1228799 form. Original result bytes
+remain unchanged; current native unit has empty ControlGroup/MainPID0. Cleanup was
+verified/stop0. Source/HEAD freeze has ended. Independent closure review943e7fb9 accepted the retained failed outcome, all
+source/input/runtime pins, final archive and five-PID cleanup. External recovery
+verification is the immediate remaining closure work.
+
+Actual claim adopted ceiling64;36consumed are now36closed=27complete9failed
+(19current14complete5failed +17prior13complete4failed). No refund, category
+transfer, cap ladder or successor authority follows. All32Task8 requirements,
+coverage77of109, all45initial and1,420total financial fits remain pending.
+The sole allocated streamed-neural successor is spent. Any further neural trial
+needs a distinct computational question, exact source/protocol/native policy,
+new identity and reviewed cumulative budget amendment before execution.
+
+Parallel source work continues: financialcandidate02 narrow source review
+4009b6f2 is accepted, genuine Torch continuation/recovery and multi-graph
+capacity remain unproved. scoretail01 review9be506f9 remains withheld and preserved. NEW scoretail02
+manifest01e62e0c/6qualifiedRED→GREEN checks correct both joins; independent source
+review2dab7b25 accepts the narrow correction. Genuine Owner integration, fullgraph
+rehash cost, remote transport and whole-local capacity remain unproved. physical_correction owns the isolated genuine
+original-import fixture bridge; no live integration or actual fixture claim.
+physical_review owns actual04 independent closure review. Root owns STATE,
+registrations/live integration/commits/externalbackup and the sole numerical
+launcher. Next safe action: complete failure review/backup/recovery, continue
+independent MCM/storage corrections and investigate bounded full-graph memory
+reductions without fitting or relaxing scientific settings/test criteria.
+
+# Current execution checkpoint — October 2, 2026
+
+**Latest checkpoint: empirical04 ACTIVE, one worker; HEAD/sourcefreeze inforce.**
+eth-paper-neural-resource-20261002-04 claimed20:36:33.803647UTC fromactualremote
+verified8631cbcce34cf827f0551dad04f6822ca8e1e1ec; claimSHAa14c14a320475942ec45a9423ae20626e235b08b3cf4de21cf8a8f04f0098bfd.
+Rootlaunch_once observation02/session82271, no duplicate/relaunch. Actualfresh
+16rows passed30.006s,min7272259584B>=7247757312B(6.75GiB), source/dedupe/disk/
+actualadmission/claimRPC verified. Conditionalceiling64 nowadopted byactualclaim;
+36consumed=35closed+1active (18currentclosed+1active+17prior), norefund.
+Coverage77of109/all1420financialfits unchangedpendingresourcecell outcomes.
+
+Actualnative release kernelcontrolsverified/cpu_ready worker1228796 cpus[0,1],
+filecap8388608B. Guardunitonchain-replication-74d3b95dbde24050bf8be59facac94ed.service
+cgroupmax=high4026531840B/swap0/reserve3221225472B/diskfloor10737418240B/7200s.
+Observedguardrunning~200s,current335044608B/sampledpeak340008960B/eventsall0,
+pressureavg0/hostavailable7199002624B/disk20147937280B. Theseareearlyobservations,
+notcapacitysuccess/financialfit. KernelCPUquotaunavailable; inheritedtwoCPUaffinity
+withthreadreadback enforced. Rootsolelauncher; nootherheavy/numericaljoballowed.
+Firstsourceproducerdir/phase notyet observed atthatcheck; awaiting actual stages.
+No completion/terminal outcome yet. Freezeall134selectedliveproduction/HEAD;
+STATE andisolated sourcecandidates/reviews mayupdate withoutcommits.
+
+Financial02frozenmanifestdfb5ff9f/13pureASTmethods, independentreviewinprogress;
+legacydefault retained/realTorchwrapper andmulti-distinct-graphcapacity unproved.
+Scoretailcandidatefrozenmanifestf7f22697/49pins149826B/13qualifiedbyteASTchecks;
+exactcodec/localwriter/readerseal/heldsource implemented, transportrefuseduntil
+separatelytypedContext/Operationtailpopulation authority. Registrationreviewer
+ownsscoretail independentreview. No productionbytesfreed/uploads/deletions.
+Fixtureadmissionrequirementsde455fc3 identifyminimalgenuinecompact_resource job
+schema+worker/inventory(include_torch=True), actualsyntheticfamilyclaim/ledger,
+resourceJournalOwner.finish terminal andcompletewritable namespacewatch. Worker
+ownsisolatedfixturebridgecandidate only; nolivewrites/numericalimports/claims.
+Authority04narrow sourceacceptance preserved; genuine32motif/two-targetMCM and
+full23resourcecells/fullscope/fits remainrequired. Nextsafeaction: monitor SAME
+active04/phase/nativebounds; retain/review/backupcomplete closure whenfinished,
+neverrestartidentity. Continueisolatedimplementation/reviews underfreeze.
+
+# Current execution checkpoint — October 2, 2026
+
 **Latestcheckpoint: full04 safelyunclaimed; implementationcandidates progressinparallel.**
 Actualadmission/readiness01/sourcef6893b17 andfresh4blobrecovery independently
 accepted454f38ae:one6679945216Brow<7247757312B, no16rowpassingwindow/guard/job/NS/

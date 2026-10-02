@@ -1,0 +1,29 @@
+test_duplicate_graph_unknown_field_bounds (__main__.Budget.test_duplicate_graph_unknown_field_bounds) ... FAIL
+test_whole_population_rounded_two_graphs (__main__.Budget.test_whole_population_rounded_two_graphs) ... FAIL
+
+======================================================================
+FAIL: test_duplicate_graph_unknown_field_bounds (__main__.Budget.test_duplicate_graph_unknown_field_bounds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_budget01.py", line 14, in test_duplicate_graph_unknown_field_bounds
+    m=self.module()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_budget01.py", line 5, in module
+    self.assertTrue(P.exists(),'separate score-tail population adapter missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : separate score-tail population adapter missing
+
+======================================================================
+FAIL: test_whole_population_rounded_two_graphs (__main__.Budget.test_whole_population_rounded_two_graphs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_budget01.py", line 8, in test_whole_population_rounded_two_graphs
+    m=self.module();got=m.population([{'graph':'a'*64,'rows':2048},{'graph':'b'*64,'rows':1}],chunk_cells=65536,reads=1)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_budget01.py", line 5, in module
+    self.assertTrue(P.exists(),'separate score-tail population adapter missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : separate score-tail population adapter missing
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

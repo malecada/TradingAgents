@@ -1,0 +1,33 @@
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/tail_population.py
+@@ -0,0 +1,30 @@
++"""Score-tail population arithmetic for future shared dispatch admission.
++
++This returns required reservations, never spends an allowance or admits a job.
++The caller must aggregate this with pair events, outputs, failed namespaces and
++all representations in the ORIGINAL durable Context before any transfer.
++"""
++import re
++
++def require(condition,message):
++    if not condition:raise ValueError(message)
++
++def population(targets,*,chunk_cells,reads):
++    require(type(targets) is list and 0<len(targets)<=1024,'bounded complete graph population required')
++    require(type(chunk_cells) is int and 0<chunk_cells<=65536
++        and type(reads) is int and 1<=reads<=1024,'bounded tail chunk/recovery reads')
++    seen=set();result=dict(graphs=0,cells=0,chunks=0,remote_payload_bytes=0,rounded_transfer_bytes=0,commands=0)
++    for t in targets:
++        require(type(t) is dict and set(t)=={'graph','rows'} and type(t['graph']) is str
++            and re.fullmatch('[0-9a-f]{64}',t['graph']) and t['graph'] not in seen,'distinct exact graph population')
++        require(type(t['rows']) is int and 0<t['rows']<2**58,'bounded graph row count')
++        seen.add(t['graph']);cells=t['rows']*32;full,last=divmod(cells,chunk_cells)
++        chunks=full+bool(last);rounded=full*((chunk_cells*80//32768+1)*32768)
++        if last:rounded+=(last*80//32768+1)*32768
++        result['graphs']+=1;result['cells']+=cells;result['chunks']+=chunks
++        result['remote_payload_bytes']+=cells*80
++        # One upload, its immediate complete readback, then `reads` recovery sweeps.
++        result['rounded_transfer_bytes']+=cells*80+(1+reads)*rounded
++        result['commands']+=chunks*(3+reads)
++        require(all(type(v) is int and v<2**63 for v in result.values()),'population arithmetic overflow')
++    return result

@@ -1,3 +1,29 @@
+# Latest ownership — neural04 closed kernel OOM; source freeze ended
+
+Root verified complete04closure and all5recorded/journalPIDs/cgroup absence (kernelPIDaddendum retained).
+36closed27complete9failed/adopt64, no active numerical job. Never relaunch04 or
+transfer/refund its allowance. Root owns retention/STATE/backup/liveintegration/
+registrations and sole launcher; physical_review owns REVIEW_EXECUTION04.md.
+physical_correction owns ONLY original-import-fixture-bridge-candidate source.
+score_tail_correction02 owns ONLY NEW score-tail-archive-candidate02 source and
+pure byte/AST verification. Financial02 narrow source accepted4009b6f2; no fit.
+Registration reviewer available for next frozen source review/memory diagnosis.
+All1420fits/fullpaper scope remain. Complete actual04archive/result review and
+external recovery are immediate closure requirements; independent work proceeds.
+
+# Latest ownership — active empirical04; source/HEAD freeze
+
+RootONEactivefull04/session82271/claim20:36:33UTC a14c14a3/source8631cbcce.
+16readinessrowsmin7272259584Bpassed;actualnative3.75GiBmax=high/swap0/twoCPU/
+3GiBreserve/10GiBdiskfloor/7200s verified. Adopt64/36consumed35closed1active.
+NOHEADcommit/live134selectedsourcechanges/additionalheavyjobs/relaunchuntil
+rootverifiedclosure. RootownsSTATE/livejobmonitor/complete retention+laterbackup.
+physical_correction ownsONLYnew original-import-fixture-bridge-candidate snapshots/
+patch/pureAST code underfreeze, no actualfixtures/claims/imports/livewrites.
+physical_review ownsONLYfinancial02independentreview; registration_review ownsONLY
+scoretailcandidateindependentreview. Frozenfinancial/tail sources immutable.
+All1420financialfits pending; earlyguardhealthydoesnotprovefullcapacity.
+
 # Latest ownership — full04 unclaimed readiness deferral; parallel candidates
 
 No substantialjobactive/sourcefreezeENDED. Rootowns STATE/backup/full04exactgate

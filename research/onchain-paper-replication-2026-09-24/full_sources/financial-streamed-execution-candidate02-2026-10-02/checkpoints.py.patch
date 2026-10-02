@@ -1,0 +1,24 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate-2026-10-02/checkpoints.py
++++ tradingagents/research/onchain_replication/checkpoints.py
+@@ -39,7 +39,9 @@
+            'rng':{'python':random.getstate(),'numpy_global':(numpy_state[0],numpy_state[1].tolist(),*numpy_state[2:]),
+                   'pcg64':rng.bit_generator.state,'torch_cpu':torch.get_rng_state(),
+                   'torch_cuda':torch.cuda.get_rng_state_all() if torch.cuda.is_available() else []}}
+-    if 'model_execution' in provenance:state['model_execution']=financial.identity(provenance['model_execution'])
++    if 'model_execution' in provenance:
++        state['model_execution']=financial.identity(provenance['model_execution'])
++        state['model_contract']=financial.model_contract(model,provenance['model_execution'])
+     stream=io.BytesIO();torch.save(state,stream)
+     key=digest(canonical_bytes({'provenance':provenance,'epoch':epoch,'batch':batch}))
+     return publish(root,key,{'state.pt':stream.getvalue()},provenance)
+@@ -50,8 +52,8 @@
+     financial.check_model(model,expected_provenance.get('model_execution'))
+     data=read_artifact(path,expected_provenance)
+     state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True)
+-    financial.validate_state(state,expected_provenance)
+-    required=REQUIRED|({'model_execution'} if 'model_execution' in expected_provenance else set())
++    financial.check_state_model(state,model,expected_provenance)
++    required=REQUIRED|({'model_execution','model_contract'} if 'model_execution' in expected_provenance else set())
+     if set(state)!=required or not isinstance(state['rng'],dict) or set(state['rng'])!=RNG_REQUIRED:raise ValueError('incomplete checkpoint state')
+     if state['scheduler'] is not None or any(type(state[k]) is not int or state[k]<0 for k in ('epoch','batch','epoch_count')):raise ValueError('invalid checkpoint cursor/state')
+     if len(state['rng']['torch_cuda'])!=(torch.cuda.device_count() if torch.cuda.is_available() else 0):raise ValueError('checkpoint device topology mismatch')

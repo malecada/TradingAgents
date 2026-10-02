@@ -1,0 +1,11 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate-2026-10-02/evaluation.py
++++ tradingagents/research/onchain_replication/evaluation.py
+@@ -179,7 +179,7 @@
+     else:
+         data=read_artifact(checkpoint,old);state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True)
+         financial.validate_state(state,old)
+-        model=factory();financial.check_model(model,old.get('model_execution'));model.load_state_dict(state['model'],strict=True)
++        model=factory();financial.check_state_model(state,model,old);model.load_state_dict(state['model'],strict=True)
+     return model,file_hash(checkpoint)
+ 
+ 

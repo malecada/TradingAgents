@@ -1,0 +1,75 @@
+test_all_six_scientific_scope_fields_join (__main__.Semantic.test_all_six_scientific_scope_fields_join) ... FAIL
+test_batch_body_hash_and_canonical_bytes (__main__.Semantic.test_batch_body_hash_and_canonical_bytes) ... FAIL
+test_batch_schema_types_dimensions_dtype_order_scope_owner (__main__.Semantic.test_batch_schema_types_dimensions_dtype_order_scope_owner) ... FAIL
+test_original_matching_and_order_come_from_typed_target (__main__.Semantic.test_original_matching_and_order_come_from_typed_target) ... FAIL
+test_real_adapter_routes_new_checks_and_refuses_transport (__main__.Semantic.test_real_adapter_routes_new_checks_and_refuses_transport) ... FAIL
+test_unchanged_32_cell_start_refuses_65536_capacity (__main__.Semantic.test_unchanged_32_cell_start_refuses_65536_capacity) ... FAIL
+
+======================================================================
+FAIL: test_all_six_scientific_scope_fields_join (__main__.Semantic.test_all_six_scientific_scope_fields_join)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 36, in test_all_six_scientific_scope_fields_join
+    join=self.helper('_scientific_joins');owner,t,c=self.setup_values()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 16, in helper
+    self.assertEqual(len(found),1,'missing semantic boundary '+name)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : missing semantic boundary _scientific_joins
+
+======================================================================
+FAIL: test_batch_body_hash_and_canonical_bytes (__main__.Semantic.test_batch_body_hash_and_canonical_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 59, in test_batch_body_hash_and_canonical_bytes
+    check=self.helper('_batch_start');c,start,raw=self.batch()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 16, in helper
+    self.assertEqual(len(found),1,'missing semantic boundary '+name)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : missing semantic boundary _batch_start
+
+======================================================================
+FAIL: test_batch_schema_types_dimensions_dtype_order_scope_owner (__main__.Semantic.test_batch_schema_types_dimensions_dtype_order_scope_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 50, in test_batch_schema_types_dimensions_dtype_order_scope_owner
+    check=self.helper('_batch_start');c,start,raw=self.batch()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 16, in helper
+    self.assertEqual(len(found),1,'missing semantic boundary '+name)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : missing semantic boundary _batch_start
+
+======================================================================
+FAIL: test_original_matching_and_order_come_from_typed_target (__main__.Semantic.test_original_matching_and_order_come_from_typed_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 29, in test_original_matching_and_order_come_from_typed_target
+    join=self.helper('_scientific_joins');owner,t,c=self.setup_values();join(owner,t,c)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 16, in helper
+    self.assertEqual(len(found),1,'missing semantic boundary '+name)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : missing semantic boundary _scientific_joins
+
+======================================================================
+FAIL: test_real_adapter_routes_new_checks_and_refuses_transport (__main__.Semantic.test_real_adapter_routes_new_checks_and_refuses_transport)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 66, in test_real_adapter_routes_new_checks_and_refuses_transport
+    self.assertIn('target',[x.arg for x in methods['__init__'].args.args])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'target' not found in ['self', 'owner', 'stage', 'held', 'value']
+
+======================================================================
+FAIL: test_unchanged_32_cell_start_refuses_65536_capacity (__main__.Semantic.test_unchanged_32_cell_start_refuses_65536_capacity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 46, in test_unchanged_32_cell_start_refuses_65536_capacity
+    check=self.helper('_batch_start');c,start,raw=self.batch();check(c,raw)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate02-2026-10-02/test_semantic01.py", line 16, in helper
+    self.assertEqual(len(found),1,'missing semantic boundary '+name)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : missing semantic boundary _batch_start
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.011s
+
+FAILED (failures=6)

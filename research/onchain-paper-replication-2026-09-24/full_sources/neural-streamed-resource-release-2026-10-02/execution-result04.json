@@ -1,0 +1,269 @@
+{
+  "budget": {
+    "closed_complete": 27,
+    "closed_failed": 9,
+    "highest_adopted_ceiling": 64,
+    "new_financial_fits": 0,
+    "refunds": 0,
+    "spent_empirical": 36
+  },
+  "cells": [
+    {
+      "id": "neural_checkpoint-2022-01-03",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2022-06-13",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2022-07-25",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2022-11-07",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2023-06-05",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-01-01",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-03-11",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-08-05",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    },
+    {
+      "id": "neural_checkpoint-2024-12-23",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    }
+  ],
+  "cgroup_absent": true,
+  "child_exit_code": null,
+  "cleanup_stop_returncode": 0,
+  "cleanup_verified": true,
+  "complete_retained_tree": {
+    "allocated_bytes_including_directories": 249856,
+    "directories_including_each_root": 11,
+    "entries_including_each_root": 32,
+    "files": 21,
+    "identity": "eth-paper-neural-resource-20261002-04",
+    "logical_bytes": 145567,
+    "schema_version": 1,
+    "symlinks": 0
+  },
+  "coordinator_exit_code": 1,
+  "final_tail_qualification": "Original launcher final accounting predates monitor-failed.json; complete retained inventory includes this later 1088B/4096allocated/oneentry terminal receipt. Collector01 failed a read-only cell mapping assumption before any outputs; preserved unchanged with traceback, corrected metadata-only collector02, no empirical rerun.",
+  "guard_phase": "failed",
+  "identity": "eth-paper-neural-resource-20261002-04",
+  "input_pins_verified": 109,
+  "journal_commands": {
+    "kernel": {
+      "command": [
+        "journalctl",
+        "-k",
+        "--utc",
+        "--no-pager",
+        "--output=short-iso-precise",
+        "--since",
+        "2026-10-02 20:35:00 UTC",
+        "--until",
+        "2026-10-02 20:45:00 UTC",
+        "--grep",
+        "onchain-replication-74d3b95dbde24050bf8be59facac94ed.service"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 918,
+      "stdout_sha256": "990e37858528813233339ae62332d90f2776a9383162f037c375ba147cb3eff8"
+    },
+    "unit": {
+      "command": [
+        "journalctl",
+        "--user",
+        "--utc",
+        "--no-pager",
+        "--output=short-iso-precise",
+        "--since",
+        "2026-10-02 20:35:00 UTC",
+        "--until",
+        "2026-10-02 20:45:00 UTC",
+        "--unit",
+        "onchain-replication-74d3b95dbde24050bf8be59facac94ed.service"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 5563,
+      "stdout_sha256": "d686ca140f1ea8fbb78a7ae367d9b630666d3f258e46e5fbc47218cb4cf58da7"
+    },
+    "unit_current": {
+      "command": [
+        "systemctl",
+        "--user",
+        "show",
+        "onchain-replication-74d3b95dbde24050bf8be59facac94ed.service",
+        "--property=ActiveState,SubState,Result,ExecMainStatus,ControlGroup,MainPID"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 92,
+      "stdout_sha256": "ec460886fb400167aed7c9c8ed7416f239d14d2314093e67e25c794dcc6fe438"
+    }
+  },
+  "last_phase": {
+    "elapsed_seconds": 115.43293291300506,
+    "event": "forward_before",
+    "observation": {
+      "anon_bytes": 1137008640,
+      "file_bytes": 562827264,
+      "memory_current_bytes": 1704366080,
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "qualification": "instantaneous unit metadata, not peak or phase attribution; unknown is not zero",
+      "unavailable": []
+    }
+  },
+  "last_sampled_memory_bytes": 1832390656,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 2181,
+    "oom": 2,
+    "oom_group_kill": 1,
+    "oom_kill": 3
+  },
+  "observed_at_utc": "2026-10-02T20:56:25.089963+00:00",
+  "peak_sampled_memory_bytes": 4026531840,
+  "phase_count": 9,
+  "phase_schema": 2,
+  "pid_qualification": "All explicitly recorded owner/supervisor/cpu-ready and identified journal PIDs absent; vanished unit cgroup proves no remaining owned descendants. Final cpu_thread_readback is empty after death, not reconstructed.",
+  "pids_absent": {
+    "1223250": true,
+    "1226015": true,
+    "1228796": true,
+    "1282829": true
+  },
+  "qualification": "Actual streamed full-size trial failed at native 3.75GiB hard high=max with kernel OOM. Startup 16-row window passed; host reserve remained satisfied at final sample. Forward_before marks intent only; exact allocating suboperation and larger capacity required are unknown. No returned forward, backward, optimizer or checkpoint proof. Nine cells unavailable; financial1420 fits remain pending. No retry/checkpoint-policy/cap-ladder authority. Complete raw three-root bodies/directory modes plus separate outer receipts retained; sourcefreeze ends after this verified closure. Native CPU quota unavailable; twoCPU ready receipt retained.",
+  "refs": {
+    "admission02.json": {
+      "bytes": 506,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/admission02.json",
+      "sha256": "24853f457f0eea719ce679b0336743efcfa0077950831b43b08c0fd86f64baf1"
+    },
+    "collect_execution04.py": {
+      "bytes": 12787,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/collect_execution04.py",
+      "sha256": "ed3b3542957823332731a1533efe503a6e40d0bfa140f436bb7f61110d230a99"
+    },
+    "collect_execution04_02.py": {
+      "bytes": 13202,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/collect_execution04_02.py",
+      "sha256": "d14e02e6d993012a9698705a0c41579a273d8dc525a8fdb26ce019be5c635c23"
+    },
+    "collector04-generation01.log": {
+      "bytes": 739,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/collector04-generation01.log",
+      "sha256": "ef5501108ec6b7986c0e5c334548d2cbdccfa1c69be3b1c90c850b7c2333afa5"
+    },
+    "gate.json": {
+      "bytes": 260427,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/gate.json",
+      "sha256": "b5d83f7ed997acb1de09032efe2ecbe989b2ee20200a7da3637d28e0117b603d"
+    },
+    "kernel-journal04.txt": {
+      "bytes": 918,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/kernel-journal04.txt",
+      "sha256": "990e37858528813233339ae62332d90f2776a9383162f037c375ba147cb3eff8"
+    },
+    "launch-intent02.json": {
+      "bytes": 1138,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/launch-intent02.json",
+      "sha256": "5a517fe3527c200482d68a01be3f8513e6ac4a6d9a0fdc2e42641296754b1a2d"
+    },
+    "launch02.log": {
+      "bytes": 1403,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/launch02.log",
+      "sha256": "a8d6794ff3e116c7ef57f4aa655d8e7d548a2459e7b2e1466b2f03cd02d53138"
+    },
+    "neural-plan.json": {
+      "bytes": 4658,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/neural-plan.json",
+      "sha256": "b82fc3634ad17d6fa633d4c62c4026211911ee685031a219873e65294ae5bfc2"
+    },
+    "readiness02.json": {
+      "bytes": 2015,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/readiness02.json",
+      "sha256": "00368f9becaf530c97d605d9e110d51c5d7002dd40547991d30d66156be48d93"
+    },
+    "resource-amendment.json": {
+      "bytes": 12560,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/resource-amendment.json",
+      "sha256": "e458cb111e123db3c9fd8f55499bebb0cf9ea1cc5e600ad64332542abd978263"
+    },
+    "retained-tree04.json": {
+      "bytes": 7075,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/retained-tree04.json",
+      "sha256": "8e8ad5d1c8d4f3fb011e3334d5306a4fd97cbe634b9823a79ec2a464f963096d"
+    },
+    "retained-tree04.tar.gz": {
+      "bytes": 29965,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/retained-tree04.tar.gz",
+      "sha256": "17a1353ca08105cb1816616ac14719ee980bfff8cddbed322736495945f96706"
+    },
+    "source-manifest01.json": {
+      "bytes": 41480,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/source-manifest01.json",
+      "sha256": "3057e587df5251f17f171becbd5ac0d280b9e42f7c8963e7485deb9ad25cf8a4"
+    },
+    "unit-journal04.txt": {
+      "bytes": 5563,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/unit-journal04.txt",
+      "sha256": "d686ca140f1ea8fbb78a7ae367d9b630666d3f258e46e5fbc47218cb4cf58da7"
+    },
+    "unit-properties04.txt": {
+      "bytes": 92,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-resource-release-2026-10-02/unit-properties04.txt",
+      "sha256": "ec460886fb400167aed7c9c8ed7416f239d14d2314093e67e25c794dcc6fe438"
+    }
+  },
+  "runtime_pins_verified": 7,
+  "schema_version": 1,
+  "session": 82271,
+  "source": "8631cbcce34cf827f0551dad04f6822ca8e1e1ec",
+  "source_pins_verified": 249,
+  "status": "closed_failed_kernel_oom_retained_review_pending",
+  "terminal": {
+    "claim_sha256": "a14c14a320475942ec45a9423ae20626e235b08b3cf4de21cf8a8f04f0098bfd",
+    "ended_at": "2026-10-02T20:42:23.889467+00:00",
+    "experiment_id": "eth-paper-neural-resource-20261002-04",
+    "output_sha256": {},
+    "reason": "outer observer verified owned cgroup death; complete denominator retained",
+    "status": "failed"
+  },
+  "unit_properties_observed": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "9",
+    "MainPID": "0",
+    "Result": "oom-kill",
+    "SubState": "failed"
+  }
+}

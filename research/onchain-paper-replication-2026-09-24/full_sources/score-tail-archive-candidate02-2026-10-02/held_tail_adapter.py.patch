@@ -1,0 +1,107 @@
+--- a/held_tail_adapter.py
++++ b/held_tail_adapter.py
+@@ -14,6 +14,8 @@
+ from tradingagents.research.onchain_replication import archive_dispatch as dispatch
+ from tradingagents.research.onchain_replication.provenance import canonical_bytes, digest, thaw
+ from . import score_tail_archive as tail
++from . import imported_mcm_identity as imported
++from .matching_identity import graph_identity
+ 
+ require=tail.require
+ 
+@@ -26,20 +28,54 @@
+         and stage.scope['workflow']==c['scope']['workflow'],'original owner/stage/workload denominator differs')
+ 
+ 
++def _scientific_joins(owner,target,c):
++    """Derive scientific fields only through the admitted imported Target.
++
++    Target.check rejoins the genuine completed import, original dictionary,
++    producer descriptor/registered graph input, current backend and full graph.
++    Scalar stand-ins in pure tests do not constitute this native authority.
++    """
++    require(type(target) is imported.Target and target.owner is owner,
++        'genuine original imported Target for this owner required')
++    target.check()
++    scope=target.derive_scope()
++    motifs=[graph_identity(m) for m in target.dictionary.representatives]
++    require(c['scope']==scope and c['scope']['dictionary']==target.dictionary.identity
++        and c['ordered_motifs']==motifs and len(motifs)==32
++        and c['original_matching_sha256']==target.dictionary.matching_config_hash
++        and type(c['rows']) is int and c['rows']==len(target.graph.node_ids)
++        and type(c['motifs']) is int and c['motifs']==32,
++        'original imported dictionary/matching/motif order/target scope differs')
++
++
++def _batch_start(c,raw):
++    """Join actual bounded ScoreBatches start, including small-graph capacity."""
++    require(tail.digest(raw)==c['batch_start_sha256'],'original batch start hash differs')
++    start=tail.decode(raw)
++    expected=dict(schema_version=1,scope=c['scope'],owner=c['owner'],
++        rows=c['rows'],motifs=c['motifs'],chunk_cells=c['chunk_cells'],
++        dtype='<f8',order='row-major')
++    require(start==expected and all(type(start[k]) is int
++        for k in ('schema_version','rows','motifs','chunk_cells')),
++        'original batch start schema/dimensions/dtype/order/owner/scope differs')
++
++
+ class HeldSource:
+     """A captured original Owner/stage/token; never acquires a substitute lock."""
+-    def __init__(self,owner,stage,held,value):
++    def __init__(self,owner,stage,held,target,value):
+         require(type(owner) is owners.Owner and type(stage) is owners.Stage
+             and type(held) is owners._HeldTransition,'genuine compact Owner, Stage and held token required')
+-        self.owner=owner;self.stage=stage;self.held=held;self.contract=tail.contract(value)
+-        self._pin=tail.encode(self.contract);self._original=(owner,stage,held,owner.bound,owner.bound._run)
++        require(type(target) is imported.Target,'genuine imported target required')
++        self.owner=owner;self.stage=stage;self.held=held;self.target=target;self.contract=tail.contract(value)
++        self._pin=tail.encode(self.contract);self._original=(owner,stage,held,owner.bound,owner.bound._run,target)
+         self.check()
+     def check(self):
+-        owner,stage,held,bound,run=self._original
+-        require((self.owner,self.stage,self.held)==(owner,stage,held) and owner.bound is bound
++        owner,stage,held,bound,run,target=self._original
++        require(self.owner is owner and self.stage is stage and self.held is held and self.target is target and owner.bound is bound
+             and bound._run is run and tail.encode(self.contract)==self._pin,'held source objects changed')
+         held.check(owner);owner.lease();stage.integrity();owners.verify_current(owner)
+         _joins(owner,stage,self.contract)
++        _scientific_joins(owner,target,self.contract)
+         require(bound.record.get('resource_only') is True
+             and bound.record.get('job_input')==self.contract['job_input']
+             and bound.record.get('job_sha256')==self.contract['job_sha256']
+@@ -48,7 +84,8 @@
+         key=self.contract['job_input'];require(run.admission.inputs[key]['sha256']==self.contract['job_sha256'],'job admission hash differs')
+         raw=run.read_input(key);require(digest(raw)==self.contract['job_sha256'],'actual selected job bytes differ')
+         held.check(owner);owners.verify_current(owner);stage.integrity();_joins(owner,stage,self.contract)
+-        require(owner.bound is bound and bound._run is run and tail.encode(self.contract)==self._pin,
++        _scientific_joins(owner,target,self.contract)
++        require(self.target is target and owner.bound is bound and bound._run is run and tail.encode(self.contract)==self._pin,
+             'held source replaced during job callback')
+         require(tail.digest(stage.intent)==self.contract['stage_intent_sha256'],'original stage intent differs')
+         path,fd=tail.open_root(stage.root)
+@@ -74,8 +111,9 @@
+             finally:tail.cleanup((lambda:os.close(fd),),sys.exception())
+         batch_root,bfd=tail.open_root(roots[1])
+         try:
+-            require(tail.digest(tail.read_member(bfd,'start.json',tail.META))==c['batch_start_sha256'],
+-                'original batch start differs')
++            batch_start_body=tail.read_member(bfd,'start.json',tail.META)
++            _batch_start(c,batch_start_body)
++            batch_start_inode=(os.fstat(bfd).st_dev,os.fstat(bfd).st_ino)
+             batch_start_pin=tail.signature(os.stat('start.json',dir_fd=bfd,follow_symlinks=False))
+             tail.root_check(batch_root,bfd)
+         finally:tail.cleanup((lambda:os.close(bfd),),sys.exception())
+@@ -91,8 +129,11 @@
+             finally:tail.cleanup((lambda:os.close(fd),),sys.exception())
+         batch_root,bfd=tail.open_root(roots[1])
+         try:
+-            require(tail.signature(os.stat('start.json',dir_fd=bfd,follow_symlinks=False))==batch_start_pin
+-                and tail.digest(tail.read_member(bfd,'start.json',tail.META))==c['batch_start_sha256'],
++            body=tail.read_member(bfd,'start.json',tail.META)
++            _batch_start(c,body)
++            require((os.fstat(bfd).st_dev,os.fstat(bfd).st_ino)==batch_start_inode
++                and tail.signature(os.stat('start.json',dir_fd=bfd,follow_symlinks=False))==batch_start_pin
++                and body==batch_start_body,
+                 'original batch start changed across callback')
+             tail.root_check(batch_root,bfd)
+         finally:tail.cleanup((lambda:os.close(bfd),),sys.exception())

@@ -1,0 +1,30 @@
+test_current_dispatch_cannot_be_repurposed (__main__.Held.test_current_dispatch_cannot_be_repurposed) ... FAIL
+test_exact_stage_token_and_denominator_rejoined (__main__.Held.test_exact_stage_token_and_denominator_rejoined) ... FAIL
+
+======================================================================
+FAIL: test_current_dispatch_cannot_be_repurposed (__main__.Held.test_current_dispatch_cannot_be_repurposed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_held01.py", line 24, in test_current_dispatch_cannot_be_repurposed
+    self.helper();tree=ast.parse(P.read_text());f=next(x for x in tree.body if isinstance(x,ast.FunctionDef) and x.name=='bind_transport')
+    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_held01.py", line 6, in helper
+    self.assertTrue(P.exists(),'typed held tail adapter is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : typed held tail adapter is missing
+
+======================================================================
+FAIL: test_exact_stage_token_and_denominator_rejoined (__main__.Held.test_exact_stage_token_and_denominator_rejoined)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_held01.py", line 12, in test_exact_stage_token_and_denominator_rejoined
+    check=self.helper();owner=types.SimpleNamespace(identity='o',active=None,stages={},_binding_sha256='b')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_held01.py", line 6, in helper
+    self.assertTrue(P.exists(),'typed held tail adapter is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : typed held tail adapter is missing
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

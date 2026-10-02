@@ -1,0 +1,114 @@
+EFFFFFFFFFFF.
+======================================================================
+ERROR: test_checkpoint_refuses_before_rng_or_restore (__main__.Boundary.test_checkpoint_refuses_before_rng_or_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 77, in test_checkpoint_refuses_before_rng_or_restore
+    with self.assertRaises(ValueError):space['load_checkpoint']('unused',obj,None,None,{'model_execution':prior.selected()})
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "actual_load_checkpoint", line 52, in load_checkpoint
+NameError: name 'torch' is not defined
+
+======================================================================
+FAIL: test_hidden_selected_labels_and_nested_wrapper_refused (__main__.Boundary.test_hidden_selected_labels_and_nested_wrapper_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 53, in test_hidden_selected_labels_and_nested_wrapper_refused
+    with self.assertRaises(ValueError):ns['check_model'](obj,None)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_rebaseline_cannot_use_mutable_model_metadata (__main__.Boundary.test_rebaseline_cannot_use_mutable_model_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 68, in test_rebaseline_cannot_use_mutable_model_metadata
+    with self.assertRaises(ValueError):ns['attach'](obj,prior.selected())
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scientific_and_trainability_changes_refused (__main__.Boundary.test_scientific_and_trainability_changes_refused) (mutate=<function Boundary.test_scientific_and_trainability_changes_refused.<locals>.<lambda> at 0x75647ef6da80>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 62, in test_scientific_and_trainability_changes_refused
+    with self.subTest(mutate=mutate),self.assertRaises(ValueError):ns['check_model'](obj,prior.selected())
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scientific_and_trainability_changes_refused (__main__.Boundary.test_scientific_and_trainability_changes_refused) (mutate=<function Boundary.test_scientific_and_trainability_changes_refused.<locals>.<lambda> at 0x75647ef6d9e0>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 62, in test_scientific_and_trainability_changes_refused
+    with self.subTest(mutate=mutate),self.assertRaises(ValueError):ns['check_model'](obj,prior.selected())
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scientific_and_trainability_changes_refused (__main__.Boundary.test_scientific_and_trainability_changes_refused) (mutate=<function Boundary.test_scientific_and_trainability_changes_refused.<locals>.<lambda> at 0x75647ef6db20>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 62, in test_scientific_and_trainability_changes_refused
+    with self.subTest(mutate=mutate),self.assertRaises(ValueError):ns['check_model'](obj,prior.selected())
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scientific_and_trainability_changes_refused (__main__.Boundary.test_scientific_and_trainability_changes_refused) (mutate=<function Boundary.test_scientific_and_trainability_changes_refused.<locals>.<lambda> at 0x75647ef6dc60>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 62, in test_scientific_and_trainability_changes_refused
+    with self.subTest(mutate=mutate),self.assertRaises(ValueError):ns['check_model'](obj,prior.selected())
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scientific_and_trainability_changes_refused (__main__.Boundary.test_scientific_and_trainability_changes_refused) (mutate=<function Boundary.test_scientific_and_trainability_changes_refused.<locals>.<lambda> at 0x75647ef6dbc0>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 62, in test_scientific_and_trainability_changes_refused
+    with self.subTest(mutate=mutate),self.assertRaises(ValueError):ns['check_model'](obj,prior.selected())
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scientific_and_trainability_changes_refused (__main__.Boundary.test_scientific_and_trainability_changes_refused) (mutate=<function Boundary.test_scientific_and_trainability_changes_refused.<locals>.<lambda> at 0x75647ef6dd00>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 62, in test_scientific_and_trainability_changes_refused
+    with self.subTest(mutate=mutate),self.assertRaises(ValueError):ns['check_model'](obj,prior.selected())
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scientific_and_trainability_changes_refused (__main__.Boundary.test_scientific_and_trainability_changes_refused) (mutate=<function Boundary.test_scientific_and_trainability_changes_refused.<locals>.<lambda> at 0x75647ef6dda0>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 62, in test_scientific_and_trainability_changes_refused
+    with self.subTest(mutate=mutate),self.assertRaises(ValueError):ns['check_model'](obj,prior.selected())
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scientific_and_trainability_changes_refused (__main__.Boundary.test_scientific_and_trainability_changes_refused) (mutate=<function Boundary.test_scientific_and_trainability_changes_refused.<locals>.<lambda> at 0x75647ef6de40>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 62, in test_scientific_and_trainability_changes_refused
+    with self.subTest(mutate=mutate),self.assertRaises(ValueError):ns['check_model'](obj,prior.selected())
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scientific_and_trainability_changes_refused (__main__.Boundary.test_scientific_and_trainability_changes_refused) (mutate=<function Boundary.test_scientific_and_trainability_changes_refused.<locals>.<lambda> at 0x75647ef6dee0>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-streamed-execution-candidate02-2026-10-02/test_model_boundary02.py", line 62, in test_scientific_and_trainability_changes_refused
+    with self.subTest(mutate=mutate),self.assertRaises(ValueError):ns['check_model'](obj,prior.selected())
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.044s
+
+FAILED (failures=11, errors=1)

@@ -1,0 +1,43 @@
+# Independent corrected score-tail source review
+
+Disposition: **accepted as an unintegrated source correction for the two findings in REVIEW_SCORE_TAIL01.md; no executable release, native Owner proof, transport authority or resource-capacity acceptance.** No additional material defect was found within this bounded delta review. The original withheld review remains unchanged and accurately describes candidate01.
+
+Selected manifest02 SHA-256: `01e62e0c91b8239218eb956075ae59bb48b7c77f527e8987689e16aaf1f34f62`.
+Selected adapter SHA-256: `f00f77a23343a574c453b1dc254a6c9642dba465a5df3ae35bae6b06e49017d9`.
+Unchanged codec SHA-256: `dbd6c4ca56ca2ae30f7c0f779b5a62a81258654c4c82802cdbc2d5ebeb78f20c`.
+
+The review used bounded stdlib byte/hash/JSON/AST inspection only. No candidate or numerical module was imported, no tests or jobs were rerun, and no admission, empirical claim, network operation, production source, registration, ledger, HEAD or other evidence was changed. Only this review file is new.
+
+## Correction of scientific identity
+
+`held_tail_adapter.py:31–48` now requires the exact imported `Target` type and original Owner, calls that Target's actual `check()`, derives its full six-field scope, computes ordered motif identities from its actual Dictionary representatives and compares the original matching configuration hash directly to `target.dictionary.matching_config_hash`. The row count must equal the actual registered graph's node count and the motif denominator must be exactly 32. This closes the prior syntactically valid but unauthenticated `original_matching_sha256` substitution. Reversed motif order and any changed graph/node-order/dictionary/ordered-motifs/current-matching/workflow field are rejected by equality with the authenticated derivation.
+
+This is more than a new type label. The independently read pinned Target source (`original-dictionary-import-mcm-implementation03-2026-10-02/imported_mcm_identity.py:23–95`) binds the original ImportedExecution, Owner, Dictionary and graph/array objects; the complete admitted descriptor's graph-to-manifest mapping; registered manifest bytes; target graph content and node order; original dictionary/matching; and backend-qualified current matching/workload. Its `check()` rejoins ImportedExecution and original materialization, then verifies full graph content. The pinned authority04 `ImportedExecution.check()` rejoins the actual completed ImportStage, owner/Binding/materialized identities, original receipt/inode and execution contract, then independently compares the original numeric identities. This preserves the original Dictionary and current execution distinction without fabricating a fresh dictionary or recomputing the historical sample.
+
+`HeldSource.__init__/check` at lines 65–96 captures the original Target object alongside the original Owner, Stage, held token, Binding and run, requires identity preservation, and performs scientific joins on both sides of the selected-job read callback. Existing resource-only Binding/job/source, stage intent/inode, original token and workflow/denominator checks remain. The first prior finding is therefore addressed at source level, conditional on installing these exact coordinated dependencies into a genuinely admitted source package.
+
+## Correction of actual batch-start binding
+
+`_batch_start` at lines 51–60 now checks the actual start-body SHA and bounded canonical JSON object, then requires exact equality to the production ScoreBatches schema: schema version 1, complete scope, owner, rows, motifs, chunk capacity, `<f8` dtype and row-major order. Schema version and dimensions must be integers rather than bools/floats. Unknown, missing or mismatched fields fail.
+
+`original_parts` calls this helper on the first actual start-file read at lines 112–119 and after the authority callback at lines 130–139. It also pins/rejoins the batch directory inode, original start file signature and exact body. Existing tail/header/payload signatures and body comparisons are retained. The unchanged codec separately verifies all ordinals, float64 payload bits and predecessor checksums against the contract.
+
+The retained counterexample was independently inspected without executing the helper: `batch-start01.json` has exactly the SHA supplied in `batch-capacity-counterexample01.json`, its capacity is 32 and the counterexample claims 65,536; both have a 32-cell first extent. The new exact start equality necessarily rejects this mismatch, whereas candidate01 only hashed that body. The second prior finding is therefore addressed.
+
+## Evidence integrity and test scope
+
+All **12** selected manifest bodies match their hashes, sizes, regular-file type and recorded single-link count, totalling **64,715 bytes**. All **19** dependency pins match their hashes and sizes (229,669 bytes). All **49** original candidate manifest bodies still match (149,826 bytes), including their recorded hardlink counts. The original adapter copy and codec copy are byte-identical to the prior selected versions. The unified patch exactly reconstructs the current adapter delta. The pinned authority04 manifest's **25** bodies and typed MCM03 manifest's **17** bodies also rehash exactly. These checks establish preservation/source references; they do not make the unintegrated dependency combination a released package.
+
+The frozen raw logs record six expected RED failures against the old adapter and six GREEN methods in 0.012 seconds against this correction. Static inspection confirms coverage of original matching and motif order mutation, all six scope fields, wrong Owner/type/rows, the unchanged-start/different-capacity case, malformed schema/type/dimension/dtype/order/owner/scope, body hash/canonical JSON, and actual HeldSource routing plus continuing transport refusal.
+
+These are qualified helper/source checks. The scientific helper is extracted by AST and executed by the author with a scalar Target stand-in, no real native authority; the batch helper uses real local codec parsing. The routing check inspects AST. They establish the proposed comparisons and call wiring, not real Target/Owner construction, actual graph-derived values, native admission, original token lifetime, cross-thread rejection, callback mutation in a complete owner, or integrated full-stage closure. This reviewer did not execute those tests or repeat old fixtures.
+
+## Conditions retained before integration
+
+The source uses relative imports for the new typed module and codec, and current production does not provide that coordinated installation. A future isolated source package must select and pin authority04, typed MCM03, the corrected adapter, codec and all transitive numerical/runtime/producer dependencies without mixing class identities from separate copies. The genuine compact-resource worker/admission and resource-journal closure requirements remain as documented in the separate fixture investigation.
+
+`Target.check()` hashes the full graph and is called twice per HeldSource.check; original_parts invokes check before reading and after its authority boundary. Cost is therefore repeated per chunk and remains unmeasured. Do not replace it with a weaker unchecked lease or call its throughput acceptable on the basis of six tiny tests. A concrete admitted two-target/all-32-motif native fixture must establish the real identity chain, the two corrected mutation refusals, token expiry/thread behavior, original inode/body rechecks, first-fatal cleanup, failure on the second target with the first retained, and complete stage/Owner/publication joins under fixed resource/IO limits.
+
+`bind_transport` at lines 143–153 still unconditionally raises after genuine source/View checks. A typed 80-byte tail population/claim in the original durable Context and held Operation ledger, cumulative no-refund spending, complete mapping predecessor traversal and coordinated stream/stage/Owner/publication consumers remain absent. No 168-byte event capability has been silently repurposed. A fresh reviewed finite transfer/full-body recovery proof is required before any proposed source disposition; earlier closed archive identities remain unavailable for rerun.
+
+The byte codec, local-only receipt semantics and all storage cleanup logic are unchanged. This correction frees zero production bytes. Whole 55,439,818,752-byte population capacity and the separately reported 9,239,969,792-byte non-tail residue were not measured by this review; batch/output offload or adequate local capacity remains required. No model fit, paper agreement, financial return, fee/funding correctness, empirical-budget adoption or completed scientific denominator follows from this source acceptance.

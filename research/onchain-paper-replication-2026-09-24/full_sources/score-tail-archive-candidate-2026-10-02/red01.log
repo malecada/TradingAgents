@@ -1,0 +1,89 @@
+test_alias_and_first_fatal_close_once (__main__.Candidate.test_alias_and_first_fatal_close_once) ... FAIL
+test_bound_65536_cells_is_five_mib (__main__.Candidate.test_bound_65536_cells_is_five_mib) ... FAIL
+test_callback_mutates_contract_is_refused (__main__.Candidate.test_callback_mutates_contract_is_refused) ... FAIL
+test_exact_original_format_and_partial_final_chunk (__main__.Candidate.test_exact_original_format_and_partial_final_chunk) ... FAIL
+test_revocation_before_success_preserves_bytes_and_poison (__main__.Candidate.test_revocation_before_success_preserves_bytes_and_poison) ... FAIL
+test_schema_denominator_identity_and_reordered_bytes_refused (__main__.Candidate.test_schema_denominator_identity_and_reordered_bytes_refused) ... FAIL
+test_writer_reader_atomic_seal_and_no_deletion (__main__.Candidate.test_writer_reader_atomic_seal_and_no_deletion) ... FAIL
+
+======================================================================
+FAIL: test_alias_and_first_fatal_close_once (__main__.Candidate.test_alias_and_first_fatal_close_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 77, in test_alias_and_first_fatal_close_once
+    m=self.module();root=HERE/'fixture-alias01';root.mkdir();(root/'a').write_bytes(b'x');os.link(root/'a',root/'b')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 39, in module
+    self.assertTrue(P.exists(),'bounded score-tail archive implementation is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded score-tail archive implementation is missing
+
+======================================================================
+FAIL: test_bound_65536_cells_is_five_mib (__main__.Candidate.test_bound_65536_cells_is_five_mib)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 59, in test_bound_65536_cells_is_five_mib
+    m=self.module();c,*parts=fixture(2048,65536,0)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 39, in module
+    self.assertTrue(P.exists(),'bounded score-tail archive implementation is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded score-tail archive implementation is missing
+
+======================================================================
+FAIL: test_callback_mutates_contract_is_refused (__main__.Candidate.test_callback_mutates_contract_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 88, in test_callback_mutates_contract_is_refused
+    m=self.module();c,*parts=fixture();writer=m.LocalChunk(HERE/'fixture-mutate01',c,lease=lambda:None)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 39, in module
+    self.assertTrue(P.exists(),'bounded score-tail archive implementation is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded score-tail archive implementation is missing
+
+======================================================================
+FAIL: test_exact_original_format_and_partial_final_chunk (__main__.Candidate.test_exact_original_format_and_partial_final_chunk)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 42, in test_exact_original_format_and_partial_final_chunk
+    m=self.module()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 39, in module
+    self.assertTrue(P.exists(),'bounded score-tail archive implementation is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded score-tail archive implementation is missing
+
+======================================================================
+FAIL: test_revocation_before_success_preserves_bytes_and_poison (__main__.Candidate.test_revocation_before_success_preserves_bytes_and_poison)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 70, in test_revocation_before_success_preserves_bytes_and_poison
+    m=self.module();root=HERE/'fixture-revoked01';c,*parts=fixture();state={'fail':False}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 39, in module
+    self.assertTrue(P.exists(),'bounded score-tail archive implementation is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded score-tail archive implementation is missing
+
+======================================================================
+FAIL: test_schema_denominator_identity_and_reordered_bytes_refused (__main__.Candidate.test_schema_denominator_identity_and_reordered_bytes_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 49, in test_schema_denominator_identity_and_reordered_bytes_refused
+    m=self.module();c,*parts=fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 39, in module
+    self.assertTrue(P.exists(),'bounded score-tail archive implementation is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded score-tail archive implementation is missing
+
+======================================================================
+FAIL: test_writer_reader_atomic_seal_and_no_deletion (__main__.Candidate.test_writer_reader_atomic_seal_and_no_deletion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 62, in test_writer_reader_atomic_seal_and_no_deletion
+    m=self.module();root=HERE/'fixture-green01';root.mkdir()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/score-tail-archive-candidate-2026-10-02/test_candidate01.py", line 39, in module
+    self.assertTrue(P.exists(),'bounded score-tail archive implementation is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : bounded score-tail archive implementation is missing
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (failures=7)
