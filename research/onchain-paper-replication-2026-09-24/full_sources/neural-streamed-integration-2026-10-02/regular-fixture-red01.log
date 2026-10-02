@@ -1,0 +1,44 @@
+test_duplicate_and_unknown_request_refused (__main__.RegularFixture.test_duplicate_and_unknown_request_refused) ... FAIL
+test_symlink_parent_refused (__main__.RegularFixture.test_symlink_parent_refused) ... FAIL
+test_three_fixtures_remain_regular_owned_distinct (__main__.RegularFixture.test_three_fixtures_remain_regular_owned_distinct) ... FAIL
+
+======================================================================
+FAIL: test_duplicate_and_unknown_request_refused (__main__.RegularFixture.test_duplicate_and_unknown_request_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/test_regular_fixture01.py", line 31, in test_duplicate_and_unknown_request_refused
+    self.require_helper(); root=args.root/'refusals'; root.mkdir()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/test_regular_fixture01.py", line 21, in require_helper
+    def require_helper(self):self.assertIsNotNone(helper,'owned regular-directory fixture missing')
+                             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : owned regular-directory fixture missing
+
+======================================================================
+FAIL: test_symlink_parent_refused (__main__.RegularFixture.test_symlink_parent_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/test_regular_fixture01.py", line 38, in test_symlink_parent_refused
+    self.require_helper(); actual=args.root/'actual'; actual.mkdir()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/test_regular_fixture01.py", line 21, in require_helper
+    def require_helper(self):self.assertIsNotNone(helper,'owned regular-directory fixture missing')
+                             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : owned regular-directory fixture missing
+
+======================================================================
+FAIL: test_three_fixtures_remain_regular_owned_distinct (__main__.RegularFixture.test_three_fixtures_remain_regular_owned_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/test_regular_fixture01.py", line 24, in test_three_fixtures_remain_regular_owned_distinct
+    self.require_helper(); root=args.root/'distinct'; root.mkdir()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/test_regular_fixture01.py", line 21, in require_helper
+    def require_helper(self):self.assertIsNotNone(helper,'owned regular-directory fixture missing')
+                             ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : owned regular-directory fixture missing
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)

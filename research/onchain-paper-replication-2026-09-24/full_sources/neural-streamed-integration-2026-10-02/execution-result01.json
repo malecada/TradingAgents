@@ -1,0 +1,96 @@
+{
+  "budget": {
+    "highest_adopted_ceiling": 63,
+    "new_empirical_claims": 0,
+    "new_financial_fits": 0,
+    "spent_empirical": 35
+  },
+  "cgroup_absent": true,
+  "child_exit_code": null,
+  "cleanup_verified": true,
+  "closed_at_utc": "2026-10-02T19:18:58.640286+00:00",
+  "complete_retained_tree": {
+    "allocated_bytes_including_directories": 745472,
+    "directories_including_each_root": 42,
+    "entries_including_each_root": 180,
+    "files": 135,
+    "identity": "neural-streamed-production-adapter-20261002-01",
+    "logical_bytes": 72046,
+    "logical_link_target_bytes": 744,
+    "schema_version": 1,
+    "symlinks": 3
+  },
+  "coordinator_exit_code": 1,
+  "guard_limit_reason": "ValueError: storage special file or symbolic link refused",
+  "identity": "neural-streamed-production-adapter-20261002-01",
+  "launcher_error": "FileNotFoundError(2, 'No such file or directory')",
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "oracle_report_present": false,
+  "peak_sampled_memory_bytes": 298364928,
+  "pids_absent": {
+    "1148521": true,
+    "1148810": true,
+    "1148825": true,
+    "1148845": true
+  },
+  "qualification": "Failed native adapter preserved permanently. Pytest builtin tmp_path created three current symlinks; guard correctly rejected special/link objects. Child log has three dots but no complete four-test/phase report or child_exit snapshot, so no full adapter pass claimed. Native memory events all0; no memory failure. Original workload/readback threads/monitor/cgroup absent. All regular bodies, directory modes and symlink target strings retained without following links or modifying failed tree; allocation includes directories, link target bytes reported separately. No model/criterion change or historical rerun. New successor may change only explicit regular-directory fixture, after exact independent release. Sourcefreeze ended after verified closure.",
+  "refs": {
+    "REVIEW_ADAPTER_RELEASE03.md": {
+      "bytes": 6543,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/REVIEW_ADAPTER_RELEASE03.md",
+      "sha256": "acd1e3c74dc9518cced4037790bdc5d647ca78cdb4dcb3d03925047f0a4e1186"
+    },
+    "adapter-release03.json": {
+      "bytes": 53292,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/adapter-release03.json",
+      "sha256": "867feec8a3df47779cdd9c126ab3af31b0065276384011c493bedac905f2bc19"
+    },
+    "adapter_launcher03.py": {
+      "bytes": 19960,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/adapter_launcher03.py",
+      "sha256": "31d894bad8b8fd250a43c780004ca16487cf42273b5c83cdffdff3515a623bde"
+    },
+    "adapter_tests03.py": {
+      "bytes": 4283,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/adapter_tests03.py",
+      "sha256": "1e793c84a864a5b354f7109e651446d24a74dfcae25c2fa935b6900087ad255c"
+    },
+    "coordinator-result01.json": {
+      "bytes": 256,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/coordinator-result01.json",
+      "sha256": "3a4d6559a81d1a0a73d8e80a58a0625072095740dc544c24dd9fab5597879941"
+    },
+    "coordinator01.log": {
+      "bytes": 2079,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/coordinator01.log",
+      "sha256": "e0a2587f59cd45769f8d36d6ee96d7c4af151e768546eda882f1b96e601a5ab9"
+    },
+    "launch-intent01.json": {
+      "bytes": 977,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/launch-intent01.json",
+      "sha256": "ef87a265ca3460b978b6f4d965a95367bc7df9b5cb0cdce1824664e4d4d24532"
+    },
+    "retained-tree01.json": {
+      "bytes": 48699,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/retained-tree01.json",
+      "sha256": "e426b3ca082609ca9b69af4b80719987b2a8ea9115b6189c2fb70db456a09884"
+    },
+    "retained-tree01.tar.gz": {
+      "bytes": 14487,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-streamed-integration-2026-10-02/retained-tree01.tar.gz",
+      "sha256": "0df36245c079b868a62077f13a60d2bba34424f62ca811f01ff9599ffb8fdb08"
+    }
+  },
+  "schema_version": 1,
+  "session": 90521,
+  "source": "cbe9f4108af9710043dc74a222e1e0c8d2ad6bab",
+  "source_pins_verified": 276,
+  "status": "closed_failed_storage_symlink_retained_review_pending"
+}

@@ -1,5 +1,43 @@
 # Current execution checkpoint — October 2, 2026
 
+**Latest release: adapter02 source/release05 independently accepted.**
+Reviewd293ed6c accepts23378194/285pins2256432B, worker04d3df59ec/launcher04
+9355aee6, samefourtests/nativebounds; ownedregularfixture and13normalprogress
+records replace numberedpytestlinks. Original01FAILED/completearchive/child125
+correction andreview5cc32537 are exactpinned. Next: commit/externalverify/fresh
+checks, ONE adapter02; all1420financialfits remainpending.
+
+**Latest checkpoint: adapter01 CLOSED failed storage-link guard; regular-fixture successor prepared.**
+One-use adapter01/session90521 from externally verifiedcbe9f4108af9710043dc74a222e1e0c8d2ad6bab
+closed19:15:18UTC/1 in3.261s. Pytest builtin tmp_path creates numbered current
+symlinks; storageguard correctly rejected special/linkobjects. Parentfailed
+missingoracle-report;3childlogdots do not establish allfourtests/12phases.
+Native1GiBhigh=max/zeroSwap/events0/sampledpeak298364928B; no RAMfailure.
+Cleanupstop0/allfourrecordedPIDs andoriginalcgroup absent. Whole135regularfiles,
+42dirs/3symlinks/180members,72046regularlogical+744linktargetbytes/745472allocated
+incldirs archived without linkfollowing. Guardfinal child_exit_code null is
+an earlier observation: actual alreadyarchivedchild_exit receipt exists and
+records125/signal/workload1148825/40988672terminalbytes/events0. Originalresult
+incorrectlysaidnosnapshot; preserved and correctedaddendum46a0f4bb accepted in
+independent failedclosure review5cc32537. No rerun01/pass/refund/empiricalcharge.
+
+NEW worker04 d3df59ec/launcher04 9355aee6 changes only owned regular tmp_path
+fixture and bounded append-only testprogress, retaining identicalfourtests,
+production/science/nativebounds. Purefixture regression3REDmissing→3GREEN
+proves distinctregularowned dirs/duplicate+unknownrefusal/symlinkparentrefusal.
+Unused adapter02 exactfinalrelease05 23378194/285pins2256432B binds failure review
+and correction; reviewpending. Next: accept/commit/push/remoteverify/freshchecks,
+ONE unused neural-streamed-production-adapter-20261002-02; retain/review actual
+then immediately prepareprospective64/fullneural04. No substantialjobactive.
+
+Originalimport isolated01 withhelda9f6ac5d for evidence/extent/Dictionaryidentity
+and arrayobjectpins; oldbytespreserved. NEW coordinatedcandidate02 manifest9fd04c99
+includes resourceBinding/job_input, prebirthOwnerimportstage/durablereceipts and
+typedImportedExecution plus pinfixes; independentreviewpending/no liveintegration.
+NextMCM/kerneltypedcandidate proceedsoutsidefrozenneuralclosure. Genuineguarded
+numericbridge/23cells/storage remainrequired.35spent/adopt63/77of109/all1420fits
+and9neural+23otherresources pending; conditional64 notadopted/no04claim.
+
 **Latest release: exact adapter03 accepted; sole native invocation next.**
 Reviewacd1e3c7 accepts final release03 867feec8/worker03 1e793c84/launcher03
 31d894ba,276pins2160644B/all134productionPython and implicitpytestclosure.
