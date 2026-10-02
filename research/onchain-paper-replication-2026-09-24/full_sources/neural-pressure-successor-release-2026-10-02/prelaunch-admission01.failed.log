@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job.py", line 101, in _admitted
+    admitted = admit(root=args.root, registration=args.registration,
+                     experiment=args.experiment, source=args.source)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 335, in admit
+    ceiling = effective_budget(root, spec["program_id"], experiment, exp, family, relevant, extension_metadata)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/budget_extensions.py", line 20, in effective_budget
+    raw=read_bound(reference['extension']);extension=json.loads(raw)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 329, in extension_metadata
+    raise ValueError("budget extension metadata must be source-pinned")
+ValueError: budget extension metadata must be source-pinned

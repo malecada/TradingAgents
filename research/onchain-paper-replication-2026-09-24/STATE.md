@@ -1,5 +1,29 @@
 # Current execution checkpoint — October 2, 2026
 
+**Correction02 independently accepted; no empirical attempt.**
+REVIEW_GATE02 SHA3c94130f1e09f206f7ce06f9d9760026c4ca40cab4b305f80c4b6357de336b19
+confirms exactly2acceptedbudget sourcepins added andall3callback metadata docs
+match current/Gitbytes. Gate4b6fbca8/214sourcepins/133Python/7runtime/77inputs
+andclaimpreview83,960B/RPC86,465B are frozen. Originalmetadatafailure remains
+preserved; no03namespace/caller/nativeguard was attempted. Back up correction,
+repeat actualcommittedHEAD admission, thenfreshreadiness andsingleunused03launch.
+
+**Latest checkpoint: actual metadata admission refused; no claim/job started.**
+Session35709/fullHEADa6b0913c31c6f3a9ae751b72d7542b3cd3604cbc returned1
+because admission.extension_metadata requires extension/review in source_files.
+Original gate01 omitted those2entries. Traceback, failed metadata receipt and
+originalgate/preview/generator/reviews are preserved. No caller invocation,
+namespace reservation, readiness, guard or budget adoption occurred;34spent/
+highestadopted62 unchanged. This prospective review was not a schema pass.
+New gate SHA4b6fbca874b3ea31e3fdffc15b57d5feb47d107ed5c2da1986d4d0aee8e4f2a6
+adds exactly2unchanged acceptedbudget document hashes to source_files (212→214).
+All other JSONvalues/caller/resources/science/9cells/windows/inputs/ancestors
+remain identical. Conservative correctedpreview83,960B/RPC86,465B fits256KiB.
+Independent delta/callback review pending. Nextsafeaction: reviewed correction
+commit+remote backup, repeat actualcommittedHEAD metadataadmission, thenfresh
+16x2sRAMreadiness/nativeguard andONEunused03probe. No substantialjobactive.
+Originaldictionary02independentreview inparallel; fullscope/fits remainpending.
+
 **Latest checkpoint: exact neural03gate independently accepted; actual admission next.**
 New neural-pressure-successor-release-2026-10-02/gate.json SHAd6cbe22b2e85e83ae75859232d8523646b52815c555930b8e4743a40fc404d56
 binds all9originalcells/graphs/order/config/windows, complete133Python/7runtime/
