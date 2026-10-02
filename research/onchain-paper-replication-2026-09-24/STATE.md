@@ -3,6 +3,50 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**October 2 actual neural02 scheduling DEFERRED — independent work continues**:
+Final corrected caller/gate/reviews committed and backed up at
+`91b45091966ab37e1f70aec6d8a04e5a62d340e9`, exact remote HEAD verified. Actual
+metadata admission succeeded: ready=true, prospective62 ceiling,67,123B claim
+and69,112B authority request. New in-process observation01 measured8,993,329,152B
+then8,839,364,608B available2.0003s apart. Second sample was19,005,440B (18.13MiB)
+below the8,858,370,048B scheduling threshold, so coordinator session48467 returned3
+before any launch. This is the conservative scheduling margin, not measured model
+memory or a guard failure. All three02 namespaces, launch intent and outer log
+are absent; no guard, workload, Torch import or lifecycle claim was created.
+
+REVIEW_OBSERVATION01 independently accepts raw admission01/readiness01 and
+coordinator-result01, verifies all206 source pins against91b4509, two-sample
+spacing/shortfall, current process and namespace absence, and all16 currentclaim
+history joins.33spent and greatest adopted60 remain unchanged;62 is prospective.
+Coordinator exit3 is supported by source branch/result and tool output, not a
+separately retained session transcript. Identity02 remains unused, not terminal.
+Observation01 is immutable. Another observation requires meaningful availability
+improvement and fresh actual source admission; no automatic retry or saved permit.
+Closed predecessor01 remains permanently reserved and must never be reopened.
+
+Source freeze is released: no substantial/empirical job is active. Root advances
+the independent lower-RAM archive outer-owner proof instead of waiting. Complete
+candidate02 snapshot maps1,873 committed files/18,815,116B at824489a and has been
+materialized as independent read-only blob copies under onchain-fixture-isolation/
+archive-outer-owner-20261002-01/source (24,662,016allocatedB including directories).
+Source mapping is independently accepted as preparation, not execution. Worker
+owns new launcher/spec/small synthetic checks; reviewer owns independent control
+review. No package or numerical changes are needed. Proposed3GiB/1800s fixture
+retains all three cases, one representation each. The host lacks a durable hard
+aggregate filesystem quota. New explicit spec02 must qualify the1GiB owned-total
+stop threshold as sampled externally with possible-between-sample overshoot,
+separate from hard cgroup/per-file/wall controls. No hard aggregate quota or full
+SSH/whole-route transport capacity is claimed. Concrete launcher/runtime/isolation/
+cleanup and fresh immutable identity require review before the heavy proof.
+
+Next safe action: back up reviewed scheduling evidence; finish exact bounded
+owner launcher/spec/runtime mapping and independent release review, then run that
+single isolated synthetic proof with measured controls. Continue separate exact
+resource/source preparations while the neural scheduling dependency remains.
+Coverage77/109, nine neural capacity requirements, other23resource requirements
+and all1,420 financial fits remain pending. No paid-resource/user-system change
+is implied by this preparation;10GiB free-space floor remains.
+
 **October 2 final neural launch caller accepted — actual admission next**:
 Accepted archive/resource preparation is committed at
 `824489afa2aa5eba39ebf1af456681120ac9e0fb`, pushed with exact remote HEAD verified.

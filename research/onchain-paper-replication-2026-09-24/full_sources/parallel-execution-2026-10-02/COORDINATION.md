@@ -1,5 +1,30 @@
 # Parallel execution checkpoint — October 2, 2026
 
+## Current operational checkpoint — neural scheduling deferred
+
+Corrected neural caller at committed/pushed91b45091966ab37e1f70aec6d8a04e5a62d340e9
+completed actual metadata admission then DEFERRED before any launch: second RAM
+sample8,839,364,608B was19,005,440B below8.25GiB scheduling. No namespace/guard/
+model/claim exists;33spent and highestadopted60 unchanged,62 prospective. Source
+freeze released. REVIEW_OBSERVATION01 accepts retained raw proof. No automatic
+retry; unused02 requires meaningful RAM improvement and fresh actual admission.
+
+- Root owns STATE/result backup and next isolated engineering proof release.
+- physical_correction owns NEW owner-release-preparation01 snapshot/spec/launcher/
+  small fake tests only. Materialized exact824489a snapshot18,815,116logicalB;
+  package/old fixture unchanged. No actual heavy proof before reviewed release.
+- physical_review independently accepted source mapping, owns NEW spec02/launcher
+  review. Proposed1GiB total-owned allocation is a sampled stop threshold, not
+  unavailable hard aggregate filesystem quota; all limitations explicit.
+- registration_review completed actual scheduling observation review; available
+  for separate bounded research metadata work. No empirical job is active.
+
+One substantial resource job at a time;3GiB owner proof can advance independently
+of neural8.25GiB scheduling. Require exact isolated source/runtime mapping, finite
+4MiBlog,1800swall,swap0, descendantcleanup and10GiBfloor before execution. Retain
+all attempts/raw evidence; full transport physical/SSH/second-view spend unproved.
+All77/109 coverage and1,420 financial fits remain pending.
+
 ## Current release checkpoint — accepted source and practical RAM ceiling
 
 This section supersedes assignments and resource statements below. Accepted
