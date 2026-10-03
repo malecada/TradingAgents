@@ -1,0 +1,39 @@
+# Independent failed primary02 closure and missing-source diagnosis
+
+The genuine attempt `original-import-native-success-20261003-02` is accepted as a **closed, retained failed engineering attempt**, not a successful MCM proof. The immediate cause is a missing executable source dependency, not RAM exhaustion. The first original dictionary import completed; the first MCM stage was born and failed before score-stream construction, kernel matching, scalar references or publication. The second target remains unavailable. No closed identity may be rerun, and the dependent publication-failure02 case must not be launched through this unchanged source.
+
+## Exact original evidence
+
+Source HEAD `ae3160260187b7853fb6066e91562584be93eef6`; release `c32a3af9636201f5499186a1187d9dfa19eba70c473af842ee15c131cda782b5`; claim `56d653890440a57896a98e87ed641f9dcfd74fca8375b3491e804fd2f5432688`; failed terminal `6f088e8cc3252db4ca91ee0b37323793ce53d822e68a2e2ac0c505cea29f1747`.
+
+The independently rehashed `EXECUTION_PRIMARY01.json` is `d7b7193703bff5ffcf09d6b003feabb639fd45ad1fca25349433d69605f2d3ae`; retention manifest `2d1972192c89d7db31308aa97edfa596690c9bcb44d9eabfdb6b26b1ff1cbd9a`. Paths below refer to the immutable capsule02 in `original-import-native-successor-preparation04-2026-10-03`.
+
+`guard/child.log`, the failed lifecycle terminal and the cell ledger agree on `ImportError: cannot import name 'resource_refusal'`. The exact traceback reaches `tradingagents/research/onchain_replication/compact_mcm.py:282`. Source inspection confirms that the imported module is absent from both the selected 156-source map and actual package filesystem. The package initializer supplies no such attribute. The first cell is failed and the second unavailable; neither is silently removed from the denominator. All four output bodies join the failed terminal hashes.
+
+## Causal composition defect and narrow correction
+
+The actual `_produce_locked.compute` unconditionally imports the missing module before creating `MCMScoreStream`. Lines 283–294 additionally substitute `compute_callback(owner,matcher)`, `score_callback(owner,stream)` and `returned(owner,actual)` into the ordinary route. The retained metadata02 baseline instead passes `matcher` and `stream` directly and returns the kernel result. Comparing that exact baseline with the actual source demonstrates that copying the entire cleanup-candidate `_produce_locked` brought these unrelated refusal hooks together with the desired delayed-poison exception handler.
+
+The desired correction is confined to the exception handler: perform the existing terminal/stream/log cleanup before poisoning the owner in `finally`, retaining first-fatal behavior. The numerical callback body must remain exactly the accepted metadata02 baseline. Preserve both failed capsules and every old candidate. Do not add an unreviewed refusal framework merely to satisfy the missing import, enlarge memory limits, alter mathematical settings, or replay the closed identity.
+
+The earlier composition review verified whole-function equality against the cleanup candidate but failed to detect this accompanying import/callback delta. That was insufficient validation; the actual failure supersedes any implication that the composed function had a complete execution closure. A successor needs a regression for the exact intended handler-only AST change and a transitive source-import audit, rather than accepting the entire predecessor function by hash alone. This investigation does not itself accept any later corrected source or release.
+
+## What actually completed
+
+The genuine `compact/dictionary-import/import-complete.json` has hash `f0f724f15d2714c45ce2504b4249b31b7811246efbeec2311eb5fa582a36af4a`. This establishes the retained original-dictionary import stage outcome in this admitted resource attempt. One first-target MCM stage directory exists, but no `stage-complete.json` and no compact output namespace exists. The missing import precedes score-stream construction and the kernel call; zero scalar reference comparisons were reached. Import completion is not current scientific dictionary construction, MCM equality, full23-cell completion, a paper-scope representation, financial fit, or full-sized capacity proof.
+
+The old success01 claim and failed terminal remain byte-identical (`f475dd6c…` and `09206641…`). There are now two actual failed engineering claims. The current adopted cumulative ceiling remains three; a proposed ceiling four is separate preparation, not an automatic refund or admission. The previously unlaunched dependent identity must remain unattempted unless explicitly withdrawn or separately admitted in a new reviewed allocation. Paper accounting remains the recorded 36 closed attempts and highest adopted ceiling64; this engineering failure does not alter those counts.
+
+## Native controls and closure qualifications
+
+The native worker exited1 after 257.8945938109973 seconds. Recorded sampled memory peak was393,662,464 bytes. Initial and final kernel memory event counters are all zero. Actual memory high=max are3,221,225,472 bytes with swap0; readback records two-CPU affinity, hard/soft file size4,194,304 bytes and `RuntimeMaxUSec=30min`. The unit wall bound is not a hard deadline for the entire outer invocation, and the sampled aggregate owned-tree watch is not a kernel disk quota. These observations do not measure later MCM/model peak demand.
+
+The original guard has `cleanup_verified=true`, stop return0, empty cgroup and failed/exit-code status. Independently at review time all six recorded PIDs1624414,1624418,1624581,1624931,1625264,1625268 and the original cgroup were absent; current read-only systemd properties remained failed/failed, exit-code, ExecMainStatus1, empty ControlGroup. Source and gate pins match the frozen Git origins.
+
+The original outer cleanup still says `pid_absence_verified=false` and `unresolved_pid_absence=true`; its terminal `proof` is null. These bytes were not rewritten. The separate collector/review absence observations establish postclosure absence without upgrading that original proof. The selected success-only raw authenticator refused with `ambiguous lifecycle terminals`: `fixture_tools/raw_receipts01.py:138` demands a complete lifecycle for case `success` and rejects the actual failed file. Inspection confirms one failed lifecycle terminal and no complete terminal, so that wording is not evidence of two lifecycle terminals. The overall attempt and outer terminal remain failed. Post-tail authentication is separately recorded; the whole final inventory below supplies later complete retention, not a retroactive successful outer proof.
+
+## Complete retention and independent verification
+
+`review_inventory01.py` and its retained log perform stdlib-only independent checks. All817 original and recovered paths match exactly:579 regular files,238 directories including capsule root;5,973,237 logical file bytes and8,441,856 allocated bytes including directory blocks. All original names, modes, sizes, body hashes and block counts were checked. The archive is2,442,028 bytes, SHA `3c04dce14a627f550fd300393e1247d5886b88f045a4447f0cd36b4b4a9eea03`; every member was streamed and checked without extraction or execution. No special entries or hardlinks are accepted. The final retained tree includes historical and current failed evidence and the capsule Git store.
+
+All156 selected source bodies equal the current source commit and source-anchor blobs in both original and recovered Git stores; registration and claim joins reproduce. The original26 historical commit:path bodies and11 retained JSON inputs reproduce. Original-source recovery does not recover installed runtime or empirical array stores. No NumPy/Torch/SciPy import, numerical replay, new lifecycle claim, ledger write, network action, or source mutation occurred in this review.

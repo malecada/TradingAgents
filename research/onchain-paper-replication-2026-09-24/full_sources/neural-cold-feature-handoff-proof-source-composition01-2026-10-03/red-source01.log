@@ -1,0 +1,21 @@
+test_base_numerics_and_metadata_cleanup_preserved (__main__.Tests.test_base_numerics_and_metadata_cleanup_preserved) ... ok
+test_complete_materialization_source_map (__main__.Tests.test_complete_materialization_source_map) ... FAIL
+test_exact_science_outer_bodies (__main__.Tests.test_exact_science_outer_bodies) ... ok
+test_source_compile_only (__main__.Tests.test_source_compile_only) ... ok
+test_typed_archive_separate_and_no_replay (__main__.Tests.test_typed_archive_separate_and_no_replay) ... ok
+test_weakref_slots_only (__main__.Tests.test_weakref_slots_only) ... ok
+
+======================================================================
+FAIL: test_complete_materialization_source_map (__main__.Tests.test_complete_materialization_source_map)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition01-2026-10-03/test_composition01.py", line 13, in test_complete_materialization_source_map
+    self.assertEqual(value,{k:v['sha256'] for k,v in self.rows.items()})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'tradingagents/research/__init__.py': 'b34[19538 chars]4e5'} != {'.python-version': '56c16a411e41fec3219e82[21029 chars]b9a'}
+Diff is 22106 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.346s
+
+FAILED (failures=1)

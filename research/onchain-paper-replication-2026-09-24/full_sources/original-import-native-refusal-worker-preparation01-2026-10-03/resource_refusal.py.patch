@@ -1,0 +1,65 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/resource_refusal.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation01-2026-10-03/resource_refusal.py
+@@ -58,6 +58,36 @@
+ def forbidden_compute(*args,**kwargs):
+     raise AssertionError('legacy refusal reached forbidden computation')
+ 
++
++def genuine_oracle(target):
++    """Real guarded Target only. Durable observation precedes every Owner mutation."""
++    import hashlib,importlib,sys
++    from pathlib import Path
++    from . import import_metadata
++    from .imported_mcm_identity import Target
++    from .provenance import thaw
++    from .cache import cache_key
++    require(type(target) is Target,'genuine original-import Target required')
++    target.check();run=target.owner.bound._run;run._active();root=run.admission.root
++    sources=run.admission.experiment['source_files'];tools=root/'fixture_tools'
++    names=('raw_receipts01','original_semantics','refusal_pair_identity','resource_policy05','guarded_formula_oracle05')
++    for name in names:
++        path=tools/(name+'.py');require(path.resolve()==path and path.stat().st_size<=131072 and sources.get('fixture_tools/'+name+'.py')==hashlib.sha256(path.read_bytes()).hexdigest(),'oracle helper source not admitted')
++    if str(tools) not in sys.path:sys.path.insert(0,str(tools))
++    modules={name:importlib.import_module(name) for name in names}
++    for name,module in modules.items():
++        path=Path(module.__file__).resolve();require(path==tools/(name+'.py') and hashlib.sha256(path.read_bytes()).hexdigest()==sources['fixture_tools/'+name+'.py'],'oracle helper import origin differs')
++    record=target.execution.check();manifest=json.loads(target._manifest)
++    expected=modules['refusal_pair_identity'].expected_pairs(root,run.admission.inputs[target._input]['path'],manifest,run.admission.inputs,numeric=record['original'],dictionary_config=target.dictionary.config,matching=thaw(target.owner.matching),context=thaw(target.owner.bound.context),backend=record['current']['backend'],workload=target.scope['workflow'],source_files=sources)
++    proof=modules['guarded_formula_oracle05'].verify(target,expected)
++    target.check();run._active()
++    value={'schema_version':1,'kind':'guarded-original-target-identity-observation','identity':run.admission.experiment_id,'source':run.admission.source,'claim_sha256':run._claim_sha256,'binding_sha256':cache_key(thaw(target.owner.bound.record)),'owner':target.owner.identity,'proof':proof,'expected_pair_identity_sha256':cache_key(expected),'tool_sources':{name:sources['fixture_tools/'+name+'.py'] for name in names}}
++    require(proof['pair_count']==64 and proof['pair_identity_sha256']==value['expected_pair_identity_sha256'],'genuine64pair observation differs')
++    raw=(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode();require(len(raw)<=8192,'oracle metadata ceiling')
++    digest=import_metadata.write(run.directory,'refusal-oracle.json',raw)
++    import_metadata.exact(run.directory,'refusal-oracle.json',raw);target.check();run._active()
++    return {'path':str((run.directory/'refusal-oracle.json').relative_to(root)),'sha256':digest,'bytes':len(raw)}
++
+ def execute(run,payload,*,job_input='execution_job'):
+     from . import resource_fixture as fixture,resource_binding,original_import_preparation,original_import_stage
+     from . import compact_mcm,compact_owner,matching_owner,original_dictionary,compact_closure
+@@ -72,7 +102,7 @@
+     require(case not in cases.PRECLAIM,'preclaim refusal must never reach worker claim')
+     name,s,f=fixture.selection(job);item=json.loads(run.read_input(s['plan_input']))['producers'][s['producer']]
+     fragment=cases.FRAGMENTS[case]
+-    journal=owner=None;observed=None;primary=None;graph=None;execution=None;target=None
++    journal=owner=None;observed=None;primary=None;graph=None;execution=None;target=None;oracle=None
+     try:
+         if case=='reservation':
+             observed=observe(lambda:fixture.preflight(run,job),fragment)
+@@ -99,6 +129,7 @@
+                 owner,stage=original_import_stage.attach(prepared,policy_input=s['compact_policy_input'],stage_policy_input=s['original_dictionary_stage_input'])
+                 execution=original_import_stage.ImportedExecution(stage)
+                 key,path,sha=inputs[0];graph=load_graph(path,sha,resident=True);target=Target(execution,graph,key)
++                oracle=genuine_oracle(target)
+                 if case=='matching-swap':
+                     d=execution._materialized._dictionary;object.__setattr__(d,'matching_config_hash',execution.check()['current']['execution_matching']);observed=observe(execution.check,fragment)
+                 elif case=='motif-identity':
+@@ -139,7 +170,7 @@
+         if journal is not None and not journal.sealed:journal.seal('failed',reason='registered negative fixture; no retry')
+     def assemble():
+         nonlocal terminal,rows
+-        terminal={'schema_version':1,'kind':'original-import-refusal','status':'observed' if primary is None else 'failed','case':case,'identity':run.admission.experiment_id,'boundary':observed,'resource_only':True,'financial_representation_admitted':False}
++        terminal={'schema_version':1,'kind':'original-import-refusal','status':'observed' if primary is None else 'failed','case':case,'identity':run.admission.experiment_id,'boundary':observed,'resource_only':True,'financial_representation_admitted':False,'oracle_observation':oracle}
+         rows=[{'id':'import-target-01','status':'unavailable','reason':'registered refusal before publication'},{'id':'import-target-02','status':'unavailable','reason':'registered refusal before publication'}]
+     def publish(name):
+         require(terminal is not None,'refusal terminal assembly absent');run.write_json(name,terminal)

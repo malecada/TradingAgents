@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition02-2026-10-03/check_loaders02.py", line 12, in <module>
+    try:path=m.evaluate(n.args[1]);name=str(Path(path).relative_to(ROOT))
+             ~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition02-2026-10-03/source_symbols01.py", line 27, in evaluate
+    if isinstance(node,ast.Subscript):return e(node.value)[e(node.slice)]
+                                             ~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition02-2026-10-03/source_symbols01.py", line 23, in <lambda>
+    e=lambda n:self.evaluate(n,local)
+               ~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition02-2026-10-03/source_symbols01.py", line 25, in evaluate
+    if isinstance(node,ast.Name):return local[node.id] if node.id in local else self.get(node.id)
+                                                                                ~~~~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition02-2026-10-03/source_symbols01.py", line 81, in get
+    raise AttributeError(self.path+':'+name)
+AttributeError: research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/journal.py:start
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition02-2026-10-03/check_loaders02.py", line 13, in <module>
+    except (ValueError,KeyError,AttributeError,TypeError) as e:raise ValueError('unresolved selected path caller: '+target+':'+str(n.lineno)) from e
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: unresolved selected path caller: research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/journal.py:164

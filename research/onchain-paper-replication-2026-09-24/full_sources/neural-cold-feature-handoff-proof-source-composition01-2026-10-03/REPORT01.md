@@ -1,0 +1,27 @@
+# Cold proof source composition01
+
+Status: frozen source candidate only. No capsule, Git object, registration, release, claim, native job or numerical result is created here.
+
+The complete sorted inventory contains164 source bodies (2963908 bytes), including147 package bodies. All142 original base package paths remain:136 are byte-identical, six receive exactly the separately accepted cold proof overlays, and five new typed cold/proof modules are added. All11 scientific proof bodies are byte-identical to proof-preparation01. All six proof_tools bodies are byte-identical to accepted outer02. The source-bodies directory is a disjoint source snapshot with no Git metadata, runtime, raw stores or empirical outputs.
+
+The accepted metadata02/cleanup03 MCM composition remains exactly08150fb38943717d7f173c30b6dda12c494d8663654670c6b8cd865df1dd3caf. Native resources remains e1d305e41938815d60ae2f465fcb2b543768c6862d176f4f6075ced53c8069c7. Full model source, training batches/calendar, matching/dictionary numerical methods and original joint gradient route are byte-identical to the accepted base. No newly simplified method or original512-sample replay is introduced. The20f451c0 scientific-model lineage is retained through the existing pinned body; this preparation performs no new Git ancestry verification.
+
+AST_AND_ARCHIVE01 records exact changed definition names. Changes are confined to selected native/job dispatch, producer cold handoff/observer/finalization, five new proof/authority modules and weak-reference slots. Receipt/Published/Closure changes are independently confirmed to be only __weakref__ slots. All source bodies compile without importing the research package. Both pre/post-fit finalizations, resident/default route and scientific completion requirements remain the exact accepted proof bodies.
+
+Typed archive authority is explicitly inventoried separately: original archive modules, compact stage/terminal/closure/publication and the cold file authority remain pinned. The cold authority still requires an actual scientific terminal and calls archive_owner_seal.check_content for archive contracts. Imported resource completion cannot satisfy this type. This synthetic proof selects local stages, so archive execution/recovery remains unproved.
+
+## Materialization source closure correction
+
+The original proof metadata builder discovered package/study files but omitted proof_tools and other selected tool sources. Executing that exact source-discovery AST against this source-only tree reproduces the missing complete map (retained red-source01.log). prepare_metadata_composed01.py replaces discovery with strict readback of the exact canonically hash-pinned164-entry composition inventory and every installed target's hash/extent. It includes all six proof_tools before materialization can emit the future comparison policy. No numerical source or emitted policy is rewritten after materialization. The helper retains recipe/config/model/training templates byte-for-byte and writes exclusive unregistered drafts only when root later supplies genuine installed root, actual anchor/resources/environment and reviewed inventory. The helper was not invoked to create a draft or a capsule.
+
+Six source/hash/AST checks pass in final-source01.log, including exact17 overlays, unchanged base sources, full materialization source-map equality, weakref-only slots and typed archive refusal authority. The RED missing-map result and earlier GREEN are preserved. No broad empirical/legacy tests were run.
+
+## Dependencies and pending authority
+
+DEPENDENCY_READBACK01 pins original11JSON references (957811 bytes), original source c6b568d4b1c177ab94ac37fbad462c2decc721c0 and26 original source-path pins, plus the immutable original dictionary identity. These remain references to previously verified recovery, not freshly read arrays or newly authenticated Git objects. None of the original512-sample/clustering jobs is reopened.
+
+The existing runtime selection reports251 distribution RECORD pins, all freshly byte-hashed against their recorded digests without importing numerical packages. This binds RECORD manifests only; individual dependency bodies and eventual capsule import origins remain pending. Accepted science/outer reviews, source inventories, runtime and recipe/config/model/training templates are pinned. No sentinel source commit is installed or adopted as authority.
+
+The future program remains compact-cold-engineering-20261003 with two separately reviewed identities, fresh synthetic32-sample dictionary and a full scientific producer. Materialization is input-only; comparison requires the actual completed scientific Published/Binding/Owner chain. Original resource-only32-motif import completion remains distinct. Full guarded64/or larger matching proofs from other engineering families do not transfer budget or completion here.
+
+Root must independently review this composition, install the exact full map into a genuine committed capsule, verify runtime/input/original-source provenance, and freeze separate materialization then comparison gates/releases. Actual native controls, synthetic materialization, full scientific producer/handoff, weakref/object-sharing/gradient/Adam/checkpoint proof, process exit and external recoverability all remain pending. No memory-saving, capacity, financial-fit or paper-numerical-agreement claim follows from this source composition.

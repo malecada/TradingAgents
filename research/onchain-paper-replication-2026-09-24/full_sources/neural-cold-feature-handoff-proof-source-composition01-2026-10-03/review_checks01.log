@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition01-2026-10-03/review_checks01.py", line 61, in <module>
+    ds=extracted(pkg/'compact_dictionary.py','_sources',dict_env)(proof)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition01-2026-10-03/source-bodies/tradingagents/research/onchain_replication/compact_dictionary.py", line 39, in _sources
+    require(expected is not None and file_hash(ROOT / path) == expected
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        and file_hash(ad.root / path) == expected, 'compact dictionary numerical source not admitted or changed')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition01-2026-10-03/review_checks01.py", line 57, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: compact dictionary numerical source not admitted or changed
