@@ -1,0 +1,225 @@
+check_closure02.py
+{
+  "sources": 195,
+  "package": 147,
+  "external": 33,
+  "local_import_edges": 881,
+  "missing_local_imports": [],
+  "actual_required_sources": 47,
+  "SOURCES_declaration_modules": [
+    "research/onchain-paper-replication-2026-09-24/full_sources/dictionary-artifact-route-2026-10-01/route.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/driver.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/publication.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/route.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/boundary.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/encoded_hashes.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-publication-2026-10-01/publication.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/route.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/driver.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-publication-2026-10-01/publication.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/reader.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/route.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-extent-2026-09-30/extent.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-serial-composition-2026-09-30/serial.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/representation-closure-route-2026-10-01/closure.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/denominator.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/route.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/publication.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/records.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/route.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/route.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/native_map.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/terminal-output-lifetime-2026-10-01/seal.py",
+    "tradingagents/research/lifecycle.py",
+    "tradingagents/research/onchain_replication/archive_owner_seal.py",
+    "tradingagents/research/onchain_replication/array_neighborhoods.py",
+    "tradingagents/research/onchain_replication/calendar.py",
+    "tradingagents/research/onchain_replication/cold_files.py",
+    "tradingagents/research/onchain_replication/compact_cold_features.py",
+    "tradingagents/research/onchain_replication/compact_denominator.py",
+    "tradingagents/research/onchain_replication/compact_dictionary.py",
+    "tradingagents/research/onchain_replication/compact_features.py",
+    "tradingagents/research/onchain_replication/compact_mcm.py",
+    "tradingagents/research/onchain_replication/compact_native_features.py",
+    "tradingagents/research/onchain_replication/compact_native_producer.py",
+    "tradingagents/research/onchain_replication/compact_sampler.py",
+    "tradingagents/research/onchain_replication/compact_samples.py",
+    "tradingagents/research/onchain_replication/compact_stage.py",
+    "tradingagents/research/onchain_replication/component_store.py",
+    "tradingagents/research/onchain_replication/dataset.py",
+    "tradingagents/research/onchain_replication/dictionary.py",
+    "tradingagents/research/onchain_replication/feature_journal.py",
+    "tradingagents/research/onchain_replication/feature_pipeline.py",
+    "tradingagents/research/onchain_replication/feature_residency.py",
+    "tradingagents/research/onchain_replication/neighborhood_policy.py",
+    "tradingagents/research/onchain_replication/neighborhoods.py",
+    "tradingagents/research/onchain_replication/serialization.py"
+  ],
+  "numeric_imports": false,
+  "capsule": false,
+  "authority": false
+}
+
+exit=0
+check_loaders02.py
+{
+  "schema_version": 1,
+  "source_only": true,
+  "finite_path_callers": [
+    {
+      "source": "fixture_tools/outer_controller01.py",
+      "line": 136,
+      "target": "tradingagents/research/onchain_replication/resources.py"
+    },
+    {
+      "source": "fixture_tools/outer_controller01.py",
+      "line": 137,
+      "target": "tradingagents/research/onchain_replication/workflow_storage.py"
+    },
+    {
+      "source": "fixture_tools/outer_controller01.py",
+      "line": 138,
+      "target": "fixture_tools/runtime_gate01.py"
+    },
+    {
+      "source": "proof_tools/proof_outer01.py",
+      "line": 126,
+      "target": "tradingagents/research/onchain_replication/resources.py"
+    },
+    {
+      "source": "proof_tools/proof_outer01.py",
+      "line": 127,
+      "target": "tradingagents/research/onchain_replication/workflow_storage.py"
+    },
+    {
+      "source": "proof_tools/proof_outer01.py",
+      "line": 128,
+      "target": "proof_tools/runtime_gate01.py"
+    },
+    {
+      "source": "proof_tools/proof_release01.py",
+      "line": 83,
+      "target": "proof_tools/runtime_gate01.py"
+    },
+    {
+      "source": "proof_tools/proof_supervise01.py",
+      "line": 13,
+      "target": "tradingagents/research/onchain_replication/resources.py"
+    },
+    {
+      "source": "proof_tools/proof_supervise01.py",
+      "line": 13,
+      "target": "tradingagents/research/onchain_replication/workflow_storage.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/driver.py",
+      "line": 15,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/route.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/dictionary-publication-2026-10-01/driver.py",
+      "line": 17,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/route.py",
+      "line": 17,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-route-2026-10-01/route.py",
+      "line": 18,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-boundary-2026-10-01/boundary.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/route.py",
+      "line": 14,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/ownership.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/route.py",
+      "line": 15,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/pair-serial-composition-2026-09-30/serial.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/ownership.py",
+      "line": 20,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-route-2026-09-30/route.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/ownership.py",
+      "line": 21,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/journal.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/route.py",
+      "line": 18,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/route.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-route-2026-10-01/route.py",
+      "line": 19,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/representation-denominator-2026-10-01/denominator.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/route.py",
+      "line": 18,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/route.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/route.py",
+      "line": 19,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/reader.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py",
+      "line": 21,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/route.py"
+    },
+    {
+      "source": "research/onchain-paper-replication-2026-09-24/full_sources/sampler-proof-route-2026-10-01/producer.py",
+      "line": 22,
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py"
+    }
+  ],
+  "generic_load_functions_all_callers_resolved": true,
+  "MCM_path_dispatch": {
+    "scientific": "research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py",
+    "imported": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py",
+    "scientific_proof_selects": "scientific"
+  },
+  "legacy_native_reuse": {
+    "selected": false,
+    "reason": "different explicit native_backend returns False before api; schema2 compatibility is not broadened",
+    "legacy_api_not_admitted_by_this_closure": true
+  }
+}
+
+exit=0
+check_selection02.py
+{
+  "status": "source-only-selection-pass",
+  "actual_required_sources": 47,
+  "scientific_dictionary_pins": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py": "30a957ad48997a3236203e1af2ccf9e0874b172ffac73773c31efc6bece9fc67",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/reader.py": "3f9ebf731b5027f3282e8d4c7ae8a66c8d25f4aa8a989e2a8cfbd44d3d27cc50"
+  },
+  "scientific_MCM_pins": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py": "30a957ad48997a3236203e1af2ccf9e0874b172ffac73773c31efc6bece9fc67",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/reader.py": "3f9ebf731b5027f3282e8d4c7ae8a66c8d25f4aa8a989e2a8cfbd44d3d27cc50",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py": "4a870113be59f55913ffb91ee79c89438f3a43b53de280fa049467a1781fa047"
+  },
+  "dictionary_source_map_bytes": 338,
+  "MCM_source_map_bytes": 504,
+  "actual_start_constructor_fixed_scalar_fixture_bytes": 1799,
+  "metadata_limit": 8192,
+  "complete_record_and_real_run_not_proved": true,
+  "numeric_or_authority_imports": false
+}
+
+exit=0

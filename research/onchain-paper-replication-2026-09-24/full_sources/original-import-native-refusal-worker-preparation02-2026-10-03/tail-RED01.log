@@ -1,0 +1,76 @@
+test_failed_marker_does_not_mask_first_fatal (__main__.Tests.test_failed_marker_does_not_mask_first_fatal) ... FAIL
+test_first_fatal_preserved_in_marker_and_raise_selection (__main__.Tests.test_first_fatal_preserved_in_marker_and_raise_selection) ... ERROR
+test_marker_cleanup_failure_replaces_ordinary (__main__.Tests.test_marker_cleanup_failure_replaces_ordinary) ... FAIL
+test_ordinary_restore_marker_after_all_attempts (__main__.Tests.test_ordinary_restore_marker_after_all_attempts) ... ERROR
+test_posttail_failure_one_marker (__main__.Tests.test_posttail_failure_one_marker) ... FAIL
+test_restore_fatal_supersedes_ordinary_posttail (__main__.Tests.test_restore_fatal_supersedes_ordinary_posttail) ... FAIL
+test_success_retains_original_receipt_and_no_failure_marker (__main__.Tests.test_success_retains_original_receipt_and_no_failure_marker) ... ok
+
+======================================================================
+ERROR: test_first_fatal_preserved_in_marker_and_raise_selection (__main__.Tests.test_first_fatal_preserved_in_marker_and_raise_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation02-2026-10-03/test_tail02.py", line 31, in test_first_fatal_preserved_in_marker_and_raise_selection
+    first=MemoryError('first');actual,r,e=exercise(primary=first,restore_errors=(OSError('later'),KeyboardInterrupt('last')));self.assertIs(actual,first);self.assertEqual(r['post-terminal-failure.json']['error_type'],'MemoryError');self.assertEqual(e.count('restore'),2)
+                                                                                                                                                                           ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'post-terminal-failure.json'
+
+======================================================================
+ERROR: test_ordinary_restore_marker_after_all_attempts (__main__.Tests.test_ordinary_restore_marker_after_all_attempts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation02-2026-10-03/test_tail02.py", line 29, in test_ordinary_restore_marker_after_all_attempts
+    error=OSError('restore');actual,receipts,events=exercise(restore_errors=(error,None));self.assertIs(actual,error);self.assertEqual(receipts['terminal.json'],{'status':'passed'});self.assertEqual(receipts['post-terminal-failure.json']['error_type'],'OSError');self.assertEqual(events,['post-tail','restore','restore','save:post-terminal-failure.json'])
+                                                                                                                                                                                                       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'post-terminal-failure.json'
+
+======================================================================
+FAIL: test_failed_marker_does_not_mask_first_fatal (__main__.Tests.test_failed_marker_does_not_mask_first_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation02-2026-10-03/test_tail02.py", line 35, in test_failed_marker_does_not_mask_first_fatal
+    fatal=MemoryError('restore');actual,r,e=exercise(restore_errors=(fatal,None),save_error=CleanupFailure('write'));self.assertIs(actual,fatal);self.assertNotIn('post-terminal-failure.json',r);self.assertEqual(e.count('restore'),2);self.assertEqual(e.count('save:post-terminal-failure.json'),1)
+                                                                                                                                                                                                                                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_marker_cleanup_failure_replaces_ordinary (__main__.Tests.test_marker_cleanup_failure_replaces_ordinary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation02-2026-10-03/test_tail02.py", line 37, in test_marker_cleanup_failure_replaces_ordinary
+    cleanup=CleanupFailure('write');actual,r,e=exercise(restore_errors=(OSError('restore'),None),save_error=cleanup);self.assertIs(actual,cleanup)
+                                                                                                                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: OSError('restore') is not CleanupFailure('write')
+
+======================================================================
+FAIL: test_posttail_failure_one_marker (__main__.Tests.test_posttail_failure_one_marker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation02-2026-10-03/test_tail02.py", line 41, in test_posttail_failure_one_marker
+    error=ValueError('post');actual,r,e=exercise(post_error=error);self.assertIs(actual,error);self.assertEqual(r['post-terminal-failure.json']['error_type'],'ValueError');self.assertEqual(e,['post-tail','restore','restore','save:post-terminal-failure.json'])
+                                                                                                                                                                            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['post-tail', 'save:post-terminal-failure.json', 'restore', 'restore'] != ['post-tail', 'restore', 'restore', 'save:post-terminal-failure.json']
+
+First differing element 1:
+'save:post-terminal-failure.json'
+'restore'
+
+- ['post-tail', 'save:post-terminal-failure.json', 'restore', 'restore']
++ ['post-tail', 'restore', 'restore', 'save:post-terminal-failure.json']
+
+======================================================================
+FAIL: test_restore_fatal_supersedes_ordinary_posttail (__main__.Tests.test_restore_fatal_supersedes_ordinary_posttail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation02-2026-10-03/test_tail02.py", line 33, in test_restore_fatal_supersedes_ordinary_posttail
+    fatal=KeyboardInterrupt('first fatal');actual,r,e=exercise(post_error=ValueError('post'),restore_errors=(fatal,MemoryError('later fatal')));self.assertIs(actual,fatal);self.assertEqual(r['post-terminal-failure.json']['error_type'],'KeyboardInterrupt');self.assertEqual(e.count('save:post-terminal-failure.json'),1)
+                                                                                                                                                                            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ValueError' != 'KeyboardInterrupt'
+- ValueError
++ KeyboardInterrupt
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.044s
+
+FAILED (failures=4, errors=2)

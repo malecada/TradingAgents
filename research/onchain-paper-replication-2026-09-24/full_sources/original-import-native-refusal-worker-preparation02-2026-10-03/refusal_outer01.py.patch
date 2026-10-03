@@ -1,0 +1,20 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation01-2026-10-03/refusal_outer01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation02-2026-10-03/refusal_outer01.py
+@@ -236,11 +236,14 @@
+             if primary is None:result=result|{'post_tail':authenticate_post_tail(root,identity,entry['job_resources'])}
+         except BaseException as error:
+             retain(error)
++        for number,handler in signal_handlers.items():
++            try:signal.signal(number,handler)
++            except BaseException as error:retain(error)
++        # This additive marker follows every independently attempted restoration.
++        # Preserve an already published terminal verbatim; a late failure wins.
++        if primary is not None:
+             try:save('post-terminal-failure.json',{'status':'failed','identity':identity,'source_commit':source,'error_type':type(primary).__name__})
+             except BaseException as later:retain(later)
+-        for number,handler in signal_handlers.items():
+-            try:signal.signal(number,handler)
+-            except BaseException as error:retain(error)
+     if primary is not None:raise primary
+     return result
+ 

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition02-2026-10-03/review_checks02.py", line 50, in <module>
+    mapping={p:r['sha256'] for p,r in rows.items()};selection(mapping)
+                                                    ~~~~~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition02-2026-10-03/review_checks02.py", line 49, in selection
+    exec(code,{'run':run,'ROOT':HERE/'source-bodies','required_sources':lambda:required,'require':require,'file_hash':lambda p:sha(p.read_bytes())})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-source-composition02-2026-10-03/source-bodies/tradingagents/research/onchain_replication/compact_native_producer.py", line 96, in <module>
+    and file_hash(run.admission.root/name) == expected,'compact source closure differs: '+name)
+                  ^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'root'
