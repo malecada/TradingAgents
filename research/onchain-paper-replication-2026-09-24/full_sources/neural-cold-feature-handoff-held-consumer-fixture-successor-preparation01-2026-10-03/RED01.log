@@ -1,0 +1,36 @@
+test_explicit_199_layout (__main__.Tests.test_explicit_199_layout) ... ERROR
+test_generation_refuses (__main__.Tests.test_generation_refuses) ... ERROR
+test_old_functions_AST_unchanged (__main__.Tests.test_old_functions_AST_unchanged) ... ok
+test_unknown_roles (__main__.Tests.test_unknown_roles) ... ERROR
+
+======================================================================
+ERROR: test_explicit_199_layout (__main__.Tests.test_explicit_199_layout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-consumer-fixture-successor-preparation01-2026-10-03/test_metadata01.py", line 7, in test_explicit_199_layout
+    self.assertEqual(B['HELD_COUNTS'],(199,148))
+                     ~^^^^^^^^^^^^^^^
+KeyError: 'HELD_COUNTS'
+
+======================================================================
+ERROR: test_generation_refuses (__main__.Tests.test_generation_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-consumer-fixture-successor-preparation01-2026-10-03/test_metadata01.py", line 9, in test_generation_refuses
+    with self.assertRaisesRegex(ValueError,'guarded'):G['generate_held_arrays']()
+                                                      ~^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'generate_held_arrays'
+
+======================================================================
+ERROR: test_unknown_roles (__main__.Tests.test_unknown_roles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-consumer-fixture-successor-preparation01-2026-10-03/test_metadata01.py", line 11, in test_unknown_roles
+    with self.assertRaises(ValueError):G['held_input_plan']({'bad':{}},None)
+                                       ~^^^^^^^^^^^^^^^^^^^
+KeyError: 'held_input_plan'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.017s
+
+FAILED (errors=3)

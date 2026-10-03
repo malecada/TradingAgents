@@ -1,0 +1,89 @@
+--- baseline
++++ successor
+@@ -96,3 +96,86 @@
+         require(identity not in gate['experiments'],'fresh engineering identity already registered')
+         gate['experiments'][identity]=exp
+     return gate,files
++
++# New held-resource metadata planning ONLY. No legacy graphs/registration call.
++HELD_ROLES=('runtime','software_environment','native_environment','native_policy','original_import_index','original_evidence','matching','target_catalog','case_contract','registration','budget_extension','budget_review','charter')
++
++def _held_ref(row):
++    require(type(row) is dict and set(row)=={'path','sha256','bytes'},'exact held metadata/input reference required')
++    p=Path(row['path']);require(type(row['path']) is str and str(p)==row['path'] and not p.is_absolute() and '..' not in p.parts and not any(x in ('keys','apis','.env','hf_token.txt','.git','.venv') or x.startswith('.env.') for x in p.parts),'unsafe held reference')
++    require(type(row['sha256']) is str and len(row['sha256'])==64 and all(x in '0123456789abcdef' for x in row['sha256']),'held SHA256 required')
++    require(type(row['bytes']) is int and 0<row['bytes']<=4*1024**2,'held per-file reference bound')
++    return dict(row)
++
++def held_input_plan(roles,source_plan):
++    """Build concrete finite input/native/source joins from already-read metadata.
++
++    Caller-facing output always remains unregistered. Root draft helper performs
++    actual source/Git and referenced-body reads anew rather than trusting this
++    dictionary as a capability. No arrays are constructed or opened here.
++    """
++    require(type(roles) is dict and set(roles)<=set(HELD_ROLES),'unknown held metadata role')
++    require(type(source_plan) is dict and source_plan.get('source_count')==199 and source_plan.get('package_count')==148 and source_plan.get('execution_admitted') is False,'actual199/148 metadata plan required')
++    missing=[n for n in HELD_ROLES if roles.get(n) is None];observed={};inputs={}
++    for name,value in roles.items():
++        if value is None:continue
++        require(type(value) is dict and set(value)=={'reference','document'},'held role body/reference pair required')
++        observed[name]=_held_ref(value['reference'])
++    require(sum(x['bytes'] for x in observed.values())<=4*1024**2,'held metadata role aggregate bound')
++    runtime=roles.get('runtime')
++    if runtime is not None:
++        r=runtime['document'];require(type(r) is dict and type(r.get('distribution_records')) is list and len(r['distribution_records'])==251,'full251 runtime RECORD metadata required')
++        require(all(type(x) is dict and all(k in x for k in ('name','version','record','record_sha256')) for x in r['distribution_records']) and len({x['name'] for x in r['distribution_records']})==251,'runtime RECORD denominator/fields')
++        require(r.get('lock_sha256')==source_plan['source_files']['uv.lock'],'runtime lock/source mismatch')
++    native=roles.get('native_policy')
++    if native is not None:
++        n=native['document'];G=1024**3
++        require(type(n) is dict and n.get('memory_max_bytes')==n.get('memory_high_bytes')==3*G and n.get('reserve_bytes')==3*G and n.get('start_reserve_bytes')==6*G and n.get('disk_floor_bytes')==10*G and n.get('wall_seconds')==1800 and n.get('native_unit_limits')=={'file_size_bytes':4194304},'held native envelope must retain exact reviewed limits')
++        require(n.get('disk_paths')==[source_plan['root']] and n.get('storage_budget',{}).get('root')==source_plan['root'],'native writable root differs')
++    original=roles.get('original_import_index')
++    if original is not None:
++        v=original['document'];require(type(v) is dict and type(v.get('inputs')) is list and len(v['inputs'])==11 and type(v.get('original_source')) is str and len(v['original_source'])==40 and type(v.get('original_claim')) is str,'original11/source/claim provenance required')
++        for row in v['inputs']:
++            require(type(row) is dict and set(row)=={'name','reference','original_path'},'original input row schema')
++            name=row['name'];require(type(name) is str and name.startswith('original_') and name not in inputs and type(row['original_path']) is str,'original role identity')
++            inputs[name]=_held_ref(row['reference'])|{'dataset':'original_dictionary','original_path':row['original_path']}
++    evidence=roles.get('original_evidence')
++    if evidence is not None:
++        e=evidence['document'];require(type(e) is dict and e.get('sample_count')==512 and type(e.get('sample_count')) is int and e.get('motif_count')==32 and type(e.get('motif_count')) is int and e.get('resample') is False and e.get('recluster') is False,'original512/32 import-only evidence required')
++    catalog=roles.get('target_catalog');targets=[]
++    if catalog is not None:
++        t=catalog['document'];require(type(t) is dict and set(t)=={'schema_version','kind','targets'} and type(t['schema_version']) is int and t['schema_version']==1 and t['kind']=='registered-imported-held-targets-v1' and type(t['targets']) is list and len(t['targets'])==2,'exact two-target metadata catalog required')
++        for row in t['targets']:
++            require(type(row) is dict and set(row)=={'graph_hash','nodes','input_name','manifest','components'},'target role schema')
++            h=row['graph_hash'];require(type(h) is str and len(h)==64 and all(x in '0123456789abcdef' for x in h) and type(row['nodes']) is int and row['nodes']>0,'target metadata dimensions/hash')
++            require(type(row['input_name']) is str and row['input_name'] not in inputs,'target input identity')
++            inputs[row['input_name']]=_held_ref(row['manifest'])|{'dataset':'synthetic'}
++            require(type(row['components']) is dict and set(row['components'])=={'node_ids','node_features','edge_index','edge_features'},'all four original target components required')
++            for name,ref in row['components'].items():inputs[row['input_name']+'_'+name]=_held_ref(ref)|{'dataset':'synthetic'}
++            targets.append({'graph_hash':h,'nodes':row['nodes'],'input_name':row['input_name']})
++        require([x['graph_hash'] for x in targets]==sorted({x['graph_hash'] for x in targets}) and sorted(x['nodes'] for x in targets)==[2,3],'deterministic complete target order/denominator differs')
++    case=roles.get('case_contract');documents={};experiment=None
++    if case is not None:
++        c=case['document'];require(type(c) is dict and set(c)=={'schema_version','kind','program_id','experiment_id','job_input','plan_input','representation','producer','held_policy_input','readback_outputs','additional_inputs'},'root case contract schema')
++        require(type(c['schema_version']) is int and c['schema_version']==1 and c['kind']=='root-selected-imported-held-resource-v1','root selected resource case required')
++        experiment=c['experiment_id'];require(type(experiment) is str and experiment and not experiment.startswith(('compact-cold-','original-import-native-')),'closed/cold scientific identity refused')
++        require(type(c['readback_outputs']) is dict and (not targets or set(c['readback_outputs'])=={x['graph_hash'] for x in targets}),'complete root selected readback output roles')
++        require(len(set(c['readback_outputs'].values()))==len(c['readback_outputs']) and all(type(x) is str and Path(x).name==x and x.endswith('.json') for x in c['readback_outputs'].values()),'unique readback output names')
++        require(type(c['additional_inputs']) is dict and len(c['additional_inputs'])<=64,'bounded additional input roles')
++        for name,row in c['additional_inputs'].items():
++            require(type(name) is str and name not in inputs and type(row) is dict and set(row)=={'reference','dataset'},'distinct additional input role')
++            require(row['dataset'] in ('synthetic','original_dictionary'),'declared held dataset');inputs[name]=_held_ref(row['reference'])|{'dataset':row['dataset']}
++        if targets:
++            policy={'schema_version':1,'kind':'original-import-held-score-readback-v1','targets':{x['graph_hash']:{'output':c['readback_outputs'][x['graph_hash']]} for x in targets},'part_bytes':1048576,'max_read_bytes':max(x['nodes'] for x in targets)*32*8,'max_members':32767}
++            documents[c['held_policy_input']]={'raw_utf8':canonical(policy).decode(),'sha256':sha(canonical(policy)),'bytes':len(canonical(policy))}
++        reg=roles.get('registration')
++        if reg is not None:
++            r=reg['document'];require(r.get('program_id')==c['program_id'] and experiment in r.get('experiments',{}),'root current registration missing selected experiment')
++            exp=r['experiments'][experiment];require(exp.get('source_files')==source_plan['source_files'],'registered199 source map differs')
++            require(set(c['readback_outputs'].values())<=set(exp['outputs']),'held outputs absent from root registration')
++            require(exp.get('cumulative_budget_extension') is not None,'reviewed cumulative accounting role required')
++    require(len(inputs)<=128 and len({x['path'] for x in inputs.values()})==len(inputs),'complete input roles overlap or exceed finite bound')
++    return {'schema_version':1,'kind':'held-resource-input-metadata-plan-v1','status':'unregistered-metadata-only','source':source_plan['source'],'anchor':source_plan['anchor'],'root':source_plan['root'],'source_count':199,'package_count':148,'observed_metadata':observed,'input_rows':dict(sorted(inputs.items())),'target_rows':targets,'rendered_metadata':documents,'experiment_id':experiment,'remaining_roles':missing,'execution_admitted':False,'runtime_installed_verified':False,'arrays_generated':False,'original_sampling_rerun':False}
++
++def generate_held_arrays(*args,**kwargs):
++    raise ValueError('held array generation requires a separately implemented genuine guarded input-materialization entry, fresh root registration and finite native release; metadata plans cannot authorize it')
