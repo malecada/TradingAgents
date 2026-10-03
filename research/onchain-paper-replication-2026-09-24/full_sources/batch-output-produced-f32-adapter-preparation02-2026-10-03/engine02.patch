@@ -1,0 +1,20 @@
+--- frozen01/selected_non_tail_transport.py
++++ candidate02/selected_non_tail_transport.py
+@@ -95,7 +95,7 @@
+  finally:owned_io._cleanup(() if fd is None else (lambda:os.close(fd),))
+ 
+ def close_context(c,primary=None):
+- require(type(c) is durable.Context and c.policy['schema_version']==2,'genuine selected Context required')
++ require(type(c) is durable.Context and (c.policy['schema_version']==2 or (type(c.policy['schema_version']) is int and c.policy['schema_version']==3)),'genuine selected Context required')
+  failure=primary
+  try:
+   c.check();require(c.active is None and c._transfer_active is None,'selected operation/command unfinished')
+@@ -382,7 +382,7 @@
+ def dispatch(operation):
+  require(type(operation) is durable.Operation,'actual durable Operation required')
+  operation.check()
+- if operation.ledger.context.policy.get('schema_version')!=2:raise NotImplementedError('registered selected plaintext transport policy absent')
++ if not (operation.ledger.context.policy.get('schema_version')==2 or (type(operation.ledger.context.policy.get('schema_version')) is int and operation.ledger.context.policy['schema_version']==3)):raise NotImplementedError('registered selected plaintext transport policy absent')
+  try:return Session(operation).run()
+  except BaseException as e:
+   if not operation.ledger.context.failed:operation.fail(e)

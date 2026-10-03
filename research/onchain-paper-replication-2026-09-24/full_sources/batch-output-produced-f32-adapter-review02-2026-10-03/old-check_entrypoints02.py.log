@@ -1,0 +1,70 @@
+..EEEE..
+======================================================================
+ERROR: test_raw_dispatch_actual_session_boundary (__main__.Checks.test_raw_dispatch_actual_session_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/check_entrypoints02.py", line 31, in test_raw_dispatch_actual_session_boundary
+    with self.assertRaises(BoundaryReached):e['dispatch'](op)
+                                            ~~~~~~~~~~~~~^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/selected_non_tail_transport.py", line 385, in dispatch
+    if operation.ledger.context.policy.get('schema_version')!=2:raise NotImplementedError('registered selected plaintext transport policy absent')
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotImplementedError: registered selected plaintext transport policy absent
+
+======================================================================
+ERROR: test_raw_firstfatal_body (__main__.Checks.test_raw_firstfatal_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/check_entrypoints02.py", line 59, in test_raw_firstfatal_body
+    def test_raw_firstfatal_body(self):self.close_case(3,MemoryError('first'),OSError('later'))
+                                       ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/check_entrypoints02.py", line 47, in close_case
+    with self.assertRaises(type(expected)) as raised:e['close_context'](c,primary)
+                                                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/selected_non_tail_transport.py", line 98, in close_context
+    require(type(c) is durable.Context and c.policy['schema_version']==2,'genuine selected Context required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/selected_non_tail_transport.py", line 13, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: genuine selected Context required
+
+======================================================================
+ERROR: test_raw_later_firstfatal (__main__.Checks.test_raw_later_firstfatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/check_entrypoints02.py", line 60, in test_raw_later_firstfatal
+    def test_raw_later_firstfatal(self):self.close_case(3,ValueError('body'),MemoryError('cleanup'))
+                                        ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/check_entrypoints02.py", line 47, in close_case
+    with self.assertRaises(type(expected)) as raised:e['close_context'](c,primary)
+                                                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/selected_non_tail_transport.py", line 98, in close_context
+    require(type(c) is durable.Context and c.policy['schema_version']==2,'genuine selected Context required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/selected_non_tail_transport.py", line 13, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: genuine selected Context required
+
+======================================================================
+ERROR: test_raw_owned_fd_close_once (__main__.Checks.test_raw_owned_fd_close_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/check_entrypoints02.py", line 57, in test_raw_owned_fd_close_once
+    def test_raw_owned_fd_close_once(self):self.close_case(3)
+                                           ~~~~~~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/check_entrypoints02.py", line 44, in close_case
+    result=e['close_context'](c);self.assertEqual(result['status'],'complete-selected-pipe-controls-only')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/selected_non_tail_transport.py", line 98, in close_context
+    require(type(c) is durable.Context and c.policy['schema_version']==2,'genuine selected Context required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-review02-2026-10-03/owned-replicas/old/selected_non_tail_transport.py", line 13, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: genuine selected Context required
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.215s
+
+FAILED (errors=4)

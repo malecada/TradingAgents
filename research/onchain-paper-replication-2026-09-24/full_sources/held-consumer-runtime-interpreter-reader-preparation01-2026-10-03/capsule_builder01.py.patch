@@ -1,0 +1,46 @@
+--- Source05/fixture_tools/capsule_builder01.py
++++ candidate/fixture_tools/capsule_builder01.py
+@@ -204,13 +204,42 @@
+         origins.append({'path':row['path'],'sha256':row['sha256'],'bytes':len(raw),'git_commit':source,'git_path':row['path']})
+     return {'schema_version':1,'kind':'held-resource-source-metadata-v1','status':'source-only-unregistered','root':str(root),'source':source,'anchor':anchor,'source_count':199,'package_count':148,'source_files':registered,'package_files':{n:registered[n] for n in package},'source_origins':origins,'logical_bytes':total,'execution_admitted':False}
+ 
++def _held_interpreter(root,path,expected,size):
++    """Hash only the pinned runtime executable, with a separate64MiB ceiling.
++
++    Source/native writable caps remain4MiB. No executable bytes are accumulated.
++    """
++    path=Path(path);cleanup=_held_io(root);parent_fd=fd=None
++    sig=lambda s:(s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns,s.st_blocks)
++    try:
++        require(type(size) is int and 0<size<=64*1024**2 and type(expected) is str and len(expected)==64 and all(c in '0123456789abcdef' for c in expected),'finite pinned runtime executable extent/hash')
++        require(path.is_absolute() and path.resolve()==path and path.name not in ('','.','..'),'runtime executable redirected')
++        parent=path.parent
++        parent_fd=os.open(parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        parent_pin=sig(os.fstat(parent_fd))
++        require(stat.S_ISDIR(os.fstat(parent_fd).st_mode) and parent.resolve()==parent and sig(parent.lstat())==parent_pin,'runtime executable parent changed')
++        before=os.stat(path.name,dir_fd=parent_fd,follow_symlinks=False);pin=sig(before)
++        require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_size==size,'runtime executable type/link/extent differs')
++        fd=os.open(path.name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK|os.O_CLOEXEC,dir_fd=parent_fd)
++        require(sig(os.fstat(fd))==pin,'runtime executable replaced before open')
++        digest=hashlib.sha256();total=0
++        while True:
++            block=os.read(fd,min(65536,size-total+1))
++            if not block:break
++            total+=len(block);require(total<=size,'runtime executable grew');digest.update(block)
++        require(total==size and digest.hexdigest()==expected,'runtime executable hash/extent differs')
++        require(sig(os.fstat(fd))==pin==sig(os.stat(path.name,dir_fd=parent_fd,follow_symlinks=False))==sig(path.lstat()) and path.resolve()==path,'runtime executable changed during read')
++        require(sig(os.fstat(parent_fd))==parent_pin==sig(parent.lstat()) and parent.resolve()==parent,'runtime executable parent changed during read')
++        return {'bytes':total,'sha256':digest.hexdigest()}
++    finally:cleanup((() if fd is None else (lambda:os.close(fd),))+(() if parent_fd is None else (lambda:os.close(parent_fd),)))
++
+ def held_runtime_metadata(root,expected):
+     """Read actual installed RECORD bytes using stdlib only; no native authority."""
+     import importlib.metadata,platform,sys
+     require(type(expected) is dict and type(expected.get('distribution_records')) is list and len(expected['distribution_records'])==251,'complete runtime metadata required')
+     require(sys.executable==expected['executable'] and sys.prefix==expected['prefix'] and platform.python_version()==expected['python'],'current locked interpreter differs')
+     executable=Path(sys.executable).resolve();require(str(executable)==expected['resolved_executable'],'resolved interpreter differs')
+-    read(executable.parent,executable.name,expected['executable_sha256'],executable.stat().st_size)
++    _held_interpreter(root,executable,expected['executable_sha256'],expected['executable_bytes'])
+     prefix=Path(sys.prefix).resolve();rows=[];total=0
+     for row in expected['distribution_records']:
+         require(type(row) is dict and type(row.get('record')) is str and importlib.metadata.version(row['name'])==row['version'],'installed distribution version/record differs')

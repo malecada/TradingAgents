@@ -1,0 +1,115 @@
+test_actual_locked_interpreter_and_251_records (__main__.Tests.test_actual_locked_interpreter_and_251_records) ... ERROR
+test_fatal_survives_both_closes_once (__main__.Tests.test_fatal_survives_both_closes_once) ... ERROR
+test_grow_and_same_size_mutation (__main__.Tests.test_grow_and_same_size_mutation) ... ERROR
+test_real_executable_bound_and_streamed_extent (__main__.Tests.test_real_executable_bound_and_streamed_extent) ... ERROR
+test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) ... 
+  test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=True, digest='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad') ... ERROR
+  test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=0, digest='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad') ... ERROR
+  test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=67108865, digest='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad') ... ERROR
+  test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=4, digest='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad') ... ERROR
+  test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=3, digest='ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff') ... ERROR
+test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) ... ERROR
+
+======================================================================
+ERROR: test_actual_locked_interpreter_and_251_records (__main__.Tests.test_actual_locked_interpreter_and_251_records)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 10, in test_actual_locked_interpreter_and_251_records
+    before=set(sys.modules);result=B['held_runtime_metadata'](ROOT,EXPECTED)
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-05/source/fixture_tools/capsule_builder01.py", line 213, in held_runtime_metadata
+    read(executable.parent,executable.name,expected['executable_sha256'],executable.stat().st_size)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-05/source/fixture_tools/capsule_builder01.py", line 31, in read
+    require(p.resolve()==p and stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_size==size and 0<size<=MAX_FILE,'source type/link/extent differs')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-05/source/fixture_tools/capsule_builder01.py", line 9, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: source type/link/extent differs
+
+======================================================================
+ERROR: test_fatal_survives_both_closes_once (__main__.Tests.test_fatal_survives_both_closes_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 48, in test_fatal_survives_both_closes_once
+    with patch.object(os,'read',side_effect=read),patch.object(os,'close',side_effect=close),self.assertRaises(MemoryError) as got:B['_held_interpreter'](ROOT,p,hashlib.sha256(b'abc').hexdigest(),3)
+                                                                                                                                   ~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_held_interpreter'
+
+======================================================================
+ERROR: test_grow_and_same_size_mutation (__main__.Tests.test_grow_and_same_size_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 39, in test_grow_and_same_size_mutation
+    with patch.object(os,'read',side_effect=selected),self.assertRaises(ValueError):B['_held_interpreter'](ROOT,p,hashlib.sha256(b'abc').hexdigest(),3)
+                                                                                    ~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_held_interpreter'
+
+======================================================================
+ERROR: test_real_executable_bound_and_streamed_extent (__main__.Tests.test_real_executable_bound_and_streamed_extent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 17, in test_real_executable_bound_and_streamed_extent
+    with patch.object(os,'read',side_effect=read):result=B['_held_interpreter'](ROOT,path,EXPECTED['executable_sha256'],EXPECTED['executable_bytes'])
+                                                         ~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_held_interpreter'
+
+======================================================================
+ERROR: test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=True, digest='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 24, in test_type_hash_and_extent_refusals
+    with self.subTest(size=size,digest=digest),self.assertRaises(ValueError):B['_held_interpreter'](ROOT,p,digest,size)
+                                                                             ~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_held_interpreter'
+
+======================================================================
+ERROR: test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=0, digest='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 24, in test_type_hash_and_extent_refusals
+    with self.subTest(size=size,digest=digest),self.assertRaises(ValueError):B['_held_interpreter'](ROOT,p,digest,size)
+                                                                             ~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_held_interpreter'
+
+======================================================================
+ERROR: test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=67108865, digest='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 24, in test_type_hash_and_extent_refusals
+    with self.subTest(size=size,digest=digest),self.assertRaises(ValueError):B['_held_interpreter'](ROOT,p,digest,size)
+                                                                             ~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_held_interpreter'
+
+======================================================================
+ERROR: test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=4, digest='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 24, in test_type_hash_and_extent_refusals
+    with self.subTest(size=size,digest=digest),self.assertRaises(ValueError):B['_held_interpreter'](ROOT,p,digest,size)
+                                                                             ~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_held_interpreter'
+
+======================================================================
+ERROR: test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals) (size=3, digest='ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 24, in test_type_hash_and_extent_refusals
+    with self.subTest(size=size,digest=digest),self.assertRaises(ValueError):B['_held_interpreter'](ROOT,p,digest,size)
+                                                                             ~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_held_interpreter'
+
+======================================================================
+ERROR: test_type_hash_and_extent_refusals (__main__.Tests.test_type_hash_and_extent_refusals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-runtime-interpreter-reader-preparation01-2026-10-03/test_runtime01.py", line 26, in test_type_hash_and_extent_refusals
+    with self.assertRaises(ValueError):B['_held_interpreter'](ROOT,link,sha,3)
+                                       ~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_held_interpreter'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.009s
+
+FAILED (errors=10)

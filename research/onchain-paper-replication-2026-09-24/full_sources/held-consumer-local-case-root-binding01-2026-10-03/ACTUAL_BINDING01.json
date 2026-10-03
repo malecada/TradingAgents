@@ -1,0 +1,937 @@
+{
+  "accepted_payload_review_manifest_sha256": "eced3702e3d086218e3d12c41b5146a983141e0572a266d1ed3db79a16a82076",
+  "actual_design_source": "d443208795f59292c156c5b81b687594efacea4d",
+  "actual_git_observations": [
+    {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "4e1e021e93ba807690c77309574bae07663695cc\n",
+      "stdout_bytes": 41,
+      "stdout_sha256": "f11e1dae59d02ece254591dce2f2dacdaae7c2934addb6c894b6c0bbf77debe6"
+    },
+    {
+      "args": [
+        "add",
+        "-f",
+        "--",
+        "cumulative-extension-review04.json",
+        "cumulative-extension04-proposal.json",
+        "fixture_inputs/held/roles01/matching.json",
+        "fixture_inputs/held/roles01/native_environment.json",
+        "fixture_inputs/held/roles01/native_policy.json",
+        "fixture_inputs/held/roles01/original_evidence.json",
+        "fixture_inputs/held/roles01/original_import_index.json",
+        "fixture_inputs/held/roles01/runtime.json",
+        "fixture_inputs/held/roles01/software_environment.json",
+        "fixture_inputs/held/roles01/target_catalog.json",
+        "fixture_inputs/held/second_target_publication_failure01/case-contract.json",
+        "fixture_inputs/held/second_target_publication_failure01/compact_policy.json",
+        "fixture_inputs/held/second_target_publication_failure01/environment.json",
+        "fixture_inputs/held/second_target_publication_failure01/execution_job.json",
+        "fixture_inputs/held/second_target_publication_failure01/execution_workspace.json",
+        "fixture_inputs/held/second_target_publication_failure01/held_score_policy.json",
+        "fixture_inputs/held/second_target_publication_failure01/mcm_output_policy.json",
+        "fixture_inputs/held/second_target_publication_failure01/mcm_policy.json",
+        "fixture_inputs/held/second_target_publication_failure01/original-evidence-role.json",
+        "fixture_inputs/held/second_target_publication_failure01/original_import.json",
+        "fixture_inputs/held/second_target_publication_failure01/original_import_stage.json",
+        "fixture_inputs/held/second_target_publication_failure01/pair_policy.json",
+        "fixture_inputs/held/second_target_publication_failure01/producer_plan.json",
+        "fixture_inputs/held/success01/case-contract.json",
+        "fixture_inputs/held/success01/compact_policy.json",
+        "fixture_inputs/held/success01/environment.json",
+        "fixture_inputs/held/success01/execution_job.json",
+        "fixture_inputs/held/success01/execution_workspace.json",
+        "fixture_inputs/held/success01/held_score_policy.json",
+        "fixture_inputs/held/success01/mcm_output_policy.json",
+        "fixture_inputs/held/success01/mcm_policy.json",
+        "fixture_inputs/held/success01/original-evidence-role.json",
+        "fixture_inputs/held/success01/original_import.json",
+        "fixture_inputs/held/success01/original_import_stage.json",
+        "fixture_inputs/held/success01/pair_policy.json",
+        "fixture_inputs/held/success01/producer_plan.json",
+        "held-auxiliary-second_target_publication_failure01.json",
+        "held-auxiliary-success01.json",
+        "held-charter-second_target_publication_failure01.md",
+        "held-charter-success01.md",
+        "held-fixture-registration01.json",
+        "successor-allocation04-proposal.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "args": [
+        "commit",
+        "--quiet",
+        "-m",
+        "Register reviewed finite imported-original held MCM engineering cases"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "d443208795f59292c156c5b81b687594efacea4d\n",
+      "stdout_bytes": 41,
+      "stdout_sha256": "5c7186be39f6aea567d6cb339f03fba67d441f53bf59a35bf54e4c032f065abb"
+    },
+    {
+      "args": [
+        "show",
+        "-s",
+        "--format=%P",
+        "d443208795f59292c156c5b81b687594efacea4d"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "4e1e021e93ba807690c77309574bae07663695cc\n",
+      "stdout_bytes": 41,
+      "stdout_sha256": "f11e1dae59d02ece254591dce2f2dacdaae7c2934addb6c894b6c0bbf77debe6"
+    },
+    {
+      "args": [
+        "diff-tree",
+        "--no-commit-id",
+        "--name-only",
+        "-r",
+        "d443208795f59292c156c5b81b687594efacea4d"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "cumulative-extension-review04.json\ncumulative-extension04-proposal.json\nfixture_inputs/held/roles01/matching.json\nfixture_inputs/held/roles01/native_environment.json\nfixture_inputs/held/roles01/native_policy.json\nfixture_inputs/held/roles01/original_evidence.json\nfixture_inputs/held/roles01/original_import_index.json\nfixture_inputs/held/roles01/runtime.json\nfixture_inputs/held/roles01/software_environment.json\nfixture_inputs/held/roles01/target_catalog.json\nfixture_inputs/held/second_target_publication_failure01/case-contract.json\nfixture_inputs/held/second_target_publication_failure01/compact_policy.json\nfixture_inputs/held/second_target_publication_failure01/environment.json\nfixture_inputs/held/second_target_publication_failure01/execution_job.json\nfixture_inputs/held/second_target_publication_failure01/execution_workspace.json\nfixture_inputs/held/second_target_publication_failure01/held_score_policy.json\nfixture_inputs/held/second_target_publication_failure01/mcm_output_policy.json\nfixture_inputs/held/second_target_publication_failure01/mcm_policy.json\nfixture_inputs/held/second_target_publication_failure01/original-evidence-role.json\nfixture_inputs/held/second_target_publication_failure01/original_import.json\nfixture_inputs/held/second_target_publication_failure01/original_import_stage.json\nfixture_inputs/held/second_target_publication_failure01/pair_policy.json\nfixture_inputs/held/second_target_publication_failure01/producer_plan.json\nfixture_inputs/held/success01/case-contract.json\nfixture_inputs/held/success01/compact_policy.json\nfixture_inputs/held/success01/environment.json\nfixture_inputs/held/success01/execution_job.json\nfixture_inputs/held/success01/execution_workspace.json\nfixture_inputs/held/success01/held_score_policy.json\nfixture_inputs/held/success01/mcm_output_policy.json\nfixture_inputs/held/success01/mcm_policy.json\nfixture_inputs/held/success01/original-evidence-role.json\nfixture_inputs/held/success01/original_import.json\nfixture_inputs/held/success01/original_import_stage.json\nfixture_inputs/held/success01/pair_policy.json\nfixture_inputs/held/success01/producer_plan.json\nheld-auxiliary-second_target_publication_failure01.json\nheld-auxiliary-success01.json\nheld-charter-second_target_publication_failure01.md\nheld-charter-success01.md\nheld-fixture-registration01.json\nsuccessor-allocation04-proposal.json\n",
+      "stdout_bytes": 2362,
+      "stdout_sha256": "ede59b06adfaa9dd9a82dc44ab279b86c20b72af0384a793cca47d009266aa66"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:cumulative-extension-review04.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 915,
+      "stdout_sha256": "e317a6e59b79036376dc055c8aa42db6366bf230b151b1cd66404576752e58f7"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:cumulative-extension04-proposal.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 2547,
+      "stdout_sha256": "b1d56965524c870c3233e828cc94f28402c4d9b0cffe82f4d87bf090cbe3ce1c"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/roles01/matching.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 1535,
+      "stdout_sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/roles01/native_environment.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 1129,
+      "stdout_sha256": "f04dadbe2c56ec0eaad2b6a8a459cc91312f713067c19cc233a3626012946fb7"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/roles01/native_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 600,
+      "stdout_sha256": "641c2c02b06dcc1b4551991131976deff8156d706be33dc0b3a6a53939d6d8ed"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/roles01/original_evidence.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 679,
+      "stdout_sha256": "c02c47fa41fc4033deed71ea264aa124983e32f2bd50bac1078382b550fdcb9e"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/roles01/original_import_index.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 4735,
+      "stdout_sha256": "a93eba3a4d7679fb12741795f2ff692ec4cc2b3d309a8a0e1936c863699890ed"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/roles01/runtime.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 76783,
+      "stdout_sha256": "2fb523f58c562933a56762fcdbf1a1806bc5af3fe0a68020d4f5c70037ecc59a"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/roles01/software_environment.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 295,
+      "stdout_sha256": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/roles01/target_catalog.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 2526,
+      "stdout_sha256": "f64d25ee45b5816a6b9c39680e45617dd90f62c26f040dc0ea4020a66a3eb8c0"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/case-contract.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 3296,
+      "stdout_sha256": "34c0e6d9f14fd994b9810c10c045ff2cc0fa7ea0110366091278193f5c19c9a2"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/compact_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 791,
+      "stdout_sha256": "5540f452f6e12d059afc21d8c2607290ebd91332e5377266c9ac639125ef6465"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/environment.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 295,
+      "stdout_sha256": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/execution_job.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 5148,
+      "stdout_sha256": "08b8437489974cf9aeb6d07d909bb8656aad6d55cc207fa31293014a884aeab5"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/execution_workspace.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 492,
+      "stdout_sha256": "950ee6d1c87260671e658513c9def2859eeee58288d096b3007637eadade1707"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/held_score_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 342,
+      "stdout_sha256": "a9d2741a39773e6741e2343738643d55bce1f534fad38f23b2a27f2468748f81"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/mcm_output_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 138,
+      "stdout_sha256": "7e9832eb55c4d7761aab39151492ce8edac61d5475fa52cbfdd68f87b80e1212"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/mcm_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 206,
+      "stdout_sha256": "efdcc827afa56424e0148ce51ba7c5bbb2e7a4332332c4321bbeb458f9d2ef1b"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/original-evidence-role.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 645,
+      "stdout_sha256": "cd9ccc4c92e0719d93b971adef77b3facafb19aaf883887eb60d4fb7b6097a72"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/original_import.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 4851,
+      "stdout_sha256": "0844394fac73fe187444a82c484d0ae5bdafc5d1b25c5a09973f8cde9f3905d2"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/original_import_stage.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 74,
+      "stdout_sha256": "8f3cd8a5a2f605c0682b727bf45cfd19fb64e0375a4068b76d6b60fe11ec7f3f"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/pair_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 19696,
+      "stdout_sha256": "71b63613f8530cecd8c02ef94d8e3aed5edc7e50e5e8474a572dfb7440a78884"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/second_target_publication_failure01/producer_plan.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 4535,
+      "stdout_sha256": "40383d34c70bbec690cfe4ccaad257eec57853b49a44a26bf87f2461174b7ff0"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/case-contract.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 2998,
+      "stdout_sha256": "8b7cfac2a6f9bdb0c40a1a409ab460c330167c9aa6aceecdd02266e651487d9b"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/compact_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 791,
+      "stdout_sha256": "5540f452f6e12d059afc21d8c2607290ebd91332e5377266c9ac639125ef6465"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/environment.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 295,
+      "stdout_sha256": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/execution_job.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 5122,
+      "stdout_sha256": "0923d394583d21dd3424f970ddf7edfebd29a554765cea63e439cb84b7174633"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/execution_workspace.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 492,
+      "stdout_sha256": "950ee6d1c87260671e658513c9def2859eeee58288d096b3007637eadade1707"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/held_score_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 342,
+      "stdout_sha256": "a9d2741a39773e6741e2343738643d55bce1f534fad38f23b2a27f2468748f81"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/mcm_output_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 138,
+      "stdout_sha256": "7e9832eb55c4d7761aab39151492ce8edac61d5475fa52cbfdd68f87b80e1212"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/mcm_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 206,
+      "stdout_sha256": "efdcc827afa56424e0148ce51ba7c5bbb2e7a4332332c4321bbeb458f9d2ef1b"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/original-evidence-role.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 619,
+      "stdout_sha256": "77f40cbeabe68bfd94d4b6f17641fd5cd9174ed8bbfe6dd09ef58b83295daedd"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/original_import.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 4851,
+      "stdout_sha256": "0844394fac73fe187444a82c484d0ae5bdafc5d1b25c5a09973f8cde9f3905d2"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/original_import_stage.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 74,
+      "stdout_sha256": "8f3cd8a5a2f605c0682b727bf45cfd19fb64e0375a4068b76d6b60fe11ec7f3f"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/pair_policy.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 19696,
+      "stdout_sha256": "71b63613f8530cecd8c02ef94d8e3aed5edc7e50e5e8474a572dfb7440a78884"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:fixture_inputs/held/success01/producer_plan.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 4509,
+      "stdout_sha256": "67a65bee06102aa6e56ed55bf3ce942b50f077fb621f661f5d0504b35d4283c6"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:held-auxiliary-second_target_publication_failure01.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 1085,
+      "stdout_sha256": "ec734c8cddf131bfda4c1d8788ec1fa837741ba9b8b2b0d06464e0478a59f727"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:held-auxiliary-success01.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 1047,
+      "stdout_sha256": "7128822ff4eb792f9ac2c311722b2210dbd7b1406d7eb69126466e24b99b26d8"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:held-charter-second_target_publication_failure01.md"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 2559,
+      "stdout_sha256": "972c6a0075ffa679766bfad7fb11d578f73241807f9b6c4ff6e21e717775fc2f"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:held-charter-success01.md"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 2521,
+      "stdout_sha256": "f773d5f3baabf5a549de22a3b60508055841eb0ddef161c78644081ad6a5b0b7"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:held-fixture-registration01.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 181052,
+      "stdout_sha256": "2d17bc25f5ccb0c39c0c82d8befd68d7b1f3db9fd967b69e0c4c23d26db87a1e"
+    },
+    {
+      "args": [
+        "cat-file",
+        "blob",
+        "d443208795f59292c156c5b81b687594efacea4d:successor-allocation04-proposal.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": null,
+      "stdout_bytes": 6292,
+      "stdout_sha256": "7f882018f3d34bbd98a4ac1c1498e25fc3f4d577309832c87a98455e229c7120"
+    }
+  ],
+  "actual_source_commit": "d443208795f59292c156c5b81b687594efacea4d",
+  "admission_source_pin_count_per_case": 204,
+  "claims_using_allowance6": 0,
+  "genuine_native_release": null,
+  "new_claims": 0,
+  "new_metadata_files": [
+    {
+      "bytes": 915,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/cumulative-extension-review04.json",
+      "path": "cumulative-extension-review04.json",
+      "sha256": "e317a6e59b79036376dc055c8aa42db6366bf230b151b1cd66404576752e58f7"
+    },
+    {
+      "bytes": 2547,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/cumulative-extension04-proposal.json",
+      "path": "cumulative-extension04-proposal.json",
+      "sha256": "b1d56965524c870c3233e828cc94f28402c4d9b0cffe82f4d87bf090cbe3ce1c"
+    },
+    {
+      "bytes": 1535,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/roles01/matching.json",
+      "path": "fixture_inputs/held/roles01/matching.json",
+      "sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e"
+    },
+    {
+      "bytes": 1129,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/roles01/native_environment.json",
+      "path": "fixture_inputs/held/roles01/native_environment.json",
+      "sha256": "f04dadbe2c56ec0eaad2b6a8a459cc91312f713067c19cc233a3626012946fb7"
+    },
+    {
+      "bytes": 600,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/roles01/native_policy.json",
+      "path": "fixture_inputs/held/roles01/native_policy.json",
+      "sha256": "641c2c02b06dcc1b4551991131976deff8156d706be33dc0b3a6a53939d6d8ed"
+    },
+    {
+      "bytes": 679,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/roles01/original_evidence.json",
+      "path": "fixture_inputs/held/roles01/original_evidence.json",
+      "sha256": "c02c47fa41fc4033deed71ea264aa124983e32f2bd50bac1078382b550fdcb9e"
+    },
+    {
+      "bytes": 4735,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/roles01/original_import_index.json",
+      "path": "fixture_inputs/held/roles01/original_import_index.json",
+      "sha256": "a93eba3a4d7679fb12741795f2ff692ec4cc2b3d309a8a0e1936c863699890ed"
+    },
+    {
+      "bytes": 76783,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/roles01/runtime.json",
+      "path": "fixture_inputs/held/roles01/runtime.json",
+      "sha256": "2fb523f58c562933a56762fcdbf1a1806bc5af3fe0a68020d4f5c70037ecc59a"
+    },
+    {
+      "bytes": 295,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/roles01/software_environment.json",
+      "path": "fixture_inputs/held/roles01/software_environment.json",
+      "sha256": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87"
+    },
+    {
+      "bytes": 2526,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/roles01/target_catalog.json",
+      "path": "fixture_inputs/held/roles01/target_catalog.json",
+      "sha256": "f64d25ee45b5816a6b9c39680e45617dd90f62c26f040dc0ea4020a66a3eb8c0"
+    },
+    {
+      "bytes": 3296,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/case-contract.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/case-contract.json",
+      "sha256": "34c0e6d9f14fd994b9810c10c045ff2cc0fa7ea0110366091278193f5c19c9a2"
+    },
+    {
+      "bytes": 791,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/compact_policy.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/compact_policy.json",
+      "sha256": "5540f452f6e12d059afc21d8c2607290ebd91332e5377266c9ac639125ef6465"
+    },
+    {
+      "bytes": 295,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/environment.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/environment.json",
+      "sha256": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87"
+    },
+    {
+      "bytes": 5148,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/execution_job.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/execution_job.json",
+      "sha256": "08b8437489974cf9aeb6d07d909bb8656aad6d55cc207fa31293014a884aeab5"
+    },
+    {
+      "bytes": 492,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/execution_workspace.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/execution_workspace.json",
+      "sha256": "950ee6d1c87260671e658513c9def2859eeee58288d096b3007637eadade1707"
+    },
+    {
+      "bytes": 342,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/held_score_policy.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/held_score_policy.json",
+      "sha256": "a9d2741a39773e6741e2343738643d55bce1f534fad38f23b2a27f2468748f81"
+    },
+    {
+      "bytes": 138,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/mcm_output_policy.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/mcm_output_policy.json",
+      "sha256": "7e9832eb55c4d7761aab39151492ce8edac61d5475fa52cbfdd68f87b80e1212"
+    },
+    {
+      "bytes": 206,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/mcm_policy.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/mcm_policy.json",
+      "sha256": "efdcc827afa56424e0148ce51ba7c5bbb2e7a4332332c4321bbeb458f9d2ef1b"
+    },
+    {
+      "bytes": 645,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/original-evidence-role.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/original-evidence-role.json",
+      "sha256": "cd9ccc4c92e0719d93b971adef77b3facafb19aaf883887eb60d4fb7b6097a72"
+    },
+    {
+      "bytes": 4851,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/original_import.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/original_import.json",
+      "sha256": "0844394fac73fe187444a82c484d0ae5bdafc5d1b25c5a09973f8cde9f3905d2"
+    },
+    {
+      "bytes": 74,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/original_import_stage.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/original_import_stage.json",
+      "sha256": "8f3cd8a5a2f605c0682b727bf45cfd19fb64e0375a4068b76d6b60fe11ec7f3f"
+    },
+    {
+      "bytes": 19696,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/pair_policy.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/pair_policy.json",
+      "sha256": "71b63613f8530cecd8c02ef94d8e3aed5edc7e50e5e8474a572dfb7440a78884"
+    },
+    {
+      "bytes": 4535,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/second_target_publication_failure01/producer_plan.json",
+      "path": "fixture_inputs/held/second_target_publication_failure01/producer_plan.json",
+      "sha256": "40383d34c70bbec690cfe4ccaad257eec57853b49a44a26bf87f2461174b7ff0"
+    },
+    {
+      "bytes": 2998,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/case-contract.json",
+      "path": "fixture_inputs/held/success01/case-contract.json",
+      "sha256": "8b7cfac2a6f9bdb0c40a1a409ab460c330167c9aa6aceecdd02266e651487d9b"
+    },
+    {
+      "bytes": 791,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/compact_policy.json",
+      "path": "fixture_inputs/held/success01/compact_policy.json",
+      "sha256": "5540f452f6e12d059afc21d8c2607290ebd91332e5377266c9ac639125ef6465"
+    },
+    {
+      "bytes": 295,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/environment.json",
+      "path": "fixture_inputs/held/success01/environment.json",
+      "sha256": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87"
+    },
+    {
+      "bytes": 5122,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/execution_job.json",
+      "path": "fixture_inputs/held/success01/execution_job.json",
+      "sha256": "0923d394583d21dd3424f970ddf7edfebd29a554765cea63e439cb84b7174633"
+    },
+    {
+      "bytes": 492,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/execution_workspace.json",
+      "path": "fixture_inputs/held/success01/execution_workspace.json",
+      "sha256": "950ee6d1c87260671e658513c9def2859eeee58288d096b3007637eadade1707"
+    },
+    {
+      "bytes": 342,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/held_score_policy.json",
+      "path": "fixture_inputs/held/success01/held_score_policy.json",
+      "sha256": "a9d2741a39773e6741e2343738643d55bce1f534fad38f23b2a27f2468748f81"
+    },
+    {
+      "bytes": 138,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/mcm_output_policy.json",
+      "path": "fixture_inputs/held/success01/mcm_output_policy.json",
+      "sha256": "7e9832eb55c4d7761aab39151492ce8edac61d5475fa52cbfdd68f87b80e1212"
+    },
+    {
+      "bytes": 206,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/mcm_policy.json",
+      "path": "fixture_inputs/held/success01/mcm_policy.json",
+      "sha256": "efdcc827afa56424e0148ce51ba7c5bbb2e7a4332332c4321bbeb458f9d2ef1b"
+    },
+    {
+      "bytes": 619,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/original-evidence-role.json",
+      "path": "fixture_inputs/held/success01/original-evidence-role.json",
+      "sha256": "77f40cbeabe68bfd94d4b6f17641fd5cd9174ed8bbfe6dd09ef58b83295daedd"
+    },
+    {
+      "bytes": 4851,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/original_import.json",
+      "path": "fixture_inputs/held/success01/original_import.json",
+      "sha256": "0844394fac73fe187444a82c484d0ae5bdafc5d1b25c5a09973f8cde9f3905d2"
+    },
+    {
+      "bytes": 74,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/original_import_stage.json",
+      "path": "fixture_inputs/held/success01/original_import_stage.json",
+      "sha256": "8f3cd8a5a2f605c0682b727bf45cfd19fb64e0375a4068b76d6b60fe11ec7f3f"
+    },
+    {
+      "bytes": 19696,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/pair_policy.json",
+      "path": "fixture_inputs/held/success01/pair_policy.json",
+      "sha256": "71b63613f8530cecd8c02ef94d8e3aed5edc7e50e5e8474a572dfb7440a78884"
+    },
+    {
+      "bytes": 4509,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/fixture_inputs/held/success01/producer_plan.json",
+      "path": "fixture_inputs/held/success01/producer_plan.json",
+      "sha256": "67a65bee06102aa6e56ed55bf3ce942b50f077fb621f661f5d0504b35d4283c6"
+    },
+    {
+      "bytes": 1085,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/held-auxiliary-second_target_publication_failure01.json",
+      "path": "held-auxiliary-second_target_publication_failure01.json",
+      "sha256": "ec734c8cddf131bfda4c1d8788ec1fa837741ba9b8b2b0d06464e0478a59f727"
+    },
+    {
+      "bytes": 1047,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/held-auxiliary-success01.json",
+      "path": "held-auxiliary-success01.json",
+      "sha256": "7128822ff4eb792f9ac2c311722b2210dbd7b1406d7eb69126466e24b99b26d8"
+    },
+    {
+      "bytes": 2559,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/held-charter-second_target_publication_failure01.md",
+      "path": "held-charter-second_target_publication_failure01.md",
+      "sha256": "972c6a0075ffa679766bfad7fb11d578f73241807f9b6c4ff6e21e717775fc2f"
+    },
+    {
+      "bytes": 2521,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/held-charter-success01.md",
+      "path": "held-charter-success01.md",
+      "sha256": "f773d5f3baabf5a549de22a3b60508055841eb0ddef161c78644081ad6a5b0b7"
+    },
+    {
+      "bytes": 181052,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/held-fixture-registration01.json",
+      "path": "held-fixture-registration01.json",
+      "sha256": "2d17bc25f5ccb0c39c0c82d8befd68d7b1f3db9fd967b69e0c4c23d26db87a1e"
+    },
+    {
+      "bytes": 6292,
+      "mode": 436,
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-metadata-preparation02-2026-10-03/capsule_payload/successor-allocation04-proposal.json",
+      "path": "successor-allocation04-proposal.json",
+      "sha256": "7f882018f3d34bbd98a4ac1c1498e25fc3f4d577309832c87a98455e229c7120"
+    }
+  ],
+  "package_anchor": "0cfc2c03200880534b7c91c2f16ac659a265a35b",
+  "package_count": 148,
+  "paper_budget_unchanged": 64,
+  "parent": "4e1e021e93ba807690c77309574bae07663695cc",
+  "previous_highest_claim_allowance": 5,
+  "qualification": "Actual Root copied/committed only42 approved metadata bodies to a genuine descendant. Original199source/148package and all oldclaims remain unchanged. Readonly current/design/admission review, dependent caller completion/recovery check, current native/whole-root preservation and exact one-use release remain separate.",
+  "registration_path": "held-fixture-registration01.json",
+  "schema_version": 1,
+  "source_count": 199,
+  "whole_external_recovery": false
+}

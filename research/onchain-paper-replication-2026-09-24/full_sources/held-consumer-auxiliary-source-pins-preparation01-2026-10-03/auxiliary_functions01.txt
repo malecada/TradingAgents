@@ -1,0 +1,43 @@
+AUXILIARY_ROLES=('budget_allocation','budget_extension','budget_review','charter')
+
+def held_auxiliary_metadata(roles,source_plan,registration,experiment_id):
+    """Strict finite metadata joins, not a budget review or admission capability."""
+    required=(*AUXILIARY_ROLES,'auxiliary_sources','case_contract','registration')
+    require(all(roles.get(k) is not None for k in required),'complete frozen auxiliary metadata roles required')
+    code=source_plan['source_files'];package=source_plan['package_files']
+    require(type(code) is dict and len(code)==199 and type(package) is dict and len(package)==148 and all(code.get(p)==h for p,h in package.items()),'exact199 implementation/148 package maps required')
+    require(all(type(p) is str and type(h) is str and len(h)==64 and all(c in '0123456789abcdef' for c in h) for p,h in code.items()),'typed implementation source map required')
+    case=roles['case_contract']['document'];exp=registration['experiments'][experiment_id]
+    require(registration['program_id']==case['program_id'] and experiment_id==case['experiment_id'],'selected current program/case binding differs')
+    require(exp.get('stage')=='development' and exp.get('selection') is None,'held auxiliary schema supports development without selection freeze only')
+    declaration=roles['auxiliary_sources'];own=_held_ref(declaration['reference']);d=declaration['document']
+    require(own['path'].endswith('.json') and own['bytes']<=8192,'finite auxiliary declaration required')
+    fields={'schema_version','kind','program_id','experiment_id','implementation_source_count','package_count','implementation_map_sha256','entry_count','entries'}
+    require(type(d) is dict and set(d)==fields and type(d['schema_version']) is int and d['schema_version']==1 and d['kind']=='held-auxiliary-source-metadata-v1','exact auxiliary declaration schema required')
+    require(d['program_id']==case['program_id'] and d['experiment_id']==experiment_id and type(d['implementation_source_count']) is int and d['implementation_source_count']==199 and type(d['package_count']) is int and d['package_count']==148 and d['implementation_map_sha256']==sha(canonical(code)),'auxiliary declaration source/program/case differs')
+    require(type(d['entry_count']) is int and d['entry_count']==4 and type(d['entries']) is list and len(d['entries'])==4 and len(canonical(d))<=8192,'exact bounded four-entry declaration required')
+    refs={};paths={own['path']};aux={own['path']:own['sha256']}
+    require([r.get('role') if type(r) is dict else None for r in d['entries']]==list(AUXILIARY_ROLES),'deterministic complete auxiliary role order required')
+    for item in d['entries']:
+        require(set(item)=={'role','reference'},'auxiliary entry schema')
+        name=item['role'];ref=_held_ref(item['reference'])
+        require(ref==_held_ref(roles[name]['reference']),'declared auxiliary role reference differs from actual read role')
+        require(ref['path'] not in paths and ref['path'] not in code and (ref['path'].endswith(('.md','.txt')) if name=='charter' else ref['path'].endswith('.json')),'auxiliary path collision/type differs')
+        refs[name]=ref;paths.add(ref['path']);aux[ref['path']]=ref['sha256']
+    require(own['path'] not in code,'auxiliary declaration collides with implementation')
+    for name,value in roles.items():
+        if value is not None and name not in (*AUXILIARY_ROLES,'auxiliary_sources'):require(value['reference']['path'] not in paths,'auxiliary metadata collides with another Root role')
+    extension=roles['budget_extension']['document'];review=roles['budget_review']['document'];allocation=roles['budget_allocation']['document']
+    short=lambda r:{k:r[k] for k in ('path','sha256')}
+    require(exp.get('cumulative_budget_extension')=={'extension':short(refs['budget_extension']),'review':short(refs['budget_review'])},'registered extension/review reference differs')
+    require(exp.get('charter')==short(refs['charter']) and type(roles['charter']['document']) is str,'registered charter reference/body differs')
+    ef={'schema_version','program_id','base_family','cumulative_ceiling','consumed_before','initial_experiment','allocation','claims','reason'}
+    require(type(extension) is dict and set(extension)==ef and type(extension['schema_version']) is int and extension['schema_version']==1,'original budget extension metadata schema differs')
+    family=registration.get('families',{}).get(exp.get('family'))
+    require(type(family) is dict and extension['program_id']==case['program_id'] and extension['base_family']==family,'extension current program/base family differs')
+    initial=extension['initial_experiment'];require(type(initial) is str and initial in registration['experiments'] and registration['experiments'][initial].get('family')==exp['family'],'extension initial adopter must be present in same current family')
+    require(extension['allocation']==short(refs['budget_allocation']) and type(allocation) is dict,'extension allocation body/reference differs')
+    require(type(review) is dict and set(review)=={'schema_version','decision','extension_sha256','reviewer','scope'} and type(review['schema_version']) is int and review['schema_version']==1 and review['decision']=='accepted' and review['extension_sha256']==refs['budget_extension']['sha256'] and all(type(review[k]) is str and review[k].strip() for k in ('reviewer','scope')),'exact accepted review metadata join required; this does not create approval')
+    union=dict(sorted({**code,**aux}.items()));require(len(aux)==5 and len(union)==204 and exp.get('source_files')==union,'exact199 plus5 auxiliary admission source map differs')
+    return {'schema_version':1,'kind':'held-auxiliary-source-joins-v1','implementation_source_count':199,'package_count':148,'auxiliary_count':5,'admission_source_count':204,'declaration':own,'references':refs,'auxiliary_source_files':dict(sorted(aux.items())),'admission_source_files':union,'budget_authority':None,'execution_admitted':False}
+

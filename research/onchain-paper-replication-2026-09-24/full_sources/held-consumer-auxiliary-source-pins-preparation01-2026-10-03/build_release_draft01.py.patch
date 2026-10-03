@@ -1,0 +1,40 @@
+--- immutable-source04
++++ auxiliary-candidate01
+@@ -35,7 +35,7 @@
+     draft(a.root,a.destination,a.phase,a.source,a.registration,a.runtime,a.native_environment,a.cpus,prior)
+ 
+ 
+-def held_metadata_draft(root,source,anchor,rows,role_references):
++def held_metadata_draft(root,source,anchor,rows,role_references,*,design_source=None):
+     """Actual source/Git and metadata readback for a distinct imported route.
+ 
+     No OUT3 historical rules, fixed cold identities or old44 role set are reused.
+@@ -58,6 +58,28 @@
+         document=raw.decode('utf-8') if name=='charter' else json.loads(raw)
+         roles[name]={'reference':reference,'document':document}
+     plan=generator.held_input_plan(roles,source_plan)
++    auxiliary=plan['auxiliary_metadata']
++    if auxiliary is not None:
++        design=source if design_source is None else design_source
++        require(type(design) is str and len(design)==40 and all(c in '0123456789abcdef' for c in design),'full genuine design commit required')
++        builder._held_git(root,'merge-base','--is-ancestor',design,source)
++        # Original199 rows remain independent of the five auxiliary metadata pins.
++        # Source body/current Git were checked by held_source_plan; design must
++        # retain the identical implementation bytes as actual admission requires.
++        for row in source_plan['source_origins']:
++            ref=design+':'+row['path'];require(int(builder._held_git(root,'cat-file','-s',ref))==row['bytes'],'design implementation extent differs')
++            require(generator.sha(builder._held_git(root,'cat-file','blob',ref))==row['sha256'],'design implementation source differs')
++        frozen_roles=(*generator.AUXILIARY_ROLES,'auxiliary_sources','registration')
++        for name in frozen_roles:
++            reference=roles[name]['reference'];raw=builder.held_document(root,reference)
++            # registration is independently committed; never pin its own hash
++            # in its source map or in the declaration it itself source-pins.
++            for commit in dict.fromkeys((source,design)):
++                ref=commit+':'+reference['path']
++                require(int(builder._held_git(root,'cat-file','-s',ref))==len(raw),'auxiliary/registration committed extent differs')
++                require(builder._held_git(root,'cat-file','blob',ref)==raw,'auxiliary/registration current/design bytes differ')
++        auxiliary['current_source']=source;auxiliary['design_source']=design;auxiliary['committed_metadata_readback']=True
++
+     route_readback=None
+     if roles.get('case_contract') is not None:
+         case=roles['case_contract']['document'];table=plan['input_rows']

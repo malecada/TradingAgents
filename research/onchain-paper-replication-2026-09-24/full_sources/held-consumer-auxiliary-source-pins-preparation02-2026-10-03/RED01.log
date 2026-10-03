@@ -1,0 +1,45 @@
+test_actual_source04_full_source_then_null_roles (__main__.Tests.test_actual_source04_full_source_then_null_roles) ... ERROR
+test_actual_source04_package_changed_only_selected_dispatch (__main__.Tests.test_actual_source04_package_changed_only_selected_dispatch) ... ERROR
+test_package_hash_missing_and_extra_rows_refuse (__main__.Tests.test_package_hash_missing_and_extra_rows_refuse) ... ok
+test_unknown_anchor_and_changed_lineage_refused (__main__.Tests.test_unknown_anchor_and_changed_lineage_refused) ... FAIL
+
+======================================================================
+ERROR: test_actual_source04_full_source_then_null_roles (__main__.Tests.test_actual_source04_full_source_then_null_roles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-auxiliary-source-pins-preparation02-2026-10-03/test_lineage02.py", line 15, in test_actual_source04_full_source_then_null_roles
+    plan=B['held_source_plan'](ROOT,SOURCE,ANCHOR,ROWS)
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-04/source/fixture_tools/capsule_builder01.py", line 169, in held_source_plan
+    require(parents==[HELD_S2],'held anchor must genuinely descend directly from original S2')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-04/source/fixture_tools/capsule_builder01.py", line 9, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: held anchor must genuinely descend directly from original S2
+
+======================================================================
+ERROR: test_actual_source04_package_changed_only_selected_dispatch (__main__.Tests.test_actual_source04_package_changed_only_selected_dispatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-auxiliary-source-pins-preparation02-2026-10-03/test_lineage02.py", line 21, in test_actual_source04_package_changed_only_selected_dispatch
+    self.assertEqual(B['HELD_SOURCE04_PACKAGE_CHANGES']['resource_fixture.py'],'3ea9902ec4067edc59bc897081c5ad5f6738350ccd3a339b0b423c863212a97e')
+                     ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'HELD_SOURCE04_PACKAGE_CHANGES'
+
+======================================================================
+FAIL: test_unknown_anchor_and_changed_lineage_refused (__main__.Tests.test_unknown_anchor_and_changed_lineage_refused)
+----------------------------------------------------------------------
+ValueError: undeclared held source replacement
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-auxiliary-source-pins-preparation02-2026-10-03/test_lineage02.py", line 27, in test_unknown_anchor_and_changed_lineage_refused
+    with patch.dict(ns,_held_git=git),self.assertRaisesRegex(ValueError,'accepted held Source04 lineage'):fn(ROOT,SOURCE,ANCHOR,ROWS)
+                                      ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "accepted held Source04 lineage" does not match "undeclared held source replacement"
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.029s
+
+FAILED (failures=1, errors=2)

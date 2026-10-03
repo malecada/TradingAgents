@@ -1,0 +1,10 @@
+--- frozen01/held_score_consumer.py
++++ candidate02/held_score_consumer.py
+@@ -232,6 +232,7 @@
+     require(len(slots)==2 and set(slots)==set(nodes) and all(row['role']=='score-batches' for row in slots.values()),'exact two f64-only complete containers')
+     for graph,n in nodes.items():
+         cells=32*n;chunks=(cells+chunk-1)//chunk
++        require(8*cells<=p['max_read_bytes'] and chunks<=p['max_members'],'held original population exceeds read policy before Context birth')
+         sizes=[8192]*(2+chunks)+[8*min(chunk,cells-i*chunk) for i in range(chunks)]
+         require(len(sizes)<=slots[graph]['max_members'] and sum(sizes)<=slots[graph]['max_bytes'],'registered full-member slot below conservative complete bound')
+         # Ledger control embeds the complete member inventory. Avoid known

@@ -1,0 +1,23 @@
+.FF
+======================================================================
+FAIL: test_small_bytes (__main__.Bounds.test_small_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-selected-transfer-worker-preparation02-2026-10-03/check_stw1.py", line 25, in test_small_bytes
+    with self.assertRaisesRegex(ValueError,'held original population'):ns['_transfer_budget'](p,pop,tx,nodes,chunk,resources)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_small_members (__main__.Bounds.test_small_members)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-selected-transfer-worker-preparation02-2026-10-03/check_stw1.py", line 29, in test_small_members
+    with self.assertRaisesRegex(ValueError,'held original population'):ns['_transfer_budget'](p,pop,tx,nodes,chunk,resources)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=2)

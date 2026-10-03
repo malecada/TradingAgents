@@ -1,0 +1,38 @@
+.E.EE.
+======================================================================
+ERROR: test_outputs (__main__.Checks.test_outputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-selected-transfer-worker-preparation01-2026-10-03/check01.py", line 26, in test_outputs
+    self.assertEqual(self.ns['_transfer_outputs'](self.p,pop,tx,base,out),out)
+                     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_transfer_outputs'
+
+======================================================================
+ERROR: test_scope (__main__.Checks.test_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-selected-transfer-worker-preparation01-2026-10-03/check01.py", line 32, in test_scope
+    self.ns['_transfer_scope'](a,b,self.p)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: '_transfer_scope'
+
+======================================================================
+ERROR: test_selected (__main__.Checks.test_selected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-selected-transfer-worker-preparation01-2026-10-03/check01.py", line 14, in test_selected
+    def test_selected(self):self.assertEqual(self.ns['_policy'](self.p,self.graphs,['read0.json','read1.json']),self.p)
+                                             ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-selected-transfer-worker-preparation01-2026-10-03/held_score_consumer.py", line 20, in _policy
+    require(type(p) is dict and set(p)=={'schema_version','kind','targets','part_bytes','max_read_bytes','max_members'},'held consumer policy fields')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-selected-transfer-worker-preparation01-2026-10-03/held_score_consumer.py", line 18, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: held consumer policy fields
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.018s
+
+FAILED (errors=3)

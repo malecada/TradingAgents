@@ -1,0 +1,68 @@
+--- baseline/selected_non_tail_transport.py
++++ candidate/selected_non_tail_transport.py
+@@ -21,6 +21,12 @@
+  return ((tx+BLOCK-1)//BLOCK+(rx//BLOCK+1)+((diagnostic+1+BLOCK-1)//BLOCK)+((control+BLOCK-1)//BLOCK))*BLOCK
+ 
+ def policy(value,context):
++ if type(value) is dict and type(value.get('schema_version')) is int and value['schema_version']==2:
++  require(value.get('kind')=='selected-produced-f32-ssh-plaintext-channel-v1' and context.get('schema_version')==3 and all(row['role']=='mcm-output' for row in context['slots']),'explicit completed raw-only transport selection')
++  legacy=dict(value);legacy.update(schema_version=1,kind='selected-non-tail-ssh-plaintext-channel-v1')
++  shape=dict(context);shape['schema_version']=2;shape['slots']=[dict(row,role='score-batches') for row in context['slots']]
++  policy(legacy,shape);return json.loads(encoded(value))
++ require(context.get('schema_version')!=3,'raw Context cannot select f64 transport schema')
+  fields={'schema_version','kind','connection','remote_namespace','part_bytes','command_seconds','cleanup_seconds','stderr_bytes','max_commands','max_parts','max_rounded_bytes','max_channel_bytes','max_local_bytes','max_files','outputs'}
+  require(type(value) is dict and set(value)==fields and type(value['schema_version']) is int and value['schema_version']==1 and value['kind']=='selected-non-tail-ssh-plaintext-channel-v1','explicit registered plaintext-channel policy required')
+  c=value['connection'];require(type(c) is dict and set(c)=={'host','user','port','identity_file','known_hosts_file'},'original explicit connection fields required')
+@@ -50,7 +56,7 @@
+   require(Path(module)==path and type(expected) is str and len(expected)==64 and digest(durable._source_body(path))==expected,'actual selected transport source closure differs')
+ 
+ def _selected(c):
+- require(type(c) is durable.Context and c.policy['schema_version']==2,'genuine explicitly selected durable Context required')
++ require(type(c) is durable.Context and c.policy['schema_version'] in (2,3),'genuine explicitly selected durable Context required')
+  c.run._active();c.run._check_source();c.run._check_inputs();_source_check(c)
+  name=c.policy['transport_input'];require(type(name) is str and name in c.run.admission.inputs,'registered selected transport input missing')
+  raw=c.run.read_input(name);require(type(raw) is bytes and len(raw)<=META,'transport metadata cap')
+@@ -118,10 +124,14 @@
+ class Session:
+  def __init__(self,operation):
+   require(type(operation) is durable.Operation,'actual selected Operation required');operation.check()
+-  c=operation.ledger.context;require(c.policy['schema_version']==2,'legacy unselected Context cannot transfer');check_context(c)
++  c=operation.ledger.context;require(c.policy['schema_version'] in (2,3),'legacy unselected Context cannot transfer');check_context(c)
+   require(c._transfer_active is None,'another transfer command active')
+   source=operation.ledger.source;source._checked();api=durable.held_score_consumer._api(c.run)
+-  require(type(source) is api.HeldBatches and operation.ledger.record['role']=='score-batches','genuine f64 HeldBatches only; raw-f32/NPY live adapters absent')
++  if c.policy['schema_version']==3:
++   from .completed_f32 import CompletedF32
++   require(type(source) is CompletedF32 and operation.ledger.record['role']=='mcm-output','actual completed raw Produced adapter required; NPY refused')
++  else:
++   require(type(source) is api.HeldBatches and operation.ledger.record['role']=='score-batches','genuine f64 HeldBatches only; raw-f32/NPY live adapters absent')
+   require(operation.index==0 and operation.offset==0,'transfer owns a fresh unconsumed ordered operation')
+   self.op=operation;self.c=c;self.p=c._transfer_policy;self.source=source;self.inventory=tuple((r['name'],r['sha256'],r['bytes']) for r in operation.ledger.inventory);self._inventory_pin=encoded(operation.ledger.inventory)
+   require(all(type(size) is int and 0<size<=4194304 and Path(name).name==name and name not in ('.','..') for name,_,size in self.inventory),'finite original member/native file extents')
+@@ -137,7 +147,7 @@
+   watch=Path(c.execution['resources']['storage_budget']['root']);require(self.root.is_relative_to(watch),'transfer tree outside actual native watch')
+   self.files={};self.directories={};self.fd=None;self.closed=False;self.recovered=False;self.command_index=0;self.local_bytes=0;self._next=None;self.process_evidence=None;self.pending_files={}
+   self.deadline=c.started+c.policy['deadline_seconds'];self._identity=encoded({'operation':operation.ledger.identity,'source':c.run.admission.source,'claim':c.claim,'inventory':digest(self._inventory_pin),'policy':digest(c._transfer_raw),'root':str(self.root)})
+-  encoded({'schema_version':1,'kind':'selected-f64-transfer-attempt','identity':json.loads(self._identity),'plaintext_accounting_only':True,'physical_encrypted_wire_metered':False,'disposition_authority':False})
++  encoded({'schema_version':1,'kind':('selected-produced-f32-transfer-attempt' if self.c.policy['schema_version']==3 else 'selected-f64-transfer-attempt'),'identity':json.loads(self._identity),'plaintext_accounting_only':True,'physical_encrypted_wire_metered':False,'disposition_authority':False})
+   self.root.mkdir()
+   try:
+    self.fd=os.open(self.root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC);self.root_pin=signature(os.fstat(self.fd))
+@@ -146,7 +156,7 @@
+    try:os.fsync(parent)
+    finally:owned_io._cleanup((lambda:os.close(parent),))
+    os.fsync(self.fd)
+-   c.publish('transfer-intent-'+operation.ledger.identity+'.json',{'schema_version':1,'kind':'selected-f64-transfer-attempt','identity':json.loads(self._identity),'plaintext_accounting_only':True,'physical_encrypted_wire_metered':False,'disposition_authority':False})
++   c.publish('transfer-intent-'+operation.ledger.identity+'.json',{'schema_version':1,'kind':('selected-produced-f32-transfer-attempt' if self.c.policy['schema_version']==3 else 'selected-f64-transfer-attempt'),'identity':json.loads(self._identity),'plaintext_accounting_only':True,'physical_encrypted_wire_metered':False,'disposition_authority':False})
+    for index,row in enumerate(self.source_members):c.publish('transfer-source-'+operation.ledger.identity+'-%04d.json'%index,{'operation':operation.ledger.identity,'original_member':row,'recovery_mode':384,'filesystem_timestamps_and_inodes_not_rebased':True})
+    self.check()
+   except BaseException as e:
+@@ -270,7 +280,7 @@
+    try:os.fsync(fd)
+    finally:owned_io._cleanup((lambda:os.close(fd),))
+    self.op.verify_local_recovery(recovery);self.recovered=True;self.check()
+-   summary={'schema_version':1,'kind':'selected-f64-remote-roundtrip','operation':self.op.ledger.identity,'original_container_sha256':self.source._reader.reference,'complete_members':len(self.inventory),'members_sha256':digest(self._inventory_pin),'remote_parts':self.parts,'reserved':self.c._transfer_spent,'observed':self.c._transfer_observed,'remote_body_roundtrip_verified':True,'physical_encrypted_wire_metered':False,'disposition_authority':False,'local_bytes_retired':0}
++   summary={'schema_version':1,'kind':('selected-produced-f32-remote-roundtrip' if self.c.policy['schema_version']==3 else 'selected-f64-remote-roundtrip'),'operation':self.op.ledger.identity,'original_container_sha256':self.source._reader.reference,'complete_members':len(self.inventory),'members_sha256':digest(self._inventory_pin),'remote_parts':self.parts,'reserved':self.c._transfer_spent,'observed':self.c._transfer_observed,'remote_body_roundtrip_verified':True,'physical_encrypted_wire_metered':False,'disposition_authority':False,'local_bytes_retired':0}
+    encoded(summary);self.check()
+   except BaseException as e:primary=e
+   try:

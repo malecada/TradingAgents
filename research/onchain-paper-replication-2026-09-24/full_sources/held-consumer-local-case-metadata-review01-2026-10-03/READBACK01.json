@@ -1,0 +1,108 @@
+{
+  "manifest_sha256": "aef0f0b39da71bc6a8c4e96eb047a8bdc3425bce4c69713e48ed43199c2b4ca3",
+  "members": 46,
+  "payload_files": 40,
+  "cases": [
+    {
+      "identity": "original-import-held-success-20261003-01",
+      "case": "success",
+      "roles": 15,
+      "inputs": 33,
+      "sources": 204,
+      "outputs": 6,
+      "parent": null,
+      "package_anchor": "0cfc2c03200880534b7c91c2f16ac659a265a35b",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "synthetic",
+          "end": "2022-01-24T00:00:00Z",
+          "start": "2022-01-10T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "original_dictionary",
+          "end": "2026-01-01T00:00:00Z",
+          "start": "2022-01-03T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "identity": "original-import-held-publication-failure-20261003-01",
+      "case": "second_target_publication_failure",
+      "roles": 15,
+      "inputs": 33,
+      "sources": 204,
+      "outputs": 6,
+      "parent": null,
+      "package_anchor": "0cfc2c03200880534b7c91c2f16ac659a265a35b",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "synthetic",
+          "end": "2022-01-24T00:00:00Z",
+          "start": "2022-01-10T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "original_dictionary",
+          "end": "2026-01-01T00:00:00Z",
+          "start": "2022-01-03T00:00:00Z"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "HLM1",
+      "case": "success",
+      "dangling_control_reference": {
+        "bytes": 4851,
+        "path": "fixture_inputs/success/original_import.json",
+        "sha256": "0844394fac73fe187444a82c484d0ae5bdafc5d1b25c5a09973f8cde9f3905d2"
+      },
+      "actual_registered_control": {
+        "dataset": "synthetic",
+        "path": "fixture_inputs/held/success01/original_import.json",
+        "sha256": "0844394fac73fe187444a82c484d0ae5bdafc5d1b25c5a09973f8cde9f3905d2"
+      }
+    },
+    {
+      "id": "HLM2",
+      "case": "success",
+      "runtime_hashes_delta": {
+        "verify.py": {
+          "registered": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439",
+          "actual": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce"
+        }
+      }
+    },
+    {
+      "id": "HLM1",
+      "case": "failure",
+      "dangling_control_reference": {
+        "bytes": 4851,
+        "path": "fixture_inputs/success/original_import.json",
+        "sha256": "0844394fac73fe187444a82c484d0ae5bdafc5d1b25c5a09973f8cde9f3905d2"
+      },
+      "actual_registered_control": {
+        "dataset": "synthetic",
+        "path": "fixture_inputs/held/second_target_publication_failure01/original_import.json",
+        "sha256": "0844394fac73fe187444a82c484d0ae5bdafc5d1b25c5a09973f8cde9f3905d2"
+      }
+    },
+    {
+      "id": "HLM2",
+      "case": "failure",
+      "runtime_hashes_delta": {
+        "verify.py": {
+          "registered": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439",
+          "actual": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce"
+        }
+      }
+    }
+  ],
+  "historical_experiments_unchanged": 4,
+  "authority_executed": false,
+  "numerical_imports": false
+}

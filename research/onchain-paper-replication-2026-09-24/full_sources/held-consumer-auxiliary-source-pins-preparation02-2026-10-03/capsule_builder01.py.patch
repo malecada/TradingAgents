@@ -1,0 +1,46 @@
+--- Source04/fixture_tools/capsule_builder01.py
++++ candidate02/fixture_tools/capsule_builder01.py
+@@ -112,6 +112,10 @@
+ # Separate held-resource metadata route. Legacy exporter remains unchanged.
+ HELD_COUNTS=(199,148)
+ HELD_S2='fb9fad1d93836b4f92f2be8111da4adf22b7e069'
++HELD_SOURCE04_ANCHOR='0cfc2c03200880534b7c91c2f16ac659a265a35b'
++HELD_SOURCE04='fa9712c36daf2896ef3f6a8a8a5d99ec696cfdf4'
++HELD_SOURCE04_LINEAGE=((HELD_SOURCE04,HELD_SOURCE04_ANCHOR),(HELD_SOURCE04_ANCHOR,'903488c49ad25e8026ec849a1c8b30ca5f90bcff'),('903488c49ad25e8026ec849a1c8b30ca5f90bcff','76a4bd766722e0f5177412f6945117d9c2b5fc45'),('76a4bd766722e0f5177412f6945117d9c2b5fc45','b8c6c280fb229ffaa5195c95baf3f57485e972b0'),('b8c6c280fb229ffaa5195c95baf3f57485e972b0',HELD_S2))
++HELD_SOURCE04_PACKAGE_CHANGES={'resource_fixture.py':'3ea9902ec4067edc59bc897081c5ad5f6738350ccd3a339b0b423c863212a97e'}
+ HELD_OLD_INVENTORY='e8d8594d1c7aabe4076bf2b4bab7454cb0fad48ec8f46b754e06fc3f3ddb6773'
+ HELD_IO='09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb'
+ HELD_PACKAGE_CHANGES={'compact_mcm.py':'6661a8668d04bdff4afa84161932e12daa351d2654c5c481eba5faafcd938a4c','mcm_score_stream.py':'ee7931cea3d28ad0719b5f3db171a5d5d3ab95db9ff7cad0cc8379101948b79e','held_score_consumer.py':'35da29691a5ef6c23f4bbdf178a55fd51bb6779214c1d38fb5a162e712ea0d41'}
+@@ -166,7 +170,14 @@
+         require(not os.path.lexists(root/'.git'/name),'Git indirection refused')
+     _held_git(root,'merge-base','--is-ancestor',anchor,source)
+     parents=_held_git(root,'show','-s','--format=%P',anchor).decode().strip().split()
+-    require(parents==[HELD_S2],'held anchor must genuinely descend directly from original S2')
++    source04=anchor==HELD_SOURCE04_ANCHOR
++    if source04:
++        for child,parent in HELD_SOURCE04_LINEAGE:
++            actual=_held_git(root,'show','-s','--format=%P',child).decode().strip().split()
++            require(actual==[parent],'accepted held Source04 lineage differs')
++        _held_git(root,'merge-base','--is-ancestor',HELD_SOURCE04,source)
++    else:
++        require(parents==[HELD_S2],'held anchor must genuinely descend directly from original S2')
+     old_path='cold_prep/source_inventory.json';old_raw=read(root,old_path,HELD_OLD_INVENTORY,124011);old=json.loads(old_raw)
+     require(old['source_count']==195 and old['package_count']==147,'historical source denominator differs')
+     baseline={x['target']:x['sha256'] for x in old['source_inventory']};require(len(baseline)==195,'historical source inventory duplicates')
+@@ -174,10 +185,16 @@
+     names=[x['path'] for x in rows];require(names==sorted(set(names)) and set(names)==set(baseline)|set(HELD_ADDITIONS),'complete held source membership differs')
+     registered={x['path']:x['sha256'] for x in rows};expected={**baseline,**HELD_ADDITIONS}
+     expected.update({'tradingagents/research/onchain_replication/'+k:v for k,v in HELD_PACKAGE_CHANGES.items()})
++    if source04:expected.update({'tradingagents/research/onchain_replication/'+k:v for k,v in HELD_SOURCE04_PACKAGE_CHANGES.items()})
+     expected['tradingagents/research/verify.py']='1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce'
+     for name in set(expected)-HELD_SUCCESSOR_HELPERS:require(registered[name]==expected[name],'undeclared held source replacement')
+     package=sorted(n for n in names if n=='tradingagents/__init__.py' or (n.endswith('.py') and str(Path(n).parent) in ('tradingagents/research','tradingagents/research/onchain_replication')))
+     require(len(package)==148,'held complete package denominator differs')
++    if source04:
++        for commit in (anchor,source):
++            anchored=_held_git(root,'ls-tree','-r','--name-only',commit).decode().splitlines()
++            anchored_package=sorted(n for n in anchored if n=='tradingagents/__init__.py' or (n.endswith('.py') and str(Path(n).parent) in ('tradingagents/research','tradingagents/research/onchain_replication')))
++            require(anchored_package==package,'accepted Source04 complete148 anchor/current roster differs')
+     total=0;origins=[]
+     for row in rows:
+         raw=held_document(root,row);total+=len(raw);require(total<=MAX_TOTAL,'held source aggregate exceeds limit')

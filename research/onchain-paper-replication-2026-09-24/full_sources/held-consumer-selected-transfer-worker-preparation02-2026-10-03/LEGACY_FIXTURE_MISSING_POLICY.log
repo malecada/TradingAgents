@@ -1,0 +1,16 @@
+E...
+======================================================================
+ERROR: test_budget (__main__.Checks.test_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-selected-transfer-worker-preparation02-2026-10-03/check03.py", line 30, in test_budget
+    value=ns['_transfer_budget']({},pop,tx,dict(zip(graphs,[2,3])),128,resources)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-selected-transfer-worker-preparation02-2026-10-03/held_score_consumer.py", line 235, in _transfer_budget
+    require(8*cells<=p['max_read_bytes'] and chunks<=p['max_members'],'held original population exceeds read policy before Context birth')
+                     ~^^^^^^^^^^^^^^^^^^
+KeyError: 'max_read_bytes'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.042s
+
+FAILED (errors=1)

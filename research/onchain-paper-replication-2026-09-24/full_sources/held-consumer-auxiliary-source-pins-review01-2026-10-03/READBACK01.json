@@ -1,0 +1,53 @@
+{
+  "scope": "actual source/real read-only lineage and synthetic metadata boundaries only",
+  "checks": [
+    "actual old199 equality RED; new204 synthetic metadata join GREEN",
+    "extra_source refusal",
+    "missing_code refusal",
+    "missing_auxiliary refusal",
+    "bool_count refusal",
+    "wrong_map refusal",
+    "approval_pending refusal",
+    "approval_hash refusal",
+    "family refusal",
+    "initial_absent refusal",
+    "charter_ref refusal",
+    "declaration_alias_registration refusal",
+    "path_traversal refusal",
+    "private_path refusal",
+    "source_collision refusal",
+    "program refusal",
+    "confirmation refusal",
+    "unknown_declaration refusal",
+    "declaration_selfhash refusal",
+    "null15 roles/noauthority and numerical generation refused",
+    "MemoryError exact firstfatal at new metadata block",
+    "KeyboardInterrupt exact firstfatal at new metadata block",
+    "SystemExit exact firstfatal at new metadata block"
+  ],
+  "composition_blockers": [
+    {
+      "id": "HAP1",
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-04/source/fixture_tools/capsule_builder01.py",
+      "lines": [
+        169,
+        176,
+        178
+      ],
+      "actual_anchor": "0cfc2c03200880534b7c91c2f16ac659a265a35b",
+      "actual_parent": "903488c49ad25e8026ec849a1c8b30ca5f90bcff",
+      "required_immediate_parent": "fb9fad1d93836b4f92f2be8111da4adf22b7e069",
+      "real_first_refusal": "held anchor must genuinely descend directly from original S2",
+      "extracted_later_refusal": "undeclared held source replacement",
+      "unlisted_package_change": {
+        "tradingagents/research/onchain_replication/resource_fixture.py": {
+          "expected": "d92c0a92d877190f93f106ce505511ed59ceef050308fe5c32c29e13a7665028",
+          "actual": "3ea9902ec4067edc59bc897081c5ad5f6738350ccd3a339b0b423c863212a97e"
+        }
+      }
+    }
+  ],
+  "author_manifest_bodies": 25,
+  "claims_jobs": 0,
+  "numeric_imports": false
+}

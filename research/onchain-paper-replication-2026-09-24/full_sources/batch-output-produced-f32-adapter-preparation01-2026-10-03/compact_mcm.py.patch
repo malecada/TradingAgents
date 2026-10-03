@@ -1,0 +1,21 @@
+--- baseline/compact_mcm.py
++++ candidate/compact_mcm.py
+@@ -329,7 +329,17 @@
+             'output':ticket,'output_args':args|{'stage_root':str(args['stage_root'])},'output_proof':output_proof}
+         reference = io._write(fd,'complete.json',io._json(record))
+         result = Produced(dictionary,graph,stage,matrix,policy,start,record,root,inode,reference)
+-        result._check(); return result
++        result._check()
++        if _imported(dictionary):
++            selected=dictionary.execution._stage.prepared._selection_now()['selected']
++            name=selected.get('non_tail_transport_input')
++            if name is not None:
++                raw=owner.bound._run.read_input(name)
++                require(len(raw)<=8192,'completed transport policy metadata bound')
++                if json.loads(raw).get('schema_version')==3:
++                    from .completed_f32 import consume_if_selected
++                    consume_if_selected(result,held)
++        return result
+     except BaseException as primary:
+         actions=[]
+         if stream is not None and not stream.closed:actions.append(stream.close)

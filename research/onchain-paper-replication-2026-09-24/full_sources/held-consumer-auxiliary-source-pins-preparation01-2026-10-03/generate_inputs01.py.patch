@@ -1,0 +1,107 @@
+--- immutable-source04
++++ auxiliary-candidate01
+@@ -98,7 +98,7 @@
+     return gate,files
+ 
+ # New held-resource metadata planning ONLY. No legacy graphs/registration call.
+-HELD_ROLES=('runtime','software_environment','native_environment','native_policy','original_import_index','original_evidence','matching','target_catalog','case_contract','registration','budget_extension','budget_review','charter')
++HELD_ROLES=('runtime','software_environment','native_environment','native_policy','original_import_index','original_evidence','matching','target_catalog','case_contract','registration','budget_extension','budget_review','charter','budget_allocation','auxiliary_sources')
+ 
+ def _held_ref(row):
+     require(type(row) is dict and set(row)=={'path','sha256','bytes'},'exact held metadata/input reference required')
+@@ -107,6 +107,61 @@
+     require(type(row['bytes']) is int and 0<row['bytes']<=4*1024**2,'held per-file reference bound')
+     return dict(row)
+ 
++AUXILIARY_ROLES=('budget_allocation','budget_extension','budget_review','charter')
++
++def render_held_auxiliary_declaration(roles,source_plan):
++    """Deterministic unregistered metadata body; no files or approval are made."""
++    require(type(roles) is dict and roles.get('case_contract') is not None and all(roles.get(k) is not None for k in AUXILIARY_ROLES),'actual Root case/four metadata references required before rendering')
++    require(type(source_plan) is dict and source_plan.get('source_count')==199 and source_plan.get('package_count')==148 and len(source_plan['source_files'])==199 and source_plan.get('execution_admitted') is False,'frozen199/148 source metadata required')
++    case=roles['case_contract']['document'];require(type(case) is dict and case.get('kind')=='root-selected-imported-held-resource-v1','selected Root case required')
++    for value in (case['program_id'],case['experiment_id']):require(type(value) is str and 0<len(value)<=128 and value[0].isascii() and value[0].isalnum() and all(c.isascii() and (c.isalnum() or c in '_.-') for c in value),'finite selected program/experiment identity required')
++    refs=[{'role':name,'reference':_held_ref(roles[name]['reference'])} for name in AUXILIARY_ROLES]
++    require(len({r['reference']['path'] for r in refs})==4 and not set(r['reference']['path'] for r in refs).intersection(source_plan['source_files']),'auxiliary role/implementation paths must be disjoint')
++    result={'schema_version':1,'kind':'held-auxiliary-source-metadata-v1','program_id':case['program_id'],'experiment_id':case['experiment_id'],'implementation_source_count':199,'package_count':148,'implementation_map_sha256':sha(canonical(source_plan['source_files'])),'entry_count':4,'entries':refs}
++    require(len(canonical(result))<=8192,'finite auxiliary declaration cap');return result
++
++def held_auxiliary_metadata(roles,source_plan,registration,experiment_id):
++    """Strict finite metadata joins, not a budget review or admission capability."""
++    required=(*AUXILIARY_ROLES,'auxiliary_sources','case_contract','registration')
++    require(all(roles.get(k) is not None for k in required),'complete frozen auxiliary metadata roles required')
++    code=source_plan['source_files'];package=source_plan['package_files']
++    require(type(code) is dict and len(code)==199 and type(package) is dict and len(package)==148 and all(code.get(p)==h for p,h in package.items()),'exact199 implementation/148 package maps required')
++    require(all(type(p) is str and type(h) is str and len(h)==64 and all(c in '0123456789abcdef' for c in h) for p,h in code.items()),'typed implementation source map required')
++    case=roles['case_contract']['document'];exp=registration['experiments'][experiment_id]
++    for value in (case['program_id'],experiment_id):require(type(value) is str and 0<len(value)<=128 and value[0].isascii() and value[0].isalnum() and all(c.isascii() and (c.isalnum() or c in '_.-') for c in value),'finite selected program/experiment identity required')
++    require(registration['program_id']==case['program_id'] and experiment_id==case['experiment_id'],'selected current program/case binding differs')
++    require(exp.get('stage')=='development' and exp.get('selection') is None,'held auxiliary schema supports development without selection freeze only')
++    declaration=roles['auxiliary_sources'];own=_held_ref(declaration['reference']);d=declaration['document']
++    require(own['path'].endswith('.json') and own['bytes']<=8192,'finite auxiliary declaration required')
++    fields={'schema_version','kind','program_id','experiment_id','implementation_source_count','package_count','implementation_map_sha256','entry_count','entries'}
++    require(type(d) is dict and set(d)==fields and type(d['schema_version']) is int and d['schema_version']==1 and d['kind']=='held-auxiliary-source-metadata-v1','exact auxiliary declaration schema required')
++    require(d['program_id']==case['program_id'] and d['experiment_id']==experiment_id and type(d['implementation_source_count']) is int and d['implementation_source_count']==199 and type(d['package_count']) is int and d['package_count']==148 and d['implementation_map_sha256']==sha(canonical(code)),'auxiliary declaration source/program/case differs')
++    require(type(d['entry_count']) is int and d['entry_count']==4 and type(d['entries']) is list and len(d['entries'])==4 and len(canonical(d))<=8192,'exact bounded four-entry declaration required')
++    refs={};paths={own['path']};aux={own['path']:own['sha256']}
++    require([r.get('role') if type(r) is dict else None for r in d['entries']]==list(AUXILIARY_ROLES),'deterministic complete auxiliary role order required')
++    for item in d['entries']:
++        require(set(item)=={'role','reference'},'auxiliary entry schema')
++        name=item['role'];ref=_held_ref(item['reference'])
++        require(ref==_held_ref(roles[name]['reference']),'declared auxiliary role reference differs from actual read role')
++        require(ref['path'] not in paths and ref['path'] not in code and (ref['path'].endswith(('.md','.txt')) if name=='charter' else ref['path'].endswith('.json')),'auxiliary path collision/type differs')
++        refs[name]=ref;paths.add(ref['path']);aux[ref['path']]=ref['sha256']
++    require(own['path'] not in code,'auxiliary declaration collides with implementation')
++    for name,value in roles.items():
++        if value is not None and name not in (*AUXILIARY_ROLES,'auxiliary_sources'):require(value['reference']['path'] not in paths,'auxiliary metadata collides with another Root role')
++    extension=roles['budget_extension']['document'];review=roles['budget_review']['document'];allocation=roles['budget_allocation']['document']
++    short=lambda r:{k:r[k] for k in ('path','sha256')}
++    require(exp.get('cumulative_budget_extension')=={'extension':short(refs['budget_extension']),'review':short(refs['budget_review'])},'registered extension/review reference differs')
++    require(exp.get('charter')==short(refs['charter']) and type(roles['charter']['document']) is str,'registered charter reference/body differs')
++    ef={'schema_version','program_id','base_family','cumulative_ceiling','consumed_before','initial_experiment','allocation','claims','reason'}
++    require(type(extension) is dict and set(extension)==ef and type(extension['schema_version']) is int and extension['schema_version']==1,'original budget extension metadata schema differs')
++    family=registration.get('families',{}).get(exp.get('family'))
++    require(type(family) is dict and extension['program_id']==case['program_id'] and extension['base_family']==family,'extension current program/base family differs')
++    initial=extension['initial_experiment'];require(type(initial) is str and initial in registration['experiments'] and registration['experiments'][initial].get('family')==exp['family'],'extension initial adopter must be present in same current family')
++    require(extension['allocation']==short(refs['budget_allocation']) and type(allocation) is dict,'extension allocation body/reference differs')
++    require(type(review) is dict and set(review)=={'schema_version','decision','extension_sha256','reviewer','scope'} and type(review['schema_version']) is int and review['schema_version']==1 and review['decision']=='accepted' and review['extension_sha256']==refs['budget_extension']['sha256'] and all(type(review[k]) is str and review[k].strip() for k in ('reviewer','scope')),'exact accepted review metadata join required; this does not create approval')
++    union=dict(sorted({**code,**aux}.items()));require(len(aux)==5 and len(union)==204 and exp.get('source_files')==union,'exact199 plus5 auxiliary admission source map differs')
++    return {'schema_version':1,'kind':'held-auxiliary-source-joins-v1','implementation_source_count':199,'package_count':148,'auxiliary_count':5,'admission_source_count':204,'declaration':own,'references':refs,'auxiliary_source_files':dict(sorted(aux.items())),'admission_source_files':union,'budget_authority':None,'execution_admitted':False}
++
+ def held_input_plan(roles,source_plan):
+     """Build concrete finite input/native/source joins from already-read metadata.
+ 
+@@ -116,6 +171,7 @@
+     """
+     require(type(roles) is dict and set(roles)<=set(HELD_ROLES),'unknown held metadata role')
+     require(type(source_plan) is dict and source_plan.get('source_count')==199 and source_plan.get('package_count')==148 and source_plan.get('execution_admitted') is False,'actual199/148 metadata plan required')
++    require(type(source_plan.get('source_files')) is dict and len(source_plan['source_files'])==199 and type(source_plan.get('package_files')) is dict and len(source_plan['package_files'])==148 and all(source_plan['source_files'].get(p)==h for p,h in source_plan['package_files'].items()),'implementation and package map cardinality/membership differ')
+     missing=[n for n in HELD_ROLES if roles.get(n) is None];observed={};inputs={}
+     def insert(name,row):
+         require(type(name) is str and bool(name) and name not in inputs,'input role collision or empty identity')
+@@ -157,7 +213,7 @@
+             for name,ref in row['components'].items():insert(row['input_name']+'_'+name,_held_ref(ref)|{'dataset':'synthetic'})
+             targets.append({'graph_hash':h,'nodes':row['nodes'],'input_name':row['input_name']})
+         require([x['graph_hash'] for x in targets]==sorted({x['graph_hash'] for x in targets}) and sorted(x['nodes'] for x in targets)==[2,3],'deterministic complete target order/denominator differs')
+-    case=roles.get('case_contract');documents={};experiment=None
++    case=roles.get('case_contract');documents={};experiment=None;auxiliary=None
+     if case is not None:
+         c=case['document'];require(type(c) is dict and set(c)=={'schema_version','kind','program_id','experiment_id','job_input','plan_input','representation','producer','held_policy_input','readback_outputs','additional_inputs'},'root case contract schema')
+         require(type(c['schema_version']) is int and c['schema_version']==1 and c['kind']=='root-selected-imported-held-resource-v1','root selected resource case required')
+@@ -174,13 +230,14 @@
+         reg=roles.get('registration')
+         if reg is not None:
+             r=reg['document'];require(r.get('program_id')==c['program_id'] and experiment in r.get('experiments',{}),'root current registration missing selected experiment')
+-            exp=r['experiments'][experiment];require(exp.get('source_files')==source_plan['source_files'],'registered199 source map differs')
++            exp=r['experiments'][experiment];auxiliary=held_auxiliary_metadata(roles,source_plan,r,experiment)
+             require(set(c['readback_outputs'].values())<=set(exp['outputs']),'held outputs absent from root registration')
+             require(exp.get('cumulative_budget_extension') is not None,'reviewed cumulative accounting role required')
++    if auxiliary is not None:require(not set(auxiliary['auxiliary_source_files']).intersection(x['path'] for x in inputs.values()),'auxiliary metadata cannot alias numerical/input roles')
+     expected=(11 if original is not None else 0)+(10 if catalog is not None else 0)+(len(case['document']['additional_inputs']) if case is not None else 0)
+     require(len(inputs)==expected,'complete input role cardinality differs')
+     require(len(inputs)<=128 and len({x['path'] for x in inputs.values()})==len(inputs),'complete input roles overlap or exceed finite bound')
+-    return {'schema_version':1,'kind':'held-resource-input-metadata-plan-v1','status':'unregistered-metadata-only','source':source_plan['source'],'anchor':source_plan['anchor'],'root':source_plan['root'],'source_count':199,'package_count':148,'observed_metadata':observed,'input_rows':dict(sorted(inputs.items())),'target_rows':targets,'rendered_metadata':documents,'experiment_id':experiment,'remaining_roles':missing,'execution_admitted':False,'runtime_installed_verified':False,'arrays_generated':False,'original_sampling_rerun':False}
++    return {'schema_version':1,'kind':'held-resource-input-metadata-plan-v1','status':'unregistered-metadata-only','source':source_plan['source'],'anchor':source_plan['anchor'],'root':source_plan['root'],'source_count':199,'package_count':148,'auxiliary_metadata':auxiliary,'observed_metadata':observed,'input_rows':dict(sorted(inputs.items())),'target_rows':targets,'rendered_metadata':documents,'experiment_id':experiment,'remaining_roles':missing,'execution_admitted':False,'runtime_installed_verified':False,'arrays_generated':False,'original_sampling_rerun':False}
+ 
+ def generate_held_arrays(*args,**kwargs):
+     raise ValueError('held array generation requires a separately implemented genuine guarded input-materialization entry, fresh root registration and finite native release; metadata plans cannot authorize it')

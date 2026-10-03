@@ -1,0 +1,50 @@
+{
+  "authority": "test construction bypass only; actual Session stops at rejecting original authority boundary; no genuine positive capability or process/network",
+  "bytes": 383077,
+  "checks": [
+    {
+      "check": "check_entrypoints02.py",
+      "exit": 1,
+      "source": "old"
+    },
+    {
+      "check": "check_entrypoints02.py",
+      "exit": 0,
+      "source": "new"
+    },
+    {
+      "check": "check_adapter01.py",
+      "exit": 0,
+      "source": "new"
+    },
+    {
+      "check": "check_bytes01.py",
+      "exit": 0,
+      "source": "new"
+    },
+    {
+      "check": "check_parity01.py",
+      "exit": 0,
+      "source": "new"
+    },
+    {
+      "check": "check_policy01.py",
+      "exit": 0,
+      "source": "new"
+    }
+  ],
+  "independent_close_error_firstfatal": [
+    "MemoryError",
+    "KeyboardInterrupt",
+    "SystemExit"
+  ],
+  "manifest_sha256": "97343a23f1b53c92f8d1af7856455ae81585e2f82d3662578c39e9cc3d9afd99",
+  "members": 34,
+  "other_three_bodies_identical": true,
+  "package": 151,
+  "prospective_admission_pins": 207,
+  "qualified_tests": 23,
+  "sources": 202,
+  "status": "accepted source-only narrow F32-1/F32-2 correction",
+  "two_guard_inverse": true
+}

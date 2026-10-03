@@ -1,0 +1,32 @@
+# Independent selected-transfer worker review
+
+Disposition: **WITHHELD — STW1, incomplete known read-bound validation before Context/Owner birth.** No candidate bytes were altered. The passing source/inverse/cleanup checks below are not activation approval.
+
+## STW1 — held reader limits are checked only after authority birth
+
+`held_score_consumer.py:_transfer_budget` (lines226–256) receives `p` but never uses its max_read_bytes or max_members. `_policy` only checks that those values are positive and finite. Consequently selected transfer_preflight accepts a policy known to be unable to read the already registered target workload. The later original `preflight(target)` checks `8*cells <= p['max_read_bytes']` and `ceil(cells/chunk) <= p['max_members']`, but that target path follows `_TransferWorker.__enter__` Context creation and original resource Owner construction in `_execute_original`.
+
+The retained independent counterexample executes the actual extracted `_policy`, `_transfer_budget`, accepted engine charge function and the exact AST-extracted original late bound predicate. For registered2/3-node targets,32 motifs and chunk64:
+
+- max_read_bytes=1 passes the new policy/budget seams, while both targets require512/768 payload bytes and fail the original bound.
+- max_members=1 passes the new seams, while the3-node target requires two payload batch members and fails the original bound.
+
+`COUNTEREXAMPLE02.json`, its log and source retain both cases. `COUNTEREXAMPLE01` retains the earlier reproduction with the same predicate written explicitly;02 independently extracts it to remove reliance on a mirrored expectation. Neither test creates a Context, Owner, ResearchRun or scientific array. They establish a source control-flow defect, not a measured native failure.
+
+The narrow correction is to apply the original per-target read-byte and payload-member predicate using the already registered node/chunk metadata in the existing before-Context budget seam. Retain the original genuine Target check too. Its payload-member denominator is distinct from the complete original container/member population used by transport. No thresholds, numerical method or other authority check needs weakening. Both malformed cases must refuse before the Context factory; valid legacy/local and selected cases should retain their original behavior.
+
+## Verified frozen sources and unaffected contracts
+
+The candidate MANIFEST01 SHA is b03d11fb657ebcc8a9de36db25383f9d1e88bcc803128701c66124e0df205a70. All23 manifest bodies and all201 prospective origin bodies matched; package count150 and total3,428,116B match. The selected consumer is0e6f5bf9d4a0c29a2bb77231bbf6b1b2942f73793e862ec19ef79b4f8eb51746 and resource fixture is a5bcd68dceb2b6c5e5e9f720c64eb588226a0ede7fb6493808ec0a698ce82df3. Accepted engine/durable/dispatch pins remain unchanged. This is not an actual201/150 Git source or numerical anchor.
+
+All16 author source tests passed in a fresh review-owned replica. Independent tests also exercised actual `_TransferWorker.__exit__` with the genuine canonical CleanupFailure class and actual durable select reducer: cleanup uncertainty followed by MemoryError selects the first actual fatal; an existing MemoryError survives later KeyboardInterrupt; ordinary primary followed by cleanup uncertainty remains failed. Context close occurs once and the worker slot is cleared. These intentionally synthetic Context handles are not genuine authority proof. The original numerical execute body is AST-identical after name restoration; full baseline inverse checks and untouched source clauses pass. The first reviewer checker expected manifest key files instead of the actual members schema and failed before body verification; CHECK01/check_worker01 remain. Corrected CHECK02 performs the actual verification; no candidate evidence was changed.
+
+The source calls actual ResearchRun current/source/input checks, original resource admission, exact registered job/producer selection, separate201/150+5auxiliary/206-admission partition, original package anchor/runtime/native joins and exact ten disjoint output roles before the Context factory. After stream.finish, consume opens the genuine held adapter, binds and dispatches its Operation while the original Target/Stage/Owner/held token remain live. The private worker slot is thread-scoped and guarded against a second worker; it is not an approval boolean. Ordinary/fatal failure and cleanup uncertainty flow through the original failed lifecycle rather than generating a synthetic successful claim. Original target rows and raw files remain retained.
+
+The declared input/reference graph is non-self-hashing: the network release hashes the job/held/population/transport/closure inputs; those use input role names instead of hashing the release. The auxiliary declaration hashes the201 implementation map and four metadata refs, while the experiment externally pins the declaration as the fifth auxiliary source. Registration does not pin itself. Original admission still determines effective historical allowance. Nothing in these metadata checks replaces that admission or permits a new program label/refund.
+
+## Still unproved regardless of STW1
+
+Existing199/148 preparation helpers cannot authenticate this201/150 selected package, and their explicit separate successor remains required. Root must create and independently review actual package/source lineage,206source pins, all actual inputs/ten output roles, cumulative allowance and original failed history, native/whole-tree/runtime/environment bindings, external recovery and a one-use launch. Source checks do not establish genuine held Context execution, Target/Owner lifetime integration under a native guard, remote provider command compatibility, full-member actual SSH recovery or descendant/cgroup absence.
+
+Plaintext stdin/stdout/stderr observations and started remote argument sizes are not encrypted network-wire metering. The source does not delete originals or remote parts, free storage, create Published/scientific completion or establish capacity/speed/financial results. Raw-f32/NPY positive adapters remain absent. The55,439,818,752B conditional tail+batch/output payload estimate remains before active arrays/headers/edges/scratch/recovery; the10GiB disk floor and16GB physical RAM constraint remain unchanged. No numerical package, array decoder, network, native job or claim was invoked in this review.

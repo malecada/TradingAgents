@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-local-case-root-binding-review01-2026-10-03/check_binding01.py", line 52, in <module>
+    sys.path.insert(0,str(S));module=runpy.run_path(str(S/'proof_tools/build_release_draft01.py'));rows=[{'path':r['target'],'sha256':r['sha256'],'bytes':r['bytes']} for r in entries];results={}
+                                     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/proof_tools/build_release_draft01.py", line 8, in <module>
+    from proof_raw01 import *
+ModuleNotFoundError: No module named 'proof_raw01'
