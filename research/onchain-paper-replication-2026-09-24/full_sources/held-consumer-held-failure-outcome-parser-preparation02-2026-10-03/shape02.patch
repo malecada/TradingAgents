@@ -1,0 +1,11 @@
+--- frozen01/held_failure01.py
++++ candidate02/held_failure01.py
+@@ -178,7 +178,7 @@
+     require(type(cells) is list and len(cells)==2 and cells[0]['id']=='import-target-01' and cells[0]['status']=='complete' and cells[0]['resource_only'] is True,'first original completion missing')
+     require(equal(cells[1],{'id':'import-target-02','status':'failed','reason':reason,'resource_only':True}),'second expected failed disposition differs')
+     require(equal(resource_journal,{'schema_version':2,'kind':'original-import-resource-terminal','status':'failed','resource_only':True,'financial_representation_admitted':False,'reason':reason}),'failed resource journal differs')
+-    require(type(journal['schema_version']) is int and journal['schema_version']==1 and journal['reason']==reason and journal['status']=='failed' and journal['workflow_identity']==workflow and journal['required_graphs']==list(TARGETS),'actual expected failed journal differs')
++    require(type(journal['schema_version']) is int and journal['schema_version']==1 and journal['reason']==reason and journal['status']=='failed' and journal['workflow_identity'] is None and journal['parent'] is None and equal(journal['events'],[]) and journal['owner']['workflow_identity']==workflow and journal['required_graphs']==list(TARGETS),'actual expected failed journal differs')
+     return reason
+ 
+ def workflow_from_first(root,cells,graph):

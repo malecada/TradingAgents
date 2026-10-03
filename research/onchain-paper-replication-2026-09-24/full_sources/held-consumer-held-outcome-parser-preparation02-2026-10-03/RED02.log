@@ -1,0 +1,68 @@
+..FEEF
+======================================================================
+ERROR: test_exact_reviewer_poll_oserror (__main__.Checks.test_exact_reviewer_poll_oserror)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 22, in test_exact_reviewer_poll_oserror
+    def test_exact_reviewer_poll_oserror(self):self.fake(MemoryError('original'),OSError('later poll'))
+                                               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 20, in fake
+    with self.assertRaises(type(primary)) as result:m.git(P,['--version'])
+                                                    ~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation01-2026-10-03/held_outcome01.py", line 112, in git
+    if child.poll() is None:actions.extend([child.kill,lambda:child.wait(timeout=5)])
+       ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 16, in poll
+    def poll(self):calls.append('poll');raise late or AssertionError('unnecessary poll observation')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: later poll
+
+======================================================================
+ERROR: test_exact_reviewer_poll_systemexit (__main__.Checks.test_exact_reviewer_poll_systemexit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 23, in test_exact_reviewer_poll_systemexit
+    def test_exact_reviewer_poll_systemexit(self):self.fake(MemoryError('original'),SystemExit('later poll'))
+                                                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 20, in fake
+    with self.assertRaises(type(primary)) as result:m.git(P,['--version'])
+                                                    ~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation01-2026-10-03/held_outcome01.py", line 112, in git
+    if child.poll() is None:actions.extend([child.kill,lambda:child.wait(timeout=5)])
+       ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 16, in poll
+    def poll(self):calls.append('poll');raise late or AssertionError('unnecessary poll observation')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SystemExit: later poll
+
+======================================================================
+FAIL: test_closed_observation_avoided (__main__.Checks.test_closed_observation_avoided)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 24, in test_closed_observation_avoided
+    def test_closed_observation_avoided(self):self.fake(MemoryError('original'),closed_late=SystemExit('closed'))
+                                              ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 20, in fake
+    with self.assertRaises(type(primary)) as result:m.git(P,['--version'])
+                                                    ~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation01-2026-10-03/held_outcome01.py", line 112, in git
+    if child.poll() is None:actions.extend([child.kill,lambda:child.wait(timeout=5)])
+       ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 16, in poll
+    def poll(self):calls.append('poll');raise late or AssertionError('unnecessary poll observation')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unnecessary poll observation
+
+======================================================================
+FAIL: test_independent_actions_and_first_fatal (__main__.Checks.test_independent_actions_and_first_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-held-outcome-parser-preparation02-2026-10-03/check_cleanup02.py", line 36, in test_independent_actions_and_first_fatal
+    self.assertIs(result.exception,primary if m.fatal(primary) else later);self.assertEqual(calls,['kill','wait','close','close','close'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AttributeError("'Child' object has no attribute 'poll'") is not MemoryError('first')
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.006s
+
+FAILED (failures=2, errors=2)

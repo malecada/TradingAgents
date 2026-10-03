@@ -1,0 +1,17 @@
+--- frozen01/held_outcome01.py
++++ candidate02/held_outcome01.py
+@@ -109,9 +109,11 @@
+     except BaseException as error:primary=error
+     actions=[]
+     if child is not None:
+-        if child.poll() is None:actions.extend([child.kill,lambda:child.wait(timeout=5)])
+-        actions.extend(stream.close for stream in (child.stdin,child.stdout,child.stderr) if not stream.closed)
+-    if poll is not None:actions.append(poll.close)
++        # Popen.kill is harmless after reap; avoid optional poll/closed reads
++        # outside the reducer. Stream.close is idempotent for closed stdin.
++        actions.extend([lambda:child.kill(),lambda:child.wait(timeout=5)])
++        actions.extend(lambda name=name:getattr(child,name).close() for name in ('stdin','stdout','stderr'))
++    if poll is not None:actions.append(lambda:poll.close())
+     cleanup(actions,primary);return bytes(out)
+ 
+ def sources(reader,release):
