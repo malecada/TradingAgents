@@ -1,0 +1,134 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/proof_release01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation03-2026-10-03/proof_release01.py
+@@ -23,7 +23,7 @@
+     fields={'schema_version','kind','status','phase','root','source','registration','sources','runtime','native_environment','phase_contract','prior_materialization','cpus','remaining'}
+     require(set(release)==fields and release['schema_version']==1 and release['kind']=='cold-proof-outer-release-v1' and release['status']=='released' and release['remaining']==[] and release['phase']==phase in IDENTITIES,'proof source draft is not an exact release')
+     require(Path.cwd()==root and root.resolve()==root and release['root']==str(root) and (root/'.git').is_dir() and not (root/'.git').is_symlink() and not (root/'.git/objects/info/alternates').exists(),'genuine isolated capsule required')
+-    require(subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True,timeout=10).strip()==release['source'],'source freeze HEAD differs')
++    _source_head(root,release['source'],mode)
+     source_doc=deref(root,release['sources']);require(set(source_doc)=={'schema_version','files'} and source_doc['schema_version']==1 and 0<len(source_doc['files'])<=2048,'source document denominator differs')
+     sources=source_doc['files'];required={'proof_tools/proof_supervise01.py','proof_tools/proof_outer01.py','proof_tools/proof_raw01.py','proof_tools/proof_release01.py','proof_tools/runtime_gate01.py','tradingagents/research/onchain_replication/job.py','tradingagents/research/onchain_replication/resources.py','tradingagents/research/onchain_replication/owned_io.py','tradingagents/research/onchain_replication/workflow_storage.py','tradingagents/research/onchain_replication/compact_cold_proof.py','tradingagents/research/onchain_replication/compact_cold_proof_inputs.py','tradingagents/research/onchain_replication/compact_cold_proof_native.py'}
+     require(required<=set(sources),'proof source closure missing')
+@@ -32,7 +32,7 @@
+         committed=subprocess.check_output(['git','show',release['source']+':'+name],cwd=root,timeout=10)
+         require(committed==raw and time.monotonic()-started<=120,'source Git closure/time differs')
+     require(Path(__file__).resolve()==root/'proof_tools/proof_release01.py','release verifier outside genuine capsule')
+-    registration=deref(root,release['registration']);contract=deref(root,release['phase_contract']);identity=IDENTITIES[phase]
++    registration=_committed_reference(root,release['source'],release['registration']);contract=deref(root,release['phase_contract']);identity=IDENTITIES[phase]
+     require(set(contract)=={'schema_version','identity','experiment','family','expected_outputs'} and contract['schema_version']==1 and contract['identity']==identity,'phase contract differs')
+     experiment=contract['experiment'];family=contract['family'];require(registration['program_id']==PROGRAM and registration['experiments'][identity]==experiment and registration['families'][experiment['family']]==family,'original registration/phase contract differs')
+     require(family['attempt_budget']==2 and family['prior_attempts']==0 and experiment['cells']==[CELLS[phase]],'separate finite engineering budget/cell differs')
+@@ -66,20 +66,20 @@
+     return _release_context(root,release,phase,'unclaimed')
+ 
+ 
+-def authenticate_prior(root,current,experiment,job):
++def authenticated_materialization(root,accepted_ref,wait_ref):
+     """Revalidate retained materialization; never admit/replay its closed run."""
+-    prior=current['prior_materialization'];identity=IDENTITIES['materialize']
+-    require(type(prior) is dict and set(prior)=={'accepted','wait'} and set(job['payload']['representation_jobs'])=={'cold-proof'},'comparison requires exact prior closure')
++    prior={'accepted':accepted_ref,'wait':wait_ref};identity=IDENTITIES['materialize']
+     require(prior['accepted']['path']==OUTER+identity+'/accepted.json' and prior['wait']['path']=='proof_supervise/'+identity+'/exit.json','prior original receipt paths differ')
+     accepted=deref(root,prior['accepted']);wait=deref(root,prior['wait'])
+     require(accepted['status']==wait['status']=='accepted' and accepted['phase']==wait['phase']=='materialize' and accepted['identity']==wait['identity']==identity,'prior disposition differs')
+-    require(accepted['source']==wait['source']==current['source'],'prior/current source commits conflict')
++    require(accepted['source']==wait['source'],'prior source commits conflict')
+     require(accepted['release']==wait['release'],'original release references conflict')
+     original=deref(root,accepted['release'])
+-    require(original['source']==current['source'] and original['sources']==current['sources'] and original['runtime']==current['runtime'] and original['native_environment']==current['native_environment'] and original['cpus']==current['cpus'],'retained source/runtime/native contract changed')
++    require(original['source']==accepted['source'],'original materialization source conflicts with retained receipts')
+     # This reuses all exact Git/source/registration/input/policy checks but
+     # deliberately does not invoke fresh admission or demand absent old claims.
+     ctx=_release_context(root,original,'materialize','retained-materialization')
++    require(len(ctx['sources'])==195,'historical195 selected source denominator differs')
+     runtime_gate=module('cold_prior_runtime_gate',root/'proof_tools/runtime_gate01.py',ctx['sources']['proof_tools/runtime_gate01.py'])
+     runtime_gate.check(root,ctx['runtime'])
+     require(wait['controller_exit_code']==0 and wait['controller_pid_absent'] is True and wait['accepted_receipt']==prior['accepted'],'actual materialization wait differs')
+@@ -106,8 +106,83 @@
+     require(observed==deref(root,accepted['authentication']),'retained authentication differs from actual original evidence')
+     require(accepted['tail']==closure(root,'materialize',ctx['job']['resources']['storage_budget']['limits']),'original native outer closure differs')
+     material=deref(root,observed['proof']['future_inputs']);require(set(material['inputs'])==MATERIAL_INPUTS,'materialized denominator reduced')
++    return {'context':ctx,'observed':observed,'material':material,'registration':_committed_reference(root,original['source'],original['registration'])}
++
++
++def _source_head(root,source,mode):
++    require(type(source) is str and len(source)==40 and all(c in '0123456789abcdef' for c in source),'exact Git source required')
++    head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True,timeout=10).strip()
++    if head!=source:
++        require(mode=='retained-materialization','source freeze HEAD differs')
++        parents=subprocess.check_output(['git','rev-list','--parents','-n','1',head],cwd=root,text=True,timeout=10).strip().split()
++        require(parents==[head,source],'historical source is not sole exact parent')
++    return head
++
++
++def _committed_reference(root,source,reference):
++    value=deref(root,reference);raw=body(root,reference['path'])
++    frozen=subprocess.check_output(['git','show',source+':'+reference['path']],cwd=root,timeout=10)
++    require(len(frozen)<=MAX and frozen==raw,'original committed document differs')
++    return value
++
++
++def _registration_evolution(original,current,experiment,material):
++    first=IDENTITIES['materialize'];second=IDENTITIES['compare']
++    require(set(original)==set(current) and {k:v for k,v in original.items() if k!='experiments'}=={k:v for k,v in current.items() if k!='experiments'},'registration family/history/dataset or top-level drift')
++    require(set(original['experiments'])=={first} and set(current['experiments'])=={first,second},'exact two-phase registration evolution required')
++    old=original['experiments'][first];new=current['experiments'][second]
++    require(current['experiments'][first]==old and new==experiment,'original experiment altered or comparison contract differs')
++    allowed_changes={'parent','question','cells','outputs','inputs','charter'}
++    require({k:v for k,v in new.items() if k not in allowed_changes}=={k:v for k,v in old.items() if k not in allowed_changes},'comparison runtime/window/stage or undeclared experiment drift')
++    require(new['parent']==first and new['family']==old['family'] and new['source_files']==old['source_files'] and len(old['source_files'])==195,'comparison lineage/family/195 sources differ')
++    require(set(material['inputs'])==MATERIAL_INPUTS,'materialized denominator reduced')
+     expected={('execution_job' if name=='future_execution_job' else name):info for name,info in material['inputs'].items()}
+-    require(set(experiment['inputs'])==set(expected)|{'environment'},'comparison input denominator differs')
+-    require(all(experiment['inputs'][name]==info for name,info in expected.items()),'comparison inputs differ from actual emitted bytes')
+-    environment=experiment['inputs']['environment'];require(digest(body(root,environment['path']))==environment['sha256'],'registered comparison environment changed')
+-    return observed
++    require(set(new['inputs'])==set(expected)|{'environment'} and all(new['inputs'][name]==info for name,info in expected.items()),'comparison inputs differ from actual emitted bytes')
++    require(new['inputs']['environment']==old['inputs']['environment'],'original environment input changed')
++
++
++def _evolution_tree(root,current,original,experiment,material,prior):
++    """Exact additive B(parent=A) tree; no self hash or current-commit cycle."""
++    parent=original['source'];head=_source_head(root,current['source'],'unclaimed')
++    require(head!=parent and _source_head(root,parent,'retained-materialization')==head,'comparison requires the one new exact child commit')
++    evolution=_committed_reference(root,head,prior['evolution'])
++    fields={'schema_version','kind','parent_source','original_registration','current_registration','accepted','wait','additions'}
++    require(set(evolution)==fields and type(evolution['schema_version']) is int and evolution['schema_version']==1 and evolution['kind']=='cold-proof-additive-registration-evolution-v1','typed evolution document differs')
++    require(evolution['parent_source']==parent and evolution['original_registration']==original['registration'] and evolution['current_registration']==current['registration'] and evolution['accepted']==prior['accepted'] and evolution['wait']==prior['wait'],'evolution original ancestry differs')
++    newreg=_committed_reference(root,head,current['registration']);oldreg=_committed_reference(root,parent,original['registration'])
++    _registration_evolution(oldreg,newreg,experiment,material)
++    require(current['registration']['path']!=original['registration']['path'],'original registration path cannot be overwritten')
++    allowed={}
++    def allow(path,sha,role):
++        require(path not in allowed,'overlapping evolution file roles');allowed[path]={'path':path,'sha256':sha,'role':role}
++    allow(current['registration']['path'],current['registration']['sha256'],'comparison-registration')
++    charter=experiment['charter'];allow(charter['path'],charter['sha256'],'comparison-charter')
++    for field,role in (('phase_contract','comparison-phase-contract'),('sources','unchanged-source-document')):
++        if current[field]['path']!=original[field]['path']:allow(current[field]['path'],current[field]['sha256'],role)
++    for info in material['inputs'].values():allow(info['path'],info['sha256'],'emitted-input')
++    rows=evolution['additions'];require(type(rows) is list and 2<=len(rows)<=47,'finite addition denominator differs')
++    require(all(type(r) is dict and set(r)=={'path','sha256','role'} and allowed.get(r['path'])==r for r in rows),'evolution admits an unregistered file/hash/role')
++    paths=[r['path'] for r in rows];require(paths==sorted(set(paths)),'addition membership must be complete sorted unique')
++    require({current['registration']['path'],charter['path']}<=set(paths),'new registration and charter must be committed additions')
++    own=prior['evolution']['path'];require(own not in allowed and own not in paths,'evolution own document cannot self-hash or overlap')
++    # Own document is authenticated by the external release reference and actual
++    # B Git blob, not by a recursively embedded own hash or B commit in itself.
++    raw=subprocess.check_output(['git','diff-tree','--no-commit-id','--name-status','-r','-z',parent,head],cwd=root,timeout=10)
++    require(len(raw)<=65536,'bounded evolution diff exceeded');parts=raw.decode('utf-8').split('\0');require(parts[-1]=='' and (len(parts)-1)%2==0,'Git diff framing differs')
++    changes=list(zip(parts[:-1:2],parts[1:-1:2]));require(all(status=='A' for status,path in changes),'evolution modifies/deletes/renames an old body')
++    require(len(changes)==len(paths)+1 and {path for status,path in changes}==set(paths)|{own},'actual Git changes exceed declared finite evolution')
++    for row in rows:
++        raw=body(root,row['path']);require(digest(raw)==row['sha256'],'evolution input/document drift')
++        frozen=subprocess.check_output(['git','show',head+':'+row['path']],cwd=root,timeout=10);require(frozen==raw and len(frozen)<=MAX,'added committed bytes differ')
++    return {'parent_source':parent,'source':head,'addition_count':len(rows),'evolution':prior['evolution'],'qualification':'Own evolution document is separately release/Git authenticated; original native evidence is independently revalidated.'}
++
++
++def authenticate_prior(root,current,experiment,job):
++    """Actual historical A evidence plus separately committed finite child B."""
++    prior=current['prior_materialization']
++    require(type(prior) is dict and set(prior)=={'accepted','wait','evolution'} and set(job['payload']['representation_jobs'])=={'cold-proof'},'comparison requires exact prior closure and evolution')
++    retained=authenticated_materialization(root,prior['accepted'],prior['wait']);ctx=retained['context'];original=ctx['release']
++    require(deref(root,original['sources'])==deref(root,current['sources']) and len(ctx['sources'])==195,'exact195 selected source bodies changed')
++    require(original['runtime']==current['runtime'] and original['native_environment']==current['native_environment'] and original['cpus']==current['cpus'],'original runtime/native/CPU contract changed')
++    _evolution_tree(root,current,original,experiment,retained['material'],prior)
++    return retained['observed']

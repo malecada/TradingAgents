@@ -1,0 +1,22 @@
+test_canonical_fatal_identity_and_first_use_order (__main__.Tests.test_canonical_fatal_identity_and_first_use_order) ... ok
+test_corrupt_duplicate_nomember_partition_and_order (__main__.Tests.test_corrupt_duplicate_nomember_partition_and_order) ... ok
+test_full512_32_multiplicity_requirement (__main__.Tests.test_full512_32_multiplicity_requirement) ... FAIL
+test_later_representative_not_visited_after_first_refusal (__main__.Tests.test_later_representative_not_visited_after_first_refusal) ... ok
+test_no_numerical_or_package_imports (__main__.Tests.test_no_numerical_or_package_imports) ... ok
+test_recomputed_between_validations_no_cache (__main__.Tests.test_recomputed_between_validations_no_cache) ... ok
+test_valid_actual_evidence_order_equal (__main__.Tests.test_valid_actual_evidence_order_equal) ... ok
+
+======================================================================
+FAIL: test_full512_32_multiplicity_requirement (__main__.Tests.test_full512_32_multiplicity_requirement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-canonical-validation-candidate01-2026-10-03/test_validate01.py", line 55, in test_full512_32_multiplicity_requirement
+    print('GRAPH_CANONICAL_COUNTS',json.dumps(counts,sort_keys=True));self.assertEqual(counts['old'],32768);self.assertEqual(counts['new'],544)
+                                                                                                            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: 32768 != 544
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.327s
+
+FAILED (failures=1)
+GRAPH_CANONICAL_COUNTS {"new": 32768, "old": 32768}

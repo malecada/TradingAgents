@@ -1,0 +1,129 @@
+"""Sequential current-owner complete graph admission to a metadata binding.
+
+No representation event is published or sealed here. Numeric graph receipts are
+released between graphs; retained dictionary/sample prerequisites and resident
+parent graphs are outside the selected sequential conversion allowance.
+"""
+import hashlib
+import importlib.util
+from pathlib import Path
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,file_hash,freeze,thaw
+from tradingagents.research.onchain_replication.cache import cache_key
+from tradingagents.research.onchain_replication.neighborhoods import node_order_hash
+
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+spec=importlib.util.spec_from_file_location('closure_denominator_route',HERE.parent/'representation-denominator-route-2026-10-01/route.py')
+denominator=importlib.util.module_from_spec(spec);spec.loader.exec_module(denominator)
+graphs=denominator.graphs;saved=graphs.saved;reader=graphs.reader
+SOURCES=tuple(sorted(set(denominator.SOURCES)|{str(Path(__file__).relative_to(ROOT))}))
+require=saved.require;equal=saved.equal
+
+class Receipt:
+    __slots__=('_record','_lease')
+    def __init__(self,record,lease):
+        object.__setattr__(self,'_record',freeze(record));object.__setattr__(self,'_lease',lease)
+    def __setattr__(self,name,value):raise AttributeError('closure receipt is immutable')
+    @property
+    def record(self):return self._record
+    def lease(self):self._lease()
+
+def edge_hash(edges):
+    h=hashlib.sha256(canonical_bytes({'shape':edges.shape,'dtype':str(edges.dtype)}))
+    with graphs.boundary.blocks(edges,65536) as blocks:
+        for block in blocks:h.update(memoryview(block).cast('B'))
+    return h.hexdigest()
+
+def snapshot_events(metadata,directory,prefix,*,artifact_cap,mcm_cap,graph_cap):
+    for i,event in enumerate(prefix):
+        cap=artifact_cap if event['stage'] in ('samples_complete','dictionary_complete') else (graph_cap if event['stage']=='graph_complete' else mcm_cap)
+        require(equal(metadata.read(directory/f'event-{i:06d}.json',cap=cap),event),'closure event differs')
+
+
+def admit(owned,journal,*,examples,fold,denominator_input,dictionary_ticket,policy_input):
+    saved.actual_owner(owned,journal)
+    route=owned.workload;bound=route.bound;ad=bound._run.admission;owner=thaw(bound.record)
+    def sources():
+        for name in SOURCES:
+            sha=ad.experiment['source_files'].get(name)
+            require(sha is not None and file_hash(ROOT/name)==sha and file_hash(ad.root/name)==sha,'closure source differs')
+    sources();metadata=saved.producer.Metadata(ad.root)
+    def registered(name):
+        require(type(name) is str and name in ad.inputs,'registered closure input required')
+        info=ad.inputs[name];return metadata.read(ad.root/info['path'],info['sha256'])
+    directory=Path(owner['journal_directory']);claim=metadata.read(directory/'claim.json')
+    plan=registered(claim['plan_input']);job=registered('execution_job')
+    item=plan.get('producers',{}).get(owner['producer']);selected=job.get('payload',{}).get('representation_jobs',{}).get(owner['representation'])
+    require(isinstance(item,dict) and isinstance(selected,dict)
+        and item.get('representation_closure_input')==selected.get('representation_closure_input')==policy_input,'selected closure policy differs')
+    policy=registered(policy_input)
+    require(isinstance(policy,dict) and set(policy)=={'schema_version','max_graphs','max_record_bytes','max_sequential_numeric_bytes','graph_admission'}
+        and type(policy['schema_version']) is int and policy['schema_version']==1
+        and all(type(policy[k]) is int and policy[k]>0 for k in ('max_graphs','max_record_bytes','max_sequential_numeric_bytes')),'closure policy differs')
+    args=policy['graph_admission'];keys={'mcm_input','mcm_output_input','mcm_read_input','feature_input','output_input','read_input'}
+    require(isinstance(args,dict) and set(args)==keys and all(type(v) is str and v in ad.inputs for v in args.values()),'closure graph route differs')
+    output=registered(args['output_input']);read=registered(args['read_input']);mcm_output=registered(args['mcm_output_input']);mcm_read=registered(args['mcm_read_input'])
+    require(all(type(p.get('max_numeric_bytes')) is int and 0<p['max_numeric_bytes']<=policy['max_sequential_numeric_bytes']
+        for p in (read,mcm_read)),'closure sequential numeric allowance exceeded')
+    date_receipt=denominator.admit(owned,examples=examples,fold=fold,policy_input=denominator_input)
+    required=sorted(route.descriptor['required_graphs']);prefix=thaw(journal.records)
+    expected_owner={k:owner[k] for k in ('experiment','source_commit','producer','workflow_identity')}
+    def journal_check():
+        require(journal.directory==directory and equal(journal.owner,expected_owner) and journal.parent is None and not journal.sealed
+            and journal.identity==owner['workflow_identity'] and journal.required==required and equal(journal.records,prefix),'closure journal changed')
+        completed=[e['context'].get('graph_hash') for e in prefix if e['stage']=='graph_complete']
+        mcms=[e['context'].get('graph_hash') for e in prefix if e['stage']=='mcm_progress']
+        require(sorted(completed)==required and sorted(mcms)==required and len(required)<=policy['max_graphs']
+            and not any(e['stage'] in ('representation_complete','embedding_progress','dictionary_progress') for e in prefix),
+            'exact graph completion membership required')
+    journal_check()
+    pin=saved.ticket_lease(dictionary_ticket,owned,journal);dictionary=pin['dictionary']
+    require(route.descriptor['arm'] in ('proposed','training_label_permutation','mcm_without_gat'),'motif closure arm required')
+    # Preserve all prior event bytes and the full fixed journal prefix.
+    artifact_policy=registered(pin['inputs']['artifact']['input'])
+    snapshot_events(metadata,directory,prefix,artifact_cap=artifact_policy['max_manifest_bytes'],
+        mcm_cap=mcm_output['max_metadata_bytes'],graph_cap=output['max_metadata_bytes'])
+    signatures={};inventories={};attempts={};records={};feature_hashes={}
+    def inspect(event,out,inp):
+        path=directory/event['path']
+        _,sigs,_,files=reader.inspect_component(path,event['sha256'],event['binding'],ad.root,
+            out['max_manifest_bytes'],out['max_artifact_bytes'],inp['max_array_bytes'])
+        signatures.update(sigs);inventories[path.parent]=files
+    def check():
+        sources();date_receipt.lease();saved.ticket_lease(dictionary_ticket,owned,journal);metadata.lease();journal_check()
+        for path,files in inventories.items():reader.inventory(path,files)
+        for path,files in attempts.items():reader.inventory(path,files)
+        for path,sig in signatures.items():
+            require(path.resolve()==path and reader.signature(path.lstat())==sig,'closure graph component changed')
+    for h in required:
+        graph_attempt=graphs.publication.attempt_directory(owned,h);mcm_attempt=saved.publication.attempt_directory(owned,h)
+        path=graph_attempt/'complete.json';proof=metadata.read(path,cap=output['max_metadata_bytes']);proof_hash=metadata.snapshots[path][0]
+        for attempt,p,cap in ((graph_attempt,proof,output['max_metadata_bytes']),
+                (mcm_attempt,metadata.read(mcm_attempt/'complete.json',cap=mcm_output['max_metadata_bytes']),mcm_output['max_metadata_bytes'])):
+            attempts[attempt]={attempt/'start.json',attempt/'complete.json'}
+            metadata.read(attempt/'start.json',p['start']['sha256'],cap)
+        index=proof['event_index'];require(type(index) is int and 0<=index<len(prefix),'closure graph event index differs')
+        event=prefix[index];mcm_events=[e for e in prefix if e['stage']=='mcm_progress' and e['context'].get('graph_hash')==h]
+        inspect(event,output,read);inspect(mcm_events[0],mcm_output,mcm_read)
+        check()
+        # The real saved-graph route joins source MCM values and exact proof/event
+        # identities. Do not replace this with a caller-supplied record/callback.
+        receipt=graphs.admit(owned,journal,dictionary_ticket=dictionary_ticket,graph_hash=h,proof_sha256=proof_hash,**args)
+        receipt.lease();records[h]=thaw(receipt.record);feature_hashes[h]=receipt.record['feature_hash']
+        del receipt
+        check()
+    lineage={}
+    for h in sorted(set(required)|set(dictionary.training_graph_hashes)):
+        g=route._graphs[h]
+        lineage[h]={'input_graph_hash':h,'asset':g.asset,'source_hashes':list(g.source_hashes),'start_utc':g.start_utc,
+            'end_utc':g.end_utc,'available_at':g.available_at,'node_order_hash':node_order_hash(g.node_ids),'edge_index_hash':edge_hash(g.edge_index)}
+    binding={'schema_version':3,'workflow_identity':owner['workflow_identity'],'representation':'motif_mcm','asset':route._graphs[required[0]].asset,
+        'fold_id':fold.id,'fold_hash':examples.fold_hash,'train_hash':examples.train_hash,'seed':route.descriptor['seed'],
+        'dictionary_hash':dictionary.identity,'dictionary_training_graph_hashes':list(dictionary.training_graph_hashes),
+        'configuration_hash':cache_key({'dictionary':thaw(route.settings),'matching':thaw(route.descriptor['configs']['matching']),
+            'baselines':thaw(route.descriptor['configs']['baselines'])}),
+        'feature_hashes':feature_hashes,'lineage':lineage,'alignment_order':[],
+        'alignment_order_policy':'available_at,start_utc,graph_hash; start at earliest required event week'}
+    record={'schema_version':1,'owner':owner,'policy':{'input':policy_input,'sha256':ad.inputs[policy_input]['sha256']},
+        'binding':binding,'denominator':thaw(date_receipt.record),'graphs':records,'empirical_admission_verified':False}
+    require(len(canonical_bytes(record))<=policy['max_record_bytes'],'closure record allowance exceeded')
+    check();return Receipt(record,check)

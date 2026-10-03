@@ -1,0 +1,20 @@
+--- tradingagents/research/onchain_replication/original_dictionary.py
++++ tradingagents/research/onchain_replication/original_dictionary.py
+@@ -138,8 +138,16 @@
+     reps=d['representatives'];groups=d['memberships'];require(type(reps) is list and type(groups) is list and len(reps)==len(groups)==p['motif_count'],'dictionary cardinality differs')
+     require(all(type(group) is list and all(type(j) is int for j in group) for group in groups) and sorted(j for group in groups for j in group)==list(range(p['sample_count'])),'membership partition differs')
+     indices=[]
++    sample_bytes=[None]*len(s['graphs'])
+     for g,group in zip(reps,groups,strict=True):
+-        matches=[j for j,x in enumerate(s['graphs']) if canonical(x)==canonical(g)]
++        representative_bytes=None
++        matches=[]
++        for j,x in enumerate(s['graphs']):
++            encoded=sample_bytes[j]
++            if encoded is None:
++                encoded=canonical(x);sample_bytes[j]=encoded
++            if representative_bytes is None:representative_bytes=canonical(g)
++            if encoded==representative_bytes:matches.append(j)
+         require(len(matches)==1 and matches[0] in group,'representative is not unique original sample member');indices.append(matches[0])
+     require(len(set(indices))==len(indices),'repeated representative')
+     scientific={'graphs':[{'nodes':g['node_ids'],**{k:g[k] for k in ('node_features','edge_index','edge_features','parent_hash','center_id')}} for g in reps],

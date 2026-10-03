@@ -1,0 +1,76 @@
+"""Bounded native-array to CPU tensor conversion, not research admission.
+
+Caller supplies already admitted MCM/graph provenance, expected feature identity
+and its combined owner/source lease. Outputs are independent mutable model inputs.
+Budget counts source payloads, tensor payloads and one numeric/boolean chunk;
+it excludes parent graphs, dictionary receipts, Python overhead and model state.
+"""
+import hashlib
+import numpy as np
+import torch
+from tradingagents.research.onchain_replication.provenance import canonical_bytes
+
+
+def require(value,message):
+    if not value:raise ValueError(message)
+
+
+def blocks(array,chunk):
+    return np.nditer(array,flags=['external_loop','buffered','zerosize_ok'],
+        op_flags=[['readonly','contig']],order='C',buffersize=chunk)
+
+
+def identity(mcm,edges,chunk):
+    """Maintained feature_hash wire format without a whole contiguous copy."""
+    h=hashlib.sha256()
+    for key,array in (('edge_index',edges),('mcm',mcm)):
+        h.update(canonical_bytes(key))
+        h.update(canonical_bytes({'shape':array.shape,'dtype':str(array.dtype)}))
+        with blocks(array,chunk) as iterator:
+            for block in iterator:
+                require(block.size<=chunk,'feature chunk bound exceeded')
+                if key=='mcm':
+                    require(np.isfinite(block).all() and np.all(block>=0) and np.all(block<=1),'invalid MCM score')
+                else:require(np.all(block>=0) and np.all(block<len(mcm)),'invalid graph endpoint')
+                h.update(memoryview(block).cast('B'))
+                del block
+        del iterator
+    return h.hexdigest()
+
+
+def materialize(mcm,edge_index,*,expected_hash,max_numeric_bytes,chunk_entries,lease):
+    require(callable(lease),'combined feature lease required')
+    require(type(chunk_entries) is int and 0<chunk_entries<=65536,'invalid feature chunk bound')
+    require(type(max_numeric_bytes) is int and max_numeric_bytes>0,'invalid feature numeric bound')
+    require(type(expected_hash) is str and len(expected_hash)==64
+        and all(c in '0123456789abcdef' for c in expected_hash),'invalid expected feature hash')
+    lease()
+    require(type(mcm) is np.ndarray and mcm.dtype==np.dtype('float32') and mcm.ndim==2
+        and all(n>0 for n in mcm.shape),'native nonempty float32 MCM required')
+    require(type(edge_index) is np.ndarray and edge_index.dtype==np.dtype('int64')
+        and edge_index.ndim==2 and edge_index.shape[0]==2,'native int64 edges required')
+    layout=tuple((a.shape,a.strides,a.dtype) for a in (mcm,edge_index))
+    # One float32/int64 buffered chunk plus a boolean comparison temporary.
+    required=2*(mcm.nbytes+edge_index.nbytes)+9*chunk_entries
+    require(required<=max_numeric_bytes,'feature numeric bound exceeded before allocation')
+    require(identity(mcm,edge_index,chunk_entries)==expected_hash,'feature input hash differs')
+    lease()
+    require(layout==tuple((a.shape,a.strides,a.dtype) for a in (mcm,edge_index)),'feature layout changed')
+    output={}
+    for key,array,dtype in (('mcm',mcm,torch.float32),('edge_index',edge_index,torch.int64)):
+        tensor=torch.empty(array.shape,dtype=dtype,device='cpu',requires_grad=False)
+        target=tensor.numpy().reshape(-1);offset=0
+        with blocks(array,chunk_entries) as iterator:
+            for block in iterator:
+                require(block.size<=chunk_entries,'feature copy chunk bound exceeded')
+                np.copyto(target[offset:offset+block.size],block,casting='no');offset+=block.size
+                del block
+        del iterator
+        require(offset==array.size,'incomplete feature copy')
+        output[key]=tensor
+    lease()
+    require(layout==tuple((a.shape,a.strides,a.dtype) for a in (mcm,edge_index)),'feature layout changed')
+    require(identity(mcm,edge_index,chunk_entries)==expected_hash,'feature input changed during copy')
+    require(identity(output['mcm'].numpy(),output['edge_index'].numpy(),chunk_entries)==expected_hash,
+        'feature tensor hash differs')
+    return output

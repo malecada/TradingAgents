@@ -1,0 +1,48 @@
+{
+  "execution_sha256": "1e75072838dc25d8f132c345d38b22af544954a0753c02c5cf4033c2224e6949",
+  "identity": "original-import-native-success-20261003-03",
+  "missing_worker_outputs": [
+    "cell-ledger.json",
+    "resource-summary.json"
+  ],
+  "original_durable_cells": [
+    {
+      "id": "import-target-01",
+      "reason": "SystemExit: owned execution interrupted; never relaunch this identity",
+      "resource_only": true,
+      "status": "failed"
+    },
+    {
+      "id": "import-target-02",
+      "reason": "SystemExit: owned execution interrupted; never relaunch this identity",
+      "resource_only": true,
+      "status": "unavailable"
+    }
+  ],
+  "postmortem": {
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-native-success-20261003-03/postmortem-cells.json",
+    "sha256": "8dc88aae95d2647f35d341503f5d700f2b25f4696733f9a06ed66e570bd14779"
+  },
+  "qualification": "Original durable source records establish target 1 failed and target 2 unavailable. The collector fallback incorrectly labels both unavailable; this additive correction supersedes only that fallback. Original execution summary, terminal, missing worker outputs and retained archive are unchanged. No worker receipt, numerical comparison, complete MCM or successful representation is synthesized.",
+  "retention_sha256": "f590948a38b5a25a7a56c089d2e3ca670db1b6298f668784aa1d998e13922a89",
+  "review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-timeout-closure-2026-10-03/REVIEW_EXECUTION03.md",
+    "sha256": "5b2a2215f8d7f4dbb49f4e6f192c48d11ee51bb9305f17fb7832f26f0ae87611"
+  },
+  "schema_version": 1,
+  "source_cells": [
+    {
+      "bytes": 145,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/original-import-native-success-20261003-03/import-target-01.json",
+      "sha256": "373e1887802d98aca21e8171d38251a9129a16a5aa6582d8c7e19d7ab628b6ba"
+    },
+    {
+      "bytes": 150,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/original-import-native-success-20261003-03/import-target-02.json",
+      "sha256": "cd6757ffc170cac7f4b9ee01df4df05d4d7365338c2881922ad0c064d26fe6dc"
+    }
+  ],
+  "status": "additive_reporting_correction",
+  "supersedes_field": "EXECUTION_PRIMARY01.json.separate_root_unavailable_cells",
+  "verified_utc": "2026-10-03T03:00:07.036781+00:00"
+}

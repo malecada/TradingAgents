@@ -1,0 +1,72 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation02-2026-10-03/refusal_outer01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation03-2026-10-03/refusal_outer01.py
+@@ -1,7 +1,8 @@
+ """Prospective one-use genuine job controller. Root release is mandatory."""
+ import argparse,hashlib,importlib.util,json,os,re,resource,shutil,signal,stat,subprocess,sys,time
+ from pathlib import Path
+-from raw_receipts01 import authenticate_post_tail,body,metadata,require
++from raw_receipts01 import authenticate_post_tail as authenticate_native_post_tail,body,metadata,require
++import refusal_inventory03 as inventory_tools
+ from refusal_native01 import authenticate
+ from refusal_cases import NAMES,PRECLAIM,identity as case_identity
+ from types import SimpleNamespace
+@@ -29,6 +30,15 @@
+         'disk_floor_bytes':10*GIB,'excludes_own_file':True,'remaining_final_file_allowance':65536})
+     watch.check()
+     require(shutil.disk_usage(root).free>=10*GIB,'final disk floor breached after readback publication')
++
++
++def authenticate_post_tail(root,identity,limits):
++    observation=authenticate_native_post_tail(root,identity,limits)
++    base='fixture_outer/'+identity;raw=body(root,base+'/authenticated-refusal.json',8192);proof=json.loads(raw)
++    terminal=json.loads(body(root,base+'/terminal.json',8192))
++    require(terminal['status']=='passed' and terminal['identity']==identity and terminal['proof_sha256']==hashlib.sha256(raw).hexdigest(),'inventory original outer proof/terminal join differs')
++    reference=inventory_tools.authenticate(root,Path(root)/base,identity,proof['inventory'])
++    return {'native_post_tail':observation,'complete_inventory':reference}
+ 
+ 
+ def select(primary,later,cleanup_type=()):
+@@ -56,9 +66,10 @@
+     require(sys.executable==release['runtime']['executable'] and sys.prefix==release['runtime']['prefix'],'shared interpreter differs')
+     require(subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True,timeout=10).strip()==release['capsule_commit'],'capsule HEAD differs')
+     require(Path(__file__).resolve()==root/'fixture_tools/refusal_outer01.py','controller origin outside capsule')
+-    required={'fixture_tools/'+name for name in ('refusal_outer01.py','refusal_preclaim01.py','refusal_native01.py','refusal_oracle_evidence01.py','guarded_formula_oracle05.py','resource_policy05.py','refusal_caller.py','refusal_cases.py','refusal_evidence.py','refusal_stage.py','refusal_pair_identity.py','original_semantics.py')}|{'tradingagents/research/onchain_replication/resource_refusal.py','tradingagents/research/onchain_replication/resource_refusal_cases.py'}
++    required={'fixture_tools/'+name for name in ('refusal_inventory03.py','refusal_outer01.py','refusal_preclaim01.py','refusal_native01.py','refusal_oracle_evidence01.py','guarded_formula_oracle05.py','resource_policy05.py','refusal_caller.py','refusal_cases.py','refusal_evidence.py','refusal_stage.py','refusal_pair_identity.py','original_semantics.py')}|{'tradingagents/research/onchain_replication/resource_refusal.py','tradingagents/research/onchain_replication/resource_refusal_cases.py'}
+     require(required<=set(release['source_files']),'complete refusal hook/native closure missing')
+     source_envelope(root,release)
++    require(Path(inventory_tools.__file__).resolve()==root/'fixture_tools/refusal_inventory03.py' and release['inventory_policy']==inventory_tools.POLICY,'selected complete inventory policy/source origin differs')
+     raw=body(root,release['registration']);require(hashlib.sha256(raw).hexdigest()==release['registration_sha256'],'registration bytes differ')
+     registration=json.loads(raw);entry=release['cases'][case];identity=entry['identity']
+     require(identity==case_identity(case) and set(registration['experiments'])=={case_identity(v) for v in NAMES},'exact27 identity denominator differs')
+@@ -180,7 +191,7 @@
+     def interrupted(number,frame):raise InterruptedError('outer native controller interrupted by signal '+str(number))
+     try:
+         for number in (signal.SIGINT,signal.SIGTERM):signal_handlers[number]=signal.signal(number,interrupted)
+-        save('intent.json',{'identity':identity,'case':case,'source_commit':source,'registration_sha256':release['registration_sha256'],'command':command,'caller_pid':os.getpid(),'caller_file_limits':list(resource.getrlimit(resource.RLIMIT_FSIZE)),'native_environment':env,'outer_active_seconds':1840,'closure_seconds':60,'initial_storage':initial,'runtime_observation_sha256':hashlib.sha256(json.dumps(runtime_observation,sort_keys=True).encode()).hexdigest()})
++        save('intent.json',{'identity':identity,'case':case,'source_commit':source,'registration_sha256':release['registration_sha256'],'command':command,'caller_pid':os.getpid(),'caller_file_limits':list(resource.getrlimit(resource.RLIMIT_FSIZE)),'native_environment':env,'outer_active_seconds':1840,'closure_seconds':None,'whole_outer_deadline_seconds':None,'deadline_qualification':'Native1800 and active-loop1840 are enforced; cleanup/verification has individual finite checks but no proved whole-outer wall bound','initial_storage':initial,'runtime_observation_sha256':hashlib.sha256(json.dumps(runtime_observation,sort_keys=True).encode()).hexdigest()})
+         for name in ('stdout.log','stderr.log'):fds.append(os.open(outer/name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600))
+         process=subprocess.Popen(command,cwd=root,env=os.environ.copy(),stdout=fds[0],stderr=fds[1],start_new_session=True)
+         save('supervisor.json',{'pid':process.pid,'ticks':Path('/proc',str(process.pid),'stat').read_text().rsplit(')',1)[1].split()[19]})
+@@ -215,17 +226,11 @@
+         try:save('cleanup.json',{'native':cleanup,'supervisor_reaped':process is not None and process.poll() is not None,'pid_absence_verified':result is not None,'unresolved_pid_absence':result is None})
+         except BaseException as error:retain(error)
+         try:
+-            index=inventory(root);pages=[];page=[];extent=0;total=0
+-            for row in index.pop('members'):
+-                size=len(json.dumps(row,separators=(',',':'),sort_keys=True).encode())+1
+-                if extent+size>6144 and page:pages.append(page);page=[];extent=0
+-                page.append(row);extent+=size;total+=size;require(total<=4*1024**2,'final inventory aggregate extent exceeded')
+-            if page:pages.append(page)
+-            require(len(pages)<=768,'inventory page bound exceeded')
+-            references=[]
+-            for i,page in enumerate(pages):
+-                name='inventory-'+str(i).zfill(3)+'.json';save(name,{'members':page});references.append({'path':name,'sha256':hashlib.sha256(body(root,str((outer/name).relative_to(root)))).hexdigest()})
+-            save('inventory.json',index|{'pages':references})
++            def save_inventory(name,value):
++                save(name,value);watch.check()
++                require(shutil.disk_usage(root).free>=10*GIB,'inventory publication disk floor breached')
++            inventory_reference=inventory_tools.publish(root,outer,inventory(root),identity,save_inventory)
++            if result is not None:result=result|{'inventory':inventory_reference}
+         except BaseException as error:retain(error)
+         try:
+             save('authenticated-refusal.json',result) if result is not None else None

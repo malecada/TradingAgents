@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-resource-investigation-2026-10-03/measure01.py", line 21, in <module>
+    g=next(n for n in run.body if isinstance(n,ast.Try) and n.finalbody);block=next(n for n in g.finalbody if isinstance(n,ast.Try) and any(isinstance(x,ast.Assign) and 'index' in ast.unparse(x) and 'inventory(root)' in ast.unparse(x) for x in n.body));nodes=block.body
+                                                                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration

@@ -1,0 +1,21 @@
+test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) ... ok
+test_authentication_chain_is_recomputed (__main__.Corrections.test_authentication_chain_is_recomputed) ... FAIL
+test_cleanup_then_first_memory_fatal (__main__.Corrections.test_cleanup_then_first_memory_fatal) ... ok
+test_original_prior_fragment_refuses_forgery (__main__.Corrections.test_original_prior_fragment_refuses_forgery) ... ok
+test_owned_parent_fsync_close (__main__.Corrections.test_owned_parent_fsync_close) ... ok
+test_reduced_materialization_membership (__main__.Corrections.test_reduced_materialization_membership) ... ok
+test_supervisor_uses_authenticated_cleanup_type (__main__.Corrections.test_supervisor_uses_authenticated_cleanup_type) ... ok
+
+======================================================================
+FAIL: test_authentication_chain_is_recomputed (__main__.Corrections.test_authentication_chain_is_recomputed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation03-2026-10-03/test_corrections02.py", line 59, in test_authentication_chain_is_recomputed
+    self.assertTrue({'_release_context','authenticate','closure','runtime_gate.check'}<=calls)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.009s
+
+FAILED (failures=1)

@@ -1,0 +1,240 @@
+{
+  "baselines": {
+    "common_temporal": "same attention LSTM and training settings as full model",
+    "funds": {
+      "filter": "induced graph on explicitly admitted address cohort only; independent assumption pending actual source",
+      "never_synthesize_addresses": true,
+      "status": "blocked: exact 65-entity address mapping and historical vintage not recovered"
+    },
+    "graph": {
+      "gin": {
+        "activation": "relu",
+        "aggregation": "sum neighbors",
+        "epsilon": "trainable initialized 0",
+        "input_width": 4,
+        "layers": 2,
+        "mlp": "32 relu 32",
+        "pooling": "mean",
+        "self_policy": "(1+epsilon)*self + sum incoming non-self neighbors",
+        "training": "joint with common attention LSTM",
+        "width": 32
+      },
+      "graphwave": {
+        "approximation": "exact sparse matrix exponential actions, capacity failure before unbounded dense materialization",
+        "evaluation_points": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "heat": "matrix exponential on bounded fixtures, sparse approximation must pass oracle",
+        "laplacian": "combinatorial weak undirected",
+        "output_width": 30,
+        "readout": "real and imaginary empirical characteristic function over heat wavelet column for each scale/time, mean over nodes",
+        "scales": [
+          0.1,
+          1.0,
+          10.0
+        ]
+      },
+      "node2vec": {
+        "batch_size": 256,
+        "context": 5,
+        "dimensions": 32,
+        "embedding_alignment": "training-only anchor basis; test only aligned to immediately preceding available snapshot",
+        "epochs": 5,
+        "initialization": "uniform(-0.5/32,0.5/32)",
+        "learning_rate": 0.025,
+        "learning_rate_schedule": "constant",
+        "loss": "skipgram negative-sampling sum positive and five negative logsigmoid terms, mean over positive pairs",
+        "negative_distribution": "degree^0.75 normalized",
+        "negative_samples": 5,
+        "optimizer": "SGD",
+        "p": 1.0,
+        "q": 1.0,
+        "readout": "input embeddings",
+        "transition": "unweighted weak undirected; isolated walk stops",
+        "walk_length": 40,
+        "walks_per_node": 10,
+        "window": "fixed symmetric distance<=5; no dynamic window"
+      },
+      "watchyourstep": {
+        "attention": "softmax learned context-length weights",
+        "attention_l2": 0.01,
+        "batching": "exact blockwise pair objective, no negative subsampling",
+        "dimensions": 32,
+        "epochs": 100,
+        "initialization": "normal std0.1 for embeddings; zeros for attention logits",
+        "learning_rate": 0.001,
+        "loss_reduction": "sum",
+        "objective": "Eq12 arXiv:1710.09599v2: beta*L2(q)^2 + sum(-E[D]*logsigmoid(LR^T) - indicator(A=0)*logsigmoid(-LR^T)); E[D]=10*I*sum softmax(q)_k*T^k",
+        "optimizer": "Adam",
+        "representation": "concatenate L,R each width16",
+        "transition": "unweighted directed outgoing, isolates self-absorbing",
+        "walk_horizon": 10,
+        "walks_per_node": 10
+      }
+    },
+    "graph_alignment": "node2vec/WatchYourStep: align successive embeddings with orthogonal Procrustes on common addresses only, no future graph; first orientation fixed by seed. No anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.",
+    "metrics": {
+      "aggregation": "annual metrics averaged equally across seven folds; seed mean/range separately; pooled date results also retained",
+      "log_loss_epsilon": 1e-15,
+      "primary": "binary_up",
+      "regression": [
+        "MAE",
+        "MSE",
+        "RMSE",
+        "MAPE_percent"
+      ],
+      "secondary": [
+        "macro",
+        "weighted",
+        "balanced_accuracy",
+        "brier",
+        "log_loss"
+      ],
+      "zero_division": "0 for undefined precision/recall/F1; MAPE undefined if true price <=0"
+    },
+    "price": {
+      "gru": {
+        "depth": 1,
+        "dropout": 0.0,
+        "readout": "last valid state",
+        "width": 64
+      },
+      "hlstm": {
+        "chunk_days": 7,
+        "chunks": 4,
+        "dropout": 0.0,
+        "implementation": "independent temporal adaptation of Hou et al. 2020 Fig2/Eqs3-4",
+        "lower_depth": 1,
+        "lower_lstm_width": 128,
+        "readout": "shared lower final state per chunk, upper final state to task head",
+        "training": "common frozen training.json, not Hou cyberattack training settings",
+        "upper_depth": 1,
+        "upper_lstm_width": 128
+      },
+      "lstm": {
+        "depth": 1,
+        "dropout": 0.0,
+        "readout": "last valid state",
+        "width": 64
+      },
+      "svm": {
+        "cache_size_MiB": 200,
+        "classification": "SVC C=1 kernel=rbf gamma=scale class_weight=None probability=False tol=0.001 max_iter=-1; sigmoid(decision_function) is uncalibrated diagnostic score, threshold 0",
+        "implementation": "scikit-learn 1.7.2",
+        "input": "flattened 28 standardized closes",
+        "regression": "SVR C=1 epsilon=0.1 kernel=rbf gamma=scale tol=0.001 max_iter=-1"
+      }
+    },
+    "schema_version": 1,
+    "uncertainty": {
+      "block_days": 14,
+      "method": "paired moving-block bootstrap within year",
+      "missing_daily_runs": "unavailable interval until pre-result gap-aware amendment",
+      "replicates": 2000,
+      "seed": 20260924
+    },
+    "whales": {
+      "filter": "drop every edge incident to whale, rebuild derived features",
+      "threshold": "strictly greater than 0.9*max wallet volume within same week",
+      "volume": "per-week incoming+outgoing native value; self transfer counted twice"
+    }
+  },
+  "dictionary": {
+    "capacity_action": "raise explicit capacity error, no truncation",
+    "hop_depth": 1,
+    "insufficient_samples": "explicit unavailable if fewer than dictionary size",
+    "linkage": "average pairwise distance",
+    "maximum_neighborhood_nodes": 10000,
+    "neighborhood": "weak one-hop induced subgraph retaining directed edges and center",
+    "partition": "seeded permutation chunks; min(32,chunk size) medoids each; recursively cluster medoids to 32",
+    "partition_size": 512,
+    "partition_threshold": 2048,
+    "representative": "medoid minimizing within-cluster sum distance; ties sample index",
+    "rng": "numpy PCG64",
+    "sample_count": 32,
+    "sampling": "without replacement over (training week,center); equal initial mass per candidate; after selection halve weights of remaining centers inside sampled neighborhood in that week",
+    "schema_version": 1,
+    "seed_scope": "one dictionary per asset/fold/seed/variant",
+    "size": 32,
+    "training_scope": "only graph snapshots fully available inside training interval"
+  },
+  "graph": {
+    "assets": [
+      "ETH",
+      "BTC"
+    ],
+    "availability": "week end + 1 day; retrospective assumption, historical publication unverified",
+    "btc_projection": {
+      "change": "retain",
+      "coinbase": "exclude and count",
+      "fees": "sum(inputs)-sum(outputs), do not allocate as transferred value",
+      "input_merge": "sum repeated addresses before projection",
+      "missing_prevout": "reject as unavailable, no zero fill",
+      "non_address_scripts": "exclude entire transaction if any input/output cannot map to one address; count",
+      "rule": "for each resolved address input amount a_i and output b_j: rational a_i*b_j/sum(inputs)"
+    },
+    "direction": "directed",
+    "edge_features": [
+      "log1p(count)",
+      "log1p(native_volume)"
+    ],
+    "edge_order": "source then destination",
+    "eth_filters": {
+      "duplicates": "reject duplicate transaction identity before filtering",
+      "receipt_status": 1,
+      "recipient": "valid address required; null/None excluded",
+      "value": "strictly positive"
+    },
+    "event_universe": "confirmed native top-level transfers only; no token logs/internal calls",
+    "node_features": [
+      "log1p(in_count)",
+      "log1p(out_count)",
+      "log1p(in_native_volume)",
+      "log1p(out_native_volume)"
+    ],
+    "node_order": "lexicographic address bytes",
+    "parallel_edges": "aggregate ordered pair: count and sum native value",
+    "partial_weeks": "exclude with explicit missing-source intervals; never fabricate partial graphs",
+    "raw_units": {
+      "BTC": "integer satoshis; rational projection; /1e8 for features",
+      "ETH": "stored float64 wei / 1e18; approximate ETH"
+    },
+    "schema_version": 1,
+    "self_loops": "retain observed self transfers; GAT adds one self-neighbor",
+    "timezone": "UTC",
+    "week_anchor": "MON"
+  },
+  "matching": {
+    "alpha": 1.0,
+    "amendment": "matching-precision-v2.md",
+    "beta0": 1.0,
+    "beta_final": 30.0,
+    "beta_rate": 0.075,
+    "beta_update": "beta *= (1+beta_rate)",
+    "convergence": "temperature termination; no additional fixed-point stopping",
+    "edge_agreement_chunk_pairs": 65536,
+    "empty_nodes": "reject",
+    "hardening": "greedy global maximum; ties row-major; remove row and column; stop after min(n,m) matches",
+    "initialization": "node agreement s2 (Algorithm1 s1 symbol corrected by argument type)",
+    "internal_precision": "float64",
+    "max_iterations": 50,
+    "max_pair_entries": 4000000,
+    "normalization": "row then column, log-domain stable",
+    "normalization_iterations": 1,
+    "objective": "paper Eq1 literal including factor 2 in edge denominator",
+    "precision_accelerated": "float32 output with float64 affinity and annealing",
+    "precision_reference": "float64",
+    "rectangular": "un-padded rectangular one-pass normalization; soft row/column sums need not both equal 1; hard assignment must be injective",
+    "s1": "edge RBF exp(-mean squared feature difference); zero if either edge absent",
+    "s2": "node RBF exp(-mean squared feature difference)",
+    "schema_version": 1,
+    "solver": "algorithm1_literal",
+    "symmetric_dictionary_distance": "1 - (S(A,B)+S(B,A))/2",
+    "update": "Q_ui=0.5*sum_vj(edge_agreement_uvij*M_vj)+alpha*node_agreement_ui; literal Algorithm1, not claimed Eq2 derivative",
+    "zero_edges": "edge contribution zero if either graph has zero edges; retain node contribution divided by (1+alpha)"
+  }
+}

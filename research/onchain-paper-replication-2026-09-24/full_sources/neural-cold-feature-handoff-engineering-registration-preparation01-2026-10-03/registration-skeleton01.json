@@ -1,0 +1,46 @@
+{
+  "exclusive_identity_ceiling": 2,
+  "execution_authorized": false,
+  "family": {
+    "attempt_budget": 2,
+    "history_reference": null,
+    "mechanism_id": "compact-cold-genuine-authority",
+    "name": "compact-cold-genuine-authority",
+    "prior_attempts": 0
+  },
+  "identities": {
+    "compact-cold-comparison-20261003-01": {
+      "cells": [
+        "cold-genuine-comparison"
+      ],
+      "charter": null,
+      "inputs": null,
+      "outputs": [
+        "binding.json",
+        "journal.json",
+        "cold-handoff.json",
+        "proof-compare.json"
+      ],
+      "parent": "compact-cold-inputs-20261003-01",
+      "source_files": null,
+      "status": "blocked-authenticated-materialization-and-outer03-required"
+    },
+    "compact-cold-inputs-20261003-01": {
+      "cells": [
+        "cold-input-materialization"
+      ],
+      "charter": null,
+      "inputs": null,
+      "outputs": [
+        "proof-materialize.json"
+      ],
+      "parent": null,
+      "source_files": null
+    }
+  },
+  "kind": "unregistered-nonadmissible-skeleton",
+  "lifecycle_claim_ceiling": 2,
+  "null_fields": "must be genuine verified references; skeleton is never registration input",
+  "paper_budget_adoption": false,
+  "program_id": "compact-cold-engineering-20261003"
+}

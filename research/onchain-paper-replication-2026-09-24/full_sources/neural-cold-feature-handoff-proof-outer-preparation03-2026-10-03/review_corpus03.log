@@ -1,0 +1,70 @@
+test_historical_parity03.py
+test_actual_predecessor_rejects_required_child_source (__main__.Tests.test_actual_predecessor_rejects_required_child_source) ... ok
+test_other_five_selected_proof_tools_unchanged (__main__.Tests.test_other_five_selected_proof_tools_unchanged) ... ok
+test_whole_native_supervisor_claim_wait_raw_materialization_chain_unchanged (__main__.Tests.test_whole_native_supervisor_claim_wait_raw_materialization_chain_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.014s
+
+OK
+exit=0
+test_tree03.py
+test_exact_minimal_additions (__main__.Tests.test_exact_minimal_additions) ... ok
+test_existing_modification_deletion_rename_refused (__main__.Tests.test_existing_modification_deletion_rename_refused) ... ok
+test_extra_source_runtime_old_data_or_unknown_addition_refused (__main__.Tests.test_extra_source_runtime_old_data_or_unknown_addition_refused) ... ok
+test_original_registration_and_added_body_git_mismatch (__main__.Tests.test_original_registration_and_added_body_git_mismatch) ... ok
+test_self_hash_or_rechained_arbitrary_addition_refused (__main__.Tests.test_self_hash_or_rechained_arbitrary_addition_refused) ... ok
+test_wrong_parent_merge_or_unchanged_commit_refused (__main__.Tests.test_wrong_parent_merge_or_unchanged_commit_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.011s
+
+OK
+exit=0
+test_evolution03.py
+test_historical_head_and_exact_parent (__main__.Tests.test_historical_head_and_exact_parent) ... ok
+test_real_historical_authentication_chain_still_present (__main__.Tests.test_real_historical_authentication_chain_still_present) ... ok
+test_registration_addition_and_corruptions (__main__.Tests.test_registration_addition_and_corruptions) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.019s
+
+OK
+exit=0
+test_corrections03.py
+test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) ... ok
+test_authentication_chain_is_recomputed (__main__.Corrections.test_authentication_chain_is_recomputed) ... ok
+test_cleanup_then_first_memory_fatal (__main__.Corrections.test_cleanup_then_first_memory_fatal) ... ok
+test_original_prior_fragment_refuses_forgery (__main__.Corrections.test_original_prior_fragment_refuses_forgery) ... ok
+test_owned_parent_fsync_close (__main__.Corrections.test_owned_parent_fsync_close) ... ok
+test_reduced_materialization_membership (__main__.Corrections.test_reduced_materialization_membership) ... ok
+test_supervisor_uses_authenticated_cleanup_type (__main__.Corrections.test_supervisor_uses_authenticated_cleanup_type) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.013s
+
+OK
+exit=0
+test_corrections02.py
+test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) ... ok
+test_authentication_chain_is_recomputed (__main__.Corrections.test_authentication_chain_is_recomputed) ... FAIL
+test_cleanup_then_first_memory_fatal (__main__.Corrections.test_cleanup_then_first_memory_fatal) ... ok
+test_original_prior_fragment_refuses_forgery (__main__.Corrections.test_original_prior_fragment_refuses_forgery) ... ok
+test_owned_parent_fsync_close (__main__.Corrections.test_owned_parent_fsync_close) ... ok
+test_reduced_materialization_membership (__main__.Corrections.test_reduced_materialization_membership) ... ok
+test_supervisor_uses_authenticated_cleanup_type (__main__.Corrections.test_supervisor_uses_authenticated_cleanup_type) ... ok
+
+======================================================================
+FAIL: test_authentication_chain_is_recomputed (__main__.Corrections.test_authentication_chain_is_recomputed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation03-2026-10-03/test_corrections02.py", line 59, in test_authentication_chain_is_recomputed
+    self.assertTrue({'_release_context','authenticate','closure','runtime_gate.check'}<=calls)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.010s
+
+FAILED (failures=1)
+exit=1

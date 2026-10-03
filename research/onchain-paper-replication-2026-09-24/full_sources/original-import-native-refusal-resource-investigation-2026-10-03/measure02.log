@@ -1,0 +1,75 @@
+{
+  "source_sha256": "eed4786a2383cb99f426facdd00431d1bae85b1f1e5ad63f2fd3c1922eff2535",
+  "closed_tree": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation04-2026-10-03/capsule02",
+  "closed_tree_retention_sha256": "2d1972192c89d7db31308aa97edfa596690c9bcb44d9eabfdb6b26b1ff1cbd9a",
+  "actual_closed_baseline": {
+    "error": null,
+    "pages_published": 23,
+    "max_page_bytes": 6538,
+    "index_bytes": 2960,
+    "prospective_index_bytes": 2960,
+    "compact_aggregate_bytes": 134187,
+    "rows": 816
+  },
+  "actual_inventory_rows_excluding_root": 816,
+  "index_envelope_bytes_with_zero_pages": 432,
+  "maximum_reference_pages_fitting8192": 70,
+  "index_bytes_at_maximum": 8130,
+  "index_bytes_at_next": 8240,
+  "index_bytes_at_declared768": 84910,
+  "synthetic_ASCII_count_boundary": {
+    "last_passing": {
+      "error": null,
+      "pages_published": 70,
+      "max_page_bytes": 6416,
+      "index_bytes": 8130,
+      "prospective_index_bytes": 8130,
+      "compact_aggregate_bytes": 425040,
+      "rows": 2310
+    },
+    "first_refused": {
+      "error": {
+        "type": "ValueError",
+        "message": "new refusal metadata exceeds8KiB"
+      },
+      "pages_published": 71,
+      "max_page_bytes": 6416,
+      "index_bytes": null,
+      "prospective_index_bytes": 8240,
+      "compact_aggregate_bytes": 425224,
+      "rows": 2311
+    }
+  },
+  "synthetic_declared32768_short_rows": {
+    "error": {
+      "type": "ValueError",
+      "message": "final inventory aggregate extent exceeded"
+    },
+    "pages_published": 0,
+    "max_page_bytes": 0,
+    "index_bytes": null,
+    "prospective_index_bytes": 432,
+    "compact_aggregate_bytes": 4194327,
+    "rows": 32768
+  },
+  "synthetic_escaped_path": {
+    "characters": 901,
+    "utf8_bytes": 3493,
+    "max_component_utf8_bytes": 128,
+    "components": 28,
+    "result": {
+      "error": {
+        "type": "ValueError",
+        "message": "new refusal metadata exceeds8KiB"
+      },
+      "pages_published": 0,
+      "max_page_bytes": 0,
+      "index_bytes": null,
+      "prospective_index_bytes": 432,
+      "compact_aggregate_bytes": 10534,
+      "rows": 1
+    }
+  },
+  "actual_suite_attempts": 0,
+  "numeric_imports": false
+}

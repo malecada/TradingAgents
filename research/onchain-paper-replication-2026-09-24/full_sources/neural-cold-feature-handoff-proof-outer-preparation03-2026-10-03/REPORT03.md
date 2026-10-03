@@ -1,0 +1,25 @@
+# Cold proof outer03: authenticated finite registration evolution
+
+Status: source-only candidate, not independently reviewed or admitted. No numerical imports, arrays, native jobs, research claims, real registrations, capsule edits, Git mutations, STATE changes or network calls occurred.
+
+The predecessor required historical materialization source to equal current HEAD. Real comparison registration cannot exist with exact emitted43 hashes before materialization, so a subsequent commit is necessary. The source now verifies materialization against its actual original commit A and verifies comparison separately against a sole direct child B. It does not accept arbitrary descendant changes.
+
+`authenticated_materialization(root, accepted_ref, wait_ref)` provides the generator a concrete read-only authenticated original result at A before drafting comparison. The original runtime/source/input/registration/ResearchRun/native/controller/supervisor/wait/raw43/tail chain remains checked. A source AST comparison confirms the entire original block from runtime validation through materialized-input membership is unchanged. The original registration is now also byte-joined to its own committed Git source.
+
+`authenticate_prior` requires the typed evolution document and calls the historical helper, preserves195 selected source hashes/runtime/native environment/CPU selection, and verifies exact additive child-commit evolution. The registration keeps all old experiments/family/datasets/history and permits only the one specified comparison experiment. The complete current registration is Git-bound at B, original registration at A, input refs derive from authentic raw materialization, and every allowed added body is joined to B and its declared digest. Historical method/model/batch/dictionary numerical source is unchanged.
+
+The generator author confirmed the real schema: same program, family attempt budget2/prior0/history, dataset/exposures and original materialize experiment, followed by one child compare experiment with43 renamed emitted refs plus the same environment. `PROTOCOL03.md` specifies concrete paths/roles through caller-provided exact refs, B's sole parent and all allowable additions, including non-cyclic own-document binding. No release envelope containing B is required inside B itself. The registration-referenced comparison charter uses a fresh B path; an immutable template may be present at A.
+
+## Checks
+
+All checks used checkout-local `.venv/bin/python -B` in the stdlib/source profile. `test_evolution03.py` first failed against predecessor02 with three expected missing-capability failures (`evolution-RED02.log`), then passes three checks covering actual extracted registration-conservation logic, sole-parent/history selection and preserved raw-chain calls. `test_historical_parity03.py` separately reproduces the actual old source-equality false refusal and verifies three parity properties, including unchanged five other proof tools and complete historical native/claim/wait/raw source block.
+
+`test_tree03.py` runs six actual-verifier source fixtures, including a strictly typed minimal new registration+charter evolution and refusal of extra source/runtime/data/unknown files, old modifications/deletions/renames, non-parent/merge/same commits, historical/current Git body mismatches and a coherently rechained own-hash insertion. These use in-memory fake Git responses and explicitly synthetic metadata only; they are not evidence of a real valid capsule, claim or job.
+
+The unchanged outer four tests pass. Boundary16 and corrected historical-source seven tests pass, preserving fatal/owned-cleanup/raw archive/metadata/forgery checks. Initially the copied boundary suite lacked its local baseline text (one harness error), and the predecessor historical-call test expected all calls directly inside the old function (one assertion after the helper extraction). Both original suites/logs remain retained. The genuine baseline text is now copied byte-for-byte and a separate test_corrections03.py follows the actual helper call and its unchanged raw checks. No author/source failure was hidden.
+
+Final logs: final-evolution03.log (3), final-tree03.log (6), historical-parity03.log (3), inherited-outer03.log (4), final-boundaries03.log (16), final-corrections03.log (7). Total39 source checks pass. Source inventory and manifest pin exact origins; only proof_tools/proof_release01.py changes among195 selected targets.
+
+## Remaining
+
+Different-author review must verify this exact source/protocol before integration. Root must install outer03 before actual materialization, re-pin the195 closure and generator, independently freeze/review genuine inputs/runtime/A registration/charter/release, and observe the materialization. Only its authenticated raw result can supply a later concrete B registration, finite evolution and reviewed comparison release. No A/B commits or accepted actual raw evidence were fabricated by this preparation. All numerical, native, lifetime/gradient, capacity and external-recovery proofs remain unexecuted. No financial/paper scope or spent original512 history is changed.

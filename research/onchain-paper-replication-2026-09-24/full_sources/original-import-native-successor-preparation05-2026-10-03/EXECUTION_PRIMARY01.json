@@ -1,0 +1,129 @@
+{
+  "actual_selected_post_tail": {
+    "disk_free_bytes": 19576123392,
+    "excludes_own_file": true,
+    "path": "fixture_outer/original-import-native-success-20261003-03/post-tail-storage.json",
+    "qualification": "Caller also enforces a separate current watch and disk-floor check after publication; overall acceptance requires exit0 and no late failure receipt.",
+    "sha256": "9021d343a14dc17a93320db197017a947243d4adea249cfceb157dd82a1e0018"
+  },
+  "actual_selected_post_tail_authentication_error": null,
+  "actual_selected_raw_authentication": null,
+  "actual_selected_raw_authentication_error": {
+    "message": "child terminal snapshot failed/missing",
+    "type": "ValueError"
+  },
+  "cells": null,
+  "claim_sha256": "7e35261724e6bf2d58ca484a2ef39606d7a586313dca5fe7f0c06fe6b8ef88ef",
+  "complete_mcm_stage_markers": 0,
+  "identity": "original-import-native-success-20261003-03",
+  "kernel_controls": {
+    "memory.high": "3221225472",
+    "memory.max": "3221225472",
+    "memory.swap.max": "0"
+  },
+  "lifecycle_status": "failed",
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "missing_registered_outputs": [
+    "cell-ledger.json",
+    "resource-summary.json"
+  ],
+  "native_child_exit_code": 125,
+  "native_elapsed_seconds": 1802.523400692,
+  "native_sampled_peak_bytes": 402456576,
+  "original_cgroup_absent": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-f9a4a219a63b46c6a26fe0d22d997c07.service",
+  "original_dictionary_import_complete_sha256": "170c4e77cb891494ca854c0ee0f45267d97030347045ad8e613d3411a7106cd7",
+  "original_outer_cleanup": {
+    "native": {
+      "after": {
+        "properties": {
+          "ActiveState": "failed",
+          "ControlGroup": "",
+          "Result": "timeout",
+          "SubState": "failed"
+        },
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "Result=timeout\nControlGroup=\nActiveState=failed\nSubState=failed\n"
+      },
+      "before": {
+        "properties": {
+          "ActiveState": "failed",
+          "ControlGroup": "",
+          "Result": "timeout",
+          "SubState": "failed"
+        },
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "Result=timeout\nControlGroup=\nActiveState=failed\nSubState=failed\n"
+      },
+      "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-f9a4a219a63b46c6a26fe0d22d997c07.service",
+      "cgroup_absent": true,
+      "errors": [],
+      "native_unit_observed": true,
+      "properties": {
+        "ActiveState": "failed",
+        "ControlGroup": "",
+        "Result": "timeout",
+        "SubState": "failed"
+      },
+      "stop": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "unit": "onchain-replication-f9a4a219a63b46c6a26fe0d22d997c07.service"
+    },
+    "pid_absence_verified": false,
+    "supervisor_reaped": true,
+    "unresolved_pid_absence": true
+  },
+  "outer_exit_code": 1,
+  "outer_terminal_status": "failed",
+  "paper_closed_attempts": 36,
+  "paper_highest_adopted_budget": 64,
+  "parent_failure_reason": "outer observer verified owned cgroup death; complete denominator retained",
+  "qualification": "Actual registered synthetic imported dictionary/MCM resource outcome only. All actual dispositions retained; authentication refusal is reported and never relabeled success. Source freeze ended only after recorded original PIDs/cgroup absent and source/input pins unchanged. Full owned raw has not yet been independently reviewed or externally recovered. No scientific representation completion/full-sized capacity/financial fit or paper agreement inferred.",
+  "recorded_pids_absent": [
+    1756801,
+    1756805,
+    1756967,
+    1757654,
+    1758323,
+    1758327
+  ],
+  "release_sha256": "785a1f3bfc4f64177b00c4cb423a76aaffb917f60d6289d430962287ea727bc4",
+  "repeat_allowed": false,
+  "retained_mcm_stage_directories": 1,
+  "retention_sha256": "f590948a38b5a25a7a56c089d2e3ca670db1b6298f668784aa1d998e13922a89",
+  "schema_version": 1,
+  "separate_root_unavailable_cells": [
+    {
+      "basis": "Separate root observation: missing original worker cell-ledger after native timeout; no original receipt or numerical value synthesized.",
+      "cell": "import-target-01",
+      "status": "unavailable"
+    },
+    {
+      "basis": "Separate root observation: missing original worker cell-ledger after native timeout; no original receipt or numerical value synthesized.",
+      "cell": "import-target-02",
+      "status": "unavailable"
+    }
+  ],
+  "source_commit": "bb9e6ac95b2be13dbbfe5b77c55a5ce35a0926a9",
+  "source_freeze_ended": true,
+  "terminal_sha256": "e0fb5527f662461300dfa153bed8a155661c32f0e98e43690b512c5019259351",
+  "unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "125",
+    "Result": "timeout",
+    "SubState": "failed"
+  },
+  "verified_utc": "2026-10-03T02:46:50.999350+00:00"
+}

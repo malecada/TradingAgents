@@ -1,0 +1,41 @@
+test_2311_rows_and_maximum_entries_all_retained (__main__.Tests.test_2311_rows_and_maximum_entries_all_retained) ... FAIL
+test_escaped_row_refuses_before_any_publication (__main__.Tests.test_escaped_row_refuses_before_any_publication) ... FAIL
+test_exact_serializer_not_compact_estimate (__main__.Tests.test_exact_serializer_not_compact_estimate) ... FAIL
+
+======================================================================
+FAIL: test_2311_rows_and_maximum_entries_all_retained (__main__.Tests.test_2311_rows_and_maximum_entries_all_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation03-2026-10-03/test_inventory03.py", line 9, in test_2311_rows_and_maximum_entries_all_retained
+    m=self.module()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation03-2026-10-03/test_inventory03.py", line 6, in module
+    p=D/'refusal_inventory03.py';self.assertTrue(p.exists(),'new complete inventory implementation required');s=importlib.util.spec_from_file_location('inventory_candidate03',p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+                                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : new complete inventory implementation required
+
+======================================================================
+FAIL: test_escaped_row_refuses_before_any_publication (__main__.Tests.test_escaped_row_refuses_before_any_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation03-2026-10-03/test_inventory03.py", line 14, in test_escaped_row_refuses_before_any_publication
+    m=self.module();v=self.index(1);v['members'][0]['path']='\x01'*2048
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation03-2026-10-03/test_inventory03.py", line 6, in module
+    p=D/'refusal_inventory03.py';self.assertTrue(p.exists(),'new complete inventory implementation required');s=importlib.util.spec_from_file_location('inventory_candidate03',p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+                                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : new complete inventory implementation required
+
+======================================================================
+FAIL: test_exact_serializer_not_compact_estimate (__main__.Tests.test_exact_serializer_not_compact_estimate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation03-2026-10-03/test_inventory03.py", line 17, in test_exact_serializer_not_compact_estimate
+    m=self.module();v=self.index(100,70);plan=m.prepare(v,'synthetic-case');self.assertTrue(all(m.encode(b)==(json.dumps(b,sort_keys=True,allow_nan=False)+'\n').encode() for n,b in plan));self.assertTrue(all(len(m.encode(b))<=8192 for n,b in plan))
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-worker-preparation03-2026-10-03/test_inventory03.py", line 6, in module
+    p=D/'refusal_inventory03.py';self.assertTrue(p.exists(),'new complete inventory implementation required');s=importlib.util.spec_from_file_location('inventory_candidate03',p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+                                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : new complete inventory implementation required
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)

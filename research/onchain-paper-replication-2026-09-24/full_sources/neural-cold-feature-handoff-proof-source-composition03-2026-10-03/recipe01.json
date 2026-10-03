@@ -1,0 +1,41 @@
+{
+  "asset": "ETH",
+  "batch_size": 16,
+  "dictionary_size": 32,
+  "edge_formula": "1 + week/100 + edge/10 + feature/1000",
+  "edges": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      0
+    ]
+  ],
+  "graph_start": "2024-01-01",
+  "graph_weeks": 19,
+  "kind": "fresh-synthetic-cold-population-v1",
+  "lookback_days": 28,
+  "missing_price": "2024-02-18",
+  "node_formula": "1 + week/100 + node/10 + feature/1000",
+  "nodes": 4,
+  "price_end": "2024-05-13",
+  "price_formula": "100 + i/10 + (i%7)/20",
+  "price_start": "2023-12-04",
+  "sample_count": 32,
+  "schema_version": 1,
+  "seed": 11,
+  "test_end": "2024-05-13T00:00:00Z",
+  "test_start": "2024-05-01T00:00:00Z",
+  "train_end": "2024-05-01T00:00:00Z",
+  "train_start": "2024-01-01T00:00:00Z"
+}

@@ -1,0 +1,213 @@
+"""Saved resident MCM admission with a locally issued dictionary prerequisite.
+
+Preparation may reconstruct sample membership once. Reuse does not perform that
+preparation. Tickets are in-process contracts, not a Python security boundary or
+permission for historical, sealed, mapped or empirical reuse.
+"""
+import importlib.util
+from pathlib import Path
+import weakref
+import numpy as np
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,file_hash,thaw,freeze
+from tradingagents.research.onchain_replication.neighborhoods import graph_hash as hash_graph,node_order_hash
+from tradingagents.research.onchain_replication.matching_identity import graph_identity
+from tradingagents.research.onchain_replication.dictionary import dictionary_hash
+from tradingagents.research.onchain_replication.cache import cache_key
+
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+spec=importlib.util.spec_from_file_location('saved_mcm_publication',HERE.parent/'mcm-publication-2026-10-01/publication.py')
+publication=importlib.util.module_from_spec(spec);spec.loader.exec_module(publication)
+artifacts=publication.driver.artifacts;producer=publication.producer;reader=publication.reader
+SOURCES=tuple(sorted(set(publication.SOURCES)|{str(Path(__file__).relative_to(ROOT))}))
+_issued=weakref.WeakKeyDictionary()
+
+def require(value,message):
+    if not value:raise ValueError(message)
+def equal(a,b):return canonical_bytes(a)==canonical_bytes(b)
+
+class DictionaryTicket:
+    __slots__=('__weakref__',)
+
+class Admitted:
+    __slots__=('_mcm','_record','_lease','_layout')
+    def __init__(self,matrix,record,lease):
+        object.__setattr__(self,'_mcm',matrix);object.__setattr__(self,'_record',freeze(record))
+        object.__setattr__(self,'_lease',lease)
+        object.__setattr__(self,'_layout',(matrix.shape,matrix.strides,matrix.dtype))
+    def __setattr__(self,name,value):raise AttributeError('admitted MCM receipt is immutable')
+    def _check(self):
+        require((self._mcm.shape,self._mcm.strides,self._mcm.dtype)==self._layout and not self._mcm.flags.writeable,
+            'admitted MCM layout changed')
+    @property
+    def mcm(self):self._check();return self._mcm
+    @property
+    def record(self):return self._record
+    def lease(self):self._check();self._lease();self._check()
+
+def immutable_matrix(matrix,chunk):
+    require(isinstance(matrix,np.ndarray) and matrix.dtype==np.dtype('float32') and matrix.ndim==2
+        and all(n>0 for n in matrix.shape) and type(chunk) is int and 0<chunk<=65536,'MCM matrix/chunk differs')
+    with np.nditer(matrix,flags=['external_loop','buffered'],op_flags=['readonly'],order='K',buffersize=chunk) as blocks:
+        for block in blocks:
+            require(block.size<=chunk,'MCM validation chunk exceeded')
+            require(np.isfinite(block).all() and np.all(block>=0) and np.all(block<=1),'MCM score values differ')
+    del block,blocks
+    # Immutable bytes, not a reversible writeable=False flag on owned storage.
+    return np.frombuffer(matrix.tobytes(order='C'),dtype=np.float32).reshape(matrix.shape)
+
+def actual_owner(owned,journal):
+    require(type(owned) is producer.artifacts.consumer.ownership.OwnedJournal
+        and type(journal) is producer.artifacts.feature_journal.FeatureJournal,'actual MCM owner/journal required')
+    bound=owned.workload.bound;bound.check();owned.lease()
+    require(bound._ancestry_arguments is None,'historical MCM admission requires separate admission')
+
+def source_check(owned):
+    ad=owned.workload.bound._run.admission
+    for name in SOURCES:
+        sha=ad.experiment['source_files'].get(name)
+        require(sha is not None and file_hash(ROOT/name)==sha and file_hash(ad.root/name)==sha,'MCM admission source differs')
+
+def prepare_dictionary(owned,journal,*,sampler_input,artifact_input,output_input,proof_sha256):
+    actual_owner(owned,journal);source_check(owned)
+    receipt=artifacts.admit(owned,journal,sampler_input=sampler_input,artifact_input=artifact_input,
+        output_input=output_input,proof_sha256=proof_sha256)
+    ad=owned.workload.bound._run.admission
+    inputs={key:{'input':name,'sha256':ad.inputs[name]['sha256']} for key,name in
+        (('sampler',sampler_input),('artifact',artifact_input),('dictionary_output',output_input))}
+    ticket=DictionaryTicket()
+    _issued[ticket]={'owned':owned,'journal':journal,'receipt':receipt,'dictionary':receipt.dictionary,
+        'record':receipt.record,'record_hash':cache_key(receipt.record),'callback':receipt._lease,
+        'lease_function':type(receipt).lease,'inputs':inputs}
+    try:ticket_lease(ticket,owned,journal)
+    except BaseException:
+        del _issued[ticket];raise
+    return ticket
+
+def ticket_lease(ticket,owned,journal):
+    require(type(ticket) is DictionaryTicket and ticket in _issued,'issued dictionary ticket required')
+    pin=_issued[ticket]
+    require(pin['owned'] is owned and pin['journal'] is journal,'dictionary ticket owner/journal differs')
+    r=pin['receipt'];d=pin['dictionary'];route=owned.workload;bound=route.bound
+    def check():
+        require(r.dictionary is d and r.record is pin['record'] and cache_key(r.record)==pin['record_hash']
+            and r._lease is pin['callback'] and type(r).lease is pin['lease_function'] and 'lease' not in vars(r),
+            'dictionary prerequisite replaced')
+        require(equal(r.record['owner'],bound.record) and r.record['dictionary_identity']==d.identity==dictionary_hash(d)
+            and equal(d.config,thaw(route.settings)|{'pair_execution':publication.driver.serial.pair.BACKEND})
+            and d.matching_config_hash==cache_key({'config':thaw(route.descriptor['configs']['matching']),
+                'backend':publication.driver.serial.pair.BACKEND}),'dictionary prerequisite identity/config differs')
+        ad=bound._run.admission
+        require(all(ad.inputs[v['input']]['sha256']==v['sha256'] for v in pin['inputs'].values()),'dictionary preparation inputs differ')
+    actual_owner(owned,journal);source_check(owned);check();pin['lease_function'](r);check()
+    return pin
+
+def admit(owned,journal,*,dictionary_ticket,graph_hash,mcm_input,output_input,read_input,proof_sha256):
+    pin=ticket_lease(dictionary_ticket,owned,journal)
+    route=owned.workload;bound=route.bound;ad=bound._run.admission;owner=thaw(bound.record)
+    directory=Path(owner['journal_directory']);metadata=producer.Metadata(ad.root)
+    require(type(graph_hash) is str and graph_hash in route.descriptor['required_graphs'] and graph_hash in route._graphs,'required MCM graph differs')
+    graph=route._graphs[graph_hash];d=pin['dictionary'];n=len(graph.node_ids);k=len(d.representatives);numeric=4*n*k
+    require(n>0 and k==route.settings['size'] and n*k<=route.control['max_entries'],'MCM entry count differs')
+    order=node_order_hash(graph.node_ids);motifs=[graph_identity(g) for g in d.representatives]
+    scope=cache_key({'schema_version':1,'kind':'mcm','workflow':owner['workflow_identity'],'backend':publication.driver.serial.pair.BACKEND,
+        'graph':graph_hash,'node_order':order,'dictionary':d.identity,'ordered_motifs':motifs,
+        'matching':thaw(route.descriptor['configs']['matching']),'dtype':'float32'})
+    def registered(name):
+        require(type(name) is str and name in ad.inputs,'registered MCM input required')
+        info=ad.inputs[name];return metadata.read(ad.root/info['path'],info['sha256'])
+    claim=metadata.read(directory/'claim.json');plan=registered(claim['plan_input']);job=registered('execution_job')
+    item=plan.get('producers',{}).get(owner['producer']);selected=job.get('payload',{}).get('representation_jobs',{}).get(owner['representation'])
+    require(isinstance(item,dict) and isinstance(selected,dict),'selected MCM route required')
+    for key,name in (('mcm_execution_input',mcm_input),('mcm_output_input',output_input),('mcm_read_input',read_input)):
+        require(item.get(key)==selected.get(key)==name,'selected MCM route differs')
+    policy=registered(output_input)
+    require(isinstance(policy,dict) and set(policy)=={'schema_version','max_metadata_bytes','max_manifest_bytes','max_artifact_bytes','max_attempt_bytes','max_array_bytes'}
+        and type(policy['schema_version']) is int and policy['schema_version']==1
+        and all(type(policy[x]) is int and policy[x]>0 for x in policy if x!='schema_version')
+        and max(policy['max_metadata_bytes'],policy['max_manifest_bytes'])<=reader.MANIFEST_LIMIT,'MCM output policy differs')
+    publication.driver.kernel.validate_policy(registered(mcm_input),n*k)
+    read=registered(read_input)
+    require(isinstance(read,dict) and set(read)=={'schema_version','max_array_bytes','validation_chunk_entries','max_numeric_bytes'}
+        and type(read['schema_version']) is int and read['schema_version']==1
+        and all(type(read[x]) is int and read[x]>0 for x in read if x!='schema_version')
+        and read['validation_chunk_entries']<=65536,'MCM read policy differs')
+    chunk=read['validation_chunk_entries']
+    require(numeric<=min(policy['max_array_bytes'],read['max_array_bytes'])
+        and 2*numeric+5*chunk<=read['max_numeric_bytes'],'MCM read/copy numeric allowance exceeded')
+    cap=policy['max_metadata_bytes'];attempt=publication.attempt_directory(owned,graph_hash);proof_path=attempt/'complete.json'
+    require(artifacts.publication.driver.proof.valid_hash(proof_sha256),'explicit MCM proof hash required')
+    proof=metadata.read(proof_path,proof_sha256,cap)
+    fields={'schema_version','status','owner','resumable','start','graph_hash','event_index','output_input','output_policy_sha256',
+        'node_order_sha256','ordered_motifs','dictionary_provenance','workload_sha256','mcm_policy','completed_rows','completed_cells',
+        'array_bytes','encoded_artifact_bytes','encoded_event_bytes','event','component'}
+    require(isinstance(proof,dict) and set(proof)==fields and type(proof['schema_version']) is int and proof['schema_version']==1
+        and proof['status']=='complete' and proof['resumable'] is False and equal(proof['owner'],owner)
+        and proof['graph_hash']==graph_hash and proof['output_input']==output_input
+        and proof['output_policy_sha256']==ad.inputs[output_input]['sha256'],'MCM completion owner/policy/schema differs')
+    require(type(proof['event_index']) is int and proof['event_index']>=2
+        and all(type(proof[x]) is int and proof[x]>0 for x in ('completed_rows','completed_cells','array_bytes','encoded_artifact_bytes','encoded_event_bytes'))
+        and (proof['completed_rows'],proof['completed_cells'],proof['array_bytes'])==(n,n*k,numeric)
+        and proof['node_order_sha256']==order and proof['ordered_motifs']==motifs and proof['workload_sha256']==scope
+        and equal(proof['dictionary_provenance'],pin['record'])
+        and proof['mcm_policy']=={'input':mcm_input,'sha256':ad.inputs[mcm_input]['sha256']},'MCM provenance/order/count differs')
+    def inventory():reader.inventory(attempt,{attempt/'start.json',proof_path})
+    inventory()
+    def reference(ref,path):
+        require(isinstance(ref,dict) and set(ref)=={'path','sha256'} and ref['path']==str(path)
+            and artifacts.publication.driver.proof.valid_hash(ref['sha256']),'MCM reference differs')
+        return metadata.read(path,ref['sha256'],cap)
+    start=reference(proof['start'],attempt/'start.json');index=proof['event_index']
+    require(set(start)=={'schema_version','status','owner','resumable','graph_hash','output_input','output_policy_sha256','dictionary_proof',
+        'mcm_input','event_index','sources','reserved_encoded_bytes'}
+        and type(start['schema_version']) is int and start['schema_version']==1 and start['status']=='reserved' and start['resumable'] is False
+        and equal(start['owner'],owner) and start['graph_hash']==graph_hash and start['output_input']==output_input
+        and start['output_policy_sha256']==proof['output_policy_sha256'] and equal(start['dictionary_proof'],pin['record']['dictionary_proof'])
+        and start['mcm_input']==mcm_input and type(start['event_index']) is int and start['event_index']==index
+        and start['sources']=={name:ad.experiment['source_files'][name] for name in publication.SOURCES}
+        and type(start['reserved_encoded_bytes']) is int and start['reserved_encoded_bytes']==4*cap+policy['max_artifact_bytes']<=policy['max_attempt_bytes'],
+        'MCM start/reservation differs')
+    expected_owner={key:owner[key] for key in ('experiment','source_commit','producer','workflow_identity')}
+    context={'workflow_identity':owner['workflow_identity'],'graph_hash':graph_hash,'next_node':n,'node_order_sha256':order,'ordered_motifs':motifs,
+        'dictionary_provenance':thaw(pin['record']),'workload_sha256':scope,'mcm_policy':proof['mcm_policy'],
+        'pair_workload_sha256':route.descriptor['pair_workload']['sha256'],'completed_rows':n,'completed_cells':n*k,
+        'output_input':output_input,'output_policy_sha256':proof['output_policy_sha256']}
+    binding={'owner':expected_owner,'stage':'mcm_progress','context':context}
+    event=reference(proof['event'],directory/f'event-{index:06d}.json');component=directory/f'checkpoint-{index:06d}/manifest.json'
+    require(equal(event,{'stage':'mcm_progress','context':context,'path':str(component.relative_to(directory)),'sha256':event.get('sha256'),'binding':binding})
+        and proof['component']=={'path':str(component),'sha256':event['sha256']},'MCM event/component differs')
+    sample_policy=registered(pin['inputs']['artifact']['input'])
+    def journal_check():
+        require(journal.directory==directory and equal(journal.owner,expected_owner) and journal.parent is None and not journal.sealed
+            and journal.identity==owner['workflow_identity'] and journal.required==sorted(route.descriptor['required_graphs'])
+            and index<len(journal.records)<=sample_policy['max_journal_events'] and equal(journal.records[index],event),'MCM live journal differs')
+        hits=[i for i,e in enumerate(journal.records) if e['stage']=='mcm_progress' and e['context'].get('graph_hash')==graph_hash]
+        require(hits==[index] and not any(e['stage']=='representation_complete' or
+            (e['stage'] in ('embedding_progress','graph_complete') and e['context'].get('graph_hash')==graph_hash)
+            for e in journal.records[:index]),
+            'MCM graph event denominator/order differs')
+    journal_check()
+    manifest,signatures,headers,files=reader.inspect_component(component,event['sha256'],binding,ad.root,
+        policy['max_manifest_bytes'],policy['max_artifact_bytes'],read['max_array_bytes'])
+    require(manifest['tree']=={'kind':'array','member':'array-000000.npy'} and set(manifest['arrays'])=={'array-000000.npy'},'single MCM array required')
+    info=manifest['arrays']['array-000000.npy']
+    require(info['dtype']=='float32' and info['shape']==[n,k],'native float32 MCM dimensions differ')
+    require(proof['encoded_artifact_bytes']==signatures[component][2]+info['bytes']
+        and proof['encoded_event_bytes']==len(producer.lifecycle._encode(event))
+        and proof['encoded_event_bytes']<=min(cap,policy['max_manifest_bytes'],sample_policy['max_manifest_bytes']),'MCM encoded byte claims differ')
+    def compact():
+        metadata.lease();inventory();journal_check();reader.inventory(component.parent,files)
+        for path,sig in signatures.items():require(path.resolve()==path and reader.signature(path.lstat())==sig,'MCM component changed')
+        require(route._graphs.get(graph_hash) is graph and graph_hash in route.descriptor['required_graphs'] and hash_graph(graph)==graph_hash
+            and node_order_hash(graph.node_ids)==order and [graph_identity(g) for g in d.representatives]==motifs,'MCM graph/motif prerequisite changed')
+    def lease():
+        compact();ticket_lease(dictionary_ticket,owned,journal);compact()
+    lease()
+    matrix=reader.read_component(component,event['sha256'],binding,root=ad.root,max_manifest_bytes=policy['max_manifest_bytes'],
+        max_artifact_bytes=policy['max_artifact_bytes'],max_array_bytes=read['max_array_bytes'],lease=lease)
+    immutable=immutable_matrix(matrix,chunk);del matrix
+    lease()
+    record={'schema_version':1,'owner':owner,'mcm_proof':{'path':str(proof_path),'sha256':proof_sha256},'event':proof['event'],'component':proof['component'],
+        'graph_hash':graph_hash,'node_order_sha256':order,'ordered_motifs':motifs,'workload_sha256':scope,'dictionary_provenance':thaw(pin['record']),
+        'dictionary_inputs':pin['inputs'],'mcm_policy':proof['mcm_policy'],'output_input':output_input,'output_policy_sha256':proof['output_policy_sha256'],
+        'read_input':read_input,'read_policy_sha256':ad.inputs[read_input]['sha256']}
+    return Admitted(immutable,record,lease)

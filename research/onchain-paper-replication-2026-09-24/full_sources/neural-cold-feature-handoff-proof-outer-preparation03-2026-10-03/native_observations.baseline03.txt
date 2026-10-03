@@ -1,0 +1,36 @@
+def positive_native_observations(root,guard,child,limits):
+    """Authenticate genuine existing snapshot fields, without numeric loading."""
+    require('snapshot_error' in child and child['snapshot_error'] is None and child.get('reason')=='workload exited','child terminal snapshot failed/missing')
+    snapshot=child.get('terminal_memory_snapshot')
+    require(type(snapshot) is dict and guard.get('terminal_memory_snapshot')==snapshot,'original child terminal memory join differs')
+    events=snapshot.get('memory_events');current=snapshot.get('memory_current_bytes')
+    require(type(events) is dict and all(type(v) is int and v>=0 for v in events.values())
+        and events.get('oom')==events.get('oom_kill')==0,'terminal memory events differ')
+    require(type(current) is int and 0<=current<=limits['memory_max_bytes']
+        and guard.get('memory_events')==events and guard.get('memory_current_bytes')==current,'terminal memory current differs')
+    peak=guard.get('peak_sampled_memory_current_bytes')
+    require(type(peak) is int and current<=peak<=limits['memory_max_bytes'],'positive sampled memory peak missing/differs')
+    initial=guard.get('initial_memory_events')
+    require(type(initial) is dict and initial and all(type(v) is int and v==0 for v in initial.values()),'initial memory event evidence differs')
+    elapsed=guard.get('elapsed_seconds')
+    require(type(elapsed) in (int,float) and 0<=elapsed<=limits['wall_seconds']+60,'native elapsed evidence missing/differs')
+    host=guard.get('host_mem_available_bytes')
+    require(type(host) is int and host>=limits['reserve_bytes'],'observed host reserve missing/breached')
+    disk=guard.get('disk_free_bytes')
+    require(type(disk) is dict and set(disk)=={str(root)} and type(disk[str(root)]) is int
+        and disk[str(root)]>=limits['disk_floor_bytes'],'native disk-floor evidence missing/breached')
+    budget=limits['storage_budget'];observation=guard.get('storage_observation')
+    require(guard.get('storage_budget')==budget and type(observation) is dict,'positive storage observation missing')
+    info=root.stat();require(observation.get('root')==str(root) and observation.get('root_device')==info.st_dev
+        and observation.get('root_inode')==info.st_ino,'native storage original root differs')
+    bounds=budget['limits']
+    for key,cap in (('allocated_bytes','max_allocated_bytes'),('logical_file_bytes','max_logical_bytes'),('entries','max_entries')):
+        last=observation.get(key);high=guard.get('storage_peak_'+key)
+        require(type(last) is int and type(high) is int and 0<=last<=high<=bounds[cap],'positive storage/peak missing/differs: '+key)
+    files=observation.get('regular_files');dirs=observation.get('directories');scan=observation.get('elapsed_seconds')
+    require(type(files) is int and files>0 and type(dirs) is int and dirs>0
+        and observation['entries']==files+dirs-1 and type(scan) in (int,float)
+        and 0<=scan<=bounds['max_scan_seconds'],'storage scan denominator/time differs')
+    return {'sampled_memory_current_bytes':current,'sampled_memory_peak_bytes':peak,
+        'native_elapsed_seconds':elapsed,'native_disk_free_bytes':disk[str(root)],
+        'storage_observation':observation,'qualification':'Sampled guard observations precede outer tail; no kernel aggregate filesystem quota or full-size capacity inference.'}
