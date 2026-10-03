@@ -1,0 +1,45 @@
+# Prospective held-consumer source closure
+
+Source-only investigation. No installed capsule, Git anchor, registration, claim, runtime import, array inspection or execution was created. The wiring source is subject to its separate independent review. This report does not admit that wiring or a scientific transition.
+
+## Concrete source census
+
+`SOURCE_ENTRY_DRAFT01.json` contains the complete target/origin/SHA-256/length mapping: **199 sources, 148 package files**. All 195 CSC4 source bodies were checked against the frozen inventory. Exactly 192 remain unchanged, three are replaced (compact_mcm, mcm_score_stream, verify), and four are added (one package helper and three dated local-reader modules). Every Python body was parsed as AST without import. Future execution and anchor commits remain null; no historical origin is presented as a future installed Git object.
+
+The selected replacements/additions are byte-for-byte those in wiring `SOURCE_MAP01.json`, plus Main `verify.py` SHA `1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce` (19,938 bytes). Main adds fresh registration-pair Git batching to CSC4's source-body batching. Its transport qualifications and independent acceptance belong to their original review; this investigation only checks its actual bytes and records the source change. No unrelated current Main package file is substituted.
+
+`PACKAGE_ANCHOR_REQUIREMENTS01.json` is an exact 148-path/hash requirement list, deliberately not a valid admitted `numerical_source`: no commit field is fabricated. Three dated reader modules are registered dynamic sources, outside the conservative package glob. The new `held_score_consumer.py` is inside that glob and raises its denominator by one.
+
+## Actual source/anchor enforcement
+
+The selected `job.py:27` computes required sources from all onchain_replication/*.py, research/*.py and tradingagents/__init__.py. Static evaluation over the proposed complete target mapping yields exactly 148. `matching_owner.py:142` requires numerical_source.files to equal that complete set, current registered/local hashes to agree, and every Git blob at numerical_source.commit to agree. It authenticates full original bytes afresh; a source count label cannot replace the check. Its current-run/source/input/runtime checks remain required.
+
+`imported_mcm_identity.Target.sources:89` includes the same required set plus the registered imported kernel and workload helper. These existing dynamic sources are already in the 195-source baseline and remain unchanged. Target retains original registered graph manifest, GraphSnapshot/array identities, node order, original dictionary/matching identity, ordered motifs, current backend matching, current execution and derived workload. The consumer adds no alternative graph or dictionary authority.
+
+The old S2 147-file anchor cannot be reused as the new numerical anchor: the new package member is absent and three package bodies differ. Root must later create a genuine fresh source tree containing every selected byte, commit the exact 148 package bodies, and derive the anchor from those actual Git objects. Historical original-dictionary objects remain separately preserved and authenticated. An execution commit may descend from that genuine anchor after adding reviewed registration/input metadata; it cannot substitute Main HEAD for a capsule commit unless the actual target blobs exist there and pass the complete check. No exact future commit or capsule identity is assigned here.
+
+## Concrete policy and route limitation
+
+Wiring preflight only executes for `produce_imported`, while the original genuine held transition is active and before MCM namespace/Stage birth. It requires the actual imported Target/Owner, identical selected-job and original-plan `held_score_consumer_input`, resource_only=True, a registered <=8KiB policy and one distinct registered JSON output per descriptor required_graph. Policy validates full graph-key membership, finite aligned part size, total bytes and member bound. Source loading independently pins canonical origins and refuses conflicting module aliases. The accepted stream's private completion evidence is consumed only after successful finish and before Stage finalization. Reads are opaque ordered float64 bytes and produce readback evidence, not scientific publication or storage retirement.
+
+**Source composition alone does not activate this helper in the cold scientific proof.** The original cold proof uses a fit job/compact_native_producer, with a freshly materialized synthetic scientific dictionary. The consumer explicitly requires the imported resource Target. Root must select a separately reviewed resource-only imported execution for the immediate held-reader proof, or commission a distinct genuine scientific authority transition before integrating it into fit. It must not attach a fake Target, relabel resource completion as Published, or simply change a resource_only flag. The current policy is prospective and unregistered. This adapter frees zero local bytes and grants no transport/deletion authority.
+
+## Historical cold proof and successor lineage
+
+CAP2 B2 `361339125a3f1cd57e7ba8611f5a994ae649fa0b`, sole parent A2 `9742c6ec817dd0917f9f35a52e4b83965ca1cd29`, remains immutable with 195 selected sources/147 package bodies. Its materialization is COMPLETE; its comparison is permanently FAILED and both engineering allowances are spent. The recovered 43 materialization outputs and 44 registered comparison input roles remain historical evidence. They are not an automatic 44-input future contract: their policies/anchor/source identity refer to the original source and job.
+
+OUT3 `proof_release01.py:82,137,185` explicitly authenticates historical 195 sources and requires unchanged source maps across its sole-child additive registration evolution. Therefore the 199-source successor is **not** an admissible fifth addition to old B2, nor another invocation of its closed fixed IDs. The historical checker must remain exact. A separately reviewed successor lineage/admission contract must explicitly authenticate original closed materialization and any byte reuse, while binding the new current source/anchor/input roles and unused identities. It cannot obtain authority by merely replacing 195 with 199 in historical checks.
+
+The original saved 32-motif dictionary/512 spent samples retain their original scientific identity, representative order, graph/sample ancestry and closed claim. Importing them is distinct from re-running that sampling and distinct from the fresh synthetic 32-recipe cold proof. Neither source composition nor this report grants resampling, a refund, a new allowance, or paper-budget transfer.
+
+## Exact preparation changes required before root integration
+
+1. After wiring review, freeze a new complete composition from the 199-entry draft; preserve all earlier inventories/snapshots. Pin source origins and independently verify every installed byte and actual Git object. Recompute package148 anchor from genuine committed bytes.
+2. Prepare successors to CSC4 metadata helper, generator04 and builder02. They currently bind exact inventory digests and 195/147 counts (metadata helper lines14–26, generator lines64–65/111–112, builder lines34/61–62/95). Merely supplying this draft will correctly refuse. Successor review must cover new current-source cardinality without relaxing historical checks.
+3. Select and register the actual imported-resource producer/target mapping, same job_input/plan identity, finite held policy and extra per-graph outputs. Preserve original import/matching/resource controls; a scientific consumer requires an additional authentic transition, not provided here.
+4. Rebind current runtime/source inventory, immutable module origins and native environment to the actual new capsule. Installed software need not change merely because source changes; no new numerical imports were performed and no runtime receipt is fabricated. The historical 251 RECORD pins are evidence, not a current new-capsule runtime observation. Preserve real job._command and native/worker inventory verification.
+5. Root alone prepares new cumulative accounting, finite guard/whole-tree controls, release/recovery and one-use identities. Every previous failure and both old cold IDs remain closed. A later genuine guarded Target/Owner/Stage/stream test is still necessary; these byte/AST checks establish only closure preparation.
+
+## Checks and limits
+
+`readback01.py` ran with checkout-local `.venv/bin/python -B`; all source hashes, lengths, unique targets, package derivation, 192/3/4 partition and Python AST parsing passed. Reads were regular single-link files bounded to4MiB with before/after identity checks. No array bodies, numerical imports, Git writes, network, claims or original capsule changes occurred. The draft is a complete executable-source input to a future composition, not proof of transitive numerical execution, performance, capacity or full paper-scope completion.
