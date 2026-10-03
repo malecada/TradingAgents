@@ -1,0 +1,32 @@
+{
+  "author_stdlib_tests_passed": 13,
+  "execution_admitted": false,
+  "findings": [
+    {
+      "file": "financial_wrapper_fixture.py",
+      "id": "FW1",
+      "issue": "Later failure-evidence fatal replaces first actual fatal; diagnostic attachment unprotected",
+      "line": 325,
+      "severity": "P2",
+      "witness": "Exact extracted handler MemoryError\u2192SystemExit and SystemExit\u2192MemoryError select later fatal."
+    },
+    {
+      "file": "financial_wrapper_fixture.py",
+      "id": "FW2",
+      "issue": "Continuation parent phase/cursor not bound to interrupt1/epoch1; genuine failed epoch100 checkpoint can complete with zero updates",
+      "line": 288,
+      "severity": "P2",
+      "witness": "Original fit cursor accepts epoch100,batch0 and original while predicate is false; source callback after checkpoint can fail before fit completion."
+    }
+  ],
+  "independent_source_checks_including_RED_witnesses": 346,
+  "no_numerical_array_claim_native_network_authority_execution": true,
+  "prospective_unreserved_phase_slots": 18,
+  "report_sha256": "650ae08f25da1e519a390231a876cfcc6d2080a5aaadafccf4be163d4750127e",
+  "schema_version": 1,
+  "source_targets": 194,
+  "subject_manifest_sha256": "f6bf2be20dd3e2cc77b53bf4c2c75ce4638da7e1600bd944addd4ed658d89b2d",
+  "subject_source_sha256": "5e8face14c8624512692caf62b8f3f153c7ed90f720ce8bf43858ecf929d60bc",
+  "timestamp_utc": "2026-10-03T19:13:23.102071+00:00",
+  "verdict": "WITHHELD"
+}

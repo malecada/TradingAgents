@@ -1,0 +1,55 @@
+{
+  "replay.py": [
+    {
+      "before": "    model=ReplicationModel(config,'classification') if execution is None else build_model('proposed','classification',config,execution=execution)",
+      "after": "    task=manifest.get('task','classification')\n    if task not in ('classification','regression'):raise ValueError('explicit replay task differs')\n    model=ReplicationModel(config,task) if execution is None else build_model('proposed',task,config,execution=execution)"
+    }
+  ],
+  "job.py": [
+    {
+      "before": "def job_schema(job):\n",
+      "after": "def job_schema(job):\n    if job.get('kind')=='financial_wrapper':\n        from . import financial_wrapper_fixture\n        financial_wrapper_fixture.schema(job)\n",
+      "count": 1
+    },
+    {
+      "before": "and not _cold_native(job):raise ValueError('native-only",
+      "after": "and not _cold_native(job) and job.get('kind')!='financial_wrapper':raise ValueError('native-only",
+      "count": 1
+    },
+    {
+      "before": "'neural_resource', 'compact_resource'):",
+      "after": "'neural_resource', 'compact_resource', 'financial_wrapper'):",
+      "count": 1
+    },
+    {
+      "before": "    if _cold_native(job):\n        from . import compact_cold_proof_native\n        compact_cold_proof_native.admitted(admitted,job)",
+      "after": "    if job['kind']=='financial_wrapper':\n        from . import financial_wrapper_fixture\n        financial_wrapper_fixture.admitted(admitted,job)\n    if _cold_native(job):\n        from . import compact_cold_proof_native\n        compact_cold_proof_native.admitted(admitted,job)",
+      "count": 1
+    },
+    {
+      "before": "    if _cold_native(job):\n        from . import compact_cold_proof_native\n        readback=compact_cold_proof_native.worker_limits()",
+      "after": "    if job['kind']=='financial_wrapper':\n        from . import financial_wrapper_fixture\n        readback=financial_wrapper_fixture.worker_limits()\n    elif _cold_native(job):\n        from . import compact_cold_proof_native\n        readback=compact_cold_proof_native.worker_limits()",
+      "count": 1
+    },
+    {
+      "before": "job['kind']=='compact_resource' or _cold_native(job)",
+      "after": "job['kind'] in ('compact_resource','financial_wrapper') or _cold_native(job)",
+      "count": 2
+    },
+    {
+      "before": "    admitted, job = _admitted(args)\n    if _cold_native(job):",
+      "after": "    admitted, job = _admitted(args)\n    if job['kind']=='financial_wrapper':\n        from . import financial_wrapper_fixture\n        financial_wrapper_fixture.worker_limits()\n    if _cold_native(job):",
+      "count": 1
+    },
+    {
+      "before": "('fit','neural_resource','compact_resource')",
+      "after": "('fit','neural_resource','compact_resource','financial_wrapper')",
+      "count": 1
+    },
+    {
+      "before": "            elif job['kind']=='compact_resource':",
+      "after": "            elif job['kind']=='financial_wrapper':\n                from . import financial_wrapper_fixture\n                cells=financial_wrapper_fixture.execute(run,args,job['payload']['plan_input'])\n            elif job['kind']=='compact_resource':",
+      "count": 1
+    }
+  ]
+}

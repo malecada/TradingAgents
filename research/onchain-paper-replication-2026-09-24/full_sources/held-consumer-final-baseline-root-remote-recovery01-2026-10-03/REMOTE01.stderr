@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-baseline-root-remote-recovery01-2026-10-03/recover_selected01.py", line 173, in <module>
+    main()
+    ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-baseline-root-remote-recovery01-2026-10-03/recover_selected01.py", line 136, in main
+    tree = git(['ls-tree', '-r', '-z', COMMIT], repo, cap=8 * 1024**2)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-baseline-root-remote-recovery01-2026-10-03/recover_selected01.py", line 114, in git
+    raise first
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-baseline-root-remote-recovery01-2026-10-03/recover_selected01.py", line 80, in git
+    require(len(target) <= (cap if target is out else 65536), 'streaming response bound')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-baseline-root-remote-recovery01-2026-10-03/recover_selected01.py", line 25, in require
+    raise ValueError(message)
+ValueError: streaming response bound

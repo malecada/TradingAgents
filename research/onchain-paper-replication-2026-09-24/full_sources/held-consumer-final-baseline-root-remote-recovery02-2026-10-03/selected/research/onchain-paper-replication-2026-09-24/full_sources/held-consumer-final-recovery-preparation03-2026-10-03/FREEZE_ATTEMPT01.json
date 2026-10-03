@@ -1,0 +1,7 @@
+{
+  "scope": "Evidence-inventory tooling only, not recovery source or tests",
+  "result": "FAILED_BEFORE_MANIFEST_WRITE",
+  "reason": "Initial freeze code only handled directory, regular file and symlink; the retained reader refusal fixture synthetic-io-n84oa4mj/root/fifo raised RuntimeError.",
+  "correction": "freeze03.py explicitly records kind=fifo without reading it. The production archive validator continues to refuse FIFOs.",
+  "source_changed": false
+}

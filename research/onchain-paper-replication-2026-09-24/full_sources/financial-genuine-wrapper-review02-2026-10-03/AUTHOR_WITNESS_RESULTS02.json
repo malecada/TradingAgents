@@ -1,0 +1,107 @@
+{
+  "cursor": [
+    {
+      "epoch": 0,
+      "new_reject": true,
+      "old_loop": true,
+      "old_reject": false
+    },
+    {
+      "epoch": 1,
+      "new_reject": false,
+      "old_loop": true,
+      "old_reject": false
+    },
+    {
+      "epoch": 2,
+      "new_reject": true,
+      "old_loop": true,
+      "old_reject": false
+    },
+    {
+      "epoch": 99,
+      "new_reject": true,
+      "old_loop": true,
+      "old_reject": false
+    },
+    {
+      "epoch": 100,
+      "new_reject": true,
+      "old_loop": false,
+      "old_reject": 0
+    },
+    {
+      "epoch": 101,
+      "new_reject": true,
+      "old_loop": false,
+      "old_reject": true
+    }
+  ],
+  "fatal": [
+    {
+      "expected_identity": false,
+      "first": "MemoryError",
+      "later": "SystemExit",
+      "observed": "SystemExit",
+      "version": "prior",
+      "writer_calls": 1
+    },
+    {
+      "expected_identity": false,
+      "first": "SystemExit",
+      "later": "MemoryError",
+      "observed": "MemoryError",
+      "version": "prior",
+      "writer_calls": 1
+    },
+    {
+      "expected_identity": true,
+      "first": "MemoryError",
+      "later": "OSError",
+      "observed": "MemoryError",
+      "version": "prior",
+      "writer_calls": 1
+    },
+    {
+      "expected_identity": true,
+      "first": "ValueError",
+      "later": "MemoryError",
+      "observed": "MemoryError",
+      "version": "prior",
+      "writer_calls": 1
+    },
+    {
+      "expected_identity": true,
+      "first": "MemoryError",
+      "later": "SystemExit",
+      "observed": "MemoryError",
+      "version": "successor",
+      "writer_calls": 1
+    },
+    {
+      "expected_identity": true,
+      "first": "SystemExit",
+      "later": "MemoryError",
+      "observed": "SystemExit",
+      "version": "successor",
+      "writer_calls": 1
+    },
+    {
+      "expected_identity": true,
+      "first": "MemoryError",
+      "later": "OSError",
+      "observed": "MemoryError",
+      "version": "successor",
+      "writer_calls": 1
+    },
+    {
+      "expected_identity": true,
+      "first": "ValueError",
+      "later": "MemoryError",
+      "observed": "MemoryError",
+      "version": "successor",
+      "writer_calls": 1
+    }
+  ],
+  "qualification": "stdlib actual-source handlers and scalar metadata only; no Run/Owner/Binding/model/tensor/checkpoint/native fixture"
+}

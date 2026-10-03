@@ -1,0 +1,13 @@
+--- preserved/replay.py
++++ prospective/replay.py
+@@ -48,7 +48,9 @@
+     package=Path(__file__).resolve().parent
+     if manifest['source_files']!={name:file_hash(package/name) for name in (SELECTED_CODE if execution is not None else CODE)}:raise ValueError('replay source differs')
+     config=json.loads((directory/'model.json').read_bytes())
+-    model=ReplicationModel(config,'classification') if execution is None else build_model('proposed','classification',config,execution=execution)
++    task=manifest.get('task','classification')
++    if task not in ('classification','regression'):raise ValueError('explicit replay task differs')
++    model=ReplicationModel(config,task) if execution is None else build_model('proposed',task,config,execution=execution)
+     data=read_artifact(directory/manifest['checkpoint'],manifest['provenance'])
+     state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True);financial.validate_state(state,manifest['provenance']);financial.check_state_model(state,model,manifest['provenance']);model.load_state_dict(state['model'],strict=True);model.eval()
+     graph,price=inputs(json.loads((directory/'inputs.json').read_bytes()))

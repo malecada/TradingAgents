@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 253, in <module>
+    require(args.bundle is not None and args.capture_sha256 is not None and args.destination is not None,'explicit recovered bundle/hash/destination required');recover(args.bundle,args.capture_sha256,q,args.request_sha256,args.destination)
+                                                                                                                                                                ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 243, in recover
+    results[role]=restore(bundle/(role+'.tar.gz'),receipt['archives'][role],request_value[role+'_manifest'],output,prefix=role)
+                  ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 186, in restore
+    for name,t,body in members:
+                       ^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 124, in framed_members
+    require(set(fields)=={b'path'},'PAX path missing');pending=path_name(fields[b'path']);continue
+                                                               ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 15, in path_name
+    require(type(n) is str and n and n!='.' and str(PurePosixPath(n))==n and not n.startswith('/') and '\\' not in n and '\0' not in n and '..' not in n.split('/') and len(n.encode())<=2048 and len(n.split('/'))<=32,'unsafe member path')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 11, in require
+    if not v:raise ValueError(msg)
+             ^^^^^^^^^^^^^^^^^^^^^
+ValueError: unsafe member path

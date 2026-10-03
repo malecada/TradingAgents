@@ -1,0 +1,27 @@
+# Independent actual fresh flat03 archival recovery review
+
+Decision: **accepted complete actual external archival baseline only**. The genuine successful flat03 receipt is `48c24f5b7c015cb902db19afbb2b171edefadb88a3bb10ef86d8815067c8bf34`. This is not recovered Git proof, a final native release, or a successful scientific outcome.
+
+Root’s frozen FLAT_RUN_PINS03 and FLAT_TERMINAL03 agree on the absolute fetched request, bundle, capture and new private flat03 output. They select the independently accepted recovery04 source `b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a` and its exact review. The source and two copied IO/Git dependencies still match. The actual terminal records exit0 in1.567052544 seconds, empty stdout/stderr and the exact recovery hash; their bodies and hashes were checked. This attempt is distinct from the preserved failed flat01 and flat02. Neither was rerun or relabeled.
+
+## Independent complete recovered-byte evidence
+
+Every actual flat03 file was reopened with bounded nofollow IO, single-link/type/extent checks and pre/post descriptor/path signatures. The directory is the supplied0700 scope and contains exactly676 regular0600 files:663 capsule bodies,10 external-parent bodies,2 role metadata files and1 final recovery receipt. No extra member or instantiated directory exists. The reviewer retained the complete676-file observed inventory with hashes and inode identities.
+
+Each recovered body agrees with the full authenticated role map and original length/SHA256. The maps cover exactly925 logical capsule members (663 files,262 directories) and12 external members (10 files,2 directories), including all logical modes and root-mode metadata. Capsule logical file bytes are6,782,177; external logical file bytes are271,900. Original0775/0700 root modes remain authenticated metadata; recovery did not instantiate those original POSIX trees or original file permissions.
+
+Canonical TAR/gzip recompression from **these actual recovered flat bodies**, rather than donor paths, reproduced both entire fetched archive byte strings: capsule `bcbc44160e09beba8b50e28188393cce6a3e9f90af9062fd90e4026f2ce74dbd` (2,894,600 bytes), external `67e1db759678c8fe36627d6af1d313a624737ed66b4afc1f83fb63fa7faa1189` (75,209 bytes). This independently verifies full ordering, logical member types, body bytes and canonical compressed framing after recovery. No archive extraction, actual recovery rerun, array decoding or numerical module import occurred.
+
+## Origin and original-state joins
+
+The accepted actual remote02 receipt `e4c0d191f87816717e3239c627421d5096e79466f4234a85ed6d4cdaf610ea9d` authenticates137 selected bodies/7,566,383 bytes from recorded actual remote commit `d9ebc6cb0be3b3b5f7247ff486e44455136b21ef`. Its earlier independent full137-object/body review remains pinned. This review additionally re-read all six fetched request/capture/manifest/archive bodies through genuine offline `commit:path` Git joins with lazy fetch and network protocols disabled. They equal the selected saved bytes used for flat03. No local donor or synthesized object store was substituted. Final FETCH_HEAD still has the separately fetched blob-union semantics described in the earlier review; it is not called the source commit.
+
+Request `3d5481584c69034d696276431465064d01788e0fd651bdc8fe7df203bc52bf71`, capture `b9f1d20bedb3e9eff6ca7390684c439de29f5eaab062663e8419f2a3b7a40227`, both original role manifests and all receipt metadata joins match. Recovered caller7a197e2f and parser95affaa3 match their accepted originals. The recovered release and request are explicitly UNRELEASED. The original empty failed flat01 and exact470-body failed flat02 remain present without a final recovery receipt. No selected recovery04/controller/job process, parent attempt or either fresh claim/outer/artifact namespace was observed after closure. Root’s terminal disk observation18,951,221,248 bytes exceeded10 GiB; this is historical resource evidence, not future eligibility.
+
+## Exact exclusions and remaining gate
+
+All role-level and top-level false flags remain truthful: instantiated_posix_tree, recovered_tree_git_join, runtime_package_bodies_recovered, outside_stores_recovered and research_authority. The original `.git` bytes are archived/recovered as flat members, but no fresh reconstructed Git object-store, current/design/anchor/history query or ancestry check was performed here. Complete C6 history beyond the selected retained objects remains excluded.
+
+This is the complete captured immutable capsule/caller baseline. Later released envelope/request/proof bodies, recovery04 source/review evidence created after the original selected-commit snapshot, and their required exact supporting scope are not silently included in that older baseline. They require separately pinned actual external preservation and a final union review. The installed runtime metadata and opaque empirical inputs are preserved only to the extent expressly inside the manifests; outside installed package bodies and stores are not backed up by this receipt.
+
+Root still needs the separately reviewed recovered Git proof, exact final recovered body union and request, and fresh process/resource/native eligibility before any one-use launch. No budget adoption, genuine Run/Owner, numerical result/capacity, financial fit or native authority follows from archival acceptance. Only the new reviewer directory was written; original sources, recovery trees, capsules, Git, failures and claims remain unchanged.
