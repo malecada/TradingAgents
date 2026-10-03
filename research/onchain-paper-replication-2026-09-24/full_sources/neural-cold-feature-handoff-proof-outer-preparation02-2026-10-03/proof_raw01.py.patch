@@ -1,0 +1,45 @@
+--- immutable01/proof_raw01.py
++++ candidate02/proof_raw01.py
+@@ -18,6 +18,32 @@
+ def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
+ def fatal(error):return error is not None and (not isinstance(error,Exception) or isinstance(error,(MemoryError,RecursionError)))
+ def preserve(first,later):return first if fatal(first) else later if fatal(later) or first is None else first
++
++def preserve_owned(first,later,cleanup_type):
++    # cleanup_type is the source-authenticated canonical owned_io class, never
++    # an invented error label or user-provided receipt field.
++    if first is None:return later
++    actual=lambda e:fatal(e) and not isinstance(e,cleanup_type)
++    if actual(first):return first
++    if actual(later):return later
++    if isinstance(later,cleanup_type) and isinstance(first,Exception):return later
++    return first
++
++def sync_owned_directory(path,cleanup_type):
++    fd=os.open(path,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);first=None
++    try:os.fsync(fd)
++    except BaseException as error:first=preserve_owned(first,error,cleanup_type)
++    try:os.close(fd)
++    except BaseException as error:first=preserve_owned(first,error,cleanup_type)
++    if first is not None:raise first
++
++MATERIAL_INPUTS=frozenset(['graph-'+str(i).zfill(2) for i in range(19)]+[
++ 'population','model','training','calendar','coverage','pair_checkpoint',
++ 'compact_policy','compact_training','compact_sampler','compact_samples',
++ 'compact_dictionary','compact_mcm','compact_mcm_output','compact_feature',
++ 'compact_graph_output','compact_denominator','compact_closure',
++ 'compact_publication','compact_terminal','compact_native_features',
++ 'compact_cold_handoff','cold_proof','plan','future_execution_job'])
+ 
+ def body(root,relative,limit=MAX):
+     require(DEADLINE is None or time.monotonic()<=DEADLINE,'raw verification deadline exceeded')
+@@ -154,7 +180,8 @@
+     require((summary['train_rows'],summary['test_rows'],summary['excluded_rows'],summary['graph_population'],summary['required_graphs'])==(56,12,65,19,18),'actual materialized denominator differs')
+     require(summary['fresh_sample_count']==summary['dictionary_size']==32 and summary['dictionary_max_pairs']==992 and summary['mcm_pairs_per_required_graph']==128,'fresh synthetic sample accounting differs')
+     require(document(root,prefix+'/future-inputs.json')==summary and document(root,prefix+'/complete.json')==summary,'materializer original saved completion differs')
+-    refs=summary['inputs'];require(len([n for n in refs if n.startswith('graph-')])==19,'graph manifest denominator differs')
++    refs=summary['inputs'];require(set(refs)==MATERIAL_INPUTS,'exact materialized input membership differs')
++    require(summary['execution_input_rename']=={'future_execution_job':'execution_job'} and sorted(summary['future_outputs'])==sorted(['binding.json','journal.json','cold-handoff.json','proof-compare.json']),'materialized output/rename contract differs')
+     population=None;graphs={};members=0
+     for name,item in refs.items():
+         raw=body(root,item['path']);require(digest(raw)==item['sha256'],'materialized input hash differs: '+name)

@@ -1,0 +1,29 @@
+test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy (__main__.Allowance.test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy) ... ERROR
+
+======================================================================
+ERROR: test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy (__main__.Allowance.test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation04-2026-10-03/test_allowance01.py", line 21, in test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy
+    numeric=ast.literal_eval(call.args[1])['numeric'];self.assertEqual(numeric['max_buffer_bytes'],1048576)
+            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/ast.py", line 110, in literal_eval
+    return _convert(node_or_string)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/ast.py", line 99, in _convert
+    return dict(zip(map(_convert, node.keys),
+                    map(_convert, node.values)))
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/ast.py", line 109, in _convert
+    return _convert_signed_num(node)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/ast.py", line 83, in _convert_signed_num
+    return _convert_num(node)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/ast.py", line 74, in _convert_num
+    _raise_malformed_node(node)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/ast.py", line 71, in _raise_malformed_node
+    raise ValueError(msg + f': {node!r}')
+ValueError: malformed node or string on line 62: <ast.BinOp object at 0x7af964d49450>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (errors=1)

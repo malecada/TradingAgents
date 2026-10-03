@@ -1,0 +1,96 @@
+test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) ... 
+  test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) (kind='MemoryError') ... FAIL
+  test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) (kind='RecursionError') ... FAIL
+  test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) (kind='KeyboardInterrupt') ... FAIL
+  test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) (kind='SystemExit') ... FAIL
+test_authentication_chain_is_recomputed (__main__.Corrections.test_authentication_chain_is_recomputed) ... FAIL
+test_cleanup_then_first_memory_fatal (__main__.Corrections.test_cleanup_then_first_memory_fatal) ... FAIL
+test_original_prior_fragment_refuses_forgery (__main__.Corrections.test_original_prior_fragment_refuses_forgery) ... FAIL
+test_owned_parent_fsync_close (__main__.Corrections.test_owned_parent_fsync_close) ... FAIL
+test_reduced_materialization_membership (__main__.Corrections.test_reduced_materialization_membership) ... FAIL
+
+======================================================================
+FAIL: test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) (kind='MemoryError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/test_corrections02.py", line 19, in test_all_mixed_fatal_orders
+    self.assertIs(reducer(Cleanup(),fatal,Cleanup),fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CleanupFailure() is not MemoryError()
+
+======================================================================
+FAIL: test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) (kind='RecursionError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/test_corrections02.py", line 19, in test_all_mixed_fatal_orders
+    self.assertIs(reducer(Cleanup(),fatal,Cleanup),fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CleanupFailure() is not RecursionError()
+
+======================================================================
+FAIL: test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) (kind='KeyboardInterrupt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/test_corrections02.py", line 19, in test_all_mixed_fatal_orders
+    self.assertIs(reducer(Cleanup(),fatal,Cleanup),fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CleanupFailure() is not KeyboardInterrupt()
+
+======================================================================
+FAIL: test_all_mixed_fatal_orders (__main__.Corrections.test_all_mixed_fatal_orders) (kind='SystemExit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/test_corrections02.py", line 19, in test_all_mixed_fatal_orders
+    self.assertIs(reducer(Cleanup(),fatal,Cleanup),fatal)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CleanupFailure() is not SystemExit()
+
+======================================================================
+FAIL: test_authentication_chain_is_recomputed (__main__.Corrections.test_authentication_chain_is_recomputed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/test_corrections02.py", line 51, in test_authentication_chain_is_recomputed
+    tree=ast.parse((S/'proof_release01.py').read_text());fn=next((n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='authenticate_prior'),None);self.assertIsNotNone(fn)
+                                                                                                                                                                ~~~~~~~~~~~~~~~~~~~~^^^^
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_cleanup_then_first_memory_fatal (__main__.Corrections.test_cleanup_then_first_memory_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/test_corrections02.py", line 14, in test_cleanup_then_first_memory_fatal
+    self.assertIs(reducer(first,later,Cleanup),later)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CleanupFailure('uncertain') is not MemoryError('fatal')
+
+======================================================================
+FAIL: test_original_prior_fragment_refuses_forgery (__main__.Corrections.test_original_prior_fragment_refuses_forgery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/test_corrections02.py", line 46, in test_original_prior_fragment_refuses_forgery
+    with self.assertRaises((ValueError,KeyError,FileNotFoundError)):exec(code,env)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'KeyError'>, <class 'FileNotFoundError'>) not raised
+
+======================================================================
+FAIL: test_owned_parent_fsync_close (__main__.Corrections.test_owned_parent_fsync_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/test_corrections02.py", line 23, in test_owned_parent_fsync_close
+    fn=getattr(raw,'sync_owned_directory',None);self.assertIsNotNone(fn)
+                                                ~~~~~~~~~~~~~~~~~~~~^^^^
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_reduced_materialization_membership (__main__.Corrections.test_reduced_materialization_membership)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation02-2026-10-03/test_corrections02.py", line 48, in test_reduced_materialization_membership
+    names=getattr(raw,'MATERIAL_INPUTS',None);self.assertIsNotNone(names)
+                                              ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.007s
+
+FAILED (failures=9)

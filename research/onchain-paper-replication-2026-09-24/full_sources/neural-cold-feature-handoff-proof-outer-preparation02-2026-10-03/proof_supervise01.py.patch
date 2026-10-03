@@ -1,0 +1,33 @@
+--- immutable01/proof_supervise01.py
++++ candidate02/proof_supervise01.py
+@@ -3,6 +3,7 @@
+ from pathlib import Path
+ from proof_raw01 import *
+ from proof_release01 import check_release,module
++from proof_outer01 import canonical_cleanup
+ 
+ 
+ def run(root,release_path,expected_sha,phase):
+@@ -10,6 +11,7 @@
+     release=parse(raw);ctx=check_release(root,release,phase);identity=IDENTITIES[phase]
+     require(Path(__file__).resolve()==root/'proof_tools/proof_supervise01.py','supervisor source origin differs')
+     sources=ctx['sources'];resources=module('proof_supervisor_resources',root/'tradingagents/research/onchain_replication/resources.py',sources['tradingagents/research/onchain_replication/resources.py']);storage=module('proof_supervisor_storage',root/'tradingagents/research/onchain_replication/workflow_storage.py',sources['tradingagents/research/onchain_replication/workflow_storage.py'])
++    owned=canonical_cleanup(root,sources['tradingagents/research/onchain_replication/owned_io.py'])
+     environment=resources._native_owned_env(root);require(environment==ctx['environment'],'supervisor environment differs');os.environ.update(environment)
+     resource.setrlimit(resource.RLIMIT_FSIZE,(MAX,MAX));require(resource.getrlimit(resource.RLIMIT_FSIZE)==(MAX,MAX),'supervisor file limit differs')
+     watch=storage.StorageWatch(root,ctx['job']['resources']['storage_budget']['limits']);initial=watch.check();require(initial['allocated_bytes']<=128*1024**2 and initial['logical_file_bytes']<=128*1024**2 and shutil.disk_usage(root).free>=10*GIB,'supervisor baseline unavailable')
+@@ -19,12 +21,10 @@
+         require(len((json.dumps(value,sort_keys=True,allow_nan=False)+'\n').encode())<=META,'supervisor receipt exceeds8KiB');resources._native_receipt(directory,name,value)
+     def retain(error):
+         nonlocal primary
+-        primary=preserve(primary,error)
++        primary=preserve_owned(primary,error,owned.CleanupFailure)
+     def stop(number,frame):raise InterruptedError('proof supervising process interrupted')
+     try:
+-        fd=os.open(directory.parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+-        try:os.fsync(fd)
+-        finally:os.close(fd)
++        sync_owned_directory(directory.parent,owned.CleanupFailure)
+         for number in (signal.SIGINT,signal.SIGTERM):handlers[number]=signal.signal(number,stop)
+         command=[sys.executable,'-B',str(root/'proof_tools/proof_outer01.py'),'--release',release_path,'--release-sha256',expected_sha,'--phase',phase]
+         save('claim.json',{'schema_version':1,'phase':phase,'identity':identity,'source':release['source'],'release':ref(root,release_path,kind='metadata'),'owner_pid':os.getpid(),'owner_start_ticks':Path('/proc/self/stat').read_text().rsplit(')',1)[1].split()[19],'command':command,'file_size_limit':[MAX,MAX],'numerical_claim':False})

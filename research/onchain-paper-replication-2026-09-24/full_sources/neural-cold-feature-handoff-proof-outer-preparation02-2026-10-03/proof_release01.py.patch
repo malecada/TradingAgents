@@ -1,0 +1,94 @@
+--- immutable01/proof_release01.py
++++ candidate02/proof_release01.py
+@@ -17,7 +17,8 @@
+     require(digest(path.read_bytes())==sha,'helper source differs')
+     spec=importlib.util.spec_from_file_location(name,path);value=importlib.util.module_from_spec(spec);sys.modules[name]=value;spec.loader.exec_module(value);return value
+ 
+-def check_release(root,release,phase):
++def _release_context(root,release,phase,mode):
++    require(mode in ('unclaimed','retained-materialization') and (mode=='unclaimed' or phase=='materialize'),'historical context is materialization-only and read-only')
+     started=time.monotonic();root=Path(root)
+     fields={'schema_version','kind','status','phase','root','source','registration','sources','runtime','native_environment','phase_contract','prior_materialization','cpus','remaining'}
+     require(set(release)==fields and release['schema_version']==1 and release['kind']=='cold-proof-outer-release-v1' and release['status']=='released' and release['remaining']==[] and release['phase']==phase in IDENTITIES,'proof source draft is not an exact release')
+@@ -46,23 +47,10 @@
+     require(p['memory_max_bytes']==p['memory_high_bytes']==3*GIB and p['reserve_bytes']==3*GIB and p['start_reserve_bytes']==6*GIB and p['wall_seconds']==1800 and p['disk_floor_bytes']==10*GIB and p['disk_paths']==[str(root)] and p['native_unit_limits']=={'file_size_bytes':MAX} and 'physical_policy' not in p,'exact native policy differs')
+     require(p['storage_budget']=={'root':str(root),'limits':{'max_allocated_bytes':GIB,'max_logical_bytes':GIB,'max_entries':32768,'max_depth':32,'max_scan_seconds':5}},'whole writable capsule watch differs')
+     require(type(release['cpus']) is list and release['cpus']==sorted(release['cpus']) and len(release['cpus'])==len(set(release['cpus']))==2 and all(type(x) is int for x in release['cpus']),'CPU affinity denominator differs')
+-    require(not any((root/n/identity).exists() or (root/n/identity).is_symlink() for n in ('research_runs',PREFIX,OUTER,ARTIFACT)),'phase identity already reserved/terminal')
++    if mode=='unclaimed':require(not any((root/n/identity).exists() or (root/n/identity).is_symlink() for n in ('research_runs',PREFIX,OUTER,ARTIFACT)),'phase identity already reserved/terminal')
+     prior=release['prior_materialization']
+     if phase=='materialize':require(prior is None and job['payload']['representation_jobs']=={},'materialization cannot claim prior science')
+-    else:
+-        require(prior is not None and set(job['payload']['representation_jobs'])=={'cold-proof'},'comparison requires actual materialization')
+-        require(set(prior)=={'accepted','wait'},'prior materialization closure references differ')
+-        accepted=deref(root,prior['accepted']);wait=deref(root,prior['wait'])
+-        require(prior['accepted']['path']==OUTER+IDENTITIES['materialize']+'/accepted.json' and accepted['status']=='accepted' and accepted['phase']=='materialize','materialization outer success absent')
+-        require(prior['wait']['path']=='proof_supervise/'+IDENTITIES['materialize']+'/exit.json' and wait['status']=='accepted' and wait['controller_exit_code']==0 and wait['controller_pid_absent'] is True and wait['accepted_receipt']==prior['accepted'] and wait['release']==accepted['release'],'actual observed materialization outer exit differs')
+-        require(all(type(wait[k]) is int and not Path('/proc',str(wait[k])).exists() for k in ('controller_pid','supervisor_pid')) and not (root/'proof_supervise'/IDENTITIES['materialize']/'late-failure.json').exists(),'prior materialization processes/late failure remain')
+-        require(not any((root/OUTER/IDENTITIES['materialize']/n).exists() for n in ('failed.json','late-failure.json')),'materialization outer failed')
+-        observed=deref(root,accepted['authentication']);require(observed['proof']['kind']=='materialized-inputs-only' and observed['proof']['scientific_completion'] is False,'materialization was relabeled scientific')
+-        material=deref(root,observed['proof']['future_inputs'])
+-        for name,info in material['inputs'].items():
+-            target='execution_job' if name=='future_execution_job' else name
+-            require(experiment['inputs'].get(target)==info,'comparison input not actual materialized bytes: '+target)
+-        require(digest(body(root,material['inputs']['population']['path']))==material['inputs']['population']['sha256'],'materialized population changed')
++    else:authenticate_prior(root,release,experiment,job)
+     runtime=deref(root,release['runtime']);environment=deref(root,release['native_environment'])
+     require(sys.executable==runtime['executable'] and sys.prefix==runtime['prefix'],'locked runtime mapping differs')
+     sys.path.insert(0,str(root));blocker=no_numerics()
+@@ -71,3 +59,55 @@
+     args=SimpleNamespace(root=root,registration=release['registration']['path'],experiment=identity,source=release['source'])
+     launch_command=job_module._command(args,'launch');worker_command=job_module._command(args,'worker')
+     return {'release':release,'phase':phase,'sources':sources,'runtime':runtime,'environment':environment,'experiment':experiment,'family':family,'job':job,'launch_command':launch_command,'worker_command':worker_command,'blocker':blocker,'source_count':len(sources)}
++
++
++def check_release(root,release,phase):
++    """Only launch-facing gate: an already born identity always refuses."""
++    return _release_context(root,release,phase,'unclaimed')
++
++
++def authenticate_prior(root,current,experiment,job):
++    """Revalidate retained materialization; never admit/replay its closed run."""
++    prior=current['prior_materialization'];identity=IDENTITIES['materialize']
++    require(type(prior) is dict and set(prior)=={'accepted','wait'} and set(job['payload']['representation_jobs'])=={'cold-proof'},'comparison requires exact prior closure')
++    require(prior['accepted']['path']==OUTER+identity+'/accepted.json' and prior['wait']['path']=='proof_supervise/'+identity+'/exit.json','prior original receipt paths differ')
++    accepted=deref(root,prior['accepted']);wait=deref(root,prior['wait'])
++    require(accepted['status']==wait['status']=='accepted' and accepted['phase']==wait['phase']=='materialize' and accepted['identity']==wait['identity']==identity,'prior disposition differs')
++    require(accepted['source']==wait['source']==current['source'],'prior/current source commits conflict')
++    require(accepted['release']==wait['release'],'original release references conflict')
++    original=deref(root,accepted['release'])
++    require(original['source']==current['source'] and original['sources']==current['sources'] and original['runtime']==current['runtime'] and original['native_environment']==current['native_environment'] and original['cpus']==current['cpus'],'retained source/runtime/native contract changed')
++    # This reuses all exact Git/source/registration/input/policy checks but
++    # deliberately does not invoke fresh admission or demand absent old claims.
++    ctx=_release_context(root,original,'materialize','retained-materialization')
++    runtime_gate=module('cold_prior_runtime_gate',root/'proof_tools/runtime_gate01.py',ctx['sources']['proof_tools/runtime_gate01.py'])
++    runtime_gate.check(root,ctx['runtime'])
++    require(wait['controller_exit_code']==0 and wait['controller_pid_absent'] is True and wait['accepted_receipt']==prior['accepted'],'actual materialization wait differs')
++    require(all(type(wait[k]) is int and wait[k]>1 and not Path('/proc',str(wait[k])).exists() for k in ('controller_pid','supervisor_pid')),'prior controller/supervisor remains')
++    for namespace,names in [('proof_supervise/',('late-failure.json',)),(OUTER,('failed.json','late-failure.json'))]:
++        require(not any((root/namespace/identity/n).exists() for n in names),'prior late failure remains')
++    claim=metadata(root,'proof_supervise/'+identity+'/claim.json');child=metadata(root,'proof_supervise/'+identity+'/child.json');intent=metadata(root,OUTER+identity+'/intent.json')
++    require(claim['phase']=='materialize' and claim['identity']==identity and claim['source']==original['source'] and claim['release']==accepted['release'] and claim['owner_pid']==wait['supervisor_pid'] and claim['numerical_claim'] is False,'supervisor claim authority differs')
++    require(child['pid']==wait['controller_pid'] and type(child['start_ticks']) is str and child['start_ticks'].isdigit(),'original controller child identity differs')
++    command=[sys.executable,'-B',str(root/'proof_tools/proof_outer01.py'),'--release',accepted['release']['path'],'--release-sha256',accepted['release']['sha256'],'--phase','materialize']
++    require(claim['command']==command and claim['file_size_limit']==[MAX,MAX],'original controller command differs')
++    require(intent['source']==original['source'] and intent['release']==accepted['release'] and intent['phase']=='materialize' and intent['identity']==identity and intent['caller_pid']==child['pid']==wait['controller_pid'],'controller source/release/PID intent differs')
++    require(intent['registration']==original['registration'] and intent['sources']==original['sources'] and intent['source_count']==len(ctx['sources']) and intent['launch_command']==ctx['launch_command'] and intent['worker_command']==ctx['worker_command'] and intent['file_limits']==[MAX,MAX] and intent['cpus']==original['cpus'],'controller registered native command differs')
++    require(type(claim['owner_start_ticks']) is str and claim['owner_start_ticks'].isdigit() and int(claim['owner_start_ticks'])>0,'supervisor original process identity absent')
++    require(wait['disk_free_bytes']>=10*GIB and wait['own_process_death_claimed'] is False,'supervisor final boundary differs')
++    storage=wait['storage'];info=root.stat();require(storage['root']==str(root) and storage['root_device']==info.st_dev and storage['root_inode']==info.st_ino,'supervisor watched root differs')
++    for key,bound in [('allocated_bytes','max_allocated_bytes'),('logical_file_bytes','max_logical_bytes'),('entries','max_entries')]:require(type(storage[key]) is int and 0<=storage[key]<=ctx['job']['resources']['storage_budget']['limits'][bound],'supervisor final storage differs')
++    require(set(wait['controller_logs'])=={'controller.stdout','controller.stderr'},'final controller log denominator differs')
++    for name,item in wait['controller_logs'].items():
++        require(item['path']=='proof_supervise/'+identity+'/'+name,'final controller log path differs');require(ref(root,item['path'])==item,'final controller log changed')
++    # Recompute actual native controls/owner/exit, genuine ResearchRun terminal
++    # and original complete population. Summary labels cannot substitute for it.
++    observed=authenticate(root,'materialize',ctx)
++    require(observed==deref(root,accepted['authentication']),'retained authentication differs from actual original evidence')
++    require(accepted['tail']==closure(root,'materialize',ctx['job']['resources']['storage_budget']['limits']),'original native outer closure differs')
++    material=deref(root,observed['proof']['future_inputs']);require(set(material['inputs'])==MATERIAL_INPUTS,'materialized denominator reduced')
++    expected={('execution_job' if name=='future_execution_job' else name):info for name,info in material['inputs'].items()}
++    require(set(experiment['inputs'])==set(expected)|{'environment'},'comparison input denominator differs')
++    require(all(experiment['inputs'][name]==info for name,info in expected.items()),'comparison inputs differ from actual emitted bytes')
++    environment=experiment['inputs']['environment'];require(digest(body(root,environment['path']))==environment['sha256'],'registered comparison environment changed')
++    return observed

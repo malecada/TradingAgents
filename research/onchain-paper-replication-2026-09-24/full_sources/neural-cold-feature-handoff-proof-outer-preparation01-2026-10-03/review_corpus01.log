@@ -1,0 +1,17 @@
+.............E......
+======================================================================
+ERROR: test_source_compile_without_import (test_boundaries02.Tests.test_source_compile_without_import)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation01-2026-10-03/test_boundaries02.py", line 10, in test_source_compile_without_import
+    for f in P.glob('*.py'):compile(f.read_text(),str(f),'exec')
+                            ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-outer-preparation01-2026-10-03/review_counterexamples01.py", line 21
+    env={k:getattr(raw,k) for k in ('require','deref','digest','body','OUTER','IDENTITIES')};env.update(Path=Path,root=root,phase='compare',release={'source':'a'*40,'prior_materialization':{'accepted':accepted,'wait':wait}},job={'payload':{'representation_jobs':{'cold-proof':{}}}},experiment={'inputs':{'population':{'path':population['path'],'sha256':population['sha256']}})
+                                                                                                                                                                                                                                                                                                                                                                                       ^
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '{'
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.062s
+
+FAILED (errors=1)

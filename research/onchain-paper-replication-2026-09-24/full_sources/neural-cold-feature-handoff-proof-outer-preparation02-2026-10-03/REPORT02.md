@@ -1,0 +1,11 @@
+# Outer02 implementation and verification
+
+CO1 correction: retained phase-one summaries are no longer accepted as sufficient authority. Original release/Git/source/runtime/registration/input/native policy is reconstructed through the materialization-only historical gate; the actual native/lifecycle/materialization validators, controller/supervisor identity/wait/log/storage chain and complete43-input membership are rechecked. The old identity remains closed. Ordinary launch admission is unchanged and always refuses reserved identities.
+
+CO2 correction: supervisor uses the exact canonical owned_io CleanupFailure type and an actual-fatal-preserving reducer. Parent fsync and close now have independent exception reduction and one close attempt. A later ordinary close cannot mask a first fsync MemoryError; earlier CleanupFailure cannot mask a later first actual fatal.
+
+Only new02 was edited. proof_outer01.py, runtime_gate01.py and build_release_draft01.py remain byte-identical to01. Selected native observation function and all scientific model/worker math remain unchanged. Original01 and its independent failed review are immutable dependencies.
+
+Seven correction methods pass, including the actual extracted prior-branch forgery, authenticated-type caller wiring, mixed CleanupFailure/fatal orders, ordered fsync/close identity preservation, fixed materialization cardinality and full-chain source calls. The existing4 source and16 bounded stdlib tests pass. red-corrections01.log retains the predecessor failures; green-corrections01.log predates the additional caller-wiring test and is retained. These tests use explicit fabricated tiny metadata or source-extracted classes, never genuine claims or numerical arrays. They do not establish an actual successful historical chain or native execution.
+
+Remaining uncertainty: full genuine source/runtime/native/ResearchRun/materialization chain requires the future separately admitted execution. Both materialization and comparison remain unexecuted. Complete composed installation inventory and registration/release are root responsibilities; this inventory maps only the six outer source bodies and pins dependencies. No numerical import, actual job, research claim, registration, STATE, live source, network or commit was performed. Independent review of02 remains required.

@@ -1,0 +1,11 @@
+# Source verification report 01
+
+A concrete proof-specific one-use supervisor, controller, strict release gate, distinct raw materialization/scientific proof reader, and exclusive release-draft builder are prepared. Only the new owned directory changed. No live source, registration, STATE, legacy default, model mathematics, empirical data or historical outcome was modified.
+
+The supervisor records actual controller wait status, preserving failures and late failures. The controller uses genuine job._command, independently attempts child/native cleanup and preserves the first fatal exception. Final source/input/runtime and raw authority checks must pass before acceptance. Two phase identities remain finite and disjoint; controller and supervisor reservation directories are never recycled.
+
+Verification used the checkout-local Python 3.13 environment with -B. final-source02.log reports 4 passing source checks; final-boundaries03.log reports 16 passing stdlib/AST/tiny-file tests. RED01 preserves four missing-implementation errors before source creation; it is not an empirical regression result. Prior green/final logs and exact native baseline function bodies remain retained. Native positive-observation AST is identical to the accepted native03 function. The remaining outer changes adapt compact pagination and proof-specific raw joins; they do not establish OS parity by execution.
+
+Tests exercise strict JSON, compact/original document bounds, digest mutation, path and hardlink refusal, bounded pagination, fatal selection, genuine-type selection through explicitly synthetic stand-ins, deadline checks, no numerical imports, unknown archive members, and opaque ZIP equality/refusal. They do not construct a genuine terminal, launch a guard or claim, load numerical arrays or execute Torch. All source modules compile. No network, commit, numerical import or real process launcher was run.
+
+Required next step is independent review of this exact candidate, then root integration of proof_tools into the complete source closure before phase-one freeze. Actual source/runtime/input/registration/native environment release, both genuine guarded executions, raw closure review, complete final inventory and verified external recovery remain pending. Existing source acceptance of proof-preparation01 does not pre-admit this new outer route.

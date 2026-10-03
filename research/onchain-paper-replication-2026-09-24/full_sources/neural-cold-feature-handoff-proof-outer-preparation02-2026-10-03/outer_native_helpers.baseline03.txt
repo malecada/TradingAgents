@@ -1,0 +1,73 @@
+def canonical_cleanup(root,expected):
+    """Use the exact package module also imported by native receipt writers."""
+    name='tradingagents/research/onchain_replication/owned_io.py'
+    require(hashlib.sha256(body(root,name)).hexdigest()==expected,'cleanup source differs')
+    value=importlib.import_module('tradingagents.research.onchain_replication.owned_io')
+    require(Path(value.__file__).resolve()==root/name,'canonical cleanup module origin differs')
+    require(hashlib.sha256(body(root,name)).hexdigest()==expected,'cleanup source changed at import')
+    return value
+
+def inventory(root,limit_seconds=30):
+    """Post-stop finite recursive body index; self/tail excluded explicitly."""
+    started=time.monotonic();rows=[];total=0
+    for path in root.rglob('*'):
+        require(len(rows)<32768 and time.monotonic()-started<limit_seconds,'final inventory finite bound exceeded')
+        relative=str(path.relative_to(root));require(len(relative)<=2048,'inventory path extent exceeds bound');info=path.lstat();require(path.resolve()==path and info.st_dev==root.stat().st_dev,'inventory path/device differs')
+        row={'path':relative,'bytes':info.st_size,'allocated':info.st_blocks*512}
+        if stat.S_ISREG(info.st_mode):
+            require(info.st_nlink==1 and info.st_size<=FILE,'inventory file/link limit')
+            row['kind']='file';row['sha256']=hashlib.sha256(body(root,relative)).hexdigest();total+=info.st_size
+        else:require(stat.S_ISDIR(info.st_mode),'inventory special member');row['kind']='directory'
+        rows.append(row);require(total<=GIB,'final logical stop exceeded')
+    require(sum(x['allocated'] for x in rows)+root.stat().st_blocks*512<=GIB,'final allocated stop exceeded')
+    rows.sort(key=lambda x:x['path'])
+    return {'schema_version':1,'root':str(root),'members':rows,'root_allocated':root.stat().st_blocks*512,'tail_exclusion':'This index and subsequently written outer terminal/readback are hashed and fully counted by final post-tail storage observation; no recursive self-hash claim.'}
+
+def stop_native(root,base,supervisor_pid,*,retain_observation=None,cleanup_type=()):
+    """Retain each attempted action even when another action fails."""
+    evidence={'native_unit_observed':False,'before':None,'stop':None,'after':None,'errors':[]}
+    primary=None
+    def retain(step,error):
+        nonlocal primary
+        primary=select(primary,error,cleanup_type)
+        try:evidence['errors'].append({'step':step,'type':type(error).__name__,'message':str(error)[:1024]})
+        except BaseException as later:primary=select(primary,later,cleanup_type)
+    def inspected():
+        command=['systemctl','--user','show',unit,'--property=ControlGroup,ActiveState,SubState,Result']
+        result=subprocess.run(command,capture_output=True,text=True,timeout=10)
+        require(len(result.stdout)<=16384 and len(result.stderr)<=16384,'stop inspection output bound exceeded')
+        return {'returncode':result.returncode,'stdout':result.stdout,'stderr':result.stderr,
+            'properties':dict(line.split('=',1) for line in result.stdout.splitlines() if '=' in line)}
+    try:
+        if not (root/base/'guard/live.json').exists():
+            evidence['pid_absence_verified']=False
+        else:
+            launch=metadata(root,base+'/launch.json');owner=metadata(root,base+'/owner.json');live=metadata(root,base+'/guard/live.json')
+            require(launch['supervisor_pid']==supervisor_pid and live['owner_identity']==owner and all(owner[k]==v for k,v in launch.items()),'refuse stopping unjoined native owner')
+            unit=live['unit'];require(re.fullmatch(r'onchain-replication-[0-9a-f]{32}\.service',unit) is not None,'unsafe native unit identity')
+            evidence.update(native_unit_observed=True,unit=unit)
+            try:evidence['before']=inspected()
+            except BaseException as error:retain('before',error)
+            try:
+                stopped=subprocess.run(['systemctl','--user','stop',unit],capture_output=True,timeout=10)
+                require(len(stopped.stdout)<=16384 and len(stopped.stderr)<=16384,'stop command output bound exceeded')
+                evidence['stop']={'returncode':stopped.returncode,'stdout':stopped.stdout.decode('utf-8','replace'),'stderr':stopped.stderr.decode('utf-8','replace')}
+            except BaseException as error:retain('stop',error)
+            try:evidence['after']=inspected()
+            except BaseException as error:retain('after',error)
+            try:
+                before=(evidence['before'] or {}).get('properties',{});after=(evidence['after'] or {}).get('properties',{})
+                known=live.get('cgroup')
+                if known is None and before.get('ControlGroup'):known='/sys/fs/cgroup'+before['ControlGroup']
+                require(known is not None,'original cgroup unobserved; cleanup remains unresolved')
+                cg=Path(known);require(cg.is_relative_to('/sys/fs/cgroup') and cg.name==unit,'unsafe cgroup identity')
+                evidence.update(cgroup=str(cg),cgroup_absent=not cg.exists(),properties=after)
+                require(after.get('ActiveState') in ('inactive','failed') and after.get('SubState') in ('dead','failed') and not cg.exists(),'native unit cleanup unverified')
+            except BaseException as error:retain('validation',error)
+    except BaseException as error:retain('original_owner',error)
+    finally:
+        if retain_observation is not None:
+            try:retain_observation(evidence)
+            except BaseException as error:retain('receipt',error)
+    if primary is not None:raise primary
+    return evidence

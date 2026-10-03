@@ -1,0 +1,15 @@
+test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy (__main__.Allowance.test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy) ... FAIL
+
+======================================================================
+FAIL: test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy (__main__.Allowance.test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation04-2026-10-03/test_allowance01.py", line 24, in test_actual_registered_constructor_and_tiny_inputs_fit_selected_policy
+    allowance=eval(code,{'__builtins__':{}},scope);self.assertLessEqual(allowance,numeric['max_buffer_bytes']);self.assertEqual(allowance,expected)
+                                                   ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 10486000 not less than or equal to 1048576
+
+----------------------------------------------------------------------
+Ran 1 test in 0.015s
+
+FAILED (failures=1)
