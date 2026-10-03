@@ -1,0 +1,46 @@
+--- withheld01
++++ candidate02
+@@ -33,11 +33,38 @@
+     return p
+ 
+ def _body(path):
+-    require(path.resolve()==path and not path.is_symlink(),'held source redirected')
+-    before=path.stat();require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<before.st_size<=1048576,'held source extent/type')
+-    raw=path.read_bytes();after=path.stat()
+-    require((before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns,before.st_ctime_ns)==(after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_ctime_ns) and len(raw)==before.st_size,'held source changed')
+-    return raw
++    # Canonical package reducer is already in the full admitted package closure.
++    from . import owned_io as source_io
++    cap=1048576;root_fd=file_fd=None
++    def signature(s):
++        return (s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns,s.st_blocks)
++    try:
++        require(path.is_absolute() and path.resolve()==path and path.name not in ('','.','..'),'held source redirected')
++        parent=path.parent
++        root_fd=os.open(parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        root_pin=signature(os.fstat(root_fd))
++        require(stat.S_ISDIR(os.fstat(root_fd).st_mode) and signature(parent.lstat())==root_pin and parent.resolve()==parent,'held source parent changed')
++        before=os.stat(path.name,dir_fd=root_fd,follow_symlinks=False)
++        pin=signature(before)
++        require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<before.st_size<=cap,'held source extent/type')
++        file_fd=os.open(path.name,os.O_RDONLY|os.O_NONBLOCK|os.O_NOFOLLOW|os.O_CLOEXEC,dir_fd=root_fd)
++        require(signature(os.fstat(file_fd))==pin,'held source changed before open')
++        pieces=[];count=0
++        while True:
++            part=os.read(file_fd,min(65536,before.st_size-count+1))
++            if not part:break
++            count+=len(part)
++            require(count<=before.st_size and count<=cap,'held source grew during bounded read')
++            pieces.append(part)
++        require(count==before.st_size and signature(os.fstat(file_fd))==pin
++            and signature(os.stat(path.name,dir_fd=root_fd,follow_symlinks=False))==pin
++            and signature(path.lstat())==pin and path.resolve()==path,'held source changed during read')
++        require(signature(os.fstat(root_fd))==root_pin and signature(parent.lstat())==root_pin
++            and parent.resolve()==parent,'held source parent changed during read')
++        return b''.join(pieces)
++    finally:
++        source_io._cleanup((() if file_fd is None else (lambda:os.close(file_fd),))
++            + (() if root_fd is None else (lambda:os.close(root_fd),)))
+ 
+ def _sources(run):
+     from . import mcm_score_stream

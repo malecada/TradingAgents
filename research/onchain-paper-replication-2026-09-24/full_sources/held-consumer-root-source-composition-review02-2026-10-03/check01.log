@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-root-source-composition-review02-2026-10-03/check01.py", line 52, in <module>
+    for r in inv['source_inventory']:assert cb[r['target']]==read(clone/r['target'])==ob[r['target']]
+                                                             ~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-root-source-composition-review02-2026-10-03/check01.py", line 5, in read
+    s=p.lstat();assert stat.S_ISREG(s.st_mode) and 0<=s.st_size<=4194304
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 437, in lstat
+    return self.stat(follow_symlinks=False)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 515, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-01/source/.python-version'
