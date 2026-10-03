@@ -1,0 +1,170 @@
+--- launcher01.py
++++ launcher02.py
+@@ -11,19 +11,19 @@
+ class CleanupFailure(BaseException):pass
+ def require(v,message):
+  if not v:raise ValueError(message)
+-def fatal(e):return e is not None and (isinstance(e,(MemoryError,RecursionError)) or not isinstance(e,Exception)) and not isinstance(e,CleanupFailure)
+-def select(first,later):
+- if fatal(first):return first
+- if fatal(later) or first is None:return later
+- if isinstance(later,CleanupFailure):return later
++def fatal(e,cleanup_types=()):return e is not None and (isinstance(e,(MemoryError,RecursionError)) or not isinstance(e,Exception)) and not isinstance(e,(CleanupFailure,*cleanup_types))
++def select(first,later,cleanup_types=()):
++ if fatal(first,cleanup_types):return first
++ if fatal(later,cleanup_types) or first is None:return later
++ if isinstance(later,(CleanupFailure,*cleanup_types)):return later
+  return first
+-def actions(callbacks,primary=None):
++def actions(callbacks,primary=None,cleanup_types=()):
+  selected=primary;uncertain=False
+  for cb in callbacks:
+   try:cb()
+-  except BaseException as e:selected=select(selected,e);uncertain=True
+- if selected is not primary and fatal(selected):raise selected
+- if uncertain and not fatal(selected):raise CleanupFailure('owned root cleanup uncertain')
++  except BaseException as e:selected=select(selected,e,cleanup_types);uncertain=True
++ if selected is not primary and fatal(selected,cleanup_types):raise selected
++ if uncertain and not fatal(selected,cleanup_types):raise CleanupFailure('owned root cleanup uncertain')
+ def direct(path):
+  p=Path(path);require(p.is_absolute() and str(p)==str(path) and p.resolve()==p,'absolute canonical direct path required')
+  for ancestor in (p,*p.parents):require(not ancestor.is_symlink(),'redirected path')
+@@ -133,19 +133,19 @@
+  try:os.fsync(fd)
+  finally:actions((lambda:os.close(fd),),sys.exception())
+  write(d,'intent.json',encoded(intent));return d
+-def root_watch(directory):
++def root_watch(directory,*,reserve_bytes=9*1024**2,reserve_entries=8):
+  total=0;count=0
+  for p in directory.iterdir():
+-  count+=1;s=p.lstat();require(count<=32 and stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_size<=MAX,'root output file/count/type bound');total+=s.st_blocks*512
+- require(total<=32*1024**2 and shutil.disk_usage(directory).free>=10*GIB,'root output storage stop threshold')
++  count+=1;s=p.lstat();require(count<=32-reserve_entries and stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_size<=MAX,'root output file/count/type bound');total+=s.st_blocks*512
++ require(total<=32*1024**2-reserve_bytes and shutil.disk_usage(directory).free>=10*GIB,'root output storage stop threshold')
+  return {'files':count,'allocated_bytes':total}
+-def cleanup_descendants(root,identity,supervisor_pid,ctx):
++def cleanup_descendants(root,identity,supervisor_pid,ctx,*,register_cleanup_type=None):
+  # Only actual joined supervisor/child and native owner receipts authorize stops.
+- primary=None;observed={}
++ primary=None;observed={};cleanup_types=[]
+  def attempt(name,fn):
+   nonlocal primary
+   try:observed[name]=fn()
+-  except BaseException as error:primary=select(primary,error)
++  except BaseException as error:primary=select(primary,error,cleanup_types)
+  def controller():
+   prefix=root/'proof_supervise'/identity
+   if not (prefix/'child.json').exists():
+@@ -168,15 +168,64 @@
+    require(not (root/base/'guard/live.json').exists(),'native ownership incomplete; no safe stop');return {'native_launch_observed':False}
+   launch=raw.metadata(root,base+'/launch.json');outer=load('root_original_outer_cleanup',root/'proof_tools/proof_outer01.py')
+   owned=outer.canonical_cleanup(root,ctx['sources']['tradingagents/research/onchain_replication/owned_io.py'])
++  cleanup_types.append(owned.CleanupFailure)
++  if register_cleanup_type is not None:register_cleanup_type(owned.CleanupFailure)
+   return outer.stop_native(root,base,launch['supervisor_pid'],cleanup_type=owned.CleanupFailure)
+  attempt('controller',controller);attempt('native',native)
+  if primary is not None:raise primary
+  return observed
+ 
++def tail_write(directory,name,value):
++ data=encoded(value);require(len(data)<=8192,'compact root tail limit')
++ write(directory,name,data)
++ require((directory/name).stat().st_blocks*512<=65536,'root tail allocation allowance exceeded')
++
++def finish_tail(directory,root,identity,q,request_reference,process,observed,primary,result,cleanup_types):
++ """Additive terminal journal: observation alone is never a success terminal."""
++ def retain(error):
++  nonlocal primary
++  primary=select(primary,error,cleanup_types)
++ try:
++  root_watch(directory)
++  tail_write(directory,'tail-intent.json',{'schema_version':1,'kind':'root-tail-pending','identity':identity,'observation_is_nonterminal':True,'requires_tail_complete_and_actual_wrapper_exit0':True,'failure_markers_revoke_tail_complete':True,'automatic_retry':False})
++ except BaseException as error:retain(error)
++ try:
++  for prefix in ('research_runs','proof_supervise','proof_outer'):
++   for name in ('claim.json','complete.json','failed.json','accepted.json','late-failure.json','exit.json'):
++    p=root/prefix/identity/name
++    if p.exists():observed[prefix+'/'+name]={'path':str(p),'sha256':sha(read(p))}
++  disposition='unclaimed' if 'research_runs/claim.json' not in observed else 'actual-complete-receipt-present' if 'research_runs/complete.json' in observed else 'actual-failed-receipt-present' if 'research_runs/failed.json' in observed else 'claimed-no-terminal-observed'
++  summary={'schema_version':1,'kind':'root-observation-not-child-terminal','identity':identity,'phase':q['phase'],'source':q['source'],'request':request_reference,'supervisor_exit_code':None if process is None else process.returncode,'result':result if primary is None else None,'disposition':disposition,'original_receipts':observed,'requires_root_tail_complete':True,'automatic_retry':False}
++  write(directory,'observation.json',encoded(summary))
++ except BaseException as error:retain(error)
++ # Reserve error.txt (at most MAX) plus three independently attempted compact
++ # marker allocations. No fallible post-success scan can invalidate silently.
++ try:root_watch(directory,reserve_bytes=MAX+3*65536,reserve_entries=4)
++ except BaseException as error:retain(error)
++ if primary is None:
++  try:
++   tail_write(directory,'tail-complete.json',{'schema_version':1,'kind':'root-tail-complete-not-child-terminal','identity':identity,'requires_actual_wrapper_exit0':True,'failure_markers_revoke_this_observation':True,'own_file_excluded_from_previous_scan':True,'own_allocated_allowance':65536,'automatic_retry':False})
++  except BaseException as error:retain(error)
++ if primary is not None:
++  try:
++   import traceback
++   data=''.join(traceback.format_exception(primary)).encode('utf8','backslashreplace');require(len(data)<=MAX,'full error exceeds root log bound');write(directory,'error.txt',data)
++  except BaseException as error:retain(error)
++  try:root_watch(directory,reserve_bytes=3*65536,reserve_entries=3)
++  except BaseException as error:retain(error)
++  # All three names are unique and exclusive. A failed write is never retried
++  # under its original name; a later marker also revokes a partial prior seal.
++  for name in ('failure.json','late-failure.json','tail-write-failure.json'):
++   try:
++    tail_write(directory,name,{'schema_version':1,'kind':'root-wrapper-failed','identity':identity,'error_type':type(primary).__name__,'revokes_observation':True,'revokes_any_tail_complete':True,'child_terminal_synthesized':False,'remaining_unwritten_marker_allowance':3*65536,'own_file_excluded_from_previous_scan':True,'automatic_retry':False})
++   except BaseException as error:retain(error)
++   else:break
++ return primary
++
+ def execute(q,request_reference):
+  root,release,ctx,resources,recovered,relative_release=validate(q);identity=IDS[q['phase']]
+  command=[sys.executable,'-B',str(root/'proof_tools/proof_supervise01.py'),'--release',relative_release,'--release-sha256',q['release']['sha256'],'--phase',q['phase']]
+- raw=sys.modules['proof_raw01'];primary=None;process=None;fds=[];handlers={};result=None;observed={}
++ raw=sys.modules['proof_raw01'];primary=None;process=None;fds=[];handlers={};result=None;observed={};cleanup_types=[]
+  # Readbacks immediately precede permanent root reservation. Native unit limits
+  # are established and independently authenticated only by the original route.
+  available=resources.mem_available();free=shutil.disk_usage(root).free
+@@ -185,7 +234,7 @@
+  directory=reserve(q['output_parent'],identity,{'schema_version':1,'kind':'root-launch-intent-not-research-claim','identity':identity,'phase':q['phase'],'source':q['source'],'request':request_reference,'release':q['release'],'reviews':q['reviews'],'recovery':recovered,'command':command,'parent_pid':os.getpid(),'memory_available_bytes':available,'disk_free_bytes':free,'file_limit':[MAX,MAX],'automatic_retry':False})
+  def retain(e):
+   nonlocal primary
+-  primary=select(primary,e)
++  primary=select(primary,e,cleanup_types)
+  def stop(number,frame):raise InterruptedError('root wrapper interrupted')
+  started=time.monotonic()
+  try:
+@@ -224,33 +273,14 @@
+     except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait(timeout=5);raise CleanupFailure('supervisor forced kill; descendant cleanup requires retained original evidence')
+    except BaseException as e:retain(e)
+   if primary is not None and process is not None:
+-   try:write(directory,'cleanup-attempt.json',encoded(cleanup_descendants(root,identity,process.pid,ctx)))
+-   except BaseException as e:retain(e)
+-  try:actions(tuple(lambda fd=fd:os.close(fd) for fd in fds),primary)
++   try:write(directory,'cleanup-attempt.json',encoded(cleanup_descendants(root,identity,process.pid,ctx,register_cleanup_type=cleanup_types.append)))
++   except BaseException as e:retain(e)
++  try:actions(tuple(lambda fd=fd:os.close(fd) for fd in fds),primary,cleanup_types)
+   except BaseException as e:retain(e)
+   for sig,handler in handlers.items():
+    try:signal.signal(sig,handler)
+    except BaseException as e:retain(e)
+-  # Pure observations only, never fabricate a lifecycle/native terminal. Missing
+-  # receipts remain missing and success is impossible without all joins above.
+-  try:
+-   for prefix in ('research_runs','proof_supervise','proof_outer'):
+-    for name in ('claim.json','complete.json','failed.json','accepted.json','late-failure.json','exit.json'):
+-     p=root/prefix/identity/name
+-     if p.exists():observed[prefix+'/'+name]={'path':str(p),'sha256':sha(read(p))}
+-   disposition='unclaimed' if 'research_runs/claim.json' not in observed else 'actual-complete-receipt-present' if 'research_runs/complete.json' in observed else 'actual-failed-receipt-present' if 'research_runs/failed.json' in observed else 'claimed-no-terminal-observed'
+-   summary={'schema_version':1,'kind':'root-observation-not-child-terminal','identity':identity,'phase':q['phase'],'source':q['source'],'request':request_reference,'supervisor_exit_code':None if process is None else process.returncode,'result':result if primary is None else None,'disposition':disposition,'original_receipts':observed,'root_output_before_own_tail':root_watch(directory),'automatic_retry':False}
+-   write(directory,'observation.json',encoded(summary))
+-  except BaseException as e:retain(e)
+-  if primary is not None:
+-   try:
+-    import traceback
+-    text=''.join(traceback.format_exception(primary)).encode('utf8','backslashreplace');require(len(text)<=MAX,'full error exceeds root log bound');write(directory,'error.txt',text)
+-   except BaseException as e:retain(e)
+-   try:write(directory,'failure.json',encoded({'kind':'root-wrapper-failed','error_type':type(primary).__name__,'automatic_retry':False,'child_terminal_synthesized':False}))
+-   except BaseException as e:retain(e)
+-  try:root_watch(directory)
+-  except BaseException as e:retain(e)
++  primary=finish_tail(directory,root,identity,q,request_reference,process,observed,primary,result,cleanup_types)
+  if primary is not None:raise primary
+  return result
+ 

@@ -1,0 +1,187 @@
+{
+  "manifest_bodies": 22,
+  "source_origin_pins": 7,
+  "changed_functions": [
+    "actions",
+    "cleanup_descendants",
+    "execute",
+    "fatal",
+    "root_watch",
+    "select"
+  ],
+  "full_inverse_AST": true,
+  "numeric_or_authority_execution": false,
+  "cases": [
+    {
+      "case": "normal",
+      "selected_error": null,
+      "writes": [
+        "tail-intent.json",
+        "observation.json",
+        "tail-complete.json"
+      ],
+      "watch_arguments": [
+        {},
+        {
+          "reserve_bytes": 4390912,
+          "reserve_entries": 4
+        }
+      ]
+    },
+    {
+      "case": "ordinary-final",
+      "selected_error": "ValueError",
+      "writes": [
+        "tail-intent.json",
+        "observation.json",
+        "error.txt",
+        "failure.json"
+      ],
+      "watch_arguments": [
+        {},
+        {
+          "reserve_bytes": 4390912,
+          "reserve_entries": 4
+        },
+        {
+          "reserve_bytes": 196608,
+          "reserve_entries": 3
+        }
+      ]
+    },
+    {
+      "case": "fatal-final",
+      "selected_error": "MemoryError",
+      "writes": [
+        "tail-intent.json",
+        "observation.json",
+        "error.txt",
+        "failure.json"
+      ],
+      "watch_arguments": [
+        {},
+        {
+          "reserve_bytes": 4390912,
+          "reserve_entries": 4
+        },
+        {
+          "reserve_bytes": 196608,
+          "reserve_entries": 3
+        }
+      ]
+    },
+    {
+      "case": "early-fatal-late-fatal",
+      "selected_error": "SystemExit",
+      "writes": [
+        "tail-intent.json",
+        "observation.json",
+        "error.txt",
+        "failure.json"
+      ],
+      "watch_arguments": [
+        {},
+        {
+          "reserve_bytes": 4390912,
+          "reserve_entries": 4
+        },
+        {
+          "reserve_bytes": 196608,
+          "reserve_entries": 3
+        }
+      ]
+    },
+    {
+      "case": "partial-seal",
+      "selected_error": "MemoryError",
+      "writes": [
+        "tail-intent.json",
+        "observation.json",
+        "tail-complete.json",
+        "error.txt",
+        "failure.json"
+      ],
+      "watch_arguments": [
+        {},
+        {
+          "reserve_bytes": 4390912,
+          "reserve_entries": 4
+        },
+        {
+          "reserve_bytes": 196608,
+          "reserve_entries": 3
+        }
+      ]
+    },
+    {
+      "case": "first-marker-fatal",
+      "selected_error": "KeyboardInterrupt",
+      "writes": [
+        "tail-intent.json",
+        "observation.json",
+        "error.txt",
+        "failure.json",
+        "late-failure.json"
+      ],
+      "watch_arguments": [
+        {},
+        {
+          "reserve_bytes": 4390912,
+          "reserve_entries": 4
+        },
+        {
+          "reserve_bytes": 196608,
+          "reserve_entries": 3
+        }
+      ]
+    },
+    {
+      "case": "all-markers",
+      "selected_error": "MemoryError",
+      "writes": [
+        "tail-intent.json",
+        "observation.json",
+        "error.txt",
+        "failure.json",
+        "late-failure.json",
+        "tail-write-failure.json"
+      ],
+      "watch_arguments": [
+        {},
+        {
+          "reserve_bytes": 4390912,
+          "reserve_entries": 4
+        },
+        {
+          "reserve_bytes": 196608,
+          "reserve_entries": 3
+        }
+      ]
+    },
+    {
+      "case": "observation-fatal",
+      "selected_error": "MemoryError",
+      "writes": [
+        "tail-intent.json",
+        "observation.json",
+        "error.txt",
+        "failure.json"
+      ],
+      "watch_arguments": [
+        {},
+        {
+          "reserve_bytes": 4390912,
+          "reserve_entries": 4
+        },
+        {
+          "reserve_bytes": 196608,
+          "reserve_entries": 3
+        }
+      ]
+    }
+  ],
+  "old_RL1_reproduced": true,
+  "canonical_type_identity_and_firstfatal": true,
+  "active_23MiB_24_entries_bounds": true,
+  "initial_headroom_arithmetic": true
+}

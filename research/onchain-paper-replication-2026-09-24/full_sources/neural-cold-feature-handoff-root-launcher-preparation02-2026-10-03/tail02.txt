@@ -1,0 +1,47 @@
+def tail_write(directory,name,value):
+ data=encoded(value);require(len(data)<=8192,'compact root tail limit')
+ write(directory,name,data)
+ require((directory/name).stat().st_blocks*512<=65536,'root tail allocation allowance exceeded')
+
+def finish_tail(directory,root,identity,q,request_reference,process,observed,primary,result,cleanup_types):
+ """Additive terminal journal: observation alone is never a success terminal."""
+ def retain(error):
+  nonlocal primary
+  primary=select(primary,error,cleanup_types)
+ try:
+  root_watch(directory)
+  tail_write(directory,'tail-intent.json',{'schema_version':1,'kind':'root-tail-pending','identity':identity,'observation_is_nonterminal':True,'requires_tail_complete_and_actual_wrapper_exit0':True,'failure_markers_revoke_tail_complete':True,'automatic_retry':False})
+ except BaseException as error:retain(error)
+ try:
+  for prefix in ('research_runs','proof_supervise','proof_outer'):
+   for name in ('claim.json','complete.json','failed.json','accepted.json','late-failure.json','exit.json'):
+    p=root/prefix/identity/name
+    if p.exists():observed[prefix+'/'+name]={'path':str(p),'sha256':sha(read(p))}
+  disposition='unclaimed' if 'research_runs/claim.json' not in observed else 'actual-complete-receipt-present' if 'research_runs/complete.json' in observed else 'actual-failed-receipt-present' if 'research_runs/failed.json' in observed else 'claimed-no-terminal-observed'
+  summary={'schema_version':1,'kind':'root-observation-not-child-terminal','identity':identity,'phase':q['phase'],'source':q['source'],'request':request_reference,'supervisor_exit_code':None if process is None else process.returncode,'result':result if primary is None else None,'disposition':disposition,'original_receipts':observed,'requires_root_tail_complete':True,'automatic_retry':False}
+  write(directory,'observation.json',encoded(summary))
+ except BaseException as error:retain(error)
+ # Reserve error.txt (at most MAX) plus three independently attempted compact
+ # marker allocations. No fallible post-success scan can invalidate silently.
+ try:root_watch(directory,reserve_bytes=MAX+3*65536,reserve_entries=4)
+ except BaseException as error:retain(error)
+ if primary is None:
+  try:
+   tail_write(directory,'tail-complete.json',{'schema_version':1,'kind':'root-tail-complete-not-child-terminal','identity':identity,'requires_actual_wrapper_exit0':True,'failure_markers_revoke_this_observation':True,'own_file_excluded_from_previous_scan':True,'own_allocated_allowance':65536,'automatic_retry':False})
+  except BaseException as error:retain(error)
+ if primary is not None:
+  try:
+   import traceback
+   data=''.join(traceback.format_exception(primary)).encode('utf8','backslashreplace');require(len(data)<=MAX,'full error exceeds root log bound');write(directory,'error.txt',data)
+  except BaseException as error:retain(error)
+  try:root_watch(directory,reserve_bytes=3*65536,reserve_entries=3)
+  except BaseException as error:retain(error)
+  # All three names are unique and exclusive. A failed write is never retried
+  # under its original name; a later marker also revokes a partial prior seal.
+  for name in ('failure.json','late-failure.json','tail-write-failure.json'):
+   try:
+    tail_write(directory,name,{'schema_version':1,'kind':'root-wrapper-failed','identity':identity,'error_type':type(primary).__name__,'revokes_observation':True,'revokes_any_tail_complete':True,'child_terminal_synthesized':False,'remaining_unwritten_marker_allowance':3*65536,'own_file_excluded_from_previous_scan':True,'automatic_retry':False})
+   except BaseException as error:retain(error)
+   else:break
+ return primary
+
