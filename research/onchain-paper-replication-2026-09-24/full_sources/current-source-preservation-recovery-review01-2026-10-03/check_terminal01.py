@@ -1,0 +1,6 @@
+from pathlib import Path
+import hashlib,json
+R=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources');P=R/'neural-cold-feature-handoff-current-source-preservation01-2026-10-03';D=Path(__file__).parent;H=lambda b:hashlib.sha256(b).hexdigest();raw=(P/'REMOTE_FINAL_RELEASE_RECOVERY02.json').read_bytes();t=(P/'ACTUAL_RECOVERY_TOOL_EXIT02.json').read_bytes();v=json.loads(t)
+assert v['tool_session_id']==30216 and v['tool_exit_code']==0 and v['remote_commit']=='1a975e02e333f0fceba3a7a19680851795289e74' and v['genuine_recovery_receipt_sha256']==H(raw) and v['helper_sha256']==H((P/'recover_release02.py').read_bytes())
+(D/'ACTUAL_RECOVERY_TOOL_EXIT02.original.json').write_bytes(t)
+(D/'TERMINAL_JOIN01.json').write_text(json.dumps({'schema_version':1,'root_observed_original_tool_exit':{'path':str(P/'ACTUAL_RECOVERY_TOOL_EXIT02.json'),'sha256':H(t)},'genuine_recovery_receipt':{'path':str(P/'REMOTE_FINAL_RELEASE_RECOVERY02.json'),'sha256':H(raw)},'session':30216,'exit':0,'qualification':'Root original tool observation plus independent offline actual Git/body checks; reviewer did not invoke or wait on root session and does not infer network provenance from local repo alone.'},indent=2)+'\n');print('PASS original tool terminal joins actual receipt/helper/remote commit')

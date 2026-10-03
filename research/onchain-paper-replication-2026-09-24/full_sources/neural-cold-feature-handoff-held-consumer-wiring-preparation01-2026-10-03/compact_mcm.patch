@@ -1,0 +1,25 @@
+--- baseline
++++ candidate
+@@ -251,6 +251,10 @@
+     owner = _owner(dictionary); held.check(owner)
+     fd = None; stream = log = None; claimed = False; inode = None
+     try:
++        held_consumer = None
++        if _imported(dictionary):
++            from . import held_score_consumer
++            held_consumer = held_score_consumer.preflight(dictionary)
+         graph,kernel,policy,start = _prepare(dictionary,graph_hash,input_name,output_input)
+         root = directory(dictionary,graph_hash)
+         require(root.is_absolute() and root.resolve() == root and not compact_owner.present(root),
+@@ -290,7 +294,10 @@
+                 **({'imported':dictionary} if _imported(dictionary) else {}))
+             numeric_pin=_matrix(actual['mcm'],start['rows'],start['motifs'])
+             if matcher.retention is not None:stage_retention._bind(stage,matcher.retention,held)
+-            return actual,stream.finish()['terminal_sha256'],numeric_pin
++            stream_terminal = stream.finish()['terminal_sha256']
++            if held_consumer is not None:
++                held_score_consumer.consume(dictionary,stage,held,stream)
++            return actual,stream_terminal,numeric_pin
+         ledger=getattr(owner,'_archive_operations',None)
+         if ledger is None:
+             log = compact_pair_log.PairLog(stage.root/'matching',owner=owner.identity,scope=thaw(stage.scope),

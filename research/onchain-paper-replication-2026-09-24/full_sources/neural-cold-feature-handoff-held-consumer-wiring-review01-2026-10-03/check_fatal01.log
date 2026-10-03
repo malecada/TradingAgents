@@ -1,0 +1,13 @@
+{
+  "finding": "HCW1",
+  "actual_extracted_function": "_body",
+  "first_fatal": "MemoryError",
+  "observed_primary": "OSError",
+  "first_fatal_preserved": false,
+  "events": [
+    "enter",
+    "read",
+    "close"
+  ],
+  "qualification": "Actual source _body calls unchanged Path.read_bytes; synthetic file-context read/close failure injection, not genuine authority/native execution."
+}

@@ -1,0 +1,66 @@
+{
+  "caller_baseline": {
+    "bytes": 21452,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-consumer-wiring-preparation01-2026-10-03/compact_mcm.baseline01.py",
+    "sha256": "6673fa484f37c0c3556c3d158035bb0c7f1db8f4a9f834ca50374c57c1e21b81"
+  },
+  "install_map": [
+    {
+      "candidate": {
+        "bytes": 21793,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-consumer-wiring-preparation01-2026-10-03/compact_mcm.py",
+        "sha256": "6661a8668d04bdff4afa84161932e12daa351d2654c5c481eba5faafcd938a4c"
+      },
+      "target": "tradingagents/research/onchain_replication/compact_mcm.py"
+    },
+    {
+      "candidate": {
+        "bytes": 9156,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-consumer-wiring-preparation01-2026-10-03/held_score_consumer.py",
+        "sha256": "b0df7acfaf0767265dddbe47efb0b16d109ec37c80c19938738b7634fc98215d"
+      },
+      "target": "tradingagents/research/onchain_replication/held_score_consumer.py"
+    },
+    {
+      "accepted_unchanged_dependency": {
+        "bytes": 13411,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/held_score_reader.py",
+        "sha256": "3836bbcdc8b5b1be6a08c47a6d97c76c7c0875eeba7e91e6d363bdc6b4ade209"
+      },
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/held_score_reader.py"
+    },
+    {
+      "accepted_unchanged_dependency": {
+        "bytes": 12133,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/exact_members02.py",
+        "sha256": "ea1ffcef833344ff1a5fbd89bc2f79ade1414c90a3159329c1f3bdee86bfe0cb"
+      },
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/exact_members02.py"
+    },
+    {
+      "accepted_unchanged_dependency": {
+        "bytes": 3099,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/owned_io.py",
+        "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+      },
+      "target": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/owned_io.py"
+    },
+    {
+      "accepted_unchanged_dependency": {
+        "bytes": 15805,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/mcm_score_stream.py",
+        "sha256": "ee7931cea3d28ad0719b5f3db171a5d5d3ab95db9ff7cad0cc8379101948b79e"
+      },
+      "target": "tradingagents/research/onchain_replication/mcm_score_stream.py"
+    }
+  ],
+  "no_actual_claim_or_numerical_run": true,
+  "required_new_inputs": [
+    "identical job/plan nested held_score_consumer_input",
+    "exact finite local-readback policy"
+  ],
+  "required_new_outputs": "one distinct registered JSON readback per original descriptor graph",
+  "required_new_source_closure": "new package helper changes conservative package/anchor set; full source inventory must be regenerated",
+  "schema_version": 1,
+  "status": "source-only pending independent review; no authority release"
+}
