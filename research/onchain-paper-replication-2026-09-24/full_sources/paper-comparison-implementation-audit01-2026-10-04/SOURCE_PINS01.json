@@ -1,0 +1,3595 @@
+[
+  {
+    "bytes": 2298,
+    "calls": [
+      "AlternativeGraphTemporal",
+      "DiagnosticGraph",
+      "GINEncoder",
+      "HierarchicalLSTM",
+      "PriceRecurrent",
+      "ReplicationModel",
+      "TemporalHead",
+      "ValueError",
+      "VectorTemporal",
+      "nn.Module.__init__",
+      "price_svm",
+      "prices.new_zeros",
+      "self._configure",
+      "self.temporal",
+      "super",
+      "super().__init__",
+      "torch.cat",
+      "{'direction': 'classification'}.get"
+    ],
+    "definitions": [
+      {
+        "kind": "ClassDef",
+        "line": 14,
+        "name": "VectorTemporal"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 25,
+        "name": "AlternativeGraphTemporal"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 32,
+        "name": "build_model"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 15,
+        "name": "__init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 18,
+        "name": "forward"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 26,
+        "name": "__init__"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/model_registry.py",
+    "sha256": "c0e2202578ae708e2fc0406ece5726541952bf40f29df9dc81812c177c334543",
+    "snapshot": "snapshot/0"
+  },
+  {
+    "bytes": 5722,
+    "calls": [
+      "(batch[edge_index[0]] != batch[edge_index[1]]).any",
+      "GraphEncoder",
+      "MappingProxyType",
+      "TemporalHead",
+      "ValueError",
+      "blocks.extend",
+      "checkpoint",
+      "config.get",
+      "dict",
+      "edge_index.numel",
+      "enumerate",
+      "id",
+      "initialize_linear",
+      "layer",
+      "layers.append",
+      "len",
+      "list",
+      "mcm.masked_fill",
+      "mean_pool",
+      "nn.Linear",
+      "nn.ModuleList",
+      "nn.ReLU",
+      "nn.Sequential",
+      "prices.new_zeros",
+      "rows.append",
+      "self._configure",
+      "self._encode_graph",
+      "self.graph",
+      "self.graph.gat.parameters",
+      "self.graph.mlp.parameters",
+      "self.mlp",
+      "self.temporal",
+      "self.temporal.alignment.parameters",
+      "self.temporal.key.parameters",
+      "self.temporal.lstm.parameters",
+      "self.temporal.output.parameters",
+      "self.temporal.query.parameters",
+      "set",
+      "super",
+      "super().__init__",
+      "torch.cat",
+      "torch.is_grad_enabled",
+      "torch.isfinite",
+      "torch.isfinite(mcm).all",
+      "torch.ones",
+      "torch.stack",
+      "type",
+      "validate_execution",
+      "vectors.append",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 12,
+        "name": "validate_execution"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 24,
+        "name": "GraphEncoder"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 56,
+        "name": "ReplicationModel"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 25,
+        "name": "__init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 45,
+        "name": "forward"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 57,
+        "name": "__init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 64,
+        "name": "_configure"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 70,
+        "name": "_encode_graph"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 78,
+        "name": "forward"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 97,
+        "name": "parameter_groups"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/model.py",
+    "sha256": "2f55b04d3a707e212b2a1d9e0fb591eb3ec2b4828614edcc1a5a5d8f313d3b8e",
+    "snapshot": "snapshot/1"
+  },
+  {
+    "bytes": 2397,
+    "calls": [
+      "(attention[:, :, None] * h).sum",
+      "(lengths == 0).any",
+      "ValueError",
+      "initialize_linear",
+      "len",
+      "lengths.cpu",
+      "logits.masked_fill",
+      "math.sqrt",
+      "nn.LSTM",
+      "nn.Linear",
+      "nn.init.uniform_",
+      "nn.init.xavier_uniform_",
+      "nn.init.zeros_",
+      "pack_padded_sequence",
+      "pad_packed_sequence",
+      "self.alignment",
+      "self.alignment(torch.tanh(self.query(last)[:, None, :] + self.key(h))).squeeze",
+      "self.key",
+      "self.lstm",
+      "self.lstm.named_parameters",
+      "self.output",
+      "self.query",
+      "super",
+      "super().__init__",
+      "torch.arange",
+      "torch.equal",
+      "torch.ones",
+      "torch.softmax",
+      "torch.tanh",
+      "valid.sum"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 9,
+        "name": "initialize_linear"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 14,
+        "name": "TemporalHead"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 15,
+        "name": "__init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 29,
+        "name": "forward"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/temporal.py",
+    "sha256": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226",
+    "snapshot": "snapshot/2"
+  },
+  {
+    "bytes": 11938,
+    "calls": [
+      "(batch[source] != batch[target]).any",
+      "(expected * torch.nn.functional.logsigmoid(score) + (adjacency == 0) * torch.nn.functional.logsigmoid(-score)).sum",
+      "(torch.nn.functional.logsigmoid(pos) + torch.nn.functional.logsigmoid(-negative).sum(1)).mean",
+      "(x * right(values[:, 1])).sum",
+      "(x[:, None, :] * right(neg)).sum",
+      "ValueError",
+      "_embedding_identity",
+      "a.maximum",
+      "a.sum",
+      "a[start:end].toarray",
+      "adjacency",
+      "cache_key",
+      "capture_rng",
+      "checkpoint",
+      "degree.sum",
+      "digest",
+      "edges.max",
+      "edges.min",
+      "enumerate",
+      "expm_multiply",
+      "float",
+      "h.masked_fill",
+      "initialize_linear",
+      "int",
+      "isolated.astype",
+      "layer",
+      "left",
+      "left.copy_",
+      "left.detach",
+      "left.load_state_dict",
+      "left.parameters",
+      "left.state_dict",
+      "left.weight.detach",
+      "left.weight.detach().numpy",
+      "left.weight.detach().numpy().copy",
+      "len",
+      "list",
+      "logs.append",
+      "loss.backward",
+      "loss.detach",
+      "max",
+      "mcm.masked_fill",
+      "mean_pool",
+      "memoryview",
+      "memoryview(edges).cast",
+      "min",
+      "nn.Embedding",
+      "nn.Linear",
+      "nn.ModuleList",
+      "nn.Parameter",
+      "nn.ParameterList",
+      "nn.ReLU",
+      "nn.Sequential",
+      "nn.init.uniform_",
+      "np.array",
+      "np.asarray",
+      "np.asarray(a.sum(1)).ravel",
+      "np.asarray(transition.sum(1)).ravel",
+      "np.ascontiguousarray",
+      "np.empty",
+      "np.exp",
+      "np.exp(1j * point * heat).mean",
+      "np.issubdtype",
+      "np.linalg.svd",
+      "np.ones",
+      "np.random.Generator",
+      "np.random.PCG64",
+      "np.stack",
+      "np.zeros",
+      "optimizer.load_state_dict",
+      "optimizer.state_dict",
+      "optimizer.step",
+      "optimizer.zero_grad",
+      "pairs.append",
+      "penalty.backward",
+      "penalty.detach",
+      "power.toarray",
+      "powers.append",
+      "q.copy_",
+      "q.detach",
+      "q.square",
+      "q.square().sum",
+      "range",
+      "restore_rng",
+      "resume_state['grads'][name].clone",
+      "right",
+      "right.copy_",
+      "right.detach",
+      "right.load_state_dict",
+      "right.parameters",
+      "right.state_dict",
+      "rng.choice",
+      "save",
+      "seed_all",
+      "self.layers.append",
+      "set",
+      "sparse.csr_matrix",
+      "sparse.diags",
+      "sparse.eye",
+      "super",
+      "super().__init__",
+      "time.monotonic",
+      "torch.cat",
+      "torch.cat([left, right], 1).detach",
+      "torch.cat([left, right], 1).detach().numpy",
+      "torch.cat([left, right], 1).detach().numpy().copy",
+      "torch.einsum",
+      "torch.isfinite",
+      "torch.isfinite(h).all",
+      "torch.nn.functional.logsigmoid",
+      "torch.nn.functional.logsigmoid(-negative).sum",
+      "torch.no_grad",
+      "torch.ones",
+      "torch.optim.Adam",
+      "torch.optim.SGD",
+      "torch.randn",
+      "torch.softmax",
+      "torch.tensor",
+      "torch.zeros",
+      "torch.zeros_like",
+      "torch.zeros_like(h).index_add_",
+      "transition.sum",
+      "update",
+      "values.extend",
+      "walk.append",
+      "walks",
+      "watchyourstep_objective",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 15,
+        "name": "_embedding_identity"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 20,
+        "name": "adjacency"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 29,
+        "name": "graphwave"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 51,
+        "name": "align_embeddings"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 62,
+        "name": "walks"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 74,
+        "name": "node2vec"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 119,
+        "name": "watchyourstep_objective"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 125,
+        "name": "watchyourstep"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 164,
+        "name": "GINEncoder"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 93,
+        "name": "save"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 143,
+        "name": "save"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 165,
+        "name": "__init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 172,
+        "name": "forward"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 99,
+        "name": "update"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/graph_baselines.py",
+    "sha256": "f284a85a0ce3aa5dee24c748c6a376d9d44a2d775409b874540215ff0e594907",
+    "snapshot": "snapshot/3"
+  },
+  {
+    "bytes": 3956,
+    "calls": [
+      "(x[:, -1] > x[:, -2]).astype",
+      "(x[:, -1] > x[:, -2]).astype(float).tolist",
+      "GraphAttention",
+      "GraphEncoder",
+      "SVC",
+      "SVR",
+      "ValueError",
+      "float",
+      "head",
+      "initialize_linear",
+      "initialize_recurrent",
+      "labels[np.random.Generator(np.random.PCG64(20260924)).permutation(len(labels))].copy",
+      "layer",
+      "layer.named_parameters",
+      "len",
+      "lower[:, -1].reshape",
+      "math.sqrt",
+      "mcm.masked_fill",
+      "mcm.new_zeros",
+      "mean_pool",
+      "nn.LSTM",
+      "nn.LSTM if kind == 'lstm' else nn.GRU",
+      "nn.Linear",
+      "nn.init.uniform_",
+      "nn.init.zeros_",
+      "np.asarray",
+      "np.isfinite",
+      "np.isfinite(x).all",
+      "np.isin",
+      "np.isin(y, [0, 1]).all",
+      "np.random.Generator",
+      "np.random.Generator(np.random.PCG64(20260924)).permutation",
+      "np.random.PCG64",
+      "self.lower",
+      "self.mlp",
+      "self.output",
+      "self.recurrent",
+      "self.upper",
+      "super",
+      "super().__init__",
+      "torch.isfinite",
+      "torch.isfinite(mcm).all",
+      "torch.isfinite(x).all",
+      "x.reshape",
+      "y.mean"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 9,
+        "name": "initialize_recurrent"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 16,
+        "name": "head"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 21,
+        "name": "PriceRecurrent"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 33,
+        "name": "HierarchicalLSTM"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 45,
+        "name": "price_svm"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 52,
+        "name": "training_controls"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 58,
+        "name": "permute_training_labels"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 63,
+        "name": "DiagnosticGraph"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 22,
+        "name": "__init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 28,
+        "name": "forward"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 35,
+        "name": "__init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 39,
+        "name": "forward"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 64,
+        "name": "__init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 76,
+        "name": "forward"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/baselines.py",
+    "sha256": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a",
+    "snapshot": "snapshot/4"
+  },
+  {
+    "bytes": 3418,
+    "calls": [
+      "(~mask).sum",
+      "Fraction",
+      "GraphSnapshot",
+      "ValueError",
+      "any",
+      "cache_key",
+      "format",
+      "graph_hash",
+      "incident.max",
+      "int",
+      "len",
+      "np.add.at",
+      "np.arange",
+      "np.array",
+      "np.flatnonzero",
+      "np.full",
+      "np.log1p",
+      "np.zeros",
+      "require_hash",
+      "set",
+      "tuple",
+      "type",
+      "validate_graph",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 8,
+        "name": "filter_graph"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/subsets.py",
+    "sha256": "59a17cb12711d8ec518f6f25ec4518f143647b79c3ef3286399dada114b7a22c",
+    "snapshot": "snapshot/5"
+  },
+  {
+    "bytes": 2147,
+    "calls": [
+      "ExactBTCGraph",
+      "Fraction",
+      "cache_key",
+      "encode",
+      "enumerate",
+      "filter_graph",
+      "float",
+      "format",
+      "len",
+      "np.log1p",
+      "np.zeros",
+      "replace",
+      "set",
+      "tuple",
+      "validate_exact",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 11,
+        "name": "filter_btc_graph"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/btc_subsets.py",
+    "sha256": "79f1cc4de5b5bf52e491201d05941bbe0ff29555d814f343294411f4591ed736",
+    "snapshot": "snapshot/6"
+  },
+  {
+    "bytes": 3137,
+    "calls": [
+      "'.'.join",
+      "ValueError",
+      "any",
+      "c.get",
+      "cache_key",
+      "cells[identity]['tables'].append",
+      "identity.split",
+      "int",
+      "len",
+      "lifecycle_cell_id",
+      "lifecycle_id.replace",
+      "re.fullmatch",
+      "row['cell_pattern'].format",
+      "scientific_id.split",
+      "set",
+      "sorted",
+      "specification.items",
+      "str",
+      "sum",
+      "tuple"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 5,
+        "name": "enumerate_cells"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 23,
+        "name": "initial_cells"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 28,
+        "name": "reconcile_cells"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 37,
+        "name": "lifecycle_cell_id"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 50,
+        "name": "scientific_cell_id"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/cells.py",
+    "sha256": "1a15e33377030b6f3c533fd498bf75825778a59c35f2b0b8702cfaf79bb9bcfd",
+    "snapshot": "snapshot/7"
+  },
+  {
+    "bytes": 4382,
+    "calls": [
+      "ValueError",
+      "annual.append",
+      "any",
+      "batches.append",
+      "bool",
+      "cache_key",
+      "cell.get",
+      "copy.deepcopy",
+      "enumerate",
+      "enumerate_cells",
+      "initial_cells",
+      "isinstance",
+      "len",
+      "list",
+      "math.fsum",
+      "math.isfinite",
+      "max",
+      "min",
+      "output.append",
+      "per_seed.values",
+      "reconcile_cells",
+      "record.update",
+      "row['cell_pattern'].format",
+      "set",
+      "sorted",
+      "str",
+      "sum",
+      "type",
+      "values.values"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 8,
+        "name": "execution_batches"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 23,
+        "name": "table_results"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/comparison.py",
+    "sha256": "b157f41b2b98517c67152209bac46fbedf3a2eb9471fd27f9c588a41e60c8c23",
+    "snapshot": "snapshot/8"
+  },
+  {
+    "bytes": 13599,
+    "calls": [
+      "PreparedFeatures",
+      "ValueError",
+      "align_embeddings",
+      "alignment_order.append",
+      "asdict",
+      "by_hash.items",
+      "cache_key",
+      "callable",
+      "check_sample_records",
+      "checkpoint",
+      "completed.get",
+      "dataclass",
+      "dictionary_from_record",
+      "dictionary_to_record",
+      "emit",
+      "engine",
+      "feature_hash",
+      "fit_dictionary",
+      "graph_hash",
+      "graph_lineage",
+      "graphwave",
+      "len",
+      "lineage.setdefault",
+      "list",
+      "materialize_component",
+      "max",
+      "mcm_features",
+      "min",
+      "node_order_hash",
+      "np.array",
+      "np.array_equal",
+      "np.asarray",
+      "np.isfinite",
+      "np.isfinite(prefix).all",
+      "np.isfinite(vectors).all",
+      "np.zeros",
+      "prefix.copy",
+      "progress.get",
+      "representation_arm",
+      "require_matching_arm",
+      "require_neighborhood_arm",
+      "require_sampling_arm",
+      "resume_state.get",
+      "resume_state.get('completed_graphs', {}).get",
+      "resume_state.get('graph_progress', {}).get",
+      "sample_neighborhoods",
+      "samples_from_record",
+      "samples_to_record",
+      "set",
+      "sorted",
+      "torch.tensor",
+      "tuple",
+      "type",
+      "utc",
+      "validate_graph",
+      "validate_neighborhood_policy",
+      "vectors.mean",
+      "weeks.add",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "ClassDef",
+        "line": 24,
+        "name": "PreparedFeatures"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 30,
+        "name": "representation_arm"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 35,
+        "name": "prepare_features"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 77,
+        "name": "graph_lineage"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/feature_pipeline.py",
+    "sha256": "19ebe96275095ded92743a1a1bcadc4178f85cd5d39f1ed23786fba279b5fa41",
+    "snapshot": "snapshot/9"
+  },
+  {
+    "bytes": 13975,
+    "calls": [
+      "(journal.directory / 'complete.json').exists",
+      "(p / 'complete.json').exists",
+      "(p / 'failed.json').exists",
+      "(root / parent_id / 'failed.json').resolve",
+      "(run.admission.root / info['path']).read_bytes",
+      "(run_parent / 'complete.json').exists",
+      "(run_parent / 'failed.json').is_file",
+      "FeatureJournal",
+      "FileExistsError",
+      "FixedFeatureMap",
+      "Path",
+      "PreparedFeatures",
+      "ValueError",
+      "_immutable",
+      "_lock",
+      "ancestor.exists",
+      "ancestor.parent.parent.resolve",
+      "ancestor.parent.resolve",
+      "ancestor.read_bytes",
+      "ancestor.stat",
+      "any",
+      "asdict",
+      "cache_key",
+      "canonical_bytes",
+      "chain.add",
+      "dictionary_from_record",
+      "digest",
+      "durable_mkdir",
+      "file_hash",
+      "graph_hash",
+      "graphs.validate",
+      "isinstance",
+      "item.get",
+      "item['graphs'].items",
+      "journal.directory.resolve",
+      "journal.directory.resolve().is_relative_to",
+      "journal.directory.stat",
+      "journal.seal",
+      "json.loads",
+      "json.loads(ancestor.read_bytes()).get",
+      "len",
+      "metadata.get",
+      "output.read_bytes",
+      "p.read_bytes",
+      "p.resolve",
+      "path.parent.resolve",
+      "path.read_bytes",
+      "path.relative_to",
+      "path.resolve",
+      "path.resolve().is_relative_to",
+      "plan.get",
+      "prepare_features",
+      "read_feature_journal",
+      "read_feature_policy",
+      "read_graph_policy",
+      "read_matching_policy",
+      "read_neighborhood_policy",
+      "read_sampling_policy",
+      "registered_graph_manifests",
+      "representation_arm",
+      "representation_descriptor",
+      "require_matching_arm",
+      "require_neighborhood_arm",
+      "require_sampling_arm",
+      "root.iterdir",
+      "root.resolve",
+      "root.resolve().is_relative_to",
+      "run._active",
+      "run._check_source",
+      "run._published_outputs.get",
+      "run.admission.root.resolve",
+      "run.admission.root.stat",
+      "run.read_input",
+      "run.write_json",
+      "set",
+      "sorted",
+      "str",
+      "tuple",
+      "type"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 24,
+        "name": "representation_descriptor"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 33,
+        "name": "prepare_registered_features"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 148,
+        "name": "reuse_registered_features"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/registered_features.py",
+    "sha256": "8a79c459336773bd139f377fe44fe1006796378651d30a8eb22c966c72f7b267",
+    "snapshot": "snapshot/10"
+  },
+  {
+    "bytes": 14110,
+    "calls": [
+      "(run.directory / 'outputs' / name).read_bytes",
+      "ValueError",
+      "_configuration",
+      "_immutable",
+      "_published",
+      "asdict",
+      "binding.get",
+      "canonical_bytes",
+      "classification_metrics",
+      "control_values.items",
+      "digest",
+      "directory.mkdir",
+      "dispositions.append",
+      "durable_mkdir",
+      "enumerate",
+      "evaluate_cell",
+      "example_binding",
+      "failed.get",
+      "feature.get",
+      "feature_reference.get",
+      "file_hash",
+      "getattr",
+      "isinstance",
+      "item.get",
+      "json.loads",
+      "len",
+      "lifecycle_cell_id",
+      "list",
+      "path.relative_to",
+      "plan['representations'].get",
+      "prediction_directory",
+      "preflight_batch",
+      "prepared.binding.get",
+      "reconcile_cells",
+      "reference.get",
+      "representations.get",
+      "row.update",
+      "row['attempts'].append",
+      "run._active",
+      "run._check_source",
+      "run._published_outputs.get",
+      "run.read_input",
+      "run.write_json",
+      "set",
+      "sorted",
+      "str",
+      "sync_directory",
+      "training_controls",
+      "type",
+      "validate_manifest",
+      "validate_scientific_cell"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 21,
+        "name": "_configuration"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 27,
+        "name": "_published"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 34,
+        "name": "preflight_batch"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 121,
+        "name": "execute_batch"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/run.py",
+    "sha256": "d44fa28991f05bedf228de22975399847dd97404b1f3dba8390be7bd720f73de",
+    "snapshot": "snapshot/11"
+  },
+  {
+    "bytes": 15700,
+    "calls": [
+      "(directory / 'failed.json').exists",
+      "(fit_directory / 'complete.json').exists",
+      "(path / 'cell.json').read_bytes",
+      "(path / 'predictions.json').read_bytes",
+      "(previous / 'complete.json').resolve",
+      "Path",
+      "Path(completion['checkpoint']).resolve",
+      "Path(output_directory).resolve",
+      "Prediction",
+      "ValueError",
+      "_immutable",
+      "_lock",
+      "_reserve",
+      "asdict",
+      "batch_factory",
+      "build_model",
+      "canonical_bytes",
+      "cell['id'].split",
+      "cell_id.encode",
+      "checkpoint.resolve",
+      "checkpoint.resolve().is_relative_to",
+      "classification_metrics",
+      "completion.get",
+      "completion_path.resolve",
+      "digest",
+      "directory.mkdir",
+      "directory.resolve",
+      "durable_mkdir",
+      "example_binding",
+      "examples.require_test_mask",
+      "expit",
+      "factory",
+      "feature_binding.get",
+      "feature_hash",
+      "features.items",
+      "features.load_batch",
+      "features.verified_hashes",
+      "feed",
+      "file_hash",
+      "fit_cell",
+      "float",
+      "h.hexdigest",
+      "h.update",
+      "hashlib.sha256",
+      "io.BytesIO",
+      "isinstance",
+      "item.detach",
+      "item.detach().cpu",
+      "item.detach().cpu().numpy",
+      "item.feed_hash",
+      "joblib.dump",
+      "joblib.load",
+      "json.loads",
+      "len",
+      "lifecycle_cell_id",
+      "list",
+      "memoryview",
+      "memoryview(array).cast",
+      "model.decision_function",
+      "model.fit",
+      "model.load_state_dict",
+      "model.predict",
+      "model_path.open",
+      "np.array",
+      "np.asarray",
+      "np.ascontiguousarray",
+      "old.items",
+      "os.fsync",
+      "output[:, 0].numpy",
+      "path.read_bytes",
+      "permute_training_labels",
+      "predict_cell",
+      "prediction_directory",
+      "previous.resolve",
+      "provenance.items",
+      "range",
+      "read_artifact",
+      "recover_completed_model",
+      "regression_metrics",
+      "rows.append",
+      "run._active",
+      "run._check_source",
+      "run._published_outputs.get",
+      "run.read_input",
+      "scaler.inverse",
+      "scaler.transform",
+      "set",
+      "sorted",
+      "str",
+      "stream.fileno",
+      "stream.flush",
+      "sync_directory",
+      "test",
+      "torch.load",
+      "torch.softmax",
+      "torch.softmax(output, 1)[:, 1].numpy",
+      "torch.tensor",
+      "torch.tensor(scaler.transform([x.input_prices for x in examples]), dtype=torch.float32).unsqueeze",
+      "torch.tensor(scaler.transform([x.target_price for x in examples]), dtype=torch.float32).reshape",
+      "train",
+      "tuple",
+      "type",
+      "validate_cell_admission",
+      "validate_manifest",
+      "validate_scientific_cell",
+      "x['x'].numpy",
+      "x['x'].numpy().reshape",
+      "y.numpy",
+      "y.numpy().reshape",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 23,
+        "name": "batch_factory"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 43,
+        "name": "evaluate_cell"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 128,
+        "name": "reuse_cell"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 136,
+        "name": "prediction_directory"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 140,
+        "name": "feature_hash"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 156,
+        "name": "recover_completed_model"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 180,
+        "name": "validate_cell_admission"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 188,
+        "name": "validate_manifest"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 197,
+        "name": "validate_scientific_cell"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 28,
+        "name": "batch"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 143,
+        "name": "feed"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/evaluation.py",
+    "sha256": "b3af7cf6b71f8adcdd762eb471abb66d8fdd00f20087aeff377447d51a854b29",
+    "snapshot": "snapshot/12"
+  },
+  {
+    "bytes": 30058,
+    "calls": [
+      "(Path('/proc') / str(pid) / 'stat').read_text",
+      "(Path('/proc') / str(pid) / 'stat').read_text().rsplit",
+      "(Path('/proc') / str(pid) / 'stat').read_text().rsplit(')', 1)[1].split",
+      "(admitted.root / 'tradingagents/research/onchain_replication/job.py').resolve",
+      "(admitted.root / info['path']).read_bytes",
+      "(admitted.root / layout['path']).read_bytes",
+      "(base / 'launch.json').read_bytes",
+      "(base / 'observer.json').exists",
+      "(base / 'observer.json').read_bytes",
+      "(base / 'owner.json').read_bytes",
+      "(base / name).exists",
+      "(directory / 'claim.json').read_bytes",
+      "(directory / 'complete.json').exists",
+      "(directory / 'failed.json').exists",
+      "(directory / 'owner.json').read_bytes",
+      "(directory / name).exists",
+      "(group / 'cgroup.events').read_text",
+      "(group / 'cgroup.events').read_text().splitlines",
+      "(guard_dir / 'final.json').exists",
+      "(guard_dir / 'final.json').read_bytes",
+      "(guard_dir / 'live.json').exists",
+      "(guard_dir / 'live.json').read_bytes",
+      "(path.parent / 'outputs').iterdir",
+      "(root / 'research_artifacts').resolve",
+      "(root / 'research_artifacts/onchain_fit_cells').glob",
+      "(root / 'research_artifacts/onchain_representations').glob",
+      "(root / 'research_runs').resolve",
+      "(root / PREFIX / 'batches' / args.experiment).glob",
+      "(root / common).resolve",
+      "(run_dir / 'claim.json').exists",
+      "(run_dir / 'complete.json').exists",
+      "(run_dir / 'failed.json').exists",
+      "(run_dir / ('complete.json' if status == 'failed' else 'failed.json')).exists",
+      "Path",
+      "Path('/proc/self/stat').read_text",
+      "Path('/proc/self/stat').read_text().rsplit",
+      "Path('/proc/self/stat').read_text().rsplit(')', 1)[1].split",
+      "Path('/proc/sys/kernel/random/boot_id').read_text",
+      "Path('/proc/sys/kernel/random/boot_id').read_text().strip",
+      "Path(__file__).resolve",
+      "Path(args.root).resolve",
+      "Path(p).is_absolute",
+      "Path(p).stat",
+      "Path(root).resolve",
+      "ResearchRun",
+      "ResearchRun.start",
+      "RuntimeError",
+      "Scope.create",
+      "Scope.open",
+      "SimpleNamespace",
+      "StorageWatch",
+      "SystemExit",
+      "ValueError",
+      "_admitted",
+      "_base",
+      "_command",
+      "_encode",
+      "_immutable",
+      "_incomplete_representation",
+      "_observer_evidence",
+      "_once",
+      "_physical_scope",
+      "_reconcile",
+      "_terminal",
+      "admit",
+      "all",
+      "any",
+      "argparse.ArgumentParser",
+      "base.mkdir",
+      "c.get",
+      "capture_admitted_prices",
+      "capture_ranges",
+      "claim_path.read_bytes",
+      "current_metadata_scope",
+      "dict",
+      "dict((line.split() for line in (group / 'cgroup.events').read_text().splitlines())).get",
+      "digest",
+      "directory.is_dir",
+      "directory.resolve",
+      "directory.rglob",
+      "directory.stat",
+      "durable_mkdir",
+      "execute_fit_payload",
+      "execute_source_job",
+      "file_hash",
+      "final.get",
+      "final.get('memory_events', {}).get",
+      "final_path.exists",
+      "final_path.read_bytes",
+      "finalize_registered_storage",
+      "finalize_storage",
+      "getattr",
+      "globals",
+      "globals()[args.mode]",
+      "group.exists",
+      "group.is_relative_to",
+      "group.name.startswith",
+      "inventory",
+      "isinstance",
+      "job.get",
+      "job['resources'].get",
+      "job_schema",
+      "journals.append",
+      "json.dumps",
+      "json.loads",
+      "json.loads(final_path.read_bytes()).get",
+      "len",
+      "lifecycle_cell_id",
+      "line.split",
+      "live.get",
+      "metadata_scope",
+      "missing.append",
+      "monitor.poll",
+      "monitor.terminate",
+      "monitor.wait",
+      "os.getpid",
+      "os.path.lexists",
+      "owner.get",
+      "p.is_file",
+      "p.relative_to",
+      "p.stat",
+      "package.glob",
+      "package.parent.glob",
+      "parser.add_argument",
+      "parser.parse_args",
+      "path.exists",
+      "path.is_symlink",
+      "path.lstat",
+      "path.read_bytes",
+      "policy.items",
+      "populated",
+      "primary.add_note",
+      "print",
+      "produce_registered_census",
+      "produce_registered_graphs",
+      "produce_registered_hub_census",
+      "produce_registered_neural_resource",
+      "reconcile",
+      "recorded.get",
+      "repr",
+      "required_sources",
+      "resource_policy",
+      "resources.assert_guarded_worker",
+      "resources.bind_parent_death",
+      "resources.guarded_run",
+      "result.get",
+      "root.stat",
+      "run.fail",
+      "run.finish",
+      "run.read_input",
+      "run.write_json",
+      "same_process_alive",
+      "scope.close_authority",
+      "scope.finish",
+      "scope.read_metadata",
+      "scope.terminal_tail",
+      "scope.verify_environment",
+      "set",
+      "signal.signal",
+      "sorted",
+      "stat.S_ISREG",
+      "str",
+      "subprocess.Popen",
+      "subprocess.check_output",
+      "subprocess.check_output(['git', 'rev-parse', '--git-common-dir'], cwd=root, text=True).strip",
+      "subprocess.run",
+      "sum",
+      "sync_directory",
+      "terminal.get",
+      "ticks.isdecimal",
+      "time.monotonic",
+      "time.sleep",
+      "torch.set_num_threads",
+      "type",
+      "uuid.uuid4",
+      "validate",
+      "watch.root.is_relative_to",
+      "workspace_binding"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 27,
+        "name": "required_sources"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 35,
+        "name": "same_process_alive"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 44,
+        "name": "resource_policy"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 77,
+        "name": "job_schema"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 92,
+        "name": "workspace_binding"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 100,
+        "name": "_admitted"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 125,
+        "name": "_base"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 129,
+        "name": "_command"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 136,
+        "name": "_once"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 144,
+        "name": "_terminal"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 165,
+        "name": "_observer_evidence"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 171,
+        "name": "_physical_scope"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 183,
+        "name": "launch"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 221,
+        "name": "monitor"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 246,
+        "name": "execute_source_job"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 277,
+        "name": "worker"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 325,
+        "name": "_incomplete_representation"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 345,
+        "name": "reconcile"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 352,
+        "name": "_reconcile"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 293,
+        "name": "stop"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 374,
+        "name": "populated"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 198,
+        "name": "stop"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job.py",
+    "sha256": "d41518c7a7feaac03f66b50e7fce296ce3061e65d740b3117b34d34a6c99aa96",
+    "snapshot": "snapshot/13"
+  },
+  {
+    "bytes": 16938,
+    "calls": [
+      "Example",
+      "ExampleManifest",
+      "Fold",
+      "Scaler",
+      "ValueError",
+      "_execute_fit_payload",
+      "_produce_eager_graphs",
+      "archive_context.view",
+      "archive_dispatch.Context",
+      "archive_dispatch.preflight",
+      "asdict",
+      "cache_key",
+      "canonical_bytes",
+      "compact_native_producer.finalize",
+      "compact_native_producer.produce",
+      "compact_native_producer.selected",
+      "context.close",
+      "dict",
+      "execute_batch",
+      "fields",
+      "freeze",
+      "isinstance",
+      "job.get",
+      "json.loads",
+      "list",
+      "load_graph",
+      "manifests.append",
+      "map",
+      "metadata['arrays'].values",
+      "native_producer.produce",
+      "native_producer.selected",
+      "native_reuse.prepare",
+      "native_reuse.selected",
+      "open_graph_population",
+      "payload['population_inputs'].items",
+      "payload['representation_jobs'].items",
+      "population_from_record",
+      "preflight_batch",
+      "prepare_registered_features",
+      "prepared.items",
+      "produce",
+      "produce_registered_population",
+      "producer.get",
+      "read_feature_policy",
+      "read_graph_policy",
+      "read_matching_policy",
+      "read_neighborhood_policy",
+      "read_sampling_policy",
+      "reference.get",
+      "registered_graph_manifests",
+      "representation_arm",
+      "require_matching_arm",
+      "require_neighborhood_arm",
+      "require_sampling_arm",
+      "reuse_registered_features",
+      "row.items",
+      "run.read_input",
+      "run.write_json",
+      "set",
+      "sorted",
+      "str",
+      "sum",
+      "tuple",
+      "type"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 14,
+        "name": "population_record"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 22,
+        "name": "population_from_record"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 39,
+        "name": "execute_fit_payload"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 58,
+        "name": "_execute_fit_payload"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 224,
+        "name": "_produce_eager_graphs"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 28,
+        "name": "example"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 174,
+        "name": "produce"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job_payload.py",
+    "sha256": "0303ea2e516e57e1d4a850b3eadf13b3b23ee047b48df1417e8ae559ff171ab0",
+    "snapshot": "snapshot/14"
+  },
+  {
+    "bytes": 10611,
+    "calls": [
+      "(directory / name).read_bytes",
+      "CalendarGraph",
+      "Fold",
+      "Path",
+      "PricePanel",
+      "ValueError",
+      "_immutable",
+      "arrays.items",
+      "asdict",
+      "asdict(fold).items",
+      "assemble_population",
+      "assembly.items",
+      "build_examples_from_metadata",
+      "canonical_bytes",
+      "dict",
+      "digest",
+      "directory.mkdir",
+      "durable_mkdir",
+      "example_binding",
+      "expected_week",
+      "fit_scaler",
+      "graph_references.items",
+      "json.loads",
+      "len",
+      "matching[0].items",
+      "metadata.append",
+      "outputs.values",
+      "plan.get",
+      "plan['graphs'].items",
+      "population_record",
+      "price_record.items",
+      "publish_projection",
+      "refs[week].get",
+      "require_hash",
+      "required_weeks",
+      "result.items",
+      "run.read_input",
+      "run.write_json",
+      "set",
+      "sorted",
+      "stamp",
+      "sync_directory",
+      "timedelta",
+      "tuple",
+      "type",
+      "used.append",
+      "utc",
+      "values.items",
+      "weeks.add"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 18,
+        "name": "required_weeks"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 32,
+        "name": "assemble_population"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 121,
+        "name": "publish_population"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 138,
+        "name": "produce_registered_population"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/population_assembly.py",
+    "sha256": "dddb2d170d171981b63ab3de1bf3d09f0602a882ed9f8cf6c08406ddf24d7f8e",
+    "snapshot": "snapshot/15"
+  },
+  {
+    "bytes": 17523,
+    "calls": [
+      "Path",
+      "SourceBoundary",
+      "ValueError",
+      "_complete",
+      "_immutable",
+      "_plan",
+      "_source_inventory",
+      "_verify_graph_coverage",
+      "any",
+      "build_btc_weekly",
+      "build_weekly",
+      "cache_key",
+      "config.get",
+      "coverage_path.relative_to",
+      "decode_eth",
+      "decode_parquet",
+      "dict",
+      "digest",
+      "directory.mkdir",
+      "durable_mkdir",
+      "events",
+      "file_hash",
+      "hashes.append",
+      "intervals.append",
+      "isinstance",
+      "iterator.close",
+      "json.loads",
+      "len",
+      "list",
+      "load_graph if plan['asset'] == 'ETH' else load_btc_graph",
+      "local_path",
+      "m.get",
+      "map",
+      "members.append",
+      "path.relative_to",
+      "plan.get",
+      "plan['graphs'].values",
+      "range",
+      "record",
+      "ref.update",
+      "require_hash",
+      "run._active",
+      "run._check_source",
+      "run.read_input",
+      "save_graph if plan['asset'] == 'ETH' else save_btc_graph",
+      "seen.add",
+      "selected.append",
+      "set",
+      "sorted",
+      "source.get",
+      "sources.append",
+      "stamp",
+      "str",
+      "sum",
+      "sync_directory",
+      "timedelta",
+      "type",
+      "utc",
+      "week_start",
+      "weeks.append",
+      "workspace.relative_to",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 20,
+        "name": "_plan"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 67,
+        "name": "_source_inventory"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 112,
+        "name": "_verify_graph_coverage"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 141,
+        "name": "produce_registered_graphs"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 164,
+        "name": "record"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 206,
+        "name": "events"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/graph_production.py",
+    "sha256": "ef5ee5e2c8f6438e4e334d1a468397ad6f60e176d157e7849b7132737c7c85e8",
+    "snapshot": "snapshot/16"
+  },
+  {
+    "bytes": 7938,
+    "calls": [
+      "(parent_dir / 'complete.json').exists",
+      "(parent_dir / 'failed.json').is_file",
+      "(previous[0] / 'complete.json').exists",
+      "(previous[0] / 'failed.json').is_file",
+      "(run.admission.root / info['path']).resolve",
+      "FileExistsError",
+      "FitResult",
+      "Path",
+      "Path(continuation['checkpoint']).resolve",
+      "ValueError",
+      "_immutable",
+      "_lock",
+      "_reserve",
+      "after_batch",
+      "any",
+      "batch_factory",
+      "canonical_bytes",
+      "cell_id.encode",
+      "checkpoint.is_relative_to",
+      "destination.mkdir",
+      "digest",
+      "durable_mkdir",
+      "file_hash",
+      "float",
+      "isinstance",
+      "json.loads",
+      "len",
+      "list",
+      "load_checkpoint",
+      "logs.append",
+      "loss.backward",
+      "loss.detach",
+      "min",
+      "model",
+      "model.eval",
+      "model.parameters",
+      "model.train",
+      "model_factory",
+      "old.items",
+      "optimizer.step",
+      "optimizer.zero_grad",
+      "output.detach",
+      "output.detach().cpu",
+      "outputs.append",
+      "previous[0].resolve",
+      "prior_schedule.read_bytes",
+      "provenance.items",
+      "range",
+      "root.iterdir",
+      "run._active",
+      "run._check_source",
+      "run.admission.inputs.values",
+      "save_checkpoint",
+      "seed_all",
+      "sorted",
+      "str",
+      "sync_directory",
+      "time.monotonic",
+      "torch.cat",
+      "torch.isfinite",
+      "torch.isfinite(output).all",
+      "torch.nn.functional.cross_entropy",
+      "torch.nn.functional.mse_loss",
+      "torch.nn.utils.clip_grad_norm_",
+      "torch.no_grad",
+      "torch.optim.Adam",
+      "tuple",
+      "type"
+    ],
+    "definitions": [
+      {
+        "kind": "ClassDef",
+        "line": 13,
+        "name": "FitResult"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 20,
+        "name": "_reserve"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 49,
+        "name": "fit_cell"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 99,
+        "name": "predict_cell"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/training.py",
+    "sha256": "5c0380de62c670d356ea3546c7b81eed4ccab55a886bc27b6a1bbfd75c2c3369",
+    "snapshot": "snapshot/17"
+  },
+  {
+    "bytes": 3441,
+    "calls": [
+      "((p < 0) | (p > 1)).any",
+      "(np.diff(dates).astype(int) <= 0).any",
+      "(np.diff(dates[index]).astype(int) != 1).any",
+      "(p > 0.5).astype",
+      "(y <= 0).any",
+      "ValueError",
+      "_pair",
+      "annual.append",
+      "any",
+      "d[selected].mean",
+      "dates.astype",
+      "float",
+      "groups.append",
+      "int",
+      "len",
+      "np.abs",
+      "np.asarray",
+      "np.clip",
+      "np.concatenate",
+      "np.diff",
+      "np.diff(dates).astype",
+      "np.diff(dates[index]).astype",
+      "np.flatnonzero",
+      "np.isfinite",
+      "np.isfinite(a).all",
+      "np.isfinite(b).all",
+      "np.isin",
+      "np.isin(y, [0, 1]).all",
+      "np.isnat",
+      "np.isnat(dates).any",
+      "np.log",
+      "np.log1p",
+      "np.mean",
+      "np.quantile",
+      "np.random.Generator",
+      "np.random.PCG64",
+      "np.sqrt",
+      "np.sum",
+      "np.unique",
+      "out.update",
+      "p.astype",
+      "precision_recall_fscore_support",
+      "range",
+      "recall.mean",
+      "rng.integers",
+      "set",
+      "sorted",
+      "tuple",
+      "values.append",
+      "y.astype",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 6,
+        "name": "_pair"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 12,
+        "name": "classification_metrics"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 28,
+        "name": "regression_metrics"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 35,
+        "name": "paired_block_interval"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 55,
+        "name": "aggregate_years"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/metrics.py",
+    "sha256": "9476c2052e02be278c01360fa598a3a136a791ffaa90d90f1fde992c8a27c84b",
+    "snapshot": "snapshot/18"
+  },
+  {
+    "bytes": 8253,
+    "calls": [
+      "(g.edge_aggregates < 0).any",
+      "GraphSnapshot",
+      "MappingProxyType",
+      "ValueError",
+      "_duplicate_edges",
+      "any",
+      "array.tobytes",
+      "dataclass",
+      "dict",
+      "fields",
+      "g.edge_index.max",
+      "g.edge_index.min",
+      "g.exclusion_counts.values",
+      "getattr",
+      "getattr(g, f.name).tolist",
+      "isinstance",
+      "len",
+      "map",
+      "max",
+      "np.all",
+      "np.allclose",
+      "np.any",
+      "np.array",
+      "np.asarray",
+      "np.frombuffer",
+      "np.frombuffer(array.tobytes(), dtype=array.dtype).reshape",
+      "np.isfinite",
+      "np.isfinite(array).all",
+      "np.isfinite(g.edge_aggregates).all",
+      "np.isfinite(g.edge_features).all",
+      "np.isfinite(g.node_features).all",
+      "np.issubdtype",
+      "np.lexsort",
+      "np.log1p",
+      "object.__setattr__",
+      "pairwise",
+      "range",
+      "require_hash",
+      "set",
+      "sorted",
+      "sum",
+      "tuple",
+      "type",
+      "utc",
+      "validate_graph"
+    ],
+    "definitions": [
+      {
+        "kind": "ClassDef",
+        "line": 12,
+        "name": "GraphSnapshot"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 40,
+        "name": "Fold"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 52,
+        "name": "Prediction"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 69,
+        "name": "ArtifactKey"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 81,
+        "name": "_duplicate_edges"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 91,
+        "name": "validate_graph"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 141,
+        "name": "graph_from_dict"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 152,
+        "name": "graph_to_dict"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 160,
+        "name": "Transaction"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 173,
+        "name": "PricePanel"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 184,
+        "name": "AttributedGraph"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 200,
+        "name": "validate_attributed"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 28,
+        "name": "__post_init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 193,
+        "name": "__post_init__"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py",
+    "sha256": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a",
+    "snapshot": "snapshot/19"
+  },
+  {
+    "bytes": 4494,
+    "calls": [
+      "(left @ right.T).detach",
+      "(left @ right.T).detach().numpy",
+      "GINEncoder",
+      "Path",
+      "Path(__file__).resolve",
+      "RuntimeError",
+      "align_embeddings",
+      "all",
+      "deepcopy",
+      "dict",
+      "expected.append",
+      "expm",
+      "float",
+      "graphwave",
+      "json.loads",
+      "list",
+      "loss.backward",
+      "loss.detach",
+      "model",
+      "model.parameters",
+      "node2vec",
+      "np.array",
+      "np.exp",
+      "np.exp(1j * t * heat).mean",
+      "np.eye",
+      "np.logaddexp",
+      "np.testing.assert_allclose",
+      "np.testing.assert_array_equal",
+      "out.sum",
+      "out.sum().backward",
+      "pytest.approx",
+      "pytest.raises",
+      "range",
+      "root.read_bytes",
+      "saved.append",
+      "saved.clear",
+      "torch.randn",
+      "torch.tensor",
+      "torch.zeros",
+      "values.extend",
+      "walks",
+      "watchyourstep",
+      "watchyourstep_objective"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 10,
+        "name": "test_graphwave_against_dense_three_node_oracle"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 25,
+        "name": "test_historical_alignment_and_walk_reproducibility"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 34,
+        "name": "test_watchyourstep_objective_matches_scalar_and_gin_gradients"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 47,
+        "name": "test_node2vec_mid_epoch_recovery_matches_uninterrupted"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 61,
+        "name": "test_wys_partial_gradient_checkpoint_and_graphwave_replay"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 54,
+        "name": "interrupt"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 69,
+        "name": "interrupt"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_graph_baselines.py",
+    "sha256": "05c1eef19e6ca3d990e4f2077e2b98ba903ea7faef41a2e1fcfe957caad1b5a3",
+    "snapshot": "snapshot/20"
+  },
+  {
+    "bytes": 1843,
+    "calls": [
+      "GraphSnapshot",
+      "filter_graph",
+      "fixture",
+      "np.array",
+      "np.expm1",
+      "np.log1p",
+      "np.testing.assert_allclose",
+      "np.testing.assert_array_equal",
+      "np.zeros",
+      "pytest.raises",
+      "replace"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 7,
+        "name": "fixture"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 13,
+        "name": "test_whales_removed_features_rebuilt_and_origin_counters_explicit"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 20,
+        "name": "test_fund_cohort_cannot_be_invented"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 26,
+        "name": "test_whale_strict_boundary_uses_raw_aggregates"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 34,
+        "name": "test_induced_fund_graph_retains_isolated_selected_vertex"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_subsets.py",
+    "sha256": "7a99b6e71ec6a4170f6445456a36aa6da0dd92c91b487dd816b316fb32ce9c4a",
+    "snapshot": "snapshot/21"
+  },
+  {
+    "bytes": 1995,
+    "calls": [
+      "Fraction",
+      "build_btc_weekly",
+      "event",
+      "file_hash",
+      "filter_btc_graph",
+      "len",
+      "list",
+      "load_btc_graph",
+      "max",
+      "np.testing.assert_array_equal",
+      "pytest.raises",
+      "replace",
+      "save_btc_graph",
+      "tuple",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 12,
+        "name": "test_whale_selection_uses_bound_exact_sidecar_and_preserves_isolates"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 24,
+        "name": "test_fund_rebuilds_exact_retained_edges_and_rejects_rounded_node_features"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_btc_subsets.py",
+    "sha256": "12e4e85c047e629fe74046e600e6ba00a9023f5b40a0df9027045d87e7c2fded",
+    "snapshot": "snapshot/22"
+  },
+  {
+    "bytes": 1188,
+    "calls": [
+      "Path",
+      "Path(__file__).resolve",
+      "all",
+      "build_model",
+      "json.loads",
+      "model",
+      "model.parameters",
+      "out.square",
+      "out.square().sum",
+      "out.square().sum().backward",
+      "pytest.mark.parametrize",
+      "root.read_bytes",
+      "torch.isfinite",
+      "torch.isfinite(p.grad).all",
+      "torch.rand",
+      "torch.randn",
+      "torch.tensor"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 9,
+        "name": "test_every_neural_arm_assembles_and_receives_gradients"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_registry.py",
+    "sha256": "b0544e169ced716b80b8ae72c3e3c6f14a9491b5708f9f6a0e91343260c166f0",
+    "snapshot": "snapshot/23"
+  },
+  {
+    "bytes": 2327,
+    "calls": [
+      "(ROOT / 'config/training.json').read_bytes",
+      "(ROOT / 'table-map.json').read_bytes",
+      "Path",
+      "Path(__file__).resolve",
+      "c.update",
+      "changed.update",
+      "dict",
+      "enumerate_cells",
+      "execution_batches",
+      "inputs",
+      "int",
+      "json.loads",
+      "len",
+      "next",
+      "pytest.approx",
+      "pytest.raises",
+      "range",
+      "str",
+      "sum",
+      "table_results"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 10,
+        "name": "inputs"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 13,
+        "name": "test_full_matrix_allocates_initial_once_and_every_later_asset_year"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 21,
+        "name": "test_printed_rows_reuse_identical_cells_and_do_not_average_survivors"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_comparison.py",
+    "sha256": "0085f62607745571906f6a936a70c6fa89247427a4ec18e48650bf5d0f23dfd8",
+    "snapshot": "snapshot/24"
+  },
+  {
+    "bytes": 6164,
+    "calls": [
+      "(CONFIG / 'model.json').read_bytes",
+      "(CONFIG / (v + '.json')).read_bytes",
+      "Path",
+      "Path(__file__).resolve",
+      "SimpleNamespace",
+      "all",
+      "asdict",
+      "build_examples",
+      "build_model",
+      "calls.append",
+      "calls.clear",
+      "canonical_bytes",
+      "checkpoints.append",
+      "configs",
+      "digest",
+      "enumerate",
+      "fixture",
+      "json.loads",
+      "len",
+      "list",
+      "loss.backward",
+      "map",
+      "model",
+      "model.parameters",
+      "monkeypatch.setattr",
+      "np.all",
+      "np.full",
+      "np.ones",
+      "np.testing.assert_array_equal",
+      "population",
+      "prepare_features",
+      "prepared.features.items",
+      "prepared.features.values",
+      "pytest.mark.parametrize",
+      "pytest.raises",
+      "replace",
+      "result.square",
+      "result.square().sum",
+      "row",
+      "set",
+      "torch.zeros",
+      "zip"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 14,
+        "name": "configs"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 17,
+        "name": "population"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 26,
+        "name": "test_graph_producer_binds_raw_topology_and_fixed_population"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 37,
+        "name": "test_proposed_runs_dictionary_then_mcm_then_full_trainable_model"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 54,
+        "name": "test_missing_or_foreign_graph_never_becomes_empty_feature_vector"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 60,
+        "name": "test_delayed_intermediate_cannot_change_earlier_feature_and_all_ancestors_are_bound"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 71,
+        "name": "row"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 76,
+        "name": "engine"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 94,
+        "name": "future_engine"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_feature_pipeline.py",
+    "sha256": "74411956371d0a0a4d26859a692744bc2415145c70a953de5a27b0508ccf64c2",
+    "snapshot": "snapshot/25"
+  },
+  {
+    "bytes": 2035,
+    "calls": [
+      "HierarchicalLSTM",
+      "PriceRecurrent",
+      "all",
+      "classification_metrics",
+      "len",
+      "model",
+      "model.parameters",
+      "np.arange",
+      "np.arange('2024-01-01', '2024-03-01', dtype='datetime64[D]').astype",
+      "np.arange('2024-01-01', '2024-03-01', dtype='datetime64[D]').astype(str).tolist",
+      "np.ones",
+      "np.zeros",
+      "out.square",
+      "out.square().sum",
+      "out.square().sum().backward",
+      "paired_block_interval",
+      "price_svm",
+      "pytest.approx",
+      "pytest.mark.parametrize",
+      "pytest.raises",
+      "regression_metrics",
+      "torch.isfinite",
+      "torch.isfinite(p.grad).all",
+      "torch.linspace",
+      "torch.linspace(0, 1, 56).reshape",
+      "training_controls"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 8,
+        "name": "test_metrics_hand_calculation_and_probability_limits"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 17,
+        "name": "test_interval_rejects_gaps_and_preserves_pairing"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 24,
+        "name": "test_price_models_have_distinct_joint_trainable_structure"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 32,
+        "name": "test_svm_contract_and_zero_fit_controls"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_metrics_baselines.py",
+    "sha256": "689f304e5351ee657dafb0cab51b5031403a9c6bd39b11280a8ec7eefa3020f8",
+    "snapshot": "snapshot/26"
+  },
+  {
+    "bytes": 1437,
+    "calls": [
+      "(root / 'config/training.json').read_bytes",
+      "(root / 'table-map.json').read_bytes",
+      "Path",
+      "Path(__file__).resolve",
+      "any",
+      "bool",
+      "enumerate_cells",
+      "initial_cells",
+      "isinstance",
+      "json.loads",
+      "len",
+      "lifecycle_cell_id",
+      "pytest.raises",
+      "reconcile_cells",
+      "scientific_cell_id",
+      "set",
+      "sum"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 7,
+        "name": "test_full_paper_and_diagnostic_denominators_are_finite_and_reused"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 17,
+        "name": "test_every_scientific_identity_has_unique_reversible_lifecycle_name"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_cells.py",
+    "sha256": "a01331d8b41aba2e681f68130dc45e8bd330f9bc544cf50d21e8e6a601e60b08",
+    "snapshot": "snapshot/27"
+  },
+  {
+    "bytes": 19904,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/REPLICATION_SPEC.md",
+    "sha256": "8ffb0cb8729ed0792bab79491a7dbbb72ac7ed482d1e52fbc819cb92eeb14921",
+    "snapshot": "snapshot/28"
+  },
+  {
+    "bytes": 4163,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/TABLE_COVERAGE.md",
+    "sha256": "ef65c221c18102e48282487d19637cf746ebae78a77c183ddef5787e424de89f",
+    "snapshot": "snapshot/29"
+  },
+  {
+    "bytes": 24913,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/fidelity.json",
+    "sha256": "a115b80961289ab3909f7ba52b2b012a6452322adc18d117e923169d2fb35a75",
+    "snapshot": "snapshot/30"
+  },
+  {
+    "bytes": 8272,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/PROTOCOL.md",
+    "sha256": "7a9fc2d68d197ea827a3e65b440bfd83ead7e03885816343f23fd684f1776e28",
+    "snapshot": "snapshot/31"
+  },
+  {
+    "bytes": 6449,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/SOURCE_AUDIT.md",
+    "sha256": "65412370c1fcbcd061a7004457d779df8e2b07abeafb3f05c82abd9e8887b11b",
+    "snapshot": "snapshot/32"
+  },
+  {
+    "bytes": 2512,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/DECISIONS.md",
+    "sha256": "19864bac2d10480fbfc1fbbb0946aecd132b54ba6eac47d97771defbc5ad2134",
+    "snapshot": "snapshot/33"
+  },
+  {
+    "bytes": 18755,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/table-map.json",
+    "sha256": "8ce7ea18fa3a64199ae222c5ecf9ea5007f75f8549fc248ba96716f05279c78a",
+    "snapshot": "snapshot/34"
+  },
+  {
+    "bytes": 806,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/protocol-freeze-v5.json",
+    "sha256": "3dc4e895eb4e50287c525f7ce0d7b04903f6500e27b49cfb3621154a525103f6",
+    "snapshot": "snapshot/35"
+  },
+  {
+    "bytes": 5430,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/baselines.json",
+    "sha256": "a120054bd0e19b710cd23160aec41809ab92a0b54ab554900b653afd73cb4026",
+    "snapshot": "snapshot/36"
+  },
+  {
+    "bytes": 3934,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/training.json",
+    "sha256": "d5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0",
+    "snapshot": "snapshot/37"
+  },
+  {
+    "bytes": 1628,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/model.json",
+    "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d",
+    "snapshot": "snapshot/38"
+  },
+  {
+    "bytes": 1017,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/dictionary.json",
+    "sha256": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff",
+    "snapshot": "snapshot/39"
+  },
+  {
+    "bytes": 1535,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/matching-stable.json",
+    "sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e",
+    "snapshot": "snapshot/40"
+  },
+  {
+    "bytes": 44769,
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/docs/superpowers/plans/2026-09-24-onchain-paper-replication.md",
+    "sha256": "5bfad832de3dc07fc136e6f3575005fbfb8585bc2963899bcc9c8836d378cb62",
+    "snapshot": "snapshot/41"
+  },
+  {
+    "bytes": 9594,
+    "calls": [
+      "Path",
+      "Path(__file__).resolve",
+      "ValueError",
+      "_PINS.get",
+      "_classes",
+      "_structure",
+      "any",
+      "authenticate",
+      "buffer_refs.append",
+      "buffers.append",
+      "canonical",
+      "check_model",
+      "constructor",
+      "detached.get",
+      "dict",
+      "getattr",
+      "hasattr",
+      "hashlib.sha256",
+      "hashlib.sha256(canonical(p)).hexdigest",
+      "hashlib.sha256(canonical({'execution': selected, 'config': detached, 'task': task})).hexdigest",
+      "hashlib.sha256(raw).hexdigest",
+      "id",
+      "identity",
+      "isinstance",
+      "json.dumps",
+      "json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode",
+      "json.loads",
+      "len",
+      "list",
+      "mapping.items",
+      "model.modules",
+      "model.named_buffers",
+      "model.named_modules",
+      "model.named_parameters",
+      "model.parameters",
+      "model_contract",
+      "module.__dict__.get",
+      "module_refs.append",
+      "modules.append",
+      "parameter_refs.append",
+      "parameters.append",
+      "path.is_symlink",
+      "path.open",
+      "path.resolve",
+      "path.stat",
+      "plan['model'].get",
+      "provenance.get",
+      "run.admission.experiment['source_files'].get",
+      "set",
+      "str",
+      "stream.read",
+      "tuple",
+      "type",
+      "validate_state",
+      "weakref.WeakKeyDictionary"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 11,
+        "name": "canonical"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 13,
+        "name": "identity"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 23,
+        "name": "authenticate"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 32,
+        "name": "for_run"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 39,
+        "name": "plan_selection"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 56,
+        "name": "_classes"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 61,
+        "name": "_structure"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 82,
+        "name": "construct"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 100,
+        "name": "check_model"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 115,
+        "name": "model_contract"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 120,
+        "name": "check_state_model"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 125,
+        "name": "validate_state"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/financial_execution.py",
+    "sha256": "e16402d8625ed9b1c9fe5d308d18867b811b3acb2bb90b2e0bcb7132cd4a602e",
+    "snapshot": "snapshot/42"
+  },
+  {
+    "bytes": 35924,
+    "calls": [
+      "(a - b).abs",
+      "(a - b).abs().max",
+      "(ad.root / '.git').is_dir",
+      "(ad.root / '.git').resolve",
+      "(ad.root / info['path']).read_bytes",
+      "(base / 'owner.json').read_bytes",
+      "(directory / 'claim.json').read_bytes",
+      "(directory / ('complete.json' if status == 'failed' else 'failed.json')).exists",
+      "(directory / (status + '.json')).read_bytes",
+      "(expected_fit / 'complete.json').resolve",
+      "(fit / 'checkpoints').resolve",
+      "(fit / 'complete.json').exists",
+      "(local / checkpoint.name).relative_to",
+      "(local / source.name).open",
+      "(refdir / 'claim.json').read_bytes",
+      "(refdir / 'complete.json').read_bytes",
+      "(refdir / 'failed.json').exists",
+      "(root / 'uv.lock').read_bytes",
+      "(run.admission.root / run.admission.inputs[ref['completion_input']]['path']).resolve",
+      "(tag + ':' + str(i)).encode",
+      "AssertionError",
+      "Bounded",
+      "Path",
+      "Path(__file__).read_bytes",
+      "Path(__file__).resolve",
+      "Path(complete['checkpoint']).resolve",
+      "Path(distribution.locate_file(matches[0])).resolve",
+      "Path(name).is_absolute",
+      "Path(replay.__file__).resolve",
+      "Path(sys.executable).resolve",
+      "PlannedInterruption",
+      "Unavailable",
+      "_immutable",
+      "_interrupt_case",
+      "_interrupt_parent",
+      "_one_epoch_state",
+      "_parent",
+      "_reference_state",
+      "_select_failure",
+      "a.keys",
+      "a.numel",
+      "ad.experiment['source_files'].get",
+      "ad.inputs.get",
+      "ad.spec['program_id'].startswith",
+      "admitted",
+      "all",
+      "any",
+      "authorize",
+      "b.keys",
+      "bool",
+      "canonical",
+      "checkpoint.parent.iterdir",
+      "checkpoint.read_bytes",
+      "checkpoint.resolve",
+      "checkpoint.resolve().is_relative_to",
+      "checkpoints.capture_rng",
+      "checkpoints.load_checkpoint",
+      "checkpoints.save_checkpoint",
+      "checkpoints.seed_all",
+      "closure.get",
+      "compare",
+      "copy.deepcopy",
+      "cp.relative_to",
+      "dict",
+      "directory.exists",
+      "directory.mkdir",
+      "directory.parent.mkdir",
+      "directory.resolve",
+      "directory.rglob",
+      "distribution.locate_file",
+      "enumerate",
+      "evaluation.recover_completed_model",
+      "exe.read_bytes",
+      "expected.read_bytes",
+      "expected.resolve",
+      "expected_fit.resolve",
+      "f.fileno",
+      "f.flush",
+      "f.write",
+      "factory",
+      "fatal",
+      "file_hash",
+      "financial.check_model",
+      "financial.check_state_model",
+      "financial.for_run",
+      "financial.identity",
+      "float",
+      "fresh.state_dict",
+      "freshopt.state_dict",
+      "frozen",
+      "g['edge_index'].tolist",
+      "g['mcm'].data_ptr",
+      "g['mcm'].detach",
+      "g['mcm'].detach().tolist",
+      "graphs.append",
+      "hashlib.sha256",
+      "hashlib.sha256((tag + ':' + str(i)).encode()).digest",
+      "hashlib.sha256(b).hexdigest",
+      "id",
+      "importlib.metadata.distribution",
+      "importlib.metadata.version",
+      "inputs['prices'].detach",
+      "inputs['prices'].detach().tolist",
+      "int.from_bytes",
+      "inventory",
+      "isinstance",
+      "job._admitted",
+      "job._base",
+      "job._command",
+      "job.required_sources",
+      "json.dumps",
+      "json.dumps(v, sort_keys=True, separators=(',', ':'), allow_nan=False).encode",
+      "json.loads",
+      "lease",
+      "len",
+      "list",
+      "local.mkdir",
+      "loss.backward",
+      "manifest['members'].items",
+      "math.isfinite",
+      "member.relative_to",
+      "member.stat",
+      "missing.pop",
+      "model",
+      "model(**inputs).tolist",
+      "model.eval",
+      "model.named_parameters",
+      "model.parameters",
+      "model.state_dict",
+      "model.train",
+      "one_step",
+      "opt.state_dict",
+      "opt.step",
+      "optimizer",
+      "os.fsync",
+      "os.sched_getaffinity",
+      "p.lstat",
+      "p.relative_to",
+      "p['cell_id'].encode",
+      "path.is_file",
+      "path.is_symlink",
+      "path.open",
+      "path.read_bytes",
+      "path.relative_to",
+      "path.resolve",
+      "path.stat",
+      "persist_tensors",
+      "platform.python_version",
+      "prov.items",
+      "provenance",
+      "r.get",
+      "r.items",
+      "range",
+      "record.read_bytes",
+      "records.append",
+      "ref['provenance'].items",
+      "ref['provenance']['cell_id'].encode",
+      "refcp.read_bytes",
+      "refcp.resolve",
+      "refcp.resolve().is_relative_to",
+      "refmanifest['members'].items",
+      "registered",
+      "registry.build_model",
+      "replay.replay",
+      "replay_package",
+      "repr",
+      "require",
+      "resource.getrlimit",
+      "resource.setrlimit",
+      "resources.assert_guarded_worker",
+      "result.update",
+      "run._active",
+      "run._check_inputs",
+      "run._check_source",
+      "run.admission.inputs.values",
+      "run.read_input",
+      "run.write_json",
+      "runtime_check",
+      "schema",
+      "selected",
+      "selected.add_note",
+      "self.tell",
+      "set",
+      "sha",
+      "sorted",
+      "source.get",
+      "source.is_file",
+      "source.is_symlink",
+      "source.items",
+      "source.read_bytes",
+      "source.stat",
+      "sources.values",
+      "stat.S_ISDIR",
+      "stat.S_ISLNK",
+      "stat.S_ISREG",
+      "state.get",
+      "states.append",
+      "str",
+      "str(f).endswith",
+      "stream.getvalue",
+      "super",
+      "super().write",
+      "synthetic",
+      "targets",
+      "time.monotonic",
+      "torch.cuda.is_available",
+      "torch.equal",
+      "torch.isfinite",
+      "torch.isfinite(a).all",
+      "torch.isfinite(b).all",
+      "torch.isfinite(param.grad).all",
+      "torch.nn.functional.cross_entropy",
+      "torch.nn.functional.mse_loss",
+      "torch.nn.utils.clip_grad_norm_",
+      "torch.no_grad",
+      "torch.optim.Adam",
+      "torch.save",
+      "torch.set_num_threads",
+      "torch.tensor",
+      "torch.tensor([(i - 8) / 32 for i in range(16)], dtype=torch.float32).reshape",
+      "torch.tensor(values('opaque-graph-' + str(i), 4 * 32), dtype=torch.float32).reshape",
+      "torch.tensor(values('opaque-graph-' + str(i), 4 * 32), dtype=torch.float32).reshape(4, 32).requires_grad_",
+      "torch.tensor(values('opaque-prices', 448), dtype=torch.float32).reshape",
+      "torch.tensor(values('opaque-prices', 448), dtype=torch.float32).reshape(16, 28, 1).requires_grad_",
+      "torch.testing.assert_close",
+      "training.fit_cell",
+      "training.predict_cell",
+      "tuple",
+      "type",
+      "validate_plan",
+      "value.detach",
+      "value.detach().cpu",
+      "value.detach().cpu().clone",
+      "value.items",
+      "value['provenance'].items",
+      "values",
+      "verify_claim",
+      "watch",
+      "x.is_file",
+      "x.relative_to",
+      "x.stat",
+      "zip",
+      "{'epoch': 0, 'examples': 16, 'seed': 11}.items"
+    ],
+    "definitions": [
+      {
+        "kind": "ClassDef",
+        "line": 16,
+        "name": "Unavailable"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 17,
+        "name": "PlannedInterruption"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 18,
+        "name": "require"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 20,
+        "name": "sha"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 21,
+        "name": "canonical"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 22,
+        "name": "validate_plan"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 34,
+        "name": "schema"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 41,
+        "name": "worker_limits"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 46,
+        "name": "admitted"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 65,
+        "name": "runtime_check"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 80,
+        "name": "authorize"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 111,
+        "name": "watch"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 122,
+        "name": "synthetic"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 135,
+        "name": "targets"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 138,
+        "name": "compare"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 155,
+        "name": "selected"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 159,
+        "name": "optimizer"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 162,
+        "name": "provenance"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 167,
+        "name": "frozen"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 175,
+        "name": "one_step"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 189,
+        "name": "persist_tensors"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 198,
+        "name": "_parent"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 220,
+        "name": "_select_failure"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 225,
+        "name": "_interrupt_case"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 230,
+        "name": "_one_epoch_state"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 237,
+        "name": "_interrupt_parent"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 261,
+        "name": "replay_package"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 278,
+        "name": "_reference_state"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 297,
+        "name": "execute"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 53,
+        "name": "registered"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 124,
+        "name": "values"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 191,
+        "name": "Bounded"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 239,
+        "name": "registered"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 192,
+        "name": "write"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 340,
+        "name": "batches"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 359,
+        "name": "after"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/financial_wrapper_fixture.py",
+    "sha256": "e13d7170a55165f1c5d2313223cf972dc102d0beac95ba49c493c146ed4a4897",
+    "snapshot": "snapshot/43"
+  },
+  {
+    "bytes": 2723,
+    "calls": [
+      "AlternativeGraphTemporal",
+      "DiagnosticGraph",
+      "GINEncoder",
+      "HierarchicalLSTM",
+      "PriceRecurrent",
+      "ReplicationModel",
+      "TemporalHead",
+      "ValueError",
+      "VectorTemporal",
+      "config.get",
+      "financial.authenticate",
+      "financial.construct",
+      "nn.Module.__init__",
+      "price_svm",
+      "prices.new_zeros",
+      "self._configure",
+      "self.temporal",
+      "super",
+      "super().__init__",
+      "torch.cat",
+      "{'direction': 'classification'}.get"
+    ],
+    "definitions": [
+      {
+        "kind": "ClassDef",
+        "line": 15,
+        "name": "VectorTemporal"
+      },
+      {
+        "kind": "ClassDef",
+        "line": 26,
+        "name": "AlternativeGraphTemporal"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 33,
+        "name": "build_model"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 16,
+        "name": "__init__"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 19,
+        "name": "forward"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 27,
+        "name": "__init__"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/model_registry.py",
+    "sha256": "5a8be9dc05a1844528c1353cf2177185b4aa48cdc8a52581fdbb7acc5d910339",
+    "snapshot": "snapshot/44"
+  },
+  {
+    "bytes": 34033,
+    "calls": [
+      "(Path('/proc') / str(pid) / 'stat').read_text",
+      "(Path('/proc') / str(pid) / 'stat').read_text().rsplit",
+      "(Path('/proc') / str(pid) / 'stat').read_text().rsplit(')', 1)[1].split",
+      "(admitted.root / 'tradingagents/research/onchain_replication/job.py').resolve",
+      "(admitted.root / info['path']).read_bytes",
+      "(admitted.root / layout['path']).read_bytes",
+      "(base / 'launch.json').read_bytes",
+      "(base / 'observer.json').exists",
+      "(base / 'observer.json').read_bytes",
+      "(base / 'owner.json').read_bytes",
+      "(base / name).exists",
+      "(directory / 'claim.json').read_bytes",
+      "(directory / 'complete.json').exists",
+      "(directory / 'failed.json').exists",
+      "(directory / 'owner.json').read_bytes",
+      "(directory / name).exists",
+      "(group / 'cgroup.events').read_text",
+      "(group / 'cgroup.events').read_text().splitlines",
+      "(guard_dir / 'final.json').exists",
+      "(guard_dir / 'final.json').read_bytes",
+      "(guard_dir / 'live.json').exists",
+      "(guard_dir / 'live.json').read_bytes",
+      "(path.parent / 'outputs').iterdir",
+      "(root / 'research_artifacts').resolve",
+      "(root / 'research_artifacts/onchain_fit_cells').glob",
+      "(root / 'research_artifacts/onchain_representations').glob",
+      "(root / 'research_runs').resolve",
+      "(root / PREFIX / 'batches' / args.experiment).glob",
+      "(root / common).resolve",
+      "(run_dir / 'claim.json').exists",
+      "(run_dir / 'complete.json').exists",
+      "(run_dir / 'failed.json').exists",
+      "(run_dir / ('complete.json' if status == 'failed' else 'failed.json')).exists",
+      "Path",
+      "Path('/proc/self/stat').read_text",
+      "Path('/proc/self/stat').read_text().rsplit",
+      "Path('/proc/self/stat').read_text().rsplit(')', 1)[1].split",
+      "Path('/proc/sys/kernel/random/boot_id').read_text",
+      "Path('/proc/sys/kernel/random/boot_id').read_text().strip",
+      "Path(__file__).resolve",
+      "Path(args.root).resolve",
+      "Path(p).is_absolute",
+      "Path(p).stat",
+      "Path(root).resolve",
+      "ResearchRun",
+      "ResearchRun.start",
+      "RuntimeError",
+      "Scope.create",
+      "Scope.open",
+      "SimpleNamespace",
+      "StorageWatch",
+      "SystemExit",
+      "ValueError",
+      "_admitted",
+      "_base",
+      "_cold_native",
+      "_command",
+      "_encode",
+      "_immutable",
+      "_incomplete_representation",
+      "_observer_evidence",
+      "_once",
+      "_physical_scope",
+      "_reconcile",
+      "_resource_limit_receipt",
+      "_terminal",
+      "admit",
+      "all",
+      "any",
+      "argparse.ArgumentParser",
+      "base.mkdir",
+      "c.get",
+      "capture_admitted_prices",
+      "capture_ranges",
+      "claim_path.read_bytes",
+      "compact_cold_proof_native.admitted",
+      "compact_cold_proof_native.schema",
+      "compact_cold_proof_native.worker_limits",
+      "current_metadata_scope",
+      "dict",
+      "dict((line.split() for line in (group / 'cgroup.events').read_text().splitlines())).get",
+      "digest",
+      "directory.is_dir",
+      "directory.resolve",
+      "directory.rglob",
+      "directory.stat",
+      "durable_mkdir",
+      "execute_fit_payload",
+      "execute_source_job",
+      "file_hash",
+      "final.get",
+      "final.get('memory_events', {}).get",
+      "final_path.exists",
+      "final_path.read_bytes",
+      "finalize_registered_storage",
+      "finalize_storage",
+      "financial_wrapper_fixture.admitted",
+      "financial_wrapper_fixture.execute",
+      "financial_wrapper_fixture.schema",
+      "financial_wrapper_fixture.worker_limits",
+      "getattr",
+      "globals",
+      "globals()[args.mode]",
+      "group.exists",
+      "group.is_relative_to",
+      "group.name.startswith",
+      "inventory",
+      "isinstance",
+      "job.get",
+      "job['payload'].get",
+      "job['resources'].get",
+      "job['resources'].items",
+      "job_schema",
+      "journals.append",
+      "json.dumps",
+      "json.loads",
+      "json.loads(final_path.read_bytes()).get",
+      "len",
+      "lifecycle_cell_id",
+      "line.split",
+      "live.get",
+      "metadata_scope",
+      "missing.append",
+      "monitor.poll",
+      "monitor.terminate",
+      "monitor.wait",
+      "os.environ.get",
+      "os.getpid",
+      "os.path.lexists",
+      "owner.get",
+      "p.is_file",
+      "p.relative_to",
+      "p.stat",
+      "package.glob",
+      "package.parent.glob",
+      "parser.add_argument",
+      "parser.parse_args",
+      "path.exists",
+      "path.is_symlink",
+      "path.lstat",
+      "path.read_bytes",
+      "policy.items",
+      "populated",
+      "primary.add_note",
+      "print",
+      "produce_registered_census",
+      "produce_registered_graphs",
+      "produce_registered_hub_census",
+      "produce_registered_neural_resource",
+      "reconcile",
+      "recorded.get",
+      "repr",
+      "required_sources",
+      "resource_fixture.admitted",
+      "resource_fixture.execute",
+      "resource_fixture.schema",
+      "resource_fixture.worker_limits",
+      "resource_policy",
+      "resources._native_owned_env",
+      "resources._native_policy",
+      "resources._native_receipt",
+      "resources.assert_guarded_worker",
+      "resources.bind_parent_death",
+      "resources.guarded_run",
+      "result.get",
+      "root.stat",
+      "run.fail",
+      "run.finish",
+      "run.read_input",
+      "run.write_json",
+      "same_process_alive",
+      "scope.close_authority",
+      "scope.finish",
+      "scope.read_metadata",
+      "scope.terminal_tail",
+      "scope.verify_environment",
+      "set",
+      "signal.signal",
+      "sorted",
+      "stat.S_ISREG",
+      "str",
+      "subprocess.Popen",
+      "subprocess.check_output",
+      "subprocess.check_output(['git', 'rev-parse', '--git-common-dir'], cwd=root, text=True).strip",
+      "subprocess.run",
+      "sum",
+      "sync_directory",
+      "terminal.get",
+      "ticks.isdecimal",
+      "time.monotonic",
+      "time.sleep",
+      "torch.set_num_threads",
+      "type",
+      "uuid.uuid4",
+      "validate",
+      "watch.root.is_relative_to",
+      "workspace_binding"
+    ],
+    "definitions": [
+      {
+        "kind": "FunctionDef",
+        "line": 27,
+        "name": "required_sources"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 35,
+        "name": "same_process_alive"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 44,
+        "name": "resource_policy"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 78,
+        "name": "_cold_native"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 82,
+        "name": "job_schema"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 107,
+        "name": "workspace_binding"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 115,
+        "name": "_admitted"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 149,
+        "name": "_base"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 153,
+        "name": "_command"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 160,
+        "name": "_once"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 168,
+        "name": "_terminal"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 189,
+        "name": "_observer_evidence"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 195,
+        "name": "_physical_scope"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 207,
+        "name": "launch"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 245,
+        "name": "_resource_limit_receipt"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 264,
+        "name": "monitor"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 293,
+        "name": "execute_source_job"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 324,
+        "name": "worker"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 388,
+        "name": "_incomplete_representation"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 408,
+        "name": "reconcile"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 415,
+        "name": "_reconcile"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 350,
+        "name": "stop"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 437,
+        "name": "populated"
+      },
+      {
+        "kind": "FunctionDef",
+        "line": 222,
+        "name": "stop"
+      }
+    ],
+    "mode": 436,
+    "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/job.py",
+    "sha256": "755cbbc9f22a8d9718ebb53211135d08b62e485dd3edeca2fbec29998c43b923",
+    "snapshot": "snapshot/45"
+  }
+]

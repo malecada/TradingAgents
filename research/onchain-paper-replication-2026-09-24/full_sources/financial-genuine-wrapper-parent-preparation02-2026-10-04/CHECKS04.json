@@ -1,0 +1,204 @@
+{
+  "checks": [
+    "tiny-exit7 all original descendants absent",
+    "tiny-exit7 no remaining original identities",
+    "actual exit7 preserved",
+    "tiny-orphan all original descendants absent",
+    "tiny-orphan no remaining original identities",
+    "orphan child captured",
+    "leader exit7 remains actual",
+    "tiny-double-fork all original descendants absent",
+    "tiny-double-fork no remaining original identities",
+    "doublefork setsid drainage",
+    "tiny-timeout all original descendants absent",
+    "tiny-timeout no remaining original identities",
+    "deadline retained",
+    "tiny-first-fatal all original descendants absent",
+    "tiny-first-fatal no remaining original identities",
+    "same firstfatal object",
+    "draft refused",
+    "original guarded source has no deletion of intent",
+    "pre-dispatch verifying phase publishes",
+    "native publication atomic original record",
+    "unique unit precedes publication and launch"
+  ],
+  "count": 21,
+  "native_commands_executed": false,
+  "outcomes": [
+    {
+      "cleanup": {
+        "dedicated_no_preexisting_children": true,
+        "owned_pid_start_records": [
+          {
+            "pgrp": 47437,
+            "pid": 47437,
+            "ppid": 47436,
+            "session": 47437,
+            "state": "Z",
+            "ticks": "12744831"
+          }
+        ],
+        "reaped_descendants": [],
+        "remaining_original_identities": [],
+        "subreaper_used": true
+      },
+      "error_type": null,
+      "name": "tiny-exit7",
+      "result": {
+        "elapsed_seconds": 0.10276889799570199,
+        "exit_code": 7,
+        "pid": 47437,
+        "stderr_bytes": 0,
+        "stdout_bytes": 15
+      }
+    },
+    {
+      "cleanup": {
+        "dedicated_no_preexisting_children": true,
+        "owned_pid_start_records": [
+          {
+            "pgrp": 47439,
+            "pid": 47439,
+            "ppid": 47436,
+            "session": 47439,
+            "state": "Z",
+            "ticks": "12744849"
+          },
+          {
+            "pgrp": 47439,
+            "pid": 47440,
+            "ppid": 47436,
+            "session": 47439,
+            "state": "Z",
+            "ticks": "12744851"
+          }
+        ],
+        "reaped_descendants": [
+          {
+            "pid": 47440,
+            "wait_status": 15
+          }
+        ],
+        "remaining_original_identities": [],
+        "subreaper_used": true
+      },
+      "error_type": null,
+      "name": "tiny-orphan",
+      "result": {
+        "elapsed_seconds": 0.2944190329872072,
+        "exit_code": 7,
+        "pid": 47439,
+        "stderr_bytes": 0,
+        "stdout_bytes": 6
+      }
+    },
+    {
+      "cleanup": {
+        "dedicated_no_preexisting_children": true,
+        "owned_pid_start_records": [
+          {
+            "pgrp": 47441,
+            "pid": 47441,
+            "ppid": 47436,
+            "session": 47441,
+            "state": "Z",
+            "ticks": "12744885"
+          },
+          {
+            "pgrp": 47442,
+            "pid": 47442,
+            "ppid": 47436,
+            "session": 47442,
+            "state": "Z",
+            "ticks": "12744887"
+          },
+          {
+            "pgrp": 47442,
+            "pid": 47443,
+            "ppid": 47436,
+            "session": 47442,
+            "state": "Z",
+            "ticks": "12744887"
+          }
+        ],
+        "reaped_descendants": [
+          {
+            "pid": 47442,
+            "wait_status": 0
+          },
+          {
+            "pid": 47443,
+            "wait_status": 9
+          }
+        ],
+        "remaining_original_identities": [],
+        "subreaper_used": true
+      },
+      "error_type": null,
+      "name": "tiny-double-fork",
+      "result": {
+        "elapsed_seconds": 3.336604205003823,
+        "exit_code": 0,
+        "pid": 47441,
+        "stderr_bytes": 0,
+        "stdout_bytes": 17
+      }
+    },
+    {
+      "cleanup": {
+        "dedicated_no_preexisting_children": true,
+        "owned_pid_start_records": [
+          {
+            "pgrp": 47468,
+            "pid": 47468,
+            "ppid": 47436,
+            "session": 47468,
+            "state": "Z",
+            "ticks": "12745226"
+          },
+          {
+            "pgrp": 47468,
+            "pid": 47469,
+            "ppid": 47436,
+            "session": 47468,
+            "state": "Z",
+            "ticks": "12745228"
+          }
+        ],
+        "reaped_descendants": [
+          {
+            "pid": 47469,
+            "wait_status": 15
+          }
+        ],
+        "remaining_original_identities": [],
+        "subreaper_used": true
+      },
+      "error_type": "ValueError",
+      "name": "tiny-timeout",
+      "result": null
+    },
+    {
+      "cleanup": {
+        "dedicated_no_preexisting_children": true,
+        "owned_pid_start_records": [
+          {
+            "pgrp": 47471,
+            "pid": 47471,
+            "ppid": 47436,
+            "session": 47471,
+            "state": "Z",
+            "ticks": "12745262"
+          }
+        ],
+        "reaped_descendants": [],
+        "remaining_original_identities": [],
+        "subreaper_used": true
+      },
+      "error_type": "KeyboardInterrupt",
+      "name": "tiny-first-fatal",
+      "result": null
+    }
+  ],
+  "source_interface_mutated": false
+}

@@ -1,0 +1,10 @@
+{
+  "parent": {
+    "old": " finally:os.close(fd)",
+    "new": " finally:R._cleanup((lambda:os.close(fd),))"
+  },
+  "supervisor": {
+    "old": "  tree.scan();on_spawn(process)",
+    "new": "  on_spawn(process);tree.scan()"
+  }
+}

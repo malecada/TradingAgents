@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-canonical-root-recipe-review01-2026-10-04/check01.py", line 25, in <module>
+    ok('no duplicate or omitted paths',len({r['path'] for r in rows})==len(rows) and {p.relative_to(C).as_posix() for p in C.rglob('*')}=={r['path'] for r in rows}|{'MANIFEST01.json'})
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-canonical-root-recipe-review01-2026-10-04/check01.py", line 10, in ok
+    if not v:raise AssertionError(n)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: no duplicate or omitted paths

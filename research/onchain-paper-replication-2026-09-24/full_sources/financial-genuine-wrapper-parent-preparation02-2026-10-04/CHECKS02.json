@@ -1,0 +1,26 @@
+{
+  "checks": [
+    "foreign PID-start refusal",
+    "rejected signal leaves actual child alive",
+    "actual original child then drained",
+    "prior subreaper state restored"
+  ],
+  "count": 4,
+  "actual_pid": 46400,
+  "cleanup": {
+    "owned_pid_start_records": [
+      {
+        "pid": 46400,
+        "ppid": 46395,
+        "pgrp": 46395,
+        "session": 46395,
+        "ticks": "12738676",
+        "state": "Z"
+      }
+    ],
+    "reaped_descendants": [],
+    "remaining_original_identities": [],
+    "subreaper_used": true,
+    "dedicated_no_preexisting_children": true
+  }
+}

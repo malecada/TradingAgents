@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-production-review01-2026-10-04/check01.py", line 60, in <module>
+    observer_loop=next(n for n in ast.walk(reconcile) if isinstance(n,ast.For) and "claim['experiment']['cells']"==ast.unparse(n.iter))
+StopIteration

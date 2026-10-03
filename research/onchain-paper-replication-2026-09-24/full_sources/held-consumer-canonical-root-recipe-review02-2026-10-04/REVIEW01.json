@@ -1,0 +1,85 @@
+{
+  "actual_adoption_release": "WITHHELD",
+  "actual_claim": null,
+  "actual_native_execution": false,
+  "actual_recovery": false,
+  "candidate_complete_members": 647,
+  "candidate_complete_regular_files": 547,
+  "candidate_pins": {
+    "MANIFEST02.json": "6b6bfe5126cd783e6d0e0ec4555b30ae220e3a4ded71c3ff73a261a594040683",
+    "SOURCE_EXPECTATIONS02.json": "e7ba2f536d8783f380db41922af04e030a680258bb87ed918648a0c57d89d436",
+    "manifest02.py": "60ed0b35f8eab6360a23493266860ed671c188de2d62b0215393fbae31f47c05",
+    "prepare01.py": "12457e989adb553c6fea32239d36bafb3810865413e94f9d9684c47572a1dc0e",
+    "rebind01.py": "7c7d442983ac4b12905e991fd6bde105b93ac25fc8b8bb3772466179e295ccef"
+  },
+  "counterexamples": [
+    {
+      "baseline_accepts": true,
+      "id": "RR1",
+      "root": "/",
+      "successor_refuses": true
+    },
+    {
+      "baseline_accepts": true,
+      "id": "RR1",
+      "root": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07",
+      "successor_refuses": true
+    },
+    {
+      "baseline_accepts198": true,
+      "id": "RR2",
+      "successor_refuses198": true
+    },
+    {
+      "baseline_accepts16roles198pins": true,
+      "id": "RR3",
+      "successor_refuses": true
+    },
+    {
+      "baseline_accepts": true,
+      "id": "RR5",
+      "owned_absolute_input": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-canonical-root-recipe-review02-2026-10-04/opaque-job.json",
+      "successor_refuses": true,
+      "undeclared_path_access": false
+    },
+    {
+      "id": "RR4",
+      "includes_old_root_manifest": true,
+      "old_missing": [
+        "generated01/evidence/held-consumer-canonical-fatal-supplement-review01-2026-10-03/MANIFEST01.json",
+        "generated01/evidence/held-consumer-canonical-successor-preparation01-2026-10-03/MANIFEST01.json",
+        "generated01/evidence/held-consumer-canonical-successor-review01-2026-10-03/MANIFEST01.json"
+      ],
+      "successor_includes_all": true
+    }
+  ],
+  "decision": "ACCEPTED_SOURCE_ONLY_RR1_TO_RR5_CORRECTIONS",
+  "destination_reserved_or_created": false,
+  "earlier_withheld_review_immutable": "42f1debabdf962033c64149f5c90be2e0ef25fc9176ef4330f30633c0c231e0f",
+  "fresh_checks": 1883,
+  "future_cumulative_allocation": null,
+  "future_design": null,
+  "future_gate": null,
+  "future_identity": null,
+  "future_source": null,
+  "inherited_source_map": {
+    "fresh_scientific_review_of_198_claimed": false,
+    "implementation": 199,
+    "package": 148,
+    "replacement": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9",
+    "unchanged_other_bodies": 198
+  },
+  "network": false,
+  "new_metadata_scope": "SOURCE_EXPECTATIONS02.json",
+  "new_source_scope": [
+    "prepare01.py",
+    "rebind01.py",
+    "manifest02.py"
+  ],
+  "numerical_imports": false,
+  "paper_credit": 0,
+  "report_sha256": "770df13aec4876ab82c54d02ac5f326e85ef94e2ffc5049837d319b860104fa4",
+  "schema_version": 1,
+  "source_installed": false,
+  "unchanged_generated_regular_files": 510
+}

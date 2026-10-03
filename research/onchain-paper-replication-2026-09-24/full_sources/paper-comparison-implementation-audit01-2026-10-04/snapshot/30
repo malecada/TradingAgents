@@ -1,0 +1,650 @@
+{
+  "note": "Status describes source fidelity. Target code/test paths do not assert implementation or passing tests.",
+  "records": [
+    {
+      "blocking_scope": "M2/M3",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/eth_source.py"
+      ],
+      "decision": "Native top-level successful positive transfers; BTC rational projection; original provider/filters unavailable.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F01",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a74.1",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_eth_source.py"
+      ]
+    },
+    {
+      "blocking_scope": "M2/M3",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/weekly.py"
+      ],
+      "decision": "Directed aggregated pairs with count/value and four node activity attributes; approximate ETH units retained.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F02",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a74.1",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_weekly.py"
+      ]
+    },
+    {
+      "blocking_scope": "M2/M3",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/prices.py"
+      ],
+      "decision": "Monday UTC complete weeks; daily Yahoo unadjusted closes, one-day availability lag.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F03",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a74.1",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_prices.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/neighborhoods.py"
+      ],
+      "decision": "Weighted without-replacement weak one-hop sampling, 512 samples, probabilities halved on overlap.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F04",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a72.1",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_neighborhoods.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/dictionary.py"
+      ],
+      "decision": "Average linkage, 32 medoids, declared recursive partition rule.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F05",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a72.1",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_dictionary.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/matching_reference.py"
+      ],
+      "decision": "Literal Eq1, RBF attributes, alpha1, missing-edge zero; directed self score need not1.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F06",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "Eqs1\u20132",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_matching_reference.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/matching_reference.py"
+      ],
+      "decision": "Literal half coefficient, one row/column pass, multiplicative beta; symbols resolved by argument type.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F07",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "Algorithm1 p2062",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_matching_reference.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1/C06",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/matching.py"
+      ],
+      "decision": "Batched tensor implementation planned instead of custom CTA CUDA; GPU parity blocked on available device.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F08",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a72.2.4",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "known_deviation",
+      "test_ids": [
+        "tests/research/onchain_replication/test_matching_accelerated.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/mcm.py"
+      ],
+      "decision": "Full motif similarities then downstream-trainable 32\u219264\u219232 ReLU MLP.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F09",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a72.3 Eq3",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_mcm.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/gat.py"
+      ],
+      "decision": "Full incoming-neighbor/self GAT with frozen head dimensions.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F10",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a72.4 Eqs4\u20138",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_gat.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/pooling.py"
+      ],
+      "decision": "Mean pooling after GAT and joint downstream gradients; pooling omitted by source.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F11",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a7\u00a72.4\u20133",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_model.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/temporal.py"
+      ],
+      "decision": "LSTM64 plus tanh additive attention querying final valid state; 28 daily steps.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F12",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a73.1 Eqs9\u201311",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_temporal.py"
+      ]
+    },
+    {
+      "blocking_scope": "M1",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/model.py"
+      ],
+      "decision": "Separate regression scalar and directly trained two-logit classifier; no regressor-sign substitute.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F13",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a74.2",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_model.py"
+      ]
+    },
+    {
+      "blocking_scope": "M2/M3",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/training.py"
+      ],
+      "decision": "Rolling2018\u20132024 reconstructed folds, fixed100epochs/five seeds; original folds unavailable.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F14",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a74.2",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_training.py"
+      ]
+    },
+    {
+      "blocking_scope": "M3",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/price_baselines.py"
+      ],
+      "decision": "Full + LSTM/HLSTM/GRU/SVR both assets; HLSTM declared two-level chunk adaptation.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F15",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "Table1",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_price_baselines.py"
+      ]
+    },
+    {
+      "blocking_scope": "M2/M3",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/price_baselines.py"
+      ],
+      "decision": "Same five directly trained direction arms, uncalibrated SVC sigmoid diagnostic probabilities labeled.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F16",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "Table2",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_price_baselines.py"
+      ]
+    },
+    {
+      "blocking_scope": "M3",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/graph_baselines.py"
+      ],
+      "decision": "Node2Vec/GraphWave/GIN/WatchYourStep plus matched temporal heads with declared alignment.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F17",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "Table3",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_graph_baselines.py"
+      ]
+    },
+    {
+      "blocking_scope": "M4",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/variants.py"
+      ],
+      "decision": "Weekly incident value >90% same-week maximum; retain equality; recompute features after removal.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F18",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a75.3 Table4",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_variants.py"
+      ]
+    },
+    {
+      "blocking_scope": "M4",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/variants.py"
+      ],
+      "decision": "Exact65-entity address cohort and vintage absent; current labels cannot replace it. Synthetic filter software remains implementable.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F19",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "\u00a75.4 Tables5\u20136",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "blocked",
+      "test_ids": [
+        "tests/research/onchain_replication/test_variants.py"
+      ]
+    },
+    {
+      "blocking_scope": "M2/M3/M4",
+      "code_paths": [
+        "tradingagents/research/onchain_replication/metrics.py"
+      ],
+      "decision": "Primary binary-up metrics averaged over annual folds; pooled/macro/weighted secondary; retain published contradictions.",
+      "evidence_paths": [
+        "SOURCE_AUDIT.md",
+        "PROTOCOL.md",
+        "DECISIONS.md"
+      ],
+      "id": "F20",
+      "implementation_status": "pending; paths are targets, not passing evidence",
+      "locator": "Eqs12\u201319 Tables1\u20136",
+      "reason": "Paper/artifact audit in SOURCE_AUDIT.md; independent configuration in PROTOCOL.md.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": [
+        "tests/research/onchain_replication/test_metrics.py"
+      ]
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "Provider and event universe not reported; independent retained-source native-transfer definition.",
+      "evidence_paths": [
+        "config/graph.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U01",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U01",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "Features, direction, aggregation and precision explicitly independently chosen.",
+      "evidence_paths": [
+        "config/graph.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U02",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U02",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "Proportional rational input-output projection; exact satoshi inputs, not observed bilateral flows.",
+      "evidence_paths": [
+        "config/graph.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U03",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U03",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "Monday UTC complete weeks and daily Close, next-day horizon.",
+      "evidence_paths": [
+        "config/calendar.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U04",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U04",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "Graph end+1day <= sequence decision; original latency unknown.",
+      "evidence_paths": [
+        "config/calendar.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U05",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U05",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "512 samples,32 dictionary,1hop; RBF, no tuning.",
+      "evidence_paths": [
+        "config/dictionary.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U06",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U06",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "Literal Algorithm1, rectangular hard constraints, explicit zero-edge case.",
+      "evidence_paths": [
+        "config/matching.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U07",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U07",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "Mean node pooling after full GAT; joint trainable path.",
+      "evidence_paths": [
+        "config/model.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U08",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U08",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "No recovered crypto hyperparameters; fixed Adam100epochs five seeds.",
+      "evidence_paths": [
+        "config/training.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U09",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U09",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "2018\u20132024 eligible rolling folds; no invented pre2016 data.",
+      "evidence_paths": [
+        "config/calendar.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U10",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U10",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "Binary-up primary annual means; extra conventions separate.",
+      "evidence_paths": [
+        "config/baselines.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U11",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U11",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "M4",
+      "code_paths": [],
+      "decision": "Original fund address list and historical timestamp required.",
+      "evidence_paths": [
+        "AUTHOR_QUESTIONS.md",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U12",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U12",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "blocked",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "Per-wallet weekly incoming+outgoing, including self twice, strict >0.9max.",
+      "evidence_paths": [
+        "config/baselines.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U13",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U13",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    },
+    {
+      "blocking_scope": "dependent implementation",
+      "code_paths": [],
+      "decision": "52GB treated as ambiguous host memory; no52GB VRAM inference.",
+      "evidence_paths": [
+        "config/resources.json",
+        "SOURCE_AUDIT.md"
+      ],
+      "id": "U14",
+      "implementation_status": "decision recorded; validation pending",
+      "locator": "REPLICATION_SPEC.md U14",
+      "reason": "Published source and public artifacts do not resolve all numerical details.",
+      "source_url": "https://doi.org/10.1007/s10614-025-10940-1",
+      "status": "declared_assumption",
+      "test_ids": []
+    }
+  ],
+  "schema_version": 1
+}

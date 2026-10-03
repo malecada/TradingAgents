@@ -1,0 +1,19 @@
+{
+  "end_line": 164,
+  "events": [
+    "actual fsync then primary fatal",
+    "actual close then secondary ordinary"
+  ],
+  "file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-parent-preparation02-2026-10-04/parent01.py",
+  "id": "PF1",
+  "line": 163,
+  "observed_type": "OSError",
+  "primary_retained_only_as_context": true,
+  "primary_type": "KeyboardInterrupt",
+  "real_native_commands": false,
+  "real_research_claims": false,
+  "same_primary_observed": false,
+  "secondary_is_observed": true,
+  "source_segment": "try:os.fsync(fd)\n finally:os.close(fd)",
+  "source_sha256": "332e9cbb7abc84d660a0fd04a344ec2dfce8d3a47a4e5ec50595f5b65567b1f4"
+}

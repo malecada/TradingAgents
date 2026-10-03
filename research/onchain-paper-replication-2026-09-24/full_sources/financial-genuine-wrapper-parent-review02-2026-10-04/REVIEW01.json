@@ -1,0 +1,59 @@
+{
+  "actual_financial_claims": false,
+  "actual_gate": null,
+  "actual_native_execution": false,
+  "actual_source_design_release": null,
+  "candidate_source_pins": {
+    "MANIFEST01.json": "3f209f1794ace2c928d49fd83d5f51ce2330419971bdbf1dd4aea05857bf3270",
+    "PROTOCOL_PINS01.json": "b55959d7fef0bf04b6eea80e4e83d1c262a2f0f9e778791814e52f2fe0325434",
+    "REQUEST_TEMPLATE01.json": "f11ce1b2232d71a7054963a5e627471030b55d71987178cb91a5196949374a7c",
+    "bounded_git01.py": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f",
+    "descendants01.py": "7ce3c0b4aa5a89c8f74238e810a19b659e3aaf89fe67b86801127a2246d12ee9",
+    "owned_io.py": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+    "parent01.py": "332e9cbb7abc84d660a0fd04a344ec2dfce8d3a47a4e5ec50595f5b65567b1f4",
+    "recovery04.py": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a",
+    "supervisor01.py": "8bc1bef8d3c1dc9dfd82a13a113562e71f2f82f633aa9a035e0259497a8dc51c"
+  },
+  "candidate_typed_members": 111,
+  "cumulative18_adopted": false,
+  "decision": "WITHHELD_SOURCE_CORRECTION_REQUIRED",
+  "findings": [
+    {
+      "file": "parent01.py",
+      "id": "PF1",
+      "line": 163,
+      "severity": "material",
+      "sha256": "63608f1507b3ca9abd5e616f5bb5066d02bdc38299570f6d71e876315c89ad14",
+      "witness": "PF1_WITNESS01.json"
+    },
+    {
+      "file": "supervisor01.py",
+      "id": "PF2",
+      "line": 24,
+      "related_parent_line": 178,
+      "severity": "material",
+      "sha256": "c1803d71c0a0b437796d661df93b712f51a4d1fc6fc132617c2a4e5d0932155d",
+      "witness": "PF2_WITNESS01.json"
+    }
+  ],
+  "independent_checks": 317,
+  "numerical_imports": false,
+  "paper_fits": 0,
+  "previous_parent01": {
+    "check_count": 17,
+    "decision": "WITHHELD_SOURCE_INTERFACE",
+    "historical_tiny_pids": [
+      40664,
+      40665,
+      40666,
+      40667
+    ],
+    "manifest_sha256": "5e8cb86e97c0ccc5abc988eb6177adc3b17f111a21c2d69013e200f95cbf9f26",
+    "parent_sha256": "f053e99838e9ec3f10293600d9e96ab0c256e20dd23b6d37fa6b23b67149e2c0",
+    "supervisor_sha256": "aea69483e8d794bcf03b94273abe95255fe89751c922e4ff4689458bf34dbf7c"
+  },
+  "recovery_release": null,
+  "report_sha256": "69035e0f499d947feef6a4c9789cc9c9b3afc92f3575e31f39dd94fdb2b67156",
+  "schema_version": 1,
+  "source_installed": false
+}

@@ -1,0 +1,94 @@
+{
+  "C6_source_objects": 26,
+  "SourceInstalled": false,
+  "actual_baseline_commit": "d443208795f59292c156c5b81b687594efacea4d",
+  "actual_candidate_files_excluding_root_manifest": 521,
+  "actual_candidate_members_excluding_root_manifest": 621,
+  "actual_claims": false,
+  "actual_native_execution": false,
+  "candidate_manifest_claimed_files": 518,
+  "candidate_manifest_claimed_members": 618,
+  "candidate_pins": {
+    "DRAFT_CASES02.json": "76d6e332e7cd30c44022a65501340525090efc8089fa316b636393e2d5f52324",
+    "MANIFEST01.json": "05393053abb828e3980b01a6911d6e602ee488a34f4d988c90f1a43fab27fd35",
+    "prepare01.py": "631870b67284e1dbc9e9ce07c63c2b35604f3b9a6629a2b1a9f9c39550ce7f6c",
+    "rebind01.py": "791a2c36f3c89c2e3d42870c3554294aa3fa23b0b46d12d47228418d2dec3cda"
+  },
+  "case_count": 2,
+  "changed_count": 1,
+  "decision": "WITHHELD_ROOT_INTEGRATION",
+  "exact_source_input_composition_authenticated": true,
+  "fatal_supplement_independent_acceptance": "e6d70bc0e531657ca18f0d1c5aac2992adc01b3159761a1843f56a5f21af0ab9",
+  "findings": [
+    {
+      "file": "rebind01.py",
+      "id": "RR1",
+      "issue": "accepts root and preserved-capsule ancestor",
+      "line": 9,
+      "severity": "material"
+    },
+    {
+      "file": "MANIFEST01.json",
+      "id": "RR4",
+      "issue": "three copied evidence manifests omitted",
+      "line": 3,
+      "severity": "material"
+    },
+    {
+      "file": "rebind01.py",
+      "id": "RR5",
+      "issue": "absolute input path accepted in mutated draft",
+      "line": 13,
+      "severity": "material_at_future_rebind_boundary"
+    },
+    {
+      "file": "prepare01.py",
+      "id": "RR2",
+      "issue": "delta helper does not itself enforce199",
+      "line": 37,
+      "severity": "qualified_partial_helper"
+    },
+    {
+      "file": "rebind01.py",
+      "id": "RR3",
+      "issue": "reports fixed counts without validating mutated roles/source map",
+      "line": 26,
+      "severity": "qualified_partial_helper"
+    }
+  ],
+  "future_cumulative_allocation": null,
+  "future_design": null,
+  "future_gate": null,
+  "future_identity": null,
+  "future_source": null,
+  "independent_checks": 2589,
+  "inputs_per_case": 33,
+  "model_configuration": {
+    "included_in_this_recipe_as_new_body": false,
+    "is_model_py": false,
+    "path": "research/onchain-paper-replication-2026-09-24/config/model.json",
+    "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+  },
+  "network": false,
+  "numerical_imports": false,
+  "outputs_per_case": 6,
+  "package_count": 148,
+  "paper_credit": 0,
+  "payload_decoding": false,
+  "report_sha256": "aa1cb430caefa499f48f18fad959e7129a95b1e0ace72f2aa60c86294a45bba1",
+  "reviewer_authored_fatal_supplement": true,
+  "roles_per_case": 15,
+  "schema_version": 1,
+  "source_count": 199,
+  "source_model_provenance": {
+    "actual_C6_model_sha256": "199ce63ee56a76deae60495598a4ca4ac6306d7d7f24cf6483a7d1f89feb4944",
+    "actual_held_model_sha256": "2f55b04d3a707e212b2a1d9e0fb591eb3ec2b4828614edcc1a5a5d8f313d3b8e",
+    "financial20f_model_equality_claimed": false
+  },
+  "unchanged_count": 198,
+  "witnesses": {
+    "absolute_input": "RR5_WITNESS01.json",
+    "initial_inventory_failure": "CHECK01.err",
+    "observations": "CHECKS02.json"
+  }
+}

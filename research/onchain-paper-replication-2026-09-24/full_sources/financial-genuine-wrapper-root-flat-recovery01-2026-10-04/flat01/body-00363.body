@@ -1,0 +1,239 @@
+"""Strict bounded resident numeric component reader; no empirical admission.
+
+Preserves component_store. Supports ndarray/scalar/string-key dictionary/list/
+tuple trees only. All members are admitted before allocating any array. No NumPy
+load, mmap, archive or pickle is used. The resident cap covers array payloads,
+not Python metadata, process overhead, physical storage or sampler provenance.
+"""
+from contextlib import contextmanager
+import hashlib
+import io
+import json
+import math
+import os
+from pathlib import Path
+import re
+import stat
+import struct
+import numpy as np
+from tradingagents.research.onchain_replication.provenance import canonical_bytes
+
+HEADER_LIMIT = 16384
+MANIFEST_LIMIT = 2 * 1024 * 1024
+
+
+def require(value, message):
+    if not value:
+        raise ValueError(message)
+
+
+def signature(value):
+    return (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns,
+            value.st_ctime_ns, value.st_nlink)
+
+
+@contextmanager
+def opened(path, root, expected=None):
+    require(path.is_absolute() and path.resolve() == path and path.is_relative_to(root),
+            'component path containment differs')
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC | os.O_NONBLOCK)
+    try:
+        before = os.fstat(fd)
+        require(stat.S_ISREG(before.st_mode) and before.st_nlink == 1
+                and before.st_dev == root.stat().st_dev, 'component file type/link/device differs')
+        sig = signature(before)
+        require(expected is None or sig == expected, 'component file signature changed')
+        stream = os.fdopen(fd, 'rb')
+        fd = None
+        with stream:
+            yield stream, sig
+            require(signature(os.fstat(stream.fileno())) == sig
+                    and signature(path.lstat()) == sig, 'component file changed during read')
+    finally:
+        if fd is not None:
+            os.close(fd)
+
+
+def digest_stream(stream, expected_bytes):
+    stream.seek(0)
+    h = hashlib.sha256()
+    remaining = expected_bytes
+    while remaining:
+        chunk = stream.read(min(262144, remaining))
+        require(bool(chunk), 'component ended during bounded hash')
+        h.update(chunk)
+        remaining -= len(chunk)
+    require(stream.read(1) == b'', 'component grew during bounded hash')
+    return h.hexdigest()
+
+
+def inventory(directory, expected_files):
+    expected = {p.name for p in expected_files}
+    seen = set()
+    with os.scandir(directory) as entries:
+        for entry in entries:
+            require(entry.name in expected and entry.name not in seen,
+                    'component has unexpected inventory entry')
+            seen.add(entry.name)
+    require(seen == expected, 'component inventory member missing')
+
+
+def header(stream):
+    magic = stream.read(8)
+    require(len(magic) == 8 and magic[:6] == b'\x93NUMPY', 'NPY magic required')
+    version = tuple(magic[6:])
+    require(version in ((1, 0), (2, 0)), 'supported numeric NPY version required')
+    count = 2 if version == (1, 0) else 4
+    prefix = stream.read(count)
+    require(len(prefix) == count, 'truncated NPY header length')
+    length = struct.unpack('<H' if count == 2 else '<I', prefix)[0]
+    require(0 < length <= HEADER_LIMIT, 'NPY header bound exceeded')
+    raw = stream.read(length)
+    require(len(raw) == length, 'truncated NPY header')
+    parser = np.lib.format.read_array_header_1_0 if count == 2 else np.lib.format.read_array_header_2_0
+    shape, fortran, dtype = parser(io.BytesIO(prefix + raw), max_header_size=HEADER_LIMIT)
+    require(isinstance(shape, tuple) and len(shape) <= 32
+            and all(type(x) is int and x >= 0 for x in shape), 'NPY shape differs')
+    require(type(fortran) is bool and not dtype.hasobject and dtype.kind in 'biuf'
+            and dtype.fields is None and dtype.itemsize > 0, 'numeric NPY dtype required')
+    return shape, fortran, dtype, magic + prefix + raw
+
+
+def unique_object(pairs):
+    value = dict(pairs)
+    require(len(value) == len(pairs), 'duplicate JSON key')
+    return value
+
+
+def walk(node, declared, used, arrays=None):
+    require(isinstance(node, dict) and 'kind' in node, 'component tree node differs')
+    kind = node['kind']
+    if kind == 'array':
+        require(set(node) == {'kind', 'member'} and isinstance(node['member'], str), 'array tree schema differs')
+        name = node['member']
+        require(name in declared and name not in used, 'unknown or reused array member')
+        used.add(name)
+        return None if arrays is None else arrays[name]
+    if kind == 'scalar':
+        require(set(node) == {'kind', 'value'}, 'scalar tree schema differs')
+        value = node['value']
+        require(value is None or type(value) in (bool, str, int, float), 'scalar type differs')
+        require(type(value) is not float or math.isfinite(value), 'nonfinite scalar')
+        return value
+    require(kind in ('dict', 'list', 'tuple') and set(node) == {'kind', 'items'}
+            and isinstance(node['items'], list), 'unsupported component tree')
+    if kind == 'dict':
+        result = {}
+        for pair in node['items']:
+            require(isinstance(pair, list) and len(pair) == 2, 'dictionary item differs')
+            key, value = pair
+            require(isinstance(key, dict) and key.get('kind') == 'scalar', 'scalar dictionary key required')
+            key = walk(key, declared, used, arrays)
+            require(type(key) is str and key not in result, 'unique string dictionary key required')
+            result[key] = walk(value, declared, used, arrays)
+        return result
+    values = [walk(x, declared, used, arrays) for x in node['items']]
+    return tuple(values) if kind == 'tuple' else values
+
+
+def inspect_component(path, expected_hash, expected_context, root, manifest_cap, artifact_cap, array_cap):
+    require(root.is_absolute() and root.resolve() == root and root.is_dir(), 'existing nonsymlink root required')
+    require(path.name == 'manifest.json' and path.parent.resolve() == path.parent, 'component manifest path differs')
+    require(isinstance(expected_hash, str) and re.fullmatch('[0-9a-f]{64}', expected_hash), 'manifest hash required')
+    with opened(path, root) as (stream, sig):
+        require(0 < sig[2] <= manifest_cap, 'component manifest bound exceeded')
+        raw = stream.read(manifest_cap + 1)
+        require(len(raw) == sig[2] and hashlib.sha256(raw).hexdigest() == expected_hash, 'component manifest hash/extent differs')
+    value = json.loads(raw, object_pairs_hook=unique_object,
+                      parse_constant=lambda x: (_ for _ in ()).throw(ValueError('nonfinite JSON')))
+    require(isinstance(value, dict) and set(value) == {'schema_version', 'context', 'tree', 'arrays'}
+            and type(value['schema_version']) is int and value['schema_version'] == 1, 'component schema differs')
+    require(canonical_bytes(value['context']) == canonical_bytes(expected_context), 'component context differs')
+    declared = value['arrays']
+    require(isinstance(declared, dict) and set(declared) == {f'array-{i:06d}.npy' for i in range(len(declared))},
+            'component array denominator differs')
+    used = set()
+    walk(value['tree'], declared, used)
+    require(used == set(declared), 'unreferenced array member')
+    expected_files = {path, *(path.parent / name for name in declared)}
+    inventory(path.parent, expected_files)
+    total_files = sig[2]
+    total_arrays = 0
+    descriptors = {}
+    for name, info in declared.items():
+        require(isinstance(info, dict) and set(info) == {'sha256', 'bytes', 'shape', 'dtype'}, 'array descriptor differs')
+        require(type(info['bytes']) is int and info['bytes'] > 0
+                and isinstance(info['sha256'], str) and re.fullmatch('[0-9a-f]{64}', info['sha256']), 'array extent/hash differs')
+        require(isinstance(info['shape'], list) and len(info['shape']) <= 32
+                and all(type(x) is int and x >= 0 for x in info['shape']), 'array shape descriptor differs')
+        require(type(info['dtype']) is str, 'array dtype descriptor differs')
+        dtype = np.dtype(info['dtype'])
+        require(str(dtype) == info['dtype'] and not dtype.hasobject and dtype.kind in 'biuf'
+                and dtype.fields is None and dtype.itemsize > 0, 'numeric dtype descriptor required')
+        total_files += info['bytes']
+        total_arrays += math.prod(info['shape']) * dtype.itemsize
+        require(total_files <= artifact_cap and total_arrays <= array_cap, 'aggregate component budget exceeded')
+        descriptors[name] = info
+    require(total_files <= artifact_cap, 'component encoded budget exceeded')
+    signatures = {path: sig}
+    headers = {}
+    # All metadata/budgets precede full member admission; all member admission
+    # precedes the first resident numerical allocation.
+    for name, info in descriptors.items():
+        member = path.parent / name
+        with opened(member, root) as (stream, member_sig):
+            require(member_sig[2] == info['bytes'], 'array file extent differs')
+            shape, fortran, dtype, prefix = header(stream)
+            require(list(shape) == info['shape'] and str(dtype) == info['dtype'], 'array header descriptor differs')
+            require(len(prefix) + math.prod(shape) * dtype.itemsize == member_sig[2], 'NPY exact payload extent differs')
+            require(digest_stream(stream, member_sig[2]) == info['sha256'], 'array file hash differs')
+        signatures[member] = member_sig
+        headers[name] = (shape, fortran, dtype, prefix)
+    return value, signatures, headers, expected_files
+
+
+def read_component(path, expected_hash, expected_context, *, root,
+                   max_manifest_bytes, max_artifact_bytes, max_array_bytes, lease):
+    for limit in (max_manifest_bytes, max_artifact_bytes, max_array_bytes):
+        require(type(limit) is int and limit > 0, 'positive component bounds required')
+    require(max_manifest_bytes <= MANIFEST_LIMIT and callable(lease), 'bounded metadata and explicit lease required')
+    path, root = Path(path).absolute(), Path(root).absolute()
+    value, signatures, headers, expected_files = inspect_component(
+        path, expected_hash, expected_context, root,
+        max_manifest_bytes, max_artifact_bytes, max_array_bytes)
+    lease()
+    arrays = {}
+    for name, info in value['arrays'].items():
+        member = path.parent / name
+        shape, fortran, dtype, prefix = headers[name]
+        with opened(member, root, signatures[member]) as (stream, _):
+            actual = header(stream)
+            require(actual[:3] == (shape, fortran, dtype) and actual[3] == prefix, 'array header changed before load')
+            lease()
+            array = np.empty(math.prod(shape), dtype=dtype)
+            view = memoryview(array).cast('B')
+            offset = 0
+            while offset < len(view):
+                n = stream.readinto(view[offset:])
+                require(n is not None and n > 0, 'array ended during load')
+                offset += n
+            require(stream.read(1) == b'', 'array has trailing bytes')
+            h = hashlib.sha256(prefix)
+            h.update(view)
+            require(h.hexdigest() == info['sha256'], 'loaded array bytes differ')
+        arrays[name] = array.reshape(shape, order='F' if fortran else 'C')
+    # Recheck every admitted path and the exact inventory before returning any
+    # loaded payload. This includes files loaded earlier in the loop.
+    inventory(path.parent, expected_files)
+    for member, sig in signatures.items():
+        expected = expected_hash if member == path else value['arrays'][member.name]['sha256']
+        with opened(member, root, sig) as (stream, _):
+            require(digest_stream(stream, sig[2]) == expected, 'component changed during load')
+    used = set()
+    result = walk(value['tree'], value['arrays'], used, arrays)
+    inventory(path.parent, expected_files)
+    for member, sig in signatures.items():
+        require(member.resolve() == member and signature(member.lstat()) == sig,
+                'component signature changed during final verification')
+    lease()
+    return result

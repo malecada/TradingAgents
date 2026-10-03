@@ -1,0 +1,73 @@
+{
+  "actual_claims": false,
+  "actual_committed_metadata": [
+    {
+      "bytes": 181052,
+      "git_mode": "100644",
+      "git_oid": "19e6b2c4c8350608ca817995eaa5f28810cd3771",
+      "path": "held-fixture-registration01.json",
+      "sha256": "2d17bc25f5ccb0c39c0c82d8befd68d7b1f3db9fd967b69e0c4c23d26db87a1e"
+    },
+    {
+      "bytes": 1047,
+      "git_mode": "100644",
+      "git_oid": "09536b88862d31850e7efad7da5b147714162d02",
+      "path": "held-auxiliary-success01.json",
+      "sha256": "7128822ff4eb792f9ac2c311722b2210dbd7b1406d7eb69126466e24b99b26d8"
+    },
+    {
+      "bytes": 1085,
+      "git_mode": "100644",
+      "git_oid": "aa80b72c2728c9945ac3da1addec0e833b1c012b",
+      "path": "held-auxiliary-second_target_publication_failure01.json",
+      "sha256": "ec734c8cddf131bfda4c1d8788ec1fa837741ba9b8b2b0d06464e0478a59f727"
+    },
+    {
+      "bytes": 2998,
+      "git_mode": "100644",
+      "git_oid": "e981c4644dbff4dda3797939d191e210aa6fbbca",
+      "path": "fixture_inputs/held/success01/case-contract.json",
+      "sha256": "8b7cfac2a6f9bdb0c40a1a409ab460c330167c9aa6aceecdd02266e651487d9b"
+    },
+    {
+      "bytes": 3296,
+      "git_mode": "100644",
+      "git_oid": "16a99da5b3c644634b87bad730eb3158810865ec",
+      "path": "fixture_inputs/held/second_target_publication_failure01/case-contract.json",
+      "sha256": "34c0e6d9f14fd994b9810c10c045ff2cc0fa7ea0110366091278193f5c19c9a2"
+    }
+  ],
+  "actual_native_execution": false,
+  "checks": [
+    "genuine committed metadata held-fixture-registration01.json",
+    "genuine committed metadata held-auxiliary-success01.json",
+    "genuine committed metadata held-auxiliary-second_target_publication_failure01.json",
+    "genuine committed metadata fixture_inputs/held/success01/case-contract.json",
+    "genuine committed metadata fixture_inputs/held/second_target_publication_failure01/case-contract.json",
+    "model CONFIG20f451 observed",
+    "RR5 absolute owned input path accepted",
+    "pure rebind does not mutate owned input",
+    "candidate draft remains byte unchanged"
+  ],
+  "count": 9,
+  "model_configuration": {
+    "included_in_this_recipe_as_new_body": false,
+    "is_model_py": false,
+    "path": "research/onchain-paper-replication-2026-09-24/config/model.json",
+    "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+  },
+  "path_mutation_witness": {
+    "accepted_by_pure_rebind": true,
+    "candidate_rebind_sha256": "791a2c36f3c89c2e3d42870c3554294aa3fa23b0b46d12d47228418d2dec3cda",
+    "external_paths_read": false,
+    "future_capsule_written": false,
+    "id": "RR5",
+    "mutation": "only execution_job.path replaced by an owned absolute path in a copied in-memory draft",
+    "original_candidate_mutated": false,
+    "owned_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-canonical-root-recipe-review01-2026-10-04/opaque-job.json",
+    "release_granted": false,
+    "returned_input_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-canonical-root-recipe-review01-2026-10-04/opaque-job.json"
+  },
+  "payload_decoding": false,
+  "schema_version": 1
+}

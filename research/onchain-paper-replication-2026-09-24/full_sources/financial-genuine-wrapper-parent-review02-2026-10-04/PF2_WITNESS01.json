@@ -1,0 +1,43 @@
+{
+  "actual_native_commands": false,
+  "actual_tiny_child": {
+    "opaque_progress": true,
+    "pid": 58320
+  },
+  "callback_pids": [],
+  "candidate_parent_sha256": "332e9cbb7abc84d660a0fd04a344ec2dfce8d3a47a4e5ec50595f5b65567b1f4",
+  "candidate_supervisor_sha256": "8bc1bef8d3c1dc9dfd82a13a113562e71f2f82f633aa9a035e0259497a8dc51c",
+  "checks": [
+    "actual child progressed before failed census",
+    "parent callback never receives process",
+    "original census fatal preserved",
+    "ordinary child still drained",
+    "ordinary child PID retained in separate supervisor receipt",
+    "actual parent sets handle only in callback",
+    "actual parent native cleanup requires callback handle",
+    "actual supervisor orders failing census before callback"
+  ],
+  "count": 8,
+  "id": "PF2",
+  "impact": "If real child dispatch has occurred before this census failure, ordinary subreaper drainage does not establish native cgroup absence, and parent skips its native cleanup. Actual native dispatch was not executed in this control.",
+  "native_escape_demonstrated": false,
+  "native_unit_created": false,
+  "ordinary_cleanup": {
+    "dedicated_no_preexisting_children": true,
+    "owned_pid_start_records": [
+      {
+        "pgrp": 58320,
+        "pid": 58320,
+        "ppid": 58319,
+        "session": 58320,
+        "state": "Z",
+        "ticks": "12816020"
+      }
+    ],
+    "reaped_descendants": [],
+    "remaining_original_identities": [],
+    "subreaper_used": true
+  },
+  "parent_cleanup_skipped_by_exact_source_condition": true,
+  "primary_exception_type": "KeyboardInterrupt"
+}

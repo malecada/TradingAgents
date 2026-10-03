@@ -1,0 +1,72 @@
+{
+  "checks": [
+    "red real child progressed",
+    "red first actual fatal preserved",
+    "red actual child absent",
+    "red handle disposition",
+    "green real child progressed",
+    "green first actual fatal preserved",
+    "green actual child absent",
+    "green handle disposition",
+    "genuine parent first callback statement stores handle",
+    "unchanged genuine parent schedules native cleanup whenever handle exists",
+    "actual returned handle retained before diagnostic failure"
+  ],
+  "count": 11,
+  "outcomes": [
+    {
+      "label": "red",
+      "actual_pid": 59486,
+      "parent_handles": [],
+      "actual_child_exits": [],
+      "fatal_identity_preserved": true,
+      "cleanup": {
+        "dedicated_no_preexisting_children": true,
+        "owned_pid_start_records": [
+          {
+            "pgrp": 59486,
+            "pid": 59486,
+            "ppid": 59485,
+            "session": 59486,
+            "state": "Z",
+            "ticks": "12824038"
+          }
+        ],
+        "reaped_descendants": [],
+        "remaining_original_identities": [],
+        "subreaper_used": true
+      },
+      "actual_native_commands": false
+    },
+    {
+      "label": "green",
+      "actual_pid": 59514,
+      "parent_handles": [
+        59514
+      ],
+      "actual_child_exits": [
+        -15
+      ],
+      "fatal_identity_preserved": true,
+      "cleanup": {
+        "dedicated_no_preexisting_children": true,
+        "owned_pid_start_records": [
+          {
+            "pgrp": 59514,
+            "pid": 59514,
+            "ppid": 59485,
+            "session": 59514,
+            "state": "Z",
+            "ticks": "12824053"
+          }
+        ],
+        "reaped_descendants": [],
+        "remaining_original_identities": [],
+        "subreaper_used": true
+      },
+      "actual_native_commands": false
+    }
+  ],
+  "native_dispatch_tested": false,
+  "scope": "real ordinary children only; genuine native cleanup route retained and source-joined"
+}

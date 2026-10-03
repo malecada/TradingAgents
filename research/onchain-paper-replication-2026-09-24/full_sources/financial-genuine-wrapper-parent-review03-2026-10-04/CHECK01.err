@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-parent-review03-2026-10-04/check01.py", line 27, in <module>
+    if r['type']=='file':ok('candidate body '+r['path'],stat.S_ISREG(s.st_mode) and s.st_size==r['size'] and sha(p)==r['sha256'])
+                                                                                               ~^^^^^^^^
+KeyError: 'size'

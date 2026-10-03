@@ -1,0 +1,55 @@
+{
+  "actual_function_ast": "FunctionDef(name='build_model', args=arguments(args=[arg(arg='arm'), arg(arg='task'), arg(arg='config')]), body=[Assign(targets=[Name(id='task', ctx=Store())], value=Call(func=Attribute(value=Dict(keys=[Constant(value='direction')], values=[Constant(value='classification')]), attr='get', ctx=Load()), args=[Name(id='task', ctx=Load()), Name(id='task', ctx=Load())])), If(test=Compare(left=Name(id='task', ctx=Load()), ops=[NotIn()], comparators=[Set(elts=[Constant(value='classification'), Constant(value='regression')])]), body=[Raise(exc=Call(func=Name(id='ValueError', ctx=Load()), args=[Constant(value='unknown task')]))]), If(test=Compare(left=Name(id='arm', ctx=Load()), ops=[In()], comparators=[Set(elts=[Constant(value='lstm'), Constant(value='gru')])]), body=[Return(value=Call(func=Name(id='PriceRecurrent', ctx=Load()), args=[Name(id='arm', ctx=Load()), Name(id='task', ctx=Load())]))]), If(test=Compare(left=Name(id='arm', ctx=Load()), ops=[Eq()], comparators=[Constant(value='hlstm')]), body=[Return(value=Call(func=Name(id='HierarchicalLSTM', ctx=Load()), args=[Name(id='task', ctx=Load())]))]), If(test=Compare(left=Name(id='arm', ctx=Load()), ops=[In()], comparators=[Set(elts=[Constant(value='proposed'), Constant(value='training_label_permutation')])]), body=[Return(value=Call(func=Name(id='ReplicationModel', ctx=Load()), args=[Name(id='config', ctx=Load()), Name(id='task', ctx=Load())]))]), If(test=Compare(left=Name(id='arm', ctx=Load()), ops=[In()], comparators=[Set(elts=[Constant(value='gin'), Constant(value='gat_without_mcm'), Constant(value='mcm_without_gat')])]), body=[Return(value=Call(func=Name(id='AlternativeGraphTemporal', ctx=Load()), args=[Name(id='config', ctx=Load()), Name(id='task', ctx=Load()), Name(id='arm', ctx=Load())]))]), If(test=Compare(left=Name(id='arm', ctx=Load()), ops=[In()], comparators=[Name(id='VECTOR_WIDTHS', ctx=Load())]), body=[Return(value=Call(func=Name(id='VectorTemporal', ctx=Load()), args=[Subscript(value=Name(id='VECTOR_WIDTHS', ctx=Load()), slice=Name(id='arm', ctx=Load()), ctx=Load()), Name(id='task', ctx=Load()), Name(id='config', ctx=Load()), Compare(left=Name(id='arm', ctx=Load()), ops=[Eq()], comparators=[Constant(value='constant_graph')])]))]), If(test=Compare(left=Name(id='arm', ctx=Load()), ops=[Eq()], comparators=[Constant(value='svm')]), body=[ImportFrom(module='baselines', names=[alias(name='price_svm')], level=1), Return(value=Call(func=Name(id='price_svm', ctx=Load()), args=[Name(id='task', ctx=Load())]))]), Raise(exc=Call(func=Name(id='ValueError', ctx=Load()), args=[Constant(value='unregistered model arm')]))])",
+  "branches": [
+    {
+      "condition": "task not in {'classification', 'regression'}",
+      "line": 34,
+      "returns": []
+    },
+    {
+      "condition": "arm in {'lstm', 'gru'}",
+      "line": 35,
+      "returns": [
+        "PriceRecurrent(arm, task)"
+      ]
+    },
+    {
+      "condition": "arm == 'hlstm'",
+      "line": 36,
+      "returns": [
+        "HierarchicalLSTM(task)"
+      ]
+    },
+    {
+      "condition": "arm in {'proposed', 'training_label_permutation'}",
+      "line": 37,
+      "returns": [
+        "ReplicationModel(config, task)"
+      ]
+    },
+    {
+      "condition": "arm in {'gin', 'gat_without_mcm', 'mcm_without_gat'}",
+      "line": 38,
+      "returns": [
+        "AlternativeGraphTemporal(config, task, arm)"
+      ]
+    },
+    {
+      "condition": "arm in VECTOR_WIDTHS",
+      "line": 39,
+      "returns": [
+        "VectorTemporal(VECTOR_WIDTHS[arm], task, config, arm == 'constant_graph')"
+      ]
+    },
+    {
+      "condition": "arm == 'svm'",
+      "line": 40,
+      "returns": [
+        "price_svm(task)"
+      ]
+    }
+  ],
+  "executed": false,
+  "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/model_registry.py",
+  "sha256": "c0e2202578ae708e2fc0406ece5726541952bf40f29df9dc81812c177c334543"
+}

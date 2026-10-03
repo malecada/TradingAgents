@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-root-launch-20261004-01/parent01.py", line 189, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-root-launch-20261004-01/parent01.py", line 188, in main
+    else:validate_release(q)
+         ~~~~~~~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-root-launch-20261004-01/parent01.py", line 24, in validate_release
+    require(q['status']=='RELEASED_ONE_USE_FINANCIAL_PARENT' and q['capsule_root']==str(CAP),'no draft release')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-root-launch-20261004-01/parent01.py", line 16, in require
+    def require(v,m):R.require(v,m)
+                     ~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-root-launch-20261004-01/recovery04.py", line 11, in require
+    if not v:raise ValueError(msg)
+             ^^^^^^^^^^^^^^^^^^^^^
+ValueError: no draft release

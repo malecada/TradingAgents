@@ -1,0 +1,23 @@
+# Financial parent preparation 03 — PF1 and PF2
+
+Status: SOURCE CANDIDATE, NOT RELEASED. Parent02 and its complete historical source, tiny outcomes, 282-check independent evidence and reviewer refusals remain unchanged. This successor owns only this new directory. No original job/resources/financial194 source body, gate, claim, native unit or actual outcome was changed or executed.
+
+## Two exact corrections
+
+PF1: Parent02's directory fsync used plain `finally: os.close(fd)`. A later close error could replace the actual fsync KeyboardInterrupt. The successor invokes the existing accepted `R._cleanup` close callback in that same finally suite. Exact AST extraction executes genuine directory fsync and close, injecting real exception objects after each syscall. RED01 preserves the original masking witness. The 25-case GREEN matrix covers no error, ordinary errors, MemoryError, KeyboardInterrupt and SystemExit: the first actual fatal survives, an ordinary primary yields to the first cleanup fatal, and ordinary cleanup uncertainty remains a CleanupFailure retaining original evidence. Close occurs exactly once.
+
+PF2: Parent02 ran `tree.scan()` before `on_spawn(process)`. A real child could progress before a scan failure while the parent still lacked its Popen handle and therefore skipped native cleanup. The successor calls `on_spawn(process)` immediately after Popen and before the first scan. The unchanged genuine parent's first callback statement stores the actual handle before attempting metadata publication. Every later supervisor failure therefore leaves the actual handle available to the existing native-cleanup retainer. A metadata-publication failure does not turn absence of a receipt into successful cleanup.
+
+CHECKS02 includes actual new RED and GREEN children which wrote opaque progress before the injected first-scan KeyboardInterrupt. Both ordinary children were reaped; the old callback saw no process and the new callback retained the actual reaped Popen object. The original fatal object survived. The native cleanup retainer and callback assignment are joined against exact parent AST. This demonstrates handle retention and source routing; it does not claim a native unit was created or exercise actual systemd cleanup.
+
+## Preservation and inverse
+
+INVERSE01.json stores the two exact substitutions. Reversing each restores complete Parent02 source bytes and whole-module AST. All eight other copied runtime/template/original-protocol bodies are unchanged and origin-pinned. The supervisor's subreaper, PID/start checks, first-fatal rules, six-second drain, three-second TERM grace, directory/log descriptor anchors and cleanup receipts remain unchanged. The parent's authenticated existing pre-systemd intent, failed/unknown native-creation refusal, native unit/cgroup/PID checks and before/stop/after control attempts remain unchanged. Neither fix weakens the absence-evidence requirements.
+
+All original limits remain: 3 GiB native high=max, zero swap, two CPUs, 1800-second native limit, 3 GiB reserve/6 GiB startup, 4 MiB files, 1 GiB capsule watch, 10 GiB disk floor, 16 GiB host-memory ceiling and 1840-second outer deadline. Planned interruption remains genuine FAILED, and actual parent OS exit must still be recorded externally. No complete native PID history or universal descriptor visibility is claimed.
+
+## Checks and remaining release requirements
+
+56 PF1 assertions passed, including the actual RED witness, all 25 GREEN error pairs and exact two-source byte/AST inverses. Eleven PF2 assertions passed. Twenty-one fresh complete supervisor checks passed on Parent03, including real exit7, orphan, double-fork/setsid TERM resistance, timeout and first-fatal cleanup, draft refusal and original native-intent source order. Total 88 passed assertions; all three stderr files are empty. Every attempted tiny outcome is retained in this directory. Only stdlib modules and real tiny processes were used, with the checkout-locked Python and bytecode disabled. No numerical imports, arrays, test labels, native command, network, Run/Owner/Binding or claim was used.
+
+The complete final source must receive independent exact review. Root must then freeze actual caller/helper hashes, genuine registration/cumulative/runtime/source/input proofs and exact final release, externally preserve and freshly recover the complete final scope, and check current resources/processes/unused namespaces. The all-null request remains unreleased and refuses. No allowance, financial fit, paper credit, scientific completion or real native cleanup success follows from these engineering tests.
