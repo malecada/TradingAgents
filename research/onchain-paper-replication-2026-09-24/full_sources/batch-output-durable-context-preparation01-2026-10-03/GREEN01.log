@@ -1,0 +1,27 @@
+.E......E
+======================================================================
+ERROR: test_all_roles_finite (__main__.Tests.test_all_roles_finite)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation01-2026-10-03/test_candidate01.py", line 18, in test_all_roles_finite
+    p=self.policy();p['slots'][0]['role']=role;self.m['validate_policy'](p)
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "actual-candidate-extract", line 67, in validate_policy
+  File "actual-candidate-extract", line 15, in require
+ValueError: durable failure/terminal headroom required
+
+======================================================================
+ERROR: test_policy (__main__.Tests.test_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation01-2026-10-03/test_candidate01.py", line 15, in test_policy
+    def test_policy(self):self.assertEqual(self.m['validate_policy'](self.policy()),self.policy())
+                                           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "actual-candidate-extract", line 67, in validate_policy
+  File "actual-candidate-extract", line 15, in require
+ValueError: durable failure/terminal headroom required
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.082s
+
+FAILED (errors=2)

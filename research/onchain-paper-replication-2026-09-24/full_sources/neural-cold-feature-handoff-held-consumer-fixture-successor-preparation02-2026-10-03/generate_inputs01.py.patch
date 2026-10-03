@@ -1,0 +1,51 @@
+--- immutable-preparation01/generate_inputs01.py
++++ preparation02/generate_inputs01.py
+@@ -117,6 +117,9 @@
+     require(type(roles) is dict and set(roles)<=set(HELD_ROLES),'unknown held metadata role')
+     require(type(source_plan) is dict and source_plan.get('source_count')==199 and source_plan.get('package_count')==148 and source_plan.get('execution_admitted') is False,'actual199/148 metadata plan required')
+     missing=[n for n in HELD_ROLES if roles.get(n) is None];observed={};inputs={}
++    def insert(name,row):
++        require(type(name) is str and bool(name) and name not in inputs,'input role collision or empty identity')
++        inputs[name]=row
+     for name,value in roles.items():
+         if value is None:continue
+         require(type(value) is dict and set(value)=={'reference','document'},'held role body/reference pair required')
+@@ -138,7 +141,7 @@
+         for row in v['inputs']:
+             require(type(row) is dict and set(row)=={'name','reference','original_path'},'original input row schema')
+             name=row['name'];require(type(name) is str and name.startswith('original_') and name not in inputs and type(row['original_path']) is str,'original role identity')
+-            inputs[name]=_held_ref(row['reference'])|{'dataset':'original_dictionary','original_path':row['original_path']}
++            insert(name,_held_ref(row['reference'])|{'dataset':'original_dictionary','original_path':row['original_path']})
+     evidence=roles.get('original_evidence')
+     if evidence is not None:
+         e=evidence['document'];require(type(e) is dict and e.get('sample_count')==512 and type(e.get('sample_count')) is int and e.get('motif_count')==32 and type(e.get('motif_count')) is int and e.get('resample') is False and e.get('recluster') is False,'original512/32 import-only evidence required')
+@@ -149,9 +152,9 @@
+             require(type(row) is dict and set(row)=={'graph_hash','nodes','input_name','manifest','components'},'target role schema')
+             h=row['graph_hash'];require(type(h) is str and len(h)==64 and all(x in '0123456789abcdef' for x in h) and type(row['nodes']) is int and row['nodes']>0,'target metadata dimensions/hash')
+             require(type(row['input_name']) is str and row['input_name'] not in inputs,'target input identity')
+-            inputs[row['input_name']]=_held_ref(row['manifest'])|{'dataset':'synthetic'}
++            insert(row['input_name'],_held_ref(row['manifest'])|{'dataset':'synthetic'})
+             require(type(row['components']) is dict and set(row['components'])=={'node_ids','node_features','edge_index','edge_features'},'all four original target components required')
+-            for name,ref in row['components'].items():inputs[row['input_name']+'_'+name]=_held_ref(ref)|{'dataset':'synthetic'}
++            for name,ref in row['components'].items():insert(row['input_name']+'_'+name,_held_ref(ref)|{'dataset':'synthetic'})
+             targets.append({'graph_hash':h,'nodes':row['nodes'],'input_name':row['input_name']})
+         require([x['graph_hash'] for x in targets]==sorted({x['graph_hash'] for x in targets}) and sorted(x['nodes'] for x in targets)==[2,3],'deterministic complete target order/denominator differs')
+     case=roles.get('case_contract');documents={};experiment=None
+@@ -164,7 +167,7 @@
+         require(type(c['additional_inputs']) is dict and len(c['additional_inputs'])<=64,'bounded additional input roles')
+         for name,row in c['additional_inputs'].items():
+             require(type(name) is str and name not in inputs and type(row) is dict and set(row)=={'reference','dataset'},'distinct additional input role')
+-            require(row['dataset'] in ('synthetic','original_dictionary'),'declared held dataset');inputs[name]=_held_ref(row['reference'])|{'dataset':row['dataset']}
++            require(row['dataset'] in ('synthetic','original_dictionary'),'declared held dataset');insert(name,_held_ref(row['reference'])|{'dataset':row['dataset']})
+         if targets:
+             policy={'schema_version':1,'kind':'original-import-held-score-readback-v1','targets':{x['graph_hash']:{'output':c['readback_outputs'][x['graph_hash']]} for x in targets},'part_bytes':1048576,'max_read_bytes':max(x['nodes'] for x in targets)*32*8,'max_members':32767}
+             documents[c['held_policy_input']]={'raw_utf8':canonical(policy).decode(),'sha256':sha(canonical(policy)),'bytes':len(canonical(policy))}
+@@ -174,6 +177,8 @@
+             exp=r['experiments'][experiment];require(exp.get('source_files')==source_plan['source_files'],'registered199 source map differs')
+             require(set(c['readback_outputs'].values())<=set(exp['outputs']),'held outputs absent from root registration')
+             require(exp.get('cumulative_budget_extension') is not None,'reviewed cumulative accounting role required')
++    expected=(11 if original is not None else 0)+(10 if catalog is not None else 0)+(len(case['document']['additional_inputs']) if case is not None else 0)
++    require(len(inputs)==expected,'complete input role cardinality differs')
+     require(len(inputs)<=128 and len({x['path'] for x in inputs.values()})==len(inputs),'complete input roles overlap or exceed finite bound')
+     return {'schema_version':1,'kind':'held-resource-input-metadata-plan-v1','status':'unregistered-metadata-only','source':source_plan['source'],'anchor':source_plan['anchor'],'root':source_plan['root'],'source_count':199,'package_count':148,'observed_metadata':observed,'input_rows':dict(sorted(inputs.items())),'target_rows':targets,'rendered_metadata':documents,'experiment_id':experiment,'remaining_roles':missing,'execution_admitted':False,'runtime_installed_verified':False,'arrays_generated':False,'original_sampling_rerun':False}
+ 
