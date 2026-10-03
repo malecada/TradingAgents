@@ -1,0 +1,539 @@
+{
+  "all18_unreserved": true,
+  "conditional_dispositions": {
+    "COMPLETE": 14,
+    "FAILED": 4
+  },
+  "paper_credit": 0,
+  "slots": [
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "FAILED",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-eager-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-classification-eager-interrupt1-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-eager-interrupt1-20261003-01",
+        "phase": "interrupt1",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-eager-reference-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-classification-eager-complete100-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-eager-complete100-20261003-01",
+        "phase": "complete100",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-classification-eager-interrupt1-20261003-01",
+        "financial-wrapper-classification-eager-complete100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-eager-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-classification-eager-continue100-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-eager-continue100-20261003-01",
+        "phase": "continue100",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": "uninterrupted_reference",
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-classification-eager-continue100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-eager-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-classification-eager-predict-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-eager-predict-20261003-01",
+        "phase": "predict",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-selected-agreement-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-classification-selected-agreement-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-selected-agreement-20261003-01",
+        "phase": "agreement",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "FAILED",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-selected-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-classification-selected-interrupt1-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-selected-interrupt1-20261003-01",
+        "phase": "interrupt1",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-selected-reference-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-classification-selected-complete100-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-selected-complete100-20261003-01",
+        "phase": "complete100",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-classification-selected-interrupt1-20261003-01",
+        "financial-wrapper-classification-selected-complete100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-selected-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-classification-selected-continue100-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-selected-continue100-20261003-01",
+        "phase": "continue100",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": "uninterrupted_reference",
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-classification-selected-continue100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-selected-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-classification-selected-predict-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-selected-predict-20261003-01",
+        "phase": "predict",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "FAILED",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-regression-eager-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-regression-eager-interrupt1-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-regression-eager-interrupt1-20261003-01",
+        "phase": "interrupt1",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "regression",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-regression-eager-reference-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-regression-eager-complete100-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-regression-eager-complete100-20261003-01",
+        "phase": "complete100",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "regression",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-regression-eager-interrupt1-20261003-01",
+        "financial-wrapper-regression-eager-complete100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-regression-eager-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-regression-eager-continue100-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-regression-eager-continue100-20261003-01",
+        "phase": "continue100",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": "uninterrupted_reference",
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "regression",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-regression-eager-continue100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-regression-eager-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-regression-eager-predict-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-regression-eager-predict-20261003-01",
+        "phase": "predict",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "regression",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-regression-selected-agreement-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-regression-selected-agreement-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-regression-selected-agreement-20261003-01",
+        "phase": "agreement",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "regression",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "FAILED",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-regression-selected-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-regression-selected-interrupt1-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-regression-selected-interrupt1-20261003-01",
+        "phase": "interrupt1",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "regression",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-regression-selected-reference-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-regression-selected-complete100-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-regression-selected-complete100-20261003-01",
+        "phase": "complete100",
+        "prior_input": null,
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "regression",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-regression-selected-interrupt1-20261003-01",
+        "financial-wrapper-regression-selected-complete100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-regression-selected-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-regression-selected-continue100-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-regression-selected-continue100-20261003-01",
+        "phase": "continue100",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": "uninterrupted_reference",
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "regression",
+        "training_input": "training"
+      }
+    },
+    {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-regression-selected-continue100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-regression-selected-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "selected",
+        "experiment": "financial-wrapper-regression-selected-predict-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-regression-selected-predict-20261003-01",
+        "phase": "predict",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "regression",
+        "training_input": "training"
+      }
+    }
+  ],
+  "ten_proposed_cells": 10,
+  "withheld_dependent_registrations": [
+    {
+      "actual_checkpoint_members": null,
+      "actual_parent_hash": null,
+      "dependencies": [
+        "financial-wrapper-classification-eager-interrupt1-20261003-01",
+        "financial-wrapper-classification-eager-complete100-20261003-01"
+      ],
+      "proposed_cell": "financial-wrapper-classification-eager-continued-20261003-01",
+      "proposed_identity": "financial-wrapper-classification-eager-continue100-20261003-01",
+      "reason": "genuine dependent outcomes unavailable",
+      "registration": null
+    },
+    {
+      "actual_checkpoint_members": null,
+      "actual_parent_hash": null,
+      "dependencies": [
+        "financial-wrapper-classification-eager-continue100-20261003-01"
+      ],
+      "proposed_cell": "financial-wrapper-classification-eager-continued-20261003-01",
+      "proposed_identity": "financial-wrapper-classification-eager-predict-20261003-01",
+      "reason": "genuine dependent outcomes unavailable",
+      "registration": null
+    },
+    {
+      "actual_checkpoint_members": null,
+      "actual_parent_hash": null,
+      "dependencies": [
+        "financial-wrapper-classification-selected-interrupt1-20261003-01",
+        "financial-wrapper-classification-selected-complete100-20261003-01"
+      ],
+      "proposed_cell": "financial-wrapper-classification-selected-continued-20261003-01",
+      "proposed_identity": "financial-wrapper-classification-selected-continue100-20261003-01",
+      "reason": "genuine dependent outcomes unavailable",
+      "registration": null
+    },
+    {
+      "actual_checkpoint_members": null,
+      "actual_parent_hash": null,
+      "dependencies": [
+        "financial-wrapper-classification-selected-continue100-20261003-01"
+      ],
+      "proposed_cell": "financial-wrapper-classification-selected-continued-20261003-01",
+      "proposed_identity": "financial-wrapper-classification-selected-predict-20261003-01",
+      "reason": "genuine dependent outcomes unavailable",
+      "registration": null
+    },
+    {
+      "actual_checkpoint_members": null,
+      "actual_parent_hash": null,
+      "dependencies": [
+        "financial-wrapper-regression-eager-interrupt1-20261003-01",
+        "financial-wrapper-regression-eager-complete100-20261003-01"
+      ],
+      "proposed_cell": "financial-wrapper-regression-eager-continued-20261003-01",
+      "proposed_identity": "financial-wrapper-regression-eager-continue100-20261003-01",
+      "reason": "genuine dependent outcomes unavailable",
+      "registration": null
+    },
+    {
+      "actual_checkpoint_members": null,
+      "actual_parent_hash": null,
+      "dependencies": [
+        "financial-wrapper-regression-eager-continue100-20261003-01"
+      ],
+      "proposed_cell": "financial-wrapper-regression-eager-continued-20261003-01",
+      "proposed_identity": "financial-wrapper-regression-eager-predict-20261003-01",
+      "reason": "genuine dependent outcomes unavailable",
+      "registration": null
+    },
+    {
+      "actual_checkpoint_members": null,
+      "actual_parent_hash": null,
+      "dependencies": [
+        "financial-wrapper-regression-selected-interrupt1-20261003-01",
+        "financial-wrapper-regression-selected-complete100-20261003-01"
+      ],
+      "proposed_cell": "financial-wrapper-regression-selected-continued-20261003-01",
+      "proposed_identity": "financial-wrapper-regression-selected-continue100-20261003-01",
+      "reason": "genuine dependent outcomes unavailable",
+      "registration": null
+    },
+    {
+      "actual_checkpoint_members": null,
+      "actual_parent_hash": null,
+      "dependencies": [
+        "financial-wrapper-regression-selected-continue100-20261003-01"
+      ],
+      "proposed_cell": "financial-wrapper-regression-selected-continued-20261003-01",
+      "proposed_identity": "financial-wrapper-regression-selected-predict-20261003-01",
+      "reason": "genuine dependent outcomes unavailable",
+      "registration": null
+    }
+  ]
+}
