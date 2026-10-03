@@ -1,0 +1,48 @@
+{
+  "model": {
+    "sha256": "6854c3e37309e8f0f015c76298b2ecb211a0fb4f9396b4f17b092db6168e38ec",
+    "equal_original_materialization_input": true
+  },
+  "training": {
+    "sha256": "0fd8b42b8de7dbb58fc170d51b309b73f63dcc70259409d2bb3f4492afa7e1d9",
+    "equal_original_materialization_input": true
+  },
+  "matching": {
+    "max_iterations": 50,
+    "beta0": 1.0,
+    "beta_final": 30.0,
+    "beta_rate": 0.075,
+    "internal_precision": "float64",
+    "solver": "algorithm1_literal"
+  },
+  "dictionary_count": 32,
+  "dictionary_size": 32,
+  "lookback": 28,
+  "batch_size": 16,
+  "future_job_resources_equal_original": true,
+  "resources": {
+    "disk_floor_bytes": 10737418240,
+    "disk_paths": [
+      "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source"
+    ],
+    "memory_high_bytes": 3221225472,
+    "memory_max_bytes": 3221225472,
+    "native_unit_limits": {
+      "file_size_bytes": 4194304
+    },
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 6442450944,
+    "storage_budget": {
+      "limits": {
+        "max_allocated_bytes": 1073741824,
+        "max_depth": 32,
+        "max_entries": 32768,
+        "max_logical_bytes": 1073741824,
+        "max_scan_seconds": 5
+      },
+      "root": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source"
+    },
+    "wall_seconds": 1800
+  },
+  "no_arrays_decoded": true
+}

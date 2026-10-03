@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "status": "actual-B2-and-external-candidate-release-read-only-verified",
+  "source_B2": "361339125a3f1cd57e7ba8611f5a994ae649fa0b",
+  "sole_parent_A2": "9742c6ec817dd0917f9f35a52e4b83965ca1cd29",
+  "source_record_sha256": "34b203eb88ad391a6fca7e535da42c53d592ab84cf2a36c727514df8017e8065",
+  "candidate_sha256": "407642fc43b41b40dc918e40ce81d375fcc0067d2af7d99c44beb42548f64011",
+  "candidate_bytes": 1692,
+  "actual_four_additions": [
+    [
+      "A",
+      "cold-comparison-registration02.json"
+    ],
+    [
+      "A",
+      "cold_prep/CHARTER_COMPARE_REGISTERED02.md"
+    ],
+    [
+      "A",
+      "cold_prep/compare-evolution02.json"
+    ],
+    [
+      "A",
+      "cold_prep/compare-phase-contract02.json"
+    ]
+  ],
+  "source_files": 195,
+  "anchor_files": 147,
+  "runtime_distribution_records": 251,
+  "runtime_module_origins": 139,
+  "inputs": 44,
+  "family": {
+    "attempt_budget": 2,
+    "history_reference": "cold_prep/HISTORY02.md",
+    "mechanism_id": "compact-cold-genuine-authority",
+    "prior_attempts": 0
+  },
+  "native_environment_sha256": "6c383e3604215f35c1b8b69d042c678612e78fb5a9d1c14114b75f1e24c6c7e8",
+  "cpus": [
+    0,
+    1
+  ],
+  "resources": {
+    "disk_floor_bytes": 10737418240,
+    "disk_paths": [
+      "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source"
+    ],
+    "memory_high_bytes": 3221225472,
+    "memory_max_bytes": 3221225472,
+    "native_unit_limits": {
+      "file_size_bytes": 4194304
+    },
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 6442450944,
+    "storage_budget": {
+      "limits": {
+        "max_allocated_bytes": 1073741824,
+        "max_depth": 32,
+        "max_entries": 32768,
+        "max_logical_bytes": 1073741824,
+        "max_scan_seconds": 5
+      },
+      "root": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source"
+    },
+    "wall_seconds": 1800
+  },
+  "all11_original_pid_tid_absent": [
+    3399311,
+    3399314,
+    3399515,
+    3399730,
+    3399932,
+    3399944,
+    3399957,
+    3399961,
+    3400005,
+    3400030,
+    3400048
+  ],
+  "original_cgroup_absent": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-864fd867343a491a9f55c2b7b10d3341.service",
+  "comparison_unreserved_paths": [
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_runs/compact-cold-comparison-20261003-01",
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_outer/compact-cold-comparison-20261003-01",
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_supervise/compact-cold-comparison-20261003-01",
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/compact-cold-engineering-20261003/compact-cold-comparison-20261003-01",
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/compact-cold-comparison-20261003-01",
+    "/home/malecada/master_thesis/onchain-fixture-isolation/compact-cold-root-launches-20261003/compact-cold-comparison-20261003-01",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-compare-request02-2026-10-03/actual-parent-wait01"
+  ],
+  "launch_command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research.onchain_replication.job",
+    "--mode",
+    "launch",
+    "--root",
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source",
+    "--registration",
+    "cold-comparison-registration02.json",
+    "--experiment",
+    "compact-cold-comparison-20261003-01",
+    "--source",
+    "361339125a3f1cd57e7ba8611f5a994ae649fa0b"
+  ],
+  "worker_command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research.onchain_replication.job",
+    "--mode",
+    "worker",
+    "--root",
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source",
+    "--registration",
+    "cold-comparison-registration02.json",
+    "--experiment",
+    "compact-cold-comparison-20261003-01",
+    "--source",
+    "361339125a3f1cd57e7ba8611f5a994ae649fa0b"
+  ],
+  "no_admission_start_numerical_import_or_job": true,
+  "candidate_installed_or_selected_by_review": false
+}
