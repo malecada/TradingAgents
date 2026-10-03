@@ -1,0 +1,126 @@
+test_actual_same_content_replacement_rebase (__main__.Tests.test_actual_same_content_replacement_rebase) ... FAIL
+test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) ... 
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='root') ... FAIL
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='fd') ... FAIL
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='kind') ... FAIL
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='reference') ... FAIL
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='closed') ... FAIL
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_root_sig') ... FAIL
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_files') ... FAIL
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_payload') ... FAIL
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_pin') ... FAIL
+  test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_frozen') ... FAIL
+test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) ... ERROR
+
+======================================================================
+ERROR: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 45, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(TypeError):r._files['matrix.f32']=()
+                                      ^^^^^^^^
+AttributeError: 'selected_reader.LocalContent' object has no attribute '_files'
+
+======================================================================
+FAIL: test_actual_same_content_replacement_rebase (__main__.Tests.test_actual_same_content_replacement_rebase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 33, in test_actual_same_content_replacement_rebase
+    self.assertFalse(bypassed,'normal del/setattr rebased the pinned original member inode')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : normal del/setattr rebased the pinned original member inode
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='root')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='fd')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='kind')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='reference')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='closed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_root_sig')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_files')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_payload')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_pin')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+======================================================================
+FAIL: test_all_slots_refuse_delete_and_reassign (__main__.Tests.test_all_slots_refuse_delete_and_reassign) (name='_frozen')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-exact-member-reader-candidate02-2026-10-03/test_immutability02.py", line 41, in test_all_slots_refuse_delete_and_reassign
+    with self.assertRaises(AttributeError):delattr(r,name)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AttributeError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+FAILED (failures=11, errors=1)

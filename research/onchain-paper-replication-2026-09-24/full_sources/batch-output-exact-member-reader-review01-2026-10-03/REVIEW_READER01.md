@@ -1,0 +1,35 @@
+# Independent exact-member local reader review01
+
+Disposition: WITHHELD for the proposed immutable local-content reader layer pending EMR1. The candidate remains an unintegrated, content-only source preparation. No typed authority, transport, offload, deletion or numerical execution is admitted.
+
+Reviewed manifest `bcfae3d5f6279ff3c76b34ab486ced45c81901fd9298fe762f4f5f5efaab318a`, reader `59b533b8df03185209bad6966148a2a76371176a8d1fce1a60092761aaaff730`, report `f6e707af9775681b535d3eb8cc7876e287ea5785e16332a575b7232ff66108a7`. All13 manifest bodies and11 interface-source references were independently hashed. Candidate01 and every retained author failure remain unchanged.
+
+## EMR1 — ordinary attribute deletion bypasses original inode pinning
+
+Location: `exact_members01.py:42–45,119–123`.
+
+The class freezes assignment through `_frozen` but does not implement `__delattr__`. Ordinary `del reader._frozen` therefore removes the guard. Normal assignments can then replace `_files`, `_pin`, root/FD and other supposedly frozen topology. This is not a call to object.__setattr__ or reflection bypass.
+
+`review_checks01.py` uses the actual candidate with only standalone stdlib imports and two tiny synthetic raw files. It opens a valid128-byte raw MCM member, replaces that member with identical bytes at a new inode, and confirms `reader.check()` initially refuses `original member identity changed`. It then deletes `_frozen`, rebinds only the new member signature using normal assignments, freezes again, and observes a successful range read, complete `reader.check()` and successful context exit. Thus the returned object's original-inode claim can be rebased by ordinary operations while the original manifest/hash remains unchanged. The original tiny synthetic fixture and complete log are retained solely in the review directory.
+
+Correction: refuse ordinary deletion of every frozen slot, including the guard itself, while preserving internal close-state updates and independent descriptor cleanup. Add actual-reader sentinels for deletion of the guard and identity-bearing fields, same-content replacement before/after attempted mutation, and successful close. Keep candidate01 immutable and produce a new candidate. No change to numerical formats, scientific matching, file limits or existing default readers is needed.
+
+## Other examined source properties
+
+The previous dot-path defect is corrected: `member_name` refuses empty/root/parent/nested/absolute/NUL/backslash names. Payload names are derived from the three selected formats rather than caller-provided membership dictionaries. Descriptor-relative opens use no-follow/nonblock/close-on-exec; each child is checked as regular, single-linked, finite-size, with matching descriptor/path signature. Range reads check signatures before and after; successful context exit performs a full member reread and exact inventory check. Without EMR1 rebasing, the retained tests correctly reject same-content inode replacement, changed bytes and directory replacement.
+
+Score-batch schema matches the actual producer's canonical newline JSON,8-byte `<f8` extent, complete terminal denominator, original32 motifs, header start/previous/index/offset/count/payload hash and exact immediate membership. Failed/pending stores are refused rather than stripped of failed evidence. The source only recognizes the byte/container proof; finite score values, tail purpose/scalar equality and semantic stage authority remain in their existing verifiers.
+
+Raw MCM manifest schema matches the original `_manifest`; dimensions, scope/owner/stage/contract hash strings, raw `<f4` extent and full payload hash are checked. Original stage existence, scientific scope authorization and f64-to-f32 conversion equality are not proven by this parser. Those checks must remain in `compact_mcm_output` and the actual publication/Produced authority chain.
+
+The graph-component encoding is the specific `compact_graph_artifacts._payload` array route, not generic arbitrary component decoding: exact ordered feature/aligned_vectors tree, two original array members, float32 MCM `[rows,32]`, int64 edges `[2,E]`, component full-file SHA, parsed NPY1/2 dtype/order/shape and header-plus-body extent. The hash-bound context is not interpreted as a genuine Owner or cold receipt. No array values, edge semantic validity, MCM finite values or scientific provenance were checked. NPY parse work is finite by the64KiB header bound; metadata capture remains bounded by8KiB/4MiB as selected.
+
+The candidate's copied owned_io body exactly matches accepted reducer `09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb`. Acquired child FDs have one independent finally-close; the outer directory closes independently even when initialization or a child close fails. Scandir closes use the same reducer. A first actual fatal in the body survives ordinary close uncertainty; later actual fatal outranks ordinary uncertainty. No exception formatting/add_note is introduced in these call sites. The author's actual-read/outer-close sentinels and retained12 passing methods were inspected, not treated as genuine research authority. The earlier test-scoping failure remains preserved. Future package integration must pin the coordinated canonical `.owned_io` module; standalone import identity alone is not an installed closure.
+
+Two qualifications should remain precise: `_root` pins the root device/inode and canonical path, not all directory size/mode/timestamps from `_root_sig`; full signatures apply to members. Also the65536-entry/64GiB per-member bounds and O(member-count) maps are parser bounds, not an aggregate disk quota, measured memory capacity, deadline or admitted workload. All scans are non-atomic under the stated sole-writer/source-freeze assumption. No consumer should publish accepted data until successful context exit. Failed checks are not an independent revocation authority.
+
+## Remaining boundary
+
+After EMR1, acceptance can concern the local content reader only. Genuine Target/current held Owner/stage/token or admitted cold authority must supply the independent trusted document pin, source/runtime/input/population and original graph/node/motif/matching identity. Those actual authority checks must run before, during and after use, retaining original signatures/content and final terminal/inventory joins. Real transport requires separate durable cumulative no-refund budgets, full original-body recovery, safe staged disposition and failure preservation before any local removal. Active Published/Produced inode identity cannot be replaced by a restored same-content file. Joint forward/all-gradient/Adam/RNG/checkpoint equivalence and multi-graph capacity still require separately reviewed finite execution.
+
+No numerical imports, research samples, real arrays, credentials, network, native units, jobs, claims, offload, live deletion or capsule mutation occurred. The only replaced file was a newly created tiny synthetic member inside this owned review directory. No current RAM/performance result or full scientific/numerical agreement is inferred.

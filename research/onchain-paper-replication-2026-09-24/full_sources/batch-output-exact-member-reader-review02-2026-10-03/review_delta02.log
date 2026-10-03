@@ -1,0 +1,36 @@
+{
+  "manifest_bodies": 13,
+  "whole_AST_equal_except_delattr": true,
+  "actual_old_new_results": [
+    {
+      "version": 1,
+      "original_replacement_refused": true,
+      "deletion_refused": false,
+      "context_exit": "accepted"
+    },
+    {
+      "version": 2,
+      "original_replacement_refused": true,
+      "deletion_refused": true,
+      "reassignment_refused": true,
+      "replacement_still_refused": true,
+      "context_exit": "refused",
+      "reason": "original member identity changed"
+    }
+  ],
+  "all_slots_deletion_assignment_refused": [
+    "root",
+    "fd",
+    "kind",
+    "reference",
+    "closed",
+    "_root_sig",
+    "_files",
+    "_payload",
+    "_pin",
+    "_frozen"
+  ],
+  "mapping_proxy_and_no_dict": true,
+  "unchanged_valid_read_exit_close": true,
+  "numerical_imports_jobs_transport": false
+}
