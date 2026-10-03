@@ -1,0 +1,27 @@
+import hashlib,json,stat
+from pathlib import Path
+B=Path(__file__).resolve().parent;OLD=B.parent/'paper-treatment-production-preparation02-2026-10-04';R=B.parent/'paper-treatment-production-review02-2026-10-04';REL='overlay/tradingagents/research/onchain_replication/'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def put(name,obj):(B/name).write_text(json.dumps(obj,sort_keys=True,indent=2)+'\n')
+c=json.loads((B/'TP3_CHECKS02.json').read_text())
+put('TP3_PROTOCOL01.json',{'schema_version':1,'status':'uninstalled-source-candidate-awaiting-independent-review','correction':'TP3: registered(role) validates type-is-str non-null lowercase64hex SHA256 before path resolution and optional metadata reader','exact_source_change':json.loads((B/'TP3_INVERSE02.json').read_text()),'unchanged_active_sources':{name:sha(B/REL/name) for name in ('job.py','treatment_contract.py')},'historical_parent':{'producer02_manifest_sha256':sha(OLD/'MANIFEST03.json'),'review02_manifest_sha256':sha(R/'MANIFEST01.json'),'review02_report_sha256':sha(R/'REVIEW02.md'),'review02_machine_sha256':sha(R/'REVIEW02.json'),'TP3_witness_sha256':sha(R/'TP3_WITNESS01.json')},'verification':{'checks':c['checks'],'pin_cases':len(c['cases']),'exact_old_null_bypass_reproduced_on_roles':['execution_job','plan'],'new_correct_hash_returns_unchanged':True,'all_other_inherited_bodies_and_review02_preserved':True,'author_check01':'Superseded by check02: check01 only tested review witness existence through a dead conditional, so check02 replaces that with exact complete prior-review byte authentication. Check01 remains historical and is not counted as additional independent evidence.'},'preserved_semantics':['T1 durable treatment ancestry/cell recovery and actual resolved claim.inputs late bindings','T2 independent all-missing-row attempts, summary and audit, first-fatal and no fabricated unavailable writer result','optional unpinned local intent/row metadata reader remains unchanged','original filters, native/lifecycle/admission source, claims, registered inputs and storage/gate scope unchanged'],'authority':{'SourceInstalled':False,'source_commit':None,'gate':None,'claim':None,'native_execution':None,'financial_credit':0},'limitations':['No genuine claims, Owner, Run, native or numerical execution','Synthetic metadata-complete row is opaque utility evidence, not an empirical graph or genuine source admission','Previous T1/T2 and underlying producer limitations remain; no first-fatal allocation-exhaustion equivalence or historical fund authority','Root alone final source composition, registration, cumulative accounting, preservation/recovery and release; different-author review required']})
+(B/'TP3_IMPLEMENTATION01.md').write_text(f'''# Producer03 — exact TP3 hash correction
+
+This uninstalled candidate adds one call: `hashed(ref['sha256'])` in `registered(role)`, before path resolution and the optional metadata reader. Registered roles must carry an exact non-null lowercase 64-hex SHA256. Local unpinned intent/row metadata handling is unchanged. No placeholder pin is adopted into the candidate or genuine claim.
+
+The complete source byte/AST inverse restores producer02 exactly. Job.py and treatment_contract.py remain byte-identical; every other inherited preparation02 file and the independent review02 are preserved. T1/T2 recovery, actual resolved claim['inputs'] late bindings, complete denominator and finalization behavior are unchanged.
+
+The actual-source controls reproduce producer02 accepting null on execution_job and plan. Successor controls refuse null, empty, short/long, nonhex/uppercase, integer/bool/dict/list/bytes and well-formed-but-wrong hashes; exact actual file hashes preserve the same opaque complete row. Invalid pins fail before path lookup or reading. TP3_CHECKS02 records {c['checks']} checks including 48 previous/successor role/pin cases and exact preservation joins. Check01 is retained but superseded: its prior-review existence-only assertion contained a dead conditional; check02 replaces it with exact byte verification of every preserved independent review body. Check01 is not counted as extra verification.
+
+No ResearchRun, Owner, claim, numerical library/array, native process, registration, storage policy, gate, budget or Git/network action was invoked. Opaque metadata is utility evidence only. The candidate awaits different-author review and Root's separate exact integration/admission. All existing source-only and fund-cohort limitations remain.
+''')
+entries=[]
+for p in sorted(B.rglob('*')):
+ rel=p.relative_to(B).as_posix()
+ if rel=='MANIFEST04.json':continue
+ s=p.lstat();kind='directory' if stat.S_ISDIR(s.st_mode) else 'file';assert kind=='directory' or stat.S_ISREG(s.st_mode)
+ e={'path':rel,'type':kind,'mode':stat.S_IMODE(s.st_mode)}
+ if kind=='file':e.update(bytes=s.st_size,sha256=sha(p))
+ entries.append(e)
+put('MANIFEST04.json',{'schema_version':1,'kind':'complete-typed-source-only-TP3-correction','self_excluded':'MANIFEST04.json','entries':entries,'members':len(entries),'regular_files':sum(e['type']=='file' for e in entries)})
+print(json.dumps({'source':sha(B/REL/'treatment_production.py'),'job':sha(B/REL/'job.py'),'protocol':sha(B/'TP3_PROTOCOL01.json'),'report':sha(B/'TP3_IMPLEMENTATION01.md'),'manifest':sha(B/'MANIFEST04.json'),'checks':c['checks'],'members':len(entries),'files':sum(e['type']=='file' for e in entries)},indent=2))

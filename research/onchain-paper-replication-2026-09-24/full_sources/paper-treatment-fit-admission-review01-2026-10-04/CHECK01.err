@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review01-2026-10-04/check01.py", line 53, in <module>
+    bad=copy.deepcopy(complete);bad[key]=None;refused(lambda bad=bad:module.disposition(claim,bad,[retained],pin,pin,plan,week,'whale','ETH'),'terminal mutation '+key)
+                                              ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review01-2026-10-04/check01.py", line 11, in refused
+    try:f()
+        ~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review01-2026-10-04/check01.py", line 53, in <lambda>
+    bad=copy.deepcopy(complete);bad[key]=None;refused(lambda bad=bad:module.disposition(claim,bad,[retained],pin,pin,plan,week,'whale','ETH'),'terminal mutation '+key)
+                                                                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-preparation01-2026-10-04/overlay/tradingagents/research/onchain_replication/treatment_admission.py", line 90, in disposition
+    require(terminal.get('output_sha256', {}).get('cell-ledger.json') == ledger_hash and terminal.get('cells') == ledger, 'terminal ledger differs')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'

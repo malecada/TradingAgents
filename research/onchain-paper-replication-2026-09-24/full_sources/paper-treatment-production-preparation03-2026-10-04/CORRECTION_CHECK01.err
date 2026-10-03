@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-production-preparation02-2026-10-04/check_correction01.py", line 127, in <module>
+    ok(not any(isinstance(n,ast.Attribute) and n.attr in ('write_bytes','write_text','unlink','replace') for n in ast.walk(next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='recover_treatment_rows'))),'recovery helper read only')
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-production-preparation02-2026-10-04/check_correction01.py", line 10, in ok
+    if not value:raise AssertionError(label)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: recovery helper read only

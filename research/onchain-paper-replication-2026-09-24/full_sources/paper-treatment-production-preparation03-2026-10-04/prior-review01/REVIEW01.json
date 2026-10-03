@@ -1,0 +1,75 @@
+{
+  "actual_native_execution": false,
+  "actual_parent_claim_or_Run_constructed": false,
+  "actual_recovery": false,
+  "actual_source_count": 135,
+  "array_sample_or_testlabel_decoding": false,
+  "candidate_manifest_sha256": "b3f23d2d304acb31c2fb75dfe830f31d0cfb3abef6861ec747aafaa21146b6ec",
+  "candidate_members": 32,
+  "candidate_regular_files": 27,
+  "candidate_source_pins": {
+    "job.py": "0c68bac51c407dc1d5356eac84117efd16e05cf2dfd23747d68af16da448d174",
+    "treatment_contract.py": "fb148eb922431bdd46c2bd4c310d48b180d1f040c50e1d64d63ca0dc859a11fc",
+    "treatment_production.py": "33dbc6608ef5a68d6f610a85fcfe4aea4300312d0955b785ccd9b50f18aec44f"
+  },
+  "decision": "WITHHELD_SOURCE_RECOVERY_CORRECTIONS_REQUIRED",
+  "downstream_fit_admission": "WITHHELD_MANDATORY_TREATMENT_RECEIPT_AND_COMMON_MASK_CONTRACT_MISSING",
+  "earlier_harness_failures": [
+    {
+      "cause": "selected reconcile wrapper instead of _reconcile body",
+      "script": "check01.py",
+      "stderr_sha256": "10f2b70e52e3d968536012c4d6f6330501cde44157c6439ad9d75616e9ef1c9c"
+    },
+    {
+      "cause": "scalar pending test plan omitted required asset field",
+      "script": "check02.py",
+      "stderr_sha256": "5970438828c9788affaae4bab919544703c251f9cf37030d61a0408bcf3276d1"
+    }
+  ],
+  "financial_credit": 0,
+  "findings": [
+    {
+      "actual_Run_or_claim_constructed": false,
+      "id": "T1",
+      "impact": "After later failure, actual durable treatment rows are not read by unchanged reconciliation; it synthesizes unavailable dispositions instead.",
+      "observer_line": 444,
+      "observer_segment": "path = root/PREFIX/'sources'/args.experiment/(name+'.json')",
+      "opaque_observed_path": "/opaque-root/research_artifacts/onchain-paper-replication-2026-09-24/sources/opaque-id/opaque-cell.json",
+      "opaque_produced_path": "/opaque-root/research_artifacts/onchain-paper-replication-2026-09-24/treatments/opaque-id/opaque-cell.json",
+      "producer_line": 51,
+      "producer_segment": "directory=run.admission.root/'research_artifacts/onchain-paper-replication-2026-09-24/treatments'/run.admission.experiment_id"
+    },
+    {
+      "actual_file_or_claim_publication": false,
+      "attempted_record_ids": [
+        "opaque-a"
+      ],
+      "declared_ids": [
+        "opaque-a",
+        "opaque-b",
+        "opaque-c"
+      ],
+      "id": "T2",
+      "impact": "One unavailable-row writer failure prevents attempts for all subsequent pending cells; later summary depends on missing rows.",
+      "line": 112,
+      "original_fatal_preserved": true,
+      "retained_row_ids": [],
+      "segment": "def pending():\n   for week,cell in zip(p['expected_weeks'],ids,strict=True):\n    if cell not in rows:record({'id':cell,'status':'unavailable','asset':p['asset'],'week':week,'reason':'not completed after '+('unknown stop' if primary is None else type(primary).__name__)})",
+      "summary_action_attempted": true
+    }
+  ],
+  "fund_addresses_created": false,
+  "future_cumulative_allowance": null,
+  "future_registration": null,
+  "future_source": null,
+  "historical_fund65_evidence": null,
+  "independent_checks": 117,
+  "job_full_byte_AST_inverse": true,
+  "job_substitutions": 4,
+  "new_modules": 2,
+  "new_source_installed": false,
+  "numerical_imports": false,
+  "prospective_source_count": 137,
+  "report_sha256": "a7051e4f848e889050522826ae29cef0c9dcddc8f9a89bd30ddf99e140701c09",
+  "schema_version": 1
+}

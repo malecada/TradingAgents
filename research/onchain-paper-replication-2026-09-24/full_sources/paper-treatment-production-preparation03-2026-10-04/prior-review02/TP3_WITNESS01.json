@@ -1,0 +1,23 @@
+{
+  "candidate_source_sha256": "5de4334c5ebecf00a5032b73c70bc85d0d1b35ca634475bccd9e805ed0801ae4",
+  "mutation": {
+    "role": "late_plan",
+    "original": "df1caad38e6d700c90d7f8bb3fc8ca345b8e3ab40ec53ac3bb6f359ed72c53b5",
+    "mutated": null
+  },
+  "actual_return": {
+    "treatment-eth-whale-2024-01-01": {
+      "asset": "ETH",
+      "coverage_sha256": "fa47340ffa13c5f721b4c841264367cadaf06e0ef71543536ddbf7dbb582486a",
+      "id": "treatment-eth-whale-2024-01-01",
+      "manifest_path": "research_artifacts/onchain-paper-replication-2026-09-24/treatments/opaque-review-only/treatment-eth-whale-2024-01-01/manifest.json",
+      "manifest_sha256": "e946b3a0fcc524bf6e252570cb6f68291ca94e2ed801fba8de918ae2109c7168",
+      "status": "complete",
+      "treatment_receipt_sha256": "9ef647aa10b5dfb3271c3af10bd9bc8a8ff51ec1143c0316256755196ee30491",
+      "week": "2024-01-01T00:00:00Z"
+    }
+  },
+  "scope": "pure opaque helper input validation only; no genuine claim supplied or started",
+  "root_cause": "registered passes null hash to metadata optional pin=None, disabling the hash predicate",
+  "smallest_correction": "hashed(ref[sha256]) before calling metadata from registered; ordinary unpinned local metadata helper remains unchanged"
+}

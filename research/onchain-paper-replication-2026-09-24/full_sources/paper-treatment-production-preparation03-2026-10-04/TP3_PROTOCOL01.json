@@ -1,0 +1,57 @@
+{
+  "authority": {
+    "SourceInstalled": false,
+    "claim": null,
+    "financial_credit": 0,
+    "gate": null,
+    "native_execution": null,
+    "source_commit": null
+  },
+  "correction": "TP3: registered(role) validates type-is-str non-null lowercase64hex SHA256 before path resolution and optional metadata reader",
+  "exact_source_change": {
+    "candidate_sha256": "210db787eaf830974357831c4142260baf8d0043e8049f6794f31f05eb1d208c",
+    "exact_change": {
+      "new": "  ref=inputs[role];hashed(ref['sha256']);path=local_path(root,ref['path'])",
+      "old": "  ref=inputs[role];path=local_path(root,ref['path'])"
+    },
+    "full_ast_inverse": true,
+    "full_byte_inverse": true,
+    "old_sha256": "5de4334c5ebecf00a5032b73c70bc85d0d1b35ca634475bccd9e805ed0801ae4"
+  },
+  "historical_parent": {
+    "TP3_witness_sha256": "84668a600bb807a136535140ace87e1fa84f9d40506e47e580069287876d1139",
+    "producer02_manifest_sha256": "7a9d8dbaf8ced852e80e89770b02d512715a0655f847d0db4a13450daa26e75b",
+    "review02_machine_sha256": "64c85c3d5160a9290351a0c31ea2e9f246b50b2d7e3e182d14acc97a881fe0ab",
+    "review02_manifest_sha256": "5cc27d542475892d9f566c083b3a525cad86b734ccb8beacf379d06a0f749286",
+    "review02_report_sha256": "1405e48c837025fc6044b96332b956ae6f1fa9f12489f52ce4c62bdf54d37328"
+  },
+  "limitations": [
+    "No genuine claims, Owner, Run, native or numerical execution",
+    "Synthetic metadata-complete row is opaque utility evidence, not an empirical graph or genuine source admission",
+    "Previous T1/T2 and underlying producer limitations remain; no first-fatal allocation-exhaustion equivalence or historical fund authority",
+    "Root alone final source composition, registration, cumulative accounting, preservation/recovery and release; different-author review required"
+  ],
+  "preserved_semantics": [
+    "T1 durable treatment ancestry/cell recovery and actual resolved claim.inputs late bindings",
+    "T2 independent all-missing-row attempts, summary and audit, first-fatal and no fabricated unavailable writer result",
+    "optional unpinned local intent/row metadata reader remains unchanged",
+    "original filters, native/lifecycle/admission source, claims, registered inputs and storage/gate scope unchanged"
+  ],
+  "schema_version": 1,
+  "status": "uninstalled-source-candidate-awaiting-independent-review",
+  "unchanged_active_sources": {
+    "job.py": "91dbda651cd5d87860ff9e85f267117b162d18a14d6f725f589454b42bc834e1",
+    "treatment_contract.py": "fb148eb922431bdd46c2bd4c310d48b180d1f040c50e1d64d63ca0dc859a11fc"
+  },
+  "verification": {
+    "all_other_inherited_bodies_and_review02_preserved": true,
+    "author_check01": "Superseded by check02: check01 only tested review witness existence through a dead conditional, so check02 replaces that with exact complete prior-review byte authentication. Check01 remains historical and is not counted as additional independent evidence.",
+    "checks": 194,
+    "exact_old_null_bypass_reproduced_on_roles": [
+      "execution_job",
+      "plan"
+    ],
+    "new_correct_hash_returns_unchanged": true,
+    "pin_cases": 48
+  }
+}

@@ -1,0 +1,13 @@
+# Independent downstream02 correction review
+
+Verdict: WITHHELD for one remaining exact-absence predicate, DA4. The original DA1–DA3 corrections pass the bounded independent controls.
+
+**DA4, P2 — treatment_admission.py:234:** `not actual_row_path.exists()` accepts a present dangling symlink as an absent durable row. A fresh owned control established `lexists=True`, `is_symlink=True`, `exists=False`; the actual extracted consumer predicate accepted it. The branch still represents unavailable data, so this is not evidence of positive completion or financial authority. It fails the claimed exact pathname-absence prerequisite. Use lexical presence (`os.path.lexists` or equivalent lstat semantics), rejecting files, directories and both live and dangling symlinks while retaining the existing FAILED/unavailable/registered-cell checks.
+
+DA1 now accepts the actual observer's id/status/reason fallback unchanged, without fabricated asset/week fields. Complete or active terminals, extra fields, wrong identity and retained-row impersonation refuse. The caller derives the flag from disposition_input=None and retains the later path predicate; only that predicate remains defective.
+
+DA2 closes actual acquired descriptors when fdopen raises and transfers ownership only after successful wrapping. DA3 preserves the earliest fatal object through later close errors, otherwise retaining the earliest ordinary error. All cleanup callbacks are attempted and secondary actual exception identities remain available in the cause group; attachment failure cannot replace the selected error.
+
+The 1,273 independent controls include complete 47-member/42-file manifest authentication, all inherited body comparisons, full byte/AST inverse, untouched source/provenance/per-week/component/coverage/causal/common-mask checks, 216 callback combinations and 126 actual owned-IO stage/error cases. Real tiny descriptors were checked closed after each case. These counts are engineering checks, not empirical outcomes. check01 stopped at an incorrect predecessor-manifest schema assumption; its source/error are retained and check02 corrects the harness to the actual entries/integer-mode schema.
+
+Producer pins remain None, fund historical membership/vintage/known_at policy remains refused, and no genuine ResearchRun/Owner/claim, native workload, numerical module, array or test label was used. Actual committed ancestry, graph numerical semantics, financial source composition, capacity, cumulative accounting, full recovery and release remain separately withheld. Arbitrary allocation exhaustion and concurrent path races were not proved; injected close failures occurred after the owned descriptor actually closed.
