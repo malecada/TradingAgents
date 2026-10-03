@@ -1,0 +1,45 @@
+{
+  "claim_sha256": "b892aa8243e70ee225bd6ffcd8d6f630a7ea8012c588774916cc0b593bb56c2e",
+  "identity": "original-import-native-success-20261003-04",
+  "original_cgroup_absent": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-e624afdb7518476db19811f2cfcb8aed.service",
+  "original_pids_absent": [
+    2413150,
+    2413154,
+    2413318,
+    2414328,
+    2415326,
+    2415330,
+    2417343,
+    2418034,
+    2418042,
+    3273614
+  ],
+  "pinned_original_logs": [
+    {
+      "bytes": 0,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-native-success-20261003-04/guard/child.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "systemd_killed_pids": []
+    },
+    {
+      "bytes": 922,
+      "path": "fixture_outer/original-import-native-success-20261003-04/stdout.log",
+      "sha256": "cd8e917a1042cb5568013fe448ed423303ea3a68b0126f96a6541afd787da3e5",
+      "systemd_killed_pids": []
+    },
+    {
+      "bytes": 0,
+      "path": "fixture_outer/original-import-native-success-20261003-04/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "systemd_killed_pids": []
+    }
+  ],
+  "qualification": "Additive root verification of all original PIDs explicitly recorded by launcher/owner/CPU readback and systemd killed-process logs, original cgroup absence and exact source/input/gate pins. Original failure and outer unresolved proof fields remain unchanged. No outcome relabeled, no rerun or new authority.",
+  "repeat_allowed": false,
+  "schema_version": 1,
+  "selected_source_files": 162,
+  "source_commit": "ce0e37f8eaaca258c46944a4cbdb9ae30e40fa26",
+  "source_freeze_ended": true,
+  "status": "original-recorded-processes-and-cgroup-absent-source-pins-unchanged",
+  "verified_utc": "2026-10-03T04:04:05.942932+00:00"
+}

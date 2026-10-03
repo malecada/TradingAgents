@@ -1,0 +1,150 @@
+{
+  "actual_selected_post_tail": {
+    "disk_free_bytes": 19463536640,
+    "excludes_own_file": true,
+    "path": "fixture_outer/original-import-native-success-20261003-04/post-tail-storage.json",
+    "qualification": "Caller also enforces a separate current watch and disk-floor check after publication; overall acceptance requires exit0 and no late failure receipt.",
+    "sha256": "b422438bd0515a31b28ddf673fc7ce8b1626749f076cde26ae239dc2726fb3d6"
+  },
+  "actual_selected_post_tail_authentication_error": null,
+  "actual_selected_raw_authentication": null,
+  "actual_selected_raw_authentication_error": {
+    "message": "child terminal snapshot failed/missing",
+    "type": "ValueError"
+  },
+  "cells": null,
+  "claim_sha256": "b892aa8243e70ee225bd6ffcd8d6f630a7ea8012c588774916cc0b593bb56c2e",
+  "complete_mcm_stage_markers": 0,
+  "identity": "original-import-native-success-20261003-04",
+  "kernel_controls": {
+    "memory.high": "3221225472",
+    "memory.max": "3221225472",
+    "memory.swap.max": "0"
+  },
+  "lifecycle_status": "failed",
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "missing_registered_outputs": [
+    "cell-ledger.json",
+    "resource-journal.json",
+    "resource-summary.json"
+  ],
+  "native_child_exit_code": 125,
+  "native_elapsed_seconds": 1802.3540939379964,
+  "native_sampled_peak_bytes": 395300864,
+  "original_cgroup_absent": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-e624afdb7518476db19811f2cfcb8aed.service",
+  "original_dictionary_import_complete_sha256": "03d7a36fa8a1b1a193f587a87961d93180ad95295dad39fc8973a26aa549f806",
+  "original_outer_cleanup": {
+    "native": {
+      "after": {
+        "properties": {
+          "ActiveState": "failed",
+          "ControlGroup": "",
+          "Result": "timeout",
+          "SubState": "failed"
+        },
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "Result=timeout\nControlGroup=\nActiveState=failed\nSubState=failed\n"
+      },
+      "before": {
+        "properties": {
+          "ActiveState": "failed",
+          "ControlGroup": "",
+          "Result": "timeout",
+          "SubState": "failed"
+        },
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "Result=timeout\nControlGroup=\nActiveState=failed\nSubState=failed\n"
+      },
+      "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-e624afdb7518476db19811f2cfcb8aed.service",
+      "cgroup_absent": true,
+      "errors": [],
+      "native_unit_observed": true,
+      "properties": {
+        "ActiveState": "failed",
+        "ControlGroup": "",
+        "Result": "timeout",
+        "SubState": "failed"
+      },
+      "stop": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "unit": "onchain-replication-e624afdb7518476db19811f2cfcb8aed.service"
+    },
+    "pid_absence_verified": false,
+    "supervisor_reaped": true,
+    "unresolved_pid_absence": true
+  },
+  "outer_exit_code": 1,
+  "outer_terminal_status": "failed",
+  "paper_closed_attempts": 36,
+  "paper_highest_adopted_budget": 64,
+  "parent_failure_reason": "outer observer verified owned cgroup death; complete denominator retained",
+  "qualification": "Actual registered synthetic imported dictionary/MCM resource outcome only. All actual dispositions retained; authentication refusal is reported and never relabeled success. Source freeze ended only after recorded original PIDs/cgroup absent and source/input pins unchanged. Full owned raw has not yet been independently reviewed or externally recovered. No scientific representation completion/full-sized capacity/financial fit or paper agreement inferred.",
+  "recorded_pids_absent": [
+    2413150,
+    2413154,
+    2413318,
+    2414328,
+    2415326,
+    2415330
+  ],
+  "release_sha256": "988719d0e067fc7639fe5af6767812272f3140d7596ed2589a76011b4a96f106",
+  "repeat_allowed": false,
+  "retained_mcm_stage_directories": 1,
+  "retention_sha256": "a2c361a9941bf37d11a8c00f6eb46f6ba8dc9646cb3c37e6607f45cf0f04b221",
+  "schema_version": 1,
+  "separate_root_observed_cells": [
+    {
+      "basis": "Authenticated original durable source cell; original worker ledger remains missing. No worker receipt or numerical value synthesized.",
+      "cell": "import-target-01",
+      "evidence": {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/original-import-native-success-20261003-04/import-target-01.json",
+        "sha256": "373e1887802d98aca21e8171d38251a9129a16a5aa6582d8c7e19d7ab628b6ba"
+      },
+      "original_durable_record": {
+        "id": "import-target-01",
+        "reason": "SystemExit: owned execution interrupted; never relaunch this identity",
+        "resource_only": true,
+        "status": "failed"
+      },
+      "status": "failed"
+    },
+    {
+      "basis": "Authenticated original durable source cell; original worker ledger remains missing. No worker receipt or numerical value synthesized.",
+      "cell": "import-target-02",
+      "evidence": {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/original-import-native-success-20261003-04/import-target-02.json",
+        "sha256": "cd6757ffc170cac7f4b9ee01df4df05d4d7365338c2881922ad0c064d26fe6dc"
+      },
+      "original_durable_record": {
+        "id": "import-target-02",
+        "reason": "SystemExit: owned execution interrupted; never relaunch this identity",
+        "resource_only": true,
+        "status": "unavailable"
+      },
+      "status": "unavailable"
+    }
+  ],
+  "source_commit": "ce0e37f8eaaca258c46944a4cbdb9ae30e40fa26",
+  "source_freeze_ended": true,
+  "terminal_sha256": "4133378bf9febae51cc9f7da0cd57e165c1770d5d4e5215357d8e4e235a36d59",
+  "unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "125",
+    "Result": "timeout",
+    "SubState": "failed"
+  },
+  "verified_utc": "2026-10-03T04:01:44.459174+00:00"
+}

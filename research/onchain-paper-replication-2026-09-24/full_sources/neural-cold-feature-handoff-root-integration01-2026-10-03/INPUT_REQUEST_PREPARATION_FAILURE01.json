@@ -1,0 +1,21 @@
+{
+  "actual_claims": 0,
+  "actual_numerical_jobs": 0,
+  "created_input_files": 0,
+  "errors": [
+    {
+      "message": "'path': embedded runtime document incorrectly treated as body reference",
+      "stage": "root-request-assembly",
+      "type": "KeyError"
+    },
+    {
+      "message": "request-inputs01.json was absent after assembly refusal",
+      "stage": "builder-cli-preflight",
+      "type": "FileNotFoundError"
+    }
+  ],
+  "failed_utc": "2026-10-03T04:06:11.213478+00:00",
+  "qualification": "Both preparation errors retained. Builder refused before loading any request or changing the scientific capsule. No identity opened, source changed, synthetic receipt inserted or numerical work replayed.",
+  "schema_version": 1,
+  "status": "root-input-request-preparation-failed-before-input-creation"
+}
