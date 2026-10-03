@@ -216,20 +216,18 @@ def _verify_sources(root, pinned, commits):
     flush()
 
 
-def _registration_pair(root, claim):
+def _registration_pair(root, source, design, path):
     """Two fresh ordered logical reads; no retained/caller-supplied authority.
 
     The existing transport bounds the whole pair, including duplicate requests.
     Transport failures can precede first-body comparisons. Second ordinary
     reference/framing errors remain deferred until the original design check.
     """
-    source, path = claim['source'], claim['registration']
     if type(source) is not str or type(path) is not str:
         raise ValueError('registration references require plain strings')
     first, request = _source_request(source, path)
     delayed = None
     try:
-        design = claim['design_source']
         if type(design) is not str:
             raise ValueError('registration references require plain strings')
         second, other = _source_request(design, path)
@@ -280,7 +278,7 @@ def verify_claim(directory) -> dict:
     if claim["experiment_id"] != directory.name or directory.parent.name != "research_runs":
         raise ValueError("claim directory identity mismatch")
     root = directory.parent.parent
-    registration_pair = _registration_pair(root, claim)
+    registration_pair = _registration_pair(root, claim["source"], claim["design_source"], claim["registration"])
     registration = next(registration_pair)
     if hashlib.sha256(registration).hexdigest() != claim["registration_sha256"]:
         raise ValueError("registration hash differs from committed source")

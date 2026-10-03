@@ -1,0 +1,62 @@
+test_fallback_and_fresh_invocations (__main__.Tests.test_fallback_and_fresh_invocations) ... ERROR
+test_first_body_before_second_parse (__main__.Tests.test_first_body_before_second_parse) ... ERROR
+test_first_comparison_before_invalid_second_ref (__main__.Tests.test_first_comparison_before_invalid_second_ref) ... ERROR
+test_first_fatal_cleanup (__main__.Tests.test_first_fatal_cleanup) ... ok
+test_inverse_bytes (__main__.Tests.test_inverse_bytes) ... ok
+test_malformed_frames (__main__.Tests.test_malformed_frames) ... ok
+test_pair_one_transport_duplicate_requests (__main__.Tests.test_pair_one_transport_duplicate_requests) ... ERROR
+test_real_tiny_git (__main__.Tests.test_real_tiny_git) ... ok
+test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) ... ok
+
+======================================================================
+ERROR: test_fallback_and_fresh_invocations (__main__.Tests.test_fallback_and_fresh_invocations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 32, in test_fallback_and_fresh_invocations
+    self.assertEqual(list(self.pair('.',H,H,'a\nb')),[b'1',b'2']);self.assertEqual(list(self.pair('.',H,H,'a\nb')),[b'3',b'4'])
+                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/verify.candidate01.py", line 240, in _registration_pair
+    value = _git_transport(root, b'', first)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/verify.candidate01.py", line 132, in _git_transport
+    raise ValueError('saved committed provenance cannot be verified')
+ValueError: saved committed provenance cannot be verified
+
+======================================================================
+ERROR: test_first_body_before_second_parse (__main__.Tests.test_first_body_before_second_parse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 18, in test_first_body_before_second_parse
+    p=self.pair('.',H,H,'x');self.assertEqual(next(p),b'a')
+                                              ~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/verify.candidate01.py", line 260, in _registration_pair
+    raise ValueError('Git batch object missing, malformed or non-blob')
+ValueError: Git batch object missing, malformed or non-blob
+
+======================================================================
+ERROR: test_first_comparison_before_invalid_second_ref (__main__.Tests.test_first_comparison_before_invalid_second_ref)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 22, in test_first_comparison_before_invalid_second_ref
+    p=self.pair('.',H,'invalid','x');self.assertEqual(next(p),b'a')
+                                                      ~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/verify.candidate01.py", line 240, in _registration_pair
+    value = _git_transport(root, b'', first)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/verify.candidate01.py", line 132, in _git_transport
+    raise ValueError('saved committed provenance cannot be verified')
+ValueError: saved committed provenance cannot be verified
+
+======================================================================
+ERROR: test_pair_one_transport_duplicate_requests (__main__.Tests.test_pair_one_transport_duplicate_requests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 14, in test_pair_one_transport_duplicate_requests
+    with patch.dict(NS,{'_git_transport':transport}):self.assertEqual(list(self.pair('.',H,H,'x')), [b'a',b'b'])
+                                                                      ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/verify.candidate01.py", line 260, in _registration_pair
+    raise ValueError('Git batch object missing, malformed or non-blob')
+ValueError: Git batch object missing, malformed or non-blob
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.056s
+
+FAILED (errors=4)

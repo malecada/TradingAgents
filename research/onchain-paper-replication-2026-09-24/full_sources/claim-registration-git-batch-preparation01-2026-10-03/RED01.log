@@ -1,0 +1,258 @@
+test_fallback_and_fresh_invocations (__main__.Tests.test_fallback_and_fresh_invocations) ... ERROR
+test_first_body_before_second_parse (__main__.Tests.test_first_body_before_second_parse) ... ERROR
+test_first_comparison_before_invalid_second_ref (__main__.Tests.test_first_comparison_before_invalid_second_ref) ... ERROR
+test_first_fatal_cleanup (__main__.Tests.test_first_fatal_cleanup) ... ok
+test_inverse_bytes (__main__.Tests.test_inverse_bytes) ... ERROR
+test_malformed_frames (__main__.Tests.test_malformed_frames) ... 
+  test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'') ... ERROR
+  test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n') ... ERROR
+  test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n2222222222') ... ERROR
+  test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n2222222222') ... ERROR
+  test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n2222222222') ... ERROR
+  test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n2222222222') ... ERROR
+test_pair_one_transport_duplicate_requests (__main__.Tests.test_pair_one_transport_duplicate_requests) ... ERROR
+test_real_tiny_git (__main__.Tests.test_real_tiny_git) ... ERROR
+test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) ... 
+  test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path=None) ... ERROR
+  test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path=12) ... ERROR
+  test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='../x') ... ERROR
+  test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='/x') ... ERROR
+  test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='keys/x') ... ERROR
+  test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='.env') ... ERROR
+  test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='x\x00y') ... ERROR
+
+======================================================================
+ERROR: test_fallback_and_fresh_invocations (__main__.Tests.test_fallback_and_fresh_invocations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 32, in test_fallback_and_fresh_invocations
+    self.assertEqual(list(self.pair('.',H,H,'a\nb')),[b'1',b'2']);self.assertEqual(list(self.pair('.',H,H,'a\nb')),[b'3',b'4'])
+                          ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_first_body_before_second_parse (__main__.Tests.test_first_body_before_second_parse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 18, in test_first_body_before_second_parse
+    p=self.pair('.',H,H,'x');self.assertEqual(next(p),b'a')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_first_comparison_before_invalid_second_ref (__main__.Tests.test_first_comparison_before_invalid_second_ref)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 22, in test_first_comparison_before_invalid_second_ref
+    p=self.pair('.',H,'invalid','x');self.assertEqual(next(p),b'a')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_inverse_bytes (__main__.Tests.test_inverse_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 54, in test_inverse_bytes
+    c=(HERE/'verify.candidate01.py').read_text();b=(HERE/'verify.baseline01.py').read_text()
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/verify.candidate01.py'
+
+======================================================================
+ERROR: test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 27, in test_malformed_frames
+    with self.assertRaises(ValueError):list(self.pair('.',H,H,'x'))
+                                            ~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 27, in test_malformed_frames
+    with self.assertRaises(ValueError):list(self.pair('.',H,H,'x'))
+                                            ~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n2222222222')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 27, in test_malformed_frames
+    with self.assertRaises(ValueError):list(self.pair('.',H,H,'x'))
+                                            ~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n2222222222')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 27, in test_malformed_frames
+    with self.assertRaises(ValueError):list(self.pair('.',H,H,'x'))
+                                            ~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n2222222222')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 27, in test_malformed_frames
+    with self.assertRaises(ValueError):list(self.pair('.',H,H,'x'))
+                                            ~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_malformed_frames (__main__.Tests.test_malformed_frames) (raw=b'2222222222222222222222222222222222222222 blob 1\na\n2222222222')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 27, in test_malformed_frames
+    with self.assertRaises(ValueError):list(self.pair('.',H,H,'x'))
+                                            ~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_pair_one_transport_duplicate_requests (__main__.Tests.test_pair_one_transport_duplicate_requests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 14, in test_pair_one_transport_duplicate_requests
+    with patch.dict(NS,{'_git_transport':transport}):self.assertEqual(list(self.pair('.',H,H,'x')), [b'a',b'b'])
+                                                                           ~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_real_tiny_git (__main__.Tests.test_real_tiny_git)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 50, in test_real_tiny_git
+    self.assertEqual(list(self.pair(root,a,b,'r.json')),[b'{"version":1}\n',b'{"version":2}\n'])
+                          ~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 37, in test_typed_secret_null_refusals
+    with self.assertRaises((ValueError,TypeError)):list(self.pair('.',H,H,path))
+                                                        ~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path=12)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 37, in test_typed_secret_null_refusals
+    with self.assertRaises((ValueError,TypeError)):list(self.pair('.',H,H,path))
+                                                        ~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='../x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 37, in test_typed_secret_null_refusals
+    with self.assertRaises((ValueError,TypeError)):list(self.pair('.',H,H,path))
+                                                        ~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='/x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 37, in test_typed_secret_null_refusals
+    with self.assertRaises((ValueError,TypeError)):list(self.pair('.',H,H,path))
+                                                        ~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='keys/x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 37, in test_typed_secret_null_refusals
+    with self.assertRaises((ValueError,TypeError)):list(self.pair('.',H,H,path))
+                                                        ~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='.env')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 37, in test_typed_secret_null_refusals
+    with self.assertRaises((ValueError,TypeError)):list(self.pair('.',H,H,path))
+                                                        ~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+======================================================================
+ERROR: test_typed_secret_null_refusals (__main__.Tests.test_typed_secret_null_refusals) (path='x\x00y')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 37, in test_typed_secret_null_refusals
+    with self.assertRaises((ValueError,TypeError)):list(self.pair('.',H,H,path))
+                                                        ~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests01.py", line 10, in pair
+    def pair(self,*args):return NS['_registration_pair'](*args)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.027s
+
+FAILED (errors=19)

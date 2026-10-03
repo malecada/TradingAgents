@@ -1,0 +1,18 @@
+test_pair_one_transport_duplicate_requests (__main__.Tests.test_pair_one_transport_duplicate_requests) ... ERROR
+
+======================================================================
+ERROR: test_pair_one_transport_duplicate_requests (__main__.Tests.test_pair_one_transport_duplicate_requests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests03.py", line 15, in test_pair_one_transport_duplicate_requests
+    with patch.dict(NS,{'_git_transport':transport}):self.assertEqual(list(self.pair('.',H,H,'x')), [b'a',b'b'])
+                                                                           ~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-registration-git-batch-preparation01-2026-10-03/tests03.py", line 11, in pair
+    def pair(self,root,source,design,path):return NS['_registration_pair'](root,{'source':source,'design_source':design,'registration':path})
+                                                  ~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_registration_pair'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
