@@ -1,0 +1,84 @@
+test_actual_boundary_joins_three_outputs_and_emits_fourth (test_boundary01.BoundaryTests.test_actual_boundary_joins_three_outputs_and_emits_fourth) ... ERROR
+test_output_bytes_and_registry_drift_refused (test_boundary01.BoundaryTests.test_output_bytes_and_registry_drift_refused) ... 
+  test_output_bytes_and_registry_drift_refused (test_boundary01.BoundaryTests.test_output_bytes_and_registry_drift_refused) (mutation=<function BoundaryTests.test_output_bytes_and_registry_drift_refused.<locals>.<lambda> at 0x73874d8ef560>) ... ERROR
+  test_output_bytes_and_registry_drift_refused (test_boundary01.BoundaryTests.test_output_bytes_and_registry_drift_refused) (mutation=<function BoundaryTests.test_output_bytes_and_registry_drift_refused.<locals>.<lambda> at 0x73874d8ef4c0>) ... ERROR
+test_postpublication_original_mutation_refuses_return (test_boundary01.BoundaryTests.test_postpublication_original_mutation_refuses_return) ... ERROR
+test_publication_failure_is_same_object_and_prefix_retained (test_boundary01.BoundaryTests.test_publication_failure_is_same_object_and_prefix_retained) ... FAIL
+test_source_module_hash_missing_refuses (test_boundary01.BoundaryTests.test_source_module_hash_missing_refuses) ... ERROR
+test_source_runtime_config_and_wrong_type_refuse_before_write (test_boundary01.BoundaryTests.test_source_runtime_config_and_wrong_type_refuse_before_write) ... ERROR
+
+======================================================================
+ERROR: test_actual_boundary_joins_three_outputs_and_emits_fourth (test_boundary01.BoundaryTests.test_actual_boundary_joins_three_outputs_and_emits_fourth)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_boundary01.py", line 39, in test_actual_boundary_joins_three_outputs_and_emits_fourth
+    self.m.publish_projection(self.r,'plan',self.plan,self.result)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'projection_candidate' has no attribute 'publish_projection'
+
+======================================================================
+ERROR: test_output_bytes_and_registry_drift_refused (test_boundary01.BoundaryTests.test_output_bytes_and_registry_drift_refused) (mutation=<function BoundaryTests.test_output_bytes_and_registry_drift_refused.<locals>.<lambda> at 0x73874d8ef560>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_boundary01.py", line 46, in test_output_bytes_and_registry_drift_refused
+    with self.assertRaises(ValueError):self.m.publish_projection(self.r,'plan',self.plan,self.result)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'projection_candidate' has no attribute 'publish_projection'
+
+======================================================================
+ERROR: test_output_bytes_and_registry_drift_refused (test_boundary01.BoundaryTests.test_output_bytes_and_registry_drift_refused) (mutation=<function BoundaryTests.test_output_bytes_and_registry_drift_refused.<locals>.<lambda> at 0x73874d8ef4c0>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_boundary01.py", line 46, in test_output_bytes_and_registry_drift_refused
+    with self.assertRaises(ValueError):self.m.publish_projection(self.r,'plan',self.plan,self.result)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'projection_candidate' has no attribute 'publish_projection'
+
+======================================================================
+ERROR: test_postpublication_original_mutation_refuses_return (test_boundary01.BoundaryTests.test_postpublication_original_mutation_refuses_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_boundary01.py", line 66, in test_postpublication_original_mutation_refuses_return
+    with self.assertRaises(ValueError):self.m.publish_projection(self.r,'plan',self.plan,self.result)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'projection_candidate' has no attribute 'publish_projection'
+
+======================================================================
+ERROR: test_source_module_hash_missing_refuses (test_boundary01.BoundaryTests.test_source_module_hash_missing_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_boundary01.py", line 70, in test_source_module_hash_missing_refuses
+    with self.assertRaises(ValueError):self.m.publish_projection(self.r,'plan',self.plan,self.result)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'projection_candidate' has no attribute 'publish_projection'
+
+======================================================================
+ERROR: test_source_runtime_config_and_wrong_type_refuse_before_write (test_boundary01.BoundaryTests.test_source_runtime_config_and_wrong_type_refuse_before_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_boundary01.py", line 50, in test_source_runtime_config_and_wrong_type_refuse_before_write
+    with self.assertRaises(ValueError):self.m.publish_projection(object(),'plan',self.plan,self.result)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'projection_candidate' has no attribute 'publish_projection'
+
+======================================================================
+FAIL: test_publication_failure_is_same_object_and_prefix_retained (test_boundary01.BoundaryTests.test_publication_failure_is_same_object_and_prefix_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_boundary01.py", line 60, in test_publication_failure_is_same_object_and_prefix_retained
+    try:self.m.publish_projection(self.r,'plan',self.plan,self.result)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'projection_candidate' has no attribute 'publish_projection'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_boundary01.py", line 61, in test_publication_failure_is_same_object_and_prefix_retained
+    except BaseException as actual:self.assertIs(actual,error)
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: AttributeError("module 'projection_candidate' has no attribute 'publish_projection'") is not MemoryError('test publication')
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.033s
+
+FAILED (failures=1, errors=6)

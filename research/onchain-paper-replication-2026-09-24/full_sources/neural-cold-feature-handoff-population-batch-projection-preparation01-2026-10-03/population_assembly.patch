@@ -1,0 +1,26 @@
+--- a/tradingagents/research/onchain_replication/population_assembly.py
++++ b/tradingagents/research/onchain_replication/population_assembly.py
+@@ -139,11 +139,12 @@
+     """Publish population/binding inside an already admitted claim, before fitting."""
+     from .contracts import Fold, PricePanel
+     plan = json.loads(run.read_input(plan_input))
+-    if set(plan) != {'schema_version','graphs','price_input','fold','calendar_input',
+-                     'expected_weeks','admission_input','outputs'} or plan['schema_version'] != 1:
++    projection = type(plan.get('schema_version')) is int and plan['schema_version'] == 2
++    if set(plan) != ({'schema_version','graphs','price_input','fold','calendar_input',
++                     'expected_weeks','admission_input','outputs'} | ({'projection_input'} if projection else set())) or (not projection and plan['schema_version'] != 1):
+         raise ValueError('population producer plan schema differs')
+     outputs = plan['outputs']
+-    if (set(outputs) != {'population','binding','assembly'} or len(set(outputs.values())) != 3
++    if (set(outputs) != ({'population','binding','assembly'} | ({'projection'} if projection else set())) or len(set(outputs.values())) != (4 if projection else 3)
+             or not set(outputs.values()) <= set(run.admission.experiment['outputs'])):
+         raise ValueError('population producer outputs not registered')
+     if set(outputs.values()) & set(run._published_outputs):
+@@ -169,4 +170,7 @@
+     run.write_json(outputs['population'], result['population'])
+     run.write_json(outputs['binding'], result['binding'])
+     run.write_json(outputs['assembly'], {k:v for k,v in result.items() if k not in ('population','binding')})
++    if projection:
++        from .population_batch_projection import publish_projection
++        publish_projection(run, plan_input, plan, result)
+     return result

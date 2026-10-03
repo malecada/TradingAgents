@@ -1,0 +1,54 @@
+test_legacy_three_outputs_unchanged (test_projection01.ProducerTests.test_legacy_three_outputs_unchanged) ... ok
+test_new_registered_projection_branch (test_projection01.ProducerTests.test_new_registered_projection_branch) ... FAIL
+test_publication_fatal_propagates_retains_prefix (test_projection01.ProducerTests.test_publication_fatal_propagates_retains_prefix) ... ERROR
+setUpClass (test_projection01.ProjectionTests) ... ERROR
+
+======================================================================
+ERROR: test_publication_fatal_propagates_retains_prefix (test_projection01.ProducerTests.test_publication_fatal_propagates_retains_prefix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_projection01.py", line 59, in test_publication_fatal_propagates_retains_prefix
+    with self.assertRaises(MemoryError):f(r,'plan')
+                                        ~^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/population_assembly.py", line 144, in produce_registered_population
+    raise ValueError('population producer plan schema differs')
+ValueError: population producer plan schema differs
+
+======================================================================
+ERROR: setUpClass (test_projection01.ProjectionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_projection01.py", line 64, in setUpClass
+    def setUpClass(cls):cls.m=load()
+                              ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_projection01.py", line 10, in load
+    p=HERE/'population_batch_projection.py';s=importlib.util.spec_from_file_location('projection_candidate',p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+                                                                                                                                                    ~~~~~~~~~~~~~~~~~~~~^^^
+  File "<frozen importlib._bootstrap_external>", line 1019, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1156, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1214, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/population_batch_projection.py'
+
+======================================================================
+FAIL: test_new_registered_projection_branch (test_projection01.ProducerTests.test_new_registered_projection_branch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_projection01.py", line 52, in test_new_registered_projection_branch
+    try:out=f(r,'plan')
+            ~^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/population_assembly.py", line 144, in produce_registered_population
+    raise ValueError('population producer plan schema differs')
+ValueError: population producer plan schema differs
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-population-batch-projection-preparation01-2026-10-03/test_projection01.py", line 53, in test_new_registered_projection_branch
+    except ValueError as e:self.fail('selected schema2 incorrectly refused: '+str(e))
+                           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: selected schema2 incorrectly refused: population producer plan schema differs
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.009s
+
+FAILED (failures=1, errors=2)
