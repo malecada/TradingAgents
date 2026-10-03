@@ -1,0 +1,145 @@
+{
+  "actual_external_or_flat_recovery": false,
+  "actual_terminal_sha256": "6904180ffcc99be26e88b7802c34c7641aa2af6b7d6960387796836b54d73cfe",
+  "archives": {
+    "parent": {
+      "archive": {
+        "bytes": 75115,
+        "manifest_sha256": "7f608e9877086f961f4f8a998ba5faa50d42b8fd65808e2cf3ba2756eb28b77e",
+        "sha256": "d620cea8113f365fb1c9a458f245031b1f04c063c861f0b08a9f1ba71f1e2c7f"
+      },
+      "framing": {
+        "headers": 16,
+        "inflated_bytes": 307200,
+        "pax_headers": 0
+      },
+      "logical_bytes": 293515,
+      "members": 15,
+      "regular_bodies": 14,
+      "root_mode": 448
+    },
+    "source": {
+      "archive": {
+        "bytes": 2703524,
+        "manifest_sha256": "ebe3ade50a6bd106105001a615144a2e4ef1d649755989bc63937063ed9c258c",
+        "sha256": "4a483c2d9d1ed1c5f652e73bb818ca8bd11dbe79fa7acaae34b11248655a4e76"
+      },
+      "framing": {
+        "headers": 929,
+        "inflated_bytes": 6993920,
+        "pax_headers": 50
+      },
+      "logical_bytes": 6321921,
+      "members": 878,
+      "regular_bodies": 631,
+      "root_mode": 448
+    }
+  },
+  "capture_sha256": "3401a6d84e8e00439e921eaafa690e155f16022d742d9f77045742db15d42660",
+  "capture_support": [
+    {
+      "bytes": 369,
+      "kind": "file",
+      "mode": 436,
+      "path": "ACTUAL_TERMINAL01.json",
+      "sha256": "6904180ffcc99be26e88b7802c34c7641aa2af6b7d6960387796836b54d73cfe"
+    },
+    {
+      "bytes": 0,
+      "kind": "file",
+      "mode": 436,
+      "path": "CAPTURE01.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1585,
+      "kind": "file",
+      "mode": 384,
+      "path": "CAPTURE01.json",
+      "sha256": "3401a6d84e8e00439e921eaafa690e155f16022d742d9f77045742db15d42660"
+    },
+    {
+      "bytes": 1317,
+      "kind": "file",
+      "mode": 436,
+      "path": "CAPTURE01.out",
+      "sha256": "0eaeddfe5635c235f37ed3d19656c3623c303c984d32bdddf96c4df3c007b060"
+    },
+    {
+      "bytes": 214,
+      "kind": "file",
+      "mode": 384,
+      "path": "INTENT01.json",
+      "sha256": "03c4b23116dd61b6e3774da35767b39770a417a0d12b8cb41576640ff3415bb3"
+    },
+    {
+      "bytes": 2929,
+      "kind": "file",
+      "mode": 384,
+      "path": "PARENT_MANIFEST01.json",
+      "sha256": "7f608e9877086f961f4f8a998ba5faa50d42b8fd65808e2cf3ba2756eb28b77e"
+    },
+    {
+      "bytes": 1719,
+      "kind": "file",
+      "mode": 384,
+      "path": "REQUEST01.json",
+      "sha256": "17d92c05d58c3e4308097a945b3de3180e33629f92df1bfb83abcbaa6f67390f"
+    },
+    {
+      "bytes": 174159,
+      "kind": "file",
+      "mode": 384,
+      "path": "SOURCE_MANIFEST01.json",
+      "sha256": "ebe3ade50a6bd106105001a615144a2e4ef1d649755989bc63937063ed9c258c"
+    },
+    {
+      "bytes": 4078,
+      "kind": "file",
+      "mode": 436,
+      "path": "capture01.py",
+      "sha256": "e0255ce2b84afaa1a0365a1a3fc661eef0d69619c77eb0161f5327cb9a072c21"
+    },
+    {
+      "bytes": 75115,
+      "kind": "file",
+      "mode": 384,
+      "path": "complete-parent01.tar.gz",
+      "sha256": "d620cea8113f365fb1c9a458f245031b1f04c063c861f0b08a9f1ba71f1e2c7f"
+    },
+    {
+      "bytes": 2703524,
+      "kind": "file",
+      "mode": 384,
+      "path": "complete-source01.tar.gz",
+      "sha256": "4a483c2d9d1ed1c5f652e73bb818ca8bd11dbe79fa7acaae34b11248655a4e76"
+    }
+  ],
+  "checks": 15252,
+  "decision": "ACCEPTED_ACTUAL_INTERMEDIATE_SOURCE_PARENT_CAPTURE_AND_TRANSPORT_SOURCE_ONLY",
+  "final_release_recovered": false,
+  "implementation": 194,
+  "package": 149,
+  "request_sha256": "17d92c05d58c3e4308097a945b3de3180e33629f92df1bfb83abcbaa6f67390f",
+  "runtime_store_native_authority": false,
+  "schema_version": 1,
+  "source": "d4e56ba9ed968e9c24b2813656c2ca65a3dbd7a0",
+  "source_pins": 289,
+  "tracked": 290,
+  "transport_candidate_sha256": "2d05df683ec6f12ce2e76be95cd5af0d602e40321939182a7b1fd283a9268e5f",
+  "transport_changed_literals": [
+    [
+      "fresh-financial01.git",
+      "fresh-financial02.git"
+    ],
+    [
+      "fresh-actual-remote-financial-source-archive-and-supporting-bodies-recovered",
+      "fresh-actual-remote-financial-source290-and-parent-baseline-recovered"
+    ],
+    [
+      "Complete current financial source archive, exact manifest/request/capture/actual terminal, installed source and full-scope review bodies plus selected documentary supporting evidence were actually fetched from external Git. Original permissions remain manifest metadata; fresh full flat recovery and independent full-source joins remain separate. Shared installed runtime bodies, empirical stores, live Torch observation, registrations and native or numerical execution are outside this recovery.",
+      "Complete closed current financial source290 and unreleased external Parent baseline archives, exact manifests/request/capture/actual terminal and selected independent reviews were actually fetched from external Git. Committed finite registration contents are preserved as bytes; no Run or native release authority follows. Original permissions remain manifest metadata; fresh complete flat recovery and independent joins remain separate. Shared installed runtime bodies, empirical stores, live Torch equality, later final-release additions and numerical execution are outside this scope."
+    ]
+  ],
+  "transport_full_byte_AST_inverse": true
+}
