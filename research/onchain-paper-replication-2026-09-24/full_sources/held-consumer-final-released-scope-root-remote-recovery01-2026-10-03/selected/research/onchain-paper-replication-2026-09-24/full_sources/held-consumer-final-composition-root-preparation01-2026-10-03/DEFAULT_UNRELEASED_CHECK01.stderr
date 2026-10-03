@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py", line 623, in <module>
+    prepared(selected.request, selected.request_sha256)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py", line 207, in prepared
+    require(type(request.get('schema_version')) is int and request['schema_version'] == 1
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and request['kind'] == 'original-import-held-success-parent-v1'
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+            and request['case'] == 'success' and request['capsule_root'] == str(CAP)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and request['capsule_commit'] == SOURCE, 'unreleased or different finite parent')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py", line 42, in require
+    raise ValueError(message)
+ValueError: unreleased or different finite parent

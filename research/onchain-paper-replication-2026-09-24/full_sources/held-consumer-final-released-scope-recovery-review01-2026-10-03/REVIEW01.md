@@ -1,0 +1,30 @@
+# Independent actual final950 archival recovery outcome
+
+Disposition: **ACCEPTED_ACTUAL_FINAL950_FLAT_ARCHIVAL_RECOVERY_ONLY**. Independent review verified all 950 original typed members and modes, all 686 recovered regular bodies, exact 689-file output membership, and complete canonical compressed archive reconstruction from the actual recovered bytes. The main read-only check passed 23,409 assertions. No recovery helper, network operation, Git store mutation, parent or native research execution was performed by this reviewer.
+
+## Actual chain and outcome
+
+The final capture request is `660a715bc4da9bfd93e4076cee4d82730301024b9fa95668c8182a48d9ac2061`, capture `122706bfcd5cf8eaaecc31b7230a0553d804606fad4db4d86a74f136dbe27408`, and actual flat recovery receipt `8b5eb6d58e4e422b38f327bd95056df34780c19fe1d65bed7a4cbfa0d6855371`. The actual flat terminal records exit 0, elapsed 1.5168772889883257 seconds, PID 4036870 absent, 18,874,499,072 free bytes and empty stdout/stderr. PID absence was independently checked. Root's launch hold remains true and native-start status false.
+
+The selected capture request and all five bundle files exactly equal the accepted original capture and their selected-blob receipt entries. The joined fresh remote receipt is `eaaf62de466583661d81a9d03b76a037192776334d3bf8d5ef4decc0312aaffd`, commit `a9f18fffbc06b9e3996b67fc2a0139ce98900709`, selection `7bde62d8a3a549561b879320c672f77b662bc256f141dd47b96569e918447625`, remote source `6b4d6671f852ab6893a2219c4185efb7106253b3bf48eb07da500bafe54dbfce`. Recorded remote operations all report successful exits without cleanup failures. The declared remote scope is 431 blobs and 12,674,060 bytes. Independent real Git/origin joins across that entire scope are assigned to the separate physical review; this report does not replace that review with receipt counters.
+
+Recovery used exact qualified Recovery04 source `b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a`. The full recorded argv independently matches the pinned interpreter, source, recover mode, freshly selected request/bundle, exact pins and fresh flat destination. The source review `11edd9d352edbcaef1fbf0a8d55778d8ea4cac83611d502efd29da056d448e39` and manifest `8ebeaa7dc5affcb6dbb00d0c71a28801c90463d1c37e6a82281da5577d9f09a1` authenticate successfully: all 38 declared regular members, original modes, link counts, sizes, hashes and complete membership checked. The review runtime is pinned CPython 3.13.13, executable SHA-256 `1b6373b55566df2953fe1e1345aec5df0d2e76c5e385871e68aa46c48020803d`; this is an observed installed runtime identity, not runtime-package archival recovery.
+
+## Complete recovered bytes and original metadata
+
+| Scope | Typed members | Actual regular bodies | Logical bytes | Original root mode | Inflated archive bytes |
+| --- | ---: | ---: | ---: | --- | ---: |
+| Capsule | 925 | 663 | 6,782,177 | 0775 | 7,464,960 |
+| Parent | 25 | 23 | 514,939 | 0700 | 542,720 |
+
+The recovered capsule metadata equals the complete original manifest `0ed39e3bb1f374f5eb3df1ff2053e0533804cc18df152dc8179b26598d94169e`; Parent metadata equals `1b96c4ab4cddf2c89e711b130aa46be71e2dc27604f68353162652331997e2a8`. Each directory/name/type/mode remains archival metadata. All regular body mappings are exact, unique and deterministic; each actual flat body is compared byte-for-byte to its decoded archive member as well as against original size/hash. All 689 output files are single-link regular 0600 files under the acquired 0700 root. Exact membership is 686 body files, two metadata files and one recovery receipt. Final body readback remains unchanged.
+
+The independent raw decoder is reused only as two pure AST-extracted framing/encoding definitions from the prior independent capture review. It does not call the candidate's framed-member iterator or recovery entry point. It checks bounded gzip reads, raw 512-byte headers, finite header count, 192 MiB inflated ceiling, local unique path-only PAX records up to 8,192 bytes, regular bodies up to 4 MiB, selected types, protected names, duplicates, zero padding and end framing. The capsule has 24 local PAX records; Parent has none. Rebuilding canonical TAR/gzip from the **actual recovered flat bodies** exactly reproduces capsule archive `bcbc44160e09beba8b50e28188393cce6a3e9f90af9062fd90e4026f2ce74dbd` and Parent archive `788ec697816f6dbb802af6546dcc5a095ab883167111518def9b7c6089e484b4`.
+
+The capsule is identical to the original 925-member baseline. All original 12 Parent members remain unchanged; exactly 13 new bodies account for the current 25-member Parent. A separate final bounded scan of both current original roots also equals both complete captured manifests, including modes and opaque-body hashes. No original member was edited or restored. Original failed attempts and earlier baselines remain preserved.
+
+## Remaining authority boundary
+
+This verifies actual archival recovery feasibility and complete bytes, not counters alone. It does not instantiate the original POSIX directory tree, establish created-directory birth ownership, perform fresh recovered-tree Git execution, recover installed runtime packages or empirical stores, prove full C6 tree/ancestry, or authorize native execution/scientific claims. All corresponding false flags in the actual receipt remain false. Caller/contract/proof union, complete remote Git/origin joins, current request/source authority and final resource/native eligibility remain separate review and Root decisions. No arrays or labels were decoded and no NumPy, Torch or SciPy module was imported.
+
+`check01.py`, `CHECK01.log` and `READBACK01.json` retain the successful main verification. `QUALIFICATION01.json` records complete source-review/runtime/argv qualification; `CURRENT_ORIGINAL01.json` records the complete current-original comparison. No failing review expectation occurred in this task. The manifest freezes this narrow disposition without altering any actual capture, recovery or source artifact.

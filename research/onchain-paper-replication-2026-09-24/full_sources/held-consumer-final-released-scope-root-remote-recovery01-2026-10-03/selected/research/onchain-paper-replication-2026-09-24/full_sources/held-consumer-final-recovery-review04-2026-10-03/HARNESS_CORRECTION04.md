@@ -1,0 +1,1 @@
+Initial independent check04 completed full candidate manifest and inverse checks, then failed before decoder execution because the reviewer did not add the selected helper directory for its stdlib owned_io dependency import. check05 adds only that selected dependency path. Both original source and failed log remain. No candidate or actual recovery state changed.

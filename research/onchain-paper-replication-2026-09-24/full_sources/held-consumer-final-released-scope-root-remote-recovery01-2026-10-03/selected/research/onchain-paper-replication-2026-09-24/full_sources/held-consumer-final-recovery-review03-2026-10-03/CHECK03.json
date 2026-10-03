@@ -1,0 +1,32 @@
+{
+  "tests": 17,
+  "errors": 1,
+  "failures": 0,
+  "observations": {
+    "67B_read_requests": [
+      512
+    ],
+    "manifest_types": {
+      "file": 395,
+      "directory": 450,
+      "symlink": 5,
+      "fifo": 1
+    },
+    "complete_roundtrip": {
+      "status": "fresh-flat-archival-recovery-not-origin-proof",
+      "archive_sha256": "091e56dc0155df4a0716fb304f6256eae8e7bae945ca07d03e11c69737fc0acf",
+      "manifest_sha256": "d33676e445699bdc7d5a1eb88cdca9870a9e2feeb3cc1ecdb768431fc602115c",
+      "members": 4,
+      "regular_bodies": 2,
+      "metadata_file": "body-metadata.json",
+      "metadata_sha256": "11958af308725516178b03d50054cd25bf193522bddfa96102c814387cbf1a57",
+      "root_mode": 488,
+      "instantiated_posix_tree": false,
+      "recovered_tree_git_join": false,
+      "runtime_package_bodies_recovered": false,
+      "outside_stores_recovered": false,
+      "research_authority": false
+    }
+  },
+  "actual_capsule_or_external_recovery": false
+}

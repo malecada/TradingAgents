@@ -1,0 +1,1 @@
+Initial freeze04 asserted unselected type on the preserved IO FIFO fixture before creating a manifest. The initial source is retained. The successor records FIFO type using lstat without opening its body; no helper behavior changed.

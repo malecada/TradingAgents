@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-review04-2026-10-03/check04.py", line 34, in <module>
+    m=load(A/'recovery04.py','independent_recovery04');oldm=load(OLD/'recovery03.py','independent_old03')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-review04-2026-10-03/check04.py", line 33, in load
+    spec=importlib.util.spec_from_file_location(name,p);value=importlib.util.module_from_spec(spec);sys.modules[name]=value;spec.loader.exec_module(value);return value
+                                                                                                                            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation04-2026-10-03/recovery04.py", line 5, in <module>
+    from owned_io import _cleanup
+ModuleNotFoundError: No module named 'owned_io'
