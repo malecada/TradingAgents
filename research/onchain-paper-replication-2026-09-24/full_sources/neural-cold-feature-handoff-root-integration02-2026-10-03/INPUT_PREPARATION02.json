@@ -1,0 +1,85 @@
+{
+  "actual_added_files": [
+    "cold_inputs/anchor.json",
+    "cold_inputs/cold_proof.json",
+    "cold_inputs/configs.json",
+    "cold_inputs/environment.json",
+    "cold_inputs/execution_job.json",
+    "cold_inputs/future_resources.json",
+    "cold_inputs/model.json",
+    "cold_inputs/recipe.json",
+    "cold_inputs/registration-draft.json",
+    "cold_inputs/training.json",
+    "cold_prep/anchor.json",
+    "cold_prep/environment.json",
+    "cold_prep/materialize-request.json",
+    "cold_prep/native_environment.json",
+    "cold_prep/resources.json",
+    "cold_prep/runtime.json"
+  ],
+  "actual_builder_exit_code": 0,
+  "actual_builder_result": {
+    "execution_authorized": false,
+    "request": "cold_prep/materialize-request.json",
+    "root_must_rebind_request_to_actual_source_before_render": true,
+    "source_at_preparation": "fb9fad1d93836b4f92f2be8111da4adf22b7e069",
+    "status": "unregistered-nine-input-draft"
+  },
+  "actual_numerical_jobs": 0,
+  "inputs": {
+    "anchor": {
+      "dataset": "synthetic-cold",
+      "path": "cold_inputs/anchor.json",
+      "sha256": "397d63618dc2bcdd03af7c5cbf8e1c4113f604a7d9b07ee7212990e57305efaa"
+    },
+    "cold_proof": {
+      "dataset": "synthetic-cold",
+      "path": "cold_inputs/cold_proof.json",
+      "sha256": "420d18870514647beac9236985bcb6e393761a5d6f98dc6999e5ae00d54c4271"
+    },
+    "configs": {
+      "dataset": "synthetic-cold",
+      "path": "cold_inputs/configs.json",
+      "sha256": "31d3ee2a62082388302501313060474322dfd7fe68b3a39b5f50c8afe3905f37"
+    },
+    "environment": {
+      "dataset": "synthetic-cold",
+      "path": "cold_inputs/environment.json",
+      "sha256": "290105e59ef3e8f80909da6d930bbd8f6130649a47e5e9cd56d76f957a1ab997"
+    },
+    "execution_job": {
+      "dataset": "synthetic-cold",
+      "path": "cold_inputs/execution_job.json",
+      "sha256": "4ca7431da4a3f620ce851ded1737e3b6439445ba0798611dadb9e3e3ccf36b4d"
+    },
+    "future_resources": {
+      "dataset": "synthetic-cold",
+      "path": "cold_inputs/future_resources.json",
+      "sha256": "e028a3234e396bbdcce6b1bb99d046c963aad8cca2e3f82146b775be01d84e80"
+    },
+    "model": {
+      "dataset": "synthetic-cold",
+      "path": "cold_inputs/model.json",
+      "sha256": "6854c3e37309e8f0f015c76298b2ecb211a0fb4f9396b4f17b092db6168e38ec"
+    },
+    "recipe": {
+      "dataset": "synthetic-cold",
+      "path": "cold_inputs/recipe.json",
+      "sha256": "1af143707b1f1eda54bdc462eef0d9468796d616048721a558e8e7fdfe0aea52"
+    },
+    "training": {
+      "dataset": "synthetic-cold",
+      "path": "cold_inputs/training.json",
+      "sha256": "0fd8b42b8de7dbb58fc170d51b309b73f63dcc70259409d2bb3f4492afa7e1d9"
+    }
+  },
+  "installed_runtime_RECORDs_checked": 251,
+  "native_environment_sha256": "6c383e3604215f35c1b8b69d042c678612e78fb5a9d1c14114b75f1e24c6c7e8",
+  "observed_at": "2026-10-03T05:23:27.098914+00:00",
+  "qualification": "Genuine exact16-file input/native preparation commit T2 directly descends from S2. No materialization registration, claim, OS limit, Binding/Owner/MCM proof or execution release exists. SourceT2 request is a fresh separate file; original S2 request remains unchanged.",
+  "schema_version": 1,
+  "software_environment_and_runtime_reused_bytes_rechecked": true,
+  "source_S2": "fb9fad1d93836b4f92f2be8111da4adf22b7e069",
+  "source_T2": "095fd51e4d65318f4ee92de9873edf98cbee6c9b",
+  "status": "actual-nine-input-T2-preparation"
+}

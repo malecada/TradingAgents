@@ -1,0 +1,45 @@
+# Independent composition04, generator04 and builder02 review
+
+Decision: **ACCEPTED for exact source composition and metadata preparation only.** No material blocker was found in the frozen coordinated delta. This is not acceptance of a capsule, registration, runtime/native readback, numerical result, capacity, remote backup or execution release.
+
+## Exact reviewed bodies
+
+| Component | Manifest SHA256 | Selected implementation SHA256 |
+| --- | --- | --- |
+| Composition04 | 10fba546b2ebcf39e33fb80da710be56c7fa518ba3447ba87bdc40aa6b6bcc99 | metadata helper 557f7a6ff03ba7f2338b3f1d0b010f02a3f69c1088121f915485ad4c291bce16 |
+| Generator04 | ccd6a09d1022e7fce0d685cbfc53e74c5437fb0a0dffab91a9879adfdbfd0884 | be286f6b9cfcbeec1f228c0c75d80663f9aa3ed02d7319e0e8ecbdd2088f06b5 |
+| Builder02 | 8feb177726f5df8ce5a2875aa3a7d13fca861270bb329cedbb0f476ac6b2ce9a | 182b423f6f65f72d193f091a2fd36990fde1dfeb998020a7946c21471c5ef98c |
+
+All206 composition,13 generator and13 builder manifest members were independently verified by complete body hash and size. The inventory raw SHA256 is e8d8594d1c7aabe4076bf2b4bab7454cb0fad48ec8f46b754e06fc3f3ddb6773; its canonical JSON-with-newline digest is 3fc6a3afc3d50a9df1c24533c8343b8cd769a7d513a3bd8d0c27be298808bcc8. These intentionally differ. The helper uses the canonical digest; generator and builder use the exact serialized inventory digest.
+
+The inventory contains195 targets,147 package bodies and3,278,877 source bytes. Every body matches its declared origin and snapshot. All112 historical Git joins were independently read from existing local Git objects with lazy fetch and protocols disabled. The new verify.py origin is the actual accepted candidate snapshot, with null historical Git fields; no historical commit is invented for it. Root still needs a genuine committed preparation/snapshot before the builder's prospective Git joins can pass.
+
+## Delta and closure
+
+Exactly one target changes from composition03: tradingagents/research/verify.py, to accepted3a45746a388307d1b375c885bb2fd7a22c2a60f139df714d2bbe98906d57d7eb. All194 other complete inventory rows and bodies are unchanged. The independently accepted Git-batching review847f7f85 remains the authority for that source change and its finite transport qualifications. This composition does not establish an empirical speedup. The four recipe/config/model/training templates, all scientific bodies and six outer tools remain exact predecessors.
+
+Independent inverse whole-module AST checks passed for all three changed helpers. Metadata changes only its canonical inventory digest and exact creation-status string. Generator changes only PINNED_INVENTORY. Builder changes only the complete declared directory/filename/module-name/hash replacement map; stage functions and checks are otherwise identical. All generator charters/history/request templates and all four builder request templates are byte-identical to their predecessors. Canonical scientific configuration pins independently match the actual four templates.
+
+Static reconstruction verifies881 local import edges. The bounded source-expression analyzer follows52 declaration modules to47 actual compact-producer required pins, all in the195-target inventory, and resolves23 finite generic-loader call sites to included bodies. It executes no selected implementation modules. This retains the predecessor's qualified selected scientific route closure, including the external readers/kernel/native-map/seal/publication chain; it is not proof for an unrelated dormant legacy route. The cleanup-only compact MCM source remains free of the previously missing resource_refusal hooks. Scientific compact metadata still uses its small explicit source maps rather than serializing all195 registration sources into an8KiB record.
+
+## Independent boundary checks
+
+The actual source_mapping helper, extracted with its real digest/serialization functions, accepts the exact195-body snapshot. The predecessor helper refuses the new inventory. Six independent inventory mutations—creation status, execution-admitted flag, path escape, order, hash and denominator—are refused. The immutable creation status remains source-only-verify-batch04-unreviewed; this later review supplies scoped acceptance without rewriting that history.
+
+Actual extracted builder metadata functions reject unsafe paths, malformed/duplicate/missing runtime cardinality and source-denominator violations. Selected generator resource validation retains exact3GiB high=max,3GiB reserve/6GiB start,1800-second native wall,4MiB per-file cap,10GiB floor and1GiB sampled whole-capsule watch with32768 entries/depth32/scan5seconds. Boolean substitutes and physical_policy addition are refused. These are synthetic scalar checks; no native unit or resource observation was created.
+
+The actual selected _native_owned_env helper was extracted and checked independently. The generator native_environment function accepts its exact synthetic-root map and rejects a software-inventory value in that role, a different-root temporary path and changed selected helper bytes. The document/body callbacks in these checks are explicitly mocked; no genuine receipt is fabricated. Native shell variables stay distinct from registered software inventory/251 installed distribution RECORD bindings. HOME is not repurposed. Builder manifest pins and inventory pin were evaluated from its actual constant expressions and checked against exact current frozen bodies.
+
+The authored23 source tests and their raw logs were read and hash-authenticated (4 composition,7 generator,12 builder); their counts are not additional actual execution evidence. Independent scripts and full logs are retained here. No author test runner, builder.execute, metadata.build, generator.render/prepare_compare, runtime.check, native guard, admission or numerical module was invoked by this review.
+
+## Authority and remaining concrete release requirements
+
+The unchanged builder verifies all selected preparation manifest members against an actual root-supplied provenance commit before export. Each exported body is rechecked, destination creation is exclusive, and the result explicitly remains unregistered. Inputs require a separate genuine capsule Git source, actual ancestor numerical anchor, installed runtime verification and bounded native environment mapping. The exact147-file anchor and full195 source inventory remain different objects and must both be validated in the fresh capsule. Runtime RECORD checks bind expected installed files; they do not rehash every dependency binary.
+
+Generator materialization retains the separate fixed two-attempt/prior-zero engineering family, exploratory synthetic availability, exposures=[], nine exact input roles, the single materialization cell and one output. Successful actual materialization must authenticate43 emitted roles before comparison can add the original environment to make44 inputs. Comparison retains the actual parent and complete original experiment/family/dataset/history, and requires precisely four registration-only additions at the sole direct child of A. No intermediate capsule commit or changed numerical source is permitted between materialization A and comparison B. The accepted OUT3 historical authenticator remains byte-exact; copied source is not a historical result.
+
+Before release, root must complete: committed accepted preparation; a genuinely fresh independent capsule S2 and exact147-file anchor; real source/input/runtime/native path mappings; metadata T2 and actual reviewed registration A2; explicit cross-root reconciliation of the old unattempted withdrawn A and absent fixed-ID namespaces; final selected source-plus-charter batch transport extents; whole-capsule baseline/disk/RAM readiness; complete external recovery and independent review; and a final one-use release. Neither source-only source mapping nor unchanged templates discharges those requirements. Actual numerical materialization and later genuine scientific Binding/Owner/dictionary/MCM/cold handoff/model-gradient/checkpoint proof remain unexecuted by these preparations.
+
+The native1800-second and active-phase1840-second limits are not a hard whole-invocation deadline. The sampled1GiB watch is not a kernel aggregate quota. The accepted fresh Git batching preserves every invocation/body/hash/charter check but has stricter128-request/64KiB request/8MiB response bounds and grouped transport-error precedence; full-claim timing and speed remain unmeasured.
+
+No claim, reservation, allowance adoption, financial experiment, array, output terminal or capsule was created. Original failed identities and spent samples remain unchanged. This review grants no paper-budget increase, full-scale memory/storage proof,27-refusal-suite completion, full-size MCM completion, financial fit or numerical agreement with the paper. Installed runtime251 RECORDs, original26 Git objects/11 JSON source inputs and actual fresh capsule authority were not newly observed here; their exact release joins remain separate.

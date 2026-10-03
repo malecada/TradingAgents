@@ -1,0 +1,21 @@
+test_actual_read_close_fatal_identity (__main__.Tests.test_actual_read_close_fatal_identity) ... ok
+test_first_fatal_all_closures (__main__.Tests.test_first_fatal_all_closures) ... ok
+test_one_use_retained_reservation (__main__.Tests.test_one_use_retained_reservation) ... ok
+test_original_release_reference_four_fields (__main__.Tests.test_original_release_reference_four_fields) ... FAIL
+test_paths_refs (__main__.Tests.test_paths_refs) ... ok
+test_read_hash_and_symlink (__main__.Tests.test_read_hash_and_symlink) ... ok
+test_schema_no_missing_reviews (__main__.Tests.test_schema_no_missing_reviews) ... ok
+
+======================================================================
+FAIL: test_original_release_reference_four_fields (__main__.Tests.test_original_release_reference_four_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-launcher-preparation01-2026-10-03/test_launcher01.py", line 12, in test_original_release_reference_four_fields
+    self.assertTrue(eval(compile(ast.Expression(call.args[0]),'actual-join','eval'),ns))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.014s
+
+FAILED (failures=1)
