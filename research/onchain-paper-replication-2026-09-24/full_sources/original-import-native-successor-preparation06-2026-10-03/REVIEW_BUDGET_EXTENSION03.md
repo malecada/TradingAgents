@@ -1,0 +1,24 @@
+# Independent cumulative engineering budget review03
+
+Decision: **ACCEPTED for the exact cumulative engineering budget proposal only.** This review does not adopt the allowance, admit a capsule or authorize a launch.
+
+The reviewed extension SHA256 is `2828938d8c0db0db1d2096b01436b9765c13461e1832ca0b9b660caf34226c6d`; allocation SHA256 is `708f96b031e8a116ac1d914fb16abcf3027e9f1c962b857aff82218cd8a2ecd1`. Both match the frozen proposal references. The mechanism/program and original base family remain unchanged: base allowance2, prior attempts0, highest actually adopted allowance4. Three genuine failed attempts are permanently spent; proposed ceiling5 leaves exactly two prospective attempts.
+
+Independent read-only reconstruction used the preserved actual claims and terminal bodies in predecessor capsule03, their exact historical Git registrations and experiment/family records, and every retained output hash. Claims01/02/03 have effective allowances2/3/4 respectively. Their claim/failed-terminal hashes match every allocation/extension row. The first two have all four original output bodies; attempt03 has only the two failed binding/journal outputs named by its actual failed terminal. No success terminal or missing output was synthesized.
+
+Attempt03's original worker ledger and summary remain absent. Actual durable source records and the observer postmortem ledger preserve target1 **failed**, target2 **unavailable**. The independently checked additive `CELL_DISPOSITION_CORRECTION01.json`, SHA256 `edb8a1d9aa9eac5f96231c5580dfba17b89b72f4cdeafd323b39e634ffbe570f`, correctly supersedes only the collector's coarse both-unavailable fallback and pins the unchanged original result and source records. The actual closed failure and two missing outputs remain material evidence. Native timeout/partial finalization is not a RAM failure or numerical result.
+
+Only the following fixed identities may consume the two proposed allocations, at most one claim each:
+
+- `original-import-native-success-20261003-04`: full two-target160-scalar comparison question, conditional on accepted previous closure/correction/external recovery, exact independently reviewed source composition and concrete capsule/gate/runtime/native release.
+- `original-import-native-publication-failure-20261003-04`: conditional dependent case preserving64 first-target reference comparisons and96 second-target numerical cells with deliberately unavailable second publication/reference. It cannot be launched on an unchanged blocker merely because the ceiling permits another claim.
+
+All three superseded publication-failure01/02/03 identities are absent from the preserved actual claim store. Their withdrawal creates no terminal, refund or numerical evidence. Both fresh04 identities are also absent at review time. Algebraically,3 spent +2 fixed future claims =5; this is a prospective one-unit increase over highest adopted4, not a reset to a new family or a fourth attempt disguised as prior0.
+
+The allocation preserves3GiB high/max, swap0,3GiB host reserve,6GiB startup threshold,1800-second native unit,1840-second sampled active wait,4MiB per-file limit,1GiB sampled whole-capsule stop threshold and10GiB disk floor. These are the stated controls, not a hard aggregate quota or a guaranteed total outer shutdown duration. Numerical/sample/model/convergence/tolerance settings and the original32-motif/512-spent-sample evidence are unchanged. Any canonicalization or bulk-Git optimization still needs its own exact source acceptance/composition; descriptive wording in the proposal does not confer that acceptance.
+
+Paper accounting remains36 closed (27 complete/9 failed), highest adopted64, with no65 allowance, financial-fit grant, transfer or capacity conclusion. The separate16-class/27-variant refusal suite remains unexecuted and retains its own maximum23 claims,17 Owners and19 journals. The two primary cases do not discharge it. Reused original data is not fresh confirmation, and no original sampling/dictionary job may be rerun.
+
+The next actual admission must preserve all three historical claims, original Git/source/gates, old extension paths and cumulative ancestry, then bind this exact extension and its machine review to a separately reviewed fresh registration. Full failed03 external recovery remains a separate review; locally finding an archive or configured remote is insufficient. Fresh process/RAM/disk eligibility and sole-launch ownership remain mandatory. This review creates neither a ResearchRun nor an executing lease.
+
+Verification was metadata-only using stdlib JSON/hash/Git reads with network/lazy fetch disabled. No numerical modules, arrays, samples, test labels, admission start, native job, registration adoption, ledger or source mutation occurred. Only this review and the corresponding exact five-field machine review were created in the assigned preparation directory.

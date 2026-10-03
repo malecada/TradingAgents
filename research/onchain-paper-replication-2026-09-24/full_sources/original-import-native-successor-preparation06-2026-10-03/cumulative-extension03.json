@@ -1,0 +1,38 @@
+{
+  "allocation": {
+    "path": "fixture_budget/successor-allocation03.json",
+    "sha256": "708f96b031e8a116ac1d914fb16abcf3027e9f1c962b857aff82218cd8a2ecd1"
+  },
+  "base_family": {
+    "attempt_budget": 2,
+    "history_reference": "Separate synthetic authority/IO engineering only. Original eth-paper-resource-pilot-20260924-02 and its spent dictionary/samples remain terminal and are imported without rerun. No paper family/category allowance transfer.",
+    "mechanism_id": "original-dictionary-import-engineering-v1",
+    "prior_attempts": 0
+  },
+  "claims": [
+    {
+      "claim_sha256": "f475dd6c04d7dfc5e9d94bba30b5d3e686d1b71b5f5394dfa1aa0b174797f61e",
+      "experiment": "original-import-native-success-20261003-01",
+      "terminal_sha256": "09206641f5ce569716bbf61246ecc85c20daa3ed40bf7f82427e4772198881c0",
+      "terminal_status": "failed"
+    },
+    {
+      "claim_sha256": "56d653890440a57896a98e87ed641f9dcfd74fca8375b3491e804fd2f5432688",
+      "experiment": "original-import-native-success-20261003-02",
+      "terminal_sha256": "6f088e8cc3252db4ca91ee0b37323793ce53d822e68a2e2ac0c505cea29f1747",
+      "terminal_status": "failed"
+    },
+    {
+      "claim_sha256": "7e35261724e6bf2d58ca484a2ef39606d7a586313dca5fe7f0c06fe6b8ef88ef",
+      "experiment": "original-import-native-success-20261003-03",
+      "terminal_sha256": "e0fb5527f662461300dfa153bed8a155661c32f0e98e43690b512c5019259351",
+      "terminal_status": "failed"
+    }
+  ],
+  "consumed_before": 3,
+  "cumulative_ceiling": 5,
+  "initial_experiment": "original-import-native-success-20261003-04",
+  "program_id": "original-dictionary-import-engineering-2026-10-02",
+  "reason": "All three failed engineering attempts are retained. Attempt03 imported the original dictionary but exceeded native1800s before MCM completion, with no OOM. Source investigation found repeated canonicalization within each full authentication. Accepted canonical-source optimization preserves exact ordered membership and all authentication while eliminating redundant serialization within one validation; bounded Git IO candidate requires separate acceptance before inclusion. Fresh fixed04 success/publication-failure complete the original two finite primary cases with cumulative5, preserving highestadopted4/base2/prior0 and all closed original data/source/results. No test-outcome tuning, original resampling, paper-budget change, cap increase, refund or transfer.",
+  "schema_version": 1
+}

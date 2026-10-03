@@ -1,0 +1,102 @@
+--- resource_fixture.py.baseline
++++ resource_fixture.py.candidate
+@@ -141,21 +141,89 @@
+     require(resource.getrlimit(resource.RLIMIT_FSIZE)==(FILE_MAX,FILE_MAX),'worker file limit not enforced')
+     return {'rlimit_fsize':FILE_MAX,'scope':'worker and inherited descendants; outer launcher/log limits separately required'}
+ 
++def _original_batch_rows(raw,items):
++    """Exact sorted original26 blob bodies; framing never splits body newlines."""
++    require(type(raw) is bytes and len(raw)<=4*1024**2+128*len(items),'original batch response ceiling')
++    offset=0;total=0;rows=[]
++    for name,sha in items:
++        end=raw.find(b'\n',offset,min(len(raw),offset+128))
++        require(end>=0,'original batch header missing or oversized')
++        fields=raw[offset:end].split(b' ')
++        require(len(fields)==3 and len(fields[0])==40 and all(c in b'0123456789abcdef' for c in fields[0]) and fields[1]==b'blob','original object missing or wrong type')
++        token=fields[2];require(token.isdigit() and token[:1]!=b'0' and len(token)<=7,'original extent invalid')
++        size=int(token);total+=size
++        require(0<size<=2*1024**2 and total<=4*1024**2,'original source extent ceiling')
++        offset=end+1;end=offset+size
++        require(end<len(raw) and raw[end:end+1]==b'\n','original body truncated or delimiter differs')
++        require(hashlib.sha256(memoryview(raw)[offset:end]).hexdigest()==sha,'original committed source body differs')
++        rows.append({'path':name,'sha256':sha,'bytes':size});offset=end+1
++    require(offset==len(raw),'original batch trailing response')
++    return rows
++
++
++def _original_git_batch(root,requests):
++    """One fresh finite local Git process; bounded pipes and independent cleanup."""
++    import selectors
++    import time
++    from .owned_io import _cleanup
++    require(type(requests) is bytes and 0<len(requests)<=65536,'original request extent ceiling')
++    process=None;selector=None;closed_stdin=False
++    deadline=time.monotonic()+10;output=bytearray();errors=bytearray();sent=0
++    def stop():
++        if process is not None and process.poll() is None:process.kill()
++    def reap():
++        if process is not None:process.wait(timeout=5)
++    def close_stdin():
++        nonlocal closed_stdin
++        if process is not None and not closed_stdin:
++            closed_stdin=True;process.stdin.close()
++    try:
++        process=subprocess.Popen(['git','cat-file','--batch'],cwd=root,env={**os.environ,'GIT_NO_LAZY_FETCH':'1'},stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,bufsize=0)
++        selector=selectors.DefaultSelector()
++        for stream,label,event in ((process.stdin,'input',selectors.EVENT_WRITE),(process.stdout,'output',selectors.EVENT_READ),(process.stderr,'error',selectors.EVENT_READ)):
++            os.set_blocking(stream.fileno(),False);selector.register(stream,event,label)
++        while selector.get_map():
++            left=deadline-time.monotonic()
++            if left<=0:raise subprocess.TimeoutExpired(['git','cat-file','--batch'],10)
++            for key,mask in selector.select(min(left,.25)):
++                stream=key.fileobj
++                if key.data=='input':
++                    try:n=os.write(stream.fileno(),requests[sent:sent+4096])
++                    except BlockingIOError:continue
++                    require(n>0,'original Git input closed');sent+=n
++                    if sent==len(requests):selector.unregister(stream);close_stdin()
++                else:
++                    try:part=os.read(stream.fileno(),65536)
++                    except BlockingIOError:continue
++                    if not part:selector.unregister(stream);continue
++                    target=output if key.data=='output' else errors
++                    limit=4*1024**2+128*26 if key.data=='output' else 65536
++                    require(len(target)+len(part)<=limit,'original Git output ceiling');target.extend(part)
++        left=deadline-time.monotonic()
++        if left<=0:raise subprocess.TimeoutExpired(['git','cat-file','--batch'],10)
++        code=process.wait(timeout=left)
++        require(sent==len(requests) and code==0,'original Git process failed')
++        return bytes(output)
++    finally:
++        # The selected canonical reducer keeps the first actual fatal, attempts
++        # all independent closures, and never retries a closed descriptor.
++        _cleanup((stop,reap,close_stdin,
++            lambda:process.stdout.close() if process is not None else None,
++            lambda:process.stderr.close() if process is not None else None,
++            lambda:selector.close() if selector is not None else None))
++
++
+ def original_source_blobs(run,control):
+     from . import original_dictionary as original
+     claim=original.parse(original._read_registered(run,control['refs']['claim']['input']))
+     files=claim['experiment']['source_files'];commit=control['original_source']
+     require(commit=='c6b568d4b1c177ab94ac37fbad462c2decc721c0' and claim['source']==commit and type(files) is dict and len(files)==26,'original26-source claim required')
+-    rows=[];total=0;env={**os.environ,'GIT_NO_LAZY_FETCH':'1'}
+-    for name,sha in sorted(files.items()):
+-        require(type(name) is str and not Path(name).is_absolute() and '..' not in Path(name).parts and '\n' not in name,'original source path differs')
+-        ref=commit+':'+name
+-        size=int(subprocess.check_output(['git','cat-file','-s',ref],cwd=run.admission.root,env=env,timeout=10).strip())
+-        total+=size;require(0<size<=2*1024**2 and total<=4*1024**2,'original source extent ceiling')
+-        raw=subprocess.check_output(['git','cat-file','blob',ref],cwd=run.admission.root,env=env,timeout=10)
+-        require(len(raw)==size and hashlib.sha256(raw).hexdigest()==sha,'original committed source body differs')
+-        rows.append({'path':name,'sha256':sha,'bytes':size})
+-    return rows
++    items=sorted(files.items());requests=[]
++    for name,sha in items:
++        require(type(name) is str and not Path(name).is_absolute() and '..' not in Path(name).parts and not any(c in name for c in ('\n','\r','\x00')),'original source path differs')
++        requests.append((commit+':'+name+'\n').encode('utf-8'))
++    raw=_original_git_batch(run.admission.root,b''.join(requests))
++    return _original_batch_rows(raw,items)
+ 
+ def preflight(run,job):
+     from . import original_dictionary as original,compact_policy,compact_owner

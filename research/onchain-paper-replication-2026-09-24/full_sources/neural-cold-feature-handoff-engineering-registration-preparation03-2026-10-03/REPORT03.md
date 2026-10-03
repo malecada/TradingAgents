@@ -1,0 +1,5 @@
+# Scientific engineering registration correction 03
+
+The generator separates the registered software inventory (`environment`) from the native shell variable map (`native_environment`). The latter has its own bounded SHA-256-authenticated reference and must equal the actual selected source `_native_owned_env(root)`. The release template forwards that reference to the existing outer draft helper. The materialization input denominator remains nine; the native map is outer metadata, not an invented financial input. Runtime verification remains separate. All comparison generation, 43-to-44 input authentication, source A/sole-direct-child B evolution, charter bytes, finite family budget and source/input/numerical configuration remain unchanged.
+
+Generator02 and its WITHHELD independent review are retained unchanged. This is source preparation only: no capsule authority, gate, claim, native process, numerical import or result exists. A root-installed genuine capsule, runtime and exact independent review/recovery are still required.

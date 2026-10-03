@@ -1,0 +1,67 @@
+{
+  "recovery_receipt_sha256": "03d4ac50aef619bdca9fb3430f54dc70d1d781b09c0b61f895a6bd69dc8ca82a",
+  "actual_already_fetched_commit": "325dda4a532a7d406aa0e3a2a50b6ace170a4890",
+  "selected_remote_blobs": 67,
+  "archive_members": 939,
+  "files": 665,
+  "directories": 274,
+  "logical_bytes": 6585516,
+  "retained_original_allocated_bytes": 9453568,
+  "current_and_anchor_source_joins": 159,
+  "original_git_paths": 26,
+  "original_json_inputs": 11,
+  "failed_histories": [
+    {
+      "identity": "original-import-native-success-20261003-01",
+      "claim_sha256": "f475dd6c04d7dfc5e9d94bba30b5d3e686d1b71b5f5394dfa1aa0b174797f61e",
+      "terminal_sha256": "09206641f5ce569716bbf61246ecc85c20daa3ed40bf7f82427e4772198881c0",
+      "source_bodies": 153,
+      "outputs": [
+        "cell-ledger.json",
+        "resource-binding.json",
+        "resource-journal.json",
+        "resource-summary.json"
+      ]
+    },
+    {
+      "identity": "original-import-native-success-20261003-02",
+      "claim_sha256": "56d653890440a57896a98e87ed641f9dcfd74fca8375b3491e804fd2f5432688",
+      "terminal_sha256": "6f088e8cc3252db4ca91ee0b37323793ce53d822e68a2e2ac0c505cea29f1747",
+      "source_bodies": 156,
+      "outputs": [
+        "cell-ledger.json",
+        "resource-binding.json",
+        "resource-journal.json",
+        "resource-summary.json"
+      ]
+    },
+    {
+      "identity": "original-import-native-success-20261003-03",
+      "claim_sha256": "7e35261724e6bf2d58ca484a2ef39606d7a586313dca5fe7f0c06fe6b8ef88ef",
+      "terminal_sha256": "e0fb5527f662461300dfa153bed8a155661c32f0e98e43690b512c5019259351",
+      "source_bodies": 159,
+      "outputs": [
+        "resource-binding.json",
+        "resource-journal.json"
+      ]
+    }
+  ],
+  "corrected_cells": [
+    {
+      "id": "import-target-01",
+      "reason": "SystemExit: owned execution interrupted; never relaunch this identity",
+      "resource_only": true,
+      "status": "failed"
+    },
+    {
+      "id": "import-target-02",
+      "reason": "SystemExit: owned execution interrupted; never relaunch this identity",
+      "resource_only": true,
+      "status": "unavailable"
+    }
+  ],
+  "unresolved_original_outer_cleanup_preserved": true,
+  "native_timeout_preserved": true,
+  "current_live_process_absence_not_inferred_from_restore": true,
+  "network_fetch_extraction_imports_or_replay": false
+}

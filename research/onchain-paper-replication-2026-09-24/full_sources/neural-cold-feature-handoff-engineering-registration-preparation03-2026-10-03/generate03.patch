@@ -1,0 +1,52 @@
+--- generate02.py
++++ generate03.py
+@@ -3,7 +3,7 @@
+ Materialization needs a genuine installed committed capsule and real input bytes.
+ Comparison uses accepted outer03 historical authentication before producing drafts.
+ """
+-import argparse,hashlib,importlib.util,json,os,re,stat,subprocess,sys
++import argparse,ast,hashlib,importlib.util,json,os,re,stat,subprocess,sys
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent
+ PROGRAM='compact-cold-engineering-20261003'
+@@ -40,10 +40,22 @@
+  require(type(p['native_unit_limits']['file_size_bytes']) is int,'file cap type differs')
+  require(p.get('storage_budget')=={'root':str(root),'limits':{'max_allocated_bytes':GIB,'max_logical_bytes':GIB,'max_entries':32768,'max_depth':32,'max_scan_seconds':5}},'whole capsule watch differs')
+  return p
++def native_environment(root,request,sources):
++ # The shell variable map is distinct from the registered software inventory.
++ actual=document(root,request['native_environment'])
++ target='tradingagents/research/onchain_replication/resources.py'
++ raw=body(root,target);require(digest(raw)==sources[target],'selected native helper source differs')
++ tree=ast.parse(raw);nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='_native_owned_env']
++ require(len(nodes)==1,'exact native environment helper required')
++ namespace={'Path':Path}
++ exec(compile(ast.Module(body=nodes,type_ignores=[]),'selected-native-environment','exec'),namespace)
++ require(actual==namespace['_native_owned_env'](root),'native shell environment differs')
++ return actual
++
+ def validate(root,request):
+  require(type(request) is dict and request.get('phase') in IDS,'fixed phase required')
+  require(request['phase']=='materialize','use authenticated comparison generator')
+- keys={'schema_version','phase','root','source','inventory','runtime','environment','resources','anchor','inputs','cpus'}
++ keys={'schema_version','phase','root','source','inventory','runtime','environment','native_environment','resources','anchor','inputs','cpus'}
+  require(set(request)==keys and type(request['schema_version']) is int and request['schema_version']==1,'request fields differ')
+  require(type(request['root']) is str and request['root']==str(root) and root.resolve()==root and Path.cwd()==root,'genuine capsule cwd required')
+  source=request['source'];require(type(source) is str and re.fullmatch('[0-9a-f]{40}',source) and len(set(source))>1,'real source commit required')
+@@ -55,6 +67,7 @@
+  for row in rows:
+   b=body(root,row['target']);require(len(b)==row['bytes'] and digest(b)==row['sha256'] and git(root,'show',source+':'+row['target'])==b,'installed source/Git differs: '+row['target']);sources[row['target']]=row['sha256']
+  runtime=document(root,request['runtime']);environment=document(root,request['environment'])
++ native_environment(root,request,sources)
+  require(not any(n.split('.')[0] in {'numpy','torch','scipy','tradingagents'} for n in sys.modules),'numerical/research imports forbidden')
+  # Exact accepted stdlib runtime checker; cannot mint a runtime from booleans.
+  name='cold_registration_runtime';path=root/'proof_tools/runtime_gate01.py'
+@@ -84,7 +97,7 @@
+  for ref,name in [(charter_ref,'CHARTER_MATERIALIZE02.md'),(history_ref,'HISTORY02.md')]:require(reference(root,ref)==(HERE/name).read_bytes(),'frozen charter/history differs')
+  family={'mechanism_id':'compact-cold-genuine-authority','attempt_budget':2,'prior_attempts':0,'history_reference':history_ref['path']}
+  experiment={'family':FAMILY,'parent':None,'question':'Can the frozen fresh synthetic cold-proof population be materialized under genuine guarded ResearchRun authority?','stage':'development','reuse':'exploratory','charter':charter_ref,'source_files':sources,'runtime_hashes':{Path(k).name:v for k,v in sources.items() if str(Path(k).parent)=='tradingagents/research'},'cells':[CELL['materialize']],'outputs':['proof-materialize.json'],'inputs':request['inputs'],'windows':[{'dataset':'synthetic-cold','start':'2023-12-04T00:00:00Z','end':'2024-05-13T00:00:00Z','availability':'existing'}]}
+- return {'source_document':{'schema_version':1,'files':sources},'phase_contract':{'schema_version':1,'identity':IDS['materialize'],'experiment':experiment,'family':family,'expected_outputs':experiment['outputs']},'gate_template':{'schema_version':1,'kind':'unregistered-materialization-release-template','status':'draft','phase':'materialize','root':str(root),'source':None,'registration':None,'sources':None,'runtime':request['runtime'],'native_environment':request['environment'],'phase_contract':None,'prior_materialization':None,'cpus':request['cpus'],'execution_authorized':False,'remaining':['commit root reviewed exact registration/charter and select actual A','use accepted build_release_draft01 helper with exact document refs to assemble reviewed release']},'schema_version':1,'kind':'unregistered-cold-engineering-draft','execution_authorized':False,'registration':{'schema_version':1,'program_id':PROGRAM,'families':{FAMILY:family},'datasets':{'synthetic-cold':{'identity':'compact-cold-synthetic-20261003','history_reference':history_ref['path'],'exposures':[]}},'experiments':{IDS['materialize']:experiment}},'root_required':['independent exact registration/budget/native release','commit actual registration and charter before any claim','fresh source/Git/native/input check at final execution','genuine materialization then authenticated comparison draft and sole-child release'],'runtime_readback':readback,'comparison_status':'requires-actual-materialization-and-reviewed-sole-child-registration-release'}
++ return {'source_document':{'schema_version':1,'files':sources},'phase_contract':{'schema_version':1,'identity':IDS['materialize'],'experiment':experiment,'family':family,'expected_outputs':experiment['outputs']},'gate_template':{'schema_version':1,'kind':'unregistered-materialization-release-template','status':'draft','phase':'materialize','root':str(root),'source':None,'registration':None,'sources':None,'runtime':request['runtime'],'native_environment':request['native_environment'],'phase_contract':None,'prior_materialization':None,'cpus':request['cpus'],'execution_authorized':False,'remaining':['commit root reviewed exact registration/charter and select actual A','use accepted build_release_draft01 helper with exact document refs to assemble reviewed release']},'schema_version':1,'kind':'unregistered-cold-engineering-draft','execution_authorized':False,'registration':{'schema_version':1,'program_id':PROGRAM,'families':{FAMILY:family},'datasets':{'synthetic-cold':{'identity':'compact-cold-synthetic-20261003','history_reference':history_ref['path'],'exposures':[]}},'experiments':{IDS['materialize']:experiment}},'root_required':['independent exact registration/budget/native release','commit actual registration and charter before any claim','fresh source/Git/native/input check at final execution','genuine materialization then authenticated comparison draft and sole-child release'],'runtime_readback':readback,'comparison_status':'requires-actual-materialization-and-reviewed-sole-child-registration-release'}
+ 
+ def new_path(root,name):
+  require(type(name) is str and name and not Path(name).is_absolute() and '..' not in Path(name).parts,'new local path required')

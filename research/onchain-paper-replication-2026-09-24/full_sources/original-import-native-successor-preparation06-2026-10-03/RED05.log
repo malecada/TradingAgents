@@ -1,0 +1,34 @@
+test_actual_fresh04_admission_and_selected_fixture_agree (__main__.Parent.test_actual_fresh04_admission_and_selected_fixture_agree) ... ERROR
+test_legacy_none_and_unknown_parent_routes_are_preserved (__main__.Parent.test_legacy_none_and_unknown_parent_routes_are_preserved) ... ok
+test_old_ceiling_or_missing_and_changed_review_is_refused (__main__.Parent.test_old_ceiling_or_missing_and_changed_review_is_refused) ... ok
+test_only_fixed04_lineage_nodes_are_added (__main__.Parent.test_only_fixed04_lineage_nodes_are_added) ... ok
+test_parent_missing_wrong_or_terminal_identity_is_refused (__main__.Parent.test_parent_missing_wrong_or_terminal_identity_is_refused) ... FAIL
+
+======================================================================
+ERROR: test_actual_fresh04_admission_and_selected_fixture_agree (__main__.Parent.test_actual_fresh04_admission_and_selected_fixture_agree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation06-2026-10-03/test_parent04.py", line 18, in test_actual_fresh04_admission_and_selected_fixture_agree
+    self.assertTrue(self.ad.ready);self.assertEqual(self.ad.effective_attempt_budget,5);self.module.admitted(self.ad,self.job)
+                                                                                        ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation06-2026-10-03/resource_fixture.baseline05.py", line 134, in admitted
+    require(ad.experiment['cells']==CELLS and _engineering_parent(ad),'fresh exact engineering denominator required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation06-2026-10-03/resource_fixture.baseline05.py", line 20, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: fresh exact engineering denominator required
+
+======================================================================
+FAIL: test_parent_missing_wrong_or_terminal_identity_is_refused (__main__.Parent.test_parent_missing_wrong_or_terminal_identity_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation06-2026-10-03/test_parent04.py", line 21, in test_parent_missing_wrong_or_terminal_identity_is_refused
+    with self.assertRaises(ValueError):self.module.admitted(dataclasses.replace(self.ad,experiment=self.ad.experiment|{'parent':parent}),self.job)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.151s
+
+FAILED (failures=1, errors=1)
