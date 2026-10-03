@@ -1,0 +1,35 @@
+test_copy_and_recovery_exact_bytes_modes_membership (__main__.Tests.test_copy_and_recovery_exact_bytes_modes_membership) ... FAIL
+test_missing_extra_hardlink (__main__.Tests.test_missing_extra_hardlink) ... FAIL
+test_no_reuse_and_symlink_refusal (__main__.Tests.test_no_reuse_and_symlink_refusal) ... FAIL
+
+======================================================================
+FAIL: test_copy_and_recovery_exact_bytes_modes_membership (__main__.Tests.test_copy_and_recovery_exact_bytes_modes_membership)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/test_archive01.py", line 8, in test_copy_and_recovery_exact_bytes_modes_membership
+    self.assertTrue(hasattr(m,'snapshot'),'complete finite snapshot seam absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : complete finite snapshot seam absent
+
+======================================================================
+FAIL: test_missing_extra_hardlink (__main__.Tests.test_missing_extra_hardlink)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/test_archive01.py", line 23, in test_missing_extra_hardlink
+    self.assertTrue(hasattr(m,'verify_tree'),'full recovery verifier absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : full recovery verifier absent
+
+======================================================================
+FAIL: test_no_reuse_and_symlink_refusal (__main__.Tests.test_no_reuse_and_symlink_refusal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/test_archive01.py", line 16, in test_no_reuse_and_symlink_refusal
+    self.assertTrue(hasattr(m,'snapshot'),'snapshot seam absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : snapshot seam absent
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)

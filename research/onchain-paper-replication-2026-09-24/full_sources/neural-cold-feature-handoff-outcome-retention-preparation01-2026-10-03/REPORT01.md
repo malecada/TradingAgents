@@ -1,0 +1,11 @@
+# Implementation report
+
+Concrete standalone collector, readonly closed-comparison adapter and immutable byte archive/recovery verifier prepared. No live or historical source, capsule, gate, claim, registration, STATE or Git mutation occurred. No actual collector/native job/network/numerical import occurred.
+
+Selected source files: `collector01.py`, `closed_comparison01.py`, `archive01.py`, and byte-exact accepted `owned_io.py`. Both original context/authentication function bodies are retained separately. The exact request and runtime prerequisites are in PROTOCOL01.md. The source-only helper does not weaken preclaim namespace refusal.
+
+Checks: 14 focused stdlib retention tests passed (`CHECK_RETENTION04.log`) and three byte archive tests passed (`CHECK_ARCHIVE03.log`). Tests cover absent/missing/conflicting outputs, empty born namespace, closed-prior refusal before context, parent failure revocation, recursive exact metadata retention, complete recovery equality/membership/error refusal, root extent, source inode replacement and first-fatal preservation with both acquired FDs closed once. The actual closed-context statements are inverse-AST checked except the three explicitly declared old mode/origin/namespace statements. No ResearchRun/Owner/Binding was counterfeited; early-refusal tests use deliberately synthetic metadata only.
+
+Preserved failures: initial seam-absent archive RED; first archive fixture used an impossible 1,024-byte allocated bound and failed on a real 4,096-byte block (source bound was not relaxed; fixture allowance corrected); first context-parity test omitted the explicitly removed old materialize-only mode restriction from its inverse-check allowlist. Original failing logs and fixture bytes remain. Subsequent checks pass. These failures are engineering evidence, not trials.
+
+Limitations: actual closed comparison/native/publication verification remains unexecuted; original source helper IO and structural verifier subprocess qualifications remain, as documented. Exact parent wait source and actual invocation evidence require root integration/review. Complete local copy/hash recovery does not independently prove external transfer. Metadata snapshots do not establish scientific inference, numerical agreement or full-size capacity.

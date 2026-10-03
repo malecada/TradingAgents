@@ -1,0 +1,152 @@
+{
+  "actual_cgroup_absent": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-864fd867343a491a9f55c2b7b10d3341.service",
+  "all_eight_original_pids_absent": [
+    3399311,
+    3399314,
+    3399515,
+    3399730,
+    3399932,
+    3399944,
+    3399957,
+    3399961
+  ],
+  "cleanup": {
+    "cgroup_absent": true,
+    "original_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-864fd867343a491a9f55c2b7b10d3341.service",
+    "original_guard_sha256": "e0bbbbb3a9557d26334143ec8fb52ba77e6b4f27ee2119346a0b253ecd3e233f",
+    "original_start_receipts": {
+      "job_launch": {
+        "pid": 3399932,
+        "start_ticks": "7069282"
+      },
+      "monitor": {
+        "pid": 3399944,
+        "start_ticks": "7069308"
+      },
+      "proof_outer": {
+        "pid": 3399932,
+        "ticks": "7069282"
+      },
+      "proof_supervise": {
+        "pid": 3399730,
+        "start_ticks": "7069214"
+      },
+      "root_wrapper_child": {
+        "pid": 3399515,
+        "start_ticks": "7069163"
+      }
+    },
+    "present_or_reused_pids": [],
+    "recorded_pids": [
+      3399314,
+      3399515,
+      3399730,
+      3399932,
+      3399944,
+      3399957,
+      3399961
+    ],
+    "status": "original-cleanup-observed",
+    "termination_attempted": false
+  },
+  "future_comparison_unclaimed": true,
+  "genuine_retained_authentication": {
+    "identity": "compact-cold-inputs-20261003-01",
+    "lifecycle": {
+      "claim": {
+        "bytes": 33569,
+        "kind": "document",
+        "path": "research_runs/compact-cold-inputs-20261003-01/claim.json",
+        "sha256": "0644ae951d97ae47ce1f1e024df7799fff5964d856d972522e7eab1a48cdf5e6"
+      },
+      "outputs": {
+        "proof-materialize.json": "5cd0dbba8e2a4b51307664151cecfa8228416050bda1d6dd04aacc0dad510351"
+      },
+      "terminal": {
+        "bytes": 709,
+        "kind": "document",
+        "path": "research_runs/compact-cold-inputs-20261003-01/complete.json",
+        "sha256": "21c1a956cf786ad7b2ee70e73b7c1fb163fef3c5a31ee6328890c119f823323e"
+      }
+    },
+    "native": {
+      "native_final": {
+        "bytes": 8484,
+        "kind": "document",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/compact-cold-inputs-20261003-01/guard/final.json",
+        "sha256": "e0bbbbb3a9557d26334143ec8fb52ba77e6b4f27ee2119346a0b253ecd3e233f"
+      },
+      "observations": {
+        "native_disk_free_bytes": 19295072256,
+        "native_elapsed_seconds": 7.972126805005246,
+        "qualification": "Sampled guard observations precede outer tail; no kernel aggregate filesystem quota or full-size capacity inference.",
+        "sampled_memory_current_bytes": 11714560,
+        "sampled_memory_peak_bytes": 387375104,
+        "storage_observation": {
+          "aggregate_entry_visit_bound": 98304,
+          "allocated_bytes": 8380416,
+          "directories": 267,
+          "elapsed_seconds": 0.01370554200548213,
+          "entries": 923,
+          "hardlink_observations": [],
+          "logical_file_bytes": 5593632,
+          "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+          "regular_files": 657,
+          "root": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source",
+          "root_device": 66310,
+          "root_inode": 10504012,
+          "scan_attempts": 1
+        }
+      },
+      "original_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-864fd867343a491a9f55c2b7b10d3341.service",
+      "recorded_pids": [
+        3399932,
+        3399944,
+        3399957,
+        3399961
+      ]
+    },
+    "numerical_imports": false,
+    "phase": "materialize",
+    "proof": {
+      "future_inputs": {
+        "bytes": 12020,
+        "kind": "document",
+        "path": "research_artifacts/compact-cold-engineering-20261003/compact-cold-inputs-20261003-01/future-inputs.json",
+        "sha256": "3012aae4640d54cc48054542041790858ecfc51d6b998d9683fdd95e1c3f6b4d"
+      },
+      "graph_components": 76,
+      "graph_manifests": 19,
+      "kind": "materialized-inputs-only",
+      "population": {
+        "bytes": 240232,
+        "kind": "document",
+        "path": "research_artifacts/compact-cold-engineering-20261003/compact-cold-inputs-20261003-01/population.json",
+        "sha256": "be62d125dde082d4d22ab16d1ea911baa22b3d1ea3bdfb5e35118381633d69ee"
+      },
+      "required_graphs": 18,
+      "scientific_completion": false
+    },
+    "schema_version": 1,
+    "status": "authenticated"
+  },
+  "graph_manifests": 19,
+  "identity": "compact-cold-inputs-20261003-01",
+  "materialized_input_count": 43,
+  "native_elapsed_seconds": 7.972126805005246,
+  "opaque_component_byte_hashes": 76,
+  "paper_financial_fits_completed": 0,
+  "peak_sampled_memory_current_bytes": 387375104,
+  "qualification": "Opaque component byte hashing only, no array decoding/test-label inspection/numerical imports. Actual tool-session exit observation is root evidence; actual parent/wrapper/native/raw joins independently checked. Whole outcome recovery remains required before comparison.",
+  "required_graphs": 18,
+  "source": "9742c6ec817dd0917f9f35a52e4b83965ca1cd29",
+  "status": "ACCEPTED-MATERIALIZATION_COMPLETE-SCIENCE_PENDING",
+  "wrapper_authentication": {
+    "seal_sha256": "1300d3dfa30e3f84f11db5d2ecadcb5f564b69e7696c1e272b245c6e46b33eb0",
+    "status": "original-wrapper-exit0-and-tail-authenticated",
+    "wait": {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-launch-request02-2026-10-03/actual-parent-wait02/wait.json",
+      "sha256": "a14ca812ebceb9215dcaf02ae213d74f189cbdaea46222996319be8812683f6f"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+--- frozen01/archive01.py
++++ candidate02/archive01.py
+@@ -5,15 +5,18 @@
+ MAX=4194304;GIB=1024**3
+ require=io._require
+ 
++def safe_components(path):
++ require(not any(x in {'keys','apis','.env','hf_token.txt'} or x.startswith('.env.') for x in Path(path).parts),'secret path forbidden')
++
+ def direct(p):
+- p=Path(p);require(p.is_absolute() and p.resolve()==p,'absolute direct root required')
++ p=Path(p);safe_components(p);require(p.is_absolute() and p.resolve()==p,'absolute direct root required')
+  for x in (p,*p.parents):require(not x.is_symlink(),'redirected ancestry')
+  return p
+ 
+ def relative(s):
+  require(type(s)is str and s and len(s)<=2048,'bounded path required');p=Path(s)
+  require(not p.is_absolute() and str(p)==s and s!='.' and '..' not in p.parts,'unsafe member path')
+- require(not any(x in {'keys','apis','.env','hf_token.txt'} or x.startswith('.env.') for x in p.parts),'secret path forbidden');return p
++ safe_components(p);return p
+ 
+ def sig(s):return (s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
+ 
+@@ -93,8 +96,9 @@
+ def pages(directory,rows):
+  directory.mkdir(exist_ok=False);refs=[];group=[]
+  for row in rows:
+-  if len(json.dumps(group+[row],sort_keys=True).encode())>7800:
++  if len((json.dumps(group+[row],sort_keys=True,allow_nan=False)+'\n').encode())>7800:
+    require(group,'single metadata member exceeds compact page');refs.append(write(directory,f'page-{len(refs):05d}.json',group));group=[]
++  require(len((json.dumps([row],sort_keys=True,allow_nan=False)+'\n').encode())<=7800,'single metadata member exceeds compact page')
+   group.append(row)
+  if group:refs.append(write(directory,f'page-{len(refs):05d}.json',group))
+  return refs

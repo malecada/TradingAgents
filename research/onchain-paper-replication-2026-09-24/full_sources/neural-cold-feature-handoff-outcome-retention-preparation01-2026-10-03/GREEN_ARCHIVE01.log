@@ -1,0 +1,62 @@
+test_copy_and_recovery_exact_bytes_modes_membership (__main__.Tests.test_copy_and_recovery_exact_bytes_modes_membership) ... ERROR
+test_missing_extra_hardlink (__main__.Tests.test_missing_extra_hardlink) ... ERROR
+test_no_reuse_and_symlink_refusal (__main__.Tests.test_no_reuse_and_symlink_refusal) ... ERROR
+
+======================================================================
+ERROR: test_copy_and_recovery_exact_bytes_modes_membership (__main__.Tests.test_copy_and_recovery_exact_bytes_modes_membership)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/test_archive01.py", line 11, in test_copy_and_recovery_exact_bytes_modes_membership
+    copy=root/'archive';rows=m.snapshot(source,copy,limit=1024);m.verify_tree(copy,rows,limit=1024)
+                             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/archive01.py", line 63, in snapshot
+    source=direct(source);destination=direct(destination);require(not destination.is_relative_to(source) and not source.is_relative_to(destination),'independent snapshot root required');deadline=time.monotonic()+seconds;before=census(source,limit,deadline);destination.mkdir(exist_ok=False);fsync_dir(destination.parent);result=[]
+                                                                                                                                                                                                                                   ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/archive01.py", line 33, in census
+    require(total<=limit and allocated<=limit,'tree extent exceeds bound')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/owned_io.py", line 7, in _require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: tree extent exceeds bound
+
+======================================================================
+ERROR: test_missing_extra_hardlink (__main__.Tests.test_missing_extra_hardlink)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/test_archive01.py", line 26, in test_missing_extra_hardlink
+    root=pathlib.Path(d);src=root/'source';src.mkdir();(src/'a').write_bytes(b'a');out=root/'out';rows=m.snapshot(src,out,limit=1024)
+                                                                                                       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/archive01.py", line 63, in snapshot
+    source=direct(source);destination=direct(destination);require(not destination.is_relative_to(source) and not source.is_relative_to(destination),'independent snapshot root required');deadline=time.monotonic()+seconds;before=census(source,limit,deadline);destination.mkdir(exist_ok=False);fsync_dir(destination.parent);result=[]
+                                                                                                                                                                                                                                   ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/archive01.py", line 33, in census
+    require(total<=limit and allocated<=limit,'tree extent exceeds bound')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/owned_io.py", line 7, in _require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: tree extent exceeds bound
+
+======================================================================
+ERROR: test_no_reuse_and_symlink_refusal (__main__.Tests.test_no_reuse_and_symlink_refusal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/test_archive01.py", line 18, in test_no_reuse_and_symlink_refusal
+    root=pathlib.Path(d);src=root/'source';src.mkdir();(src/'a').write_bytes(b'a');out=root/'out';m.snapshot(src,out,limit=1024)
+                                                                                                  ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/archive01.py", line 63, in snapshot
+    source=direct(source);destination=direct(destination);require(not destination.is_relative_to(source) and not source.is_relative_to(destination),'independent snapshot root required');deadline=time.monotonic()+seconds;before=census(source,limit,deadline);destination.mkdir(exist_ok=False);fsync_dir(destination.parent);result=[]
+                                                                                                                                                                                                                                   ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/archive01.py", line 33, in census
+    require(total<=limit and allocated<=limit,'tree extent exceeds bound')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03/owned_io.py", line 7, in _require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: tree extent exceeds bound
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+FAILED (errors=3)

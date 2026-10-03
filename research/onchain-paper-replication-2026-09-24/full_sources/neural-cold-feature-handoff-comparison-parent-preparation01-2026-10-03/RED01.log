@@ -1,0 +1,56 @@
+test_actual_compare_selection (__main__.Cases.test_actual_compare_selection) ... ERROR
+test_exact_three_literal_delta_and_inverse_whole_AST (__main__.Cases.test_exact_three_literal_delta_and_inverse_whole_AST) ... FAIL
+test_mixed_or_unknown_selection_refused (__main__.Cases.test_mixed_or_unknown_selection_refused) ... ok
+test_old_materialization_refused (__main__.Cases.test_old_materialization_refused) ... FAIL
+test_process_io_cleanup_and_eight_field_wait_exact (__main__.Cases.test_process_io_cleanup_and_eight_field_wait_exact) ... ok
+
+======================================================================
+ERROR: test_actual_compare_selection (__main__.Cases.test_actual_compare_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-parent-preparation01-2026-10-03/test_parent_selection01.py", line 9, in test_actual_compare_selection
+    def test_actual_compare_selection(self):self.select(NEW,'compare')
+                                            ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-parent-preparation01-2026-10-03/test_parent_selection01.py", line 8, in select
+    tree=ast.parse(SOURCE.read_text());fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='require');main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main');statement=next(n for n in main.body if isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and any(isinstance(x,ast.Constant) and type(x.value)is str and x.value.startswith('this exact parent selects only ') for x in n.value.args));namespace={'identity':identity,'request':{'phase':phase}};exec(compile(ast.fix_missing_locations(ast.Module(body=[fn,statement],type_ignores=[])),str(SOURCE),'exec'),namespace)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-launch-request02-2026-10-03/parent_wait05.py", line 202, in <module>
+    require(identity == "compact-cold-inputs-20261003-01" and request["phase"] == "materialize",
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            "this exact parent selects only materialization")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-launch-request02-2026-10-03/parent_wait05.py", line 25, in require
+    raise ValueError(message)
+ValueError: this exact parent selects only materialization
+
+======================================================================
+FAIL: test_exact_three_literal_delta_and_inverse_whole_AST (__main__.Cases.test_exact_three_literal_delta_and_inverse_whole_AST)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-parent-preparation01-2026-10-03/test_parent_selection01.py", line 21, in test_exact_three_literal_delta_and_inverse_whole_AST
+    normalized=Normalize().visit(selected);self.assertEqual(sorted(seen),sorted(MAPPING));self.assertEqual(ast.dump(normalized,include_attributes=False),ast.dump(before,include_attributes=False))
+                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['compact-cold-comparison-20261003-01', 'c[48 chars]son']
+
+Second list contains 3 additional elements.
+First extra element 0:
+'compact-cold-comparison-20261003-01'
+
+- []
++ ['compact-cold-comparison-20261003-01',
++  'compare',
++  'this exact parent selects only comparison']
+
+======================================================================
+FAIL: test_old_materialization_refused (__main__.Cases.test_old_materialization_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-parent-preparation01-2026-10-03/test_parent_selection01.py", line 11, in test_old_materialization_refused
+    with self.assertRaises(ValueError):self.select(OLD,'materialize')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.030s
+
+FAILED (failures=2, errors=1)

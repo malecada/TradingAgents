@@ -1,0 +1,9 @@
+# Corrected outcome-retention source candidate02
+
+Three actual frozen-source counterexamples confirmed and corrected: post-flush compact singleton overflow; protected absolute external-reference paths; and false unattempted classification for born authority namespaces/reservations. Candidate01 and its withheld review remain immutable. No actual collector, capsule, registration, claim, numerical import, network or Git operation occurred.
+
+The final nine-test actual-source corpus fails on candidate01 (16 failing subcases) and passes on candidate02. The earlier seven-test corpus/RED and GREEN are retained as well. The unchanged 14 retention tests and three archive tests pass. Whole-module AST parity checks preserve 16 archive and 25 collector top-level statements outside explicitly changed functions; six copied authentication/IO/test/baseline files remain byte-identical. All exact logs and both corpus versions are retained.
+
+Schema2 collector requests add planned parent/wrapper reservation roots, including before receipt creation. Actual born paths are conservatively partial/unverified and retained; absence is only a fresh finite observation, not a claim that an identity has never existed. Existing launch request, parent eight-field wait, actual ResearchRun/source/runtime/budget and closed-comparison joins remain unchanged. This candidate is source-only and unreviewed, not activated or admitted.
+
+Remaining requirements: independent different-author review; actual root-owned closed source/native/authority evidence and parent invocation/wait provenance; root-approved collection envelope; complete actual off-laptop transfer/recovery with independent provenance. Inherited verify_claim legacy document Git timeout qualification remains. The full scientific comparison and financial fits are not established by these metadata tests.

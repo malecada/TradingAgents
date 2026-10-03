@@ -1,0 +1,13 @@
+--- accepted/parent_wait05.py
++++ candidate/comparison_parent05.py
+@@ -199,8 +199,8 @@
+     require(ref(request_ref["path"]) == request_ref, "original request changed")
+     request = json.loads(read(request_ref["path"]))
+     identity = document["allowed_identity"]
+-    require(identity == "compact-cold-inputs-20261003-01" and request["phase"] == "materialize",
+-            "this exact parent selects only materialization")
++    require(identity == "compact-cold-comparison-20261003-01" and request["phase"] == "compare",
++            "this exact parent selects only comparison")
+     require(command == [sys.executable, "-B", document["launcher"]["path"], "--request",
+                         request_ref["path"], "--request-sha256", request_ref["sha256"]],
+             "actual locked wrapper command differs")

@@ -1,0 +1,35 @@
+"""Independent tiny synthetic source counterexamples; never actual collector/main."""
+import ast,hashlib,json,sys,tempfile,time
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;AUTHOR=HERE.parent/'neural-cold-feature-handoff-outcome-retention-preparation01-2026-10-03'
+sys.path.insert(0,str(AUTHOR));import archive01 as a;import collector01 as c
+manifest=json.loads((AUTHOR/'MANIFEST01.json').read_bytes());assert hashlib.sha256((AUTHOR/'MANIFEST01.json').read_bytes()).hexdigest()=='5483a8df15e92e218f9cd1b36674c90d474a9aba8325a7d9b9a13a10f0f5096d'
+for row in manifest['files']:
+ b=(AUTHOR/row['path']).read_bytes();assert len(b)==row['bytes'] and hashlib.sha256(b).hexdigest()==row['sha256']
+results=[]
+with tempfile.TemporaryDirectory(dir=HERE) as d:
+ root=Path(d)
+ # Exact serializer escaped metadata behavior; no source arrays/data.
+ rows=[{'path':'a','kind':'file','bytes':1,'mode':384,'sha256':'0'*64},{'path':'b'+'é'*1800,'kind':'file','bytes':1,'mode':384,'sha256':'1'*64}]
+ refs=a.pages(root/'pages',rows);sizes=[(root/'pages'/r['path']).stat().st_size for r in refs]
+ assert sizes[1]>8192
+ try:a.read(root/'pages'/refs[1]['path'],8192)
+ except ValueError as error:refusal=str(error)
+ else:raise AssertionError('expected own-reader refusal')
+ results.append({'finding':'R1 page over compact limit','emitted_sizes':sizes,'subsequent_reader_refusal':refusal,'synthetic':True})
+ # source credential-name path refusal is absent for external metadata references.
+ sensitive=root/'keys';sensitive.mkdir();p=sensitive/'synthetic.txt';p.write_bytes(b'SYNTHETIC-NONSECRET')
+ q={'path':str(p),'sha256':c.digest(p.read_bytes())};got=c.reference(q);assert got==b'SYNTHETIC-NONSECRET'
+ saved=c.capture_external({'ref':q},root/'external');assert len(saved)==1 and (root/'external'/saved[0]['retained']).read_bytes()==got
+ results.append({'finding':'R2 external credential path copied','synthetic_only':True,'retained_rows':len(saved),'path_class':'keys/synthetic.txt'})
+ # Born supervisor namespace with no actual ResearchRun remains mislabelled.
+ cap=root/'synthetic-capsule';cap.mkdir();(cap/'proof_supervise'/c.IDS['materialize']).mkdir(parents=True)
+ value=c.observed_phase(cap,'materialize',None);assert value['original_lifecycle_observation']=='not_observed'
+ value.update(scientific_authentication={'status':'unverified'},wrapper_authentication={'status':'unverified'},cleanup={'status':'unresolved'},lifecycle_authentication={'status':'unverified'})
+ fn=next(n for n in ast.parse((AUTHOR/'collector01.py').read_bytes()).body if isinstance(n,ast.FunctionDef) and n.name=='collect')
+ stmt=next(n for n in ast.walk(fn) if isinstance(n,ast.Assign) and any(isinstance(t,ast.Subscript) and isinstance(t.slice,ast.Constant) and t.slice.value=='strict_scientific_disposition' for t in n.targets))
+ ns={'value':value,'phase':'materialize','wrapper':None};exec(compile(ast.Module(body=[stmt],type_ignores=[]),'actual-disposition-statement','exec'),ns)
+ assert value['strict_scientific_disposition']=='NOT_ATTEMPTED_OBSERVED'
+ results.append({'finding':'R3 born proof supervisor misclassified','actual_born_namespace':'proof_supervise/'+c.IDS['materialize'],'disposition':value['strict_scientific_disposition'],'synthetic':True})
+assert not any(n.split('.')[0] in {'numpy','torch','tradingagents','pandas','pyarrow'} for n in sys.modules)
+(HERE/'counterexamples01.json').write_text(json.dumps({'status':'THREE_COUNTEREXAMPLES_REPRODUCED','results':results},indent=2,sort_keys=True)+'\n');print(json.dumps(results,sort_keys=True))

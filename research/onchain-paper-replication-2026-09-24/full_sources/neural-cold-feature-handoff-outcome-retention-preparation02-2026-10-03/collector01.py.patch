@@ -1,0 +1,115 @@
+--- frozen01/collector01.py
++++ candidate02/collector01.py
+@@ -22,9 +22,9 @@
+  spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);sys.modules[name]=m;spec.loader.exec_module(m);return m
+ 
+ def source_context(q):
+- require(set(q)=={'schema_version','root','source','inventory','releases','wrappers','wrapper_waits','parent_sources','destination'} and type(q['schema_version'])is int and q['schema_version']==1,'exact collection request required')
+- require(set(q['releases'])==set(q['wrappers'])==set(q['wrapper_waits'])==set(q['parent_sources'])==set(IDS),'both fixed phase denominator required')
+- root=store.direct(q['root']);require(Path.cwd()==root and (root/'.git').is_dir() and not os.path.lexists(root/'.git/objects/info/alternates'),'actual isolated capsule cwd required')
++ require(set(q)=={'schema_version','root','source','inventory','releases','wrappers','wrapper_waits','parent_sources','reservation_roots','destination'} and type(q['schema_version'])is int and q['schema_version']==2,'exact collection request required')
++ require(set(q['releases'])==set(q['wrappers'])==set(q['wrapper_waits'])==set(q['parent_sources'])==set(q['reservation_roots'])==set(IDS),'both fixed phase denominator required')
++ root=store.direct(q['root']);[reservation_paths(q,root,phase) for phase in IDS];require(Path.cwd()==root and (root/'.git').is_dir() and not os.path.lexists(root/'.git/objects/info/alternates'),'actual isolated capsule cwd required')
+  require(re.fullmatch('[0-9a-f]{40}',q['source']) is not None,'source commit required');head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True,timeout=10).strip();require(head==q['source'],'current source freeze differs')
+  raw=reference(q['inventory']);require(digest(raw)==INV,'selected composition04 inventory differs');inventory=json.loads(raw);rows=inventory['source_inventory'];require(len(rows)==195 and inventory['package_count']==147,'source195/package147 required');sources={}
+  for row in rows:
+@@ -32,6 +32,27 @@
+  require(len(sources)==195 and sum(n.startswith('tradingagents/') for n in sources)==147,'source mapping duplicates or package mismatch')
+  raw_api=load('proof_raw01',root/'proof_tools/proof_raw01.py',sources['proof_tools/proof_raw01.py']);api=load('proof_release01',root/'proof_tools/proof_release01.py',sources['proof_tools/proof_release01.py']);api.no_numerics()
+  return root,sources,raw_api,api
++
++AUTHORITY_NAMESPACES=('research_runs','proof_outer','proof_supervise','research_artifacts/compact-cold-engineering-20261003','research_artifacts/onchain-paper-replication-2026-09-24/runs')
++
++# Exact selected compact_native_producer.NAMESPACES. Their presence is only
++# conservative born-artifact evidence, never an attributed Owner or claim.
++COMPACT_NAMESPACES=('onchain_representations','onchain_pair_workflows','onchain_compact_sampler','onchain_compact_samples','onchain_compact_dictionary','onchain_compact_mcm','onchain_compact_outputs','onchain_compact_graphs','onchain_compact_publications','onchain_compact_terminals')
++def capsule_authority_paths(root,phase):
++ return [root/ns/IDS[phase] for ns in AUTHORITY_NAMESPACES]+[root/'research_artifacts'/ns for ns in COMPACT_NAMESPACES]
++
++def reservation_paths(q,root,phase):
++ values=q['reservation_roots'][phase];require(type(values)is dict and set(values)=={'wrapper','parent'},'exact planned wrapper and parent roots required')
++ paths={name:store.direct(path) for name,path in values.items()}
++ require(paths['wrapper']!=paths['parent'] and all(not p.is_relative_to(root) and not root.is_relative_to(p) for p in paths.values()) and not paths['wrapper'].is_relative_to(paths['parent']) and not paths['parent'].is_relative_to(paths['wrapper']),'independent finite reservation roots required')
++ if q.get('wrappers',{}).get(phase) is not None:require(store.direct(q['wrappers'][phase])==paths['wrapper'],'actual wrapper differs from planned root')
++ if q.get('wrapper_waits',{}).get(phase) is not None:require(store.direct(q['wrapper_waits'][phase]['path']).parent==paths['parent'],'actual parent wait differs from planned root')
++ return paths
++
++def unattempted_observation(q,root,phase):
++ paths=capsule_authority_paths(root,phase)+list(reservation_paths(q,root,phase).values())
++ born=[str(p) for p in paths if os.path.lexists(p)]
++ return {'all_absent':not born,'checked_paths':[str(p) for p in paths],'born_paths':born,'qualification':'fresh absence of all declared fixed authority and root reservations; not lifetime absence or admission'}
+ 
+ def observed_phase(root,phase,release):
+  identity=IDS[phase];base=root/'research_runs'/identity;names=('claim.json','complete.json','failed.json');retained={}
+@@ -42,8 +63,9 @@
+  expected=None
+  if release is not None:
+   registration=metadata(root,release['registration']['path']);require(identity in registration['experiments'],'selected phase absent from original registration');expected=registration['experiments'][identity]['outputs']
+- status=('unclaimed_partial' if os.path.lexists(base) else 'not_observed') if not retained else 'unclaimed_partial' if 'claim.json' not in retained else 'conflicting_original_terminals' if 'complete.json' in retained and 'failed.json' in retained else 'failed_terminal_present_unverified' if 'failed.json' in retained else 'complete_terminal_present_unverified' if 'complete.json' in retained else 'claimed_partial_no_terminal'
+- return {'phase':phase,'identity':identity,'original_lifecycle_observation':status,'original_receipts':retained,'registered_outputs':expected,'protocol_outputs':OUTPUTS[phase],'present_output_names':actual,'absent_registered_outputs':None if expected is None else sorted(set(expected)-set(actual or [])),'unavailable_registered_output_names':None if expected is None else sorted(set(expected)-set(actual or [])),'scientific_authentication':None,'wrapper_authentication':None,'cleanup':None,'numerical_results_synthesized':False}
++ born=[str(path) for path in capsule_authority_paths(root,phase) if os.path.lexists(path)]
++ status=('unclaimed_partial' if born else 'not_observed') if not retained else 'unclaimed_partial' if 'claim.json' not in retained else 'conflicting_original_terminals' if 'complete.json' in retained and 'failed.json' in retained else 'failed_terminal_present_unverified' if 'failed.json' in retained else 'complete_terminal_present_unverified' if 'complete.json' in retained else 'claimed_partial_no_terminal'
++ return {'phase':phase,'identity':identity,'original_lifecycle_observation':status,'original_receipts':retained,'born_capsule_namespaces':born,'registered_outputs':expected,'protocol_outputs':OUTPUTS[phase],'present_output_names':actual,'absent_registered_outputs':None if expected is None else sorted(set(expected)-set(actual or [])),'unavailable_registered_output_names':None if expected is None else sorted(set(expected)-set(actual or [])),'scientific_authentication':None,'wrapper_authentication':None,'cleanup':None,'numerical_results_synthesized':False}
+ 
+ def cleanup_observation(root,phase,wrapper):
+  identity=IDS[phase];base='research_artifacts/onchain-paper-replication-2026-09-24/runs/'+identity;required=[base+'/launch.json',base+'/owner.json',base+'/guard/final.json',base+'/guard/cpu_ready.json',base+'/guard/child_exit.json','proof_outer/'+identity+'/supervisor.json'];missing=[p for p in required if not (root/p).exists()]
+@@ -129,11 +151,13 @@
+  try:
+   trees={'capsule':(root,GIB)}
+   for phase in IDS:
+-   wrapper=q['wrappers'][phase];wait=q['wrapper_waits'][phase]
+-   if wrapper is not None:trees['wrapper-'+phase]=(store.direct(wrapper),32*1024**2)
+-   else:absent.append('wrapper-'+phase)
+-   if wait is not None:trees['parent-'+phase]=(store.direct(wait['path']).parent,16*1024**2)
+-   else:absent.append('parent-'+phase)
++   if 'reservation_roots' in q:
++    paths=reservation_paths(q,root,phase)
++   else:
++    paths={'wrapper':None if q['wrappers'][phase] is None else store.direct(q['wrappers'][phase]),'parent':None if q['wrapper_waits'][phase] is None else store.direct(q['wrapper_waits'][phase]['path']).parent}
++   for role,path in paths.items():
++    if path is not None and os.path.lexists(path):trees[role+'-'+phase]=(path,(32 if role=='wrapper' else 16)*1024**2)
++    else:absent.append(role+'-'+phase)
+   for name,(path,limit) in trees.items():indexes[name]=store.pages(members/name,store.snapshot(path,data/name,limit=limit))
+   outcomes={phase:{'identity':identity,'strict_scientific_disposition':'FAILED_OR_UNVERIFIED','source_authentication':'refused','error_type':type(error).__name__,'numerical_results_synthesized':False} for phase,identity in IDS.items()}
+   report={'schema_version':1,'source':q.get('source'),'root':str(root),'outcomes':outcomes,'byte_retention_status':'complete-original-byte-copy','source_authentication':'refused','external_reference_authentication':'not_performed','absent_roots':absent,'member_pages':indexes,'tree_root_modes':{name:(data/name).stat().st_mode&0o777 for name in indexes},'paper_financial_completion':False,'numerical_arrays_decoded':False,'original_receipts_modified':False,'remote_recovery_proved':False}
+@@ -152,8 +176,8 @@
+  try:
+   observed_roots={'capsule':(root,GIB)}
+   for phase in IDS:
+-   if q['wrappers'][phase] is not None:observed_roots['wrapper-'+phase]=(store.direct(q['wrappers'][phase]),32*1024**2)
+-   if q['wrapper_waits'][phase] is not None:observed_roots['parent-'+phase]=(store.direct(q['wrapper_waits'][phase]['path']).parent,16*1024**2)
++   for role,path in reservation_paths(q,root,phase).items():
++    if os.path.lexists(path):observed_roots[role+'-'+phase]=(path,(32 if role=='wrapper' else 16)*1024**2)
+   before={name:(store.sig(path.stat()),store.census(path,limit,time.monotonic()+120)) for name,(path,limit) in observed_roots.items()}
+   for phase in IDS:
+    release=None;wrapper=None
+@@ -162,23 +186,21 @@
+    except Exception as error:
+     if isinstance(error,(MemoryError,RecursionError)):raise
+     value=failure_observation(phase,error)
+-   outcomes[phase]=value
++   outcomes[phase]=value;value['reservation_observation']=unattempted_observation(q,root,phase)
+    for key,fn in [('lifecycle_authentication',lambda:authenticate_lifecycle(root,sources,phase,release)),('scientific_authentication',lambda:authenticate_phase(q,root,sources,raw_api,api,phase,release)),('wrapper_authentication',lambda:wrapper_authentication(q,root,phase,wrapper,release)),('cleanup',lambda:cleanup_observation(root,phase,wrapper))]:
+     try:value[key]=fn()
+     except Exception as e:
+      if isinstance(e,(MemoryError,RecursionError)):raise
+      value[key]={'status':'unverified','error_type':type(e).__name__,'missing_or_failed_original_evidence':True}
+-   value['strict_scientific_disposition']=('MATERIALIZATION_COMPLETE_SCIENCE_PENDING' if phase=='materialize' else 'SCIENTIFIC_COMPARISON_COMPLETE') if 'observation_error_type' not in value and value['scientific_authentication'].get('status')=='authenticated' and value['wrapper_authentication'].get('status')=='original-wrapper-exit0-and-tail-authenticated' and value['cleanup'].get('status')=='original-cleanup-observed' else ('FAILED_AUTHENTICATED_TERMINAL' if value['cleanup'].get('status')=='original-cleanup-observed' else 'FAILED_AUTHENTICATED_TERMINAL_CLEANUP_UNRESOLVED') if value['lifecycle_authentication'].get('status')=='failed' else 'UNAVAILABLE_OR_INCOMPLETE_TERMINAL' if value['lifecycle_authentication'].get('unavailable_cell_count') else 'NOT_ATTEMPTED_OBSERVED' if value['original_lifecycle_observation']=='not_observed' and wrapper is None else 'FAILED_OR_UNVERIFIED'
++   value['strict_scientific_disposition']=('MATERIALIZATION_COMPLETE_SCIENCE_PENDING' if phase=='materialize' else 'SCIENTIFIC_COMPARISON_COMPLETE') if 'observation_error_type' not in value and value['scientific_authentication'].get('status')=='authenticated' and value['wrapper_authentication'].get('status')=='original-wrapper-exit0-and-tail-authenticated' and value['cleanup'].get('status')=='original-cleanup-observed' else ('FAILED_AUTHENTICATED_TERMINAL' if value['cleanup'].get('status')=='original-cleanup-observed' else 'FAILED_AUTHENTICATED_TERMINAL_CLEANUP_UNRESOLVED') if value['lifecycle_authentication'].get('status')=='failed' else 'UNAVAILABLE_OR_INCOMPLETE_TERMINAL' if value['lifecycle_authentication'].get('unavailable_cell_count') else 'NOT_ATTEMPTED_OBSERVED' if value['original_lifecycle_observation']=='not_observed' and wrapper is None and unattempted_observation(q,root,phase)['all_absent'] else 'FAILED_OR_UNVERIFIED'
+   external=capture_external(q,data/'external-evidence');copies['external-evidence']=store.census(data/'external-evidence',32*1024**2,time.monotonic()+120)
+   copies['external-evidence']=[{k:v for k,v in row.items() if k!='signature'}|({'sha256':store.hash_file(data/'external-evidence'/row['path'],row,time.monotonic()+10)} if row['kind']=='file' else {}) for row in copies['external-evidence']]
+   copies['capsule']=store.snapshot(root,data/'capsule',limit=GIB)
+   for phase in IDS:
+-   path=q['wrappers'][phase]
+-   if path is None:absent.append('wrapper-'+phase)
+-   else:copies['wrapper-'+phase]=store.snapshot(store.direct(path),data/('wrapper-'+phase),limit=32*1024**2)
+-   wait=q['wrapper_waits'][phase]
+-   if wait is None:absent.append('parent-'+phase)
+-   else:copies['parent-'+phase]=store.snapshot(store.direct(wait['path']).parent,data/('parent-'+phase),limit=16*1024**2)
++   for role,path in reservation_paths(q,root,phase).items():
++    name=role+'-'+phase
++    if not os.path.lexists(path):absent.append(name)
++    else:copies[name]=store.snapshot(path,data/name,limit=(32 if role=='wrapper' else 16)*1024**2)
+   for name,(path,limit) in observed_roots.items():require(before[name]==(store.sig(path.stat()),store.census(path,limit,time.monotonic()+120)),'original evidence changed across authentication/retention')
+   require(subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True,timeout=10).strip()==q['source'],'source freeze changed while collecting')
+   for path,h in sources.items():require(digest(store.read(root/path))==h,'source changed while collecting')
