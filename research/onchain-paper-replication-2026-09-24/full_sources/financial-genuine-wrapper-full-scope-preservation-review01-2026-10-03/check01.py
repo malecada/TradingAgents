@@ -1,0 +1,45 @@
+import ast,gzip,hashlib,importlib.util,io,json,os,shutil,stat,subprocess,sys,tarfile,time
+from pathlib import Path
+O=Path(__file__).resolve().parent;F=O.parent;P=F/'financial-genuine-wrapper-root-preservation01-2026-10-03';U=F/'held-consumer-final-recovery-preparation04-2026-10-03';sys.path.insert(0,str(U));spec=importlib.util.spec_from_file_location('archive_primitives_only',U/'recovery04.py');a=importlib.util.module_from_spec(spec);spec.loader.exec_module(a);sha=lambda b:hashlib.sha256(b).hexdigest();checks=[]
+def ck(v,m):
+ assert v,m
+ checks.append(m)
+def read(p):return a.read(p.parent,p.name)
+def doc(p,pin=None):
+ b=read(p);ck(pin is None or sha(b)==pin,'pin '+p.name);v=json.loads(b);ck(a.encode(v)==b,'canonical '+p.name);return v
+request=doc(P/'REQUEST01.json');receipt=doc(P/'CAPTURE01.json');manifest=doc(P/'complete-manifest01.json','f4835eb4914d1b014e16cc28eb86197f6e003ce40f153f8dffbb478da4092101');root=Path(request['source_root']);head='44bf99d199acae5a043cf5b472a53e2fcf4caf1b';base='390c82a9958e135c24bcca80f3a636313ca27932';ck(all(receipt[k]==v for k,v in request.items()),'capture joins complete request');ck(request['actual_HEAD']==head and request['implementation_baseline']==base,'financial sources notheldd443');ck(sha(read(U/'recovery04.py'))=='b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a','exact accepted generic primitives');ck(a.scan(root)==manifest,'whole originalGit/source tree before');archive=read(P/'complete-source01.tar.gz');info=receipt['archive'];ck(len(archive)==info['bytes']==2218058 and sha(archive)==info['sha256']=='2e267a231ba56777a42af32db38b47a380f98a7bae84643ee86e4b4aafc41f1b' and info['manifest_sha256']==request['complete_manifest_sha256'],'exactactualcompressedarchive')
+# Use only prior independent pure raw framing/reencoding definitions.
+prior=F/'held-consumer-final-released-scope-capture-review01-2026-10-03/check01.py';tree=ast.parse(read(prior));defs=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ('decode','recode')];ck(len(defs)==2,'independent puredecoderpair');exec(compile(ast.Module(body=defs,type_ignores=[]),str(prior),'exec'));bodies,framing=decode(archive,manifest);ck(recode(manifest,bodies)==archive,'independent fullcanonicalgzip/TAR equality');files={r['path']:r for r in manifest['members'] if r['kind']=='file'};ck(len(manifest['members'])==receipt['manifest_members']==748 and len(files)==receipt['regular_bodies']==527 and sum(r['bytes'] for r in files.values())==receipt['logical_bytes']==4924712,'actual748/527/4924712');ck(all(read(root/n)==bodies[n] for n in files),'all527opaque original/archive bodies');ck(stat.S_IMODE(root.lstat().st_mode)==manifest['root_mode'],'originalrootmode');allocated=root.lstat().st_blocks*512+sum((root/r['path']).lstat().st_blocks*512 for r in manifest['members']);ck(allocated<=a.BASE and receipt['logical_bytes']<=a.BASE and len(archive)<=a.FILE,'actual4/128MiB bounds');free=shutil.disk_usage(P).free;ck(free>=a.FLOOR,'current10GiBfloor')
+def git(args,data=None):
+ r=subprocess.run(['git','--no-replace-objects','-c','protocol.allow=never','-C',str(root),*args],input=data,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=10,env={'PATH':'/usr/bin:/bin','GIT_NO_REPLACE_OBJECTS':'1','GIT_NO_LAZY_FETCH':'1','GIT_OPTIONAL_LOCKS':'0','GIT_CONFIG_GLOBAL':'/dev/null','GIT_CONFIG_NOSYSTEM':'1'});ck(r.returncode==0 and len(r.stdout)<=8*1024**2 and len(r.stderr)<=65536,'boundedfinancialGit');return r.stdout
+ck(git(['rev-parse','HEAD']).decode().strip()==head,'actualfinancialHEAD');ck(all(not os.path.lexists(root/n) for n in ['.git/objects/info/alternates','.git/info/grafts','.git/refs/replace']),'no foreignGit authority');priorreview=doc(F/'financial-genuine-wrapper-installed-auxiliary-review01-2026-10-03/READBACK01.json','884d6e467830ba517ead6ff48f51e7a823150bf0d8a3f4e18524def0e74db865');ck(sha(read(F/'financial-genuine-wrapper-installed-auxiliary-review01-2026-10-03/REVIEW01.md'))==request['closed_installed_review_sha256'],'accepted actualinstalled review');rows={r['path']:r for r in priorreview['joined']};current={}
+for entry in git(['ls-tree','-r','-z',head]).split(b'\0'):
+ if not entry:continue
+ m,n=entry.split(b'\t');mode,typ,oid=m.decode().split();ck(typ=='blob','actualtrackedtype');current[n.decode()]={'oid':oid,'git_mode':mode}
+ck(set(current)==set(rows)=={n for n in files if not n.startswith('.git/')} and len(current)==242,'complete tracked242 vswholeGitFs');reply=git(['cat-file','--batch'],(''.join(current[n]['oid']+'\n' for n in sorted(current))).encode());offset=0
+for n in sorted(current):
+ end=reply.index(b'\n',offset);oid,typ,size=reply[offset:end].decode().split();size=int(size);body=reply[end+1:end+1+size];offset=end+size+2;r=rows[n];ck(reply[offset-1:offset]==b'\n' and typ=='blob' and oid==current[n]['oid']==r['oid'] and current[n]['git_mode']==r['git_mode'],'actualcommittedOid/mode');ck(body==bodies[n] and hashlib.sha1(b'blob '+str(size).encode()+b'\0'+body).hexdigest()==oid and sha(body)==r['sha256'] and size==r['bytes'] and files[n]['mode']==r['mode'],'all242actualGit/archive/pinjoin')
+ck(offset==len(reply),'completeGitbatch');ck(sum(r['role']=='implementation' for r in rows.values())==194 and sum(n.startswith('tradingagents/') for n in current)==149,'194code149package vs48aux');ck(git(['rev-parse',head+'^']).decode().strip()==base,'actual390baselineparent');ck(not any(n.startswith(('research_runs/','research_artifacts/','fixture_outer/')) for n in files),'noRunclaimoutputnamespace');D='fixture_inputs/financial_wrapper_draft01/';draft=json.loads(bodies[D+'DRAFT01.json']);env=json.loads(bodies[D+'environment.DRAFT.json']);mapping=json.loads(bodies[D+'runtime_mapping.json']);ck(sha(bodies['uv.lock'])==mapping['lock_sha256'],'archivedrootlock joins originalruntime metadata');ck(all(env[k] is None for k in ['torch_version','cuda_build','cuda_available']),'actual liveTorch unavailable');ck(all(v is None for v in draft['future'].values()) and draft['future_admitted_source_total'] is None,'notregistered/unreleased')
+for slot in draft['slots']:
+ ck(len(slot['inputs'])==8 and slot['admitted'] is False and slot['actual_outcome'] is None,'18draftslots notactualdeps')
+ for ref in slot['inputs'].values():ck(sha(bodies[D+Path(ref['prepared_path']).name])==ref['sha256'] and ref['path'] is None and ref['dataset'] is None,'144archivebodydraftjoins')
+ck(len(draft['slots'])==18,'18unreserved phases')
+# Targeted same-user writer snapshot reads fd links/flags only, never environment.
+writers=[];denied=[];fdcount=0;deadline=time.monotonic()+20
+for p in Path('/proc').iterdir():
+ if not p.name.isdecimal() or int(p.name)==os.getpid():continue
+ ck(time.monotonic()<deadline,'finitewriter snapshot')
+ try:
+  if p.stat().st_uid!=os.geteuid():continue
+  for f in (p/'fd').iterdir():
+   fdcount+=1;ck(fdcount<=32768,'finitefdcount')
+   try:
+    target=os.readlink(f).removesuffix(' (deleted)');path=Path(target)
+    if not path.is_absolute() or not path.is_relative_to(root):continue
+    props=dict(line.split(':',1) for line in (p/'fdinfo'/f.name).read_text().splitlines() if ':' in line);flags=int(props['flags'].strip(),8)
+    if flags&os.O_ACCMODE in (os.O_WRONLY,os.O_RDWR):writers.append({'pid':p.name,'fd':f.name,'target':target})
+   except FileNotFoundError:pass
+   except PermissionError:denied.append({'pid':p.name,'fd':f.name})
+ except FileNotFoundError:pass
+ except PermissionError:denied.append({'pid':p.name,'fd':None})
+ck(not writers,'no observed sameuser rootwritable descriptors');ck(a.scan(root)==manifest,'whole actualsourceGit stableafter');ck(git(['rev-parse','HEAD']).decode().strip()==head and git(['status','--porcelain','--untracked-files=all'])==b'','current clean stableHEAD');ck(set(p.name for p in P.iterdir())=={'REQUEST01.json','CAPTURE01.json','complete-manifest01.json','complete-source01.tar.gz'},'exactlocalcapturefourfiles');ck(not any(n.split('.')[0] in {'numpy','torch','scipy','pandas'} for n in sys.modules),'no numericalimports');out={'decision':'ACCEPTED_LOCAL_COMPLETE_FINANCIAL_SOURCE_ARCHIVE_ONLY','checks':len(checks),'request_sha256':sha(read(P/'REQUEST01.json')),'capture_sha256':sha(read(P/'CAPTURE01.json')),'manifest_sha256':info['manifest_sha256'],'archive':info,'current_commit':head,'baseline_commit':base,'whole_typed_members':748,'whole_regular_bodies':527,'tracked242':242,'implementation194':194,'package149':149,'draft_auxiliary48':48,'logical_bytes':4924712,'allocated_bytes':allocated,'disk_free_bytes':free,'framing':framing,'writer_snapshot':{'writers':writers,'inaccessible':denied,'fd_count':fdcount,'qualification':'observed accessible same-user descriptors only; complete repeated tree stability is verified; no universal/future writer guarantee'},'external_or_flat_recovery':False,'held205_33_authenticator_used':False,'genuine_runtime_or_registration':False};(O/'READBACK01.json').write_bytes(a.encode(out));print(json.dumps(out,indent=2))

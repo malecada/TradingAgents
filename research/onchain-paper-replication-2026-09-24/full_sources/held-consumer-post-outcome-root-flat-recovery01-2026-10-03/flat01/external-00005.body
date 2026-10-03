@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/fixture_tools/outer_controller01.py", line 221, in <module>
+    run(json.loads(args.release.read_bytes()),args.case)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/fixture_tools/outer_controller01.py", line 216, in run
+    if primary is not None:raise primary
+                           ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/fixture_tools/outer_controller01.py", line 169, in run
+    require(process.returncode==(0 if case=='success' else 1),'supervisor exit differs from exact case')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/fixture_tools/raw_receipts01.py", line 8, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: supervisor exit differs from exact case

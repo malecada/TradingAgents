@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-auxiliary-preparation01-2026-10-03/build_aux01.py", line 130, in <module>
+    R.require(a.build_draft,'explicit draft mode required');d=build();print(json.dumps({'status':d['status'],'source':COMMIT,'slots':18,'paper_fit_credit':0}))
+                                                              ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-auxiliary-preparation01-2026-10-03/build_aux01.py", line 101, in build
+    refs,values=origins();source=authenticate_sources(values);mapping,env,observations=runtime(values)
+                                                                                       ~~~~~~~^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-auxiliary-preparation01-2026-10-03/build_aux01.py", line 86, in runtime
+    raw=read(path/'METADATA');total+=len(raw);message=BytesParser().parsebytes(raw,headersonly=True);name=message['Name'];version=message['Version']
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-auxiliary-preparation01-2026-10-03/build_aux01.py", line 18, in read
+    p=Path(path);return R.read(p.parent,p.name)
+                        ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-auxiliary-preparation01-2026-10-03/recovery04.py", line 25, in read
+    require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_size<=limit,'file type/link/extent')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-auxiliary-preparation01-2026-10-03/recovery04.py", line 11, in require
+    if not v:raise ValueError(msg)
+             ^^^^^^^^^^^^^^^^^^^^^
+ValueError: file type/link/extent

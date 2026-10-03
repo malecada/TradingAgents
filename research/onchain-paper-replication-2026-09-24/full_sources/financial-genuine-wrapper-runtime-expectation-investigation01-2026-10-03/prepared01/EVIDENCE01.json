@@ -1,0 +1,59 @@
+{
+  "cumulative_authority": null,
+  "current_basic_observations": {
+    "cpu_count": 12,
+    "lock_sha256": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a",
+    "packages": {
+      "numpy": "2.3.0",
+      "pyarrow": "23.0.1",
+      "scikit-learn": "1.7.2",
+      "scipy": "1.17.1",
+      "torch": "2.10.0"
+    },
+    "python": "3.13.13"
+  },
+  "current_environment_equality_proven": false,
+  "current_order": {
+    "actual_inventory_after_claim": true,
+    "claim_context_line": 354,
+    "comparison_line": 356,
+    "comparison_source": "if inventory(root, include_torch=job['kind'] in ('fit', 'neural_resource', 'compact_resource', 'financial_wrapper')) != json.loads(run.read_input(job['environment_input'])):\n    raise ValueError('registered execution environment differs')",
+    "mismatch_spends_attempt": true
+  },
+  "current_source_observed": "44bf99d199acae5a043cf5b472a53e2fcf4caf1b",
+  "current_torch_api_observed": false,
+  "driver_unchanged_claim": false,
+  "historical_claim_sha256": "d998a80d0178a4e46bf97ac863611ad3b1794d2b2e74e3048c4704f397f8b4ba",
+  "historical_environment_sha256": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87",
+  "historical_expected_values": {
+    "cpu_count": 12,
+    "cuda_available": false,
+    "cuda_build": "12.8",
+    "lock_sha256": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a",
+    "packages": {
+      "numpy": "2.3.0",
+      "pyarrow": "23.0.1",
+      "scikit-learn": "1.7.2",
+      "scipy": "1.17.1",
+      "torch": "2.10.0"
+    },
+    "python": "3.13.13",
+    "torch_version": "2.10.0+cu128"
+  },
+  "historical_failed_sha256": "51f475bfb01db192a78bbc09cbbc44c7ba2f3d46836263c7ab38517a8419caba",
+  "historical_source": "d443208795f59292c156c5b81b687594efacea4d",
+  "input_adoption": null,
+  "next_root_action": "Independently review and adopt exact expectation body SHA1ff7418a as separately hashed environment input; keep historical null draft unchanged. Freeze exact new source/input registration/cumulative/release. Actual worker compares full inventory inside genuine guard AFTER claim; mismatch closes spent FAILED, never replay same identity.",
+  "old_order": {
+    "actual_inventory_after_claim": true,
+    "claim_context_line": 342,
+    "comparison_line": 344,
+    "comparison_source": "if inventory(root, include_torch=job['kind'] in ('fit', 'neural_resource', 'compact_resource')) != json.loads(run.read_input(job['environment_input'])):\n    raise ValueError('registered execution environment differs')",
+    "mismatch_spends_attempt": true
+  },
+  "paper_fit_credit": 0,
+  "phase_slots_unreserved": 18,
+  "recovered_metadata_sha256": "d8b81554205b9eeb5523fbed41ba616ffc79a0b7fb78c6779b2bcee7f4844fdb",
+  "registration": null,
+  "status": "EXPECTATION_PREPARATION_ONLY_NOT_RELEASED"
+}

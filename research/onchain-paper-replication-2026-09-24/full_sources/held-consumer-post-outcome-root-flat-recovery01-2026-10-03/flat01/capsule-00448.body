@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/job.py", line 552, in <module>
+    result = globals()[args.mode](args)
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/job.py", line 272, in monitor
+    result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',
+        memory_swap_max_bytes=0, owner_identity=owner, native_unit_limits=job['resources'].get('native_unit_limits'), **guard_policy)
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py", line 689, in guarded_run
+    raise selected_primary
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py", line 532, in guarded_run
+    boundaries()
+    ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py", line 439, in boundaries
+    if time.monotonic()-begin>wall_seconds:raise RuntimeError('registered wall-clock limit exceeded')
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: registered wall-clock limit exceeded

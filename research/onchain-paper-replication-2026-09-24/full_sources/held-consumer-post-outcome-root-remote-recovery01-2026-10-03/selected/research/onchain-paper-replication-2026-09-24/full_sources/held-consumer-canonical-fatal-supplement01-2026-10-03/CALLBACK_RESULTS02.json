@@ -1,0 +1,86 @@
+{
+  "adapter_changes": [
+    "two self._check() calls renamed check()",
+    "pure fatal import supplied by exact original AST definition",
+    "outer lock/cleanup excluded; tested separately in regression01"
+  ],
+  "cases": [
+    {
+      "authority_evidence": false,
+      "case": "first MemoryError survives later SystemExit and diagnostic KeyboardInterrupt",
+      "selected": "first",
+      "selected_object_identity": true,
+      "trace": [
+        "check0",
+        "action",
+        "check1",
+        "note"
+      ]
+    },
+    {
+      "authority_evidence": false,
+      "case": "first SystemExit survives ordinary recheck and diagnostic MemoryError",
+      "selected": "first",
+      "selected_object_identity": true,
+      "trace": [
+        "check0",
+        "action",
+        "check1",
+        "note"
+      ]
+    },
+    {
+      "authority_evidence": false,
+      "case": "ordinary action promotes first recheck fatal",
+      "selected": "recheck",
+      "selected_object_identity": true,
+      "trace": [
+        "check0",
+        "action",
+        "check1"
+      ]
+    },
+    {
+      "authority_evidence": false,
+      "case": "ordinary action/recheck promotes first diagnostic fatal",
+      "selected": "note",
+      "selected_object_identity": true,
+      "trace": [
+        "check0",
+        "action",
+        "check1",
+        "note"
+      ]
+    },
+    {
+      "authority_evidence": false,
+      "case": "successful action cannot bypass failed postcheck",
+      "selected": "recheck",
+      "selected_object_identity": true,
+      "trace": [
+        "check0",
+        "action",
+        "check1"
+      ]
+    },
+    {
+      "authority_evidence": false,
+      "case": "successful result only after both checks",
+      "selected": "return",
+      "selected_object_identity": true,
+      "trace": [
+        "check0",
+        "action",
+        "check1"
+      ]
+    }
+  ],
+  "exact_reducer_source_lines": [
+    199,
+    206
+  ],
+  "real_authority_calls": false,
+  "schema_version": 1,
+  "source_sha256": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9",
+  "verbatim_original_reducer": "                if primary is None:primary=error\n                elif fatal(error) and not fatal(primary):error.__cause__=primary;primary=error\n                else:\n                    # Diagnostic failure participates after the selected error;\n                    # it must never replace an earlier actual fatal.\n                    try:primary.add_note('post-callback evidence/authority check failed: '+type(error).__name__)\n                    except BaseException as diagnostic:\n                        if fatal(diagnostic) and not fatal(primary):primary=diagnostic\n"
+}

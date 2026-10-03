@@ -1,0 +1,1910 @@
+{
+  "clock_ticks": 100,
+  "samples": [
+    {
+      "utc": "2026-10-03T20:24:54.636406+00:00",
+      "processes": [
+        {
+          "pid": 4050318,
+          "state": "S",
+          "ppid": 4050315,
+          "utime_ticks": 267,
+          "stime_ticks": 188,
+          "cutime_ticks": 11,
+          "cstime_ticks": 30,
+          "start_ticks": 11892059,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   27556 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py",
+            "--request",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/request-final01.json",
+            "--request-sha256",
+            "bc482b1196e691d8a0a06e3c866a11877b8cf8556ef407e5d3da72743412e4d4",
+            "--launch",
+            ""
+          ],
+          "children": [
+            4050527
+          ]
+        },
+        {
+          "pid": 4050527,
+          "state": "S",
+          "ppid": 4050318,
+          "utime_ticks": 2314,
+          "stime_ticks": 3415,
+          "cutime_ticks": 9,
+          "cstime_ticks": 26,
+          "start_ticks": 11892130,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   28876 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "fixture_tools/outer_controller01.py",
+            "--release",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/release-final01.json",
+            "--case",
+            "success",
+            ""
+          ],
+          "children": [
+            4050749
+          ]
+        },
+        {
+          "pid": 4050749,
+          "state": "S",
+          "ppid": 4050527,
+          "utime_ticks": 15,
+          "stime_ticks": 6,
+          "cutime_ticks": 10,
+          "cstime_ticks": 9,
+          "start_ticks": 11892200,
+          "wchan": "do_wait",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30528 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "launch",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050790
+          ]
+        },
+        {
+          "pid": 4050790,
+          "state": "R",
+          "ppid": 4050749,
+          "utime_ticks": 2594,
+          "stime_ticks": 3581,
+          "cutime_ticks": 469,
+          "cstime_ticks": 880,
+          "start_ticks": 11892245,
+          "wchan": "0",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30432 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "monitor",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            "--owner-pid",
+            "4050749",
+            "--nonce",
+            "fabe5ec13e29404fa3f84aa40ea2d091",
+            ""
+          ],
+          "children": []
+        },
+        {
+          "pid": 4050843,
+          "state": "S",
+          "ppid": 3865,
+          "utime_ticks": 293,
+          "stime_ticks": 62,
+          "cutime_ticks": 0,
+          "cstime_ticks": 0,
+          "start_ticks": 11892292,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   19824 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py",
+            "--child",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-held-success-20261003-01/guard",
+            "--cpus",
+            "0,1",
+            "--lease",
+            "15.0",
+            "--native-file-limit",
+            "4194304",
+            "--",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050847
+          ]
+        },
+        {
+          "pid": 4050847,
+          "state": "R",
+          "ppid": 4050843,
+          "utime_ticks": 78523,
+          "stime_ticks": 9611,
+          "cutime_ticks": 19033,
+          "cstime_ticks": 20036,
+          "start_ticks": 11892309,
+          "wchan": "0",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t  685948 kB",
+            "Threads:\t4"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-03T20:24:55.138009+00:00",
+      "processes": [
+        {
+          "pid": 4050318,
+          "state": "S",
+          "ppid": 4050315,
+          "utime_ticks": 268,
+          "stime_ticks": 188,
+          "cutime_ticks": 11,
+          "cstime_ticks": 30,
+          "start_ticks": 11892059,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   27556 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py",
+            "--request",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/request-final01.json",
+            "--request-sha256",
+            "bc482b1196e691d8a0a06e3c866a11877b8cf8556ef407e5d3da72743412e4d4",
+            "--launch",
+            ""
+          ],
+          "children": [
+            4050527
+          ]
+        },
+        {
+          "pid": 4050527,
+          "state": "S",
+          "ppid": 4050318,
+          "utime_ticks": 2315,
+          "stime_ticks": 3417,
+          "cutime_ticks": 9,
+          "cstime_ticks": 26,
+          "start_ticks": 11892130,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   28876 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "fixture_tools/outer_controller01.py",
+            "--release",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/release-final01.json",
+            "--case",
+            "success",
+            ""
+          ],
+          "children": [
+            4050749
+          ]
+        },
+        {
+          "pid": 4050749,
+          "state": "S",
+          "ppid": 4050527,
+          "utime_ticks": 15,
+          "stime_ticks": 6,
+          "cutime_ticks": 10,
+          "cstime_ticks": 9,
+          "start_ticks": 11892200,
+          "wchan": "do_wait",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30528 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "launch",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050790
+          ]
+        },
+        {
+          "pid": 4050790,
+          "state": "S",
+          "ppid": 4050749,
+          "utime_ticks": 2595,
+          "stime_ticks": 3582,
+          "cutime_ticks": 469,
+          "cstime_ticks": 881,
+          "start_ticks": 11892245,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30432 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "monitor",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            "--owner-pid",
+            "4050749",
+            "--nonce",
+            "fabe5ec13e29404fa3f84aa40ea2d091",
+            ""
+          ],
+          "children": []
+        },
+        {
+          "pid": 4050843,
+          "state": "S",
+          "ppid": 3865,
+          "utime_ticks": 294,
+          "stime_ticks": 62,
+          "cutime_ticks": 0,
+          "cstime_ticks": 0,
+          "start_ticks": 11892292,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   19824 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py",
+            "--child",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-held-success-20261003-01/guard",
+            "--cpus",
+            "0,1",
+            "--lease",
+            "15.0",
+            "--native-file-limit",
+            "4194304",
+            "--",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050847
+          ]
+        },
+        {
+          "pid": 4050847,
+          "state": "R",
+          "ppid": 4050843,
+          "utime_ticks": 78541,
+          "stime_ticks": 9618,
+          "cutime_ticks": 19048,
+          "cstime_ticks": 20052,
+          "start_ticks": 11892309,
+          "wchan": "0",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t  685948 kB",
+            "Threads:\t4"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-03T20:24:55.639552+00:00",
+      "processes": [
+        {
+          "pid": 4050318,
+          "state": "S",
+          "ppid": 4050315,
+          "utime_ticks": 268,
+          "stime_ticks": 188,
+          "cutime_ticks": 11,
+          "cstime_ticks": 30,
+          "start_ticks": 11892059,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   27556 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py",
+            "--request",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/request-final01.json",
+            "--request-sha256",
+            "bc482b1196e691d8a0a06e3c866a11877b8cf8556ef407e5d3da72743412e4d4",
+            "--launch",
+            ""
+          ],
+          "children": [
+            4050527
+          ]
+        },
+        {
+          "pid": 4050527,
+          "state": "S",
+          "ppid": 4050318,
+          "utime_ticks": 2316,
+          "stime_ticks": 3418,
+          "cutime_ticks": 9,
+          "cstime_ticks": 26,
+          "start_ticks": 11892130,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   28876 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "fixture_tools/outer_controller01.py",
+            "--release",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/release-final01.json",
+            "--case",
+            "success",
+            ""
+          ],
+          "children": [
+            4050749
+          ]
+        },
+        {
+          "pid": 4050749,
+          "state": "S",
+          "ppid": 4050527,
+          "utime_ticks": 15,
+          "stime_ticks": 6,
+          "cutime_ticks": 10,
+          "cstime_ticks": 9,
+          "start_ticks": 11892200,
+          "wchan": "do_wait",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30528 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "launch",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050790
+          ]
+        },
+        {
+          "pid": 4050790,
+          "state": "S",
+          "ppid": 4050749,
+          "utime_ticks": 2597,
+          "stime_ticks": 3583,
+          "cutime_ticks": 469,
+          "cstime_ticks": 881,
+          "start_ticks": 11892245,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30432 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "monitor",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            "--owner-pid",
+            "4050749",
+            "--nonce",
+            "fabe5ec13e29404fa3f84aa40ea2d091",
+            ""
+          ],
+          "children": []
+        },
+        {
+          "pid": 4050843,
+          "state": "S",
+          "ppid": 3865,
+          "utime_ticks": 294,
+          "stime_ticks": 62,
+          "cutime_ticks": 0,
+          "cstime_ticks": 0,
+          "start_ticks": 11892292,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   19824 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py",
+            "--child",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-held-success-20261003-01/guard",
+            "--cpus",
+            "0,1",
+            "--lease",
+            "15.0",
+            "--native-file-limit",
+            "4194304",
+            "--",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050847
+          ]
+        },
+        {
+          "pid": 4050847,
+          "state": "R",
+          "ppid": 4050843,
+          "utime_ticks": 78590,
+          "stime_ticks": 9619,
+          "cutime_ticks": 19048,
+          "cstime_ticks": 20052,
+          "start_ticks": 11892309,
+          "wchan": "0",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t  685948 kB",
+            "Threads:\t4"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-03T20:24:56.141258+00:00",
+      "processes": [
+        {
+          "pid": 4050318,
+          "state": "S",
+          "ppid": 4050315,
+          "utime_ticks": 268,
+          "stime_ticks": 188,
+          "cutime_ticks": 11,
+          "cstime_ticks": 30,
+          "start_ticks": 11892059,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   27556 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py",
+            "--request",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/request-final01.json",
+            "--request-sha256",
+            "bc482b1196e691d8a0a06e3c866a11877b8cf8556ef407e5d3da72743412e4d4",
+            "--launch",
+            ""
+          ],
+          "children": [
+            4050527
+          ]
+        },
+        {
+          "pid": 4050527,
+          "state": "S",
+          "ppid": 4050318,
+          "utime_ticks": 2317,
+          "stime_ticks": 3419,
+          "cutime_ticks": 9,
+          "cstime_ticks": 26,
+          "start_ticks": 11892130,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   28876 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "fixture_tools/outer_controller01.py",
+            "--release",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/release-final01.json",
+            "--case",
+            "success",
+            ""
+          ],
+          "children": [
+            4050749
+          ]
+        },
+        {
+          "pid": 4050749,
+          "state": "S",
+          "ppid": 4050527,
+          "utime_ticks": 15,
+          "stime_ticks": 6,
+          "cutime_ticks": 10,
+          "cstime_ticks": 9,
+          "start_ticks": 11892200,
+          "wchan": "do_wait",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30528 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "launch",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050790
+          ]
+        },
+        {
+          "pid": 4050790,
+          "state": "S",
+          "ppid": 4050749,
+          "utime_ticks": 2598,
+          "stime_ticks": 3585,
+          "cutime_ticks": 469,
+          "cstime_ticks": 881,
+          "start_ticks": 11892245,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30432 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "monitor",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            "--owner-pid",
+            "4050749",
+            "--nonce",
+            "fabe5ec13e29404fa3f84aa40ea2d091",
+            ""
+          ],
+          "children": []
+        },
+        {
+          "pid": 4050843,
+          "state": "S",
+          "ppid": 3865,
+          "utime_ticks": 294,
+          "stime_ticks": 62,
+          "cutime_ticks": 0,
+          "cstime_ticks": 0,
+          "start_ticks": 11892292,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   19824 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py",
+            "--child",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-held-success-20261003-01/guard",
+            "--cpus",
+            "0,1",
+            "--lease",
+            "15.0",
+            "--native-file-limit",
+            "4194304",
+            "--",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050847
+          ]
+        },
+        {
+          "pid": 4050847,
+          "state": "R",
+          "ppid": 4050843,
+          "utime_ticks": 78610,
+          "stime_ticks": 9626,
+          "cutime_ticks": 19062,
+          "cstime_ticks": 20067,
+          "start_ticks": 11892309,
+          "wchan": "0",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t  685948 kB",
+            "Threads:\t4"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-03T20:24:56.643112+00:00",
+      "processes": [
+        {
+          "pid": 4050318,
+          "state": "S",
+          "ppid": 4050315,
+          "utime_ticks": 268,
+          "stime_ticks": 188,
+          "cutime_ticks": 11,
+          "cstime_ticks": 30,
+          "start_ticks": 11892059,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   27556 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py",
+            "--request",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/request-final01.json",
+            "--request-sha256",
+            "bc482b1196e691d8a0a06e3c866a11877b8cf8556ef407e5d3da72743412e4d4",
+            "--launch",
+            ""
+          ],
+          "children": [
+            4050527
+          ]
+        },
+        {
+          "pid": 4050527,
+          "state": "S",
+          "ppid": 4050318,
+          "utime_ticks": 2318,
+          "stime_ticks": 3421,
+          "cutime_ticks": 9,
+          "cstime_ticks": 26,
+          "start_ticks": 11892130,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   28876 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "fixture_tools/outer_controller01.py",
+            "--release",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/release-final01.json",
+            "--case",
+            "success",
+            ""
+          ],
+          "children": [
+            4050749
+          ]
+        },
+        {
+          "pid": 4050749,
+          "state": "S",
+          "ppid": 4050527,
+          "utime_ticks": 15,
+          "stime_ticks": 6,
+          "cutime_ticks": 10,
+          "cstime_ticks": 9,
+          "start_ticks": 11892200,
+          "wchan": "do_wait",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30528 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "launch",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050790
+          ]
+        },
+        {
+          "pid": 4050790,
+          "state": "S",
+          "ppid": 4050749,
+          "utime_ticks": 2599,
+          "stime_ticks": 3587,
+          "cutime_ticks": 470,
+          "cstime_ticks": 882,
+          "start_ticks": 11892245,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30432 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "monitor",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            "--owner-pid",
+            "4050749",
+            "--nonce",
+            "fabe5ec13e29404fa3f84aa40ea2d091",
+            ""
+          ],
+          "children": []
+        },
+        {
+          "pid": 4050843,
+          "state": "S",
+          "ppid": 3865,
+          "utime_ticks": 294,
+          "stime_ticks": 62,
+          "cutime_ticks": 0,
+          "cstime_ticks": 0,
+          "start_ticks": 11892292,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   19824 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py",
+            "--child",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-held-success-20261003-01/guard",
+            "--cpus",
+            "0,1",
+            "--lease",
+            "15.0",
+            "--native-file-limit",
+            "4194304",
+            "--",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050847
+          ]
+        },
+        {
+          "pid": 4050847,
+          "state": "S",
+          "ppid": 4050843,
+          "utime_ticks": 78653,
+          "stime_ticks": 9628,
+          "cutime_ticks": 19064,
+          "cstime_ticks": 20069,
+          "start_ticks": 11892309,
+          "wchan": "do_poll.constprop.0",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t  685948 kB",
+            "Threads:\t4"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4120799
+          ]
+        },
+        {
+          "pid": 4120799,
+          "state": "R",
+          "ppid": 4050847,
+          "utime_ticks": 0,
+          "stime_ticks": 0,
+          "cutime_ticks": 0,
+          "cstime_ticks": 0,
+          "start_ticks": 12012578,
+          "wchan": "0",
+          "status": [
+            "Name:\tgit",
+            "VmRSS:\t    4816 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "git",
+            "cat-file",
+            "--batch",
+            ""
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-03T20:24:57.144672+00:00",
+      "processes": [
+        {
+          "pid": 4050318,
+          "state": "S",
+          "ppid": 4050315,
+          "utime_ticks": 268,
+          "stime_ticks": 188,
+          "cutime_ticks": 11,
+          "cstime_ticks": 30,
+          "start_ticks": 11892059,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   27556 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py",
+            "--request",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/request-final01.json",
+            "--request-sha256",
+            "bc482b1196e691d8a0a06e3c866a11877b8cf8556ef407e5d3da72743412e4d4",
+            "--launch",
+            ""
+          ],
+          "children": [
+            4050527
+          ]
+        },
+        {
+          "pid": 4050527,
+          "state": "S",
+          "ppid": 4050318,
+          "utime_ticks": 2319,
+          "stime_ticks": 3423,
+          "cutime_ticks": 9,
+          "cstime_ticks": 26,
+          "start_ticks": 11892130,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   28876 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "fixture_tools/outer_controller01.py",
+            "--release",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/release-final01.json",
+            "--case",
+            "success",
+            ""
+          ],
+          "children": [
+            4050749
+          ]
+        },
+        {
+          "pid": 4050749,
+          "state": "S",
+          "ppid": 4050527,
+          "utime_ticks": 15,
+          "stime_ticks": 6,
+          "cutime_ticks": 10,
+          "cstime_ticks": 9,
+          "start_ticks": 11892200,
+          "wchan": "do_wait",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30528 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "launch",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050790
+          ]
+        },
+        {
+          "pid": 4050790,
+          "state": "S",
+          "ppid": 4050749,
+          "utime_ticks": 2600,
+          "stime_ticks": 3588,
+          "cutime_ticks": 470,
+          "cstime_ticks": 882,
+          "start_ticks": 11892245,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30432 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "monitor",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            "--owner-pid",
+            "4050749",
+            "--nonce",
+            "fabe5ec13e29404fa3f84aa40ea2d091",
+            ""
+          ],
+          "children": []
+        },
+        {
+          "pid": 4050843,
+          "state": "S",
+          "ppid": 3865,
+          "utime_ticks": 294,
+          "stime_ticks": 62,
+          "cutime_ticks": 0,
+          "cstime_ticks": 0,
+          "start_ticks": 11892292,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   19824 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py",
+            "--child",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-held-success-20261003-01/guard",
+            "--cpus",
+            "0,1",
+            "--lease",
+            "15.0",
+            "--native-file-limit",
+            "4194304",
+            "--",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050847
+          ]
+        },
+        {
+          "pid": 4050847,
+          "state": "R",
+          "ppid": 4050843,
+          "utime_ticks": 78677,
+          "stime_ticks": 9634,
+          "cutime_ticks": 19077,
+          "cstime_ticks": 20083,
+          "start_ticks": 11892309,
+          "wchan": "0",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t  685948 kB",
+            "Threads:\t4"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-03T20:24:57.646315+00:00",
+      "processes": [
+        {
+          "pid": 4050318,
+          "state": "S",
+          "ppid": 4050315,
+          "utime_ticks": 268,
+          "stime_ticks": 189,
+          "cutime_ticks": 11,
+          "cstime_ticks": 30,
+          "start_ticks": 11892059,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   27556 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py",
+            "--request",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/request-final01.json",
+            "--request-sha256",
+            "bc482b1196e691d8a0a06e3c866a11877b8cf8556ef407e5d3da72743412e4d4",
+            "--launch",
+            ""
+          ],
+          "children": [
+            4050527
+          ]
+        },
+        {
+          "pid": 4050527,
+          "state": "S",
+          "ppid": 4050318,
+          "utime_ticks": 2320,
+          "stime_ticks": 3425,
+          "cutime_ticks": 9,
+          "cstime_ticks": 26,
+          "start_ticks": 11892130,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   28876 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "fixture_tools/outer_controller01.py",
+            "--release",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/release-final01.json",
+            "--case",
+            "success",
+            ""
+          ],
+          "children": [
+            4050749
+          ]
+        },
+        {
+          "pid": 4050749,
+          "state": "S",
+          "ppid": 4050527,
+          "utime_ticks": 15,
+          "stime_ticks": 6,
+          "cutime_ticks": 10,
+          "cstime_ticks": 9,
+          "start_ticks": 11892200,
+          "wchan": "do_wait",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30528 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "launch",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050790
+          ]
+        },
+        {
+          "pid": 4050790,
+          "state": "S",
+          "ppid": 4050749,
+          "utime_ticks": 2601,
+          "stime_ticks": 3589,
+          "cutime_ticks": 470,
+          "cstime_ticks": 882,
+          "start_ticks": 11892245,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30432 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "monitor",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            "--owner-pid",
+            "4050749",
+            "--nonce",
+            "fabe5ec13e29404fa3f84aa40ea2d091",
+            ""
+          ],
+          "children": []
+        },
+        {
+          "pid": 4050843,
+          "state": "S",
+          "ppid": 3865,
+          "utime_ticks": 294,
+          "stime_ticks": 62,
+          "cutime_ticks": 0,
+          "cstime_ticks": 0,
+          "start_ticks": 11892292,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   19824 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py",
+            "--child",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-held-success-20261003-01/guard",
+            "--cpus",
+            "0,1",
+            "--lease",
+            "15.0",
+            "--native-file-limit",
+            "4194304",
+            "--",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050847
+          ]
+        },
+        {
+          "pid": 4050847,
+          "state": "R",
+          "ppid": 4050843,
+          "utime_ticks": 78716,
+          "stime_ticks": 9637,
+          "cutime_ticks": 19080,
+          "cstime_ticks": 20088,
+          "start_ticks": 11892309,
+          "wchan": "0",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t  685948 kB",
+            "Threads:\t4"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "utc": "2026-10-03T20:24:58.148018+00:00",
+      "processes": [
+        {
+          "pid": 4050318,
+          "state": "S",
+          "ppid": 4050315,
+          "utime_ticks": 268,
+          "stime_ticks": 189,
+          "cutime_ticks": 11,
+          "cstime_ticks": 30,
+          "start_ticks": 11892059,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   27556 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/launch_success01.py",
+            "--request",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/request-final01.json",
+            "--request-sha256",
+            "bc482b1196e691d8a0a06e3c866a11877b8cf8556ef407e5d3da72743412e4d4",
+            "--launch",
+            ""
+          ],
+          "children": [
+            4050527
+          ]
+        },
+        {
+          "pid": 4050527,
+          "state": "S",
+          "ppid": 4050318,
+          "utime_ticks": 2322,
+          "stime_ticks": 3426,
+          "cutime_ticks": 9,
+          "cstime_ticks": 26,
+          "start_ticks": 11892130,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   28876 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "fixture_tools/outer_controller01.py",
+            "--release",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-root-launch-20261003-01/release-final01.json",
+            "--case",
+            "success",
+            ""
+          ],
+          "children": [
+            4050749
+          ]
+        },
+        {
+          "pid": 4050749,
+          "state": "S",
+          "ppid": 4050527,
+          "utime_ticks": 15,
+          "stime_ticks": 6,
+          "cutime_ticks": 10,
+          "cstime_ticks": 9,
+          "start_ticks": 11892200,
+          "wchan": "do_wait",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30528 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "launch",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050790
+          ]
+        },
+        {
+          "pid": 4050790,
+          "state": "S",
+          "ppid": 4050749,
+          "utime_ticks": 2602,
+          "stime_ticks": 3591,
+          "cutime_ticks": 470,
+          "cstime_ticks": 883,
+          "start_ticks": 11892245,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   30432 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "monitor",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            "--owner-pid",
+            "4050749",
+            "--nonce",
+            "fabe5ec13e29404fa3f84aa40ea2d091",
+            ""
+          ],
+          "children": []
+        },
+        {
+          "pid": 4050843,
+          "state": "S",
+          "ppid": 3865,
+          "utime_ticks": 294,
+          "stime_ticks": 62,
+          "cutime_ticks": 0,
+          "cstime_ticks": 0,
+          "start_ticks": 11892292,
+          "wchan": "hrtimer_nanosleep",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t   19824 kB",
+            "Threads:\t1"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/tradingagents/research/onchain_replication/resources.py",
+            "--child",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/original-import-held-success-20261003-01/guard",
+            "--cpus",
+            "0,1",
+            "--lease",
+            "15.0",
+            "--native-file-limit",
+            "4194304",
+            "--",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": [
+            4050847
+          ]
+        },
+        {
+          "pid": 4050847,
+          "state": "R",
+          "ppid": 4050843,
+          "utime_ticks": 78743,
+          "stime_ticks": 9642,
+          "cutime_ticks": 19092,
+          "cstime_ticks": 20099,
+          "start_ticks": 11892309,
+          "wchan": "0",
+          "status": [
+            "Name:\tpython",
+            "VmRSS:\t  685948 kB",
+            "Threads:\t4"
+          ],
+          "argv": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+            "-B",
+            "-m",
+            "tradingagents.research.onchain_replication.job",
+            "--mode",
+            "worker",
+            "--root",
+            "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source",
+            "--registration",
+            "held-fixture-registration01.json",
+            "--experiment",
+            "original-import-held-success-20261003-01",
+            "--source",
+            "d443208795f59292c156c5b81b687594efacea4d",
+            ""
+          ],
+          "children": []
+        }
+      ]
+    }
+  ],
+  "markers": [
+    {
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_runs/original-import-held-success-20261003-01",
+      "mode": 16893,
+      "size": 4096,
+      "mtime_ns": 1791057895029635879
+    },
+    {
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_runs/original-import-held-success-20261003-01/claim.json",
+      "mode": 33204,
+      "size": 47456,
+      "mtime_ns": 1791057895011636043
+    },
+    {
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_runs/original-import-held-success-20261003-01/outputs",
+      "mode": 16893,
+      "size": 4096,
+      "mtime_ns": 1791057895010636053
+    },
+    {
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain-paper-replication-2026-09-24/sources/original-import-held-success-20261003-01",
+      "mode": 16893,
+      "size": 4096,
+      "mtime_ns": 1791057898554603589
+    },
+    {
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain_representations",
+      "mode": 16893,
+      "size": 4096,
+      "mtime_ns": 1791057900561585173
+    },
+    {
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain_representations/851f1ac5645b8ce7d15d83fc4b545c1d79d8a6817ecb6a802bf0a15247ed4b9c",
+      "mode": 16893,
+      "size": 4096,
+      "mtime_ns": 1791057900562585164
+    },
+    {
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-07/source/research_artifacts/onchain_representations/851f1ac5645b8ce7d15d83fc4b545c1d79d8a6817ecb6a802bf0a15247ed4b9c/original-import-held-success-20261003-01",
+      "mode": 16893,
+      "size": 4096,
+      "mtime_ns": 1791057908139515433
+    }
+  ],
+  "claims": [
+    {
+      "path": "research_runs/original-import-held-success-20261003-01/claim.json",
+      "sha256": "d998a80d0178a4e46bf97ac863611ad3b1794d2b2e74e3048c4704f397f8b4ba",
+      "id": "original-import-held-success-20261003-01",
+      "source": "d443208795f59292c156c5b81b687594efacea4d",
+      "design": "d443208795f59292c156c5b81b687594efacea4d",
+      "source_count": 204,
+      "pins_with_charter": 204,
+      "input_count": 33,
+      "terminal": [],
+      "effective": 6,
+      "extension": true
+    },
+    {
+      "path": "research_runs/original-import-native-success-20261003-01/claim.json",
+      "sha256": "f475dd6c04d7dfc5e9d94bba30b5d3e686d1b71b5f5394dfa1aa0b174797f61e",
+      "id": "original-import-native-success-20261003-01",
+      "source": "529c7a3769fcfea28d3a617270b3025aebbce1f5",
+      "design": "529c7a3769fcfea28d3a617270b3025aebbce1f5",
+      "source_count": 153,
+      "pins_with_charter": 154,
+      "input_count": 32,
+      "terminal": [
+        "failed.json"
+      ],
+      "effective": 2,
+      "extension": false
+    },
+    {
+      "path": "research_runs/original-import-native-success-20261003-02/claim.json",
+      "sha256": "56d653890440a57896a98e87ed641f9dcfd74fca8375b3491e804fd2f5432688",
+      "id": "original-import-native-success-20261003-02",
+      "source": "ae3160260187b7853fb6066e91562584be93eef6",
+      "design": "ae3160260187b7853fb6066e91562584be93eef6",
+      "source_count": 156,
+      "pins_with_charter": 157,
+      "input_count": 32,
+      "terminal": [
+        "failed.json"
+      ],
+      "effective": 3,
+      "extension": true
+    },
+    {
+      "path": "research_runs/original-import-native-success-20261003-03/claim.json",
+      "sha256": "7e35261724e6bf2d58ca484a2ef39606d7a586313dca5fe7f0c06fe6b8ef88ef",
+      "id": "original-import-native-success-20261003-03",
+      "source": "bb9e6ac95b2be13dbbfe5b77c55a5ce35a0926a9",
+      "design": "bb9e6ac95b2be13dbbfe5b77c55a5ce35a0926a9",
+      "source_count": 159,
+      "pins_with_charter": 160,
+      "input_count": 32,
+      "terminal": [
+        "failed.json"
+      ],
+      "effective": 4,
+      "extension": true
+    },
+    {
+      "path": "research_runs/original-import-native-success-20261003-04/claim.json",
+      "sha256": "b892aa8243e70ee225bd6ffcd8d6f630a7ea8012c588774916cc0b593bb56c2e",
+      "id": "original-import-native-success-20261003-04",
+      "source": "ce0e37f8eaaca258c46944a4cbdb9ae30e40fa26",
+      "design": "ce0e37f8eaaca258c46944a4cbdb9ae30e40fa26",
+      "source_count": 162,
+      "pins_with_charter": 163,
+      "input_count": 32,
+      "terminal": [
+        "failed.json"
+      ],
+      "effective": 5,
+      "extension": true
+    }
+  ],
+  "scope": "Read-only process metadata and registered control documents; no process environment, FD contents, arrays or module execution."
+}
