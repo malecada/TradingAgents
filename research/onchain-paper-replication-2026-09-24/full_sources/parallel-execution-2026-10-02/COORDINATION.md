@@ -1,5 +1,15 @@
 # Current execution checkpoint — October 3, 2026
 
+**TOP 2026-10-03T11:22:11.949136+00:00: the one byte-only source recovery has completed. No numerical or byte-recovery job is active. Three agents continue the next implementation and independent reviews.**
+
+Actual tool14746 exited0 (original finalchunk55aef8). The genuine source-recovery receipt3c9f713e records remote8f703aabc495d65563980b8da5be9ef6fc9b58f8 and all240Gitobjects:239selected bodies4,794,437bytes plus the exact selection manifest. It includes the original self-contained source02Git bundle and204source copies. Independent actual recovered-bundle/199source/148anchor/204body/lineage reconstruction is next; the earlier accepted local-bundle request review is not substituted for it. Root commit82e2e7b7 retains the actual receipt/tool observation and all withheld fixture01 evidence. Push and actualremoteHEAD readback are next. No experiment authority, installedruntime/empiricalstore/complete writable-directory recovery is implied.
+
+Fixture metadata01 is independently WITHHELD d48acf3c/ea41a9d7 for HFS1 original-role overwrite and HFS2 absent/unread selected policy. Original sources remain unchanged/uninstalled. cold_handoff_source froze actual input-reuse investigationc8cc30cf:22original/recovered/archive input bodies961,506bytes,52actualremoteGitbodies/archive5f7d187b and26originalsource objects122,632bytes; two existing sorted2/3-node target inputs can be copied opaquely after independentreview without generating or rerunning any historical job. It now implements NEW metadata02 correcting HFS1/HFS2. physical_review independently reviews the non-tail local adapter8023fc8d, then authenticates the completed source recovery in a separately named review. physical_correction implements NEW durable non-tail Context/dispatch, preserving event-specific authority/defaults and refusing rawf32/NPY without genuine held/cold joins. Root owns all integration, finite registration/cumulative allowance, STATE/commit/network and ONE native launcher. The detailed closed accounting/fullscope/resources/next requirements in the checkpoint below remain unchanged.
+
+---
+
+# Current execution checkpoint — October 3, 2026
+
 **TOP 2026-10-03T11:16:15.030854+00:00: the failed comparison is closed and externally recovered. No numerical job is active. A fresh byte-only source backup is running, and three agents continue separate implementation and verification tasks.**
 
 The comparison `compact-cold-comparison-20261003-01` remains permanently FAILED at 1,800.835859874 seconds because of its registered time limit. Peak memory was 443,465,728 bytes; all memory-event counters were zero. Its 19 stages and 3,296 partial comparison pairs do not constitute completed neural, checkpoint, gradient or capacity evidence. All 12 process/thread identities and the native cgroup are absent. The original guard's null child exit and separate real exit125 remain unchanged. The materialization job is COMPLETE with science pending. The separate two-attempt cold engineering family is exhausted with one COMPLETE and one FAILED; no replay, refund or transfer is available.
