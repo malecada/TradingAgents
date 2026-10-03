@@ -1,0 +1,118 @@
+{
+  "producers": {
+    "original32": {
+      "binding_output": "resource-binding.json",
+      "compact_mcm_input": "mcm_policy",
+      "compact_mcm_output_input": "mcm_output_policy",
+      "compact_policy_input": "compact_policy",
+      "descriptor": {
+        "arm": "proposed",
+        "compact_execution": {
+          "backend": "resident-native-compact-current-owner-v1",
+          "policy_sha256": "5540f452f6e12d059afc21d8c2607290ebd91332e5377266c9ac639125ef6465"
+        },
+        "configs": {
+          "dictionary": {
+            "capacity_action": "raise explicit capacity error, no truncation",
+            "hop_depth": 1,
+            "insufficient_samples": "explicit unavailable if fewer than dictionary size",
+            "linkage": "average pairwise distance",
+            "maximum_neighborhood_nodes": 10000,
+            "neighborhood": "weak one-hop induced subgraph retaining directed edges and center",
+            "partition": "seeded permutation chunks; min(32,chunk size) medoids each; recursively cluster medoids to 32",
+            "partition_size": 512,
+            "partition_threshold": 2048,
+            "representative": "medoid minimizing within-cluster sum distance; ties sample index",
+            "rng": "numpy PCG64",
+            "sample_count": 512,
+            "sampling": "without replacement over (training week,center); equal initial mass per candidate; after selection halve weights of remaining centers inside sampled neighborhood in that week",
+            "schema_version": 1,
+            "seed_scope": "one dictionary per asset/fold/seed/variant",
+            "size": 32,
+            "training_scope": "only graph snapshots fully available inside training interval"
+          },
+          "matching": {
+            "alpha": 1.0,
+            "amendment": "matching-precision-v2.md",
+            "beta0": 1.0,
+            "beta_final": 30.0,
+            "beta_rate": 0.075,
+            "beta_update": "beta *= (1+beta_rate)",
+            "convergence": "temperature termination; no additional fixed-point stopping",
+            "edge_agreement_chunk_pairs": 65536,
+            "empty_nodes": "reject",
+            "hardening": "greedy global maximum; ties row-major; remove row and column; stop after min(n,m) matches",
+            "initialization": "node agreement s2 (Algorithm1 s1 symbol corrected by argument type)",
+            "internal_precision": "float64",
+            "max_iterations": 50,
+            "max_pair_entries": 4000000,
+            "normalization": "row then column, log-domain stable",
+            "normalization_iterations": 1,
+            "objective": "paper Eq1 literal including factor 2 in edge denominator",
+            "precision_accelerated": "float32 output with float64 affinity and annealing",
+            "precision_reference": "float64",
+            "rectangular": "un-padded rectangular one-pass normalization; soft row/column sums need not both equal 1; hard assignment must be injective",
+            "s1": "edge RBF exp(-mean squared feature difference); zero if either edge absent",
+            "s2": "node RBF exp(-mean squared feature difference)",
+            "schema_version": 1,
+            "solver": "algorithm1_literal",
+            "symmetric_dictionary_distance": "1 - (S(A,B)+S(B,A))/2",
+            "update": "Q_ui=0.5*sum_vj(edge_agreement_uvij*M_vj)+alpha*node_agreement_ui; literal Algorithm1, not claimed Eq2 derivative",
+            "zero_edges": "edge contribution zero if either graph has zero edges; retain node contribution divided by (1+alpha)"
+          }
+        },
+        "dictionary_origin": "imported-original-v1",
+        "original_dictionary_import": {
+          "input": "original_import",
+          "sha256": "0844394fac73fe187444a82c484d0ae5bdafc5d1b25c5a09973f8cde9f3905d2"
+        },
+        "original_dictionary_stage": {
+          "input": "original_import_stage",
+          "sha256": "8f3cd8a5a2f605c0682b727bf45cfd19fb64e0375a4068b76d6b60fe11ec7f3f"
+        },
+        "pair_execution": {
+          "backend": {
+            "affinity": "scalar_float64",
+            "checkpoint_schema": 3,
+            "device": "cpu",
+            "hardening": "stable_descending_row_major",
+            "name": "scalar_ranked_typed_graph",
+            "normalization": "scipy_float64",
+            "objective": "sparse_scalar_float64",
+            "output": "float64_score",
+            "version": 2
+          },
+          "policy_sha256": "73eced740d365a9851c691195d52363beebc299fc481be9703ac53a47a99dcff"
+        },
+        "required_graphs": [
+          "e5abfa02758c751c6f0ec2eca2bf358be3c1e7615f5a024c268834882069802d",
+          "f674b9d99a40c621d90a5b37cc35b53a82faa746388ec7d61185f593fcf95f49"
+        ],
+        "resource_fixture": {
+          "case": "success",
+          "data_kind": "synthetic-targets-original-dictionary",
+          "schema_version": 1,
+          "target_nodes": {
+            "e5abfa02758c751c6f0ec2eca2bf358be3c1e7615f5a024c268834882069802d": 2,
+            "f674b9d99a40c621d90a5b37cc35b53a82faa746388ec7d61185f593fcf95f49": 3
+          },
+          "target_provenance_input": "target_provenance"
+        },
+        "resource_graph_inputs": {
+          "e5abfa02758c751c6f0ec2eca2bf358be3c1e7615f5a024c268834882069802d": "target_graph_1",
+          "f674b9d99a40c621d90a5b37cc35b53a82faa746388ec7d61185f593fcf95f49": "target_graph_2"
+        }
+      },
+      "held_score_consumer_input": "held_score_policy",
+      "journal_output": "resource-journal.json",
+      "native_backend": "resident-native-compact-current-owner-v1",
+      "operation": "produce",
+      "original_dictionary_input": "original_import",
+      "original_dictionary_stage_input": "original_import_stage",
+      "pair_checkpoint_input": "pair_policy",
+      "plan_input": "producer_plan",
+      "producer": "original32"
+    }
+  },
+  "schema_version": 2
+}

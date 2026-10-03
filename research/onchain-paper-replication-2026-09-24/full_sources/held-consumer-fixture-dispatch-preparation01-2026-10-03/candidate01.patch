@@ -1,0 +1,33 @@
+--- Source03/resource_fixture.py
++++ candidate01/resource_fixture.py
+@@ -23,7 +23,9 @@
+     jobs=job['payload']['representation_jobs']
+     require(type(jobs) is dict and len(jobs)==1,'exactly one finite representation required')
+     name=next(iter(jobs));s=jobs[name]
+-    require(type(name) is str and name and type(s) is dict and set(s)==KEYS,'fixture selected fields differ')
++    require(type(name) is str and name and type(s) is dict and (set(s)==KEYS or set(s)==KEYS|{'held_score_consumer_input'}),'fixture selected fields differ')
++    if 'held_score_consumer_input' in s:
++        require(type(s['held_score_consumer_input']) is str and bool(s['held_score_consumer_input']),'explicit held consumer input required')
+     require(s['operation']=='produce' and all(type(s[k]) is str and s[k] for k in KEYS-{'operation','descriptor'}),'explicit selected producer inputs required')
+     d=s['descriptor'];require(type(d) is dict and d.get('arm')=='proposed' and d.get('dictionary_origin')=='imported-original-v1','imported proposed descriptor required')
+     graphs=d.get('required_graphs');require(type(graphs) is list and len(graphs)==2 and graphs==sorted(set(graphs)) and all(type(h) is str and len(h)==64 and all(c in '0123456789abcdef' for c in h) for h in graphs),'exact two distinct sorted targets required')
+@@ -120,7 +122,18 @@
+     item=plan['producers'][s['producer']]
+     require(all(item.get(k)==v for k,v in s.items()),'selected producer plan/job differ')
+     outputs={item.get('binding_output'),item.get('journal_output'),'cell-ledger.json','resource-summary.json'}
+-    require(len(outputs)==4 and None not in outputs and outputs==set(run.admission.experiment['outputs']),'exact resource-only outputs required')
++    if 'held_score_consumer_input' in s:
++        require(len(outputs)==4 and None not in outputs,'exact original resource-only outputs required')
++        policy_name=s['held_score_consumer_input']
++        require(policy_name in run.admission.inputs,'held policy input not registered')
++        policy_raw=original._read_registered(run,policy_name)
++        require(len(policy_raw)<=8192,'held policy metadata bound')
++        from . import held_score_consumer
++        policy=held_score_consumer._policy(original.parse(policy_raw),s['descriptor']['required_graphs'],run.admission.experiment['outputs'])
++        readbacks={v['output'] for v in policy['targets'].values()}
++        require(len(readbacks)==2 and not outputs.intersection(readbacks) and outputs|readbacks==set(run.admission.experiment['outputs']),'exact six held resource-only outputs required')
++    else:
++        require(len(outputs)==4 and None not in outputs and outputs==set(run.admission.experiment['outputs']),'exact resource-only outputs required')
+     control=original.parse(original._read_registered(run,s['original_dictionary_input']));original.policy_check(control)
+     require(control['motif_count']==32 and control['sample_count']==512 and control['dictionary_identity']==ORIGINAL,'all original32/512 evidence required; no fresh sampling')
+     source_rows=original_source_blobs(run,control)

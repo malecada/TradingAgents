@@ -1,0 +1,52 @@
+test_bad_selector (__main__.Tests.test_bad_selector) ... ok
+test_bool_and_mutated_policy (__main__.Tests.test_bool_and_mutated_policy) ... ERROR
+test_default (__main__.Tests.test_default) ... ok
+test_extra_output (__main__.Tests.test_extra_output) ... ok
+test_missing_output (__main__.Tests.test_missing_output) ... ok
+test_missing_registered_policy (__main__.Tests.test_missing_registered_policy) ... ok
+test_output_conflict (__main__.Tests.test_output_conflict) ... ok
+test_oversize_policy (__main__.Tests.test_oversize_policy) ... ok
+test_selected (__main__.Tests.test_selected) ... ERROR
+test_target_mismatch (__main__.Tests.test_target_mismatch) ... ok
+test_unknown_selector (__main__.Tests.test_unknown_selector) ... ok
+
+======================================================================
+ERROR: test_bool_and_mutated_policy (__main__.Tests.test_bool_and_mutated_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-fixture-dispatch-preparation01-2026-10-03/test_dispatch01.py", line 48, in test_bool_and_mutated_policy
+    self.check();self.policy['max_read_bytes']=True
+    ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-fixture-dispatch-preparation01-2026-10-03/test_dispatch01.py", line 21, in check
+    ns['selection'](self.job);raw=json.dumps(self.policy).encode();run=SimpleNamespace(admission=SimpleNamespace(experiment={'outputs':self.outputs},inputs={'held_score_policy':{}} if registered else {}));orig=SimpleNamespace(parse=json.loads,_read_registered=lambda r,n:raw)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/resource_fixture.py", line 26, in selection
+    require(type(name) is str and name and type(s) is dict and set(s)==KEYS,'fixture selected fields differ')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/resource_fixture.py", line 20, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: fixture selected fields differ
+
+======================================================================
+ERROR: test_selected (__main__.Tests.test_selected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-fixture-dispatch-preparation01-2026-10-03/test_dispatch01.py", line 25, in test_selected
+    def test_selected(self):self.check()
+                            ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-fixture-dispatch-preparation01-2026-10-03/test_dispatch01.py", line 21, in check
+    ns['selection'](self.job);raw=json.dumps(self.policy).encode();run=SimpleNamespace(admission=SimpleNamespace(experiment={'outputs':self.outputs},inputs={'held_score_policy':{}} if registered else {}));orig=SimpleNamespace(parse=json.loads,_read_registered=lambda r,n:raw)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/resource_fixture.py", line 26, in selection
+    require(type(name) is str and name and type(s) is dict and set(s)==KEYS,'fixture selected fields differ')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/resource_fixture.py", line 20, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: fixture selected fields differ
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.003s
+
+FAILED (errors=2)
