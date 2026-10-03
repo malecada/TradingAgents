@@ -1,0 +1,184 @@
+# Fresh per-claim source transport. No admission or numerical dependency.
+_GIT_PARTS = 128
+_GIT_BODY = 8 * 1024**2
+_GIT_REQUEST = 65536
+_GIT_SECONDS = 10
+
+class _GitCleanupFailure(BaseException):
+    """Git ownership could not be conclusively released; stop verification."""
+
+def _git_cleanup(actions, primary):
+    # First true fatal wins; all acquired resources get exactly one close call.
+    selected = primary
+    uncertain = False
+    for action in actions:
+        try:
+            action()
+        except BaseException as error:
+            fatal = isinstance(error, MemoryError) or not isinstance(error, Exception)
+            already = selected is not None and (isinstance(selected, MemoryError) or not isinstance(selected, Exception))
+            if fatal and not already:
+                selected = error
+            uncertain = True
+    if selected is not None and (isinstance(selected, MemoryError) or not isinstance(selected, Exception)):
+        if selected is not primary:
+            raise selected
+        return
+    if uncertain:
+        raise _GitCleanupFailure('Git cleanup uncertain')
+
+
+def _git_transport(root, requests, expression=None):
+    """Finite fresh child, bounded stdout/stderr; no shell, no network fetch."""
+    import os
+    import selectors
+    import sys
+    import time
+    command = ['git', 'cat-file', '--batch'] if expression is None else ['git', 'cat-file', 'blob', expression]
+    process = selector = None
+    stdin_closed = False
+    output = bytearray()
+    errors = bytearray()
+    sent = 0
+    deadline = time.monotonic() + _GIT_SECONDS
+    def stop():
+        if process is not None and process.poll() is None:
+            process.kill()
+    def reap():
+        if process is not None:
+            process.wait(timeout=5)
+    def close_input():
+        nonlocal stdin_closed
+        if process is not None and not stdin_closed:
+            stdin_closed = True
+            process.stdin.close()
+    try:
+        process = subprocess.Popen(command, cwd=root, env={**os.environ, 'GIT_NO_LAZY_FETCH':'1'},
+                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=0)
+        selector = selectors.DefaultSelector()
+        for stream, label, event in ((process.stdin,'input',selectors.EVENT_WRITE),
+                (process.stdout,'output',selectors.EVENT_READ),(process.stderr,'error',selectors.EVENT_READ)):
+            os.set_blocking(stream.fileno(), False)
+            selector.register(stream,event,label)
+        while selector.get_map():
+            left = deadline - time.monotonic()
+            if left <= 0:
+                raise subprocess.TimeoutExpired(command, _GIT_SECONDS)
+            for key, _ in selector.select(min(left, .25)):
+                stream = key.fileobj
+                if key.data == 'input':
+                    if sent < len(requests):
+                        try:
+                            n = os.write(stream.fileno(),requests[sent:sent+4096])
+                        except BlockingIOError:
+                            continue
+                        if n <= 0:
+                            raise ValueError('Git input closed')
+                        sent += n
+                    if sent == len(requests):
+                        selector.unregister(stream)
+                        close_input()
+                else:
+                    try:
+                        part = os.read(stream.fileno(),65536)
+                    except BlockingIOError:
+                        continue
+                    if not part:
+                        selector.unregister(stream)
+                        continue
+                    target = output if key.data == 'output' else errors
+                    limit = _GIT_BODY + 128 * _GIT_PARTS if key.data == 'output' else 65536
+                    if len(target) + len(part) > limit:
+                        raise ValueError('Git aggregate output ceiling exceeded')
+                    target.extend(part)
+        left = deadline - time.monotonic()
+        if left <= 0:
+            raise subprocess.TimeoutExpired(command, _GIT_SECONDS)
+        if process.wait(timeout=left) != 0 or sent != len(requests):
+            raise ValueError('saved committed provenance cannot be verified')
+        return bytes(output)
+    finally:
+        _git_cleanup((stop, reap, close_input,
+            lambda: process.stdout.close() if process is not None else None,
+            lambda: process.stderr.close() if process is not None else None,
+            lambda: selector.close() if selector is not None else None), sys.exception())
+
+
+def _verify_batch(raw, rows):
+    offset = 0
+    for path, commit, expected in rows:
+        end = raw.find(b'\n', offset, offset+128)
+        if end < 0:
+            raise ValueError('Git batch header missing or oversized')
+        fields = raw[offset:end].split(b' ')
+        if (len(fields) != 3 or re.fullmatch(rb'[0-9a-f]{40}',fields[0]) is None
+                or fields[1] != b'blob' or re.fullmatch(rb'0|[1-9][0-9]*',fields[2]) is None):
+            raise ValueError('Git batch object missing, malformed or non-blob')
+        size = int(fields[2])
+        if size > _GIT_BODY:
+            raise ValueError('Git blob body ceiling exceeded')
+        offset = end+1
+        if offset+size >= len(raw) or raw[offset+size:offset+size+1] != b'\n':
+            raise ValueError('Git batch short body or terminator')
+        if hashlib.sha256(memoryview(raw)[offset:offset+size]).hexdigest() != expected:
+            raise ValueError('registered source/charter/selection hash mismatch')
+        offset += size+1
+    if offset != len(raw):
+        raise ValueError('Git batch trailing response')
+
+
+def _source_request(commit, path):
+    # Identical original _blob validation; path text is not normalized.
+    import os
+    if not isinstance(commit, str) or not re.fullmatch(r'[0-9a-f]{40}', commit):
+        raise ValueError('saved provenance requires a full SHA-1 commit identity')
+    raw = Path(path)
+    if (raw.is_absolute() or '..' in raw.parts
+            or any(part in {'keys', 'apis', '.env', 'hf_token.txt'} or part.startswith('.env.') for part in raw.parts)):
+        raise ValueError('untrusted or secret committed path')
+    expression = f'{commit}:{path}'
+    encoded = os.fsencode(expression)
+    if b'\0' in encoded:
+        raise ValueError('embedded null byte')
+    # Git 2.34 has no NUL batch framing. Valid LF/CR/non-UTF8 names
+    # use argv and an independently bounded blob child, never line splitting.
+    if b'\n' in encoded or b'\r' in encoded or len(encoded)+1 > _GIT_REQUEST:
+        return expression, None
+    return expression, encoded+b'\n'
+
+
+def _verify_sources(root, pinned, commits):
+    rows = []
+    requests = bytearray()
+    def flush():
+        if rows:
+            _verify_batch(_git_transport(root,bytes(requests)), rows)
+            rows.clear()
+            requests.clear()
+    for path, expected in pinned.items():
+        for commit in commits:
+            try:
+                expression, request = _source_request(commit,path)
+            except BaseException:
+                # Preserve comparison order: earlier hash errors still precede
+                # this path's ordinary validation failure. Fatal is not delayed.
+                import sys
+                error = sys.exception()
+                if isinstance(error, Exception) and not isinstance(error, MemoryError):
+                    flush()
+                raise
+            if request is None:
+                flush()
+                raw = _git_transport(root,b'',expression)
+                if len(raw)>_GIT_BODY:
+                    raise ValueError('Git blob body ceiling exceeded')
+                if hashlib.sha256(raw).hexdigest()!=expected:
+                    raise ValueError('registered source/charter/selection hash mismatch')
+            else:
+                if len(rows)==_GIT_PARTS or len(requests)+len(request)>_GIT_REQUEST:
+                    flush()
+                rows.append((path,commit,expected))
+                requests.extend(request)
+    flush()
+
+

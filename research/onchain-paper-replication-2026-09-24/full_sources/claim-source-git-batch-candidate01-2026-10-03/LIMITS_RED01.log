@@ -1,0 +1,25 @@
+...F
+======================================================================
+FAIL: test_request_bound_before_spawn (__main__.Limits.test_request_bound_before_spawn)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-source-git-batch-candidate01-2026-10-03/test_limits01.py", line 7, in test_request_bound_before_spawn
+    with self.assertRaises(ValueError):m._git_transport(P,b'x'*65537)
+                                       ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-source-git-batch-candidate01-2026-10-03/candidate01.py", line 83, in _git_transport
+    process = subprocess.Popen(command, cwd=root, env={**os.environ, 'GIT_NO_LAZY_FETCH':'1'},
+                               stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=0)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+AssertionError: must not spawn
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=1)

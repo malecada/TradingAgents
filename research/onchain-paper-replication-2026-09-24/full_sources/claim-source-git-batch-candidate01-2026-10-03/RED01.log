@@ -1,0 +1,32 @@
+FFF
+======================================================================
+FAIL: test_cleanup_first_fatal (__main__.Tests.test_cleanup_first_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-source-git-batch-candidate01-2026-10-03/test_batch01.py", line 33, in test_cleanup_first_fatal
+    if not hasattr(m,'_git_cleanup'):self.fail('owned cleanup reducer absent')
+                                     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: owned cleanup reducer absent
+
+======================================================================
+FAIL: test_parser_negative_and_order (__main__.Tests.test_parser_negative_and_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-source-git-batch-candidate01-2026-10-03/test_batch01.py", line 27, in test_parser_negative_and_order
+    if not hasattr(m,'_verify_batch'):self.fail('bounded framing validator absent')
+                                      ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: bounded framing validator absent
+
+======================================================================
+FAIL: test_real_git_fresh_order_names_and_process_count (__main__.Tests.test_real_git_fresh_order_names_and_process_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-source-git-batch-candidate01-2026-10-03/test_batch01.py", line 22, in test_real_git_fresh_order_names_and_process_count
+    self.assertLess(first,len(names),'source bodies still spawn one process each')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 5 not less than 5 : source bodies still spawn one process each
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.037s
+
+FAILED (failures=3)

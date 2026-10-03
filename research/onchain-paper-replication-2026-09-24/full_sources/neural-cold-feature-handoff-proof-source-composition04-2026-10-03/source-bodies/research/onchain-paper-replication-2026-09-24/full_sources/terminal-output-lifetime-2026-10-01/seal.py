@@ -1,0 +1,263 @@
+"""Current-owner publication, explicit terminal handoff and registered outputs.
+
+Not a cold/historical reader, fit permit, physical quota or total RSS bound.
+Completed producer identities are never reopened. Pair kernel archive payloads
+remain preserved; their directory identities/inventories are checked, not their
+numerical bytes. Model-input artifacts retain admitted SHA/extent checks.
+"""
+import importlib.util
+import os
+from dataclasses import asdict
+from pathlib import Path
+import stat
+from tradingagents.research import lifecycle
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,digest,file_hash,freeze,thaw,durable_mkdir,sync_directory
+
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+spec=importlib.util.spec_from_file_location('seal_representation_publication',HERE.parent/'representation-seal-2026-10-01/publication.py')
+publication=importlib.util.module_from_spec(spec);spec.loader.exec_module(publication)
+saved=publication.saved;reader=publication.reader;producer=publication.producer
+writer=publication.writer;write_metadata=writer.write_metadata
+ownership=producer.artifacts.consumer.ownership;pair=ownership.journal
+SOURCES=tuple(sorted(set(publication.SOURCES)|{str(Path(__file__).relative_to(ROOT))}))
+spec=importlib.util.spec_from_file_location('terminal_output_tracker',HERE/'outputs.py')
+output_module=importlib.util.module_from_spec(spec);spec.loader.exec_module(output_module)
+SOURCES=tuple(sorted(set(SOURCES)|{str((HERE/'outputs.py').relative_to(ROOT))}))
+require=saved.require;equal=saved.equal
+
+class Receipt:
+    __slots__=('_record','_lease')
+    def __init__(self,record,lease):object.__setattr__(self,'_record',freeze(record));object.__setattr__(self,'_lease',lease)
+    def __setattr__(self,name,value):raise AttributeError('terminal receipt is immutable')
+    @property
+    def record(self):return self._record
+    def lease(self):self._lease()
+
+def outputs(item,selected,allowed):
+    names=tuple(item.get(k) for k in ('binding_output','journal_output'))
+    require(all(type(v) is str and v and Path(v).name==v and v in allowed for v in names)
+        and names[0]!=names[1] and names==tuple(selected.get(k) for k in ('binding_output','journal_output')),
+        'exact distinct registered output routes required')
+    return names
+
+def bounded_children(path,remaining):
+    require(type(remaining) is int and remaining>=0,'positive inventory allowance required')
+    result=[]
+    with os.scandir(path) as entries:
+        for entry in entries:
+            require(len(result)<remaining,'seal snapshot entry allowance exceeded')
+            require(not entry.name.startswith('.pending-'),'pending archive artifact')
+            result.append(Path(entry.path))
+    return result
+
+def attempt_directory(owned):
+    b=owned.workload.bound
+    return b._run.admission.root/'research_artifacts/onchain_representation_seals'/b.record['workflow_identity']/b.record['experiment']
+
+def finish(owned,journal,*,examples,fold,denominator_input,dictionary_ticket,closure_input,output_input,seal_input):
+    saved.actual_owner(owned,journal);bound=owned.workload.bound;run=bound._run;ad=run.admission
+    owner=thaw(bound.record);directory=Path(owner['journal_directory']);j=owned.journal
+    attempt=attempt_directory(owned);metadata=producer.Metadata(ad.root);written={};phase='reserved'
+    def sources():
+        for name in SOURCES:
+            sha=ad.experiment['source_files'].get(name)
+            require(sha is not None and file_hash(ROOT/name)==sha and file_hash(ad.root/name)==sha,'seal source differs')
+    sources()
+    def registered(name):
+        require(type(name) is str and name in ad.inputs,'registered seal input required')
+        info=ad.inputs[name];return metadata.read(ad.root/info['path'],info['sha256'])
+    claim=metadata.read(directory/'claim.json');plan=registered(claim['plan_input']);job=registered('execution_job')
+    item=plan.get('producers',{}).get(owner['producer']);selected=job.get('payload',{}).get('representation_jobs',{}).get(owner['representation'])
+    require(isinstance(item,dict) and isinstance(selected,dict) and item.get('representation_seal_input')==selected.get('representation_seal_input')==seal_input,'selected seal policy differs')
+    binding_name,journal_name=outputs(item,selected,ad.experiment['outputs']);policy=registered(seal_input)
+    require(type(policy) is dict and set(policy)=={'schema_version','max_metadata_bytes','max_attempt_bytes','max_snapshot_entries','max_journal_events','max_pair_events'}
+        and type(policy['schema_version']) is int and policy['schema_version']==1
+        and all(type(v) is int and v>0 for k,v in policy.items() if k!='schema_version')
+        and policy['max_metadata_bytes']<=reader.MANIFEST_LIMIT,'seal policy differs')
+    cap=policy['max_metadata_bytes'];reserve=6*cap+pair.LIMIT
+    require(reserve<=policy['max_attempt_bytes'],'seal encoded reservation exceeded')
+    def absent(path):require(not path.exists() and not path.is_symlink(),'seal/output identity already reserved')
+    absent(attempt);absent(publication.attempt_directory(owned))
+    for name in (binding_name,journal_name):absent(run.directory/'outputs'/name)
+    require(j.state['pending'] is None and all(v['kind']=='complete' for v in j.state['pairs'].values()),'unresolved pair work cannot seal')
+    require(len(j.records)<=policy['max_pair_events'] and len(journal.records)+1<=policy['max_journal_events'],'seal event allowance exceeded')
+    require(attempt.resolve()==attempt and attempt.is_relative_to(ad.root),'seal attempt containment differs')
+    durable_mkdir(attempt.parent);owned.lease();attempt.mkdir(exist_ok=False);sync_directory(attempt.parent)
+    require(attempt.stat().st_dev==ad.root.stat().st_dev,'seal attempt device differs')
+    def write(name,value):
+        ref=write_metadata(metadata,attempt,name,value,cap)
+        written[Path(ref['path'])]=ref['sha256'];return ref
+    try:
+        start=write('start.json',{'schema_version':1,'status':'reserved','resumable':False,'owner':owner,'seal_input':seal_input,
+            'seal_policy_sha256':ad.inputs[seal_input]['sha256'],'binding_output':binding_name,'journal_output':journal_name,
+            'reserved_encoded_bytes':reserve,'sources':{n:ad.experiment['source_files'][n] for n in SOURCES}})
+        proof_ref=publication.produce(owned,journal,examples=examples,fold=fold,denominator_input=denominator_input,
+            dictionary_ticket=dictionary_ticket,closure_input=closure_input,output_input=output_input)
+        phase='representation_published'
+        proof=metadata.read(Path(proof_ref['path']),proof_ref['sha256'],cap)
+        require(proof['status']=='complete' and equal(proof['owner'],owner),'published seal owner differs')
+        dates=publication.closure.denominator.admit(owned,examples=examples,fold=fold,policy_input=denominator_input)
+        require(equal(dates.record,proof['closure']['denominator']),'seal denominator differs from publication')
+        route=owned.workload;descriptor=thaw(route.descriptor);control=thaw(route.control);graph_objects=dict(route._graphs)
+        expected_examples=control['example_manifest_sha256']
+        def resident_inputs():
+            require(owned.workload is route and route.bound is bound and equal(bound.record,owner)
+                and equal(route.descriptor,descriptor) and equal(route.control,control),'seal input owner/route changed')
+            require(publication.closure.denominator.manifest_hash(examples)==expected_examples
+                and equal(asdict(fold),descriptor['fold']),'seal examples/fold changed')
+            require(set(route._graphs)==set(graph_objects),'seal graph population changed')
+            for h,g in graph_objects.items():
+                require(type(g) is publication.closure.denominator.GraphSnapshot and route._graphs[h] is g
+                    and publication.closure.denominator.graph_hash(g)==h,'seal resident graph changed')
+        resident_inputs()
+        binding=proof['closure']['binding'];feature_records=thaw(journal.records);pair_records=thaw(j.records);pair_state=thaw(j.state)
+        pin=saved.ticket_lease(dictionary_ticket,owned,journal)
+        expected={Path(p):{'sha256':v['sha256'],'bytes':v['bytes']} for p,v in proof['predecessor_snapshot']['files'].items()}
+        directories=[Path(p) for p in proof['predecessor_snapshot']['directories']]
+        def reference(ref):
+            path=Path(ref['path']);value=metadata.read(path,ref['sha256'],cap)
+            expected[path]={'sha256':ref['sha256'],'bytes':metadata.snapshots[path][1][2]}
+            return value
+        reference(proof_ref);reference(proof['start']);directories.append(Path(proof_ref['path']).parent)
+        reference(proof['component']);directories.append(Path(proof['component']['path']).parent)
+        dictionary_ref=pin['record']['dictionary_proof'];dictionary=reference(dictionary_ref)
+        reference(dictionary['start']);directories.append(Path(dictionary_ref['path']).parent)
+        sampler_ref=pin['record']['sample_provenance']['sampler_proof'];sampler=reference(sampler_ref)
+        reference(sampler['start'])
+        for ref in sampler['draws']:reference(ref)
+        directories.append(Path(sampler_ref['path']).parent)
+        snapshot=publication.Snapshot(ad.root,directories,policy['max_snapshot_entries'],expected_files=expected)
+        # Keep registered metadata caps where a path was already admitted.
+        def pin_file(path,sha=None):
+            old=metadata.snapshots.get(path)
+            return metadata.read(path,sha,cap if old is None else old[2])
+        for path,sha in bound._snapshots.items():pin_file(path,sha)
+        for info in ad.inputs.values():pin_file(ad.root/info['path'],info['sha256'])
+        for name in ('owner.json','start.json','claim.json'):pin_file(directory/name)
+        proved_events=[pin['record']['event'],pin['record']['sample_provenance']['sample_artifact']['event'],proof['event']]
+        for graph in proof['closure']['graphs'].values():
+            proved_events.extend((graph['event'],graph['feature_provenance']['mcm_provenance']['event']))
+        proved={Path(ref['path']):ref['sha256'] for ref in proved_events}
+        require(len(proved)==len(proved_events)==len(feature_records)==proof['event_index']+1
+            and set(proved)=={directory/f'event-{i:06d}.json' for i in range(len(feature_records))},'proved feature event denominator differs')
+        for i,event in enumerate(feature_records):
+            path=directory/f'event-{i:06d}.json'
+            require(equal(pin_file(path,proved[path]),event),'feature event differs before seal')
+        for ref in (owned.cert_reference,j.start,*pair_records):pin_file(Path(ref['path']),ref['sha256'])
+        # Explicitly reject unreserved sessions/artifact directories. Numerical
+        # checkpoint internals remain archived; only their tree/signatures are
+        # retained here, not a new full kernel-payload verification claim.
+        sessions={};archive_files={};trees={};entries=len(expected)+len(directories)+len(metadata.snapshots)
+        def tree(path,children):
+            nonlocal entries
+            value=path.lstat();require(path.resolve()==path and path.is_relative_to(ad.root) and stat.S_ISDIR(value.st_mode)
+                and value.st_dev==ad.root.stat().st_dev,'seal tree directory differs')
+            children=set(children);reader.inventory(path,children)
+            entries+=1+len(children);require(entries<=policy['max_snapshot_entries'],'seal snapshot entry allowance exceeded')
+            trees[path]=((value.st_dev,value.st_ino),children)
+        for ref in pair_records:
+            event=pin_file(Path(ref['path']),ref['sha256'])
+            if event['kind']=='reserve':
+                path=Path(event['payload']['path']);sessions.setdefault(path.parent.parent,set()).add(path.parent)
+            else:
+                ref=event['payload'];value=pin_file(Path(ref['path']),ref['sha256'])
+                tree(Path(ref['path']).parent,{Path(ref['path'])}|({Path(ref['path']).parent/'state'} if value['kind']=='progress' else set()))
+        tree(j.root/'pairs',sessions)
+        for session,artifacts in sessions.items():
+            tree(session,artifacts|{session/'owner.json'});pin_file(session/'owner.json')
+            for artifact in artifacts:
+                state=artifact/'state'
+                if state.exists() or state.is_symlink():
+                    stack=[state]
+                    while stack:
+                        current=stack.pop();value=current.lstat()
+                        require(current.resolve()==current and current.is_relative_to(ad.root)
+                            and stat.S_ISDIR(value.st_mode) and value.st_dev==ad.root.stat().st_dev,'archive directory differs before enumeration')
+                        children=bounded_children(current,policy['max_snapshot_entries']-entries-1);tree(current,children)
+                        for child in children:
+                            require(not child.name.startswith('.pending-'),'pending pair archive artifact')
+                            value=child.lstat()
+                            if stat.S_ISDIR(value.st_mode):stack.append(child)
+                            else:
+                                with reader.opened(child,ad.root) as (_,sig):archive_files[child]=sig
+        feature_children={directory/n for n in ('owner.json','start.json','claim.json')}
+        feature_children|={directory/f'event-{i:06d}.json' for i in range(len(feature_records))}
+        feature_children|={directory/f'checkpoint-{i:06d}' for i in range(len(feature_records))}
+        tree(directory,feature_children)
+        pair_children={j.directory/'binding.json',j.directory/'start.json',*(Path(r['path']) for r in pair_records)}
+        tree(j.directory,pair_children);tree(j.root,{j.root/'pairs',j.directory})
+        feature_terminal={'schema_version':1,'status':'complete','reason':None,'owner':thaw(journal.owner),
+            'workflow_identity':journal.identity,'events':feature_records,'parent':None,'required_graphs':list(journal.required)}
+        pair_terminal={'schema_version':1,'status':'complete','start':thaw(j.start),'events':pair_records}
+        feature_sha=digest(lifecycle._encode(feature_terminal));pair_sha=digest(pair.encode(pair_terminal))
+        terminal_ref={'path':str((directory/'complete.json').relative_to(ad.root)),'sha256':feature_sha,
+            'owner':thaw(journal.owner),'workflow_identity':journal.identity}
+        out_values={binding_name:binding,journal_name:terminal_ref};out_hashes={n:digest(lifecycle._encode(v)) for n,v in out_values.items()}
+        require(all(len(lifecycle._encode(v))<=cap for v in (feature_terminal,*out_values.values()))
+            and len(pair.encode(pair_terminal))<=pair.LIMIT,'terminal/output encoded allowance exceeded')
+        pair_done=False;feature_done=False;output_done=set()
+        pair_identity=(j.root,j.directory,j.owner,j.workflow,j.previous)
+        pair_policy=thaw(j.policy);pair_start=thaw(j.start)
+        feature_identity=(journal.directory,journal.identity,thaw(journal.owner),list(journal.required),journal.parent)
+        output_before=dict(run._published_outputs);output_children={run.directory/'outputs'/n for n in output_before}
+        reader.inventory(run.directory/'outputs',output_children)
+        final={'schema_version':1,'status':'complete','resumable':False,'owner':owner,'start':start,'publication':proof_ref,
+            'seal_input':seal_input,'seal_policy_sha256':ad.inputs[seal_input]['sha256'],
+            'pair_terminal':{'path':str(j.directory/'complete.json'),'sha256':pair_sha},
+            'feature_terminal':{'path':str(directory/'complete.json'),'sha256':feature_sha},
+            'outputs':{n:{'path':str(run.directory/'outputs'/n),'sha256':h} for n,h in out_hashes.items()}}
+        require(len(canonical_bytes(final))<=cap and len(canonical_bytes({'schema_version':1,'status':'failed','resumable':False,
+            'owner':owner,'last_phase':'journal_output_published','reason_type':'X'*100,'reason':'X'*500}))<=cap,'seal result allowance exceeded')
+        def lease(output_tracker=None):
+            run._active();run._check_source();run._check_inputs();bound._guard();sources()
+            require(digest(canonical_bytes(ownership.owner.inventory(ad.root,include_torch=True)))==bound.context['runtime_hash'],'seal runtime changed')
+            metadata.lease();snapshot.check();resident_inputs()
+            require(bound._run is run and (j.root,j.directory,j.owner,j.workflow,j.previous)==pair_identity
+                and equal(j.policy,pair_policy) and equal(j.start,pair_start) and j.safe
+                and equal((journal.directory.as_posix(),journal.identity,thaw(journal.owner),list(journal.required),journal.parent),
+                    (feature_identity[0].as_posix(),*feature_identity[1:])), 'seal owner/object identity changed')
+            require(equal(j.records,pair_records) and equal(j.state,pair_state) and equal(journal.records,feature_records)
+                and j.sealed==pair_done and journal.sealed==feature_done,'seal in-memory phase changed')
+            for path,(identity,children) in trees.items():
+                value=path.lstat();require(path.resolve()==path and stat.S_ISDIR(value.st_mode) and (value.st_dev,value.st_ino)==identity,'seal directory changed')
+                extra={path/'complete.json'} if (path==j.directory and pair_done) or (path==directory and feature_done) else set()
+                reader.inventory(path,children|extra)
+            for path,sig in archive_files.items():
+                with reader.opened(path,ad.root,sig):pass
+            if pair_done:pin_file(j.directory/'complete.json',pair_sha)
+            if feature_done:pin_file(directory/'complete.json',feature_sha)
+            if output_tracker is None:
+                # The transition retains its original exact phase checks. Its
+                # leases may already hold the lifecycle lock; never reacquire it.
+                reader.inventory(run.directory/'outputs',output_children|{run.directory/'outputs'/n for n in output_done})
+                require(run._published_outputs==output_before|{n:out_hashes[n] for n in output_done},'published output registry differs')
+                for n in output_done:pin_file(run.directory/'outputs'/n,out_hashes[n])
+            else:
+                # Only the returned post-completion lease admits new same-run
+                # publications. The tracker acquires the writer's lifecycle lock.
+                output_tracker.check()
+            reader.inventory(attempt,set(written))
+            for path,sha in written.items():pin_file(path,sha)
+            bound._guard()
+        # The old live contracts end before the first terminal mutation. The
+        # new exact phase contract brackets every following durable boundary.
+        saved.ticket_lease(dictionary_ticket,owned,journal);lease()
+        with lifecycle._lock(ad.root):
+            owned.lease();dates.lease();resident_inputs();lease()
+            actual=owned.seal('complete');pair_done=True;phase='pair_sealed'
+            require(actual==final['pair_terminal'],'pair terminal reference differs');lease()
+            actual=journal.seal('complete');feature_done=True;phase='feature_sealed'
+            require(actual==directory/'complete.json','feature terminal path differs');lease()
+        # write_json reacquires the lifecycle lock; never nest it above.
+        for name in (binding_name,journal_name):
+            lease();run.write_json(name,out_values[name]);output_done.add(name)
+            phase='binding_output_published' if name==binding_name else 'journal_output_published';lease()
+        result=write('complete.json',final);lease()
+        tracker=output_module.Outputs(run,output_before|out_hashes,max_bytes=cap)
+        lease(tracker)
+        return Receipt(final|{'seal_proof':result},lambda:lease(tracker))
+    except BaseException as error:
+        try:write('failed.json',{'schema_version':1,'status':'failed','resumable':False,'owner':owner,
+            'last_phase':phase,'reason_type':type(error).__name__,'reason':str(error)[:500]})
+        except BaseException:pass
+        raise

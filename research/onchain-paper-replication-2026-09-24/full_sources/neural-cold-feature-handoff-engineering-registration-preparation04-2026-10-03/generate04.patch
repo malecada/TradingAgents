@@ -1,0 +1,11 @@
+--- generate03.py
++++ generate04.py
+@@ -11,7 +11,7 @@
+ IDS={'materialize':'compact-cold-inputs-20261003-01','compare':'compact-cold-comparison-20261003-01'}
+ CELL={'materialize':'cold-input-materialization','compare':'cold-genuine-comparison'}
+ MAX=4194304;GIB=1073741824
+-PINNED_INVENTORY='8576e2baba60576818ee4def16fcfad32cc69bd197c4ff1b727808d9695786d2'
++PINNED_INVENTORY='e8d8594d1c7aabe4076bf2b4bab7454cb0fad48ec8f46b754e06fc3f3ddb6773'
+ RELEASE_SHA='53c2294b7b38f340e9160e4484a6b7506942ce36e2dff12694a47f9b72206812'
+ CONFIG_PINS={'recipe':'35a10c4b1e342afe2bff01e6d655b4d93312e07302b2061a237dcea861f56570','configs':'1ceae44792c7ff3ff76ce15a7cf79b0267e4a919f56917473862ddf432935a1f','model':'29af65736dddfbd22b5ce94c6ff3e507041b00dc81dfcc94c6919a615a68dcb7','training':'99fb74a84b85ddff9589e5a8706f8b5ef3807a3f065dfb7091a220a28af63bb3'}
+ MATERIAL_INPUTS=frozenset(['graph-'+str(i).zfill(2) for i in range(19)]+['population','model','training','calendar','coverage','pair_checkpoint','compact_policy','compact_training','compact_sampler','compact_samples','compact_dictionary','compact_mcm','compact_mcm_output','compact_feature','compact_graph_output','compact_denominator','compact_closure','compact_publication','compact_terminal','compact_native_features','compact_cold_handoff','cold_proof','plan','future_execution_job'])

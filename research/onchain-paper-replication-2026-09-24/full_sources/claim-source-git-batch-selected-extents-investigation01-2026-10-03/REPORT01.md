@@ -1,0 +1,37 @@
+# Selected per-claim Git batch extents
+
+The exact selected original source/charter objects fit the accepted candidate transport's finite byte/count caps. This is authenticated local object arithmetic, not a claim verification run, speed measurement, deadline guarantee or capacity proof. No historical job was rerun. Candidate `3a45746a388307d1b375c885bb2fd7a22c2a60f139df714d2bbe98906d57d7eb` was source-pinned, not installed.
+
+| Original identity | Sources / package | Source body bytes | Source + charter requests / body bytes | Actual groups (rows; request bytes; complete stdout bytes) |
+|---|---:|---:|---:|---|
+| imported01 | 153 / 142 | 2,812,412 | 154 / 2,812,851 | 128;12,749;1,215,015 — 26;2,511;1,605,893 |
+| imported02 | 156 / 142 | 2,823,463 | 157 / 2,824,306 | 128;12,716;1,201,039 — 29;2,815;1,631,479 |
+| imported03 | 159 / 142 | 2,834,459 | 160 / 2,835,501 | 128;12,668;1,183,537 — 32;3,122;1,660,332 |
+| imported04 | 162 / 142 | 2,848,285 | 163 / 2,849,664 | 128;12,634;1,182,376 — 35;3,415;1,675,811 |
+| SCI source A, unclaimed | 195 / 147 | 3,270,731 | 196 / 3,274,362 | 128;13,916;1,268,422 — 68;6,785;2,016,204 |
+
+Package body sums are respectively 1,406,927 / 1,411,058 / 1,414,993 / 1,420,140 / 1,477,313 bytes. The four genuine claim registrations were read at their actual source commits, SHA-joined to claim registration hashes, and experiment/family mappings compared exactly. Each original source equals its design_source, so the candidate's set of commits contains ONE commit: 634 source+charter requests across eight groups, not 1,268. All four claims remain FAILED. The SCI row uses the actual committed source-A registration as prospective metadata; no claim exists or was manufactured.
+
+The order is the actual decoded registration/claim source_files insertion order, then the charter assignment, then each distinct commit in the candidate's set order. No path sorting was introduced. Per-path/per-commit rows, Git blob IDs, SHA-256s, body sizes, request sizes and framing bytes are retained in readback01.json. None has a selection reference adding another row. Equality of source/design commits removes process-dependent two-element set ordering for these exact histories. A future claim with distinct commits needs both possible ordered group extents, not this one-commit conclusion.
+
+## Caps and framing
+
+Selected maxima: 128 requests/group; 13,916 request bytes/group; 171 bytes/single request; 1,326,335 bytes/single blob (`uv.lock`); 2,016,204 stdout bytes/group; zero stderr bytes. Caps:128 /65,536 /8,388,608 blob /8,404,992 stdout /65,536 stderr. Batch framing was checked from actual Git output as 40-byte object ID + space + `blob` + space + decimal size + newline, followed by full body and newline. Total framing for the five inventories is 8,057 /8,212 /8,368 /8,523 /10,264 bytes. No unknown headers, missing objects, partial bodies, trailing bytes or hash mismatches occurred.
+
+The current 162-source imported closure and actual195-source SCI closure each use two groups once charter is included. Existing verify.py is 9,328 bytes; accepted inline candidate is17,474, an8,146-byte body increase and one-byte decimal-header increase. With the SAME existing path/order/charter, imported04 selected body total becomes2,857,810, package sum1,428,286 and affected group stdout1,683,958; SCI selected body total3,282,508, package1,485,459 and affected group stdout2,024,351. These are counterfactual byte substitutions only. Historical objects are immutable, and no future commit, regenerated registration, changed charter or actual claim is invented. Old-history delta entries in the readback are arithmetic only and are not recommendations to alter any history.
+
+Actual future source rows/charter/selection/order may differ after root integration. Recompute the exact frozen successor's groups and request/framing extents before release; today's same-order delta cannot certify additional metadata rows or rewritten charter. Inline implementation retains147/195 membership only if no additional selected helper is introduced. Registration/claim/binding/budget reads outside the replaced source loop continue through their original paths; these measurements do not claim those operations gained batching or satisfy these transport caps.
+
+## Fallback and failure semantics
+
+No selected path needs fallback. Actual pure `_source_request` was extracted without imports of research code and exercised on tiny text fixtures: LF and CR names fall back to argv; a long line whose request exceeds64KiB falls back to argv; ordinary and non-UTF8 fsencoded names without LF/CR remain batch-framed. The source comment groups non-UTF8 with unusual paths, but the actual encoder's condition does not force non-UTF8 fallback. A fallback expression must fit128KiB and its blob8MiB; LF/CR/long-path fixture checks here execute no Git child or filesystem creation. NUL and invalid/secret/parent paths remain refusal classes covered by the separately accepted candidate review, not selected actual-source paths.
+
+The candidate groups transport before per-row hash comparisons: a transport failure for a later object in a group can precede an earlier hash mismatch. That independently reviewed group-level transport-error priority remains; this successful extent observation does not remove it. Ordinary validation errors flush preceding accumulated rows; fatal errors are not delayed. No source-authentication frequency or original claim check is skipped.
+
+The candidate's10-second monitored bound plus cleanup wait up to5 seconds is per transport, not a whole verify_claim/Binding/Owner duration. Two groups imply two separately bounded transports for these exact inventories; eight groups span four different historical claims. Child creation, synchronous calls, scheduling and cleanup qualifications remain those of the accepted review. No measured runtime, speedup or whole-call15/30/120-second bound is asserted.
+
+## Availability and qualifications
+
+All requested original registered source and charter blobs were returned by local genuine `git cat-file --batch`; `GIT_NO_LAZY_FETCH=1` and `GIT_TERMINAL_PROMPT=0` were set. Only local cat-file/rev-parse commands ran; no network command or credential read occurred. SHA joins establish complete availability for these exact selected object sets, not the whole historical repository or installed runtime. Original current capsule04 provides all four historical commits; SCI uses actual A6ab2. Source refs pin candidate/manifest/review, exact original four claim metadata and SCI registration.
+
+Only stdlib source/metadata and explicit registered source objects were inspected. No admission, verify_claim, Owner, numerical package, array, label, original job, candidate transport or empirical output was executed/read. The four terminal file presences were checked without relabeling outcomes. The preliminary lookup of a nonexistent candidate `verify.py` path was corrected to actual `candidate01.py`; no claim execution depended on that lookup. The measurement script and its one successful raw log are retained. No source/gate/budget/capsule/Git/STATE mutation occurred. Remaining release requirement: authenticate the final composed successor's exact source/inventory/charter and group extents, then complete independently reviewed registration/runtime/native/recovery/eligibility; extent fit alone grants no execution authority.

@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_first_actual_fatal_outranks_uncertainty_wrapper (__main__.Tests.test_first_actual_fatal_outranks_uncertainty_wrapper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/claim-source-git-batch-candidate01-2026-10-03/test_cleanup02.py", line 7, in test_first_actual_fatal_outranks_uncertainty_wrapper
+    with self.assertRaises(MemoryError) as got:m._git_cleanup((fail,lambda:seen.append(2)),m._GitCleanupFailure('uncertain'))
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: MemoryError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

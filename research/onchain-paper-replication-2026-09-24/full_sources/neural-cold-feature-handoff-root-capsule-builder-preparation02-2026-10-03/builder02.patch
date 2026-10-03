@@ -1,0 +1,42 @@
+--- builder01.py
++++ builder02.py
+@@ -7,10 +7,10 @@
+ import argparse,ast,hashlib,importlib.util,json,os,re,stat,subprocess,sys
+ from pathlib import Path
+ BASE='research/onchain-paper-replication-2026-09-24/full_sources/'
+-CSC=BASE+'neural-cold-feature-handoff-proof-source-composition03-2026-10-03'
+-GEN=BASE+'neural-cold-feature-handoff-engineering-registration-preparation03-2026-10-03'
+-PINS={CSC+'/MANIFEST03.json':'4c770e65ca9b4c93335cf1cf87610fd9f24097da939252ce897afc43e8e1b7a8',GEN+'/MANIFEST03.json':'44a3f97a480084c233bba66c13a90dbc7b72ea204c1150ac499f073ea57ec4d2'}
+-INV='8576e2baba60576818ee4def16fcfad32cc69bd197c4ff1b727808d9695786d2'
++CSC=BASE+'neural-cold-feature-handoff-proof-source-composition04-2026-10-03'
++GEN=BASE+'neural-cold-feature-handoff-engineering-registration-preparation04-2026-10-03'
++PINS={CSC+'/MANIFEST04.json':'10fba546b2ebcf39e33fb80da710be56c7fa518ba3447ba87bdc40aa6b6bcc99',GEN+'/MANIFEST04.json':'ccd6a09d1022e7fce0d685cbfc53e74c5437fb0a0dffab91a9879adfdbfd0884'}
++INV='e8d8594d1c7aabe4076bf2b4bab7454cb0fad48ec8f46b754e06fc3f3ddb6773'
+ GIB=1073741824;MAX=4194304
+ 
+ def require(v,m):
+@@ -58,13 +58,13 @@
+   for r in manifest['files']:
+    path=parent+'/'+relative(r['path']);b=bounded(repo,path)
+    require(len(b)==r['bytes'] and digest(b)==r['sha256'] and git(repo,'show',commit+':'+path)==b,'preparation source/Git differs: '+path)
+- invraw=bounded(repo,CSC+'/source_inventory03.json');require(digest(invraw)==INV,'selected195 inventory differs')
++ invraw=bounded(repo,CSC+'/source_inventory04.json');require(digest(invraw)==INV,'selected195 inventory differs')
+  inv=json.loads(invraw);rows=ordered_rows(inv['source_inventory']);require(inv['package_count']==147,'package147 required')
+  for r in rows:
+   raw=bounded(repo,CSC+'/source-bodies/'+r['target']);require(len(raw)==r['bytes'] and digest(raw)==r['sha256'],'copied body differs')
+   if r.get('git_commit') is not None:require(git(repo,'show',r['git_commit']+':'+r['git_path'])==raw,'historical Git origin differs')
+   else:require(git(repo,'show',commit+':'+CSC+'/source-bodies/'+r['target'])==raw,'candidate committed snapshot differs')
+- return inv,load(repo/GEN/'generate03.py','accepted_cold_generator03'),load(repo/CSC/'prepare_metadata_composed03.py','accepted_composed_metadata03')
++ return inv,load(repo/GEN/'generate04.py','accepted_cold_generator04'),load(repo/CSC/'prepare_metadata_composed04.py','accepted_composed_metadata04')
+ def put(gen,root,name,data):
+  relative(name);p=root/name;require(p.resolve()==p and not p.exists() and not p.is_symlink(),'exclusive destination required')
+  p.parent.mkdir(parents=True,exist_ok=True);gen.write_exclusive(p,data)
+@@ -90,7 +90,7 @@
+   for r in rows:
+    data=bounded(repo,CSC+'/source-bodies/'+r['target']);require(len(data)==r['bytes'] and digest(data)==r['sha256'],'source changed before copy')
+    put(gen,root,r['target'],data)
+-  put(gen,root,'cold_prep/source_inventory.json',bounded(repo,CSC+'/source_inventory03.json'))
++  put(gen,root,'cold_prep/source_inventory.json',bounded(repo,CSC+'/source_inventory04.json'))
+   for name in ('CHARTER_MATERIALIZE02.md','CHARTER_COMPARE02.md','HISTORY02.md'):put(gen,root,'cold_prep/'+name,bounded(repo,GEN+'/'+name))
+   result={'status':'unregistered-source-export','source_count':195,'package_count':147,'logical_source_bytes':total,'origin_commit':request['provenance_commit'],'actual_capsule_commit':None,'execution_authorized':False}
+   put(gen,root,'cold_prep/export.json',encoded(result));return result
