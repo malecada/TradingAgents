@@ -1,0 +1,39 @@
+{
+  "source_sha256": "33fb83b106e0c9c75162e6f60db4a2eab8cfb6d7248e9173ff7c49b1da0798a3",
+  "results": [
+    "ordinary body then fatal file close: exact fatal retained, once",
+    "directory fatal then ordinary close: exact fatal retained, both once",
+    {
+      "case": "callback",
+      "pid": 3388953,
+      "exit": -15,
+      "absent": true,
+      "handlers_restored": true
+    },
+    {
+      "case": "failed-signal-wait",
+      "pid": 3388954,
+      "exit": 0,
+      "absent": true,
+      "handlers_restored": true
+    },
+    {
+      "case": "cancel",
+      "pid": 3388955,
+      "exit": -15,
+      "absent": true,
+      "handlers_restored": true
+    },
+    "postwait first fatal retained, both fd close and both publication attempts",
+    "RP3: joined built before protected acquisition/spawn; exact finally calls cleanup preserving prior; only declared AST movement",
+    {
+      "case": "forced-kill",
+      "pid": 3388956,
+      "exit": -9,
+      "absent": true,
+      "handlers_restored": true
+    },
+    "failed TERM and first wait do not skip real SIGKILL/final wait; exact first fatal retained"
+  ],
+  "no_original_main_or_capsule_invoked": true
+}

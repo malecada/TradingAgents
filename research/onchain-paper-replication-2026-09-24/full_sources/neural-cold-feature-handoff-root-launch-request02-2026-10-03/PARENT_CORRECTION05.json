@@ -1,0 +1,23 @@
+{
+  "actual_invocations": 0,
+  "capsule_source_unchanged": "9742c6ec817dd0917f9f35a52e4b83965ca1cd29",
+  "child_command_unchanged": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-launch-request02-2026-10-03/EXACT_COMMAND02.json",
+    "sha256": "3f20df217e73eb249140687d755ed984c41a0029e868cfcc3ffc544ec16814ac"
+  },
+  "child_request_unchanged": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-launch-request02-2026-10-03/MATERIALIZE_REQUEST02.json",
+    "sha256": "ef024344fba338a34208686ef55f64a784a68571d0194d0e5a14040daa067836"
+  },
+  "corrected_parent05": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-launch-request02-2026-10-03/parent_wait05.py",
+    "sha256": "33fb83b106e0c9c75162e6f60db4a2eab8cfb6d7248e9173ff7c49b1da0798a3"
+  },
+  "correction": "Only moves joined mapping copy before acquiring stdio or spawning child. No fallible request copy precedes close/wait/publication cleanup; all identified RP1/RP2 corrections preserved. Original04 and earlier sources/commands unchanged.",
+  "original_parent04": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-launch-request02-2026-10-03/parent_wait04.py",
+    "sha256": "b570c7dd5e95c64ce8681ddde963b0657c4815cae85029dc4411070a069aa1d2"
+  },
+  "original_status": "WITHHELD RP3 fallible joined-mapping allocation before finally cleanup",
+  "schema_version": 1
+}

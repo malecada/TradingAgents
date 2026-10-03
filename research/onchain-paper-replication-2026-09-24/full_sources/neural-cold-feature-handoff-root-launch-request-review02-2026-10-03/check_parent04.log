@@ -1,0 +1,36 @@
+{
+  "source_sha256": "b570c7dd5e95c64ce8681ddde963b0657c4815cae85029dc4411070a069aa1d2",
+  "results": [
+    "ordinary body then fatal file close: exact fatal retained, once",
+    "directory fatal then ordinary close: exact fatal retained, both once",
+    {
+      "case": "callback",
+      "pid": 3387895,
+      "exit": -15,
+      "absent": true,
+      "handlers_restored": true
+    },
+    {
+      "case": "failed-signal-wait",
+      "pid": 3387896,
+      "exit": 0,
+      "absent": true,
+      "handlers_restored": true
+    },
+    {
+      "case": "cancel",
+      "pid": 3387907,
+      "exit": -15,
+      "absent": true,
+      "handlers_restored": true
+    },
+    "postwait first fatal retained, both fd close and both publication attempts",
+    {
+      "counterexample": "main final mapping allocation precedes finish_wait",
+      "injected_at": "actual BUILD_MAP opcode, plain request dict",
+      "observed": "later MemoryError replaces original SystemExit; finish_wait not called",
+      "qualification": "synthetic allocation error, no real exhausted memory"
+    }
+  ],
+  "no_original_main_or_capsule_invoked": true
+}

@@ -1,0 +1,37 @@
+{
+  "parent_source_sha256": "a549aa257d4c31da79e03d113dd34143cbba723eb6dcb901adff9726996f74ec",
+  "no_actual_parent_main_or_CAP_invocation": true,
+  "counterexamples": [
+    {
+      "case": "ordinary-body-later-fatal-close",
+      "observed": "original ValueError; later MemoryError suppressed",
+      "fd_closed_once": true
+    },
+    {
+      "case": "directory-fsync-fatal-later-ordinary-close",
+      "observed": "OSError replaces exact MemoryError",
+      "all_fds_closed_once": true
+    },
+    {
+      "case": "signal-failure-skips-wait",
+      "pid": 3381025,
+      "still_alive_when_wait_owned_returned": true,
+      "primary_identity_preserved": true
+    },
+    {
+      "case": "post-wait-publication-masks-existing-fatal",
+      "observed": "OSError replaces MemoryError"
+    }
+  ],
+  "normal_on_child_fatal_cleanup": {
+    "pid": 3381024,
+    "exit": -15,
+    "absent": true
+  },
+  "actual_SIGTERM_cleanup": {
+    "pid": 3381026,
+    "exit": -15,
+    "absent": true,
+    "handlers_restored": true
+  }
+}
