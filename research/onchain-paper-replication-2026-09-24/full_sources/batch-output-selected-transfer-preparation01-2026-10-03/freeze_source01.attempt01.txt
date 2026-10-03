@@ -1,0 +1,42 @@
+"""Metadata/source readback only. No import of empirical packages or claims."""
+import ast,difflib,hashlib,json,os,stat
+from pathlib import Path
+P=Path(__file__).resolve().parent;ROOT=P.parents[3]
+def body(path,limit=4194304):
+ fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC);raw=[];count=0
+ try:
+  before=os.fstat(fd);assert stat.S_ISREG(before.st_mode) and before.st_size<=limit
+  while True:
+   b=os.read(fd,min(65536,limit-count+1))
+   if not b:break
+   count+=len(b);assert count<=limit;raw.append(b)
+  assert before==os.fstat(fd) and count==before.st_size
+  return b''.join(raw)
+ finally:os.close(fd)
+def pin(path):
+ raw=body(path);return {'path':str(path.relative_to(ROOT)),'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw)}
+def save(name,value):
+ raw=(json.dumps(value,sort_keys=True,indent=2)+'\n').encode();assert len(raw)<4194304;(P/name).write_bytes(raw)
+base=P.parent/'neural-cold-feature-handoff-held-consumer-fixture-successor-preparation02-2026-10-03/prospective-source-inventory02.json'
+original=json.loads(body(base));rows={r['target']:dict(r) for r in original['source_inventory']};assert len(rows)==199
+for r in rows.values():
+ raw=body(ROOT/r['origin']);assert len(raw)==r['bytes'] and hashlib.sha256(raw).hexdigest()==r['sha256']
+# Accepted factory is a prerequisite reference, not a third implementation copy.
+dispatch=P.parent/'batch-output-durable-context-preparation03-2026-10-03/archive_dispatch.py'
+changes=[('tradingagents/research/onchain_replication/archive_dispatch.py',dispatch),('tradingagents/research/onchain_replication/archive_non_tail.py',P/'archive_non_tail.py'),('tradingagents/research/onchain_replication/selected_non_tail_transport.py',P/'selected_non_tail_transport.py')]
+install=[]
+for target,path in changes:
+ raw=body(path);prior=rows.get(target);info=pin(path)
+ rows[target]={'target':target,'origin':info['path'],'sha256':info['sha256'],'bytes':info['bytes'],'future_git_commit':None,'observed_git_commit':None}
+ install.append({**rows[target],'role':'unchanged accepted prerequisite' if path==dispatch else 'candidate implementation','baseline_sha256':None if prior is None else prior['sha256']})
+package=[r for t,r in rows.items() if t.startswith('tradingagents/')];assert len(rows)==201 and len(package)==150
+save('PROSPECTIVE_SOURCE_INVENTORY01.json',{'schema_version':1,'status':'SOURCE_ONLY_UNADMITTED','future_source_commit':None,'future_package_anchor':None,'source_count':201,'package_count':150,'source_bytes':sum(r['bytes'] for r in rows.values()),'package_bytes':sum(r['bytes'] for r in package),'original_inventory':pin(base),'source_inventory':[rows[t] for t in sorted(rows)]})
+save('INSTALL_MAP01.json',{'schema_version':1,'execution_admitted':False,'implementation_bodies':2,'prospective_source_count':201,'prospective_package_count':150,'install':install,'genuine_future_source_commit':None,'genuine_future_package_anchor':None})
+refs=[base,dispatch,dispatch.with_name('archive_transport.py'),dispatch.with_name('MANIFEST03.json'),P.parent/'batch-output-durable-context-review03-2026-10-03/REVIEW_DURABLE03.md',P.parent/'batch-output-exact-member-reader-candidate02-2026-10-03/exact_members02.py',P.parent/'batch-output-exact-member-reader-candidate02-2026-10-03/owned_io.py',P.parent/'neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/held_score_reader.py',P.parent/'neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/mcm_score_stream.py',P.parent/'neural-cold-feature-handoff-held-consumer-wiring-preparation02-2026-10-03/held_score_consumer.py']
+save('DEPENDENCIES01.json',{'schema_version':1,'references':[pin(x) for x in refs]})
+for n in ('archive_non_tail.py','selected_non_tail_transport.py'):
+ tree=ast.parse(body(P/n));compile(tree,str(P/n),'exec')
+ for node in ast.walk(tree):
+  if isinstance(node,ast.Import):assert not any(x.name.split('.')[0] in ('numpy','torch','pandas','pyarrow') for x in node.names)
+(P/'archive_non_tail.patch').write_text(''.join(difflib.unified_diff(body(P/'archive_non_tail.baseline03.txt').decode().splitlines(True),body(P/'archive_non_tail.py').decode().splitlines(True),fromfile='accepted-durable03',tofile='selected-candidate01')))
+print(json.dumps({'status':'source_metadata_checks_pass','sources':len(rows),'packages':len(package),'source_bytes':sum(r['bytes'] for r in rows.values()),'implementation_hashes':{n:pin(P/n)['sha256'] for n in ('archive_non_tail.py','selected_non_tail_transport.py')},'execution_admitted':False},sort_keys=True))

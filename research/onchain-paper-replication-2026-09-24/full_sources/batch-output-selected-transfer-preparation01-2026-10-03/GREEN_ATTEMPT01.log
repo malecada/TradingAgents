@@ -1,0 +1,26 @@
+test_body_fatal_survives_two_file_closes (__main__.PumpTests.test_body_fatal_survives_two_file_closes) ... FAIL
+test_deadline_kills_and_reaps (__main__.PumpTests.test_deadline_kills_and_reaps) ... ok
+test_exact_duplex (__main__.PumpTests.test_exact_duplex) ... ok
+test_nonzero_preserves_process_and_bytes (__main__.PumpTests.test_nonzero_preserves_process_and_bytes) ... ok
+test_oversize_diagnostic (__main__.PumpTests.test_oversize_diagnostic) ... ok
+test_oversize_stdout_retains_probe (__main__.PumpTests.test_oversize_stdout_retains_probe) ... ok
+test_rounding_includes_zero_and_exact_block (__main__.PumpTests.test_rounding_includes_zero_and_exact_block) ... ok
+test_short_stdout (__main__.PumpTests.test_short_stdout) ... ok
+test_snapshot_canonical_and_mutation (__main__.PumpTests.test_snapshot_canonical_and_mutation) ... ok
+test_snapshot_growth_firstfatal (__main__.PumpTests.test_snapshot_growth_firstfatal) ... ok
+test_spawn_failure_keeps_reservation_observation (__main__.PumpTests.test_spawn_failure_keeps_reservation_observation) ... ok
+test_untyped_dispatch_refused (__main__.PumpTests.test_untyped_dispatch_refused) ... ok
+
+======================================================================
+FAIL: test_body_fatal_survives_two_file_closes (__main__.PumpTests.test_body_fatal_survives_two_file_closes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-selected-transfer-preparation01-2026-10-03/test_transport01.py", line 46, in test_body_fatal_survives_two_file_closes
+    self.assertIs(e,fatal);self.assertEqual(len(calls),2);self.assertEqual(len(set(calls)),2);self.assertTrue(s.process_evidence['direct_child_reaped'])
+    ~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: CleanupFailure('score storage cleanup unresolved; worker must stop') is not MemoryError('body')
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.215s
+
+FAILED (failures=1)

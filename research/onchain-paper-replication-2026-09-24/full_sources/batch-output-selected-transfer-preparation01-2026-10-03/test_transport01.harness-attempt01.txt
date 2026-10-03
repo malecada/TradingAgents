@@ -1,0 +1,69 @@
+"""Extracted actual source with explicit synthetic handles; no SSH or authority."""
+import ast,hashlib,json,os,pathlib,sys,tempfile,time,types,unittest
+from unittest.mock import patch
+P=pathlib.Path(__file__).parent
+BASE=P.parent/'batch-output-exact-member-reader-candidate02-2026-10-03'/'owned_io.py'
+io=types.SimpleNamespace();exec(compile(BASE.read_bytes(),str(BASE),'exec'),io.__dict__)
+baseline=ast.parse((P/'archive_non_tail.baseline03.txt').read_text());ds={'json':json,'META':8192,'CleanupFailure':io.CleanupFailure}
+exec(compile(ast.Module([n for n in baseline.body if isinstance(n,ast.FunctionDef) and n.name in ('require','encode','fatal','select')],[]),'actual-reducers','exec'),ds)
+durable=types.SimpleNamespace(**ds)
+tree=ast.parse((P/'selected_non_tail_transport.py').read_text());tree.body=[n for n in tree.body if not isinstance(n,ast.ImportFrom) or n.level==0]
+ns={'durable':durable,'owned_io':io};exec(compile(tree,'actual-selected-source','exec'),ns)
+Session=ns['Session'];pump=ns['_pump']
+def new_observed():return dict(commands_started=0,stdin_bytes=0,stdout_bytes=0,stderr_bytes=0,command_argument_bytes_started=0)
+class PumpTests(unittest.TestCase):
+ def setUp(self):
+  self.tmp=tempfile.TemporaryDirectory(dir=P,prefix='owned-test-');self.root=pathlib.Path(self.tmp.name);self.addCleanup(self.tmp.cleanup)
+ def session(self,seconds=2):
+  s=object.__new__(Session);s.p={'command_seconds':seconds,'cleanup_seconds':.3,'stderr_bytes':64,'connection':{'user':'fixture','host':'invalid'}};s.deadline=time.monotonic()+3;s.check=lambda:None
+  s.create_owned=lambda path,bound:os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+  return s
+ def invoke(self,code,data=b'',expected=0,seconds=2):
+  s=self.session(seconds);command=[sys.executable,'-B','-c',code,'fixture@invalid'];out=self.root/'out';err=self.root/'err';s._next=(tuple(command),ns['digest'](data),expected,str(out),str(err),1);observed=new_observed()
+  try:result=pump(s,command,data,expected,out,err,observed)
+  except BaseException as e:return s,observed,e,out,err
+  return s,observed,result,out,err
+ def test_exact_duplex(self):
+  s,o,r,out,err=self.invoke('import sys; b=sys.stdin.buffer.read();sys.stdout.buffer.write(b);sys.stderr.write("ok")',b'abcd',4)
+  self.assertIsInstance(r,dict);self.assertEqual(out.read_bytes(),b'abcd');self.assertEqual(err.read_bytes(),b'ok');self.assertEqual((o['stdin_bytes'],o['stdout_bytes'],o['stderr_bytes']),(4,4,2));self.assertTrue(r['direct_child_reaped']);self.assertEqual(r['returncode'],0)
+ def test_nonzero_preserves_process_and_bytes(self):
+  s,o,e,out,err=self.invoke('import sys;sys.stderr.write("bad");sys.exit(7)');self.assertIsInstance(e,ValueError);self.assertEqual(err.read_bytes(),b'bad');self.assertEqual(s.process_evidence['returncode'],7);self.assertTrue(s.process_evidence['direct_child_reaped'])
+ def test_oversize_stdout_retains_probe(self):
+  s,o,e,out,err=self.invoke('import sys;sys.stdout.buffer.write(b"abcdef")',expected=2);self.assertIsInstance(e,ValueError);self.assertEqual(o['stdout_bytes'],3);self.assertEqual(out.read_bytes(),b'abc');self.assertTrue(s.process_evidence['direct_child_reaped'])
+ def test_oversize_diagnostic(self):
+  s,o,e,out,err=self.invoke('import sys;sys.stderr.buffer.write(b"x"*100)');self.assertIsInstance(e,ValueError);self.assertEqual(len(err.read_bytes()),65);self.assertTrue(s.process_evidence['direct_child_reaped'])
+ def test_short_stdout(self):
+  s,o,e,out,err=self.invoke('pass',expected=3);self.assertIsInstance(e,ValueError);self.assertTrue(s.process_evidence['direct_child_reaped'])
+ def test_deadline_kills_and_reaps(self):
+  s,o,e,out,err=self.invoke('import time;time.sleep(2)',seconds=.08);self.assertIsInstance(e,ValueError);self.assertTrue(s.process_evidence['direct_child_reaped']);self.assertTrue(s.process_evidence['group_kill_requested'])
+ def test_spawn_failure_keeps_reservation_observation(self):
+  with patch.object(ns['subprocess'],'Popen',side_effect=OSError('spawn refused')):s,o,e,out,err=self.invoke('pass')
+  self.assertIsInstance(e,OSError);self.assertEqual(o['commands_started'],0);self.assertIsNone(s.process_evidence['pid']);self.assertTrue(out.exists() and err.exists())
+ def test_body_fatal_survives_two_file_closes(self):
+  fatal=MemoryError('body');original=ns['_write_all'];realclose=os.close;calls=[]
+  def close(fd):calls.append(fd);realclose(fd);raise OSError('close failed after closing')
+  with patch.dict(ns,_write_all=lambda fd,b:(_ for _ in ()).throw(fatal)),patch.object(ns['os'],'close',side_effect=close):s,o,e,out,err=self.invoke('import sys;sys.stdout.buffer.write(b"x")',expected=1)
+  self.assertIs(e,fatal);self.assertEqual(len(calls),2);self.assertEqual(len(set(calls)),2);self.assertTrue(s.process_evidence['direct_child_reaped'])
+ def test_snapshot_canonical_and_mutation(self):
+  p=self.root/'one';p.write_bytes(b'abc');p.chmod(0o600);row=ns['_owned_snapshot'](p,3,time.monotonic()+2);self.assertEqual(row['sha256'],hashlib.sha256(b'abc').hexdigest())
+  (self.root/'link').symlink_to('one')
+  with self.assertRaises(ValueError):ns['_owned_snapshot'](self.root/'link',3,time.monotonic()+2)
+  with self.assertRaises(ValueError):ns['_owned_snapshot'](p,2,time.monotonic()+2)
+ def test_snapshot_growth_firstfatal(self):
+  p=self.root/'one';p.write_bytes(b'abc');p.chmod(0o600);read=os.read;first=True
+  def growing(fd,count):
+   nonlocal first
+   if first:first=False;p.write_bytes(b'abcdef')
+   return read(fd,count)
+  with patch.object(ns['os'],'read',side_effect=growing),self.assertRaises(ValueError):ns['_owned_snapshot'](p,3,time.monotonic()+2)
+  fatal=MemoryError('read');close=os.close;calls=[]
+  def broken_close(fd):calls.append(fd);close(fd);raise OSError('closed then error')
+  with patch.object(ns['os'],'read',side_effect=fatal),patch.object(ns['os'],'close',side_effect=broken_close),self.assertRaises(MemoryError) as got:ns['_owned_snapshot'](p,6,time.monotonic()+2)
+  self.assertIs(got.exception,fatal);self.assertEqual(len(calls),2);self.assertEqual(len(set(calls)),2)
+ def test_untyped_dispatch_refused(self):
+  durable.Operation=type('FakeNotUsed',(),{})
+  with self.assertRaises(ValueError):ns['dispatch']({})
+ def test_rounding_includes_zero_and_exact_block(self):
+  self.assertEqual(ns['charge'](0,0,0,0),65536)
+  self.assertEqual(ns['charge'](32768,32768,1,1),5*32768)
+if __name__=='__main__':unittest.main(verbosity=2)

@@ -1,0 +1,344 @@
+{
+  "closed_comparison_metadata": {
+    "native_elapsed_seconds": 1800.8358598740015,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-outcome-local-review01-2026-10-03/READBACK01.json",
+    "sha256": "4642a9ad63fb7ec4f2ff239e35c766cc24f2b644b14a9e3b3abbb00061ca62c8"
+  },
+  "conditional_batched_pair_calls_per_scan": 3,
+  "conditional_extension_plain_git_calls_per_scan": 6,
+  "historical_import_claims": [
+    {
+      "claim_sha256": "f475dd6c04d7dfc5e9d94bba30b5d3e686d1b71b5f5394dfa1aa0b174797f61e",
+      "extension": false,
+      "identity": "original-import-native-success-20261003-01"
+    },
+    {
+      "claim_sha256": "56d653890440a57896a98e87ed641f9dcfd74fca8375b3491e804fd2f5432688",
+      "extension": true,
+      "identity": "original-import-native-success-20261003-02"
+    },
+    {
+      "claim_sha256": "7e35261724e6bf2d58ca484a2ef39606d7a586313dca5fe7f0c06fe6b8ef88ef",
+      "extension": true,
+      "identity": "original-import-native-success-20261003-03"
+    },
+    {
+      "claim_sha256": "b892aa8243e70ee225bd6ffcd8d6f630a7ea8012c588774916cc0b593bb56c2e",
+      "extension": true,
+      "identity": "original-import-native-success-20261003-04"
+    }
+  ],
+  "jobs": 0,
+  "main_verify_matches_source03": true,
+  "numerical_imports": 0,
+  "observed_speed_gain": null,
+  "prior_investigation": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-authority-io-cost-investigation01-2026-10-03/INVESTIGATION01.md",
+    "sha256": "eb4cc9dcd4f5baa5707f351ee842a3329cca7aa9fc537f44215e535cdf2b9eb8"
+  },
+  "qualification": "Static three extension-bearing historical claims only; no actual future admission namespace or measured wall share asserted.",
+  "scope": "source-only-fresh-per-call-transport-investigation",
+  "sources": [
+    {
+      "bytes": 19938,
+      "calls": [
+        {
+          "call": "_git_transport(root, request + other)",
+          "line": 253
+        },
+        {
+          "call": "verify_claim(directory)",
+          "line": 360
+        },
+        {
+          "call": "_git_fatal(selected)",
+          "line": 53
+        },
+        {
+          "call": "_git_cleanup((stop, reap, close_input, lambda: process.stdout.close() if process is not None else None, lambda: process.stderr.close() if process is not None else None, lambda: selector.close() if selector is not None else None), sys.exception())",
+          "line": 135
+        },
+        {
+          "call": "_git_transport(root, b'', first)",
+          "line": 242
+        },
+        {
+          "call": "_git_transport(root, b'', second)",
+          "line": 248
+        },
+        {
+          "call": "_blob(root, claim['source'], claim['bindings'])",
+          "line": 332
+        },
+        {
+          "call": "_blob(root, claim['source'], ref['path'])",
+          "line": 302
+        },
+        {
+          "call": "_git_fatal(error)",
+          "line": 48
+        },
+        {
+          "call": "_git_transport(root, bytes(requests))",
+          "line": 189
+        },
+        {
+          "call": "_git_transport(root, b'', expression)",
+          "line": 206
+        },
+        {
+          "call": "hashlib.sha256(_blob(root, claim['source'], capture['path'])).hexdigest()",
+          "line": 348
+        },
+        {
+          "call": "_git_fatal(selected)",
+          "line": 49
+        },
+        {
+          "call": "_blob(root, claim['source'], capture['path'])",
+          "line": 348
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/verify.py",
+      "sha256": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce"
+    },
+    {
+      "bytes": 19911,
+      "calls": [
+        {
+          "call": "_git(root, 'show', f'{source}:{Path(name).as_posix()}')",
+          "line": 60
+        },
+        {
+          "call": "_committed(root, source, registration)",
+          "line": 238
+        },
+        {
+          "call": "_git(root, 'merge-base', '--is-ancestor', design_source, source)",
+          "line": 240
+        },
+        {
+          "call": "_git(root, 'show', f'{design_source}:{Path(registration).as_posix()}')",
+          "line": 241
+        },
+        {
+          "call": "_committed(root, source, charter['path'], charter['sha256'])",
+          "line": 252
+        },
+        {
+          "call": "datetime.fromisoformat(_git(root, 'show', '-s', '--format=%cI', design_source).decode().strip()).astimezone(timezone.utc)",
+          "line": 353
+        },
+        {
+          "call": "_committed(root, source, name, expected)",
+          "line": 114
+        },
+        {
+          "call": "_source_git_batch(root, [oid for oid, _ in extents], bodies=True)",
+          "line": 119
+        },
+        {
+          "call": "verify_claim(child)",
+          "line": 200
+        },
+        {
+          "call": "_git(root, 'rev-parse', 'HEAD').decode().strip()",
+          "line": 236
+        },
+        {
+          "call": "_committed(root, source, selection['path'], selection['sha256'])",
+          "line": 289
+        },
+        {
+          "call": "_committed(root, source, reference['path'], reference['sha256'])",
+          "line": 330
+        },
+        {
+          "call": "_committed(root, source, bindings)",
+          "line": 388
+        },
+        {
+          "call": "_source_git_batch(root, requests)",
+          "line": 132
+        },
+        {
+          "call": "_git(root, 'show', f\"{design_source}:{charter['path']}\")",
+          "line": 253
+        },
+        {
+          "call": "_git(root, 'show', f\"{design_source}:{reference['path']}\")",
+          "line": 331
+        },
+        {
+          "call": "_committed(root, source, capture['path'], capture['sha256'])",
+          "line": 405
+        },
+        {
+          "call": "_git(root, 'show', f'{design_source}:{name}')",
+          "line": 115
+        },
+        {
+          "call": "_git(root, 'rev-parse', 'HEAD').decode()",
+          "line": 236
+        },
+        {
+          "call": "_git(root, 'show', f\"{design_source}:{selection['path']}\")",
+          "line": 290
+        },
+        {
+          "call": "_git(root, 'show', '-s', '--format=%cI', design_source).decode().strip()",
+          "line": 354
+        },
+        {
+          "call": "_git(root, 'rev-parse', 'HEAD')",
+          "line": 236
+        },
+        {
+          "call": "_git(root, 'show', '-s', '--format=%cI', design_source).decode()",
+          "line": 354
+        },
+        {
+          "call": "_git(root, 'show', '-s', '--format=%cI', design_source)",
+          "line": 354
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/admission.py",
+      "sha256": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd"
+    },
+    {
+      "bytes": 5359,
+      "calls": [],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/budget_extensions.py",
+      "sha256": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a"
+    },
+    {
+      "bytes": 10509,
+      "calls": [
+        {
+          "call": "self._check_source()",
+          "line": 160
+        },
+        {
+          "call": "self._check_source()",
+          "line": 175
+        },
+        {
+          "call": "run._check_inputs()",
+          "line": 128
+        },
+        {
+          "call": "self._check_source()",
+          "line": 197
+        },
+        {
+          "call": "self._check_inputs()",
+          "line": 198
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/lifecycle.py",
+      "sha256": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc"
+    },
+    {
+      "bytes": 21054,
+      "calls": [
+        {
+          "call": "run._check_source()",
+          "line": 163
+        },
+        {
+          "call": "run._check_source()",
+          "line": 108
+        },
+        {
+          "call": "run._check_inputs()",
+          "line": 108
+        },
+        {
+          "call": "_anchor_blobs(raw, sizes)",
+          "line": 139
+        },
+        {
+          "call": "_anchor_read(ad.root, numerical['commit'], names, sizes)",
+          "line": 156
+        },
+        {
+          "call": "inventory(ad.root, include_torch=True)",
+          "line": 213
+        },
+        {
+          "call": "inventory(run.admission.root, include_torch=True)",
+          "line": 110
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/matching_owner.py",
+      "sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751"
+    },
+    {
+      "bytes": 28651,
+      "calls": [],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/compact_owner.py",
+      "sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171"
+    },
+    {
+      "bytes": 14091,
+      "calls": [],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/original_import_preparation.py",
+      "sha256": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5"
+    },
+    {
+      "bytes": 10626,
+      "calls": [],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/original_import_stage.py",
+      "sha256": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a"
+    },
+    {
+      "bytes": 6776,
+      "calls": [],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1"
+    },
+    {
+      "bytes": 18641,
+      "calls": [],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/compact_matcher.py",
+      "sha256": "6a7e6e0c1918db7a42edc8fe8737f2b77497c0e32583c184e338e286fa47ad70"
+    },
+    {
+      "bytes": 10736,
+      "calls": [],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/held_score_consumer.py",
+      "sha256": "35da29691a5ef6c23f4bbdf178a55fd51bb6779214c1d38fb5a162e712ea0d41"
+    },
+    {
+      "bytes": 804,
+      "calls": [],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/environment.py",
+      "sha256": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28"
+    },
+    {
+      "bytes": 17362,
+      "calls": [
+        {
+          "call": "run._check_source()",
+          "line": 138
+        },
+        {
+          "call": "run._check_inputs()",
+          "line": 138
+        },
+        {
+          "call": "matching_owner.inventory(ad.root, include_torch=True)",
+          "line": 140
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/compact_terminal.py",
+      "sha256": "b06ccedcfc6e3bb8356dec48fc2ea49092da2c1e18f23e32aeb8f58ca0e3c0b5"
+    },
+    {
+      "bytes": 7875,
+      "calls": [],
+      "path": "/home/malecada/master_thesis/onchain-fixture-isolation/held-score-consumer-native-20261003-03/source/tradingagents/research/onchain_replication/compact_native_features.py",
+      "sha256": "34a6f63125ac048df2d0f4a2b354ff2c6808ee8fc0dcc4b6a04bff1eeeb6e136"
+    }
+  ]
+}

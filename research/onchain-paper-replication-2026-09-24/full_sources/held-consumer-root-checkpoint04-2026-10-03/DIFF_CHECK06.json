@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 2,
+      "stderr": "",
+      "stdout": "research/onchain-paper-replication-2026-09-24/full_sources/batch-output-selected-transfer-preparation01-2026-10-03/archive_non_tail.patch:5: trailing whitespace.\n+ \n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        "*.py",
+        "*.md",
+        "*.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "qualification": "Only an immutable original selected-transfer patch blank context has trailing whitespace; source, Markdown and JSON scoped check passed. No frozen evidence body edited.",
+  "schema_version": 1
+}

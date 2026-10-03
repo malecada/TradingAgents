@@ -1,0 +1,31 @@
+{
+  "status": "proposed-not-executed",
+  "first_seam": "verify_claim extension/review ordered fresh pair",
+  "limits": {
+    "parts": 128,
+    "body_bytes": 8388608,
+    "request_bytes": 65536,
+    "seconds": 10
+  },
+  "preserved": [
+    "all body/hash/path/JSON checks",
+    "every claim/Owner/runtime invocation",
+    "working file rechecks",
+    "first actual fatal and independent cleanup",
+    "no cross-call acceptance cache"
+  ],
+  "required_cases": [
+    "same/different refs",
+    "first malformed JSON second invalid ref order",
+    "missing/nonblob/short/extra",
+    "LF/CR fallback",
+    "oversize/bounds",
+    "changed between calls",
+    "timeout/nonzero",
+    "fatal mixed cleanup closeonce killreap",
+    "inverse AST",
+    "actual metadata verifier schema"
+  ],
+  "second_seam": "admission per-current/design registration then charter then extension_metadata pairs",
+  "actual_execution": false
+}

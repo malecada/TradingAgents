@@ -1,0 +1,25 @@
+test_concrete_engine_exists (__main__.Tests.test_concrete_engine_exists) ... FAIL
+test_selected_dispatch_exists (__main__.Tests.test_selected_dispatch_exists) ... FAIL
+
+======================================================================
+FAIL: test_concrete_engine_exists (__main__.Tests.test_concrete_engine_exists)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-selected-transfer-preparation01-2026-10-03/test_selection01.py", line 5, in test_concrete_engine_exists
+    def test_concrete_engine_exists(self):self.assertTrue((P/'selected_non_tail_transport.py').exists())
+                                          ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_selected_dispatch_exists (__main__.Tests.test_selected_dispatch_exists)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-selected-transfer-preparation01-2026-10-03/test_selection01.py", line 7, in test_selected_dispatch_exists
+    tree=ast.parse((P/'archive_non_tail.py').read_text());op=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='Operation');dispatch=next(n for n in op.body if isinstance(n,ast.FunctionDef) and n.name=='dispatch');self.assertIn('selected_non_tail_transport',ast.unparse(dispatch))
+                                                                                                                                                                                                                                        ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'selected_non_tail_transport' not found in "def dispatch(self, *args, **kwargs):\n    self.check()\n    raise NotImplementedError('legacy Transport transfer cleanup is not selected for this population; exact first-fatal non-tail transfer/recovery engine remains required')"
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.010s
+
+FAILED (failures=2)

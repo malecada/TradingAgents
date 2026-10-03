@@ -1,0 +1,50 @@
+--- accepted-durable03
++++ selected-candidate01
+@@ -65,6 +65,11 @@
+  close_all([lambda:os.close(child)],primary);os.fsync(fd);require(read_file(fd,name)==raw,'durable metadata readback differs')
+ 
+ def validate_policy(p):
++ if type(p) is dict and type(p.get('schema_version')) is int and p['schema_version']==2:
++  require(set(p)=={'schema_version','kind','category','namespace','deadline_seconds','max_rounded_bytes','max_commands','max_parts','max_control_bytes','part_bytes','receipt_output','terminal_output','slots','transport_input'},'selected population exact schema')
++  require(p['kind']=='non-tail-durable-selected-population-v2' and type(p['transport_input']) is str and 0<len(p['transport_input'])<=80,'registered selected transport role required')
++  legacy=dict(p);del legacy['transport_input'];legacy.update(schema_version=1,kind='non-tail-durable-population-v1');validate_policy(legacy)
++  encode(p);return json.loads(encode(p))
+  fields={'schema_version','kind','category','namespace','deadline_seconds','max_rounded_bytes','max_commands','max_parts','max_control_bytes','part_bytes','receipt_output','terminal_output','slots'}
+  require(type(p) is dict and set(p)==fields and type(p['schema_version']) is int and p['schema_version']==1 and p['kind']=='non-tail-durable-population-v1' and p['category']=='non-tail-original-members','separate non-tail registered population required')
+  for k in ('deadline_seconds','max_rounded_bytes','max_commands','max_parts','max_control_bytes','part_bytes'):require(type(p[k]) is int and 0<p[k]<2**63,'strict positive finite bound')
+@@ -173,6 +178,9 @@
+   intent_raw=encode(intent) # Complete ancestry/policy must fit8KiB BEFORE namespace birth.
+   receipt={'context':str(self.root.relative_to(run.admission.root)),'intent_sha256':hashlib.sha256(intent_raw).hexdigest()}
+   encode(receipt) # The initial output anchor is also a complete8KiB control record.
++  if self.policy['schema_version']==2:
++   from . import selected_non_tail_transport
++   selected_non_tail_transport.preflight_context(self)
+   self.root.mkdir();self.fd=os.open(self.root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);self.inode=(os.fstat(self.fd).st_dev,os.fstat(self.fd).st_ino)
+   try:
+    pfd=os.open(parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+@@ -205,8 +213,14 @@
+   reservations=sorted(n for n in self.expected if n.startswith('reservation-'))
+   expected=json.loads(self.expected[reservations[-1]])['spent'] if reservations else dict(rounded_bytes=0,commands=0,parts=0)
+   require(self.spent==expected,'non-tail cumulative reservation refund/replacement')
++  if self.policy['schema_version']==2:
++   from . import selected_non_tail_transport
++   selected_non_tail_transport.check_context(self)
+  def bind(self,source):return Ledger(self,source)
+  def close(self,primary=None):
++  if self.policy['schema_version']==2:
++   from . import selected_non_tail_transport
++   return selected_non_tail_transport.close_context(self,primary)
+   failure=primary
+   try:self.check();require(self.active is None,'non-tail operation unfinished')
+   except BaseException as e:failure=select(failure,e)
+@@ -272,6 +286,10 @@
+    self.terminal=True;c.active=None
+   except BaseException as e:self.fail(e);raise
+  def dispatch(self,*args,**kwargs):
++  if self.ledger.context.policy['schema_version']==2:
++   require(not args and not kwargs,'caller transport authority is forbidden')
++   from . import selected_non_tail_transport
++   return selected_non_tail_transport.dispatch(self)
+   self.check();raise NotImplementedError('legacy Transport transfer cleanup is not selected for this population; exact first-fatal non-tail transfer/recovery engine remains required')
+  def fail(self,primary):
+   c=self.ledger.context;c.failed=True;self.terminal=True;self.ledger.closed=True;self.ledger.owner.poisoned=True;failure=primary

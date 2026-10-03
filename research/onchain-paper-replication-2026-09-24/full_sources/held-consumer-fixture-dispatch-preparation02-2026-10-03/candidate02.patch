@@ -1,0 +1,14 @@
+--- candidate01/resource_fixture.py
++++ candidate02/resource_fixture.py
+@@ -122,6 +122,11 @@
+     item=plan['producers'][s['producer']]
+     require(all(item.get(k)==v for k,v in s.items()),'selected producer plan/job differ')
+     outputs={item.get('binding_output'),item.get('journal_output'),'cell-ledger.json','resource-summary.json'}
++    for value in (s,item):
++        require(not any(type(k) is str and k.startswith('held_score_') and k!='held_score_consumer_input' for k in value),'unknown held selection')
++    if 'held_score_consumer_input' in s or 'held_score_consumer_input' in item:
++        held_name=s.get('held_score_consumer_input')
++        require(type(held_name) is str and held_name and item.get('held_score_consumer_input')==held_name,'held job/plan selection differs')
+     if 'held_score_consumer_input' in s:
+         require(len(outputs)==4 and None not in outputs,'exact original resource-only outputs required')
+         policy_name=s['held_score_consumer_input']
