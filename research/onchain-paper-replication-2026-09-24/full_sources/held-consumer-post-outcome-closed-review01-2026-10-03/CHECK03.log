@@ -1,0 +1,84 @@
+{
+  "decision": "ACCEPTED_GENUINE_CLOSED_FAILED_SCOPE_FOR_BYTE_CAPTURE_ONLY",
+  "checks": 5178,
+  "scopes": {
+    "capsule": {
+      "members": 1012,
+      "regular": 716,
+      "logical_bytes": 7133890,
+      "allocated_bytes": 10190848,
+      "subset": {
+        "original_members": 925,
+        "current_members": 1012,
+        "added_members": 87,
+        "added_regular_files": 53
+      }
+    },
+    "external": {
+      "members": 35,
+      "regular": 31,
+      "logical_bytes": 518994,
+      "allocated_bytes": 622592,
+      "subset": {
+        "original_members": 25,
+        "current_members": 35,
+        "added_members": 10,
+        "added_regular_files": 8
+      }
+    }
+  },
+  "sourcejoin": {
+    "source": "d443208795f59292c156c5b81b687594efacea4d",
+    "committed_source_registration_bodies": 205,
+    "registered_inputs": 33,
+    "tracked_files": 246,
+    "nonGit_files": 288
+  },
+  "all10_pids": [
+    "4050318",
+    "4050527",
+    "4050749",
+    "4050790",
+    "4050843",
+    "4050847",
+    "4050970",
+    "4051023",
+    "4051044",
+    "4157093"
+  ],
+  "unit_properties": {
+    "Result": "timeout",
+    "ExecMainStatus": "125",
+    "ControlGroup": "",
+    "ActiveState": "failed",
+    "SubState": "failed"
+  },
+  "writer_observation": {
+    "sameuser_processes": 185,
+    "descriptors": 4614,
+    "writable_matches": [],
+    "uncertain": [
+      {
+        "pid": 3866,
+        "fd": null
+      },
+      {
+        "pid": 5446,
+        "fd": null
+      },
+      {
+        "pid": 26733,
+        "fd": null
+      }
+    ],
+    "qualification": "bounded contemporaneous observation plus all10/cgroup absence and full stable inventories; no future writer guarantee"
+  },
+  "five_actual_failed_claims": 5,
+  "actual_highest_adopted": 6,
+  "dependent_case": "UNAVAILABLE_NO_CLAIM",
+  "free_bytes": 18838003712,
+  "machine_review_sha256": "ec1d9736bf4a3f5be400e8d477530a74439ea6274abebb85a2031a0c541c7c43",
+  "reviewed_request_sha256": "23cf258b1f49feff79802bdfe04d0c91563ed81c6e75dfbbab0e8983b260ffe6",
+  "capture_performed": false,
+  "native_or_scientific_authority": false
+}

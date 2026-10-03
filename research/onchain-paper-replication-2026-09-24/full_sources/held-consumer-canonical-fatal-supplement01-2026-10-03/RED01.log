@@ -1,0 +1,15 @@
+test_original_fatal_identity_after_note_raises (__main__.Cases.test_original_fatal_identity_after_note_raises) ... FAIL
+
+======================================================================
+FAIL: test_original_fatal_identity_after_note_raises (__main__.Cases.test_original_fatal_identity_after_note_raises)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-canonical-fatal-supplement01-2026-10-03/regression01.py", line 27, in test_original_fatal_identity_after_note_raises
+    self.assertIs(actual,p);self.assertEqual(trace,['note'])
+    ~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: RuntimeError('note failed') is not Selected('first')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

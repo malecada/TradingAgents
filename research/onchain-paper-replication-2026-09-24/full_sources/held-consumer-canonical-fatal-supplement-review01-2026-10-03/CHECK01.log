@@ -1,0 +1,18 @@
+{
+  "decision": "ACCEPTED_NARROW_DIAGNOSTIC_GUARD_SOURCE_ONLY",
+  "checks": 223,
+  "matrix_cases": 64,
+  "red": {
+    "original_type": "MemoryError",
+    "later_type": "ValueError",
+    "escaped_type": "RuntimeError",
+    "escaped_is_diagnostic": true,
+    "original_preserved": false,
+    "note_attempts": 1
+  },
+  "source_sha256": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9",
+  "baseline_sha256": "93c0cd1ae882d51df185458ce7304a46dfb66dc7ca337285039541fa70176e88",
+  "full_byte_and_other_AST_inverse": true,
+  "fake_authority_constructed": false,
+  "source_installed": false
+}

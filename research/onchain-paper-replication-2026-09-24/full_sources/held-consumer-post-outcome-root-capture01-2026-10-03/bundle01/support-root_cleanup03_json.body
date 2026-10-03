@@ -1,0 +1,35 @@
+{
+  "actual_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-19891b32a3b141d3887857ff1d713cc4.service",
+  "actual_pid_absence": {
+    "4050318": true,
+    "4050527": true,
+    "4050749": true,
+    "4050790": true,
+    "4050843": true,
+    "4050847": true,
+    "4050970": true,
+    "4051023": true,
+    "4051044": true,
+    "4157093": true
+  },
+  "actual_unit": "onchain-replication-19891b32a3b141d3887857ff1d713cc4.service",
+  "actual_unit_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "actual_unit_stdout_sha256": "f5c33c380334363a9f428e7d85bc803c02ab8f353f6cc15efb1cc4a6eae3d43f",
+  "cgroup_absent": true,
+  "identity": "original-import-held-success-20261003-01",
+  "original_guard_child_exit_code": null,
+  "original_guard_cleanup_verified": false,
+  "processes_absent": true,
+  "qualification": "Independent later Root actual PID/cgroup/unit readback; no mutation of original false/null native receipts, no synthetic guard success or retrospective property insertion.",
+  "schema_version": 1,
+  "separate_original_parent_cleanup_sha256": "35788c13bd25fc1a381cd488582ab848775822d91c241250145e5eab08ca89d2",
+  "source_commit": "d443208795f59292c156c5b81b687594efacea4d",
+  "unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "125",
+    "Result": "timeout",
+    "SubState": "failed"
+  },
+  "utc": "2026-10-03T20:43:22.702623+00:00"
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "exception": "MemoryError",
+    "kind": "removed_redundant_call_not_exception_equivalent",
+    "rows": [
+      {
+        "disposition": {
+          "message": "second representative serialization",
+          "status": "error",
+          "type": "MemoryError"
+        },
+        "implementation": 0,
+        "representative_calls": 2,
+        "same_error": true
+      },
+      {
+        "disposition": {
+          "indices": [
+            0
+          ],
+          "status": "return"
+        },
+        "implementation": 1,
+        "representative_calls": 1,
+        "same_error": false
+      }
+    ]
+  },
+  {
+    "exception": "SystemExit",
+    "kind": "removed_redundant_call_not_exception_equivalent",
+    "rows": [
+      {
+        "disposition": {
+          "message": "second representative serialization",
+          "status": "error",
+          "type": "SystemExit"
+        },
+        "implementation": 0,
+        "representative_calls": 2,
+        "same_error": true
+      },
+      {
+        "disposition": {
+          "indices": [
+            0
+          ],
+          "status": "return"
+        },
+        "implementation": 1,
+        "representative_calls": 1,
+        "same_error": false
+      }
+    ]
+  },
+  {
+    "authority_objects_constructed": false,
+    "escaped_type": "RuntimeError",
+    "introduced_by_successor": false,
+    "kind": "unchanged_with_evidence_add_note_can_replace_first_fatal",
+    "primary_type": "MemoryError subclass with failing add_note",
+    "secondary_type": "ValueError",
+    "source_line": 199
+  }
+]

@@ -1,0 +1,103 @@
+{
+  "actual_capture_exit": 0,
+  "actual_flat_recovery_verified": false,
+  "actual_remote_recovery_verified": false,
+  "assertions": 12669,
+  "capture_sha256": "8dda0e91ea7e70c6164139a52d96b9c056befecac28e4d86f056eb3fc3312111",
+  "credentials_read": false,
+  "fd_visibility": "No independent universal FD census; prior closed-tree scope correction remains applicable",
+  "ledger": [
+    {
+      "id": "import-target-01",
+      "reason": "SystemExit: owned execution interrupted; never relaunch this identity",
+      "resource_only": true,
+      "status": "failed"
+    },
+    {
+      "id": "import-target-02",
+      "reason": "SystemExit: owned execution interrupted; never relaunch this identity",
+      "resource_only": true,
+      "status": "unavailable"
+    }
+  ],
+  "numerical_imports": false,
+  "original_failed_claims": [
+    "original-import-held-success-20261003-01",
+    "original-import-native-success-20261003-01",
+    "original-import-native-success-20261003-02",
+    "original-import-native-success-20261003-03",
+    "original-import-native-success-20261003-04"
+  ],
+  "original_guard": {
+    "child_exit_code": null,
+    "cleanup_verified": false
+  },
+  "pid_cgroup_observation_utc": "2026-10-03T21:04:48Z",
+  "request_sha256": "23cf258b1f49feff79802bdfe04d0c91563ed81c6e75dfbbab0e8983b260ffe6",
+  "runtime_or_scientific_completion": false,
+  "schema_version": 1,
+  "separate_child_receipt": {
+    "exit_code": 125,
+    "reason": "signal",
+    "snapshot_error": null,
+    "terminal_memory_snapshot": {
+      "memory_current_bytes": 454148096,
+      "memory_events": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      },
+      "optional_memory_telemetry": {
+        "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+        "unit": {
+          "anon_bytes": 397127680,
+          "file_bytes": 53129216,
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-19891b32a3b141d3887857ff1d713cc4.service",
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "swap_current_bytes": 0,
+          "unavailable": {}
+        },
+        "user_ancestor": {
+          "anon_bytes": 5811355648,
+          "file_bytes": 4561907712,
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=26798235\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=26057470",
+          "swap_current_bytes": 2103091200,
+          "unavailable": {}
+        }
+      }
+    },
+    "workload_pid": 4050847
+  },
+  "source_join": {
+    "opaque_inputs": 33,
+    "source": "d443208795f59292c156c5b81b687594efacea4d",
+    "source_and_registration": 205,
+    "tracked": 246
+  },
+  "trees": {
+    "capsule": {
+      "allocated_bytes": 10190848,
+      "archive_bytes": 2984241,
+      "archive_sha256": "0c662bbc4e579fe702b256403ad2970d8aa91d7bdc44b07f14ae9552e723466e",
+      "baseline_members": 925,
+      "canonical_recompression_exact": true,
+      "logical_bytes": 7133890,
+      "members": 1012,
+      "regular_files": 716
+    },
+    "external": {
+      "allocated_bytes": 622592,
+      "archive_bytes": 144452,
+      "archive_sha256": "566b9989a62ddb31cdd6cb43b326c0f4e9fbab77dd8eb69e19a44660bfe6a455",
+      "baseline_members": 25,
+      "canonical_recompression_exact": true,
+      "logical_bytes": 518994,
+      "members": 35,
+      "regular_files": 31
+    }
+  }
+}

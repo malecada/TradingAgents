@@ -1,0 +1,9 @@
+{
+  "after_sha256": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9",
+  "before_sha256": "93c0cd1ae882d51df185458ce7304a46dfb66dc7ca337285039541fa70176e88",
+  "full_byte_inverse": true,
+  "new_text": "                else:\n                    # Diagnostic failure participates after the selected error;\n                    # it must never replace an earlier actual fatal.\n                    try:primary.add_note('post-callback evidence/authority check failed: '+type(error).__name__)\n                    except BaseException as diagnostic:\n                        if fatal(diagnostic) and not fatal(primary):primary=diagnostic\n",
+  "old_text": "                else:primary.add_note('post-callback evidence/authority check failed: '+type(error).__name__)\n",
+  "schema_version": 1,
+  "whole_other_AST_inverse": true
+}

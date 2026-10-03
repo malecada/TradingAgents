@@ -1,0 +1,1 @@
+check01.py and its log retain a reviewer syntax error in the literal AST-source assertion. It failed before any import or fixture execution. check02.py changes only the assertion string quoting. No candidate source was altered.

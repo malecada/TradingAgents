@@ -1,0 +1,82 @@
+{
+  "utc": "2026-10-03T20:29:32.921968+00:00",
+  "sources_current_claim_and_git_join": {
+    "tradingagents/research/admission.py": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd",
+    "tradingagents/research/budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+    "tradingagents/research/lifecycle.py": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+    "tradingagents/research/onchain_replication/compact_matcher.py": "6a7e6e0c1918db7a42edc8fe8737f2b77497c0e32583c184e338e286fa47ad70",
+    "tradingagents/research/onchain_replication/compact_mcm.py": "6661a8668d04bdff4afa84161932e12daa351d2654c5c481eba5faafcd938a4c",
+    "tradingagents/research/onchain_replication/compact_owner.py": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171",
+    "tradingagents/research/onchain_replication/compact_pair_log.py": "e7b38cbc4a0b13733e0018db897489acab5f7324368c7938addb20f8a9d2392d",
+    "tradingagents/research/onchain_replication/environment.py": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+    "tradingagents/research/onchain_replication/imported_mcm_identity.py": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1",
+    "tradingagents/research/onchain_replication/job.py": "6ee38bb578d1e6cdd38aa276ec31313aeb6636ad191194a55458559604dc502b",
+    "tradingagents/research/onchain_replication/matching_owner.py": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+    "tradingagents/research/onchain_replication/original_dictionary.py": "cbe571a3758695b2ff63a45031c90840a7358538f9a2c0bad31077db8439a6d9",
+    "tradingagents/research/onchain_replication/original_import_preparation.py": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5",
+    "tradingagents/research/onchain_replication/original_import_stage.py": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a",
+    "tradingagents/research/onchain_replication/resource_binding.py": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d",
+    "tradingagents/research/onchain_replication/resource_fixture.py": "3ea9902ec4067edc59bc897081c5ad5f6738350ccd3a339b0b423c863212a97e",
+    "tradingagents/research/verify.py": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce"
+  },
+  "source": "d443208795f59292c156c5b81b687594efacea4d",
+  "synthetic_membership_only": {
+    "baseline": 32768,
+    "candidate": 544,
+    "candidate_sha256": "93c0cd1ae882d51df185458ce7304a46dfb66dc7ca337285039541fa70176e88",
+    "sample_count": 512,
+    "representatives": 32,
+    "actual_samples_read": false,
+    "full_validate_executed": false
+  },
+  "claims": [
+    {
+      "id": "original-import-held-success-20261003-01",
+      "pins": 204,
+      "source_batches": 2,
+      "registration_batches": 1,
+      "extension_blob_calls": 2
+    },
+    {
+      "id": "original-import-native-success-20261003-01",
+      "pins": 154,
+      "source_batches": 2,
+      "registration_batches": 1,
+      "extension_blob_calls": 0
+    },
+    {
+      "id": "original-import-native-success-20261003-02",
+      "pins": 157,
+      "source_batches": 2,
+      "registration_batches": 1,
+      "extension_blob_calls": 2
+    },
+    {
+      "id": "original-import-native-success-20261003-03",
+      "pins": 160,
+      "source_batches": 2,
+      "registration_batches": 1,
+      "extension_blob_calls": 2
+    },
+    {
+      "id": "original-import-native-success-20261003-04",
+      "pins": 163,
+      "source_batches": 2,
+      "registration_batches": 1,
+      "extension_blob_calls": 2
+    }
+  ],
+  "claim_verification_processes_per_fresh_admit": 23,
+  "admission_source_pair_batch_bytes": [
+    2558096,
+    4203584
+  ],
+  "normal_successful_admit_git_processes": 40,
+  "static_multiplicity": {
+    "prepared_checks_per_target_lease": 4,
+    "target_leases_per_compact_matcher_check": 2,
+    "full_validations_per_matcher_check": 8,
+    "membership_canonical_calls_per_matcher_check": 262144
+  },
+  "qualification": "Source path census, not profiler or measured invocation count; failures/other callback paths differ. No numerical modules, original sample bodies, arrays or active helper invocation."
+}

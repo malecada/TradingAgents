@@ -1,0 +1,156 @@
+{
+  "actual_remote_recovery_sha256": null,
+  "actual_selection_sha256": null,
+  "baseline_sha256": "6b4d6671f852ab6893a2219c4185efb7106253b3bf48eb07da500bafe54dbfce",
+  "full_text_inverse": [
+    {
+      "new": "import argparse\n",
+      "new_line": 2,
+      "old": "",
+      "old_line": 2
+    },
+    {
+      "new": "COMMIT = None\n",
+      "new_line": 15,
+      "old": "COMMIT = 'a9f18fffbc06b9e3996b67fc2a0139ce98900709'\n",
+      "old_line": 14
+    },
+    {
+      "new": "    global COMMIT\n    parser = argparse.ArgumentParser()\n    parser.add_argument('--selection-sha256', required=True)\n    args = parser.parse_args()\n    selection_body = (HERE / 'SELECTED_BODIES01.json').read_bytes()\n    require(digest(selection_body) == args.selection_sha256, 'explicit frozen selection pin')\n",
+      "new_line": 120,
+      "old": "    selection_body = (HERE / 'SELECTED_BODIES03.json').read_bytes()\n",
+      "old_line": 119
+    },
+    {
+      "new": "    COMMIT = selection['remote_commit']\n    require(type(COMMIT) is str and len(COMMIT) == 40 and all(c in '0123456789abcdef' for c in COMMIT), 'commit pin')\n    require(encode(selection) == selection_body, 'frozen canonical selection')\n",
+      "new_line": 127,
+      "old": "    require(encode(selection) == selection_body and selection['remote_commit'] == COMMIT, 'frozen selection')\n",
+      "old_line": 121
+    },
+    {
+      "new": "    repo = HERE / 'fresh-post-outcome01.git'\n",
+      "new_line": 136,
+      "old": "    repo = HERE / 'fresh-final01.git'\n",
+      "old_line": 128
+    },
+    {
+      "new": "    receipt = {'schema_version': 1, 'status': 'fresh-actual-remote-failed-post-outcome-archives-and-selected-supporting-bodies-recovered',\n",
+      "new_line": 171,
+      "old": "    receipt = {'schema_version': 1, 'status': 'fresh-actual-remote-final950-archives-and-selected-supporting-bodies-recovered',\n",
+      "old_line": 163
+    },
+    {
+      "new": "               'qualification': 'Complete current supplied closed capsule/caller archives, exact manifests/request/capture, original failed terminal/cleanup/support and selected documentary source/review bodies were actually fetched from external Git. Original POSIX permissions remain manifest metadata. Fresh full flat recovery, independent actual failed-outcome closure and installed runtime/empirical-store recovery remain separate. No native or numerical execution follows.'}\n    write(HERE / 'REMOTE_RECOVERY01.json', encode(receipt))\n",
+      "new_line": 177,
+      "old": "               'qualification': 'Both original and final950 complete capsule/caller archives, exact manifests/request/capture, documentary decisions and selected supporting sources/reviews/proof receipts were actually fetched from external Git. Original POSIX permissions remain manifest metadata. Fresh final flat recovery, independent complete final union/request/actual resource eligibility and installed runtime/empirical-store recovery remain separate.'}\n    write(HERE / 'REMOTE_RECOVERY03.json', encode(receipt))\n",
+      "old_line": 169
+    },
+    {
+      "new": "        write(HERE / 'FAILED01.json', encode({'status': 'failed-original-attempt', 'error_type': type(error).__name__,\n",
+      "new_line": 186,
+      "old": "        write(HERE / 'FAILED03.json', encode({'status': 'failed-original-attempt', 'error_type': type(error).__name__,\n",
+      "old_line": 178
+    }
+  ],
+  "inherited_operation_budget_witness": [
+    {
+      "completed_guard_passes": 1023,
+      "failure": null,
+      "required_git_calls": 1023,
+      "rows": 506
+    },
+    {
+      "completed_guard_passes": 1024,
+      "failure": {
+        "message": "finite recovery budget",
+        "one_based_operation": 1025
+      },
+      "required_git_calls": 1025,
+      "rows": 507
+    },
+    {
+      "completed_guard_passes": 1024,
+      "failure": {
+        "message": "finite recovery budget",
+        "one_based_operation": 1025
+      },
+      "required_git_calls": 1035,
+      "rows": 512
+    }
+  ],
+  "maximum_successful_rows_under_current_budget": 506,
+  "network_or_process_execution": false,
+  "normalized_whole_AST_inverse": true,
+  "qualification": "bounded literal source/CLI adaptation accepted only with independently frozen exact safe selection; no blanket512-row completion claim",
+  "schema_version": 1,
+  "selection_controls": [
+    {
+      "accepted": true,
+      "error": null,
+      "name": "valid opaque pinned"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: explicit frozen selection pin",
+      "name": "wrong external pin"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: commit pin",
+      "name": "uppercase"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: commit pin",
+      "name": "short"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: commit pin",
+      "name": "nontext"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: commit pin",
+      "name": "invalidhex"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: selected logical bound",
+      "name": "empty rows"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: selected unique sorted scope",
+      "name": "duplicate rows"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: selected logical bound",
+      "name": "aggregate over64MiB"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: frozen canonical selection",
+      "name": "noncanonical selection"
+    },
+    {
+      "accepted": false,
+      "error": "ValueError: selected logical bound",
+      "name": "513rows"
+    },
+    {
+      "accepted": true,
+      "error": null,
+      "name": "512 passes schema only"
+    }
+  ],
+  "source_sha256": "4d16cb824ca1e301cc0cc80303966806011bd8a1c8f2eb1bbebfc1a65dac4284",
+  "unchanged_complete_function_AST": [
+    "require",
+    "digest",
+    "encode",
+    "write",
+    "git"
+  ]
+}

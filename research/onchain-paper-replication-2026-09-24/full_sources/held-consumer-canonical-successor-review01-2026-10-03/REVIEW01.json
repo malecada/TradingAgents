@@ -1,0 +1,35 @@
+{
+  "author_assertions": 47,
+  "baseline_sha256": "cbe571a3758695b2ff63a45031c90840a7358538f9a2c0bad31077db8439a6d9",
+  "candidate_sha256": "93c0cd1ae882d51df185458ce7304a46dfb66dc7ca337285039541fa70176e88",
+  "execution_admitted": false,
+  "independent_assertions": 420,
+  "limits": [
+    {
+      "blocks_universal_callback_first_fatal_claim": true,
+      "finding": "unguarded add_note can replace selected first fatal",
+      "id": "HC-C1",
+      "line": 201,
+      "path": "original_dictionary.py",
+      "severity": "P2 inherited; not introduced by successor",
+      "witness": "LIMITATIONS01.json"
+    },
+    {
+      "finding": "removed redundant serializer calls cannot preserve call-count-dependent failures",
+      "id": "HC-C2",
+      "witness": "LIMITATIONS01.json"
+    },
+    {
+      "finding": "allocation/OOM timing and retained-frame lifetime differ; no measured saving",
+      "id": "HC-C3"
+    }
+  ],
+  "numerical_or_authority_execution": false,
+  "opaque_cases": 336,
+  "report_sha256": "9d3e9b11ce4d9a7f48b1f1404119e8579acdf68bea38cf4e55124056f5b85d91",
+  "schema_version": 1,
+  "source_installed": false,
+  "subject_manifest_sha256": "5a66675c7ee9c48181ad899ce1be84f41456afff9fb574d9bc0a0af159155546",
+  "timeout_solution_proven": false,
+  "verdict": "ACCEPTED_SOURCE_ONLY_NARROW_MEMBERSHIP_REUSE"
+}
