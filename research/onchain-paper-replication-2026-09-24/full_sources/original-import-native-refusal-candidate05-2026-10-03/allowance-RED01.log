@@ -1,0 +1,19 @@
+E
+======================================================================
+ERROR: test_selected_oracle_constructor_allowance (__main__.Checks.test_selected_oracle_constructor_allowance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate05-2026-10-03/test_allowance05.py", line 13, in test_selected_oracle_constructor_allowance
+    path=Path(os.environ.get('ORACLE_SOURCE',str(D/'guarded_formula_oracle05.py')));tree=ast.parse(path.read_text());call=next(x for x in ast.walk(tree) if isinstance(x,ast.Call) and isinstance(x.func,ast.Name) and x.func.id=='ArrayNeighborhoodIndex');chunk=next(x.value.value for x in call.keywords if x.arg=='edge_chunk');self.assertEqual(formula(2,chunk),655600)
+                                                                                                                                                                                                                                                                                                                                                     ~~~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate05-2026-10-03/test_allowance05.py", line 10, in formula
+    exec(compile(ast.Module(body=fn.body[start:start+2],type_ignores=[]),str(SOURCE),'exec'),scope);return scope['self'].buffer_allowance
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-io-candidate02-2026-10-02/array_neighborhoods.py", line 31, in <module>
+    raise ValueError('neighborhood index buffer allowance exceeded')
+ValueError: neighborhood index buffer allowance exceeded
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (errors=1)

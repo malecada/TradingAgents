@@ -1,0 +1,30 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/mutation_inputs.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate05-2026-10-03/mutation_inputs.py
+@@ -1,6 +1,7 @@
+ """Deterministic per-variant draft inputs; no writes, admission or imports of numerics."""
+ import ast,copy,hashlib,json
+ from pathlib import Path
++from resource_policy05 import NUMERIC,validate,CONSTRUCTOR_PATH,CONSTRUCTOR_SHA256
+ from refusal_cases import NAMES,PRECLAIM,policy,identity
+ 
+ def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
+@@ -18,6 +19,10 @@
+     def get(name):return json.loads(files[value['inputs'][name]['path']])
+     def put(name,item):
+         raw=canonical(item);files[value['inputs'][name]['path']]=raw;value['inputs'][name]['sha256']=sha(raw)
++    if package_sources.get(CONSTRUCTOR_PATH)!=CONSTRUCTOR_SHA256:raise ValueError('registered neighborhood constructor source differs')
++    numeric=get('mcm_policy');numeric['numeric']=dict(NUMERIC)
++    for n in (2,3):validate(numeric['numeric'],n,n,32,16)
++    put('mcm_policy',numeric)
+     pair=get('pair_policy');pair['numerical_source']['files']=dict(package_sources);put('pair_policy',pair)
+     job=get('execution_job');selected=next(iter(job['payload']['representation_jobs'].values()));descriptor=selected['descriptor'];descriptor['resource_fixture']['case']='refusal-'+variant
+     descriptor['pair_execution']['policy_sha256']=value['inputs']['pair_policy']['sha256']
+@@ -52,7 +57,7 @@
+ 
+ def draft_gate(primary_gate,rendered,source_files,runtime_hashes,*,imported_identity_source):
+     if set(rendered)!=set(NAMES):raise ValueError('all27 finite variants required')
+-    gate=copy.deepcopy(primary_gate);gate['experiments']={}
++    gate=copy.deepcopy(primary_gate);gate['experiments']={};gate['program_id']='original-import-refusal-engineering-20261003'
+     gate['families']={'import-refusal-engineering':{'mechanism_id':'original-import-refusal-engineering-v1','attempt_budget':23,'prior_attempts':0,'history_reference':'Separate unexecuted refusal engineering family.27 variants:4 must fail before claim;23 maximum genuine failed claims. No transfer/refund/reopening of original scientific or primary engineering claims.'}}
+     files={};template=next(iter(primary_gate['experiments'].values()))
+     selected_sources=selected_imported_paths(source_files,imported_identity_source);kernel=selected_sources['KERNEL'];helper=selected_sources['HELPER']

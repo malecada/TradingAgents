@@ -1,0 +1,34 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/guarded_formula_oracle04.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate05-2026-10-03/guarded_formula_oracle05.py
+@@ -18,12 +18,24 @@
+     target.check();run=target.owner.bound._run;run._active()
+     source=Path(__file__).resolve();relative=str(source.relative_to(run.admission.root))
+     if run.admission.experiment['source_files'].get(relative)!=hashlib.sha256(source.read_bytes()).hexdigest():raise ValueError('formula oracle source not admitted')
++    from fixture_tools import resource_policy05 as resource_policy
++    from tradingagents.research.onchain_replication import original_dictionary
++    for obj,path,expected in ((ArrayNeighborhoodIndex,resource_policy.CONSTRUCTOR_PATH,resource_policy.CONSTRUCTOR_SHA256),(resource_policy,None,None)):
++        import inspect
++        actual=Path(inspect.getfile(obj)).resolve()
++        relative=str(actual.relative_to(run.admission.root))
++        if path is not None and relative!=path:raise ValueError('oracle constructor origin differs')
++        digest=hashlib.sha256(actual.read_bytes()).hexdigest()
++        if run.admission.experiment['source_files'].get(relative)!=digest or expected is not None and digest!=expected:raise ValueError('oracle resource source differs')
++    selected=target.execution._stage.prepared._selection['selected']
++    numeric=original_dictionary.parse(original_dictionary._read_registered(run,selected['compact_mcm_input']))['numeric']
+     graph=target.graph;dictionary=target.dictionary;matching=thaw(target.owner.matching);context=thaw(target.owner.bound.context)
++    allowance=resource_policy.validate(numeric,len(graph.node_ids),int(graph.edge_index.shape[1]),int(graph.node_features.shape[1]*graph.node_features.dtype.itemsize),int(graph.edge_features.shape[1]*graph.edge_features.dtype.itemsize))
+     if len(graph.node_ids)!=2 or len(dictionary.representatives)!=32 or len(expected_pairs)!=64:raise ValueError('exact tiny oracle denominator required')
+     # This is the selected kernel's actual type/array operation, not a substitute
+     # matching algorithm. There are zero score computations or optimizer steps.
+     result=[];components=compact_matcher._components()
+-    with ArrayNeighborhoodIndex(graph,max_buffer_bytes=1048576,edge_chunk=65536) as index:
++    with ArrayNeighborhoodIndex(graph,max_buffer_bytes=1048576,edge_chunk=4096) as index:
+         for center in range(2):
+             target.check();local=index.neighborhood(center,dictionary.config)
+             try:
+@@ -36,4 +48,4 @@
+                     result.append(value)
+             finally:del local
+     target.check();run._active()
+-    return {'schema_version':1,'kind':'genuine-array-identity-oracle','graph_hash':target.key,'import_receipt_sha256':target.receipt_sha256,'workload_sha256':target.scope['workflow'],'pair_count':64,'pair_identity_sha256':cache_key(result),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'matching_computations':0}
++    return {'schema_version':1,'kind':'genuine-array-identity-oracle','graph_hash':target.key,'import_receipt_sha256':target.receipt_sha256,'workload_sha256':target.scope['workflow'],'pair_count':64,'pair_identity_sha256':cache_key(result),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'matching_computations':0,'numeric_policy':dict(numeric),'constructor_allowance_bytes':allowance,'constructor_source_sha256':resource_policy.CONSTRUCTOR_SHA256}
