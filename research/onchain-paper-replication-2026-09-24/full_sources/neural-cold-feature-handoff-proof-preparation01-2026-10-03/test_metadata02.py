@@ -1,0 +1,62 @@
+"""Finite stdlib/extracted-source checks. No genuine scientific or numeric proof."""
+import ast,datetime,gc,json,types,unittest,weakref
+from pathlib import Path
+P=Path(__file__).resolve().parent
+
+def functions(names,extra):
+ tree=ast.parse((P/'compact_cold_proof.py').read_text());body=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in names]
+ env={'__builtins__':__builtins__,**extra};exec(compile(ast.Module(body=body,type_ignores=[]),'actual-proof-fragments','exec'),env);return env
+
+class Tests(unittest.TestCase):
+ def test_recipe_actual_calendar_batches(self):
+  r=json.loads((P/'recipe01.json').read_bytes());D=datetime.datetime;T=datetime.timedelta
+  start=D.fromisoformat(r['graph_start']);weeks={start+T(weeks=i) for i in range(r['graph_weeks'])}
+  day=D.fromisoformat(r['train_start'].replace('Z','+00:00')).replace(tzinfo=None);end=D.fromisoformat(r['train_end'].replace('Z','+00:00')).replace(tzinfo=None);rows=[]
+  while day<end:
+   dates=[day-T(days=i) for i in range(28,0,-1)]
+   expected=[(d-T(days=d.weekday())-T(days=7)) for d in dates]
+   if day+T(days=1)<end and day.date().isoformat()!=r['missing_price'] and all(x.date().isoformat()!=r['missing_price'] for x in dates) and all(w in weeks for w in expected):rows.append(types.SimpleNamespace(decision_at=day.isoformat()+'Z'))
+   day+=T(days=1)
+  env=functions({'require','_batches'},{});groups=env['_batches'](types.SimpleNamespace(train=rows))
+  self.assertEqual(len(rows),56);self.assertEqual([len(v) for _,v in groups],[16,16,8])
+  self.assertEqual(groups[1][1],list(range(16)))
+ def test_short_or_ungapped_population_refuses(self):
+  env=functions({'require','_batches'},{});base=datetime.datetime(2024,1,1)
+  for count in (8,32,35):
+   rows=[types.SimpleNamespace(decision_at=(base+datetime.timedelta(days=i)).isoformat()) for i in range(count)]
+   with self.assertRaises(ValueError):env['_batches'](types.SimpleNamespace(train=rows))
+ def test_weakrefs_actual_release_fragment(self):
+  class Holder:pass
+  obj=Holder();session={'state':'resident-complete','experiment':'x','alias':obj,'alias_names':{'graph'},'refs':{'graph':weakref.ref(obj)}};del obj
+  run=types.SimpleNamespace(admission=types.SimpleNamespace(experiment_id='x'))
+  env=functions({'require','_release'},{'SESSION':session,'gc':gc});self.assertEqual(env['_release'](run)['remaining'],[])
+ def test_unexpected_retained_ancestry_refuses(self):
+  class Holder:pass
+  obj=Holder();external=Holder();session={'state':'resident-complete','experiment':'x','alias':obj,'alias_names':{'graph'},'refs':{'graph':weakref.ref(obj),'terminal':weakref.ref(external)}};del obj
+  env=functions({'require','_release'},{'SESSION':session,'gc':gc})
+  with self.assertRaisesRegex(ValueError,'unexpected ancestry'):env['_release'](types.SimpleNamespace(admission=types.SimpleNamespace(experiment_id='x')))
+  self.assertIn('alias',session)
+ def test_weakslot_only_parity(self):
+  for name in ('compact_terminal','compact_publication','compact_closure'):
+   before=ast.parse((P/(name+'.py.baseline')).read_text());after=ast.parse((P/(name+'.py')).read_text())
+   for n in ast.walk(after):
+    if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='__slots__' for t in n.targets):n.value.elts=[e for e in n.value.elts if not isinstance(e,ast.Constant) or e.value!='__weakref__']
+   self.assertEqual(ast.dump(before,include_attributes=False),ast.dump(after,include_attributes=False))
+ def test_cold_nonproof_ast_parity(self):
+  before=ast.parse((P/'compact_cold_features.py.baseline02').read_text());after=ast.parse((P/'compact_cold_features.py').read_text())
+  for n in after.body:
+   if isinstance(n,ast.FunctionDef) and n.name=='prepare':n.body=[x for x in n.body if not isinstance(x,ast.If) or 'compact_cold_proof.observe' not in ast.unparse(x)]
+  self.assertEqual(ast.dump(before,include_attributes=False),ast.dump(after,include_attributes=False))
+ def test_payload_nonproof_ast_parity(self):
+  before=ast.parse((P/'job_payload.py.baseline02').read_text());after=ast.parse((P/'job_payload.py').read_text())
+  for n in after.body:
+   if isinstance(n,ast.FunctionDef) and n.name=='execute_fit_payload':n.body=[x for x in n.body if not isinstance(x,ast.If) or 'compact_cold_proof.execute' not in ast.unparse(x)]
+  self.assertEqual(ast.dump(before,include_attributes=False),ast.dump(after,include_attributes=False))
+ def test_unchanged_producer_and_file_authority(self):
+  for name in ('compact_native_producer.py','cold_files.py'):self.assertEqual((P/name).read_bytes(),(P/(name+'.baseline02')).read_bytes())
+ def test_no_unbounded_recipe_or_archive_claim(self):
+  r=json.loads((P/'recipe01.json').read_bytes());self.assertEqual((r['nodes'],r['graph_weeks'],r['sample_count'],r['dictionary_size']),(4,19,32,32))
+  source=(P/'compact_cold_proof_inputs.py').read_text();self.assertNotIn('compact_archive_input',source)
+ def test_every_source_compiles_without_import(self):
+  for f in P.glob('*.py'):compile(f.read_text(),str(f),'exec')
+if __name__=='__main__':unittest.main(verbosity=2)

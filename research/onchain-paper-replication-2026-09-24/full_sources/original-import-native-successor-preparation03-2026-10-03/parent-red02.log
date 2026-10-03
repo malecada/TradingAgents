@@ -1,0 +1,56 @@
+test_actual_successor_read_only_admission_and_selected_fixture_agree (__main__.Parent.test_actual_successor_read_only_admission_and_selected_fixture_agree) ... ERROR
+test_legacy_parent_none_is_unchanged_and_unknown_parent_refused (__main__.Parent.test_legacy_parent_none_is_unchanged_and_unknown_parent_refused) ... ERROR
+test_other_fixture_module_nodes_are_unchanged (__main__.Parent.test_other_fixture_module_nodes_are_unchanged) ... ok
+test_selected_ceiling_and_extension_reference_must_match_exact_review (__main__.Parent.test_selected_ceiling_and_extension_reference_must_match_exact_review) ... FAIL
+test_selected_parent_missing_or_wrong_is_refused (__main__.Parent.test_selected_parent_missing_or_wrong_is_refused) ... FAIL
+
+======================================================================
+ERROR: test_actual_successor_read_only_admission_and_selected_fixture_agree (__main__.Parent.test_actual_successor_read_only_admission_and_selected_fixture_agree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation03-2026-10-03/test_parent01.py", line 22, in test_actual_successor_read_only_admission_and_selected_fixture_agree
+    self.module.admitted(self.ad,self.job)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation03-2026-10-03/resource_fixture.baseline.py", line 51, in admitted
+    require(ad.experiment['cells']==CELLS and ad.experiment.get('parent') is None,'fresh exact engineering denominator required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation03-2026-10-03/resource_fixture.baseline.py", line 20, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: fresh exact engineering denominator required
+
+======================================================================
+ERROR: test_legacy_parent_none_is_unchanged_and_unknown_parent_refused (__main__.Parent.test_legacy_parent_none_is_unchanged_and_unknown_parent_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation03-2026-10-03/test_parent01.py", line 33, in test_legacy_parent_none_is_unchanged_and_unknown_parent_refused
+    self.assertTrue(self.module._engineering_parent(SimpleNamespace(experiment_id='legacy-source-sentinel',experiment={'parent':None})))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'tradingagents.research.onchain_replication.resource_fixture' has no attribute '_engineering_parent'
+
+======================================================================
+FAIL: test_selected_ceiling_and_extension_reference_must_match_exact_review (__main__.Parent.test_selected_ceiling_and_extension_reference_must_match_exact_review)
+----------------------------------------------------------------------
+ValueError: fresh exact engineering denominator required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation03-2026-10-03/test_parent01.py", line 28, in test_selected_ceiling_and_extension_reference_must_match_exact_review
+    with self.assertRaisesRegex(ValueError,'successor parent/ceiling'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "successor parent/ceiling" does not match "fresh exact engineering denominator required"
+
+======================================================================
+FAIL: test_selected_parent_missing_or_wrong_is_refused (__main__.Parent.test_selected_parent_missing_or_wrong_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation03-2026-10-03/test_parent01.py", line 26, in test_selected_parent_missing_or_wrong_is_refused
+    with self.assertRaisesRegex(ValueError,'successor parent/ceiling'):self.module.admitted(ad,self.job)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.551s
+
+FAILED (failures=2, errors=2)

@@ -1,0 +1,11 @@
+--- compact_terminal.py.baseline
++++ compact_terminal.py
+@@ -55,7 +55,7 @@
+ 
+ 
+ class Receipt:
+-    __slots__ = ('_record','_live','_verify','_owner')
++    __slots__ = ('__weakref__','_record','_live','_verify','_owner')
+     def __init__(self,record,live,verify,owner):
+         object.__setattr__(self,'_record',freeze(record));object.__setattr__(self,'_live',live)
+         object.__setattr__(self,'_verify',verify);object.__setattr__(self,'_owner',owner)

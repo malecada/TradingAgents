@@ -1,0 +1,25 @@
+test_frozen_config_pins (__main__.Tests.test_frozen_config_pins) ... ok
+test_native_job_unselected_whole_ast_parity (__main__.Tests.test_native_job_unselected_whole_ast_parity) ... ok
+test_native_policy_refusals (__main__.Tests.test_native_policy_refusals) ... ok
+test_no_numeric_import_in_preclaim_module (__main__.Tests.test_no_numeric_import_in_preclaim_module) ... ok
+test_only_declared_synthetic_dictionary_override (__main__.Tests.test_only_declared_synthetic_dictionary_override) ... ERROR
+
+======================================================================
+ERROR: test_only_declared_synthetic_dictionary_override (__main__.Tests.test_only_declared_synthetic_dictionary_override)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/test_native03.py", line 48, in test_only_declared_synthetic_dictionary_override
+    root=P.parents[2]/'config';cfg=json.loads((P/'configs01.json').read_bytes());original=json.loads((root/'dictionary.json').read_bytes())
+                                                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/config/dictionary.json'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.037s
+
+FAILED (errors=1)

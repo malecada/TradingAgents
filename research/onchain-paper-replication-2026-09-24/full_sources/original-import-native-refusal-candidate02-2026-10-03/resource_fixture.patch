@@ -1,0 +1,43 @@
+--- resource_fixture.baseline.py
++++ resource_fixture.py
+@@ -6,6 +6,7 @@
+ import resource
+ import subprocess
+ from .owned_io import _fatal
++from . import resource_refusal_cases as cases
+ 
+ GIB=1024**3
+ FILE_MAX=4*1024**2
+@@ -29,7 +30,7 @@
+     graphs=d.get('required_graphs');require(type(graphs) is list and len(graphs)==2 and graphs==sorted(set(graphs)) and all(type(h) is str and len(h)==64 and all(c in '0123456789abcdef' for c in h) for h in graphs),'exact two distinct sorted targets required')
+     mapping=d.get('resource_graph_inputs');require(type(mapping) is dict and set(mapping)==set(graphs) and len(set(mapping.values()))==2 and all(type(v) is str and v for v in mapping.values()),'complete distinct target mapping required')
+     f=d.get('resource_fixture');require(type(f) is dict and set(f)=={'schema_version','case','data_kind','target_nodes','target_provenance_input'} and type(f['schema_version']) is int and f['schema_version']==1,'finite fixture policy fields differ')
+-    require(f['case'] in ('success','second_target_publication_failure') and f['data_kind']=='synthetic-targets-original-dictionary','explicit synthetic case required')
++    require(f['case'] in ('success','second_target_publication_failure')+tuple('refusal-'+n for n in cases.NAMES) and f['data_kind']=='synthetic-targets-original-dictionary','explicit synthetic case required')
+     require(type(f['target_nodes']) is dict and set(f['target_nodes'])==set(graphs) and all(type(n) is int and 1<=n<=4 for n in f['target_nodes'].values()),'tiny exact node denominator required')
+     require(type(f['target_provenance_input']) is str and f['target_provenance_input'],'synthetic provenance input required')
+     return name,s,f
+@@ -47,7 +48,11 @@
+ 
+ def admitted(ad,job):
+     schema(job)
+-    require(ad.spec['program_id']==PROGRAM and ad.family['mechanism_id']==MECHANISM,'separate synthetic engineering program/family required')
++    _,_,selected_fixture=selection(job)
++    refusal=selected_fixture['case'].startswith('refusal-')
++    mechanism='original-import-refusal-engineering-v1' if refusal else MECHANISM
++    require(ad.spec['program_id']==PROGRAM and ad.family['mechanism_id']==mechanism,'separate synthetic engineering program/family required')
++    if refusal:require(ad.family['attempt_budget']==23 and ad.family['prior_attempts']==0,'finite23-claim refusal family required')
+     require(ad.experiment['cells']==CELLS and ad.experiment.get('parent') is None,'fresh exact engineering denominator required')
+     require(Path(job['resources']['storage_budget']['root'])==ad.root,'storage watch must include complete isolated checkout, baseline and every output namespace')
+     require((ad.root/'.git').is_dir() and (ad.root/'.git').resolve()==ad.root/'.git','independent local Git directory inside watched root required')
+@@ -197,6 +202,10 @@
+ 
+ 
+ def execute(run,payload,*,job_input='execution_job'):
++    selected_job=json.loads(run.read_input(job_input))
++    if selection(selected_job)[2]['case'].startswith('refusal-'):
++        from . import resource_refusal
++        return resource_refusal.execute(run,payload,job_input=job_input)
+     from . import resource_binding,original_import_preparation,original_import_stage,compact_mcm,compact_owner,import_metadata
+     from .imported_mcm_identity import Target
+     from .graph_store import load_graph

@@ -1,0 +1,20 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/compact_mcm.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/compact_mcm.py
+@@ -310,7 +310,6 @@
+         result = Produced(dictionary,graph,stage,matrix,policy,start,record,root,inode,reference)
+         result._check(); return result
+     except BaseException as primary:
+-        owner.poisoned=True
+         actions=[]
+         if stream is not None and not stream.closed:actions.append(stream.close)
+         if log is not None and not log.closed:
+@@ -318,7 +317,8 @@
+             actions.append(log.close)
+         if claimed and fd is not None:
+             actions.append(lambda:io._write(fd,'failed.json',io._json({'schema_version':1,'status':'failed','owner':owner.identity})))
+-        io._cleanup(actions,primary=primary)
++        try:io._cleanup(actions,primary=primary)
++        finally:owner.poisoned=True
+         raise
+     finally:
+         if fd is not None:

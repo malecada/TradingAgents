@@ -1,0 +1,50 @@
+FFFFF
+======================================================================
+FAIL: test_each_numeric_identity_corruption_refuses (__main__.Counterexamples.test_each_numeric_identity_corruption_refuses) (field='ordered_motifs')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/test_predecessor03.py", line 16, in test_each_numeric_identity_corruption_refuses
+    with self.assertRaises((ValueError,FileNotFoundError,KeyError)):fixture.caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'FileNotFoundError'>, <class 'KeyError'>) not raised
+
+======================================================================
+FAIL: test_each_numeric_identity_corruption_refuses (__main__.Counterexamples.test_each_numeric_identity_corruption_refuses) (field='representative_sample_indices')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/test_predecessor03.py", line 16, in test_each_numeric_identity_corruption_refuses
+    with self.assertRaises((ValueError,FileNotFoundError,KeyError)):fixture.caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'FileNotFoundError'>, <class 'KeyError'>) not raised
+
+======================================================================
+FAIL: test_each_numeric_identity_corruption_refuses (__main__.Counterexamples.test_each_numeric_identity_corruption_refuses) (field='bundle_sha256')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/test_predecessor03.py", line 16, in test_each_numeric_identity_corruption_refuses
+    with self.assertRaises((ValueError,FileNotFoundError,KeyError)):fixture.caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'FileNotFoundError'>, <class 'KeyError'>) not raised
+
+======================================================================
+FAIL: test_each_numeric_identity_corruption_refuses (__main__.Counterexamples.test_each_numeric_identity_corruption_refuses) (field='numeric_bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/test_predecessor03.py", line 16, in test_each_numeric_identity_corruption_refuses
+    with self.assertRaises((ValueError,FileNotFoundError,KeyError)):fixture.caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'FileNotFoundError'>, <class 'KeyError'>) not raised
+
+======================================================================
+FAIL: test_empty_numerical_stage_refuses (__main__.Counterexamples.test_empty_numerical_stage_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/test_predecessor03.py", line 11, in test_empty_numerical_stage_refuses
+    with self.assertRaises((ValueError,FileNotFoundError,KeyError)):fixture.caller.terminal(root=root,variant='wrong-count')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'FileNotFoundError'>, <class 'KeyError'>) not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.033s
+
+FAILED (failures=5)

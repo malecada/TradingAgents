@@ -1,0 +1,12 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/refusal_evidence.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/refusal_evidence.py
+@@ -109,6 +109,8 @@
+         manifest_input=descriptor['resource_graph_inputs'][required[0]];manifest=load(manifest_input)
+         require(manifest['graph_hash']==required[0],'registered first target manifest differs')
+         node_order=target_node_order(root,inputs[manifest_input]['path'],manifest,inputs)
+-        observed['numerical_stage']=authenticate_stage(root,stage,variant,owner_identity,producer_start,envelope['stage_policy'],descriptor['configs']['matching'],expected['context'],claim['experiment']['source_files'],numeric,execution,observed['import_sha256'],node_order)
++        from refusal_pair_identity import expected_pairs
++        pairs=expected_pairs(root,inputs[manifest_input]['path'],manifest,inputs,numeric=numeric,dictionary_config=json.loads(blobs['dictionary'])['config'],matching=descriptor['configs']['matching'],context=expected['context'],backend=execution['backend'],workload=producer_start['scope']['workflow'],source_files=claim['experiment']['source_files'])
++        observed['numerical_stage']=authenticate_stage(root,stage,variant,owner_identity,producer_start,envelope['stage_policy'],descriptor['configs']['matching'],expected['context'],claim['experiment']['source_files'],numeric,execution,observed['import_sha256'],node_order,pairs)
+         observed['producer_count']=1;observed['producer_hashes']={'start.json':digest(start_raw),'failed.json':digest(failed_raw)}
+     return observed

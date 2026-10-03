@@ -1,0 +1,19 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/refusal_stage.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/refusal_stage.py
+@@ -36,7 +36,7 @@
+     values=[data[10+size+i*4*width:10+size+(i+1)*4*width].decode('utf-32-le').rstrip('\0') for i in range(2)]
+     require(all(values) and len(set(values))==2,'distinct target nodes required');return key(values)
+ 
+-def authenticate_stage(root,stage,variant,owner,producer,policy,matching,context,source_files,numeric,execution,receipt_sha,node_order):
++def authenticate_stage(root,stage,variant,owner,producer,policy,matching,context,source_files,numeric,execution,receipt_sha,node_order,expected_pairs):
+     pairs,acks=COUNTS[variant];files={};root=Path(root);stage=Path(stage)
+     def raw(relative):
+         value=body(root,str((stage/relative).relative_to(root)),65536);files[relative]=digest(value);return value
+@@ -68,6 +68,7 @@
+     for i,event in enumerate(events):
+         ordinal,kind,pair_index,score,iterations,purpose,identity,artifact=event
+         require(ordinal==i and pair_index==i//2 and artifact.hex()==ZERO and purpose.hex()!=ZERO and identity.hex()!=ZERO,'matching event identity differs')
++        require((purpose.hex(),identity.hex())==expected_pairs[i//2],'registered typed purpose/ordered pair differs')
+         if i%2==0:require(kind==0 and score==0 and iterations==0,'matching begin differs')
+         else:
+             require(kind in (1,2) and math.isfinite(score) and 0<=score<=1 and iterations<=matching['max_iterations'] and event[5:7]==events[i-1][5:7],'matching completion differs');completed.append((score,purpose.hex()))

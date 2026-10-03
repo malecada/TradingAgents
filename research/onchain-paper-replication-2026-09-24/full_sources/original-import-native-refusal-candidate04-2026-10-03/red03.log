@@ -1,0 +1,59 @@
+FFFFFF
+======================================================================
+FAIL: test_coherent_other_center_or_motif_refuses (__main__.Resealed.test_coherent_other_center_or_motif_refuses) (expected_other_index=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/test_resealed04.py", line 37, in test_coherent_other_center_or_motif_refuses
+    with self.assertRaises(ValueError):caller.terminal(root=root,variant='wrong-ack')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_coherent_other_center_or_motif_refuses (__main__.Resealed.test_coherent_other_center_or_motif_refuses) (expected_other_index=32)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/test_resealed04.py", line 37, in test_coherent_other_center_or_motif_refuses
+    with self.assertRaises(ValueError):caller.terminal(root=root,variant='wrong-ack')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_resealed_purpose_and_ordered_pair_refuse (__main__.Resealed.test_resealed_purpose_and_ordered_pair_refuse) (change='purpose')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/test_resealed04.py", line 26, in test_resealed_purpose_and_ordered_pair_refuse
+    with self.assertRaises(ValueError):caller.terminal(root=root,variant='wrong-ack')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_resealed_purpose_and_ordered_pair_refuse (__main__.Resealed.test_resealed_purpose_and_ordered_pair_refuse) (change='pair')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/test_resealed04.py", line 26, in test_resealed_purpose_and_ordered_pair_refuse
+    with self.assertRaises(ValueError):caller.terminal(root=root,variant='wrong-ack')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_resealed_purpose_and_ordered_pair_refuse (__main__.Resealed.test_resealed_purpose_and_ordered_pair_refuse) (change='both')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/test_resealed04.py", line 26, in test_resealed_purpose_and_ordered_pair_refuse
+    with self.assertRaises(ValueError):caller.terminal(root=root,variant='wrong-ack')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_resealed_purpose_and_ordered_pair_refuse (__main__.Resealed.test_resealed_purpose_and_ordered_pair_refuse) (change='swapped')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/test_resealed04.py", line 26, in test_resealed_purpose_and_ordered_pair_refuse
+    with self.assertRaises(ValueError):caller.terminal(root=root,variant='wrong-ack')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.992s
+
+FAILED (failures=6)

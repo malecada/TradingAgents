@@ -1,0 +1,11 @@
+--- compact_publication.py.baseline
++++ compact_publication.py
+@@ -28,7 +28,7 @@
+ 
+ 
+ class Published:
+-    __slots__ = ('_closure','_record','_directory','_inode','_bodies','_limit')
++    __slots__ = ('__weakref__','_closure','_record','_directory','_inode','_bodies','_limit')
+     def __init__(self,closure,record,root,inode,bodies,limit):
+         for name,value in (('_closure',closure),('_record',freeze(record)),('_directory',root),
+             ('_inode',inode),('_bodies',freeze(bodies)),('_limit',limit)):

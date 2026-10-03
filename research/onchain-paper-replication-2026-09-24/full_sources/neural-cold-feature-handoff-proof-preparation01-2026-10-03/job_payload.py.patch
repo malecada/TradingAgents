@@ -1,0 +1,12 @@
+--- job_payload.py.baseline02
++++ job_payload.py
+@@ -41,6 +41,9 @@
+     registered=json.loads(run.read_input(job_input))
+     if registered['kind']!='fit' or canonical_bytes(registered['payload'])!=canonical_bytes(payload):
+         raise ValueError('fit job payload differs from registration')
++    if payload.get('cold_proof_input') is not None or any(j.get('cold_proof_input') is not None for j in payload['representation_jobs'].values()):
++        from . import compact_cold_proof
++        return compact_cold_proof.execute(run,payload)
+     routes={name:False if native_reuse.selected(run,name,job) else compact_native_producer.selected(run,name,job)
+         for name,job in payload['representation_jobs'].items()}
+     plan=archive_dispatch.preflight(run,payload,routes,job_input=job_input)

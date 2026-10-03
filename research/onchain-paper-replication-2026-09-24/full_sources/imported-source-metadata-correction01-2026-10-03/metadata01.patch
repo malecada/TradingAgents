@@ -1,0 +1,48 @@
+--- baseline/compact_mcm.py
++++ candidate/compact_mcm.py
+@@ -58,6 +58,16 @@
+     return result | {KERNEL:sha}
+ 
+ 
++def _source_evidence(dictionary, sources):
++    """Keep imported receipt metadata bounded; full sources remain validated."""
++    if not _imported(dictionary):return sources
++    require(type(sources) is dict and sources and all(type(name) is str
++        and type(pin) is str and len(pin)==64 and all(c in '0123456789abcdef' for c in pin)
++        for name,pin in sources.items()),'imported source evidence differs')
++    return {'kind':'registered-source-map-v1','source_count':len(sources),
++        'source_sha256':cache_key(sources)}
++
++
+ def _kernel(dictionary=None):
+     path=KERNEL
+     if dictionary is not None and _imported(dictionary):
+@@ -137,7 +147,7 @@
+         'policy_input':input_name,'policy_sha256':run.admission.inputs[input_name]['sha256'],
+         'output_input':output_input,'output_policy_sha256':run.admission.inputs[output_input]['sha256'],
+         'reserved_workflow_metadata_bytes':3*io.META_LIMIT*(len(owner.required)-1),
+-        'reserved_workflow_output_bytes':output_reserved,'sources':sources,'representation_admitted':False,'resumable':False}
++        'reserved_workflow_output_bytes':output_reserved,'sources':_source_evidence(dictionary,sources),'representation_admitted':False,'resumable':False}
+     io._json(start); return graph,kernel,policy,start
+ 
+ 
+@@ -189,6 +199,9 @@
+ 
+     def _check(self):
+         self.lease(); self._dictionary.check(); _sources(self._dictionary); self._numeric(); self._evidence()
++        if _imported(self._dictionary):
++            require(thaw(self._start)['sources']==_source_evidence(self._dictionary,_sources(self._dictionary)),
++                'imported source receipt reference differs')
+         owner = _owner(self._dictionary); ticket = self.record['output']
+         with publication._open_verified(owner,self._stage,output_input=self.record['output_input'],
+                 expected_scope=thaw(self.record['scope']),receipt_sha256=ticket['receipt_sha256']) as saved:
+@@ -202,6 +215,9 @@
+         args = self.record['output_args']; expected = self.record['output_proof']
+         publication._verify(Path(ticket['directory']),thaw(args)|{'stage_root':self._stage.root},
+             thaw(expected),lambda:None,ticket['receipt_sha256'])
++        if _imported(self._dictionary):
++            require(thaw(self._start)['sources']==_source_evidence(self._dictionary,_sources(self._dictionary)),
++                'imported source receipt reference differs')
+ 
+     def check(self):
+         owner = _owner(self._dictionary)

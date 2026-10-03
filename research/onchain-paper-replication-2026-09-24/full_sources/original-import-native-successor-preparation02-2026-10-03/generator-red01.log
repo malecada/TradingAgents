@@ -1,0 +1,27 @@
+test_case_charters_match_the_accepted_denominators (__main__.Successor.test_case_charters_match_the_accepted_denominators) ... FAIL
+test_graph_inputs_arrays_and_numerical_generator_functions_unchanged (__main__.Successor.test_graph_inputs_arrays_and_numerical_generator_functions_unchanged) ... ok
+test_new_charter_paths_preserve_every_historical_charter (__main__.Successor.test_new_charter_paths_preserve_every_historical_charter) ... FAIL
+test_only_fresh_fixed_identities_and_closed_parent_are_added (__main__.Successor.test_only_fresh_fixed_identities_and_closed_parent_are_added) ... ok
+
+======================================================================
+FAIL: test_case_charters_match_the_accepted_denominators (__main__.Successor.test_case_charters_match_the_accepted_denominators)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation02-2026-10-03/test_successor01.py", line 27, in test_case_charters_match_the_accepted_denominators
+    self.assertIn('complete all160 scalar-reference comparisons',charters[success['charter']['path']].decode())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'complete all160 scalar-reference comparisons' not found in 'Synthetic engineering success. Import original complete32-motif dictionary and512samples without rerun. Two genuine targets; compare all160scores with unchanged scalar reference. Native3GiB/swap0/1800s/file4MiB/whole-tree sampled1GiB/floor10GiB. Expected publication failure remains failed lifecycle. No financial fit, numerical paper agreement or full-size capacity conclusion. Mutation/legacy refusal acceptance is separate and pending.\n'
+
+======================================================================
+FAIL: test_new_charter_paths_preserve_every_historical_charter (__main__.Successor.test_new_charter_paths_preserve_every_historical_charter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation02-2026-10-03/test_successor01.py", line 33, in test_new_charter_paths_preserve_every_historical_charter
+    self.assertFalse(historical&set(charters))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'fixture_inputs/second_target_publication_failure/charter.md', 'fixture_inputs/success/charter.md'} is not false
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.035s
+
+FAILED (failures=2)

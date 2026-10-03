@@ -1,0 +1,24 @@
+test_cold_nonproof_ast_parity (__main__.Tests.test_cold_nonproof_ast_parity) ... ok
+test_every_source_compiles_without_import (__main__.Tests.test_every_source_compiles_without_import) ... ok
+test_no_unbounded_recipe_or_archive_claim (__main__.Tests.test_no_unbounded_recipe_or_archive_claim) ... ok
+test_payload_nonproof_ast_parity (__main__.Tests.test_payload_nonproof_ast_parity) ... ok
+test_recipe_actual_calendar_batches (__main__.Tests.test_recipe_actual_calendar_batches) ... FAIL
+test_short_or_ungapped_population_refuses (__main__.Tests.test_short_or_ungapped_population_refuses) ... ok
+test_unchanged_producer_and_file_authority (__main__.Tests.test_unchanged_producer_and_file_authority) ... ok
+test_unexpected_retained_ancestry_refuses (__main__.Tests.test_unexpected_retained_ancestry_refuses) ... ok
+test_weakrefs_actual_release_fragment (__main__.Tests.test_weakrefs_actual_release_fragment) ... ok
+test_weakslot_only_parity (__main__.Tests.test_weakslot_only_parity) ... ok
+
+======================================================================
+FAIL: test_recipe_actual_calendar_batches (__main__.Tests.test_recipe_actual_calendar_batches)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/test_metadata02.py", line 21, in test_recipe_actual_calendar_batches
+    self.assertEqual(len(rows),55);self.assertEqual([len(v) for _,v in groups],[16,16,7])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: 56 != 55
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.110s
+
+FAILED (failures=1)

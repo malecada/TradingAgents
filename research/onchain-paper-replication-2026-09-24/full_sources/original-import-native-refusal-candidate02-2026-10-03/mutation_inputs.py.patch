@@ -1,0 +1,38 @@
+--- candidate01/mutation_inputs.py
++++ candidate02/mutation_inputs.py
+@@ -1,5 +1,5 @@
+ """Deterministic per-variant draft inputs; no writes, admission or imports of numerics."""
+-import copy,hashlib,json
++import ast,copy,hashlib,json
+ from pathlib import Path
+ from refusal_cases import NAMES,PRECLAIM,policy,identity
+ 
+@@ -36,12 +36,26 @@
+     value.update(files=files,variant=variant,identity=identity(variant),status='unregistered-negative-inputs',workflow_identity=sha(canonical(descriptor)),job_path=value['inputs']['execution_job']['path'])
+     return value
+ 
+-def draft_gate(primary_gate,rendered,source_files,runtime_hashes):
++def selected_imported_paths(source_files,identity_source):
++    target='tradingagents/research/onchain_replication/imported_mcm_identity.py'
++    if type(identity_source) is not bytes or len(identity_source)>65536 or source_files.get(target)!=sha(identity_source):raise ValueError('selected imported identity source body differs')
++    values={}
++    for node in ast.parse(identity_source).body:
++        if isinstance(node,ast.Assign) and len(node.targets)==1 and isinstance(node.targets[0],ast.Name) and node.targets[0].id in ('KERNEL','HELPER'):
++            name=node.targets[0].id
++            if name in values:raise ValueError('duplicate selected imported source')
++            value=ast.literal_eval(node.value)
++            if type(value) is not str or Path(value).is_absolute() or '..' in Path(value).parts or source_files.get(value) is None:raise ValueError('selected imported kernel/helper absent from exact closure')
++            values[name]=value
++    if set(values)!={'KERNEL','HELPER'}:raise ValueError('selected imported constants missing')
++    return values
++
++def draft_gate(primary_gate,rendered,source_files,runtime_hashes,*,imported_identity_source):
+     if set(rendered)!=set(NAMES):raise ValueError('all27 finite variants required')
+     gate=copy.deepcopy(primary_gate);gate['experiments']={}
+     gate['families']={'import-refusal-engineering':{'mechanism_id':'original-import-refusal-engineering-v1','attempt_budget':23,'prior_attempts':0,'history_reference':'Separate unexecuted refusal engineering family.27 variants:4 must fail before claim;23 maximum genuine failed claims. No transfer/refund/reopening of original scientific or primary engineering claims.'}}
+     files={};template=next(iter(primary_gate['experiments'].values()))
+-    kernel='research/onchain-paper-replication-2026-09-24/full_sources/original-dictionary-import-mcm-implementation03-2026-10-02/imported_kernel.py';helper='research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py'
++    selected_sources=selected_imported_paths(source_files,imported_identity_source);kernel=selected_sources['KERNEL'];helper=selected_sources['HELPER']
+     for variant in NAMES:
+         item=rendered[variant];exp=copy.deepcopy(template);exp.update(family='import-refusal-engineering',inputs=item['inputs'],source_files=dict(source_files),runtime_hashes=runtime_hashes,question='Does the genuine registered '+variant+' mutation refuse at its frozen boundary before target publication?')
+         if variant in ('source','kernel','helper'):

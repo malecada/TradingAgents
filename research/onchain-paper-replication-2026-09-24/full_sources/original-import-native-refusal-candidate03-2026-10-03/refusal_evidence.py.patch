@@ -1,0 +1,32 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/refusal_evidence.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/refusal_evidence.py
+@@ -81,8 +81,17 @@
+     require(intent['owner']==owner_identity and intent['stage']==intent['kind']=='dictionary-import' and intent['binding_sha256']==key(binding) and intent['prebirth_contract']==stage_contract,'original import stage intent differs')
+     stage_policy=load(selected['original_dictionary_stage_input']);require(intent['policy']==stage_policy and intent['reserved_logical_bytes']==stage_policy['max_stage_bytes'],'import stage reservation differs')
+     require(type(receipt['schema_version']) is int and receipt['schema_version']==1 and receipt['kind']=='dictionary-import-complete' and receipt['owner']==owner_identity and receipt['intent_sha256']==observed['journal_hashes']['compact/dictionary-import/intent.json'] and receipt['execution']==intent['execution'] and type(receipt['current_matching_pairs']) is int and receipt['current_matching_pairs']==0 and receipt['historical_work_recomputed'] is False,'genuine completed import stage differs')
+-    original=load(selected['original_dictionary_input']);numeric=receipt['numeric'];require(numeric['original_dictionary']==original['dictionary_identity'] and numeric['original_matching']==key(descriptor['configs']['matching']) and len(numeric['ordered_motifs'])==len(numeric['representative_sample_indices'])==32 and numeric['owner_stage_completed'] is False and numeric['mcm_execution_admitted'] is False,'original32 import numeric metadata differs')
++    from original_semantics import expected_numeric
++    original=load(selected['original_dictionary_input']);blobs={}
++    require(original['motif_count']==32,'exact original32 required')
++    for role,reference in original['refs'].items():
++        row=inputs[reference['input']];raw=body(root,row['path'],original['max_json_bytes'])
++        require(digest(raw)==row['sha256']==reference['sha256'],'original registered evidence changed');blobs[role]=raw
++    numeric=receipt['numeric'];expected_numeric_record=expected_numeric(original,blobs)
++    require(canonical(numeric)==canonical(expected_numeric_record) and numeric['original_matching']==key(descriptor['configs']['matching']),'original32 import numeric metadata differs')
+     execution=receipt['execution'];require(execution['original_dictionary']==numeric['original_dictionary'] and execution['original_matching']==numeric['original_matching'] and execution['current_binding']==key(binding) and execution['current_source']==claim['source'] and execution['runtime_hash']==key(environment) and execution['stage_contract']==stage_contract and execution['backend']==pair['backend'] and execution['execution_matching']==key({'config':descriptor['configs']['matching'],'backend':pair['backend']}),'import execution/original identity join differs')
++    expected_execution={'original_dictionary':numeric['original_dictionary'],'original_matching':numeric['original_matching'],'execution_matching':key({'config':descriptor['configs']['matching'],'backend':pair['backend']}),'backend':pair['backend'],'current_binding':key(binding),'current_source':claim['source'],'runtime_hash':key(environment),'source_modules':{n:claim['experiment']['source_files'][n] for n in ('tradingagents/research/onchain_replication/original_import_preparation.py','tradingagents/research/onchain_replication/original_dictionary.py')},'stage_contract':stage_contract,'mcm_execution_admitted':False}
++    require(canonical(execution)==canonical(expected_execution),'exact imported execution source contract differs')
+     observed['import_sha256']=observed['journal_hashes']['compact/dictionary-import/import-complete.json']
+     numeric_case=variant in NUMERIC
+     expected_children=['dictionary-import']+(['mcm-'+required[0]] if numeric_case else [])
+@@ -96,5 +105,10 @@
+         rp=str(producer.relative_to(root));start_raw=body(root,rp+'/start.json');failed_raw=body(root,rp+'/failed.json');producer_start=json.loads(start_raw)
+         require(producer_start['owner']==owner_identity and producer_start['graph_hash']==required[0] and producer_start['rows']==2 and producer_start['motifs']==32 and producer_start['cells']==64,'original failed producer denominator differs')
+         require(json.loads(failed_raw)=={'schema_version':1,'status':'failed','owner':owner_identity},'original failed producer marker differs')
++        from refusal_stage import authenticate_stage,target_node_order
++        manifest_input=descriptor['resource_graph_inputs'][required[0]];manifest=load(manifest_input)
++        require(manifest['graph_hash']==required[0],'registered first target manifest differs')
++        node_order=target_node_order(root,inputs[manifest_input]['path'],manifest,inputs)
++        observed['numerical_stage']=authenticate_stage(root,stage,variant,owner_identity,producer_start,envelope['stage_policy'],descriptor['configs']['matching'],expected['context'],claim['experiment']['source_files'],numeric,execution,observed['import_sha256'],node_order)
+         observed['producer_count']=1;observed['producer_hashes']={'start.json':digest(start_raw),'failed.json':digest(failed_raw)}
+     return observed

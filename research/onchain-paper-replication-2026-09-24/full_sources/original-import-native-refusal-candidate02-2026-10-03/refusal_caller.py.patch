@@ -1,0 +1,17 @@
+--- candidate01/refusal_caller.py
++++ candidate02/refusal_caller.py
+@@ -45,11 +45,6 @@
+     summary=metadata(root,path+'/outputs/resource-summary.json')
+     require(metadata(root,path+'/outputs/resource-binding.json')==summary==metadata(root,path+'/outputs/resource-journal.json'),'negative resource outputs differ')
+     require(summary['case']==variant and summary['identity']==name and summary['status']=='observed' and summary['boundary']=={'exception':'ValueError','expected_message_fragment':FRAGMENTS[variant],'observed':True},'negative boundary receipt differs')
+-    for relative in ('research_artifacts/onchain_compact_outputs','research_artifacts/onchain_compact_mcm'):
+-        namespace=root/relative
+-        if namespace.exists():
+-            # Actual current output path embeds the experiment identity. Other
+-            # separately closed variants are retained and never reclassified.
+-            for path in namespace.glob('*'+'/'+name+'/*'):
+-                require(not (path/'receipt.json').exists() and not (path/'artifact/manifest.json').exists(),'negative variant published a target artifact')
+-    return {'variant':variant,'claim_sha256':digest(claim),'observed':True,'native_parser_still_required':True}
++    from refusal_evidence import authenticate
++    evidence=authenticate(root,variant,claim)
++    return {'variant':variant,'claim_sha256':digest(claim),'observed':True,'evidence':evidence,'native_parser_still_required':True}

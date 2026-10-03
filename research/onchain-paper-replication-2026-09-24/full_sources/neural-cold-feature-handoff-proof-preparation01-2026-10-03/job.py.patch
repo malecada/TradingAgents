@@ -1,0 +1,72 @@
+--- job.py.baseline-native02
++++ job.py
+@@ -75,8 +75,15 @@
+     return value
+ 
+ 
++def _cold_native(job):
++    return job.get('kind')=='fit' and type(job.get('payload')) is dict and job['payload'].get('cold_proof_input') is not None
++
++
+ def job_schema(job):
+-    if 'native_unit_limits' in job.get('resources',{}) and job.get('kind')!='compact_resource':raise ValueError('native-only file limits require compact_resource')
++    if _cold_native(job):
++        from . import compact_cold_proof_native
++        compact_cold_proof_native.schema(job)
++    if 'native_unit_limits' in job.get('resources',{}) and job.get('kind')!='compact_resource' and not _cold_native(job):raise ValueError('native-only file limits require compact_resource')
+     if 'physical_policy' in job.get('resources',{}) and job.get('kind')!='neural_resource':
+         raise ValueError('physical policy is restricted to explicit neural resource jobs')
+     if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource', 'compact_resource'):
+@@ -122,6 +129,9 @@
+     if job['kind']=='compact_resource':
+         from . import resource_fixture
+         resource_fixture.admitted(admitted,job)
++    if _cold_native(job):
++        from . import compact_cold_proof_native
++        compact_cold_proof_native.admitted(admitted,job)
+     source = admitted.experiment['source_files']
+     if not required_sources() <= set(source):
+         raise ValueError('execution dependency source closure not registered')
+@@ -227,8 +237,12 @@
+ 
+ 
+ def _resource_limit_receipt(args,job,role,live=None):
+-    from . import resource_fixture
+-    readback=resource_fixture.worker_limits()
++    if _cold_native(job):
++        from . import compact_cold_proof_native
++        readback=compact_cold_proof_native.worker_limits()
++    else:
++        from . import resource_fixture
++        readback=resource_fixture.worker_limits()
+     expected=job['resources']['native_unit_limits']
+     if expected!={'file_size_bytes':readback['rlimit_fsize']}:raise ValueError('registered process file limit differs')
+     if role=='worker' and (live is None or live.get('native_unit_limits')!=expected):raise ValueError('worker native authority missing')
+@@ -241,7 +255,7 @@
+ def monitor(args):
+     resources.bind_parent_death(args.owner_pid)
+     _, job = _admitted(args)
+-    if job['kind']=='compact_resource':
++    if job['kind']=='compact_resource' or _cold_native(job):
+         from . import resource_fixture
+         _resource_limit_receipt(args,job,'monitor')
+     scope=_physical_scope(args,job)
+@@ -300,6 +314,9 @@
+ 
+ def worker(args):
+     admitted, job = _admitted(args)
++    if _cold_native(job):
++        from . import compact_cold_proof_native
++        compact_cold_proof_native.worker_limits()
+     if job['kind']=='compact_resource':
+         from . import resource_fixture
+         resource_fixture.worker_limits()
+@@ -317,7 +334,7 @@
+             raise ValueError('execution worker ownership differs')
+         if any(live[k] != v for k, v in policy.items()):
+             raise ValueError('execution guard policy differs from registration')
+-        if job['kind']=='compact_resource':_resource_limit_receipt(args,job,'worker',live)
++        if job['kind']=='compact_resource' or _cold_native(job):_resource_limit_receipt(args,job,'worker',live)
+         def stop(signum, frame):
+             raise SystemExit('owned execution interrupted; never relaunch this identity')
+         signal.signal(signal.SIGTERM, stop)

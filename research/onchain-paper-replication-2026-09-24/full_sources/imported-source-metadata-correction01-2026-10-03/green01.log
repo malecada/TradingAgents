@@ -1,0 +1,55 @@
+test_actual_retained_start_is_too_large_and_selected_reference_fits (__main__.Metadata.test_actual_retained_start_is_too_large_and_selected_reference_fits) ... ERROR
+test_actual_start_and_check_call_the_selected_evidence_join (__main__.Metadata.test_actual_start_and_check_call_the_selected_evidence_join) ... ok
+test_every_numerical_and_production_function_is_unchanged (__main__.Metadata.test_every_numerical_and_production_function_is_unchanged) ... ok
+test_legacy_returns_exact_same_map (__main__.Metadata.test_legacy_returns_exact_same_map) ... ERROR
+test_source_changes_do_not_preserve_the_reference (__main__.Metadata.test_source_changes_do_not_preserve_the_reference) ... ERROR
+
+======================================================================
+ERROR: test_actual_retained_start_is_too_large_and_selected_reference_fits (__main__.Metadata.test_actual_retained_start_is_too_large_and_selected_reference_fits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/imported-source-metadata-correction01-2026-10-03/test_metadata01.py", line 22, in test_actual_retained_start_is_too_large_and_selected_reference_fits
+    ns=namespace();records=json.loads((F/'original-import-metadata-bound-investigation-2026-10-03/RECONSTRUCTION01.json').read_text())['records']
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/imported-source-metadata-correction01-2026-10-03/test_metadata01.py", line 11, in namespace
+    spec=importlib.util.spec_from_file_location('actual_provenance',p);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-release-2026-10-03/capsule01/tradingagents/research/onchain_replication/provenance.py", line 8, in <module>
+    from .owned_io import _closing,_release
+ImportError: attempted relative import with no known parent package
+
+======================================================================
+ERROR: test_legacy_returns_exact_same_map (__main__.Metadata.test_legacy_returns_exact_same_map)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/imported-source-metadata-correction01-2026-10-03/test_metadata01.py", line 30, in test_legacy_returns_exact_same_map
+    ns=namespace();value={'unchanged':'a'*64};self.assertIs(ns['_source_evidence'](False,value),value)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/imported-source-metadata-correction01-2026-10-03/test_metadata01.py", line 11, in namespace
+    spec=importlib.util.spec_from_file_location('actual_provenance',p);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-release-2026-10-03/capsule01/tradingagents/research/onchain_replication/provenance.py", line 8, in <module>
+    from .owned_io import _closing,_release
+ImportError: attempted relative import with no known parent package
+
+======================================================================
+ERROR: test_source_changes_do_not_preserve_the_reference (__main__.Metadata.test_source_changes_do_not_preserve_the_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/imported-source-metadata-correction01-2026-10-03/test_metadata01.py", line 32, in test_source_changes_do_not_preserve_the_reference
+    ns=namespace();a={'path':'a'*64};expected=ns['_source_evidence'](True,a)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/imported-source-metadata-correction01-2026-10-03/test_metadata01.py", line 11, in namespace
+    spec=importlib.util.spec_from_file_location('actual_provenance',p);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-release-2026-10-03/capsule01/tradingagents/research/onchain_replication/provenance.py", line 8, in <module>
+    from .owned_io import _closing,_release
+ImportError: attempted relative import with no known parent package
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.036s
+
+FAILED (errors=3)

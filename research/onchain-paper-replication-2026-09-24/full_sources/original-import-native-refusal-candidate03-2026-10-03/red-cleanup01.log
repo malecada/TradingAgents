@@ -1,0 +1,17 @@
+.F.
+======================================================================
+FAIL: test_terminal_before_poison (__main__.Cleanup.test_terminal_before_poison)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/test_cleanup03.py", line 33, in test_terminal_before_poison
+    def test_terminal_before_poison(self):self.run_case()
+                                          ~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/test_cleanup03.py", line 31, in run_case
+    if fatal or not close_fails:self.assertIs(got.exception,primary)
+                                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Uncertain() is not ValueError('expected mutation')
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.015s
+
+FAILED (failures=1)

@@ -1,0 +1,24 @@
+test_actual_check_join_rejects_changed_or_malformed_receipt_references (__main__.Metadata.test_actual_check_join_rejects_changed_or_malformed_receipt_references) ... ok
+test_actual_retained_start_is_too_large_and_selected_reference_fits (__main__.Metadata.test_actual_retained_start_is_too_large_and_selected_reference_fits) ... ok
+test_actual_start_and_check_call_the_selected_evidence_join (__main__.Metadata.test_actual_start_and_check_call_the_selected_evidence_join) ... ok
+test_complete_record_prospective_extent_and_unchanged_read_limits (__main__.Metadata.test_complete_record_prospective_extent_and_unchanged_read_limits) ... ok
+test_every_numerical_and_production_function_is_unchanged (__main__.Metadata.test_every_numerical_and_production_function_is_unchanged) ... ok
+test_final_source_callback_cannot_escape_matrix_revalidation (__main__.Metadata.test_final_source_callback_cannot_escape_matrix_revalidation) ... ERROR
+test_invalid_selected_map_is_refused_and_legacy_untouched (__main__.Metadata.test_invalid_selected_map_is_refused_and_legacy_untouched) ... ok
+test_legacy_returns_exact_same_map (__main__.Metadata.test_legacy_returns_exact_same_map) ... ok
+test_source_changes_do_not_preserve_the_reference (__main__.Metadata.test_source_changes_do_not_preserve_the_reference) ... ok
+
+======================================================================
+ERROR: test_final_source_callback_cannot_escape_matrix_revalidation (__main__.Metadata.test_final_source_callback_cannot_escape_matrix_revalidation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/imported-source-metadata-correction02-2026-10-03/test_metadata01.py", line 53, in test_final_source_callback_cannot_escape_matrix_revalidation
+    exec(compile(ast.Module(body=check.body,type_ignores=[]),'actual-check-final-source-boundary','exec'),ns)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "actual-check-final-source-boundary", line 209, in <module>
+AttributeError: 'bytes' object has no attribute 'cast'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.117s
+
+FAILED (errors=1)

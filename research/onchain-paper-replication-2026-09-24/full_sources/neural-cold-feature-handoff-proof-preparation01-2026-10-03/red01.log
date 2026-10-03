@@ -1,0 +1,116 @@
+test_concrete_worker (__main__.Tests.test_concrete_worker) ... ERROR
+test_dispatch_before_default (__main__.Tests.test_dispatch_before_default) ... ERROR
+test_genuine_factory_observation (__main__.Tests.test_genuine_factory_observation) ... ERROR
+test_no_fake_lifecycle (__main__.Tests.test_no_fake_lifecycle) ... ERROR
+test_no_numerical_top_import (__main__.Tests.test_no_numerical_top_import) ... ERROR
+test_real_weakref_slots (__main__.Tests.test_real_weakref_slots) ... ERROR
+
+======================================================================
+ERROR: test_concrete_worker (__main__.Tests.test_concrete_worker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/test_source01.py", line 8, in test_concrete_worker
+    t=ast.parse((P/'compact_cold_proof.py').read_text())
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/compact_cold_proof.py'
+
+======================================================================
+ERROR: test_dispatch_before_default (__main__.Tests.test_dispatch_before_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/test_source01.py", line 26, in test_dispatch_before_default
+    s=(P/'job_payload.py').read_text();self.assertLess(s.index('compact_cold_proof.execute('),s.index('routes={'))
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/job_payload.py'
+
+======================================================================
+ERROR: test_genuine_factory_observation (__main__.Tests.test_genuine_factory_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/test_source01.py", line 12, in test_genuine_factory_observation
+    s=(P/'compact_cold_features.py').read_text()
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/compact_cold_features.py'
+
+======================================================================
+ERROR: test_no_fake_lifecycle (__main__.Tests.test_no_fake_lifecycle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/test_source01.py", line 23, in test_no_fake_lifecycle
+    s=(P/'compact_cold_proof.py').read_text()
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/compact_cold_proof.py'
+
+======================================================================
+ERROR: test_no_numerical_top_import (__main__.Tests.test_no_numerical_top_import)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/test_source01.py", line 16, in test_no_numerical_top_import
+    t=ast.parse((P/'compact_cold_proof.py').read_text())
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/compact_cold_proof.py'
+
+======================================================================
+ERROR: test_real_weakref_slots (__main__.Tests.test_real_weakref_slots)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/test_source01.py", line 21, in test_real_weakref_slots
+    self.assertIn("'__weakref__'",(P/(n+'.py')).read_text())
+                                  ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-proof-preparation01-2026-10-03/compact_terminal.py'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.003s
+
+FAILED (errors=6)

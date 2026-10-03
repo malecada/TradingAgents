@@ -1,0 +1,11 @@
+--- compact_closure.py.baseline
++++ compact_closure.py
+@@ -64,7 +64,7 @@
+ 
+ 
+ class Receipt:
+-    __slots__ = ('_dictionary','_denominator','_graphs','_record','_pin')
++    __slots__ = ('__weakref__','_dictionary','_denominator','_graphs','_record','_pin')
+     def __init__(self,dictionary,denominator,graphs,record):
+         object.__setattr__(self,'_dictionary',dictionary);object.__setattr__(self,'_denominator',denominator)
+         object.__setattr__(self,'_graphs',tuple(graphs));object.__setattr__(self,'_record',freeze(record))

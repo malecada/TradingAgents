@@ -1,0 +1,12 @@
+--- compact_cold_features.py.baseline02
++++ compact_cold_features.py
+@@ -169,6 +169,9 @@
+     require(policy is not None and job['compact_cold_handoff_input']==input_name,'cold explicit route required')
+     require(type(run) is lifecycle.ResearchRun and set(vars(run))=={'admission','directory','_published_outputs','_claim_sha256'},'cold run contains untracked state')
+     resident=compact_native_features.prepare(terminal,input_name=job['compact_native_features_input'])
++    if 'cold_proof_input' in json.loads(run.read_input('execution_job'))['payload']:
++        from . import compact_cold_proof
++        compact_cold_proof.observe(run,published,terminal,resident)
+     require(owner._transition.acquire(blocking=False),'concurrent cold terminal handoff')
+     claimed=False;directory=None;inode=None
+     try:

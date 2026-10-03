@@ -1,0 +1,23 @@
+--- compact_mcm.baseline.py
++++ compact_mcm.py
+@@ -262,15 +262,18 @@
+             matcher = compact_matcher.CompactMatcher(log,config=thaw(owner.matching),context=thaw(owner.bound.context),
+                 policy=p['pair'],workload_sha256=scope['workflow'],schedule=p['schedule'],lease=live,
+                 retention=stage_retention.options(stage))
++            from . import resource_refusal
++            selected_compute=resource_refusal.compute_callback(owner,matcher)
+             stream = MCMScoreStream(stage.root/'stream',graph=graph,dictionary=dictionary.dictionary,
+                 matching_config=thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],backend=BACKEND,
+-                owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live,
++                owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=selected_compute,lease=live,
+                 **({'_imported':dictionary} if _imported(dictionary) else {}))
+             require(stream.scope == scope,'MCM stream scientific scope differs')
+             live(); _original(dictionary,graph,graph_hash)
+             actual = kernel.mcm(graph,dictionary.dictionary,thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],
+-                backend=BACKEND,max_entries=policy['max_entries'],score_pair=stream,policy=policy['numeric'],lease=live,
++                backend=BACKEND,max_entries=policy['max_entries'],score_pair=resource_refusal.score_callback(owner,stream),policy=policy['numeric'],lease=live,
+                 **({'imported':dictionary} if _imported(dictionary) else {}))
++            actual=resource_refusal.returned(owner,actual)
+             numeric_pin=_matrix(actual['mcm'],start['rows'],start['motifs'])
+             if matcher.retention is not None:stage_retention._bind(stage,matcher.retention,held)
+             return actual,stream.finish()['terminal_sha256'],numeric_pin

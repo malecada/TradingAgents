@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate04-2026-10-03/test_resealed04.py", line 7, in <module>
+    sp=importlib.util.spec_from_file_location(name,Path(os.environ['PARSER_DIR'])/(name+'.py'));mod=importlib.util.module_from_spec(sp);sys.modules[name]=mod;sp.loader.exec_module(mod)
+                                                                                                                                                              ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate03-2026-10-03/refusal_evidence.py", line 5, in <module>
+    from raw_receipts01 import body,metadata,require,digest
+ModuleNotFoundError: No module named 'raw_receipts01'

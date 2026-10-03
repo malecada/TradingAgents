@@ -1,0 +1,117 @@
+test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) ... 
+  test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='missing-terminal') ... FAIL
+  test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='wrong-owner') ... FAIL
+  test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='wrong-compact') ... FAIL
+  test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='extra-journal') ... FAIL
+  test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='owner-complete') ... FAIL
+  test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='import-receipt') ... FAIL
+test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer (__main__.Evidence.test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer) ... 
+  test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer (__main__.Evidence.test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer) (variant='policy-bool') ... ERROR
+  test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer (__main__.Evidence.test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer) (variant='job-input') ... ERROR
+  test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer (__main__.Evidence.test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer) (variant='lease-terminal') ... ERROR
+  test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer (__main__.Evidence.test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer) (variant='wrong-count') ... ERROR
+test_unexpected_actual_producer_complete_name_refuses (__main__.Evidence.test_unexpected_actual_producer_complete_name_refuses) ... FAIL
+
+======================================================================
+ERROR: test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer (__main__.Evidence.test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer) (variant='policy-bool')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 45, in test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer
+    self.assertEqual(record['evidence']['journal_count'],int(variant not in cases.NO_JOURNAL));self.assertEqual(record['evidence']['owner_count'],int(variant not in cases.NO_OWNER))
+                     ~~~~~~^^^^^^^^^^^^
+KeyError: 'evidence'
+
+======================================================================
+ERROR: test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer (__main__.Evidence.test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer) (variant='job-input')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 45, in test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer
+    self.assertEqual(record['evidence']['journal_count'],int(variant not in cases.NO_JOURNAL));self.assertEqual(record['evidence']['owner_count'],int(variant not in cases.NO_OWNER))
+                     ~~~~~~^^^^^^^^^^^^
+KeyError: 'evidence'
+
+======================================================================
+ERROR: test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer (__main__.Evidence.test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer) (variant='lease-terminal')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 45, in test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer
+    self.assertEqual(record['evidence']['journal_count'],int(variant not in cases.NO_JOURNAL));self.assertEqual(record['evidence']['owner_count'],int(variant not in cases.NO_OWNER))
+                     ~~~~~~^^^^^^^^^^^^
+KeyError: 'evidence'
+
+======================================================================
+ERROR: test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer (__main__.Evidence.test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer) (variant='wrong-count')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 45, in test_qualified_valid_zero_journal_journal_only_owner_and_failed_producer
+    self.assertEqual(record['evidence']['journal_count'],int(variant not in cases.NO_JOURNAL));self.assertEqual(record['evidence']['owner_count'],int(variant not in cases.NO_OWNER))
+                     ~~~~~~^^^^^^^^^^^^
+KeyError: 'evidence'
+
+======================================================================
+FAIL: test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='missing-terminal')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 56, in test_missing_or_wrong_original_journal_and_owner_refuse
+    with self.assertRaises((ValueError,KeyError,FileNotFoundError)):caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'KeyError'>, <class 'FileNotFoundError'>) not raised
+
+======================================================================
+FAIL: test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='wrong-owner')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 56, in test_missing_or_wrong_original_journal_and_owner_refuse
+    with self.assertRaises((ValueError,KeyError,FileNotFoundError)):caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'KeyError'>, <class 'FileNotFoundError'>) not raised
+
+======================================================================
+FAIL: test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='wrong-compact')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 56, in test_missing_or_wrong_original_journal_and_owner_refuse
+    with self.assertRaises((ValueError,KeyError,FileNotFoundError)):caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'KeyError'>, <class 'FileNotFoundError'>) not raised
+
+======================================================================
+FAIL: test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='extra-journal')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 56, in test_missing_or_wrong_original_journal_and_owner_refuse
+    with self.assertRaises((ValueError,KeyError,FileNotFoundError)):caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'KeyError'>, <class 'FileNotFoundError'>) not raised
+
+======================================================================
+FAIL: test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='owner-complete')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 56, in test_missing_or_wrong_original_journal_and_owner_refuse
+    with self.assertRaises((ValueError,KeyError,FileNotFoundError)):caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'KeyError'>, <class 'FileNotFoundError'>) not raised
+
+======================================================================
+FAIL: test_missing_or_wrong_original_journal_and_owner_refuse (__main__.Evidence.test_missing_or_wrong_original_journal_and_owner_refuse) (change='import-receipt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 56, in test_missing_or_wrong_original_journal_and_owner_refuse
+    with self.assertRaises((ValueError,KeyError,FileNotFoundError)):caller.terminal(root=root,variant='lease-terminal')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'KeyError'>, <class 'FileNotFoundError'>) not raised
+
+======================================================================
+FAIL: test_unexpected_actual_producer_complete_name_refuses (__main__.Evidence.test_unexpected_actual_producer_complete_name_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-refusal-candidate02-2026-10-03/test_evidence02.py", line 60, in test_unexpected_actual_producer_complete_name_refuses
+    with self.assertRaises(ValueError):caller.terminal(root=root,variant='wrong-count')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.040s
+
+FAILED (failures=7, errors=4)
