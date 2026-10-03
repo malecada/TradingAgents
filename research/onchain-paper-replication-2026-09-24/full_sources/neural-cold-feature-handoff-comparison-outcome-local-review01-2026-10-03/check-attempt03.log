@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-outcome-local-review01/check03.py", line 55, in <module>
+    need(sha(Path(runtime['resolved_executable']))==runtime['executable_sha256'],'interpreter');checks.append('251 original runtime RECORD hashes and resolved interpreter unchanged; no numerical import')
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-outcome-local-review01/check03.py", line 10, in sha
+    def sha(p,limit=4*1024**2):return hashlib.sha256(body(p,limit)).hexdigest()
+                                                     ~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-outcome-local-review01/check03.py", line 9, in body
+    s=p.lstat();need(stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_size<=limit,'regular bounded file '+str(p));raw=p.read_bytes();need(tuple(getattr(p.lstat(),k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns'))==tuple(getattr(s,k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns')),'changed file '+str(p));return raw
+                ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-outcome-local-review01/check03.py", line 7, in need
+    if not ok:raise ValueError(why)
+              ^^^^^^^^^^^^^^^^^^^^^
+ValueError: regular bounded file /home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/bin/python3.13

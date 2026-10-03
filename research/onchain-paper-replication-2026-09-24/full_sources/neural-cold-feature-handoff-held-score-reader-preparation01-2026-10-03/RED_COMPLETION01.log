@@ -1,0 +1,57 @@
+test_close_failure_never_creates_success (test_completion01.CompletionTests.test_close_failure_never_creates_success) ... ERROR
+test_history_failure_never_creates_success (test_completion01.CompletionTests.test_history_failure_never_creates_success) ... ERROR
+test_mutated_completed_stream_refuses (test_completion01.CompletionTests.test_mutated_completed_stream_refuses) ... ERROR
+test_success_has_noncaller_completion_evidence (test_completion01.CompletionTests.test_success_has_noncaller_completion_evidence) ... ERROR
+
+======================================================================
+ERROR: test_close_failure_never_creates_success (test_completion01.CompletionTests.test_close_failure_never_creates_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/test_completion01.py", line 38, in test_close_failure_never_creates_success
+    s,ns=load();s.close=lambda:(_ for _ in ()).throw(OSError('close'))
+         ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/test_completion01.py", line 22, in load
+    exec(compile(ast.Module(body=[ast.ClassDef(name='MCMScoreStream',bases=[],keywords=[],body=[finish],decorator_list=[])]+helpers,type_ignores=[]),'<actual-stream-finish>','exec'),ns)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: required field "lineno" missing from stmt
+
+======================================================================
+ERROR: test_history_failure_never_creates_success (test_completion01.CompletionTests.test_history_failure_never_creates_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/test_completion01.py", line 34, in test_history_failure_never_creates_success
+    s,ns=load();error=MemoryError('history');s._history_check=lambda *a:(_ for _ in ()).throw(error)
+         ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/test_completion01.py", line 22, in load
+    exec(compile(ast.Module(body=[ast.ClassDef(name='MCMScoreStream',bases=[],keywords=[],body=[finish],decorator_list=[])]+helpers,type_ignores=[]),'<actual-stream-finish>','exec'),ns)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: required field "lineno" missing from stmt
+
+======================================================================
+ERROR: test_mutated_completed_stream_refuses (test_completion01.CompletionTests.test_mutated_completed_stream_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/test_completion01.py", line 42, in test_mutated_completed_stream_refuses
+    s,ns=load();s.finish();self.assertIn('completed_evidence',ns,'completed stream integrity check missing');s.cells=31
+         ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/test_completion01.py", line 22, in load
+    exec(compile(ast.Module(body=[ast.ClassDef(name='MCMScoreStream',bases=[],keywords=[],body=[finish],decorator_list=[])]+helpers,type_ignores=[]),'<actual-stream-finish>','exec'),ns)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: required field "lineno" missing from stmt
+
+======================================================================
+ERROR: test_success_has_noncaller_completion_evidence (test_completion01.CompletionTests.test_success_has_noncaller_completion_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/test_completion01.py", line 31, in test_success_has_noncaller_completion_evidence
+    s,ns=load();s.finish();self.assertIn('completed_evidence',ns,'actual successful completion capability missing')
+         ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/test_completion01.py", line 22, in load
+    exec(compile(ast.Module(body=[ast.ClassDef(name='MCMScoreStream',bases=[],keywords=[],body=[finish],decorator_list=[])]+helpers,type_ignores=[]),'<actual-stream-finish>','exec'),ns)
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: required field "lineno" missing from stmt
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.014s
+
+FAILED (errors=4)

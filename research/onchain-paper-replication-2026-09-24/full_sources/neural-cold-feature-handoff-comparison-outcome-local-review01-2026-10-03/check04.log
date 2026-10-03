@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-outcome-local-review01/check04.py", line 57, in <module>
+    pids=set(report['outcomes']['compare']['cleanup']['recorded_pids'])|{int(p) for p in guard['cpu_thread_readback']};need(len(pids)==12 and all(not Path('/proc',str(p)).exists() for p in pids),'12 original PID/TIDs absent')
+                                                                                                                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-outcome-local-review01/check04.py", line 7, in need
+    if not ok:raise ValueError(why)
+              ^^^^^^^^^^^^^^^^^^^^^
+ValueError: 12 original PID/TIDs absent

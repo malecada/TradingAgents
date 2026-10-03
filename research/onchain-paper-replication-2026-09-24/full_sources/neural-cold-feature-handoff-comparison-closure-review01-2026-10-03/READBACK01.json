@@ -1,0 +1,394 @@
+{
+  "schema_version": 1,
+  "status": "ACCEPTED_AS_CLOSED_FAILED_NOT_SCIENTIFIC_SUCCESS",
+  "source": "361339125a3f1cd57e7ba8611f5a994ae649fa0b",
+  "identity": "compact-cold-comparison-20261003-01",
+  "claim_sha256": "6a9e5932716d102c4821d75a6023be892a47996b93efe6f94cea66dff8325048",
+  "failed_sha256": "c42ae0fcfa49681b4febe568ca4d9c59177ca47b2bd038a4bb00fddca3f10d20",
+  "actual_verify_run": {
+    "experiment": "compact-cold-comparison-20261003-01",
+    "status": "failed",
+    "cell_count": 0,
+    "unavailable_count": 0,
+    "output_count": 0,
+    "verification": "structural hashes and denominators only; no scientific validation"
+  },
+  "original_materialize_verify_run": {
+    "experiment": "compact-cold-inputs-20261003-01",
+    "status": "complete",
+    "cell_count": 1,
+    "unavailable_count": 0,
+    "output_count": 1,
+    "verification": "structural hashes and denominators only; no scientific validation"
+  },
+  "registered_failed_cell": "cold-genuine-comparison",
+  "registered_outputs_missing": [
+    "binding.json",
+    "journal.json",
+    "cold-handoff.json",
+    "proof-compare.json"
+  ],
+  "completed_comparison_cells": 0,
+  "registered_comparison_cells_without_success": 1,
+  "count_qualification": "Separate reviewer denominator; original failed terminal has no fabricated cells/output records. verify_run failed count0 is structural, not removal of registered one cell.",
+  "family_declared": {
+    "attempt_budget": 2,
+    "history_reference": "cold_prep/HISTORY02.md",
+    "mechanism_id": "compact-cold-genuine-authority",
+    "prior_attempts": 0
+  },
+  "actual_complete_claims": 1,
+  "actual_failed_claims": 1,
+  "budget_exhausted": true,
+  "elapsed_native_seconds": 1800.8358598740015,
+  "limit_reason": "RuntimeError: registered wall-clock limit exceeded",
+  "peak_sampled_memory_current_bytes": 443465728,
+  "guard_final_child_exit": null,
+  "separate_child_exit": 125,
+  "native_result": "timeout",
+  "all_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "native_cleanup_verified": true,
+  "recorded_original_pids_tids_absent": [
+    3481870,
+    3481873,
+    3482302,
+    3482717,
+    3483143,
+    3483159,
+    3483177,
+    3483181,
+    3483245,
+    3483269,
+    3483270,
+    3483274
+  ],
+  "cgroup_absent": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7882401fb21e4ec8a32e39c9b1f40c04.service",
+  "source_count": 195,
+  "anchor_count": 147,
+  "inputs": 44,
+  "runtime_records": 251,
+  "raw_stage_completion_metadata": [
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/dictionary/stage-complete.json",
+      "sha256": "800d10b62dfe48525a4a6d34ca69b867a1e5888f0f47fad9630e355f21180f63",
+      "recorded_completed_pairs": 992,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-0cb8e505c5c1ce9718b6bced267665421d6f8d2f10eb002bab372e895abe3f5b/stage-complete.json",
+      "sha256": "efe76252c9b42e601dd8995d793c8ddb4b653889d9e32f7afb85b72f053bf419",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-1401a6e9d86e1d76dfa486ac19f0b3def4a9e7c751ac21e8d3765bcb97500a56/stage-complete.json",
+      "sha256": "2c7a6807aba38898ab531b869f638dcb221b3c84099842ff75c27e85401c0cf2",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-2156693b48d5ccb2fdd486faa18f0d468c5df9a57096d234a44fbf98644973a6/stage-complete.json",
+      "sha256": "1345c2d8874f5e03b42350a0713bc01f4139806bb5626e2e5d5580be7a46a228",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-24131f84fea45e98aa493bf490f8d05b529646beba18e685add27e2185e64908/stage-complete.json",
+      "sha256": "ea6c72a2dcd3aed49112bed68908fa4ce41df560ceae28873de1f96b14753b55",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-2796651aee96fc7089f1009d43325cba30a4f4b33453ecb778e1a45a68cf6c59/stage-complete.json",
+      "sha256": "e6713e804db20b75e75b4d13cc77c1d8e566c2241891204b412f81e189e6afce",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-42fc65ea776aae37f7c01456afb17535d63c755554031540ee4bc09827bde7d9/stage-complete.json",
+      "sha256": "7fa10e49c120943e4fa5618087832a0766f3c6e802a5aa92546f96f17d4f05ef",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-5428de615b6743b8356401372f7f60c886a7c7a3cb70dc7017e1649201a9d2a8/stage-complete.json",
+      "sha256": "c7bba95262ea7e78f0bbdc300866cceeaa2914a58079502d18c8fba878d7751e",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-60ac4863467027e9cff2e440ab10d464f658839a9d0acf8b789b7a3b3e3c6bef/stage-complete.json",
+      "sha256": "0dc835ac9c1fa9c6f8cdde205e00ed5f7864d9afdc2d9d89e4d132f0f87dde38",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-7bfa16ab20ccd599a68bf5087caeb2dbbae62f9e892b21e8586738fd935feb12/stage-complete.json",
+      "sha256": "b080de7d15a5caf6e3a5d3a614321a9c13a0c94529a046879fe5d1dd3b29c406",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-89435fbff893743374d5d96b7ce2a67f9b1e3d8b12ce2144daaeab54e8535ae1/stage-complete.json",
+      "sha256": "7e694992bad79299dcf6e6f2af2cadf3e6509dd55921aefb7ad85aa0e11a6847",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-91dca330e2e7af97090295ba4f34d59bf7afec928141626ff05de21d15138be4/stage-complete.json",
+      "sha256": "b980cf127e45800adcce35a4b6ac7b1ee778a750c65e8d65faa42bae5b495c21",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-add74b7663e249e47631a9cc0d938467aea97dc1a26ee74b0e98ebeaf1c620cb/stage-complete.json",
+      "sha256": "8b2bfe6b30de18a02a8c2961fb1a9eba29953add3a2ac3d41938e3499220cb01",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-b373350de548784819d4ead5020592e393dcfc36da4506a5dd1dfa8f62479548/stage-complete.json",
+      "sha256": "1f05f08fd79dd5669a20a672fc5a28b1fb7c6535f3b7645ab268359a7721a9c6",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-ddf2c84b32f07a024d32153f32469e426a02b351847dc4151e8483d835392b0a/stage-complete.json",
+      "sha256": "df73237e64e363df65c1816889684e448167102cbd5acfc94e5c0f28c9cc33ca",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-e13ee09a42a41f22b46fb4de76862cc4199d8d6d753a0ed053af2dc41af03601/stage-complete.json",
+      "sha256": "006753e2b772bd2ec6372c45c8244b1c9d71e4cfd72829eb340619fc99ebc3bf",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-ee3d1bae94e3d646cda40bf0056348bcca79ce7963c88034c79ca700d1bb631b/stage-complete.json",
+      "sha256": "0d2790f13032ab4221a374d7f07d353c68c6a03892562e4cfde18a7198f2649a",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-efd11a3b1b515d40c00030d499ae6ee4a0d7ac5eceae1a4ec2df0c651a33c75b/stage-complete.json",
+      "sha256": "9e7b14394257eb26c15c372cfd9e7b77f7cc02b4c2e359f9d4be66c193a1971e",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-f18afc60abc2fcb7f4edb0d8c1bbe8cd9b6d669f31c6acab625b25df9acb18b5/stage-complete.json",
+      "sha256": "a7195a862d99fa034edb8d0a53475de0cbeaadcc0c10166bcd335b606b11681d",
+      "recorded_completed_pairs": 128,
+      "execution_admitted": false
+    }
+  ],
+  "stage_pair_total_reported": 3296,
+  "raw_stage_qualification": "Original low-level metadata presence and counts only; no decoded score validation, no accepted scientific Published/terminal or numerical comparison.",
+  "numerical_comparison_reports_or_checkpoints_present": false,
+  "memory_saving_proved": false,
+  "full_graph_capacity_proved": false,
+  "financial_fits_completed": 0,
+  "raw_refs": {
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_runs/compact-cold-comparison-20261003-01/failed.json": {
+      "sha256": "c42ae0fcfa49681b4febe568ca4d9c59177ca47b2bd038a4bb00fddca3f10d20",
+      "bytes": 327
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/cold_prep/source_inventory.json": {
+      "sha256": "e8d8594d1c7aabe4076bf2b4bab7454cb0fad48ec8f46b754e06fc3f3ddb6773",
+      "bytes": 124011
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/cold_prep/anchor.json": {
+      "sha256": "397d63618dc2bcdd03af7c5cbf8e1c4113f604a7d9b07ee7212990e57305efaa",
+      "bytes": 18988
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/cold_prep/runtime.json": {
+      "sha256": "b40f3fd76abd6c6b5d088f85612124908277265996f1dde041d195608d90d772",
+      "bytes": 66189
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/compact-cold-comparison-20261003-01/guard/final.json": {
+      "sha256": "b2ae0d8aa3c003103ff03631fb3664ea9a445a3f0c12cab4dce61f95e91786ba",
+      "bytes": 7568
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/compact-cold-comparison-20261003-01/guard/child_exit.json": {
+      "sha256": "72cb6b7e479f99e77927a35525f6b9fe08c17747f30949e038e93fa3563394cb",
+      "bytes": 1264
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/compact-cold-comparison-20261003-01/guard/cpu_ready.json": {
+      "sha256": "c48153ae2d57a96279c1cfd5de129af487227f47bd5e2949ecc83126a5a135f5",
+      "bytes": 1388
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/compact-cold-comparison-20261003-01/owner.json": {
+      "sha256": "a9094fa068278d06b865576ae19afca5c611004c5ab02920b5a309687ae7538d",
+      "bytes": 259
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/compact-cold-comparison-20261003-01/launch.json": {
+      "sha256": "68a7eb4c84d32fc754f5fad21944d763886f4290e6747ce0b07f888fa52e4854",
+      "bytes": 197
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-compare-request02-2026-10-03/actual-parent-wait01/wait.json": {
+      "sha256": "dfa445034006a3071e42f0be56c7accff77ecbaea795410d8e56b71402e16333",
+      "bytes": 1216
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-compare-request02-2026-10-03/actual-parent-wait01/intent.json": {
+      "sha256": "9866aac72f0db7d8e4d453a09e4136e32a4ad48473b88c7e429fff1cb7b44e2e",
+      "bytes": 1820
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-compare-request02-2026-10-03/actual-parent-wait01/child.json": {
+      "sha256": "a7347e9e2d7e9bbb707105de5f35a2c4d0caff54b66ff4ca8ad7fadb3e9b36f7",
+      "bytes": 659
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-root-compare-request02-2026-10-03/actual-parent-wait01/failure.json": {
+      "sha256": "549249e6b3599ea41aff768f17026282e7d6b60b78bb35c14b5e393548f26512",
+      "bytes": 177
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/compact-cold-root-launches-20261003/compact-cold-comparison-20261003-01/intent.json": {
+      "sha256": "6a18539db6342400dbdea3a3f91da498094cbd7c2ef30b89f3ab6baa263010e0",
+      "bytes": 3249
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/compact-cold-root-launches-20261003/compact-cold-comparison-20261003-01/child.json": {
+      "sha256": "e01c50aedf5ee0b2b065891907ec023e53a9b461e28fcac29799bde3d8834dcc",
+      "bytes": 43
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/compact-cold-root-launches-20261003/compact-cold-comparison-20261003-01/observation.json": {
+      "sha256": "6019286a98e440111212ca092993d6cfef92819e6594eba3fa1e6c87a3203a8c",
+      "bytes": 2659
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/compact-cold-root-launches-20261003/compact-cold-comparison-20261003-01/failure.json": {
+      "sha256": "402f3cdca77ffd0ab237d3ea7d60eb8694621be0cfd35045f594b7ee358081bb",
+      "bytes": 353
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_supervise/compact-cold-comparison-20261003-01/claim.json": {
+      "sha256": "d36fa75d466960d8e5eaff7d937ffdfbbf96234661a2ffd63a7a104e3acaa356",
+      "bytes": 850
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_supervise/compact-cold-comparison-20261003-01/child.json": {
+      "sha256": "8cafef803d8870b7f84116e912a07d617ae983cc8e1e35318a729628c70ee030",
+      "bytes": 43
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_supervise/compact-cold-comparison-20261003-01/exit.json": {
+      "sha256": "180a1e45ff889df0abd52a6e5f0b5e7c8b1f580146a4579f3ad924326ce25c22",
+      "bytes": 1900
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_supervise/compact-cold-comparison-20261003-01/late-failure.json": {
+      "sha256": "48eeb4fd40af8a88c27752d287779e2c3a1dad7c3287ec4c1cc65d66edf89bb6",
+      "bytes": 146
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_outer/compact-cold-comparison-20261003-01/intent.json": {
+      "sha256": "731fde574b72e176c73119b750e409ccc6f3bcb951134e36879ad5560ed5572b",
+      "bytes": 2507
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_outer/compact-cold-comparison-20261003-01/supervisor.json": {
+      "sha256": "a18ba5469425b2d9e82f06dd673b5ee8423221d065264c89e9ec80f2755b35a1",
+      "bytes": 37
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_outer/compact-cold-comparison-20261003-01/failed.json": {
+      "sha256": "10f0bd20c8169313cd72cb9bc0334ff5ae1986229e56090615951a696ca9efc5",
+      "bytes": 381
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_outer/compact-cold-comparison-20261003-01/late-failure.json": {
+      "sha256": "46000e9f3fc788256e8e8752e078201778335e4d45adb01d83df90004958c97d",
+      "bytes": 204
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/proof_outer/compact-cold-comparison-20261003-01/disposition.json": {
+      "sha256": "d367b956305144494f2de4a40e45cf4a961dc4c7cf88a599354af57e26372bd6",
+      "bytes": 622
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-closure-review01-2026-10-03/active-guard-observation01.json": {
+      "sha256": "ceb74b68bea0008d27ccff1b0ce4a3edb32a1122eafbe1d2939eae00f6e7fbc5",
+      "bytes": 7289
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/compact-cold-engineering-20261003/compact-cold-inputs-20261003-01/plan.json": {
+      "sha256": "7d3ccff083904e2eef1913cf1b6a5a78548e9e829d5c8ea028c2dc6ce9bec9a7",
+      "bytes": 15012
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/dictionary/stage-complete.json": {
+      "sha256": "800d10b62dfe48525a4a6d34ca69b867a1e5888f0f47fad9630e355f21180f63",
+      "bytes": 1108
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-0cb8e505c5c1ce9718b6bced267665421d6f8d2f10eb002bab372e895abe3f5b/stage-complete.json": {
+      "sha256": "efe76252c9b42e601dd8995d793c8ddb4b653889d9e32f7afb85b72f053bf419",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-1401a6e9d86e1d76dfa486ac19f0b3def4a9e7c751ac21e8d3765bcb97500a56/stage-complete.json": {
+      "sha256": "2c7a6807aba38898ab531b869f638dcb221b3c84099842ff75c27e85401c0cf2",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-2156693b48d5ccb2fdd486faa18f0d468c5df9a57096d234a44fbf98644973a6/stage-complete.json": {
+      "sha256": "1345c2d8874f5e03b42350a0713bc01f4139806bb5626e2e5d5580be7a46a228",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-24131f84fea45e98aa493bf490f8d05b529646beba18e685add27e2185e64908/stage-complete.json": {
+      "sha256": "ea6c72a2dcd3aed49112bed68908fa4ce41df560ceae28873de1f96b14753b55",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-2796651aee96fc7089f1009d43325cba30a4f4b33453ecb778e1a45a68cf6c59/stage-complete.json": {
+      "sha256": "e6713e804db20b75e75b4d13cc77c1d8e566c2241891204b412f81e189e6afce",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-42fc65ea776aae37f7c01456afb17535d63c755554031540ee4bc09827bde7d9/stage-complete.json": {
+      "sha256": "7fa10e49c120943e4fa5618087832a0766f3c6e802a5aa92546f96f17d4f05ef",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-5428de615b6743b8356401372f7f60c886a7c7a3cb70dc7017e1649201a9d2a8/stage-complete.json": {
+      "sha256": "c7bba95262ea7e78f0bbdc300866cceeaa2914a58079502d18c8fba878d7751e",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-60ac4863467027e9cff2e440ab10d464f658839a9d0acf8b789b7a3b3e3c6bef/stage-complete.json": {
+      "sha256": "0dc835ac9c1fa9c6f8cdde205e00ed5f7864d9afdc2d9d89e4d132f0f87dde38",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-7bfa16ab20ccd599a68bf5087caeb2dbbae62f9e892b21e8586738fd935feb12/stage-complete.json": {
+      "sha256": "b080de7d15a5caf6e3a5d3a614321a9c13a0c94529a046879fe5d1dd3b29c406",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-89435fbff893743374d5d96b7ce2a67f9b1e3d8b12ce2144daaeab54e8535ae1/stage-complete.json": {
+      "sha256": "7e694992bad79299dcf6e6f2af2cadf3e6509dd55921aefb7ad85aa0e11a6847",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-91dca330e2e7af97090295ba4f34d59bf7afec928141626ff05de21d15138be4/stage-complete.json": {
+      "sha256": "b980cf127e45800adcce35a4b6ac7b1ee778a750c65e8d65faa42bae5b495c21",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-add74b7663e249e47631a9cc0d938467aea97dc1a26ee74b0e98ebeaf1c620cb/stage-complete.json": {
+      "sha256": "8b2bfe6b30de18a02a8c2961fb1a9eba29953add3a2ac3d41938e3499220cb01",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-b373350de548784819d4ead5020592e393dcfc36da4506a5dd1dfa8f62479548/stage-complete.json": {
+      "sha256": "1f05f08fd79dd5669a20a672fc5a28b1fb7c6535f3b7645ab268359a7721a9c6",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-ddf2c84b32f07a024d32153f32469e426a02b351847dc4151e8483d835392b0a/stage-complete.json": {
+      "sha256": "df73237e64e363df65c1816889684e448167102cbd5acfc94e5c0f28c9cc33ca",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-e13ee09a42a41f22b46fb4de76862cc4199d8d6d753a0ed053af2dc41af03601/stage-complete.json": {
+      "sha256": "006753e2b772bd2ec6372c45c8244b1c9d71e4cfd72829eb340619fc99ebc3bf",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-ee3d1bae94e3d646cda40bf0056348bcca79ce7963c88034c79ca700d1bb631b/stage-complete.json": {
+      "sha256": "0d2790f13032ab4221a374d7f07d353c68c6a03892562e4cfde18a7198f2649a",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-efd11a3b1b515d40c00030d499ae6ee4a0d7ac5eceae1a4ec2df0c651a33c75b/stage-complete.json": {
+      "sha256": "9e7b14394257eb26c15c372cfd9e7b77f7cc02b4c2e359f9d4be66c193a1971e",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain_representations/ef8a7ad34e000863cf4fa381563b156b1a80e8d8a4c0218358b03571e06bcd79/compact-cold-comparison-20261003-01/compact/mcm-f18afc60abc2fcb7f4edb0d8c1bbe8cd9b6d669f31c6acab625b25df9acb18b5/stage-complete.json": {
+      "sha256": "a7195a862d99fa034edb8d0a53475de0cbeaadcc0c10166bcd335b606b11681d",
+      "bytes": 1225
+    },
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/compact-cold-engineering-20261003/compact-cold-comparison-20261003-01/failed.json": {
+      "sha256": "e36645156cdc305c37981ad5a571114cfad8290cee47e56dbf7fee33a650280e",
+      "bytes": 56
+    }
+  },
+  "no_numerical_import_admission_start_replay_or_original_mutation": true
+}

@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "decision": "accepted",
+  "request_sha256": "89b718215212a5291f684ef86e25a9c099f5732f185bc3eb705682f70aede5c3",
+  "collector_sha256": "d3ab84766f8a0e42d1247f5620b9a331fc1975d38e6447ee192bb2b1324d0b69",
+  "source": "361339125a3f1cd57e7ba8611f5a994ae649fa0b",
+  "scope": "One byte-only collection of both original phases; no rerun, new claim, numerical validation or success upgrade. Comparison FAILED with four missing registered outputs; collection destination absent at review. Actual collection and recovery remain unperformed by reviewer.",
+  "actual_read_only_source_context": true,
+  "phases": {
+    "materialize": {
+      "lifecycle": {
+        "status": "complete",
+        "verification": "actual pinned verify_run structural hashes only; no scientific completion inferred",
+        "claim_sha256": "0644ae951d97ae47ce1f1e024df7799fff5964d856d972522e7eab1a48cdf5e6",
+        "terminal_sha256": "21c1a956cf786ad7b2ee70e73b7c1fb163fef3c5a31ee6328890c119f823323e",
+        "actual_output_count": 1,
+        "registered_cells": [
+          "cold-input-materialization"
+        ],
+        "unavailable_cell_count": 0,
+        "failed_cell_count_not_synthesized": true
+      },
+      "cleanup": {
+        "status": "original-cleanup-observed",
+        "recorded_pids": [
+          3399314,
+          3399515,
+          3399730,
+          3399932,
+          3399944,
+          3399957,
+          3399961
+        ],
+        "present_or_reused_pids": [],
+        "original_start_receipts": {
+          "monitor": {
+            "pid": 3399944,
+            "start_ticks": "7069308"
+          },
+          "job_launch": {
+            "pid": 3399932,
+            "start_ticks": "7069282"
+          },
+          "proof_supervise": {
+            "pid": 3399730,
+            "start_ticks": "7069214"
+          },
+          "proof_outer": {
+            "pid": 3399932,
+            "ticks": "7069282"
+          },
+          "root_wrapper_child": {
+            "pid": 3399515,
+            "start_ticks": "7069163"
+          }
+        },
+        "original_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-864fd867343a491a9f55c2b7b10d3341.service",
+        "cgroup_absent": true,
+        "original_guard_sha256": "e0bbbbb3a9557d26334143ec8fb52ba77e6b4f27ee2119346a0b253ecd3e233f",
+        "termination_attempted": false
+      },
+      "actual_wrapper_exit": 0
+    },
+    "compare": {
+      "lifecycle": {
+        "status": "failed",
+        "verification": "actual pinned verify_run structural hashes only; no scientific completion inferred",
+        "claim_sha256": "6a9e5932716d102c4821d75a6023be892a47996b93efe6f94cea66dff8325048",
+        "terminal_sha256": "c42ae0fcfa49681b4febe568ca4d9c59177ca47b2bd038a4bb00fddca3f10d20",
+        "actual_output_count": 0,
+        "registered_cells": [
+          "cold-genuine-comparison"
+        ],
+        "unavailable_cell_count": null,
+        "failed_cell_count_not_synthesized": true
+      },
+      "cleanup": {
+        "status": "original-cleanup-observed",
+        "recorded_pids": [
+          3481873,
+          3482302,
+          3482717,
+          3483143,
+          3483159,
+          3483177,
+          3483181
+        ],
+        "present_or_reused_pids": [],
+        "original_start_receipts": {
+          "monitor": {
+            "pid": 3483159,
+            "start_ticks": "7726632"
+          },
+          "job_launch": {
+            "pid": 3483143,
+            "start_ticks": "7726599"
+          },
+          "proof_supervise": {
+            "pid": 3482717,
+            "start_ticks": "7726475"
+          },
+          "proof_outer": {
+            "pid": 3483143,
+            "ticks": "7726599"
+          },
+          "root_wrapper_child": {
+            "pid": 3482302,
+            "start_ticks": "7726365"
+          }
+        },
+        "original_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7882401fb21e4ec8a32e39c9b1f40c04.service",
+        "cgroup_absent": true,
+        "original_guard_sha256": "b2ae0d8aa3c003103ff03631fb3664ea9a445a3f0c12cab4dce61f95e91786ba",
+        "termination_attempted": false
+      },
+      "actual_wrapper_exit": 1
+    }
+  },
+  "collection_invoked": false,
+  "destination_reserved": false
+}

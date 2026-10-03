@@ -1,0 +1,193 @@
+{
+  "boot_id": "8c389743-c1c9-4eba-be5d-c19699d52d0a",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7882401fb21e4ec8a32e39c9b1f40c04.service",
+  "child_exit_code": null,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research.onchain_replication.job",
+    "--mode",
+    "worker",
+    "--root",
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source",
+    "--registration",
+    "cold-comparison-registration02.json",
+    "--experiment",
+    "compact-cold-comparison-20261003-01",
+    "--source",
+    "361339125a3f1cd57e7ba8611f5a994ae649fa0b"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "3483177": [
+      0,
+      1
+    ],
+    "3483181": [
+      0,
+      1
+    ],
+    "3483245": [
+      0,
+      1
+    ],
+    "3483269": [
+      0,
+      1
+    ],
+    "3483270": [
+      0,
+      1
+    ],
+    "3483274": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source",
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source": 19168247808
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source"
+  ],
+  "elapsed_seconds": 63.38772403499752,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 6956732416,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "3221225472",
+    "memory.max": "3221225472",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": null,
+  "memory_current_bytes": 416890880,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 3221225472,
+  "memory_max_bytes": 3221225472,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 3483159,
+  "monotonic_seconds": 77330.045771752,
+  "native_environment": {
+    "HF_HOME": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/fixture_runtime/hf",
+    "MKL_NUM_THREADS": "2",
+    "MPLCONFIGDIR": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/fixture_runtime/matplotlib",
+    "NUMEXPR_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source",
+    "TMPDIR": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/fixture_runtime/tmp",
+    "TORCH_EXTENSIONS_DIR": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/fixture_runtime/torch-extensions",
+    "TORCH_HOME": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/fixture_runtime/torch",
+    "XDG_CACHE_HOME": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/fixture_runtime/cache"
+  },
+  "native_unit_limits": {
+    "file_size_bytes": 4194304
+  },
+  "native_unit_properties": {
+    "LimitFSIZE": "4194304",
+    "LimitFSIZESoft": "4194304",
+    "RuntimeMaxUSec": "30min"
+  },
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 385019904,
+      "file_bytes": 27971584,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7882401fb21e4ec8a32e39c9b1f40c04.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 7442464768,
+      "file_bytes": 4663619584,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=26723179\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=25985288",
+      "swap_current_bytes": 1118146560,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": {
+    "experiment": "compact-cold-comparison-20261003-01",
+    "monitor_pid": 3483159,
+    "monitor_start_ticks": "7726632",
+    "nonce": "6989f8c38c334b36808d90d98b0adf8c",
+    "source_commit": "361339125a3f1cd57e7ba8611f5a994ae649fa0b",
+    "supervisor_pid": 3483143
+  },
+  "peak_sampled_memory_current_bytes": 425189376,
+  "phase": "running",
+  "receipt_dir": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/compact-cold-comparison-20261003-01/guard",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 6442450944,
+  "storage_budget": {
+    "limits": {
+      "max_allocated_bytes": 1073741824,
+      "max_depth": 32,
+      "max_entries": 32768,
+      "max_logical_bytes": 1073741824,
+      "max_scan_seconds": 5
+    },
+    "root": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source"
+  },
+  "storage_enforcement": "Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.",
+  "storage_observation": {
+    "aggregate_entry_visit_bound": 98304,
+    "allocated_bytes": 9785344,
+    "directories": 292,
+    "elapsed_seconds": 0.02259795001009479,
+    "entries": 1164,
+    "hardlink_observations": [],
+    "logical_file_bytes": 6252372,
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+    "regular_files": 873,
+    "root": "/home/malecada/master_thesis/onchain-fixture-isolation/neural-cold-proof-native-20261003-02/source",
+    "root_device": 66310,
+    "root_inode": 10504012,
+    "scan_attempts": 1
+  },
+  "storage_peak_allocated_bytes": 9785344,
+  "storage_peak_entries": 1164,
+  "storage_peak_logical_file_bytes": 6252372,
+  "storage_root_identity": [
+    66310,
+    10504012
+  ],
+  "unit": "onchain-replication-7882401fb21e4ec8a32e39c9b1f40c04.service",
+  "unit_properties": {
+    "ActiveState": "active",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-7882401fb21e4ec8a32e39c9b1f40c04.service",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "running"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 1800
+}

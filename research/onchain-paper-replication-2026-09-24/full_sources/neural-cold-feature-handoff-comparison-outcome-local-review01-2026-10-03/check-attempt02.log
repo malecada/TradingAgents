@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-outcome-local-review01/check02.py", line 24, in <module>
+    q=doc(OUT/'COLLECTION_REQUEST01.json');wait=doc(OUT/'COLLECTION_WAIT01.json');report=doc(COL/'collection.json');root=Path(q['root']);need(wait['exit_code']==0 and wait['first_error_type'] is None,'collector actual wait');need(sha(OUT/'COLLECTION_REQUEST01.json')=='89b718215212a5291f684ef86e25a9c099f5732f185bc3eb705682f70aede5c3','request');need(body(COL/'request.json')==body(OUT/'COLLECTION_REQUEST01.json'),'retained request');need(not body(OUT/'collector.stderr'),'collector stderr')
+                                                                                                                                                                                                                                                                                                                                                          ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-outcome-local-review01/check02.py", line 7, in need
+    if not ok:raise ValueError(why)
+              ^^^^^^^^^^^^^^^^^^^^^
+ValueError: retained request
