@@ -1,0 +1,25 @@
+test_actual_producer_has_no_unregistered_refusal_seam (__main__.Composition.test_actual_producer_has_no_unregistered_refusal_seam) ... FAIL
+test_only_exact_accepted_cleanup_exception_is_composed (__main__.Composition.test_only_exact_accepted_cleanup_exception_is_composed) ... FAIL
+
+======================================================================
+FAIL: test_actual_producer_has_no_unregistered_refusal_seam (__main__.Composition.test_actual_producer_has_no_unregistered_refusal_seam)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/imported-source-cleanup-composition-correction01-2026-10-03/test_composition01.py", line 19, in test_actual_producer_has_no_unregistered_refusal_seam
+    self.assertFalse(any(isinstance(n,ast.ImportFrom) and n.level==1 and n.module is None and any(a.name=='resource_refusal' for a in n.names) for n in ast.walk(fn)))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_only_exact_accepted_cleanup_exception_is_composed (__main__.Composition.test_only_exact_accepted_cleanup_exception_is_composed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/imported-source-cleanup-composition-correction01-2026-10-03/test_composition01.py", line 16, in test_only_exact_accepted_cleanup_exception_is_composed
+    self.assertEqual(ast.dump(candidate),ast.dump(baseline))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "Modu[64107 chars]])), ImportFrom(names=[alias(name='resource_re[19440 chars]])])" != "Modu[64107 chars]])), Assign(targets=[Name(id='stream', ctx=Sto[18766 chars]])])"
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.035s
+
+FAILED (failures=2)

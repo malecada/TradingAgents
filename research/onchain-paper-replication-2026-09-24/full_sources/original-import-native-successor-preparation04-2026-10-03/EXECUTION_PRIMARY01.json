@@ -1,0 +1,126 @@
+{
+  "actual_selected_post_tail": {
+    "disk_free_bytes": 19680342016,
+    "excludes_own_file": true,
+    "path": "fixture_outer/original-import-native-success-20261003-02/post-tail-storage.json",
+    "qualification": "Caller also enforces a separate current watch and disk-floor check after publication; overall acceptance requires exit0 and no late failure receipt.",
+    "sha256": "8983d192591ffc00d01fa63f0892b1241ebcfb59c10e83448cd16d64f78a2569"
+  },
+  "actual_selected_post_tail_authentication_error": null,
+  "actual_selected_raw_authentication": null,
+  "actual_selected_raw_authentication_error": {
+    "message": "ambiguous lifecycle terminals",
+    "type": "ValueError"
+  },
+  "cells": [
+    {
+      "id": "import-target-01",
+      "reason": "ImportError: cannot import name 'resource_refusal' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation04-2026-10-03/capsule02/tradingagents/research/onchain_replication/__init__.py)",
+      "resource_only": true,
+      "status": "failed"
+    },
+    {
+      "id": "import-target-02",
+      "reason": "ImportError: cannot import name 'resource_refusal' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation04-2026-10-03/capsule02/tradingagents/research/onchain_replication/__init__.py)",
+      "resource_only": true,
+      "status": "unavailable"
+    }
+  ],
+  "claim_sha256": "56d653890440a57896a98e87ed641f9dcfd74fca8375b3491e804fd2f5432688",
+  "complete_mcm_stage_markers": 0,
+  "identity": "original-import-native-success-20261003-02",
+  "kernel_controls": {
+    "memory.high": "3221225472",
+    "memory.max": "3221225472",
+    "memory.swap.max": "0"
+  },
+  "lifecycle_status": "failed",
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "native_child_exit_code": 1,
+  "native_elapsed_seconds": 257.8945938109973,
+  "native_sampled_peak_bytes": 393662464,
+  "original_cgroup_absent": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-51fa7b5c03014768bcc6f480ba17e715.service",
+  "original_dictionary_import_complete_sha256": "f0f724f15d2714c45ce2504b4249b31b7811246efbeec2311eb5fa582a36af4a",
+  "original_outer_cleanup": {
+    "native": {
+      "after": {
+        "properties": {
+          "ActiveState": "failed",
+          "ControlGroup": "",
+          "Result": "exit-code",
+          "SubState": "failed"
+        },
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "Result=exit-code\nControlGroup=\nActiveState=failed\nSubState=failed\n"
+      },
+      "before": {
+        "properties": {
+          "ActiveState": "failed",
+          "ControlGroup": "",
+          "Result": "exit-code",
+          "SubState": "failed"
+        },
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "Result=exit-code\nControlGroup=\nActiveState=failed\nSubState=failed\n"
+      },
+      "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-51fa7b5c03014768bcc6f480ba17e715.service",
+      "cgroup_absent": true,
+      "errors": [],
+      "native_unit_observed": true,
+      "properties": {
+        "ActiveState": "failed",
+        "ControlGroup": "",
+        "Result": "exit-code",
+        "SubState": "failed"
+      },
+      "stop": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "unit": "onchain-replication-51fa7b5c03014768bcc6f480ba17e715.service"
+    },
+    "pid_absence_verified": false,
+    "supervisor_reaped": true,
+    "unresolved_pid_absence": true
+  },
+  "outer_exit_code": 1,
+  "outer_terminal_status": "failed",
+  "paper_closed_attempts": 36,
+  "paper_highest_adopted_budget": 64,
+  "parent_failure_reason": "ImportError: cannot import name 'resource_refusal' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation04-2026-10-03/capsule02/tradingagents/research/onchain_replication/__init__.py)",
+  "qualification": "Actual registered synthetic imported dictionary/MCM resource outcome only. All actual dispositions retained; authentication refusal is reported and never relabeled success. Source freeze ended only after recorded original PIDs/cgroup absent and source/input pins unchanged. Full owned raw has not yet been independently reviewed or externally recovered. No scientific representation completion/full-sized capacity/financial fit or paper agreement inferred.",
+  "recorded_pids_absent": [
+    1624414,
+    1624418,
+    1624581,
+    1624931,
+    1625264,
+    1625268
+  ],
+  "release_sha256": "c32a3af9636201f5499186a1187d9dfa19eba70c473af842ee15c131cda782b5",
+  "repeat_allowed": false,
+  "retained_mcm_stage_directories": 1,
+  "retention_sha256": "2d1972192c89d7db31308aa97edfa596690c9bcb44d9eabfdb6b26b1ff1cbd9a",
+  "schema_version": 1,
+  "source_commit": "ae3160260187b7853fb6066e91562584be93eef6",
+  "source_freeze_ended": true,
+  "terminal_sha256": "6f088e8cc3252db4ca91ee0b37323793ce53d822e68a2e2ac0c505cea29f1747",
+  "unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "verified_utc": "2026-10-03T01:27:04.511884+00:00"
+}
