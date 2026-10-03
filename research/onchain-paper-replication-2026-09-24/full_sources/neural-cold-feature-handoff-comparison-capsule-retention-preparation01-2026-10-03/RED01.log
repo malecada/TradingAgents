@@ -1,0 +1,22 @@
+test_batch_framing_refusals (__main__.Cases.test_batch_framing_refusals) ... ok
+test_complete_opaque_roundtrip (__main__.Cases.test_complete_opaque_roundtrip) ... ok
+test_compressed_bound_and_no_overwrite (__main__.Cases.test_compressed_bound_and_no_overwrite) ... ok
+test_duplicate_tar_member_refused (__main__.Cases.test_duplicate_tar_member_refused) ... ok
+test_link_and_traversal_refuse (__main__.Cases.test_link_and_traversal_refuse) ... ok
+test_missing_extra_hash_mode_refuse (__main__.Cases.test_missing_extra_hash_mode_refuse) ... ok
+test_pack_firstfatal_survives_tar_close (__main__.Cases.test_pack_firstfatal_survives_tar_close) ... ok
+test_trailing_archive_bytes_refused (__main__.Cases.test_trailing_archive_bytes_refused) ... FAIL
+
+======================================================================
+FAIL: test_trailing_archive_bytes_refused (__main__.Cases.test_trailing_archive_bytes_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-comparison-capsule-retention-preparation01-2026-10-03/test_retention01.py", line 41, in test_trailing_archive_bytes_refused
+    with self.assertRaises(ValueError):m.unpack(root/'a.gz',root/'restored',rows)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.048s
+
+FAILED (failures=1)
