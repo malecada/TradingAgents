@@ -2,7 +2,7 @@
 import hashlib,importlib.util,json,os,shutil,stat,subprocess,tarfile,time
 from datetime import datetime,timezone
 from pathlib import Path
-HERE=Path(__file__).resolve().parent;CAP=HERE/'capsule03';IDENTITY='original-import-native-success-20261003-04'
+HERE=Path(__file__).resolve().parent;CAP=HERE/'capsule04';IDENTITY='original-import-native-success-20261003-04'
 def sha(raw):return hashlib.sha256(raw).hexdigest()
 def read(path):return json.loads(path.read_bytes())
 def save(name,value):
@@ -27,6 +27,7 @@ def main():
     properties=dict(line.split('=',1) for line in result.stdout.splitlines() if '=' in line);assert properties['ActiveState'] in ('failed','inactive') and properties['SubState'] in ('failed','dead') and properties['ControlGroup']==''
     for name,pin in release['source_files'].items():assert sha((CAP/name).read_bytes())==pin
     assert sha((CAP/release['registration']).read_bytes())==release['registration_sha256']
+    for role,ref in claim['inputs'].items():assert sha((CAP/ref['path']).read_bytes())==ref['sha256']
     spec=importlib.util.spec_from_file_location('actual_selected_raw',CAP/'fixture_tools/raw_receipts01.py');raw=importlib.util.module_from_spec(spec);spec.loader.exec_module(raw)
     authentication=None;authentication_error=None;post_tail=None;post_tail_error=None
     try:authentication=raw.authenticate(CAP,'success',release)
@@ -35,7 +36,16 @@ def main():
     except Exception as error:post_tail_error={'type':type(error).__name__,'message':str(error)[:2048]}
     outer_terminal=read(outer/'terminal.json');cell_path=run/'outputs/cell-ledger.json';cells=read(cell_path) if cell_path.exists() else None
     missing_registered_outputs=sorted(set(claim['experiment']['outputs'])-set(outputs))
-    observed_registered_cells=[{'cell':cell,'status':'unavailable','basis':'Separate root observation: missing original worker cell-ledger after native timeout; no original receipt or numerical value synthesized.'} for cell in claim['experiment']['cells']] if cells is None else None
+    observed_registered_cells=None
+    if cells is None:
+        observed_registered_cells=[]
+        for cell in claim['experiment']['cells']:
+            source=CAP/'research_artifacts/onchain-paper-replication-2026-09-24/sources'/IDENTITY/(cell+'.json')
+            if source.exists():
+                original=read(source);assert original['status'] in ('complete','failed','unavailable')
+                observed_registered_cells.append({'cell':cell,'status':original['status'],'original_durable_record':original,'evidence':{'path':str(source.relative_to(CAP)),'sha256':sha(source.read_bytes())},'basis':'Authenticated original durable source cell; original worker ledger remains missing. No worker receipt or numerical value synthesized.'})
+            else:
+                observed_registered_cells.append({'cell':cell,'status':'unavailable','basis':'No original worker ledger or source-cell receipt exists; no receipt or numerical value synthesized.'})
     stages=[p for p in (CAP/'research_artifacts/onchain_representations').glob('*/'+IDENTITY+'/compact/mcm-*')]
     completed_stages=[p for p in stages if (p/'stage-complete.json').exists()]
     roots=list((CAP/'research_artifacts/onchain_representations').glob('*/'+IDENTITY));assert len(roots)==1
@@ -49,13 +59,13 @@ def main():
         members.append(row)
     archive=HERE/'retained-primary01.tar.gz'
     with tarfile.open(archive,'x:gz') as stream:
-        for row in members:stream.add(CAP/row['path'],arcname='capsule03'+('' if row['path']=='.' else '/'+row['path']),recursive=False)
+        for row in members:stream.add(CAP/row['path'],arcname='capsule04'+('' if row['path']=='.' else '/'+row['path']),recursive=False)
     assert archive.stat().st_size<=4*1024**2
     for row in members:
         if row['kind']=='file':assert sha((CAP/row['path']).read_bytes())==row['sha256']
     retention={'schema_version':1,'identity':IDENTITY,'members':members,'files':sum(x['kind']=='file' for x in members),'directories':sum(x['kind']=='directory' for x in members),'logical_bytes':sum(x['bytes'] for x in members),'allocated_bytes':sum(x['allocated_bytes'] for x in members),'archive_sha256':sha(archive.read_bytes()),'archive_bytes':archive.stat().st_size}
     save('RETAINED_PRIMARY01.json',retention)
-    observed={'schema_version':1,'identity':IDENTITY,'lifecycle_status':status,'repeat_allowed':False,'source_commit':release['capsule_commit'],'release_sha256':sha((HERE/'release01.json').read_bytes()),'claim_sha256':sha((run/'claim.json').read_bytes()),'terminal_sha256':sha((run/(status+'.json')).read_bytes()),'parent_failure_reason':terminal.get('reason'),'outer_exit_code':exit_record['caller_exit_code'],'outer_terminal_status':outer_terminal['status'],'native_child_exit_code':child['exit_code'],'native_elapsed_seconds':guard['elapsed_seconds'],'native_sampled_peak_bytes':guard['peak_sampled_memory_current_bytes'],'memory_events':guard['memory_events'],'kernel_controls':guard['kernel_controls'],'recorded_pids_absent':pids,'original_cgroup_absent':str(cg),'unit_properties':properties,'original_outer_cleanup':read(outer/'cleanup.json'),'original_dictionary_import_complete_sha256':sha(imported.read_bytes()) if imported.exists() else None,'retained_mcm_stage_directories':len(stages),'complete_mcm_stage_markers':len(completed_stages),'cells':cells,'missing_registered_outputs':missing_registered_outputs,'separate_root_unavailable_cells':observed_registered_cells,'actual_selected_raw_authentication':authentication,'actual_selected_raw_authentication_error':authentication_error,'actual_selected_post_tail_authentication_error':post_tail_error,'retention_sha256':sha((HERE/'RETAINED_PRIMARY01.json').read_bytes()),'source_freeze_ended':True,'paper_closed_attempts':36,'paper_highest_adopted_budget':64,'verified_utc':datetime.now(timezone.utc).isoformat(),'qualification':'Actual registered synthetic imported dictionary/MCM resource outcome only. All actual dispositions retained; authentication refusal is reported and never relabeled success. Source freeze ended only after recorded original PIDs/cgroup absent and source/input pins unchanged. Full owned raw has not yet been independently reviewed or externally recovered. No scientific representation completion/full-sized capacity/financial fit or paper agreement inferred.'}
+    observed={'schema_version':1,'identity':IDENTITY,'lifecycle_status':status,'repeat_allowed':False,'source_commit':release['capsule_commit'],'release_sha256':sha((HERE/'release01.json').read_bytes()),'claim_sha256':sha((run/'claim.json').read_bytes()),'terminal_sha256':sha((run/(status+'.json')).read_bytes()),'parent_failure_reason':terminal.get('reason'),'outer_exit_code':exit_record['caller_exit_code'],'outer_terminal_status':outer_terminal['status'],'native_child_exit_code':child['exit_code'],'native_elapsed_seconds':guard['elapsed_seconds'],'native_sampled_peak_bytes':guard['peak_sampled_memory_current_bytes'],'memory_events':guard['memory_events'],'kernel_controls':guard['kernel_controls'],'recorded_pids_absent':pids,'original_cgroup_absent':str(cg),'unit_properties':properties,'original_outer_cleanup':read(outer/'cleanup.json'),'original_dictionary_import_complete_sha256':sha(imported.read_bytes()) if imported.exists() else None,'retained_mcm_stage_directories':len(stages),'complete_mcm_stage_markers':len(completed_stages),'cells':cells,'missing_registered_outputs':missing_registered_outputs,'separate_root_observed_cells':observed_registered_cells,'actual_selected_raw_authentication':authentication,'actual_selected_raw_authentication_error':authentication_error,'actual_selected_post_tail_authentication_error':post_tail_error,'retention_sha256':sha((HERE/'RETAINED_PRIMARY01.json').read_bytes()),'source_freeze_ended':True,'paper_closed_attempts':36,'paper_highest_adopted_budget':64,'verified_utc':datetime.now(timezone.utc).isoformat(),'qualification':'Actual registered synthetic imported dictionary/MCM resource outcome only. All actual dispositions retained; authentication refusal is reported and never relabeled success. Source freeze ended only after recorded original PIDs/cgroup absent and source/input pins unchanged. Full owned raw has not yet been independently reviewed or externally recovered. No scientific representation completion/full-sized capacity/financial fit or paper agreement inferred.'}
     if post_tail is not None:observed['actual_selected_post_tail']=post_tail
     save('EXECUTION_PRIMARY01.json',observed);print(json.dumps({k:observed[k] for k in ['identity','lifecycle_status','outer_exit_code','native_child_exit_code','native_elapsed_seconds','native_sampled_peak_bytes','complete_mcm_stage_markers','actual_selected_raw_authentication_error']}))
 if __name__=='__main__':main()
