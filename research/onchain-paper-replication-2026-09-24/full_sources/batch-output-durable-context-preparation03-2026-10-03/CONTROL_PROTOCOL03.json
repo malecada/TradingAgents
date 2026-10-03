@@ -1,0 +1,55 @@
+{
+  "actual_policy": null,
+  "authority_metadata_limit": 8192,
+  "bound_origin": "original_dictionary._read_registered limit=2*1024**2, called by original_import_preparation.Prepared._selection_now; exact source pins in DEPENDENCIES03",
+  "control_headroom_formula": "8192*(8+3*max_commands)",
+  "execution_admitted": false,
+  "job_document_comparison": "complete canonical JSON; not a publication record",
+  "kind": "source-only-non-tail-control-contract-v3",
+  "limits": {
+    "deadline_seconds": 1800,
+    "max_bytes_per_slot": 68719476736,
+    "max_commands": 131072,
+    "max_members_per_slot": 4096,
+    "max_parts": 65536,
+    "max_rounded_bytes": 1099511627776,
+    "part_bytes": 1048576,
+    "slots": 128
+  },
+  "original_job_document_limit": 2097152,
+  "original_raw_job_limit": 2097152,
+  "oversize_ancestry_or_membership": "refuse complete body; no truncation, paging or implicit larger envelope",
+  "policy_schema": {
+    "category": "non-tail-original-members",
+    "exact_fields": [
+      "schema_version",
+      "kind",
+      "category",
+      "namespace",
+      "deadline_seconds",
+      "max_rounded_bytes",
+      "max_commands",
+      "max_parts",
+      "max_control_bytes",
+      "part_bytes",
+      "receipt_output",
+      "terminal_output",
+      "slots"
+    ],
+    "kind": "non-tail-durable-population-v1",
+    "schema_version": 1
+  },
+  "prebirth_checks": [
+    "original raw job before parse",
+    "complete canonical job",
+    "complete context configuration",
+    "complete original intent",
+    "complete receipt output"
+  ],
+  "registered_inputs": null,
+  "registered_outputs": null,
+  "schema_version": 1,
+  "source_body_limit": 1048576,
+  "source_read_chunk": 65536,
+  "whole_body_encoding_required": true
+}

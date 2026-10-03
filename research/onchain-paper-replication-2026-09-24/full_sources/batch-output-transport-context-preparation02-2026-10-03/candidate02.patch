@@ -1,0 +1,127 @@
+--- frozen01/non_tail_context.py
++++ candidate02/non_tail_context.py
+@@ -3,7 +3,8 @@
+ Local content is evidence of bytes, never a ResearchRun/Owner/transport capability.
+ Reservation counters are local engineering proposal counters, not research spend.
+ """
+-import hashlib,importlib.util,json,sys,time
++import hashlib,importlib.util,json,sys,time,os,stat
++from threading import current_thread
+ from contextlib import contextmanager
+ from pathlib import Path
+ from types import MappingProxyType
+@@ -11,12 +12,41 @@
+ PINS={'owned_io':'09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb','exact_members02':'ea1ffcef833344ff1a5fbd89bc2f79ade1414c90a3159329c1f3bdee86bfe0cb'}
+ def require(v,m):
+  if not v:raise ValueError(m)
++class BootstrapCleanupFailure(BaseException):pass
++
++def bootstrap_read(path):
++ """Bound before read; original descriptor/path and first fatal survive close."""
++ require(type(path) is Path or isinstance(path,Path),'dependency path required')
++ require(path.resolve()==path,'canonical dependency path required')
++ fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK|os.O_CLOEXEC)
++ primary=None;result=None
++ try:
++  before=os.fstat(fd)
++  signature=lambda s:(s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
++  require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<before.st_size<=1048576,'bounded regular dependency required')
++  require(signature(before)==signature(path.lstat()),'dependency path/FD differs')
++  parts=[];count=0
++  while count<=before.st_size:
++   block=os.read(fd,min(65536,before.st_size-count+1))
++   if not block:break
++   count+=len(block);require(count<=before.st_size,'dependency grew');parts.append(block)
++  require(count==before.st_size and signature(before)==signature(os.fstat(fd))==signature(path.lstat()),'dependency changed')
++  result=b''.join(parts)
++ except BaseException as error:primary=error
++ try:os.close(fd)
++ except BaseException as later:
++  primary_fatal=primary is not None and (isinstance(primary,MemoryError) or not isinstance(primary,Exception))
++  later_fatal=isinstance(later,MemoryError) or not isinstance(later,Exception)
++  if not primary_fatal:primary=later if later_fatal else BootstrapCleanupFailure('dependency close uncertain; no retry')
++ if primary is not None:raise primary
++ return result
++
+ def load(name):
+- p=D/(name+'.py');b=p.read_bytes();require(len(b)<=1048576 and hashlib.sha256(b).hexdigest()==PINS[name],'accepted local dependency differs')
++ p=D/(name+'.py');b=bootstrap_read(p);require(hashlib.sha256(b).hexdigest()==PINS[name],'accepted local dependency differs')
+  if name in sys.modules:
+   m=sys.modules[name];require(Path(m.__file__).resolve()==p.resolve(),'dependency alias differs');return m
+  spec=importlib.util.spec_from_file_location(name,p);m=importlib.util.module_from_spec(spec);sys.modules[name]=m
+- try:spec.loader.exec_module(m)
++ try:exec(compile(b,str(p),'exec'),m.__dict__)
+  except BaseException:
+   del sys.modules[name];raise
+  return m
+@@ -42,13 +72,13 @@
+  def __setattr__(self,n,v):raise AttributeError('immutable local context')
+  def __delattr__(self,n):raise AttributeError('immutable local context')
+ class Reservations(Frozen):
+- __slots__=('_policy','_spent','_start','_revoked')
++ __slots__=('_policy','_spent','_start','_revoked','_thread','_reserving')
+  def __init__(self,value):
+   fields={'max_rounded_bytes','max_commands','max_parts','part_bytes','deadline_seconds'}
+   require(type(value) is dict and set(value)==fields,'exact finite local reservation policy')
+   require(all(type(v) is int and v>0 for v in value.values()),'positive strict integer limits')
+   require(value['max_rounded_bytes']<=2**40 and value['max_commands']<=131072 and value['max_parts']<=65536 and value['part_bytes']<=1048576 and value['deadline_seconds']<=1800,'local preparation ceilings exceeded')
+-  object.__setattr__(self,'_policy',MappingProxyType(dict(value)));object.__setattr__(self,'_spent',(0,0,0));object.__setattr__(self,'_start',time.monotonic());object.__setattr__(self,'_revoked',False)
++  object.__setattr__(self,'_policy',MappingProxyType(dict(value)));object.__setattr__(self,'_spent',(0,0,0));object.__setattr__(self,'_start',time.monotonic());object.__setattr__(self,'_revoked',False);object.__setattr__(self,'_thread',current_thread());object.__setattr__(self,'_reserving',False)
+  @property
+  def policy(self):return self._policy
+  @property
+@@ -57,15 +87,25 @@
+  def revoked(self):return self._revoked
+  def revoke(self):object.__setattr__(self,'_revoked',True)
+  def check(self):
++  require(current_thread() is self._thread,'reservation context thread differs')
+   require(not self.revoked,'reservation context revoked')
+   if time.monotonic()-self._start>=self.policy['deadline_seconds']:self.revoke();raise TimeoutError('whole local preparation deadline')
+  def reserve(self,size):
+-  try:
+-   self.check();require(type(size) is int and 0<size<=1048576,'finite positive part bytes')
+-   b,c,p=self._spent;new=(b+((size+BLOCK-1)//BLOCK)*BLOCK,c+1,p+1)
++  entered=False
++  try:
++   self.check();require(not self._reserving,'reentrant reservation refused')
++   object.__setattr__(self,'_reserving',True);entered=True
++   require(type(size) is int and 0<size<=1048576,'finite positive part bytes')
++   b,c,p=self._spent
++   # Conservative actual archive_transport.get bound includes an extra block
++   # at exact multiples; proposal only, not SSH framing or wire metering.
++   new=(b+(size//BLOCK+1)*BLOCK,c+1,p+1)
+    require(new[0]<=self.policy['max_rounded_bytes'] and new[1]<=self.policy['max_commands'] and new[2]<=self.policy['max_parts'],'cumulative reservation exhausted')
+-   object.__setattr__(self,'_spent',new);return self.spent
+-  except BaseException:self.revoke();raise
++   self.check();object.__setattr__(self,'_spent',new);return self.spent
++  except BaseException:self.revoke();raise
++  finally:
++   if entered:object.__setattr__(self,'_reserving',False)
++
+ class Context(Frozen):
+  __slots__=('_reader','_budget','_inventory','_members','_metadata','_position','_recovered','_revoked')
+  def __init__(self,content,limits):
+@@ -139,13 +179,21 @@
+   raise NotImplementedError('non-tail population absent from genuine archive_dispatch preflight/Context and typed Ledger; actual registered held/cold authority and durable no-refund original Context required')
+ @contextmanager
+ def open_context(root,*,kind,document_sha256,limits):
+- cm=reader.open_local(root,kind=kind,document_sha256=document_sha256);content=cm.__enter__();c=None;primary=None
++ cm=reader.open_local(root,kind=kind,document_sha256=document_sha256)
++ shared=limits if type(limits) is Reservations else None
++ c=None;primary=None;entered=False
+  try:
++  content=cm.__enter__();entered=True
+   c=Context(content,limits);yield c;c.check()
+- except BaseException as error:primary=error
++ except BaseException as error:
++  primary=error
++  if shared is not None:shared.revoke()
+  def close():
++  if not entered:return
+   try:cm.__exit__(type(primary) if primary is not None else None,primary,primary.__traceback__ if primary is not None else None)
+   except BaseException as error:
++   if shared is not None:shared.revoke()
++   if c is not None:c.revoke()
+    if error is not primary:raise
+  actions=[close]
+  if c is not None:actions.append(c.revoke if primary is not None else lambda:object.__setattr__(c,'_revoked',True))

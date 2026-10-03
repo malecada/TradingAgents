@@ -1,0 +1,56 @@
+--- frozen02/non_tail_context.py
++++ candidate03/non_tail_context.py
+@@ -15,29 +15,41 @@
+ class BootstrapCleanupFailure(BaseException):pass
+ 
+ def bootstrap_read(path):
+- """Bound before read; original descriptor/path and first fatal survive close."""
++ """Bound held-parent read; no source rebaseline; close each owned FD once."""
+  require(type(path) is Path or isinstance(path,Path),'dependency path required')
+  require(path.resolve()==path,'canonical dependency path required')
+- fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK|os.O_CLOEXEC)
+- primary=None;result=None
++ signature=lambda s:(s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
++ parent=path.parent;parent_before=parent.lstat()
++ require(stat.S_ISDIR(parent_before.st_mode),'real dependency parent required')
++ parent_fd=os.open(parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++ fd=None;primary=None;result=None;uncertain=False
+  try:
++  def rejoin():
++   require(path.resolve()==path and parent.resolve()==parent,'canonical dependency origin changed')
++   require(signature(parent_before)==signature(os.fstat(parent_fd))==signature(parent.lstat()),'dependency parent changed')
++  rejoin()
++  fd=os.open(path.name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK|os.O_CLOEXEC,dir_fd=parent_fd)
+   before=os.fstat(fd)
+-  signature=lambda s:(s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
+   require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<before.st_size<=1048576,'bounded regular dependency required')
+-  require(signature(before)==signature(path.lstat()),'dependency path/FD differs')
++  require(signature(before)==signature(os.stat(path.name,dir_fd=parent_fd,follow_symlinks=False))==signature(path.lstat()),'dependency path/FD differs')
+   parts=[];count=0
+   while count<=before.st_size:
+    block=os.read(fd,min(65536,before.st_size-count+1))
+    if not block:break
+    count+=len(block);require(count<=before.st_size,'dependency grew');parts.append(block)
+-  require(count==before.st_size and signature(before)==signature(os.fstat(fd))==signature(path.lstat()),'dependency changed')
+-  result=b''.join(parts)
++  require(count==before.st_size and signature(before)==signature(os.fstat(fd))==signature(os.stat(path.name,dir_fd=parent_fd,follow_symlinks=False))==signature(path.lstat()),'dependency changed')
++  rejoin();result=b''.join(parts)
+  except BaseException as error:primary=error
+- try:os.close(fd)
+- except BaseException as later:
+-  primary_fatal=primary is not None and (isinstance(primary,MemoryError) or not isinstance(primary,Exception))
+-  later_fatal=isinstance(later,MemoryError) or not isinstance(later,Exception)
+-  if not primary_fatal:primary=later if later_fatal else BootstrapCleanupFailure('dependency close uncertain; no retry')
++ for owned in (fd,parent_fd):
++  if owned is None:continue
++  try:os.close(owned)
++  except BaseException as later:
++   uncertain=True
++   primary_fatal=primary is not None and (isinstance(primary,MemoryError) or not isinstance(primary,Exception))
++   later_fatal=isinstance(later,MemoryError) or not isinstance(later,Exception)
++   if not primary_fatal and (primary is None or later_fatal):primary=later
++ if uncertain and not (isinstance(primary,MemoryError) or not isinstance(primary,Exception)):
++  raise BootstrapCleanupFailure('dependency close uncertain; no retry')
+  if primary is not None:raise primary
+  return result
+ 

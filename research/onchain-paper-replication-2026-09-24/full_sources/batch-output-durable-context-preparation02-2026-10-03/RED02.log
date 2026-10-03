@@ -1,0 +1,178 @@
+test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) ... 
+  test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='descriptor') ... ERROR
+  test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='operation') ... ERROR
+  test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='pair_checkpoint_input') ... ERROR
+  test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='producer') ... ERROR
+  test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='non_tail_transport_input') ... ERROR
+test_complete_matching_selection (__main__.Tests.test_complete_matching_selection) ... ERROR
+test_firstfatal_and_close_once (__main__.Tests.test_firstfatal_and_close_once) ... ERROR
+test_metadata_8k_boundary (__main__.Tests.test_metadata_8k_boundary) ... FAIL
+test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) ... 
+  test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='missing') ... ERROR
+  test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='schema') ... ERROR
+  test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='bool') ... ERROR
+  test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='duplicate') ... ERROR
+  test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='unsorted') ... ERROR
+test_owned_fd_exact_read (__main__.Tests.test_owned_fd_exact_read) ... ERROR
+test_path_replacement_links_and_size (__main__.Tests.test_path_replacement_links_and_size) ... ERROR
+test_read_growth_bound (__main__.Tests.test_read_growth_bound) ... ERROR
+test_success_body_uncertain_close_fails (__main__.Tests.test_success_body_uncertain_close_fails) ... ERROR
+test_whole_other_sources_and_inverse_ast (__main__.Tests.test_whole_other_sources_and_inverse_ast) ... ok
+
+======================================================================
+ERROR: test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='descriptor')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 30, in test_all_mismatches_refuse
+    with self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                       ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='operation')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 30, in test_all_mismatches_refuse
+    with self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                       ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='pair_checkpoint_input')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 30, in test_all_mismatches_refuse
+    with self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                       ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='producer')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 30, in test_all_mismatches_refuse
+    with self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                       ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) (field='non_tail_transport_input')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 30, in test_all_mismatches_refuse
+    with self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                       ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_complete_matching_selection (__main__.Tests.test_complete_matching_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 25, in test_complete_matching_selection
+    r,e,p=self.fixture();self.assertEqual(self.m['_selection_graphs'](r,e,'policy'),{'a'*64})
+                                          ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_firstfatal_and_close_once (__main__.Tests.test_firstfatal_and_close_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 52, in test_firstfatal_and_close_once
+    with self.assertRaises(MemoryError) as caught:self.m['_source_body'](p)
+                                                  ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: '_source_body'
+
+======================================================================
+ERROR: test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='missing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 39, in test_missing_input_or_plan_header
+    with self.subTest(mode=mode),self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                                               ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='schema')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 39, in test_missing_input_or_plan_header
+    with self.subTest(mode=mode),self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                                               ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='bool')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 39, in test_missing_input_or_plan_header
+    with self.subTest(mode=mode),self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                                               ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='duplicate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 39, in test_missing_input_or_plan_header
+    with self.subTest(mode=mode),self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                                               ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) (mode='unsorted')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 39, in test_missing_input_or_plan_header
+    with self.subTest(mode=mode),self.assertRaises(ValueError):self.m['_selection_graphs'](r,e,'policy')
+                                                               ~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: '_selection_graphs'
+
+======================================================================
+ERROR: test_owned_fd_exact_read (__main__.Tests.test_owned_fd_exact_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 46, in test_owned_fd_exact_read
+    p=pathlib.Path(d)/'source.py';p.write_bytes(b'body');self.assertEqual(self.m['_source_body'](p),b'body')
+                                                                          ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: '_source_body'
+
+======================================================================
+ERROR: test_path_replacement_links_and_size (__main__.Tests.test_path_replacement_links_and_size)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 73, in test_path_replacement_links_and_size
+    with self.assertRaises(ValueError):self.m['_source_body'](q)
+                                       ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: '_source_body'
+
+======================================================================
+ERROR: test_read_growth_bound (__main__.Tests.test_read_growth_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 68, in test_read_growth_bound
+    with patch.object(os,'read',side_effect=read),self.assertRaisesRegex(ValueError,'grew'):self.m['_source_body'](p)
+                                                                                            ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: '_source_body'
+
+======================================================================
+ERROR: test_success_body_uncertain_close_fails (__main__.Tests.test_success_body_uncertain_close_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 58, in test_success_body_uncertain_close_fails
+    with patch.object(os,'close',side_effect=close),self.assertRaises(IO.CleanupFailure):self.m['_source_body'](p)
+                                                                                         ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: '_source_body'
+
+======================================================================
+FAIL: test_metadata_8k_boundary (__main__.Tests.test_metadata_8k_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/test_corrections02.py", line 41, in test_metadata_8k_boundary
+    self.assertEqual(self.m['META'],8192)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 131072 != 8192
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.071s
+
+FAILED (failures=1, errors=16)

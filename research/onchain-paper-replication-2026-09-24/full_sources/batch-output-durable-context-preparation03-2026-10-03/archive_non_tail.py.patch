@@ -1,0 +1,54 @@
+--- immutable02/archive_non_tail.py
++++ candidate03/archive_non_tail.py
+@@ -15,6 +15,11 @@
+  if not v:raise ValueError(m)
+ def encode(v):
+  b=(json.dumps(v,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode();require(len(b)<=META,'non-tail control metadata cap');return b
++def job_document(value):
++ # Original imported Prepared._selection_now uses original_dictionary's2MiB
++ # registered-document ceiling; this is not an8KiB publication record.
++ raw=(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
++ require(len(raw)<=2*1024**2,'original imported job document bound');return raw
+ def fatal(e):return isinstance(e,MemoryError) or (not isinstance(e,Exception) and not isinstance(e,CleanupFailure))
+ def select(first,later):
+  if first is None:return later
+@@ -147,7 +152,9 @@
+   require(type(policy_input) is str and policy_input in run.admission.inputs and job_input in run.admission.inputs,'registered non-tail/job inputs required')
+   self.run=run;self.input=policy_input;self.job_input=job_input;self.policy_raw=run.read_input(policy_input)
+   require(len(self.policy_raw)<=META,'non-tail policy exceeds original8KiB authority bound')
+-  self.policy=validate_policy(json.loads(self.policy_raw));self.job_raw=run.read_input(job_input);self.execution=json.loads(self.job_raw)
++  self.policy=validate_policy(json.loads(self.policy_raw));self.job_raw=run.read_input(job_input)
++  require(type(self.job_raw) is bytes and len(self.job_raw)<=2*1024**2,'original registered job byte bound')
++  self.execution=json.loads(self.job_raw);job_document(self.execution) # Same complete-document bound checked before birth.
+   graphs=_selection_graphs(run,self.execution,policy_input,(self.policy['receipt_output'],self.policy['terminal_output']))
+   require({v['graph'] for v in self.policy['slots']}==graphs,'whole selected original graph population differs')
+   require({self.policy['receipt_output'],self.policy['terminal_output']}<=set(run.admission.experiment['outputs']),'registered non-tail outputs required')
+@@ -163,7 +170,9 @@
+   self.started=time.monotonic();self.spent=dict(rounded_bytes=0,commands=0,parts=0);self.failed=False;self.closed=False;self.active=None;self.operations={};self.expected={};self.control_bytes=0;self.thread=get_ident()
+   self._config=encode({'policy':self.policy,'job_sha256':hashlib.sha256(self.job_raw).hexdigest(),'claim':self.claim,'root':str(self.root)})
+   intent={'schema_version':1,'kind':'non-tail-context','source':run.admission.source,'claim':self.claim,'policy_sha256':hashlib.sha256(self.policy_raw).hexdigest(),'job_input':job_input,'job_sha256':hashlib.sha256(self.job_raw).hexdigest(),'policy':self.policy,'semantics':'durable original-member reservations; no disposition authority'}
+-  encode(intent) # Complete ancestry/policy must fit8KiB BEFORE namespace birth.
++  intent_raw=encode(intent) # Complete ancestry/policy must fit8KiB BEFORE namespace birth.
++  receipt={'context':str(self.root.relative_to(run.admission.root)),'intent_sha256':hashlib.sha256(intent_raw).hexdigest()}
++  encode(receipt) # The initial output anchor is also a complete8KiB control record.
+   self.root.mkdir();self.fd=os.open(self.root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);self.inode=(os.fstat(self.fd).st_dev,os.fstat(self.fd).st_ino)
+   try:
+    pfd=os.open(parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+@@ -171,7 +180,7 @@
+    except BaseException as e:close_all([lambda:os.close(pfd)],e)
+    else:close_all([lambda:os.close(pfd)])
+    self.publish('intent.json',intent)
+-   run.write_json(self.policy['receipt_output'],{'context':str(self.root.relative_to(run.admission.root)),'intent_sha256':hashlib.sha256(self.expected['intent.json']).hexdigest()});self.receipt=run._published_outputs[self.policy['receipt_output']]
++   run.write_json(self.policy['receipt_output'],receipt);self.receipt=run._published_outputs[self.policy['receipt_output']]
+    self.check()
+   except BaseException as e:self.failed=True;self.closed=True;close_all([lambda:os.close(self.fd)],e)
+  def publish(self,name,value):
+@@ -184,7 +193,7 @@
+   require(self.run._claim_sha256==self.claim and self.run.read_input(self.input)==self.policy_raw and self.run.read_input(self.job_input)==self.job_raw,'original non-tail admission changed')
+   require(encode({'policy':self.policy,'job_sha256':hashlib.sha256(self.job_raw).hexdigest(),'claim':self.claim,'root':str(self.root)})==self._config,'non-tail configuration changed')
+   require(matching_owner.metadata(self.base/'owner.json',self.run.admission.root)[1]==self.guard_hash and matching_owner.metadata(self.base/'launch.json',self.run.admission.root)[1]==self.launch_hash,'original native records changed')
+-  require(encode(self.execution)==encode(json.loads(self.job_raw)),'original parsed resource configuration changed')
++  require(job_document(self.execution)==job_document(json.loads(self.job_raw)),'original parsed resource configuration changed')
+   matching_owner._guard(self.run,self.execution['resources'],self.guard,self.base)
+   require(self.run._published_outputs[self.policy['receipt_output']]==self.receipt and matching_owner.metadata(self.run.directory/'outputs'/self.policy['receipt_output'],self.run.admission.root)[1]==self.receipt,'non-tail output anchor changed')
+   require((self.root.lstat().st_dev,self.root.lstat().st_ino)==(os.fstat(self.fd).st_dev,os.fstat(self.fd).st_ino)==self.inode and self.root.resolve()==self.root,'non-tail root changed')

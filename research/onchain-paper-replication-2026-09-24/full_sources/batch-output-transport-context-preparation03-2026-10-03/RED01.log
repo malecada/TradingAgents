@@ -1,0 +1,50 @@
+test_actual_reviewer_redirect (__main__.Tests.test_actual_reviewer_redirect) ... FAIL
+test_child_open_failure_closes_parent (__main__.Tests.test_child_open_failure_closes_parent) ... FAIL
+test_file_replacement (__main__.Tests.test_file_replacement) ... ok
+test_firstfatal_and_independent_closes (__main__.Tests.test_firstfatal_and_independent_closes) ... FAIL
+test_ordinary_close_then_first_actual_fatal (__main__.Tests.test_ordinary_close_then_first_actual_fatal) ... ERROR
+test_regular_parent_replacement (__main__.Tests.test_regular_parent_replacement) ... ok
+
+======================================================================
+ERROR: test_ordinary_close_then_first_actual_fatal (__main__.Tests.test_ordinary_close_then_first_actual_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation03-2026-10-03/test_parent03.py", line 47, in test_ordinary_close_then_first_actual_fatal
+    with self.assertRaises(SystemExit) as got:m.bootstrap_read(p)
+                                              ~~~~~~~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation02-2026-10-03/non_tail_context.py", line 41, in bootstrap_read
+    if primary is not None:raise primary
+                           ^^^^^^^^^^^^^
+candidate03.BootstrapCleanupFailure: dependency close uncertain; no retry
+
+======================================================================
+FAIL: test_actual_reviewer_redirect (__main__.Tests.test_actual_reviewer_redirect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation03-2026-10-03/test_parent03.py", line 14, in test_actual_reviewer_redirect
+    with self.assertRaises(ValueError):m.bootstrap_read(p)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_child_open_failure_closes_parent (__main__.Tests.test_child_open_failure_closes_parent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation03-2026-10-03/test_parent03.py", line 56, in test_child_open_failure_closes_parent
+    self.assertEqual(len(opened),1);self.assertEqual(closed,opened)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_firstfatal_and_independent_closes (__main__.Tests.test_firstfatal_and_independent_closes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation03-2026-10-03/test_parent03.py", line 38, in test_firstfatal_and_independent_closes
+    self.assertIs(got.exception,first);self.assertEqual(len(seen),2);self.assertEqual(len(set(seen)),2)
+                                       ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: 1 != 2
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+
+FAILED (failures=3, errors=1)

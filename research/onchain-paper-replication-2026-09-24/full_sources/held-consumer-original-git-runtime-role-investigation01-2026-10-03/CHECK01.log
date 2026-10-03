@@ -1,0 +1,21 @@
+warning: lazy fetching disabled; some objects may not be available
+fatal: git cat-file: could not get object info
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-original-git-runtime-role-investigation01-2026-10-03/check01.py", line 44, in <module>
+    assert mode in ('100644','100755');body=obj(oid,'blob');assert sha(body)==row['sha256']==row['claim_sha256'];source.append({'path':path,'git_mode':mode,'object':oid,'bytes':len(body),'sha256':sha(body)})
+                                            ~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-original-git-runtime-role-investigation01-2026-10-03/check01.py", line 28, in obj
+    assert git(G,'cat-file','-t',oid).strip().decode()==kind
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-original-git-runtime-role-investigation01-2026-10-03/check01.py", line 21, in git
+    def git(g,*a):return subprocess.check_output(['git','--git-dir='+str(g),*a],env={**os.environ,'GIT_NO_LAZY_FETCH':'1','GIT_OPTIONAL_LOCKS':'0'},timeout=15)
+                         ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 472, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', '--git-dir=/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-native-successor-preparation06-2026-10-03/outcome-recovery01/repository.git', 'cat-file', '-t', '9df0ab43741659b390eec3d64070b0386e98c871']' returned non-zero exit status 128.

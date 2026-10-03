@@ -1,0 +1,9 @@
+NTC1 fixed controls: bounded growth refusal and identical first MemoryError after two distinct real closes
+NTC2 fixed controls: foreign threads refused/revoked; swallowed reentrant refusal cannot commit or refund; exact32768 charges65536
+COMPLETE local original/recovery score-batches members 4 charges {'rounded_bytes': 262144, 'commands': 8, 'parts': 8}
+COMPLETE local original/recovery mcm-output members 2 charges {'rounded_bytes': 131072, 'commands': 4, 'parts': 4}
+COMPLETE local original/recovery graph-artifact members 3 charges {'rounded_bytes': 196608, 'commands': 6, 'parts': 6}
+NTC3 fixed controls: birth/body/close/fatal revoke shared alias with original spend intact
+NTC4 exact actual interleaving old02 ACCEPTED BAD PATH 1 independent closes
+NTC4 exact actual interleaving new03 refused 2 independent closes
+{"status": "source-controls-pass", "corrected": ["NTC1-fatal/growth", "NTC2", "NTC3", "NTC4"], "remaining": [], "author_bodies": 18, "dependency_bodies": 5, "authority_or_network": false}

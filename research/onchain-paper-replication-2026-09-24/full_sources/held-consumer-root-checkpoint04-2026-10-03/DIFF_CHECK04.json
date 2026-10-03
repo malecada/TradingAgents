@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "checks": [
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 2,
+      "stdout": "research/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/RED02.log:1: trailing whitespace.\n+test_all_mismatches_refuse (__main__.Tests.test_all_mismatches_refuse) ... \nresearch/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/RED02.log:10: trailing whitespace.\n+test_missing_input_or_plan_header (__main__.Tests.test_missing_input_or_plan_header) ... \nresearch/onchain-paper-replication-2026-09-24/full_sources/batch-output-durable-context-preparation02-2026-10-03/archive_non_tail.py.patch:24: trailing whitespace.\n+ \nresearch/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation03-2026-10-03/candidate03.patch:5: trailing whitespace.\n+ \nresearch/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation03-2026-10-03/candidate03.patch:56: trailing whitespace.\n+ \nresearch/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation03-2026-10-03/candidate03.patch:56: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        "*.py",
+        "*.md",
+        "*.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "qualification": "Full check retains original immutable RED log trailing spaces and patch context/EOF bytes; source, Markdown and JSON scoped check passed. No original evidence bytes edited."
+}

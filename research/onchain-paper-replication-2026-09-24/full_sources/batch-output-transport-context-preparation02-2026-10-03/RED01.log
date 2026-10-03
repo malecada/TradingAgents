@@ -1,0 +1,94 @@
+test_actual_transport_rounding (__main__.Tests.test_actual_transport_rounding) ... FAIL
+test_bootstrap_valid (__main__.Tests.test_bootstrap_valid) ... ERROR
+test_bound_before_read (__main__.Tests.test_bound_before_read) ... ERROR
+test_bounded_bootstrap_firstfatal (__main__.Tests.test_bounded_bootstrap_firstfatal) ... ERROR
+test_clean_close_poisons_shared_alias (__main__.Tests.test_clean_close_poisons_shared_alias) ... FAIL
+test_foreign_threads_no_lost_spend (__main__.Tests.test_foreign_threads_no_lost_spend) ... FAIL
+test_growth_refusal (__main__.Tests.test_growth_refusal) ... ERROR
+test_positive_shared (__main__.Tests.test_positive_shared) ... ok
+test_same_thread_reentrancy_revokes (__main__.Tests.test_same_thread_reentrancy_revokes) ... FAIL
+
+======================================================================
+ERROR: test_bootstrap_valid (__main__.Tests.test_bootstrap_valid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation02-2026-10-03/test_corrections02.py", line 37, in test_bootstrap_valid
+    p=Path(d)/'x.py';p.write_bytes(b'abc');self.assertEqual(m.bootstrap_read(p),b'abc')
+                                                            ^^^^^^^^^^^^^^^^
+AttributeError: module 'context_under_test' has no attribute 'bootstrap_read'
+
+======================================================================
+ERROR: test_bound_before_read (__main__.Tests.test_bound_before_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation02-2026-10-03/test_corrections02.py", line 23, in test_bound_before_read
+    with patch.object(m.os,'read',side_effect=AssertionError('must not read')):
+                      ^^^^
+AttributeError: module 'context_under_test' has no attribute 'os'
+
+======================================================================
+ERROR: test_bounded_bootstrap_firstfatal (__main__.Tests.test_bounded_bootstrap_firstfatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation02-2026-10-03/test_corrections02.py", line 17, in test_bounded_bootstrap_firstfatal
+    with patch.object(m.os,'read',side_effect=fatal),patch.object(m.os,'close',side_effect=close):
+                      ^^^^
+AttributeError: module 'context_under_test' has no attribute 'os'
+
+======================================================================
+ERROR: test_growth_refusal (__main__.Tests.test_growth_refusal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation02-2026-10-03/test_corrections02.py", line 33, in test_growth_refusal
+    with patch.object(m.os,'read',side_effect=read):
+                      ^^^^
+AttributeError: module 'context_under_test' has no attribute 'os'
+
+======================================================================
+FAIL: test_actual_transport_rounding (__main__.Tests.test_actual_transport_rounding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation02-2026-10-03/test_corrections02.py", line 63, in test_actual_transport_rounding
+    b=m.Reservations(policy());b.reserve(32768);self.assertEqual(b.spent['rounded_bytes'],65536)
+                                                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 32768 != 65536
+
+======================================================================
+FAIL: test_clean_close_poisons_shared_alias (__main__.Tests.test_clean_close_poisons_shared_alias)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation02-2026-10-03/test_corrections02.py", line 74, in test_clean_close_poisons_shared_alias
+    self.assertEqual(closed,[rootfd]);self.assertTrue(c.revoked);self.assertTrue(alias.revoked)
+                                                                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_foreign_threads_no_lost_spend (__main__.Tests.test_foreign_threads_no_lost_spend)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation02-2026-10-03/test_corrections02.py", line 50, in test_foreign_threads_no_lost_spend
+    self.assertEqual(success,[]);self.assertEqual(len(errors),2);self.assertTrue(b.revoked);self.assertEqual(b.spent['commands'],0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: Lists differ: [{'rounded_bytes': 32768, 'commands': 1, '[59 chars]: 1}] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+{'rounded_bytes': 32768, 'commands': 1, 'parts': 1}
+
++ []
+- [{'commands': 1, 'parts': 1, 'rounded_bytes': 32768},
+-  {'commands': 1, 'parts': 1, 'rounded_bytes': 32768}]
+
+======================================================================
+FAIL: test_same_thread_reentrancy_revokes (__main__.Tests.test_same_thread_reentrancy_revokes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-preparation02-2026-10-03/test_corrections02.py", line 60, in test_same_thread_reentrancy_revokes
+    with self.assertRaises(ValueError):b.reserve(1)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.018s
+
+FAILED (failures=4, errors=4)

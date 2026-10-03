@@ -1,0 +1,10 @@
+NTC1 fixed controls: bounded growth refusal and identical first MemoryError after one real close
+NTC2 fixed controls: foreign threads refused/revoked; swallowed reentrant refusal cannot commit or refund; exact32768 charges65536
+COMPLETE local original/recovery score-batches members 4 charges {'rounded_bytes': 262144, 'commands': 8, 'parts': 8}
+COMPLETE local original/recovery mcm-output members 2 charges {'rounded_bytes': 131072, 'commands': 4, 'parts': 4}
+COMPLETE local original/recovery graph-artifact members 3 charges {'rounded_bytes': 196608, 'commands': 6, 'parts': 6}
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-transport-context-review02-2026-10-03/check02.py", line 104, in <module>
+    else:raise AssertionError('failure unexpectedly suppressed')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: failure unexpectedly suppressed

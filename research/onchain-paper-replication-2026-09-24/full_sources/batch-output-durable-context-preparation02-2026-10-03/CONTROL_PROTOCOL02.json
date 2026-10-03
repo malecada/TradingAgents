@@ -1,0 +1,44 @@
+{
+  "actual_policy": null,
+  "authority_metadata_limit": 8192,
+  "control_headroom_formula": "8192*(8+3*max_commands)",
+  "execution_admitted": false,
+  "kind": "source-only-non-tail-control-contract-v2",
+  "limits": {
+    "deadline_seconds": 1800,
+    "max_bytes_per_slot": 68719476736,
+    "max_commands": 131072,
+    "max_members_per_slot": 4096,
+    "max_parts": 65536,
+    "max_rounded_bytes": 1099511627776,
+    "part_bytes": 1048576,
+    "slots": 128
+  },
+  "oversize_ancestry_or_membership": "refuse complete body; no truncation, paging or implicit larger envelope",
+  "policy_schema": {
+    "category": "non-tail-original-members",
+    "exact_fields": [
+      "schema_version",
+      "kind",
+      "category",
+      "namespace",
+      "deadline_seconds",
+      "max_rounded_bytes",
+      "max_commands",
+      "max_parts",
+      "max_control_bytes",
+      "part_bytes",
+      "receipt_output",
+      "terminal_output",
+      "slots"
+    ],
+    "kind": "non-tail-durable-population-v1",
+    "schema_version": 1
+  },
+  "registered_inputs": null,
+  "registered_outputs": null,
+  "schema_version": 1,
+  "source_body_limit": 1048576,
+  "source_read_chunk": 65536,
+  "whole_body_encoding_required": true
+}
