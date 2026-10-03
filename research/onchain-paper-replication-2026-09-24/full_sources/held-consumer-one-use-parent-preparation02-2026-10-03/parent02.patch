@@ -1,0 +1,210 @@
+--- launch_success01.py.baseline
++++ launch_success01.py
+@@ -30,6 +30,7 @@
+ PARENT_LIMITS = dict(max_allocated_bytes=32*1024**2,
+                      max_logical_bytes=16*1024**2, max_entries=1024,
+                      max_depth=8, max_scan_seconds=5)
++SELECTED_CLEANUP_TYPES = ()
+ PROOF_FIELDS = ('release_review_sha256', 'external_capsule_recovery_sha256',
+                 'external_recovery_review_sha256')
+ 
+@@ -42,14 +43,14 @@
+ 
+ def fatal(error):
+     return isinstance(error, MemoryError) or (not isinstance(error, Exception)
+-            and not isinstance(error, ParentCleanupFailure))
++            and not isinstance(error, (ParentCleanupFailure,)+SELECTED_CLEANUP_TYPES))
+ 
+ def select(primary, later):
+     if primary is None:
+         return later
+     if fatal(primary):
+         return primary
+-    if fatal(later) or isinstance(later, ParentCleanupFailure):
++    if fatal(later) or isinstance(later, (ParentCleanupFailure,)+SELECTED_CLEANUP_TYPES):
+         return later
+     return primary
+ 
+@@ -193,10 +194,12 @@
+                     .splitlines() if line.startswith('MemAvailable:')))*1024
+ 
+ def prepared(request_path, expected, *, after=False):
++    global SELECTED_CLEANUP_TYPES
+     require(request_path.parent == PARENT and Path(__file__).resolve() == PARENT/'launch_success01.py'
+             and Path.cwd() == CAP, 'caller origin/cwd differs')
+     parser_raw = bootstrap(PARENT, 'held_outcome02.py', PARSER_SHA)
+     semantic = module(PARENT/'held_outcome02.py', '_selected_local6_semantic', parser_raw)
++    SELECTED_CLEANUP_TYPES = (semantic.CleanupFailure,)
+     reader = semantic.Reader(PARENT)
+     raw = reader.body(request_path.name)
+     require(sha(raw) == expected, 'exact independently reviewed request differs')
+@@ -258,47 +261,120 @@
+     reader.recheck()
+     return request, release, release_sha, semantic, outer
+ 
+-def write(directory, name, value):
++def directory_identity(directory):
++    """Acquire a current IO anchor; no directory-birth capability is claimed."""
++    directory = Path(directory)
++    require(directory.is_absolute() and directory.resolve() == directory,
++            'canonical receipt directory required')
++    parent = fd = None
++    primary = None
++    result = None
++    try:
++        parent = os.open(directory.parent, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        before = directory.lstat()
++        fd = os.open(directory.name, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC,
++                     dir_fd=parent)
++        key = lambda info:(info.st_dev,info.st_ino,info.st_mode,info.st_uid,info.st_gid)
++        require(stat.S_ISDIR(before.st_mode) and key(before) == key(os.fstat(fd))
++                == key(os.stat(directory.name,dir_fd=parent,follow_symlinks=False))
++                == key(directory.lstat()) and directory.resolve() == directory,
++                'receipt directory acquisition changed')
++        p = key(os.fstat(parent))
++        require(p == key(directory.parent.lstat()) and directory.parent.resolve() == directory.parent,
++                'receipt parent acquisition changed')
++        result = (p, key(before))
++    except BaseException as error:
++        primary = error
++    cleanup(([lambda:os.close(fd)] if fd is not None else [])+
++            ([lambda:os.close(parent)] if parent is not None else []), primary)
++    return result
++
++def write(directory, name, value, expected_identity=None):
+     require('/' not in name and name not in ('', '.', '..'), 'flat parent output')
++    require(expected_identity is not None, 'authenticated IO directory anchor required')
++    directory = Path(directory)
+     raw = (json.dumps(value, indent=2, sort_keys=True, allow_nan=False)+'\n').encode()
+     require(len(raw) <= 65536, 'parent receipt bound')
+-    fd = os.open(directory/name, os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC, 0o600)
++    parent = owned = fd = None
+     primary = None
++    key = lambda info:(info.st_dev,info.st_ino,info.st_mode,info.st_uid,info.st_gid)
+     try:
++        require(directory.is_absolute() and directory.resolve() == directory,
++                'receipt directory redirected')
++        parent = os.open(directory.parent, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        require(key(os.fstat(parent)) == expected_identity[0] == key(directory.parent.lstat()),
++                'receipt parent differs from acquired anchor')
++        owned = os.open(directory.name, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC,
++                        dir_fd=parent)
++        def joined():
++            require(directory.parent.resolve() == directory.parent and directory.resolve() == directory
++                    and key(os.fstat(parent)) == expected_identity[0] == key(directory.parent.lstat())
++                    and key(os.fstat(owned)) == expected_identity[1] == key(directory.lstat())
++                    == key(os.stat(directory.name,dir_fd=parent,follow_symlinks=False)),
++                    'original acquired receipt directory changed')
++        joined()
++        fd = os.open(name, os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,
++                     0o600, dir_fd=owned)
++        created = key(os.fstat(fd))
+         offset = 0
+         while offset < len(raw):
+             size = os.write(fd, raw[offset:])
+             require(size > 0, 'parent receipt short write')
+             offset += size
+         os.fsync(fd)
++        final = os.fstat(fd)
++        require(stat.S_ISREG(final.st_mode) and final.st_nlink == 1
++                and final.st_size == len(raw) and key(final) == created
++                and signature(final) == signature(os.stat(name,dir_fd=owned,follow_symlinks=False))
++                == signature((directory/name).lstat()) and (directory/name).resolve() == directory/name,
++                'atomic owned receipt member changed')
++        joined()
++        os.fsync(owned)
++        joined()
+     except BaseException as error:
+         primary = error
+-    cleanup([lambda:os.close(fd)], primary)
++    cleanup(([lambda:os.close(fd)] if fd is not None else [])+
++            ([lambda:os.close(owned)] if owned is not None else [])+
++            ([lambda:os.close(parent)] if parent is not None else []), primary)
+ 
+ def ticks(pid):
+     return Path('/proc', str(pid), 'stat').read_text().rsplit(')',1)[1].split()[19]
+ 
+ def reap_controller(process, recorded_ticks):
+-    """Every independent termination/reap attempt uses the fatal reducer."""
+-    def terminate():
++    """Independent TERM, first wait, conditional KILL, and final reap."""
++    primary = None
++    reaped = False
++    def retain(error):
++        nonlocal primary
++        primary = select(primary, error)
++    def joined_signal(number):
++        require(recorded_ticks is not None and ticks(process.pid) == recorded_ticks,
++                'cannot stop unjoined controller identity')
++        os.killpg(process.pid, number)
++    try:
+         if process.poll() is None:
+-            require(recorded_ticks is not None and ticks(process.pid) == recorded_ticks,
+-                    'cannot stop unjoined controller identity')
+-            os.killpg(process.pid, signal.SIGTERM)
+-    def wait_then_kill():
+-        primary = None
+-        try:
+-            process.wait(timeout=60)
+-            return
+-        except subprocess.TimeoutExpired:
+-            try:
+-                require(recorded_ticks is not None and ticks(process.pid) == recorded_ticks,
+-                        'controller identity changed')
+-                os.killpg(process.pid, signal.SIGKILL)
+-            except BaseException as error:
+-                primary = error
+-        cleanup([lambda:process.wait(timeout=5)], primary)
+-    cleanup([terminate, wait_then_kill])
++            joined_signal(signal.SIGTERM)
++    except BaseException as error:
++        retain(error)
++    try:
++        process.wait(timeout=60)
++        reaped = True
++    except BaseException as error:
++        if not isinstance(error, subprocess.TimeoutExpired):
++            retain(error)
++    if not reaped:
++        try:
++            joined_signal(signal.SIGKILL)
++        except BaseException as error:
++            retain(error)
++        try:
++            process.wait(timeout=5)
++            reaped = True
++        except BaseException as error:
++            retain(error)
++    if primary is not None:
++        raise primary
++    require(reaped, 'controller final reap unresolved')
+ 
+ def finish_check(semantic, outer, release, release_path, release_sha):
+     reader = semantic.Reader(CAP)
+@@ -318,7 +394,8 @@
+     # Exact original post-tail semantics, with the reviewed bounded reader.
+     raw = reader.body('fixture_tools/raw_receipts01.py')
+     require(sha(raw) == release['source_files']['fixture_tools/raw_receipts01.py'], 'post-tail source differs')
+-    ns = {'Path':Path, 'GIB':GIB, 'require':require,
++    ns = {'Path':Path, 'GIB':GIB, 'require':require, 'digest':sha,
++          'body':lambda root,name:reader.body(name),
+           'metadata':lambda root,name:reader.json(name)}
+     definition = next(n for n in ast.parse(raw).body if isinstance(n,ast.FunctionDef)
+                       and n.name == 'authenticate_post_tail')
+@@ -345,6 +422,7 @@
+     require(attempt.resolve() == attempt and attempt.is_dir(), 'parent attempt root redirected')
+     directory = attempt/IDENTITY
+     directory.mkdir(exist_ok=False)  # Permanently reserved, including preclaim failure.
++    directory_pin = directory_identity(directory)
+     primary = None
+     process = None
+     fds = []
+@@ -360,7 +438,7 @@
+     def interrupted(number, frame):
+         raise InterruptedError('parent interrupted by signal '+str(number))
+     def receipt(name, value):
+-        write(directory, name, value)
++        write(directory, name, value, directory_pin)
+     try:
+         for number in (signal.SIGINT, signal.SIGTERM):
+             handlers[number] = signal.signal(number, interrupted)

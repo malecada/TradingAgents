@@ -1,0 +1,106 @@
+--- frozen01/recovery01.py
++++ candidate02/recovery01.py
+@@ -91,28 +91,84 @@
+  with new_file(destination) as fd:
+   sink=Sink(fd);tar_stream(root,m,sink);os.fsync(fd);same(root,m)
+  return {'bytes':sink.count,'sha256':sink.hash.hexdigest(),'manifest_sha256':digest(encode(m))}
++INFLATED=BASE+64*1024**2
++PAX=8192
++
++def framed_members(raw):
++ """Bounded gzip reads and raw TAR headers, before any extension parser."""
++ gz=None;total=0;headers=0;pending=None
++ try:
++  gz=gzip.GzipFile(fileobj=io.BytesIO(raw),mode='rb')
++  def take(n):
++   nonlocal total
++   require(type(n) is int and 0<=n<=FILE,'framing read extent');parts=[];left=n
++   while left:
++    block=gz.read(min(left,65536));require(block,'truncated TAR framing');total+=len(block);require(total<=INFLATED,'inflated TAR total bound');parts.append(block);left-=len(block)
++   return b''.join(parts)
++  while True:
++   header=take(512);headers+=1;require(headers<=65538,'TAR header count')
++   if header==bytes(512):
++    require(pending is None and take(512)==bytes(512),'incomplete TAR termination')
++    while True:
++     block=gz.read(65536)
++     if not block:break
++     total+=len(block);require(total<=INFLATED and not any(block),'inflated/trailing TAR bound')
++    return
++   t=tarfile.TarInfo.frombuf(header,'utf-8','strict')
++   require(type(t.size) is int and t.size>=0,'negative TAR extent')
++   if t.type==tarfile.XHDTYPE:
++    require(pending is None and t.name=='././@PaxHeader' and t.size<=PAX,'PAX type/extent refused before payload')
++    body=take(t.size);padding=take((-t.size)%512);require(not any(padding),'PAX padding');offset=0;fields={}
++    while offset<len(body):
++     space=body.find(b' ',offset);require(offset<space<=offset+8 and body[offset:space].isdigit(),'PAX record length');n=int(body[offset:space]);require(n>space-offset+3 and offset+n<=len(body),'PAX record bound');record=body[space+1:offset+n];require(record.endswith(b'\n') and b'=' in record,'PAX record form');key,value=record[:-1].split(b'=',1);require(key==b'path' and key not in fields,'unselected PAX extension');fields[key]=value.decode('utf-8','strict');offset+=n
++    require(set(fields)=={b'path'},'PAX path missing');pending=path_name(fields[b'path']);continue
++   require(t.type in (tarfile.REGTYPE,tarfile.AREGTYPE,tarfile.DIRTYPE),'TAR extension/sparse/link type refused before payload')
++   name=path_name(pending if pending is not None else t.name);pending=None
++   require((t.isdir() and t.size==0) or (t.isfile() and t.size<=FILE),'TAR member bound before payload')
++   body=take(t.size);padding=take((-t.size)%512);require(not any(padding),'TAR member padding');yield name,t,body
++ finally:_cleanup(() if gz is None else (gz.close,))
++
++class RestoreDirectories:
++ """Original created inode handles; never chmod a replacement pathname."""
++ def __init__(self,dest):
++  self.dest=Path(dest);self.records={};self.fds=[];self.parent=None
++ def begin(self):
++  require(self.dest.parent.resolve()==self.dest.parent,'restore external parent redirected');fd=os.open(self.dest.parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);self.fds.append(fd);s=os.fstat(fd);self.parent=(self.dest.parent,fd,(s.st_dev,s.st_ino,s.st_mode));self.create('')
++ def parent_check(self):
++  p,fd,pin=self.parent;s=os.fstat(fd);now=p.lstat();require(p.resolve()==p and (s.st_dev,s.st_ino,s.st_mode)==pin==(now.st_dev,now.st_ino,now.st_mode),'original restore parent changed')
++ def check(self,name):
++  path,fd,pfd,leaf,pin=self.records[name];self.parent_check()
++  if name:self.check(str(PurePosixPath(name).parent) if '/' in name else '')
++  s=os.fstat(fd);at=os.stat(leaf,dir_fd=pfd,follow_symlinks=False);now=path.lstat();require(path.resolve()==path and stat.S_ISDIR(s.st_mode) and (s.st_dev,s.st_ino,s.st_mode)==pin==(at.st_dev,at.st_ino,at.st_mode)==(now.st_dev,now.st_ino,now.st_mode),'created directory identity changed');return fd
++ def create(self,name):
++  if name:
++   path_name(name);parent=str(PurePosixPath(name).parent);parent='' if parent=='.' else parent;pfd=self.check(parent);path=self.dest/name;leaf=Path(name).name
++  else:self.parent_check();pfd=self.parent[1];path=self.dest;leaf=path.name
++  os.mkdir(leaf,0o700,dir_fd=pfd);born=os.stat(leaf,dir_fd=pfd,follow_symlinks=False);require(stat.S_ISDIR(born.st_mode),'created directory replaced');fd=os.open(leaf,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=pfd);self.fds.append(fd);s=os.fstat(fd);require((s.st_dev,s.st_ino,s.st_mode)==(born.st_dev,born.st_ino,born.st_mode),'created directory changed before open');self.records[name]=(path,fd,pfd,leaf,(s.st_dev,s.st_ino,s.st_mode));self.check(name)
++ def mode(self,name,mode):
++  fd=self.check(name);os.fchmod(fd,mode);path,fd,pfd,leaf,pin=self.records[name];s=os.fstat(fd);self.records[name]=(path,fd,pfd,leaf,(pin[0],pin[1],s.st_mode));self.check(name);os.fsync(fd)
++ def close(self):_cleanup(tuple(lambda fd=fd:os.close(fd) for fd in reversed(self.fds)))
++
+ def restore(archive,info,m,dest):
+- archive=Path(archive);dest=Path(dest);validate(m);raw=read(archive.parent,archive.name);require(set(info)=={'bytes','sha256','manifest_sha256'} and len(raw)==info['bytes'] and digest(raw)==info['sha256'] and digest(encode(m))==info['manifest_sha256'],'archive binding differs');require(dest.parent.resolve()==dest.parent and not os.path.lexists(dest),'fresh destination required');dest.mkdir(mode=0o700);expected={r['path']:r for r in m['members']};seen=set();tar=None
+- try:
+-  tar=tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz')
+-  for t in tar:
+-   name=path_name(t.name);require(name in expected and name not in seen,'extra/repeated tar member');r=expected[name];require(t.mode==r['mode'] and not t.issym() and not t.islnk(),'archive mode/link');q=dest/name;require(q.parent.resolve()==q.parent and q.parent.is_dir(),'restore parent missing/redirected')
+-   if r['kind']=='directory':require(t.isdir() and t.size==0,'directory extent/type');q.mkdir(mode=0o700)
++ archive=Path(archive);dest=Path(dest);validate(m);raw=read(archive.parent,archive.name);require(set(info)=={'bytes','sha256','manifest_sha256'} and len(raw)==info['bytes'] and digest(raw)==info['sha256'] and digest(encode(m))==info['manifest_sha256'],'archive binding differs');require(dest.parent.resolve()==dest.parent and not os.path.lexists(dest),'fresh destination required');expected={r['path']:r for r in m['members']};seen=set();directories=RestoreDirectories(dest);members=None
++ try:
++  directories.begin();members=framed_members(raw)
++  for name,t,body in members:
++   require(name in expected and name not in seen,'extra/repeated tar member');r=expected[name];require(t.mode==r['mode'],'archive mode');q=dest/name;parent=str(PurePosixPath(name).parent);parent='' if parent=='.' else parent;directories.check(parent)
++   if r['kind']=='directory':require(t.isdir() and t.size==0,'directory extent/type');directories.create(name)
+    else:
+-    require(t.isfile() and t.size==r['bytes']<=FILE,'file extent/type');stream=None
+-    try:
+-     stream=tar.extractfile(t);require(stream is not None,'missing body');b=stream.read(FILE+1);require(len(b)==r['bytes'] and digest(b)==r['sha256'],'archive body mismatch')
+-     with new_file(q) as fd:
+-      offset=0
+-      while offset<len(b):n=os.write(fd,b[offset:]);require(n>0,'restore short write');offset+=n
+-      os.fchmod(fd,r['mode']);os.fsync(fd)
+-    finally:_cleanup(() if stream is None else (stream.close,))
++    require(t.isfile() and len(body)==t.size==r['bytes']<=FILE and digest(body)==r['sha256'],'file extent/type/hash')
++    with new_file(q) as fd:
++     offset=0
++     while offset<len(body):n=os.write(fd,body[offset:]);require(n>0,'restore short write');offset+=n
++     os.fchmod(fd,r['mode']);os.fsync(fd)
++    directories.check(parent)
+    seen.add(name)
+- finally:_cleanup(() if tar is None else (tar.close,))
+- require(seen==set(expected),'missing tar member')
+- for r in reversed(m['members']):
+-  if r['kind']=='directory':os.chmod(dest/r['path'],r['mode'])
+- os.chmod(dest,m['root_mode']);same(dest,m);sink=Sink();tar_stream(dest,m,sink);require(sink.count==len(raw) and sink.hash.hexdigest()==digest(raw),'noncanonical/trailing archive framing');return {'status':'byte-restored-no-authority','archive_sha256':digest(raw),'members':len(seen),'root_mode':m['root_mode']}
++  require(seen==set(expected),'missing tar member')
++  for r in reversed(m['members']):
++   if r['kind']=='directory':directories.mode(r['path'],r['mode'])
++  directories.mode('',m['root_mode']);same(dest,m);sink=Sink();tar_stream(dest,m,sink);require(sink.count==len(raw) and sink.hash.hexdigest()==digest(raw),'noncanonical/trailing archive framing');return {'status':'byte-restored-no-authority','archive_sha256':digest(raw),'members':len(seen),'root_mode':m['root_mode']}
++ finally:_cleanup((() if members is None else (members.close,))+(directories.close,))
+ def put(path,value):
+  raw=encode(value);require(len(raw)<=FILE,'receipt extent')
+  with new_file(path) as fd:

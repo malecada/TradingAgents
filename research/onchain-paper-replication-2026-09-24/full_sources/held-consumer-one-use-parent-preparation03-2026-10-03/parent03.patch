@@ -1,0 +1,127 @@
+--- launch_success01.py.baseline
++++ launch_success01.py
+@@ -282,6 +282,12 @@
+         p = key(os.fstat(parent))
+         require(p == key(directory.parent.lstat()) and directory.parent.resolve() == directory.parent,
+                 'receipt parent acquisition changed')
++        # Both the acquired directory and its parent entry are durable before release.
++        os.fsync(fd)
++        os.fsync(parent)
++        require(p == key(os.fstat(parent)) == key(directory.parent.lstat())
++                and key(before) == key(os.fstat(fd)) == key(directory.lstat())
++                and directory.resolve() == directory, 'reservation changed during fsync')
+         result = (p, key(before))
+     except BaseException as error:
+         primary = error
+@@ -337,6 +343,66 @@
+             ([lambda:os.close(owned)] if owned is not None else [])+
+             ([lambda:os.close(parent)] if parent is not None else []), primary)
+ 
++def open_log(directory, name, expected_identity):
++    """Atomic nofollow log FD; its acquired parent anchor is mandatory."""
++    require(name in ('stdout.log','stderr.log'), 'finite owned log name')
++    directory = Path(directory)
++    parent = owned = fd = None
++    primary = None
++    key = lambda info:(info.st_dev,info.st_ino,info.st_mode,info.st_uid,info.st_gid)
++    try:
++        require(directory.is_absolute() and directory.resolve() == directory,
++                'log directory redirected')
++        parent = os.open(directory.parent, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        require(key(os.fstat(parent)) == expected_identity[0] == key(directory.parent.lstat()),
++                'log parent differs from acquired anchor')
++        owned = os.open(directory.name, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC,
++                        dir_fd=parent)
++        def joined():
++            require(directory.parent.resolve() == directory.parent and directory.resolve() == directory
++                    and key(os.fstat(parent)) == expected_identity[0] == key(directory.parent.lstat())
++                    and key(os.fstat(owned)) == expected_identity[1] == key(directory.lstat())
++                    == key(os.stat(directory.name,dir_fd=parent,follow_symlinks=False)),
++                    'original acquired log directory changed')
++        joined()
++        fd = os.open(name, os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,
++                     0o600, dir_fd=owned)
++        actual = os.fstat(fd)
++        require(stat.S_ISREG(actual.st_mode) and actual.st_nlink == 1 and actual.st_size == 0
++                and signature(actual) == signature(os.stat(name,dir_fd=owned,follow_symlinks=False))
++                == signature((directory/name).lstat()), 'atomic owned log file changed')
++        joined()
++        os.fsync(fd)
++        os.fsync(owned)
++        joined()
++    except BaseException as error:
++        primary = error
++    # A failed acquisition closes the new log FD as well as both directory FDs.
++    try:
++        cleanup(([lambda:os.close(owned)] if owned is not None else [])+
++                ([lambda:os.close(parent)] if parent is not None else []), primary)
++    except BaseException as error:
++        cleanup(([lambda:os.close(fd)] if fd is not None else []), error)
++    return fd
++
++def log_join(directory, name, fd, expected_identity, *, final=False):
++    """Current actual FD/path join; growing child logs are sampled by inode."""
++    directory = Path(directory)
++    key = lambda info:(info.st_dev,info.st_ino,info.st_mode,info.st_uid,info.st_gid)
++    require(directory.resolve() == directory and directory.parent.resolve() == directory.parent
++            and key(directory.parent.lstat()) == expected_identity[0]
++            and key(directory.lstat()) == expected_identity[1], 'log directory anchor changed')
++    actual = os.fstat(fd)
++    path = directory/name
++    current = path.lstat()
++    require(stat.S_ISREG(actual.st_mode) and actual.st_nlink == current.st_nlink == 1
++            and key(actual) == key(current) and path.resolve() == path
++            and actual.st_size < FILE, 'original log FD/path/file bound differs')
++    if final:
++        require(signature(actual) == signature(current), 'final log member changed')
++    return {'path':name, 'device':actual.st_dev, 'inode':actual.st_ino,
++            'bytes':actual.st_size, 'mode':stat.S_IMODE(actual.st_mode), 'links':actual.st_nlink}
++
+ def ticks(pid):
+     return Path('/proc', str(pid), 'stat').read_text().rsplit(')',1)[1].split()[19]
+ 
+@@ -419,6 +485,7 @@
+     require(resource.getrlimit(resource.RLIMIT_FSIZE) == (FILE,FILE), 'parent file limit differs')
+     attempt = PARENT/'attempt'
+     attempt.mkdir(exist_ok=True)
++    directory_identity(attempt)  # fsync PARENT's attempt entry before any release.
+     require(attempt.resolve() == attempt and attempt.is_dir(), 'parent attempt root redirected')
+     directory = attempt/IDENTITY
+     directory.mkdir(exist_ok=False)  # Permanently reserved, including preclaim failure.
+@@ -449,7 +516,7 @@
+             'file_limit':list(resource.getrlimit(resource.RLIMIT_FSIZE)),
+             'identity_reuse_forbidden':True})
+         for name in ('stdout.log','stderr.log'):
+-            fds.append(os.open(directory/name, os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW, 0o600))
++            fds.append(open_log(directory, name, directory_pin))
+         public = ('PATH','HOME','LANG','LC_ALL','DBUS_SESSION_BUS_ADDRESS','XDG_RUNTIME_DIR')
+         env = {name:os.environ[name] for name in public if name in os.environ}
+         env.update(release['native_environment'])
+@@ -461,8 +528,8 @@
+             watch.check()
+             require(shutil.disk_usage(CAP).free >= 10*GIB, 'parent disk floor breached')
+             require(time.monotonic()-started < 2000, 'parent controller active deadline')
+-            require(all((directory/name).lstat().st_size < FILE for name in ('stdout.log','stderr.log')),
+-                    'parent log reached file bound')
++            for name,fd in zip(('stdout.log','stderr.log'),fds,strict=True):
++                log_join(directory,name,fd,directory_pin)
+             time.sleep(.25)
+         require(process.returncode == 0, 'actual outer controller exited nonzero')
+     except BaseException as error:
+@@ -488,6 +555,16 @@
+                         'cleanup_verified':False, 'qualification':'No fabricated native absence proof.'})
+             except BaseException as error:
+                 retain(error)
++        final_logs = []
++        for name,fd in zip(('stdout.log','stderr.log'),fds):
++            try:
++                final_logs.append(log_join(directory,name,fd,directory_pin,final=True))
++            except BaseException as error:
++                retain(error)
++        try:
++            receipt('log-fd-joins.json', {'actual_log_fd_path_joins':final_logs})
++        except BaseException as error:
++            retain(error)
+         try:
+             cleanup([lambda fd=fd:os.close(fd) for fd in fds], primary)
+         except BaseException as error:

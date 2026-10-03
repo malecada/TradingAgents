@@ -1,0 +1,38 @@
+--- baseline
+
++++ full
+
+@@ -1,4 +1,4 @@
+
+-def held_metadata_draft(root, source, anchor, rows, role_references, *, design_source=None):
++def full_held_metadata_draft(root, source, anchor, rows, role_references, *, design_source=None, closure_mode):
+     """Actual source/Git and metadata readback for a distinct imported route.
+ 
+     No OUT3 historical rules, fixed cold identities or old44 role set are reused.
+@@ -10,7 +10,7 @@
+
+     for module, name in ((builder, 'fixture_tools/capsule_builder01.py'), (generator, 'fixture_tools/generate_inputs01.py')):
+         require(Path(module.__file__).resolve() == root / name, 'held metadata helper origin differs')
+     require(Path(__file__).resolve() == root / 'proof_tools/build_release_draft01.py', 'held draft helper origin differs')
+-    source_plan = builder.held_source_plan(root, source, anchor, rows)
++    source_plan = builder.held_source_plan(root, source, anchor, rows, closure_mode=closure_mode, design_source=design_source)
+     require(type(role_references) is dict and set(role_references) <= set(generator.HELD_ROLES), 'unknown held release role')
+     roles = {}
+     for name in generator.HELD_ROLES:
+@@ -21,7 +21,7 @@
+
+         raw = builder.held_document(root, reference)
+         document = raw.decode('utf-8') if name == 'charter' else json.loads(raw)
+         roles[name] = {'reference': reference, 'document': document}
+-    plan = generator.held_input_plan(roles, source_plan)
++    plan = generator.held_input_plan(roles, source_plan, closure_mode=closure_mode)
+     auxiliary = plan['auxiliary_metadata']
+     if auxiliary is not None:
+         design = source if design_source is None else design_source
+@@ -99,4 +99,4 @@
+
+     runtime = None
+     if roles.get('runtime') is not None:
+         runtime = builder.held_runtime_metadata(root, roles['runtime']['document'])
+-    return {'schema_version': 1, 'kind': 'held-resource-release-metadata-draft-v1', 'status': 'draft-not-released', 'source_document': source_plan, 'input_plan': plan, 'route_readback': route_readback, 'runtime_readback': runtime, 'registration_authority': None, 'budget_authority': None, 'native_release': None, 'guarded_input_materialization': None, 'remaining': plan['remaining_roles'] + ['root independent source/runtime/input/registered-role review', 'fresh finite cumulative accounting and unused identity admission', 'genuine guarded numerical input-materialization entry', 'imported Target/native/current-guard/one-use launcher proof', 'whole writable-tree eligibility and actual external recovery'], 'execution_admitted': False}
++    return {'schema_version': 1, 'kind': 'held-resource-release-metadata-draft-v1', 'status': 'draft-not-released', 'source_document': source_plan, 'input_plan': plan, 'route_readback': route_readback, 'runtime_readback': runtime, 'registration_authority': None, 'budget_authority': None, 'native_release': None, 'guarded_input_materialization': None, 'remaining': plan['remaining_roles'] + ['full202 raw caller missing; selected f64 worker remains201/206', 'full202/151/207 Root registration and native release absent'] + ['root independent source/runtime/input/registered-role review', 'fresh finite cumulative accounting and unused identity admission', 'genuine guarded numerical input-materialization entry', 'imported Target/native/current-guard/one-use launcher proof', 'whole writable-tree eligibility and actual external recovery'], 'execution_admitted': False}

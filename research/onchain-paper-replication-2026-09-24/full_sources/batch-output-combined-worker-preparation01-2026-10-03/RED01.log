@@ -1,0 +1,35 @@
+E.E.
+======================================================================
+ERROR: test_combined_explicit_202 (__main__.Tests.test_combined_explicit_202)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-combined-worker-preparation01-2026-10-03/check_contract01.py", line 12, in test_combined_explicit_202
+    m=load();c,r,p=closure();self.assertEqual(m['_transfer_closure'](c,r,p),c['source_files'])
+                                              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-combined-worker-preparation01-2026-10-03/held_score_consumer.py.baseline", line 198, in _transfer_closure
+    require(type(value) is dict and set(value)==fields and type(value['schema_version']) is int and value['schema_version']==1 and value['kind']=='selected-held-transfer-source-closure-v1','typed selected implementation declaration')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-combined-worker-preparation01-2026-10-03/held_score_consumer.py.baseline", line 20, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: typed selected implementation declaration
+
+======================================================================
+ERROR: test_raw_policy_explicit (__main__.Tests.test_raw_policy_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-combined-worker-preparation01-2026-10-03/check_contract01.py", line 23, in test_raw_policy_explicit
+    self.assertEqual(m['_policy'](p,g,['a.json','b.json']),p)
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-combined-worker-preparation01-2026-10-03/held_score_consumer.py.baseline", line 29, in _policy
+    require(type(p) is dict and set(p)=={'schema_version','kind','targets','part_bytes','max_read_bytes','max_members'},'held consumer policy fields')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-combined-worker-preparation01-2026-10-03/held_score_consumer.py.baseline", line 20, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: held consumer policy fields
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.032s
+
+FAILED (errors=2)

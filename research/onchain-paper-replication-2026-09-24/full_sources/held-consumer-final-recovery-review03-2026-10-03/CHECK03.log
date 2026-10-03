@@ -1,0 +1,71 @@
+test_67byte_original_parser_bound (__main__.Checks.test_67byte_original_parser_bound) ... ok
+test_actual_readback_and_late_body_change (__main__.Checks.test_actual_readback_and_late_body_change) ... ERROR
+test_all851_frozen_types_no_special_reads (__main__.Checks.test_all851_frozen_types_no_special_reads) ... ok
+test_all_body_names_modes_and_reencoding (__main__.Checks.test_all_body_names_modes_and_reencoding) ... ok
+test_archive_pin_refused_before_read_or_write (__main__.Checks.test_archive_pin_refused_before_read_or_write) ... ok
+test_atomic_created_file_ownership (__main__.Checks.test_atomic_created_file_ownership) ... ok
+test_every_manifest_type_hash_mode (__main__.Checks.test_every_manifest_type_hash_mode) ... ok
+test_existing_file_cannot_receive_writes (__main__.Checks.test_existing_file_cannot_receive_writes) ... ok
+test_firstfatal_each_fd_close (__main__.Checks.test_firstfatal_each_fd_close) ... ok
+test_fixed_and_tiny_scaled_bounds (__main__.Checks.test_fixed_and_tiny_scaled_bounds) ... ok
+test_long_utf8_full_reencoding (__main__.Checks.test_long_utf8_full_reencoding) ... ok
+test_namespace_replacement_no_foreign_mutation (__main__.Checks.test_namespace_replacement_no_foreign_mutation) ... ok
+test_no_birth_or_metadata_operations (__main__.Checks.test_no_birth_or_metadata_operations) ... ok
+test_noncanonical_and_trailing_compression (__main__.Checks.test_noncanonical_and_trailing_compression) ... ok
+test_null_template_and_numerical_absence (__main__.Checks.test_null_template_and_numerical_absence) ... ok
+test_output_contract_refusals (__main__.Checks.test_output_contract_refusals) ... ok
+test_whole_inverse (__main__.Checks.test_whole_inverse) ... ok
+
+======================================================================
+ERROR: test_actual_readback_and_late_body_change (__main__.Checks.test_actual_readback_and_late_body_change)
+----------------------------------------------------------------------
+  | ExceptionGroup: body/cleanup failures (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 177, in flat_tar_stream
+    |     output.check();b=read(output.dest,mapping[r['path']]);require(len(b)==r['bytes'] and digest(b)==r['sha256'],'recovered flat body differs');t.size=len(b);tar.addfile(t,io.BytesIO(b))
+    |                                                           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 11, in require
+    |     if not v:raise ValueError(msg)
+    |              ^^^^^^^^^^^^^^^^^^^^^
+    | ValueError: recovered flat body differs
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/owned_io.py", line 34, in _cleanup
+    |     try:close()
+    |         ~~~~~^^
+    |   File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/gzip.py", line 373, in close
+    |     fileobj.write(self.compress.flush())
+    |     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 167, in write
+    |     def write(self,b):require(b==self.expected[self.count:self.count+len(b)],'noncanonical exact compressed bytes');return super().write(b)
+    |                       ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 11, in require
+    |     if not v:raise ValueError(msg)
+    |              ^^^^^^^^^^^^^^^^^^^^^
+    | ValueError: noncanonical exact compressed bytes
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-review03-2026-10-03/check03.py", line 72, in test_actual_readback_and_late_body_change
+    with patch.object(m,'read',change),self.assertRaises(ValueError):self.restore()
+                                                                     ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-review03-2026-10-03/check03.py", line 9, in restore
+    def restore(self):return m.restore(self.arc,self.info,self.man,self.dest)
+                             ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 192, in restore
+    require(seen==set(expected),'missing tar member');sink=ExactSink(raw);flat_tar_stream(output,m,mapping,sink);require(sink.count==len(raw) and sink.hash.hexdigest()==digest(raw),'noncanonical/trailing archive framing')
+                                                                          ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/recovery03.py", line 178, in flat_tar_stream
+    finally:_cleanup((() if tar is None else (tar.close,))+(() if gz is None else (gz.close,)))
+            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation03-2026-10-03/owned_io.py", line 52, in _cleanup
+    raise failure
+owned_io.CleanupFailure: score storage cleanup unresolved; worker must stop
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.289s
+
+FAILED (errors=1)

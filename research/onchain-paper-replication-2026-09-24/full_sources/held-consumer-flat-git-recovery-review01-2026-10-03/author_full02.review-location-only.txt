@@ -1,0 +1,38 @@
+"""Real tiny utility Git fixture for full schema: no actual d443/C6/claims/source donor.
+All bodies are generated opaque strings and metadata. Actual tiny commit IDs
+replace constants only inside this qualification process; no ResearchRun exists.
+"""
+import hashlib,json,os,tempfile,time
+from pathlib import Path
+from unittest.mock import patch
+import git_recovery01 as m
+from bounded_git01 import git
+P=Path(__file__).resolve().parent;R=Path(tempfile.mkdtemp(prefix='tiny-full-schema-',dir=REVIEW_OUTPUT));D=R/'tiny-donor.git';D.mkdir(mode=0o700);git(D,['init','--bare','.'])
+def put(path,value):m.a.put(path,value)
+def blob(b):return git(D,['hash-object','-w','--stdin'],b).decode().strip()
+def commit(rows,label):
+ tree=git(D,['mktree'],''.join(r['git_mode']+' blob '+r['object']+'\t'+r['path']+'\n' for r in sorted(rows,key=lambda x:x['path'])).encode()).decode().strip()
+ return git(D,['-c','user.name=synthetic','-c','user.email=synthetic@invalid','commit-tree',tree,'-m',label]).decode().strip()
+def row(name,body):return {'path':name,'git_mode':'100644','object':blob(body),'bytes':len(body),'sha256':m.a.digest(body)}
+bodies={f'f{i:03d}':('opaque '+str(i)+'\n').encode() for i in range(245)};rows=[row(n,b) for n,b in bodies.items()];byname={r['path']:r for r in rows};histlookups=[];claims=[];claimbodies={};charter=row('charter.txt',b'opaque synthetic charter, no research authorization\n')
+for i,n in enumerate((156,157,158,159)):
+ identity='synthetic-old-'+str(i);exp={'source_files':{r['path']:r['sha256'] for r in rows[:n]},'charter':{'path':charter['path'],'sha256':charter['sha256']}};reg={'program_id':'tiny-utility-only','experiments':{identity:exp}};regraw=m.a.encode(reg);rr=row('history-registration.json',regraw);selected=rows[:n]+[charter,rr];oid=commit(selected,'tiny synthetic historical gate '+str(i))
+ histlookups.extend(dict(r,commit=oid) for r in selected);claim={'experiment_id':identity,'source':oid,'design_source':oid,'registration':rr['path'],'registration_sha256':rr['sha256'],'experiment':exp,'program_id':'tiny-utility-only','family':{'attempt_budget':2,'prior_attempts':0},'effective_attempt_budget':i+2};cr=m.a.encode(claim);terminal={'experiment_id':identity,'claim_sha256':m.a.digest(cr),'status':'failed'};tr=m.a.encode(terminal);claimbodies['research_runs/'+identity+'/claim.json']=cr;claimbodies['research_runs/'+identity+'/failed.json']=tr;claims.append({'identity':identity,'claim_sha256':m.a.digest(cr),'terminal_sha256':m.a.digest(tr),'source':oid,'design_source':oid,'registration':rr['path'],'registration_sha256':rr['sha256'],'effective_budget':i+2})
+assert len(histlookups)==638
+registration={'experiments':{'original-import-held-success-20261003-01':{'source_files':{r['path']:r['sha256'] for r in rows[:204]},'inputs':{str(i):{'path':r['path'],'sha256':r['sha256']} for i,r in enumerate(rows[204:237])}}},'scope':'SYNTHETIC TINY UTILITY METADATA ONLY'};regraw=m.a.encode(registration);regrow=row('registration.json',regraw);current=rows+[regrow];source=commit(current,'tiny current246');c6=commit(rows[:26],'tiny selected26 distinct commit')
+cap=R/'capsule';cap.mkdir(mode=0o700);(cap/'.git').mkdir(mode=0o700);(cap/'.git/objects').mkdir(mode=0o700)
+for f in (D/'objects').glob('??/*'):
+ target=cap/'.git/objects'/f.parent.name/f.name;target.parent.mkdir(mode=0o700,exist_ok=True);target.write_bytes(f.read_bytes())
+for n,b in dict(bodies,**{'registration.json':regraw},**claimbodies).items():
+ target=cap/n;target.parent.mkdir(mode=0o700,parents=True,exist_ok=True);target.write_bytes(b)
+ext=R/'external';ext.mkdir(mode=0o700);(ext/'note').write_bytes(b'tiny offline utility evidence');bundle=R/'bundle';bundle.mkdir(mode=0o700);flat=R/'flat';flat.mkdir(mode=0o700);out=R/'proof';out.mkdir(mode=0o700)
+q={'schema_version':1,'capsule_root':str(cap),'source':source,'external_root':str(ext),'external_members':{'note':m.a.digest((ext/'note').read_bytes())},'output_root':str(R/'capture-uninvoked'),'registration':'registration.json','registration_sha256':regrow['sha256']};records={}
+for role,root in [('capsule',cap),('external',ext)]:
+ man=m.a.scan(root);q[role+'_manifest']=man;q[role+'_manifest_sha256']=m.a.digest(m.a.encode(man));records[role]=m.a.pack(root,man,bundle/(role+'.tar.gz'));put(bundle/(role+'-manifest.json'),man)
+put(R/'request.json',q);qsha=m.a.digest(m.a.encode(q));capture={'schema_version':1,'request_sha256':qsha,'source':source,'archives':records,'scope':'SYNTHETIC UTILITY CHAIN; actual capture/authenticate_source NOT invoked'};put(bundle/'capture.json',capture);csha=m.a.digest(m.a.encode(capture));e={'schema_version':1,'source':source,'current':current,'selected_c6':{'commit':c6,'rows':rows[:26]},'historical':{'lookups':histlookups,'claims':claims}};put(R/'expected.json',e)
+start=time.monotonic()
+with patch.object(m.a,'CAP',str(cap)),patch.object(m.a,'SOURCE',source),patch.object(m,'SOURCE',source),patch.object(m,'C6',c6):
+ m.a.recover(bundle,csha,q,qsha,flat);spec={'schema_version':1,'bundle':str(bundle),'flat_root':str(flat),'request_file':str(R/'request.json'),'request_sha256':qsha,'capture_sha256':csha,'recovery_sha256':m.a.digest((flat/'recovery.json').read_bytes()),'output_root':str(out),'expected_file':str(R/'expected.json'),'expected_sha256':m.a.digest(m.a.encode(e))};put(R/'spec.json',spec);result=m.prove(spec)
+assert result['current_committed_files']==246 and result['source_registration_joins']==205 and result['opaque_inputs']==33 and result['selected_c6_paths']==26 and result['historical_lookups']==638
+assert all(result[k] is False for k in ('full_c6_ancestry','full_original_filesystem','original_posix_modes_instantiated','external_origin_proved','runtime_recovered','outside_stores_recovered','research_authority'))
+print(json.dumps({'result':'PASS_TINY_FULL_PUBLIC_SCHEMA','scope':'Synthetic genuine Git objects only; patched tiny commit constants; no actual source/capsule/claim','current246':246,'source_registration205':205,'opaque33':33,'selected26':26,'historical638':638,'git_operations':result['git_operations'],'git_returned_bytes':result['git_returned_bytes'],'elapsed_seconds':time.monotonic()-start,'fixture':str(R)},indent=2))

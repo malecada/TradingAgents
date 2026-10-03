@@ -1,0 +1,119 @@
+{
+  "candidate_sha256": "e952f679c50b1a5b0dfd32a15281fe9a2dec8f6b0650b5834369e8b197286fdd",
+  "decision": "withheld",
+  "finding": "HUP3 remaining reservation-parent durability and anchored logs",
+  "members": [
+    {
+      "bytes": 141,
+      "links": 1,
+      "mode": 436,
+      "path": "CHECK02.log",
+      "sha256": "d16a36339d80385c21cdc3cfbde0bee853552f3f3ee1e4ce18d44d574dee023d",
+      "type": "file"
+    },
+    {
+      "bytes": 853,
+      "links": 1,
+      "mode": 436,
+      "path": "READBACK02.json",
+      "sha256": "c4abf6f897b25ee0d73952535930228de89af0d3bcf3b801fc432c6eab8b609d",
+      "type": "file"
+    },
+    {
+      "bytes": 4627,
+      "links": 1,
+      "mode": 436,
+      "path": "REVIEW02.md",
+      "sha256": "1b26d2b00f545d53502de714443457a8ca077f51a69281c2acea1f814c34a59c",
+      "type": "file"
+    },
+    {
+      "bytes": 8095,
+      "links": 1,
+      "mode": 436,
+      "path": "check02.py",
+      "sha256": "e02685e0ca180cdd99c1393d7cfc495dc7741a82799de941203738547334a3ba",
+      "type": "file"
+    },
+    {
+      "mode": 509,
+      "path": "foreign",
+      "type": "directory"
+    },
+    {
+      "bytes": 0,
+      "links": 1,
+      "mode": 384,
+      "path": "foreign/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type": "file"
+    },
+    {
+      "bytes": 0,
+      "links": 1,
+      "mode": 384,
+      "path": "foreign/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type": "file"
+    },
+    {
+      "mode": 509,
+      "path": "good",
+      "type": "directory"
+    },
+    {
+      "bytes": 21,
+      "links": 1,
+      "mode": 384,
+      "path": "good/complete.json",
+      "sha256": "a112dda6363842c477ff438c039f059133aa3c8da9c1fdd765b89c0aefaa2fcc",
+      "type": "file"
+    },
+    {
+      "bytes": 0,
+      "links": 1,
+      "mode": 384,
+      "path": "good/partial.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type": "file"
+    },
+    {
+      "mode": 511,
+      "path": "owned",
+      "target": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-one-use-parent-review02-2026-10-03/foreign",
+      "type": "symlink"
+    },
+    {
+      "mode": 509,
+      "path": "owned-retained",
+      "type": "directory"
+    },
+    {
+      "mode": 509,
+      "path": "posttail",
+      "type": "directory"
+    },
+    {
+      "mode": 509,
+      "path": "reservation-parent",
+      "type": "directory"
+    },
+    {
+      "mode": 509,
+      "path": "reservation-parent/fixed-identity",
+      "type": "directory"
+    },
+    {
+      "mode": 509,
+      "path": "same",
+      "type": "directory"
+    },
+    {
+      "mode": 509,
+      "path": "same-retained",
+      "type": "directory"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "source and tiny owned fixtures only; no launch/native/authority"
+}

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-full-source-helper-preparation02-2026-10-03/check_pair01.py", line 8, in <module>
+    b.full_rows(rows,q['closure_mode']);print('PASS exact accepted combined worker pair accepted in explicit202 map')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-full-source-helper-preparation01-2026-10-03/capsule_builder01.py", line 384, in full_rows
+    require(all(type(r['bytes']) is int and 0<r['bytes']<=MAX and type(r['sha256']) is str and r['sha256']==expected[r['path']] for r in rows),'unknown full source replacement/extent')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-full-source-helper-preparation01-2026-10-03/capsule_builder01.py", line 9, in require
+    if not value:raise ValueError(message)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: unknown full source replacement/extent

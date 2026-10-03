@@ -1,0 +1,57 @@
+INFLATED=BASE+64*1024**2
+PAX=8192
+
+def framed_members(raw):
+ """Bounded gzip reads and raw TAR headers, before any extension parser."""
+ gz=None;total=0;headers=0;pending=None
+ try:
+  gz=gzip.GzipFile(fileobj=io.BytesIO(raw),mode='rb')
+  def take(n):
+   nonlocal total
+   require(type(n) is int and 0<=n<=FILE,'framing read extent');parts=[];left=n
+   while left:
+    block=gz.read(min(left,65536));require(block,'truncated TAR framing');total+=len(block);require(total<=INFLATED,'inflated TAR total bound');parts.append(block);left-=len(block)
+   return b''.join(parts)
+  while True:
+   header=take(512);headers+=1;require(headers<=65538,'TAR header count')
+   if header==bytes(512):
+    require(pending is None and take(512)==bytes(512),'incomplete TAR termination')
+    while True:
+     block=gz.read(65536)
+     if not block:break
+     total+=len(block);require(total<=INFLATED and not any(block),'inflated/trailing TAR bound')
+    return
+   t=tarfile.TarInfo.frombuf(header,'utf-8','strict')
+   require(type(t.size) is int and t.size>=0,'negative TAR extent')
+   if t.type==tarfile.XHDTYPE:
+    require(pending is None and t.name=='././@PaxHeader' and t.size<=PAX,'PAX type/extent refused before payload')
+    body=take(t.size);padding=take((-t.size)%512);require(not any(padding),'PAX padding');offset=0;fields={}
+    while offset<len(body):
+     space=body.find(b' ',offset);require(offset<space<=offset+8 and body[offset:space].isdigit(),'PAX record length');n=int(body[offset:space]);require(n>space-offset+3 and offset+n<=len(body),'PAX record bound');record=body[space+1:offset+n];require(record.endswith(b'\n') and b'=' in record,'PAX record form');key,value=record[:-1].split(b'=',1);require(key==b'path' and key not in fields,'unselected PAX extension');fields[key]=value.decode('utf-8','strict');offset+=n
+    require(set(fields)=={b'path'},'PAX path missing');pending=path_name(fields[b'path']);continue
+   require(t.type in (tarfile.REGTYPE,tarfile.AREGTYPE,tarfile.DIRTYPE),'TAR extension/sparse/link type refused before payload')
+   name=path_name(pending if pending is not None else t.name);pending=None
+   require((t.isdir() and t.size==0) or (t.isfile() and t.size<=FILE),'TAR member bound before payload')
+   body=take(t.size);padding=take((-t.size)%512);require(not any(padding),'TAR member padding');yield name,t,body
+ finally:_cleanup(() if gz is None else (gz.close,))
+
+class RestoreDirectories:
+ """Original created inode handles; never chmod a replacement pathname."""
+ def __init__(self,dest):
+  self.dest=Path(dest);self.records={};self.fds=[];self.parent=None
+ def begin(self):
+  require(self.dest.parent.resolve()==self.dest.parent,'restore external parent redirected');fd=os.open(self.dest.parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);self.fds.append(fd);s=os.fstat(fd);self.parent=(self.dest.parent,fd,(s.st_dev,s.st_ino,s.st_mode));self.create('')
+ def parent_check(self):
+  p,fd,pin=self.parent;s=os.fstat(fd);now=p.lstat();require(p.resolve()==p and (s.st_dev,s.st_ino,s.st_mode)==pin==(now.st_dev,now.st_ino,now.st_mode),'original restore parent changed')
+ def check(self,name):
+  path,fd,pfd,leaf,pin=self.records[name];self.parent_check()
+  if name:self.check(str(PurePosixPath(name).parent) if '/' in name else '')
+  s=os.fstat(fd);at=os.stat(leaf,dir_fd=pfd,follow_symlinks=False);now=path.lstat();require(path.resolve()==path and stat.S_ISDIR(s.st_mode) and (s.st_dev,s.st_ino,s.st_mode)==pin==(at.st_dev,at.st_ino,at.st_mode)==(now.st_dev,now.st_ino,now.st_mode),'created directory identity changed');return fd
+ def create(self,name):
+  if name:
+   path_name(name);parent=str(PurePosixPath(name).parent);parent='' if parent=='.' else parent;pfd=self.check(parent);path=self.dest/name;leaf=Path(name).name
+  else:self.parent_check();pfd=self.parent[1];path=self.dest;leaf=path.name
+  os.mkdir(leaf,0o700,dir_fd=pfd);fd=os.open(leaf,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=pfd);self.fds.append(fd);s=os.fstat(fd);self.records[name]=(path,fd,pfd,leaf,(s.st_dev,s.st_ino,s.st_mode));self.check(name)
+ def mode(self,name,mode):
+  fd=self.check(name);os.fchmod(fd,mode);path,fd,pfd,leaf,pin=self.records[name];s=os.fstat(fd);self.records[name]=(path,fd,pfd,leaf,(pin[0],pin[1],s.st_mode));self.check(name);os.fsync(fd)
+ def close(self):_cleanup(tuple(lambda fd=fd:os.close(fd) for fd in reversed(self.fds)))

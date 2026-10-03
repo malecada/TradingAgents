@@ -1,0 +1,23 @@
+FF
+======================================================================
+FAIL: test_later_fatal (__main__.Test.test_later_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-combined-worker-preparation01-2026-10-03/check_cleanup01.py", line 28, in test_later_fatal
+    later=KeyboardInterrupt();self.assertIs(self.exercise(ValueError('ordinary'),later),later)
+                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: NameError("name 'fatal' is not defined") is not KeyboardInterrupt()
+
+======================================================================
+FAIL: test_prior_fatal (__main__.Test.test_prior_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-combined-worker-preparation01-2026-10-03/check_cleanup01.py", line 26, in test_prior_fatal
+    first=MemoryError('first');self.assertIs(self.exercise(first,later),first)
+                               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: NameError("name 'fatal' is not defined") is not MemoryError('first')
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

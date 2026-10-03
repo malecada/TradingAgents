@@ -1,0 +1,10 @@
+{
+  "status": "review-harness-failure",
+  "script": "source_inverse01.py",
+  "sha256": "0bc4ff8a6490b5152300fad58b23f490477ffd1201086b34ee0a4e15e1531960",
+  "actual_tool_chunk": "b7bf33",
+  "exit_code": 1,
+  "exception": "ValueError: substring not found",
+  "cause": "Review harness guessed stage.finish() spelling; actual accepted source uses owner._finish_stage(stage,...). No product execution occurred; source unchanged.",
+  "successor": "source_inverse02.py"
+}

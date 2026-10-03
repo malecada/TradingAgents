@@ -1,0 +1,20 @@
+...F..
+======================================================================
+FAIL: test_roundtrip_typed_directories_root (__main__.Checks.test_roundtrip_typed_directories_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation01-2026-10-03/check_archive01.py", line 10, in test_roundtrip_typed_directories_root
+    self.assertEqual(m.scan(dest),manifest);self.assertEqual(set(manifest['members'][0]),{'path','kind','mode','bytes','sha256'});self.assertEqual([r for r in manifest['members'] if r['kind']=='directory'][0],{'path':'empty','kind':'directory','mode':0o755})
+                                                                                                                                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'path': 'empty', 'mode': 509, 'kind': 'directory'} != {'path': 'empty', 'kind': 'directory', 'mode': 493}
+- {'kind': 'directory', 'mode': 509, 'path': 'empty'}
+?                               ^^
+
++ {'kind': 'directory', 'mode': 493, 'path': 'empty'}
+?                               ^ +
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.017s
+
+FAILED (failures=1)

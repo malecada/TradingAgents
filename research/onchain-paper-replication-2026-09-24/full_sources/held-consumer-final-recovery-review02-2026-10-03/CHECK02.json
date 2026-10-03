@@ -1,0 +1,33 @@
+{
+  "tests": 17,
+  "failures": 0,
+  "errors": 0,
+  "observations": {
+    "inverse": "exact complete bytes and AST outside restored block; source/Git/request/capture/recover unchanged",
+    "HFR1": {
+      "red_read_requests": [
+        512,
+        67108864
+      ],
+      "green_read_requests": [
+        512
+      ],
+      "compressed_bytes": 67
+    },
+    "HFR2-original": {
+      "old": {
+        "events": [
+          "path chmod reached"
+        ],
+        "outside_mode": 488
+      },
+      "new": {
+        "events": [],
+        "outside_mode": 448
+      }
+    },
+    "manifest_members": 39
+  },
+  "actual_capsule_capture_restore": false,
+  "external_recovery": false
+}

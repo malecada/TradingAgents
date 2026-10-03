@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-full-source-helper-preparation01-2026-10-03/check_transition04.py", line 10, in <module>
+    result=g._legacy_held_input_plan({},plan) if '--baseline' in sys.argv else g.held_input_plan({},plan,closure_mode=mode)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-full-source-helper-preparation01-2026-10-03/generate_inputs01.py", line 173, in held_input_plan
+    require(type(source_plan) is dict and source_plan.get('source_count')==199 and source_plan.get('package_count')==148 and source_plan.get('execution_admitted') is False,'actual199/148 metadata plan required')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-full-source-helper-preparation01-2026-10-03/generate_inputs01.py", line 8, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: actual199/148 metadata plan required
