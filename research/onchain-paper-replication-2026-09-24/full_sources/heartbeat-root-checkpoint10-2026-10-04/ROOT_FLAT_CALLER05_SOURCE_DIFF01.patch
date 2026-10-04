@@ -1,0 +1,91 @@
+--- root_operational_flat04.py
++++ root_operational_flat05.py
+@@ -5,7 +5,7 @@
+ ROOT=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes')
+ FS=ROOT/'research/onchain-paper-replication-2026-09-24/full_sources'
+ D=FS/'financial-wrapper-compatibility-operational-delta-root-remote03-2026-10-04'
+-V=FS/'financial-wrapper-compatibility-operational-delta-flat-entry-review04-2026-10-04'
++V=FS/'financial-wrapper-compatibility-operational-delta-flat-entry-review05-2026-10-04'
+ DRAFT='770f509c8a65a1a5a6cb33e2efbf8215c9466ba5af235251b883ac1452299e21'
+ HELPER='17f4ee85d2408cdc1b678e107e82b6e19b674b4b941f1fa51f40f17bbedef282'
+ REMOTE='64c74556c7060fc7d118b5b07354bb737e5c157446ffef8c27fe77ea6cef4d47'
+@@ -22,8 +22,12 @@
+     return b
+ def put(name,o):
+     b=(json.dumps(o,sort_keys=True,indent=2,allow_nan=False)+'\n').encode(); assert len(b)<=FILE
+-    fd=os.open(D/name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+-    with os.fdopen(fd,'wb') as f: f.write(b); f.flush(); os.fsync(f.fileno())
++    with IO._opened(D/name,'xb') as f: f.write(b); f.flush(); os.fsync(f.fileno())
++
++read(D/'utilities/owned_io.py','09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb')
++sys.path.insert(0,str(D/'utilities'))
++import owned_io as IO
++FAILURE_OBJECTS=[]
+ 
+ parser=argparse.ArgumentParser(); parser.add_argument('--entry-review-sha256',required=True)
+ args=parser.parse_args(); raw=read(V/'MACHINE01.json',args.entry_review_sha256); release=json.loads(raw)
+@@ -39,7 +43,7 @@
+     body=read(D/name,row['sha256']); assert len(body)==row['bytes'] and stat.S_IMODE((D/name).lstat().st_mode)==row['mode']
+ read(D/'REMOTE_RECOVERY01.json',REMOTE); read(D/'SELECTED_BODIES01.json',SELECTION)
+ read(D/'ROOT_REMOTE03_EXIT01.json',draft['original_Root_exit_sha256'])
+-for name in ('flat-operational-delta01','flat-failed-remote02-01','FLAT_INTENT01.json','FLAT_RECOVERY01.json','FLAT_FAILED01.json','FLAT_POSTWRITE_OBSERVATION01.json','ROOT_FLAT04_INTENT01.json','ROOT_FLAT04_SPAWN01.json','ROOT_FLAT04.stdout','ROOT_FLAT04.stderr','ROOT_FLAT04_EXIT01.json'):
++for name in ('flat-operational-delta01','flat-failed-remote02-01','FLAT_INTENT01.json','FLAT_RECOVERY01.json','FLAT_FAILED01.json','FLAT_POSTWRITE_OBSERVATION01.json','ROOT_FLAT05_INTENT01.json','ROOT_FLAT05_SPAWN01.json','ROOT_FLAT05.stdout','ROOT_FLAT05.stderr','ROOT_FLAT05_EXIT01.json','ROOT_FLAT04_INTENT01.json','ROOT_FLAT04_SPAWN01.json','ROOT_FLAT04.stdout','ROOT_FLAT04.stderr','ROOT_FLAT04_EXIT01.json'):
+     assert not os.path.lexists(D/name)
+ for p in Path('/proc').iterdir():
+     if not p.name.isdigit() or int(p.name)==os.getpid(): continue
+@@ -54,16 +58,11 @@
+ command=[str(ROOT/'.venv/bin/python'),'-B',str(D/'restore01.py'),'--remote-receipt-sha256',REMOTE,'--selection-sha256',SELECTION]
+ begun=time.monotonic(); child=None; code=None; primary=None; cleanup=[]
+ resource.setrlimit(resource.RLIMIT_FSIZE,(FILE,FILE))
+-put('ROOT_FLAT04_INTENT01.json',{'schema_version':1,'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),'argv':command,'cwd':str(ROOT),'entry_review_sha256':digest(raw),'installation_draft_sha256':DRAFT,'outer_caller_sha256':digest(read(Path(__file__).absolute())),'parent_pid':os.getpid(),'one_use':True,'remote_relaunched':False,'native_or_claim_started':False})
++put('ROOT_FLAT05_INTENT01.json',{'schema_version':1,'time':datetime.datetime.now(datetime.timezone.utc).isoformat(),'argv':command,'cwd':str(ROOT),'entry_review_sha256':digest(raw),'installation_draft_sha256':DRAFT,'outer_caller_sha256':digest(read(Path(__file__).absolute())),'parent_pid':os.getpid(),'one_use':True,'remote_relaunched':False,'native_or_claim_started':False})
+ try:
+-    outfd=os.open(D/'ROOT_FLAT04.stdout',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+-    try:
+-        errfd=os.open(D/'ROOT_FLAT04.stderr',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+-    except BaseException:
+-        os.close(outfd); raise
+-    with os.fdopen(outfd,'wb') as out, os.fdopen(errfd,'wb') as err:
++    with IO._opened(D/'ROOT_FLAT05.stdout','xb') as out, IO._opened(D/'ROOT_FLAT05.stderr','xb') as err:
+         child=subprocess.Popen(command,cwd=ROOT,stdout=out,stderr=err,start_new_session=True)
+-        put('ROOT_FLAT04_SPAWN01.json',{'schema_version':1,'pid':child.pid,'parent_pid':os.getpid(),'argv':command,'time':datetime.datetime.now(datetime.timezone.utc).isoformat()})
++        put('ROOT_FLAT05_SPAWN01.json',{'schema_version':1,'pid':child.pid,'parent_pid':os.getpid(),'argv':command,'time':datetime.datetime.now(datetime.timezone.utc).isoformat()})
+         while True:
+             code=child.poll()
+             if code is not None: break
+@@ -72,20 +71,25 @@
+             try: code=child.wait(timeout=0.25); break
+             except subprocess.TimeoutExpired: pass
+ except BaseException as error:
+-    primary=error
++    primary=error; FAILURE_OBJECTS.append(error)
+ finally:
++    secondary=[]
++    def retain(error):
++        secondary.append(error); FAILURE_OBJECTS.append(error); cleanup.append(type(error).__name__)
+     if child is not None:
+-        if child.poll() is None:
+-            try: os.killpg(child.pid,signal.SIGKILL)
+-            except ProcessLookupError: pass
+-            except BaseException as error: cleanup.append(type(error).__name__)
++        try:
++            if child.poll() is None:
++                try: os.killpg(child.pid,signal.SIGKILL)
++                except ProcessLookupError: pass
++        except BaseException as error: retain(error)
+         try: code=child.wait(timeout=10)
+-        except BaseException as error: cleanup.append(type(error).__name__)
++        except BaseException as error: retain(error)
+     try: observations.append(W.census(D))
+-    except BaseException as error:
+-        cleanup.append(type(error).__name__)
+-        if primary is None: primary=error
+-    put('ROOT_FLAT04_EXIT01.json',{'schema_version':1,'actual_outer_exit':code if primary is None and not cleanup else 1,'actual_child_exit':code,'actual_child_pid':None if child is None else child.pid,'elapsed_seconds':time.monotonic()-begun,'parent_failure_type':None if primary is None else type(primary).__name__,'cleanup_failures':cleanup,'stdout_bytes':(D/'ROOT_FLAT04.stdout').stat().st_size if (D/'ROOT_FLAT04.stdout').exists() else None,'stdout_sha256':digest(read(D/'ROOT_FLAT04.stdout')) if (D/'ROOT_FLAT04.stdout').exists() else None,'stderr_bytes':(D/'ROOT_FLAT04.stderr').stat().st_size if (D/'ROOT_FLAT04.stderr').exists() else None,'stderr_sha256':digest(read(D/'ROOT_FLAT04.stderr')) if (D/'ROOT_FLAT04.stderr').exists() else None,'whole_owned_observations':observations,'actual_inherited_child_fsize':[FILE,FILE],'remote_relaunched':False,'native_or_claim_started':False})
++    except BaseException as error: retain(error)
++    try:
++        put('ROOT_FLAT05_EXIT01.json',{'schema_version':1,'actual_outer_exit':code if primary is None and not cleanup else 1,'actual_child_exit':code,'actual_child_pid':None if child is None else child.pid,'elapsed_seconds':time.monotonic()-begun,'parent_failure_type':None if primary is None else type(primary).__name__,'cleanup_failures':cleanup,'stdout_bytes':(D/'ROOT_FLAT05.stdout').stat().st_size if (D/'ROOT_FLAT05.stdout').exists() else None,'stdout_sha256':digest(read(D/'ROOT_FLAT05.stdout')) if (D/'ROOT_FLAT05.stdout').exists() else None,'stderr_bytes':(D/'ROOT_FLAT05.stderr').stat().st_size if (D/'ROOT_FLAT05.stderr').exists() else None,'stderr_sha256':digest(read(D/'ROOT_FLAT05.stderr')) if (D/'ROOT_FLAT05.stderr').exists() else None,'whole_owned_observations':observations,'actual_parent_fsize_readback':list(resource.getrlimit(resource.RLIMIT_FSIZE)),'child_fsize_inheritance':'default subprocess inheritance; no separate child readback claimed','remote_relaunched':False,'native_or_claim_started':False})
++    except BaseException as error: retain(error)
++    IO._cleanup(tuple((lambda e=e: (_ for _ in ()).throw(e)) for e in secondary),primary=primary)
+ if primary is not None: raise primary
+ assert not cleanup and code is not None
+ print(json.dumps({'actual_child_exit':code,'elapsed_seconds':time.monotonic()-begun}))

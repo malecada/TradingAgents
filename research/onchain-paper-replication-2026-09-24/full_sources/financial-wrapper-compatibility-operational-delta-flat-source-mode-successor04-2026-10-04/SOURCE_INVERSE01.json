@@ -1,0 +1,49 @@
+{
+  "old_sha256": "6d7688080efb716b7a79d1291b4f27e62e0315e5d7a8153b2890d1f9fab35214",
+  "new_sha256": "17f4ee85d2408cdc1b678e107e82b6e19b674b4b941f1fa51f40f17bbedef282",
+  "exact_literal_inverse": true,
+  "exact_ast_inverse": true,
+  "changed_top_level_definitions": [
+    "VerifiedCohort",
+    "authenticate_selected",
+    "run"
+  ],
+  "edits": [
+    {
+      "old": "PINS = {'utilities/recovery_pax01.py': 'a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2', 'utilities/owned_io.py': '09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb', 'utilities/bounded_git01.py': 'db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f', 'watch01.py': 'bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18'}",
+      "new": "PINS = {'utilities/recovery_pax01.py': 'a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2', 'utilities/owned_io.py': '09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb', 'utilities/bounded_git01.py': 'db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f', 'watch01.py': 'bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18', 'COMPLETED_REMOTE03_READ_ONLY_SELECTED_MODE_PROFILE01.json': 'd238a23846a5bfc4b61fcc8b94092532d0ebfe1f0878833f22a6e100e1c27e29', 'COMPLETED_REMOTE_REVIEW_MACHINE01.json': '26216031a9182ca3b5a5987e3274c2263845eac974f1eb4065525f5d428bb53b', 'COMPLETED_REMOTE_REVIEW_MANIFEST01.json': '231ae543b65e63854e12a9433cbb9085b151539d0c03c90f0983f42adf75eb86'}"
+    },
+    {
+      "old": "        self.anchors = {}\n",
+      "new": "        self.anchors = {}\n        self.selected_profile = None\n"
+    },
+    {
+      "old": "        s = path.lstat()\n        R.require(stat.S_ISDIR(s.st_mode)",
+      "new": "        s = path.lstat()\n        if self.selected_profile is not None:\n            selected = Path(self.selected_profile['actual_selected_root'])\n            if path == selected or path.is_relative_to(selected):\n                name = path.relative_to(selected).as_posix()\n                directories = self.selected_profile['directory_modes']\n                files = self.selected_profile['files']\n                R.require(s.st_uid == self.selected_profile['expected_owner_uid'] == os.geteuid(), 'exact completed selected owner')\n                if name in directories:\n                    R.require(stat.S_ISDIR(s.st_mode) and stat.S_IMODE(s.st_mode) == directories[name], 'exact completed selected directory type/mode')\n                else:\n                    R.require(name in files and stat.S_ISREG(s.st_mode) and stat.S_IMODE(s.st_mode) == files[name]['mode'], 'exact completed selected file population/type/mode')\n        R.require(stat.S_ISDIR(s.st_mode)"
+    },
+    {
+      "old": "    def anchor(self, root):\n",
+      "new": "    def input_directory_mode(self, path, private_mode=0o700):\n        # This is a single authenticated completed input tree, never a generic\n        # allowance for public roots or for new flat output storage.\n        if self.selected_profile is not None:\n            selected = Path(self.selected_profile['actual_selected_root'])\n            path = Path(path)\n            if path == selected or path.is_relative_to(selected):\n                name = path.relative_to(selected).as_posix()\n                R.require(name in self.selected_profile['directory_modes'], 'unselected input directory')\n                return self.selected_profile['directory_modes'][name]\n        return private_mode\n    def bind_completed_selected_profile(self, root, remote, selection, selection_sha256):\n        profile_name = 'COMPLETED_REMOTE03_READ_ONLY_SELECTED_MODE_PROFILE01.json'\n        raw = self.read(HERE, profile_name)\n        R.require(R.digest(raw) == PINS[profile_name], 'exact completed input-mode profile bytes')\n        profile = json.loads(raw)\n        root = Path(root)\n        R.require(str(root) == profile['actual_receiver_root'] and str(root/'selected') == profile['actual_selected_root'], 'one fixed completed receiver input profile')\n        R.require(profile['schema_version'] == 1 and profile['status'] == 'OBSERVED_COMPLETED_FORENSIC_SOURCE_MODES_NO_RESTORATION_OR_MODE_MUTATION' and profile['raw_directory_mode_history_preserved'] is True, 'original input-mode observation retained')\n        R.require(type(profile['expected_owner_uid']) is int and profile['expected_owner_uid'] == os.geteuid() and profile['new_owned_flat_storage_modes_required'] == {'directory':0o700,'file':0o600}, 'original owner and private new outputs')\n        R.require(profile['files'] == {n:dict(pin,mode=0o600) for n,pin in REQUIRED.items()} and len(profile['directory_modes']) == 7 and set(profile['directory_modes'].values()) == {0o700,0o775}, 'exact completed selected file and directory profile')\n        R.validate(profile['full_manifest'])\n        expected_directories = {'.':profile['full_manifest']['root_mode']}\n        expected_directories.update({r['path']:r['mode'] for r in profile['full_manifest']['members'] if r['kind']=='directory'})\n        expected_files = {r['path']:{k:r[k] for k in ('bytes','mode','sha256')} for r in profile['full_manifest']['members'] if r['kind']=='file'}\n        R.require(expected_directories == profile['directory_modes'] and expected_files == profile['files'], 'exact complete profile manifest projection')\n        remote_raw = self.read(root,'REMOTE_RECOVERY01.json')\n        selection_raw = self.read(root,'SELECTED_BODIES01.json')\n        exit_raw = self.read(root,'ROOT_REMOTE03_EXIT01.json')\n        R.require(R.digest(remote_raw) == profile['actual_remote_receipt_sha256'] and R.encode(remote) == remote_raw, 'actual completed remote body bound to mode profile')\n        R.require(R.digest(selection_raw) == selection_sha256 == profile['selection_sha256'] and R.encode(selection) == selection_raw, 'actual completed selection body bound to mode profile')\n        R.require(R.digest(exit_raw) == profile['actual_Root_exit_sha256'] and type(json.loads(exit_raw)['actual_outer_exit']) is int and json.loads(exit_raw)['actual_outer_exit'] == 0, 'actual completed Root exit bound to mode profile')\n        review_raw = self.read(HERE,'COMPLETED_REMOTE_REVIEW_MACHINE01.json')\n        manifest_raw = self.read(HERE,'COMPLETED_REMOTE_REVIEW_MANIFEST01.json')\n        R.require(R.digest(review_raw) == PINS['COMPLETED_REMOTE_REVIEW_MACHINE01.json'] == profile['actual_remote_outcome_review_sha256'] and R.digest(manifest_raw) == PINS['COMPLETED_REMOTE_REVIEW_MANIFEST01.json'] == profile['actual_remote_outcome_review_manifest_sha256'], 'genuine original remote review and manifest pins')\n        review = json.loads(review_raw); review_manifest = json.loads(manifest_raw)\n        R.require(review['decision'] == 'ACCEPTED_ACTUAL_REMOTE_BYTES_WITHHELD_FLAT_ENTRY_RM1' and review['remote_receipt_sha256'] == profile['actual_remote_receipt_sha256'] and review['root_exit_sha256'] == profile['actual_Root_exit_sha256'] and review['selection_sha256'] == selection_sha256 and review['flat_entry_released'] is False and review['numerical_authority'] is False, 'original accepted bytes and withheld flat entry remain distinct')\n        R.require(any(r['path']=='MACHINE01.json' and r['kind']=='file' and r['sha256']==R.digest(review_raw) and r['bytes']==len(review_raw) for r in review_manifest['members']), 'original review machine sealed by original manifest')\n        R.require(self.selected_profile is None or self.selected_profile == profile, 'completed input mode profile cannot change')\n        self.selected_profile = profile\n        return profile\n    def anchor(self, root):\n"
+    },
+    {
+      "old": "stat.S_IMODE(s.st_mode)==0o700 and s.st_uid==os.geteuid(), 'cohort root private owner/mode'",
+      "new": "stat.S_IMODE(s.st_mode)==self.input_directory_mode(root) and s.st_uid==os.geteuid(), 'cohort exact input or private output owner/mode'"
+    },
+    {
+      "old": "stat.S_IMODE(before[2]) == directory_mode, 'cohort private directory mode'",
+      "new": "stat.S_IMODE(before[2]) == self.input_directory_mode(path,directory_mode), 'cohort exact input or private directory mode'"
+    },
+    {
+      "old": "    cohort.tree(root/'selected', set(REQUIRED))\n",
+      "new": "    profile = cohort.bind_completed_selected_profile(root,remote,selection,selection_sha256)\n    cohort.tree(root/'selected', set(REQUIRED))\n"
+    },
+    {
+      "old": "    R.require(set(selected_files) == set(REQUIRED) and all(row['mode'] == 0o700 for row in selected_manifest['members'] if row['kind'] == 'directory'), 'complete private selected namespace with no extra bodies')",
+      "new": "    R.require(set(selected_files) == set(REQUIRED) and selected_manifest == profile['full_manifest'], 'complete original selected namespace and literal observed modes')"
+    },
+    {
+      "old": "'cohort_currentness':'sampled complete private membership/signature population tied to exact byte reads after IO cleanup; no writer exclusion or same-signature ABA assurance'",
+      "new": "'read_only_selected_mode_profile_sha256':PINS['COMPLETED_REMOTE03_READ_ONLY_SELECTED_MODE_PROFILE01.json'],'cohort_currentness':'sampled exact original input-mode population and private output population tied to exact byte reads after IO cleanup; no writer exclusion or same-signature ABA assurance'"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "metadata_overlays_not_actual_mutations": [
+    {
+      "overlay": "st_uid",
+      "refused": true,
+      "error": "exact completed selected owner"
+    },
+    {
+      "overlay": "st_mode",
+      "refused": true,
+      "error": "exact completed selected file population/type/mode"
+    },
+    {
+      "overlay": "st_ino",
+      "refused": true,
+      "error": "verified cohort member changed"
+    },
+    {
+      "overlay": "st_dev",
+      "refused": true,
+      "error": "verified cohort member changed"
+    },
+    {
+      "overlay": "st_mtime_ns",
+      "refused": true,
+      "error": "verified cohort member changed"
+    },
+    {
+      "overlay": "st_nlink",
+      "refused": true,
+      "error": "cohort regular/directory identity"
+    },
+    {
+      "overlay": "st_size",
+      "refused": true,
+      "error": "verified cohort member changed"
+    }
+  ],
+  "source_scope": 917,
+  "complete_scope_only_self_excluded": true,
+  "actual_original_after_overlay_rejoin": true
+}

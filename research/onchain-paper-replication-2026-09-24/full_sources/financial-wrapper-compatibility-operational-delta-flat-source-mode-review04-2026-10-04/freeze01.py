@@ -1,0 +1,35 @@
+from pathlib import Path
+import hashlib,json,stat,os
+H=Path(__file__).resolve().parent;A=H.parent/'financial-wrapper-compatibility-operational-delta-flat-source-mode-successor04-2026-10-04';sha=lambda b:hashlib.sha256(b).hexdigest()
+for n in ['restore01.py','ORIGINAL_restore01.py','SOURCE_INVERSE01.json','SOURCE_DIFF01.patch','MANIFEST01.json','MACHINE01.json','REPORT01.md','AUTHENTICATION01.json','COMPLETED_REMOTE03_READ_ONLY_SELECTED_MODE_PROFILE01.json','COMPLETED_REMOTE_REVIEW_MACHINE01.json','COMPLETED_REMOTE_REVIEW_MANIFEST01.json','utilities/recovery_pax01.py','utilities/owned_io.py','utilities/bounded_git01.py','watch01.py']:
+ p=H/'source-evidence'/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((A/n).read_bytes())
+report='''# Exact completed-input mode profile source review04
+
+**Accepted source-only, fixed completed receiver input profile.** Candidate17f4ee85 and complete author manifest29db85f0 were independently authenticated. No actual flat restoration, entry/main, network, research admission or numerical library was executed.
+
+The exact original03 component reproduces RM1 on real completed remote03 selected root0775. Candidate04 authenticates genuine remote64c74556, Rootexit0f0eba1a, selectiond2f64, unchanged outcome review26216031/manifest231ae and exact literal profiled238a238, then accepts all15 bodies507,946B. Seven input directory modes are preserved (four0775 and three0700); every file is0600. All original actual input signatures, modes and bytes were unchanged before/after review. This expressly permits reading this fixed observed input graph; it does not call0775 private or imply writer exclusion.
+
+The nine literal substitutions reverse exactly to accepted source03 6d768808, including full AST inverse. Only VerifiedCohort, authenticate_selected, run and the declared PINS assignment change. The three primitive bodies and watch04 remain byte-identical. The complete917-member candidate and2,399 historical declared members are authenticated, including failed controls and literal link/hardlink witnesses. Nothing is silently excluded from the candidate except its own manifest.
+
+Independent check02 passes6,712 assertions and34 refusal cases. Additional check03 refuses seven terminal metadata-return overlays (UID/mode/inode/device/mtime/nlink/extent), verifies the full candidate namespace and rejoins unchanged actual inputs. These overlays are explicitly synthetic return values and do not alter Root metadata or manufacture receipts. Actual opaque owned output0775/0755/0777 roots, wrong file mode, extra member, link, hardlink and child-directory modes refuse despite a genuine bound selected profile. Wrong receiver/selection/receipt context and substituted profile/review/exit bytes refuse. Five real later descriptor-close mutation classes (byte, mode, foreign name, metadata and second-scope timing) refuse on both original03 and successor04. Earlier-cohort mutation after a final callback refuses with the selected profile still bound. Deadline/member ceilings remain and three primary-fatal cleanup controls preserve original primary propagation.
+
+The shared cohort persists through run's initial input reads, both restorations, all subsequent prerequisite and flat-body reads, the prepublication check, actual final receipt readback and final check after the sidecar/resource boundary. Newly added profile/review/Rootexit prerequisites enter the same byte-proof cohort. Every output remains strict0700/0600; no generic unrelated/public-root allowance or chmod is added. Limits remain4MiB per file,64MiB logical/96MiB allocated,10GiB floor,180-second/64-boundary orchestration and unchanged finite watcher limits.
+
+CHECK01.stderr is preserved as a reviewer harness failure: the harness wrongly expected owned_io._cleanup to re-raise an already-active primary when it intentionally returns to that caller's original propagation. CHECK02 uses the genuine try/finally primary propagation contract in a fresh owned namespace and passes. Neither failure nor partial fixture was deleted or relabeled.
+
+Scope limits: no public restoration success path was executed and no future receipt was fabricated. Full actual caller integration, exact installed helper-plus-three-metadata closure, separate one-use entry review, actual restoration and independent outcome acceptance remain required. FLAT_POSTWRITE_OBSERVATION01.json remains outside the verified byte cohort, as in accepted03; actual sidecar/Roottool outcome needs separate authentication. Finite signature sampling does not establish atomicity, same-signature ABA exclusion, continuous currentness, filesystem quota, POSIX reconstruction, memory/wire or financial capacity. Historical failed/initNULL/reap0/Root1 and all numerical failures/budgets are unchanged. This acceptance resolves only the source-level RM1 mode mismatch under an explicit fixed-input deviation.
+'''
+(H/'REPORT01.md').write_text(report)
+r=json.loads((H/'READBACK02.json').read_bytes());m={'schema_version':1,'decision':'ACCEPTED_SOURCE_ONLY_EXACT_COMPLETED_INPUT_MODE_PROFILE','reviewer':'combined_worker_review','source_sha256':sha((A/'restore01.py').read_bytes()),'author_manifest_sha256':sha((A/'MANIFEST01.json').read_bytes()),'candidate_members':917,'historical_members':2399,'literal_inverse_edits':9,'check02_assertions':r['assertions'],'check02_refusals':len(r['cases']),'additional_metadata_overlay_refusals':7,'actual_original_RED_successor_GREEN':True,'actual_selected_count':15,'actual_selected_bytes':507946,'original_modes_unchanged':True,'fixed_profile_sha256':'d238a23846a5bfc4b61fcc8b94092532d0ebfe1f0878833f22a6e100e1c27e29','strict_unrelated_roots_and_outputs':True,'shared_cohort_after_final_boundary':True,'auxiliary_sidecar_byte_cohort':False,'actual_installation':None,'actual_flat_entry_release':None,'actual_flat_recovery':None,'numerical_authority':False,'report_sha256':sha((H/'REPORT01.md').read_bytes()),'readback02_sha256':sha((H/'READBACK02.json').read_bytes()),'readback03_sha256':sha((H/'READBACK03.json').read_bytes()),'retained_reviewer_failure':'CHECK01.stderr'}
+(H/'MACHINE01.json').write_text(json.dumps(m,indent=2,sort_keys=True)+'\n')
+rows=[]
+for p in sorted(H.rglob('*')):
+ if p==H/'MANIFEST01.json':continue
+ s=p.lstat();r={'path':p.relative_to(H).as_posix(),'mode':stat.S_IMODE(s.st_mode)}
+ if stat.S_ISDIR(s.st_mode):r['kind']='directory'
+ elif stat.S_ISREG(s.st_mode):r.update(kind='file',bytes=s.st_size,sha256=sha(p.read_bytes()),nlink=s.st_nlink)
+ elif stat.S_ISLNK(s.st_mode):r.update(kind='symlink',target=os.readlink(p))
+ else:raise AssertionError(p)
+ rows.append(r)
+(H/'MANIFEST01.json').write_text(json.dumps({'schema_version':1,'members':rows,'exclusion':'self only; all failed scripts/logs, literal negative links and actual hardlink groups retained'},indent=2,sort_keys=True)+'\n')
+print(json.dumps({'manifest':sha((H/'MANIFEST01.json').read_bytes()),'machine':sha((H/'MACHINE01.json').read_bytes()),'report':m['report_sha256'],'members':len(rows),'bytes':sum(r.get('bytes',0) for r in rows)}))
