@@ -1,0 +1,61 @@
+{
+  "checks": 11,
+  "names": [
+    "complete-real-frozen-roundtrip",
+    "framing:truncated",
+    "framing:corrupt",
+    "framing:trailing",
+    "manifest-hash",
+    "member-mode",
+    "futurepin:null",
+    "futurepin:bad",
+    "fixed-policy",
+    "sampled-all-owned",
+    "no-original-modified"
+  ],
+  "actual_remote_entry_executed": false,
+  "actual_local_roundtrip": {
+    "status": "fresh-flat-archival-recovery-not-origin-proof",
+    "archive_sha256": "a60e19140e04a6ec1877bf17134ee7b16d560068e1296b13c05535ea6212357e",
+    "manifest_sha256": "a04069280b7bf7b49fc075e640109f935f65b292fe69e1f4e96342bc08ad246e",
+    "members": 41,
+    "regular_bodies": 33,
+    "metadata_file": "body-metadata.json",
+    "metadata_sha256": "1a8b747db8741492e475771d3355325ad5ff7df76ca60fd87c98016f42b9df32",
+    "root_mode": 448,
+    "instantiated_posix_tree": false,
+    "recovered_tree_git_join": false,
+    "runtime_package_bodies_recovered": false,
+    "outside_stores_recovered": false,
+    "research_authority": false
+  },
+  "observations": [
+    {
+      "logical_bytes": 0,
+      "allocated_bytes": 4096,
+      "members": 1,
+      "seconds": 0.00014771599671803415,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    },
+    {
+      "logical_bytes": 955147,
+      "allocated_bytes": 1044480,
+      "members": 36,
+      "seconds": 0.003591346991015598,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    },
+    {
+      "logical_bytes": 955147,
+      "allocated_bytes": 1044480,
+      "members": 36,
+      "seconds": 0.0036707569961436093,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    }
+  ]
+}
