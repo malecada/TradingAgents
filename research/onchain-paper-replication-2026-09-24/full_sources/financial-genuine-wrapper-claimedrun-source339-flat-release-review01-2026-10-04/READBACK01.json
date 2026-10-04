@@ -1,0 +1,125 @@
+{
+  "POSIX_runtime_empirical_caller_native_authority": false,
+  "actual_Root_request_mutated": false,
+  "actual_recovered_ancestry_observed": false,
+  "actual_source_restore_executed": false,
+  "checks": 42,
+  "decision": "ACCEPTED_EXACT_REQUEST_RELEASE_FOR_ONE_SOURCE339_FLAT_ONLY",
+  "fresh_research_claims_created": 0,
+  "installed_helper_pins": {
+    "CAPTURE_PINS01.json": "355a876341a21e6d4fa97ad11371805d6e93acd2ef4766e7f547d6c8c9f1fba1",
+    "bounded_git01.py": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f",
+    "git_objects01.py": "c364269be9c112dbc9501a41c8f9cf21def9a95b33cf2b9054f4384ae3888a4a",
+    "owned_io.py": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+    "recovery04.py": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a",
+    "restore01.py": "9e21e92ca69fad038dc77324b8fcc9f7600380293e55a90b7c0fd5b8ae95c1fc"
+  },
+  "observed_free_bytes": 17910222848,
+  "proposal_sha256": "3e56dfac4d7a666097d6a70e57685cafe42e0abac87f476fa249c6ef46b8b149",
+  "refusals": [
+    {
+      "case": "original real null release refuses",
+      "reason": "unreleased release",
+      "type": "ValueError"
+    },
+    {
+      "case": "missing exact request field release",
+      "reason": "request schema",
+      "type": "ValueError"
+    },
+    {
+      "case": "missing exact request field remote_receipt_sha256",
+      "reason": "request schema",
+      "type": "ValueError"
+    },
+    {
+      "case": "missing exact request field remote_root",
+      "reason": "request schema",
+      "type": "ValueError"
+    },
+    {
+      "case": "missing exact request field review",
+      "reason": "request schema",
+      "type": "ValueError"
+    },
+    {
+      "case": "missing exact request field schema_version",
+      "reason": "request schema",
+      "type": "ValueError"
+    },
+    {
+      "case": "missing exact request field source",
+      "reason": "request schema",
+      "type": "ValueError"
+    },
+    {
+      "case": "noncanonical manifest tail refuses",
+      "reason": "whole actual Source339 denominator",
+      "type": "ValueError"
+    },
+    {
+      "case": "altered capture tracked refuses",
+      "reason": "actual capture qualification",
+      "type": "ValueError"
+    },
+    {
+      "case": "altered capture original_spent_claims refuses",
+      "reason": "actual capture qualification",
+      "type": "ValueError"
+    },
+    {
+      "case": "altered capture new_claim_started refuses",
+      "reason": "actual capture qualification",
+      "type": "ValueError"
+    },
+    {
+      "case": "altered capture parent_or_final_review_captured refuses",
+      "reason": "actual capture qualification",
+      "type": "ValueError"
+    },
+    {
+      "case": "wrong actual remote receipt hash refuses",
+      "reason": "actual remote receipt pin",
+      "type": "ValueError"
+    },
+    {
+      "case": "exact released contract tamper source refuses",
+      "reason": "fixed Source339",
+      "type": "ValueError"
+    },
+    {
+      "case": "exact released contract tamper remote_receipt_sha256 refuses",
+      "reason": "exact independent release",
+      "type": "ValueError"
+    },
+    {
+      "case": "exact released contract tamper remote_root refuses",
+      "reason": "exact independent release",
+      "type": "ValueError"
+    },
+    {
+      "case": "tampered genuine review refuses",
+      "reason": "proof changed",
+      "type": "ValueError"
+    },
+    {
+      "case": "tampered release ref refuses",
+      "reason": "proof changed",
+      "type": "ValueError"
+    }
+  ],
+  "release_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-source339-flat-release-review01-2026-10-04/RELEASE01.json",
+  "release_sha256": "62606a555380daf83d89cc420d7f4d9ae3371bb8f419924cc5014ac34f2fa167",
+  "request_contract_sha256": "b1a2fdebff8943dee6849a1e6f644352afbad8e5c26caedc57a4249f7cba9b72",
+  "required_implementation": 194,
+  "required_input_roles": 8,
+  "required_original_members": 1029,
+  "required_package": 149,
+  "required_private_flat_files_with_metadata": 748,
+  "required_regular_bodies": 747,
+  "required_selected_source_pins": 338,
+  "required_tracked_source": 339,
+  "review_sha256": "6dcb03cfed84ff48132710e548aeaead0015c97df1b8885f55e8ad7ea0cbe13d",
+  "schema_version": 1,
+  "source": "0a2e7639b42b9423b90743feadcda4078aa21816"
+}

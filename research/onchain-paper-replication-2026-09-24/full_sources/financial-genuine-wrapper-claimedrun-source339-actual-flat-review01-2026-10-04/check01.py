@@ -1,0 +1,65 @@
+import ast,gzip,hashlib,io,json,os,stat,sys,tarfile,zlib
+from pathlib import Path
+O=Path(__file__).resolve().parent;F=O.parent;H=F/'financial-genuine-wrapper-claimedrun-source339-flat-20261004-01';D=F/'financial-genuine-wrapper-root-claimedrun-source339-flat01-2026-10-04';REMOTE=F/'financial-genuine-wrapper-root-claimedrun-source339-remote02-2026-10-04';RV=F/'financial-genuine-wrapper-claimedrun-source339-actual-remote-review01-2026-10-04';RELEASE=F/'financial-genuine-wrapper-claimedrun-source339-flat-release-review01-2026-10-04';sys.path.insert(0,str(F/'held-consumer-final-recovery-preparation04-2026-10-03'));import recovery04 as a
+sha=lambda b:hashlib.sha256(b).hexdigest();checks=[]
+def ck(v,m):assert v,m;checks.append(m)
+def read(p):return a.read(p.parent,p.name)
+receipt=read(H/'RECOVERY01.json');ck(sha(receipt)=='f9b3a0c761c466ce47e537e06423e8e52fcbe557e7eeab75230ed4654bab0931','actual original flatreceipt');r=json.loads(receipt);term=json.loads(read(D/'ACTUAL_TOOL_TERMINAL02.json'));obs=json.loads(read(D/'PARENT_OBSERVATION01.json'));intent=json.loads(read(H/'INTENT01.json'));final=json.loads(read(D/'REQUEST_FINAL03.json'));proposal=json.loads(read(D/'REQUEST_PROPOSAL02.json'));ck({k:v for k,v in final.items() if k!='release'}=={k:v for k,v in proposal.items() if k!='release'} and proposal['release'] is None,'Root bound only real release');ck(sha(read(Path(final['release']['path'])))==final['release']['sha256']=='62606a555380daf83d89cc420d7f4d9ae3371bb8f419924cc5014ac34f2fa167','actual genuine reviewer release');ck(sha(read(D/'REQUEST_FINAL03.json'))==obs['final_request_sha256']=='ea0465230ad11064cf2e8bd0897e452b9bded5bd6bf5c9556358838da11b21e5','actual finalrequestpin');ck(sha(read(RV/'MANIFEST01.json'))=='a747c2ad4eda66c44605690029c3d697fc663b8e8ea5b7385f7c9562c35dde15' and sha(read(RV/'READBACK01.json'))==final['review']['sha256']=='6dcb03cfed84ff48132710e548aeaead0015c97df1b8885f55e8ad7ea0cbe13d','genuine195 remoteproof');ck(sha(read(REMOTE/'REMOTE_RECOVERY01.json'))==r['remote_receipt_sha256']=='9e6d7dd7e0260aa955f6aeff72abbf6fbaf7c85bd5b308d1c527c6b69ce472b2','actualremote chain')
+ck((term['session_id'],term['start_tool_chunk'],term['completion_tool_chunk'],term['actual_exit'])==(74472,'e43a2f','75eb7a',0),'original actual tool exit0');ck(term['original_recovery_sha256']==sha(receipt) and term['parent_observation_sha256']==sha(read(D/'PARENT_OBSERVATION01.json')) and term['original_intent_sha256']==sha(read(H/'INTENT01.json')),'original intent/outcome/observationchain')
+for k,v in [('actual_parent_pid',458640),('actual_start_ticks',15965707),('actual_pgid',458637),('actual_sid',458637)]:ck(term[k]==obs[k]==v,'actual same-exec original identity')
+ck(intent['pid']==458640 and not Path('/proc/458640').exists(),'original actualPID nowabsent')
+try:os.killpg(458637,0)
+except ProcessLookupError:checks.append('originalactualgroup absent')
+else:raise AssertionError('actualgroup persists')
+for kind,leaf in [('stdout','out'),('stderr','err')]:
+ b=read(D/('ACTUAL_FLAT01.'+leaf));ck(sha(b)==term['actual_'+kind+'_sha256'],'raw actual '+kind)
+ if kind=='stderr':ck(not b,'actual emptyerr')
+ else:ck(json.loads(b)==r['actual'],'exact actual stdout result')
+flat=H/'flat-source01';metadata=read(flat/r['actual']['metadata_file']);ck(sha(metadata)==r['actual']['metadata_sha256']=='f900f8448bd92be6fd43329b970056d6e498765972682402d5aff475a777a106','original flatmetadata hash');meta=json.loads(metadata);m=meta['manifest'];mapping=meta['flat_members'];ck(len(m['members'])==1029 and len(mapping)==747 and len(set(mapping.values()))==747,'full1029/747 one-to-one');ck({p.name for p in flat.iterdir()}==set(mapping.values())|{r['actual']['metadata_file']},'exact748 noextras');bodies={}
+for row in m['members']:
+ if row['kind']!='file':continue
+ p=flat/mapping[row['path']];s=p.lstat();b=read(p);ck(stat.S_ISREG(s.st_mode) and s.st_nlink==1 and stat.S_IMODE(s.st_mode)==0o600 and len(b)==row['bytes'] and sha(b)==row['sha256'],'every747 actualprivate file/byte/hash');bodies[row['path']]=b
+st=(flat/r['actual']['metadata_file']).lstat();ck(stat.S_IMODE(st.st_mode)==0o600 and st.st_nlink==1 and stat.S_IMODE(flat.stat().st_mode)==0o700,'private metadata/rootmodes')
+rel='research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-root-claimedrun-source339-capture01-2026-10-04';bundle=REMOTE/'selected'/rel;raw=read(bundle/'source.tar.gz');ck(sha(raw)==r['actual']['archive_sha256']=='b5b6aad2f515447dc6566cfb716a20ef90031313d48f1ac903ab756735431e24' and read(bundle/'source-manifest.json')==a.encode(m),'actual received archive/manifest');t=ast.parse(read(F/'held-consumer-final-released-scope-capture-review01-2026-10-03/check01.py'));exec(compile(ast.Module(body=[n for n in t.body if isinstance(n,ast.FunctionDef) and n.name in ('decode','recode')],type_ignores=[]),'<independent raw framing>','exec'));decoded,frames=decode(raw,m)
+for n,b in bodies.items():ck(decoded[n]==b,'every actualremote archive body to actualflat')
+ck(recode(m,bodies)==raw,'complete canonical archive reconstructed from allactualflat bytes');S=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source');ck(a.scan(S)==m,'whole original currentSource same')
+for n,b in bodies.items():ck(read(S/n)==b,'everyoriginal actualflat byte')
+# Independent pure Git loose-object decoder; no Git/research helper import or repository reconstruction.
+objects={};total=0
+for n,b in bodies.items():
+ if not n.startswith('.git/objects/'):continue
+ parts=n.split('/');ck(len(parts)==4 and len(parts[2])==2 and len(parts[3])==38,'exact actual loose-object path');oid=parts[2]+parts[3];d=zlib.decompressobj();expanded=d.decompress(b,4*1024**2+1);ck(len(expanded)<=4*1024**2 and d.eof and not d.unused_data and not d.unconsumed_tail,'bounded complete actual zlib object');total+=len(expanded);ck(total<=128*1024**2,'aggregate object bound');head,content=expanded.split(b'\0',1);kind,sz=head.decode('ascii').split();ck(kind in ('commit','tree','blob','tag') and str(len(content))==sz and hashlib.sha1(expanded).hexdigest()==oid,'everyactual loose object header/OID/extent');objects[oid]=(kind,content)
+def obj(oid,kind):ck(oid in objects and objects[oid][0]==kind,'actual object type/closure');return objects[oid][1]
+commits={}
+def ancestry(oid,depth=0):
+ ck(depth<=128 and len(commits)<1024,'bounded ancestry')
+ if oid in commits:return
+ body=obj(oid,'commit');head=body.split(b'\n\n',1)[0].splitlines();trees=[s[5:].decode() for s in head if s.startswith(b'tree ')];parents=[s[7:].decode() for s in head if s.startswith(b'parent ')];ck(len(trees)==1,'exact commit tree');commits[oid]={'tree':trees[0],'parents':parents}
+ for parent in parents:ancestry(parent,depth+1)
+SOURCE=r['source'];ancestry(SOURCE);ck(len(commits)==7,'actualcomplete7commit ancestry')
+def flatten(tree,prefix='',depth=0):
+ ck(depth<=32,'boundedtree depth');b=obj(tree,'tree');off=0;result={};seen=set()
+ while off<len(b):
+  sep=b.index(b' ',off);end=b.index(b'\0',sep);mode=b[off:sep].decode();name=b[sep+1:end].decode();oid=b[end+1:end+21].hex();ck(end+21<=len(b) and name not in seen and name not in ('.','..') and '/' not in name,'complete uniquetree framing');seen.add(name);off=end+21;path=prefix+name
+  if mode=='40000':result.update(flatten(oid,path+'/',depth+1))
+  else:ck(mode in ('100644','100755'),'regular Git file mode');result[path]=(mode,oid,obj(oid,'blob'))
+ return result
+tracked=flatten(commits[SOURCE]['tree']);ck(len(tracked)==339,'actual recovered339 Git source');by={v['path']:v for v in m['members']}
+for n,(mode,oid,b) in tracked.items():ck(bodies[n]==b and ((by[n]['mode']&0o111)!=0)==(mode=='100755'),'allactualcommit treebody/mode vsflat')
+head=bodies['.git/HEAD'].decode().strip()
+if head.startswith('ref: '):
+ key='.git/'+head[5:]
+ if key in bodies:head=bodies[key].decode().strip()
+ else:head={ln.split()[1]:ln.split()[0] for ln in bodies['.git/packed-refs'].decode().splitlines() if ln and not ln.startswith(('#','^'))}[head[5:]]
+ck(head==SOURCE,'actual recovered HEAD')
+gatepath='fixture_inputs/financial_wrapper_claimedrun01/gates.json';gate=json.loads(bodies[gatepath]);ID='financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01';exp=gate['experiments'][ID];ck(len(exp['source_files'])==338 and set(exp['source_files'])|{gatepath}==set(tracked),'exact338 pins/Gitclosure')
+for n,pin in exp['source_files'].items():ck(sha(bodies[n])==pin,'every sourcepin')
+for role,ref in exp['inputs'].items():ck(sha(bodies[ref['path']])==ref['sha256'],'eight input actualbody')
+ck(len(exp['inputs'])==8,'eightroles');closure=json.loads(bodies[exp['inputs']['source_closure']['path']]);ck(len(closure['installed'])==194 and sum(n.startswith('tradingagents/') for n in closure['installed'])==149,'194/149')
+for n,pin in closure['installed'].items():ck(sha(bodies[n])==pin,'allimplementation original')
+runtime=json.loads(bodies[exp['inputs']['runtime_mapping']['path']]);ck(len(runtime['distribution_records'])==251,'251 RECORD metadata no runtimebody inference')
+old='research_runs/financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01/';claim=json.loads(bodies[old+'claim.json']);ck(sha(bodies[old+'claim.json'])=='4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128' and sha(bodies[old+'failed.json'])=='35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450','actualoldclaim/failedpins');ck(claim['source']==claim['design_source']=='649fb8a11089524aaef7843dffeeb90a3a55ca17' and claim['effective_attempt_budget']==18,'actualoldsource/design/budget');historical=flatten(commits[claim['source']]['tree']);ck(len(historical)==325,'actualold325Gitclosure');cg=json.loads(historical[claim['registration']][2]);ck(sha(historical[claim['registration']][2])==claim['registration_sha256'] and cg['experiments'][claim['experiment_id']]==claim['experiment'],'actualoldclaim registration/experiment');ck(len(claim['experiment']['source_files'])==324,'actualold324pins')
+for n,pin in claim['experiment']['source_files'].items():ck(sha(historical[n][2])==pin,'every historicalclaim selected sourcebody')
+for role,ref in claim['inputs'].items():ck(sha(historical[ref['path']][2])==ref['sha256'],'every actualhistorical input')
+ck(len(claim['inputs'])==8 and old+'complete.json' not in bodies and 'research_runs/'+ID+'/claim.json' not in bodies,'oldfailure no replacement/newclaim');ck(r['joins']['recovered_commit_ancestry_count']==len(commits) and r['joins']['historical_claim_source_joins']=={'budget':18,'design_source':claim['design_source'],'inputs':8,'pins':324,'source':claim['source'],'tracked':325},'actualreceipt independent semanticsagree');ck(len(r['disk_floor_observations'])==4 and min(r['disk_floor_observations'])>=10*1024**3,'allactual4floors');ck(a.scan(S)==m,'fullcurrentSource stableatend');ck(not any(n.split('.')[0] in {'numpy','torch','scipy','tradingagents'} for n in sys.modules),'no research numerical imports')
+x={'schema_version':1,'decision':'COMPLETE_ACTUAL_SOURCE339_BYTE_UNION_ACCEPTED','source':SOURCE,'identity':ID,'actual_recovery_sha256':sha(receipt),'actual_remote_receipt_sha256':r['remote_receipt_sha256'],'actual_remote_review_manifest_sha256':'a747c2ad4eda66c44605690029c3d697fc663b8e8ea5b7385f7c9562c35dde15','final_request_sha256':sha(read(D/'REQUEST_FINAL03.json')),'release_sha256':final['release']['sha256'],'actual_terminal_sha256':sha(read(D/'ACTUAL_TOOL_TERMINAL02.json')),'actual_parent_exit':0,'actual_original_pid':458640,'actual_original_ticks':15965707,'actual_original_group_session':458637,'actual_original_pid_group_currently_absent':True,'checks':len(checks),'original_typed_members':1029,'actual_private_flat_files':748,'regular_bodies':747,'archive_sha256':sha(raw),'manifest_sha256':sha(a.encode(m)),'metadata_sha256':sha(metadata),'actual_Git_objects':len(objects),'actual_commit_ancestry':commits,'current_tracked_git_bodies':339,'selected_source_pins':338,'input_roles':8,'implementation':194,'package':149,'runtime_RECORD_metadata':251,'historical_claim_source_joins':r['joins']['historical_claim_source_joins'],'genuine_global_spent_claims':1,'new_claims':0,'original_archival_receipt_flags':r['actual'],'full_Source339_recovered_from_actual_external_bytes':True,'source_current_stable':True,'Parent_or_final_caller_or_review_recovered':False,'installed_runtime_bodies_recovered':False,'empirical_stores_recovered':False,'POSIX_tree_instantiated':False,'native_capacity_or_numerical_release':False,'qualification':'Complete actual current Source339 archival bytes and recovered Git/claim/source semantics, joined to separately accepted actual195body external archive/witness scope. Original historical claim copies remain one spent identity. Final Parent/caller/review union and fresh numerical eligibility are separate.'};(O/'READBACK01.json').write_text(json.dumps(x,sort_keys=True,indent=2)+'\n');print(json.dumps({'checks':len(checks),'objects':len(objects),'commits':len(commits),'decision':x['decision']}))

@@ -1,0 +1,1 @@
+Reviewer check01 copied an overlong intent SHA literal with repeated58. Actual intent bytes match their original terminal pin. Original failure is retained; successor uses independently computed exact intent hash and fixes a not-yet-executed Path concatenation typo. No Root artifact or original receipt changed.
