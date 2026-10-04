@@ -1,0 +1,95 @@
+{
+  "actual_outcome_evidence": [
+    {
+      "bytes": 16478,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-claimedrun-native-outcome-review01-2026-10-04/MANIFEST01.json",
+      "sha256": "0f27670fa421d15fea717ef3326e92fce6f2cd37c29430686c4d399057bffa9e"
+    },
+    {
+      "bytes": 815,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-claimedrun-native-outcome-review01-2026-10-04/MACHINE01.json",
+      "sha256": "0fe8f25ed3baf2a1254dd2cd86826e048e05f2d609ad3a7ae1925c1c1e3bf7c3"
+    },
+    {
+      "bytes": 4431,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-claimedrun-native-outcome-review01-2026-10-04/REPORT01.md",
+      "sha256": "986f21fda97fd32933727b4c35d0681304adf6bcda977b07c9ead49f81a7f971"
+    }
+  ],
+  "budget_refusals": [
+    {
+      "case": "missing",
+      "reason": "adopted budget extension must be carried forward",
+      "type": "ValueError"
+    },
+    {
+      "case": "empty",
+      "reason": "budget extension reference differs",
+      "type": "ValueError"
+    },
+    {
+      "case": "extra",
+      "reason": "budget extension reference differs",
+      "type": "ValueError"
+    },
+    {
+      "case": "wrong-extension-pin",
+      "reason": "actual body pin differs",
+      "type": "ValueError"
+    },
+    {
+      "case": "wrong-review-pin",
+      "reason": "actual body pin differs",
+      "type": "ValueError"
+    }
+  ],
+  "checks": 45,
+  "names": [
+    "complete literal gate inverse restored original bytes",
+    "gate exact schema/cardinality",
+    "unchanged gate datasets",
+    "unchanged gate families",
+    "unchanged gate program_id",
+    "unchanged gate schema_version",
+    "unchanged historical gate entry financial-wrapper-classification-eager-interrupt1-20261003-01",
+    "unchanged historical gate entry financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01",
+    "unchanged historical gate entry financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+    "unchanged historical gate entry financial-wrapper-classification-selected-agreement-20261003-01",
+    "unchanged historical gate entry financial-wrapper-classification-selected-complete100-20261003-01",
+    "unchanged historical gate entry financial-wrapper-classification-selected-interrupt1-20261003-01",
+    "unchanged historical gate entry financial-wrapper-regression-eager-complete100-20261003-01",
+    "unchanged historical gate entry financial-wrapper-regression-eager-interrupt1-20261003-01",
+    "unchanged historical gate entry financial-wrapper-regression-selected-agreement-20261003-01",
+    "unchanged historical gate entry financial-wrapper-regression-selected-complete100-20261003-01",
+    "unchanged historical gate entry financial-wrapper-regression-selected-interrupt1-20261003-01",
+    "exact three changed experiment fields",
+    "runtime admission pins unchanged",
+    "all251 original runtime RECORD declarations retained",
+    "251 distinct distribution names",
+    "original base18/prior0",
+    "budget reference exactshape",
+    "budget reference exactshape",
+    "budget reference exactshape",
+    "original adopted snapshot remains1 not rewritten2",
+    "budget reference exactshape",
+    "budget reference exactshape",
+    "budget reference exactshape",
+    "budget reference exactshape",
+    "five actual original budget refusals",
+    "budget reference exactshape",
+    "budget reference exactshape",
+    "budget reference exactshape",
+    "actual2 claim original extension carryforward returns19",
+    "all18 original phases",
+    "12 original fit invocations",
+    "14 prospective completes",
+    "4 planned failure slots",
+    "800 training plus4 agreement updates",
+    "8 full100 completed fits",
+    "10 exact original cells",
+    "original slot2 independent reference",
+    "continuation requires both genuine outcomes",
+    "exact actual outcome review seal"
+  ],
+  "no_runtime_import_or_claim": true
+}

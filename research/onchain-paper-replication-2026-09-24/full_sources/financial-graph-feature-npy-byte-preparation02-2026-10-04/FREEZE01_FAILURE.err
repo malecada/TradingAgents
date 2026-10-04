@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "freeze01.py", line 45, in <module>
+    print(json.dumps({'source':sha(source),'manifest':sha((H/'MANIFEST01.json').read_bytes()),'machine':sha((H/'MACHINE01.json').read_bytes()),'report':sha((H/'REPORT01.md').read_bytes()),'members':len(entries),'files':sum(r['kind']=='file' for r in entries),'bytes':sum(r.get('bytes',0) for r in entries),'checks':[c2['checks'],c4['checks'],c5['checks']],'authentication':a['checks']}))
+TypeError: string indices must be integers, not 'str'

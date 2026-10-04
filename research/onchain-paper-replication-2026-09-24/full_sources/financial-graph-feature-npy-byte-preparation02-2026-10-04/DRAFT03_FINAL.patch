@@ -1,0 +1,16 @@
+--- npy_bytes03.draft03.py
++++ npy_bytes03.py
+@@ -366,11 +366,11 @@
+         # Revoke before the actual close, so its hook/failure cannot consume proof.
+         require(not self._busy, 'cannot release during consumption')
+         self.state = 'RELEASED'; self._proof = None; self._proof_pin = None
+-        self._close()
++        self._close(sys.exception())
+ 
+     def abort(self):
+         self.state = 'FAILED'; self._proof = None; self._proof_pin = None
+-        self._close()
++        self._close(sys.exception())
+ 
+ 
+ from contextlib import contextmanager

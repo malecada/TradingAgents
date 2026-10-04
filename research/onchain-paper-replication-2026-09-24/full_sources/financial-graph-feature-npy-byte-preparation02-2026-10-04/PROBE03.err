@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-graph-feature-npy-byte-preparation02-2026-10-04/probe03.py", line 33, in <module>
+    print('ACTUAL_CLOSE',repr(events),slot['cursor'].state,slot['cursor'].fd);ok(len(events)==1 and events[0][1]=='RELEASED' and slot['cursor'].fd is None,'revocation precedes real close '+str((i,j)))
+                                                                              ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-graph-feature-npy-byte-preparation02-2026-10-04/probe03.py", line 6, in ok
+    if not v:raise AssertionError(n)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: revocation precedes real close (0, 0)

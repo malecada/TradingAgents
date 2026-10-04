@@ -1,0 +1,46 @@
+{
+  "all_limits_supervision_cleanup_and_genuine_job_command_unchanged": true,
+  "changes": [
+    {
+      "original": "PARENT=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-root-launch-20261004-01')",
+      "replacement": "PARENT=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01')"
+    },
+    {
+      "original": "IDENTITY='financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01'",
+      "replacement": "IDENTITY='financial-wrapper-classification-eager-complete100-20261003-01'"
+    },
+    {
+      "original": "q['source']==q['design_source']=='0a2e7639b42b9423b90743feadcda4078aa21816'",
+      "replacement": "q['source']==q['design_source']=='9dc5c79f738920b52947b4e63fed0397f1b5b207'"
+    },
+    {
+      "original": "q['registration_sha256']=='3a20293832fa7ecc5e2821fb27dc940d1a997ab7f2ad373bc28f73e893e8781a'",
+      "replacement": "q['registration_sha256']=='752c34dfad4df2ca36b5dc4dcb999846f8de01bd1a61c5356092c4e55fbd678c'"
+    },
+    {
+      "original": "q['expected_phase']=='interrupt1','fixed fresh claimedrun initial context'",
+      "replacement": "q['expected_phase']=='complete100','fixed original unused complete100 reference context'"
+    },
+    {
+      "original": "require(exp['parent']==old_id,'actual spent predecessor')",
+      "replacement": "require(exp['parent'] is None,'independent complete100 reference has no experiment parent')"
+    },
+    {
+      "original": " require(not os.path.lexists(CAP/'research_runs'/old_id/'complete.json'),'failed history cannot become complete')",
+      "replacement": " require(not os.path.lexists(CAP/'research_runs'/old_id/'complete.json'),'failed history cannot become complete')\n planned_id='financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01'\n for name,pin in {'claim.json':'d390980c956aab64d5521698cbb6123ccf01ece94a95277b97755f019adf692b','failed.json':'4b2d7b0d162e80fe2074997baed35f2d6e6c86e5f660872fc2b8e97bb9622558'}.items():require(sha(R.read(CAP,'research_runs/'+planned_id+'/'+name))==pin,'preserved actual planned failed history')\n require(not os.path.lexists(CAP/'research_runs'/planned_id/'complete.json'),'planned failed history cannot become complete')"
+    }
+  ],
+  "original_parent_sha256": "5d5cbdae455c62c3e66b53208b0f79e6e5bbc7ce05d3ded77126da5e0692deda",
+  "parent_sha256": "7f28cee688b661584e57466838ecdb79f0e17aa52be7d6f2c04f374326de9fb3",
+  "schema_version": 1,
+  "six_helpers_unchanged": {
+    "PROTOCOL_PINS01.json": "b55959d7fef0bf04b6eea80e4e83d1c262a2f0f9e778791814e52f2fe0325434",
+    "bounded_git01.py": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f",
+    "descendants01.py": "7ce3c0b4aa5a89c8f74238e810a19b659e3aaf89fe67b86801127a2246d12ee9",
+    "owned_io.py": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+    "recovery04.py": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a",
+    "supervisor01.py": "551850d2af69baf48bc582f8fc7da7e7eba931c2b58abec4987a09e9ec270db0"
+  },
+  "source_only_draft_not_released": true,
+  "whole_literal_inverse": true
+}

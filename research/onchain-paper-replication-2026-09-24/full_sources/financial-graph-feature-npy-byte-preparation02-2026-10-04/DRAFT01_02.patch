@@ -1,0 +1,37 @@
+--- npy_bytes03.draft01.py
++++ npy_bytes03.draft02.py
+@@ -231,8 +231,17 @@
+ import fcntl
+ import threading
+ 
+-REQUIRED_SEALS = (fcntl.F_SEAL_WRITE | fcntl.F_SEAL_GROW |
+-                  fcntl.F_SEAL_SHRINK | fcntl.F_SEAL_SEAL)
++# Linux UAPI values authenticated from original local linux/fcntl.h and
++# asm-generic/fcntl.h. The pinned Python exposes fcntl(), but omits seal names.
++# No seal is installed here. Unsupported kernel/ioctl always refuses.
++import sys
++F_ADD_SEALS=1033
++F_GET_SEALS=1034
++F_SEAL_SEAL=1
++F_SEAL_SHRINK=2
++F_SEAL_GROW=4
++F_SEAL_WRITE=8
++REQUIRED_SEALS = F_SEAL_WRITE | F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL
+ 
+ 
+ def sealed_identity(fd):
+@@ -242,12 +251,13 @@
+     once installed, write/pwrite/truncate/shared writable mmap refuse. Require
+     SEAL_SEAL too. Named ordinary component files are deliberately unsupported.
+     """
++    require(sys.platform == 'linux', 'UNAVAILABLE: Linux kernel seal ABI required')
+     require(type(fd) is int and fd >= 0, 'actual borrowed descriptor required')
+     s = os.fstat(fd)
+     require(stat.S_ISREG(s.st_mode) and s.st_nlink == 0 and
+             s.st_uid == os.getuid() and 0 < s.st_size <= FILE_LIMIT,
+             'anonymous owned sealed-inode extent/type required')
+-    seals = fcntl.fcntl(fd, fcntl.F_GET_SEALS)
++    seals = fcntl.fcntl(fd, F_GET_SEALS)
+     require((seals & REQUIRED_SEALS) == REQUIRED_SEALS,
+             'kernel WRITE/GROW/SHRINK/SEAL exclusion required before reading')
+     return (s.st_dev, s.st_ino, s.st_mode, s.st_uid, s.st_nlink, s.st_size)

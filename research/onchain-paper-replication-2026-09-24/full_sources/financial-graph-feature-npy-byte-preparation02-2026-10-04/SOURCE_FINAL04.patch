@@ -1,0 +1,180 @@
+--- original_npy_bytes02
++++ successor_npy_bytes03
+@@ -120,6 +120,7 @@
+     and disk floor are sampled and do not interrupt blocking calls.
+     """
+     def __init__(self, path, metadata):
++        raise PermissionError('UNAVAILABLE: ordinary-path inode writer exclusion is not enforced; stat fingerprints and repeated hashes are insufficient')
+         self.fd = None; self.state = 'FAILED'; self.position = 0
+         self._metadata = metadata; self._pin = sha(metadata) if type(metadata) is bytes else None
+         self.path = Path(path); self.deadline = time.monotonic() + SECONDS
+@@ -224,3 +225,169 @@
+ 
+ def production(*args, **kwargs):
+     raise PermissionError('No genuine graph ancestry, registered NPY role, shared reservation, typed transport/recovery, retirement or native capacity adapter is installed; Source339 unsupported')
++
++# Explicit separate engineering domain. This does NOT capture an ordinary file,
++# implement graph publication, or turn a copy into the current original member.
++import fcntl
++import threading
++
++# Linux UAPI values authenticated from original local linux/fcntl.h and
++# asm-generic/fcntl.h. The pinned Python exposes fcntl(), but omits seal names.
++# No seal is installed here. Unsupported kernel/ioctl always refuses.
++import sys
++F_ADD_SEALS=1033
++F_GET_SEALS=1034
++F_SEAL_SEAL=1
++F_SEAL_SHRINK=2
++F_SEAL_GROW=4
++F_SEAL_WRITE=8
++REQUIRED_SEALS = F_SEAL_WRITE | F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL
++
++
++def sealed_identity(fd):
++    """Kernel exclusion applies to this inode and every fd/mapping alias.
++
++    F_SEAL_WRITE cannot be installed while a writable shared mapping exists;
++    once installed, write/pwrite/truncate/shared writable mmap refuse. Require
++    SEAL_SEAL too. Named ordinary component files are deliberately unsupported.
++    """
++    require(sys.platform == 'linux', 'UNAVAILABLE: Linux kernel seal ABI required')
++    require(type(fd) is int and fd >= 0, 'actual borrowed descriptor required')
++    s = os.fstat(fd)
++    require(stat.S_ISREG(s.st_mode) and s.st_nlink == 0 and
++            s.st_uid == os.getuid() and 0 < s.st_size <= FILE_LIMIT,
++            'anonymous owned sealed-inode extent/type required')
++    seals = fcntl.fcntl(fd, F_GET_SEALS)
++    require((seals & REQUIRED_SEALS) == REQUIRED_SEALS,
++            'kernel WRITE/GROW/SHRINK/SEAL exclusion required before reading')
++    return (s.st_dev, s.st_ino, s.st_mode, s.st_uid, s.st_nlink, s.st_size)
++
++
++class SealedCursor(Cursor):
++    """Opaque bytes of an already kernel-sealed original anonymous inode.
++
++    No file copy/seal installation is performed here. The caller must supply an
++    already immutable inode; current ordinary graph files cannot qualify. Only
++    the owned duplicate's lifetime supports proof access, from open to release.
++    finish does NOT close it. consume runs callbacks while exclusion remains;
++    release invalidates proof access BEFORE attempting close, including failure.
++    Returned proof bytes are historical evidence after release, never current
++    original-path or genuine scientific authority. All role hashes are untrusted.
++    """
++    def __init__(self, fd, metadata, floor_root):
++        self.fd = None; self.state = 'FAILED'; self.position = 0
++        self._metadata = metadata; self._pin = sha(metadata) if type(metadata) is bytes else None
++        self.spec = expected(metadata); self.deadline = time.monotonic() + SECONDS
++        self.thread = threading.get_ident(); self._busy = False; self._offset = 0
++        self._proof = None; self._proof_pin = None
++        self.floor_root = Path(floor_root)
++        require(self.floor_root.is_absolute() and self.floor_root.resolve(strict=True) == self.floor_root,
++                'canonical engineering floor root')
++        ds = self.floor_root.lstat()
++        require(stat.S_ISDIR(ds.st_mode) and ds.st_uid == os.getuid(), 'owned floor directory')
++        self._floor_identity = (ds.st_dev, ds.st_ino, ds.st_mode, ds.st_uid)
++        self.initial = sealed_identity(fd)  # No owned resource yet, no body read.
++        require(self.initial[-1] == self.spec['file_bytes'], 'sealed original expected extent')
++        try:
++            self.fd = os.dup(fd); os.set_inheritable(self.fd, False)
++            require(sealed_identity(self.fd) == self.initial, 'duplicate actual original inode join')
++            self.state = 'OPEN'; self._sample()
++            prefix = self._exact(8)
++            require(prefix[:6] == b'\x93NUMPY', 'NPY magic')
++            v = tuple(prefix[6:]); require(v in ((1, 0), (2, 0), (3, 0)), 'NPY version')
++            count_raw = self._exact(2 if v == (1, 0) else 4)
++            count = int.from_bytes(count_raw, 'little')
++            require(0 < count <= HEADER_LIMIT - len(prefix) - len(count_raw), 'header allocation bound')
++            self.envelope = parse_header(prefix + count_raw + self._exact(count))
++            e = self.envelope
++            require(e.rows == self.spec['rows'] and e.payload_offset + e.payload_bytes == self.initial[-1],
++                    'sealed header/body/expected extent')
++            require(sha(e.literal_header) == self.spec['header_sha256'], 'literal header hash')
++            self._whole = hashlib.sha256(e.literal_header); self._raw = hashlib.sha256()
++            self._sample()
++        except BaseException as error:
++            self._fail(error); raise
++
++    def _exact(self, size):
++        require(type(size) is int and 0 < size <= READ_LIMIT, 'bounded sealed read')
++        data = os.pread(self.fd, size, self._offset)
++        require(type(data) is bytes and len(data) == size, 'sealed short read')
++        self._offset += size
++        return data
++
++    def _sample(self):
++        require(self.state in ('OPEN', 'PROVEN') and self.fd is not None and
++                threading.get_ident() == self.thread, 'inactive sealed proof lifetime/thread')
++        require(time.monotonic() <= self.deadline, 'sampled deadline')
++        require(type(self._metadata) is bytes and sha(self._metadata) == self._pin and
++                canonical(self.spec) == self._metadata, 'expected metadata changed')
++        require(sealed_identity(self.fd) == self.initial, 'sealed original inode identity changed')
++        s = self.floor_root.lstat()
++        require(self.floor_root.resolve(strict=True) == self.floor_root and
++                (s.st_dev, s.st_ino, s.st_mode, s.st_uid) == self._floor_identity, 'floor root changed')
++        disk = os.statvfs(self.floor_root)
++        require(disk.f_bavail * disk.f_frsize >= FLOOR, 'sampled 10 GiB floor')
++        if self.state == 'PROVEN':
++            require(type(self._proof) is bytes and sha(self._proof) == self._proof_pin, 'proof changed')
++
++    def finish(self):
++        try:
++            require(self.state == 'OPEN' and not self._busy, 'terminal/recursive cursor')
++            self._sample()
++            require(self.position == self.envelope.payload_bytes and
++                    os.pread(self.fd, 1, self._offset) == b'', 'complete payload/exact EOF')
++            whole, raw = self._whole.hexdigest(), self._raw.hexdigest()
++            require(whole == self.spec['file_sha256'] and raw == self.spec['payload_sha256'], 'whole/raw hash')
++            self._proof = canonical({'schema_version': 1, 'kind': 'kernel-sealed-anonymous-npy-inode-proof',
++                'expected_sha256': self._pin, 'header_hex': self.envelope.literal_header.hex(),
++                'header_sha256': sha(self.envelope.literal_header), 'payload_offset': self.envelope.payload_offset,
++                'payload_bytes': self.position, 'payload_sha256': raw, 'file_sha256': whole,
++                'file_bytes': self.spec['file_bytes'], 'sealed_inode': list(self.initial),
++                'required_seals': REQUIRED_SEALS, 'lifetime': 'owned-sealed-descriptor-until-release',
++                'original_component_path_current': False, 'production_authority': False})
++            self._proof_pin = sha(self._proof); self.state = 'PROVEN'; self._sample()
++            # No descriptor cleanup occurs here. Exclusion and the original inode
++            # remain owned while the proof is consumed; release is explicit.
++            return self._proof
++        except BaseException as error:
++            self._fail(error); raise
++
++    def consume(self, callback):
++        try:
++            require(self.state == 'PROVEN' and not self._busy and callable(callback), 'live proof callback')
++            self._sample(); self._busy = True
++            try:result = callback(self._proof)
++            finally:self._busy = False
++            self._sample();return result
++        except BaseException as error:
++            self._fail(error); raise
++
++    def release(self):
++        # Revoke before the actual close, so its hook/failure cannot consume proof.
++        require(not self._busy, 'cannot release during consumption')
++        self.state = 'RELEASED'; self._proof = None; self._proof_pin = None
++        self._close()
++
++    def abort(self):
++        self.state = 'FAILED'; self._proof = None; self._proof_pin = None
++        self._close()
++
++
++from contextlib import contextmanager
++
++
++@contextmanager
++def sealed_cursor(fd, metadata, floor_root):
++    """Mandatory structured lifetime for any future admitted consumer.
++
++    Revocation precedes close even when the body raises. The original active
++    exception is passed explicitly to the unchanged first-fatal cleanup helper.
++    Escaped proof bytes after context exit are historical sealed-inode evidence.
++    """
++    cursor = SealedCursor(fd, metadata, floor_root)
++    try:
++        yield cursor
++    finally:
++        primary = sys.exception()
++        cursor.state = 'RELEASED'; cursor._proof = None; cursor._proof_pin = None
++        cursor._close(primary)

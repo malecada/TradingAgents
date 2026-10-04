@@ -1,0 +1,26 @@
+--- npy_bytes03.draft02.py
++++ npy_bytes03.draft03.py
+@@ -371,3 +371,23 @@
+     def abort(self):
+         self.state = 'FAILED'; self._proof = None; self._proof_pin = None
+         self._close()
++
++
++from contextlib import contextmanager
++
++
++@contextmanager
++def sealed_cursor(fd, metadata, floor_root):
++    """Mandatory structured lifetime for any future admitted consumer.
++
++    Revocation precedes close even when the body raises. The original active
++    exception is passed explicitly to the unchanged first-fatal cleanup helper.
++    Escaped proof bytes after context exit are historical sealed-inode evidence.
++    """
++    cursor = SealedCursor(fd, metadata, floor_root)
++    try:
++        yield cursor
++    finally:
++        primary = sys.exception()
++        cursor.state = 'RELEASED'; cursor._proof = None; cursor._proof_pin = None
++        cursor._close(primary)
