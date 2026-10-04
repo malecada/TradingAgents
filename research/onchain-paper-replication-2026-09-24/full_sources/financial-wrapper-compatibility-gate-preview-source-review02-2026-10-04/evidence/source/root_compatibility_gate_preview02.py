@@ -1,0 +1,120 @@
+"""Prepare exact gate bytes after genuine accepted composed recovery.
+
+This writes a new review directory only. It never adopts a gate, creates an
+Admission/Owner/ResearchRun, starts numerical work or changes a historical file.
+"""
+from pathlib import Path
+import argparse, copy, datetime, hashlib, json, os, stat, subprocess
+
+ROOT=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes')
+FS=ROOT/'research/onchain-paper-replication-2026-09-24/full_sources'
+CAP=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source')
+PREP=FS/'financial-wrapper-compatibility-registration-preparation01-2026-10-04'
+DEST=FS/'financial-wrapper-compatibility-gate-preview02-2026-10-04'
+NEW='fixture_inputs/financial_wrapper_compatibility01'
+OLD='fixture_inputs/financial_wrapper_claimedrun01/gates.json'
+POLICY='ae8fbdc9d13e75fc453b70b5ee633c89fb4577e9b68a35b4147cf1bbd58c6887'
+OLD_GATE='752c34dfad4df2ca36b5dc4dcb999846f8de01bd1a61c5356092c4e55fbd678c'
+CURRENT='7b056a574e3e7b3c7ba209a39ee6a615e649d60c'
+PREP_DRAFT_PIN='edd6e8acc71d35fb1ff31795701d1fb6185fdee3e64b952d805edcd75120780d'
+PREP_BINDING_PIN='1a7685a67636df3b302d5e647b169ec9ede65e36e086b8ac88ab1284f1c2fc30'
+PREPARED_PINS={'allocation20.json': '461df69895a0a5e70b23882c759790a4c000eb33d1662629cacd322b7d3b0116', 'environment.json': '1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87', 'execution_job.json': '4712f728425cacd9c346f43fcab5ec37cdbda75d1423eebdf1beb8dc3e863f0e', 'extension-review20.json': 'b5ac7652631ba25296003580774e29b9f0e555a3ed4ef5d2323576099c39f389', 'extension20.json': '07100b23f9a8c2dfcae98a8647f9f1eeb019f4093192cd4b2576c6a13bf9840e', 'model.json': '20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d', 'policy-review.json': '0a0db0cb8fafce00024aa25c048cb9efa27d1411e57586f7217b0bc209a41cd5', 'policy.json': 'ae8fbdc9d13e75fc453b70b5ee633c89fb4577e9b68a35b4147cf1bbd58c6887', 'runtime_mapping.json': '34c4adac06053df082f55d5581c4d29a93ea6d5719b515771d5d33925a62a2f7', 'source_closure.json': 'af61a1de642d029579230fb3980e87eefe8dc5e0e7ba6a965393f194e996c92c', 'synthetic_recipe.json': 'f8b1ec1eed902f3cca76bd7e06d2435accda699173b9a7942d10c37c64f01040', 'training.json': 'd5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0', 'wrapper_plan.json': '122038ae73464e0168cc0184cf9097ead7908c0194f1684b853da337bc66efda'}
+HISTORY_PINS={'financial-wrapper-classification-eager-complete100-20261003-01': {'claim.json': '2e3bbbbf786f784eadb18bc3cdfea68905610ae773bbbd748ea1b2666b9e61f1', 'failed.json': 'abdaef6f01bd02614782e442e2c102c38faa57e76061cba43b69960f3e389fa6'}, 'financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01': {'claim.json': 'd390980c956aab64d5521698cbb6123ccf01ece94a95277b97755f019adf692b', 'failed.json': '4b2d7b0d162e80fe2074997baed35f2d6e6c86e5f660872fc2b8e97bb9622558'}, 'financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01': {'claim.json': '4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128', 'failed.json': '35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450'}}
+
+HELPER='d0d770b45def89e8e00e81fa1bbb35416034eaace5ecab0f15193fd43b7a32d8'
+def sha(b):return hashlib.sha256(b).hexdigest()
+def encode(v):return (json.dumps(v,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+def canonical(v):return json.dumps(v,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
+def read(p):
+    p=Path(p);s=p.lstat()
+    assert p.is_absolute() and p.resolve(strict=True)==p and stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_size<=4194304
+    before=tuple(getattr(s,k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns'))
+    raw=p.read_bytes();after=p.lstat()
+    assert tuple(getattr(after,k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns'))==before
+    return raw
+def protected(name):
+    return any(p.lower() in ('keys','apis','.env','.ssh','hf_token.txt','.venv','node_modules') or p.lower().endswith(('.pem','.key')) for p in Path(name).parts)
+
+args=argparse.ArgumentParser()
+for name in ('recovery-proof','recovery-machine','recovery-manifest','recovery-report'):args.add_argument('--'+name,required=True)
+a=args.parse_args(); paths={k:Path(getattr(a,k.replace('-','_'))).absolute() for k in ('recovery-proof','recovery-machine','recovery-manifest','recovery-report')}
+raw={k:read(p) for k,p in paths.items()};proof=json.loads(raw['recovery-proof']);machine=json.loads(raw['recovery-machine']);manifest=json.loads(raw['recovery-manifest'])
+policy_raw=read(PREP/NEW/'policy.json');assert sha(policy_raw)==POLICY;policy=json.loads(policy_raw)
+expected={'schema_version':1,'kind':'operational_source_compatibility_recovery','policy_sha256':POLICY,'checker_sha256':HELPER,'historical_map_sha256':sha(canonical(policy['historical']['installed'])),'target_map_sha256':sha(canonical(policy['target']['installed'])),'decision':'accepted'}
+assert proof==expected and machine['decision']=='ACCEPTED_ACTUAL_OPERATIONAL_SOURCE_POLICY_BYTE_RECOVERY'
+assert machine['recovery_proof_sha256']==sha(raw['recovery-proof']) and machine['report_sha256']==sha(raw['recovery-report'])
+for k in ('schema_version','policy_sha256','checker_sha256','historical_map_sha256','target_map_sha256'):assert machine[k]==expected[k]
+for name,p in paths.items():
+    if name=='recovery-manifest':continue
+    assert p.parent==paths['recovery-manifest'].parent
+    assert any(x.get('kind')=='file' and x.get('path')==p.name and x.get('sha256')==sha(raw[name]) and x.get('bytes')==len(raw[name]) for x in manifest['members'])
+receipts=machine['recovery_receipts'];assert isinstance(receipts,list) and receipts and len({json.dumps(x,sort_keys=True) for x in receipts})==len(receipts)
+for ref in receipts:
+    assert set(ref)=={'path','sha256'} and sha(read(Path(ref['path'])))==ref['sha256']
+    rel=Path(ref['path']).relative_to(paths['recovery-manifest'].parent).as_posix()
+    assert any(x.get('path')==rel and x.get('sha256')==ref['sha256'] and x.get('kind')=='file' for x in manifest['members'])
+assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=CAP,text=True).strip()==CURRENT
+assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=CAP)
+gate_raw=read(CAP/OLD);assert sha(gate_raw)==OLD_GATE
+gate=json.loads(gate_raw)
+draft_raw=read(PREP/'EXPERIMENT_DRAFT_NOT_REGISTRATION01.json');assert sha(draft_raw)==PREP_DRAFT_PIN
+binding_raw=read(PREP/'PREPARATION_BINDING01.json');assert sha(binding_raw)==PREP_BINDING_PIN
+draft=json.loads(draft_raw);binding=json.loads(binding_raw)
+assert binding['current_source_design']==CURRENT and binding['current_reference_roles']==10 and binding['required_reference_roles_after_genuine_recovery']==11
+assert binding['actual_claims']==binding['actual_spent_FAILED']==3 and binding['highest_actual_budget']==19 and binding['extension20_adopted'] is False
+assert binding['fixed_consumers']==policy['consumers']
+assert set(x.name for x in (PREP/NEW).iterdir())==set(PREPARED_PINS)
+for name,pin in PREPARED_PINS.items():assert sha(read(PREP/NEW/name))==pin
+runroot=CAP/'research_runs'
+assert set(x.name for x in runroot.iterdir())==set(HISTORY_PINS)|{'.lock'}
+history=[];budgets=[]
+for name,pins in sorted(HISTORY_PINS.items()):
+    directory=runroot/name
+    assert directory.is_dir() and directory.resolve(strict=True)==directory and not os.path.lexists(directory/'complete.json')
+    claim_raw=read(directory/'claim.json');failed_raw=read(directory/'failed.json')
+    assert sha(claim_raw)==pins['claim.json'] and sha(failed_raw)==pins['failed.json']
+    claim=json.loads(claim_raw);failed=json.loads(failed_raw)
+    assert claim['experiment_id']==failed['experiment_id']==name and claim['program_id']=='financial-wrapper-engineering-2026-10-03'
+    assert claim['experiment']['family']=='synthetic-financial-wrapper' and claim['family']['attempt_budget']==18 and claim['family']['prior_attempts']==0
+    assert failed['status']=='failed' and failed['claim_sha256']==sha(claim_raw)
+    assert type(claim['effective_attempt_budget']) is int
+    budgets.append(claim['effective_attempt_budget'])
+    history.append({'identity':name,'claim_sha256':sha(claim_raw),'failed_sha256':sha(failed_raw),'disposition':'FAILED_SPENT'})
+actual_highest=max(budgets);assert actual_highest==19 and len(history)==3
+
+assert draft['status']=='DRAFT_NOT_REGISTRATION_NOT_ADMITTED_NOT_NUMERICALLY_RELEASED'
+identity=draft['identity'];assert identity==policy['consumers']['complete100']['experiment'] and identity not in gate['experiments']
+assert not os.path.lexists(CAP/'research_runs'/identity) and not os.path.lexists(CAP/NEW) and not os.path.lexists(DEST)
+files={}
+for p in sorted((PREP/NEW).iterdir()):
+    assert p.is_file();raw_input=read(p);assert sha(raw_input)==PREPARED_PINS[p.name];files[NEW+'/'+p.name]=raw_input
+assert len(files)==13
+files[NEW+'/policy-recovery.json']=raw['recovery-proof']
+assert len(files)==14
+names=subprocess.check_output(['git','ls-files','-z'],cwd=CAP).split(b'\0');names=[n.decode() for n in names if n];assert len(names)==340
+assert all(not protected(n) for n in names)
+source_files={name:sha(read(CAP/name)) for name in names}
+source_files.update({name:sha(body) for name,body in files.items()});assert len(source_files)==354
+experiment=copy.deepcopy(draft['experiment']);experiment['source_files']=source_files
+for role,ref in experiment['inputs'].items():
+    assert ref['path'] in files and sha(files[ref['path']])==ref['sha256']
+experiment['inputs']['operational_source_compatibility_recovery']={'dataset':'synthetic','path':NEW+'/policy-recovery.json','sha256':sha(raw['recovery-proof'])}
+assert len(experiment['inputs'])==11 and experiment['parent'] is None
+assert experiment['cells']==[policy['consumers']['complete100']['cell_id']]
+for path,pin in policy['target']['installed'].items():assert source_files[path]==pin
+assert json.loads(files[NEW+'/wrapper_plan.json'])['experiment']==identity
+old_exp=copy.deepcopy(gate['experiments']);gate['experiments'][identity]=experiment
+assert all(gate['experiments'][k]==v for k,v in old_exp.items()) and len(old_exp)==12
+assert gate['families']['synthetic-financial-wrapper']['attempt_budget']==18 and gate['families']['synthetic-financial-wrapper']['prior_attempts']==0
+assert sha(files[NEW+'/extension20.json'])=='07100b23f9a8c2dfcae98a8647f9f1eeb019f4093192cd4b2576c6a13bf9840e'
+assert sha(files[NEW+'/allocation20.json'])=='461df69895a0a5e70b23882c759790a4c000eb33d1662629cacd322b7d3b0116'
+assert sha(files[NEW+'/extension-review20.json'])=='b5ac7652631ba25296003580774e29b9f0e555a3ed4ef5d2323576099c39f389'
+files[NEW+'/gates.json']=encode(gate)
+assert len(files)==15
+DEST.mkdir(mode=0o700)
+for name,body in files.items():
+    p=DEST/name;p.parent.mkdir(parents=True,exist_ok=True,mode=0o700)
+    with p.open('xb') as f:f.write(body)
+with (DEST/'PREVIEW01.json').open('x') as out:
+    json.dump({'schema_version':1,'status':'CONCRETE_GATE_PREVIEW_NOT_ADOPTED','time':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_before':CURRENT,'root':str(CAP),'old_gate_sha256':OLD_GATE,'new_gate_path':NEW+'/gates.json','new_gate_sha256':sha(files[NEW+'/gates.json']),'identity':identity,'parent':None,'roles':11,'existing_tracked':340,'new_files':15,'prospective_tracked':355,'source_pins':354,'old_experiments_preserved':12,'actual_highest':actual_highest,'actual_spent_failed':len(history),'actual_history':history,'prepared_body_pins':PREPARED_PINS,'prepared_draft_sha256':PREP_DRAFT_PIN,'prepared_binding_sha256':PREP_BINDING_PIN,'prospective_amendment':20,'actual_recovery_refs':{k:{'path':str(paths[k]),'sha256':sha(v)} for k,v in raw.items()},'new_file_pins':{k:sha(v) for k,v in files.items()},'genuine_Admission_or_Owner_or_Run_created':False,'gate_or_budget_adopted':False,'paper_budget_changed':False},out,indent=2,sort_keys=True);out.write('\n')
+print(json.dumps({'status':'CONCRETE_GATE_PREVIEW_NOT_ADOPTED','identity':identity,'new_files':15,'source_pins':354}))

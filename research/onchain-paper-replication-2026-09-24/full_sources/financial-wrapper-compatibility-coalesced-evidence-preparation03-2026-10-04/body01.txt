@@ -1,0 +1,118 @@
+"""One fixed ordinary evidence copy. Emits DRAFT_NOT_AUTHORITY; never a release."""
+import hashlib,json,os,stat,time,types
+from pathlib import Path,PurePosixPath
+FILE=4194304
+TOTAL=8388608
+LOGICAL=64*1024**2
+ALLOCATED=96*1024**2
+FLOOR=10*1024**3
+SECONDS=120
+MEMBERS=256
+INPUTS_SHA='5c4c9ebbc976d057a1896f106c18fc00c8c0a179e2beaf047bc5ed329ea40f04'
+OUTPUT=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-coalesced-evidence-root03-2026-10-04')
+def require(v,m):
+ if not v:raise ValueError(m)
+def h(b):return hashlib.sha256(b).hexdigest()
+def encode(x):return (json.dumps(x,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+# Embedded exact reviewed bytes avoid unchecked filesystem bootstrap imports.
+@EMBED@
+PC=types.ModuleType('_exact_preclaim02_reader');PC.__file__='<embedded preclaim557b>'
+IO=types.ModuleType('_exact_owned_io');IO.__file__='<embedded owned_io09d1>'
+require(h(PRECLAIM_BYTES)=='557b7bcb38b48e3bf1e9e5b5b1eae25ab4908b8567820e17700dc08774b48d16','preclaim primitive pin')
+require(h(OWNED_IO_BYTES)=='09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb','IO primitive pin')
+exec(compile(PRECLAIM_BYTES,PC.__file__,'exec'),PC.__dict__)
+exec(compile(OWNED_IO_BYTES,IO.__file__,'exec'),IO.__dict__)
+def finish(actions,primary=None):
+ errors=[];selected=primary
+ def wrapped(action):
+  def call():
+   try:action()
+   except BaseException as e:errors.append(e);raise
+  return call
+ try:IO._cleanup(tuple(wrapped(a) for a in actions),primary=primary)
+ except BaseException as e:selected=e;raise
+ finally:
+  if selected is not None:
+   try:
+    d=BaseException.__dict__['__dict__'].__get__(selected);old=d.get('layout_cleanup_errors',());old=old if type(old)is tuple else (old,);d['layout_cleanup_errors']=old+tuple(e for e in ([primary] if primary is not None else [])+errors if e is not selected)
+   except BaseException:pass
+
+def relative(n):
+ require(type(n)is str and n and not n.startswith('/') and str(PurePosixPath(n))==n and len(PurePosixPath(n).parts)<=2 and all(x not in ('.','..') for x in PurePosixPath(n).parts),'fixed shallow relative member');return n
+
+def signature(s):return(s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
+def namespace(root):
+ require(root.resolve(strict=True)==root,'output redirect');rs=root.lstat();require(stat.S_ISDIR(rs.st_mode) and stat.S_IMODE(rs.st_mode)==0o700 and rs.st_uid==os.getuid(),'private owned root');rows={};logical=0;allocated=rs.st_blocks*512;todo=[root];started=time.monotonic()
+ while todo:
+  p=todo.pop();before=signature(p.lstat());it=None;primary=None
+  try:
+   it=os.scandir(p)
+   for e in it:
+    require(time.monotonic()-started<5 and len(rows)<MEMBERS,'finite output census');n=Path(e.path).relative_to(root).as_posix();relative(n);s=e.stat(follow_symlinks=False);require(s.st_uid==os.getuid(),'output owner');allocated+=s.st_blocks*512
+    if stat.S_ISDIR(s.st_mode):require(stat.S_IMODE(s.st_mode)==0o700,'private output dir');todo.append(Path(e.path))
+    else:require(stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_size<=FILE,'output regular cap');logical+=s.st_size
+    rows[n]=signature(s)
+  except BaseException as e:primary=e;raise
+  finally:finish(() if it is None else (it.close,),primary)
+  require(signature(p.lstat())==before,'output directory changed')
+ free=os.statvfs(root);require(free.f_bavail*free.f_frsize>=FLOOR,'10GiB floor');require(logical<=LOGICAL and allocated<=ALLOCATED,'whole output budget')
+ for n,s in rows.items():require(signature((root/n).lstat())==s,'whole sampled output rejoin')
+ return {'members':rows,'logical_bytes':logical,'allocated_bytes':allocated,'free_bytes':free.f_bavail*free.f_frsize,'root_identity':(rs.st_dev,rs.st_ino,rs.st_mode,rs.st_uid)}
+
+def put(fd,n,raw,mode):
+ relative(n);require(type(raw)is bytes and len(raw)<=FILE and mode in (0o600,0o644,0o664),'bounded exact output mode');fds=[];primary=None
+ try:
+  parts=PurePosixPath(n).parts;parent=fd
+  if len(parts)==2:
+   parent=os.open(parts[0],os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC,dir_fd=fd);fds.append(parent)
+  out=os.open(parts[-1],os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,0o600,dir_fd=parent);fds.append(out)
+  os.fchmod(out,mode);view=memoryview(raw)
+  while view:
+   size=os.write(out,view);require(0<size<=len(view),'output short write');view=view[size:]
+  os.fsync(out)
+ except BaseException as e:primary=e;raise
+ finally:finish(tuple(lambda fd=x:os.close(fd) for x in reversed(fds)),primary)
+
+def anchored_parent(root):
+ require(root.is_absolute() and root.parent.resolve(strict=True)==root.parent and len(root.parts)<=64,'fresh output canonical parent');fds=[];primary=None
+ try:
+  fd=os.open('/',os.O_RDONLY|os.O_DIRECTORY|os.O_CLOEXEC);fds.append(fd)
+  for p in root.parent.parts[1:]:fd=os.open(p,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC,dir_fd=fd);fds.append(fd)
+  require(not os.path.lexists(root),'one-use absent output required');return fds
+ except BaseException as e:
+  primary=e;finish(tuple(lambda fd=x:os.close(fd) for x in reversed(fds)),primary);raise
+
+def copy_layout(spec,root,reader):
+ """Internal ordinary byte primitive; public run binds immutable spec and root."""
+ require(type(spec)is dict and type(spec.get('rows'))is list and 1<=len(spec['rows'])<=128,'finite copy rows');rows=spec['rows'];paths=[relative(x['destination']) for x in rows];require(paths==sorted(paths) and len(set(paths))==len(paths),'sorted unique disjoint output names');require(all(x['destination'] not in ('DRAFT_LAYOUT01.json','ORIGIN_MAP01.json') for x in rows),'reserved draft names')
+ bodies={};origins=[];start=time.monotonic()
+ for x in rows:
+  require(type(x.get('bytes'))is int and 0<=x['bytes']<=FILE and PC.digest(x.get('sha256')),'copy extent/hash');require(x['output_mode'] in (0o600,0o644,0o664),'fixed output mode')
+  for key,modekey in [('original_path','original_mode'),('path','copy_mode')]:
+   p=Path(x[key]);require(not p.is_relative_to(root) and not root.is_relative_to(p),'output/source isolation');b=reader.read(p);require(h(b)==x['sha256'] and len(b)==x['bytes'] and stat.S_IMODE(p.lstat().st_mode)==x[modekey] and p.lstat().st_nlink==1,'exact original/current retained copy');bodies[x['destination']]=b
+  origins.append(dict(x))
+ require(sum(len(x) for x in bodies.values())<=LOGICAL//2,'finite projected retained copy');space=os.statvfs(root.parent);require(space.f_bavail*space.f_frsize>=FLOOR+sum(len(x) for x in bodies.values())+1024**2,'floor plus conservative write headroom')
+ fds=anchored_parent(root);primary=None;created=False
+ try:
+  parent=fds[-1];os.mkdir(root.name,mode=0o700,dir_fd=parent);created=True;fd=os.open(root.name,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC,dir_fd=parent);fds.append(fd);require(root.resolve(strict=True)==root and stat.S_IMODE(os.fstat(fd).st_mode)==0o700 and os.fstat(fd).st_ino==root.lstat().st_ino,'actual fresh root join')
+  for name in sorted({PurePosixPath(n).parts[0] for n in paths if len(PurePosixPath(n).parts)==2}):os.mkdir(name,mode=0o700,dir_fd=fd)
+  for x in rows:
+   reader.tick();require(time.monotonic()-start<SECONDS,'copy deadline');put(fd,x['destination'],bodies[x['destination']],x['output_mode']);require(reader.read(root/x['destination'])==bodies[x['destination']],'actual saved body join')
+  mapping={'schema_version':1,'status':'DRAFT_LITERAL_COPY_NOT_AUTHORITY','members':origins,'source_review_manifest_sha256':spec.get('source_review_manifest_sha256'),'original_provenance_count':spec.get('original_provenance_count'),'receipt_count':spec.get('receipt_count'),'source_evidence_count':spec.get('source_evidence_count')}
+  put(fd,'ORIGIN_MAP01.json',encode(mapping),0o600);reader.read(root/'ORIGIN_MAP01.json')
+  receiptrefs=[{'path':str(root/x['destination']),'sha256':x['sha256']} for x in rows if x['role']=='receipt']
+  draft={'schema_version':1,'status':'DRAFT_NOT_AUTHORITY_REQUIRES_INDEPENDENT_ACTUAL_REVIEW','output_root':str(root),'receipt_candidates':receiptrefs,'original_recovery_proof_copy':{'path':str(root/'ORIGINAL_RECOVERY_PROOF01.json'),'sha256':next((x['sha256'] for x in rows if x['destination']=='ORIGINAL_RECOVERY_PROOF01.json'),None)},'review_reference_candidates':{k:{'path':str(root/'concrete-policy'/n),'sha256':next((x['sha256'] for x in rows if x['destination']=='concrete-policy/'+n),None)} for k,n in [('proof','REVIEW_PROOF01.json'),('machine','MACHINE01.json'),('manifest','MANIFEST01.json'),('report','REPORT01.md')]},'new_accepted_machine':None,'new_accepted_report':None,'new_review_manifest':None,'final_parent':None,'numerical_authority':False,'actual_root_exit':None,'whole_preclaim8MiB_fit':None}
+  put(fd,'DRAFT_LAYOUT01.json',encode(draft),0o600);reader.read(root/'DRAFT_LAYOUT01.json');os.fsync(fd);os.fsync(parent)
+ except BaseException as e:primary=e;raise
+ finally:finish(tuple(lambda fd=x:os.close(fd) for x in reversed(fds)),primary)
+ reader.finish();observed=namespace(root);expected=set(paths)|{'ORIGIN_MAP01.json','DRAFT_LAYOUT01.json'}|{PurePosixPath(n).parts[0] for n in paths if len(PurePosixPath(n).parts)==2};require(set(observed['members'])==expected,'complete output census no extra/omitted entries')
+ for x in rows:require(stat.S_IMODE((root/x['destination']).lstat().st_mode)==x['output_mode'],'final original output mode')
+ reader.tick();require(reader.total<=TOTAL,'actual reader8MiB');return {'schema_version':1,'status':'DRAFT_COPIED_NOT_AUTHORITY','output_root':str(root),'copied_regular_bodies':len(rows),'receipt_bodies':len(receiptrefs),'actual_bytes_read_including_full_finish':reader.total,'output_observation':observed,'original_hashes_preserved':True,'numerical_authority':False,'Root_exit':None,'requires_independent_actual_review':True}
+
+def run():
+ require(not os.path.lexists(OUTPUT),'fixed one-use output already reserved');reader=PC.Reader();p=Path(__file__).resolve().parent/'INPUTS01.json';raw=reader.read(p);require(h(raw)==INPUTS_SHA,'fixed complete input spec');spec=json.loads(raw);require(spec['output_root']==str(OUTPUT) and spec['original_provenance_count']==51 and spec['receipt_count']==38 and spec['source_evidence_count']==13 and len(spec['rows'])==57,'fixed complete denominator');return copy_layout(spec,OUTPUT,reader)
+if __name__=='__main__':
+ try:result=run()
+ except BaseException as error:
+  finish((lambda:print(json.dumps({'status':'FAILED_OR_REFUSED_RETAIN_ALL_PARTIAL_BYTES','error_type':type(error).__name__,'new_accepted_machine':None,'numerical_authority':False})),),error);raise
+ print(json.dumps(result,sort_keys=True))

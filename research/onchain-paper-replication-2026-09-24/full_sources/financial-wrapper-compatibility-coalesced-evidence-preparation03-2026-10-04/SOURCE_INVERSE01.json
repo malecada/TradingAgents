@@ -1,0 +1,101 @@
+{
+  "complete_AST_inverse": true,
+  "complete_literal_inverse": true,
+  "declaration": "Original new-code draft and successful tiny controls retained; final candidate adds full root/member cleanup-bracket signature joins and final original-mode joins. Neither draft nor successor fixed Root entry ran.",
+  "draft_sha256": "a6244a90568d4120521bb32487cc8b6608637f5a769e120424a4060314038719",
+  "segments": [
+    {
+      "new": ",'root_signature':signature(rs)",
+      "new_end": 42162,
+      "new_start": 42131,
+      "old": "",
+      "old_end": 42131,
+      "old_start": 42131
+    },
+    {
+      "new": ";before_cleanup=namespace(root)",
+      "new_end": 47322,
+      "new_start": 47291,
+      "old": "",
+      "old_end": 47260,
+      "old_start": 47260
+    },
+    {
+      "new": ");require(observed['root_identity']==initial['root_identity'] and observed['root_signature']==before_cleanup['root_signature'] and observed['members']==before_cleanup['members'],'whole output changed across cleanup'",
+      "new_end": 47701,
+      "new_start": 47486,
+      "old": "",
+      "old_end": 47424,
+      "old_start": 47424
+    },
+    {
+      "new": "for n,s in observed['members'].items():require(signature((root/n).lstat())==s,'final output member rejoin')\n ",
+      "new_end": 48504,
+      "new_start": 48395,
+      "old": "",
+      "old_end": 48118,
+      "old_start": 48118
+    },
+    {
+      "new": "",
+      "new_end": 48535,
+      "new_start": 48535,
+      "old": "[:3]",
+      "old_end": 48153,
+      "old_start": 48149
+    },
+    {
+      "new": "",
+      "new_end": 48537,
+      "new_start": 48537,
+      "old": "tuple(",
+      "old_end": 48161,
+      "old_start": 48155
+    },
+    {
+      "new": "s",
+      "new_end": 48553,
+      "new_start": 48552,
+      "old": "",
+      "old_end": 48176,
+      "old_start": 48176
+    },
+    {
+      "new": "gnatur",
+      "new_end": 48560,
+      "new_start": 48554,
+      "old": "d",
+      "old_end": 48178,
+      "old_start": 48177
+    },
+    {
+      "new": "",
+      "new_end": 48561,
+      "new_start": 48561,
+      "old": "ntity",
+      "old_end": 48184,
+      "old_start": 48179
+    },
+    {
+      "new": "",
+      "new_end": 48563,
+      "new_start": 48563,
+      "old": "[:3])",
+      "old_end": 48191,
+      "old_start": 48186
+    },
+    {
+      "new": "')\n for x in rows:\n  for key,mkey in [('original_path','original_mode'),('path','copy_mode')]:require(stat.S_IMODE(Path(x[key]).lstat().st_mode)==x[mkey] and Path(x[key]).lstat().st_nlink==1,'final original literal mode/hardlink rejoin",
+      "new_end": 48826,
+      "new_start": 48591,
+      "old": "",
+      "old_end": 48219,
+      "old_start": 48219
+    }
+  ],
+  "source_sha256": "068147e5d5b20717b8ac54c5ac055c4826076e2b110fff9248a206fa49858b04",
+  "unchanged_primitives": {
+    "owned_io.py": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+    "preclaim01.py": "557b7bcb38b48e3bf1e9e5b5b1eae25ab4908b8567820e17700dc08774b48d16"
+  }
+}

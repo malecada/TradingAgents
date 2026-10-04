@@ -1,0 +1,26 @@
+{
+  "all_other_AST_unchanged": true,
+  "changed_function_only": "namespace",
+  "full_literal_AST_inverse": true,
+  "literal_edits": [
+    {
+      "new": "def namespace(root):\n started=time.monotonic()\n require(root.resolve(strict=True)==root,'output redirect');",
+      "old": "def namespace(root):\n require(root.resolve(strict=True)==root,'output redirect');"
+    },
+    {
+      "new": "allocated=rs.st_blocks*512;todo=[root]",
+      "old": "allocated=rs.st_blocks*512;todo=[root];started=time.monotonic()"
+    },
+    {
+      "new": "  finally:finish(() if it is None else (it.close,),primary)\n  require(time.monotonic()-started<5,'output census deadline after iterator cleanup')\n  require(signature(p.lstat())==before,'output directory changed')",
+      "old": "  finally:finish(() if it is None else (it.close,),primary)\n  require(signature(p.lstat())==before,'output directory changed')"
+    },
+    {
+      "new": " for n,s in rows.items():require(signature((root/n).lstat())==s,'whole sampled output rejoin')\n require(time.monotonic()-started<5,'output census deadline after final joins')\n return",
+      "old": " for n,s in rows.items():require(signature((root/n).lstat())==s,'whole sampled output rejoin')\n return"
+    }
+  ],
+  "original_sha256": "068147e5d5b20717b8ac54c5ac055c4826076e2b110fff9248a206fa49858b04",
+  "schema_version": 1,
+  "successor_sha256": "fcadbfcde1bf9d9d61887af27de2dff610b5d7cce188a4cb77da1c99d6989fda"
+}

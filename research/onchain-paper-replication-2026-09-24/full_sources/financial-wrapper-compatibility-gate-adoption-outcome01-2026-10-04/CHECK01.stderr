@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-gate-adoption-outcome01-2026-10-04/outcome_check01.py", line 37, in <module>
+    status=git('status','--porcelain','--untracked-files=all').decode().splitlines();ok(set(status)=={'?? '+n for n in files},'exact15 untracked no other Git changes')
+                                                                                     ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-gate-adoption-outcome01-2026-10-04/outcome_check01.py", line 7, in ok
+    assert v,n;checks.append(n)
+           ^
+AssertionError: exact15 untracked no other Git changes

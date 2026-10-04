@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "source_sha256": "f8aad6a7eab5f484036ae27d8c25ba1620be651c437644fcd8aca218686982c8",
+  "public_main_invoked": false,
+  "accepted_release_fabricated": false,
+  "rows": [
+    {
+      "case": "exact accepted dependency prefix plus one blank separator",
+      "sha256": "65b398f1dfb4b4ef2fdfd796b729eb22d275aad455e901a08b9fe345c7bb1492",
+      "passed": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": null,
+      "secondary": null,
+      "actualFDclosed_once": true,
+      "partial_preserved": false
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": null,
+      "secondary": "OSError",
+      "actualFDclosed_once": true,
+      "partial_preserved": false
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": null,
+      "secondary": "MemoryError",
+      "actualFDclosed_once": true,
+      "partial_preserved": false
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": null,
+      "secondary": "KeyboardInterrupt",
+      "actualFDclosed_once": true,
+      "partial_preserved": false
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": null,
+      "secondary": "SystemExit",
+      "actualFDclosed_once": true,
+      "partial_preserved": false
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "ValueError",
+      "secondary": null,
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "ValueError",
+      "secondary": "OSError",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "ValueError",
+      "secondary": "MemoryError",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "ValueError",
+      "secondary": "KeyboardInterrupt",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "ValueError",
+      "secondary": "SystemExit",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "MemoryError",
+      "secondary": null,
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "MemoryError",
+      "secondary": "OSError",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "MemoryError",
+      "secondary": "MemoryError",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "MemoryError",
+      "secondary": "KeyboardInterrupt",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "MemoryError",
+      "secondary": "SystemExit",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "KeyboardInterrupt",
+      "secondary": null,
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "KeyboardInterrupt",
+      "secondary": "OSError",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "KeyboardInterrupt",
+      "secondary": "MemoryError",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "KeyboardInterrupt",
+      "secondary": "KeyboardInterrupt",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "SystemExit",
+      "secondary": null,
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "SystemExit",
+      "secondary": "OSError",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "SystemExit",
+      "secondary": "MemoryError",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "SystemExit",
+      "secondary": "KeyboardInterrupt",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "real partial write/close precedence",
+      "primary": "SystemExit",
+      "secondary": "SystemExit",
+      "actualFDclosed_once": true,
+      "partial_preserved": true
+    },
+    {
+      "case": "exclusive no overwrite",
+      "refused": true,
+      "type": "FileExistsError"
+    },
+    {
+      "case": "exclusive no symlink follow",
+      "refused": true,
+      "type": "FileExistsError"
+    },
+    {
+      "case": "4MiB output before open",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "zero write stops",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "actual pinned preview scalar/path predicates",
+      "passed": true
+    },
+    {
+      "case": "preview inverse status",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse source_before",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse root",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse identity",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse parent",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse roles",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse source_pins",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse prospective_tracked",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse actual_highest",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse actual_spent_failed",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse prospective_amendment",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "preview inverse old_experiments_preserved",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "outside destination refuses",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "terminal owned exact preserve/add",
+      "passed": true
+    },
+    {
+      "case": "terminal inverse old-body",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "terminal inverse old-mode",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "terminal inverse old-inode",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "terminal inverse new-body",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "terminal inverse new-mode",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "terminal inverse extra-member",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "terminal inverse oldgate",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "terminal inverse head",
+      "refused": true,
+      "type": "ValueError"
+    },
+    {
+      "case": "terminal inverse newdir-mode",
+      "refused": true,
+      "type": "ValueError"
+    }
+  ],
+  "mutation_surface": [
+    "OUT.mkdir(mode=448)",
+    "os.chmod(OUT, 448)",
+    "put(OUT / 'INTENT01.json', encode(intent))",
+    "(CAP / NEW).mkdir(mode=448)",
+    "put(OUT / 'INSTALLED_NOT_COMMITTED01.json', encode({**intent, 'status': 'EXACT_GATE_INPUTS_INSTALLED_NOT_COMMITTED_NOT_ADMITTED_NOT_NUMERICALLY_RELEASED', 'whole_before': 589, 'whole_after': 605, 'old_body_metadata_preserved': True, 'old_definitions_preserved': 12, 'new_files': 15, 'prospective_tracked': 355, 'source_pins': 354, 'roles': 11, 'actual_highest_spent_allowance': 19, 'prospective_registered_amendment': 20, 'Admission_or_Run_started': False, 'paper_budget_changed': False, 'excluded': ['Git commit/adoption verification', 'genuine Admission', 'final writable caller recovery', 'native eligibility', 'numerical execution', 'POSIX reconstruction', 'whole fit capacity']}))",
+    "put(CAP / n, b)"
+  ]
+}

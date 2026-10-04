@@ -1,0 +1,57 @@
+{
+  "Root_entry_invoked": false,
+  "assertions": 20,
+  "checks": [
+    "real iterator closed exactly once old",
+    "actual wall delay old",
+    "real originalRED/newrefusal old",
+    "real iterator closed exactly once new",
+    "actual wall delay new",
+    "real originalRED/newrefusal new",
+    "final resource deadline old",
+    "final resource deadline new",
+    "deadline never replaces firstfatal",
+    "actual failing iterator closed once",
+    "deadline never replaces firstfatal",
+    "actual failing iterator closed once",
+    "deadline never replaces firstfatal",
+    "actual failing iterator closed once",
+    "deadline never replaces firstfatal",
+    "actual failing iterator closed once",
+    "deadline never replaces firstfatal",
+    "actual failing iterator closed once",
+    "writer aftercleanup expired Reader refuses/partial retained",
+    "fixed actualRoot never executed"
+  ],
+  "witnesses": [
+    {
+      "case": "actual emptydir/realclose/real5.1sleep",
+      "close_count": 1,
+      "reason": null,
+      "result": "accepted",
+      "seconds": 5.100303860002896,
+      "source": "old"
+    },
+    {
+      "case": "actual emptydir/realclose/real5.1sleep",
+      "close_count": 1,
+      "reason": "output census deadline after iterator cleanup",
+      "result": "refused",
+      "seconds": 5.100345393992029,
+      "source": "new"
+    },
+    {
+      "actual_wall5s_claim": false,
+      "case": "actualstatvfs + injected monotonic5.1offset",
+      "result": "accepted",
+      "source": "old"
+    },
+    {
+      "actual_wall5s_claim": false,
+      "case": "actualstatvfs + injected monotonic5.1offset",
+      "result": "refused",
+      "source": "new"
+    }
+  ],
+  "writer_deadline_is_injected_not120s_wall": true
+}

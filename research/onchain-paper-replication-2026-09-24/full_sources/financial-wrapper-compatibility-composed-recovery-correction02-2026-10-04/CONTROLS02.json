@@ -1,0 +1,946 @@
+{
+  "schema_version": 1,
+  "no_public_run_or_proof": true,
+  "source_sha256": "421cc50f32b1bf1d6a483991deea0fa6700aeb4d165ddc1cecf64dacc08dc4a2",
+  "rows": [
+    {
+      "case": "CR1",
+      "primary": "ValueError",
+      "secondary": "MemoryError",
+      "old_wrong_escape": "ValueError",
+      "new_escape": "MemoryError",
+      "actual_cleanup_once": true,
+      "all_actual_objects_reachable": true
+    },
+    {
+      "case": "CR1",
+      "primary": "ValueError",
+      "secondary": "SystemExit",
+      "old_wrong_escape": "ValueError",
+      "new_escape": "SystemExit",
+      "actual_cleanup_once": true,
+      "all_actual_objects_reachable": true
+    },
+    {
+      "case": "CR2",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "old_wrong_escape": "SystemExit",
+      "new_escape": "KeyboardInterrupt",
+      "actual_cleanup_once": true,
+      "all_actual_objects_reachable": true
+    },
+    {
+      "case": "CR2",
+      "primary": "MemoryError",
+      "secondary": "ValueError",
+      "old_wrong_escape": "ValueError",
+      "new_escape": "MemoryError",
+      "actual_cleanup_once": true,
+      "all_actual_objects_reachable": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": null,
+      "secondary": null,
+      "escape": null,
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": null,
+      "secondary": "OSError",
+      "escape": "CleanupFailure",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": null,
+      "secondary": "MemoryError",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": null,
+      "secondary": "KeyboardInterrupt",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": null,
+      "secondary": "SystemExit",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "ValueError",
+      "secondary": null,
+      "escape": "ValueError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "ValueError",
+      "secondary": "OSError",
+      "escape": "CleanupFailure",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "ValueError",
+      "secondary": "MemoryError",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "ValueError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "ValueError",
+      "secondary": "SystemExit",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": null,
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": "OSError",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": "MemoryError",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": "SystemExit",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": null,
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "OSError",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "MemoryError",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "KeyboardInterrupt",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": null,
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": "OSError",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": "MemoryError",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": "KeyboardInterrupt",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "read cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": "SystemExit",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": null,
+      "secondary": null,
+      "escape": null,
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": null,
+      "secondary": "OSError",
+      "escape": "CleanupFailure",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": null,
+      "secondary": "MemoryError",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": null,
+      "secondary": "KeyboardInterrupt",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": null,
+      "secondary": "SystemExit",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "ValueError",
+      "secondary": null,
+      "escape": "ValueError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "ValueError",
+      "secondary": "OSError",
+      "escape": "CleanupFailure",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "ValueError",
+      "secondary": "MemoryError",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "ValueError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "ValueError",
+      "secondary": "SystemExit",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": null,
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": "OSError",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": "MemoryError",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "MemoryError",
+      "secondary": "SystemExit",
+      "escape": "MemoryError",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": null,
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "OSError",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "MemoryError",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "KeyboardInterrupt",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "escape": "KeyboardInterrupt",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": null,
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": "OSError",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": "MemoryError",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": "KeyboardInterrupt",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "scan cleanup matrix",
+      "primary": "SystemExit",
+      "secondary": "SystemExit",
+      "escape": "SystemExit",
+      "actual_resource_closed_once": true,
+      "cache_or_tree_not_accepted_on_failure": true
+    },
+    {
+      "case": "CR3",
+      "stage": "str",
+      "old_wrong_escape": "SystemExit",
+      "new_original_fatal_preserved": true,
+      "all_objects_reachable": true
+    },
+    {
+      "case": "CR3",
+      "stage": "print",
+      "old_wrong_escape": "OSError",
+      "new_original_fatal_preserved": true,
+      "all_objects_reachable": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "ValueError",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "ValueError",
+      "secondary": "OSError",
+      "escape": "CleanupFailure",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "ValueError",
+      "secondary": "MemoryError",
+      "escape": "MemoryError",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "ValueError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "KeyboardInterrupt",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "ValueError",
+      "secondary": "SystemExit",
+      "escape": "SystemExit",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "MemoryError",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "MemoryError",
+      "secondary": "OSError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "MemoryError",
+      "secondary": "MemoryError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "MemoryError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "MemoryError",
+      "secondary": "SystemExit",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "KeyboardInterrupt",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "KeyboardInterrupt",
+      "secondary": "OSError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "KeyboardInterrupt",
+      "secondary": "MemoryError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "KeyboardInterrupt",
+      "secondary": "KeyboardInterrupt",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "SystemExit",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "SystemExit",
+      "secondary": "OSError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "SystemExit",
+      "secondary": "MemoryError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "SystemExit",
+      "secondary": "KeyboardInterrupt",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "str",
+      "primary": "SystemExit",
+      "secondary": "SystemExit",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "ValueError",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "ValueError",
+      "secondary": "OSError",
+      "escape": "CleanupFailure",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "ValueError",
+      "secondary": "MemoryError",
+      "escape": "MemoryError",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "ValueError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "KeyboardInterrupt",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "ValueError",
+      "secondary": "SystemExit",
+      "escape": "SystemExit",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "MemoryError",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "MemoryError",
+      "secondary": "OSError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "MemoryError",
+      "secondary": "MemoryError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "MemoryError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "MemoryError",
+      "secondary": "SystemExit",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "KeyboardInterrupt",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "KeyboardInterrupt",
+      "secondary": "OSError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "KeyboardInterrupt",
+      "secondary": "MemoryError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "KeyboardInterrupt",
+      "secondary": "KeyboardInterrupt",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "SystemExit",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "SystemExit",
+      "secondary": "OSError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "SystemExit",
+      "secondary": "MemoryError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "SystemExit",
+      "secondary": "KeyboardInterrupt",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "json",
+      "primary": "SystemExit",
+      "secondary": "SystemExit",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "ValueError",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "ValueError",
+      "secondary": "OSError",
+      "escape": "CleanupFailure",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "ValueError",
+      "secondary": "MemoryError",
+      "escape": "MemoryError",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "ValueError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "KeyboardInterrupt",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "ValueError",
+      "secondary": "SystemExit",
+      "escape": "SystemExit",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "MemoryError",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "MemoryError",
+      "secondary": "OSError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "MemoryError",
+      "secondary": "MemoryError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "MemoryError",
+      "secondary": "KeyboardInterrupt",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "MemoryError",
+      "secondary": "SystemExit",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "KeyboardInterrupt",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "KeyboardInterrupt",
+      "secondary": "OSError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "KeyboardInterrupt",
+      "secondary": "MemoryError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "KeyboardInterrupt",
+      "secondary": "KeyboardInterrupt",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "SystemExit",
+      "secondary": null,
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "SystemExit",
+      "secondary": "OSError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "SystemExit",
+      "secondary": "MemoryError",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "SystemExit",
+      "secondary": "KeyboardInterrupt",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "diagnostic matrix",
+      "stage": "print",
+      "primary": "SystemExit",
+      "secondary": "SystemExit",
+      "escape": "Hostile",
+      "actual_objects_retained": true
+    },
+    {
+      "case": "nested actual twoFD firstfatal",
+      "all_actual_objects_reachable": true,
+      "actual_descriptors_closed_once": 2
+    },
+    {
+      "case": "hostile fatal descriptors actualobject retained",
+      "passed": true
+    }
+  ]
+}

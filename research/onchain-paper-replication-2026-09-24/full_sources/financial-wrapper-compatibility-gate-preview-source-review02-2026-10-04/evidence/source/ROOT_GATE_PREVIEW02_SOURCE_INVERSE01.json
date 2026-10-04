@@ -1,0 +1,109 @@
+{
+  "actual_history_count": 3,
+  "full_inverse_equal": true,
+  "gate_or_claim_adopted": false,
+  "genuine_recovery_proof_present": false,
+  "new_sha256": "8edbfb20abba29cea941203ad40b720730de89b643954f0730cea2a2127bd208",
+  "old_sha256": "845e744580b45228e9bcb19925dd9d4ed851ea6912e246287b6e447c6c620de6",
+  "prepared_body_count": 13,
+  "replacement_segments": [
+    {
+      "new": "2",
+      "new_end": 731,
+      "new_start": 730,
+      "old": "1",
+      "old_end": 731,
+      "old_start": 730
+    },
+    {
+      "new": "\nPREP_DRAFT_PIN='edd6e8acc71d35fb1ff31795701d1fb6185fdee3e64b952d805edcd75120780d'\nPREP_BINDING_PIN='1a7685a67636df3b302d5e647b169ec9ede65e36e086b8ac88ab1284f1c2fc30'\nPREPARED_PINS={'allocation20.json': '461df69895a0a5e70b23882c759790a4c000eb33d1662629cacd322b7d3b0116', 'environment.json': '1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87', 'execution_job.json': '4712f728425cacd9c346f43fcab5ec37cdbda75d1423eebdf1beb8dc3e863f0e', 'extension-review20.json': 'b5ac7652631ba25296003580774e29b9f0e555a3ed4ef5d2323576099c39f389', 'extension20.json': '07100b23f9a8c2dfcae98a8647f9f1eeb019f4093192cd4b2576c6a13bf9840e', 'model.json': '20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d', 'policy-review.json': '0a0db0cb8fafce00024aa25c048cb9efa27d1411e57586f7217b0bc209a41cd5', 'policy.json': 'ae8fbdc9d13e75fc453b70b5ee633c89fb4577e9b68a35b4147cf1bbd58c6887', 'runtime_mapping.json': '34c4adac06053df082f55d5581c4d29a93ea6d5719b515771d5d33925a62a2f7', 'source_closure.json': 'af61a1de642d029579230fb3980e87eefe8dc5e0e7ba6a965393f194e996c92c', 'synthetic_recipe.json': 'f8b1ec1eed902f3cca76bd7e06d2435accda699173b9a7942d10c37c64f01040', 'training.json': 'd5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0', 'wrapper_plan.json': '122038ae73464e0168cc0184cf9097ead7908c0194f1684b853da337bc66efda'}\nHISTORY_PINS={'financial-wrapper-classification-eager-complete100-20261003-01': {'claim.json': '2e3bbbbf786f784eadb18bc3cdfea68905610ae773bbbd748ea1b2666b9e61f1', 'failed.json': 'abdaef6f01bd02614782e442e2c102c38faa57e76061cba43b69960f3e389fa6'}, 'financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01': {'claim.json': 'd390980c956aab64d5521698cbb6123ccf01ece94a95277b97755f019adf692b', 'failed.json': '4b2d7b0d162e80fe2074997baed35f2d6e6c86e5f660872fc2b8e97bb9622558'}, 'financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01': {'claim.json': '4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128', 'failed.json': '35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450'}}\n",
+      "new_end": 3131,
+      "new_start": 1062,
+      "old": "",
+      "old_end": 1062,
+      "old_start": 1062
+    },
+    {
+      "new": "\n",
+      "new_end": 6388,
+      "new_start": 6387,
+      "old": ";",
+      "old_end": 4319,
+      "old_start": 4318
+    },
+    {
+      "new": "_raw",
+      "new_end": 6397,
+      "new_start": 6393,
+      "old": "",
+      "old_end": 4324,
+      "old_start": 4324
+    },
+    {
+      "new": "",
+      "new_end": 6398,
+      "new_start": 6398,
+      "old": "json.loads(",
+      "old_end": 4336,
+      "old_start": 4325
+    },
+    {
+      "new": ";assert sha(draft_raw",
+      "new_end": 6472,
+      "new_start": 6451,
+      "old": "",
+      "old_end": 4389,
+      "old_start": 4389
+    },
+    {
+      "new": "==PREP_DRAFT_PIN\nbinding_raw=read(PREP/'PREPARATION_BINDING01.json');assert sha(binding_raw)==PREP_BINDING_PIN\ndraft=json.loads(draft_raw);binding=json.loads(binding_raw)\nassert binding['current_source_design']==CURRENT and binding['current_reference_roles']==10 and binding['required_reference_roles_after_genuine_recovery']==11\nassert binding['actual_claims']==binding['actual_spent_FAILED']==3 and binding['highest_actual_budget']==19 and binding['extension20_adopted'] is False\nassert binding['fixed_consumers']==policy['consumers']\nassert set(x.name for x in (PREP/NEW).iterdir())==set(PREPARED_PINS)\nfor name,pin in PREPARED_PINS.items():assert sha(read(PREP/NEW/name))==pin\nrunroot=CAP/'research_runs'\nassert set(x.name for x in runroot.iterdir())==set(HISTORY_PINS)|{'.lock'}\nhistory=[];budgets=[]\nfor name,pins in sorted(HISTORY_PINS.items()):\n    directory=runroot/name\n    assert directory.is_dir() and directory.resolve(strict=True)==directory and not os.path.lexists(directory/'complete.json')\n    claim_raw=read(directory/'claim.json');failed_raw=read(directory/'failed.json')\n    assert sha(claim_raw)==pins['claim.json'] and sha(failed_raw)==pins['failed.json']\n    claim=json.loads(claim_raw);failed=json.loads(failed_raw)\n    assert claim['experiment_id']==failed['experiment_id']==name and claim['program_id']=='financial-wrapper-engineering-2026-10-03'\n    assert claim['experiment']['family']=='synthetic-financial-wrapper' and claim['family']['attempt_budget']==18 and claim['family']['prior_attempts']==0\n    assert failed['status']=='failed' and failed['claim_sha256']==sha(claim_raw)\n    assert type(claim['effective_attempt_budget']) is int\n    budgets.append(claim['effective_attempt_budget'])\n    history.append({'identity':name,'claim_sha256':sha(claim_raw),'failed_sha256':sha(failed_raw),'disposition':'FAILED_SPENT'})\nactual_highest=max(budgets);assert actual_highest==19 and len(history)==3\n",
+      "new_end": 8397,
+      "new_start": 6473,
+      "old": "",
+      "old_end": 4390,
+      "old_start": 4390
+    },
+    {
+      "new": "raw_input=read(p);assert sha(raw_input)==PREPARED_PINS[p.name];",
+      "new_end": 8872,
+      "new_start": 8809,
+      "old": "",
+      "old_end": 4802,
+      "old_start": 4802
+    },
+    {
+      "new": "",
+      "new_end": 8895,
+      "new_start": 8895,
+      "old": "e",
+      "old_end": 4826,
+      "old_start": 4825
+    },
+    {
+      "new": "w_in",
+      "new_end": 8900,
+      "new_start": 8896,
+      "old": "d(",
+      "old_end": 4829,
+      "old_start": 4827
+    },
+    {
+      "new": "ut",
+      "new_end": 8903,
+      "new_start": 8901,
+      "old": ")",
+      "old_end": 4831,
+      "old_start": 4830
+    },
+    {
+      "new": "actual_highest,'actual_spent_failed':len(history),'actual_history':history,'prepared_body_pins':PREPARED_PINS,'prepared_draft_sha256':PREP_DRAFT_PIN,'prepared_binding_sha256':PREP_BINDING_PIN",
+      "new_end": 11610,
+      "new_start": 11419,
+      "old": "19",
+      "old_end": 7349,
+      "old_start": 7347
+    }
+  ],
+  "schema_version": 1,
+  "source_only_unexecuted": true
+}

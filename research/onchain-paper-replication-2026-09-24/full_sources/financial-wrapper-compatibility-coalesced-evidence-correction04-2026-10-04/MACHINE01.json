@@ -1,0 +1,45 @@
+{
+  "actual_old_new_delay": [
+    {
+      "case": "actual emptydir/realclose/real5.1sleep",
+      "close_count": 1,
+      "reason": null,
+      "result": "accepted",
+      "seconds": 5.100603457016405,
+      "source": "old"
+    },
+    {
+      "case": "actual emptydir/realclose/real5.1sleep",
+      "close_count": 1,
+      "reason": "output census deadline after iterator cleanup",
+      "result": "refused",
+      "seconds": 5.100376888003666,
+      "source": "new"
+    }
+  ],
+  "actual_root_entry_invoked": false,
+  "actual_root_output_absent": true,
+  "changed_function_only": "namespace",
+  "full_literal_AST_inverse": true,
+  "full_parent_preclaim_fit": null,
+  "inherited_assertions": 217,
+  "literal_edits": 4,
+  "local_full_copy_actual_reader_bytes": 7981596,
+  "new_accepted_machine": null,
+  "new_deadline_assertions": 20,
+  "new_recovery_proof": null,
+  "numerical_authority": false,
+  "original_sha256": "068147e5d5b20717b8ac54c5ac055c4826076e2b110fff9248a206fa49858b04",
+  "prior_review_pins": {
+    "CENSUS_DEADLINE_WITNESS01.json": "85822989f74d6fd3b900771e415ecc95673ca16a6fe12394ad08e2e5894f8076",
+    "MACHINE01.json": "285276d9c75a77463333935bdba60fcf275a1843066dbf216ae4adac8246797f",
+    "MANIFEST01.json": "d3b22887453c96585db36a41a50e0121ce5dd37f9da2245bdd1913758a50a244",
+    "REPORT01.md": "decb819ff3161c221d1a915431192ed2488aae8491603e71d0660823ec1f1403",
+    "census_deadline_witness01.py": "3641d333723a0aab2e1ac33c5a77409297fd90b92d3454d0b9846a6b1bcfaaa4"
+  },
+  "report_sha256": "ce95ad45940ee1a2e01b63c31052cfba1dacb9cf875211e549ad994b20c0c654",
+  "schema_version": 1,
+  "source_sha256": "fcadbfcde1bf9d9d61887af27de2dff610b5d7cce188a4cb77da1c99d6989fda",
+  "status": "SOURCE_ONLY_DEADLINE_SUCCESSOR_READY_FOR_INDEPENDENT_REVIEW",
+  "unchanged_inputs_sha256": "5c4c9ebbc976d057a1896f106c18fc00c8c0a179e2beaf047bc5ed329ea40f04"
+}

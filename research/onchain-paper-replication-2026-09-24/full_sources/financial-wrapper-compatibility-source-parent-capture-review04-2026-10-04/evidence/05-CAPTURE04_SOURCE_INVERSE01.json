@@ -1,0 +1,21 @@
+{
+  "edits": [
+    {
+      "new": "DEST=FS/'financial-wrapper-compatibility-current-source-parent-capture04-2026-10-04'",
+      "old": "DEST=FS/'financial-wrapper-compatibility-current-source-parent-capture03-2026-10-04'"
+    },
+    {
+      "new": "require(len(b)<=FILE,'snapshot file cap');require(p.is_relative_to(DEST),'owned output root')\n parent=DEST\n for part in p.parent.relative_to(DEST).parts:\n  parent=parent/part\n  if not os.path.lexists(parent):parent.mkdir(mode=0o700)\n  s=parent.lstat();require(stat.S_ISDIR(s.st_mode) and stat.S_IMODE(s.st_mode)==0o700 and s.st_uid==os.getuid(),'private output parents')",
+      "old": "require(len(b)<=FILE,'snapshot file cap');p.parent.mkdir(parents=True,exist_ok=True,mode=0o700)"
+    },
+    {
+      "new": "source-parent-delta04.tar.gz",
+      "old": "source-parent-delta03.tar.gz"
+    }
+  ],
+  "failed_capture03_preserved": true,
+  "full_byte_AST_inverse": true,
+  "original_sha256": "368d77b3c2bf5e6850d1de6d22f9ced8c51f3521309d87e7021da712f6d510c8",
+  "schema_version": 1,
+  "successor_sha256": "f55ce818ef7999195c88d872c983a568861d5d45d2970af61b539979faf27cdf"
+}

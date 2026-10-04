@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-postcommit-admission-review01-2026-10-04/integration01.py", line 18, in <module>
+    ad,j=job._admitted(args);assert type(ad) is Admission and ad.ready and ad.source==SOURCE
+         ~~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/job.py", line 116, in _admitted
+    admitted = admit(root=args.root, registration=args.registration,
+                     experiment=args.experiment, source=args.source)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/admission.py", line 294, in admit
+    _source_files(root, source, design_source, exp["source_files"])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/admission.py", line 169, in _source_files
+    batch(pending)
+    ~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/admission.py", line 132, in batch
+    extents = _source_batch_parse(_source_git_batch(root, requests), len(requests))
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/admission.py", line 75, in _source_git_batch
+    return subprocess.run(
+           ~~~~~~~~~~~~~~^
+        ["git", "cat-file", "--batch" if bodies else "--batch-check"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cwd=root, input=b"\n".join(requests) + b"\n",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 1023, in __init__
+    self.stdin = io.open(p2cwrite, 'wb', bufsize)
+                 ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-postcommit-admission-review01-2026-10-04/integration01.py", line 12, in audit
+    if flags & (os.O_WRONLY|os.O_RDWR|os.O_CREAT|os.O_TRUNC|os.O_APPEND):raise RuntimeError('read-only integration open denied')
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: read-only integration open denied

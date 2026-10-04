@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-postcommit-admission-review01-2026-10-04/postcommit01.py", line 42, in <module>
+    i=J(D/'INTEGRATION02.json');ok(i['status']=='GENUINE_READ_ONLY_JOB_ADMITTED' and i['ready'] and i['source']==HEAD and i['inputs']==11 and i['source_pins']==354 and i['claim_absent'] and i['numerical_imports']==[],'independent genuine job integration');ok(len(i['runtime_records'])==251 and i['package_bodies']==150 and i['required_sources']==195,'251runtime195source150package')
+                                                                                                                                                                                                                                                                ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-postcommit-admission-review01-2026-10-04/postcommit01.py", line 6, in ok
+    def ok(v,n):assert v,n;checks.append(n)
+                       ^
+AssertionError: 251runtime195source150package
