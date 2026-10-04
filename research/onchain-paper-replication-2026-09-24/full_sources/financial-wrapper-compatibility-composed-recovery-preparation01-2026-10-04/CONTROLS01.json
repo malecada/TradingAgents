@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "opaque_engineering_only": true,
+  "authority": false,
+  "rows": [
+    {
+      "name": "bounded real descriptor",
+      "passed": true
+    },
+    {
+      "name": "wrong hash",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "wrong mode",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "symlink refusal",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "FIFO refusal before open",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "hardlink refusal",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "4MiB bound",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "total bound",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "deadline",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "cached currentness",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "real late FD close changes earlier body final refusal",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "first fatal identity and secondary close identity",
+      "passed": true
+    },
+    {
+      "name": "actual closed FD",
+      "refused": true,
+      "error_type": "OSError"
+    },
+    {
+      "name": "late foreign namespace",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "unsafe ../a",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "unsafe /absolute",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "unsafe x/../a",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "unsafe x//a",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "unsafe keys/a",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "unsafe .env",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "duplicate JSON keys",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "nonfinite JSON",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "actual opaque flat original664/root775 private600/700",
+      "passed": true
+    },
+    {
+      "name": "flat inverse research_authority",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "flat inverse root_mode",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "flat inverse members",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "flat inverse regular_bodies",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "flat inverse metadata_sha256",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "flat inverse archive_sha256",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "flat inverse manifest_sha256",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "flat inverse metadata_file",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "trailing archive data",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "private output mode regression",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "flat missing denominator/foreign member",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "complete opaque reachable graph",
+      "passed": true
+    },
+    {
+      "name": "unreachable extra object",
+      "refused": true,
+      "error_type": "ValueError"
+    },
+    {
+      "name": "missing reached object",
+      "refused": true,
+      "error_type": "ValueError"
+    }
+  ]
+}

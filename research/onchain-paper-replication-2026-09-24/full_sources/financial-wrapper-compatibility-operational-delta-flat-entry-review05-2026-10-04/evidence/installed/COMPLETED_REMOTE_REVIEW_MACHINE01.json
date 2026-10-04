@@ -1,0 +1,57 @@
+{
+  "actual_archives": [
+    {
+      "archive": "operational-delta01.tar.gz",
+      "body_bytes": 943578,
+      "files": 33,
+      "members": 41,
+      "sha256": "a60e19140e04a6ec1877bf17134ee7b16d560068e1296b13c05535ea6212357e"
+    },
+    {
+      "archive": "failed-remote02.tar.gz",
+      "body_bytes": 114237,
+      "files": 31,
+      "members": 42,
+      "sha256": "06c8a9cd583bebb3f03fe4800a6f17972b490cff552509097a1e1ed09695b1da"
+    }
+  ],
+  "actual_flat_recovery": null,
+  "actual_git_operations": 55,
+  "assertions": 1224,
+  "commit": "4d0dbef40c978788ec9ddd9a5e4f4c2d18c52714",
+  "decision": "ACCEPTED_ACTUAL_REMOTE_BYTES_WITHHELD_FLAT_ENTRY_RM1",
+  "finding": {
+    "actual_selected_root_mode": 509,
+    "id": "RM1",
+    "observed_error": "cohort root private owner/mode",
+    "required_action": "Separately reviewed exact private ownership/mode preparation, then installed-entry review; preserve original mode evidence and do not relax source contract.",
+    "required_mode": 448,
+    "source": "recover01.py:63; accepted flat03 restore01.py:73,183",
+    "witness": "CHECK01.stderr"
+  },
+  "flat_entry_released": false,
+  "numerical_authority": false,
+  "raw_failed_controls": [
+    "CHECK01.stderr",
+    "CHECK02.stderr"
+  ],
+  "readback_sha256": "f7b0051268a00c469c2f383677665683dda5e2ecf7e724ecc309134645d50291",
+  "remote_receipt_sha256": "64c74556c7060fc7d118b5b07354bb737e5c157446ffef8c27fe77ea6cef4d47",
+  "report_sha256": "fe861ae786b2541278fdaaa4a8d82f5d6c008e85f3d3e90228ee367e8246c2c5",
+  "reviewer": "combined_worker_review",
+  "root_exit_sha256": "0f0eba1ace202b735e4a94f7f5b24dadbafbd0dd95173251a7773134f92af916",
+  "sample_maxima": {
+    "allocated_bytes": 4014080,
+    "logical_bytes": 3727985,
+    "members": 112,
+    "regular_extent_changes": 1
+  },
+  "schema_version": 1,
+  "selected_bytes": 507946,
+  "selected_count": 15,
+  "selection_sha256": "d2f64f4a7175ab13de9f40bcb7c700dc615197c61e65c39456233a21617bb23b",
+  "successful_control": "CHECK03.stdout",
+  "time": "2026-10-04T19:39:24.769953+00:00",
+  "unique_git_blobs": 15,
+  "whole_samples": 563
+}
