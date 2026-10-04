@@ -1,0 +1,35 @@
+{
+  "actual_capture_restores": 0,
+  "actual_release": null,
+  "actual_remote_outcome": null,
+  "checks": 204,
+  "decision": "WITHHELD_RECOVERED_ANCESTRY_ORDER_MODE_SEMANTICS_SR1_SR2_SR3",
+  "findings": [
+    {
+      "accepted": true,
+      "case": "missing parent object",
+      "commit": "20cfb2453f298fe1120b642d8b9973e2aa5e97fa",
+      "id": "SR1",
+      "impact": "Parser authenticates current tree only, not complete ancestry or failed claim source/design objects.",
+      "missing_parent": "ffffffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "accepted": true,
+      "case": "unsorted Git tree z then a accepted",
+      "commit": "64ef24af308b4067814d95df321a04fdcf742764",
+      "id": "SR2",
+      "impact": "No canonical Git tree ordering check; fixed known source hash prevents replacing actual source with this witness."
+    },
+    {
+      "actual_preserved_original_file_mode": 384,
+      "commit": "3875a43fb55643c01dee8001e2ff60c4d4af71fa",
+      "id": "SR3",
+      "parser_accepted": true,
+      "qualification": "The new parser authenticates Git mode syntax but does not compare Git executable class to the archived original mode. flat_source_joins discards returned mode tuples. Fixed actual archive remains independently pinned; this is omitted semantic validation, not proof of actual bad modes.",
+      "tree_mode": "100755"
+    }
+  ],
+  "fixed_actual_capture_corruption_demonstrated": false,
+  "reviewer": "/root/combined_worker_review",
+  "source_only": true
+}

@@ -1,0 +1,19 @@
+import hashlib,json,stat
+from pathlib import Path
+O=Path(__file__).resolve().parent;x=json.loads((O/'READBACK01.json').read_text())
+(O/'REPORT01.md').write_text('''# Independent actual recovery-evidence capture review
+
+Accepted as complete local opaque preservation of all four specified original preparation/review trees. Every archived body, path, type and literal mode matches the current original. All four bounded raw gzip/TAR archives were independently framed and recompressed byte-for-byte. Every original frozen manifest member joins the complete archive, with no missing witness or copied-reference substitution. All four entire current scopes were re-enumerated again at review end.
+
+Total:2,801 typed members and2,263 regular bodies. The original02 fixed-seven-commit acceptance and generic1,025-operation qualification are preserved; strict03 and its1,024 bound correction/review are preserved separately. Embedded generic Git source-control graphs and opaque control bodies are not genuine ResearchRun claim histories and are never counted as attempts. No code from these graphs was executed and no data arrays were decoded.
+
+The actual capture receipt records PID431674/start ticks15745332; that PID is currently absent. Process-group history is unrecorded and no complete process-history receipt is invented. Root reports unified session47856/start1a7997/completion951f63 exit0. A separately persisted actual terminal or raw streams were not present at review time; this limitation is retained. Receipt free-disk observation exceeds10 GiB. Canonical actual bytes and stable current originals were independently verified regardless of tool-history limitation.
+
+No capture rerun, extraction, restore, network, Source change, admission, numerical import or new claim occurred. These complete witness archives may enter a separately reviewed exact committed selection. They do not establish Source339 flat recovery, external backup, installed runtime recovery, final Parent closure or numerical eligibility. The six inherited Source325 transport requirements remain supplemental historical pins only.
+''')
+m=[]
+for p in sorted(O.rglob('*')):
+ s=p.lstat();assert stat.S_ISREG(s.st_mode);b=p.read_bytes();m.append({'path':p.relative_to(O).as_posix(),'kind':'file','mode':stat.S_IMODE(s.st_mode),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+(O/'MANIFEST01.json').write_text(json.dumps({'schema_version':1,'members':m},sort_keys=True,indent=2)+'\n')
+print('checks',x['checks'])
+for n in ['READBACK01.json','REPORT01.md','MANIFEST01.json']:print(n,hashlib.sha256((O/n).read_bytes()).hexdigest())

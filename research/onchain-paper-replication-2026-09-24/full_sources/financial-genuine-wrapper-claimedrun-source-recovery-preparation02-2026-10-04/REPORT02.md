@@ -1,0 +1,5 @@
+# Source-only SR1–SR3 correction
+
+40 controls passed on final successor. Exact old/new object fixtures demonstrate missing-parent acceptance versus refusal, noncanonical directory ordering acceptance versus refusal, and executable-mode mismatch refusal. A valid Git directory-slash ordering fixture passes. Complete two-commit changed historical blob/mode ancestry passes without requiring historical bytes equal current bytes. Current authentic old claim metadata is rejected against unrelated tiny ancestry. Real tiny R4 pipeline, all helper pins, draft release refusal, corruption/type/dependency controls and full adapter byte/AST inverse pass.
+
+CHECK01,02,03 each exited0; later checks cover added aggregate finite counters and recoveredHEAD binding. No failed successor harness occurred. Original predecessor failed harness remains untouched inside predecessor01. RecoveredHEAD and full genuine historical325/324 claim route are source-prepared; no real747-body recovery or actual Source Git graph execution occurred. Independent different-author review is still required before actual recovery.

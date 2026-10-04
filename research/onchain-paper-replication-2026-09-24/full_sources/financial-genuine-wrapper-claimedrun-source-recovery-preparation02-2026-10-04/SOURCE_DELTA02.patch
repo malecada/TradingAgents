@@ -1,0 +1,130 @@
+--- withheld01/restore01.py
++++ successor02/restore01.py
+@@ -2,7 +2,7 @@
+ import argparse,hashlib,json,os,shutil,stat,sys,time
+ from pathlib import Path
+ import recovery04 as R
+-from git_objects01 import tree_join
++from git_objects01 import tree_join,claim_join
+ H=Path(__file__).resolve().parent
+ SOURCE='0a2e7639b42b9423b90743feadcda4078aa21816'
+ REL='research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-root-claimedrun-source339-capture01-2026-10-04'
+@@ -10,7 +10,7 @@
+ GATEHASH='3a20293832fa7ecc5e2821fb27dc940d1a997ab7f2ad373bc28f73e893e8781a'
+ IDENTITY='financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01'
+ PINS={'recovery04.py':'b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a','owned_io.py':'09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb','bounded_git01.py':'db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f'}
+-PINS['git_objects01.py']='693f09b34e4ef87902443a83e5af543c02ed2e8a6adbdfae6e22928dc95e3cc8'
++PINS['git_objects01.py']='05af0c620a115429ab3d20bff61beffc392013255cafdec1ea7c124e0647e2f7'
+ for n,pin in PINS.items():R.require(R.digest(R.read(H,n))==pin,'exact R4 primitive')
+ _pins=R.read(H,'CAPTURE_PINS01.json');R.require(R.digest(_pins)=='355a876341a21e6d4fa97ad11371805d6e93acd2ef4766e7f547d6c8c9f1fba1','fixed actual capture pins');EXPECTED=json.loads(_pins)
+ 
+@@ -47,7 +47,20 @@
+  metadata=json.loads(R.read(destination,result['metadata_file']));R.require(R.digest(R.encode(metadata))==result['metadata_sha256'] and metadata['manifest']==m,'complete flat metadata')
+  mapping=metadata['flat_members'];R.require(len(mapping)==747 and set(mapping)=={r['path'] for r in m['members'] if r['kind']=='file'},'all747 recovered bodies')
+  def raw(n):return R.read(destination,mapping[n])
+- tracked=tree_join(raw,set(mapping),SOURCE,339)
++ modes={r['path']:r['mode'] for r in m['members'] if r['kind']=='file'}
++ repo,tracked=tree_join(raw,set(mapping),SOURCE,339,manifest_modes=modes)
++ head=raw('.git/HEAD').decode('ascii').strip()
++ if head.startswith('ref: '):
++  refname=head[5:];R.require(refname.startswith('refs/heads/') and all(part not in ('','.','..') for part in refname.split('/')),'canonical archived HEAD ref')
++  path='.git/'+refname
++  if path in mapping:head=raw(path).decode('ascii').strip()
++  else:
++   refs={}
++   for line in raw('.git/packed-refs').decode('ascii').splitlines():
++    if not line or line.startswith(('#','^')):continue
++    oid,name=line.split(' ',1);R.require(name not in refs,'duplicate packed ref');refs[name]=oid
++   head=refs[refname]
++ R.require(head==SOURCE,'actual recovered source HEAD')
+  gate=raw(GATE);R.require(R.digest(gate)==GATEHASH,'actual gate');reg=json.loads(gate);exp=reg['experiments'][IDENTITY];pins=exp['source_files']
+  R.require(len(pins)==338 and set(pins)|{GATE}==set(tracked),'complete source339/338')
+  for n,pin in pins.items():R.require(R.digest(raw(n))==pin,'selected body')
+@@ -60,7 +73,8 @@
+  old='research_runs/financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01/'
+  for name,pin in {'claim.json':'4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128','failed.json':'35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450'}.items():R.require(R.digest(raw(old+name))==pin,'original failed history')
+  R.require(old+'complete.json' not in mapping and 'research_runs/'+IDENTITY+'/claim.json' not in mapping,'no replacement or new claim')
+- return {'tracked_git_commit_tree_blob_joins':339,'selected_body_joins':338,'inputs':8,'recovered_regular_bodies':747,'private_flat_files_with_metadata':748,'posix_tree_instantiated':False,'historical_failed_claims':1,'new_claims':0,'parent_or_final_review_recovered':False}
++ historical=claim_join(repo,json.loads(raw(old+'claim.json')))
++ return {'recovered_commit_ancestry_count':len(repo.commits),'historical_claim_source_joins':historical,'tracked_git_commit_tree_blob_joins':339,'selected_body_joins':338,'inputs':8,'recovered_regular_bodies':747,'private_flat_files_with_metadata':748,'posix_tree_instantiated':False,'historical_failed_claims':1,'new_claims':0,'parent_or_final_review_recovered':False}
+ 
+ def reserve(p):
+  fd=None
+
+--- withheld01/git_objects01.py
++++ successor02/git_objects01.py
+@@ -1,20 +1,56 @@
+-"""Bounded immutable loose Git object view over recovered flat bodies."""
+-import hashlib,re,zlib
++"""Finite recovered loose-object commit ancestry/tree/blob authentication."""
++import hashlib,re,time,zlib
+ 
+-def tree_join(raw,paths,commit,expected_count,limit=4*1024**2):
+- def require(v,m):
+-  if not v:raise ValueError(m)
+- require(re.fullmatch('[0-9a-f]{40}',commit) is not None,'commit identity')
+- require(not any(n in paths for n in ('.git/objects/info/alternates','.git/info/grafts','.git/shallow')) and not any(n.startswith(('.git/objects/pack/','.git/refs/replace/')) for n in paths),'self-contained loose Git scope')
+- def obj(oid,kind):
+-  require(re.fullmatch('[0-9a-f]{40}',oid) is not None,'object identity');name='.git/objects/'+oid[:2]+'/'+oid[2:];require(name in paths,'missing original object');compressed=raw(name);require(len(compressed)<=limit,'compressed bound');d=zlib.decompressobj();body=d.decompress(compressed,limit+129);require(d.eof and not d.unused_data and not d.unconsumed_tail and len(body)<=limit+128,'object inflate/framing');head,sep,value=body.partition(b'\0');require(sep and head==kind.encode()+b' '+str(len(value)).encode() and len(value)<=limit and hashlib.sha1(body).hexdigest()==oid,'Git object type/hash');return value
+- c=obj(commit,'commit');line=c.split(b'\n',1)[0];require(line.startswith(b'tree ') and len(line)==45,'commit tree');tree=line[5:].decode();result={};visited=0
+- def walk(oid,prefix,depth):
+-  nonlocal visited
+-  require(depth<=32,'tree depth');visited+=1;require(visited<=32768,'tree count');body=obj(oid,'tree');at=0;names=set()
++def require(v,m):
++ if not v:raise ValueError(m)
++
++class RecoveredGit:
++ def __init__(self,raw,paths,limit=4*1024**2):
++  self.raw=raw;self.paths=paths;self.limit=limit;self.objects={};self.commits={};self.state={};self.total=0;self.tree_visits=0;self.tree_entries=0;self.start=time.monotonic()
++  require(not any(n in paths for n in ('.git/objects/info/alternates','.git/info/grafts','.git/shallow')) and not any(n.startswith(('.git/objects/pack/','.git/refs/replace/')) for n in paths),'self-contained loose Git scope')
++ def obj(self,oid,kind):
++  require(time.monotonic()-self.start<120,'Git verification deadline');require(type(oid)is str and re.fullmatch('[0-9a-f]{40}',oid) is not None,'object identity')
++  if oid in self.objects:
++   k,b=self.objects[oid];require(k==kind,'cached object type');return b
++  require(len(self.objects)<4096,'finite object count');name='.git/objects/'+oid[:2]+'/'+oid[2:];require(name in self.paths,'missing original object');compressed=self.raw(name);require(len(compressed)<=self.limit,'compressed bound');d=zlib.decompressobj();body=d.decompress(compressed,self.limit+129)
++  require(d.eof and not d.unused_data and not d.unconsumed_tail and len(body)<=self.limit+128,'object inflate/framing');head,sep,value=body.partition(b'\0');require(sep and head==kind.encode()+b' '+str(len(value)).encode() and len(value)<=self.limit and hashlib.sha1(body).hexdigest()==oid,'Git object type/hash')
++  self.total+=len(value);require(self.total<=64*1024**2,'aggregate object bound');self.objects[oid]=(kind,value);return value
++ def tree(self,oid,prefix='',depth=0,active=None):
++  self.tree_visits+=1;require(self.tree_visits<=32768,'aggregate tree visits');require(depth<=32,'tree depth');active=set() if active is None else active;require(oid not in active,'tree cycle');active=active|{oid};body=self.obj(oid,'tree');at=0;names=set();last=None;result={}
+   while at<len(body):
+-   space=body.index(b' ',at);end=body.index(b'\0',space);mode=body[at:space].decode();name=body[space+1:end].decode('utf-8');require(name not in ('','.','..') and '/' not in name and name not in names,'tree path');names.add(name);require(end+21<=len(body),'tree oid framing');child=body[end+1:end+21].hex();at=end+21;path=prefix+name
+-   if mode=='40000':walk(child,path+'/',depth+1)
+-   else:
+-    require(mode in ('100644','100755') and path not in result and len(result)<expected_count,'tracked type/count');b=obj(child,'blob');require(raw(path)==b,'recovered committed body');result[path]=(mode,child)
+- walk(tree,'',0);require(len(result)==expected_count,'complete tracked denominator');return result
++   self.tree_entries+=1;require(self.tree_entries<=65536,'aggregate tree entries');space=body.index(b' ',at);end=body.index(b'\0',space);mode=body[at:space].decode('ascii');namebytes=body[space+1:end];name=namebytes.decode('utf-8');require(name not in ('','.','..') and '/' not in name and name not in names,'tree path');names.add(name)
++   require(mode in ('40000','100644','100755'),'canonical regular/directory mode');key=namebytes+(b'/' if mode=='40000' else b'\0');require(last is None or last<key,'canonical Git tree order');last=key
++   require(end+21<=len(body),'tree oid framing');child=body[end+1:end+21].hex();at=end+21;path=prefix+name
++   if mode=='40000':result.update(self.tree(child,path+'/',depth+1,active))
++   else:self.obj(child,'blob');result[path]=(mode,child)
++   require(len(result)<=32768,'finite tree population')
++  return result
++ def ancestry(self,oid,depth=0):
++  require(depth<=128 and len(self.state)<=1024,'finite ancestry');require(self.state.get(oid)!=1,'commit cycle')
++  if self.state.get(oid)==2:return self.commits[oid]
++  self.state[oid]=1;value=self.obj(oid,'commit');headers,sep,message=value.partition(b'\n\n');require(sep,'commit header boundary');lines=headers.split(b'\n');require(lines[0].startswith(b'tree ') and len(lines[0])==45,'commit first tree');tree=lines[0][5:].decode('ascii');parents=[];other=False
++  for line in lines[1:]:
++   if line.startswith(b'parent '):
++    require(not other and len(line)==47,'canonical parent header');parent=line[7:].decode('ascii');require(parent not in parents,'duplicate parent');parents.append(parent)
++   else:other=True;require(not line.startswith(b'tree '),'duplicate tree header')
++  entries=self.tree(tree)
++  for parent in parents:self.ancestry(parent,depth+1)
++  self.commits[oid]={'tree':tree,'parents':parents,'entries':entries};self.state[oid]=2;return self.commits[oid]
++
++def tree_join(raw,paths,commit,expected_count,limit=4*1024**2,manifest_modes=None):
++ repo=RecoveredGit(raw,paths,limit);current=repo.ancestry(commit);entries=current['entries'];require(len(entries)==expected_count,'complete tracked denominator')
++ for path,(mode,oid) in entries.items():
++  require(path in paths and raw(path)==repo.obj(oid,'blob'),'recovered committed body')
++  if manifest_modes is not None:require(path in manifest_modes and bool(manifest_modes[path]&0o111)==(mode=='100755'),'manifest versus Git executable mode')
++ return repo,entries
++
++def claim_join(repo,claim):
++ source=claim['source'];design=claim['design_source'];require(source in repo.commits and design in repo.commits,'original claim source/design outside recovered ancestry');require(source==design and claim['bindings'] is None and claim['bindings_sha256'] is None,'original fixed no-binding claim')
++ entries=repo.commits[source]['entries'];regpath=claim['registration'];require(regpath in entries,'historical registration absent');raw=repo.obj(entries[regpath][1],'blob');require(hashlib.sha256(raw).hexdigest()==claim['registration_sha256'],'original registration hash')
++ import json
++ reg=json.loads(raw);exp=reg['experiments'][claim['experiment_id']];require(exp==claim['experiment'] and reg['program_id']==claim['program_id'] and reg['families'][exp['family']]==claim['family'],'genuine claimed registration definition')
++ pins=exp['source_files'];require(len(entries)==325 and len(pins)==324 and set(pins)|{regpath}==set(entries),'original325/324 source closure')
++ for path,pin in pins.items():require(hashlib.sha256(repo.obj(entries[path][1],'blob')).hexdigest()==pin,'original claimed source body')
++ require(claim['inputs']==exp['inputs'] and len(claim['inputs'])==8,'original actual input role mapping')
++ for ref in claim['inputs'].values():require(hashlib.sha256(repo.obj(entries[ref['path']][1],'blob')).hexdigest()==ref['sha256'],'original claimed input bytes')
++ require(claim['effective_attempt_budget']==18,'historical highest18 preserved');return {'source':source,'design_source':design,'tracked':325,'pins':324,'inputs':8,'budget':18}

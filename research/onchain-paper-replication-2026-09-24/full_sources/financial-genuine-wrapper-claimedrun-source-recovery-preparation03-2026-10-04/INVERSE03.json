@@ -1,0 +1,6 @@
+{
+  "predicate_old": "depth<=128 and len(self.state)<=1024",
+  "predicate_new": "depth<=128 and (oid in self.state or len(self.state)<1024)",
+  "helper_pin_old": "05af0c620a115429ab3d20bff61beffc392013255cafdec1ea7c124e0647e2f7",
+  "helper_pin_new": "c364269be9c112dbc9501a41c8f9cf21def9a95b33cf2b9054f4384ae3888a4a"
+}

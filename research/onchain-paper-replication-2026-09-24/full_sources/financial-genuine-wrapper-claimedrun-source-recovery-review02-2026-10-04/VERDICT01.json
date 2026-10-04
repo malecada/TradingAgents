@@ -1,0 +1,32 @@
+{
+  "actual747_restore": false,
+  "actual_SourceGit_objects_decoded": false,
+  "actual_release": null,
+  "actual_remote": null,
+  "author_manifest_sha256": "bb6db7b928c92b1a310bbbf759dfcd212b92c8ed031d360069c1c5b91df9a3be",
+  "checks": 561,
+  "corrected": [
+    "SR1",
+    "SR2",
+    "SR3"
+  ],
+  "decision": "ACCEPTED_FIXED_SOURCE_ONLY_WITH_SR4_NONBLOCKING_BOUND_QUALIFICATION",
+  "fixed_current_ancestry_count_previously_authenticated": 7,
+  "fixed_current_source": "0a2e7639b42b9423b90743feadcda4078aa21816",
+  "generic_ancestry_cap_actual": 1025,
+  "generic_ancestry_cap_advertised": 1024,
+  "git_view_sha256": "05af0c620a115429ab3d20bff61beffc392013255cafdec1ea7c124e0647e2f7",
+  "numerical_authority": false,
+  "remaining_findings": [
+    {
+      "accepted_commit_count": 1025,
+      "commit": "534e8a76252e2bbf8aa35a6180303e2db522be42",
+      "declared_cap": 1024,
+      "fixed_current_source_has_far_fewer_commits": true,
+      "id": "SR4",
+      "reason": "ancestry checks len(self.state)<=1024 before inserting a new commit, allowing1025"
+    }
+  ],
+  "restore_sha256": "fc913e835921d5b6ab8dfba99b6d1c7ebb376529603c7438edcd73d33264ca84",
+  "reviewer": "/root/combined_worker_review"
+}

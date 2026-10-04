@@ -1,0 +1,9 @@
+# Independent strict ancestry-cap successor review
+
+ACCEPTED SOURCE ONLY. Exact restore9e21e92c and Git helperc364269b authenticate to author MANIFEST018ae5ecff.2,840 checks include the complete1,406-member evidence seal and narrow independent source/boundary controls; unchanged broader561-control review02 was not rerun.
+
+The exact preserved534e8a76 opaque graph still yields1,025 commits under original05af. Successorc364 refuses finite ancestry before inserting the1,025th state, leaving exactly1,024 states and1,023 completed parents. A separately hashed1,023-parent-plus-root graph5cdcfc55694fdf7f1548495a1cbb22e613b7d29c accepts exactly1,024 completed commits. Completed root/ancestor cache hits still succeed at saturation; an absent fresh node refuses without insertion; an existing active-cycle state retains its commit-cycle refusal. Depth129 refuses even an existing completed entry, while depth128 cached access remains permitted.
+
+Independent full byte/AST inverse proves the Git helper changes only the single ancestry predicate. Adapter changes only the helper hash. R4, owned_io, bounded_git, capture pins and null request template remain identical. This corrects review02 SR4 without relaxing the prior corrected SR1–SR3 ancestry/order/mode semantics. Review01 WITHHELD and review02 fixed-scope acceptance/old generic1,025 qualification remain preserved; they describe their exact predecessor bytes.
+
+No actual Source Git object decode,747-body restore, network, admission, claim, Owner, Run, Binding, numerical import, Source mutation or native work occurred. Exact future remote receipt/request/review/release and actual complete recovery remain required. No runtime-body recovery, final Parent recovery, scientific result, prospective19 adoption by a claim or numerical release follows from this source acceptance.

@@ -1,0 +1,25 @@
+{
+  "edits": [
+    {
+      "old": "from git_objects01 import tree_join",
+      "new": "from git_objects01 import tree_join,claim_join"
+    },
+    {
+      "old": "PINS['git_objects01.py']='693f09b34e4ef87902443a83e5af543c02ed2e8a6adbdfae6e22928dc95e3cc8'",
+      "new": "PINS['git_objects01.py']='05af0c620a115429ab3d20bff61beffc392013255cafdec1ea7c124e0647e2f7'"
+    },
+    {
+      "old": "tracked=tree_join(raw,set(mapping),SOURCE,339)",
+      "new": "modes={r['path']:r['mode'] for r in m['members'] if r['kind']=='file'}\n repo,tracked=tree_join(raw,set(mapping),SOURCE,339,manifest_modes=modes)\n head=raw('.git/HEAD').decode('ascii').strip()\n if head.startswith('ref: '):\n  refname=head[5:];R.require(refname.startswith('refs/heads/') and all(part not in ('','.','..') for part in refname.split('/')),'canonical archived HEAD ref')\n  path='.git/'+refname\n  if path in mapping:head=raw(path).decode('ascii').strip()\n  else:\n   refs={}\n   for line in raw('.git/packed-refs').decode('ascii').splitlines():\n    if not line or line.startswith(('#','^')):continue\n    oid,name=line.split(' ',1);R.require(name not in refs,'duplicate packed ref');refs[name]=oid\n   head=refs[refname]\n R.require(head==SOURCE,'actual recovered source HEAD')"
+    },
+    {
+      "old": "R.require(old+'complete.json' not in mapping and 'research_runs/'+IDENTITY+'/claim.json' not in mapping,'no replacement or new claim')",
+      "new": "R.require(old+'complete.json' not in mapping and 'research_runs/'+IDENTITY+'/claim.json' not in mapping,'no replacement or new claim')\n historical=claim_join(repo,json.loads(raw(old+'claim.json')))"
+    },
+    {
+      "old": "'tracked_git_commit_tree_blob_joins':339,",
+      "new": "'recovered_commit_ancestry_count':len(repo.commits),'historical_claim_source_joins':historical,'tracked_git_commit_tree_blob_joins':339,"
+    }
+  ],
+  "new_git_helper_full_replacement": true
+}
