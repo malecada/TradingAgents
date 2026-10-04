@@ -1,0 +1,13 @@
+# Two finite preservation rounds
+
+BASELINE accepts five actual evidence references: accepted_basis_byte_review, coalesced_actual_review, source_runtime_bridge, postinstall_review and independent_population_review. All five must be selected and occur as exact byte/hash members of canonical archive manifests. The new full-recovery proof, final request, final release and three-proof bundle must remain null. The fixed capture04 and all known capture03 failure bodies remain mandatory. The external envelope is selected metadata rather than a member of an archive whose hash it contains.
+
+FINAL_SUPPLEMENT requires the same actual contextual evidence and baseline_envelope, baseline_recovery_review, complete_final_request, complete_final_release and three distinct complete_three_proofs bodies. Its archived selection must contain those bodies. Baseline recovery therefore does not purport to recover future-created caller authority. Neither round provides numerical authority.
+
+Use only the complete BASELINE or FINAL_SUPPLEMENT helper closure in a distinct fresh Root namespace. The top-level copies retain predecessor provenance and are not an installed caller. Each generated receiver has its own fixed fresh Git name and status. Independent exact caller/recovery releases remain required; missing actual commit/selection/proofs refuse. The fixed Main path is explicit in each round binder; installation cannot reinterpret a nesting-relative ROOT.
+
+The 54 bounded tests cover new round dependency refusals, exact draft refusal, distinct proofs, unchanged utilities, whole byte/AST flat inverse and receipt status inverse. No new operational algorithm, actual network or recovery was executed. The original snapshot controls remain in predecessor01 without replay. A transient generation script was initially staged in /tmp, then moved into this owned directory; no other artifact or live source was edited.
+
+Inherited limitation: final output cohort checking is unchanged. Independent review identified that actual input request/release/profile reads are not all retained through the final receipt cleanup in one cohort; this candidate does not silently claim that new protection. Root must resolve the concrete review disposition before actual adoption. Stat cohorts provide sampled checks, not continuous writer exclusion, runtime-body recovery, POSIX restoration or capacity evidence.
+
+Actual coalesced postinstall and SourceRuntime proofs are supplied as authentic Root references; no guessed full hashes or future accepted reviews are synthesized. All original limits and source scientific inputs remain unchanged.

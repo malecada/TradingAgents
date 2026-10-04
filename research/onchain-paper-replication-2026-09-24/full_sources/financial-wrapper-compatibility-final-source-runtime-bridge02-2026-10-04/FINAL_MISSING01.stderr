@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-final-source-runtime-bridge02-2026-10-04/measure_final01.py", line 13, in <module>
+    r=m.Reader();qraw=r.read(P/'REQUEST_FINAL01.json');q=json.loads(qraw)
+                      ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-compatibility-root-launch-20261004-01/preclaim01.py", line 77, in read
+    require(path.is_absolute() and len(path.parts)<=64 and path.resolve(strict=True)==path,'canonical evidence origin')
+                                                           ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 670, in resolve
+    return self.with_segments(os.path.realpath(self, strict=strict))
+                              ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen posixpath>", line 451, in realpath
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-compatibility-root-launch-20261004-01/REQUEST_FINAL01.json'

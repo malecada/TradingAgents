@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-coalesced-evidence-outcome-review04-2026-10-04/verify_actual01.py", line 17, in <module>
+    intent=J(L/'INTENT01.json','02726ab0780c60c68c2c88729adcf7723e48782440acd6bfc9ce84e872147684');spawn=J(L/'SPAWN01.json','ad98e65079455b2f61ebe1c43a5f8b1f4d2b51b9ccd2bb29b29cd9e6ecedafb1');child=J(L/'ACTUAL_CHILD_EXIT01.json','e052dde3dc56af1983f0b952463a37bb14dc39a432dab4df6fa58bdcfba33986');tool=J(L/'ACTUAL_ROOT_TOOL_EXIT01.json','3a21e1f0088e8035b96a15672dfdd4a4174d71c12594a3ab68bcaf190cb5157c')
+                                                                                                                                                                                                                                                                                                              ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-coalesced-evidence-outcome-review04-2026-10-04/verify_actual01.py", line 15, in J
+    def J(p,pin=None):return json.loads(read(p,pin))
+                                        ~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-coalesced-evidence-outcome-review04-2026-10-04/verify_actual01.py", line 14, in read
+    ok(sig(p.lstat())==sig(s) and len(b)==s.st_size,'current byte extent');ok(pin is None or h(b)==pin,'exact body hash');reads[str(p)]={'sha256':h(b),'bytes':len(b),'mode':stat.S_IMODE(s.st_mode),'signature':sig(s)};ok(time.monotonic()-start<60,'bounded review time');return b
+                                                                           ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-coalesced-evidence-outcome-review04-2026-10-04/verify_actual01.py", line 5, in ok
+    def ok(v,n):assert v,n;checks.append(n)
+                       ^
+AssertionError: exact body hash

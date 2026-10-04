@@ -1,0 +1,7 @@
+# Narrow final input-currentness correction
+
+Both fixed round restorers now bind verified request, implementation bodies, selected binder dependencies and actual remote/release/profile inputs to the existing VerifiedCohort. Exact read hashes join pre/post read signatures. A final descriptor-free input check runs after final receipt write/close, selected scan and restored-output cohort cleanup. Main proof reads use actual canonical file identities without imposing private-output directory modes on Main ancestors.
+
+The exact predecessor witness accepts a request rewrite at final receipt close. The corrected tail refuses it while preserving both restored scopes and the original receipt. A fresh healthy two-archive case passes. Each case preserves a primary KeyboardInterrupt over secondary cleanup OSError. No public run, remote authority or release was fabricated. ERRATA01 qualifies the inherited healthy witness's literal descriptive flag; raw output remains untouched.
+
+All schema, binders, receiver, watcher, archive/IO/Git primitives, names, caps and archive-restoration function remain byte/AST unchanged. INVERSE01 retains complete before/after source. Source/runtime/POSIX/capacity and numerical authority are not inferred. The protection is sampled metadata identity tied to read hashes, not writer exclusion or same-signature ABA protection. Actual population binding, caller release and execution remain Root responsibilities.

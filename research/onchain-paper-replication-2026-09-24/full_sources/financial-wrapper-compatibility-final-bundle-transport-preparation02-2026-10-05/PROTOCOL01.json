@@ -1,0 +1,22 @@
+{
+  "baseline_excludes": [
+    "full_recovery_proof",
+    "final_request",
+    "final_release"
+  ],
+  "baseline_proves": "byte basis plus exact new captured bodies only",
+  "envelope": "selected external metadata; must not be inserted into archive it hashes",
+  "final_requires": "actual baseline recovery plus all final caller proofs/request/release and independent review",
+  "numerical_authority": false,
+  "rounds": [
+    "BASELINE",
+    "FINAL_SUPPLEMENT"
+  ],
+  "unchanged_caps": {
+    "allocated": 100663296,
+    "file": 4194304,
+    "floor": 10737418240,
+    "logical": 67108864,
+    "members": 32768
+  }
+}
