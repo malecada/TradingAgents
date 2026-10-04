@@ -1,0 +1,93 @@
+{
+  "actual_capsule_capture_count": 0,
+  "actual_independent_capture_contract_released": false,
+  "actual_logical_bytes": 8642839,
+  "actual_members": 986,
+  "actual_regular": 713,
+  "actual_source_review_manifest_sha256": "4f39700328879e71749e31e230b7d273b36ad29783a601e483ff8a26ccd9c72f",
+  "actual_source_review_sha256": "905e757c255b63c52358b4edac05456117f24ea89b1e21cbe0233b4fd2152202",
+  "candidate_manifest_sha256": "bf017a004b512d498eac68319baac4249d9ee7c943fbfea7cba6b75bcf8a6497",
+  "checks": 138,
+  "decision": "ACCEPTED_CAPTURE_HELPER_SOURCE_ONLY_EXACT_REQUEST_RELEASE_STILL_REQUIRED",
+  "helper_sha256": "c4710f2361e6f2e61b1da6e89988a6c1ff43f91f8e4e44c58b71a397feca1096",
+  "implementation": 194,
+  "native_or_numerical_authority": false,
+  "package": 149,
+  "refusals": [
+    {
+      "case": "actual unreleased request",
+      "message": "unreleased output_root",
+      "type": "ValueError"
+    },
+    {
+      "case": "request schema_version",
+      "message": "fixed actual source",
+      "type": "ValueError"
+    },
+    {
+      "case": "request source",
+      "message": "fixed actual source",
+      "type": "ValueError"
+    },
+    {
+      "case": "request capsule_root",
+      "message": "fixed actual source",
+      "type": "ValueError"
+    },
+    {
+      "case": "request output_root",
+      "message": "unreleased release",
+      "type": "ValueError"
+    },
+    {
+      "case": "manifest duplicate",
+      "message": "duplicate member",
+      "type": "ValueError"
+    },
+    {
+      "case": "manifest oversize",
+      "message": "file extent/hash",
+      "type": "ValueError"
+    },
+    {
+      "case": "manifest badmode",
+      "message": "mode",
+      "type": "ValueError"
+    },
+    {
+      "case": "manifest unordered",
+      "message": "total/order",
+      "type": "ValueError"
+    },
+    {
+      "case": "one-use archive",
+      "message": "[Errno 17] File exists: 'tiny.tar.gz'",
+      "type": "FileExistsError"
+    },
+    {
+      "case": "one-use flat",
+      "message": "foreign/oversized flat namespace",
+      "type": "ValueError"
+    },
+    {
+      "case": "changed source",
+      "message": "whole tree differs",
+      "type": "ValueError"
+    },
+    {
+      "case": "symlink scan",
+      "message": "canonical scan root",
+      "type": "ValueError"
+    },
+    {
+      "case": "reserve reused identity",
+      "message": "[Errno 17] File exists: 'fresh'",
+      "type": "FileExistsError"
+    }
+  ],
+  "schema_version": 1,
+  "source": "649fb8a11089524aaef7843dffeeb90a3a55ca17",
+  "source_manifest_sha256": "26c67e9c9b28dd4cd607ab3833fa14143d6e8e4c7c3617024275294940ffbc53",
+  "source_pins": 324,
+  "tracked": 325
+}

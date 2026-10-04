@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "decision": "ACCEPTED_CAPTURE_HELPER_SOURCE_ONLY_EXACT_REQUEST_RELEASE_STILL_REQUIRED",
+  "checks": 138,
+  "helper_sha256": "c4710f2361e6f2e61b1da6e89988a6c1ff43f91f8e4e44c58b71a397feca1096",
+  "candidate_manifest_sha256": "bf017a004b512d498eac68319baac4249d9ee7c943fbfea7cba6b75bcf8a6497",
+  "source": "649fb8a11089524aaef7843dffeeb90a3a55ca17",
+  "source_manifest_sha256": "26c67e9c9b28dd4cd607ab3833fa14143d6e8e4c7c3617024275294940ffbc53",
+  "actual_members": 986,
+  "actual_regular": 713,
+  "actual_logical_bytes": 8642839,
+  "tracked": 325,
+  "source_pins": 324,
+  "implementation": 194,
+  "package": 149,
+  "actual_source_review_sha256": "905e757c255b63c52358b4edac05456117f24ea89b1e21cbe0233b4fd2152202",
+  "actual_source_review_manifest_sha256": "4f39700328879e71749e31e230b7d273b36ad29783a601e483ff8a26ccd9c72f",
+  "actual_capsule_capture_count": 0,
+  "actual_independent_capture_contract_released": false,
+  "refusals": [
+    {
+      "case": "actual unreleased request",
+      "type": "ValueError",
+      "message": "unreleased output_root"
+    },
+    {
+      "case": "request schema_version",
+      "type": "ValueError",
+      "message": "fixed actual source"
+    },
+    {
+      "case": "request source",
+      "type": "ValueError",
+      "message": "fixed actual source"
+    },
+    {
+      "case": "request capsule_root",
+      "type": "ValueError",
+      "message": "fixed actual source"
+    },
+    {
+      "case": "request output_root",
+      "type": "ValueError",
+      "message": "unreleased release"
+    },
+    {
+      "case": "manifest duplicate",
+      "type": "ValueError",
+      "message": "duplicate member"
+    },
+    {
+      "case": "manifest oversize",
+      "type": "ValueError",
+      "message": "file extent/hash"
+    },
+    {
+      "case": "manifest badmode",
+      "type": "ValueError",
+      "message": "mode"
+    },
+    {
+      "case": "manifest unordered",
+      "type": "ValueError",
+      "message": "total/order"
+    },
+    {
+      "case": "one-use archive",
+      "type": "FileExistsError",
+      "message": "[Errno 17] File exists: 'tiny.tar.gz'"
+    },
+    {
+      "case": "one-use flat",
+      "type": "ValueError",
+      "message": "foreign/oversized flat namespace"
+    },
+    {
+      "case": "changed source",
+      "type": "ValueError",
+      "message": "whole tree differs"
+    },
+    {
+      "case": "symlink scan",
+      "type": "ValueError",
+      "message": "canonical scan root"
+    },
+    {
+      "case": "reserve reused identity",
+      "type": "FileExistsError",
+      "message": "[Errno 17] File exists: 'fresh'"
+    }
+  ],
+  "native_or_numerical_authority": false
+}
