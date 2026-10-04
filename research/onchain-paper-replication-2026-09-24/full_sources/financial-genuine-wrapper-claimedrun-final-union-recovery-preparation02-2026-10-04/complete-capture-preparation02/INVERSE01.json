@@ -1,0 +1,28 @@
+{
+  "edits": [
+    {
+      "old": "root-claimedrun-final-capture01-2026-10-04",
+      "new": "root-claimedrun-final-capture02-2026-10-04"
+    },
+    {
+      "old": "def main():",
+      "new": "def pack_shards(r4, planner, union, manifest, here, start):\n    r4.validate(manifest)\n    require(sum(r['bytes'] for r in manifest['members'] if r['kind']=='file') <= LIMIT, 'whole virtual logical limit')\n    groups = planner.partition(manifest)\n    trees = here / 'shard-trees'\n    archives = here / 'shards'\n    trees.mkdir(mode=0o700)\n    archives.mkdir(mode=0o700)\n    records = []\n    for number, group in enumerate(groups):\n        require(time.monotonic()-start < 120 and shutil.disk_usage(here).free >= FLOOR, 'bounded shard operation')\n        name = 'shard-%04d' % number\n        tree = trees / name\n        tree.mkdir(mode=group['manifest']['root_mode'])\n        for row in group['manifest']['members']:\n            require(time.monotonic()-start < 120 and shutil.disk_usage(here).free >= FLOOR, 'bounded shard member')\n            path = tree / row['path']\n            if row['kind']=='directory':\n                path.mkdir(mode=row['mode'])\n            else:\n                body = r4.read(union,row['path'])\n                require(len(body)==row['bytes'] and digest(body)==row['sha256'], 'exact virtual body')\n                put(r4,path,body)\n            require(stat.S_IMODE(path.lstat().st_mode)==row['mode'], 'literal shard mode')\n        require(r4.scan(tree)==group['manifest'], 'complete physical shard tree')\n        manifest_path = 'shards/'+name+'-manifest.json'\n        manifest_body = r4.encode(group['manifest'])\n        put(r4,here/manifest_path,manifest_body)\n        archive_path = 'shards/'+name+'.tar.gz'\n        archive = r4.pack(tree,group['manifest'],here/archive_path)\n        require(archive['bytes'] <= FILE, 'original physical archive cap')\n        records.append({**{k:v for k,v in group.items() if k!='manifest'}, 'id':name,\n            'manifest':{'path':manifest_path,'bytes':len(manifest_body),'sha256':digest(manifest_body)},\n            'archive':{'path':archive_path,**archive}})\n    r4.same(union,manifest)\n    virtual = r4.encode(manifest)\n    index = {'schema_version':1,'kind':'complete-final-union-shards-v1',\n        'virtual_manifest':{'path':'union-manifest.json','bytes':len(virtual),'sha256':digest(virtual)},\n        'limits':{'logical_bytes':planner.LOGICAL,'typed_members':planner.MEMBERS,'archive_bytes':FILE},\n        'regular_bodies':sum(r['kind']=='file' for r in manifest['members']),'shards':records}\n    body = encoded(index)\n    put(r4,here/'SHARD_INDEX01.json',body)\n    return {'path':'SHARD_INDEX01.json','bytes':len(body),'sha256':digest(body),'virtual_manifest_sha256':digest(virtual)},len(records)\n\n\ndef main():"
+    },
+    {
+      "old": "    source_manifest = json.loads",
+      "new": "    require(digest(r4.read(HERE, 'shards01.py')) == '9c38c0893790c22e3b0142a8ab175dceb9b14dd0aeeb80edc206e5329ffcbbba', 'exact shard planner')\n    planner_spec = importlib.util.spec_from_file_location('final_union_shards', HERE / 'shards01.py')\n    planner = importlib.util.module_from_spec(planner_spec)\n    planner_spec.loader.exec_module(planner)\n    source_manifest = json.loads"
+    },
+    {
+      "old": "    archive = r4.pack(union, manifest, HERE / 'union.tar.gz')",
+      "new": "    index, shard_count = pack_shards(r4, planner, union, manifest, HERE, start)"
+    },
+    {
+      "old": "'status': 'complete-final-caller-review-byte-capture', 'archive': archive",
+      "new": "'status': 'complete-final-caller-review-sharded-byte-capture', 'index': index, 'shard_count': shard_count"
+    },
+    {
+      "old": "'archive': archive, 'original_trees': auth['original_trees']",
+      "new": "'index': index, 'shard_count': shard_count, 'original_trees': auth['original_trees']"
+    }
+  ]
+}

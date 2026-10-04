@@ -1,0 +1,7 @@
+{
+  "additional_check_correction": "Actual inverse contains six effective edits because REQUEST_FINAL03 is unchanged; seven was the earlier test-only REQUEST_FINAL77 count. No candidate defect.",
+  "cause": "Original full-recovery proof is named READBACK01.json in its independent review directory, not FULL_SOURCE_RECOVERY01.json. Installed Parent uses the latter local name. check01 stopped at this incorrect original filename; check02 joins the actual original body/hash.",
+  "changed_original_or_actual_outcome": false,
+  "original_error": "FileNotFoundError",
+  "status": "preserved independent check01 failure"
+}

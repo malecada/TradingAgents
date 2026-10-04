@@ -1,0 +1,66 @@
+{
+  "edits": [
+    {
+      "old": "\"\"\"Capture final released caller and complete witnesses as ordinary opaque bytes.\"\"\"",
+      "new": "\"\"\"Capture four closed handoff witness trees; byte-only, not caller release.\"\"\""
+    },
+    {
+      "old": "HERE = Path(__file__).resolve().parent",
+      "new": "HERE = BASE / 'financial-genuine-wrapper-root-claimedrun-witness-capture01-2026-10-04'"
+    },
+    {
+      "old": "PARENT = Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-root-launch-20261004-01')",
+      "new": "SOURCE_REVIEW = BASE / 'financial-genuine-wrapper-claimedrun-actual-admission-review01-2026-10-04'"
+    },
+    {
+      "old": "genuine-financial-wrapper-recordfix-native-20261004-01/source",
+      "new": "genuine-financial-wrapper-claimedrun-native-20261004-02/source"
+    },
+    {
+      "old": "SOURCE_CAPTURE = BASE / 'financial-genuine-wrapper-root-recordfix-capture01-2026-10-04'",
+      "new": "SOURCE_CAPTURE = BASE / 'financial-genuine-wrapper-root-claimedrun-source339-capture01-2026-10-04'"
+    },
+    {
+      "old": "SCOPES = {\n    'actual-parent': PARENT,\n    'root-parent-adoption': BASE / 'financial-genuine-wrapper-root-recordfix-parent-adoption01-2026-10-04',\n    'final-parent-review': BASE / 'financial-genuine-wrapper-recordfix-final-parent-review01-2026-10-04',\n    'root-verifier-binding': BASE / 'financial-genuine-wrapper-root-recordfix-verifier-binding01-2026-10-04',\n    'actual-verifier-review': BASE / 'financial-genuine-wrapper-recordfix-generated-verifier-review01-2026-10-04',\n    'binder-preparation': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-preparation01-2026-10-04',\n    'binder-review': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-review01-2026-10-04',\n    'caller-preparation': BASE / 'financial-genuine-wrapper-recordfix-parent-preparation01-2026-10-04',\n    'caller-review': BASE / 'financial-genuine-wrapper-recordfix-parent-review01-2026-10-04',\n    'verifier-preparation': BASE / 'financial-genuine-wrapper-first-outcome-verifier-preparation03-2026-10-04',\n    'verifier-review': BASE / 'financial-genuine-wrapper-first-outcome-verifier-review03-2026-10-04',\n}\n",
+      "new": "SCOPES = {\n    '1': BASE / 'financial-genuine-wrapper-claimedrun-source-handoff-preparation01-2026-10-04',\n    '2': BASE / 'financial-genuine-wrapper-claimedrun-source-handoff-preparation02-2026-10-04',\n    '3': BASE / 'financial-genuine-wrapper-claimedrun-source-handoff-review01-2026-10-04',\n    '4': BASE / 'financial-genuine-wrapper-claimedrun-source-handoff-review02-2026-10-04',\n}\n"
+    },
+    {
+      "old": "    require(not os.path.lexists(HERE / 'union-bytes01'), 'one-use union namespace')",
+      "new": "    require(Path(__file__).resolve().parent == HERE, 'fixed Root-installed capture scope')\n    require(not os.path.lexists(HERE / 'union-bytes01'), 'one-use union namespace')"
+    },
+    {
+      "old": "    require(digest((PARENT / 'REQUEST_FINAL02.json').read_bytes()) == '28f2ae5340d38ac71450c8947c5b1ad30ac4192481da81596684445c9cf9b52e', 'actual final caller request')\n    require(digest((SCOPES['actual-verifier-review'] / 'MANIFEST01.json').read_bytes()) == 'c856494d3c46b5f26241a72e66219adf35d79905b1117291cdc5b22e1601814a', 'actual independent binding review')",
+      "new": "    require(digest((SOURCE_REVIEW / 'MANIFEST01.json').read_bytes()) == '24e6451d2a9c5ec516b99ca95bb477567e5f9ef5d13adef3bb41c0633b93e5c7', 'actual source review manifest')\n    require(digest((SOURCE_REVIEW / 'INDEPENDENT_SOURCE_INPUT_RUNTIME01.json').read_bytes()) == '059232d0f7fc8922cee526a1bd30fef2ecb51ee17103284bcaac18c77e77641c', 'actual metadata admission proof')"
+    },
+    {
+      "old": "26c67e9c9b28dd4cd607ab3833fa14143d6e8e4c7c3617024275294940ffbc53",
+      "new": "fdf77348b81a4d6df8b420b98530f5485900a0461636e1c201506106b036dfd8",
+      "count": 2
+    },
+    {
+      "old": "8d49d60b509bc9c95cd04274127b12387b8070295499dad3d24db63b9a376efb",
+      "new": "b5b6aad2f515447dc6566cfb716a20ef90031313d48f1ac903ab756735431e24",
+      "count": 2
+    },
+    {
+      "old": "'source_full_recovery_readback_sha256': 'f86497ee97d6b5d91066db1aa2520d1bed844165b4e08d7169a5917c5bfda4df'",
+      "new": "'source_full_recovery_readback_sha256': None"
+    },
+    {
+      "old": "649fb8a11089524aaef7843dffeeb90a3a55ca17",
+      "new": "0a2e7639b42b9423b90743feadcda4078aa21816"
+    },
+    {
+      "old": "complete actual final caller, concrete verifier, source preparations and independent full witness trees; links are literal metadata only",
+      "new": "complete four closed handoff preparation/review witness trees; Source339 capture separate, recovery unavailable; links are literal metadata only"
+    },
+    {
+      "old": "complete-final-caller-review-byte-capture",
+      "new": "complete-four-handoff-witness-byte-capture"
+    },
+    {
+      "old": "Byte-only complete final-caller supplement; original Source325 remains separately completely recovered. No POSIX instantiation, installed-runtime recovery, empirical result or resource capacity follows.",
+      "new": "Byte-only complete four-tree handoff witness supplement. Source339 capture remains separate; its full recovery and final caller recovery are unavailable. No POSIX instantiation, runtime recovery, budget adoption, empirical result or capacity follows."
+    }
+  ]
+}

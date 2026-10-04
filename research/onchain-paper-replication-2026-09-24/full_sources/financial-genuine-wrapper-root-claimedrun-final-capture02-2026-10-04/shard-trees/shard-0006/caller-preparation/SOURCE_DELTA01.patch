@@ -1,0 +1,70 @@
+--- accepted-recordfix82d/parent01.py
++++ claimedrun-source02/parent01.py
+@@ -6,9 +6,9 @@
+ from bounded_git01 import git
+ from supervisor01 import supervise
+ from descendants01 import pin as process_pin
+-CAP=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source')
+-PARENT=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-root-launch-20261004-01')
+-IDENTITY='financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01'
++CAP=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source')
++PARENT=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-root-launch-20261004-01')
++IDENTITY='financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01'
+ PYTHON='/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python'
+ PREFIX='tradingagents/research/onchain_replication/'
+ GIB=1024**3
+@@ -25,9 +25,10 @@
+  require(type(q)is dict and set(q)==fields and q['schema_version']==1,'exact contract fields')
+  require(q['status']=='RELEASED_ONE_USE_FINANCIAL_PARENT' and q['capsule_root']==str(CAP),'no draft release')
+  for k in ('parent_root','identity','source','design_source','registration','registration_sha256','source_files','input_hashes','runtime_mapping','caller_sha256','helper_hashes','proofs','final_review','expected_phase'):require(q[k] is not None,'unresolved release field '+k)
+- require(q['source']==q['design_source'] and re.fullmatch('[0-9a-f]{40}',q['source']) is not None,'job CLI requires identical source/design')
++ require(q['source']==q['design_source']=='0a2e7639b42b9423b90743feadcda4078aa21816','fixed actual source/design')
++ require(q['registration']=='fixture_inputs/financial_wrapper_claimedrun01/gates.json' and q['registration_sha256']=='3a20293832fa7ecc5e2821fb27dc940d1a997ab7f2ad373bc28f73e893e8781a' and len(q['source_files'])==338 and len(q['input_hashes'])==8,'fixed actual registration/source/input cardinality')
+  require(re.fullmatch('[A-Za-z0-9][A-Za-z0-9_.-]{0,127}',q['identity']) is not None,'fresh identity syntax')
+- require(q['parent_root']==str(PARENT) and q['identity']==IDENTITY and q['expected_phase']=='interrupt1','fixed fresh recordfix initial context')
++ require(q['parent_root']==str(PARENT) and q['identity']==IDENTITY and q['expected_phase']=='interrupt1','fixed fresh claimedrun initial context')
+  require(set(q['proofs'])==PROOFS,'required actual proof roles')
+  proof_pins={k:sha(reference(v)) for k,v in q['proofs'].items()}
+  review=json.loads(reference(q['final_review']))
+@@ -58,7 +59,8 @@
+  require(git(CAP,['rev-parse','HEAD'],cap=128).decode().strip()==q['source'],'actual source')
+  for name,pin in q['source_files'].items():require(sha(R.read(CAP,name))==pin,'current source body')
+  # Each registered source body is independently matched to the actual committed blob.
+- names=sorted(q['source_files']);require(len(names)<=512,'source count')
++ names=sorted(q['source_files']);require(len(names)==338,'fixed338 selected source count')
++ tracked=git(CAP,['ls-tree','-r','--name-only',q['source']]).decode().splitlines();require(len(tracked)==339 and set(tracked)==set(names)|{q['registration']},'complete actual339 source closure')
+  for start in range(0,len(names),64):
+   batch=names[start:start+64];request=''.join(q['source']+':'+n+'\n' for n in batch).encode();raw=git(CAP,['cat-file','--batch'],request);offset=0
+   for name in batch:
+@@ -68,7 +70,12 @@
+  regraw=R.read(CAP,q['registration']);require(sha(regraw)==q['registration_sha256'] and git(CAP,['show',q['source']+':'+q['registration']])==regraw,'genuine committed registration')
+  reg=json.loads(regraw);exp=reg['experiments'][q['identity']];require(exp['source_files']==q['source_files'],'full selected source map')
+  require(reg['program_id'].startswith('financial-wrapper-engineering-'),'separate engineering program')
+- family=reg['families'][exp['family']];require(type(family['attempt_budget'])is int and family['attempt_budget']==18 and type(family['prior_attempts'])is int and family['prior_attempts']==0 and 'cumulative_budget_extension' not in exp,'unchanged numerical18/prior0 without extension')
++ family=reg['families'][exp['family']];require(type(family['attempt_budget'])is int and family['attempt_budget']==18 and type(family['prior_attempts'])is int and family['prior_attempts']==0 and exp['cumulative_budget_extension']=={'extension':{'path':'fixture_inputs/financial_wrapper_claimedrun01/extension19.json','sha256':'dfed4dd70d7ed37f3b57f155e1f3acadde6ac673d5261be4a1510a96b0c615e4'},'review':{'path':'fixture_inputs/financial_wrapper_claimedrun01/extension-review19.json','sha256':'3268b76971e4e721222707d16d25dfe84e94104779931e647fb4d7a2bf01202e'}},'base18/prior0 and exact genuine cumulative19 review')
++ require(reg['program_id']=='financial-wrapper-engineering-2026-10-03' and len(reg['experiments'])==12,'unchanged program and preserved historical11')
++ old_id='financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01'
++ require(exp['parent']==old_id,'actual spent predecessor')
++ for name,pin in {'claim.json':'4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128','failed.json':'35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450'}.items():require(sha(R.read(CAP,'research_runs/'+old_id+'/'+name))==pin,'preserved genuine failed history')
++ require(not os.path.lexists(CAP/'research_runs'/old_id/'complete.json'),'failed history cannot become complete')
+  require(set(exp['inputs'])==set(q['input_hashes']) and len(exp['inputs'])==8,'eight exact initial inputs')
+  for role,ref in exp['inputs'].items():require(sha(R.read(CAP,ref['path']))==ref['sha256']==q['input_hashes'][role],'actual input pin')
+  runtime=json.loads(R.read(CAP,exp['inputs']['runtime_mapping']['path']));require(runtime==q['runtime_mapping'],'runtime mapping')
+@@ -81,7 +88,7 @@
+   require(row['name'] not in seen and importlib.metadata.version(row['name'])==row['version'],'runtime unique/version');seen.add(row['name']);p=Path(row['record']);require(p.is_relative_to(Path(sys.prefix)/'lib/python3.13/site-packages') and p.name=='RECORD' and p.parent.name.endswith('.dist-info'),'runtime RECORD scope');require(stream_hash(p,R.FILE)==row['record_sha256'],'runtime RECORD pin')
+  protocol=json.loads(R.read(parent,'PROTOCOL_PINS01.json'))
+  for name,pin in protocol.items():require(q['source_files'].get(name)==pin,'unchanged admitted job/native protocol')
+- require(q['source_files'].get(PREFIX+'financial_wrapper_fixture.py')=='e2d9208ac51fd5876b63b6a72f734fc4fedd28fa42ac9c7fa1014346feb8404c','accepted exact runtime RECORD correction required')
++ require(q['source_files'].get(PREFIX+'financial_wrapper_fixture.py')=='f4ea651b4677c83f8e16c316d17f704d44d9ec86ff78a4bf7c4b895e92e1a16e','accepted exact claimed-run and runtime correction required')
+  require(not any(n.startswith('tradingagents') for n in sys.modules),'fresh package import')
+  sys.path.insert(0,str(CAP));job=importlib.import_module('tradingagents.research.onchain_replication.job');fw=importlib.import_module('tradingagents.research.onchain_replication.financial_wrapper_fixture');storage=importlib.import_module('tradingagents.research.onchain_replication.workflow_storage')
+  for name,module in tuple(sys.modules.items()):
+@@ -96,7 +103,7 @@
+  # predicate before any owned attempt directory, intent, or child creation.
+  admitted,admitted_job=job._admitted(args)
+  require(admitted_job==j and admitted.root==CAP and admitted.experiment_id==q['identity'] and admitted.experiment['source_files']==q['source_files'],'actual admission/source/job joins')
+- require(admitted.effective_attempt_budget==18,'actual numerical ceiling18')
++ require(admitted.effective_attempt_budget==19,'actual independently extended numerical ceiling19')
+  for name,module in tuple(sys.modules.items()):
+   if name=='tradingagents' or name.startswith('tradingagents.'):
+    path=Path(module.__file__).resolve();require(path.is_relative_to(CAP) and sha(R.read(CAP,path.relative_to(CAP).as_posix()))==q['source_files'][path.relative_to(CAP).as_posix()],'post-admission actual package prefix/hash')

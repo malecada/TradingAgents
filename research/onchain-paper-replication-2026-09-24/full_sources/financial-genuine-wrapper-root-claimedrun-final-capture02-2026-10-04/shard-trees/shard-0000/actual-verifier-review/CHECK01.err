@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-actual-outcome-binding-review01-2026-10-04/check01.py", line 35, in <module>
+    p=Path(ref['path']);ck(p.resolve()==p and p.is_relative_to(Q),'contained canonical proof');body=raw(p);ck(sha(body)==ref['sha256'],'actual proof '+role);ck(body==raw(proof_origins[role]),'genuine original independent proof '+role)
+                                                                                                                                                                      ~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-actual-outcome-binding-review01-2026-10-04/check01.py", line 8, in raw
+    s=p.lstat();ck(stat.S_ISREG(s.st_mode) and s.st_size<=4*1024**2,'regular bounded '+str(p));b=p.read_bytes();t=p.lstat();ck((s.st_ino,s.st_dev,s.st_size,s.st_mtime_ns,s.st_ctime_ns)==(t.st_ino,t.st_dev,t.st_size,t.st_mtime_ns,t.st_ctime_ns),'stable '+str(p));return b
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 437, in lstat
+    return self.stat(follow_symlinks=False)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 515, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-source339-actual-flat-review01-2026-10-04/FULL_SOURCE_RECOVERY01.json'

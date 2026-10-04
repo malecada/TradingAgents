@@ -1,0 +1,1 @@
+Reviewer check01 assumed octal-string manifest modes; this author manifest uses integer modes. It failed before fixtures. Original code/error retained. Separate check02 normalizes either representation without changing expected literal permissions or any candidate.

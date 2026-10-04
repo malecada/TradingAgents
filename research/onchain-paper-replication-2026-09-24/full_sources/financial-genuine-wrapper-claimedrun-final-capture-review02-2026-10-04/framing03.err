@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-final-capture-review02-2026-10-04/framing03.py", line 15, in <module>
+    try:R.restore(path,descriptor,m,out)
+        ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation04-2026-10-03/recovery04.py", line 193, in restore
+    for name,t,body in members:
+                       ^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/held-consumer-final-recovery-preparation04-2026-10-03/recovery04.py", line 117, in framed_members
+    t=tarfile.TarInfo.frombuf(header,'utf-8','strict')
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/tarfile.py", line 1274, in frombuf
+    return cls._frombuf(buf, encoding, errors)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/tarfile.py", line 1294, in _frombuf
+    raise InvalidHeaderError("bad checksum")
+tarfile.InvalidHeaderError: bad checksum

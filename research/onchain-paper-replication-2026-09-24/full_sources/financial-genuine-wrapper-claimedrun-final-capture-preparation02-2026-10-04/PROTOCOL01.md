@@ -1,0 +1,9 @@
+# Sharded opaque final-caller capture
+
+Source preparation only. Root must copy capture02.py and exact shards01.py into the fixed fresh root-claimedrun-final-capture02 namespace. No actual capture or recovery is performed here.
+
+The complete original mapping and virtual R4 manifest are unchanged algorithms and bytes for unchanged originals. All 20 original trees, literal links, empty directories and regular bodies remain represented. Shards partition sorted regular paths greedily, with required ancestor directories, at most 2 MiB logical and 256 typed members each. Exact PAX/TAR padding determines the tar bound; a conservative zlib bound plus gzip overhead must remain below the existing 4 MiB physical archive cap. Original R4 pack independently enforces that cap and scans the full actual owned shard tree before and after. Empty virtual directories remain metadata; no POSIX reconstruction is claimed.
+
+SHARD_INDEX01.json binds the full virtual manifest and ordered shard archive/manifest refs, typed counts, logical counts and exact regular paths. UNION_AUTHENTICATION01.json binds that index, original mapping and unchanged Source/Parent/review context. No aggregate valid archive is invented. Every partial artifact remains on failure; original first-fatal cleanup is unchanged. All original scopes are fully rescanned after packing; Source is also rechecked. The total union including mapping must be <=64 MiB, original 120-second/32768-entry checks remain, and disk must remain >=10 GiB. Numerical/native controls and accounting are unaffected.
+
+The prior actual failed aggregate archive is separate opaque evidence, never a valid gzip recovery input. Root must additionally select/recover its partial archive and original error/terminal records before numerical execution. This candidate does not establish that preservation.

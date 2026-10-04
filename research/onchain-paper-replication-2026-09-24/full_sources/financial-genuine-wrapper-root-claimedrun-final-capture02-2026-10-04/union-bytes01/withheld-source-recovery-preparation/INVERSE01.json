@@ -1,0 +1,24 @@
+{
+  "original_adapter_sha256": "b5c775a24e19c97cf0ef032a7598347689b8dfc27de5e273bccbe5710d9d519d",
+  "unchanged_AST_functions": [
+    "ref",
+    "remote_bodies"
+  ],
+  "changed_functions": [
+    "validate_request",
+    "joins",
+    "flat_source_joins",
+    "run"
+  ],
+  "added": [
+    "reserve (exact accepted999668 function)",
+    "git_objects01.tree_join (bounded recovered loose object view)"
+  ],
+  "patch": "SOURCE_DELTA01.patch",
+  "helpers": {
+    "recovery04.py": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a",
+    "owned_io.py": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+    "bounded_git01.py": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+  },
+  "qualification": "Explicit additive binding and Git-join changes; no claim entire adapter algorithm is unchanged."
+}

@@ -1,0 +1,27 @@
+def final_cpu_census(cpus,readback):
+ """Original verify_cpu_tree permits an empty census after task exit."""
+ if type(cpus)is not list or len(cpus)!=2 or any(type(c)is not int or c<0 for c in cpus) or len(set(cpus))!=2:return False
+ if type(readback)is not dict:return False
+ allowed=set(cpus)
+ for pid,mask in readback.items():
+  if type(pid)is not str or not pid.isascii() or not pid.isdecimal() or int(pid)<=0:return False
+  if type(mask)is not list or not mask or any(type(c)is not int or c<0 for c in mask):return False
+  if mask!=sorted(set(mask)) or not set(mask)<=allowed:return False
+ return True
+
+def early_cpu_evidence(guard,ready,release):
+ """Join retained original early evidence; do not invent an early task census."""
+ if type(guard)is not dict or type(ready)is not dict or type(release)is not dict:return False
+ cpus=guard.get('cpus')
+ if not final_cpu_census(cpus,{}):return False
+ if type(ready.get('cpus'))is not list or any(type(c)is not int for c in ready['cpus']) or ready['cpus']!=cpus or type(ready.get('pid'))is not int or ready['pid']<=0:return False
+ if release!={'kernel_controls_verified':True} or type(release['kernel_controls_verified'])is not bool:return False
+ policy=guard.get('native_unit_limits');size=4*1024**2
+ if policy!={'file_size_bytes':size} or type(policy['file_size_bytes'])is not int:return False
+ if ready.get('native_unit_limits')!=policy or ready.get('file_size_limit')!=[size,size] or any(type(v)is not int for v in ready['file_size_limit']):return False
+ if type(ready.get('native_environment'))is not dict or not ready['native_environment'] or ready['native_environment']!=guard.get('native_environment'):return False
+ if guard.get('kernel_controls')!={'memory.max':str(3*1024**3),'memory.high':str(3*1024**3),'memory.swap.max':'0'}:return False
+ events=guard.get('initial_memory_events')
+ if type(events)is not dict or any(type(events.get(k))is not int or events[k]!=0 for k in ('oom','oom_kill')):return False
+ return True
+

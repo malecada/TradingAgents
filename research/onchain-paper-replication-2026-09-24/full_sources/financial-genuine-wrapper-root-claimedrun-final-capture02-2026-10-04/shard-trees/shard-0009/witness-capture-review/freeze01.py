@@ -1,0 +1,26 @@
+import hashlib,json,os,stat
+from pathlib import Path
+O=Path(__file__).resolve().parent;x=json.loads((O/'READBACK01.json').read_text())
+(O/'REPORT01.md').write_text('''# Independent four-tree witness capture source review
+
+Accepted narrowly as source preparation. Actual candidate is capture01.py (the message alias helpercapture01.py was not a file). Its complete declared inverse reproduces the preserved original capture03 bytes and AST; all frozen author members, modes, bodies and lexical targets match. The four actual original preparation/review trees are identical to the independently frozen census, including all 13 literal-link witnesses. Complete Source339 capture pins and actual metadata admission proof0592/manifest24e match, and the current Source still matches the complete archived manifest. This is not Source339 recovery or final Parent closure.
+
+The uninstalled actual main refuses before creating output. Independent source-extracted tiny four-tree pipelines preserve all regular bytes and literal modes and represent links only as metadata. A full tiny compressed archive was independently reconstructed byte-for-byte. Late extra body, late mode, late body content and late lexical target changes all refuse at the complete final re-enumeration and do not produce an authentication success body. A repeated tiny output namespace refuses. Tiny annotations copied from fixed source constants are explicitly test projections, never actual Root receipts.
+
+Actual put/new_file controls use real owned body and parent descriptors, inject MemoryError/SystemExit/KeyboardInterrupt during the write and an ordinary error after each real close, and preserve each original fatal identity. Both descriptors close exactly once and are absent. Original reviewer check01 incorrectly expected one descriptor and failed; that failure, partial fixtures and raw stderr remain unchanged. Separate check02 corrects only the reviewer expectation and uses fresh fixture names. No candidate correction was necessary.
+
+Source bounds retain 4 MiB individual bodies/archives,64 MiB aggregate regular content,32,768 finite member observations per scan and120-second observed loop deadline, with10 GiB floor observations and complete final original re-enumeration. These are observed checks, not an independent hard wall-clock supervisor or continuous disk watch. Fixed trusted input pin reads use ordinary read_bytes before hashing; this review authenticates the actual bounded inputs, not arbitrary adversarial replacement during those reads. Literal links are never followed or instantiated as recovered POSIX objects.
+
+No actual Root capture, remote fetch, Source mutation, admission, claim or numerical import occurred. The actual Root capture result, exact committed selection, external bytes and fresh recovery must still receive independent outcome review. Source339 full recovery remains null in the mapping; no old Source325 recovery is borrowed. Actual new Parent and future final proof/review scopes are separate requirements.
+''')
+m=[]
+for p in sorted(O.rglob('*')):
+ s=p.lstat();r={'path':p.relative_to(O).as_posix(),'mode':stat.S_IMODE(s.st_mode)}
+ if stat.S_ISREG(s.st_mode):b=p.read_bytes();r.update(kind='file',bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+ elif stat.S_ISDIR(s.st_mode):r['kind']='directory'
+ elif stat.S_ISLNK(s.st_mode):r.update(kind='lexical-symlink',target=os.readlink(p))
+ else:raise AssertionError(p)
+ m.append(r)
+(O/'MANIFEST01.json').write_text(json.dumps({'schema_version':1,'members':m},sort_keys=True,indent=2)+'\n')
+print('checks',x['checks'],'members',len(m))
+for n in ['READBACK01.json','REPORT01.md','MANIFEST01.json']:print(n,hashlib.sha256((O/n).read_bytes()).hexdigest())
