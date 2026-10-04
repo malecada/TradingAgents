@@ -1,0 +1,119 @@
+{
+  "author_typed_members_authenticated": 105,
+  "unchanged_round_files": [
+    "BASELINE/binding01.py",
+    "BASELINE/KNOWN_REQUIRED01.json",
+    "BASELINE/recover.template01.py",
+    "BASELINE/cohort01.py",
+    "BASELINE/REQUEST_DRAFT01.json",
+    "BASELINE/watch01.py",
+    "BASELINE/receipt01.py",
+    "BASELINE/utilities/bounded_git01.py",
+    "BASELINE/utilities/owned_io.py",
+    "BASELINE/utilities/recovery_pax01.py",
+    "FINAL_SUPPLEMENT/binding01.py",
+    "FINAL_SUPPLEMENT/KNOWN_REQUIRED01.json",
+    "FINAL_SUPPLEMENT/recover.template01.py",
+    "FINAL_SUPPLEMENT/cohort01.py",
+    "FINAL_SUPPLEMENT/REQUEST_DRAFT01.json",
+    "FINAL_SUPPLEMENT/watch01.py",
+    "FINAL_SUPPLEMENT/receipt01.py",
+    "FINAL_SUPPLEMENT/utilities/bounded_git01.py",
+    "FINAL_SUPPLEMENT/utilities/owned_io.py",
+    "FINAL_SUPPLEMENT/utilities/recovery_pax01.py"
+  ],
+  "changed_round_files": [
+    "BASELINE/restore_bundle01.py",
+    "FINAL_SUPPLEMENT/restore_bundle01.py"
+  ],
+  "complete_inverse_exact": true,
+  "all_non_run_AST_unchanged_except_added_input_read": true,
+  "controls": {
+    "old-red": {
+      "finding": "FT02_INPUT_COHORT_AFTER_RECEIPT",
+      "source_sha256": "aafe50ffcdb20763b393a3c57e0eb90c2f28ea1f3c945a5fd66df1a61a514e92",
+      "exact_tail_lines": [
+        46,
+        47
+      ],
+      "two_actual_opaque_scopes_restored": true,
+      "actual_receipt_fd_closed_once": true,
+      "actual_request_changed_after_last_read": true,
+      "exact_tail_returned_success": true,
+      "refusal": null,
+      "final_output_cohort_passed": true,
+      "selected_population_unchanged": true,
+      "earlierfatal_preserved": true,
+      "public_run_invoked": false,
+      "actual_remote_or_release_fabricated": false,
+      "Root_or_CAP_modified": false,
+      "tail_only_engineering_evidence": true,
+      "selected_final_scan_fd_closed_then_mutated": false
+    },
+    "new-green": {
+      "finding": "FT02_INPUT_COHORT_AFTER_RECEIPT",
+      "source_sha256": "bdd0b14c872056708186ba6487762ac239e89003fbefff728c6fb613ccf95172",
+      "exact_tail_lines": [
+        63,
+        64
+      ],
+      "two_actual_opaque_scopes_restored": true,
+      "actual_receipt_fd_closed_once": true,
+      "actual_request_changed_after_last_read": true,
+      "exact_tail_returned_success": false,
+      "refusal": "terminal verified cohort signature differs",
+      "final_output_cohort_passed": true,
+      "selected_population_unchanged": true,
+      "earlierfatal_preserved": true,
+      "public_run_invoked": false,
+      "actual_remote_or_release_fabricated": false,
+      "Root_or_CAP_modified": false,
+      "tail_only_engineering_evidence": true,
+      "selected_final_scan_fd_closed_then_mutated": false
+    },
+    "new-healthy": {
+      "finding": "FT02_INPUT_COHORT_AFTER_RECEIPT",
+      "source_sha256": "bdd0b14c872056708186ba6487762ac239e89003fbefff728c6fb613ccf95172",
+      "exact_tail_lines": [
+        63,
+        64
+      ],
+      "two_actual_opaque_scopes_restored": true,
+      "actual_receipt_fd_closed_once": true,
+      "actual_request_changed_after_last_read": false,
+      "exact_tail_returned_success": true,
+      "refusal": null,
+      "final_output_cohort_passed": true,
+      "selected_population_unchanged": true,
+      "earlierfatal_preserved": true,
+      "public_run_invoked": false,
+      "actual_remote_or_release_fabricated": false,
+      "Root_or_CAP_modified": false,
+      "tail_only_engineering_evidence": true,
+      "selected_final_scan_fd_closed_then_mutated": false
+    },
+    "selected-late": {
+      "finding": "FT02_INPUT_COHORT_AFTER_RECEIPT",
+      "source_sha256": "bdd0b14c872056708186ba6487762ac239e89003fbefff728c6fb613ccf95172",
+      "exact_tail_lines": [
+        63,
+        64
+      ],
+      "two_actual_opaque_scopes_restored": true,
+      "actual_receipt_fd_closed_once": true,
+      "actual_request_changed_after_last_read": false,
+      "exact_tail_returned_success": true,
+      "refusal": null,
+      "final_output_cohort_passed": true,
+      "selected_population_unchanged": false,
+      "earlierfatal_preserved": true,
+      "public_run_invoked": false,
+      "actual_remote_or_release_fabricated": false,
+      "Root_or_CAP_modified": false,
+      "tail_only_engineering_evidence": true,
+      "selected_final_scan_fd_closed_then_mutated": true
+    }
+  },
+  "public_run_executed": false,
+  "actual_envelope_caller_release_tested": false
+}

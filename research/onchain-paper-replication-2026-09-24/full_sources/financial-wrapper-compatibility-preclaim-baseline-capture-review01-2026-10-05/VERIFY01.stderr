@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-preclaim-baseline-capture-review01-2026-10-05/verify01.py", line 34, in <module>
+    source=read(C/'root_preclaim_baseline_capture01.py','64c969a7d4f3558466633ba3eb027def12b10318e9d2c9e0c618efac50fdc078');old=read(C/'root_source_parent_capture04.py','f55ce818ef7999195c88d872c983a568861d5d45d2970af61b539979faf27cdf');ok(source.split(b'import subprocess,datetime,resource')[0]==old.split(b'import subprocess,datetime,resource')[0],'exact accepted Reader/IO prefix reused')
+                                                                                                                                                                                                                                             ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-preclaim-baseline-capture-review01-2026-10-05/verify01.py", line 12, in ok
+    if not v:raise AssertionError(msg)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: exact accepted Reader/IO prefix reused

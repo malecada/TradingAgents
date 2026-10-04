@@ -1,0 +1,7 @@
+# Complete sampled input/output cohort
+
+The selected root, each directory and exact membership, every authenticated selected file and actual byte proof now join the retained input cohort. Selected owner/modes come from the already authenticated completed profile; new outputs keep private modes. The final orchestration merges restored output fingerprints/proofs/trees/anchors with all retained verified inputs. The existing cohort completes all enumeration cleanup before its final descriptor-free whole-population signature pass. No I/O follows successful final checking.
+
+Exact original03 selected-scan cleanup witness succeeds with altered input. New04 refuses that witness and the earlier request mutation; a fresh healthy two-archive case succeeds. Each targeted case preserves primary KeyboardInterrupt over secondary cleanup OSError. Actual public run/remote/release objects are never fabricated. Earlier partial04 controls and their exact draft source remain separately retained. Inherited witness finding label FT02 is historical; the selected mutation is FT03 as authenticated review states.
+
+Both schemas/binders/receiver/watch/IO/Git/PAX/names/caps remain unchanged. Only flat orchestration changed; full original/new source bodies are retained in INVERSE01. No full numerical capacity, scientific outcome, installed-runtime recovery, POSIX restoration, atomicity or same-signature ABA immunity is claimed. Final actual population binding and independent caller release remain Root requirements.

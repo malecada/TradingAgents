@@ -1,0 +1,33 @@
+{
+  "actual_entry_release": false,
+  "actual_envelope_reviewed": false,
+  "authentication_sha256": "07c7163066c29ce398a125612a5d82ae301d952c0607e4b9b5cc1c96067a6fda",
+  "author_machine_sha256": "5245c151d7dcd6d36a49f08c9b99e0d6bb20fdd541aec406d1fdd6de0b134313",
+  "author_manifest_sha256": "f48d4230a1e15d0e96811079ac0e1fdd992dd11b87dbd669f747999801c5b1ee",
+  "author_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-final-bundle-transport-correction03-2026-10-05",
+  "decision": "WITHHELD_FT03_SELECTED_INPUT_AFTER_SCAN_CLEANUP",
+  "finding": {
+    "id": "FT03_SELECTED_INPUT_AFTER_SCAN_CLEANUP",
+    "impact": "Successful exact final tail can retain a changed selected receiver archive after final scan cleanup.",
+    "locations": [
+      "BASELINE/restore_bundle01.py:58",
+      "BASELINE/restore_bundle01.py:64",
+      "FINAL_SUPPLEMENT/restore_bundle01.py:58",
+      "FINAL_SUPPLEMENT/restore_bundle01.py:64"
+    ],
+    "script_sha256": "bb38a658e926f75e54be8360ccb2aa665f58c78ee5b558763fed7eaafbf5332b",
+    "witness_sha256": "683abec75a0af72250aad17073d4981bcd69eb7f34303198f1fe1771b19cf8fc"
+  },
+  "healthy_two_archive_component_passed": true,
+  "numerical_authority": false,
+  "original_stale_request_fixed": true,
+  "public_run_invoked": false,
+  "report_sha256": "acfe62ec2204a20a994902a5e807e56daa95b963e3ea61fb4514e5106e7b00a5",
+  "reviewer": "storage_watch_review",
+  "schema_version": 1,
+  "source_release": false,
+  "source_sha256": {
+    "BASELINE": "bdd0b14c872056708186ba6487762ac239e89003fbefff728c6fb613ccf95172",
+    "FINAL_SUPPLEMENT": "59e2095dfdd95d072cc83931ab613fcc731e2845bcc4e83c44d430cd132cc8cf"
+  }
+}
