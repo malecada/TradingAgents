@@ -1,0 +1,11 @@
+{
+  "illustrative_watch_candidate": {
+    "sha256": "21e21dddc5b5008c3dc016839fc5b05c60dfbd345d224e91b8a9c3fb551c62cf",
+    "status": "WITHHELD_SOURCE02_USED_ONLY_FOR_METADATA_INEQUALITY_PROOF"
+  },
+  "illustrative_watcher_only_map_sha256": "52571fa3562c4315211117470ae2476927dd97c018c4444f1c6eda26bb4e75d3",
+  "old_source_map_sha256": "ebb1727ccb55678aead9f0d5b5ee43ec81a46019c7fbb13c4b4f76144507bbca",
+  "reference": "{k: v for k, v in ref['provenance'].items() if k not in ('source_commit', 'cell_id')} == {k: v for k, v in prov.items() if k not in ('source_commit', 'cell_id')}",
+  "training_reserve_refusal": "{k: v for k, v in old.items() if k != 'source_commit'} != {k: v for k, v in provenance.items() if k != 'source_commit'}",
+  "wrapper_parent": "{k: v for k, v in value['provenance'].items() if k != 'source_commit'} == {k: v for k, v in prov.items() if k != 'source_commit'}"
+}

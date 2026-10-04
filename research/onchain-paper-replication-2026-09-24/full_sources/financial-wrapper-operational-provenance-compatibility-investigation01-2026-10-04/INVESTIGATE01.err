@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-provenance-compatibility-investigation01-2026-10-04/investigate01.py", line 46, in <module>
+    ck(runexpr(parent_pred,{'value':{'provenance':oldprov},'prov':new}),'same full hashes allows only commit change');ck(not runexpr(reserve_pred,{'old':oldprov,'provenance':new}),'reserve same full hashes allows only commit change')
+                                                                                                                             ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-provenance-compatibility-investigation01-2026-10-04/investigate01.py", line 44, in runexpr
+    def runexpr(expr,env):return eval(compile(ast.Expression(expr),'<actual-source-metadata-predicate>','eval'),{'__builtins__':{}},env)
+                                 ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<actual-source-metadata-predicate>", line 30, in <module>
+NameError: name 'previous' is not defined

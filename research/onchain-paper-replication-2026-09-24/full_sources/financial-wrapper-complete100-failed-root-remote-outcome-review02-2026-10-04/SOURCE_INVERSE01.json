@@ -1,0 +1,17 @@
+{
+  "exact_complete_inverse": true,
+  "finite_policy_unchanged": true,
+  "new_literal": " extent_changes=0\n for p,s in saved.items():\n  require(time.monotonic()-begun<POLICY['sample_seconds'],'census deadline')\n  require(p.resolve()==p,'changed canonical path')\n  current=p.lstat();now=signature(current)\n  require(current.st_dev==device and (stat.S_ISDIR(current.st_mode) or stat.S_ISREG(current.st_mode)),'owned rejoin type/device')\n  if stat.S_ISREG(current.st_mode):\n   require(current.st_nlink==1 and current.st_size<=POLICY['file'],'owned rejoin per-file/hardlink bound')\n   if now[:4]!=s[:4]:raise ChangingTree('owned regular identity changed')\n   # Count both observed endpoints of every regular body. Growing Git pack\n   # extents do not imply incomplete directory membership. This is a sampled\n   # bound, not immutable body content or a continuously atomic quota.\n   logical+=max(s[4],now[4])-s[4]\n   allocated+=max(s[7],now[7])*512-s[7]*512\n   extent_changes+=int(now!=s)\n  elif now!=s:raise ChangingTree('incomplete/changing directory census refused')\n  require(logical<=POLICY['logical'] and allocated<=POLICY['allocated'],'whole rejoin logical/allocated cap')\n require(shutil.disk_usage(root).free>=POLICY['floor'],'10GiB disk floor')\n require(time.monotonic()-begun<POLICY['sample_seconds'],'census deadline')\n return {'logical_bytes':logical,'allocated_bytes':allocated,'members':len(rows),'seconds':time.monotonic()-begun,'regular_extent_changes':extent_changes,'measurement':'complete sampled namespace; maximum of two regular extent observations'}\n",
+  "new_watch_sha256": "cd2200b071cf14c8191c7b7e95ee660b6bc9a10c49a6de252e77f9832ede8673",
+  "old_literal": " for p,s in saved.items():\n  require(p.resolve()==p,'changed canonical path')\n  if signature(p.lstat())!=s:raise ChangingTree('incomplete/changing census refused')\n require(time.monotonic()-begun<POLICY['sample_seconds'],'census deadline')\n return {'logical_bytes':logical,'allocated_bytes':allocated,'members':len(rows),'seconds':time.monotonic()-begun}\n",
+  "old_watch_sha256": "6affce2a168d540c4e1b3f6c6f6bbb6b416d9e47ae168b80730c9bf32b03d25f",
+  "scientific_source_adopted": false,
+  "unchanged_helpers": [
+    "recover01.py",
+    "restore01.py",
+    "utilities/recovery_pax01.py",
+    "utilities/owned_io.py",
+    "utilities/bounded_git01.py"
+  ],
+  "whole_ast_inverse_equal": true
+}

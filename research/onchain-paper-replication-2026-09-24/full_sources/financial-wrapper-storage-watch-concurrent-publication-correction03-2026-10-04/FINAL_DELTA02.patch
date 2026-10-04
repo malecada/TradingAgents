@@ -1,0 +1,31 @@
+--- original02_workflow_storage.py
++++ workflow_storage.py
+@@ -105,6 +105,13 @@
+         begin=time.monotonic();history=[]
+         try:return self._check(begin,history)
+         except BaseException as error:
++            # The body/cleanup already selected this fatal. Do not read
++            # overridable cause/context/observation diagnostics first.
++            if not isinstance(error,Exception) or isinstance(error,MemoryError):
++                try:
++                    _annotate(error,{},history)
++                except BaseException:raise error
++                raise
+             prior=getattr(error.__cause__ or error.__context__,'observation',{})
+             _annotate(error,prior,history);raise
+ 
+@@ -128,6 +135,14 @@
+                 time.sleep(min(.005,remaining))
+                 continue
+             except BaseException as error:
++                # The body/cleanup already selected this fatal. Do not read
++                # overridable cause/context/observation diagnostics first.
++                if not isinstance(error,Exception) or isinstance(error,MemoryError):
++                    try:
++                        _annotate(error,{},history)
++                        error.observation['mutation_observations']=list(mutations)
++                    except BaseException:raise error
++                    raise
+                 prior=getattr(error.__cause__ or error.__context__,'observation',{})
+                 _annotate(error,prior,history)
+                 error.observation['mutation_observations']=list(mutations)

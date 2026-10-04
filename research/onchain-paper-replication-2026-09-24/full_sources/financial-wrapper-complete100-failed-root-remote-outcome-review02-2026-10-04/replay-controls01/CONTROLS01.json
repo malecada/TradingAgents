@@ -1,0 +1,75 @@
+{
+  "actual_OS_extents": true,
+  "checks": 20,
+  "new_claim_or_network": false,
+  "rows": [
+    {
+      "actual_bytes": 392,
+      "error": "ValueError:no complete census in three bounded attempts",
+      "label": "original-red",
+      "lstat_calls": 6,
+      "result": null
+    },
+    {
+      "actual_bytes": 136,
+      "error": null,
+      "label": "new-green",
+      "lstat_calls": 2,
+      "result": {
+        "allocated_bytes": 8192,
+        "complete_attempts": 1,
+        "logical_bytes": 136,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations",
+        "members": 2,
+        "regular_extent_changes": 1,
+        "seconds": 0.0009272820025216788
+      }
+    },
+    {
+      "actual_bytes": 136,
+      "error": "ValueError:owned rejoin per-file/hardlink bound",
+      "label": "file-limit-refusal",
+      "lstat_calls": 2,
+      "result": null
+    },
+    {
+      "actual_bytes": 136,
+      "error": "ValueError:whole rejoin logical/allocated cap",
+      "label": "whole-logical-refusal",
+      "lstat_calls": 2,
+      "result": null
+    },
+    {
+      "actual_bytes": 4104,
+      "error": "ValueError:whole rejoin logical/allocated cap",
+      "label": "allocated-refusal",
+      "lstat_calls": 2,
+      "result": null
+    },
+    {
+      "label": "unmodified",
+      "result": {
+        "allocated_bytes": 8192,
+        "complete_attempts": 1,
+        "logical_bytes": 3,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations",
+        "members": 2,
+        "regular_extent_changes": 0,
+        "seconds": 0.00041311097447760403
+      }
+    },
+    {
+      "error": "owned tree type/path/device",
+      "label": "symlink"
+    },
+    {
+      "error": "owned per-file/hardlink bound",
+      "label": "hardlink"
+    },
+    {
+      "calls": 1,
+      "identity": true,
+      "label": "fatal-no-retry"
+    }
+  ]
+}

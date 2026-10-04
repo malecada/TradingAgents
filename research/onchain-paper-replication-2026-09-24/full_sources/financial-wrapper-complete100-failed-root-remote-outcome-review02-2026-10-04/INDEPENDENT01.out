@@ -1,0 +1,89 @@
+{
+  "cases": 12,
+  "rows": [
+    {
+      "case": "grow",
+      "observed": {
+        "logical_bytes": 8320,
+        "allocated_bytes": 16384,
+        "members": 2,
+        "seconds": 0.006364978005876765,
+        "regular_extent_changes": 1,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations"
+      },
+      "current_bytes": 8320,
+      "lstat_calls": 2
+    },
+    {
+      "case": "shrink",
+      "observed": {
+        "logical_bytes": 8192,
+        "allocated_bytes": 12288,
+        "members": 2,
+        "seconds": 0.0011237449944019318,
+        "regular_extent_changes": 1,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations"
+      },
+      "current_bytes": 1,
+      "lstat_calls": 2
+    },
+    {
+      "case": "replace",
+      "refused": "ChangingTree",
+      "message": "owned regular identity changed",
+      "lstat_calls": 2
+    },
+    {
+      "case": "mode",
+      "refused": "ChangingTree",
+      "message": "owned regular identity changed",
+      "lstat_calls": 2
+    },
+    {
+      "case": "link",
+      "refused": "ValueError",
+      "message": "owned rejoin per-file/hardlink bound",
+      "lstat_calls": 2
+    },
+    {
+      "case": "file-limit",
+      "refused": "ValueError",
+      "message": "owned rejoin per-file/hardlink bound",
+      "lstat_calls": 2
+    },
+    {
+      "case": "logical-limit",
+      "refused": "ValueError",
+      "message": "whole rejoin logical/allocated cap",
+      "lstat_calls": 2
+    },
+    {
+      "case": "retry-domain",
+      "type": "ChangingTree",
+      "attempts": 3
+    },
+    {
+      "case": "retry-domain",
+      "type": "FileNotFoundError",
+      "attempts": 3
+    },
+    {
+      "case": "retry-domain",
+      "type": "ValueError",
+      "attempts": 1
+    },
+    {
+      "case": "retry-domain",
+      "type": "MemoryError",
+      "attempts": 1
+    },
+    {
+      "case": "iterator-firstfatal",
+      "first_identity": true,
+      "close_events": [
+        "actual close"
+      ]
+    }
+  ],
+  "sampled_not_atomic": true
+}

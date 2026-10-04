@@ -1,0 +1,25 @@
+{
+  "complete_AST_inverse": true,
+  "complete_literal_inverse": true,
+  "edits": [
+    {
+      "new": "    code = None\n    reaped_exit = None\n    env = dict(os.environ)",
+      "old": "    code = None\n    env = dict(os.environ)"
+    },
+    {
+      "new": "        def reap():\n            nonlocal reaped_exit\n            reaped_exit = child.wait(timeout=5)\n        actions.extend((stop_group, reap,\n                        child.stdout.close, child.stderr.close))",
+      "old": "        actions.extend((stop_group, lambda: child.wait(timeout=5),\n                        child.stdout.close, child.stderr.close))"
+    },
+    {
+      "new": "                  'exit': code, 'actual_reaped_exit': reaped_exit, 'seconds': time.monotonic() - begun, 'actual_child_limits':ready,",
+      "old": "                  'exit': code, 'seconds': time.monotonic() - begun, 'actual_child_limits':ready,"
+    },
+    {
+      "new": "                  'error': str(primary), 'operations': CALLS, 'initial_owned_allocation': BASELINE,\n                  'whole_tree_observations': list(WATCHES), 'whole_tree_policy': dict(W.POLICY),\n                  'genuine_run_or_native_started': False}))",
+      "old": "                  'error': str(primary), 'operations': CALLS, 'genuine_run_or_native_started': False}))"
+    }
+  ],
+  "new_source_sha256": "9ddc59dd7862d4b0d11c4057e3afc14fec61e260bb375a54d3286a44c1036b46",
+  "old_source_sha256": "8b97e0219fdb8a85a9c0cdd0dde2cd8297d355d2cb5ef48ea661bae79f822d5c",
+  "qualification": "Future actual child.wait return retained separately from original observed main exit; no synthetic fields inserted into earlier failed receipts. Original actual remote02 lacks failed WATCHES/BASELINE; those remain unknown, new helper retains genuine future samples."
+}

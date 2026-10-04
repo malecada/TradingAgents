@@ -1,0 +1,29 @@
+{
+  "all_other_ast_equal": true,
+  "changed_methods": [
+    "StorageWatch.check",
+    "StorageWatch._check"
+  ],
+  "cleanup02_unchanged": true,
+  "full_literal_inverse": true,
+  "operations": [
+    {
+      "new_end": 5473,
+      "new_literal": "# The body/cleanup already selected this fatal. Do not read\n            # overridable cause/context/observation diagnostics first.\n            if not isinstance(error,Exception) or isinstance(error,MemoryError):\n                try:\n                    _annotate(error,{},history)\n                except BaseException:raise error\n                raise\n            ",
+      "new_start": 5109,
+      "old_end": 5109,
+      "old_literal": "",
+      "old_start": 5109
+    },
+    {
+      "new_end": 7346,
+      "new_literal": "\n                # The body/cleanup already selected this fatal. Do not read\n                # overridable cause/context/observation diagnostics first.\n                if not isinstance(error,Exception) or isinstance(error,MemoryError):\n                    try:\n                        _annotate(error,{},history)\n                        error.observation['mutation_observations']=list(mutations)\n                    except BaseException:raise error\n                    raise",
+      "new_start": 6871,
+      "old_end": 6507,
+      "old_literal": "",
+      "old_start": 6507
+    }
+  ],
+  "predecessor_sha256": "21e21dddc5b5008c3dc016839fc5b05c60dfbd345d224e91b8a9c3fb551c62cf",
+  "successor_sha256": "91e21c525a156cc8c25877ac35f0308896a1a0d1e6279d5aecf91d7e02567780"
+}

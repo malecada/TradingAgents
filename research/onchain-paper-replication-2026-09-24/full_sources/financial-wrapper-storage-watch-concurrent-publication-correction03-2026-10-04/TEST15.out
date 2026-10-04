@@ -1,0 +1,395 @@
+{
+  "status": "OPAQUE_UTILITY_CONTROLS_ONLY",
+  "cases": 37,
+  "results": [
+    {
+      "status": "raised",
+      "type": "FileNotFoundError",
+      "observation": {
+        "allocated_bytes": 4096,
+        "logical_file_bytes": 0,
+        "regular_files": 0,
+        "directories": 1,
+        "entries": 1,
+        "hardlink_observations": []
+      },
+      "case": "old-publish",
+      "actual_action": "publish"
+    },
+    {
+      "status": "returned",
+      "logical": 14,
+      "attempts": 2,
+      "mutations": [
+        {
+          "reason": "entry disappeared before census completed",
+          "relative_path": ".",
+          "path_truncated": false,
+          "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+          "partial_counts": {
+            "allocated_bytes": 4096,
+            "logical_file_bytes": 0,
+            "regular_files": 0,
+            "directories": 1,
+            "entries": 1
+          }
+        }
+      ],
+      "case": "new-publish",
+      "actual_action": "publish"
+    },
+    {
+      "status": "raised",
+      "type": "FileNotFoundError",
+      "observation": {
+        "allocated_bytes": 4096,
+        "logical_file_bytes": 0,
+        "regular_files": 0,
+        "directories": 1,
+        "entries": 1,
+        "hardlink_observations": []
+      },
+      "case": "old-rename",
+      "actual_action": "rename"
+    },
+    {
+      "status": "returned",
+      "logical": 14,
+      "attempts": 2,
+      "mutations": [
+        {
+          "reason": "entry disappeared before census completed",
+          "relative_path": ".",
+          "path_truncated": false,
+          "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+          "partial_counts": {
+            "allocated_bytes": 4096,
+            "logical_file_bytes": 0,
+            "regular_files": 0,
+            "directories": 1,
+            "entries": 1
+          }
+        }
+      ],
+      "case": "new-rename",
+      "actual_action": "rename"
+    },
+    {
+      "status": "raised",
+      "type": "FileNotFoundError",
+      "observation": {
+        "allocated_bytes": 4096,
+        "logical_file_bytes": 0,
+        "regular_files": 0,
+        "directories": 1,
+        "entries": 1,
+        "hardlink_observations": []
+      },
+      "case": "old-disappear",
+      "actual_action": "disappear"
+    },
+    {
+      "status": "returned",
+      "logical": 0,
+      "attempts": 2,
+      "mutations": [
+        {
+          "reason": "entry disappeared before census completed",
+          "relative_path": ".",
+          "path_truncated": false,
+          "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+          "partial_counts": {
+            "allocated_bytes": 4096,
+            "logical_file_bytes": 0,
+            "regular_files": 0,
+            "directories": 1,
+            "entries": 1
+          }
+        }
+      ],
+      "case": "new-disappear",
+      "actual_action": "disappear"
+    },
+    {
+      "status": "returned",
+      "logical": 19,
+      "attempts": 1,
+      "mutations": [],
+      "case": "old-replace",
+      "actual_action": "replace"
+    },
+    {
+      "status": "returned",
+      "logical": 19,
+      "attempts": 1,
+      "mutations": [],
+      "case": "new-replace",
+      "actual_action": "replace"
+    },
+    {
+      "case": "old-close-growth",
+      "status": "returned",
+      "logical": 1,
+      "attempts": 1,
+      "close_mutations": 1
+    },
+    {
+      "case": "new-close-growth",
+      "status": "returned",
+      "logical": 3,
+      "attempts": 2,
+      "close_mutations": 1
+    },
+    {
+      "case": "old-close-extra",
+      "status": "returned",
+      "logical": 1,
+      "attempts": 1,
+      "close_mutations": 1
+    },
+    {
+      "case": "new-close-extra",
+      "status": "returned",
+      "logical": 4,
+      "attempts": 2,
+      "close_mutations": 1
+    },
+    {
+      "case": "new-persistent-close-churn",
+      "status": "raised",
+      "type": "StorageMutationObservation",
+      "observation": {
+        "allocated_bytes": 16384,
+        "logical_file_bytes": 7,
+        "regular_files": 3,
+        "directories": 1,
+        "entries": 3,
+        "hardlink_observations": [],
+        "mutation_observations": [
+          {
+            "reason": "complete namespace rejoin differs",
+            "relative_path": ".",
+            "path_truncated": false,
+            "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+            "partial_counts": {
+              "allocated_bytes": 8192,
+              "logical_file_bytes": 1,
+              "regular_files": 1,
+              "directories": 1,
+              "entries": 1
+            }
+          },
+          {
+            "reason": "directory changed at namespace rejoin",
+            "relative_path": ".",
+            "path_truncated": false,
+            "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+            "partial_counts": {
+              "allocated_bytes": 12288,
+              "logical_file_bytes": 4,
+              "regular_files": 2,
+              "directories": 1,
+              "entries": 2
+            }
+          },
+          {
+            "reason": "directory changed at namespace rejoin",
+            "relative_path": ".",
+            "path_truncated": false,
+            "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+            "partial_counts": {
+              "allocated_bytes": 16384,
+              "logical_file_bytes": 7,
+              "regular_files": 3,
+              "directories": 1,
+              "entries": 3
+            }
+          }
+        ]
+      },
+      "close_mutations": 3
+    },
+    {
+      "case": "limit-logical",
+      "reason": "logical",
+      "observation": {
+        "allocated_bytes": 16384,
+        "logical_file_bytes": 2,
+        "regular_files": 1,
+        "directories": 3,
+        "entries": 3,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "limit-allocated",
+      "reason": "allocated",
+      "observation": {
+        "allocated_bytes": 4096,
+        "logical_file_bytes": 0,
+        "regular_files": 0,
+        "directories": 1,
+        "entries": 0,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "limit-entries",
+      "reason": "entries",
+      "observation": {
+        "allocated_bytes": 8192,
+        "logical_file_bytes": 0,
+        "regular_files": 0,
+        "directories": 2,
+        "entries": 2,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "limit-depth",
+      "reason": "depth",
+      "observation": {
+        "allocated_bytes": 8192,
+        "logical_file_bytes": 0,
+        "regular_files": 0,
+        "directories": 2,
+        "entries": 2,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "sparse-logical",
+      "reason": "logical"
+    },
+    {
+      "case": "link",
+      "type": "ValueError"
+    },
+    {
+      "case": "hardlink",
+      "type": "HardlinkObservation"
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "ValueError",
+      "secondary": "RuntimeError",
+      "selected": "StorageCleanupFailure",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "ValueError",
+      "secondary": "KeyboardInterrupt",
+      "selected": "KeyboardInterrupt",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "ValueError",
+      "secondary": "MemoryError",
+      "selected": "MemoryError",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "ValueError",
+      "secondary": "SystemExit",
+      "selected": "SystemExit",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "KeyboardInterrupt",
+      "secondary": "RuntimeError",
+      "selected": "KeyboardInterrupt",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "KeyboardInterrupt",
+      "secondary": "KeyboardInterrupt",
+      "selected": "KeyboardInterrupt",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "KeyboardInterrupt",
+      "secondary": "MemoryError",
+      "selected": "KeyboardInterrupt",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "selected": "KeyboardInterrupt",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "MemoryError",
+      "secondary": "RuntimeError",
+      "selected": "MemoryError",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "MemoryError",
+      "secondary": "KeyboardInterrupt",
+      "selected": "MemoryError",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "MemoryError",
+      "secondary": "MemoryError",
+      "selected": "MemoryError",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "MemoryError",
+      "secondary": "SystemExit",
+      "selected": "MemoryError",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "SystemExit",
+      "secondary": "RuntimeError",
+      "selected": "SystemExit",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "SystemExit",
+      "secondary": "KeyboardInterrupt",
+      "selected": "SystemExit",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "SystemExit",
+      "secondary": "MemoryError",
+      "selected": "SystemExit",
+      "descriptor_closed": true
+    },
+    {
+      "case": "fatal-pair",
+      "primary": "SystemExit",
+      "secondary": "SystemExit",
+      "selected": "SystemExit",
+      "descriptor_closed": true
+    },
+    {
+      "case": "uncertain-close",
+      "attempted_closes": 1,
+      "retried": false
+    }
+  ],
+  "scientific_execution": false
+}

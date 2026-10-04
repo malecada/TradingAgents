@@ -1,0 +1,21 @@
+{
+  "all_other_ast_equal": true,
+  "cleanup_source_unchanged": true,
+  "full_literal_inverse": true,
+  "literal_changes": [
+    {
+      "new": "\n            # The body/cleanup already selected this fatal. Do not read\n            # overridable cause/context/observation diagnostics first.\n            if not isinstance(error,Exception) or isinstance(error,MemoryError):raise\n            prior=getattr(error.__cause__ or error.__context__,'observation',{})",
+      "old": "\n            prior=getattr(error.__cause__ or error.__context__,'observation',{})"
+    },
+    {
+      "new": "\n                # The body/cleanup already selected this fatal. Do not read\n                # overridable cause/context/observation diagnostics first.\n                if not isinstance(error,Exception) or isinstance(error,MemoryError):raise\n                prior=getattr(error.__cause__ or error.__context__,'observation',{})",
+      "old": "\n                prior=getattr(error.__cause__ or error.__context__,'observation',{})"
+    }
+  ],
+  "only_changed_methods": [
+    "StorageWatch.check",
+    "StorageWatch._check"
+  ],
+  "original_sha256": "21e21dddc5b5008c3dc016839fc5b05c60dfbd345d224e91b8a9c3fb551c62cf",
+  "successor_sha256": "dca49c95e316a20de8fa679021b2e54df475c90ee02893d9b46af7eeecb6020e"
+}

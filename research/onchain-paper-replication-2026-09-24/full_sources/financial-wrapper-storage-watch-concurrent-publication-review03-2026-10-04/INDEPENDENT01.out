@@ -1,0 +1,293 @@
+{
+  "cases": 20,
+  "rows": [
+    {
+      "case": "publication-retry",
+      "observation": {
+        "allocated_bytes": 8192,
+        "logical_file_bytes": 6,
+        "regular_files": 1,
+        "directories": 1,
+        "entries": 1,
+        "elapsed_seconds": 0.011541594023583457,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review03-2026-10-04/independent-fixtures/publication-False",
+        "root_device": 66310,
+        "root_inode": 10881926,
+        "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota, immutable-byte proof or inter-sample growth guarantee. At most three attempts share one time budget. Each accepted attempt includes the whole descriptor census followed, after its cleanup, by a complete literal namespace and metadata rejoin. Each pass independently obeys all registered tree limits. No file name is ignored. Continuous change after any sampled operation remains outside this metadata-only guarantee.",
+        "scan_attempts": 2,
+        "hardlink_observations": [],
+        "mutation_observations": [
+          {
+            "reason": "entry disappeared before census completed",
+            "relative_path": ".",
+            "path_truncated": false,
+            "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+            "partial_counts": {
+              "allocated_bytes": 4096,
+              "logical_file_bytes": 0,
+              "regular_files": 0,
+              "directories": 1,
+              "entries": 1
+            }
+          }
+        ],
+        "aggregate_entry_visit_bound": 600
+      },
+      "events": [
+        "link-fsync-unlink"
+      ]
+    },
+    {
+      "case": "publication-limit",
+      "terminal": true,
+      "reason": "logical",
+      "events": [
+        "link-fsync-unlink"
+      ]
+    },
+    {
+      "case": "nested-first-fatal",
+      "primary": "KeyboardInterrupt",
+      "secondary": null,
+      "closes": [
+        [
+          7,
+          10881932
+        ],
+        [
+          5,
+          10881931
+        ],
+        [
+          3,
+          10881930
+        ]
+      ],
+      "selected_original": true,
+      "all_secondary_objects_retained": true,
+      "attempts": 1
+    },
+    {
+      "case": "nested-first-fatal",
+      "primary": "KeyboardInterrupt",
+      "secondary": "RuntimeError",
+      "closes": [
+        [
+          7,
+          10881936
+        ],
+        [
+          5,
+          10881935
+        ],
+        [
+          3,
+          10881934
+        ]
+      ],
+      "selected_original": true,
+      "all_secondary_objects_retained": true,
+      "attempts": 1
+    },
+    {
+      "case": "nested-first-fatal",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "closes": [
+        [
+          7,
+          10881940
+        ],
+        [
+          5,
+          10881939
+        ],
+        [
+          3,
+          10881938
+        ]
+      ],
+      "selected_original": true,
+      "all_secondary_objects_retained": true,
+      "attempts": 1
+    },
+    {
+      "case": "nested-first-fatal",
+      "primary": "MemoryError",
+      "secondary": null,
+      "closes": [
+        [
+          7,
+          10881944
+        ],
+        [
+          5,
+          10881943
+        ],
+        [
+          3,
+          10881942
+        ]
+      ],
+      "selected_original": true,
+      "all_secondary_objects_retained": true,
+      "attempts": 1
+    },
+    {
+      "case": "nested-first-fatal",
+      "primary": "MemoryError",
+      "secondary": "RuntimeError",
+      "closes": [
+        [
+          7,
+          10881948
+        ],
+        [
+          5,
+          10881947
+        ],
+        [
+          3,
+          10881946
+        ]
+      ],
+      "selected_original": true,
+      "all_secondary_objects_retained": true,
+      "attempts": 1
+    },
+    {
+      "case": "nested-first-fatal",
+      "primary": "MemoryError",
+      "secondary": "SystemExit",
+      "closes": [
+        [
+          7,
+          10881952
+        ],
+        [
+          5,
+          10881951
+        ],
+        [
+          3,
+          10881950
+        ]
+      ],
+      "selected_original": true,
+      "all_secondary_objects_retained": true,
+      "attempts": 1
+    },
+    {
+      "case": "nested-first-fatal",
+      "primary": "SystemExit",
+      "secondary": null,
+      "closes": [
+        [
+          7,
+          10881956
+        ],
+        [
+          5,
+          10881955
+        ],
+        [
+          3,
+          10881954
+        ]
+      ],
+      "selected_original": true,
+      "all_secondary_objects_retained": true,
+      "attempts": 1
+    },
+    {
+      "case": "nested-first-fatal",
+      "primary": "SystemExit",
+      "secondary": "RuntimeError",
+      "closes": [
+        [
+          7,
+          10881960
+        ],
+        [
+          5,
+          10881959
+        ],
+        [
+          3,
+          10881958
+        ]
+      ],
+      "selected_original": true,
+      "all_secondary_objects_retained": true,
+      "attempts": 1
+    },
+    {
+      "case": "nested-first-fatal",
+      "primary": "SystemExit",
+      "secondary": "SystemExit",
+      "closes": [
+        [
+          7,
+          10881964
+        ],
+        [
+          5,
+          10881963
+        ],
+        [
+          3,
+          10881962
+        ]
+      ],
+      "selected_original": true,
+      "all_secondary_objects_retained": true,
+      "attempts": 1
+    },
+    {
+      "case": "strict-policy",
+      "index": 0,
+      "refused": true
+    },
+    {
+      "case": "strict-policy",
+      "index": 1,
+      "refused": true
+    },
+    {
+      "case": "strict-policy",
+      "index": 2,
+      "refused": true
+    },
+    {
+      "case": "strict-policy",
+      "index": 3,
+      "refused": true
+    },
+    {
+      "case": "terminal-cap",
+      "reason": "logical",
+      "scan_calls": 1
+    },
+    {
+      "case": "terminal-cap",
+      "reason": "allocated",
+      "scan_calls": 1
+    },
+    {
+      "case": "terminal-cap",
+      "reason": "entries",
+      "scan_calls": 1
+    },
+    {
+      "case": "terminal-cap",
+      "reason": "depth",
+      "scan_calls": 1
+    },
+    {
+      "case": "final-fd-census",
+      "before": 4,
+      "after": 4
+    }
+  ],
+  "scope": "fresh opaque engineering controls only"
+}
