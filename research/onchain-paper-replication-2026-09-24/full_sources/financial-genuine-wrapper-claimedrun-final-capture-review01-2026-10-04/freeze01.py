@@ -1,0 +1,23 @@
+import hashlib,json,os,stat
+from pathlib import Path
+O=Path(__file__).resolve().parent;x=json.loads((O/'READBACK01.json').read_text())
+(O/'REPORT01.md').write_text('''# Independent fixed final20-tree capture source review
+
+Accepted source-only capture01 SHA1c74338b. Every author manifest member/type/mode/body/literal target matches. Applying the declared inverse reproduces the complete original accepted capture03 bytes and AST. The unchanged R4/owned_io/bounded Git primitive pins match. Actual uninstalled main refuses at the fixed Root-installed path check and creates no Root capture output.
+
+The exact20 original roots were independently inventoried twice:1,185 regular bodies/18,864,635 bytes and50 literal-link witnesses, with complete path/type/literal-mode/hash/target inventory retained. All1,596 top-level frozen original manifest member joins match with zero gaps. Complete actual originals include historical withheld attempts, full original verifier and binder witnesses, new actual Parent/release/proofs and genuine generated-verifier/binding review. No metadata-only mirror substitutes an original tree. Links are read as lexical metadata, never followed/extracted. Source0a2 still matches full339 captureb5b6/fdf7 and actual sourcefullrecovery468d; Parent5d5/finalrequest529c/release95da/threeproofs and actual binding review0c399 are authenticated. Parent has no attempt.
+
+Independent exact source-suffix tests cover a real owned20-tree opaque pipeline, byte-identical canonical compressed reconstruction and metadata-only links. Separate fresh four-tree fixtures inject late body, mode, target and extra-member changes after archive packing; each fails the final complete original re-enumeration and writes no authentication success. Existing output namespace refuses reuse. Actual put/new_file tests inject MemoryError, SystemExit and KeyboardInterrupt plus ordinary close errors against genuine file/parent descriptors; the original fatal identity survives and both distinct descriptors close once and are absent.
+
+Source bounds retain4 MiB individual bodies/archive,64 MiB aggregate original regular content,finite32,768 scan observations and120-second observed loop deadline, with10 GiB observed floors. These are source predicates, not a guaranteed continuous disk watch or external hard deadline. No actual final Root capture, restore, network, Source/Parent mutation, admission, claim, numerical import or scientific execution occurred. The helper's future mapping binds already genuine Source339 recovery while final caller/review external recovery remains pending. Root must execute only this exact installed helper once, retain actual outcome/partials, and obtain independent all-body actual-capture and later external/fresh-union recovery acceptance before numerical eligibility.
+''')
+m=[]
+for p in sorted(O.rglob('*')):
+ s=p.lstat();r={'path':p.relative_to(O).as_posix(),'mode':stat.S_IMODE(s.st_mode)}
+ if stat.S_ISREG(s.st_mode):b=p.read_bytes();r.update(kind='file',bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+ elif stat.S_ISDIR(s.st_mode):r['kind']='directory'
+ elif stat.S_ISLNK(s.st_mode):r.update(kind='lexical-symlink',target=os.readlink(p))
+ else:raise AssertionError(p)
+ m.append(r)
+(O/'MANIFEST01.json').write_text(json.dumps({'schema_version':1,'members':m},sort_keys=True,indent=2)+'\n');print('checks',x['checks'],'members',len(m))
+for n in ['READBACK01.json','REPORT01.md','MANIFEST01.json']:print(n,hashlib.sha256((O/n).read_bytes()).hexdigest())

@@ -1,0 +1,7 @@
+# Additive genuine failed-capture terminal and preservation scope
+
+Verified exact terminalef8e9f17: original tool62650/dcf485/133355 exit1, matching raw stdout/stderr, original partial archivefc7d4f78/4,190,463 bytes and prepackmanifestc72030b4. Original OS PID/start ticks/process-group history remain null. Both archive-cap body/cleanup errors remain in unchanged raw stderr; the previously verified incomplete gzip remains failed and unauthenticated.
+
+The complete failed-Root manifestfdda7c05 is canonical and matches every1,484 actual member excluding only its own subsequently appended seal. Current Root contains1,485 members including that seal. Every body/type/mode was verified and the complete scope remained stable after reading. All20 original trees still match all1,185 copied regular bodies and50 literal-link targets; no link is followed or extracted.
+
+Original failure review9b29dc2e/readback1533e3d4 is immutable and its FAILED/no-union disposition is unchanged. This supplementary review joins the now persisted actual terminal and closed failed-scope byte inventory; it does not authenticate the partial archive as complete, recoverable final union, successful capture or numerical authority. No replay, archive repair, network, Source/Parent/Root mutation, claim or numerical import occurred. Preserve the permanently closed namespace for any separately reviewed sharded successor.

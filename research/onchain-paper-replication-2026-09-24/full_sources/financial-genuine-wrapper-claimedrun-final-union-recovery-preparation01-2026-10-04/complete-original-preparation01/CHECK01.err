@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-recovery-preparation01-2026-10-04/check01.py", line 40, in <module>
+    ok('exact first-fatal pair '+type(first).__name__+'/'+type(second).__name__,actual is expected);ok('all callbacks '+type(first).__name__+'/'+type(second).__name__,events==['first','last'])
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-recovery-preparation01-2026-10-04/check01.py", line 5, in ok
+    def ok(n,v):assert v,n;checks.append(n)
+                       ^
+AssertionError: exact first-fatal pair ValueError/OSError

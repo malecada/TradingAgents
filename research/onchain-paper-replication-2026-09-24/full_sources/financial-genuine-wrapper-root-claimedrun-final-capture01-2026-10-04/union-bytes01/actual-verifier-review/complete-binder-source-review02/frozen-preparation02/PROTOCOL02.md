@@ -1,0 +1,7 @@
+# Genuine claim window correction
+
+The predecessor01 binder and its inherited-refusal qualification remain immutable. This successor adds exactly one verifier replacement pair to the existing accounting/literal transformation list. Full ordered expected windows are computed as genuine verify_claim: every registered window field is retained, with registered dataset identity and stage-derived spent/exposed state added. Prior exposures are the complete ordered expansion of every registered dataset's exposures with identity added. Both complete lists must equal genuine claim fields exactly.
+
+Schema1/null bindings checks remain exact and separate. Source/design/registration/science/runtime/native/Owner/cumulative19/two-identity ledger/history/cleanup/CPU/exit/planned-failure checks are unchanged. Genuine oldclaim4c54 retains availability along with all original fields; identity/state are additions. There is no future claim fixture or fabricated authority. Pure multi-dataset/confirmation metadata controls test the comparator without outcome classification.
+
+Actual Source339 fixed0a2/Parent5d5/draftb108 remain unchanged. Complete actual finalrequest/release/proofs are still required; final verifier emission is unavailable until authenticate succeeds. The original draft still refuses. No new admission, claim, Parent or native work is authorized by this correction. Root alone generates/adopts after exact independent review.

@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-source-recovery-preparation01-2026-10-04/check01.py", line 25, in <module>
+    meta=json.loads(S.R.read(flat,result['metadata_file']));ok(S.R.read(flat,meta['flat_members']['body'])==payload,'real owned R4 full recovery');refuse(lambda:S.reserve(flat),'exclusive destination')
+                                                                                                                                                   ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-source-recovery-preparation01-2026-10-04/check01.py", line 8, in refuse
+    try:f()
+        ~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-source-recovery-preparation01-2026-10-04/check01.py", line 25, in <lambda>
+    meta=json.loads(S.R.read(flat,result['metadata_file']));ok(S.R.read(flat,meta['flat_members']['body'])==payload,'real owned R4 full recovery');refuse(lambda:S.reserve(flat),'exclusive destination')
+                                                                                                                                                                 ~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-source-recovery-preparation01-2026-10-04/restore01.py", line 71, in reserve
+    check();os.mkdir(p.name,0o700,dir_fd=fd);check();R.require(p.resolve()==p and stat.S_IMODE(p.stat().st_mode)==0o700,'private fresh target');os.fsync(fd)
+            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: 'owned-flat'
