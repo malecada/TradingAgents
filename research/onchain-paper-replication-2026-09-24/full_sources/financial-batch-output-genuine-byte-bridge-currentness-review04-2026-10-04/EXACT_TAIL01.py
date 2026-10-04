@@ -1,0 +1,5 @@
+codec_before = _codec_population(store, R)
+final_proof = store.verify(terminal, descriptor)
+require(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')
+boundary()
+require(_codec_population(store, R) == codec_before, 'post-verification codec population changed')

@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/job.py", line 567, in <module>
+    result = globals()[args.mode](args)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/job.py", line 368, in worker
+    cells=financial_wrapper_fixture.execute(run,args,job['payload']['plan_input'])
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/financial_wrapper_fixture.py", line 433, in execute
+    fitted=training.fit_cell(run,p['cell_id'],prov,factory,batches,16,p['task'],11,t,continuation=continuation,after_batch=after)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/training.py", line 93, in fit_cell
+    if after_batch is not None:after_batch(epoch,batch,checkpoint)
+                               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/financial_wrapper_fixture.py", line 432, in after
+    raise PlannedInterruption('prospective engineering failed-parent fixture after one real update; no fit completion')
+tradingagents.research.onchain_replication.financial_wrapper_fixture.PlannedInterruption: prospective engineering failed-parent fixture after one real update; no fit completion

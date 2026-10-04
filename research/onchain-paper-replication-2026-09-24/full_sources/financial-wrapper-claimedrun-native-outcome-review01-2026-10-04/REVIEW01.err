@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-claimedrun-native-outcome-review01-2026-10-04/review01.py", line 14, in <module>
+    runtime=js(CAP/claim['inputs']['runtime_mapping']['path']);ok(len(runtime['distribution_records'])==251,'251 RECORD');ok(sha(read(Path(runtime['resolved_executable'])))==runtime['executable_sha256'],'interpreter')
+                                                                                                                                 ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-claimedrun-native-outcome-review01-2026-10-04/review01.py", line 6, in read
+    s=p.lstat();ok(stat.S_ISREG(s.st_mode) and not p.is_symlink() and s.st_size<=4*1024**2,'bounded regular '+p.name);b=p.read_bytes();ok((s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns)==(p.stat().st_dev,p.stat().st_ino,p.stat().st_size,p.stat().st_mtime_ns,p.stat().st_ctime_ns),'stable '+p.name);return b
+                ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-claimedrun-native-outcome-review01-2026-10-04/review01.py", line 4, in ok
+    def ok(v,n):assert v,n;checks.append(n)
+                       ^
+AssertionError: bounded regular python3.13

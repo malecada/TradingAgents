@@ -1,0 +1,13 @@
+from pathlib import Path
+import json,hashlib,ast
+H=Path(__file__).resolve().parent;CAP=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source');P=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-root-launch-20261004-01');I='financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01';sha=lambda b:hashlib.sha256(b).hexdigest();J=lambda p:json.loads(p.read_text());c=J(CAP/'research_runs'/I/'claim.json');g=J(CAP/c['registration']);e=g['experiments'][I];checks=[]
+def ok(v,n):assert v,n;checks.append(n)
+ok(e==c['experiment'],'genuine full registered experiment equality');want=[{**w,'identity':g['datasets'][w['dataset']]['identity'],'state':'spent' if e['stage']=='confirmation' else 'exposed'} for w in e['windows']];ok(want==c['windows'],'genuine ordered expanded windows')
+x=J(H/'ROOT_NATIVE_LAUNCH01_EXIT.json');ok(x['actual_outer_process_exit_code']==1 and x['original_parent_actual_parent_exit'] is None,'actual outer1/null');ok(sha((P/'attempt/parent-terminal.json').read_bytes())==x['original_parent_terminal_sha256'],'actual original terminal join')
+for n,k in [('ROOT_NATIVE_LAUNCH01_INTENT.json','root_intent_sha256'),('ROOT_NATIVE_LAUNCH01.stdout','root_stdout_sha256'),('ROOT_NATIVE_LAUNCH01.stderr','root_stderr_sha256')]:ok(sha((H/n).read_bytes())==x[k],k)
+ok(sha((P/'parent01.py').read_bytes())=='5d5cbdae455c62c3e66b53208b0f79e6e5bbc7ce05d3ded77126da5e0692deda','unchanged parent');ok(sha((P/'REQUEST_FINAL03.json').read_bytes())=='529c9bf3c587e6160a217e8eb339882e59433b6fc0f759d0009d261f872b2bd8','unchanged request')
+source=H/'source-evidence';source.mkdir()
+for n in ['financial_wrapper_fixture.py','training.py','checkpoints.py','job.py','resources.py']:
+ p=CAP/'tradingagents/research/onchain_replication'/n;body=p.read_bytes();(source/n).write_bytes(body);ok(sha(body)==c['experiment']['source_files'][str(p.relative_to(CAP))],'actual controlsource '+n)
+s=(source/'training.py').read_text();ok(s.index('optimizer.step()')<s.index("checkpoint=save_checkpoint(directory/'checkpoints'")<s.index('after_batch(epoch,batch,checkpoint)'),'actual update/save/callback order');s=(source/'financial_wrapper_fixture.py').read_text();ok("require(epoch==1 and batch==0 and checkpoint is not None" in s and "raise PlannedInterruption('prospective engineering failed-parent fixture after one real update; no fit completion')" in s,'actual planned interrupt cursor source');ok(c['bindings'] is None,'no fabricated scientific Binding')
+(H/'JOINS01.json').write_text(json.dumps({'count':len(checks),'checks':checks,'tensor_decode':False},indent=2)+'\n');print(len(checks))
