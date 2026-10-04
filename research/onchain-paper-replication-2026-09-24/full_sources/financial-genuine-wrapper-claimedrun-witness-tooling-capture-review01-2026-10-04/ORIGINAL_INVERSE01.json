@@ -1,0 +1,40 @@
+{
+  "edits": [
+    {
+      "old": "root-claimedrun-final-capture01-2026-10-04",
+      "new": "root-claimedrun-witness-tooling-capture01-2026-10-04"
+    },
+    {
+      "old": "SCOPES = {\n    'actual-parent': PARENT,\n    'root-parent-adoption': BASE / 'financial-genuine-wrapper-root-claimedrun-parent-adoption01-2026-10-04',\n    'root-parent-final-contract': BASE / 'financial-genuine-wrapper-root-claimedrun-parent-final-contract01-2026-10-04',\n    'caller-preparation': BASE / 'financial-genuine-wrapper-claimedrun-parent-preparation01-2026-10-04',\n    'caller-review': BASE / 'financial-genuine-wrapper-claimedrun-parent-review01-2026-10-04',\n    'final-parent-review': BASE / 'financial-genuine-wrapper-claimedrun-parent-final-release-review01-2026-10-04',\n    'binder-preparation01': BASE / 'financial-genuine-wrapper-claimedrun-outcome-binding-preparation01-2026-10-04',\n    'binder-preparation02': BASE / 'financial-genuine-wrapper-claimedrun-outcome-binding-preparation02-2026-10-04',\n    'binder-review': BASE / 'financial-genuine-wrapper-claimedrun-outcome-binding-review02-2026-10-04',\n    'root-verifier-binding': BASE / 'financial-genuine-wrapper-root-claimedrun-outcome-binding-generation01-2026-10-04',\n    'actual-verifier-review': BASE / 'financial-genuine-wrapper-claimedrun-actual-outcome-binding-review01-2026-10-04',\n    'claim-window-review': BASE / 'financial-genuine-wrapper-claimedrun-claim-window-review01-2026-10-04',\n    'withheld-source-recovery-preparation': BASE / 'financial-genuine-wrapper-claimedrun-source-recovery-preparation01-2026-10-04',\n    'withheld-source-recovery-review': BASE / 'financial-genuine-wrapper-claimedrun-source-recovery-review01-2026-10-04',\n    'witness-capture-preparation': BASE / 'financial-genuine-wrapper-claimedrun-witness-capture-preparation01-2026-10-04',\n    'witness-capture-review': BASE / 'financial-genuine-wrapper-claimedrun-witness-capture-review01-2026-10-04',\n    'original-verifier-preparation': BASE / 'financial-genuine-wrapper-first-outcome-verifier-preparation03-2026-10-04',\n    'original-verifier-review': BASE / 'financial-genuine-wrapper-first-outcome-verifier-review03-2026-10-04',\n    'original-binder-preparation': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-preparation01-2026-10-04',\n    'original-binder-review': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-review01-2026-10-04',\n}\n",
+      "new": "SCOPES = {\n 'tooling-preparation': BASE / 'financial-genuine-wrapper-claimedrun-sharded-witness-capture-preparation02-2026-10-04',\n 'tooling-review': BASE / 'financial-genuine-wrapper-claimedrun-sharded-witness-capture-review02-2026-10-04',\n}\nSEALS = {'tooling-preparation':'97e91712054ba8af26302606e70c40577fc8059b8b10a1966d865d1806afe359', 'tooling-review':'d0bd935a4f693f56dd5b43a7a4b5f3f9463bdf7afee29995b61aa9ba44016c3f'}\n"
+    },
+    {
+      "old": "(SCOPES['actual-verifier-review'] / 'MANIFEST01.json')",
+      "new": "(BASE / 'financial-genuine-wrapper-claimedrun-actual-outcome-binding-review01-2026-10-04/MANIFEST01.json')"
+    },
+    {
+      "old": "    union = HERE / 'union-bytes01'",
+      "new": "    for label, root in SCOPES.items():\n        require(digest(r4.read(root, 'MANIFEST01.json')) == SEALS[label], 'exact frozen tooling seal')\n    union = HERE / 'union-bytes01'"
+    },
+    {
+      "old": "complete actual final caller, concrete verifier, source preparations and independent full witness trees; links are literal metadata only",
+      "new": "complete two frozen witness-tooling source and review trees; links are literal metadata only; Source and final caller separately preserved"
+    },
+    {
+      "old": "    manifest = r4.scan(union)\n    put(r4, HERE / 'union-manifest.json', r4.encode(manifest))\n    archive = r4.pack(union, manifest, HERE / 'union.tar.gz')",
+      "new": "    archives = {}\n    for item in inventory:\n        scope = item['scope']\n        tree = union / scope\n        metadata = {'schema_version':1, 'original_tree':item, 'source_commit':mapping['source_commit'], 'links_followed_or_extracted':False, 'research_authority':False}\n        put(r4, tree / 'CAPTURE_ORIGINAL_TREE01.json', encoded(metadata))\n        require(total + sum(len(encoded({'schema_version':1, 'original_tree':t, 'source_commit':mapping['source_commit'], 'links_followed_or_extracted':False, 'research_authority':False})) for t in inventory) + len(encoded(mapping)) <= LIMIT, 'whole originals plus metadata64MiB')\n        require(time.monotonic()-start < 120 and shutil.disk_usage(HERE).free >= FLOOR, 'bounded per-scope pack')\n        scope_manifest = r4.scan(tree)\n        manifest_name = scope + '-manifest.json'\n        archive_name = scope + '.tar.gz'\n        put(r4, HERE / manifest_name, r4.encode(scope_manifest))\n        archive = r4.pack(tree, scope_manifest, HERE / archive_name)\n        archives[scope] = {'archive':dict(archive,path=archive_name), 'manifest':{'path':manifest_name,'bytes':len(r4.encode(scope_manifest)),'sha256':digest(r4.encode(scope_manifest))}, 'original_metadata_sha256':digest(encoded(metadata)), 'ordinary_members':len(scope_manifest['members'])}\n    manifest = r4.scan(union)\n    put(r4, HERE / 'union-manifest.json', r4.encode(manifest))\n    r4.same(union, manifest)"
+    },
+    {
+      "old": "'status': 'complete-final-caller-review-byte-capture', 'archive': archive",
+      "new": "'status': 'complete-two-tooling-tree-byte-capture', 'archives': archives"
+    },
+    {
+      "old": "Byte-only complete final-caller supplement; original Source339 remains separately completely recovered. No POSIX instantiation, installed-runtime recovery, empirical result or resource capacity follows.",
+      "new": "Byte-only complete two-tooling-tree capture; both scope archives and original mapping metadata are required. Source339 and caller/witness captures remain separate scopes. No POSIX instantiation, installed-runtime recovery, empirical result or resource capacity follows."
+    },
+    {
+      "old": "'archive': archive, 'original_trees'",
+      "new": "'archives': archives, 'original_trees'"
+    }
+  ]
+}

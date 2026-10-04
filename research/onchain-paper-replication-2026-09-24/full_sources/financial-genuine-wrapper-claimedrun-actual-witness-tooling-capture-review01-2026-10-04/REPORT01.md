@@ -1,0 +1,20 @@
+# Independent actual tooling capture review
+
+ACCEPTED_ACTUAL_LOCAL_TOOLING_CAPTURE. The actual two archives, complete mapping, physical union, original trees and terminal evidence passed 4,277 independent stdlib checks. No material actual-capture discrepancy was found. This acceptance covers local opaque preservation only; external recovery, fresh Root restoration and numerical release remain unavailable from this review.
+
+The installed capture source is the exact independently accepted85368444 body. Root's original session31951/start2c8ada/completioneb9bfb records exit0 and empty stderr. Original intent records PID532920/startticks16537401/process-group and session532917 before same-PID exec. The PID and every currently observable member of that group/session are absent; no /proc permission denial occurred during the census. This observation does not prove an exhaustive historical descendant tree or inherited FD history.
+
+| Actual archive | Bytes | Full SHA256 | Members |
+|---|---:|---|---:|
+| tooling-preparation.tar.gz | 181,135 | 55dd8b239af7de41d67070ee1a5df9a338c79512b057b8055e28cd6c1704eda4 | 252 |
+| tooling-review.tar.gz | 250,945 | caead83453395783ef157bb31ee22342ed50ea6a5b547168c01bd4e4a6ff6380 | 379 |
+
+Each actual archive equals the independently reconstructed pre-capture projection byte for byte. All631 members were decoded through the original bounded R4 framed parser; each path, type, mode, size, hash and body matched the exact physical manifest and current stored body. Full canonical recompression with ExactSink matched every compressed byte, including headers, PAX framing, padding, end blocks and gzip footer. Neither fixed archive encounters the raw truncated-name slash defect. The separately witnessed R4-PAX-REG-01 affecting actual57-shard witness archives0035/0049 is not cleared by this result.
+
+Complete originals remain316 files/41,887,064B/50 literal links/681 typed members including two original root directories. The roots retain original0775 modes; original body and nested directory modes are preserved in metadata while physical ordinary copies use0600/0700. Every empty directory remains represented. All original paths and literal targets match the frozen pre-capture census, actual mapping and current before/after census. Links were neither followed nor extracted. The virtual tree contains634 members:631 per-scope archive members, two scope directories and the complete ORIGINAL_TREES01 mapping. No files are omitted or double-counted as new authority.
+
+Actual authentication78ad6216, virtual manifestbd4dbb55, terminal034de94e and per-scope manifestse71096ab/7960e6d7 bind the complete capture. The whole current Root tree is recorded in READBACK01 and remained unchanged during verification. Both genuine original tooling seals97e917/d0bd remain exact. Source0a2 equals its complete1029-member Source339 capture; Parent529c, caller5d5, six helpers, gate3a20 and genuine proofs/release3268/0592/468d/95 retain exact hashes. No source/gate/claim/admission method was executed. No installed runtime packages were imported or rehashed.
+
+The actual capture reports5.5806914seconds and17,366,241,280B free disk, within the unchanged120-second/10GiB limits; both archives remain under4MiB. These measurements describe this opaque capture only and do not establish financial-fit capacity. Original spent failures, allowance accounting and all1,420 pending paper fits remain unchanged. Timing leakage, returns/cashflows, exposure reuse, fees/funding and numerical behavior were not tested.
+
+Complete recovery still requires both actual archives and manifests, union mapping/authentication, their original metadata and terminal/source/review evidence, followed by separately reviewed actual external readback and fresh restoration. Source339, finalcaller11 archives, witness57 archives plus direct originalc47f and the failed aggregate's opaque partial/archive receipts remain distinct preservation scopes. No archive was rewritten and no Root restore was performed. The review generated no failed harness; all durable evidence is retained unchanged, with a131,000-byte detailed readback.

@@ -1,0 +1,64 @@
+{
+  "edits": [
+    {
+      "old": "root-claimedrun-sharded-witness-capture01-2026-10-04",
+      "new": "root-claimedrun-sharded-witness-capture02-2026-10-04"
+    },
+    {
+      "old": "'actual-capture-review': None",
+      "new": "'actual-capture-review': 'e5e10ebfc424387cbabb4c48a2b8c6b48482583cd49f0d879d3b555786b85fa7'"
+    },
+    {
+      "old": "FILE = 4 * 1024**2",
+      "new": "DIRECT = {'scope': 'actual-capture-review', 'path': 'READBACK01.json', 'source_path': 'research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-actual-final-capture-review02-2026-10-04/READBACK01.json', 'bytes': 2532973, 'sha256': 'c47fcb6875375ecb8ea5c60926bae307955007751cdf52bec2473c44964e17e3', 'mode': 384}\nFILE = 4 * 1024**2"
+    },
+    {
+      "old": "digest(r4.read(root, 'MANIFEST01.json'))",
+      "new": "digest(r4.read(root, 'MANIFEST02.json' if label == 'actual-capture-review' else 'MANIFEST01.json'))"
+    },
+    {
+      "old": "def pack_shards(",
+      "new": "def bind_member(scope, relative, row, direct):\n    if scope == direct['scope'] and relative == direct['path']:\n        require(row['kind'] == 'file' and all(row[k] == direct[k] for k in ('bytes','sha256','mode')), 'exact direct original body/mode')\n        require(0 < direct['bytes'] <= FILE and direct['source_path'] == str((SCOPES[scope] / relative).relative_to(MAIN)), 'fixed direct Main source reference')\n        row['direct_source_path'] = direct['source_path']\n        return True\n    row['union_path'] = scope + '/' + relative\n    return False\n\n\ndef partition_join(inventory, manifest, direct):\n    original_files = [(t['scope'],r) for t in inventory for r in t['members'] if r['kind']=='file']\n    directs = [(scope,r) for scope,r in original_files if 'direct_source_path' in r]\n    require(len(directs)==1, 'exact one direct body')\n    scope,row = directs[0]\n    require(scope==direct['scope'] and row['path']==direct['path'] and row['direct_source_path']==direct['source_path'] and all(row[k]==direct[k] for k in ('bytes','sha256','mode')) and 'union_path' not in row, 'exact sole direct descriptor')\n    ordinary = {r['path']:r for r in manifest['members'] if r['kind']=='file'}\n    expected = {'ORIGINAL_TREES01.json'}\n    for scope,row in original_files:\n        if 'direct_source_path' in row:continue\n        name = scope+'/'+row['path']\n        require(row['union_path']==name and name not in expected, 'disjoint archived original path')\n        expected.add(name)\n        require(name in ordinary and all(ordinary[name][k]==row[k] for k in ('bytes','sha256')), 'exact archived original bytes')\n    require(set(ordinary)==expected and direct['scope']+'/'+direct['path'] not in ordinary, 'complete archived plus direct body partition')\n    return len(original_files)-1\n\n\ndef pack_shards("
+    },
+    {
+      "old": "def pack_shards(r4, planner, union, manifest, here, start):",
+      "new": "def pack_shards(r4, planner, union, manifest, here, start, direct):"
+    },
+    {
+      "old": "'regular_bodies':sum(r['kind']=='file' for r in manifest['members']),'shards':records}",
+      "new": "'regular_bodies':sum(r['kind']=='file' for r in manifest['members']),'shards':records, 'direct_bodies':[direct]}"
+    },
+    {
+      "old": "                row.update(kind='file', bytes=len(body), sha256=digest(body), union_path=scope + '/' + relative)\n                put(r4, destination / relative, body)",
+      "new": "                row.update(kind='file', bytes=len(body), sha256=digest(body))\n                is_direct = bind_member(scope, relative, row, DIRECT)\n                if not is_direct:\n                    put(r4, destination / relative, body)"
+    },
+    {
+      "old": "'scope_trees': inventory, 'original_regular_logical_bytes': total",
+      "new": "'scope_trees': inventory, 'direct_bodies': [DIRECT], 'direct_regular_bodies': 1, 'archived_regular_bodies': sum(r['kind']=='file' for t in inventory for r in t['members'])-1, 'original_regular_logical_bytes': total"
+    },
+    {
+      "old": "    index, shard_count = pack_shards(r4, planner, union, manifest, HERE, start)",
+      "new": "    partition_join(inventory, manifest, DIRECT)\n    require(total + len(encoded(mapping)) <= LIMIT, 'whole original INCLUDING direct and mapping64MiB')\n    index, shard_count = pack_shards(r4, planner, union, manifest, HERE, start, DIRECT)"
+    },
+    {
+      "old": "                row.update(kind='file', bytes=len(body), sha256=digest(body), union_path=item['scope'] + '/' + relative)",
+      "new": "                row.update(kind='file', bytes=len(body), sha256=digest(body))\n                bind_member(item['scope'], relative, row, DIRECT)"
+    },
+    {
+      "old": "'status': 'complete-sharded-witness-review-byte-capture'",
+      "new": "'status': 'complete-witness-shards-plus-required-direct-body-capture'"
+    },
+    {
+      "old": "'index': index, 'shard_count': shard_count, 'union_mapping_sha256'",
+      "new": "'index': index, 'shard_count': shard_count, 'direct_bodies': [DIRECT], 'direct_regular_members': 1, 'union_mapping_sha256'"
+    },
+    {
+      "old": "Byte-only complete five-tree witness supplement; original Source339 and final caller union remain separate preservation scopes.",
+      "new": "Byte-only five-tree witness capture requires ALL sharded bodies PLUS the exact directly selected original raw body; shards alone are not complete witness recovery. Original Source339 and final caller union remain separate preservation scopes."
+    },
+    {
+      "old": "'kind':'complete-final-union-shards-v1'",
+      "new": "'kind':'complete-witness-shards-plus-direct-v1'"
+    }
+  ]
+}

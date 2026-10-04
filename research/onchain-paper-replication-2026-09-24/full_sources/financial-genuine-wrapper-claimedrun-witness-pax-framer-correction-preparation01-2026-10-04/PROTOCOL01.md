@@ -1,0 +1,7 @@
+# Narrow canonical PAX framing correction
+
+This module is a source-only successor to immutable recovery04 b40e5f06. Only the premature raw filename trailing-slash predicate and full effective-name slash predicate change. Raw type must still equal the parsed type. Without a pending authenticated PAX path, all original raw slash/type checks remain. With the original bounded, path-only PAX extension, the complete PAX path controls terminal slash syntax; directory slash normalization follows only for DIRTYPE. Empty, duplicate slash, traversal, protected or noncanonical effective paths continue to refuse.
+
+The canonical writer truncates the raw REGTYPE name to100bytes while retaining the full filename in PAX. For a filename whose100thbyte is slash, that truncated raw prefix is not evidence of a directory. The new predicate admits that canonical representation without weakening raw type checks or interpreting links. Full effective path/type, manifest membership, modes, body hashes, ordered canonical complete gzip/TAR reencoding and footer checks remain mandatory in restore. Framing alone is not complete archival acceptance.
+
+All other source functions/classes, archive framing limits, PAX8192/file4MiB/inflate192MiB bounds, FD handling and cleanup are byte-identical. Original R4, archive bytes, final11flat adapter and scientific runtime are untouched. A witness adapter may use this successor only after different-author review and exact independent release. No real Root restoration or numerical work was executed.

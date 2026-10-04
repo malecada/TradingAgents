@@ -1,0 +1,7 @@
+# Source preparation outcome
+
+Executable restore_witness01.py is frozen for different-author review with all future Root remote/release fields NULL. 618 controls passed plus final module-origin/NULL-request/inverse checks. Actual captured five-root mapping/57plans/direct descriptor authenticated as metadata only. Three fresh tiny canonical shards recovered513opaque bytes; corrupt second shard retained first completion and partial directory. An owned utility namespace copied and authenticated the genuine rawdirect body without treating that copy as Root restoration. Full census mutation and directmissing/duplicate/hash/path/mode/count refusals passed, as did realFD fatal cleanup.
+
+Two author harness failures are retained: first inline generator expected one repeated original_trees literal (actual2), and EXTRA01 assumed every original scope had a symlink. Corrected build and EXTRA02 preserve source authority and exact cases; no original artifacts changed. Final source adds explicit PAX module-origin check and final existing time/disk floor callback; complete byte/AST inverse and NULL refusal were reverified after those changes. Primary pipeline controls exercised the same unmodified restore/direct functions.
+
+Original method, datasets, Source339/Parent, gates, accounting and all prior outputs remain untouched. Required actual Root remote/callerreview/release/full restoration remain unavailable. No valid authority receipt was synthesized.

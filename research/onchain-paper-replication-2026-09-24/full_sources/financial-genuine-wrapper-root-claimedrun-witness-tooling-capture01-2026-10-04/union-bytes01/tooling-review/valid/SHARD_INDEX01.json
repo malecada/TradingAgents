@@ -1,0 +1,96 @@
+{
+  "direct_bodies": [
+    {
+      "bytes": 2532973,
+      "mode": 384,
+      "path": "direct",
+      "scope": "0",
+      "sha256": "c47fcb6875375ecb8ea5c60926bae307955007751cdf52bec2473c44964e17e3",
+      "source_path": "valid/original0/direct"
+    }
+  ],
+  "kind": "complete-witness-shards-plus-direct-v1",
+  "limits": {
+    "archive_bytes": 4194304,
+    "logical_bytes": 2097152,
+    "typed_members": 256
+  },
+  "regular_bodies": 9,
+  "schema_version": 1,
+  "shards": [
+    {
+      "archive": {
+        "bytes": 1217,
+        "manifest_sha256": "0a4a800ce3fadb71c778e596984e03f24f71ca0069f3e74de4bd300d7b3c104e",
+        "path": "shards/shard-0000.tar.gz",
+        "sha256": "edcf34a47bafe2c1ca942bbe59bd132e05e6091fd0ea74f45ad5035c017fdf23"
+      },
+      "id": "shard-0000",
+      "logical_bytes": 1100006,
+      "manifest": {
+        "bytes": 586,
+        "path": "shards/shard-0000-manifest.json",
+        "sha256": "0a4a800ce3fadb71c778e596984e03f24f71ca0069f3e74de4bd300d7b3c104e"
+      },
+      "members": 4,
+      "regular_bodies": 2,
+      "regular_paths": [
+        "0/small",
+        "1/chunk0"
+      ],
+      "tar_bytes_bound": 1105920
+    },
+    {
+      "archive": {
+        "bytes": 1183,
+        "manifest_sha256": "d47a3055f01e4a7eef46bd5d403e8e7a7b0811fc759a74227363f48fa61e92b7",
+        "path": "shards/shard-0001.tar.gz",
+        "sha256": "f531a87c13fc29cfb9a6f0ffdc02bde8578f285d421d369ee6c5474bdd26b19f"
+      },
+      "id": "shard-0001",
+      "logical_bytes": 1100000,
+      "manifest": {
+        "bytes": 329,
+        "path": "shards/shard-0001-manifest.json",
+        "sha256": "d47a3055f01e4a7eef46bd5d403e8e7a7b0811fc759a74227363f48fa61e92b7"
+      },
+      "members": 2,
+      "regular_bodies": 1,
+      "regular_paths": [
+        "1/chunk1"
+      ],
+      "tar_bytes_bound": 1105920
+    },
+    {
+      "archive": {
+        "bytes": 2652,
+        "manifest_sha256": "f3a1165a8f53087332dd5a343176e6894c1c61feaa66e4a7ab493c5d31121f52",
+        "path": "shards/shard-0002.tar.gz",
+        "sha256": "f2e9e8d70af777fa4941d182d81bc2da63c4c69e84f100294e12a7398b1cf63b"
+      },
+      "id": "shard-0002",
+      "logical_bytes": 1106525,
+      "manifest": {
+        "bytes": 1477,
+        "path": "shards/shard-0002-manifest.json",
+        "sha256": "f3a1165a8f53087332dd5a343176e6894c1c61feaa66e4a7ab493c5d31121f52"
+      },
+      "members": 10,
+      "regular_bodies": 6,
+      "regular_paths": [
+        "1/chunk2",
+        "1/small",
+        "2/small",
+        "3/small",
+        "4/small",
+        "ORIGINAL_TREES01.json"
+      ],
+      "tar_bytes_bound": 1116160
+    }
+  ],
+  "virtual_manifest": {
+    "bytes": 2523,
+    "path": "union-manifest.json",
+    "sha256": "8256839d564539d1c1c0d0c0db26195ca6692b662680cef5c2c57935781e4567"
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "old": "   require(raw_type==t.type and not raw_name.endswith('//') and (not raw_name.endswith('/') or raw_type==tarfile.DIRTYPE),'noncanonical raw member slash/type')\n   name=pending if pending is not None else t.name;pending=None",
+  "new": "   require(raw_type==t.type and (pending is not None or (not raw_name.endswith('//') and (not raw_name.endswith('/') or raw_type==tarfile.DIRTYPE))),'noncanonical raw member slash/type')\n   name=pending if pending is not None else t.name;pending=None\n   require(not name.endswith('//') and (not name.endswith('/') or raw_type==tarfile.DIRTYPE),'noncanonical effective member slash/type')"
+}
