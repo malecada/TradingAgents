@@ -1,0 +1,81 @@
+{
+  "actual_native_or_capacity_tested": false,
+  "author": "combined_worker_review",
+  "checkpoint_body_read_or_deserialized": false,
+  "control_breakdown": {
+    "check02_final_rows": 496,
+    "check03_actual_AST_and_nested_cleanup_rows": 10
+  },
+  "evidence": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-provenance-compatibility-investigation01-2026-10-04/MANIFEST01.json": {
+      "bytes": 68140,
+      "sha256": "e1dd163b621915924237cf585df0f82ee8e42c19af68d81ca7b925fe32a3a4ff"
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-provenance-compatibility-investigation01-2026-10-04/PROTOCOL_REQUIREMENTS01.md": {
+      "bytes": 11356,
+      "sha256": "0e586ee51ddcbb5f2ede6dd305c88fdf3496e9c47b39bfb46a8322b94f1a7dae"
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-correction03-2026-10-04/MANIFEST01.json": {
+      "bytes": 73627,
+      "sha256": "81fb7274cd2db72faaa0ec35fb969b4bf838e4c6d676dffd3078da5ea115561b"
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-correction03-2026-10-04/workflow_storage.py": {
+      "bytes": 15768,
+      "sha256": "91e21c525a156cc8c25877ac35f0308896a1a0d1e6279d5aecf91d7e02567780"
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review03-2026-10-04/MANIFEST01.json": {
+      "bytes": 67157,
+      "sha256": "9ac0e455c692088e96bd01eda494fee7f60f2264874bf235441fe4f7ebb60020"
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review03-2026-10-04/REPORT01.md": {
+      "bytes": 2483,
+      "sha256": "774210a8a56fd58536016786ae4ab0d3b17ad2e6fa68c87311432933c473fd37"
+    }
+  },
+  "external_recovery_performed": false,
+  "final_control_rows": 506,
+  "genuine_runtime_calls_executed": false,
+  "historical_commit": "0a2e7639b42b9423b90743feadcda4078aa21816",
+  "implementation_limit": "Fixed classification/eager historical interrupt1 edge only. No transitive/general scientific compatibility. Source candidate requires independent review and Root full admission.",
+  "inverse": {
+    "file": "SOURCE_INVERSES02.json",
+    "full_literal_and_AST": true,
+    "sha256": "68ebea5c27df3a80546033c676fa7809b4696c88bc721ed6fd0d41e24a6de7c9",
+    "unaffected_numerical_functions": true
+  },
+  "later_source_with_same194map": "9dc5c79f738920b52947b4e63fed0397f1b5b207",
+  "preserved_harness_failure": {
+    "reason": "Text search for _lock( matched the own helper function name, not a lock call; check02 uses actual AST Call nodes. First failed harness is not counted as passing.",
+    "script": "check01.py",
+    "stderr": "CHECK01.err"
+  },
+  "research_allowance_changed": false,
+  "source_footprint": {
+    "added_helper_paths": 1,
+    "historical_distinct_hashes": 193,
+    "historical_paths": 194,
+    "original_paths_byte_identical": 191,
+    "replaced_paths": 3,
+    "target_distinct_hashes": 194,
+    "target_paths": 195
+  },
+  "sources": {
+    "financial_wrapper_fixture.py": {
+      "bytes": 42060,
+      "sha256": "df39c05ae107bf63d3d5b49f0bd9b6b788d3647d9cc653f550b396febb34d055"
+    },
+    "operational_source_compatibility.py": {
+      "bytes": 47723,
+      "sha256": "6a4b40f3c171e9cab8d25ec611ad9d801a67ae713cfa18b13fe75574fce1b80b"
+    },
+    "training.py": {
+      "bytes": 8556,
+      "sha256": "6f278f5b0538928827f2be06be5e8b358c5c6fcf2761085ff58b73832a74da00"
+    },
+    "workflow_storage.py": {
+      "bytes": 15768,
+      "sha256": "91e21c525a156cc8c25877ac35f0308896a1a0d1e6279d5aecf91d7e02567780"
+    }
+  },
+  "status": "SOURCE_CANDIDATE_FROZEN_NOT_ADOPTED"
+}

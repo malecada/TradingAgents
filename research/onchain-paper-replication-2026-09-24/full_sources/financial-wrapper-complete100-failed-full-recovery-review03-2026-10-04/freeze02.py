@@ -1,0 +1,40 @@
+from pathlib import Path
+import json,hashlib,stat,os
+F=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources');O=F/'financial-wrapper-complete100-failed-full-recovery-review03-2026-10-04';T=F/'financial-wrapper-complete100-failed-root-remote03-2026-10-04';S=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source');P=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01');h=lambda b:hashlib.sha256(b).hexdigest();J=lambda p:json.loads(p.read_bytes());ID='financial-wrapper-classification-eager-complete100-20261003-01';fit=S/'research_artifacts/onchain_fit_cells/c03aeddda6f73d8ab5313451b54bc536acb329400b9bec2c77ad9c4ba88e71da'/ID
+(O/'INSPECT02_FAILURE.txt').write_text("Actual tool113f28 exited1: KeyError actual_root_exit. Original Root native exit has actual_root_observed_parent_exit=1, not the forensic flat receipt's distinct actual_root_exit key. Original fields unchanged. Corrected readback03 uses exact actual field. No outcome or recovery failure inferred.\n")
+terminal=J(P/'attempt/parent-terminal.json');assert terminal['actual_parent_exit'] is None
+rootexit=J(F/'heartbeat-root-checkpoint10-2026-10-04/ROOT_COMPLETE100_NATIVE01_EXIT.json');assert rootexit['actual_root_observed_parent_exit']==1
+journals=sorted(fit.glob('epoch-*.json'));assert len(journals)==29 and [J(p)['epoch'] for p in journals]==list(range(29));checkpoints=[]
+for p in sorted(fit.glob('checkpoints/*/manifest.json')):
+ m=J(p);assert set(m['members'])=={'state.pt'};pin=m['members']['state.pt'];b=(p.parent/'state.pt').read_bytes();assert len(b)==pin['size'] and h(b)==pin['sha256'];checkpoints.append({'manifest_sha256':h(p.read_bytes()),'state_sha256':pin['sha256'],'state_bytes':pin['size']})
+assert len(checkpoints)==29
+read=J(O/'READBACK01.json');assert len(read['flat_physical_files'])==532
+for x in read['flat_physical_files']:
+ p=Path(x['path']);s=p.lstat();assert s.st_ino==x['inode'] and s.st_nlink==1 and stat.S_IMODE(s.st_mode)==384 and h(p.read_bytes())==x['sha256']
+review=F/'financial-wrapper-complete100-failed-root-remote-outcome-review03-2026-10-04';rp=h((review/'MACHINE01.json').read_bytes());assert rp=='dc7e9b6882ffa232101825b4302a9d8393d0c75671cb03f105185ccd9ddbbfaa'
+for n in ['FLAT_RECOVERY01.json','ROOT_FLAT03_EXIT01.json','ROOT_FLAT03_SPAWN01.json','ROOT_FLAT03_INTENT01.json','ROOT_FLAT03.stdout','ROOT_FLAT03.stderr']:(O/n).write_bytes((T/n).read_bytes())
+(O/'OUTCOME_JOINS03.json').write_text(json.dumps({'parent_terminal_sha256':h((P/'attempt/parent-terminal.json').read_bytes()),'original_parent_actual_exit':None,'root_actual_root_observed_parent_exit':1,'root_native_exit_sha256':h((F/'heartbeat-root-checkpoint10-2026-10-04/ROOT_COMPLETE100_NATIVE01_EXIT.json').read_bytes()),'epoch_ordinals':list(range(29)),'opaque_checkpoint_manifests_and_states':checkpoints,'spent_failed_claims':3,'highest_actual_budget':19,'complete100_reference':False,'checkpoint_deserialized':False},indent=2)+'\n')
+(O/'freeze02.py').write_bytes(Path('/tmp/flat_freeze02.py').read_bytes())
+(O/'REPORT01.md').write_text('''# Complete failed100 outcome recovery
+
+COMPLETE_FAILED_SCOPE_BYTE_UNION_ACCEPTED. Every fresh flat file was independently authenticated:522 opaque original regular bodies plus10 metadata files, all private0600/single-link with exact complete membership. Corrected capsule:588 original typed members,475 unique files,113 directories/23,015,911 logical bytes. Each file belongs to exactly one of eight shards; repeated directory metadata is declared and identical. Parent28 typed/24 files and support26 typed/23 files are complete for their exact originals. Every body/name/type/mode joins current originals, capture snapshots, fetched Git blobs and fresh flat files.
+
+All ten gzip/PAX TAR archives were reconstructed from actual fresh flat mappings and original-mode metadata, reproducing exact canonical compressed bytes. All35 selected actual external blobs rejoin fresh Git path/type/mode/OID/extent/hash and current original bodies. Nine original erroneous zero-capsule capture01 bodies remain preserved forensic evidence; actual capsule completeness derives from corrected capture02/e9e78f. Independent remote03 acceptance and all109 child FSIZE/reaped0 records rejoin; recorded PIDs/groups are currently absent.
+
+Current Source/design9dc5 has339 tracked files. All tracked blob bodies,338 registered source pins,eight registered input roles,194 implementation paths/149 package paths and251 opaque RECORD metadata rows rejoin recovered bytes. Original385-object baseline Git recovery is separately accepted and not reconstructed here. Installed dependency package bodies and unrelated empirical stores are outside this scope.
+
+Three original claims remain FAILED/spent/highest19. The fixed complete100 identity has29 journal ordinals0–28 and29 opaque checkpoint state/manifest pairs; state bodies were hashed only. Original Parent actual_parent_exit=NULL remains separate from Root actual_root_observed_parent_exit=1. No completed100 reference, successful fit, gradient agreement, paper-fit credit or capacity result is inferred. Full Parent/controller/Root evidence and prior active-observation corrections are preserved. Two reviewer inspection mistakes—terminal filename and Root exit-field name—are retained separately and corrected against actual fields, without altering originals or rerunning recovery.
+
+The ordinary flat helper exited0 once; original PID904177/group are now absent. All recorded floor samples exceed10GiB. Root samples show owned-tree growth from35,676,686 logical/36,118,528 allocated bytes to59,764,030 logical/61,550,592 allocated bytes/724members before the final documentary exit file. These are historical sampled observations, not a continuous quota or an assertion that later added documentary files have identical counts. Fixed64/96MiB forensic bounds remain distinct from native scientific limits.
+
+Original archival-only flags remain literal. Flat0600 bodies with original-mode tables are not a reconstructed POSIX source/Git tree. No network, helper entry, tensor/checkpoint deserialization, numerical module import, new claim, gate/budget change or adoption occurred. Acceptance closes only the actual failed-outcome byte union. Prospective compatibility correction, accounting, registration, caller/full preservation and native release remain separate.
+''')
+m={'schema_version':1,'decision':'COMPLETE_FAILED_SCOPE_BYTE_UNION_ACCEPTED','source':'9dc5c79f738920b52947b4e63fed0397f1b5b207','identity':ID,'capture_sha256':read['capture_sha256'],'remote_receipt_sha256':read['remote_sha256'],'flat_receipt_sha256':read['receipt_sha256'],'remote_review_machine_sha256':rp,'flat_private_files':532,'original_regular_bodies':522,'capsule_typed':588,'capsule_regular':475,'capsule_logical_bytes':23015911,'canonical_archives':10,'spent_failed_claims':3,'highest_actual_budget':19,'readback_sha256':h((O/'READBACK01.json').read_bytes()),'outcome_joins_sha256':h((O/'OUTCOME_JOINS03.json').read_bytes()),'report_sha256':h((O/'REPORT01.md').read_bytes()),'original_parent_actual_exit':None,'actual_root_observed_native_parent_exit':1,'actual_flat_root_exit':0,'installed_runtime_bodies':False,'posix_tree_restored':False,'numerical_release':False,'whole_fit_capacity':None}
+(O/'MACHINE01.json').write_text(json.dumps(m,indent=2)+'\n');rs=[]
+for p in sorted(O.rglob('*')):
+ s=p.lstat();x={'path':str(p.relative_to(O)),'mode':stat.S_IMODE(s.st_mode)}
+ if stat.S_ISREG(s.st_mode):x.update(kind='file',bytes=s.st_size,sha256=h(p.read_bytes()))
+ elif stat.S_ISDIR(s.st_mode):x.update(kind='directory')
+ else:x.update(kind='symlink',target=os.readlink(p))
+ rs.append(x)
+(O/'MANIFEST01.json').write_text(json.dumps({'schema_version':1,'manifest_self_excluded':True,'members':rs},indent=2)+'\n');print(json.dumps({n:h((O/n).read_bytes()) for n in ['MANIFEST01.json','MACHINE01.json','REPORT01.md','READBACK01.json']}))

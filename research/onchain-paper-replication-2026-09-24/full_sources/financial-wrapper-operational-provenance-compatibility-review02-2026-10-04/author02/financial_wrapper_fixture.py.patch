@@ -1,0 +1,12 @@
+--- predecessor01/financial_wrapper_fixture.py
++++ financial_wrapper_fixture.py
+@@ -282,6 +282,9 @@
+   require_parent_compatibility(run,value['provenance'],prov,run.admission.root/run.admission.inputs[value['checkpoint_input']]['path'])
+  else:
+   require({k:v for k,v in value['provenance'].items() if k!='source_commit'}=={k:v for k,v in prov.items() if k!='source_commit'},'prior scientific provenance differs')
++ if 'operational_source_compatibility' in run.admission.inputs and p['phase']=='predict':
++  from .operational_source_compatibility import require_prediction_policy
++  require_prediction_policy(run,claim)
+  info=run.admission.inputs[value['checkpoint_input']];run.read_input(value['checkpoint_input']);checkpoint=run.admission.root/info['path']
+  manifest=json.loads(checkpoint.read_bytes())
+  require(manifest['provenance']==value['provenance'],'prior artifact provenance differs')

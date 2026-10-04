@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-provenance-compatibility-preparation01-2026-10-04/check01.py", line 54, in <module>
+    body=ast.unparse(func[f]);ck('held-path no read_input or lock '+f,'.read_input(' not in body and '_lock(' not in body and 'authorize(' not in body)
+                              ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-provenance-compatibility-preparation01-2026-10-04/check01.py", line 8, in ck
+    if not truth:raise AssertionError(name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: held-path no read_input or lock _require_parent_under_fit_lock

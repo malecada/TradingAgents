@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "decision": "WITHHELD_OPC_PREDICT_POLICY_01",
+  "source_sha256": "6a4b40f3c171e9cab8d25ec611ad9d801a67ae713cfa18b13fe75574fce1b80b",
+  "author_manifest_sha256": "ac15b2501dc1ca44b8f1505eed49039672e074ac536bf6a26bfde402e3576786",
+  "readback_sha256": "5e81896fe5a7b2695080df41573b770be003955d57774ab2a633748bb5360e52",
+  "witness_sha256": "945f7849caaf1abde751bd8c68088c570e0164d50dc5f32cf9386e2de1f59c8f",
+  "report_sha256": "7dcb3871e7aa5e973a9c0fbc760ce051a28104a4dfd19007c2d6716911663e90",
+  "author_rows_replayed": 506,
+  "independent_rows": 12,
+  "genuine_runtime_or_scientific_execution": false,
+  "numerical_or_adoption_authority": false,
+  "findings": [
+    {
+      "id": "OPC-PREDICT-POLICY-01",
+      "file": "financial_wrapper_fixture.py",
+      "line": 280,
+      "issue": "Prediction completed parent policy hash not joined to current registered compatibility policy despite same195 implementation map."
+    }
+  ]
+}

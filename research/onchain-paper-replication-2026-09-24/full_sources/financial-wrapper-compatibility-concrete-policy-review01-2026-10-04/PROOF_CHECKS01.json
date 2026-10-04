@@ -1,0 +1,54 @@
+{
+  "rows": [
+    {
+      "case": "genuine independently authored exact review proof",
+      "passed": true
+    },
+    {
+      "case": "refuse null schema_version",
+      "passed": true
+    },
+    {
+      "case": "refuse null kind",
+      "passed": true
+    },
+    {
+      "case": "refuse null policy_sha256",
+      "passed": true
+    },
+    {
+      "case": "refuse null historical_map_sha256",
+      "passed": true
+    },
+    {
+      "case": "refuse null target_map_sha256",
+      "passed": true
+    },
+    {
+      "case": "refuse null checker_sha256",
+      "passed": true
+    },
+    {
+      "case": "refuse null decision",
+      "passed": true
+    },
+    {
+      "case": "review cannot stand in for recovery role",
+      "passed": true
+    }
+  ],
+  "predicate_AST": [
+    "set(proof) == {'schema_version', 'kind', 'policy_sha256', 'historical_map_sha256', 'target_map_sha256', 'checker_sha256', 'decision'} and proof['schema_version'] == 1 and (proof['kind'] == role) and (proof['decision'] == 'accepted')",
+    "proof['policy_sha256'] == sha(raw) and proof['historical_map_sha256'] == sha(canonical(hist['installed'])) and (proof['target_map_sha256'] == sha(canonical(target['installed']))) and (proof['checker_sha256'] == helper_sha)"
+  ],
+  "proof_schema_fields": [
+    "checker_sha256",
+    "decision",
+    "historical_map_sha256",
+    "kind",
+    "policy_sha256",
+    "schema_version",
+    "target_map_sha256"
+  ],
+  "scope": "Review only; no recovery proof generated or validated"
+}

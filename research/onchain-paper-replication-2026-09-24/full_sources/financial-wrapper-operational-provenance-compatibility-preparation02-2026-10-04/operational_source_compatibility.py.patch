@@ -1,0 +1,37 @@
+--- predecessor01/operational_source_compatibility.py
++++ operational_source_compatibility.py
+@@ -4,7 +4,7 @@
+ import hashlib,json,os,stat,time
+ from pathlib import Path,PurePosixPath
+ 
+-CONTROL_TARGETS={'tradingagents/research/onchain_replication/financial_wrapper_fixture.py': 'df39c05ae107bf63d3d5b49f0bd9b6b788d3647d9cc653f550b396febb34d055', 'tradingagents/research/onchain_replication/training.py': '6f278f5b0538928827f2be06be5e8b358c5c6fcf2761085ff58b73832a74da00', 'tradingagents/research/onchain_replication/workflow_storage.py': '91e21c525a156cc8c25877ac35f0308896a1a0d1e6279d5aecf91d7e02567780'}
++CONTROL_TARGETS={'tradingagents/research/onchain_replication/financial_wrapper_fixture.py': '5f478bc3570aab21ffdfa32e1215aeddbf085e5d33a3da3a8131cfb0c4aff655', 'tradingagents/research/onchain_replication/training.py': '6f278f5b0538928827f2be06be5e8b358c5c6fcf2761085ff58b73832a74da00', 'tradingagents/research/onchain_replication/workflow_storage.py': '91e21c525a156cc8c25877ac35f0308896a1a0d1e6279d5aecf91d7e02567780'}
+ FAMILY='synthetic-financial-wrapper'
+ HISTORICAL_CHECKPOINT_SHA256='b2f7d33b2f2280f5d9b0a9731ea320c64d18768bda772926421ddb0af2e12c70'
+ HISTORICAL_CLAIM_SHA256='d390980c956aab64d5521698cbb6123ccf01ece94a95277b97755f019adf692b'
+@@ -241,3 +241,25 @@
+  # The original wrapper already verifies actual COMPLETE claim/terminal and its
+  # unchanged strict source/provenance equality before this supplementary check.
+  return {'policy_sha256':pin,'reference_experiment':claim['experiment_id']}
++
++
++def validate_prediction_parent(policy,policy_sha256,closure_sha256,parent_identity,parent_inputs,parent_sources,parent_cells):
++ """Pure metadata predicate; it neither verifies nor creates a genuine claim.
++ The runtime caller supplies fields from the original verified COMPLETE parent.
++ """
++ require(digest(policy_sha256) and digest(closure_sha256),'exact current policy/closure hashes unavailable')
++ expected=policy['consumers']['continue100']
++ require(parent_identity==expected['experiment'] and parent_cells==[expected['cell_id']],'prediction parent must be the fixed continuation consumer/cell')
++ require(type(parent_inputs)is dict and parent_inputs.get(ROLE,{}).get('sha256')==policy_sha256,'completed parent used a different or missing compatibility policy')
++ target=policy['target']
++ require(parent_inputs.get(target['closure_input'],{}).get('sha256')==closure_sha256,'completed parent full implementation closure differs')
++ require(type(parent_sources)is dict and all(parent_sources.get(p)==h for p,h in target['installed'].items()),'completed parent target implementation map differs')
++ return {'policy_sha256':policy_sha256,'parent_experiment':parent_identity,'target_map_sha256':sha(canonical(target['installed']))}
++
++
++def require_prediction_policy(run,claim):
++ policy,plan,read,budget,pin=_context(run,_registered_normal)
++ require(plan['phase']=='predict','prediction policy join is unavailable outside prediction')
++ # financial_wrapper_fixture._parent already verified this exact claim and its
++ # actual COMPLETE lifecycle, and preserved the strict scientific comparison.
++ return validate_prediction_parent(policy,pin,sha(read(policy['target']['closure_input'])),claim['experiment_id'],claim['inputs'],claim['experiment']['source_files'],claim['experiment']['cells'])

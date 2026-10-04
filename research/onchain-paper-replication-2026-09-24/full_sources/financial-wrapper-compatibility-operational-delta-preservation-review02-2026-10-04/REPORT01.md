@@ -1,0 +1,13 @@
+# Operational source-policy delta — local preservation review
+
+Accepted for the exact local byte scope only. Capture02 corrects the former fabricated expansion of the baseline machine hash by binding the genuine machine body. Capture01 remains permanently withheld; its original wrong hash and erratum are retained in this review.
+
+The complete 41-member snapshot (33 regular files, 943,578 logical bytes) matches its manifest, original origin rows and literal modes. Independent gzip/PAX reconstruction is byte-identical to the 225,862-byte archive. Every current non-Git member was compared before and after: 589 members, including all 585 protected original rows. All 195 implementation paths match, with 150 package paths and 191 unchanged predecessor implementation bodies. The current commit has 340 tracked blobs and is the direct descendant of 9dc5c79f.
+
+All 394 current logical Git objects were read and verified by type, extent, SHA-256 and Git object ID. The 385 historical objects were separately read from the actual previously recovered bare repository. The nine remaining bodies match this snapshot. The genuine baseline machine is 49e0ad65d23f34496963b09e82cb8744d0e56c6d5c1a598af48f7154bd0e9122. All 475 original failed-scope fresh-flat bodies were also rehashed, and all 585 protected current rows rejoined to their original mode/name/body metadata.
+
+The exact next selectable delta consists of this archive, PAYLOAD_MANIFEST01.json, ORIGIN_MAP01.json and CAPTURE01.json, with the actual capture source and this review retained as provenance. The archive contains four adopted source bodies, the concrete policy/closure/role map and binding source, eight adoption records/source files, five selected adoption-review bodies, two composition metadata bodies, and nine new Git bodies. The five adoption-review bodies are selected evidence, not a claim to archive every historical review file. The complete old failed-byte recovery and 385-object recovery remain mandatory composition dependencies; this delta alone is not a complete source backup.
+
+The prospective policy bytes are preserved without policy admission. There is no new external delta receipt or fresh delta recovery yet. Directory and file modes are authenticated archival metadata, not restored POSIX source-tree authority. Installed runtime bodies, final caller/gate/release, capacity, numerical admission and scientific completion remain excluded. Current scans are sampled checks. No capture, transfer, restoration, numerical import or research claim was executed by this review.
+
+Both independent checks passed on their first execution; raw stdout and stderr are retained. No original artifacts were modified.

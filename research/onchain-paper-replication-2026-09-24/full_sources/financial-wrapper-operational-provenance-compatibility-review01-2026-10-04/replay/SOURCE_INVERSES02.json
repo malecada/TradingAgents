@@ -1,0 +1,43 @@
+{
+  "changes": {
+    "financial_wrapper_fixture.py": [
+      {
+        "new": " if 'operational_source_compatibility' in ad.inputs:\n  from .operational_source_compatibility import validate_current\n  validate_current(run,p,source)\n return p,json.loads(raw_model),json.loads(raw_training),source,sha(raw_recipe)",
+        "old": " return p,json.loads(raw_model),json.loads(raw_training),source,sha(raw_recipe)"
+      },
+      {
+        "new": " if 'operational_source_compatibility' in run.admission.inputs and p['phase']=='continue100':\n  from .operational_source_compatibility import require_parent_compatibility\n  require_parent_compatibility(run,value['provenance'],prov,run.admission.root/run.admission.inputs[value['checkpoint_input']]['path'])\n else:\n  require({k:v for k,v in value['provenance'].items() if k!='source_commit'}=={k:v for k,v in prov.items() if k!='source_commit'},'prior scientific provenance differs')",
+        "old": " require({k:v for k,v in value['provenance'].items() if k!='source_commit'}=={k:v for k,v in prov.items() if k!='source_commit'},'prior scientific provenance differs')"
+      },
+      {
+        "new": " require({k:v for k,v in ref['provenance'].items() if k not in ('source_commit','cell_id')}=={k:v for k,v in prov.items() if k not in ('source_commit','cell_id')},'reference scientific provenance differs')\n if 'operational_source_compatibility' in run.admission.inputs:\n  from .operational_source_compatibility import require_reference_policy\n  require_reference_policy(run,claim)",
+        "old": " require({k:v for k,v in ref['provenance'].items() if k not in ('source_commit','cell_id')}=={k:v for k,v in prov.items() if k not in ('source_commit','cell_id')},'reference scientific provenance differs')"
+      }
+    ],
+    "training.py": [
+      {
+        "new": "            if 'operational_source_compatibility' in run.admission.inputs:\n                from .operational_source_compatibility import _require_parent_under_fit_lock\n                compatibility=_require_parent_under_fit_lock(run,old,provenance,checkpoint)\n            else:\n                if {k:v for k,v in old.items() if k!='source_commit'}!={k:v for k,v in provenance.items() if k!='source_commit'}:raise ValueError('continuation scientific provenance mismatch')",
+        "old": "            if {k:v for k,v in old.items() if k!='source_commit'}!={k:v for k,v in provenance.items() if k!='source_commit'}:raise ValueError('continuation scientific provenance mismatch')"
+      },
+      {
+        "new": "    compatibility=None\n    with _lock(run.admission.root):",
+        "old": "    with _lock(run.admission.root):"
+      },
+      {
+        "new": "        if compatibility is not None:\n            _immutable(destination/'operational-source-compatibility.json',compatibility)\n        _immutable(destination/'claim.json',",
+        "old": "        _immutable(destination/'claim.json',"
+      }
+    ]
+  },
+  "full_literal_inverse": true,
+  "sources": {
+    "financial_wrapper_fixture.py": {
+      "new_sha256": "df39c05ae107bf63d3d5b49f0bd9b6b788d3647d9cc653f550b396febb34d055",
+      "old_sha256": "f4ea651b4677c83f8e16c316d17f704d44d9ec86ff78a4bf7c4b895e92e1a16e"
+    },
+    "training.py": {
+      "new_sha256": "6f278f5b0538928827f2be06be5e8b358c5c6fcf2761085ff58b73832a74da00",
+      "old_sha256": "0e5ae299f48f21cde666d78319b7710208f6d959c0c2b1aea7e848f4252ff482"
+    }
+  }
+}

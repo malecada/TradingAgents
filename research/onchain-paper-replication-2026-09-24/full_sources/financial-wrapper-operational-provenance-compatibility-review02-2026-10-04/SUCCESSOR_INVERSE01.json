@@ -1,0 +1,30 @@
+{
+  "changes": {
+    "financial_wrapper_fixture.py": [
+      {
+        "new": " if 'operational_source_compatibility' in run.admission.inputs and p['phase']=='predict':\n  from .operational_source_compatibility import require_prediction_policy\n  require_prediction_policy(run,claim)\n info=run.admission.inputs[value['checkpoint_input']];run.read_input(value['checkpoint_input']);checkpoint=run.admission.root/info['path']",
+        "old": " info=run.admission.inputs[value['checkpoint_input']];run.read_input(value['checkpoint_input']);checkpoint=run.admission.root/info['path']"
+      }
+    ],
+    "operational_source_compatibility.py": [
+      {
+        "new": "5f478bc3570aab21ffdfa32e1215aeddbf085e5d33a3da3a8131cfb0c4aff655",
+        "old": "df39c05ae107bf63d3d5b49f0bd9b6b788d3647d9cc653f550b396febb34d055"
+      },
+      {
+        "new": "\n\ndef validate_prediction_parent(policy,policy_sha256,closure_sha256,parent_identity,parent_inputs,parent_sources,parent_cells):\n \"\"\"Pure metadata predicate; it neither verifies nor creates a genuine claim.\n The runtime caller supplies fields from the original verified COMPLETE parent.\n \"\"\"\n require(digest(policy_sha256) and digest(closure_sha256),'exact current policy/closure hashes unavailable')\n expected=policy['consumers']['continue100']\n require(parent_identity==expected['experiment'] and parent_cells==[expected['cell_id']],'prediction parent must be the fixed continuation consumer/cell')\n require(type(parent_inputs)is dict and parent_inputs.get(ROLE,{}).get('sha256')==policy_sha256,'completed parent used a different or missing compatibility policy')\n target=policy['target']\n require(parent_inputs.get(target['closure_input'],{}).get('sha256')==closure_sha256,'completed parent full implementation closure differs')\n require(type(parent_sources)is dict and all(parent_sources.get(p)==h for p,h in target['installed'].items()),'completed parent target implementation map differs')\n return {'policy_sha256':policy_sha256,'parent_experiment':parent_identity,'target_map_sha256':sha(canonical(target['installed']))}\n\n\ndef require_prediction_policy(run,claim):\n policy,plan,read,budget,pin=_context(run,_registered_normal)\n require(plan['phase']=='predict','prediction policy join is unavailable outside prediction')\n # financial_wrapper_fixture._parent already verified this exact claim and its\n # actual COMPLETE lifecycle, and preserved the strict scientific comparison.\n return validate_prediction_parent(policy,pin,sha(read(policy['target']['closure_input'])),claim['experiment_id'],claim['inputs'],claim['experiment']['source_files'],claim['experiment']['cells'])\n",
+        "old": "",
+        "operation": "append"
+      }
+    ]
+  },
+  "full_literal_and_AST_inverse": true,
+  "original_sources": {
+    "financial_wrapper_fixture.py": "df39c05ae107bf63d3d5b49f0bd9b6b788d3647d9cc653f550b396febb34d055",
+    "operational_source_compatibility.py": "6a4b40f3c171e9cab8d25ec611ad9d801a67ae713cfa18b13fe75574fce1b80b"
+  },
+  "successor_sources": {
+    "financial_wrapper_fixture.py": "5f478bc3570aab21ffdfa32e1215aeddbf085e5d33a3da3a8131cfb0c4aff655",
+    "operational_source_compatibility.py": "d0d770b45def89e8e00e81fa1bbb35416034eaace5ecab0f15193fd43b7a32d8"
+  }
+}

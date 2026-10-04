@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "proposal_sha256": "57c03b0dada661970bc34346695173acc607383cf69c7c2c09595eb2018d2783",
+  "source_root": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source",
+  "current_source_design": "9dc5c79f738920b52947b4e63fed0397f1b5b207",
+  "historical_parent": "0a2e7639b42b9423b90743feadcda4078aa21816",
+  "old_map_sha256": "d933e32e18541edef226d77cad3c084b0871258aaf2bf777ff908b4e1eb4282d",
+  "target_map_sha256": "d8f74fa73e4ccda486546caba0e34de4dca3a58f21ac7830c833cd8dce409635",
+  "changes": [
+    {
+      "new_bytes": 15768,
+      "new_regular_file": false,
+      "new_sha256": "91e21c525a156cc8c25877ac35f0308896a1a0d1e6279d5aecf91d7e02567780",
+      "old_bytes": 9345,
+      "old_sha256": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554",
+      "path": "tradingagents/research/onchain_replication/workflow_storage.py",
+      "required_adopted_mode": 436,
+      "target_copy_mode": 436
+    },
+    {
+      "new_bytes": 42263,
+      "new_regular_file": false,
+      "new_sha256": "5f478bc3570aab21ffdfa32e1215aeddbf085e5d33a3da3a8131cfb0c4aff655",
+      "old_bytes": 41419,
+      "old_sha256": "f4ea651b4677c83f8e16c316d17f704d44d9ec86ff78a4bf7c4b895e92e1a16e",
+      "path": "tradingagents/research/onchain_replication/financial_wrapper_fixture.py",
+      "required_adopted_mode": 436,
+      "target_copy_mode": 436
+    },
+    {
+      "new_bytes": 8556,
+      "new_regular_file": false,
+      "new_sha256": "6f278f5b0538928827f2be06be5e8b358c5c6fcf2761085ff58b73832a74da00",
+      "old_bytes": 8123,
+      "old_sha256": "0e5ae299f48f21cde666d78319b7710208f6d959c0c2b1aea7e848f4252ff482",
+      "path": "tradingagents/research/onchain_replication/training.py",
+      "required_adopted_mode": 436,
+      "target_copy_mode": 436
+    },
+    {
+      "new_bytes": 49504,
+      "new_regular_file": true,
+      "new_sha256": "d0d770b45def89e8e00e81fa1bbb35416034eaace5ecab0f15193fd43b7a32d8",
+      "old_bytes": null,
+      "old_sha256": null,
+      "path": "tradingagents/research/onchain_replication/operational_source_compatibility.py",
+      "required_adopted_mode": 436,
+      "target_copy_mode": 436
+    }
+  ],
+  "old_paths": 194,
+  "new_paths": 195,
+  "unchanged_implementation": 191,
+  "old_package_paths": 149,
+  "new_package_paths": 150,
+  "protected_nongit_members": 585,
+  "source_and_review_seals": [
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-provenance-compatibility-review02-2026-10-04/MANIFEST01.json",
+      "sha256": "6d61d65f528a1db42fead75f70062acff1599aa571af1d1f09746302c3538e5e",
+      "members": 571
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-provenance-compatibility-preparation02-2026-10-04/MANIFEST01.json",
+      "sha256": "adf054ca1d9c9d04cb83c8a0cf5ee736c74c5b4be20d9715f9d6a4d78bc7b391",
+      "members": 163
+    }
+  ],
+  "review_machine_sha256": "c12bc77567d21b5dbee1ba117b5b8804a90861522eb82b8495556018d970f637",
+  "failed_full_recovery_machine_sha256": "171c1f7f37934d661b75d241500df637d8155515ac86965b40bcc6821ec6cb0b",
+  "claims": [
+    {
+      "identity": "financial-wrapper-classification-eager-complete100-20261003-01",
+      "claim_sha256": "2e3bbbbf786f784eadb18bc3cdfea68905610ae773bbbd748ea1b2666b9e61f1",
+      "failed_sha256": "abdaef6f01bd02614782e442e2c102c38faa57e76061cba43b69960f3e389fa6",
+      "budget": 19
+    },
+    {
+      "identity": "financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01",
+      "claim_sha256": "d390980c956aab64d5521698cbb6123ccf01ece94a95277b97755f019adf692b",
+      "failed_sha256": "4b2d7b0d162e80fe2074997baed35f2d6e6c86e5f660872fc2b8e97bb9622558",
+      "budget": 19
+    },
+    {
+      "identity": "financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+      "claim_sha256": "4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128",
+      "failed_sha256": "35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450",
+      "budget": 18
+    }
+  ],
+  "old_gate_sha256": "752c34dfad4df2ca36b5dc4dcb999846f8de01bd1a61c5356092c4e55fbd678c",
+  "old_gate_new_body_mismatches": [
+    "tradingagents/research/onchain_replication/workflow_storage.py",
+    "tradingagents/research/onchain_replication/financial_wrapper_fixture.py",
+    "tradingagents/research/onchain_replication/training.py"
+  ],
+  "scientific_ast_unchanged": true,
+  "current_matching_processes": [],
+  "current_cgroup_absent": true,
+  "future_source_design": null,
+  "future_policy_gate_budget_native": null
+}

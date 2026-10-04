@@ -1,0 +1,250 @@
+{
+  "actual_highest_allowance": 19,
+  "actual_new_policy": null,
+  "actual_new_registration": null,
+  "actual_new_source": null,
+  "actual_recovery_review": null,
+  "actual_release": null,
+  "actual_spent": 3,
+  "base_attempt_budget": 18,
+  "capacity_caps": "Unchanged3GiBhigh=max/swap0/3GiBreserve/6GiBstartup/twoCPU/1800native1840outer/4MiBFSIZE/1GiBCAP80MiBParentwatch/10GiBfloor; no cap ladder.",
+  "claims": [
+    {
+      "claim_sha256": "2e3bbbbf786f784eadb18bc3cdfea68905610ae773bbbd748ea1b2666b9e61f1",
+      "experiment": "financial-wrapper-classification-eager-complete100-20261003-01",
+      "terminal_sha256": "abdaef6f01bd02614782e442e2c102c38faa57e76061cba43b69960f3e389fa6",
+      "terminal_status": "failed"
+    },
+    {
+      "claim_sha256": "d390980c956aab64d5521698cbb6123ccf01ece94a95277b97755f019adf692b",
+      "experiment": "financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01",
+      "terminal_sha256": "4b2d7b0d162e80fe2074997baed35f2d6e6c86e5f660872fc2b8e97bb9622558",
+      "terminal_status": "failed"
+    },
+    {
+      "claim_sha256": "4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128",
+      "experiment": "financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+      "terminal_sha256": "35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450",
+      "terminal_status": "failed"
+    }
+  ],
+  "derivation": "Three actual spent claims plus seventeen still-required original phases require cumulative20. The intentional one-update FAILED fulfills interrupt1 engineering phase only; recordfix and failed100 remain extra spent failures, with no completed reference.",
+  "family": "synthetic-financial-wrapper",
+  "fulfilled_original_phases": 1,
+  "mechanism_id": "synthetic-full-financial-wrapper-v1",
+  "method": "Original32motifs/512spent samples, fullmotif\u2192MCM\u2192GAT\u2192attentionLSTM,100epochs/seed11/batch16/synthetic28lookback/model20f451/trainingd527/tolerances unchanged. Control-plane watcher+metadata compatibility changes require exact independent source/delta/policy review.",
+  "new_scope_reduction": false,
+  "one_fixed_prospective_adopter": "financial-wrapper-classification-eager-complete100-compatibility-20261004-01",
+  "original_mapping": [
+    {
+      "bytes": 57192,
+      "original_path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/research_runs/financial-wrapper-classification-eager-complete100-20261003-01/claim.json",
+      "retained_path": "original_raw/financial-wrapper-classification-eager-complete100-20261003-01/claim.json",
+      "sha256": "2e3bbbbf786f784eadb18bc3cdfea68905610ae773bbbd748ea1b2666b9e61f1"
+    },
+    {
+      "bytes": 354,
+      "original_path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/research_runs/financial-wrapper-classification-eager-complete100-20261003-01/failed.json",
+      "retained_path": "original_raw/financial-wrapper-classification-eager-complete100-20261003-01/failed.json",
+      "sha256": "abdaef6f01bd02614782e442e2c102c38faa57e76061cba43b69960f3e389fa6"
+    },
+    {
+      "bytes": 57087,
+      "original_path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/research_runs/financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01/claim.json",
+      "retained_path": "original_raw/financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01/claim.json",
+      "sha256": "d390980c956aab64d5521698cbb6123ccf01ece94a95277b97755f019adf692b"
+    },
+    {
+      "bytes": 402,
+      "original_path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/research_runs/financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01/failed.json",
+      "retained_path": "original_raw/financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01/failed.json",
+      "sha256": "4b2d7b0d162e80fe2074997baed35f2d6e6c86e5f660872fc2b8e97bb9622558"
+    },
+    {
+      "bytes": 54583,
+      "original_path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/research_runs/financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01/claim.json",
+      "retained_path": "original_raw/financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01/claim.json",
+      "sha256": "4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128"
+    },
+    {
+      "bytes": 368,
+      "original_path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/research_runs/financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01/failed.json",
+      "retained_path": "original_raw/financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01/failed.json",
+      "sha256": "35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450"
+    }
+  ],
+  "original_phases": 18,
+  "paper_budget_changed": false,
+  "paper_trial_credit": 0,
+  "pending_original_phase_mapping": [
+    {
+      "actual_fulfilled": false,
+      "logical_key": "classification/eager/complete100",
+      "original_identity": "financial-wrapper-classification-eager-complete100-20261003-01",
+      "original_slot": 2,
+      "phase": "complete100",
+      "prospective_identity": "financial-wrapper-classification-eager-complete100-compatibility-20261004-01",
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "classification/eager/continue100",
+      "original_identity": "financial-wrapper-classification-eager-continue100-20261003-01",
+      "original_slot": 3,
+      "phase": "continue100",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "classification/eager/predict",
+      "original_identity": "financial-wrapper-classification-eager-predict-20261003-01",
+      "original_slot": 4,
+      "phase": "predict",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "classification/selected/agreement",
+      "original_identity": "financial-wrapper-classification-selected-agreement-20261003-01",
+      "original_slot": 5,
+      "phase": "agreement",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "classification/selected/interrupt1",
+      "original_identity": "financial-wrapper-classification-selected-interrupt1-20261003-01",
+      "original_slot": 6,
+      "phase": "interrupt1",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "classification/selected/complete100",
+      "original_identity": "financial-wrapper-classification-selected-complete100-20261003-01",
+      "original_slot": 7,
+      "phase": "complete100",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "classification/selected/continue100",
+      "original_identity": "financial-wrapper-classification-selected-continue100-20261003-01",
+      "original_slot": 8,
+      "phase": "continue100",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "classification/selected/predict",
+      "original_identity": "financial-wrapper-classification-selected-predict-20261003-01",
+      "original_slot": 9,
+      "phase": "predict",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "regression/eager/interrupt1",
+      "original_identity": "financial-wrapper-regression-eager-interrupt1-20261003-01",
+      "original_slot": 10,
+      "phase": "interrupt1",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "regression/eager/complete100",
+      "original_identity": "financial-wrapper-regression-eager-complete100-20261003-01",
+      "original_slot": 11,
+      "phase": "complete100",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "regression/eager/continue100",
+      "original_identity": "financial-wrapper-regression-eager-continue100-20261003-01",
+      "original_slot": 12,
+      "phase": "continue100",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "regression/eager/predict",
+      "original_identity": "financial-wrapper-regression-eager-predict-20261003-01",
+      "original_slot": 13,
+      "phase": "predict",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "regression/selected/agreement",
+      "original_identity": "financial-wrapper-regression-selected-agreement-20261003-01",
+      "original_slot": 14,
+      "phase": "agreement",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "regression/selected/interrupt1",
+      "original_identity": "financial-wrapper-regression-selected-interrupt1-20261003-01",
+      "original_slot": 15,
+      "phase": "interrupt1",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "regression/selected/complete100",
+      "original_identity": "financial-wrapper-regression-selected-complete100-20261003-01",
+      "original_slot": 16,
+      "phase": "complete100",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "regression/selected/continue100",
+      "original_identity": "financial-wrapper-regression-selected-continue100-20261003-01",
+      "original_slot": 17,
+      "phase": "continue100",
+      "prospective_identity": null,
+      "release": null
+    },
+    {
+      "actual_fulfilled": false,
+      "logical_key": "regression/selected/predict",
+      "original_identity": "financial-wrapper-regression-selected-predict-20261003-01",
+      "original_slot": 18,
+      "phase": "predict",
+      "prospective_identity": null,
+      "release": null
+    }
+  ],
+  "prior_attempts": 0,
+  "program_id": "financial-wrapper-engineering-2026-10-03",
+  "proposed_cumulative_ceiling": 20,
+  "refund_or_transfer": false,
+  "remaining_if_adopted": 17,
+  "remaining_original_phases": 17,
+  "requirements": [
+    "Complete actual failed100-scope external and full recovery plus independent acceptance",
+    "Exact source compatibility policy and full195-path implementation closure independently accepted and preserved; all191 other original bodies/scientific numerical AST unchanged",
+    "Exact original and target full source/provenance maps retained; old checkpoint source0a2, current/designtarget actual; no oldhash rewriting",
+    "Actual gate/charter/source/extension/allocation and independent exact amendment review committed before admission",
+    "Fresh one-use caller/native current source/runtime/namespaces/process/resource eligibility and actual full preservation/recovery before one prospective adopter",
+    "All subsequent phases retain exact original contracts, every attempted/unavailable outcome and independent preservation; any unexpected consumption halts dependent release"
+  ],
+  "status": "DRAFT_NOT_ADOPTED",
+  "test_outcome_tuning": false
+}

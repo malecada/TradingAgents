@@ -1,0 +1,35 @@
+--- original_financial_wrapper_fixture.py
++++ financial_wrapper_fixture.py
+@@ -174,6 +174,9 @@
+  # genuine native boundary. Repeat that comparison before tensor construction.
+  from .environment import inventory
+  require(inventory(ad.root,include_torch=True)==json.loads(run.read_input(j['environment_input'])),'actual runtime closure differs')
++ if 'operational_source_compatibility' in ad.inputs:
++  from .operational_source_compatibility import validate_current
++  validate_current(run,p,source)
+  return p,json.loads(raw_model),json.loads(raw_training),source,sha(raw_recipe)
+ 
+ def watch(run,directory,deadline):
+@@ -274,7 +277,11 @@
+  require(claim_raw==(directory/'claim.json').read_bytes() and terminal['claim_sha256']==sha(claim_raw) and terminal['experiment_id']==parent,'genuine prior claim/terminal join')
+  status='failed' if p['phase']=='continue100' else 'complete'
+  require(terminal_raw==(directory/(status+'.json')).read_bytes() and not (directory/('complete.json' if status=='failed' else 'failed.json')).exists(),'actual prior lifecycle status differs')
+- require({k:v for k,v in value['provenance'].items() if k!='source_commit'}=={k:v for k,v in prov.items() if k!='source_commit'},'prior scientific provenance differs')
++ if 'operational_source_compatibility' in run.admission.inputs and p['phase']=='continue100':
++  from .operational_source_compatibility import require_parent_compatibility
++  require_parent_compatibility(run,value['provenance'],prov,run.admission.root/run.admission.inputs[value['checkpoint_input']]['path'])
++ else:
++  require({k:v for k,v in value['provenance'].items() if k!='source_commit'}=={k:v for k,v in prov.items() if k!='source_commit'},'prior scientific provenance differs')
+  info=run.admission.inputs[value['checkpoint_input']];run.read_input(value['checkpoint_input']);checkpoint=run.admission.root/info['path']
+  manifest=json.loads(checkpoint.read_bytes())
+  require(manifest['provenance']==value['provenance'],'prior artifact provenance differs')
+@@ -351,6 +358,9 @@
+  refdir=run.admission.root/'research_runs'/claim['experiment_id'];verified=verify_claim(refdir)
+  require(verified==claim and claim_raw==(refdir/'claim.json').read_bytes() and run.read_input(ref['terminal_input'])==(refdir/'complete.json').read_bytes() and not (refdir/'failed.json').exists(),'uninterrupted reference actual lifecycle join')
+  require({k:v for k,v in ref['provenance'].items() if k not in ('source_commit','cell_id')}=={k:v for k,v in prov.items() if k not in ('source_commit','cell_id')},'reference scientific provenance differs')
++ if 'operational_source_compatibility' in run.admission.inputs:
++  from .operational_source_compatibility import require_reference_policy
++  require_reference_policy(run,claim)
+  complete=json.loads(run.read_input(ref['completion_input']));require(complete['epochs']==100,'uninterrupted reference incomplete')
+  refcp=run.admission.root/run.admission.inputs[ref['checkpoint_input']]['path'];run.read_input(ref['checkpoint_input']);require(complete['sha256']==file_hash(refcp),'reference checkpoint completion join')
+  expected_fit=run.admission.root/'research_artifacts/onchain_fit_cells'/sha(ref['provenance']['cell_id'].encode())/claim['experiment_id']

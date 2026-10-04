@@ -1,0 +1,13 @@
+{
+  "finding": "OPC-PREDICT-POLICY-01",
+  "two_valid_pure_metadata_policies": true,
+  "same_target_map": true,
+  "policy_a_sha256": "b8924d63f75f2c6b8ce64bd291388c22ab53a361978fc9f103c40fdff126b416",
+  "policy_b_sha256": "c4e9108ff58943a6fd058ba0e8f477eeaa21d92c65932af63526cc08b6c116df",
+  "changed_policy_field": "consumers.predict.experiment",
+  "exact_legacy_predict_comparison": "{k: v for k, v in value['provenance'].items() if k != 'source_commit'} == {k: v for k, v in prov.items() if k != 'source_commit'}",
+  "legacy_comparison_accepts": true,
+  "parent_compatibility_guard": "'operational_source_compatibility' in run.admission.inputs and p['phase'] == 'continue100'",
+  "genuine_claim_or_parent_executed": false,
+  "qualification": "Source control-flow plus exact pure metadata comparison; no claim/Run/Admission or numerical API executed."
+}
