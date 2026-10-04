@@ -1,0 +1,142 @@
+{
+  "actual_full_scope_restore": false,
+  "actual_received_manifest_joins": true,
+  "capture_review_manifest_sha256": "a3aa7bd14e2e5afc6aa731980f9bcebedbbd160b61d1de1e01a2fb21e6aa277e",
+  "capture_sha256": "37c3f6b064b005398535c8b49636ef4e9190dd508d29200034c81823b699786c",
+  "checks": 136,
+  "decision": "ACCEPTED_FAILED_SCOPE_THREE_ROLE_FLAT_ADAPTER_SOURCE_ONLY",
+  "exact_actual_release": null,
+  "helper_sha256": "9996683a2e10905426c110097379514d1fdd152c23ff1935aa6e197ea791257f",
+  "numerical_authority": false,
+  "preparation_manifest_sha256": "ccc79a5107ebe0b9db370ea42bcad984dfb2ee72e1284e7565e6c977dc9c2a38",
+  "real_partial_failure_retained": true,
+  "refusals": [
+    {
+      "message": "draft-not-released output_root",
+      "name": "actual unknown draft",
+      "type": "ValueError"
+    },
+    {
+      "message": "draft-not-released release",
+      "name": "actual Root null review/release draft",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact failed-scope request",
+      "name": "missing exact request capture_review_manifest",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact failed-scope request",
+      "name": "missing exact request output_root",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact failed-scope request",
+      "name": "missing exact request release",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact failed-scope request",
+      "name": "missing exact request remote_receipt_sha256",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact failed-scope request",
+      "name": "missing exact request remote_root",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact failed-scope request",
+      "name": "missing exact request review",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact failed-scope request",
+      "name": "missing exact request schema_version",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact failed-scope request",
+      "name": "unknown extra request",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact failed-scope request",
+      "name": "bool request schema",
+      "type": "ValueError"
+    },
+    {
+      "message": "actual remote receipt",
+      "name": "wrong real remote receipt digest",
+      "type": "ValueError"
+    },
+    {
+      "message": "actual archive/manifest lineage",
+      "name": "missing actual role member source",
+      "type": "ValueError"
+    },
+    {
+      "message": "actual archive/manifest lineage",
+      "name": "missing actual role member parent",
+      "type": "ValueError"
+    },
+    {
+      "message": "actual archive/manifest lineage",
+      "name": "missing actual role member outer",
+      "type": "ValueError"
+    },
+    {
+      "message": "immutable actual capture",
+      "name": "changed capture actualbody",
+      "type": "ValueError"
+    },
+    {
+      "message": "'outer-manifest.json'",
+      "name": "missing real third role",
+      "type": "KeyError"
+    },
+    {
+      "message": "foreign/oversized flat namespace",
+      "name": "same role namespace reuse source",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact complete role recovery metadata",
+      "name": "wrong actual recovered metadata source",
+      "type": "ValueError"
+    },
+    {
+      "message": "foreign/oversized flat namespace",
+      "name": "same role namespace reuse parent",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact complete role recovery metadata",
+      "name": "wrong actual recovered metadata parent",
+      "type": "ValueError"
+    },
+    {
+      "message": "foreign/oversized flat namespace",
+      "name": "same role namespace reuse outer",
+      "type": "ValueError"
+    },
+    {
+      "message": "exact complete role recovery metadata",
+      "name": "wrong actual recovered metadata outer",
+      "type": "ValueError"
+    },
+    {
+      "message": "[Errno 17] File exists: 'three-flat'",
+      "name": "oneuse outer namespace",
+      "type": "FileExistsError"
+    },
+    {
+      "message": "archive binding differs",
+      "name": "real truncated second-role archive",
+      "type": "ValueError"
+    }
+  ],
+  "schema_version": 1,
+  "tiny_real_three_role_pipeline": true
+}

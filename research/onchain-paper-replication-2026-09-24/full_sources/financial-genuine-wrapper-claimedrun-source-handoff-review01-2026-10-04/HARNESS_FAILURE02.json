@@ -1,0 +1,8 @@
+{
+  "script": "check03.py",
+  "tool_chunk": "d2f3b6",
+  "exit_code": 1,
+  "exception": "AssertionError: actual future target absent before read-only build",
+  "cause": "Root concurrent target creation invalidated fresh-path assumption. build was not invoked. Independent existing-byte reconstruction follows without bypassing generator guard or inspecting new capsule.",
+  "candidate_guard_correctly_requires_fresh_target": true
+}

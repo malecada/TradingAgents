@@ -1,0 +1,19 @@
+{
+  "actual_capsule_created": false,
+  "reader": {
+    "accepted_after_parent_redirect": true,
+    "actual_resolved_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-source-handoff-review01-2026-10-04/owned-reader/retained-original/body",
+    "lexical_requested_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-source-handoff-review01-2026-10-04/owned-reader/original/body",
+    "opaque_sha256": "02b9ae325ade8352f73235caf156e33d8e5bfc6ac4349e5a6e46662f54008b2e",
+    "qualification": "Exact extracted reader; controlled read callback renames only owned directory and replaces it with a symlink; real file signatures and actual reads."
+  },
+  "source_sha256": "efcba9d1f36f2a472812ff5582a4d706c52f6a0360c7868cf2cfab34d5b072b7",
+  "writer": {
+    "context_is_primary": true,
+    "errno": 9,
+    "fd_absent": true,
+    "primary_preserved": false,
+    "raised_type": "OSError"
+  },
+  "writer_qualification": "Exact extracted main output loop; owned io.BufferedWriter subclass injects the write fatal, while real FileIO context-manager close supplies EBADF. This is source exception-order evidence, not an actual production write failure."
+}

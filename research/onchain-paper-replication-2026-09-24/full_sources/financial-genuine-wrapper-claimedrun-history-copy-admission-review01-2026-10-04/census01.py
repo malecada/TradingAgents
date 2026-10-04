@@ -1,0 +1,48 @@
+import datetime,hashlib,importlib.util,json,os,stat,subprocess
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;CAP=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source');ID='financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01';ROOT=CAP/'research_runs'/ID;SOURCE='649fb8a11089524aaef7843dffeeb90a3a55ca17';checks=[];commands=[];begin=datetime.datetime.now(datetime.timezone.utc).isoformat()
+def check(v,n):
+ if not v:raise AssertionError(n)
+ checks.append(n)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def enc(v):return (json.dumps(v,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+def save(n,v):
+ with (HERE/n).open('xb') as f:f.write(enc(v))
+def sig(s):return [s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns]
+def git(args,data=None):
+ p=subprocess.run(['git',*args],cwd=CAP,input=data,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=15,check=False);check(p.returncode==0,'read-only Git '+args[0]);commands.append({'argv':['git',*args],'exit':p.returncode,'stdout_bytes':len(p.stdout),'stdout_sha256':sha(p.stdout),'stderr_bytes':len(p.stderr),'stderr_sha256':sha(p.stderr)});return p.stdout
+check(ROOT.resolve()==ROOT and ROOT.is_dir(),'canonical actual original claim root');rows=[]
+def visit(p,relative):
+ s=p.lstat();before=sig(s);check(len(rows)<32,'finite complete claim scope');row={'path':relative,'mode':stat.S_IMODE(s.st_mode),'origin':str(p),'origin_signature':before,'destination_relative_path':'research_runs/'+ID+('' if relative=='.' else '/'+relative)}
+ if stat.S_ISDIR(s.st_mode):
+  row['kind']='directory';rows.append(row)
+  for child in sorted(p.iterdir()):visit(child,child.name if relative=='.' else relative+'/'+child.name)
+  check(sig(p.lstat())==before,'stable directory '+relative)
+ else:
+  check(stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_size<=4*1024**2,'regular immutable metadata '+relative);body=p.read_bytes();check(sig(p.lstat())==before,'stable file '+relative);row.update(kind='file',bytes=len(body),sha256=sha(body));rows.append(row)
+visit(ROOT,'.');rows.sort(key=lambda r:r['path']);check([r['path'] for r in rows]==['.','claim.json','failed.json','outputs'],'whole exact4node tree incl empty outputs')
+claimraw=(ROOT/'claim.json').read_bytes();failraw=(ROOT/'failed.json').read_bytes();claim=json.loads(claimraw);failed=json.loads(failraw);check(sha(claimraw)=='4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128' and sha(failraw)=='35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450','original byte pins unchanged');check(failed['claim_sha256']==sha(claimraw) and failed['output_sha256']=={} and failed['status']=='failed','unique actual failed terminal empty output')
+check([p.name for p in (CAP/'research_runs').iterdir()]==[ID],'entire actual ledger has one identity');check(claim['source']==claim['design_source']==SOURCE and claim['effective_attempt_budget']==18,'old source/design/budget remains historical')
+vp=CAP/'tradingagents/research/verify.py';check(sha(vp.read_bytes())==claim['experiment']['source_files']['tradingagents/research/verify.py'],'genuine stdlib verifier pinned');spec=importlib.util.spec_from_file_location('closed_original_history_verifier',vp);v=importlib.util.module_from_spec(spec);spec.loader.exec_module(v);check(v.verify_claim(ROOT)==claim,'genuine original verify_claim');verified=v.verify_run(ROOT);check(verified['status']=='failed' and verified['output_count']==0,'genuine original verify_run failed0outputs')
+check(git(['rev-parse','HEAD']).decode().strip()==SOURCE,'actual original HEAD649 unchanged');commits=git(['rev-list','--parents',SOURCE]).decode().splitlines();oids=sorted(git(['rev-list','--objects','--no-object-names',SOURCE]).decode().splitlines());check(len(oids)==len(set(oids))==363,'complete363 reachableGitobjects');check(len(commits)==6,'original6commit ancestry')
+meta=git(['cat-file','--batch-check=%(objectname) %(objecttype) %(objectsize)'],(''.join(x+'\n' for x in oids)).encode()).decode().splitlines();objects=[]
+for oid,line in zip(oids,meta):
+ actual,kind,size=line.split();size=int(size);check(actual==oid and kind in ('blob','tree','commit','tag') and 0<=size<=4*1024**2,'bounded real object '+oid);objects.append({'oid':oid,'type':kind,'bytes':size})
+check(len(meta)==len(oids) and sum(r['bytes'] for r in objects)<=64*1024**2,'whole Git object scope bounded')
+# Byte-authenticate all reachable objects without decoding blobs or retaining their bodies.
+for start in range(0,len(objects),32):
+ batch=objects[start:start+32];raw=git(['cat-file','--batch'],(''.join(x['oid']+'\n' for x in batch)).encode());offset=0
+ for row in batch:
+  end=raw.index(b'\n',offset);header=raw[offset:end].decode();check(header==row['oid']+' '+row['type']+' '+str(row['bytes']),'actual Git frame '+row['oid']);body=raw[end+1:end+1+row['bytes']];check(len(body)==row['bytes'] and raw[end+1+row['bytes']:end+2+row['bytes']]==b'\n','exact Git frame extent '+row['oid']);check(hashlib.sha1(row['type'].encode()+b' '+str(len(body)).encode()+b'\0'+body).hexdigest()==row['oid'],'actual Git object identity '+row['oid']);row['content_sha256']=sha(body);offset=end+2+row['bytes']
+ check(offset==len(raw),'batch no tail')
+# Recheck original claim metadata after genuine verification and Git enumeration.
+for r in rows:
+ p=Path(r['origin']);check(sig(p.lstat())==r['origin_signature'],'original claim stable end '+r['path'])
+ if r['kind']=='file':check(sha(p.read_bytes())==r['sha256'],'original body stable end '+r['path'])
+mapdoc={'schema_version':1,'status':'EXACT_SOURCE_COPY_SPECIFICATION_NO_COPY_PERFORMED','original_root':str(ROOT),'destination_capsule_root':None,'destination_prefix':'research_runs/'+ID,'root_and_empty_directories_must_be_created':True,'members':rows,'total_nodes':len(rows),'regular_files':2,'regular_bytes':len(claimraw)+len(failraw),'directories_including_root':2,'original_output_files':0,'original_failed_terminals':1,'original_unique_spent_claims':1,'expected_destination_unique_claim_count_after_copy':1,'actual_destination_claim_count':None,'new_claim_created':False,'copy_complete_or_admitted':False,'mode_policy':'Preserve exact literal mode metadata and verify actual destination directory/file modes; origin inode/timestamps are authentication observations, not required equal copied inode identity.','historical_paths_policy':'No rewriting absolute Owner/job/source/checkpoint strings. Such objects are historical, not new execution authority.'}
+gitmap={'schema_version':1,'original_source':SOURCE,'original_git_dir':str(CAP/'.git'),'ancestry_lines':commits,'reachable_object_count':len(objects),'raw_object_content_bytes':sum(r['bytes'] for r in objects),'objects':objects,'requirement':'Destination must retain each actual object OID/type/extent/content hash and complete six-commit ancestry; new current HEAD/source adoption is separate. A ref name or shallow graph is insufficient.','actual_destination_git':None}
+save('CLAIM_COPY_SPEC01.json',mapdoc);save('GIT_ANCESTRY_SPEC01.json',gitmap)
+requirements={'schema_version':1,'original_claim_tree_spec_sha256':sha(enc(mapdoc)),'original_git_spec_sha256':sha(enc(gitmap)),'source_verifier_sha256':sha(vp.read_bytes()),'required_destination_observations':['fresh private canonical disjoint standalone capsule, no redirects/shared .git/partial history','complete exact relative claim tree including root and empty outputs; identical bytes and modes','all original649 reachable Git objects and six-commit ancestry authenticated','actual genuine pinned verify_claim equals immutable original claim and verify_run failed/output_count0','complete destination relevant ledger exactly1 unique spent claim; copied bytes are same global claim, not fresh or duplicate allowance','actual destination source/current=design, source closure, new inputs, effective19 reviewed metadata, new registration/caller/proofs separately admitted','original Source/Parent/Git/raw stores unchanged before/after copy; literal historical absolute paths are not runtime authority','new full source/history mapping/caller/review capture and actual external/flat recovery independently accepted before release'],'actual_destination_verified':None,'actual_relocation_operation':None,'actual_new_source':None,'actual_registration':None,'actual_admission':None,'actual_caller':None,'numerical_release':False,'original_effective_budget':18,'prospective_reviewed_ceiling_not_currently_admitted':19}
+save('DESTINATION_REQUIREMENTS01.json',requirements)
+result={'decision':'EXACT_ORIGINAL_CLOSED_HISTORY_CENSUS_FROZEN_NO_COPY_OR_ADMISSION','begin':begin,'end':datetime.datetime.now(datetime.timezone.utc).isoformat(),'checks':len(checks),'check_names':checks,'original_tree_spec_sha256':sha(enc(mapdoc)),'git_ancestry_spec_sha256':sha(enc(gitmap)),'original_genuine_verify_run':verified,'actual_original_nodes':4,'actual_original_files':2,'actual_original_bytes':len(claimraw)+len(failraw),'actual_original_directories':2,'actual_failed':1,'actual_outputs':0,'actual_spent':1,'original_source_commit':SOURCE,'actual_reachable_Git_objects':len(objects),'actual_ancestry_commits':len(commits),'actual_source_unchanged':True,'read_only_git_commands':commands,'actual_destination_capsule':None,'actual_destination_verify_claim':None,'actual_destination_verify_run':None,'actual_destination_closed_claims':None,'copy_performed':False,'admission_performed':False,'scientific_imports':False,'native_or_numerical_execution':False}
+save('READBACK01.json',result);print(json.dumps({k:v for k,v in result.items() if k not in ('check_names','read_only_git_commands')}))

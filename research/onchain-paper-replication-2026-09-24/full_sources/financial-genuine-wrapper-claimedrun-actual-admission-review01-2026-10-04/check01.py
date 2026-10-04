@@ -1,0 +1,45 @@
+import ast,datetime,hashlib,io,json,os,stat,subprocess,sys,tarfile,types
+from pathlib import Path
+H=Path(__file__).resolve().parent;B=H.parent;R=B/'financial-genuine-wrapper-root-claimedrun-actual-admission01-2026-10-04';C=B/'financial-genuine-wrapper-root-claimedrun-source339-capture01-2026-10-04';V=B/'financial-genuine-wrapper-claimedrun-actual-source-admission-review01-2026-10-04';N=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source');checks=[]
+def check(v,n):
+ if not v:raise AssertionError(n)
+ checks.append(n)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def read(p,cap=4194304):
+ s=p.lstat();check(p.resolve()==p and stat.S_ISREG(s.st_mode) and s.st_size<=cap,'canonical bounded '+p.name);b=p.read_bytes();t=p.lstat();check((s.st_dev,s.st_ino,s.st_mode,s.st_size,s.st_mtime_ns,s.st_ctime_ns)==(t.st_dev,t.st_ino,t.st_mode,t.st_size,t.st_mtime_ns,t.st_ctime_ns),'stable '+p.name);return b
+def load(p):return json.loads(read(p))
+def ref(p):return {'path':str(p),'sha256':sha(read(p))}
+receipt=load(R/'ACTUAL_ADMISSION01.json');terminal=load(R/'ACTUAL_TOOL_TERMINAL02.json');check(sha(read(R/'ACTUAL_TOOL_TERMINAL02.json'))=='37bd9d32ceeddc2996e371d3a56e4123e2e310b76ca5802608ef7e063a737afb','exact Root terminal');check(sha(read(R/'ACTUAL_ADMISSION01.json'))==terminal['receipt_sha256']=='8a48866c641137e095070ac7bad1ff0f7a91c32ec54b1ab449748706814614fb','exact Root admission receipt');check((terminal['actual_unified_session'],terminal['actual_tool_start'],terminal['actual_tool_completion'],terminal['actual_exit_code'])==(97927,'111b08','29d041',0),'actual tool success joins');out=json.loads(terminal['actual_tool_output']);check(out=={'ready':True,'effective_metadata_budget':19,'actual_claims':1,'highest_actual_claim_budget':18,'pid':397801,'new_native':False},'full actualstdout join');check(receipt['observed_pid']==terminal['observed_original_pid']==397801 and receipt['observed_start_ticks']==terminal['observed_original_ticks']=='15482001','actual original PID and ticks');check(not Path('/proc/397801').exists(),'actual original PID currently absent');observed=datetime.datetime.now(datetime.timezone.utc).isoformat()
+S=receipt['source'];ID=receipt['experiment_id'];check(S==receipt['design_source']=='0a2e7639b42b9423b90743feadcda4078aa21816' and receipt['source_root']==str(N),'actual current/design/root');q=subprocess.run(['git','rev-parse','HEAD'],cwd=N,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=15);check(q.returncode==0 and q.stdout.decode().strip()==S,'actual current HEAD readback');g=load(N/receipt['registration']);e=g['experiments'][ID];check(sha(read(N/receipt['registration']))==receipt['registration_sha256']=='3a20293832fa7ecc5e2821fb27dc940d1a997ab7f2ad373bc28f73e893e8781a','actual gate');check(receipt['ready'] is True and receipt['actual_effective_metadata_budget']==19 and receipt['base_budget']==18 and receipt['prior_attempts']==0 and receipt['actual_global_spent_claims']==1 and receipt['highest_actual_claim_budget']==18,'prospective admission19 versus claim18/spent1');check(receipt['inputs']==e['inputs'] and len(e['inputs'])==receipt['input_roles']==8 and len(e['source_files'])==receipt['source_pins']==338,'exact338/8')
+for k in ('binding','research_run','owner','new_claim'):check(receipt[k] is None,'retained null '+k)
+check(receipt['new_native'] is False and receipt['numerical_imports_present'] is False,'original no native/numerical imports');check(not os.path.lexists(N/'research_runs'/ID),'newclaim still absent');check({p.name for p in (N/'research_runs').iterdir() if not p.name.startswith('.')}=={'financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01'},'actual one historical claim')
+for name,pin in e['source_files'].items():check(sha(read(N/name))==pin,'current source '+name)
+for role,row in e['inputs'].items():check(sha(read(N/row['path']))==row['sha256']==e['source_files'][row['path']],'actual input '+role)
+origins=receipt['actual_imported_source_origins'];check(len(origins)==13,'13 actual source modules');
+for name,row in origins.items():
+ check(row['path']==name.replace('.','/')+'.py' or row['path']==name.replace('.','/')+'/__init__.py','module source path '+name);check(sha(read(N/row['path']))==row['sha256']==e['source_files'][row['path']],'genuine actual imported source '+name)
+# Verify executed helper source only, never execute it or re-admit.
+raw=read(R/'ADMIT01.py');tree=ast.parse(raw);calls=[ast.unparse(n.func) for n in ast.walk(tree) if isinstance(n,ast.Call)];check(calls.count('job._admitted')==1 and calls.count('job._command')==1 and calls.count('claims')==1,'one actual original admission route');check(not any(n in calls for n in ('ResearchRun.start','job.launch','job.worker','Owner','Binding')),'no start/launch called in actual helper');check('sys.path.insert(0,str(N))' in raw.decode() and "importlib.import_module('tradingagents.research.onchain_replication.job')" in raw.decode(),'actual explicit source import path')
+jobraw=read(N/'tradingagents/research/onchain_replication/job.py');jobtree=ast.parse(jobraw);command=next(n for n in jobtree.body if isinstance(n,ast.FunctionDef) and n.name=='_command');ns={'Path':Path,'sys':sys,'MODULE':'tradingagents.research.onchain_replication.job'};exec(compile(ast.Module(body=[command],type_ignores=[]),'<actual pure command builder>','exec'),ns);args=types.SimpleNamespace(root=str(N),registration=receipt['registration'],experiment=ID,source=S);check(ns['_command'](args,'launch')==receipt['genuine_job_command'],'exact genuine pure command only no execution')
+runtime=load(N/e['inputs']['runtime_mapping']['path']);check(len(runtime['distribution_records'])==251,'runtime251');
+for row in runtime['distribution_records']:check(sha(read(Path(row['record'])))==row['record_sha256'],'runtime RECORD '+row['name'])
+check(runtime['executable']==sys.executable and runtime['prefix']==sys.prefix and sha(read(Path(runtime['resolved_executable']),64*1024**2))==runtime['executable_sha256'] and sha(read(N/'uv.lock'))==runtime['lock_sha256'],'current runtime binary/lock/path')
+# Current complete source and actual capture joins; no extracting archive.
+m=load(C/'source-manifest.json');check(sha(read(C/'source-manifest.json'))==receipt['complete_source_manifest_sha256']=='fdf77348b81a4d6df8b420b98530f5485900a0461636e1c201506106b036dfd8','actual fullcapture manifest');check(m==load(V/'CURRENT_TREE02.json'),'exact preceding whole Source review');paths=[]
+def walk(p):
+ for x in p.iterdir():
+  paths.append(x.relative_to(N).as_posix())
+  if stat.S_ISDIR(x.lstat().st_mode):walk(x)
+walk(N);check(set(paths)=={r['path'] for r in m['members']} and len(paths)==1029,'complete namespace1029');check(stat.S_IMODE(N.lstat().st_mode)==m['root_mode'],'current rootmode');
+for row in m['members']:
+ p=N/row['path'];s=p.lstat();check(stat.S_IMODE(s.st_mode)==row['mode'],'actual member mode '+row['path'])
+ if row['kind']=='file':check(stat.S_ISREG(s.st_mode) and s.st_size==row['bytes'] and sha(read(p))==row['sha256'],'actual member bytes '+row['path'])
+ else:check(stat.S_ISDIR(s.st_mode),'actual directory '+row['path'])
+cap=load(C/'CAPTURE01.json');archive=read(C/'source.tar.gz');check(sha(archive)==cap['archive']['sha256']=='b5b6aad2f515447dc6566cfb716a20ef90031313d48f1ac903ab756735431e24' and len(archive)==cap['archive']['bytes']==3912554,'actual complete archive');rows={r['path']:r for r in m['members']};seen=[]
+with tarfile.open(fileobj=io.BytesIO(archive),mode='r:gz') as tf:
+ for member in tf:
+  check(member.name in rows and member.name not in seen,'archive unique declared member');r=rows[member.name];seen.append(member.name);check(member.mode==r['mode'],'archive mode')
+  if r['kind']=='file':check(member.isfile() and member.size==r['bytes'] and sha(tf.extractfile(member).read())==r['sha256'],'archive opaque body')
+  else:check(member.isdir(),'archive directory')
+check(set(seen)==set(rows),'archive complete1029');check(sum(r['kind']=='file' for r in rows.values())==747,'archive747bodies');check(not any(n in sys.modules for n in ('numpy','torch','scipy','pandas')),'review no numerical imports')
+result={'decision':'ACCEPTED_ACTUAL_READ_ONLY_METADATA_ADMISSION','utc':observed,'checks':len(checks),'check_names':checks,'source':S,'identity':ID,'actual_original_pid':397801,'actual_original_start_ticks':'15482001','current_pid_absent':True,'historical_process_tree_complete':False,'actual_effective_metadata_budget':19,'base_budget':18,'prior_attempts':0,'global_spent_claims':1,'highest_actual_claim_budget':18,'source_pins':338,'roles':8,'imported_module_origins':13,'runtime_RECORD_metadata':251,'complete_current_source_members':1029,'complete_current_source_files':747,'no_admission_rerun':True,'no_new_claim_Run_Owner_Binding':True,'actual_full_external_recovery':None,'actual_numerical_release':None};(H/'READBACK01.json').write_text(json.dumps(result,sort_keys=True,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='check_names'}))

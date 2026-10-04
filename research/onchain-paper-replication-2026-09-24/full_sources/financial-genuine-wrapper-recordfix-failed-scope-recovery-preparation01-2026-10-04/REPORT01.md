@@ -1,0 +1,7 @@
+# Source-only implementation result
+
+A concrete three-role restore adapter was implemented around unchanged accepted R4 primitives. The fixed postfailure archive scope replaces the unrelated eleven-tree final-union adapter. The actual capture review pin is authenticated from its immutable body.
+
+The initially supplied hash accidentally included the following check-count prefix 19. The unexecuted original-review-pin-draft01.py is preserved. The final helper differs by exactly that single literal; byte and AST inverses passed. CHECK01 passed 44 bounded controls, including actual seven-object metadata joins, a real owned opaque three-role archive/flat pipeline, one-use/corruption refusals and nine first-fatal pairs. CHECK02 passed 14 additive exact-pin/inverse/request refusal/helper/no-numerical controls. Neither check restored actual captured data or executed network, native or claim APIs. No test failure occurred in these two executions.
+
+Remaining actual requirements are the new remote namespace and terminal receipt, independently reviewed exact Root request and one-use release, and a fresh output name. Root must retain actual exit/cleanup and independently verify and preserve every resulting partial or complete recovery. The candidate is not independently accepted by its author. Current-source equality is deliberately required; a later source mutation before recovery will refuse rather than silently reinterpret this failed scope.

@@ -1,0 +1,5 @@
+# Correction result
+
+Both SH1 and SH2 are corrected in a new source-only candidate. Exact extracted predecessor/successor controls rename a genuinely owned parent to a retained directory and insert a symlink during read: the original accepted the redirected path, the successor refuses. Actual owned writer controls close the real descriptor before a primary MemoryError: builtin close replaces it with OSError, while accepted owned cleanup preserves the primary fatal. All controls retain witness files and no actual Root failure is implied.
+
+37 targeted controls and 225 inherited controls passed. New generation is byte-identical for every original generated descriptor, including the eight role bodies. The full predecessor directory, original generation failure, original outputs and source are preserved. Current successor GENERATE01/CHECK01/CHECK02 exited0 without failures. Root has not invoked the predecessor or successor or created the proposed capsule. Independent review remains required.

@@ -1,0 +1,11 @@
+# Fixed failed-scope flat recovery protocol
+
+This adapter restores the three actual postfailure roles from the newly fetched remote selection only. It retains Source 1,011 typed members / 730 regular bodies, Parent 33 / 28, and outer 5 / 5: 1,049 typed members and 763 bodies, plus three flat mapping files. R4 framing, canonical compression validation, ownership IO and Git helper are byte-identical accepted primitives. Flat private files retain logical path/type/mode metadata; they do not instantiate original POSIX trees.
+
+The seven immutable capture objects and the actual independent local capture review are fixed. A Root request must supply the actual remote root/receipt, independent review and exact one-use release, and a fresh output under the fixed full_sources parent. No draft null is executable. The release binds request contract, helper, review and capture hashes. Selected remote bytes must match pinned size/hash/Git blob OID; all three canonical archive manifests and complete denominators are joined before writing. Current original Source is compared read-only before and after recovery. No local capture fallback exists.
+
+Bounds remain 4 MiB per file, 128 MiB aggregate logical baseline, 192 MiB inflate, finite R4 entries/depth/time, and 10 GiB observed free disk before and during recovery. Exclusive descriptor-anchored creation produces private 0700 directories and R4 0600 flat files. No deletion or retry occurs. All partial outputs and first fatal errors remain retained. Failed journaling uses accepted first-fatal cleanup semantics.
+
+Original null Parent self-exit is preserved alongside separate actual exit 1. Claim and failed markers are pinned; COMPLETE is absent and no checkpoint achievement is asserted. CAPTURE numerical_or_native_started=false describes the byte capture, not the historical native attempt. That actual identity remains permanently failed, with one spent claim and allowance 18. Byte recovery confers no admission, numerical capacity, runtime/store recovery or financial fit credit.
+
+Invocation after independent actual release: checkout-local .venv/bin/python -B <this-directory>/restore01.py --request <actual-request> --sha256 <actual-request-sha256>. Root alone invokes it once. No invocation has occurred in this preparation.

@@ -1,0 +1,142 @@
+{
+  "actual_effective_metadata_budget": 19,
+  "actual_global_spent_claims": 1,
+  "actual_imported_source_origins": {
+    "tradingagents": {
+      "path": "tradingagents/__init__.py",
+      "sha256": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5"
+    },
+    "tradingagents.research": {
+      "path": "tradingagents/research/__init__.py",
+      "sha256": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af"
+    },
+    "tradingagents.research.admission": {
+      "path": "tradingagents/research/admission.py",
+      "sha256": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd"
+    },
+    "tradingagents.research.budget_extensions": {
+      "path": "tradingagents/research/budget_extensions.py",
+      "sha256": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a"
+    },
+    "tradingagents.research.lifecycle": {
+      "path": "tradingagents/research/lifecycle.py",
+      "sha256": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc"
+    },
+    "tradingagents.research.onchain_replication": {
+      "path": "tradingagents/research/onchain_replication/__init__.py",
+      "sha256": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1"
+    },
+    "tradingagents.research.onchain_replication.financial_wrapper_fixture": {
+      "path": "tradingagents/research/onchain_replication/financial_wrapper_fixture.py",
+      "sha256": "f4ea651b4677c83f8e16c316d17f704d44d9ec86ff78a4bf7c4b895e92e1a16e"
+    },
+    "tradingagents.research.onchain_replication.job": {
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "sha256": "755cbbc9f22a8d9718ebb53211135d08b62e485dd3edeca2fbec29998c43b923"
+    },
+    "tradingagents.research.onchain_replication.owned_io": {
+      "path": "tradingagents/research/onchain_replication/owned_io.py",
+      "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+    },
+    "tradingagents.research.onchain_replication.provenance": {
+      "path": "tradingagents/research/onchain_replication/provenance.py",
+      "sha256": "d29f7f5c2fc5d0def6538d3a1eb13dc051c672d8ea38257af333930f87b9ff1b"
+    },
+    "tradingagents.research.onchain_replication.resources": {
+      "path": "tradingagents/research/onchain_replication/resources.py",
+      "sha256": "e1d305e41938815d60ae2f465fcb2b543768c6862d176f4f6075ced53c8069c7"
+    },
+    "tradingagents.research.onchain_replication.workflow_storage": {
+      "path": "tradingagents/research/onchain_replication/workflow_storage.py",
+      "sha256": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554"
+    },
+    "tradingagents.research.verify": {
+      "path": "tradingagents/research/verify.py",
+      "sha256": "3a45746a388307d1b375c885bb2fd7a22c2a60f139df714d2bbe98906d57d7eb"
+    }
+  },
+  "base_budget": 18,
+  "binding": null,
+  "complete_source_manifest_sha256": "fdf77348b81a4d6df8b420b98530f5485900a0461636e1c201506106b036dfd8",
+  "design_source": "0a2e7639b42b9423b90743feadcda4078aa21816",
+  "elapsed_seconds": 1.2126958230219316,
+  "experiment_id": "financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01",
+  "genuine_job_command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research.onchain_replication.job",
+    "--mode",
+    "launch",
+    "--root",
+    "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source",
+    "--registration",
+    "fixture_inputs/financial_wrapper_claimedrun01/gates.json",
+    "--experiment",
+    "financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01",
+    "--source",
+    "0a2e7639b42b9423b90743feadcda4078aa21816"
+  ],
+  "highest_actual_claim_budget": 18,
+  "input_roles": 8,
+  "inputs": {
+    "environment": {
+      "dataset": "synthetic",
+      "path": "fixture_inputs/financial_wrapper_claimedrun01/environment.json",
+      "sha256": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87"
+    },
+    "execution_job": {
+      "dataset": "synthetic",
+      "path": "fixture_inputs/financial_wrapper_claimedrun01/execution_job.json",
+      "sha256": "4712f728425cacd9c346f43fcab5ec37cdbda75d1423eebdf1beb8dc3e863f0e"
+    },
+    "model": {
+      "dataset": "synthetic",
+      "path": "fixture_inputs/financial_wrapper_claimedrun01/model.json",
+      "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+    },
+    "runtime_mapping": {
+      "dataset": "synthetic",
+      "path": "fixture_inputs/financial_wrapper_claimedrun01/runtime_mapping.json",
+      "sha256": "34c4adac06053df082f55d5581c4d29a93ea6d5719b515771d5d33925a62a2f7"
+    },
+    "source_closure": {
+      "dataset": "synthetic",
+      "path": "fixture_inputs/financial_wrapper_claimedrun01/source_closure.json",
+      "sha256": "94a33256b502747a9a8c68df3c1bef6e8d7c577f527a8d0e1dffe0003da3b14c"
+    },
+    "synthetic_recipe": {
+      "dataset": "synthetic",
+      "path": "fixture_inputs/financial_wrapper_claimedrun01/synthetic_recipe.json",
+      "sha256": "f8b1ec1eed902f3cca76bd7e06d2435accda699173b9a7942d10c37c64f01040"
+    },
+    "training": {
+      "dataset": "synthetic",
+      "path": "fixture_inputs/financial_wrapper_claimedrun01/training.json",
+      "sha256": "d5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0"
+    },
+    "wrapper_plan": {
+      "dataset": "synthetic",
+      "path": "fixture_inputs/financial_wrapper_claimedrun01/wrapper_plan.json",
+      "sha256": "15fd8a363806a15b68a6ff23b029847727b5ddbeb9e945454a1f9b5d4c4ac729"
+    }
+  },
+  "new_claim": null,
+  "new_claim_namespace_absent": true,
+  "new_native": false,
+  "numerical_imports_present": false,
+  "observed_pid": 397801,
+  "observed_start_ticks": "15482001",
+  "owner": null,
+  "prior_attempts": 0,
+  "ready": true,
+  "registration": "fixture_inputs/financial_wrapper_claimedrun01/gates.json",
+  "registration_sha256": "3a20293832fa7ecc5e2821fb27dc940d1a997ab7f2ad373bc28f73e893e8781a",
+  "research_run": null,
+  "scope": "Root actual original job._admitted/Admission result under pinned installed runtime after independent exact Source/gate/cumulative review; read-only source/input/metadata/runtime checks. Cumulative19 is effective in the prospective metadata Admission, not yet adopted by an actual claim. No ResearchRun.start, Binding, Owner, empirical inputs, numerical import, fitting or numerical release.",
+  "source": "0a2e7639b42b9423b90743feadcda4078aa21816",
+  "source_pins": 338,
+  "source_root": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source",
+  "source_whole_tree_unchanged_after": true,
+  "status": "ACTUAL_GENUINE_READ_ONLY_METADATA_ADMISSION_READY_NOT_NUMERICAL_RELEASE"
+}
