@@ -1,0 +1,128 @@
+"""Genuine completed resident ancestry -> detached metadata; no invented NPY lease.
+
+Explicit candidate retains the original sampled reader/content checks, not writer
+exclusion. Genuine capture alone creates a loader authority; metadata alone cannot
+admit fitting. This changed assurance must be reviewed/registered before a pilot.
+"""
+import hashlib,json,weakref,math
+from pathlib import Path
+
+SELF='tradingagents/research/onchain_replication/compact_detached_handoff.py'
+LIMIT=2*1024**2
+STATUS='DETACHED_SAMPLED_COMPONENT_HANDOFF_V1'
+def require(v,message):
+ if not v:raise ValueError(message)
+def encoded(value):
+ def visit(x,depth=0):
+  require(depth<=32,'detached metadata depth exceeded')
+  if type(x) in (str,int,bool,type(None)):return
+  if type(x)is float:require(math.isfinite(x),'finite metadata scalar');return
+  if type(x)is list:
+   require(len(x)<=32768,'metadata list bound');[visit(y,depth+1) for y in x];return
+  if type(x)is dict:
+   require(len(x)<=32768 and all(type(k)is str for k in x),'metadata map bound');[visit(y,depth+1) for y in x.values()];return
+  raise ValueError('only detached primitive metadata; no producer objects or callbacks')
+ visit(value);raw=json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode();require(len(raw)<=LIMIT,'detached metadata bound');return raw
+class Record:
+ """Detached bytes only, explicitly not Receipt/PreparedFeatures/Mapping."""
+ __slots__=('_raw',)
+ def __init__(self,value):
+  require(type(value)is dict and value.get('status')==STATUS,'metadata-only disposition required');object.__setattr__(self,'_raw',encoded(value))
+ def __setattr__(self,k,v):raise AttributeError('immutable detached metadata')
+ def metadata(self):return json.loads(self._raw)
+ def require_loader(self):require(self.metadata().get('lifetime')=='original-reader-sampled-content-v1','original sampled component reader required')
+
+def capture(prepared,terminal,*,input_name):
+ # Lazy imports: no numeric package import during pure metadata/refusal tests.
+ from . import compact_native_features as native,compact_terminal,compact_owner,matching_owner
+ from .provenance import thaw,file_hash,canonical_bytes
+ require(type(terminal)is compact_terminal.Receipt and type(prepared.features)is native._Features,'actual original compact terminal/features required')
+ require(prepared.features._terminal is terminal,'original feature ancestry differs')
+ terminal.check();owner=terminal._owner;bound=owner.bound;run=bound._run;ad=run.admission
+ require(owner.closed and owner.closing and not owner.poisoned and owner.active is None,'genuine completed owner required')
+ require(set(owner.stages)==set(owner.required) and all(s.closed for s in owner.stages.values()),'every original stage must be complete')
+ selected=json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][bound.record['representation']]
+ item=json.loads(run.read_input(selected['plan_input']))['producers'][bound.record['producer']]
+ require(type(input_name)is str and input_name in ad.inputs and selected.get('compact_detached_input')==item.get('compact_detached_input')==input_name,'explicit identical registered detached role required')
+ policy=json.loads(run.read_input(input_name));require(policy=={'schema_version':1,'kind':'compact-detached-sampled-v1','lifetime':'original-reader-sampled-content-v1','metadata_limit':LIMIT},'no invented lifetime authority')
+ pin=ad.experiment['source_files'].get(SELF);require(pin is not None and file_hash(ad.root/SELF)==pin and file_hash(Path(__file__))==pin,'detached source must be genuinely admitted')
+ # Original full numerical/source/Owner/Binding checks occur while ancestors live.
+ hashes=prepared.features.verified_hashes();terminal.check();record=thaw(terminal.record)
+ publication=native._metadata(Path(record['publication']['path']),record['publication']['sha256'],LIMIT)
+ binding=publication['closure']['binding'];require(binding==thaw(prepared.binding) and hashes==binding['feature_hashes'],'complete published feature binding differs')
+ require(set(hashes)==set(selected['descriptor']['required_graphs'])==set(publication['closure']['graph_receipts']),'complete original component population differs')
+ require(selected['descriptor']['configs']['dictionary']['size']==32 and selected['descriptor']['configs']['dictionary']['sample_count']==512,'original dictionary/sample cardinality differs')
+ refs=thaw(prepared.features._mapping._refs);require(set(refs)==set(hashes) and all(v['motifs']==32 for v in refs.values()),'original 32-column full component population required')
+ snapshots={str(p):sha for p,sha in bound._snapshots.items()}
+ base=ad.root/'research_artifacts/onchain_compact_graphs'/bound.record['workflow_identity']/bound.record['experiment']
+ for h in hashes:
+  path=base/h;complete=native._metadata(path/'complete.json',publication['closure']['graph_receipts'][h],LIMIT)
+  snapshots[str(path/'complete.json')]=publication['closure']['graph_receipts'][h];snapshots[str(path/'start.json')]=complete['start_sha256']
+ for stage in owner.stages.values():
+  for name in ('intent.json','stage-complete.json'):
+   path=stage.root/name;snapshots[str(path)]=matching_owner.metadata(path,ad.root)[1]
+ for role in ('publication','owner_terminal'):
+  snapshots[record[role]['path']]=record[role]['sha256']
+ representation=record['representation'];snapshots[str(ad.root/representation['path'])]=representation['sha256']
+ for ref in refs.values():snapshots[ref['path']]=ref['sha256']
+ for name,sha in record['outputs'].items():snapshots[str(run.directory/'outputs'/name)]=sha
+ # Exact original terminal attempt: it is distinct from the representation journal.
+ attempt=ad.root/'research_artifacts/onchain_compact_terminals'/bound.record['workflow_identity']/bound.record['experiment']
+ start_fields=('schema_version','format','owner','resumable','input','policy_sha256','reserved_encoded_bytes','owner_terminal_sha256','representation_sha256','outputs')
+ start={k:record[k] for k in start_fields}
+ for name,value in (('start.json',start),('complete.json',record)):
+  expected=hashlib.sha256(canonical_bytes(value)).hexdigest();require(matching_owner.metadata(attempt/name,ad.root)[1]==expected,'original terminal attempt body differs');snapshots[str(attempt/name)]=expected
+ from . import archive_owner_seal
+ archive_names,_=archive_owner_seal._journal_members(owner);journal=Path(bound.record['journal_directory'])
+ require(journal==owner.root.parent,'original representation namespace differs')
+ namespaces=[]
+ for path,names in ((attempt,{'start.json','complete.json'}),(journal.parent,{journal.name}),(journal,{'owner.json','start.json','claim.json','compact','complete.json'}|archive_names),(owner.root,{'owner.json','complete.json',*owner.required})):
+  compact_owner.entries(path,names,required=names);info=path.lstat();namespaces.append({'path':str(path),'members':sorted(names),'device':info.st_dev,'inode':info.st_ino})
+
+ value={'status':STATUS,'schema_version':1,'source':ad.source,'experiment':ad.experiment_id,'claim_sha256':run._claim_sha256,'root':str(ad.root),'policy_input':input_name,'policy_sha256':ad.inputs[input_name]['sha256'],'source_sha256':pin,'terminal':record,'binding':binding,'components':refs,'metadata_pins':snapshots,'scientific_feature_admission':False,'lifetime':policy['lifetime'],'guard':{'policy':thaw(bound._resources),'owner':thaw(bound._owner),'base':str(bound._base)},'runtime_hash':bound.context['runtime_hash'],'numerical_source':thaw(bound.record['numerical_source']),'settings':thaw(prepared.features._mapping._policy),'graph_root':str(base),'saved_namespaces':namespaces,'terminal_attempt':str(attempt),'failure_roots':sorted({str(owner.root),str(owner.root.parent),*[str(Path(n).parent) for n in snapshots]})}
+ result=Record(value);terminal.check();return result
+
+def check_metadata(record,run):
+ from ..lifecycle import ResearchRun
+ from . import matching_owner,compact_owner
+ require(type(record)is Record and isinstance(run,ResearchRun),'actual run and detached metadata required')
+ v=record.metadata();ad=run.admission;run._active();run._check_source();run._check_inputs()
+ require((str(ad.root),ad.source,ad.experiment_id,run._claim_sha256)==(v['root'],v['source'],v['experiment'],v['claim_sha256']),'same genuine run/source/claim required')
+ require(ad.inputs[v['policy_input']]['sha256']==v['policy_sha256'] and ad.experiment['source_files'].get(SELF)==v['source_sha256'],'registered handoff pins changed')
+ compact_owner.entries(Path(v['graph_root']),set(v['components']),required=set(v['components']))
+ for h in v['components']:compact_owner.entries(Path(v['graph_root'])/h,{'start.json','complete.json','artifact'},required={'start.json','complete.json','artifact'})
+ for root in v['failure_roots']:require(not any(compact_owner.present(Path(root)/n) for n in ('failed.json','attempt-failed.json')),'saved completed ancestor failed')
+ for name,sha in v['metadata_pins'].items():require(matching_owner.metadata(Path(name),ad.root)[1]==sha,'saved completed metadata changed')
+ require(all(run._published_outputs.get(name)==sha for name,sha in v['terminal']['outputs'].items()),'original published outputs changed')
+ matching_owner._source(run,v['numerical_source'])
+ from .cache import cache_key
+ require(cache_key(matching_owner.inventory(ad.root,include_torch=True))==v['runtime_hash'],'original runtime differs')
+ matching_owner._guard(run,v['guard']['policy'],v['guard']['owner'],Path(v['guard']['base']))
+ require(not any((run.directory/n).exists() or (run.directory/n).is_symlink() for n in ('complete.json','failed.json')),'current run terminal')
+ # Last saved namespace/content rejoin follows source/runtime/guard callbacks.
+ for scope in v['saved_namespaces']:
+  path=Path(scope['path']);compact_owner.entries(path,set(scope['members']),required=set(scope['members']));info=path.lstat()
+  require((info.st_dev,info.st_ino)==(scope['device'],scope['inode']),'original saved namespace identity changed')
+ for name in ('start.json','complete.json'):
+  path=Path(v['terminal_attempt'])/name;require(matching_owner.metadata(path,ad.root)[1]==v['metadata_pins'][str(path)],'original terminal attempt changed')
+ run._active();return v
+
+_ISSUED=object()
+class Authority:
+ """Run weakref + primitive bytes only; never a terminal/owner closure."""
+ __slots__=('_record','_run_ref')
+ def __init__(self,record,run,*,_key):
+  require(_key is _ISSUED and type(record)is Record,'genuine factory authority required');object.__setattr__(self,'_record',record);object.__setattr__(self,'_run_ref',weakref.ref(run))
+ def __setattr__(self,k,v):raise AttributeError('immutable handoff authority')
+ def lease(self):
+  run=self._run_ref();require(run is not None,'original run no longer live');return check_metadata(self._record,run)
+
+def prepare(prepared,terminal,*,input_name):
+ from . import compact_native_features as native
+ record=capture(prepared,terminal,input_name=input_name);record.require_loader()
+ run=terminal._owner.bound._run;authority=Authority(record,run,_key=_ISSUED);v=authority.lease();m=native._api()
+ mapping=m._NativeMap(run.admission.root,v['components'],v['settings'],lease=authority.lease,read_lease=authority.lease)
+ features=native._DetachedFeatures(mapping,authority,v['binding']['feature_hashes'],m.boundary,v['settings']['chunk_entries'])
+ require(features.verified_hashes()==v['binding']['feature_hashes'],'complete detached saved component content differs')
+ terminal.check();authority.lease()
+ return native.PreparedFeatures(features,v['binding'],None)

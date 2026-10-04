@@ -1,5 +1,63 @@
 # Current execution checkpoint — October 5, 2026
 
+**TOP72 2026-10-04T23:46:01.261680+00:00: actual fresh FLAT2 restoration completed successfully in2.08749seconds, using the already recovered44-body input set. No model fit or new numerical claim is active.**
+
+Main/confirmed remote d15e720ff6143350052b90c563ead1f950dd8be3 remain; later closed evidence awaits one bundled commit/push. CAP32d57eac/355tracked354pins11roles/605typed491files/407Git, threeFAILED/highestused19/prospective20unused remain fixed. All1,420 paper fits remain pending.
+
+Fresh writable root full_sources/financial-wrapper-compatibility-baseline-flat-root02-2026-10-05 ran ONCE using caller04/0bbb4b2c, finalrequestf26bbe69/contract23d738fd/genuineinnerbb20b66c/outerb0691f68. Different-author consolidated source+entry reviewb14e6069/7caebfae accepted explicitUSTAR framing, fixed read-only originalreceiver mapping, bounded kernel-stop/resume only owned single publisher for unchanged complete census, and normal-exit handling. No limits/method/budget/sourceCAP changes. Root copied helpers once; initial wrong utility-copy path658a1a was corrected by d83423 before any freeze/release/child and remains documented, not an empirical attempt.
+
+Actual tool87078/270020→1affab Root0; receipt e56d13dc/6747B recovered323 opaque bodies+3 metadata from374 original typed members across baseline262/303, populationreview14/16 and source-parent04 47/55. Originalouter9c3a1a94 child0/cleanup[]/parent-exitNULL; separateRootcef62671. Ten outer complete samples; final13,247,241logical/14,065,664allocatedB/359members. Recorded parent/child/startticks absent. All old413 receiver bytes/signatures and failedFLAT1 remain unchanged. This is actual BYTE restoration; independent complete605/407 composition/FullRecoveryProof is still pending. No POSIX/runtimepackagebody/wholecapacity/numerical claim follows.
+
+Original BASELINE remote304745e0 (44/6,089,473B/132Gitops/74.34066s) remains permanently complete. OriginalFLAT1 remains FAILED Root1/child-9,169 exact prefix bodies/154 missing and no metadata; closure2cc0ae75/045feeb7 accepted that disposition. Source02 caller03 normal-exit falsefailure remains preserved; narrow03/67ba11e2 replaces one acknowledgement branch. Old PAX utility, failed publication-census and actual18-longpath USTAR/PAX witnesses remain immutable. No receiver refetch or spent namespace replay occurred.
+
+Substantive graph-memory handoff02/65ca3cc3/3f5b66a0 has independent source acceptance97f85367/877518f0, restoring original terminal/Owner/journal/failure invariants and preserving resident/model/training behavior. Original01 remains withheld. No live install, numerical equivalence, real factory/loader or RAM saving has been measured; sampled ordinary-file lifetime remains an explicit unadmitted assumption.
+
+Active: combined_worker_review only NEW baseline-recovery-review02-2026-10-05 authenticates actual605/407/source/Parentdraft10 composition and writes a compact genuine proof. Other current bounded source assignments are complete. Root owns liveintegration/registrations/STATE/Git/network/recovery/ONE native numerical launcher. Next: bind genuineFullRecoveryProof plus existing source/runtime/cumulative proofs, obtain exact final Parent release, perform one bundled finalcaller/failed-outcome external preservation+actual recovery and check fresh source/process/namespace/resources/preclaim/native eligibility before unused compatible100 reference. Accepted/recovered COMPLETE precedes continuation/prediction and actual eligible-population capacity pilot.
+
+Overhead priority: reuse immutable accepted evidence, consolidate substantive review/admission and preservation, keep checkpoints/automation concise, and give workers concrete implementation. Frozen science, accounting, all failed/raw/spent identities, physical16GB/10GiBfloor/native limits and full paper scope remain unchanged. Paper36closed27COMPLETE9FAILED/highest64/coverage77of109/resource7COMPLETE102UNAVAILABLE; all13tasksC01–C18/bothassets/history/comparisons/full32Task8 stillrequired. Full55.44GB MCM needs typed tails ANDbatch/output offload/reservation/measured capacity/recovery beforedeletion. No rerun/refund/transfer/capladder/simplification/test tuning/resampling/reclustering/credentials/paid/provider-authorcontact/trading/deployment/VPSsystemdSSH. Prior exact evidence remains below.
+
+---
+
+# Current execution checkpoint — October 5, 2026
+
+**TOP71 2026-10-04T23:29:21.179185+00:00: the consolidated44-body external recovery completed, while its first flat restoration is permanently FAILED. A concrete graph-memory handoff was implemented and its narrow lineage correction independently accepted. No model fit or new scientific claim is active.**
+
+Actual Main/remote d15e720ff6143350052b90c563ead1f950dd8be3 remain fixed; later evidence is not pushed. CAP32d57eac,355tracked354pins11roles/605typed491files/407Git, threeFAILED/highestused19/prospective20unused remain unchanged. All1,420 paper financial fits remain pending.
+
+Actual BASELINE receiver: tool61499/4a3caa→6beeb0 Root0; REMOTE304745e0 (44 bodies6,089,473B/132 actual Git operations/74.34066seconds/1,339 whole-tree samples), original outer a4a417a8 child0/cleanup[]/parent-exitNULL; separate Roottool0e76c23e. All134 recorded original PIDs were absent. Original receiver/freshGit/selected/receipts remain preserved and reusable read-only; no refetch is needed.
+
+Actual released FLAT1: tool2e17fa Root1; child-9/ValueError/cleanup[]/parent-exitNULL, separate Roottool89d09ee8. Strict outer census raced bulk directory publication, so the child was killed. Exactly169 complete prefix bodies6,448,784B remain;154 bodies and all three metadata/completion receipts are unavailable. Never replay this namespace. Independent closure2cc0ae75/045feeb7 accepts only successful remote+failedflat disposition. A separate actual witness proves originalUSTAR b47 archive cannot round-trip through the PAX-only utility at18 long paths; that later branch did not cause the observed killed attempt. FullRecoveryProof remains absent.
+
+Substantive implementation: detached compact-feature handoff02/manifest65ca3cc3/machine3f5b66a0; independent review97f85367/877518f0 narrowly accepts corrected terminal/Owner/journal/failure namespace checks. Original01 remains withheld93e19088/9197ad0f. The optional registered loader route uses immutable evidence and a weak actual-run reference to release producer graph/MCM holds, preserving the resident route/model/batch/gradients. No live install, actual factory/loader, numerical equivalence or RAM saving has been measured. Ordinary-file lifetime remains sampled and requires explicit admission.
+
+Active owners: outcome_archive only NEW baseline-flat-successor-preparation02; storage_watch_review available for focused successor review; combined_worker_review completed actual failure closure. Root alone owns liveintegration/registrations/STATE/Git/network/recovery/ONE numerical launcher. The concrete metadata successor preserves old413-member receiver tree: NEW baseline-flat-root02 writable scope, fixed read-only old RECEIVER inputs, exact USTAR framing, fresh flat2 outputs, kernel-stop only the owned single stdlib publisher around unchanged complete census, primary-safe resume and unchanged file/wall/storage/floor limits. It is source preparation, not released or run.
+
+Next executable action: freeze/review that small successor, retain/preserve actual failed outcome, then one fresh restoration using already recovered inputs. Obtain genuine independent605/407 composition proof; bind final Parent proofs/release, recover final caller supplement and check native eligibility before unused compatible100 reference. Accepted/recovered COMPLETE precedes continuation/prediction and real eligible-population capacity pilot. Prioritize concrete implementation, reuse accepted evidence, bundle preservation and avoid duplicate broad reviews/history scans.
+
+Paper36closed27COMPLETE9FAILED/highest64/coverage77of109/resource7COMPLETE102UNAVAILABLE, full architecture/both assets/history/comparisons/all32Task8 requirements remain unchanged. Original32motifs512spent samples26sources/all failed and reserved identities/physical16GB/10GiBfloor/native controls stayfixed; no rerun/refund/transfer/cap ladder/scope reduction/test tuning. Full55.44GB MCM still needs typed tails AND batch/output offload, common-store reservation, measured capacity and actual recovery before deletion. No credentials/paid/provider-author contact/trading/deployment/VPSsystemdSSH. Original frozen evidence remains below.
+
+---
+
+# Current execution checkpoint — October 5, 2026
+
+**TOP70 2026-10-04T23:03:46.268903+00:00: overhead reduction is the explicit priority. The autonomous prompt is shortened and evidence/recovery work is consolidated. No numerical fit or new claim is active.**
+
+Main and confirmed remote: d15e720ff6143350052b90c563ead1f950dd8be3 (REMOTE_CONFIRMATION52/b57d1750). The complete local baseline and three-archive envelope are committed. Current capsule remains32d57eac, genuine355tracked/354pins/11roles/605typed491files/407Git; independent admission and prospective engineering20 remain unchanged and unused. Original three FAILED claims/highestused19 are permanent. All1,420 paper fits remain pending.
+
+The same consolidated source04 review accepts the transport correction and actual44 selected bodies/three archives/five evidence joins. It withheld caller01/5ef182d1 for a concrete read/close fatal-preservation defect. Original witness and candidate remain preserved. Root's narrow caller02/13548eb3 adds bounded primary-safe descriptor reads in four literal edits; contract/selection/helpers/science stay unchanged. Exact entry review is pending; no remote, flat or numerical attempt was entered.
+
+Actual baseline archiveb47c7201 (262 payload/303typed), population-review archive55a5bfb1 (14/16), source-parent04 archived90353cb (47/55), envelope5523f659 and actual Root bindings572a07f9/74a24e70/ffe5b475 are fixed. Fresh full605/407 external BYTE recovery and genuine compact FullRecoveryProof are still required. The existing reviewer has an executable actual-outcome verifier ready.
+
+Active exclusive owners: Root liveintegration/registrations/STATE/Git/network/recovery/ONE numerical launcher; storage_watch_review the existing final-bundle-transport-source-review04 consolidated source/caller/entry; combined_worker_review baseline-recovery-review01 actual605/407 composition; outcome_archive NEW compact-feature-detached-handoff01-2026-10-05 implementation. The handoff targets authenticated completed components without retaining terminal/producer graph objects; current resident behavior, provenance, batches and joint gradients remain fixed. Ordinary-file lifetime evidence is unresolved and cannot be replaced by a fake grant.
+
+Next: one exact BASELINE entry, actual remote and flat recovery, compact independent composition proof; then bind final Parent proofs/release, recover final caller supplement and check fresh native eligibility before the unused compatible100 reference. Accepted/recovered COMPLETE precedes continuation/prediction and actual eligible-population capacity measurement. Reuse immutable baselines, bundle preservation, review substantive changes/final admission once, and avoid generic frameworks, duplicate broad controls and historical rereads.
+
+Paper36closed=27COMPLETE9FAILED/highest64, coverage77/109, resource7COMPLETE102UNAVAILABLE and all broader architecture/history/comparison requirements remain unchanged. Original32motifs512samples26sourceobjects, all failed/withheld/spent histories, physical16GB ceiling/10GiB floor and native limits remain fixed. No reruns, budget refunds/transfers, cap ladder, scope reduction, test tuning, resampling or reclustering. Full55.44GB MCM still requires authenticated tails AND batch/output offload, common-store reservation, measured capacity and actual recovery before deletion. No credentials, paid resources, provider/author contact, trading, deployment or VPS systemd SSH. Prior exact evidence remains below; this checkpoint adds no numerical authority.
+
+---
+
+# Current execution checkpoint — October 5, 2026
+
 **TOP69 2026-10-04T22:28:11.860803+00:00: the source/runtime bridge and installed coalesced evidence are independently accepted. One consolidated baseline capture completed. No numerical job or new claim is active. Reducing unnecessary process overhead is now an explicit user priority.**
 
 - Main/actualremote: e51879614835288c86dae525f911661b0b06c6e0; post-push confirmation50/cf37bf43. Later evidence is not yet pushed.

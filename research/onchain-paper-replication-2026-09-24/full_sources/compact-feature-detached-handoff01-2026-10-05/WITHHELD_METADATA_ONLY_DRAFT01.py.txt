@@ -1,0 +1,75 @@
+"""Genuine completed resident ancestry -> detached metadata; no invented NPY lease.
+
+The current ordinary-path reader has no admitted lifetime authority. Therefore
+this source builds/checks detached evidence but refuses conversion to a loader.
+No frozen metadata object or caller callback is a scientific feature authority.
+"""
+import hashlib,json
+from pathlib import Path
+
+SELF='tradingagents/research/onchain_replication/compact_detached_handoff.py'
+LIMIT=2*1024**2
+STATUS='DETACHED_METADATA_ONLY_LIFETIME_UNAVAILABLE'
+def require(v,message):
+ if not v:raise ValueError(message)
+def encoded(value):
+ def visit(x,depth=0):
+  require(depth<=32,'detached metadata depth exceeded')
+  if type(x) in (str,int,bool,type(None)):return
+  if type(x)is list:
+   require(len(x)<=32768,'metadata list bound');[visit(y,depth+1) for y in x];return
+  if type(x)is dict:
+   require(len(x)<=32768 and all(type(k)is str for k in x),'metadata map bound');[visit(y,depth+1) for y in x.values()];return
+  raise ValueError('only detached primitive metadata; no producer objects or callbacks')
+ visit(value);raw=json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode();require(len(raw)<=LIMIT,'detached metadata bound');return raw
+class Record:
+ """Detached bytes only, explicitly not Receipt/PreparedFeatures/Mapping."""
+ __slots__=('_raw',)
+ def __init__(self,value):
+  require(type(value)is dict and value.get('status')==STATUS,'metadata-only disposition required');object.__setattr__(self,'_raw',encoded(value))
+ def __setattr__(self,k,v):raise AttributeError('immutable detached metadata')
+ def metadata(self):return json.loads(self._raw)
+ def require_loader(self):raise ValueError('ordinary NPY component lifetime authority unavailable; detached fit refused')
+
+def capture(prepared,terminal,*,input_name):
+ # Lazy imports: no numeric package import during pure metadata/refusal tests.
+ from . import compact_native_features as native,compact_terminal,compact_owner,matching_owner
+ from .provenance import thaw,file_hash,canonical_bytes
+ require(type(terminal)is compact_terminal.Receipt and type(prepared.features)is native._Features,'actual original compact terminal/features required')
+ require(prepared.features._terminal is terminal,'original feature ancestry differs')
+ terminal.check();owner=terminal._owner;bound=owner.bound;run=bound._run;ad=run.admission
+ require(owner.closed and owner.closing and not owner.poisoned and owner.active is None,'genuine completed owner required')
+ require(set(owner.stages)==set(owner.required) and all(s.closed for s in owner.stages.values()),'every original stage must be complete')
+ selected=json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][bound.record['representation']]
+ item=json.loads(run.read_input(selected['plan_input']))['producers'][bound.record['producer']]
+ require(type(input_name)is str and input_name in ad.inputs and selected.get('compact_detached_input')==item.get('compact_detached_input')==input_name,'explicit identical registered detached role required')
+ policy=json.loads(run.read_input(input_name));require(policy=={'schema_version':1,'kind':'compact-detached-metadata-v1','lifetime':'unavailable','scientific_feature_admission':False},'no invented lifetime authority')
+ pin=ad.experiment['source_files'].get(SELF);require(pin is not None and file_hash(ad.root/SELF)==pin and file_hash(Path(__file__))==pin,'detached source must be genuinely admitted')
+ # Original full numerical/source/Owner/Binding checks occur while ancestors live.
+ hashes=prepared.features.verified_hashes();terminal.check();record=thaw(terminal.record)
+ publication=native._metadata(Path(record['publication']['path']),record['publication']['sha256'],LIMIT)
+ binding=publication['closure']['binding'];require(binding==thaw(prepared.binding) and hashes==binding['feature_hashes'],'complete published feature binding differs')
+ require(set(hashes)==set(record['representation']['owner']['descriptor']['required_graphs']) if 'descriptor' in record['representation']['owner'] else set(hashes)==set(prepared.features._mapping._refs),'complete original component population differs')
+ refs=thaw(prepared.features._mapping._refs);require(set(refs)==set(hashes) and all(v['motifs']==32 for v in refs.values()),'original 32-column full component population required')
+ snapshots={str(p):sha for p,sha in bound._snapshots.items()}
+ for role in ('publication','owner_terminal'):
+  snapshots[record[role]['path']]=record[role]['sha256']
+ representation=record['representation'];snapshots[str(ad.root/representation['path'])]=representation['sha256']
+ for ref in refs.values():snapshots[ref['path']]=ref['sha256']
+ value={'status':STATUS,'schema_version':1,'source':ad.source,'experiment':ad.experiment_id,'claim_sha256':run._claim_sha256,'root':str(ad.root),'policy_input':input_name,'policy_sha256':ad.inputs[input_name]['sha256'],'source_sha256':pin,'terminal':record,'binding':binding,'components':refs,'metadata_pins':snapshots,'scientific_feature_admission':False}
+ result=Record(value);terminal.check();return result
+
+def check_metadata(record,run):
+ from ..lifecycle import ResearchRun
+ from . import matching_owner
+ require(type(record)is Record and isinstance(run,ResearchRun),'actual run and detached metadata required')
+ v=record.metadata();ad=run.admission;run._active();run._check_source();run._check_inputs()
+ require((str(ad.root),ad.source,ad.experiment_id,run._claim_sha256)==(v['root'],v['source'],v['experiment'],v['claim_sha256']),'same genuine run/source/claim required')
+ require(ad.inputs[v['policy_input']]['sha256']==v['policy_sha256'] and ad.experiment['source_files'].get(SELF)==v['source_sha256'],'registered handoff pins changed')
+ for name,sha in v['metadata_pins'].items():require(matching_owner.metadata(Path(name),ad.root)[1]==sha,'saved completed metadata changed')
+ require(all(run._published_outputs.get(name)==sha for name,sha in v['terminal']['outputs'].items()),'original published outputs changed')
+ run._active();return v
+
+def prepare(prepared,terminal,*,input_name):
+ record=capture(prepared,terminal,input_name=input_name)
+ record.require_loader() # Deliberate unavailable outcome, never synthetic representation_complete.

@@ -1,0 +1,36 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_native_producer.py
++++ /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_native_producer.py
+@@ -82,6 +82,8 @@
+     require(all(type(n) is str and Path(n).name == n for n in outputs) and len(set(outputs)) == 2
+         and set(outputs) <= set(run.admission.experiment['outputs']),'compact output names differ')
+     require(job['descriptor']['arm'] == 'proposed','compact producer requires motif representation')
++    if job.get('compact_detached_input') is not None or item.get('compact_detached_input') is not None:
++        compact_native_features.detached_selection(run,job,item)
+     identity = cache_key(job['descriptor'])
+     for kind in NAMESPACES:
+         namespace = run.admission.root/'research_artifacts'/kind/identity
+@@ -140,6 +142,10 @@
+         terminal = compact_terminal.finish(published,input_name=job['compact_terminal_input'])
+         prepared = compact_native_features.prepare(terminal,input_name=job['compact_native_features_input'])
+         finalize(prepared)
++        if job.get('compact_detached_input') is not None:
++            prepared=compact_native_features.detach_completed(prepared,terminal,input_name=job['compact_detached_input'])
++            finalize(prepared)
++            return prepared,None
+         return prepared,terminal
+     except BaseException as error:
+         cleanup = []
+@@ -187,6 +193,13 @@
+ 
+ def finalize(prepared):
+     """Full evidence rejoin before outer acceptance, including after all fits."""
++    if type(prepared.features) is compact_native_features._DetachedFeatures:
++        from .compact_detached_handoff import Authority
++        require(type(prepared.features._authority) is Authority,'genuine detached final authority required')
++        record=prepared.features._authority.lease()
++        require(thaw(prepared.binding)==record['binding'],'detached prepared binding differs')
++        require(prepared.features.verified_hashes()==record['binding']['feature_hashes'],'detached component bytes differ')
++        prepared.features._authority.lease();return
+     require(type(prepared.features) is compact_native_features._Features,'actual compact native features required')
+     terminal = prepared.features._terminal
+     terminal.check()

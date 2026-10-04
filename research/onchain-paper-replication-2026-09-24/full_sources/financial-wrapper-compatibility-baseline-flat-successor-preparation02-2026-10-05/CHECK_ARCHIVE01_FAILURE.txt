@@ -1,0 +1,1 @@
+Original harness passed PosixPath instead of existing FlatOutput to flat_tar_stream; AttributeError plus ExactSink gzip cleanup mismatch produced original CleanupFailure. Baseline USTAR restore already completed before harness failure. check02 reads that retained result without restoring it again; remaining scopes are new.

@@ -1,0 +1,195 @@
+--- original/utilities/recovery_ustar02.py
++++ candidate/utilities/recovery_ustar02.py
+@@ -70,7 +70,7 @@
+ def tar_stream(root,m,sink):
+  gz=None;tar=None
+  try:
+-  gz=gzip.GzipFile(filename='',mode='wb',fileobj=sink,mtime=0);tar=tarfile.open(fileobj=gz,mode='w|',format=tarfile.PAX_FORMAT)
++  gz=gzip.GzipFile(filename='',mode='wb',fileobj=sink,mtime=0);tar=tarfile.open(fileobj=gz,mode='w|',format=tarfile.USTAR_FORMAT)
+   for r in m['members']:
+    t=tarfile.TarInfo(r['path']);t.mode=r['mode'];t.uid=t.gid=0;t.uname=t.gname='';t.mtime=0
+    if r['kind']=='directory':t.type=tarfile.DIRTYPE;t.size=0;tar.addfile(t)
+@@ -177,7 +177,7 @@
+ def flat_tar_stream(output,m,mapping,sink):
+  gz=None;tar=None
+  try:
+-  gz=gzip.GzipFile(filename='',mode='wb',fileobj=sink,mtime=0);tar=tarfile.open(fileobj=gz,mode='w|',format=tarfile.PAX_FORMAT)
++  gz=gzip.GzipFile(filename='',mode='wb',fileobj=sink,mtime=0);tar=tarfile.open(fileobj=gz,mode='w|',format=tarfile.USTAR_FORMAT)
+   for r in m['members']:
+    t=tarfile.TarInfo(r['path']);t.mode=r['mode'];t.uid=t.gid=0;t.uname=t.gname='';t.mtime=0
+    if r['kind']=='directory':t.type=tarfile.DIRTYPE;t.size=0;tar.addfile(t)
+--- original/restore_successor02.py
++++ candidate/restore_successor02.py
+@@ -2,9 +2,10 @@
+ import argparse,hashlib,json,os,stat,time,sys
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent
++RECEIVER=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-baseline-root-remote02-2026-10-05')
+ sys.path.insert(0,str(HERE));sys.path.insert(0,str(HERE/'utilities'))
+ import binding01 as B
+-import recovery_pax01 as R
++import recovery_ustar02 as R
+ import watch01 as W
+ from cohort01 import VerifiedCohort
+ from receipt01 import validate_remote
+@@ -12,16 +13,16 @@
+ def restore_archives(q,selected,output,boundary,return_cohort=False):
+  """Root-authenticated finite archive population; no origin authority inferred."""
+  results={};manifests={};cohort=VerifiedCohort()
+- R.require(all(not os.path.lexists(output/('flat-'+b['name'])) for b in q['bundles']),'all output scopes fresh')
++ R.require(all(not os.path.lexists(output/('flat2-'+b['name'])) for b in q['bundles']),'all output scopes fresh')
+  for b in q['bundles']:
+   boundary();raw=R.read(selected,b['manifest']['path']);R.require(R.digest(raw)==b['manifest']['sha256'] and len(raw)==b['manifest']['bytes'],'selected manifest pin');m=json.loads(raw);R.validate(m);manifests[b['name']]=m
+   archive=R.read(selected,b['archive']['path']);R.require(R.digest(archive)==b['archive']['sha256'] and len(archive)==b['archive']['bytes'],'selected archive pin')
+-  destination=output/('flat-'+b['name']);destination.mkdir(mode=0o700);R.require(destination.resolve()==destination and stat.S_IMODE(destination.stat().st_mode)==0o700,'fresh private scope')
++  destination=output/('flat2-'+b['name']);destination.mkdir(mode=0o700);R.require(destination.resolve()==destination and stat.S_IMODE(destination.stat().st_mode)==0o700,'fresh private scope')
+   descriptor={'bytes':len(archive),'sha256':R.digest(archive),'manifest_sha256':R.digest(raw)}
+   results[b['name']]=R.restore(selected/b['archive']['path'],descriptor,m,destination);boundary()
+  # Complete byte population rejoined after all later-scope cleanup.
+  for name,result in results.items():
+-  boundary();root=output/('flat-'+name);raw=cohort.read(root,result['metadata_file']);R.require(R.digest(raw)==result['metadata_sha256'],'actual mode metadata');meta=json.loads(raw);m=manifests[name];R.require(meta['manifest']==m,'complete original metadata');files={x['path']:x for x in m['members'] if x['kind']=='file'};mapping=meta['flat_members'];R.require(set(mapping)==set(files) and len(set(mapping.values()))==len(files) and set(p.name for p in root.iterdir())==set(mapping.values())|{result['metadata_file']},'full restored population')
++  boundary();root=output/('flat2-'+name);raw=cohort.read(root,result['metadata_file']);R.require(R.digest(raw)==result['metadata_sha256'],'actual mode metadata');meta=json.loads(raw);m=manifests[name];R.require(meta['manifest']==m,'complete original metadata');files={x['path']:x for x in m['members'] if x['kind']=='file'};mapping=meta['flat_members'];R.require(set(mapping)==set(files) and len(set(mapping.values()))==len(files) and set(p.name for p in root.iterdir())==set(mapping.values())|{result['metadata_file']},'full restored population')
+   cohort.tree(root,set(mapping.values())|{result['metadata_file']})
+   for path,row in files.items():
+    raw=cohort.read(root,mapping[path]);R.require(len(raw)==row['bytes'] and R.digest(raw)==row['sha256'],'retained actual body')
+@@ -39,7 +40,7 @@
+ def run(request_name,request_sha):
+  inputs=VerifiedCohort()
+  # Pin actual implementation bodies before their input-dependent calls.
+- for name in ('restore_bundle01.py','binding01.py','receipt01.py','cohort01.py','watch01.py','KNOWN_REQUIRED01.json','recover.template01.py','utilities/recovery_pax01.py','utilities/owned_io.py','utilities/bounded_git01.py'):input_read(inputs,HERE,name)
++ for name in ('restore_successor02.py','binding01.py','receipt01.py','cohort01.py','watch01.py','KNOWN_REQUIRED01.json','recover.template01.py','utilities/recovery_pax01.py','utilities/recovery_ustar02.py','utilities/owned_io.py','utilities/bounded_git01.py'):input_read(inputs,HERE,name)
+  raw=input_read(inputs,HERE,request_name);R.require(R.digest(raw)==B.hexpin(request_sha),'exact final request');q=json.loads(raw)
+  def actual_body(row):
+   B.ref(row);data=input_read(inputs,B.ROOT,row['path']);R.require(len(data)==row['bytes'] and R.digest(data)==row['sha256'],'actual input body pin');return data
+@@ -50,10 +51,10 @@
+  required=B.validate(q);R.require(q['round']=='BASELINE','exact installed round')
+  # All are genuine later evidence, never synthesized from local source preparation.
+  for field in ('actual_remote_receipt','actual_selected_mode_profile','actual_restore_release'):B.ref(q[field])
+- release=json.loads(actual_body(q['actual_restore_release']));R.require(release=={'schema_version':1,'decision':'ACCEPTED_EXACT_BASELINE_BUNDLE_FLAT','contract_sha256':R.digest(R.encode({k:v for k,v in q.items() if k!='actual_restore_release'})),'remote_sha256':q['actual_remote_receipt']['sha256'],'source_sha256':R.digest(R.read(HERE,'restore_bundle01.py'))},'genuine independent exact restore release')
+- R.require(all(not os.path.lexists(HERE/n) for n in ('BUNDLE_FLAT_INTENT01.json','BUNDLE_FLAT_RECOVERY01.json','BUNDLE_FLAT_FAILED01.json')),'one-use receiver output')
+- remote_raw=actual_body(q['actual_remote_receipt']);remote=json.loads(remote_raw);selection={'remote_commit':q['actual_main_commit'],'rows':[dict(path=k,**v) for k,v in sorted(required.items())]};validate_remote(remote,selection,R.digest(R.encode(selection)),required);R.require(remote['fresh_git_root']==str(HERE/'fresh-compatibility-baseline02.git'),'actual fixed fresh receiver root');R.require(remote['remote_commit']==q['actual_main_commit'] and remote['status']=='fresh-actual-remote-compatibility-baseline02-supervised-recovered','actual receiver status/commit');records=remote['selected_blobs'];R.require(len(records)==len(required) and {r['path'] for r in records}==set(required),'complete actual selected population')
+- selected=HERE/'selected';profile=json.loads(actual_body(q['actual_selected_mode_profile']));R.require(profile['actual_selected_root']==str(selected),'exact original input-mode root');R.require(R.scan(selected)==profile['full_manifest'],'actual full selected original modes')
++ release=json.loads(actual_body(q['actual_restore_release']));R.require(release=={'schema_version':1,'decision':'ACCEPTED_EXACT_BASELINE_BUNDLE_FLAT','contract_sha256':R.digest(R.encode({k:v for k,v in q.items() if k!='actual_restore_release'})),'remote_sha256':q['actual_remote_receipt']['sha256'],'source_sha256':R.digest(R.read(HERE,'restore_successor02.py'))},'genuine independent exact restore release')
++ R.require(all(not os.path.lexists(HERE/n) for n in ('BUNDLE_FLAT02_INTENT01.json','BUNDLE_FLAT02_RECOVERY01.json','BUNDLE_FLAT02_FAILED01.json')),'one-use receiver output')
++ remote_raw=actual_body(q['actual_remote_receipt']);remote=json.loads(remote_raw);selection={'remote_commit':q['actual_main_commit'],'rows':[dict(path=k,**v) for k,v in sorted(required.items())]};validate_remote(remote,selection,R.digest(R.encode(selection)),required);R.require(remote['fresh_git_root']==str(RECEIVER/'fresh-compatibility-baseline02.git'),'actual fixed fresh receiver root');R.require(remote['remote_commit']==q['actual_main_commit'] and remote['status']=='fresh-actual-remote-compatibility-baseline02-supervised-recovered','actual receiver status/commit');records=remote['selected_blobs'];R.require(len(records)==len(required) and {r['path'] for r in records}==set(required),'complete actual selected population')
++ selected=RECEIVER/'selected';profile=json.loads(actual_body(q['actual_selected_mode_profile']));R.require(profile['actual_selected_root']==str(selected),'exact original input-mode root');R.require(R.scan(selected)==profile['full_manifest'],'actual full selected original modes')
+  # The authenticated completed input modes are distinct from private new outputs.
+  m=profile['full_manifest'];directories={'.':m['root_mode']};directories.update({x['path']:x['mode'] for x in m['members'] if x['kind']=='directory'});files={x['path']:x for x in m['members'] if x['kind']=='file'}
+  R.require(set(files)==set(required) and all(x['mode']==0o600 for x in files.values()),'complete private selected body population')
+@@ -64,9 +65,9 @@
+  begun=time.monotonic();samples=[]
+  def boundary():
+   R.require(time.monotonic()-begun<180 and len(samples)<64,'finite bundle restore');samples.append(W.census(HERE))
+- boundary();R.put(HERE/'BUNDLE_FLAT_INTENT01.json',{'request_sha256':request_sha,'new_claim':False});results,cohort=restore_archives(q,selected,HERE,boundary,True);boundary()
++ boundary();R.put(HERE/'BUNDLE_FLAT02_INTENT01.json',{'request_sha256':request_sha,'new_claim':False});results,cohort=restore_archives(q,selected,HERE,boundary,True);boundary()
+  R.require(actual_body(q['actual_remote_receipt'])==remote_raw and R.read(HERE,request_name)==raw,'original request/receipt unchanged')
+- R.put(HERE/'BUNDLE_FLAT_RECOVERY01.json',{'schema_version':1,'status':'BASELINE_BYTE_ARCHIVES_RECOVERED_REQUIRES_REVIEW','request_sha256':request_sha,'scopes':results,'observations':samples,'source':B.SOURCE,'source605_Git407_composition':'separate genuine589/394 basis plus15files/oneDirectory/13Git','numerical_authority':False,'POSIX':False,'installed_runtime_bodies':False});boundary();R.require(R.scan(selected)==profile['full_manifest'],'selected entire population retained');cohort.check()
++ R.put(HERE/'BUNDLE_FLAT02_RECOVERY01.json',{'schema_version':1,'status':'BASELINE_BYTE_ARCHIVES_RECOVERED_REQUIRES_REVIEW','request_sha256':request_sha,'scopes':results,'observations':samples,'source':B.SOURCE,'source605_Git407_composition':'separate genuine589/394 basis plus15files/oneDirectory/13Git','numerical_authority':False,'POSIX':False,'installed_runtime_bodies':False});boundary();R.require(R.scan(selected)==profile['full_manifest'],'selected entire population retained');cohort.check()
+  # One final cohort includes outputs too: its enumerations finish before any
+  # descriptor-free signature rejoin, including cross-scope cleanup changes.
+  for attr in ('pins','byte_proofs','trees','anchors'):
+@@ -77,6 +78,6 @@
+  try:run(a.request,a.sha256)
+  except BaseException as primary:
+   secondary=[]
+-  try:R.put(HERE/'BUNDLE_FLAT_FAILED01.json',{'status':'FAILED_RETAINED','numerical_authority':False})
++  try:R.put(HERE/'BUNDLE_FLAT02_FAILED01.json',{'status':'FAILED_RETAINED','numerical_authority':False})
+   except BaseException as error:secondary.append(error)
+   R._cleanup(tuple((lambda e=e:(_ for _ in ()).throw(e)) for e in secondary),primary=primary);raise
+--- original/caller03.py
++++ candidate/caller03.py
+@@ -1,7 +1,7 @@
+ """Fixed baseline receiver or proof-dependent flat entry; no implicit phase advance."""
+ from pathlib import Path
+ import argparse,hashlib,json,os,resource,signal,stat,subprocess,sys,time
+-ROOT=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes');F=ROOT/'research/onchain-paper-replication-2026-09-24/full_sources';D=F/'financial-wrapper-compatibility-baseline-root-remote02-2026-10-05';FILE=4194304
++ROOT=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes');F=ROOT/'research/onchain-paper-replication-2026-09-24/full_sources';D=F/'financial-wrapper-compatibility-baseline-flat-root02-2026-10-05';RECEIVER=F/'financial-wrapper-compatibility-baseline-root-remote02-2026-10-05';FILE=4194304
+ IOPIN='09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb';pins={}
+ def sig(p):
+  s=p.lstat();assert p.resolve(strict=True)==p and stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_size<=FILE;return tuple(getattr(s,k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns','st_blocks'))
+@@ -32,12 +32,46 @@
+  for p,s in pins.items():assert sig(p)==s,'verified caller input changed'
+ def local(name):
+  assert type(name)is str and Path(name).as_posix()==name and not Path(name).is_absolute() and all(x not in ('','..','.') for x in name.split('/'));return D/name
++def evidence(name):
++ p=local(name);return RECEIVER/p.relative_to(D)
+ def contract(c):
+- assert type(c)is dict and c['schema_version']==1 and c['status']=='ROOT_BOUND_BASELINE_ENTRY' and c['phase'] in ('REMOTE','FLAT') and c['owned_root']==str(D) and c['numerical_authority'] is False
++ assert type(c)is dict and c['schema_version']==1 and c['status']=='ROOT_BOUND_BASELINE_ENTRY' and c['phase']=='FLAT' and c['owned_root']==str(D) and c['numerical_authority'] is False
+  assert type(c['main_commit'])is str and len(c['main_commit'])==40 and all(x in '0123456789abcdef' for x in c['main_commit'])
+- assert type(c['helpers'])is dict and {'watch01.py','utilities/owned_io.py','recover01.py','restore_bundle01.py','binding01.py','receipt01.py','cohort01.py','utilities/recovery_pax01.py','utilities/bounded_git01.py'}<=set(c['helpers']) and 1<=len(c['helpers'])<=32 and c['helpers']['utilities/owned_io.py']==IOPIN
++ assert type(c['helpers'])is dict and {'watch01.py','utilities/owned_io.py','recover01.py','restore_successor02.py','binding01.py','receipt01.py','cohort01.py','utilities/recovery_pax01.py','utilities/recovery_ustar02.py','utilities/bounded_git01.py'}<=set(c['helpers']) and 1<=len(c['helpers'])<=32 and c['helpers']['utilities/owned_io.py']==IOPIN
+  assert c['phase']!='FLAT' or all(type(c[k])is dict for k in ('remote_receipt','remote_root_exit','selected_mode_profile','flat_release','request'))
+  return c['phase']
++def process_state(child):
++ text=raw(Path('/proc')/str(child.pid)/'stat').decode();parts=text.rsplit(')',1)[1].split();assert len(parts)>19
++ return parts[0],int(parts[19])
++def paused_census(child,identity,W,IO):
++ """Stop only this owned stdlib child; resume on every sampled failure."""
++ assert type(child) is subprocess.Popen,'owned actual Popen required'
++ begun=time.monotonic();sent=False;primary=None;observed=None
++ try:
++  if child.poll() is not None:return W.census(D)
++  state,start=process_state(child);assert start==identity,'owned Popen identity changed'
++  os.kill(child.pid,signal.SIGSTOP);sent=True
++  while True:
++   assert time.monotonic()-begun<1,'bounded STOP acknowledgement'
++   state,start=process_state(child);assert start==identity,'stopped PID identity changed'
++   if state=='T':break
++   if child.poll() is not None:raise RuntimeError('restore exited before STOP acknowledgement')
++   time.sleep(.005)
++  assert raw(Path('/proc')/str(child.pid)/'task'/str(child.pid)/'children').strip()==b'','only single-process restore may be paused'
++  observed=W.census(D);assert process_state(child)==('T',identity),'child not stopped throughout census'
++  assert time.monotonic()-begun<W.POLICY['sample_seconds'],'pause plus census deadline'
++  return observed
++ except BaseException as error:primary=error;raise
++ finally:
++  def resume():
++   if sent:
++    # No new descriptor read can prevent resume. An unreaped owned child PID
++    # cannot be reused; once this Popen has reaped it, returncode is non-null.
++    if child.returncode is not None:return
++    try:os.kill(child.pid,signal.SIGCONT)
++    except ProcessLookupError:
++     if child.poll() is None:raise
++  IO._cleanup((resume,),primary=primary)
+ def main():
+  p=argparse.ArgumentParser();p.add_argument('--contract',required=True);p.add_argument('--contract-sha256',required=True);p.add_argument('--entry-release',required=True);p.add_argument('--entry-release-sha256',required=True);a=p.parse_args()
+  c=json.loads(read(local(a.contract),a.contract_sha256));phase=contract(c);release=json.loads(read(local(a.entry_release),a.entry_release_sha256))
+@@ -47,18 +81,18 @@
+  assert c['helpers']['utilities/owned_io.py']==IOPIN;sys.path.insert(0,str(D/'utilities'));sys.path.insert(0,str(D));import owned_io as IO;import watch01 as W
+  assert Path(IO.__file__)==D/'utilities/owned_io.py' and Path(W.__file__)==D/'watch01.py';assert D.resolve()==D and stat.S_IMODE(D.stat().st_mode)==0o700
+  for key in ('selection','request','remote_receipt','remote_root_exit','selected_mode_profile','flat_release'):
+-  if c.get(key)is not None:row=c[key];read(local(row['path']),row['sha256'])
+- selection=json.loads(read(local(c['selection']['path']),c['selection']['sha256']));assert selection['remote_commit']==c['main_commit']
+- command=[str(ROOT/'.venv/bin/python'),'-B',str(D/('recover01.py' if phase=='REMOTE' else 'restore_bundle01.py'))]+(['--selection-sha256',c['selection']['sha256']] if phase=='REMOTE' else ['--request',c['request']['path'],'--sha256',c['request']['sha256']])
+- prefix='ROOT_BASELINE_'+phase+'01';assert all(not os.path.lexists(D/(prefix+x)) for x in ('_INTENT.json','_SPAWN.json','.stdout','.stderr','_EXIT.json'))
+- required_fresh={'fresh-compatibility-baseline02.git','selected','REMOTE_RECOVERY01.json','FAILED01.json'} if phase=='REMOTE' else {'BUNDLE_FLAT_INTENT01.json','BUNDLE_FLAT_RECOVERY01.json','BUNDLE_FLAT_FAILED01.json'}
++  if c.get(key)is not None:row=c[key];read((evidence if key in ('selection','remote_receipt','remote_root_exit','selected_mode_profile') else local)(row['path']),row['sha256'])
++ selection=json.loads(read(evidence(c['selection']['path']),c['selection']['sha256']));assert selection['remote_commit']==c['main_commit']
++ command=[str(ROOT/'.venv/bin/python'),'-B',str(D/('recover01.py' if phase=='REMOTE' else 'restore_successor02.py'))]+(['--selection-sha256',c['selection']['sha256']] if phase=='REMOTE' else ['--request',c['request']['path'],'--sha256',c['request']['sha256']])
++ prefix='ROOT_BASELINE_FLAT02';assert all(not os.path.lexists(D/(prefix+x)) for x in ('_INTENT.json','_SPAWN.json','.stdout','.stderr','_EXIT.json'))
++ required_fresh={'fresh-compatibility-baseline02.git','selected','REMOTE_RECOVERY01.json','FAILED01.json'} if phase=='REMOTE' else {'BUNDLE_FLAT02_INTENT01.json','BUNDLE_FLAT02_RECOVERY01.json','BUNDLE_FLAT02_FAILED01.json'}
+  assert type(c['fresh_names'])is list and required_fresh<=set(c['fresh_names']) and len(c['fresh_names'])<=64
+  for name in c['fresh_names']:assert not os.path.lexists(local(name))
+  for p in Path('/proc').iterdir():
+   if p.name.isdigit() and int(p.name)!=os.getpid():
+    try:argv=raw(p/'cmdline').split(b'\0')
+    except (FileNotFoundError,ProcessLookupError,PermissionError):continue
+-   assert str(D/'recover01.py').encode() not in argv and str(D/'restore_bundle01.py').encode() not in argv
++   assert str(D/'recover01.py').encode() not in argv and str(D/'restore_successor02.py').encode() not in argv
+  def put(name,obj):
+   b=(json.dumps(obj,sort_keys=True,indent=2,allow_nan=False)+'\n').encode();assert len(b)<=FILE
+   with IO._opened(D/name,'xb') as f:f.write(b);f.flush();os.fsync(f.fileno())
+@@ -66,9 +100,9 @@
+  put(prefix+'_INTENT.json',{'argv':command,'contract_sha256':a.contract_sha256,'entry_release_sha256':a.entry_release_sha256,'parent_pid':os.getpid(),'claim_started':False});begun=time.monotonic();child=None;code=None;primary=None;secondary=[]
+  try:
+   with IO._opened(D/(prefix+'.stdout'),'xb') as out,IO._opened(D/(prefix+'.stderr'),'xb') as err:
+-   child=subprocess.Popen(command,cwd=ROOT,stdout=out,stderr=err,start_new_session=True);put(prefix+'_SPAWN.json',{'pid':child.pid,'argv':command})
++   child=subprocess.Popen(command,cwd=ROOT,stdout=out,stderr=err,start_new_session=True);identity=process_state(child)[1];put(prefix+'_SPAWN.json',{'pid':child.pid,'argv':command,'start_ticks':identity})
+    while child.poll() is None:
+-    assert time.monotonic()-begun<(630 if phase=='REMOTE' else 210) and len(observations)<4096;observations.append(W.census(D))
++    assert time.monotonic()-begun<(630 if phase=='REMOTE' else 210) and len(observations)<4096;observations.append(paused_census(child,identity,W,IO))
+     try:code=child.wait(timeout=.25)
+     except subprocess.TimeoutExpired:pass
+  except BaseException as error:primary=error

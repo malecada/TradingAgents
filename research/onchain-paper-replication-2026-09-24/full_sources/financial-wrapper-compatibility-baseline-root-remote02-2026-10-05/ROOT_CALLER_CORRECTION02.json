@@ -1,0 +1,27 @@
+{
+  "caller_sha256": "13548eb3206febfb13e1dff0d5f63159176fb8ba1dae819f8de89b9a499cb8b7",
+  "edits": [
+    {
+      "new": "def raw(p):\n fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC|os.O_NONBLOCK);primary=None\n try:\n  b=bytearray()\n  while len(b)<=FILE:\n   chunk=os.read(fd,min(65536,FILE+1-len(b)))\n   if not chunk:break\n   b.extend(chunk)\n  assert len(b)<=FILE,'metadata file bound exceeded'\n  return bytes(b)\n except BaseException as error:primary=error;raise\n finally:\n  try:os.close(fd)\n  except BaseException as cleanup:\n   if primary is None:raise\n   fatal=lambda error:isinstance(error,MemoryError) or not isinstance(error,Exception)\n   if fatal(cleanup) and not fatal(primary):raise cleanup from primary\n   try:\n    prior=primary.__cause__\n    primary.__cause__=cleanup if prior is None else BaseExceptionGroup('prior body/cleanup evidence',[prior,cleanup])\n   except BaseException:pass\ndef read(p,h):\n",
+      "old": "def read(p,h):\n"
+    },
+    {
+      "new": "b=raw(p);",
+      "old": "b=p.read_bytes();"
+    },
+    {
+      "new": "c=json.loads(read(local(a.contract),a.contract_sha256));phase=contract(c);release=json.loads(read(local(a.entry_release),a.entry_release_sha256))\n caller_hash=release['caller_sha256'];read(Path(__file__).absolute(),caller_hash)\n assert release=={'schema_version':1,'decision':'ACCEPTED_EXACT_ONE_USE_BASELINE_'+phase,'contract_sha256':a.contract_sha256,'caller_sha256':caller_hash,'numerical_authority':False}",
+      "old": "c=json.loads(read(local(a.contract),a.contract_sha256));phase=contract(c);release=json.loads(read(local(a.entry_release),a.entry_release_sha256))\n assert release=={'schema_version':1,'decision':'ACCEPTED_EXACT_ONE_USE_BASELINE_'+phase,'contract_sha256':a.contract_sha256,'caller_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'numerical_authority':False}\n read(Path(__file__).absolute(),release['caller_sha256'])"
+    },
+    {
+      "new": "argv=raw(p/'cmdline').split(b'\\0')",
+      "old": "argv=(p/'cmdline').read_bytes().split(b'\\0')"
+    }
+  ],
+  "literal_inverse_matches_original": true,
+  "numerical_authority": false,
+  "old_caller_sha256": "5ef182d127be90ea4ebbdb0b742f748f29aa10b0da29d73d2aed7027544bbd9f",
+  "schema_version": 1,
+  "status": "DRAFT_NOT_RELEASED",
+  "unchanged_contract_sha256": "ffe5b475e31ad63d04ef6416b462eac093fe9db4315e83c743a8324d723db224"
+}

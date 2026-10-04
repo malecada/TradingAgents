@@ -1,0 +1,49 @@
+{
+  "actual_source_invoked": [
+    "Reader.read",
+    "Reader.tree"
+  ],
+  "checks": [
+    "real descriptor closed after MemoryError",
+    "real descriptor closed after SystemExit"
+  ],
+  "decision": "WITHHELD_CR1_CR2",
+  "no_run_entry_or_proof": true,
+  "source_sha256": "14145d47b0df54c4234c4c029a1108ce8b3e7a9d4638f92b9475d99eb3f7c52f",
+  "witnesses": [
+    {
+      "escaped": "ValueError",
+      "first_actual_fatal_escaped": false,
+      "id": "CR1",
+      "later_close": "MemoryError",
+      "primary": "ValueError",
+      "secondary_object_retained_as_attribute": true
+    },
+    {
+      "escaped": "ValueError",
+      "first_actual_fatal_escaped": false,
+      "id": "CR1",
+      "later_close": "SystemExit",
+      "primary": "ValueError",
+      "secondary_object_retained_as_attribute": true
+    },
+    {
+      "escaped": "SystemExit",
+      "id": "CR2",
+      "later_close": "SystemExit",
+      "original_fatal_identity_preserved": false,
+      "original_in_context": true,
+      "primary": "KeyboardInterrupt",
+      "real_iterator_closed": true
+    },
+    {
+      "escaped": "ValueError",
+      "id": "CR2",
+      "later_close": "ValueError",
+      "original_fatal_identity_preserved": false,
+      "original_in_context": true,
+      "primary": "MemoryError",
+      "real_iterator_closed": true
+    }
+  ]
+}

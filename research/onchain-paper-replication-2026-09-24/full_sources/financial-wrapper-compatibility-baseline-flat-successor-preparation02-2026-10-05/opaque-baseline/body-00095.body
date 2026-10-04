@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "original_sha256": "14145d47b0df54c4234c4c029a1108ce8b3e7a9d4638f92b9475d99eb3f7c52f",
+  "successor_sha256": "421cc50f32b1bf1d6a483991deea0fa6700aeb4d165ddc1cecf64dacc08dc4a2",
+  "owned_dependency_sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+  "inputs_sha256": "f992329f1e0baf29bff17eaa1ba82d0f0fe73edf5f8845b9d30a7386f630f4af",
+  "literal_edits": [
+    {
+      "old": "import argparse,gzip,hashlib,io,json,os,re,stat,tarfile,time",
+      "new": "import argparse,gzip,hashlib,io,json,os,re,stat,tarfile,time,types"
+    },
+    {
+      "old": "class Reader:\n",
+      "new": "# Exact pinned owned_io dependency is embedded as immutable bytes to avoid introducing\n# another filesystem/bootstrap cleanup path. The retained owned_io.py is byte-identical.\nOWNED_IO_BYTES = b'\"\"\"Owned IO cleanup only; pure stdlib, no numerical or authority imports.\"\"\"\\nimport os\\nimport sys\\nfrom contextlib import contextmanager\\n\\ndef _require(value,message):\\n    if not value:raise ValueError(message)\\n\\nclass CleanupFailure(BaseException):\\n    \"\"\"An owned close was uncertain; stop the worker, never retry its fd integer.\"\"\"\\n\\n_UNSET = object()\\n\\ndef _fatal(error):\\n    return (isinstance(error,MemoryError) or not isinstance(error,Exception)) and not isinstance(error,CleanupFailure)\\n\\ndef _flatten(errors):\\n    # Only owned cleanup wrappers carry this tuple; retain actual fatal objects.\\n    result=[];seen=set();pending=list(reversed(errors))\\n    while pending:\\n        error=pending.pop()\\n        if id(error) in seen:continue\\n        seen.add(id(error))\\n        if isinstance(error,CleanupFailure) and hasattr(error,\\'failures\\'):\\n            pending.extend(reversed(error.failures))\\n        else:result.append(error)\\n    return result\\n\\ndef _cleanup(actions,*,primary=_UNSET):\\n    \"\"\"Close every owned resource once; first actual fatal outranks uncertainty.\"\"\"\\n    if primary is _UNSET:primary=sys.exception()\\n    failures=[]\\n    for close in actions:\\n        try:close()\\n        except BaseException as error:failures.append(error)\\n    if not failures:return\\n    causes=_flatten(([primary] if primary is not None else [])+failures)\\n    selected=next((error for error in causes if _fatal(error)),None)\\n    if selected is not None:\\n        others=[error for error in causes if error is not selected]\\n        if selected is primary:return\\n        if others:\\n            # Optional evidence attachment must never replace the selected fatal.\\n            try:\\n                if selected.__cause__ is not None and all(selected.__cause__ is not e for e in others):others.append(selected.__cause__)\\n                selected.__cause__=others[0] if len(others)==1 else BaseExceptionGroup(\\'prior body/cleanup evidence\\',others)\\n            except BaseException:pass\\n        raise selected\\n    failure=CleanupFailure(\\'score storage cleanup unresolved; worker must stop\\')\\n    failure.failures=tuple(causes)\\n    failure.__cause__=causes[0] if len(causes)==1 else BaseExceptionGroup(\\'body/cleanup failures\\',causes)\\n    raise failure\\n\\ndef _close_after_failure(close,primary):\\n    _cleanup((close,),primary=primary)\\n\\ndef _release(close):\\n    _cleanup((close,))\\n\\n@contextmanager\\ndef _closing(value):\\n    try:yield value\\n    finally:_release(value.close)\\n\\n@contextmanager\\ndef _opened(path,mode):\\n    _require(mode in (\\'rb\\',\\'xb\\'),\\'explicit immutable file mode required\\')\\n    flags=os.O_NOFOLLOW|os.O_CLOEXEC\\n    flags|=(os.O_RDONLY|os.O_NONBLOCK) if mode==\\'rb\\' else (os.O_WRONLY|os.O_CREAT|os.O_EXCL)\\n    fd=os.open(path,flags,0o600);stream=None\\n    try:\\n        stream=os.fdopen(fd,mode,closefd=False)\\n        yield stream\\n    finally:\\n        _cleanup((() if stream is None else (stream.close,))+(lambda:os.close(fd),))\\n\\ndef _read_path(path,limit):\\n    with _opened(path,\\'rb\\') as stream:\\n        raw=stream.read(limit+1)\\n        _require(len(raw)<=limit,\\'immutable metadata bound exceeded\\')\\n        return raw\\n'\nrequire(h(OWNED_IO_BYTES)=='09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb','owned IO dependency pin')\nIO=types.ModuleType('_composed_pinned_owned_io')\nexec(compile(OWNED_IO_BYTES,'<pinned owned_io09d1fbcc>','exec'),IO.__dict__)\ndef _retain(selected,errors):\n # Diagnostic retention is optional and cannot replace the already selected error.\n if selected is None:return\n try:\n  namespace=BaseException.__dict__['__dict__'].__get__(selected)\n  prior=namespace.get('composed_failures',())\n  if not isinstance(prior,tuple):prior=(prior,)\n  retained=list(prior)\n  for error in errors:\n   if error is not None and error is not selected and all(error is not e for e in retained):retained.append(error)\n  if retained:namespace['composed_failures']=tuple(retained)\n except BaseException:pass\ndef _finish(actions,primary):\n failures=[];selected=primary\n def wrapped(action):\n  def close():\n   try:action()\n   except BaseException as error:failures.append(error);raise\n  return close\n try:IO._cleanup(tuple(wrapped(action) for action in actions),primary=primary)\n except BaseException as error:selected=error;raise\n finally:_retain(selected,([primary] if primary is not None else [])+failures)\nclass Reader:\n"
+    },
+    {
+      "old": "   finally:\n    try:os.close(fd)\n    except BaseException as close:\n     if primary is None:raise\n     BaseException.__dict__['__dict__'].__get__(primary)['secondary_close_failure']=close",
+      "new": "   finally:_finish((lambda:os.close(fd),),primary)"
+    },
+    {
+      "old": "   with os.scandir(p) as it:\n    for e in it:\n     self.tick();n=str(Path(e.path).relative_to(root))\n     if p==root and e.name in exclude:continue\n     safe(n);t=os.lstat(e.path);require(stat.S_ISREG(t.st_mode) or stat.S_ISDIR(t.st_mode),'tree special');require(len(found)<LIMIT,'tree members');found[n]=sig(t)\n     if stat.S_ISDIR(t.st_mode):pending.append(Path(e.path))",
+      "new": "   it=None;primary=None\n   try:\n    it=os.scandir(p)\n    for e in it:\n     self.tick();n=str(Path(e.path).relative_to(root))\n     if p==root and e.name in exclude:continue\n     safe(n);t=os.lstat(e.path);require(stat.S_ISREG(t.st_mode) or stat.S_ISDIR(t.st_mode),'tree special');require(len(found)<LIMIT,'tree members');found[n]=sig(t)\n     if stat.S_ISDIR(t.st_mode):pending.append(Path(e.path))\n   except BaseException as error:primary=error;raise\n   finally:_finish(() if it is None else (lambda:it.close(),),primary)"
+    },
+    {
+      "old": "  print(json.dumps({'schema_version':1,'status':'REFUSED','exception_type':type(error).__name__,'reason':str(error),'recovery_proof':None,'numerical_authority':False},sort_keys=True));raise",
+      "new": "  _finish((lambda:print(json.dumps({'schema_version':1,'status':'REFUSED','exception_type':type(error).__name__,'reason':str(error),'recovery_proof':None,'numerical_authority':False},sort_keys=True)),),error);raise"
+    }
+  ],
+  "full_literal_inverse_equals_original": true,
+  "full_AST_inverse_equals_original": true,
+  "unchanged_original_definitions": [
+    "h",
+    "canonical",
+    "require",
+    "unique",
+    "decode",
+    "sig",
+    "mode",
+    "safe",
+    "manifest_rows",
+    "seal",
+    "flat_scope",
+    "git_graph",
+    "run",
+    "Reader.__init__",
+    "Reader.tick",
+    "Reader.anchor",
+    "Reader.j",
+    "Reader.finish"
+  ],
+  "dependency_embedded_equals_literal_copied_file": true
+}

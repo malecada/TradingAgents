@@ -1,0 +1,83 @@
+"""Actual-receipt-bound opaque bundle recovery, source-only until Root binding."""
+import argparse,hashlib,json,os,stat,time,sys
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+RECEIVER=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-baseline-root-remote02-2026-10-05')
+sys.path.insert(0,str(HERE));sys.path.insert(0,str(HERE/'utilities'))
+import binding01 as B
+import recovery_ustar02 as R
+import watch01 as W
+from cohort01 import VerifiedCohort
+from receipt01 import validate_remote
+
+def restore_archives(q,selected,output,boundary,return_cohort=False):
+ """Root-authenticated finite archive population; no origin authority inferred."""
+ results={};manifests={};cohort=VerifiedCohort()
+ R.require(all(not os.path.lexists(output/('flat2-'+b['name'])) for b in q['bundles']),'all output scopes fresh')
+ for b in q['bundles']:
+  boundary();raw=R.read(selected,b['manifest']['path']);R.require(R.digest(raw)==b['manifest']['sha256'] and len(raw)==b['manifest']['bytes'],'selected manifest pin');m=json.loads(raw);R.validate(m);manifests[b['name']]=m
+  archive=R.read(selected,b['archive']['path']);R.require(R.digest(archive)==b['archive']['sha256'] and len(archive)==b['archive']['bytes'],'selected archive pin')
+  destination=output/('flat2-'+b['name']);destination.mkdir(mode=0o700);R.require(destination.resolve()==destination and stat.S_IMODE(destination.stat().st_mode)==0o700,'fresh private scope')
+  descriptor={'bytes':len(archive),'sha256':R.digest(archive),'manifest_sha256':R.digest(raw)}
+  results[b['name']]=R.restore(selected/b['archive']['path'],descriptor,m,destination);boundary()
+ # Complete byte population rejoined after all later-scope cleanup.
+ for name,result in results.items():
+  boundary();root=output/('flat2-'+name);raw=cohort.read(root,result['metadata_file']);R.require(R.digest(raw)==result['metadata_sha256'],'actual mode metadata');meta=json.loads(raw);m=manifests[name];R.require(meta['manifest']==m,'complete original metadata');files={x['path']:x for x in m['members'] if x['kind']=='file'};mapping=meta['flat_members'];R.require(set(mapping)==set(files) and len(set(mapping.values()))==len(files) and set(p.name for p in root.iterdir())==set(mapping.values())|{result['metadata_file']},'full restored population')
+  cohort.tree(root,set(mapping.values())|{result['metadata_file']})
+  for path,row in files.items():
+   raw=cohort.read(root,mapping[path]);R.require(len(raw)==row['bytes'] and R.digest(raw)==row['sha256'],'retained actual body')
+  boundary()
+ cohort.check()
+ return (results,cohort) if return_cohort else results
+
+def input_read(inputs,root,name):
+ """Bind an actual read to the existing sampled cohort; no writer exclusion."""
+ path=Path(root)/R.path_name(name);before=inputs.pin(path);raw=R.read(root,name)
+ R.require(inputs.signature(path)==before,'input changed during verified read cleanup')
+ proof=(len(raw),R.digest(raw));R.require(path not in inputs.byte_proofs or inputs.byte_proofs[path]==proof,'input byte proof changed');inputs.byte_proofs[path]=proof
+ return raw
+
+def run(request_name,request_sha):
+ inputs=VerifiedCohort()
+ # Pin actual implementation bodies before their input-dependent calls.
+ for name in ('restore_successor02.py','binding01.py','receipt01.py','cohort01.py','watch01.py','KNOWN_REQUIRED01.json','recover.template01.py','utilities/recovery_pax01.py','utilities/recovery_ustar02.py','utilities/owned_io.py','utilities/bounded_git01.py'):input_read(inputs,HERE,name)
+ raw=input_read(inputs,HERE,request_name);R.require(R.digest(raw)==B.hexpin(request_sha),'exact final request');q=json.loads(raw)
+ def actual_body(row):
+  B.ref(row);data=input_read(inputs,B.ROOT,row['path']);R.require(len(data)==row['bytes'] and R.digest(data)==row['sha256'],'actual input body pin');return data
+ # Include every selected binder dependency before validation, without fake authority.
+ R.require(type(q.get('exact_required'))is dict and 1<=len(q['exact_required'])<=506,'finite actual binder inputs')
+ R.require(sum(v['bytes'] for v in q['exact_required'].values())<=64*1024**2,'finite actual input bytes')
+ for name,pin in q['exact_required'].items():actual_body(dict(path=name,**pin))
+ required=B.validate(q);R.require(q['round']=='BASELINE','exact installed round')
+ # All are genuine later evidence, never synthesized from local source preparation.
+ for field in ('actual_remote_receipt','actual_selected_mode_profile','actual_restore_release'):B.ref(q[field])
+ release=json.loads(actual_body(q['actual_restore_release']));R.require(release=={'schema_version':1,'decision':'ACCEPTED_EXACT_BASELINE_BUNDLE_FLAT','contract_sha256':R.digest(R.encode({k:v for k,v in q.items() if k!='actual_restore_release'})),'remote_sha256':q['actual_remote_receipt']['sha256'],'source_sha256':R.digest(R.read(HERE,'restore_successor02.py'))},'genuine independent exact restore release')
+ R.require(all(not os.path.lexists(HERE/n) for n in ('BUNDLE_FLAT02_INTENT01.json','BUNDLE_FLAT02_RECOVERY01.json','BUNDLE_FLAT02_FAILED01.json')),'one-use receiver output')
+ remote_raw=actual_body(q['actual_remote_receipt']);remote=json.loads(remote_raw);selection={'remote_commit':q['actual_main_commit'],'rows':[dict(path=k,**v) for k,v in sorted(required.items())]};validate_remote(remote,selection,R.digest(R.encode(selection)),required);R.require(remote['fresh_git_root']==str(RECEIVER/'fresh-compatibility-baseline02.git'),'actual fixed fresh receiver root');R.require(remote['remote_commit']==q['actual_main_commit'] and remote['status']=='fresh-actual-remote-compatibility-baseline02-supervised-recovered','actual receiver status/commit');records=remote['selected_blobs'];R.require(len(records)==len(required) and {r['path'] for r in records}==set(required),'complete actual selected population')
+ selected=RECEIVER/'selected';profile=json.loads(actual_body(q['actual_selected_mode_profile']));R.require(profile['actual_selected_root']==str(selected),'exact original input-mode root');R.require(R.scan(selected)==profile['full_manifest'],'actual full selected original modes')
+ # The authenticated completed input modes are distinct from private new outputs.
+ m=profile['full_manifest'];directories={'.':m['root_mode']};directories.update({x['path']:x['mode'] for x in m['members'] if x['kind']=='directory'});files={x['path']:x for x in m['members'] if x['kind']=='file'}
+ R.require(set(files)==set(required) and all(x['mode']==0o600 for x in files.values()),'complete private selected body population')
+ inputs.selected_profile={'actual_selected_root':str(selected),'expected_owner_uid':os.geteuid(),'directory_modes':directories,'files':files}
+ for row in records:
+  data=input_read(inputs,selected,row['path']);R.require(len(data)==required[row['path']]['bytes']==row['bytes'] and R.digest(data)==required[row['path']]['sha256']==row['sha256'] and hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()==row['git_object'],'actual selected bytes/OID')
+ inputs.tree(selected,set(files))
+ begun=time.monotonic();samples=[]
+ def boundary():
+  R.require(time.monotonic()-begun<180 and len(samples)<64,'finite bundle restore');samples.append(W.census(HERE))
+ boundary();R.put(HERE/'BUNDLE_FLAT02_INTENT01.json',{'request_sha256':request_sha,'new_claim':False});results,cohort=restore_archives(q,selected,HERE,boundary,True);boundary()
+ R.require(actual_body(q['actual_remote_receipt'])==remote_raw and R.read(HERE,request_name)==raw,'original request/receipt unchanged')
+ R.put(HERE/'BUNDLE_FLAT02_RECOVERY01.json',{'schema_version':1,'status':'BASELINE_BYTE_ARCHIVES_RECOVERED_REQUIRES_REVIEW','request_sha256':request_sha,'scopes':results,'observations':samples,'source':B.SOURCE,'source605_Git407_composition':'separate genuine589/394 basis plus15files/oneDirectory/13Git','numerical_authority':False,'POSIX':False,'installed_runtime_bodies':False});boundary();R.require(R.scan(selected)==profile['full_manifest'],'selected entire population retained');cohort.check()
+ # One final cohort includes outputs too: its enumerations finish before any
+ # descriptor-free signature rejoin, including cross-scope cleanup changes.
+ for attr in ('pins','byte_proofs','trees','anchors'):
+  source=getattr(cohort,attr);target=getattr(inputs,attr);R.require(all(k not in target or target[k]==v for k,v in source.items()),'cohort overlap must agree');target.update(source)
+ inputs.check()
+if __name__=='__main__':
+ p=argparse.ArgumentParser();p.add_argument('--request',required=True);p.add_argument('--sha256',required=True);a=p.parse_args()
+ try:run(a.request,a.sha256)
+ except BaseException as primary:
+  secondary=[]
+  try:R.put(HERE/'BUNDLE_FLAT02_FAILED01.json',{'status':'FAILED_RETAINED','numerical_authority':False})
+  except BaseException as error:secondary.append(error)
+  R._cleanup(tuple((lambda e=e:(_ for _ in ()).throw(e)) for e in secondary),primary=primary);raise

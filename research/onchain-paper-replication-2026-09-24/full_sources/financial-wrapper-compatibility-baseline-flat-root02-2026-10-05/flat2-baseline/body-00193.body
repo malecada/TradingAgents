@@ -1,0 +1,87 @@
+{
+  "batch_size": 16,
+  "batch_unit": "chronological daily examples",
+  "best_seed_selection": false,
+  "betas": [
+    0.9,
+    0.999
+  ],
+  "deterministic": true,
+  "diagnostic_cells": [
+    "paper_reconstruction/ETH/2024/11/direction/constant_graph/whole",
+    "paper_reconstruction/ETH/2024/11/direction/mcm_without_gat/whole",
+    "paper_reconstruction/ETH/2024/11/direction/gat_without_mcm/whole",
+    "paper_reconstruction/ETH/2024/11/direction/training_label_permutation/whole",
+    "paper_reconstruction/ETH/2024/23/direction/constant_graph/whole",
+    "paper_reconstruction/ETH/2024/23/direction/mcm_without_gat/whole",
+    "paper_reconstruction/ETH/2024/23/direction/gat_without_mcm/whole",
+    "paper_reconstruction/ETH/2024/23/direction/training_label_permutation/whole",
+    "paper_reconstruction/ETH/2024/37/direction/constant_graph/whole",
+    "paper_reconstruction/ETH/2024/37/direction/mcm_without_gat/whole",
+    "paper_reconstruction/ETH/2024/37/direction/gat_without_mcm/whole",
+    "paper_reconstruction/ETH/2024/37/direction/training_label_permutation/whole",
+    "paper_reconstruction/ETH/2024/51/direction/constant_graph/whole",
+    "paper_reconstruction/ETH/2024/51/direction/mcm_without_gat/whole",
+    "paper_reconstruction/ETH/2024/51/direction/gat_without_mcm/whole",
+    "paper_reconstruction/ETH/2024/51/direction/training_label_permutation/whole",
+    "paper_reconstruction/ETH/2024/71/direction/constant_graph/whole",
+    "paper_reconstruction/ETH/2024/71/direction/mcm_without_gat/whole",
+    "paper_reconstruction/ETH/2024/71/direction/gat_without_mcm/whole",
+    "paper_reconstruction/ETH/2024/71/direction/training_label_permutation/whole"
+  ],
+  "diagnostics": {
+    "constant_graph": {
+      "dictionary": "none",
+      "graph_input": "all-zero32-vector at each valid timestep",
+      "trainable": "LSTM,attention,classification head only"
+    },
+    "gat_without_mcm": {
+      "dictionary": "none",
+      "graph_input": "four admitted node attributes\u2192GAT first input width4\u2192same GAT/pooling",
+      "trainable": "GAT,LSTM,attention,classification head"
+    },
+    "mcm_without_gat": {
+      "dictionary": "exact full-model asset/fold/seed training dictionary reuse",
+      "graph_input": "mean learned MLP output32 of per-node MCM32",
+      "trainable": "MLP,LSTM,attention,classification head"
+    },
+    "training_label_permutation": {
+      "dictionary": "same as full model",
+      "graph_input": "identical full model",
+      "permutation": "PCG64(20260924).permutation over training example indices sorted by decision_at; one permutation shared across all five model seeds; preserve validation/test labels",
+      "trainable": "all full-model blocks"
+    }
+  },
+  "early_stopping": "none; all fixed epochs",
+  "epochs": 100,
+  "epsilon": 1e-08,
+  "gradient_clip_norm": 1.0,
+  "hyperparameter_search": false,
+  "learning_rate": 0.001,
+  "losses": {
+    "classification": "two-logit cross entropy, labels down_or_tie=0/up=1",
+    "regression": "mean squared standardized price error"
+  },
+  "optimizer": "Adam",
+  "permutation_control_seed": 20260924,
+  "precision": "float32",
+  "price_scaler_ddof": 0,
+  "price_scaler_population": "unique admitted input-price dates inside training window referenced by training examples; sorted date order; no duplicated lookback weighting; no target-only dates; no test dates",
+  "price_scaling": "training-only mean/std; zero std rejected; inverse transform before metrics",
+  "scheduler": "none",
+  "schema_version": 1,
+  "seeds": [
+    11,
+    23,
+    37,
+    51,
+    71
+  ],
+  "shuffle": false,
+  "validation": "none",
+  "weight_decay": 0.0,
+  "zero_fit_controls": {
+    "last_direction": "probability is0 or1 from most recent available close change; unchanged0; no test-future price; retain undefined first context as unavailable",
+    "training_majority": "up probability=training up prevalence; class1 iff prevalence>0.5 (ties0)"
+  }
+}

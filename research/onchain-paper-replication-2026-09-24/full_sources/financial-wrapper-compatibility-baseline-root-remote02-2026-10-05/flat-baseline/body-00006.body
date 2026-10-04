@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "name": "genuine full fixed nested concrete-policy proof bundle and original finish",
+      "passed": true,
+      "bytes": 644264,
+      "decision": "ACCEPTED_EXACT_CONCRETE_POLICY_ONLY"
+    },
+    {
+      "name": "review_proof/null",
+      "refused": true,
+      "reason": "exact external body reference required"
+    },
+    {
+      "name": "review_proof/wronghash",
+      "refused": true,
+      "reason": "external reference hash differs"
+    },
+    {
+      "name": "review_machine/null",
+      "refused": true,
+      "reason": "exact external body reference required"
+    },
+    {
+      "name": "review_machine/wronghash",
+      "refused": true,
+      "reason": "external reference hash differs"
+    },
+    {
+      "name": "review_manifest/null",
+      "refused": true,
+      "reason": "exact external body reference required"
+    },
+    {
+      "name": "review_manifest/wronghash",
+      "refused": true,
+      "reason": "external reference hash differs"
+    },
+    {
+      "name": "review_report/null",
+      "refused": true,
+      "reason": "exact external body reference required"
+    },
+    {
+      "name": "review_report/wronghash",
+      "refused": true,
+      "reason": "external reference hash differs"
+    },
+    {
+      "name": "actual uninstalled recovery machine unavailable; no fabricated proof",
+      "refused": true,
+      "reason": "exact external body reference required"
+    },
+    {
+      "name": "samepath coalescence only, distinct identical c5 paths stay separately charged",
+      "passed": true,
+      "bytes": 1872
+    }
+  ],
+  "count": 11,
+  "no_actual_Admission_or_fake_handle": true,
+  "no_public_preflight_or_validate_preclaim": true
+}

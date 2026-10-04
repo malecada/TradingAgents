@@ -1,0 +1,9 @@
+# Fixed baseline caller draft
+
+The caller has exactly two explicit phases in the fixed Root namespace. REMOTE invokes recover01.py with the actual selection pin. FLAT invokes restore_bundle01.py with its actual request pin; the contract refuses absent actual remote receipt, Root exit, selected mode profile and flat release. It never automatically advances from remote success to flat execution. Root freezes independent actual phase entry release binding contract and caller hashes.
+
+Helpers, selection, request and actual proof bodies are read/hash-joined and retained through a final sampled signature check after output closure, cleanup and exit-receipt publication. The fixed accepted watcher observes the full owned tree before/during/after child execution. Parent hard/soft FSIZE is read back at four MiB; child inheritance is not a separate child OS observation. Actual Root process exit remains separately observed; self-receipt actual_parent_exit stays null. The caller kills/reaps its direct child process group using the original protocol; nested Git groups rely on the already-reviewed receiver's own process cleanup, not a new outer all-descendants assertion.
+
+The source is a concrete draft, not an accepted release. Helpers map, commit, selection and actual request remain null; eight pure source/null/path controls pass without Root reads or subprocess creation. No transport or numerical authority was exercised. Root must bind exact installed helper population and genuine current envelope/review; actual transfer then supplies the phase-dependent flat evidence. No future final request or final scientific caller recovery is implied.
+
+SOURCE_REFERENCES01 pins the original Root remote03/flat05 protocols. The caller is an explicitly new fixed orchestration adaptation, not a claimed literal inverse of those prior launchers. No primitive, metadata round or resource cap is changed.

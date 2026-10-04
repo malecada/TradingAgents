@@ -1,0 +1,55 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_native_features.py
++++ /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_native_features.py
+@@ -130,3 +130,52 @@
+     require(features.verified_hashes() == hashes,'compact native saved population changed')
+     terminal.check();sources();terminal._verify(full=False)
+     return PreparedFeatures(features,binding,None)
++
++
++class _DetachedFeatures(FixedFeatureMap):
++    def __init__(self,mapping,authority,hashes,boundary,chunk):
++        from .compact_detached_handoff import Authority
++        require(type(authority) is Authority,'genuine detached authority required')
++        self._mapping = mapping;self._authority = authority
++        self._hashes = freeze(hashes);self._boundary = boundary;self._chunk = chunk;self._lock = threading.Lock()
++    def __len__(self):return len(self._mapping)
++    def __iter__(self):return iter(self._mapping)
++    def __getitem__(self,key):return self.load_batch([key])[key]
++    def live_tensor_bytes(self):
++        require(self._lock.acquire(blocking=False),'concurrent compact native operation')
++        try:return self._mapping.live_tensor_bytes()
++        finally:self._lock.release()
++    def verified_hashes(self):
++        require(self._lock.acquire(blocking=False),'concurrent compact native operation')
++        try:
++            actual = self._mapping.verified_hashes();self._authority.lease()
++            require(actual == dict(self._hashes),'compact native feature population differs');return actual
++        finally:self._lock.release()
++    def load_batch(self,keys):
++        require(self._lock.acquire(blocking=False),'concurrent compact native operation')
++        loaded = None
++        try:
++            loaded = self._mapping.load_batch(keys)
++            self._authority.lease();self._mapping.live_tensor_bytes()
++            # Recheck returned values after the numeric map's final live callback.
++            for h,f in loaded.items():
++                require(self._boundary.identity(f['mcm'].numpy(),f['edge_index'].numpy(),self._chunk) == self._hashes[h],
++                    'compact native returned feature bytes changed')
++            return loaded
++        except BaseException:
++            if loaded is not None:loaded.clear()
++            loaded = None;f = None
++            raise
++        finally:self._lock.release()
++
++def detached_selection(run,job,item):
++ from . import compact_detached_handoff as detached
++ name=job.get('compact_detached_input');require(name is not None and item.get('compact_detached_input')==name and name in run.admission.inputs,'explicit detached role must agree')
++ require(json.loads(run.read_input(name))=={'schema_version':1,'kind':'compact-detached-sampled-v1','lifetime':'original-reader-sampled-content-v1','metadata_limit':detached.LIMIT},'detached policy differs')
++ pin=run.admission.experiment['source_files'].get(detached.SELF)
++ require(pin is not None and file_hash(ROOT/detached.SELF)==pin and file_hash(run.admission.root/detached.SELF)==pin,'detached helper not admitted')
++ return name
++
++def detach_completed(prepared,terminal,*,input_name):
++ from .compact_detached_handoff import prepare as detach
++ return detach(prepared,terminal,input_name=input_name)

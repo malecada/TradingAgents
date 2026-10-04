@@ -1,0 +1,40 @@
+{
+  "cases": [
+    {
+      "case": "old",
+      "child_exit": 0,
+      "pid": 1167400,
+      "start_ticks": 21795267,
+      "error": "restore exited before STOP acknowledgement",
+      "sample": null,
+      "pid_absent": true
+    },
+    {
+      "case": "new",
+      "child_exit": 0,
+      "pid": 1167401,
+      "start_ticks": 21795270,
+      "error": null,
+      "sample": {
+        "logical_bytes": 0,
+        "allocated_bytes": 4096,
+        "members": 1,
+        "seconds": 0.0001882920041680336,
+        "regular_extent_changes": 0,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations",
+        "complete_attempts": 1
+      },
+      "pid_absent": true
+    },
+    {
+      "case": "fatal",
+      "same_primary": true,
+      "resumed": true,
+      "reaped": -9,
+      "pid_absent": true
+    }
+  ],
+  "single_literal_inverse": true,
+  "unchanged_restore_ustar": true,
+  "public_entry": false
+}
