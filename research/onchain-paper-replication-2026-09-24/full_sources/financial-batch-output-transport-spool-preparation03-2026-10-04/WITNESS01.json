@@ -1,0 +1,156 @@
+{
+  "actual_sleep_not_deadline_interruption": true,
+  "count": 27,
+  "rows": [
+    {
+      "accepted": true,
+      "case": "old-SP1",
+      "exception": null,
+      "failed": false,
+      "message": null,
+      "reservation_unchanged": true,
+      "states": [
+        "ELIGIBLE"
+      ]
+    },
+    {
+      "accepted": false,
+      "case": "new-SP1",
+      "exception": "NotADirectoryError",
+      "failed": true,
+      "message": "[Errno 20] Not a directory: 'new-SP1'",
+      "reservation_unchanged": true,
+      "states": [
+        "ABSENT"
+      ]
+    },
+    {
+      "accepted": true,
+      "case": "old-SP2",
+      "exception": null,
+      "failed": false,
+      "message": null,
+      "reservation_unchanged": true,
+      "states": [
+        "ELIGIBLE"
+      ]
+    },
+    {
+      "accepted": false,
+      "case": "new-SP2",
+      "exception": "ValueError",
+      "failed": true,
+      "message": "exact unique acknowledgement required",
+      "reservation_unchanged": true,
+      "states": [
+        "PENDING"
+      ]
+    },
+    {
+      "accepted": true,
+      "case": "old-SP3",
+      "exception": null,
+      "failed": false,
+      "message": null,
+      "reservation_unchanged": true,
+      "states": [
+        "ELIGIBLE"
+      ]
+    },
+    {
+      "accepted": false,
+      "case": "new-SP3",
+      "exception": "ValueError",
+      "failed": true,
+      "message": "deadline/plan mutation",
+      "reservation_unchanged": true,
+      "states": [
+        "RECOVERED"
+      ]
+    },
+    {
+      "case": "strict-page-0",
+      "refused": true
+    },
+    {
+      "case": "strict-page-1",
+      "refused": true
+    },
+    {
+      "case": "strict-page-2",
+      "refused": true
+    },
+    {
+      "case": "strict-chunk-0",
+      "refused": true
+    },
+    {
+      "case": "strict-chunk-1",
+      "refused": true
+    },
+    {
+      "case": "strict-chunk-2",
+      "refused": true
+    },
+    {
+      "case": "strict-size-0",
+      "refused": true
+    },
+    {
+      "case": "strict-size-1",
+      "refused": true
+    },
+    {
+      "case": "strict-size-2",
+      "refused": true
+    },
+    {
+      "case": "strict-plan-0",
+      "refused": true
+    },
+    {
+      "case": "strict-plan-1",
+      "refused": true
+    },
+    {
+      "case": "strict-plan-2",
+      "refused": true
+    },
+    {
+      "case": "strict-sha256-0",
+      "refused": true
+    },
+    {
+      "case": "strict-sha256-1",
+      "refused": true
+    },
+    {
+      "case": "strict-sha256-2",
+      "refused": true
+    },
+    {
+      "case": "strict-receipt_sha256-0",
+      "refused": true
+    },
+    {
+      "case": "strict-receipt_sha256-1",
+      "refused": true
+    },
+    {
+      "case": "strict-receipt_sha256-2",
+      "refused": true
+    },
+    {
+      "case": "nested-bool",
+      "refused": true
+    },
+    {
+      "case": "cleanup-redirect",
+      "refused": true
+    },
+    {
+      "case": "fatal-overrun",
+      "first_fatal_preserved": true
+    }
+  ]
+}

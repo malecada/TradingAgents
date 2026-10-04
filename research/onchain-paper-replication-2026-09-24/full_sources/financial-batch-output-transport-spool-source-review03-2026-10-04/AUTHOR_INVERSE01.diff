@@ -1,0 +1,12 @@
+--- original02/spool04.py
++++ successor03/spool05.py
+@@ -189,6 +189,9 @@
+         require(not self.failed and not self.closed, 'terminal failed/closed spool')
+         require(time.monotonic()<self.deadline and self._plan.encoded()==self._plan_pin, 'deadline/plan mutation')
+         require(self._path_identity()==self._path_pin, 'canonical root ancestor chain changed')
++        # Sample again after every ancestry FD cleanup has finished. This is
++        # not continuous namespace immunity against concurrent path mutation.
++        require(self.root.resolve(strict=True)==self.root, 'post-cleanup canonical root changed')
+         s=os.stat(self.root,follow_symlinks=False)
+         require((s.st_dev,s.st_ino)==self._root and stat.S_IMODE(s.st_mode)==0o700, 'root changed')
+         require(set(os.listdir(self.fd))==set(self._fds), 'complete local membership changed')

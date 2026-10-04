@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-10-04T11:02:15.777378+00:00",
+  "codec_source_sha256": "f10f6803a637735bc490de8846056a34e9090451d92773d075a7025b19bd3d55",
+  "spool_source_sha256": "c6604ec50a26e639b14cebeb17a89304986b5cf178b9958993d674120d10ef06",
+  "source_only_inference": {
+    "aggregate_non_tail_bytes": 9239969792,
+    "codec_default_chunk_payload_bytes": 1048576,
+    "codec_full_aggregate_frames": 8812,
+    "codec_page_rows": 64,
+    "codec_full_aggregate_pages": 138,
+    "codec_members_including_start_terminal_and_pages": 8952,
+    "spool_max_members_per_plan": 4096,
+    "spool_per_file_byte_cap": 4194304,
+    "spool_author_estimate_chunk_bytes": 4194304,
+    "spool_author_estimate_chunks": 2203
+  },
+  "qualification": "Frozen engineering utilities have distinct formats/cardinalities and are unjoined. A single unmodified spool Plan cannot enumerate the full aggregate default codec files. Genuine per-target routing, exact member/frame/page join, shared cumulative reservation and whole-watch transport/recovery/retirement require separate implementation/admission. Individual target cardinalities and physical capacity are not observed by this source-only calculation; no changed payload, model batch, method, scope, new claim or numerical import."
+}

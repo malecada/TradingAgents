@@ -1,0 +1,62 @@
+[
+  {
+    "actual_walk_closes": 11,
+    "callbacks": [],
+    "consumed_unchanged": true,
+    "error": null,
+    "failed": false,
+    "literal_target": "old-check-moved",
+    "message": null,
+    "operation": "check",
+    "sampled_not_continuous": true,
+    "source": "old",
+    "states": [
+      "ABSENT"
+    ]
+  },
+  {
+    "actual_walk_closes": 20,
+    "callbacks": [],
+    "consumed_unchanged": true,
+    "error": "NotADirectoryError",
+    "failed": true,
+    "literal_target": "old-transfer-moved",
+    "message": "[Errno 20] Not a directory: 'old-transfer'",
+    "operation": "transfer",
+    "sampled_not_continuous": true,
+    "source": "old",
+    "states": [
+      "PENDING"
+    ]
+  },
+  {
+    "actual_walk_closes": 11,
+    "callbacks": [],
+    "consumed_unchanged": true,
+    "error": "ValueError",
+    "failed": false,
+    "literal_target": "new-check-moved",
+    "message": "post-cleanup canonical root changed",
+    "operation": "check",
+    "sampled_not_continuous": true,
+    "source": "new",
+    "states": [
+      "ABSENT"
+    ]
+  },
+  {
+    "actual_walk_closes": 11,
+    "callbacks": [],
+    "consumed_unchanged": true,
+    "error": "ValueError",
+    "failed": true,
+    "literal_target": "new-transfer-moved",
+    "message": "post-cleanup canonical root changed",
+    "operation": "transfer",
+    "sampled_not_continuous": true,
+    "source": "new",
+    "states": [
+      "ABSENT"
+    ]
+  }
+]

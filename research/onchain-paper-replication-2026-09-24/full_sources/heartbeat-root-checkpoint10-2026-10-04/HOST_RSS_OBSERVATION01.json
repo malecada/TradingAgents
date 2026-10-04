@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-04T11:16:45.178654+00:00",
+  "actual_tool_chunk": "10cf16",
+  "observed_processes": [
+    {
+      "pid": 5979,
+      "comm": "ChatGPT",
+      "rss_bytes": 4536971264,
+      "ppid": 5555
+    },
+    {
+      "pid": 6033,
+      "comm": "codex",
+      "rss_bytes": 497160192,
+      "ppid": 5541
+    },
+    {
+      "pid": 4096,
+      "comm": "gnome-shell",
+      "rss_bytes": 430350336,
+      "ppid": 3865
+    },
+    {
+      "pid": 6300,
+      "comm": "ChatGPT",
+      "rss_bytes": 407818240,
+      "ppid": 5555
+    },
+    {
+      "pid": 5541,
+      "comm": "ChatGPT",
+      "rss_bytes": 386441216,
+      "ppid": 4096
+    }
+  ],
+  "qualification": "Actual read-only proc status/comm observation. RSS may include shared pages and cannot be summed as host usage. No commandline/environment/credential contents or process mutation. App restart may release memory, but no promised amount or physical RAM increase."
+}
