@@ -1,0 +1,13 @@
+"""Bind only Root's actual fixed captured bytes; no recovery or launch."""
+import ast,hashlib,json
+from pathlib import Path
+H=Path(__file__).resolve().parent;B=H.parent;C=B/'financial-wrapper-complete100-final-supplement-capture01-2026-10-04';sha=lambda b:hashlib.sha256(b).hexdigest();capraw=(C/'CAPTURE01.json').read_bytes();assert sha(capraw)=='86b787a7a01f15a596f356c16b1c1b55060549159fb7a301cc173c814cfcb67e';cap=json.loads(capraw);required=json.loads((C/'REQUIRED_BODIES01.json').read_bytes());assert len(required)==7 and sum(r['bytes'] for r in required.values())==1063336
+root=B.parents[2]
+for name,ref in required.items():b=(root/name).read_bytes();assert len(b)==ref['bytes']<=4194304 and sha(b)==ref['sha256']
+(H/'ACTUAL_CAPTURE01.json').write_bytes(capraw);(H/'REQUIRED_BODIES01.json').write_bytes((C/'REQUIRED_BODIES01.json').read_bytes());newliteral='REQUIRED='+repr(required)+'\n';s=(H/'recover.template01.py').read_text();assert s.count('REQUIRED=None\n')==1;s=s.replace('REQUIRED=None\n',newliteral);(H/'recover01.py').write_text(s)
+inv=json.loads((H/'REMOTE_TEMPLATE_INVERSE01.json').read_bytes());inv['changes'][0]['replacement']=newliteral;inv['status']='ACTUAL_FIXED_CAPTURE_PINS_SOURCE_ONLY';inv['required_capture_pins']=sha(capraw);inv['successor_sha256']=sha(s.encode());back=s
+for change in reversed(inv['changes']):assert back.count(change['replacement'])==1;back=back.replace(change['replacement'],change['original'],1)
+assert back.encode()==(H/'ORIGINAL_REMOTE01.py').read_bytes();assert ast.dump(ast.parse(back),include_attributes=False)==ast.dump(ast.parse((H/'ORIGINAL_REMOTE01.py').read_bytes()),include_attributes=False);(H/'SOURCE_INVERSE01.json').write_text(json.dumps(inv,indent=2,sort_keys=True)+'\n')
+s=(H/'restore.template01.py').read_text();changes={'REL = None':"REL = 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-final-supplement-capture01-2026-10-04'",'CAPTURE = None':'CAPTURE = '+repr(sha(capraw)),'CAPTURE_STATUS = None':'CAPTURE_STATUS = '+repr(cap['status']),'REQUIRED = None':'REQUIRED = '+repr(required)}
+for a,z in changes.items():assert s.count(a)==1;s=s.replace(a,z,1)
+(H/'restore01.py').write_text(s);(H/'FLAT_TEMPLATE_BINDING01.json').write_text(json.dumps({'changes':changes,'template_sha256':sha((H/'restore.template01.py').read_bytes()),'bound_source_sha256':sha(s.encode()),'actual_capture_sha256':sha(capraw),'source_only':True},indent=2,sort_keys=True)+'\n');print(json.dumps({'remote':sha((H/'recover01.py').read_bytes()),'flat':sha((H/'restore01.py').read_bytes()),'selected':7,'operations':25}))

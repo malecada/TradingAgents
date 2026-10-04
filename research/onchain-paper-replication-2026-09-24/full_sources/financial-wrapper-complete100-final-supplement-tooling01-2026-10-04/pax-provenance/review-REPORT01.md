@@ -1,0 +1,13 @@
+# Independent witness PAX framer correction
+
+Accepted narrowly as witness recovery source. The exact candidate a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2 changes only the premature raw-name slash predicate and adds complete effective-name slash validation. The inverse exactly reproduces every original b40e source byte and AST. Original IO, Git, manifest, restore, canonical reencoding and cleanup code remain unchanged; all 59 author manifest members were checked.
+
+Original actual witness shards 0035 and 0049 still fail with unchanged R4. The candidate parses every original member with exact order, type, mode, extent and opaque hash; full canonical compressed bytes match. No actual archive was restored or changed. A fresh owned canonical PAX regular member whose raw prefix ends at a slash restored correctly to private flat files; no POSIX-tree or research authority is reported.
+
+893 independent checks cover the inverse, both original actual RED/new GREEN cases, real tiny restore, malformed effective and raw paths, link/device/sparse types, traversal and protected paths, PAX extra fields/oversized payload, 4 MiB member bound before payload, nonempty directories, missing/extra/duplicate/reordered members, original modes, footer/truncation/corruption and canonical gzip headers. Effective PAX NUL is refused. A raw NUL terminates the raw header name; hidden subsequent bytes are rejected by complete canonical reencoding. Canonical archive verification remains mandatory after framing.
+
+Actual write-stage MemoryError, KeyboardInterrupt and SystemExit preserve the original exception identity when descriptor close also fails; owned descriptors close. Ordinary canonical-byte mismatch plus gzip/TAR close mismatch remains the original CleanupFailure with retained causes. It must stop the operation.
+
+Four reviewer harness failures remain immutable: initial tree traversal ordering was not lexical manifest ordering; raw NUL was initially expected to fail at framing rather than canonical verification; CleanupFailure needed explicit classification because it derives from BaseException; initial close fault injection triggered during archive read before body writing. Separately named scripts and fresh fixtures correct only those test assumptions. Original failures and partial outputs are retained.
+
+This does not release the historical b40e Source/final caller adapter, modify any original archive, or establish actual external/flat recovery, numerical capacity, runtime-body preservation or execution authority. The witness adapter must bind this exact successor with genuine source-review evidence, then receive separate exact-request and actual-outcome review.

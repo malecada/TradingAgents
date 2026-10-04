@@ -1,0 +1,13 @@
+"""Prepare unresolved finite source templates only; no recovery invocation."""
+import ast,hashlib,json
+from pathlib import Path
+H=Path(__file__).resolve().parent;B=H.parent;old=B/'financial-wrapper-complete100-baseline-remote01-2026-10-04';sha=lambda b:hashlib.sha256(b).hexdigest()
+b=(old/'recover01.py').read_bytes();assert sha(b)=='b03a2c296d122f95f395c02fa1821df25d246d3d21ce93a28560a953f2335879';(H/'ORIGINAL_REMOTE01.py').write_bytes(b)
+s=b.decode();line=next(x for x in s.splitlines(keepends=True) if x.startswith('REQUIRED='));oldq='Complete current non-Git Source339 capsule, literal nine-file NEW Parent draft, supporting closed reviews/readbacks and ALL385 current reachable original Git object bodies in six canonical archives. These exact baseline bodies are recovered from external Git; full fresh flat and original Git reconstruction/independent acceptance remain separate. Final request/release are not captured and require a separate recovered supplement. Installed runtime bodies, POSIX instantiation, whole capacity and numerical authority are excluded.'
+changes=[(line,'REQUIRED=None\n'),('fresh-complete100-baseline-source339-01.git','fresh-complete100-final-supplement01.git'),('fresh-actual-remote-complete100-baseline-source339-recovered','fresh-actual-remote-complete100-final-supplement-recovered'),(oldq,'Exact final contract/support byte supplement recovered from external Git. Complete baseline Source339 and all385 original Git objects remain separately preserved and recovered. This byte receipt grants no native launch, financial, runtime, POSIX or whole-capacity authority; actual complete flat recovery and independent final release joins remain required.')]
+for a,z in changes:assert s.count(a)==1;s=s.replace(a,z,1)
+(H/'recover.template01.py').write_text(s);(H/'REMOTE_TEMPLATE_INVERSE01.json').write_text(json.dumps({'status':'UNRESOLVED_NOT_RELEASED','original_sha256':sha(b),'changes':[{'original':a,'replacement':z} for a,z in changes],'required_capture_pins':None},indent=2,sort_keys=True)+'\n')
+(H/'utilities').mkdir();P=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01')
+for n,pin in {'recovery04.py':'b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a','owned_io.py':'09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb','bounded_git01.py':'db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f'}.items():
+ body=(P/n).read_bytes();assert sha(body)==pin;(H/'utilities'/n).write_bytes(body)
+print('Unresolved remote template and three unchanged stdlib primitives prepared; no entry invoked.')

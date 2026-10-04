@@ -1,0 +1,15 @@
+"""Explicit source-only PAX successor dependency; originals stay immutable."""
+import ast,hashlib,json
+from pathlib import Path
+H=Path(__file__).resolve().parent;B=H.parent;A=B/'financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04';V=B/'financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-review01-2026-10-04';sha=lambda b:hashlib.sha256(b).hexdigest();b=(A/'recovery_pax01.py').read_bytes();assert sha(b)=='a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2';(H/'utilities/recovery_pax01.py').write_bytes(b)
+(H/'pax-provenance').mkdir();refs=[]
+for d,tag,names in [(A,'author',('MANIFEST01.json','INVERSE01.json','REPORT01.md')),(V,'review',('MANIFEST01.json','MACHINE01.json','REPORT01.md'))]:
+ for name in names:
+  raw=(d/name).read_bytes();(H/'pax-provenance'/(tag+'-'+name)).write_bytes(raw);refs.append({'original_path':str(d/name),'sha256':sha(raw),'bytes':len(raw)})
+old=(H/'utilities/recovery04.py').read_text();new=b.decode();oldtree=ast.parse(old);newtree=ast.parse(new);diff=[n.name for n in newtree.body if isinstance(n,ast.FunctionDef) and ast.dump(n,include_attributes=False)!=ast.dump(next(x for x in oldtree.body if isinstance(x,ast.FunctionDef) and x.name==n.name),include_attributes=False)];assert diff==['framed_members'];oldfun=next(n for n in oldtree.body if isinstance(n,ast.FunctionDef) and n.name=='framed_members');newfun=next(n for n in newtree.body if isinstance(n,ast.FunctionDef) and n.name=='framed_members');oldlines=old.splitlines(keepends=True);newlines=new.splitlines(keepends=True);back=''.join(newlines[:newfun.lineno-1]+oldlines[oldfun.lineno-1:oldfun.end_lineno]+newlines[newfun.end_lineno:]);assert back==old
+s=(H/'restore01.py').read_text();changes=[("'recovery04.py': 'b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a'","'recovery_pax01.py': 'a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2'"),('import recovery04 as R','import recovery_pax01 as R')]
+for a,z in changes:assert s.count(a)==1;s=s.replace(a,z,1)
+(H/'restore02.py').write_text(s);inverse=s
+for a,z in reversed(changes):inverse=inverse.replace(z,a,1)
+assert inverse==(H/'restore01.py').read_text();assert ast.dump(ast.parse(inverse),include_attributes=False)==ast.dump(ast.parse((H/'restore01.py').read_text()),include_attributes=False)
+(H/'PAX_BINDING_INVERSE01.json').write_text(json.dumps({'status':'SOURCE_ONLY_NEW_EXPLICIT_DEPENDENCY_NOT_SELF_REVIEWED','original_flat_sha256':sha((H/'restore01.py').read_bytes()),'successor_flat_sha256':sha(s.encode()),'changes':[{'original':a,'replacement':z} for a,z in changes],'pax_helper_sha256':sha(b),'changed_original_R4_functions':diff,'whole_R4_function_replacement_inverse':True,'original_R4_and_parent_untouched':True,'prior_provenance':refs,'actual_old_support_failure':'CHECK03.err','authority':'byte supplement only; prior witness-domain review is provenance, new use needs independent review'},indent=2,sort_keys=True)+'\n');print(json.dumps({'flat02':sha(s.encode()),'pax':sha(b)}))

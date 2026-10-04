@@ -1,0 +1,9 @@
+# Final supplement tooling source review
+
+Accepted source-only: exact remote25080e2e and restore02dcbf5ec2 with explicit a054 PAX dependency. 812 independent checks authenticate all90 author members, the four-substitution whole literal/AST remote inverse, the two-edit explicit PAX binding inverse, all seven actual pins, and both actual archives'290 typed members/245 bodies. Both complete canonical compressed reencodings match their immutable archive bytes.
+
+Original b40 fails exactly the support archive's PAX-truncated raw slash header; ACTUAL_RED01 records this independently. The correction retains effective full-path/type and canonical body checks, bounds, footer checks and exact reencoding. It is expressly adopted for this fixed two-scope adapter; prior witness-only approval was not treated as automatic authorization. Original restore01, CHECK03.err, original utilities and archive bytes remain unchanged.
+
+Fresh opaque long-path two-scope roundtrip recovers exact bytes and mode/empty-directory metadata. Old b40 tiny refusal, new success, compressed truncation/trailing bytes, replay, selected omission/duplicate/path/hash/extent mutations, second-scope fatal and late first-scope corruption are covered. Nine exact extracted failure-handler pairs use genuine cleanup semantics and preserve first fatal behavior. No actual helper main/entry or Root restoration, fake remote receipt, scientific handle or numerical module was executed.
+
+Source retains4MiB member/archive,64MiB selected logical,10GiB observed floor and180s sampled outer bounds. Checks do not promise preemption of arbitrary blocking work. Remote remains finite and unchanged outside four context substitutions. One-use names and retained failed/partial evidence remain mandatory. Exact committed selection, genuine remote outcome and exact fresh restore outcome require separate reviews. No runtime-body/POSIX/full-capacity/scientific/native authority follows.

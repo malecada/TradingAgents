@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-final-supplement-tooling01-2026-10-04/check03.py", line 25, in <module>
+    for name,t,b in R.framed_members((C/('complete-'+label+'01.tar.gz')).read_bytes()):
+                    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-final-supplement-tooling01-2026-10-04/utilities/recovery04.py", line 129, in framed_members
+    require(raw_type==t.type and not raw_name.endswith('//') and (not raw_name.endswith('/') or raw_type==tarfile.DIRTYPE),'noncanonical raw member slash/type')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-final-supplement-tooling01-2026-10-04/utilities/recovery04.py", line 11, in require
+    if not v:raise ValueError(msg)
+             ^^^^^^^^^^^^^^^^^^^^^
+ValueError: noncanonical raw member slash/type

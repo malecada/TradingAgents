@@ -1,0 +1,9 @@
+# Actual baseline remote review
+
+Accepted the actual seventeen-body remote outcome and exactly one prospective invocation of unchanged restore02 with the pinned actual receipt. 5,855 successful checks join every current body to its saved external body, actual fetched Git blob/OID and immutable commit tree mode. The whole six-scope local verification was repeated: canonical compressed archives, all385 reachable source objects,339 source files,338 registered pins,eight roles,194 implementation/149 package files,251 runtime RECORD metadata and both failed histories remain unchanged.
+
+All45 recorded operations exited0 with empty cleanup-failure lists; their recorded PIDs and corresponding groups are currently absent. Root intent and rawstdout/stderr join the actual outer0 record. Original Root PID/ticks/group history is not present and is not manufactured. The first fetch commit is independently authenticated as a commit object and by the original rev-parse stdout hash. Final FETCH_HEAD contains17 selected blob IDs and is not used as the first commit readback.
+
+Seven Root receipt bytes retain the exact authenticated0664-to0600 mapping; archive modes describe the private copies, not POSIX restoration. The current752c gate, unused complete100 identity and unreleased Parent draft remain intact. The six flat roots, fresh reconstruction Git root and one-use intent/result/failure names are absent; no matching helper argv was observed. Current disk floor exceeds10GiB.
+
+CHECK01's oversized whole-Main tree output refusal is retained. CHECK02 queries the exact17 paths and passes. No network, restore, admission, numerical import or claim was executed. FLAT_RELEASE01 states the finite exact invocation predicate; future actual restoration still requires independent outcome review. This grants no final caller contract, numerical, installed runtime-body, POSIX, whole-capacity or complete PID-history authority.
