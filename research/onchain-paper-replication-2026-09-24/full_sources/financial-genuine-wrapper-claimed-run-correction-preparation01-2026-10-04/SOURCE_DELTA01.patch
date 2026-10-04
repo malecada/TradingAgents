@@ -1,0 +1,27 @@
+--- original-e2d/financial_wrapper_fixture.py
++++ candidate/financial_wrapper_fixture.py
+@@ -135,7 +135,23 @@
+  from . import job,resources
+  require(type(run)is ResearchRun,'genuine admitted ResearchRun unavailable')
+  run._active();run._check_source();run._check_inputs()
+- ad,j=job._admitted(args);p=admitted(ad,j)
++ # The worker already owns a genuine claim. _check_source above revalidates
++ # that same claim using ResearchRun's original _own_claim path; a second
++ # fresh admission would correctly refuse the already spent identity.
++ from ..admission import Admission
++ ad=run.admission
++ require(type(ad)is Admission and ad.ready is True,'genuine ready existing admission unavailable')
++ require(Path(args.root).resolve()==ad.root and args.registration==ad.registration and args.experiment==ad.experiment_id and args.source==ad.source,'actual args/existing Run admission differs')
++ require(ad.design_source==ad.source and ad.bindings is None and ad.bindings_sha256 is None,'original job source/design binding differs')
++ if 'execution_workspace' in ad.inputs:
++  layout=ad.inputs['execution_workspace'];raw=run.read_input('execution_workspace')
++  require(sha(raw)==layout['sha256'] and json.loads(raw)==job.workspace_binding(ad.root),'registered execution workspace/ledger/artifact mapping differs')
++ raw=run.read_input('execution_job')
++ require(sha(raw)==ad.inputs['execution_job']['sha256'],'execution job bytes differ')
++ j=json.loads(raw);job.job_schema(j);job.resource_policy(j['resources'],ad.root)
++ require(job.required_sources()<=set(ad.experiment['source_files']),'execution dependency source closure not registered')
++ require(Path(job.__file__).resolve()==ad.root/(PREFIX+'job.py'),'execution imported from outside admitted source root')
++ p=admitted(ad,j)
+  require(ad.experiment_id==run.admission.experiment_id and ad.source==run.admission.source and ad.registration_sha256==run.admission.registration_sha256 and j['payload']['plan_input']==plan_input,'actual job/Run/plan join differs')
+  r=j['resources'];base=job._base(args)
+  live=resources.assert_guarded_worker(base/'guard',job._command(args,'worker'),required_paths=[ad.root],wall_seconds=r['wall_seconds'],memory_max_bytes=r['memory_max_bytes'],memory_high_bytes=r['memory_high_bytes'],disk_floor_bytes=r['disk_floor_bytes'])

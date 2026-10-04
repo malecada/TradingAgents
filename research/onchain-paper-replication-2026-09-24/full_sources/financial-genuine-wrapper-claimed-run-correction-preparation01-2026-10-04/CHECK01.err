@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimed-run-correction-preparation01-2026-10-04/check01.py", line 16, in <module>
+    code=compile(ast.Expression(guard),'<actual-repeat-predicate>','eval');base={'prior':[claim],'experiment':claim['experiment_id'],'_own_claim':None};ok('RED actual claimed metadata rejects fresh admission',eval(code,{'any':any},base) is True)
+                                                                                                                                                                                                                 ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "<actual-repeat-predicate>", line 317, in <module>
+  File "<actual-repeat-predicate>", line 317, in <genexpr>
+NameError: name '_own_claim' is not defined

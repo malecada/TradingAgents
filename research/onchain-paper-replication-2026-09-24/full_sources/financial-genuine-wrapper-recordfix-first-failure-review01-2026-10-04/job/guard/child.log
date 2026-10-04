@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source/tradingagents/research/onchain_replication/job.py", line 567, in <module>
+    result = globals()[args.mode](args)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source/tradingagents/research/onchain_replication/job.py", line 368, in worker
+    cells=financial_wrapper_fixture.execute(run,args,job['payload']['plan_input'])
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source/tradingagents/research/onchain_replication/financial_wrapper_fixture.py", line 350, in execute
+    p,config,t,sources,recipe_hash=authorize(run,args,plan_input)
+                                   ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source/tradingagents/research/onchain_replication/financial_wrapper_fixture.py", line 138, in authorize
+    ad,j=job._admitted(args);p=admitted(ad,j)
+         ~~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source/tradingagents/research/onchain_replication/job.py", line 116, in _admitted
+    admitted = admit(root=args.root, registration=args.registration,
+                     experiment=args.experiment, source=args.source)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source/tradingagents/research/admission.py", line 318, in admit
+    raise ValueError("repeat run prohibited; use a separately justified registration")
+ValueError: repeat run prohibited; use a separately justified registration

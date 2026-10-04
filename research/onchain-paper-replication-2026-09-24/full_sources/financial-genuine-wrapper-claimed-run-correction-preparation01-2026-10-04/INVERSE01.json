@@ -1,0 +1,9 @@
+{
+  "original_sha256": "e2d9208ac51fd5876b63b6a72f734fc4fedd28fa42ac9c7fa1014346feb8404c",
+  "edits": [
+    {
+      "old": " ad,j=job._admitted(args);p=admitted(ad,j)",
+      "new": " # The worker already owns a genuine claim. _check_source above revalidates\n # that same claim using ResearchRun's original _own_claim path; a second\n # fresh admission would correctly refuse the already spent identity.\n from ..admission import Admission\n ad=run.admission\n require(type(ad)is Admission and ad.ready is True,'genuine ready existing admission unavailable')\n require(Path(args.root).resolve()==ad.root and args.registration==ad.registration and args.experiment==ad.experiment_id and args.source==ad.source,'actual args/existing Run admission differs')\n require(ad.design_source==ad.source and ad.bindings is None and ad.bindings_sha256 is None,'original job source/design binding differs')\n if 'execution_workspace' in ad.inputs:\n  layout=ad.inputs['execution_workspace'];raw=run.read_input('execution_workspace')\n  require(sha(raw)==layout['sha256'] and json.loads(raw)==job.workspace_binding(ad.root),'registered execution workspace/ledger/artifact mapping differs')\n raw=run.read_input('execution_job')\n require(sha(raw)==ad.inputs['execution_job']['sha256'],'execution job bytes differ')\n j=json.loads(raw);job.job_schema(j);job.resource_policy(j['resources'],ad.root)\n require(job.required_sources()<=set(ad.experiment['source_files']),'execution dependency source closure not registered')\n require(Path(job.__file__).resolve()==ad.root/(PREFIX+'job.py'),'execution imported from outside admitted source root')\n p=admitted(ad,j)"
+    }
+  ]
+}

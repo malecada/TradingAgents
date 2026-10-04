@@ -1,0 +1,57 @@
+{
+  "actual_child_exit": 1,
+  "actual_parent_exit": null,
+  "cleanup": {
+    "actual_control_operations": {
+      "after": {
+        "elapsed_seconds": 0.10671456198906526,
+        "exit_code": 0,
+        "pid": 329139,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "Result=exit-code\nControlGroup=\nActiveState=failed\nSubState=failed\n",
+        "stdout_bytes": 66
+      },
+      "before": {
+        "elapsed_seconds": 0.10668816298129968,
+        "exit_code": 0,
+        "pid": 329137,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "Result=exit-code\nControlGroup=\nActiveState=failed\nSubState=failed\n",
+        "stdout_bytes": 66
+      },
+      "stop": {
+        "elapsed_seconds": 0.054063549992861226,
+        "exit_code": 0,
+        "pid": 329138,
+        "stderr": "",
+        "stderr_bytes": 0,
+        "stdout": "",
+        "stdout_bytes": 0
+      }
+    },
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-5a23a3060a5e4cf3a618885410c28e0d.service",
+    "cgroup_absent": true,
+    "joined_unit_stopped": true,
+    "native_pid_census_is_complete_history": false,
+    "native_pid_start_records": [],
+    "original_parent_exit": 1,
+    "subreaper_cleanup_sha256": "4a9fa9ca79770420e71c25ac26127b774953d158fece00d9e6e2b9968f0fbea7",
+    "unit": "onchain-replication-5a23a3060a5e4cf3a618885410c28e0d.service"
+  },
+  "error_type": null,
+  "identity": "financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+  "outcome_semantics_accepted": false,
+  "planned_interrupt_requested": true,
+  "primary_exception_observed": false,
+  "retained_outputs_location": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+  "source": "649fb8a11089524aaef7843dffeeb90a3a55ca17",
+  "supervisor_result": {
+    "elapsed_seconds": 5.942601835995447,
+    "exit_code": 1,
+    "pid": 328935,
+    "stderr_bytes": 0,
+    "stdout_bytes": 922
+  }
+}

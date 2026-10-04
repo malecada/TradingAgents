@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-actual-recovery-review01-2026-10-04/remote_check03.py", line 139, in <module>
+    ft=git(['--git-dir='+str(repo),'ls-tree','-r','-z',H,'--',*names]);ck(ft==git(['ls-tree','-r','-z',H,'--',*names]),'actual fresh immutable selected tree equals original committed tree');ck(sha(ft)==ops[8]['stdout_sha256'] and len(ft)==ops[8]['stdout_bytes'],'original fetched tree raw-operation output join')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-actual-recovery-review01-2026-10-04/remote_check03.py", line 19, in git
+    r=subprocess.run(['git','--no-replace-objects','-c','protocol.allow=never',*args],input=data,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=10,env={'PATH':'/usr/bin:/bin','GIT_CONFIG_GLOBAL':'/dev/null','GIT_CONFIG_NOSYSTEM':'1','GIT_OPTIONAL_LOCKS':'0','GIT_NO_LAZY_FETCH':'1','GIT_NO_REPLACE_OBJECTS':'1','GIT_TERMINAL_PROMPT':'0'});ck(r.returncode==0 and len(r.stdout)<=8*1024**2 and len(r.stderr)<=65536,'bounded local Git only');return r.stdout
+                                                                                                                                                                                                                                                                                                                                                          ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-actual-recovery-review01-2026-10-04/remote_check03.py", line 5, in ck
+    assert v,m
+           ^
+AssertionError: bounded local Git only
