@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-capture-preparation01-2026-10-04/check01.py", line 29, in <module>
+    restore=R.restore(archive,info,tiny,owned/'flat');ok('actual opaque flat restore',restore['regular_bodies']==2 and not restore['instantiated_posix_tree'])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-capture-preparation01-2026-10-04/recovery04.py", line 191, in restore
+    if owned:output.begin()
+             ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-capture-preparation01-2026-10-04/recovery04.py", line 143, in begin
+    self.fd=os.open(p,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);s=os.fstat(self.fd);self.pin=(s.st_dev,s.st_ino,s.st_mode,s.st_uid)
+            ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-capture-preparation01-2026-10-04/owned01/flat'

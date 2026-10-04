@@ -1,0 +1,11 @@
+# Recordfix parent source preparation
+
+Only the fixed proposed recordfix CAP, external Parent and interrupt1 identity are eligible. The exact unchanged job755c and resourcese1d creation protocol plus accepted financial_wrapper_fixture e2d9208 are mandatory. Source/design must be an actual identical committed revision. The request remains DRAFT_NOT_RELEASED, with actual source, gates, runtime mapping, helper pins, independent final review and three required proof roles null. No destination is created.
+
+After all current/committed source, input and direct runtime checks, preflight executes the genuine job._admitted(args). That original read-only method calls genuine admission and financial_wrapper_fixture.admitted, including the corrected runtime predicate; it does not start ResearchRun or create Owner/Binding. The returned genuine Admission, job and effective numerical ceiling18 are joined. Imported package bodies are reauthenticated after this call and outside-native numerical imports refuse. Namespace checks, RAM/disk eligibility and launch follow only after preflight succeeds.
+
+The unchanged numerical family allowance18/prior0 and absence of cumulative_budget_extension are explicit. Operational reserved identities do not become numerical claims. Existing old identity and failed attempt remain immutable. No allowance19, refund, transfer, fabricated Admission or fake receipt is used.
+
+The original native high=max3GiB, swap0, two CPUs, reserve3GiB/start6GiB,1800s native/1840s outer,4MiB file,1GiB whole capsule watch,80MiB Parent allocation watch and10GiB disk floor remain through the exact original schema/job/resources and parent source. The six original helper bodies are unchanged. Original first-fatal cleanup, descendant/subreaper proof, native uncertainty, late failure retention and original null parent exit remain.
+
+Root must create/review the genuine source and eight inputs, preserve/recover the original failed attempt, adopt the operational amendment under ceiling18, install a separately fresh Parent, obtain exact independent proof/release and recheck actual eligibility before invoking --launch. This source-only preparation supplies no empirical, OS, capacity or financial authority.

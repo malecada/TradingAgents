@@ -1,0 +1,119 @@
+[
+  {
+    "case": "VF1 elapsed_time_kill",
+    "original": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "successor": {
+      "cleanup_uncertain": false,
+      "eligible": false,
+      "reasons": [
+        "native retry/deadline differs"
+      ]
+    }
+  },
+  {
+    "case": "VF1 storage_breach",
+    "original": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "successor": {
+      "cleanup_uncertain": false,
+      "eligible": false,
+      "reasons": [
+        "unexpected native failure evidence storage_breach"
+      ]
+    }
+  },
+  {
+    "case": "VF1 storage_last_error",
+    "original": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "successor": {
+      "cleanup_uncertain": true,
+      "eligible": false,
+      "reasons": [
+        "native cleanup/finalization uncertainty",
+        "unexpected native failure evidence storage_last_error"
+      ]
+    }
+  },
+  {
+    "case": "VF1 cleanup_error",
+    "original": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "successor": {
+      "cleanup_uncertain": true,
+      "eligible": false,
+      "reasons": [
+        "native cleanup/finalization uncertainty",
+        "unexpected native failure evidence cleanup_error"
+      ]
+    }
+  },
+  {
+    "case": "VF1 child_log_limit_reached",
+    "original": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "successor": {
+      "cleanup_uncertain": false,
+      "eligible": false,
+      "reasons": [
+        "unexpected native failure evidence child_log_limit_reached"
+      ]
+    }
+  },
+  {
+    "case": "VF1 child_exit_code",
+    "original": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "successor": {
+      "cleanup_uncertain": false,
+      "eligible": false,
+      "reasons": [
+        "native guard expected failed child1 route"
+      ]
+    }
+  },
+  {
+    "case": "VF1 memory_events",
+    "original": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "successor": {
+      "cleanup_uncertain": false,
+      "eligible": false,
+      "reasons": [
+        "guard OOM counters missing/nonzero"
+      ]
+    }
+  },
+  {
+    "case": "VF1 limit_reason",
+    "original": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "successor": {
+      "cleanup_uncertain": false,
+      "eligible": false,
+      "reasons": [
+        "exact original unit failure reason differs"
+      ]
+    }
+  },
+  {
+    "case": "empty final CPU readback",
+    "disposition": "UNEXPECTED_FAILURE_SPENT",
+    "finding": "VF2",
+    "original_checker_result": {},
+    "qualification": "actual original pure filesystem function on owned empty-procs directory plus scalar projection; not an OS cgroup or real outcome",
+    "successor": {
+      "cleanup_uncertain": false,
+      "eligible": false,
+      "reasons": [
+        "CPU thread readback differs/missing"
+      ]
+    }
+  },
+  {
+    "case": "allowed strict subset CPU mask",
+    "finding": "VF2",
+    "original_mask_predicate": "accepted",
+    "qualification": "exact original scalar predicate; no affinity syscall or actual thread identity claim",
+    "successor": {
+      "cleanup_uncertain": false,
+      "eligible": false,
+      "reasons": [
+        "CPU thread readback differs/missing"
+      ]
+    }
+  }
+]

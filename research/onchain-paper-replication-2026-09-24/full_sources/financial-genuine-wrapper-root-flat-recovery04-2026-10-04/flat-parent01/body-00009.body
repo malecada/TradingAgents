@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/job.py", line 567, in <module>
+    result = globals()[args.mode](args)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/job.py", line 208, in launch
+    _,job=_admitted(args)
+          ~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/job.py", line 137, in _admitted
+    financial_wrapper_fixture.admitted(admitted,job)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/financial_wrapper_fixture.py", line 62, in admitted
+    runtime=json.loads(registered(p['runtime_input']));runtime_check(ad.root,runtime)
+                                                       ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/financial_wrapper_fixture.py", line 76, in runtime_check
+    require(len(matches)==1,'runtime installed RECORD unavailable')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/financial_wrapper_fixture.py", line 19, in require
+    if not v:raise Unavailable(why)
+             ^^^^^^^^^^^^^^^^^^^^^^
+tradingagents.research.onchain_replication.financial_wrapper_fixture.Unavailable: runtime installed RECORD unavailable

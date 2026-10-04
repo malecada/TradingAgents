@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-registration-preparation01-2026-10-04/generate01.py", line 71, in <module>
+    R.require(a.generate,'explicit source generation required');print(json.dumps(write(HERE/'generated01'),sort_keys=True))
+                                                                                 ~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-registration-preparation01-2026-10-04/generate01.py", line 64, in write
+    R.require(out.parent==HERE and not os.path.lexists(out) and shutil.disk_usage(HERE).free>=R.FLOOR,'fresh owned output/10GiBfloor');v=build();out.mkdir();bodies=v.pop('bodies')
+                                                                                                                                         ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-registration-preparation01-2026-10-04/generate01.py", line 47, in build
+    closure=json.loads(bodies[paths['source_closure']]);R.require(len(closure['installed'])==194 and sum(n.startswith('tradingagents/research/onchain_replication/')for n in closure['installed'])==149,'original194/149');closure['installed'][SOURCE_PATH]=CORRECTION;bodies[paths['source_closure']]=R.encode(closure)
+                                                        ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-registration-preparation01-2026-10-04/recovery04.py", line 11, in require
+    if not v:raise ValueError(msg)
+             ^^^^^^^^^^^^^^^^^^^^^
+ValueError: original194/149

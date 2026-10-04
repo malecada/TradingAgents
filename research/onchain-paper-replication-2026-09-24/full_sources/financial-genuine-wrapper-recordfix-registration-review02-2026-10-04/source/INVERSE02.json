@@ -1,0 +1,33 @@
+{
+  "edits": [
+    {
+      "new": " exp=copy.deepcopy(old);exp.update(inputs={role:{'dataset':'synthetic','path':paths[role],'sha256':R.digest(bodies[paths[role]])}for role in sorted(ROLE_NAMES)},source_files=source,charter={'path':PREFIX+'/CHARTER_PENDING.json','sha256':None})\n",
+      "old": " exp=copy.deepcopy(old);exp.update(inputs={role:{'dataset':'synthetic','path':paths[role],'sha256':R.digest(bodies[paths[role]])}for role in sorted(ROLE_NAMES)},source_files=source,charter={'path':PREFIX+'/CHARTER_PENDING.json','sha256':None},cumulative_budget_extension={'extension':{'path':PREFIX+'/EXTENSION_PENDING.json','sha256':None},'review':{'path':PREFIX+'/EXTENSION_REVIEW_PENDING.json','sha256':None}})\n"
+    },
+    {
+      "new": " allocation={'schema_version':1,'kind':'operational-identity-amendment-not-budget-extension-v1','status':'DRAFT_NOT_ADOPTED','program_id':gate['program_id'],'base_family':family,'numerical_attempt_budget':18,'prior_attempts':0,'numerical_claims_before':0,'original_order':order,'fresh_identity':NEW,'preserved_identity_definitions':order+[NEW],'prospective_numerical_order':[NEW]+[x for x in order if x!=OLD],'permanently_reserved_original_outer':OLD,'old_outer_is_numerical_claim':False,'old18_definitions_preserved':True,'ten_original_registrations_preserved':True,'defined_identity_count':19,'prospective_numerical_phase_count':18,'spent_numerical_attempt_refund':False,'spent_numerical_attempt_transfer':False,'original_failed_scope_acceptance':None,'original_failed_scope_full_recovery':None,'independent_amendment_review':None,'actual_adoption':None,'financial_credit':0}\n R.require(len(allocation['preserved_identity_definitions'])==19 and len(set(allocation['preserved_identity_definitions']))==19 and len(allocation['prospective_numerical_order'])==18 and len(set(allocation['prospective_numerical_order']))==18 and OLD not in allocation['prospective_numerical_order'],'finite19identity/18numericalphase denominator')\n for dependency in dependencies:\n  dependency['expected_checkpoint_parent_disposition']='genuine accepted FAILED planned-interruption checkpoint' if dependency['original_unregistered_draft']['proposed_plan']['phase']=='continue100' else 'genuine accepted COMPLETE100 continuation checkpoint'\n amendment_text='The original numerical family remains at18 attempts, prior0, with0 genuine ResearchRun claims. The original first outer failed before dispatch/admission and remains permanently reserved/unavailable. Its identity definition and gate bytes remain preserved. One fresh recordfix identity replaces only that unclaimed operational first phase in the18-phase prospective numerical order, giving19 historical-plus-proposed identity definitions. No spent numerical claim is refunded or transferred. Actual adoption requires independent review and full original failed-scope recovery; all other finite method, resource and genuine claim-enforcement rules remain unchanged.'",
+      "old": " allocation={'schema_version':1,'program_id':gate['program_id'],'base_family':family,'proposed_cumulative_ceiling':19,'original_order':order,'fresh_identity':NEW,'proposed_executable_order':[NEW]+[x for x in order if x!=OLD],'permanently_reserved_original_outer':OLD,'old_outer_is_numerical_claim':False,'proposed_numerical_claims_before':0,'old18_definitions_preserved':True,'financial_credit':0,'admission':None}\n extension={'schema_version':1,'program_id':gate['program_id'],'base_family':family,'cumulative_ceiling':19,'consumed_before':0,'initial_experiment':NEW,'allocation':{'path':PREFIX+'/ALLOCATION_DRAFT.json','sha256':R.digest(R.encode(allocation))},'claims':[],'reason':'One fixed source-corrected initial wrapper identity added prospectively; prior reserved predispatch outer remains unavailable. No refund, transfer or synthetic claim.'}"
+    },
+    {
+      "new": "'allocation':allocation,'operational_amendment_text':amendment_text",
+      "old": "'allocation':allocation,'extension':extension"
+    },
+    {
+      "new": "'operational_amendment_review':None",
+      "old": "'cumulative_review':None"
+    },
+    {
+      "new": "'numerical_attempt_budget':18,'prior_attempts':0,'numerical_claims_before':0,'requires_budget_extension':False,'remaining_admission_requirements':['reviewed operational amendment','original failed-scope acceptance and full recovery','genuine charter/source/design/registration freeze','fixed fresh caller/release','native eligibility']",
+      "old": "'hard_blocker':'effective_budget requires a nonempty closed-claim snapshot; actual zero numericalclaims cannot satisfy it. Separate reviewed policy/interface decision required; no fabricated claim.'"
+    },
+    {
+      "new": "DRAFT_NOT_RELEASED: genuine operational amendment/charter/source/gate/review/recovery/caller/native authority unresolved; base18 unchanged",
+      "old": "DRAFT_NOT_RELEASED: zero-claim cumulative19 API refusal, genuine charter/source/gate/review/recovery/caller/native authority unresolved"
+    },
+    {
+      "new": "[('gate','GATE_DRAFT.json'),('allocation','OPERATIONAL_AMENDMENT_DRAFT.json'),('dependent_rebindings'",
+      "old": "[('gate','GATE_DRAFT.json'),('allocation','ALLOCATION_DRAFT.json'),('extension','EXTENSION_DRAFT.json'),('dependent_rebindings'"
+    }
+  ],
+  "scope": "operational denominator correction only; old01 and unnecessary19 proposal preserved"
+}

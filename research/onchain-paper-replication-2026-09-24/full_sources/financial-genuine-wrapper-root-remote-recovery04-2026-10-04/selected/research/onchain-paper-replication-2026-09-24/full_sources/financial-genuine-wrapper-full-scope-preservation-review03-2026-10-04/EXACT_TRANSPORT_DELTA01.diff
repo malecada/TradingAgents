@@ -1,0 +1,27 @@
+--- accepted20a37
++++ candidate2d05
+@@ -133,7 +133,7 @@
+     require(git(['remote', 'get-url', 'origin']).decode().strip() == ORIGIN, 'actual configured origin join')
+     actual = git(['ls-remote', 'origin', BRANCH]).decode().split()
+     require(actual == [COMMIT, BRANCH], 'actual remote HEAD join')
+-    repo = HERE / 'fresh-financial01.git'
++    repo = HERE / 'fresh-financial02.git'
+     require(not os.path.lexists(repo), 'fresh Git namespace absent')
+     git(['init', '--bare', str(repo)])
+     git(['remote', 'add', 'origin', ORIGIN], repo)
+@@ -168,13 +168,13 @@
+     final = git(['ls-remote', 'origin', BRANCH]).decode().split()
+     require(final == [COMMIT, BRANCH], 'final actual remote HEAD join')
+     require(shutil.disk_usage(HERE).free >= FLOOR, 'final10GiBfloor')
+-    receipt = {'schema_version': 1, 'status': 'fresh-actual-remote-financial-source-archive-and-supporting-bodies-recovered',
++    receipt = {'schema_version': 1, 'status': 'fresh-actual-remote-financial-source290-and-parent-baseline-recovered',
+                'remote_commit': COMMIT, 'origin': ORIGIN, 'branch': BRANCH,
+                'selection_sha256': digest(selection_body), 'selected_blobs': recovered,
+                'selected_count': len(recovered), 'selected_logical_bytes': sum(r['bytes'] for r in rows),
+                'fresh_git_root': str(repo), 'operations': CALLS, 'elapsed_seconds': time.monotonic() - START,
+                'free_bytes': shutil.disk_usage(HERE).free, 'genuine_run_or_native_started': False,
+-               'qualification': 'Complete current financial source archive, exact manifest/request/capture/actual terminal, installed source and full-scope review bodies plus selected documentary supporting evidence were actually fetched from external Git. Original permissions remain manifest metadata; fresh full flat recovery and independent full-source joins remain separate. Shared installed runtime bodies, empirical stores, live Torch observation, registrations and native or numerical execution are outside this recovery.'}
++               'qualification': 'Complete closed current financial source290 and unreleased external Parent baseline archives, exact manifests/request/capture/actual terminal and selected independent reviews were actually fetched from external Git. Committed finite registration contents are preserved as bytes; no Run or native release authority follows. Original permissions remain manifest metadata; fresh complete flat recovery and independent joins remain separate. Shared installed runtime bodies, empirical stores, live Torch equality, later final-release additions and numerical execution are outside this scope.'}
+     write(HERE / 'REMOTE_RECOVERY01.json', encode(receipt))
+     print(json.dumps({k: receipt[k] for k in ('status', 'remote_commit', 'selected_count', 'selected_logical_bytes', 'elapsed_seconds')}))
+ 

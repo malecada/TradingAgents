@@ -1,0 +1,58 @@
+{
+  "SourceInstalled": false,
+  "actual_claim": null,
+  "actual_gate": null,
+  "actual_native_execution": false,
+  "actual_release": "WITHHELD",
+  "actual_source_design_release": null,
+  "candidate_pins": {
+    "MANIFEST01.json": "3c6c8ef58e93de1a314a105b77e0b452267494487c971c73f925f98615ad78de",
+    "PROTOCOL_PINS01.json": "b55959d7fef0bf04b6eea80e4e83d1c262a2f0f9e778791814e52f2fe0325434",
+    "REQUEST_TEMPLATE01.json": "f11ce1b2232d71a7054963a5e627471030b55d71987178cb91a5196949374a7c",
+    "bounded_git01.py": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f",
+    "descendants01.py": "7ce3c0b4aa5a89c8f74238e810a19b659e3aaf89fe67b86801127a2246d12ee9",
+    "owned_io.py": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+    "parent01.py": "3546fadac261bf1853b0139466c296c351e568b3842658d2984ac0aa5bdb8843",
+    "recovery04.py": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a",
+    "supervisor01.py": "551850d2af69baf48bc582f8fc7da7e7eba931c2b58abec4987a09e9ec270db0"
+  },
+  "candidate_typed_members": 61,
+  "corrections": [
+    {
+      "baseline_red": true,
+      "full_AST_inverse": true,
+      "full_byte_inverse": true,
+      "id": "PF1",
+      "matrix_pairs": 25,
+      "successor_green": true
+    },
+    {
+      "actual_tiny_progress_and_handle_retention": true,
+      "baseline_red": true,
+      "full_AST_inverse": true,
+      "full_byte_inverse": true,
+      "id": "PF2",
+      "native_escape_or_cleanup_tested": false,
+      "successor_green": true
+    }
+  ],
+  "cumulative18_adopted_by_review": false,
+  "decision": "ACCEPTED_SOURCE_ONLY_EXACT_PF1_PF2_CORRECTIONS",
+  "earlier_harness_failure": {
+    "before_fresh_children": true,
+    "reason": "reader expected size, candidate uses bytes",
+    "retained": true,
+    "script": "check01.py",
+    "stderr_sha256": "c6856865f70c6894e1bf96d01e61893dc4a92c6dd17e5b6dded45565cd82e9f9"
+  },
+  "fresh_independent_checks": 232,
+  "full_recovery_release": null,
+  "inherited_parent02_checks": 317,
+  "inherited_review_manifest": "d5111dae5d8d7d896779306b24b5ab3621c831aa0c24b2e88cf9b9b356fb4ec3",
+  "numerical_imports": false,
+  "original_parent01_and_parent02_preserved": true,
+  "paper_fits": 0,
+  "report_sha256": "a5c54d3eda9ee1297ee6bc74f565db8bfa1a7aa3a8a2bdae89596bb9759657e0",
+  "schema_version": 1,
+  "unchanged_inherited_bodies": 8
+}

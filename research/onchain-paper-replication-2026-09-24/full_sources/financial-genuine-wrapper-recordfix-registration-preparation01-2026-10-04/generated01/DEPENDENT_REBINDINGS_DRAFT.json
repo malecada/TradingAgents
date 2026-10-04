@@ -1,0 +1,82 @@
+[
+  {
+    "actual_checkpoint_members": null,
+    "actual_claim_pin": null,
+    "actual_prior_input": null,
+    "actual_reference_input": null,
+    "external_recovery": null,
+    "identity": "financial-wrapper-classification-eager-continue100-20261003-01",
+    "independent_outcome_acceptance": null,
+    "original_unregistered_draft": {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-classification-eager-interrupt1-20261003-01",
+        "financial-wrapper-classification-eager-complete100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-eager-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-classification-eager-continue100-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-eager-continue100-20261003-01",
+        "phase": "continue100",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": "uninterrupted_reference",
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    "proposed_dependencies": [
+      "financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+      "financial-wrapper-classification-eager-complete100-20261003-01"
+    ],
+    "registration": null,
+    "status": "UNREGISTERED_UNRESERVED_WITHHELD"
+  },
+  {
+    "actual_checkpoint_members": null,
+    "actual_claim_pin": null,
+    "actual_prior_input": null,
+    "actual_reference_input": null,
+    "external_recovery": null,
+    "identity": "financial-wrapper-classification-eager-predict-20261003-01",
+    "independent_outcome_acceptance": null,
+    "original_unregistered_draft": {
+      "actual_claim": null,
+      "actual_outcome": null,
+      "dependencies": [
+        "financial-wrapper-classification-eager-continue100-20261003-01"
+      ],
+      "expected_disposition_if_contract_met": "COMPLETE",
+      "proposed_plan": {
+        "cell_id": "financial-wrapper-classification-eager-continued-20261003-01",
+        "closure_input": "source_closure",
+        "execution": "eager",
+        "experiment": "financial-wrapper-classification-eager-predict-20261003-01",
+        "kind": "genuine-financial-wrapper-synthetic-v1",
+        "model_input": "model",
+        "namespace": "financial-wrapper-classification-eager-predict-20261003-01",
+        "phase": "predict",
+        "prior_input": "prior",
+        "recipe_input": "synthetic_recipe",
+        "reference_input": null,
+        "runtime_input": "runtime_mapping",
+        "schema_version": 1,
+        "task": "classification",
+        "training_input": "training"
+      }
+    },
+    "proposed_dependencies": [
+      "financial-wrapper-classification-eager-continue100-20261003-01"
+    ],
+    "registration": null,
+    "status": "UNREGISTERED_UNRESERVED_WITHHELD"
+  }
+]

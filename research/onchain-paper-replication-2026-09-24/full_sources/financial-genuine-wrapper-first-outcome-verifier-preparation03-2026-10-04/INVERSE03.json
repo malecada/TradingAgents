@@ -1,0 +1,24 @@
+{
+  "edits": [
+    {
+      "new": "def final_cpu_census(cpus,readback):\n \"\"\"Original verify_cpu_tree permits an empty census after task exit.\"\"\"\n if type(cpus)is not list or len(cpus)!=2 or any(type(c)is not int or c<0 for c in cpus) or len(set(cpus))!=2:return False\n if type(readback)is not dict:return False\n allowed=set(cpus)\n for pid,mask in readback.items():\n  if type(pid)is not str or not pid.isascii() or not pid.isdecimal() or int(pid)<=0:return False\n  if type(mask)is not list or not mask or any(type(c)is not int or c<0 for c in mask):return False\n  if mask!=sorted(set(mask)) or not set(mask)<=allowed:return False\n return True\n\ndef early_cpu_evidence(guard,ready,release):\n \"\"\"Join retained original early evidence; do not invent an early task census.\"\"\"\n if type(guard)is not dict or type(ready)is not dict or type(release)is not dict:return False\n cpus=guard.get('cpus')\n if not final_cpu_census(cpus,{}):return False\n if type(ready.get('cpus'))is not list or any(type(c)is not int for c in ready['cpus']) or ready['cpus']!=cpus or type(ready.get('pid'))is not int or ready['pid']<=0:return False\n if release!={'kernel_controls_verified':True} or type(release['kernel_controls_verified'])is not bool:return False\n policy=guard.get('native_unit_limits');size=4*1024**2\n if policy!={'file_size_bytes':size} or type(policy['file_size_bytes'])is not int:return False\n if ready.get('native_unit_limits')!=policy or ready.get('file_size_limit')!=[size,size] or any(type(v)is not int for v in ready['file_size_limit']):return False\n if type(ready.get('native_environment'))is not dict or not ready['native_environment'] or ready['native_environment']!=guard.get('native_environment'):return False\n if guard.get('kernel_controls')!={'memory.max':str(3*1024**3),'memory.high':str(3*1024**3),'memory.swap.max':'0'}:return False\n events=guard.get('initial_memory_events')\n if type(events)is not dict or any(type(events.get(k))is not int or events[k]!=0 for k in ('oom','oom_kill')):return False\n return True\n\ndef planned_failure_route(terminal,guard,child,parent,actual_exit,late_native_failure=False,cpu_ready=None,release=None):",
+      "old": "def planned_failure_route(terminal,guard,child,parent,actual_exit,late_native_failure=False):"
+    },
+    {
+      "new": " need(final_cpu_census(cpus,readback),'final CPU task census missing/malformed/outside selected CPUs')\n need(early_cpu_evidence(guard,cpu_ready,release),'mandatory original early ready/release/control evidence missing or inconsistent')",
+      "old": " need(type(readback)is dict and bool(readback) and all(v==cpus for v in readback.values()),'CPU thread readback differs/missing')"
+    },
+    {
+      "new": "terminal=None;claim=None;parent=None;guard=None;child_exit=None;late_native_failure=False;route=None;checkpoint_bytes_consistent=False;cpu_ready=None;native_release=None",
+      "old": "terminal=None;claim=None;parent=None;guard=None;child_exit=None;late_native_failure=False;route=None;checkpoint_bytes_consistent=False"
+    },
+    {
+      "new": "  child_exit=observed(cap,base+'/guard/child_exit.json');late_native_failure=not cap.absent(base+'/guard/native-finalization-failed.json')\n  cpu_ready=observed(cap,base+'/guard/cpu_ready.json');native_release=observed(cap,base+'/guard/release.json')",
+      "old": "  child_exit=observed(cap,base+'/guard/child_exit.json');late_native_failure=not cap.absent(base+'/guard/native-finalization-failed.json')"
+    },
+    {
+      "new": "route=planned_failure_route(terminal,guard,child_exit,parent,context['actual_parent_exit'],late_native_failure,cpu_ready,native_release)",
+      "old": "route=planned_failure_route(terminal,guard,child_exit,parent,context['actual_parent_exit'],late_native_failure)"
+    }
+  ]
+}

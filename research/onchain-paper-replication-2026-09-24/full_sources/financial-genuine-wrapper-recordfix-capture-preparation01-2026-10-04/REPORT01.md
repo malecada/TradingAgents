@@ -1,0 +1,9 @@
+# Recordfix capture preparation
+
+Implemented a fixed-source callable capture with real current/committed source, mode, input and independent source-review authentication, complete whole-tree R4 scan/pack, one-use reservation and failure retention. R4/recovery04, owned_io and bounded_git helper bodies are unchanged; no old capture function or its old fixed-root authority is invoked. This new wrapper is an additive source candidate and requires different-author review.
+
+Read-only current Source inspection joined325 tracked blobs/324pins/194implementation/149package/193unchanged and all8roles. Full inventory includes713 files and273 directories, including Git; no actual archive or capture namespace was created. Current free disk was18404937728 bytes at both observation points, not a future reservation or guarantee.
+
+The final bounded tiny opaque pipeline and refusal controls passed, including canonical pack/fresh private flat recovery, corrupt pins, missing/duplicate/unsafe manifest entries, mode/size/order refusal, source changes, symlink redirects, exclusive identities and first-fatal cleanup with all callbacks. The actual review-body and review-manifest pins also passed, wrong pins refused, and the current full Source remained unchanged. No numerical import or fake Run/Owner/claim was used.
+
+Three preparation failures are preserved: initial copy used a nonexistent old closure path; check01 omitted R4's required existing flat directory; check02 created it with default rather than required0700 mode. Fresh check03 corrected only the harness, preserving both failed trees and raw errors. No R4 constraints were relaxed. Actual compressed full-capsule size remains unmeasured; exceeding4MiB must fail and retain partial outputs, not raise the cap. Actual capture, release, external recovery and all financial/native authority remain pending.

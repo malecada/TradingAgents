@@ -1,0 +1,24 @@
+{
+  "actual_capture_executed": false,
+  "actual_composition_accepted": true,
+  "checks": 30,
+  "contract_sha256": "6884fa8027cf49b519f5c635828244d4685ce0f989691593e816792e2586704a",
+  "decision": "WITHHELD_CAPTURE_SOURCE",
+  "finding": "FC1: actual final review scope has ten members including its manifest, source requires nine",
+  "native_authority": false,
+  "parent_members": 23,
+  "required_remedy": "Preserve source04; a separately reviewed successor must use complete ten-member review scope without dropping MANIFEST01.json.",
+  "review_members": 10,
+  "schema_version": 1,
+  "source_members": 878,
+  "source_request_write_before_refusal": true,
+  "source_sha256": "a90da3397a1a2055689c98ef667f8f477da300424548306f2de5205ee4bd6820",
+  "witness": {
+    "actual_review_members": 10,
+    "declared_expected_review_members": 9,
+    "exception": "ValueError",
+    "line": 33,
+    "message": "exact final23/9 scope",
+    "source_sha256": "a90da3397a1a2055689c98ef667f8f477da300424548306f2de5205ee4bd6820"
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "authority": null,
+  "nodes": [
+    {
+      "dependencies": [],
+      "expected_status": "FAILED",
+      "identity": "financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+      "phase": "interrupt1"
+    },
+    {
+      "dependencies": [],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-classification-eager-complete100-20261003-01",
+      "phase": "complete100"
+    },
+    {
+      "dependencies": [
+        "financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+        "financial-wrapper-classification-eager-complete100-20261003-01"
+      ],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-classification-eager-continue100-20261003-01",
+      "phase": "continue100"
+    },
+    {
+      "dependencies": [
+        "financial-wrapper-classification-eager-continue100-20261003-01"
+      ],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-classification-eager-predict-20261003-01",
+      "phase": "predict"
+    },
+    {
+      "dependencies": [],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-classification-selected-agreement-20261003-01",
+      "phase": "agreement"
+    },
+    {
+      "dependencies": [],
+      "expected_status": "FAILED",
+      "identity": "financial-wrapper-classification-selected-interrupt1-20261003-01",
+      "phase": "interrupt1"
+    },
+    {
+      "dependencies": [],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-classification-selected-complete100-20261003-01",
+      "phase": "complete100"
+    },
+    {
+      "dependencies": [
+        "financial-wrapper-classification-selected-interrupt1-20261003-01",
+        "financial-wrapper-classification-selected-complete100-20261003-01"
+      ],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-classification-selected-continue100-20261003-01",
+      "phase": "continue100"
+    },
+    {
+      "dependencies": [
+        "financial-wrapper-classification-selected-continue100-20261003-01"
+      ],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-classification-selected-predict-20261003-01",
+      "phase": "predict"
+    },
+    {
+      "dependencies": [],
+      "expected_status": "FAILED",
+      "identity": "financial-wrapper-regression-eager-interrupt1-20261003-01",
+      "phase": "interrupt1"
+    },
+    {
+      "dependencies": [],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-regression-eager-complete100-20261003-01",
+      "phase": "complete100"
+    },
+    {
+      "dependencies": [
+        "financial-wrapper-regression-eager-interrupt1-20261003-01",
+        "financial-wrapper-regression-eager-complete100-20261003-01"
+      ],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-regression-eager-continue100-20261003-01",
+      "phase": "continue100"
+    },
+    {
+      "dependencies": [
+        "financial-wrapper-regression-eager-continue100-20261003-01"
+      ],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-regression-eager-predict-20261003-01",
+      "phase": "predict"
+    },
+    {
+      "dependencies": [],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-regression-selected-agreement-20261003-01",
+      "phase": "agreement"
+    },
+    {
+      "dependencies": [],
+      "expected_status": "FAILED",
+      "identity": "financial-wrapper-regression-selected-interrupt1-20261003-01",
+      "phase": "interrupt1"
+    },
+    {
+      "dependencies": [],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-regression-selected-complete100-20261003-01",
+      "phase": "complete100"
+    },
+    {
+      "dependencies": [
+        "financial-wrapper-regression-selected-interrupt1-20261003-01",
+        "financial-wrapper-regression-selected-complete100-20261003-01"
+      ],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-regression-selected-continue100-20261003-01",
+      "phase": "continue100"
+    },
+    {
+      "dependencies": [
+        "financial-wrapper-regression-selected-continue100-20261003-01"
+      ],
+      "expected_status": "COMPLETE",
+      "identity": "financial-wrapper-regression-selected-predict-20261003-01",
+      "phase": "predict"
+    }
+  ],
+  "numerical_ceiling": 18,
+  "observed_claim_count_qualification": "Zero numerical claims is the explicitly recorded current premise from Root failed-predispatch evidence; this source review does not replace actual closure/ledger review or reobserve it. Genuine admission must recount immediately before adoption.",
+  "operational_identity_count": 19,
+  "prospective_order": [
+    "financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+    "financial-wrapper-classification-eager-complete100-20261003-01",
+    "financial-wrapper-classification-eager-continue100-20261003-01",
+    "financial-wrapper-classification-eager-predict-20261003-01",
+    "financial-wrapper-classification-selected-agreement-20261003-01",
+    "financial-wrapper-classification-selected-interrupt1-20261003-01",
+    "financial-wrapper-classification-selected-complete100-20261003-01",
+    "financial-wrapper-classification-selected-continue100-20261003-01",
+    "financial-wrapper-classification-selected-predict-20261003-01",
+    "financial-wrapper-regression-eager-interrupt1-20261003-01",
+    "financial-wrapper-regression-eager-complete100-20261003-01",
+    "financial-wrapper-regression-eager-continue100-20261003-01",
+    "financial-wrapper-regression-eager-predict-20261003-01",
+    "financial-wrapper-regression-selected-agreement-20261003-01",
+    "financial-wrapper-regression-selected-interrupt1-20261003-01",
+    "financial-wrapper-regression-selected-complete100-20261003-01",
+    "financial-wrapper-regression-selected-continue100-20261003-01",
+    "financial-wrapper-regression-selected-predict-20261003-01"
+  ]
+}

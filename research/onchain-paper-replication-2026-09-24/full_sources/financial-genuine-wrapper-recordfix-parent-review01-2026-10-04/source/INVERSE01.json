@@ -1,0 +1,28 @@
+{
+  "edits": [
+    {
+      "old": "genuine-financial-wrapper-native-20261003-01/source')",
+      "new": "genuine-financial-wrapper-recordfix-native-20261004-01/source')"
+    },
+    {
+      "old": "PYTHON=",
+      "new": "PARENT=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-root-launch-20261004-01')\nIDENTITY='financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01'\nPYTHON="
+    },
+    {
+      "old": " require(q['expected_phase'] in ('agreement','interrupt1','complete100'),'dependent phase parent not admitted by this first caller')",
+      "new": " require(q['parent_root']==str(PARENT) and q['identity']==IDENTITY and q['expected_phase']=='interrupt1','fixed fresh recordfix initial context')"
+    },
+    {
+      "old": " require(reg['program_id'].startswith('financial-wrapper-engineering-'),'separate engineering program')",
+      "new": " require(reg['program_id'].startswith('financial-wrapper-engineering-'),'separate engineering program')\n family=reg['families'][exp['family']];require(type(family['attempt_budget'])is int and family['attempt_budget']==18 and type(family['prior_attempts'])is int and family['prior_attempts']==0 and 'cumulative_budget_extension' not in exp,'unchanged numerical18/prior0 without extension')"
+    },
+    {
+      "old": " args=SimpleNamespace(root=str(CAP),registration=q['registration'],experiment=q['identity'],source=q['source'])\n command=",
+      "new": " args=SimpleNamespace(root=str(CAP),registration=q['registration'],experiment=q['identity'],source=q['source'])\n # Genuine read-only admission executes the wrapper's exact installed runtime\n # predicate before any owned attempt directory, intent, or child creation.\n admitted,admitted_job=job._admitted(args)\n require(admitted_job==j and admitted.root==CAP and admitted.experiment_id==q['identity'] and admitted.experiment['source_files']==q['source_files'],'actual admission/source/job joins')\n require(admitted.effective_attempt_budget==18,'actual numerical ceiling18')\n for name,module in tuple(sys.modules.items()):\n  if name=='tradingagents' or name.startswith('tradingagents.'):\n   path=Path(module.__file__).resolve();require(path.is_relative_to(CAP) and sha(R.read(CAP,path.relative_to(CAP).as_posix()))==q['source_files'][path.relative_to(CAP).as_posix()],'post-admission actual package prefix/hash')\n require(not any(n in sys.modules for n in ('numpy','torch','scipy','pandas')),'no preflight numerical import')\n command="
+    },
+    {
+      "old": " require(not any(n.startswith('tradingagents') for n in sys.modules),'fresh package import')",
+      "new": " protocol=json.loads(R.read(parent,'PROTOCOL_PINS01.json'))\n for name,pin in protocol.items():require(q['source_files'].get(name)==pin,'unchanged admitted job/native protocol')\n require(q['source_files'].get(PREFIX+'financial_wrapper_fixture.py')=='e2d9208ac51fd5876b63b6a72f734fc4fedd28fa42ac9c7fa1014346feb8404c','accepted exact runtime RECORD correction required')\n require(not any(n.startswith('tradingagents') for n in sys.modules),'fresh package import')"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-registration-preparation02-2026-10-04/check02.py", line 31, in <module>
+    for edit in reversed(json.loads((O/'INVERSE02.json').read_bytes())['edits']):check('unique inverse '+str(len(checks)),s.count(edit['new'])==1);s=s.replace(edit['new'],edit['old'])
+                                                                                 ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-registration-preparation02-2026-10-04/check02.py", line 5, in check
+    def check(n,v):assert v,n;checks.append(n)
+                          ^
+AssertionError: unique inverse 97

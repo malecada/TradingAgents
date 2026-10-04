@@ -1,0 +1,97 @@
+[
+  {
+    "disposition": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "finding": "VF1",
+    "guard_predicates": "accepted",
+    "mutated_original_resource_field": "elapsed_time_kill",
+    "qualification": "isolated scalar source witness; no genuine or fabricated claim/Owner/guard receipt, no actual outcome classification",
+    "source_seam": "exact native policy/retry require expressions plus unchanged classifier",
+    "value": true
+  },
+  {
+    "disposition": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "finding": "VF1",
+    "guard_predicates": "accepted",
+    "mutated_original_resource_field": "storage_breach",
+    "qualification": "isolated scalar source witness; no genuine or fabricated claim/Owner/guard receipt, no actual outcome classification",
+    "source_seam": "exact native policy/retry require expressions plus unchanged classifier",
+    "value": {
+      "opaque": "retained observed failure"
+    }
+  },
+  {
+    "disposition": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "finding": "VF1",
+    "guard_predicates": "accepted",
+    "mutated_original_resource_field": "storage_last_error",
+    "qualification": "isolated scalar source witness; no genuine or fabricated claim/Owner/guard receipt, no actual outcome classification",
+    "source_seam": "exact native policy/retry require expressions plus unchanged classifier",
+    "value": "observed scan failure"
+  },
+  {
+    "disposition": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "finding": "VF1",
+    "guard_predicates": "accepted",
+    "mutated_original_resource_field": "cleanup_error",
+    "qualification": "isolated scalar source witness; no genuine or fabricated claim/Owner/guard receipt, no actual outcome classification",
+    "source_seam": "exact native policy/retry require expressions plus unchanged classifier",
+    "value": "observed close failure"
+  },
+  {
+    "disposition": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "finding": "VF1",
+    "guard_predicates": "accepted",
+    "mutated_original_resource_field": "child_log_limit_reached",
+    "qualification": "isolated scalar source witness; no genuine or fabricated claim/Owner/guard receipt, no actual outcome classification",
+    "source_seam": "exact native policy/retry require expressions plus unchanged classifier",
+    "value": true
+  },
+  {
+    "disposition": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "finding": "VF1",
+    "guard_predicates": "accepted",
+    "mutated_original_resource_field": "child_exit_code",
+    "qualification": "isolated scalar source witness; no genuine or fabricated claim/Owner/guard receipt, no actual outcome classification",
+    "source_seam": "exact native policy/retry require expressions plus unchanged classifier",
+    "value": 137
+  },
+  {
+    "disposition": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "finding": "VF1",
+    "guard_predicates": "accepted",
+    "mutated_original_resource_field": "memory_events",
+    "qualification": "isolated scalar source witness; no genuine or fabricated claim/Owner/guard receipt, no actual outcome classification",
+    "source_seam": "exact native policy/retry require expressions plus unchanged classifier",
+    "value": {
+      "oom": 1,
+      "oom_kill": 1
+    }
+  },
+  {
+    "disposition": "PLANNED_FAILED_SPENT_INTERRUPT1_BYTES",
+    "finding": "VF1",
+    "guard_predicates": "accepted",
+    "mutated_original_resource_field": "limit_reason",
+    "qualification": "isolated scalar source witness; no genuine or fabricated claim/Owner/guard receipt, no actual outcome classification",
+    "source_seam": "exact native policy/retry require expressions plus unchanged classifier",
+    "value": "host runtime memory reserve breached"
+  },
+  {
+    "actual_parent_exit_scalar": 0,
+    "cleanup_stays_true": true,
+    "finding": "VF1",
+    "qualification": "exact source scalar seam; actual Root exit not asserted"
+  },
+  {
+    "actual_parent_exit_scalar": 1,
+    "cleanup_stays_true": true,
+    "finding": "VF1",
+    "qualification": "exact source scalar seam; actual Root exit not asserted"
+  },
+  {
+    "actual_parent_exit_scalar": 137,
+    "cleanup_stays_true": true,
+    "finding": "VF1",
+    "qualification": "exact source scalar seam; actual Root exit not asserted"
+  }
+]

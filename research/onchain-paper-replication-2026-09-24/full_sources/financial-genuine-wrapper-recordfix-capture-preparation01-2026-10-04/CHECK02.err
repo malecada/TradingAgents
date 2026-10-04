@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-capture-preparation01-2026-10-04/check02.py", line 29, in <module>
+    (owned/'flat').mkdir();restore=R.restore(archive,info,tiny,owned/'flat');ok('actual opaque flat restore',restore['regular_bodies']==2 and not restore['instantiated_posix_tree'])
+                                   ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-capture-preparation01-2026-10-04/recovery04.py", line 191, in restore
+    if owned:output.begin()
+             ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-capture-preparation01-2026-10-04/recovery04.py", line 144, in begin
+    require(s.st_uid==os.geteuid() and stat.S_IMODE(s.st_mode)==0o700,'Root-owned private0700 output required');self.check();self.finish()
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-capture-preparation01-2026-10-04/recovery04.py", line 11, in require
+    if not v:raise ValueError(msg)
+             ^^^^^^^^^^^^^^^^^^^^^
+ValueError: Root-owned private0700 output required
