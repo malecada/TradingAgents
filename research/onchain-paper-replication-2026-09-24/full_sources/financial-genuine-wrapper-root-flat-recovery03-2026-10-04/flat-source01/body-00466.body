@@ -1,0 +1,123 @@
+"""Serial pair/checkpoint/journal composition; not empirical admission.
+
+Caller must provide admitted exact ownership/ancestry and derive purpose through
+the reviewed dictionary/MCM workload. A lease callback is a sequencing hook, not
+proof of ResearchRun admission. Pending reservations always require explicit
+external reconciliation; no artifact discovery or completed-pair rerun occurs.
+"""
+import copy
+import importlib.util
+import math
+from pathlib import Path
+
+from tradingagents.research.onchain_replication import matching_pair as pair
+from tradingagents.research.onchain_replication.matching_identity import graph_identity
+from tradingagents.research.onchain_replication.cache import cache_key
+
+HERE=Path(__file__).resolve().parent
+spec=importlib.util.spec_from_file_location('serial_pair_extent',HERE.parent/'pair-extent-2026-09-30/extent.py')
+extent=importlib.util.module_from_spec(spec);spec.loader.exec_module(extent)
+
+
+class CheckpointStop(RuntimeError):
+    """A safe progress publication exists; outer owner must close before a child."""
+
+
+class CleanupFailure(BaseException):
+    """Fatal to the whole worker, including ordinary unavailable-cell handlers."""
+
+
+def require(value,message):
+    if not value:raise ValueError(message)
+
+
+class Serial:
+    def __init__(self,journal,*,context,policy,config,workload_sha256,lease,
+                 operations_per_checkpoint,max_checkpoints):
+        pair.hash_string(workload_sha256)
+        require(callable(lease),'explicit ownership lease hook required')
+        require(type(operations_per_checkpoint) is int and operations_per_checkpoint>0
+                and type(max_checkpoints) is int and max_checkpoints>0,'bounded operation/publication schedule')
+        require(context['namespace']==journal.workflow,'workflow context differs')
+        extent.reservation_bytes(policy)
+        self.journal=journal;self.context=copy.deepcopy(context);self.policy=copy.deepcopy(policy)
+        self.config=copy.deepcopy(config);self.scope=workload_sha256;self.lease=lease
+        self.operations=operations_per_checkpoint;self.max_checkpoints=max_checkpoints
+        self.poisoned=False;self.busy=False
+
+    def __call__(self,purpose,a,b):
+        require(not self.poisoned and not self.busy,'closed, busy or poisoned serial consumer')
+        self.busy=True;session=None;primary=None;answer=None
+        try:
+            self.lease();self.journal.active()
+            require(self.journal.state['pending'] is None,'pending reservation requires reconciliation')
+            purpose=copy.deepcopy(purpose)
+            require(purpose.get('schema_version')==1 and purpose.get('kind') in ('dictionary','mcm')
+                    and purpose.get('workload_sha256')==self.scope,'workload purpose differs')
+            require(purpose.get('typed_graphs')==[graph_identity(a),graph_identity(b)],'ordered workload graphs differ')
+            policy=pair.policy_check(a,b,self.config,self.policy)
+            identity=pair.identity(a,b,self.config,self.context)
+            reference=self.journal.latest(purpose)
+            prior=None
+            if reference is not None:
+                # Only the journal's exact published pointer is eligible.
+                prior=self.journal.state['pairs'][pair.digest(purpose)]
+                require(prior['identity_sha256']==pair.digest(identity),'published numerical identity differs')
+                extent.verify(reference,root=self.journal.root/'pairs',owner=prior['artifact_owner'],
+                    identity=identity,policy=policy,parent=prior['session_parent'],
+                    declared_artifact_bytes=extent.reservation_bytes(policy))
+                _,meta=pair.safe_reference(self.journal.root/'pairs',reference)
+                require(meta['kind']==prior['kind'],'journal/artifact phase differs')
+                if meta['kind']=='complete':
+                    result=meta['result']
+                    require(isinstance(result,dict) and set(result)=={'score','convergence','iterations'},'completed result schema')
+                    value=result['score']
+                    require(type(value) in (float,int) and math.isfinite(value) and 0<=value<=1
+                            and type(result['iterations']) is int and 0<=result['iterations']<=self.config['max_iterations']
+                            and result['convergence'] in ('temperature_complete','iteration_cap'),'completed result values')
+                    self.lease()
+                    answer={'purpose_sha256':cache_key(purpose),'score':float(value)}
+                    return answer
+            target=self.journal.target(purpose)
+            require(not Path(target['path']).parent.parent.exists(),'closed session needs a new admitted owner')
+            for _ in range(self.max_checkpoints):
+                self.lease()
+                reservation=extent.reserve_pair(self.journal,purpose,identity,policy)
+                if session is None:
+                    name=reservation['artifact_owner']
+                    options=dict(owner=name,context=self.context,policy=policy)
+                    if reference is None:
+                        session=pair.PairSession.create(self.journal.root/'pairs',name,a,b,self.config,**options)
+                    else:
+                        session=pair.PairSession.resume(self.journal.root/'pairs',name,a,b,self.config,
+                            reference,expected_owner=prior['artifact_owner'],**options)
+                self.lease()
+                result=session.step(max_operations=self.operations)
+                if result is not None:
+                    require(math.isfinite(result.score) and 0<=result.score<=1,'computed score range')
+                saved=session.save()
+                self.lease()
+                extent.publish_pair(self.journal,saved,identity=identity,policy=policy)
+                self.lease()
+                if result is not None:
+                    answer={'purpose_sha256':cache_key(purpose),'score':float(result.score)}
+                    break
+            if answer is None:
+                raise CheckpointStop('operation slices exhausted; published progress retained for a new owner')
+        except BaseException as exc:
+            primary=exc;self.poisoned=True
+            if any(note.startswith('Pair cleanup also failed:') for note in getattr(exc,'__notes__',())):
+                raise CleanupFailure('pair adapter reported unresolved cleanup; worker must stop') from exc
+            raise
+        finally:
+            self.busy=False
+            if session is not None:
+                try:
+                    session.close()
+                except BaseException as cleanup:
+                    self.poisoned=True
+                    fatal=CleanupFailure('pair cleanup unresolved; worker must stop')
+                    if primary is not None:
+                        fatal.add_note('Primary failure: '+type(primary).__name__+': '+str(primary))
+                    raise fatal from cleanup
+        return answer

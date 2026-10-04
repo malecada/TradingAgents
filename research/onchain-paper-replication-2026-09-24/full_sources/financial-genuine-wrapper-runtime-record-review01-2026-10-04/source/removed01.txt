@@ -1,0 +1,5 @@
+ for row in rows:
+  require(set(row)=={'name','version','record','record_sha256'} and importlib.metadata.version(row['name'])==row['version'],'runtime distribution version differs')
+  distribution=importlib.metadata.distribution(row['name']);matches=[f for f in distribution.files or () if str(f).endswith('.dist-info/RECORD')]
+  require(len(matches)==1,'runtime installed RECORD unavailable')
+  record=Path(distribution.locate_file(matches[0])).resolve();require(str(record)==row['record'] and sha(record.read_bytes())==row['record_sha256'],'runtime RECORD origin/hash differs')

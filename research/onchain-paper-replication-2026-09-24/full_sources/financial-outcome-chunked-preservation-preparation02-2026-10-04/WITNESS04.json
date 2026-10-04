@@ -1,0 +1,125 @@
+[
+  {
+    "id": "CA1",
+    "mutation": "version",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "faec66991f9e5786ac422cd00870f16e7301bf50879d07adc999169ce4d4c54e",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "boolversion",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "3e640084daeb031d8f5358c10d984d432ac2fddcfac6c0409eaf7be604c8bb02",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "kind",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "5548c2deb0205255a0de0ca6f0fb6ee14492e36f8a0506d1bd302510def742cc",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "authority",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "a29b21c9aab6d76137f487604fb514e7c4c2a7c4ce457129404f0986ff7922ce",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "cap",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "196d36a74c52fee1cce60a31cd56af4f968c92d687ba5d007900b451b3d664bb",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "negativecap",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "a072bbc9b0082e0c7f1576888eceeaef7af17cc959fb604b94518dce9003ece8",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "underreserve",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "5aef1ea26011b4ac547890c739a3fbcf3cd0354a43b374b00ca520ef3673ecb3",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "boolcount",
+    "old_result": "refused",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "e9abd6ed223f52ea8e5d2bc545de088f98eba9f6da603f8baadb1957b2b3a146",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "wrongfilecount",
+    "old_result": "refused",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "ed85f68d7b5fa5a49661a14670a941bfd3f6623fe3dbf8a03cffdf96b4984cb6",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "qualification",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "53436f961bbfe1a41b7187776872052f643ba807b16fcaf502400b919f342f65",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "rootanchorbool",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "be3d36e07822929aa2354d8c14fdba4ecb228677525630a547188038045329b2",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA1",
+    "mutation": "extrafield",
+    "old_result": "accepted",
+    "new_result": "refused",
+    "new_opaque_index_sha256": "247f8ec7609499caf579de9fd6bd738562fcd7dfa1280b6caca83dcf13cb1c89",
+    "qualification": "newly pinned synthetic counterexample; not a real external pin bypass"
+  },
+  {
+    "id": "CA2",
+    "case": "old-substitution",
+    "stage": "before-mkdir",
+    "outcome": "refused",
+    "redirected_child_exists": true,
+    "original_owned_child_exists": false,
+    "qualification": "explicit scheduling of source operations on owned paths; no timing/active-root claim"
+  },
+  {
+    "id": "CA2",
+    "case": "new-before-traversal",
+    "stage": "before-traversal",
+    "outcome": "refused",
+    "redirected_child_exists": false,
+    "original_owned_child_exists": false,
+    "qualification": "explicit scheduling of source operations on owned paths; no timing/active-root claim"
+  },
+  {
+    "id": "CA2",
+    "case": "new-after-anchor",
+    "stage": "before-mkdir",
+    "outcome": "refused",
+    "redirected_child_exists": false,
+    "original_owned_child_exists": true,
+    "qualification": "explicit scheduling of source operations on owned paths; no timing/active-root claim"
+  }
+]

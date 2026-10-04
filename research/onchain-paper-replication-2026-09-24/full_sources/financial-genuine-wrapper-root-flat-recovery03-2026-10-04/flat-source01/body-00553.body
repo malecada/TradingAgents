@@ -1,0 +1,130 @@
+"""Explicit financial execution identity; no admission or numerical import at load."""
+import hashlib
+import json
+import weakref
+from pathlib import Path
+SOURCE='tradingagents/research/onchain_replication/streamed_gat.py'
+SHA='e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f'
+ARMS={'proposed','training_label_permutation'}
+PLAN_KEYS={'schema_version','cells','populations','representations','model','training','ledger_output','controls_output'}
+
+def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode('utf-8')
+
+def identity(value):
+    if value is None:return None
+    keys={'policy','policy_sha256','source_path','source_sha256','candidate_sha256'}
+    if type(value) is not dict or set(value)!=keys:raise ValueError('financial execution identity fields')
+    p=value['policy']
+    if type(p) is not dict or set(p)!={'schema_version','backend','block_edges'}:raise ValueError('financial execution policy fields')
+    if type(p['schema_version']) is not int or p['schema_version']!=1 or type(p['block_edges']) is not int or p['block_edges']!=65536 or type(p['backend']) is not str or p['backend']!='streamed-gat-mulsum-v1':raise ValueError('financial execution policy differs')
+    if any(type(value[k]) is not str for k in keys-{'policy'}) or value['policy_sha256']!=hashlib.sha256(canonical(p)).hexdigest() or value['source_path']!=SOURCE or value['source_sha256']!=SHA or value['candidate_sha256']!=SHA:raise ValueError('financial execution source/hash differs')
+    return {**value,'policy':dict(p)}
+
+def authenticate(value):
+    selected=identity(value)
+    if selected is None:return None
+    path=Path(__file__).resolve().parent/'streamed_gat.py'
+    if path.resolve()!=path or path.is_symlink() or not 0<path.stat().st_size<=65536:raise ValueError('financial backend source path/extent differs')
+    with path.open('rb') as stream:raw=stream.read(65537)
+    if len(raw)>65536 or hashlib.sha256(raw).hexdigest()!=SHA:raise ValueError('financial backend source bytes differ')
+    return selected
+
+def for_run(run,value):
+    selected=authenticate(value)
+    if selected is not None:
+        expected=run.admission.root/SOURCE
+        if Path(__file__).resolve().parent/'streamed_gat.py'!=expected or run.admission.experiment['source_files'].get(SOURCE)!=SHA:raise ValueError('financial backend not selected in admitted source')
+    return selected
+
+def plan_selection(plan):
+    if set(plan)==PLAN_KEYS and plan['schema_version']==1:return {}
+    if set(plan)!=PLAN_KEYS|{'model_execution'} or type(plan['schema_version']) is not int or plan['schema_version']!=2:raise ValueError('batch plan schema differs')
+    mapping=plan['model_execution'];present={item['cell']['arm'] for item in plan['cells']}
+    if type(mapping) is not dict or not mapping or not set(mapping)<=ARMS & present:raise ValueError('financial selected arm mapping differs')
+    if plan['model'].get('graph_activation_checkpointing',False) is not False:raise ValueError('financial streamed checkpoint policy differs')
+    result={}
+    for arm,value in mapping.items():
+        selected=identity(value)
+        if selected is None:raise ValueError('selected financial execution binding absent')
+        result[arm]=selected
+    return result
+
+# Private construction records are not taken from mutable model labels.
+_PINS=weakref.WeakKeyDictionary()
+ATTRS=('in_features','out_features','input_size','hidden_size','num_layers','bias','batch_first','dropout','bidirectional','proj_size','inplace','p','block_edges','concat','activation','slope')
+
+def _classes():
+    from .model import ReplicationModel
+    from .streamed_gat import GraphAttention
+    return ReplicationModel,GraphAttention
+
+def _structure(model):
+    modules=[];module_refs=[]
+    for name,module in model.named_modules():
+        attrs={}
+        for key in ATTRS:
+            value=getattr(module,key,None)
+            if type(value) in (int,float,bool,str) or value is None:attrs[key]=value
+        modules.append({'name':name,'class':type(module).__module__+'.'+type(module).__qualname__,'attributes':attrs})
+        module_refs.append((name,id(module),type(module),getattr(type(module),'forward',None),module.__dict__.get('forward')))
+    parameters=[];parameter_refs=[]
+    for name,param in model.named_parameters():
+        parameters.append({'name':name,'class':type(param).__module__+'.'+type(param).__qualname__,'shape':list(param.shape),'requires_grad':param.requires_grad,'dtype':str(param.dtype),'device':str(param.device.type),'device_index':param.device.index})
+        parameter_refs.append((name,id(param),type(param)))
+    buffers=[];buffer_refs=[]
+    for name,value in model.named_buffers():
+        buffers.append({'name':name,'class':type(value).__module__+'.'+type(value).__qualname__,'shape':list(value.shape),'dtype':str(value.dtype),'device':str(value.device.type),'device_index':value.device.index})
+        buffer_refs.append((name,id(value),type(value)))
+    contract={'schema_version':1,'model_config':model.config,'graph_config':model.graph.config,'task':model.task,
+      'graph_activation_checkpointing':model.graph_activation_checkpointing,'modules':modules,'parameters':parameters,'buffers':buffers}
+    return (tuple(module_refs),tuple(parameter_refs),tuple(buffer_refs)),canonical(contract)
+
+def construct(config,task,value):
+    selected=authenticate(value)
+    if selected is None:raise ValueError('selected model execution missing')
+    constructor,layer_class=_classes()
+    config_raw=canonical(config);detached=json.loads(config_raw)
+    if detached.get('graph_activation_checkpointing',False) is not False or task not in ('classification','regression'):raise ValueError('financial constructor science differs')
+    # Only this fresh real constructor can establish a private construction pin.
+    model=constructor(detached,task,execution=selected['policy'])
+    if type(model) is not constructor or canonical(model.config)!=config_raw or canonical(model.graph.config)!=config_raw or model.task!=task:raise ValueError('financial constructor reference differs')
+    if any(p.requires_grad is not True for p in model.parameters()):raise ValueError('financial constructor froze parameters')
+    runtime,contract_raw=_structure(model)
+    marker=hashlib.sha256(canonical({'execution':selected,'config':detached,'task':task})).hexdigest()
+    if model in _PINS:raise ValueError('financial constructor object already captured')
+    _PINS[model]=(canonical(selected),config_raw,task,runtime,contract_raw,marker,constructor)
+    model._financial_execution=canonical(selected);model._financial_pin=marker
+    check_model(model,selected)
+    return model
+
+def check_model(model,value):
+    selected=authenticate(value);constructor,layer_class=_classes()
+    modules=tuple(model.modules()) if hasattr(model,'modules') else (model,)
+    if selected is None:
+        if model in _PINS or any(isinstance(module,layer_class) for module in modules) or getattr(model,'execution',None) is not None or hasattr(model,'_financial_execution') or hasattr(model,'_financial_pin'):raise ValueError('selected model lacks checkpoint execution binding')
+        return
+    pin=_PINS.get(model)
+    if pin is None or pin[6] is not constructor or type(model) is not constructor:raise ValueError('financial model original constructor pin absent')
+    if pin[0]!=canonical(selected) or getattr(model,'_financial_execution',None)!=pin[0] or getattr(model,'_financial_pin',None)!=pin[5]:raise ValueError('financial model captured execution changed')
+    if canonical(model.config)!=pin[1] or canonical(model.graph.config)!=pin[1] or model.task!=pin[2] or model.graph_activation_checkpointing is not False or dict(model.execution or {})!=selected['policy'] or dict(model.graph.execution or {})!=selected['policy']:raise ValueError('financial model captured science changed')
+    if len(model.graph.gat)!=len(model.config['gat_heads']) or any(type(layer) is not layer_class or layer.block_edges!=65536 for layer in model.graph.gat):raise ValueError('financial actual GAT backend differs')
+    if any(p.device.type!='cpu' or str(p.dtype)!='torch.float32' or p.requires_grad is not True for p in model.parameters()):raise ValueError('financial selected backend trainability/device differs')
+    runtime,contract_raw=_structure(model)
+    if runtime!=pin[3] or contract_raw!=pin[4]:raise ValueError('financial constructor structure/attributes changed')
+
+def model_contract(model,value):
+    check_model(model,value)
+    if value is None:return None
+    return json.loads(_PINS[model][4])
+
+def check_state_model(state,model,provenance):
+    validate_state(state,provenance)
+    expected=model_contract(model,provenance.get('model_execution'))
+    if expected is not None and canonical(state['model_contract'])!=canonical(expected):raise ValueError('checkpoint original model contract differs')
+
+def validate_state(state,provenance):
+    selected=identity(provenance.get('model_execution'))
+    if 'model_execution' in provenance and selected is None:raise ValueError('explicit checkpoint execution missing')
+    if ('model_execution' in state)!=('model_execution' in provenance):raise ValueError('checkpoint execution presence differs')
+    if selected is not None and identity(state['model_execution'])!=selected:raise ValueError('checkpoint execution identity differs')
+    if ('model_contract' in state)!=(selected is not None) or selected is not None and type(state['model_contract']) is not dict:raise ValueError('checkpoint model contract presence differs')

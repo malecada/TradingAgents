@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/synthetic_check02.py", line 25, in <module>
+    os.link(metadata,owned/'metadata-hardlink');good('metadata-hardlink-supported',C._runtime_record(row)['version']=='1.0')
+                                                                                   ~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/candidate.py", line 108, in _runtime_record
+    matches.append(distribution);require(len(matches)<=1,'duplicate installed runtime distribution')
+                                 ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/candidate.py", line 19, in require
+    if not v:raise Unavailable(why)
+             ^^^^^^^^^^^^^^^^^^^^^^
+tradingagents.research.onchain_replication.record_synthetic_candidate.Unavailable: duplicate installed runtime distribution

@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/actual_check01.py", line 12, in <module>
+    result=new.runtime_check(CAP,mapping);assert result=={'qualification':'exact interpreter/lock/version/RECORD mapping; dependency bodies not fully rehashed'}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/candidate.py", line 129, in runtime_check
+    for row in rows:_runtime_record(row)
+                    ~~~~~~~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/candidate.py", line 114, in _runtime_record
+    metadata=_runtime_record_bytes(origin/'METADATA');parsed=BytesParser().parsebytes(metadata,headersonly=True)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/candidate.py", line 77, in _runtime_record_bytes
+    require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_size<=FILE,'runtime metadata type/link/extent')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/candidate.py", line 19, in require
+    if not v:raise Unavailable(why)
+             ^^^^^^^^^^^^^^^^^^^^^^
+tradingagents.research.onchain_replication.record_candidate.Unavailable: runtime metadata type/link/extent

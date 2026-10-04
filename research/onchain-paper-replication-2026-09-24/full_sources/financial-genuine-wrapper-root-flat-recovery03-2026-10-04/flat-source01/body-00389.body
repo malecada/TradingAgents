@@ -1,0 +1,53 @@
+{
+  "attention": "v^T tanh(W_query*h_last + W_key*h_j + bias); mask pads before softmax",
+  "attention_width": 32,
+  "edge_feature_count": 2,
+  "embedding_cache": "no learned embedding reuse across weight updates",
+  "gat_activation": [
+    "elu",
+    "identity"
+  ],
+  "gat_concatenate": [
+    true,
+    false
+  ],
+  "gat_dropout": 0.0,
+  "gat_heads": [
+    4,
+    1
+  ],
+  "gat_layers": 2,
+  "gat_neighbors": "incoming edges plus self exactly once",
+  "gat_widths": [
+    16,
+    32
+  ],
+  "gradient_path": "joint MLP,GAT,LSTM,attention,head; dictionary and raw similarities fixed",
+  "graph_vector_width": 32,
+  "heads": {
+    "classification": 2,
+    "regression": 1
+  },
+  "initialization": {
+    "attention": "linear rule above; final vector Xavier uniform gain1",
+    "gat_attention_vectors": "uniform(-sqrt(6/(2*head_width+1)),sqrt(6/(2*head_width+1)))",
+    "gat_projection": "Xavier uniform gain1",
+    "linear": "Xavier uniform gain1; biases zero",
+    "recurrent": "every weight uniform(-1/sqrt(hidden_width),+1/sqrt(hidden_width)); all biases zero, including forget gates",
+    "seed_derivation": "reset Python random, numpy PCG64 and torch manual_seed to cell seed before constructing fixed model module order; CUDA all devices same seed; dictionary has separate PCG64 seeded same value"
+  },
+  "leaky_relu_slope": 0.2,
+  "lookback_days": 28,
+  "lstm_depth": 1,
+  "lstm_width": 64,
+  "mcm_input": 32,
+  "mlp_activation": "relu",
+  "mlp_widths": [
+    64,
+    32
+  ],
+  "node_feature_count": 4,
+  "pooling": "arithmetic mean of valid node vectors after final GAT",
+  "price_input_width": 1,
+  "schema_version": 1
+}

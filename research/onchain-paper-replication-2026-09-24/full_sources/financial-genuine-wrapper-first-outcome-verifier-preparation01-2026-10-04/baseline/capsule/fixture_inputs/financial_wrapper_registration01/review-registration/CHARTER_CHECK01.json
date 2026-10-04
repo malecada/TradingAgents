@@ -1,0 +1,29 @@
+{
+  "actual_adoption": false,
+  "actual_new_claims": 0,
+  "charter_sha256": "e03dd2095b494f6fefb30fae71c49746594a3855aeaffd3f33f6149cc7aad59e",
+  "decision": "WITHHELD_EXACT_CHARTER_FC1",
+  "finding": {
+    "actual_loop": "range(16 * 28)",
+    "actual_text": "16 examples,28 distinct graphs,4 nodes and32-wide MCM features; seed11; synthetic fixed features without sampling/clustering or empirical graph acquisition.",
+    "derived_distinct_total": 448,
+    "examples": 16,
+    "file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-root-charter-preparation01-2026-10-04/CHARTER01.json",
+    "graphs_per_example": 28,
+    "id": "FC1",
+    "impact": "Charter understates total distinct graph objects by16x unless explicitly qualified per example; exact workload/resource denominator is ambiguous.",
+    "line": 941,
+    "required_correction": "Preserve original and create additive charter version stating448distinct graphs total,28per each of16examples. Explicit16replay-copy denominator is also useful.",
+    "source_file": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source/tradingagents/research/onchain_replication/financial_wrapper_fixture.py",
+    "source_line": 127,
+    "source_sha256": "e13d7170a55165f1c5d2313223cf972dc102d0beac95ba49c493c146ed4a4897"
+  },
+  "fixed_order_deferred_to_final_registration": true,
+  "paper_fit_credit": 0,
+  "planned_failed_authentication_and_recovery_preserved": true,
+  "schema_version": 1,
+  "source390_historical_current868_futurefinal_null": true,
+  "status": "Registration generated03 source-only acceptance separable from withheld exact new charter",
+  "unchanged18phase_DAG_resource_denominator": true,
+  "unexpected_failure_stops_numerical_release": true
+}

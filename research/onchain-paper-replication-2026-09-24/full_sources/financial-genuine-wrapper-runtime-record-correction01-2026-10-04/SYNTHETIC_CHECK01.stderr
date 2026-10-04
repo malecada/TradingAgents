@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/synthetic_check01.py", line 11, in <module>
+    good('actual-own-metadata-valid',C._runtime_record(row)['record']==str(record));d=next(iter(M.distributions(path=[str(site)],name='tiny-pkg')));good('old-vendored-record-ambiguity',len([f for f in d.files if str(f).endswith('.dist-info/RECORD')])==2)
+                                                                                                                                                    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-runtime-record-correction01-2026-10-04/synthetic_check01.py", line 5, in good
+    def good(name,value):assert value,name;checks.append(name)
+                                ^^^^^
+AssertionError: old-vendored-record-ambiguity

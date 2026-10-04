@@ -1,0 +1,45 @@
+def planned_failure_route(terminal,guard,child,parent,actual_exit,late_native_failure=False):
+ """Pure retained-scalar consistency, not a genuine claim or OS observation."""
+ import ast
+ reasons=[];uncertain=False
+ def need(condition,reason):
+  if not condition:reasons.append(reason)
+ if any(type(v)is not dict for v in (terminal,guard,child,parent)):
+  return {'eligible':False,'cleanup_uncertain':True,'reasons':['mandatory original terminal/native/child/parent evidence missing']}
+ need(terminal.get('reason')=='PlannedInterruption: '+REASON,'lifecycle failed reason differs')
+ need(terminal.get('status')=='failed','lifecycle status differs')
+ need(type(actual_exit)is int and actual_exit==1,'actual external Parent exit must be1')
+ need(type(parent.get('actual_child_exit'))is int and parent['actual_child_exit']==1,'Parent child exit must be1')
+ need(parent.get('actual_parent_exit','missing') is None,'original Parent exit null changed')
+ need(parent.get('planned_interrupt_requested') is True and parent.get('outcome_semantics_accepted') is False,'original Parent planned/acceptance flags')
+ if parent.get('primary_exception_observed') is not False or parent.get('error_type','missing') is not None:uncertain=True;reasons.append('Parent exception/finalization uncertainty')
+ supervisor=parent.get('supervisor_result');cleanup=parent.get('cleanup')
+ need(type(supervisor)is dict and type(supervisor.get('exit_code'))is int and supervisor.get('exit_code')==1,'supervisor exit must be1')
+ need(type(cleanup)is dict and type(cleanup.get('original_parent_exit'))is int and cleanup.get('original_parent_exit')==1,'native cleanup original exit must be1')
+ if type(cleanup)is not dict or cleanup.get('joined_unit_stopped') is not True or cleanup.get('cgroup_absent') is not True:uncertain=True;reasons.append('native Parent cleanup not proved')
+ need(type(child.get('exit_code'))is int and child['exit_code']==1 and child.get('reason')=='workload exited' and child.get('snapshot_error','missing') is None,'original child workload exit/snapshot')
+ need(type(child.get('workload_pid'))is int and child['workload_pid']>0,'original workload PID unavailable')
+ need(type(guard.get('child_exit_code'))is int and guard['child_exit_code']==1 and guard.get('phase')=='failed','native guard expected failed child1 route')
+ need(guard.get('retry') is False and guard.get('elapsed_time_kill') is False,'native retry/deadline differs')
+ if guard.get('cleanup_verified') is not True or any(k in guard for k in ('cleanup_error','storage_last_error')) or late_native_failure:uncertain=True;reasons.append('native cleanup/finalization uncertainty')
+ for key in ('storage_breach','storage_last_error','cleanup_error','child_log_limit_reached','cpu_limit_reached','cpu_kill'):
+  need(key not in guard,'unexpected native failure evidence '+key)
+ need(not late_native_failure,'additive native finalization failure marker')
+ props=guard.get('unit_properties');text=guard.get('limit_reason');prefix='RuntimeError: child or unit failed: '
+ need(type(props)is dict and props.get('Result')=='exit-code' and props.get('ActiveState') in ('inactive','failed'),'unit expected nonzero workload result')
+ parsed=None
+ if type(text)is str and text.startswith(prefix) and len(text)<=8192:
+  try:
+   node=ast.parse(text[len(prefix):],mode='eval');require(sum(1 for _ in ast.walk(node))<=128,'bounded unit reason expression');parsed=ast.literal_eval(node)
+  except (SyntaxError,ValueError,TypeError,RecursionError):pass
+ need(type(parsed)is dict and parsed==props,'exact original unit failure reason differs')
+ snapshot=child.get('terminal_memory_snapshot')
+ need(type(snapshot)is dict and guard.get('terminal_memory_snapshot')==snapshot,'child/native terminal snapshot join')
+ for label,value in (('guard',guard),('terminal',snapshot if type(snapshot)is dict else {})):
+  events=value.get('memory_events');need(type(events)is dict and all(type(events.get(k))is int and events[k]==0 for k in ('oom','oom_kill')),label+' OOM counters missing/nonzero')
+  need(type(value.get('memory_current_bytes'))is int and value['memory_current_bytes']>=0,label+' memory accounting missing')
+ cpus=guard.get('cpus');readback=guard.get('cpu_thread_readback')
+ need(type(cpus)is list and len(cpus)==2 and all(type(x)is int and x>=0 for x in cpus) and len(set(cpus))==2,'two actual native CPUs required')
+ need(type(readback)is dict and bool(readback) and all(v==cpus for v in readback.values()),'CPU thread readback differs/missing')
+ return {'eligible':not reasons,'cleanup_uncertain':uncertain,'reasons':reasons}
+

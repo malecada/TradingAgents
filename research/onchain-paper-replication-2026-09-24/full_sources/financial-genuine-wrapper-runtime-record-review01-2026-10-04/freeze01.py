@@ -1,0 +1,16 @@
+from pathlib import Path
+import hashlib,json,os,stat
+D=Path(__file__).resolve().parent;P=D.parent/'financial-genuine-wrapper-runtime-record-correction01-2026-10-04';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();a=json.loads((D/'ACTUAL_REVIEW01.json').read_text());b=json.loads((D/'OWNED_REVIEW03.json').read_text());recipe=json.loads((D/'source/SOURCE_RECIPE01.json').read_text());changed=[r for r in recipe['rows'] if r['changed']];assert len(changed)==1;r=changed[0];overlay=P/'overlay'/r['path'];assert sha(overlay)==sha(D/'source/candidate.py')==r['candidate_sha256'] and stat.S_IMODE(overlay.stat().st_mode)==r['mode']
+o={'schema_version':1,'verdict':'ACCEPTED_BOUNDED_UNINSTALLED_SOURCE_CORRECTION_ONLY','candidate_source_sha256':sha(D/'source/candidate.py'),'candidate_manifest_sha256':sha(D/'source/MANIFEST01.json'),'original_source_commit':recipe['original_source'],'actual_controls':a['checks'],'owned_controls':b['checks'],'total_controls':a['checks']+b['checks'],'extra_final_overlay_hash_mode_join':True,'implementation_bodies':194,'changed_bodies':1,'unchanged_bodies':193,'original_runtime_records':251,'actual_runtime_mapping_sha256':a['unchanged_runtime_mapping_sha256'],'actual_original_refusal':a['old_refusal'],'actual_cwd':a['cwd'],'actual_python':a['python'],'actual_pythonpath':a['pythonpath'],'sole_actual_ambiguity':a['inventory_ambiguities'],'full_byte_AST_inverse':True,'actual_checks_sha256':sha(D/'ACTUAL_REVIEW01.json'),'owned_checks_sha256':sha(D/'OWNED_REVIEW03.json'),'report_sha256':sha(D/'REVIEW01.md'),'source_installed':False,'actual_outcome_reviewed':False,'native_executions':0,'numerical_imports':0,'claims_created':0,'future_source':None,'future_registration':None,'future_identity':None,'cumulative_adoption':None,'external_recovery':None,'release_authorized':False,'old_failed_identity_retry_allowed':False,'paper_financial_credit':0,'retained_offline_oversize_negative_witness':b['retained_oversized_negative_witness'],'authority':None}
+(D/'REVIEW01.json').write_text(json.dumps(o,sort_keys=True,indent=2)+'\n')
+rows=[]
+for p in sorted(D.rglob('*')):
+ if p==D/'MANIFEST01.json':continue
+ s=p.lstat();r={'path':p.relative_to(D).as_posix(),'mode':stat.S_IMODE(s.st_mode)}
+ if stat.S_ISREG(s.st_mode):r.update(type='file',bytes=s.st_size,nlink=s.st_nlink,sha256=sha(p))
+ elif stat.S_ISDIR(s.st_mode):r['type']='directory'
+ elif stat.S_ISLNK(s.st_mode):r.update(type='symlink',target=os.readlink(p))
+ else:raise ValueError(str(p))
+ rows.append(r)
+m={'schema_version':1,'status':o['verdict'],'scope':'complete owned independent source review, actual metadata readback, original/candidate bodies, failed reviewer setup/fixture evidence, all owned metadata/descriptor controls and nested manifest; excludes only exact root MANIFEST01.json','entries':rows,'members':len(rows),'regular_files':sum(r['type']=='file' for r in rows),'regular_bytes':sum(r.get('bytes',0) for r in rows),'authority':None}
+(D/'MANIFEST01.json').write_text(json.dumps(m,sort_keys=True,indent=2)+'\n');print(json.dumps({'manifest':sha(D/'MANIFEST01.json'),'machine':sha(D/'REVIEW01.json'),'report':sha(D/'REVIEW01.md'),'members':m['members'],'files':m['regular_files'],'bytes':m['regular_bytes'],'checks':o['total_controls']}))

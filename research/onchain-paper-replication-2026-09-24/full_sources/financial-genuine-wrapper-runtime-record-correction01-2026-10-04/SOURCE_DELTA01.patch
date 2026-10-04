@@ -1,0 +1,78 @@
+--- original/financial_wrapper_fixture.py
++++ candidate/financial_wrapper_fixture.py
+@@ -62,6 +62,61 @@
+  runtime=json.loads(registered(p['runtime_input']));runtime_check(ad.root,runtime)
+  return p
+ 
++def _runtime_record_bytes(path):
++ from .owned_io import _cleanup
++ fds=[];parents=[]
++ try:
++  require(path.is_absolute() and path.resolve()==path,'runtime metadata path redirected')
++  # Walk every directory from / with O_NOFOLLOW; cleanup preserves first fatal.
++  fd=os.open('/',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);fds.append(fd);current=Path('/')
++  def signature(s):return (s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
++  parents.append((current,fd,signature(os.fstat(fd))))
++  for part in path.parts[1:-1]:
++   fd=os.open(part,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=fd);fds.append(fd);current=current/part;parents.append((current,fd,signature(os.fstat(fd))))
++  before=os.stat(path.name,dir_fd=fd,follow_symlinks=False);pin=signature(before)
++  require(stat.S_ISREG(before.st_mode) and before.st_nlink>=1 and before.st_size<=FILE,'runtime metadata type/link/extent')
++  child=os.open(path.name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=fd);fds.append(child);require(signature(os.fstat(child))==pin,'runtime metadata replaced');raw=bytearray()
++  while True:
++   block=os.read(child,min(65536,before.st_size-len(raw)+1))
++   if not block:break
++   raw.extend(block);require(len(raw)<=before.st_size,'runtime metadata grew')
++  require(len(raw)==before.st_size and signature(os.fstat(child))==pin==signature(os.stat(path.name,dir_fd=fd,follow_symlinks=False))==signature(path.lstat()),'runtime metadata changed')
++  for p,f,original in parents:require(p.resolve()==p and signature(p.lstat())==original==signature(os.fstat(f)),'runtime metadata parent changed')
++  return bytes(raw)
++ finally:_cleanup(tuple(lambda f=f:os.close(f) for f in reversed(fds)))
++
++def _runtime_distribution_name(name):
++ import re
++ require(type(name)is str and re.fullmatch(r'[A-Za-z0-9]+(?:[A-Za-z0-9._-]*[A-Za-z0-9])?',name)is not None,'runtime distribution name')
++ return re.sub(r'[-_.]+','-',name).lower()
++
++def _runtime_record(row):
++ import importlib.metadata,sysconfig
++ from email.parser import BytesParser
++ require(type(row)is dict and set(row)=={'name','version','record','record_sha256'},'runtime distribution fields')
++ name=_runtime_distribution_name(row['name'])
++ require(type(row['version'])is str and row['version'] and type(row['record'])is str,'runtime distribution version/path type')
++ require(type(row['record_sha256'])is str and len(row['record_sha256'])==64 and all(c in '0123456789abcdef' for c in row['record_sha256']),'runtime RECORD hash type')
++ record=Path(row['record']);require(record.is_absolute() and str(record)==row['record'] and record.resolve()==record and record.name=='RECORD' and record.parent.name.endswith('.dist-info'),'runtime installed RECORD path')
++ roots=sorted(set(sysconfig.get_path(key) for key in ('purelib','platlib')))
++ require(all(type(p)is str and Path(p).is_absolute() and Path(p).resolve()==Path(p) and Path(p).is_relative_to(Path(sys.prefix)) for p in roots),'runtime installed site roots')
++ require(str(record.parent.parent) in roots,'runtime RECORD outside interpreter installation')
++ # distribution.files is a wheel-member inventory, including vendored RECORDs.
++ # Discover only the interpreter installation, excluding source cwd egg-info.
++ matches=[]
++ for distribution in importlib.metadata.distributions(path=roots,name=row['name']):
++  matches.append(distribution);require(len(matches)<=1,'duplicate installed runtime distribution')
++ require(len(matches)==1 and type(matches[0])is importlib.metadata.PathDistribution,'unique installed path distribution unavailable')
++ # PathDistribution._path is an explicit CPython3.13.13 implementation contract.
++ # Fail closed if the representation changes; no files-list/default fallback.
++ origin=matches[0]._path
++ require(isinstance(origin,Path) and origin.is_absolute() and origin.resolve()==origin and origin==record.parent,'installed runtime distribution origin differs')
++ metadata=_runtime_record_bytes(origin/'METADATA');parsed=BytesParser().parsebytes(metadata,headersonly=True)
++ require(parsed.get_all('Name') is not None and len(parsed.get_all('Name'))==1 and _runtime_distribution_name(str(parsed['Name']))==name,'installed runtime metadata name differs')
++ require(parsed.get_all('Version')==[row['version']],'installed runtime metadata version differs')
++ raw=_runtime_record_bytes(record);require(sha(raw)==row['record_sha256'],'runtime RECORD origin/hash differs')
++ return {'name':name,'version':row['version'],'record':str(record),'record_sha256':sha(raw),'metadata_sha256':sha(metadata)}
++
+ def runtime_check(root,value):
+  import importlib.metadata,platform
+  keys={'python','executable','resolved_executable','prefix','executable_sha256','lock_sha256','distribution_records'}
+@@ -70,11 +125,8 @@
+  exe=Path(sys.executable).resolve();require(str(exe)==value['resolved_executable'] and sha(exe.read_bytes())==value['executable_sha256'] and sha((root/'uv.lock').read_bytes())==value['lock_sha256'],'runtime interpreter/lock bytes differ')
+  rows=value['distribution_records'];require(type(rows)is list and rows and {r['name'] for r in rows}>={'torch','numpy','scipy'},'runtime distribution closure absent')
+  require(len({r['name'] for r in rows})==len(rows),'duplicate runtime distribution')
+- for row in rows:
+-  require(set(row)=={'name','version','record','record_sha256'} and importlib.metadata.version(row['name'])==row['version'],'runtime distribution version differs')
+-  distribution=importlib.metadata.distribution(row['name']);matches=[f for f in distribution.files or () if str(f).endswith('.dist-info/RECORD')]
+-  require(len(matches)==1,'runtime installed RECORD unavailable')
+-  record=Path(distribution.locate_file(matches[0])).resolve();require(str(record)==row['record'] and sha(record.read_bytes())==row['record_sha256'],'runtime RECORD origin/hash differs')
++ require(len({_runtime_distribution_name(r['name']) for r in rows})==len(rows),'duplicate normalized runtime distribution')
++ for row in rows:_runtime_record(row)
+  return {'qualification':'exact interpreter/lock/version/RECORD mapping; dependency bodies not fully rehashed'}
+ 
+ def authorize(run,args,plan_input):
