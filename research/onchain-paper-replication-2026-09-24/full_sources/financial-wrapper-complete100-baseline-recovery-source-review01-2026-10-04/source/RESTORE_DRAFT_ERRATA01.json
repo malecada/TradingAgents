@@ -1,0 +1,37 @@
+{
+  "current_source_sha256": "6af39be9f02e21e14b8409b312165ecb3e8e622f2243b42dfc2553b9781c6695",
+  "edits": [
+    {
+      "original": "REL + '/REQUIRED_BODIES01.json'",
+      "replacement": "REL + '/REQUIRED_BODIES02.json'"
+    },
+    {
+      "original": "len(required) == 16",
+      "replacement": "len(required) == 17"
+    },
+    {
+      "original": "exact sixteen original baseline bodies",
+      "replacement": "exact seventeen original baseline bodies"
+    },
+    {
+      "original": "result = R.restore(archive, capture['scopes'][label]['archive'], manifest, HERE / ('flat-' + label + '01'))",
+      "replacement": "result = R.restore(bundle / ('complete-' + label + '01.tar.gz'), capture['scopes'][label]['archive'], manifest, HERE / ('flat-' + label + '01'))"
+    },
+    {
+      "original": "R.read(HERE / ('flat-' + label + '01'), 'metadata.json')",
+      "replacement": "R.read(HERE / ('flat-' + label + '01'), restored[label]['metadata_file'])"
+    },
+    {
+      "original": "metadata['mapping']",
+      "replacement": "metadata['flat_members']"
+    },
+    {
+      "original": "R._cleanup(tuple((lambda error=error: (_ for _ in ()).throw(error)) for error in secondary), primary=primary)\n",
+      "replacement": "R._cleanup(tuple((lambda error=error: (_ for _ in ()).throw(error)) for error in secondary), primary=primary)\n        raise\n"
+    }
+  ],
+  "first_draft_executed": false,
+  "first_unreleased_draft_sha256": "13e43a965dc834838d5e8cdd48a7558f70fb7eb928b7e403c747a7cde6e5a564",
+  "qualification": "API path/metadata and first-fatal fallback corrected before any entry execution; preserved original draft. Literal Root receipt modes are an explicit original-to-private sidecar, not silent equality.",
+  "schema_version": 1
+}

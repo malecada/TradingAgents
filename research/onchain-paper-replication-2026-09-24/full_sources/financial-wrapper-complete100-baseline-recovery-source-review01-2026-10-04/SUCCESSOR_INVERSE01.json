@@ -1,0 +1,14 @@
+{
+  "all_R4_IO_Git_primitives_unchanged": true,
+  "new_claim_or_native_started": false,
+  "one_exact_replacement": {
+    "original": "        result = R.restore(bundle / ('complete-' + label + '01.tar.gz'), capture['scopes'][label]['archive'], manifest, HERE / ('flat-' + label + '01'))",
+    "replacement": "        destination = HERE / ('flat-' + label + '01')\n        destination.mkdir(mode=0o700)\n        result = R.restore(bundle / ('complete-' + label + '01.tar.gz'), capture['scopes'][label]['archive'], manifest, destination)"
+  },
+  "original": "WITHHELD_FLAT_DESTINATION_ABSENT",
+  "original_entry_executed": false,
+  "original_source_sha256": "6af39be9f02e21e14b8409b312165ecb3e8e622f2243b42dfc2553b9781c6695",
+  "schema_version": 1,
+  "successor_source_sha256": "8b010b28e37978c6ea24eb0e4aaad68d715f4031a102d7396f4627fd501d06e1",
+  "whole_literal_inverse": true
+}

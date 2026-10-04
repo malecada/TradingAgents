@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-baseline-preservation-review01-2026-10-04/check01.py", line 37, in <module>
+    original=F/'heartbeat-root-checkpoint10-2026-10-04'/n;copy=rootreceipts/n;ok(original.read_bytes()==copy.read_bytes()and stat.S_IMODE(original.stat().st_mode)==stat.S_IMODE(copy.stat().st_mode),'actual Root receipt original '+n)
+                                                                              ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-baseline-preservation-review01-2026-10-04/check01.py", line 5, in ok
+    def ok(v,n):assert v,n;checks.append(n)
+                       ^
+AssertionError: actual Root receipt original REFERENCE_CURRENT_OBSERVATION01.json
