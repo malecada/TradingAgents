@@ -1,0 +1,38 @@
+--- byte_bridge01.draft02.py
++++ byte_bridge01.py
+@@ -103,6 +103,9 @@
+     require(module is not None,'UNAVAILABLE: genuine already-loaded module '+name)
+     return module
+ 
++def original_cardinality(policy):
++    require(type(policy) is dict and type(policy.get('sample_count')) is int and policy['sample_count']==512 and type(policy.get('motif_count')) is int and policy['motif_count']==32,'original exactly512 spent samples and32 motifs required')
++
+ def _authority(source,role):
+     consumer=_module(PKG+'held_score_consumer')
+     if role=='score-batches':
+@@ -116,6 +119,10 @@
+     require(run.admission.source!=DENIED_SOURCE,'UNAVAILABLE: unchanged Source339 has no bridge admission')
+     bound.check();target.check();held.check(owner);consumer._sources(run)
+     require(owner.bound is bound and bound._run is run and target.owner is owner,'original current authority identity')
++    prepared=target.execution._stage.prepared
++    original_policy=json.loads(run.read_input(prepared._input));original_cardinality(original_policy)
++    require(original_policy==json.loads(prepared._cap._policy),'actual original import policy changed')
++    target.check();held.check(owner)
+     return consumer,target,stage,held,value,owner,bound,run
+ 
+ def _dependencies(consumer,run):
+@@ -156,7 +163,13 @@
+         require(len(rows)==1 and rows[0][0]=='matrix.f32','exact completed raw member')
+         consumer=_module(PKG+'held_score_consumer')
+         extra={'stage_intent_hex':stage.intent.hex(),'producer_start_hex':consumer._body(value.directory/'start.json').hex(),'producer_complete_hex':consumer._body(value.directory/'complete.json').hex(),'producer_receipt_sha256':value.receipt_sha256}
+-    snapshot={'schema_version':1,'kind':'original-imported-local-byte-bridge-provenance','role':role,'source_commit':run.admission.source,'claim_sha256':run._claim_sha256,'owner':target.owner.identity,'stage':stage.name,'stage_intent_sha256':stage.intent_sha256,'original_root':str(local.root),'original_document_sha256':local.reference,'scope':target.derive_scope(),'original_members':[{'name':n,'bytes':p[2],'sha256':p[1]} for n,p in local._pin],'metadata':docs,'ancestry':extra,'scientific_publication':False,'representation_complete':False}
++        ticket=value.record['output'];receipt=consumer._body(Path(ticket['directory'])/'receipt.json')
++        require(digest(receipt)==ticket['receipt_sha256'],'original publication receipt bytes')
++        extra['publication_receipt_hex']=receipt.hex()
++        extra['stage_complete_hex']=consumer._body(stage.root/'stage-complete.json').hex()
++    original_input=target.execution._stage.prepared._input
++    extra['original_import_policy_input']=original_input;extra['original_import_policy_hex']=run.read_input(original_input).hex()
++    snapshot={'schema_version':1,'kind':'original-imported-local-byte-bridge-provenance','role':role,'source_commit':run.admission.source,'claim_sha256':run._claim_sha256,'owner':target.owner.identity,'stage':stage.name,'stage_intent_sha256':stage.intent_sha256,'original_root':str(local.root),'original_document_sha256':local.reference,'scope':target.derive_scope(),'original_members':[{'name':n,'bytes':p[2],'sha256':p[1],'mode':stat.S_IMODE(p[0][2])} for n,p in local._pin],'metadata':docs,'ancestry':extra,'scientific_publication':False,'representation_complete':False}
+     body=canonical(snapshot,2*META);source._checked();target.check()
+     return tuple(rows),body
+ 

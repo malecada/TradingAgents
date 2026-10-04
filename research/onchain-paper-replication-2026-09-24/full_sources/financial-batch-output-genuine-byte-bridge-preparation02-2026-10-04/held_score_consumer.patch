@@ -1,0 +1,21 @@
+--- held_score_consumer.original.py
++++ held_score_consumer.py
+@@ -498,3 +498,18 @@
+ 
+ def raw_transfer_worker(run,execution,*,job_input='execution_job'):
+     return _RawWorker(run,execution,job_input)
++
++
++def encode_codec_held(target,stage,held,stream,store):
++    """Explicit future local byte seam; no implicit network or new run."""
++    from . import compact_owner,mcm_score_stream
++    route=_route(target);require(route is not None,'original held consumer selection required')
++    run=route[0];owner=target.owner
++    require(type(stage) is compact_owner.Stage and type(held) is compact_owner._HeldTransition and type(stream) is mcm_score_stream.MCMScoreStream,'genuine original held handles')
++    held.check(owner);target.check()
++    bridge=sys.modules.get('genuine_byte_bridge_selected')
++    require(bridge is not None,'UNAVAILABLE: separately admitted local byte bridge absent')
++    with _api(run).open_held(target,stage,held,stream) as source:
++        result=bridge.encode_held(source,store)
++    held.check(owner);target.check();compact_owner.verify_current(owner)
++    return result

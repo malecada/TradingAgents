@@ -1,0 +1,112 @@
+[
+  {
+    "case": "old-BB1",
+    "events": [
+      {
+        "closed_fd": 5,
+        "dev": 66310,
+        "inode": 10793362
+      }
+    ],
+    "exact_tail": "final_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')",
+    "final_tail_accepted": true,
+    "genuine_encode_executed": false,
+    "post_signature": [
+      66310,
+      10793358,
+      384,
+      1791116915091212093,
+      1791116915091212093
+    ],
+    "pre_signature": [
+      66310,
+      10793358,
+      384,
+      1791116915083212192,
+      1791116915083212192
+    ],
+    "refusal": null,
+    "subsequent_independent_verify": "frame length/hash"
+  },
+  {
+    "case": "new-BB1",
+    "events": [
+      {
+        "closed_fd": 5,
+        "dev": 66310,
+        "inode": 10793370
+      }
+    ],
+    "exact_tail": "final_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')",
+    "final_tail_accepted": false,
+    "genuine_encode_executed": false,
+    "post_signature": [
+      66310,
+      10793366,
+      384,
+      1791116915101211969,
+      1791116915101211969
+    ],
+    "pre_signature": [
+      66310,
+      10793366,
+      384,
+      1791116915095212044,
+      1791116915095212044
+    ],
+    "refusal": "ValueError: frame length/hash",
+    "subsequent_independent_verify": "frame length/hash"
+  },
+  {
+    "case": "new-intact",
+    "events": [],
+    "exact_tail": "final_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')",
+    "final_tail_accepted": true,
+    "genuine_encode_executed": false,
+    "post_signature": [
+      66310,
+      10793374,
+      384,
+      1791116915105211920,
+      1791116915105211920
+    ],
+    "pre_signature": [
+      66310,
+      10793374,
+      384,
+      1791116915105211920,
+      1791116915105211920
+    ],
+    "refusal": null,
+    "subsequent_independent_verify": null
+  },
+  {
+    "case": "new-BB2",
+    "events": [
+      {
+        "closed_fd": 5,
+        "dev": 66310,
+        "inode": 10793383
+      }
+    ],
+    "exact_tail": "final_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')",
+    "final_tail_accepted": true,
+    "genuine_encode_executed": false,
+    "post_signature": [
+      66310,
+      10793382,
+      384,
+      1791116915124211685,
+      1791116915124211685
+    ],
+    "pre_signature": [
+      66310,
+      10793382,
+      384,
+      1791116915115211796,
+      1791116915115211796
+    ],
+    "refusal": null,
+    "subsequent_independent_verify": "frame length/hash"
+  }
+]

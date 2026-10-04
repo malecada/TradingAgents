@@ -1,0 +1,21 @@
+{
+  "no_new_owned_file_descriptor_in_population": true,
+  "only_changes": [
+    "new _codec_population helper",
+    "_encode three population/boundary statements"
+  ],
+  "population_source": "def _codec_population(store,R):\n    \"\"\"Sample complete metadata through the owned directory; no byte authority.\"\"\"\n    store.check()\n    root=os.fstat(store.fd)\n    names=tuple(sorted(os.listdir(store.fd)))\n    require(set(names)==store.names,'codec fingerprint complete membership')\n    rows=[]\n    for name in names:\n        item=os.stat(name,dir_fd=store.fd,follow_symlinks=False)\n        require(stat.S_ISREG(item.st_mode) and item.st_nlink==1 and stat.S_IMODE(item.st_mode)==0o600,'codec fingerprint member type/mode')\n        rows.append((name,R.sig(item),item.st_blocks,item.st_blksize))\n    current=os.fstat(store.fd)\n    require(store.root.resolve()==store.root and R.sig(store.root.lstat())==R.sig(root)==R.sig(current) and tuple(sorted(os.listdir(store.fd)))==names,'codec fingerprint root/membership changed')\n    return (R.sig(current),current.st_blocks,current.st_blksize,tuple(rows))",
+  "sampled_not_atomic": true,
+  "signature_source": "def sig(s):\n    return (s.st_dev, s.st_ino, s.st_mode, s.st_nlink, s.st_size, s.st_mtime_ns, s.st_ctime_ns)",
+  "unchanged": {
+    "bounded_git01.py": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f",
+    "codec01.py": "f10f6803a637735bc490de8846056a34e9090451d92773d075a7025b19bd3d55",
+    "completed_f32.py": "78c13788f7b1305ea91b440d71178686d32372faf9c6804e4a650f5043a20b69",
+    "held_score_consumer.py": "809637393e6794c7ea335c1467e98ad5b9cd9fede3001e043e3881324cf010e6",
+    "local_store01.py": "ceec61446f678f8749fa1e24530b5b4e3e344a59cce75f7906e322f03dd8ad89",
+    "owned_io.py": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+    "recovery04.py": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a"
+  },
+  "whole_AST_inverse": true,
+  "whole_literal_inverse": true
+}

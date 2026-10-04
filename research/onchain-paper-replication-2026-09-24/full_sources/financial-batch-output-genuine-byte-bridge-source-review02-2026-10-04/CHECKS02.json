@@ -1,0 +1,225 @@
+{
+  "checks": [
+    {
+      "case": "valid declared utility grant only",
+      "genuine_registration": false,
+      "reserve": 13763840
+    },
+    {
+      "case": "missing schema_version",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing kind",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing job_input",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing job_sha256",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing role",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing targets",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing max_logical_bytes",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing max_allocated_bytes",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing scientific_publication",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing transport",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "missing retirement",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad schema_version True",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad schema_version 1.0",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad schema_version 2",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad max_logical_bytes True",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad max_logical_bytes 67108864.0",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad max_logical_bytes 13763839",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad max_logical_bytes 67108865",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad max_allocated_bytes 0",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad max_allocated_bytes 13763839",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad max_allocated_bytes 67108865",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad scientific_publication 0",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad scientific_publication True",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad transport 0",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad transport True",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad retirement 0",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad retirement True",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad targets {}",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad targets {'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa': 2}",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad targets {'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa': True, 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb': 3}",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad job_sha256 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad job_sha256 None",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad role 'mcm-output'",
+      "refusal": "ValueError"
+    },
+    {
+      "case": "bad role None",
+      "refusal": "ValueError"
+    },
+    {
+      "both_descriptors_closed": true,
+      "case": "actual fatal-close pair 0",
+      "empty_partial_retained": true,
+      "later": "RuntimeError",
+      "primary": "MemoryError",
+      "selected": "MemoryError"
+    },
+    {
+      "both_descriptors_closed": true,
+      "case": "actual fatal-close pair 1",
+      "empty_partial_retained": true,
+      "later": "RuntimeError",
+      "primary": "SystemExit",
+      "selected": "SystemExit"
+    },
+    {
+      "both_descriptors_closed": true,
+      "case": "actual fatal-close pair 2",
+      "empty_partial_retained": true,
+      "later": "MemoryError",
+      "primary": "KeyboardInterrupt",
+      "selected": "KeyboardInterrupt"
+    },
+    {
+      "both_descriptors_closed": true,
+      "case": "actual fatal-close pair 3",
+      "empty_partial_retained": true,
+      "later": "SystemExit",
+      "primary": "GeneratorExit",
+      "selected": "GeneratorExit"
+    },
+    {
+      "both_descriptors_closed": true,
+      "case": "actual fatal-close pair 4",
+      "empty_partial_retained": true,
+      "later": "MemoryError",
+      "primary": "RuntimeError",
+      "selected": "MemoryError"
+    },
+    {
+      "both_descriptors_closed": true,
+      "case": "actual fatal-close pair 5",
+      "empty_partial_retained": true,
+      "later": "SystemExit",
+      "primary": "RuntimeError",
+      "selected": "SystemExit"
+    },
+    {
+      "both_descriptors_closed": true,
+      "case": "actual fatal-close pair 6",
+      "empty_partial_retained": true,
+      "later": "ValueError",
+      "primary": "ValueError",
+      "selected": "CleanupFailure"
+    },
+    {
+      "both_descriptors_closed": true,
+      "case": "actual fatal-close pair 7",
+      "empty_partial_retained": true,
+      "later": "SystemExit",
+      "primary": "MemoryError",
+      "selected": "MemoryError"
+    },
+    {
+      "both_descriptors_closed": true,
+      "case": "actual fatal-close pair 8",
+      "empty_partial_retained": true,
+      "later": "KeyboardInterrupt",
+      "primary": "BaseException",
+      "selected": "BaseException"
+    },
+    {
+      "case": "original context-manager RED",
+      "refusal": "CleanupFailure"
+    },
+    {
+      "case": "candidate actual context-manager GREEN"
+    }
+  ],
+  "count": 46
+}

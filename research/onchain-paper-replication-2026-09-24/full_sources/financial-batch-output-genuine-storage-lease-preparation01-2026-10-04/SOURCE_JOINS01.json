@@ -1,0 +1,618 @@
+{
+  "bodies": [
+    {
+      "bytes": 41319,
+      "definitions": [
+        {
+          "ast_sha256": "2407e108a9bab0667a8b0fc9e12a4ef08a70d8fbae9d87b3cfe5ea649dd9ba19",
+          "line": 21,
+          "name": "require"
+        },
+        {
+          "ast_sha256": "5a624da4e8f616e9fcb11d20d0179dcc616bf61bb1d357edd9db923787c729f2",
+          "line": 23,
+          "name": "_policy"
+        },
+        {
+          "ast_sha256": "164d64a34dcd413e2da74633670e88ee2f21c7885bf19bc45d8ac1f09e12870a",
+          "line": 51,
+          "name": "_body"
+        },
+        {
+          "ast_sha256": "9062e3d3558639b8115cac840d66cad804162ef2bbd6bbcc1111d71c2561cefb",
+          "line": 85,
+          "name": "_sources"
+        },
+        {
+          "ast_sha256": "f66e5d65cb35860bacb0ed819685119bef0a1eb661509d71eba504966b9282ec",
+          "line": 92,
+          "name": "_api"
+        },
+        {
+          "ast_sha256": "d1d31f8fa51a53202642123bd2b63cb5a32c654f0137aa3c9e41a748bf48c51e",
+          "line": 111,
+          "name": "_route"
+        },
+        {
+          "ast_sha256": "0b8d8779ce3dda3fa1b5b5ea4904d35a13bd690c589ba5543c43ba8f9225fb60",
+          "line": 132,
+          "name": "preflight"
+        },
+        {
+          "ast_sha256": "96d8db99fe0a876c99500343b67789dc852522102f9c3e6c7368a9306b993895",
+          "line": 144,
+          "name": "_read_all"
+        },
+        {
+          "ast_sha256": "24804422414f8f830507b5f09fa07da8fe0acd54c8c7067395a34f1e8971f888",
+          "line": 160,
+          "name": "consume"
+        },
+        {
+          "ast_sha256": "84391614a3d888e74ccbcde1ea7dd7f06bda4b5cfa1f93886a0063ece2bd7bb2",
+          "line": 186,
+          "name": "_transfer_scope"
+        },
+        {
+          "ast_sha256": "9cb6e451d58e4cb7eeab20f11251352d03330a565471ee0c1b697d422d284b5e",
+          "line": 190,
+          "name": "_transfer_outputs"
+        },
+        {
+          "ast_sha256": "eb358b77c3d836804cca986ca206e33a8baa14304b7c20b91022b845d8e15e2a",
+          "line": 195,
+          "name": "_transfer_json"
+        },
+        {
+          "ast_sha256": "b0be90f7c8a4fe67b94b153aaa4bc64cb848ed80e1e70d7ea50c8494b751a428",
+          "line": 203,
+          "name": "_transfer_closure"
+        },
+        {
+          "ast_sha256": "b972af3c97738cca48feabbdb5f60509d6cd4d1dd78224a30989cec2fc735a47",
+          "line": 215,
+          "name": "_transfer_auxiliary"
+        },
+        {
+          "ast_sha256": "1a5bb5fef67c3878f457b1074692013eba6935ad1300c522de585f8ca12eab10",
+          "line": 234,
+          "name": "_transfer_budget"
+        },
+        {
+          "ast_sha256": "e5be3ea3185fcd965d6b979ff71376b5d9e0774b0fd10fb8ff0822e206fffbf5",
+          "line": 267,
+          "name": "_transfer_preflight_legacy"
+        },
+        {
+          "ast_sha256": "8c9bad1965f7fe74a198bf1348dedef182619e61cd6c5ff7a73cd8e04a5d18c5",
+          "line": 310,
+          "name": "_TransferWorker"
+        },
+        {
+          "ast_sha256": "d3ff5d86abef343d3f2b4c17a4497e6106c3a30d7f71224c3b03c0aa2b8029e6",
+          "line": 343,
+          "name": "transfer_worker"
+        },
+        {
+          "ast_sha256": "04f965dc3cd83ba07f220e9f8c87b69140544fad7a7cada1fe29e7c6a754835c",
+          "line": 346,
+          "name": "_worker_current"
+        },
+        {
+          "ast_sha256": "27f052af95b9def4ec6962ea3039476cefb2c29a9e27f22f0b91f800486146e6",
+          "line": 358,
+          "name": "_combined_closure"
+        },
+        {
+          "ast_sha256": "f99603dab15fa05833206d91a52f84f56627c480f207076325b5511daf333cc2",
+          "line": 370,
+          "name": "_combined_auxiliary"
+        },
+        {
+          "ast_sha256": "51f9cd1d35fdbd2d2fbdc0d8b67d30f62536f43fa667d4c638f537ed25ab1d09",
+          "line": 389,
+          "name": "_combined_preflight"
+        },
+        {
+          "ast_sha256": "64348687564b156fbfaaec5ca2a4762e4fe6fd9b17d79e9b366acf43b3076295",
+          "line": 441,
+          "name": "_combined_budget"
+        },
+        {
+          "ast_sha256": "b64ee140478b92b0369db32bc2294a9cb7c6ce37643be36c281fd2d531be1a0f",
+          "line": 447,
+          "name": "transfer_preflight"
+        },
+        {
+          "ast_sha256": "8ea2b5a9f906c6f552a02decc67da61fca2d1d9a4df39f3d9ebe98d4033eff22",
+          "line": 459,
+          "name": "_RawWorker"
+        },
+        {
+          "ast_sha256": "5fd015df555a02d58e722f261e3c0f0b3f564960697d4b6d12439dd6e17ba599",
+          "line": 491,
+          "name": "_raw_current"
+        },
+        {
+          "ast_sha256": "a4a8d35db4a38100d42e59f3c59609a764219551f08499c5f79208cb7d861506",
+          "line": 499,
+          "name": "raw_transfer_worker"
+        }
+      ],
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-combined-worker-preparation01-2026-10-03/held_score_consumer.py",
+      "sha256": "8c66189bd61a715c5f06b33b5fa9195a7185237c571529135d46f8ee1d7710ae"
+    },
+    {
+      "bytes": 22331,
+      "definitions": [
+        {
+          "ast_sha256": "826b0cf12f2dbcdf032e68d423b8f22c7a128fe60ae99a5f4e3dbb8c7797ede4",
+          "line": 32,
+          "name": "_imported"
+        },
+        {
+          "ast_sha256": "05327f30c95d1ef9cdad567d00b19890b0b96e67cdb97a54973d47be81ded5a2",
+          "line": 37,
+          "name": "_owner"
+        },
+        {
+          "ast_sha256": "78978b6cf97c86320efb62c58ebc159ef22662c3a0954155c149fc0a1096798a",
+          "line": 43,
+          "name": "_training"
+        },
+        {
+          "ast_sha256": "432154cdd8d92c7494fd5bc1c62c5e7686d9503ebd9127271421b91b5b6cbb45",
+          "line": 46,
+          "name": "directory"
+        },
+        {
+          "ast_sha256": "69a88bc8b97113e4726fc9053b70d60c17393991fb4dcaf1e24c4a0813dcd531",
+          "line": 52,
+          "name": "_sources"
+        },
+        {
+          "ast_sha256": "9f2f33fae3ea2047392d1028db0d32e6dde12073eab1e6753d71a6dbe0e2b7a1",
+          "line": 61,
+          "name": "_source_evidence"
+        },
+        {
+          "ast_sha256": "884e4d099f6853bda294cb0cd520a0ccb29cd638d26362aba61a78c05383a28d",
+          "line": 71,
+          "name": "_kernel"
+        },
+        {
+          "ast_sha256": "e54143d958e518a9764918146fb066f6f38838c2f80164c3230d1a3cf197e2a2",
+          "line": 80,
+          "name": "_graph"
+        },
+        {
+          "ast_sha256": "8a6635cc95ae2c378f1719c61bf3050dff8d4d13a15b0eb02416d9c38aa1caee",
+          "line": 89,
+          "name": "_original"
+        },
+        {
+          "ast_sha256": "1e3ee422ccc49e52dd2444f6c4e1ad92f6ef583920fe89aae57eab4f07ba639b",
+          "line": 100,
+          "name": "_matrix"
+        },
+        {
+          "ast_sha256": "a021fecce3b64d421a47a969710a8a90cbc43066dfbf7c7e67081c10bfa748d3",
+          "line": 108,
+          "name": "_prepare"
+        },
+        {
+          "ast_sha256": "2a26e0b6d7979531ec2fe84325657567017e98e8ef6d93ac21558756aa345fcb",
+          "line": 154,
+          "name": "Produced"
+        },
+        {
+          "ast_sha256": "4917ed747578aee68f2136b335a9bc30ee592399383e215f2f542321856a34bb",
+          "line": 236,
+          "name": "produce"
+        },
+        {
+          "ast_sha256": "2ad9066009c18459cfd5b8fbc8512c593337cea33dd09ad5de7b20fb3d964040",
+          "line": 243,
+          "name": "produce_imported"
+        },
+        {
+          "ast_sha256": "c51f2c1fcef81c410192ff434670a62319c272b5808792bfe7999a23db777f31",
+          "line": 250,
+          "name": "_produce_locked"
+        }
+      ],
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-preparation02-2026-10-03/compact_mcm.py",
+      "sha256": "35aba737220f1b5772b31138ea2c4cd920e842ae888425bfecbfd0ee151c5181"
+    },
+    {
+      "bytes": 11016,
+      "definitions": [
+        {
+          "ast_sha256": "0d4aa82e0c63303dd543f354df6004db0b7cbc3114d0998e83bd445ed5e046b3",
+          "line": 18,
+          "name": "_source"
+        },
+        {
+          "ast_sha256": "561e3a3091811c4949e05574625ebc6cd0b6307441a02ece2e711483d9f72274",
+          "line": 24,
+          "name": "_selected"
+        },
+        {
+          "ast_sha256": "3e6c907a6a9d0387e7328ac32902700499e7612ba68ac28e93e11ed9213ae21c",
+          "line": 58,
+          "name": "CompletedF32"
+        },
+        {
+          "ast_sha256": "6621b7d7658bb4715ae08fe74be731dfebae56265efbe6a8eed79b3341fc2cd0",
+          "line": 124,
+          "name": "open_completed"
+        },
+        {
+          "ast_sha256": "6d67a92e55045b5b3c0cab9992984ef2810bcd6cfb9839f862758ab29e229d34",
+          "line": 131,
+          "name": "completed_worker"
+        },
+        {
+          "ast_sha256": "d87726e4bbeb0bf9a78e375aa2e1de69a50febe5323ca98535b8598e6a8325dc",
+          "line": 153,
+          "name": "consume_if_selected"
+        }
+      ],
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-preparation02-2026-10-03/completed_f32.py",
+      "sha256": "ba739fb8711287f365abca061544a712bfdb0fd65a52836188da1c959ac9f266"
+    },
+    {
+      "bytes": 21452,
+      "definitions": [
+        {
+          "ast_sha256": "826b0cf12f2dbcdf032e68d423b8f22c7a128fe60ae99a5f4e3dbb8c7797ede4",
+          "line": 32,
+          "name": "_imported"
+        },
+        {
+          "ast_sha256": "05327f30c95d1ef9cdad567d00b19890b0b96e67cdb97a54973d47be81ded5a2",
+          "line": 37,
+          "name": "_owner"
+        },
+        {
+          "ast_sha256": "78978b6cf97c86320efb62c58ebc159ef22662c3a0954155c149fc0a1096798a",
+          "line": 43,
+          "name": "_training"
+        },
+        {
+          "ast_sha256": "432154cdd8d92c7494fd5bc1c62c5e7686d9503ebd9127271421b91b5b6cbb45",
+          "line": 46,
+          "name": "directory"
+        },
+        {
+          "ast_sha256": "69a88bc8b97113e4726fc9053b70d60c17393991fb4dcaf1e24c4a0813dcd531",
+          "line": 52,
+          "name": "_sources"
+        },
+        {
+          "ast_sha256": "9f2f33fae3ea2047392d1028db0d32e6dde12073eab1e6753d71a6dbe0e2b7a1",
+          "line": 61,
+          "name": "_source_evidence"
+        },
+        {
+          "ast_sha256": "884e4d099f6853bda294cb0cd520a0ccb29cd638d26362aba61a78c05383a28d",
+          "line": 71,
+          "name": "_kernel"
+        },
+        {
+          "ast_sha256": "e54143d958e518a9764918146fb066f6f38838c2f80164c3230d1a3cf197e2a2",
+          "line": 80,
+          "name": "_graph"
+        },
+        {
+          "ast_sha256": "8a6635cc95ae2c378f1719c61bf3050dff8d4d13a15b0eb02416d9c38aa1caee",
+          "line": 89,
+          "name": "_original"
+        },
+        {
+          "ast_sha256": "1e3ee422ccc49e52dd2444f6c4e1ad92f6ef583920fe89aae57eab4f07ba639b",
+          "line": 100,
+          "name": "_matrix"
+        },
+        {
+          "ast_sha256": "a021fecce3b64d421a47a969710a8a90cbc43066dfbf7c7e67081c10bfa748d3",
+          "line": 108,
+          "name": "_prepare"
+        },
+        {
+          "ast_sha256": "2a26e0b6d7979531ec2fe84325657567017e98e8ef6d93ac21558756aa345fcb",
+          "line": 154,
+          "name": "Produced"
+        },
+        {
+          "ast_sha256": "4917ed747578aee68f2136b335a9bc30ee592399383e215f2f542321856a34bb",
+          "line": 236,
+          "name": "produce"
+        },
+        {
+          "ast_sha256": "2ad9066009c18459cfd5b8fbc8512c593337cea33dd09ad5de7b20fb3d964040",
+          "line": 243,
+          "name": "produce_imported"
+        },
+        {
+          "ast_sha256": "ace6d6d258d0232d2f0c4cf342fd36be0e8d13ae0b3b5f26e4d86cd75d857645",
+          "line": 250,
+          "name": "_produce_locked"
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/compact_mcm.py",
+      "sha256": "6673fa484f37c0c3556c3d158035bb0c7f1db8f4a9f834ca50374c57c1e21b81"
+    },
+    {
+      "bytes": 9604,
+      "definitions": [
+        {
+          "ast_sha256": "eadc92f88e9357e3d33893d3ece5bd8a5687e8904841524794fb121c39a784bb",
+          "line": 24,
+          "name": "_locked"
+        },
+        {
+          "ast_sha256": "6f03c94f23251e8bf402e6a9f7f0ea8321d1e4a121a0c4e268d5866e4872a2ca",
+          "line": 37,
+          "name": "_output_policy"
+        },
+        {
+          "ast_sha256": "1a966a4af436053ab9d3fd1ffbe1ff1328300f15678743fd2f21cdc39de3d6a2",
+          "line": 60,
+          "name": "_prepare"
+        },
+        {
+          "ast_sha256": "91af7f8a972b09b32b215309dc75eac32201eebe7c4ab2995a72c5c5ee68bb05",
+          "line": 104,
+          "name": "_verify"
+        },
+        {
+          "ast_sha256": "cd778555e731fc40e89942f4de8cf603b405f2a7008eadc08ca7ad9b6210a21a",
+          "line": 118,
+          "name": "publish"
+        },
+        {
+          "ast_sha256": "e823c581c01fa9238610e63b971c091ac60caabd580dfcc46dd62752e2dbda7f",
+          "line": 123,
+          "name": "_publish"
+        },
+        {
+          "ast_sha256": "63028efa93a371f8cb686a105a42bd4394325c93ae7cd2a12e29b3d4a40c4482",
+          "line": 149,
+          "name": "verify"
+        },
+        {
+          "ast_sha256": "67fcfa2544bf2e7433a17ff0c08a5d14832af2b2ddb8995303a733da43a8d6c9",
+          "line": 158,
+          "name": "open_verified"
+        },
+        {
+          "ast_sha256": "f881392e2cc3f51fec1762aadaf0dca569da2c02f31f3197b91342073ae2658f",
+          "line": 166,
+          "name": "_open_verified"
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/compact_mcm_publication.py",
+      "sha256": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a"
+    },
+    {
+      "bytes": 28651,
+      "definitions": [
+        {
+          "ast_sha256": "216cb9083a9ecc12a858108da54cf4f49597142420f6ca9610ddb65cea5e2cec",
+          "line": 33,
+          "name": "_HeldTransition"
+        },
+        {
+          "ast_sha256": "7837da47d2d735d7a5e6789e4f012523ebf233a1d92899cbbc7179936441731e",
+          "line": 48,
+          "name": "_held"
+        },
+        {
+          "ast_sha256": "279102b3f0cdf869c76d52ecd46d4edd620776073fd8fb8b7a9b7a336441b273",
+          "line": 70,
+          "name": "_held_import"
+        },
+        {
+          "ast_sha256": "c3c89abc8dfadbb3dd47d16526ff0805031f70f2a5dffe4f1e303d9bbdf66dc7",
+          "line": 90,
+          "name": "_stage_content"
+        },
+        {
+          "ast_sha256": "ddb4bf482e7b1924bb7f008056334a9a8a686fe28d93a56248ce0d62a96d3e8f",
+          "line": 103,
+          "name": "transition"
+        },
+        {
+          "ast_sha256": "a7afcf48463da67a1b6e788e7a752ae890e6bfb75b7cccbe432269aeb7ef55a1",
+          "line": 116,
+          "name": "present"
+        },
+        {
+          "ast_sha256": "c7d64079ae5bc0b7f26b08d4be35d0a702a6aebdaeb5c1521b92c1df65c60567",
+          "line": 119,
+          "name": "body"
+        },
+        {
+          "ast_sha256": "dcde2f37bdc4a4f7837303ef61fb80f4bd722db48f96af1164a74d74771cfe8f",
+          "line": 124,
+          "name": "entries"
+        },
+        {
+          "ast_sha256": "26550bbcefcefe5aa2c0e2ccc5fd60858a77bae3b1585a452ffe469d18cdb30e",
+          "line": 139,
+          "name": "exact"
+        },
+        {
+          "ast_sha256": "ef2e0f09f93352cc4f7e2c48c4439d81bd651fe8b2f992af0667b583f636c14c",
+          "line": 147,
+          "name": "Stage"
+        },
+        {
+          "ast_sha256": "cf54b27aef3534f2211523d21808333465b020066eefebeadd0afa9e026c2a6a",
+          "line": 194,
+          "name": "Owner"
+        },
+        {
+          "ast_sha256": "c9c4cb9aa3769d5d23458e2b6aa457cd55a1be0e062d85e53d98699d7416de35",
+          "line": 451,
+          "name": "verify_current"
+        },
+        {
+          "ast_sha256": "aecf2137520b5724acf414ae67f14e47d4c49bacce2f9c5a09431ceb4bdb52e4",
+          "line": 497,
+          "name": "attach"
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/compact_owner.py",
+      "sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171"
+    },
+    {
+      "bytes": 6776,
+      "definitions": [
+        {
+          "ast_sha256": "2407e108a9bab0667a8b0fc9e12a4ef08a70d8fbae9d87b3cfe5ea649dd9ba19",
+          "line": 14,
+          "name": "require"
+        },
+        {
+          "ast_sha256": "c2bc689769fbaff638abce398feb3f5203a69dabf8a4da69340b6922e0b9dc36",
+          "line": 18,
+          "name": "workload_record"
+        },
+        {
+          "ast_sha256": "d21f74fc27ca87cb04992c5583e3eae0c75ad2e482504d6da12b44d93ec506c5",
+          "line": 25,
+          "name": "Target"
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1"
+    },
+    {
+      "bytes": 21054,
+      "definitions": [
+        {
+          "ast_sha256": "acb67b4ff3d8932ef6bec19d28a93079515424306c9f0d75d5cbc5eddcaf03c5",
+          "line": 27,
+          "name": "JournalConstructionError"
+        },
+        {
+          "ast_sha256": "b4ab6ec497410c11e833745bbc87778f63e3fb88e691e78e8830216848b6961d",
+          "line": 31,
+          "name": "_creation_path"
+        },
+        {
+          "ast_sha256": "3b218d97634fd91fd6595535193a2eb525911ab34ffd45793deaba58332ca99e",
+          "line": 41,
+          "name": "require"
+        },
+        {
+          "ast_sha256": "0c92246891c0e240776cbec11f096670bfec4da0d077625e972ae0fa992bb810",
+          "line": 45,
+          "name": "equal"
+        },
+        {
+          "ast_sha256": "eb5a5501ff5fc62a60ff3f8638cfba2f3b52b05c98cd1cb71f19cc47f0331092",
+          "line": 48,
+          "name": "signature"
+        },
+        {
+          "ast_sha256": "ef77f3219e1f206d857755356f3a76606cdccd13503369178199e8100c665b1a",
+          "line": 53,
+          "name": "metadata"
+        },
+        {
+          "ast_sha256": "55b5b5dd57b26c4348b1e13b20b0c7120aee2e348770072573218c013c950629",
+          "line": 67,
+          "name": "_guard"
+        },
+        {
+          "ast_sha256": "a57a54b38b9ee7de361f50802edae66af196bf0c6948b67339640aa0de3ab73d",
+          "line": 79,
+          "name": "Binding"
+        },
+        {
+          "ast_sha256": "91e502867feaff072732baff7770d75d776aa39536385bf524d7d0ca7fa0f222",
+          "line": 114,
+          "name": "_anchor_blobs"
+        },
+        {
+          "ast_sha256": "42588cd0d0850cea86c8b04350f12bac82e221ed327f2cfe92a686828c1c426a",
+          "line": 132,
+          "name": "_anchor_read"
+        },
+        {
+          "ast_sha256": "7a8c91dff12c19ea2ec7edafe090d7127ff4dcccd7df81631f3aaa91bb1d64e0",
+          "line": 142,
+          "name": "_source"
+        },
+        {
+          "ast_sha256": "94cfdaf36e9a3619770af4096dd07dad7496e1322d2dd54caf31484782b4d62a",
+          "line": 160,
+          "name": "bind"
+        },
+        {
+          "ast_sha256": "ebdc11b9ddf484fb9a29add48c31a6334723a977213450a2231901c7c52fd722",
+          "line": 296,
+          "name": "open_successor"
+        },
+        {
+          "ast_sha256": "f7eb44604b71f1110d6dfbf4d5939b51fad407d402a09390de68d3f4318eb74a",
+          "line": 307,
+          "name": "open_first"
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/matching_owner.py",
+      "sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751"
+    },
+    {
+      "bytes": 9345,
+      "definitions": [
+        {
+          "ast_sha256": "bce3fd2cab40ee1d45061222cf5ffe986b2774c43119ca4977c0f8093cfd15c3",
+          "line": 20,
+          "name": "StorageLimit"
+        },
+        {
+          "ast_sha256": "7bfb0de7521797003d4499972d3b95f73e9779712b56e5637157c520ec617e46",
+          "line": 26,
+          "name": "HardlinkObservation"
+        },
+        {
+          "ast_sha256": "3bb8a8c4c27c077fdb3cad6bd0bfc5d841a08d9747ae4d6768d6a51db9d24480",
+          "line": 36,
+          "name": "StorageCleanupFailure"
+        },
+        {
+          "ast_sha256": "a774fe5579660ff49f0d31c008107ea26e99799f0e8de4711f2fb8780a1c7b7a",
+          "line": 39,
+          "name": "_cleanup"
+        },
+        {
+          "ast_sha256": "526d65b71c336194ce7501b20aa49a86d0f3df2eba1231bba32fc131d60c7dcd",
+          "line": 49,
+          "name": "_close"
+        },
+        {
+          "ast_sha256": "cfc4a1e017a07acd0766a8a2f75a939af8b51ef7590ede4244ee911a9fadb35c",
+          "line": 52,
+          "name": "_annotate"
+        },
+        {
+          "ast_sha256": "8f71281c3aff3f7224604d341f611e125a800bada7d0c926214bcc978f6c51f3",
+          "line": 61,
+          "name": "StorageWatch"
+        }
+      ],
+      "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py",
+      "sha256": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554"
+    }
+  ],
+  "literal_source_snapshot": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-production-handoff-investigation01-2026-10-04/SOURCE_BODIES01.json",
+  "new_candidate_changed_classes": [
+    "OwnedLease",
+    "GenuineLease"
+  ],
+  "original_source_bodies_modified": 0
+}

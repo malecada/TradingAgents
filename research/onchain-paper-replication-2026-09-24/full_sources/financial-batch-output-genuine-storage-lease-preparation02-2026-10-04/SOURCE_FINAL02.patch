@@ -1,0 +1,93 @@
+--- original92e5
++++ successor02
+@@ -23,7 +23,7 @@
+ EVENTS=128
+ ENTRIES=32768
+ PKG='tradingagents.research.onchain_replication.'
+-PREFIX='research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-storage-lease-preparation01-2026-10-04'
++PREFIX='research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-storage-lease-preparation02-2026-10-04'
+ DENIED_SOURCE='0a2e7639b42b9423b90743feadcda4078aa21816'
+ IO_SHA='09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb'
+ ROLES=('producer','batches','outputs','codec','spool','recovered','diagnostic','journal','scratch')
+@@ -57,6 +57,21 @@
+         result=fd;fd=None;return result
+     finally:
+         if fd is not None:_cleanup((lambda:os.close(fd),))
++
++def _rejoin(root,fd,root_id,rows,deadline):
++    """One final metadata fingerprint sweep after measured IO cleanup.
++
++    No new file/dir descriptor, iterator, callback or deferred close is created.
++    Directory signatures cover sampled membership; every recorded child joins
++    its full signature. No body hash or atomic/continuous immutability is claimed.
++    Concurrent changes after their final stat remain outside this sampled proof.
++    """
++    require(time.monotonic()<deadline and root.resolve()==root and identity(root.lstat())==root_id and identity(os.fstat(fd))==root_id,'final sampled root identity')
++    for path,row in sorted(rows.items()):
++        require(time.monotonic()<deadline,'final sampled fingerprint deadline')
++        current=os.fstat(fd) if path=='' else os.stat(path,dir_fd=fd,follow_symlinks=False)
++        require(sig(current)==tuple(row['signature']),'final sampled metadata fingerprint changed')
++    require(root.resolve()==root and identity(root.lstat())==root_id and identity(os.fstat(fd))==root_id,'final sampled lexical root rejoin')
+ 
+ def census(root,fd,root_id,*,deadline,file_limit=FILE):
+     """No body reads: complete anchored metadata census, all retained descendants.
+@@ -102,6 +117,7 @@
+     walk(fd,'',0)
+     require(Path(root).resolve()==root and identity(root.lstat())==root_id and identity(os.fstat(fd))==root_id,'final root rejoin')
+     require(len(rows)<=ENTRIES,'finite total tree')
++    _rejoin(root,fd,root_id,rows,deadline)
+     return rows
+ 
+ class OwnedLease:
+@@ -192,10 +208,12 @@
+             if path in self.tickets:
+                 ticket=self.tickets[path]
+                 require(row['kind']==ticket['kind'] and row['size']<=ticket['size'] and row['allocated']<=ticket['allocated'],'projected path reservation exceeded')
+-                # Once a file reaches its declared final extent it cannot change.
++                # Final extent seals only the sampled stat fingerprint, never bytes.
+                 if ticket.get('final') is not None:require(tuple(row['signature'])==tuple(ticket['final']),'sealed reserved file changed')
+                 if row['kind']=='file' and row['size']==ticket['size']:ticket['final']=row['signature']
+         logical,allocated=self._bounds(rows);free=self._space(self.allocated_reserved-allocated)
++        # Floor/statvfs and census descriptor cleanup precede this final sweep.
++        _rejoin(self.root,self.fd,self.root_id,rows,min(self.deadline,time.monotonic()+5))
+         self.seen=rows;self._stamp=self._state()
+         return {'logical_bytes':logical,'allocated_bytes':allocated,'members':len(rows),'free_bytes':free,'logical_reserved':self.logical_reserved,'allocated_reserved':self.allocated_reserved}
+     @contextmanager
+@@ -203,12 +221,16 @@
+         if not self._busy.acquire(False):
+             error=ValueError('recursive/concurrent lease operation refused');self.abort(error);raise error
+         try:
+-            self._boundary();yield;self._boundary()
++            self._boundary();final={};yield final;self._boundary()
++            # Exactly one final census after the actual trailing callback.
++            # Its cleanup/floor IO is followed by a descriptor-free rejoin.
++            final['sample']=self._sample()
+         except BaseException as error:
+             self.abort(error);raise
+         finally:self._busy.release()
+     def check(self):
+-        with self._operation():return self._sample()
++        with self._operation() as final:self._sample()
++        return final['sample']
+     def reserve(self,role,paths,*,scratch_bytes=0):
+         """Reserve exact new/growing destinations before any external write.
+ 
+@@ -216,7 +238,7 @@
+         Directory projections must be1MiB. Scratch is retained commitment only;
+         any actual scratch file ALSO requires its own path ticket. No deletion.
+         """
+-        with self._operation():
++        with self._operation() as final:
+             self._sample();require(role in ROLES and type(paths) in (list,tuple) and 0<len(paths)<=256,'bounded declared copy plan')
+             require(type(scratch_bytes) is int and 0<=scratch_bytes<=SCRATCH,'bounded additional scratch')
+             prefix=dict(self.roles)[role];planned={};logical=scratch_bytes;allocated=round_block(scratch_bytes)
+@@ -236,7 +258,8 @@
+             # Spend before journaling; no finally rollback on failure.
+             self.logical_reserved+=logical;self.allocated_reserved+=allocated;self.tickets.update(planned);self._stamp=self._state()
+             self._write('reserve',{'role':role,'paths':paths,'scratch_bytes':scratch_bytes,'logical_reserved':self.logical_reserved,'allocated_reserved':self.allocated_reserved})
+-            result=self._sample();return result
++            self._sample()
++        return final['sample']
+     def perform(self,role,paths,write,*,scratch_bytes=0):
+         """Bounded utility callback; genuine caller supplies the real writer.
+ 

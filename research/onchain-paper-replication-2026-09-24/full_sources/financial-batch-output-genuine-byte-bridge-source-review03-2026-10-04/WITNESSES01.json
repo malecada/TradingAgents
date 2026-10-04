@@ -1,0 +1,62 @@
+{
+  "boundary_callback_scope": "only actual opaque summary readback/store metadata; no genuine source authority simulated",
+  "cases": [
+    {
+      "actual_one_use_closed_inode_events": [
+        {
+          "fd": 5,
+          "inode": 10795130
+        }
+      ],
+      "case": "old-BB2",
+      "genuine_encode_executed": false,
+      "independent_verify": "frame length/hash",
+      "refusal": null
+    },
+    {
+      "actual_one_use_closed_inode_events": [
+        {
+          "fd": 5,
+          "inode": 10795138
+        }
+      ],
+      "case": "new-BB2",
+      "genuine_encode_executed": false,
+      "independent_verify": "frame length/hash",
+      "refusal": "ValueError: post-verification codec population changed"
+    },
+    {
+      "actual_one_use_closed_inode_events": [
+        {
+          "fd": 5,
+          "inode": 10795149
+        }
+      ],
+      "case": "new-BB1",
+      "genuine_encode_executed": false,
+      "independent_verify": "frame length/hash",
+      "refusal": "ValueError: frame length/hash"
+    },
+    {
+      "actual_one_use_closed_inode_events": [],
+      "case": "new-intact",
+      "genuine_encode_executed": false,
+      "independent_verify": null,
+      "refusal": null
+    },
+    {
+      "actual_one_use_closed_inode_events": [
+        {
+          "fd": 5,
+          "inode": 10795165
+        }
+      ],
+      "case": "new-last-boundary",
+      "genuine_encode_executed": false,
+      "independent_verify": "frame length/hash",
+      "refusal": "ValueError: post-verification codec population changed"
+    }
+  ],
+  "exact_new_tail": "codec_before = _codec_population(store, R)\nfinal_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')\nboundary()\nrequire(_codec_population(store, R) == codec_before, 'post-verification codec population changed')",
+  "exact_old_tail": "final_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')"
+}

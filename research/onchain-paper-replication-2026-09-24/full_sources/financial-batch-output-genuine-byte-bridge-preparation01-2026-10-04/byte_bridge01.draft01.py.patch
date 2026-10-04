@@ -1,0 +1,101 @@
+--- byte_bridge01.draft01.py
++++ byte_bridge01.py
+@@ -103,6 +103,9 @@
+     require(module is not None,'UNAVAILABLE: genuine already-loaded module '+name)
+     return module
+ 
++def original_cardinality(policy):
++    require(type(policy) is dict and type(policy.get('sample_count')) is int and policy['sample_count']==512 and type(policy.get('motif_count')) is int and policy['motif_count']==32,'original exactly512 spent samples and32 motifs required')
++
+ def _authority(source,role):
+     consumer=_module(PKG+'held_score_consumer')
+     if role=='score-batches':
+@@ -116,6 +119,10 @@
+     require(run.admission.source!=DENIED_SOURCE,'UNAVAILABLE: unchanged Source339 has no bridge admission')
+     bound.check();target.check();held.check(owner);consumer._sources(run)
+     require(owner.bound is bound and bound._run is run and target.owner is owner,'original current authority identity')
++    prepared=target.execution._stage.prepared
++    original_policy=json.loads(run.read_input(prepared._input));original_cardinality(original_policy)
++    require(original_policy==json.loads(prepared._cap._policy),'actual original import policy changed')
++    target.check();held.check(owner)
+     return consumer,target,stage,held,value,owner,bound,run
+ 
+ def _dependencies(consumer,run):
+@@ -129,7 +136,10 @@
+     for relative,h in required.items():
+         require(pin(h) and run.admission.experiment['source_files'].get(relative)==h and digest(consumer._body(run.admission.root/relative))==h,'exact admitted bridge dependency')
+     for name,h in PINS.items():
+-        m=_module(name);require(Path(m.__file__)==run.admission.root/PREFIX/(name+'.py'),'dependency alias/origin differs');result[name]=m
++        # The genuine HeldBatches loader already owns the shared owned_io alias.
++        # Reuse that exact accepted module instead of colliding with its origin.
++        relative=(consumer.PREFIX+'/owned_io.py') if name=='owned_io' else PREFIX+'/'+name+'.py'
++        m=_module(name);require(Path(m.__file__)==run.admission.root/relative and run.admission.experiment['source_files'].get(relative)==h and digest(consumer._body(run.admission.root/relative))==h,'dependency alias/origin differs');result[name]=m
+     require(result['local_store01'].C is result['codec01'] and result['local_store01'].R is result['recovery04'] and result['local_store01']._cleanup is result['owned_io']._cleanup,'exact codec/store/reducer objects')
+     return result
+ 
+@@ -153,18 +163,24 @@
+         require(len(rows)==1 and rows[0][0]=='matrix.f32','exact completed raw member')
+         consumer=_module(PKG+'held_score_consumer')
+         extra={'stage_intent_hex':stage.intent.hex(),'producer_start_hex':consumer._body(value.directory/'start.json').hex(),'producer_complete_hex':consumer._body(value.directory/'complete.json').hex(),'producer_receipt_sha256':value.receipt_sha256}
+-    snapshot={'schema_version':1,'kind':'original-imported-local-byte-bridge-provenance','role':role,'source_commit':run.admission.source,'claim_sha256':run._claim_sha256,'owner':target.owner.identity,'stage':stage.name,'stage_intent_sha256':stage.intent_sha256,'original_root':str(local.root),'original_document_sha256':local.reference,'scope':target.derive_scope(),'original_members':[{'name':n,'bytes':p[2],'sha256':p[1]} for n,p in local._pin],'metadata':docs,'ancestry':extra,'scientific_publication':False,'representation_complete':False}
++        ticket=value.record['output'];receipt=consumer._body(Path(ticket['directory'])/'receipt.json')
++        require(digest(receipt)==ticket['receipt_sha256'],'original publication receipt bytes')
++        extra['publication_receipt_hex']=receipt.hex()
++        extra['stage_complete_hex']=consumer._body(stage.root/'stage-complete.json').hex()
++    original_input=target.execution._stage.prepared._input
++    extra['original_import_policy_input']=original_input;extra['original_import_policy_hex']=run.read_input(original_input).hex()
++    snapshot={'schema_version':1,'kind':'original-imported-local-byte-bridge-provenance','role':role,'source_commit':run.admission.source,'claim_sha256':run._claim_sha256,'owner':target.owner.identity,'stage':stage.name,'stage_intent_sha256':stage.intent_sha256,'original_root':str(local.root),'original_document_sha256':local.reference,'scope':target.derive_scope(),'original_members':[{'name':n,'bytes':p[2],'sha256':p[1],'mode':stat.S_IMODE(p[0][2])} for n,p in local._pin],'metadata':docs,'ancestry':extra,'scientific_publication':False,'representation_complete':False}
+     body=canonical(snapshot,2*META);source._checked();target.check()
+     return tuple(rows),body
+ 
+ def _write(R,IO,path,raw):
+-    fd=None
+-    try:
+-        fd=R.new_file(path);at=0
++    # R4.new_file owns both descriptors and performs anchored namespace rejoin.
++    # Its original finally reducer retains an active first fatal and closes all.
++    with R.new_file(path) as fd:
++        at=0
+         while at<len(raw):
+             n=os.write(fd,memoryview(raw)[at:at+65536]);require(n>0,'bridge write progress');at+=n
+         os.fsync(fd)
+-    finally:IO._cleanup(() if fd is None else (lambda:os.close(fd),))
+     require(R.read(path.parent,path.name)==raw,'bridge durable readback')
+ 
+ def _encode(source,role,store):
+@@ -181,6 +197,8 @@
+     require(target.key in graphs and len(target.graph.node_ids)==graphs[target.key],'actual complete target nodes')
+     base=run.directory/('byte-bridge-'+role+'-'+target.key)
+     require(store.root==base/'codec' and base.resolve()==base and stat.S_IMODE(base.lstat().st_mode)==0o700 and set(os.listdir(base))=={'codec'},'fresh fixed owned bridge namespace; no retry')
++    base_info=base.lstat();base_pin=(base_info.st_dev,base_info.st_ino,base_info.st_mode)
++    require(base_info.st_blocks*512<=BLOCK,'initial bridge directory allocation')
+     store.check();require(not store.names,'fresh empty codec store')
+     limits=job['resources']['storage_budget']['limits']
+     require(reserve<=min(limits['max_logical_bytes'],limits['max_allocated_bytes']),'bridge exceeds original whole-watch policy')
+@@ -188,19 +206,25 @@
+     dtype,width=('<f8',8) if role=='score-batches' else ('<f4',4)
+     descriptor={'schema_version':1,'kind':'mcm-batch-output-bytes','role':role,'dtype':dtype,'shape':[graphs[target.key],32],'order':'C','scope':target.derive_scope(),'motifs':32,'spent_samples':512}
+     require(sum(r[1] for r in rows)==C.descriptor(descriptor),'complete original payload denominator')
++    published={}
+     def boundary():
+         _authority(source,role);_dependencies(consumer,run)
+         require(run.read_input(GRANT)==raw and run.read_input('execution_job')==job_raw,'bridge grant/job changed')
+         require(_snapshot(source,role,target,stage,value,run)==(rows,original),'original metadata/ancestry changed')
++        info=base.lstat()
++        require(base.resolve()==base and (info.st_dev,info.st_ino,info.st_mode)==base_pin and set(os.listdir(base))=={'codec'}|set(published),'bridge parent identity/membership changed')
++        for name,body in published.items():require(R.read(base,name)==body,'retained bridge provenance/summary changed')
++        require(L.shutil.disk_usage(base).free>=L.FLOOR+reserve,'bridge floor plus complete reservation')
+         store.check()
+     try:
+         boundary();_write(R,IO,base/'original.json',original)
++        published['original.json']=original
+         cursor=Cursor(rows,width,source.read_part,boundary)
+         terminal=C.encode_stream(cursor,descriptor,store.put)
+         proof=store.verify(terminal,descriptor);done=cursor.completion();boundary()
+         require(done['bytes']==proof['logical_bytes'] and done['sha256']==proof['raw_sha256'],'whole original->codec raw hash')
+         result={'schema_version':1,'kind':'genuine-imported-local-codec-byte-proof-only','original_sha256':digest(original),'grant_sha256':digest(raw),'terminal_sha256':terminal,'descriptor':descriptor,'original_raw':done,'codec':proof,'complete_population_reservation':reserve,'transport_authority':False,'retirement_authority':False,'local_bytes_retired':0,'representation_complete':False}
+-        body=canonical(result,65536);boundary();_write(R,IO,base/'complete.json',body);boundary();return result
++        body=canonical(result,65536);boundary();_write(R,IO,base/'complete.json',body);published['complete.json']=body;boundary();return result
+     except BaseException as primary:
+         owner.poisoned=True;store.poisoned=True
+         def mark():_write(R,IO,base/'failed.json',canonical({'status':'FAILED','error_type':type(primary).__name__,'original_sha256':digest(original),'local_bytes_retired':0}))

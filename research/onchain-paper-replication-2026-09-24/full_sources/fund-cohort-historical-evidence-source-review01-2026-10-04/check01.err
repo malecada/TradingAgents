@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/fund-cohort-historical-evidence-source-review01-2026-10-04/check01.py", line 6, in <module>
+    b=(A/'MANIFEST01.json').read_bytes();ok(sha(b)=='ee18d505bf55fee4c44370d8e90a2710b1f59a6218f2c48a9aaeca8f5c85629d','manifest pin');m=json.loads(b)['members'];ok(len(m)==33,'33 members');ok(sorted(str(p.relative_to(A)) for p in A.rglob('*') if p!=A/'MANIFEST01.json')==sorted(r['path'] for r in m),'complete scope')
+                                                                                                                                                                                              ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/fund-cohort-historical-evidence-source-review01-2026-10-04/check01.py", line 5, in ok
+    def ok(v,s):assert v,s;checks.append(s)
+                       ^
+AssertionError: complete scope

@@ -1,0 +1,12 @@
+{
+  "original": "research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-storage-lease-preparation01-2026-10-04/check02.py",
+  "changes": [
+    "owned output namespace",
+    "result filename",
+    "explicit later mtime for deterministic stat-fingerprint partial rewrite control"
+  ],
+  "before": "(rt/'codec/x').write_bytes(b'xyz');x.check();(rt/'codec/x').write_bytes(b'abc');fn=x.check",
+  "after": "(rt/'codec/x').write_bytes(b'xyz');x.check();prior=(rt/'codec/x').stat();(rt/'codec/x').write_bytes(b'abc');os.utime(rt/'codec/x',ns=(prior.st_atime_ns,prior.st_mtime_ns+1000000));fn=x.check",
+  "original_failed_review_replay": "financial-batch-output-genuine-storage-lease-source-review01-2026-10-04/check02.py raw failure and entire own tree remain sealed",
+  "byte_immutability_proven": false
+}

@@ -1,0 +1,35 @@
+{
+  "added_function": "def _rejoin(root,fd,root_id,rows,deadline):\n    \"\"\"One final metadata fingerprint sweep after measured IO cleanup.\n\n    No new file/dir descriptor, iterator, callback or deferred close is created.\n    Directory signatures cover sampled membership; every recorded child joins\n    its full signature. No body hash or atomic/continuous immutability is claimed.\n    Concurrent changes after their final stat remain outside this sampled proof.\n    \"\"\"\n    require(time.monotonic()<deadline and root.resolve()==root and identity(root.lstat())==root_id and identity(os.fstat(fd))==root_id,'final sampled root identity')\n    for path,row in sorted(rows.items()):\n        require(time.monotonic()<deadline,'final sampled fingerprint deadline')\n        current=os.fstat(fd) if path=='' else os.stat(path,dir_fd=fd,follow_symlinks=False)\n        require(sig(current)==tuple(row['signature']),'final sampled metadata fingerprint changed')\n    require(root.resolve()==root and identity(root.lstat())==root_id and identity(os.fstat(fd))==root_id,'final sampled lexical root rejoin')\n\n",
+  "edits": [
+    {
+      "after": "financial-batch-output-genuine-storage-lease-preparation02-2026-10-04",
+      "before": "financial-batch-output-genuine-storage-lease-preparation01-2026-10-04"
+    },
+    {
+      "after": "require(len(rows)<=ENTRIES,'finite total tree')\n    _rejoin(root,fd,root_id,rows,deadline)\n    return rows",
+      "before": "require(len(rows)<=ENTRIES,'finite total tree')\n    return rows"
+    },
+    {
+      "after": "# Floor/statvfs and census descriptor cleanup precede this final sweep.\n        _rejoin(self.root,self.fd,self.root_id,rows,min(self.deadline,time.monotonic()+5))\n        self.seen=rows;self._stamp=self._state()\n        return {'logical_bytes'",
+      "before": "self.seen=rows;self._stamp=self._state()\n        return {'logical_bytes'"
+    },
+    {
+      "after": "self._boundary();final={};yield final;self._boundary()\n            # Exactly one final census after the actual trailing callback.\n            # Its cleanup/floor IO is followed by a descriptor-free rejoin.\n            final['sample']=self._sample()",
+      "before": "self._boundary();yield;self._boundary()"
+    },
+    {
+      "after": "with self._operation() as final:self._sample()\n        return final['sample']",
+      "before": "with self._operation():return self._sample()"
+    },
+    {
+      "after": "with self._operation() as final:\n            self._sample();require(role",
+      "before": "with self._operation():\n            self._sample();require(role"
+    },
+    {
+      "after": "self._sample()\n        return final['sample']",
+      "before": "result=self._sample();return result"
+    }
+  ],
+  "full_AST_inverse": true,
+  "full_literal_inverse": true
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "observation_date": "2026-10-04",
+  "kind": "bounded_search_navigation_not_cohort_authority",
+  "queries": [
+    "site:etherscan.io/accounts/label \"Fund\" \"Alameda\" \"65\"",
+    "\"Analyzing Transaction Graphs\" \"65\" \"fund\"",
+    "site:etherscan.io \"Fund\" \"Alameda Research 25\"",
+    "\"Larry Cermak\" \"list\" \"Alameda\" wallets etherscan",
+    "site:etherscan.io/accounts/label/fund \"65\"",
+    "site:twitter.com/lawmaster \"Alameda\" \"wallets\"",
+    "site:etherscan.io/address/ \"Larry Cermak\" \"list\" Alameda Research 25",
+    "site:x.com/lawmaster/status \"releasing my entire database\"",
+    "\"Alameda\" \"lawmaster/status\" \"November 7, 2022\"",
+    "\"Etherscan\" \"Fund\" \"65 accounts\"",
+    "\"Inside Alameda Research: A Multi-Token Network Analysis\"",
+    "\"Coquidé\" \"Alameda\" github"
+  ],
+  "primary_web_observations": [
+    {
+      "url": "https://etherscan.io/labelcloud",
+      "availability": "search-index excerpt; index crawl age2months, not historical as-of",
+      "fund_accounts": 90,
+      "alameda_accounts": 29
+    },
+    {
+      "url": "https://etherscan.io/address/0x84d34f4f83a87596cd3fb6887cff8f17bf5a7b83",
+      "availability": "search-index excerpt; direct web403",
+      "label": "Alameda Research 25",
+      "attribution": "Larry Cermak wallet list; original list not authenticated"
+    },
+    {
+      "url": "https://arxiv.org/html/2409.10949v1",
+      "primary_raw_file": "comparison_primary.html",
+      "section": "3 Dataset and4 Network construction",
+      "publication_date": "2024-09-17",
+      "author_connection_to_celik_sefer": false
+    },
+    {
+      "url": "https://link.springer.com/article/10.1007/s41109-025-00712-z",
+      "primary_raw_file": "comparison_successor.html",
+      "publication_date": "2025-08-26",
+      "relation": "independent authors' later extension; leads to historical collector",
+      "original_target_paper": false
+    }
+  ],
+  "failed_public_routes": [
+    {
+      "url": "https://etherscan.io/accounts/label/fund",
+      "result": "web403; rawGET403receipt retained"
+    },
+    {
+      "url": "https://web.archive.org/cdx/search/cdx?url=etherscan.io/accounts/label/fund&output=json&filter=statuscode:200&collapse=timestamp:4&from=2019&to=2025",
+      "result": "web inaccessible; rawGET20second timeout receipt retained"
+    }
+  ],
+  "secondary_discovery_hits_not_evidence": [
+    "threadreaderapp.com/user/lawmaster",
+    "themoonlight.io/en/review/inside-alameda-research-a-multi-token-network-analysis"
+  ],
+  "qualification": "No primary-source corpus exhaustive search claim; no historical Etherscan or paper-author reuse attestation. Third-party collector's own artifact is primary evidence of that collector snapshot only."
+}

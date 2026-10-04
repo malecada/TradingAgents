@@ -1,0 +1,14 @@
+--- original/byte_bridge01.py
++++ successor/byte_bridge01.py
+@@ -224,7 +224,10 @@
+         proof=store.verify(terminal,descriptor);done=cursor.completion();boundary()
+         require(done['bytes']==proof['logical_bytes'] and done['sha256']==proof['raw_sha256'],'whole original->codec raw hash')
+         result={'schema_version':1,'kind':'genuine-imported-local-codec-byte-proof-only','original_sha256':digest(original),'grant_sha256':digest(raw),'terminal_sha256':terminal,'descriptor':descriptor,'original_raw':done,'codec':proof,'complete_population_reservation':reserve,'transport_authority':False,'retirement_authority':False,'local_bytes_retired':0,'representation_complete':False}
+-        body=canonical(result,65536);boundary();_write(R,IO,base/'complete.json',body);published['complete.json']=body;boundary();return result
++        body=canonical(result,65536);boundary();_write(R,IO,base/'complete.json',body);published['complete.json']=body;boundary()
++        final_proof=store.verify(terminal,descriptor)
++        require(final_proof==proof and final_proof['logical_bytes']==done['bytes'] and final_proof['raw_sha256']==done['sha256'],'post-summary complete codec/original byte join')
++        return result
+     except BaseException as primary:
+         owner.poisoned=True;store.poisoned=True
+         def mark():_write(R,IO,base/'failed.json',canonical({'status':'FAILED','error_type':type(primary).__name__,'original_sha256':digest(original),'local_bytes_retired':0}))

@@ -1,0 +1,13 @@
+--- storage_lease01.draft02.py
++++ storage_lease01.py
+@@ -342,8 +342,9 @@
+         finally:self.context=None
+     def _set(self,target,held):
+         require(self.context is None and not self.closed,'one held boundary at a time')
++        require(type(target) is module(PKG+'imported_mcm_identity').Target,'actual original Target before attribute access')
+         owner=target.owner
+-        require(type(target) is module(PKG+'imported_mcm_identity').Target and type(owner) is module(PKG+'compact_owner').Owner and type(held) is module(PKG+'compact_owner')._HeldTransition,'actual original Target/Owner/held only')
++        require(type(owner) is module(PKG+'compact_owner').Owner and type(held) is module(PKG+'compact_owner')._HeldTransition,'actual original Target/Owner/held only')
+         bound=owner.bound;run=bound._run
+         require(type(bound) is module(PKG+'matching_owner').Binding and type(run) is module('tradingagents.research.lifecycle').ResearchRun,'actual original Binding/Run only')
+         require(run.admission.source!=DENIED_SOURCE,'UNAVAILABLE: Source339 has no shared lease admission')

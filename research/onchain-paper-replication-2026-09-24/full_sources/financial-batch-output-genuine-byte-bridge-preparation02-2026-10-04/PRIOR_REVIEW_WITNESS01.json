@@ -1,0 +1,30 @@
+{
+  "actual_tail_utility_only": true,
+  "boundary_source": "def boundary():\n    _authority(source, role)\n    _dependencies(consumer, run)\n    require(run.read_input(GRANT) == raw and run.read_input('execution_job') == job_raw, 'bridge grant/job changed')\n    require(_snapshot(source, role, target, stage, value, run) == (rows, original), 'original metadata/ancestry changed')\n    info = base.lstat()\n    require(base.resolve() == base and (info.st_dev, info.st_ino, info.st_mode) == base_pin and (set(os.listdir(base)) == {'codec'} | set(published)), 'bridge parent identity/membership changed')\n    for name, body in published.items():\n        require(R.read(base, name) == body, 'retained bridge provenance/summary changed')\n    require(L.shutil.disk_usage(base).free >= L.FLOOR + reserve, 'bridge floor plus complete reservation')\n    store.check()",
+  "candidate_sha256": "74d9350f3c306130af86537fcf0a2b0e90d84558c370fdf878e5eb07da199dff",
+  "current_frame_sha256": "88ddeb8efc7625be7779c8f58f5ad9751f46ce2bcfce514e4716d1484c806190",
+  "final_exact_store_check_passed": true,
+  "finding": "BB1_POST_VERIFICATION_CODEC_BYTES_NOT_REJOINED",
+  "genuine_bridge_executed": false,
+  "independent_codec_refusal": "frame length/hash",
+  "old_frame_sha256": "a91e79bdacd91b3746e614072862333f2c1f3a55401192fc6d044c0c007726c8",
+  "qualification": "A deterministic owned close hook after the actual summary fd close, not a wall-clock race or fake Owner. All other genuine authority/source checks are source-inspected, not executed.",
+  "real_summary_fd_close_then_single_corruption": true,
+  "same_extent": true,
+  "schema_version": 1,
+  "source_store_checks": [
+    {
+      "line": 202,
+      "source": "store.check()"
+    },
+    {
+      "line": 218,
+      "source": "store.check()"
+    },
+    {
+      "line": 224,
+      "source": "store.verify(terminal, descriptor)"
+    }
+  ],
+  "summary_write_readback_passed": true
+}

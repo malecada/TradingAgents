@@ -1,0 +1,112 @@
+[
+  {
+    "case": "old-BB1",
+    "events": [
+      {
+        "closed_fd": 5,
+        "dev": 66310,
+        "inode": 10794554
+      }
+    ],
+    "exact_tail": "codec_before = _codec_population(store, R)\nfinal_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')\nboundary()\nrequire(_codec_population(store, R) == codec_before, 'post-verification codec population changed')",
+    "final_tail_accepted": true,
+    "genuine_encode_executed": false,
+    "post_signature": [
+      66310,
+      10794550,
+      384,
+      1791117229517360385,
+      1791117229517360385
+    ],
+    "pre_signature": [
+      66310,
+      10794550,
+      384,
+      1791117229510360467,
+      1791117229510360467
+    ],
+    "refusal": null,
+    "subsequent_independent_verify": "frame length/hash"
+  },
+  {
+    "case": "new-BB1",
+    "events": [
+      {
+        "closed_fd": 5,
+        "dev": 66310,
+        "inode": 10794562
+      }
+    ],
+    "exact_tail": "codec_before = _codec_population(store, R)\nfinal_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')\nboundary()\nrequire(_codec_population(store, R) == codec_before, 'post-verification codec population changed')",
+    "final_tail_accepted": false,
+    "genuine_encode_executed": false,
+    "post_signature": [
+      66310,
+      10794558,
+      384,
+      1791117229529360246,
+      1791117229529360246
+    ],
+    "pre_signature": [
+      66310,
+      10794558,
+      384,
+      1791117229521360339,
+      1791117229521360339
+    ],
+    "refusal": "ValueError: frame length/hash",
+    "subsequent_independent_verify": "frame length/hash"
+  },
+  {
+    "case": "new-intact",
+    "events": [],
+    "exact_tail": "codec_before = _codec_population(store, R)\nfinal_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')\nboundary()\nrequire(_codec_population(store, R) == codec_before, 'post-verification codec population changed')",
+    "final_tail_accepted": true,
+    "genuine_encode_executed": false,
+    "post_signature": [
+      66310,
+      10794566,
+      384,
+      1791117229533360199,
+      1791117229533360199
+    ],
+    "pre_signature": [
+      66310,
+      10794566,
+      384,
+      1791117229533360199,
+      1791117229533360199
+    ],
+    "refusal": null,
+    "subsequent_independent_verify": null
+  },
+  {
+    "case": "new-BB2",
+    "events": [
+      {
+        "closed_fd": 5,
+        "dev": 66310,
+        "inode": 10794575
+      }
+    ],
+    "exact_tail": "codec_before = _codec_population(store, R)\nfinal_proof = store.verify(terminal, descriptor)\nrequire(final_proof == proof and final_proof['logical_bytes'] == done['bytes'] and (final_proof['raw_sha256'] == done['sha256']), 'post-summary complete codec/original byte join')\nboundary()\nrequire(_codec_population(store, R) == codec_before, 'post-verification codec population changed')",
+    "final_tail_accepted": false,
+    "genuine_encode_executed": false,
+    "post_signature": [
+      66310,
+      10794574,
+      384,
+      1791117229552359978,
+      1791117229552359978
+    ],
+    "pre_signature": [
+      66310,
+      10794574,
+      384,
+      1791117229544360071,
+      1791117229544360071
+    ],
+    "refusal": "ValueError: post-verification codec population changed",
+    "subsequent_independent_verify": "frame length/hash"
+  }
+]

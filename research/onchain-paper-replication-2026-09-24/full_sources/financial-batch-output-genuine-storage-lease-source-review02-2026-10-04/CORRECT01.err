@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-storage-lease-source-review02-2026-10-04/correct01.py", line 116, in <module>
+    ok(reversed_source==old,'full exact byte inverse');ok(ast.dump(ast.parse(reversed_source),include_attributes=False)==ast.dump(ast.parse(old),include_attributes=False),'full AST inverse')
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-storage-lease-source-review02-2026-10-04/correct01.py", line 8, in ok
+    if not v:raise AssertionError(n)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: full exact byte inverse

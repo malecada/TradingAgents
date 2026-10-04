@@ -1,0 +1,11 @@
+{
+  "original_sha256": "42b6a3750ffb6f71b311bb8c341c42971e469ef3ac358bd5a9ad0a0b237b234d",
+  "successor_sha256": "ca5f4768789ec0fd632c4667439c7560d6318d288cd22c8b3f543361eb2c39b1",
+  "removed_added_helper": "def _codec_population(store,R):\n    \"\"\"Sample complete metadata through the owned directory; no byte authority.\"\"\"\n    store.check()\n    root=os.fstat(store.fd)\n    names=tuple(sorted(os.listdir(store.fd)))\n    require(set(names)==store.names,'codec fingerprint complete membership')\n    rows=[]\n    for name in names:\n        item=os.stat(name,dir_fd=store.fd,follow_symlinks=False)\n        require(stat.S_ISREG(item.st_mode) and item.st_nlink==1 and stat.S_IMODE(item.st_mode)==0o600,'codec fingerprint member type/mode')\n        rows.append((name,R.sig(item),item.st_blocks,item.st_blksize))\n    current=os.fstat(store.fd)\n    require(store.root.resolve()==store.root and R.sig(store.root.lstat())==R.sig(root)==R.sig(current) and tuple(sorted(os.listdir(store.fd)))==names,'codec fingerprint root/membership changed')\n    return (R.sig(current),current.st_blocks,current.st_blksize,tuple(rows))\n\n",
+  "remove_tail_lines": [
+    "codec_before=_codec_population(store,R)",
+    "boundary(); require(_codec_population(store,R)==codec_before,...)"
+  ],
+  "complete_byte_AST_inverse": true,
+  "checks": 979
+}

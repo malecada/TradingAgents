@@ -1,0 +1,29 @@
+  | ExceptionGroup: body/cleanup failures (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-byte-bridge-preparation01-2026-10-04/byte_bridge01.py", line 165, in _write
+    |     n=os.write(fd,memoryview(raw)[at:at+65536]);require(n>0,'bridge write progress');at+=n
+    | TypeError: '_GeneratorContextManager' object cannot be interpreted as an integer
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-byte-bridge-preparation01-2026-10-04/owned_io.py", line 34, in _cleanup
+    |     try:close()
+    |         ~~~~~^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-byte-bridge-preparation01-2026-10-04/byte_bridge01.py", line 167, in <lambda>
+    |     finally:IO._cleanup(() if fd is None else (lambda:os.close(fd),))
+    |                                                       ~~~~~~~~^^^^
+    | TypeError: '_GeneratorContextManager' object cannot be interpreted as an integer
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-byte-bridge-preparation01-2026-10-04/io_red01.py", line 6, in <module>
+    try:B._write(R,IO,p/'draft-write-red.json',b'opaque')
+        ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-byte-bridge-preparation01-2026-10-04/byte_bridge01.py", line 167, in _write
+    finally:IO._cleanup(() if fd is None else (lambda:os.close(fd),))
+            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-genuine-byte-bridge-preparation01-2026-10-04/owned_io.py", line 52, in _cleanup
+    raise failure
+owned_io.CleanupFailure: score storage cleanup unresolved; worker must stop
