@@ -1,0 +1,45 @@
+import ast,hashlib,importlib.metadata,importlib.util,json,os,stat,subprocess,sys
+from pathlib import Path
+O=Path(__file__).resolve().parent;F=O.parent;P=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-root-launch-20261004-01');S=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-recordfix-native-20261004-01/source');A=F/'financial-genuine-wrapper-root-recordfix-parent-adoption01-2026-10-04';H='649fb8a11089524aaef7843dffeeb90a3a55ca17';sha=lambda b:hashlib.sha256(b).hexdigest();checks=[]
+def ck(x,m):
+ assert x,m
+ checks.append(m)
+sys.path.insert(0,str(P));sp=importlib.util.spec_from_file_location('installed_parent_contract_review',P/'parent01.py');C=importlib.util.module_from_spec(sp);sp.loader.exec_module(C);R=C.R
+read=lambda p:R.read(p.parent,p.name)
+def doc(p):return json.loads(read(p))
+q=doc(P/'REQUEST_PROPOSAL01.json');ck(sha(read(P/'REQUEST_PROPOSAL01.json'))=='71f98acb5f0e6c60c5469d2fbc40dae72840b740b9ac81419a4b9981815fa79a' and read(P/'REQUEST_PROPOSAL01.json')==read(A/'REQUEST_PROPOSAL01.json'),'actual installed proposal unchanged')
+ck(C.contract(q)=='873fba4ce39446dc34d741c25d757a1db756fa15e4b6b4c674e7f9bf18e6589d' and q['final_review'] is None,'actual exact unresolved final contract')
+try:C.validate_release(q)
+except ValueError as error:ck(str(error)=='unresolved release field final_review','genuine exact null refusal')
+else:raise AssertionError('null released')
+ck(b'ValueError: unresolved release field final_review' in read(A/'ACTUAL_NULL_REFUSAL01.err') and read(A/'ACTUAL_NULL_REFUSAL01.out')==b'','original Root null CLI evidence')
+ad=doc(A/'SOURCE_ADOPTION01.json');origin=F/'financial-genuine-wrapper-recordfix-parent-preparation01-2026-10-04';review=doc(F/'financial-genuine-wrapper-recordfix-parent-review01-2026-10-04/REVIEW01.json');ck(review['verdict']=='ACCEPTED_SOURCE_ONLY_RECORDFIX_PARENT' and review['candidate_parent_sha256']==q['caller_sha256']=='82d79e1a99cff7be02fcd402661034f18eda749de870b6aa3a51f4994df4f578','genuine independent caller source acceptance')
+for row in ad['files']:
+ b=read(P/row['path']);ck(b==read(origin/row['path']) and len(b)==row['bytes'] and sha(b)==row['sha256'],'every installed accepted helper body')
+for n,h in q['helper_hashes'].items():ck(sha(read(P/n))==h,'six actual helper pins')
+proof_origins={'cumulative':F/'financial-genuine-wrapper-recordfix-registration-review02-2026-10-04/REVIEW02.json','independent_source_input_runtime':F/'financial-genuine-wrapper-recordfix-source-admission-review01-2026-10-04/READBACK01.json','full_recovery':F/'financial-genuine-wrapper-recordfix-actual-recovery-review01-2026-10-04/FLAT_READBACK02.json'}
+for role,ref in q['proofs'].items():ck(read(Path(ref['path']))==read(proof_origins[role]) and sha(read(Path(ref['path'])))==ref['sha256'],'genuine original proof copy '+role)
+full=doc(proof_origins['full_recovery']);ck(full['decision']=='COMPLETE_RECORDFIX_SOURCE_BYTE_UNION_ACCEPTED' and full['source']==H and full['tracked']==325 and full['source_pins']==324 and full['private_flat_files']==714,'full genuine current source union')
+installed=doc(proof_origins['independent_source_input_runtime']);ck(installed['source']==installed['design_source']==H and installed['actual_ready'] is True and installed['numerical_attempt_budget']==18 and installed['numerical_claims']==0,'genuine current actual admission')
+expected={row['path'] for row in ad['files']}|{'REQUEST_PROPOSAL01.json','proofs'}|{Path(ref['path']).relative_to(P).as_posix() for ref in q['proofs'].values()};ck({x.relative_to(P).as_posix() for x in P.rglob('*')}==expected,'entire installed Parent membership no attempt')
+pm=R.scan(P);ck(len(pm['members'])==12 and sum(x['kind']=='file' for x in pm['members'])==11,'actual12Parent11file scope');R.put(O/'PARENT_MANIFEST01.json',pm)
+cap=F/'financial-genuine-wrapper-root-recordfix-capture01-2026-10-04';sm=doc(cap/'source-manifest.json');ck(R.scan(S)==sm,'whole current986 recovered source unchanged')
+gate=doc(S/q['registration']);e=gate['experiments'][q['identity']];ck(sha(read(S/q['registration']))==q['registration_sha256']=='4474df26460aab41281bfdcc311129b613a90d76963e853858841200d9faa69a' and e['source_files']==q['source_files'] and len(q['source_files'])==324,'actual genuine gate/source map')
+for n,h in q['source_files'].items():ck(sha(read(S/n))==h,'all324 source bodies')
+for role,ref in e['inputs'].items():ck(sha(read(S/ref['path']))==ref['sha256']==q['input_hashes'][role],'all8 exact input bindings')
+family=gate['families'][e['family']];ck(family['attempt_budget']==18 and family['prior_attempts']==0 and 'cumulative_budget_extension' not in e,'actual numerical18 unchanged0prior')
+runtime=doc(S/e['inputs']['runtime_mapping']['path']);ck(runtime==q['runtime_mapping'] and len(runtime['distribution_records'])==251 and C.stream_hash(Path(sys.executable).resolve(),64*1024**2)==runtime['executable_sha256'] and sha(read(S/'uv.lock'))==runtime['lock_sha256'],'actual pinned interpreter and lock/runtime mapping')
+for row in runtime['distribution_records']:ck(C.stream_hash(Path(row['record']),R.FILE)==row['record_sha256'] and importlib.metadata.version(row['name'])==row['version'],'all251 actual RECORD hash/version joins')
+job=doc(S/e['inputs']['execution_job']['path']);r=job['resources'];ck(r['wall_seconds']==1800 and r['memory_max_bytes']==r['memory_high_bytes']==3*1024**3 and r['start_reserve_bytes']==6*1024**3 and r['native_unit_limits']['file_size_bytes']==4*1024**2 and r['disk_floor_bytes']==10*1024**3 and r['disk_paths']==[str(S)] and r['storage_budget']['root']==str(S),'exact unchanged registered resource limits')
+plan=doc(S/e['inputs']['wrapper_plan']['path']);ck(plan['experiment']==q['identity']==C.IDENTITY and plan['phase']==q['expected_phase']=='interrupt1','fixed fresh planned first phase')
+parent_tree=ast.parse(read(P/'parent01.py'));pf=next(n for n in parent_tree.body if isinstance(n,ast.FunctionDef) and n.name=='preflight');launch=next(n for n in parent_tree.body if isinstance(n,ast.FunctionDef) and n.name=='launch');calls=[n for n in ast.walk(pf) if isinstance(n,ast.Call)];adline=next(n.lineno for n in calls if isinstance(n.func,ast.Attribute) and n.func.attr=='_admitted');cmdline=next(n.lineno for n in calls if isinstance(n.func,ast.Attribute) and n.func.attr=='_command');ck(adline<cmdline and ast.unparse(launch.body[0].value)=='preflight(q)','genuine admission before command and launch owned-directory/spawn')
+ck(not any(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr in ['mkdir','Popen','start'] for n in ast.walk(pf)),'preflight no attempt creation/spawn/start')
+for root in [S,Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-native-20261003-01/source')]:ck(all(not os.path.lexists(root/n) for n in ['research_runs','research_artifacts','fixture_outer']),'actual current/original zero claims namespaces')
+oldparent=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-root-launch-20261004-01');oldm=doc(F/'financial-genuine-wrapper-root-preservation06-2026-10-04/PARENT_MANIFEST01.json');ck(R.scan(oldparent)==oldm and (oldparent/'attempt').is_dir(),'original permanently reserved failed Parent retained')
+ck(not os.path.lexists(P/'attempt'),'new attempt namespace absent')
+# No preflight/native eligibility is claimed. Validate only the genuine independent exact contract.
+release={'schema_version':1,'decision':'accepted-exact-one-use-financial-parent','contract_sha256':C.contract(q),'proof_sha256':{k:v['sha256'] for k,v in q['proofs'].items()},'identity':q['identity'],'source':H,'caller_sha256':q['caller_sha256']}
+R.put(O/'RELEASE_REVIEW01.json',release);bound=dict(q,final_review={'path':str(O/'RELEASE_REVIEW01.json'),'sha256':sha(R.encode(release))});ck(C.validate_release(bound)==release,'genuine sevenfield exact contract validator accepted')
+ck(R.scan(P)==pm and R.scan(S)==sm,'original actual Parent and Source unchanged after review');ck(not any(n.split('.')[0] in {'numpy','torch','scipy','pandas'} for n in sys.modules),'no numerical imports')
+out={'schema_version':1,'decision':'ACCEPTED_EXACT_INSTALLED_PARENT_CONTRACT_PENDING_FINAL_UNION_AND_PREFLIGHT','checks':len(checks),'source':H,'design_source':H,'identity':q['identity'],'contract_sha256':C.contract(q),'proposal_sha256':sha(read(P/'REQUEST_PROPOSAL01.json')),'caller_sha256':q['caller_sha256'],'release_sha256':sha(R.encode(release)),'proof_sha256':release['proof_sha256'],'actual_parent_members':12,'actual_parent_regular':11,'actual_source_members':986,'tracked':325,'source_pins':324,'input_joins':8,'runtime_RECORD_metadata_joins':251,'numerical_budget':18,'prior_attempts':0,'numerical_claims':0,'actual_parent_preflight_executed':False,'actual_genuine_admission_repeated':False,'actual_validator_calls':2,'source_spawn_or_Run_start':False,'new_Parent_review_complete_preservation_and_recovery':False,'native_capacity_or_numerical_release':False}
+R.put(O/'READBACK01.json',out);print(json.dumps(out,indent=2))

@@ -1,0 +1,68 @@
+{
+  "checks": [
+    "exact03",
+    "full byte inverse put and four call sites",
+    "complete AST inverse",
+    "first fatal/ordinary close MemoryError",
+    "actual descriptor absent MemoryError",
+    "first fatal/ordinary close KeyboardInterrupt",
+    "actual descriptor absent KeyboardInterrupt",
+    "first fatal/ordinary close SystemExit",
+    "actual descriptor absent SystemExit",
+    "first fatal/ordinary close GeneratorExit",
+    "actual descriptor absent GeneratorExit",
+    "first fatal/ordinary close ValueError",
+    "actual descriptor absent ValueError",
+    "first fatal/ordinary close OSError",
+    "actual descriptor absent OSError",
+    "valid readback 0",
+    "private body 0",
+    "exclusive collision 0",
+    "valid readback 1",
+    "private body 1",
+    "exclusive collision 1",
+    "redirect refused",
+    "redirect target unchanged",
+    "over4MiB refused before IO"
+  ],
+  "count": 24,
+  "fdresults": [
+    {
+      "descriptor_absent": true,
+      "primary": "MemoryError",
+      "raised": "MemoryError",
+      "same_primary": true
+    },
+    {
+      "descriptor_absent": true,
+      "primary": "KeyboardInterrupt",
+      "raised": "KeyboardInterrupt",
+      "same_primary": true
+    },
+    {
+      "descriptor_absent": true,
+      "primary": "SystemExit",
+      "raised": "SystemExit",
+      "same_primary": true
+    },
+    {
+      "descriptor_absent": true,
+      "primary": "GeneratorExit",
+      "raised": "GeneratorExit",
+      "same_primary": true
+    },
+    {
+      "descriptor_absent": true,
+      "primary": "ValueError",
+      "raised": "CleanupFailure",
+      "same_primary": false
+    },
+    {
+      "descriptor_absent": true,
+      "primary": "OSError",
+      "raised": "CleanupFailure",
+      "same_primary": false
+    }
+  ],
+  "qualification": "Actual R4.new_file/owned cleanup; controlled fsync seam closes genuinely owned descriptor before exception. No actual Root failure, output archive or numerical execution."
+}

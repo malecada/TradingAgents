@@ -1,0 +1,469 @@
+{
+  "checks": [
+    "exact02",
+    "whole byte inverse only final loop/comment",
+    "all other main AST unchanged",
+    "02 unchanged",
+    "02 extra-file",
+    "original RED extra-file",
+    "02 extra-directory",
+    "original RED extra-directory",
+    "02 extra-link",
+    "original RED extra-link",
+    "02 remove",
+    "02 body",
+    "02 mode",
+    "02 link-target",
+    "CF2 real close masks first fatal"
+  ],
+  "count": 15,
+  "late_member_witnesses": [
+    {
+      "actual_members": [
+        {
+          "kind": "directory",
+          "mode": 448,
+          "path": "."
+        },
+        {
+          "bytes": 16,
+          "kind": "file",
+          "mode": 436,
+          "path": "body",
+          "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+          "union_path": "tiny/body"
+        },
+        {
+          "kind": "lexical-symlink",
+          "mode": 511,
+          "path": "literal",
+          "target": "absent"
+        }
+      ],
+      "case": "unchanged",
+      "inventory": [
+        {
+          "members": [
+            {
+              "kind": "directory",
+              "mode": 448,
+              "path": "."
+            },
+            {
+              "bytes": 16,
+              "kind": "file",
+              "mode": 436,
+              "path": "body",
+              "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+              "union_path": "tiny/body"
+            },
+            {
+              "kind": "lexical-symlink",
+              "mode": 511,
+              "path": "literal",
+              "target": "absent"
+            }
+          ],
+          "original_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-capture-review01-2026-10-04/owned-unchanged",
+          "scope": "tiny"
+        }
+      ],
+      "new": "accepted",
+      "old": "accepted"
+    },
+    {
+      "actual_members": [
+        {
+          "kind": "directory",
+          "mode": 448,
+          "path": "."
+        },
+        {
+          "bytes": 16,
+          "kind": "file",
+          "mode": 436,
+          "path": "body",
+          "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+          "union_path": "tiny/body"
+        },
+        {
+          "bytes": 12,
+          "kind": "file",
+          "mode": 436,
+          "path": "late",
+          "sha256": "ade8bb0b7060babff57418472df2ced3e9aef6365eb28eca9a3b24fb11ac3572",
+          "union_path": "tiny/late"
+        },
+        {
+          "kind": "lexical-symlink",
+          "mode": 511,
+          "path": "literal",
+          "target": "absent"
+        }
+      ],
+      "case": "extra-file",
+      "inventory": [
+        {
+          "members": [
+            {
+              "kind": "directory",
+              "mode": 448,
+              "path": "."
+            },
+            {
+              "bytes": 16,
+              "kind": "file",
+              "mode": 436,
+              "path": "body",
+              "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+              "union_path": "tiny/body"
+            },
+            {
+              "kind": "lexical-symlink",
+              "mode": 511,
+              "path": "literal",
+              "target": "absent"
+            }
+          ],
+          "original_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-capture-review01-2026-10-04/owned-extra-file",
+          "scope": "tiny"
+        }
+      ],
+      "new": "ValueError: complete original membership/body/mode/literal-link differs",
+      "old": "accepted"
+    },
+    {
+      "actual_members": [
+        {
+          "kind": "directory",
+          "mode": 448,
+          "path": "."
+        },
+        {
+          "bytes": 16,
+          "kind": "file",
+          "mode": 436,
+          "path": "body",
+          "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+          "union_path": "tiny/body"
+        },
+        {
+          "kind": "directory",
+          "mode": 509,
+          "path": "late"
+        },
+        {
+          "kind": "lexical-symlink",
+          "mode": 511,
+          "path": "literal",
+          "target": "absent"
+        }
+      ],
+      "case": "extra-directory",
+      "inventory": [
+        {
+          "members": [
+            {
+              "kind": "directory",
+              "mode": 448,
+              "path": "."
+            },
+            {
+              "bytes": 16,
+              "kind": "file",
+              "mode": 436,
+              "path": "body",
+              "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+              "union_path": "tiny/body"
+            },
+            {
+              "kind": "lexical-symlink",
+              "mode": 511,
+              "path": "literal",
+              "target": "absent"
+            }
+          ],
+          "original_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-capture-review01-2026-10-04/owned-extra-directory",
+          "scope": "tiny"
+        }
+      ],
+      "new": "ValueError: complete original membership/body/mode/literal-link differs",
+      "old": "accepted"
+    },
+    {
+      "actual_members": [
+        {
+          "kind": "directory",
+          "mode": 448,
+          "path": "."
+        },
+        {
+          "bytes": 16,
+          "kind": "file",
+          "mode": 436,
+          "path": "body",
+          "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+          "union_path": "tiny/body"
+        },
+        {
+          "kind": "lexical-symlink",
+          "mode": 511,
+          "path": "late",
+          "target": "absent-late"
+        },
+        {
+          "kind": "lexical-symlink",
+          "mode": 511,
+          "path": "literal",
+          "target": "absent"
+        }
+      ],
+      "case": "extra-link",
+      "inventory": [
+        {
+          "members": [
+            {
+              "kind": "directory",
+              "mode": 448,
+              "path": "."
+            },
+            {
+              "bytes": 16,
+              "kind": "file",
+              "mode": 436,
+              "path": "body",
+              "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+              "union_path": "tiny/body"
+            },
+            {
+              "kind": "lexical-symlink",
+              "mode": 511,
+              "path": "literal",
+              "target": "absent"
+            }
+          ],
+          "original_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-capture-review01-2026-10-04/owned-extra-link",
+          "scope": "tiny"
+        }
+      ],
+      "new": "ValueError: complete original membership/body/mode/literal-link differs",
+      "old": "accepted"
+    },
+    {
+      "actual_members": [
+        {
+          "kind": "directory",
+          "mode": 448,
+          "path": "."
+        },
+        {
+          "kind": "lexical-symlink",
+          "mode": 511,
+          "path": "literal",
+          "target": "absent"
+        }
+      ],
+      "case": "remove",
+      "inventory": [
+        {
+          "members": [
+            {
+              "kind": "directory",
+              "mode": 448,
+              "path": "."
+            },
+            {
+              "bytes": 16,
+              "kind": "file",
+              "mode": 436,
+              "path": "body",
+              "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+              "union_path": "tiny/body"
+            },
+            {
+              "kind": "lexical-symlink",
+              "mode": 511,
+              "path": "literal",
+              "target": "absent"
+            }
+          ],
+          "original_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-capture-review01-2026-10-04/owned-remove",
+          "scope": "tiny"
+        }
+      ],
+      "new": "ValueError: complete original membership/body/mode/literal-link differs",
+      "old": "FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-capture-review01-2026-10-04/owned-remove/body'"
+    },
+    {
+      "actual_members": [
+        {
+          "kind": "directory",
+          "mode": 448,
+          "path": "."
+        },
+        {
+          "bytes": 15,
+          "kind": "file",
+          "mode": 436,
+          "path": "body",
+          "sha256": "b65f588917d5cef79d220b1ce341b1874074ff966788fcca120f003412c012d1",
+          "union_path": "tiny/body"
+        },
+        {
+          "kind": "lexical-symlink",
+          "mode": 511,
+          "path": "literal",
+          "target": "absent"
+        }
+      ],
+      "case": "body",
+      "inventory": [
+        {
+          "members": [
+            {
+              "kind": "directory",
+              "mode": 448,
+              "path": "."
+            },
+            {
+              "bytes": 16,
+              "kind": "file",
+              "mode": 436,
+              "path": "body",
+              "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+              "union_path": "tiny/body"
+            },
+            {
+              "kind": "lexical-symlink",
+              "mode": 511,
+              "path": "literal",
+              "target": "absent"
+            }
+          ],
+          "original_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-capture-review01-2026-10-04/owned-body",
+          "scope": "tiny"
+        }
+      ],
+      "new": "ValueError: complete original membership/body/mode/literal-link differs",
+      "old": "ValueError: original final body changed"
+    },
+    {
+      "actual_members": [
+        {
+          "kind": "directory",
+          "mode": 448,
+          "path": "."
+        },
+        {
+          "bytes": 16,
+          "kind": "file",
+          "mode": 384,
+          "path": "body",
+          "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+          "union_path": "tiny/body"
+        },
+        {
+          "kind": "lexical-symlink",
+          "mode": 511,
+          "path": "literal",
+          "target": "absent"
+        }
+      ],
+      "case": "mode",
+      "inventory": [
+        {
+          "members": [
+            {
+              "kind": "directory",
+              "mode": 448,
+              "path": "."
+            },
+            {
+              "bytes": 16,
+              "kind": "file",
+              "mode": 436,
+              "path": "body",
+              "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+              "union_path": "tiny/body"
+            },
+            {
+              "kind": "lexical-symlink",
+              "mode": 511,
+              "path": "literal",
+              "target": "absent"
+            }
+          ],
+          "original_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-capture-review01-2026-10-04/owned-mode",
+          "scope": "tiny"
+        }
+      ],
+      "new": "ValueError: complete original membership/body/mode/literal-link differs",
+      "old": "ValueError: original mode changed"
+    },
+    {
+      "actual_members": [
+        {
+          "kind": "directory",
+          "mode": 448,
+          "path": "."
+        },
+        {
+          "bytes": 16,
+          "kind": "file",
+          "mode": 436,
+          "path": "body",
+          "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+          "union_path": "tiny/body"
+        },
+        {
+          "kind": "lexical-symlink",
+          "mode": 511,
+          "path": "literal",
+          "target": "other-absent"
+        }
+      ],
+      "case": "link-target",
+      "inventory": [
+        {
+          "members": [
+            {
+              "kind": "directory",
+              "mode": 448,
+              "path": "."
+            },
+            {
+              "bytes": 16,
+              "kind": "file",
+              "mode": 436,
+              "path": "body",
+              "sha256": "5783bb8ba055b8073cc5a88143613ac8c693e0490470b45d48c2cbab99fd049b",
+              "union_path": "tiny/body"
+            },
+            {
+              "kind": "lexical-symlink",
+              "mode": 511,
+              "path": "literal",
+              "target": "absent"
+            }
+          ],
+          "original_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-recordfix-final-union-capture-review01-2026-10-04/owned-link-target",
+          "scope": "tiny"
+        }
+      ],
+      "new": "ValueError: complete original membership/body/mode/literal-link differs",
+      "old": "ValueError: original lexical link changed"
+    }
+  ],
+  "put_fatal_witness": {
+    "context_is_primary": true,
+    "descriptor_absent": true,
+    "primary_preserved": false,
+    "raised_errno": 9,
+    "raised_type": "OSError"
+  },
+  "qualification": "Exact extracted source with owned tiny opaque trees. Fsync callback is deliberately injected; descriptor close/EBADF and exception identity are actual. No actual Root failure or native launch asserted.",
+  "source_sha256": {
+    "capture01.py": "e3df24f9448941806a73a429aad098c8316e887b844980b13c1fee7522d3488a",
+    "capture02.py": "d0153e8d08afbd9e0df4a3cd5e0715c16738b1008ada0870b8b5cf93c1cda17b"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "actual_exit": 1,
+  "actual_generator_not_rerun": true,
+  "actual_tool": "efec9c",
+  "cause": "Root copied original preparation MANIFEST01.json as immutable reference; it cannot be overwritten by an actual generated-tree manifest. Actual generation terminal had been written before the guard.",
+  "original_error": "AssertionError at final own-manifest namespace guard",
+  "original_reference_manifest_sha256": "d8b68c05c84b14332d5e1d031ebc4b7d38379bbf784ee9b1269eab63aa4505aa",
+  "remedy": "New distinct MANIFEST_ACTUAL02.json for whole current Root copy/generation tree, preserving original manifest and failed attempt."
+}

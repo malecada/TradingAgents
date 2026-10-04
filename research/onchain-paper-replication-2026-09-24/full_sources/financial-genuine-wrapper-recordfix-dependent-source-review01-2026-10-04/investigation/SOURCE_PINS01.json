@@ -1,0 +1,582 @@
+{
+  "actual_body_joins": [
+    {
+      "bytes": 19911,
+      "mode": 436,
+      "path": "tradingagents/research/admission.py",
+      "sha256": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd"
+    },
+    {
+      "bytes": 17474,
+      "mode": 436,
+      "path": "tradingagents/research/verify.py",
+      "sha256": "3a45746a388307d1b375c885bb2fd7a22c2a60f139df714d2bbe98906d57d7eb"
+    },
+    {
+      "bytes": 34033,
+      "mode": 436,
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "sha256": "755cbbc9f22a8d9718ebb53211135d08b62e485dd3edeca2fbec29998c43b923"
+    },
+    {
+      "bytes": 40014,
+      "mode": 436,
+      "path": "tradingagents/research/onchain_replication/financial_wrapper_fixture.py",
+      "sha256": "e2d9208ac51fd5876b63b6a72f734fc4fedd28fa42ac9c7fa1014346feb8404c"
+    },
+    {
+      "bytes": 8123,
+      "mode": 436,
+      "path": "tradingagents/research/onchain_replication/training.py",
+      "sha256": "0e5ae299f48f21cde666d78319b7710208f6d959c0c2b1aea7e848f4252ff482"
+    },
+    {
+      "bytes": 5016,
+      "mode": 436,
+      "path": "tradingagents/research/onchain_replication/checkpoints.py",
+      "sha256": "5bd40b1e573bad25807d8596472b437fee93eb7c644bc03e4cd45512e74437f0"
+    },
+    {
+      "bytes": 16286,
+      "mode": 436,
+      "path": "tradingagents/research/onchain_replication/evaluation.py",
+      "sha256": "e671f622101eced67b5807bb74f069bbc10cc45eec0c2f410157bd46399f33e2"
+    },
+    {
+      "bytes": 4654,
+      "mode": 436,
+      "path": "tradingagents/research/onchain_replication/cache.py",
+      "sha256": "5fbbe0df14cfc1802dd1df4da6c8bdbd1153a9fcbb4c89dd202e791d1811ddba"
+    }
+  ],
+  "adoption_sha256": "c08c065d3366441e94ae237cceab3fc35a1e83981f87e63a2e7085eab8523dc6",
+  "function_locations": {
+    "tradingagents/research/admission.py": [
+      {
+        "end_line": 18,
+        "line": 17,
+        "name": "digest"
+      },
+      {
+        "end_line": 23,
+        "line": 21,
+        "name": "runtime_hashes"
+      },
+      {
+        "end_line": 30,
+        "line": 26,
+        "name": "utc"
+      },
+      {
+        "end_line": 36,
+        "line": 33,
+        "name": "identity"
+      },
+      {
+        "end_line": 48,
+        "line": 39,
+        "name": "local_path"
+      },
+      {
+        "end_line": 55,
+        "line": 51,
+        "name": "_git"
+      },
+      {
+        "end_line": 65,
+        "line": 58,
+        "name": "_committed"
+      },
+      {
+        "end_line": 80,
+        "line": 72,
+        "name": "_source_git_batch"
+      },
+      {
+        "end_line": 104,
+        "line": 83,
+        "name": "_source_batch_parse"
+      },
+      {
+        "end_line": 172,
+        "line": 107,
+        "name": "_source_files"
+      },
+      {
+        "end_line": 179,
+        "line": 175,
+        "name": "_window"
+      },
+      {
+        "end_line": 185,
+        "line": 182,
+        "name": "_overlaps"
+      },
+      {
+        "end_line": 206,
+        "line": 188,
+        "name": "claims"
+      },
+      {
+        "end_line": 225,
+        "line": 210,
+        "name": "Admission"
+      },
+      {
+        "end_line": 410,
+        "line": 228,
+        "name": "admit"
+      }
+    ],
+    "tradingagents/research/onchain_replication/cache.py": [
+      {
+        "end_line": 12,
+        "line": 11,
+        "name": "cache_key"
+      },
+      {
+        "end_line": 17,
+        "line": 15,
+        "name": "_member"
+      },
+      {
+        "end_line": 61,
+        "line": 20,
+        "name": "publish"
+      },
+      {
+        "end_line": 90,
+        "line": 64,
+        "name": "read_artifact"
+      },
+      {
+        "end_line": 113,
+        "line": 93,
+        "name": "artifact_key"
+      }
+    ],
+    "tradingagents/research/onchain_replication/checkpoints.py": [
+      {
+        "end_line": 19,
+        "line": 15,
+        "name": "seed_all"
+      },
+      {
+        "end_line": 30,
+        "line": 22,
+        "name": "_provenance"
+      },
+      {
+        "end_line": 47,
+        "line": 33,
+        "name": "save_checkpoint"
+      },
+      {
+        "end_line": 65,
+        "line": 50,
+        "name": "load_checkpoint"
+      },
+      {
+        "end_line": 70,
+        "line": 68,
+        "name": "capture_rng"
+      },
+      {
+        "end_line": 78,
+        "line": 73,
+        "name": "restore_rng"
+      }
+    ],
+    "tradingagents/research/onchain_replication/evaluation.py": [
+      {
+        "end_line": 41,
+        "line": 24,
+        "name": "batch_factory"
+      },
+      {
+        "end_line": 130,
+        "line": 44,
+        "name": "evaluate_cell"
+      },
+      {
+        "end_line": 138,
+        "line": 133,
+        "name": "reuse_cell"
+      },
+      {
+        "end_line": 142,
+        "line": 141,
+        "name": "prediction_directory"
+      },
+      {
+        "end_line": 158,
+        "line": 145,
+        "name": "feature_hash"
+      },
+      {
+        "end_line": 183,
+        "line": 161,
+        "name": "recover_completed_model"
+      },
+      {
+        "end_line": 191,
+        "line": 186,
+        "name": "validate_cell_admission"
+      },
+      {
+        "end_line": 200,
+        "line": 194,
+        "name": "validate_manifest"
+      },
+      {
+        "end_line": 208,
+        "line": 203,
+        "name": "validate_scientific_cell"
+      }
+    ],
+    "tradingagents/research/onchain_replication/financial_wrapper_fixture.py": [
+      {
+        "end_line": 16,
+        "line": 16,
+        "name": "Unavailable"
+      },
+      {
+        "end_line": 17,
+        "line": 17,
+        "name": "PlannedInterruption"
+      },
+      {
+        "end_line": 19,
+        "line": 18,
+        "name": "require"
+      },
+      {
+        "end_line": 20,
+        "line": 20,
+        "name": "sha"
+      },
+      {
+        "end_line": 21,
+        "line": 21,
+        "name": "canonical"
+      },
+      {
+        "end_line": 32,
+        "line": 22,
+        "name": "validate_plan"
+      },
+      {
+        "end_line": 39,
+        "line": 34,
+        "name": "schema"
+      },
+      {
+        "end_line": 44,
+        "line": 41,
+        "name": "worker_limits"
+      },
+      {
+        "end_line": 63,
+        "line": 46,
+        "name": "admitted"
+      },
+      {
+        "end_line": 86,
+        "line": 65,
+        "name": "_runtime_record_bytes"
+      },
+      {
+        "end_line": 91,
+        "line": 88,
+        "name": "_runtime_distribution_name"
+      },
+      {
+        "end_line": 118,
+        "line": 93,
+        "name": "_runtime_record"
+      },
+      {
+        "end_line": 130,
+        "line": 120,
+        "name": "runtime_check"
+      },
+      {
+        "end_line": 161,
+        "line": 132,
+        "name": "authorize"
+      },
+      {
+        "end_line": 172,
+        "line": 163,
+        "name": "watch"
+      },
+      {
+        "end_line": 185,
+        "line": 174,
+        "name": "synthetic"
+      },
+      {
+        "end_line": 188,
+        "line": 187,
+        "name": "targets"
+      },
+      {
+        "end_line": 205,
+        "line": 190,
+        "name": "compare"
+      },
+      {
+        "end_line": 209,
+        "line": 207,
+        "name": "selected"
+      },
+      {
+        "end_line": 212,
+        "line": 211,
+        "name": "optimizer"
+      },
+      {
+        "end_line": 217,
+        "line": 214,
+        "name": "provenance"
+      },
+      {
+        "end_line": 225,
+        "line": 219,
+        "name": "frozen"
+      },
+      {
+        "end_line": 239,
+        "line": 227,
+        "name": "one_step"
+      },
+      {
+        "end_line": 248,
+        "line": 241,
+        "name": "persist_tensors"
+      },
+      {
+        "end_line": 270,
+        "line": 250,
+        "name": "_parent"
+      },
+      {
+        "end_line": 275,
+        "line": 272,
+        "name": "_select_failure"
+      },
+      {
+        "end_line": 280,
+        "line": 277,
+        "name": "_interrupt_case"
+      },
+      {
+        "end_line": 287,
+        "line": 282,
+        "name": "_one_epoch_state"
+      },
+      {
+        "end_line": 311,
+        "line": 289,
+        "name": "_interrupt_parent"
+      },
+      {
+        "end_line": 328,
+        "line": 313,
+        "name": "replay_package"
+      },
+      {
+        "end_line": 347,
+        "line": 330,
+        "name": "_reference_state"
+      },
+      {
+        "end_line": 439,
+        "line": 349,
+        "name": "execute"
+      }
+    ],
+    "tradingagents/research/onchain_replication/job.py": [
+      {
+        "end_line": 32,
+        "line": 27,
+        "name": "required_sources"
+      },
+      {
+        "end_line": 41,
+        "line": 35,
+        "name": "same_process_alive"
+      },
+      {
+        "end_line": 75,
+        "line": 44,
+        "name": "resource_policy"
+      },
+      {
+        "end_line": 79,
+        "line": 78,
+        "name": "_cold_native"
+      },
+      {
+        "end_line": 104,
+        "line": 82,
+        "name": "job_schema"
+      },
+      {
+        "end_line": 112,
+        "line": 107,
+        "name": "workspace_binding"
+      },
+      {
+        "end_line": 146,
+        "line": 115,
+        "name": "_admitted"
+      },
+      {
+        "end_line": 150,
+        "line": 149,
+        "name": "_base"
+      },
+      {
+        "end_line": 157,
+        "line": 153,
+        "name": "_command"
+      },
+      {
+        "end_line": 165,
+        "line": 160,
+        "name": "_once"
+      },
+      {
+        "end_line": 186,
+        "line": 168,
+        "name": "_terminal"
+      },
+      {
+        "end_line": 192,
+        "line": 189,
+        "name": "_observer_evidence"
+      },
+      {
+        "end_line": 204,
+        "line": 195,
+        "name": "_physical_scope"
+      },
+      {
+        "end_line": 242,
+        "line": 207,
+        "name": "launch"
+      },
+      {
+        "end_line": 261,
+        "line": 245,
+        "name": "_resource_limit_receipt"
+      },
+      {
+        "end_line": 290,
+        "line": 264,
+        "name": "monitor"
+      },
+      {
+        "end_line": 321,
+        "line": 293,
+        "name": "execute_source_job"
+      },
+      {
+        "end_line": 385,
+        "line": 324,
+        "name": "worker"
+      },
+      {
+        "end_line": 405,
+        "line": 388,
+        "name": "_incomplete_representation"
+      },
+      {
+        "end_line": 412,
+        "line": 408,
+        "name": "reconcile"
+      },
+      {
+        "end_line": 553,
+        "line": 415,
+        "name": "_reconcile"
+      }
+    ],
+    "tradingagents/research/onchain_replication/training.py": [
+      {
+        "end_line": 18,
+        "line": 14,
+        "name": "FitResult"
+      },
+      {
+        "end_line": 47,
+        "line": 21,
+        "name": "_reserve"
+      },
+      {
+        "end_line": 98,
+        "line": 50,
+        "name": "fit_cell"
+      },
+      {
+        "end_line": 111,
+        "line": 101,
+        "name": "predict_cell"
+      }
+    ],
+    "tradingagents/research/verify.py": [
+      {
+        "end_line": 25,
+        "line": 15,
+        "name": "_blob"
+      },
+      {
+        "end_line": 35,
+        "line": 34,
+        "name": "_GitCleanupFailure"
+      },
+      {
+        "end_line": 38,
+        "line": 37,
+        "name": "_git_fatal"
+      },
+      {
+        "end_line": 58,
+        "line": 40,
+        "name": "_git_cleanup"
+      },
+      {
+        "end_line": 138,
+        "line": 61,
+        "name": "_git_transport"
+      },
+      {
+        "end_line": 161,
+        "line": 141,
+        "name": "_verify_batch"
+      },
+      {
+        "end_line": 181,
+        "line": 164,
+        "name": "_source_request"
+      },
+      {
+        "end_line": 216,
+        "line": 184,
+        "name": "_verify_sources"
+      },
+      {
+        "end_line": 298,
+        "line": 219,
+        "name": "verify_claim"
+      },
+      {
+        "end_line": 345,
+        "line": 301,
+        "name": "verify_run"
+      }
+    ]
+  },
+  "source": "649fb8a11089524aaef7843dffeeb90a3a55ca17"
+}
