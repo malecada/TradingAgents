@@ -1,0 +1,1364 @@
+{
+  "archive": {
+    "bytes": 440829,
+    "manifest_sha256": "f20abc5e9db34808437913271d1d54f3d9b129f594077bb555d6ff41beddfcd1",
+    "sha256": "a3604f90d8abe569cbb7b72e600bc2faf8296d43614c98860b30a33812dfad72"
+  },
+  "flat_members": {
+    "CAPTURE_ORIGINAL_TREE01.json": "body-00000.body",
+    "CHECK01.err": "body-00001.body",
+    "CHECK01.out": "body-00002.body",
+    "CHECK02.err": "body-00003.body",
+    "CHECK02.out": "body-00004.body",
+    "CHECKS01.json": "body-00005.body",
+    "CHECKS02.json": "body-00006.body",
+    "MANIFEST01.json": "body-00007.body",
+    "ORIGINAL_CENSUS01.json": "body-00008.body",
+    "ORIGINAL_INVERSE01.json": "body-00009.body",
+    "ORIGINAL_MANIFEST01.json": "body-00010.body",
+    "ORIGINAL_capture_tooling01.py": "body-00011.body",
+    "ORIGINAL_original-capture01.py": "body-00012.body",
+    "PRIMITIVE_bounded_git01.py": "body-00013.body",
+    "PRIMITIVE_owned_io.py": "body-00014.body",
+    "PRIMITIVE_recovery04.py": "body-00015.body",
+    "PROJECTION01.json": "body-00016.body",
+    "REPORT01.md": "body-00017.body",
+    "VERDICT01.json": "body-00018.body",
+    "check01.py": "body-00019.body",
+    "check02.py": "body-00020.body",
+    "cleanup-KeyboardInterrupt-KeyboardInterrupt": "body-00021.body",
+    "cleanup-KeyboardInterrupt-MemoryError": "body-00022.body",
+    "cleanup-KeyboardInterrupt-OSError": "body-00023.body",
+    "cleanup-KeyboardInterrupt-SystemExit": "body-00024.body",
+    "cleanup-MemoryError-KeyboardInterrupt": "body-00025.body",
+    "cleanup-MemoryError-MemoryError": "body-00026.body",
+    "cleanup-MemoryError-OSError": "body-00027.body",
+    "cleanup-MemoryError-SystemExit": "body-00028.body",
+    "cleanup-SystemExit-KeyboardInterrupt": "body-00029.body",
+    "cleanup-SystemExit-MemoryError": "body-00030.body",
+    "cleanup-SystemExit-OSError": "body-00031.body",
+    "cleanup-SystemExit-SystemExit": "body-00032.body",
+    "freeze01.py": "body-00033.body",
+    "negative-existing": "body-00034.body",
+    "put-KeyboardInterrupt": "body-00035.body",
+    "put-MemoryError": "body-00036.body",
+    "put-OSError": "body-00037.body",
+    "put-SystemExit": "body-00038.body",
+    "tiny-body/0-manifest.json": "body-00039.body",
+    "tiny-body/0.tar.gz": "body-00040.body",
+    "tiny-body/1-manifest.json": "body-00041.body",
+    "tiny-body/1.tar.gz": "body-00042.body",
+    "tiny-body/original0/body": "body-00043.body",
+    "tiny-body/original1/body": "body-00044.body",
+    "tiny-body/source/body": "body-00045.body",
+    "tiny-body/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json": "body-00046.body",
+    "tiny-body/union-bytes01/0/body": "body-00047.body",
+    "tiny-body/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json": "body-00048.body",
+    "tiny-body/union-bytes01/1/body": "body-00049.body",
+    "tiny-body/union-bytes01/ORIGINAL_TREES01.json": "body-00050.body",
+    "tiny-body/union-manifest.json": "body-00051.body",
+    "tiny-extra/0-manifest.json": "body-00052.body",
+    "tiny-extra/0.tar.gz": "body-00053.body",
+    "tiny-extra/1-manifest.json": "body-00054.body",
+    "tiny-extra/1.tar.gz": "body-00055.body",
+    "tiny-extra/original0/body": "body-00056.body",
+    "tiny-extra/original0/late": "body-00057.body",
+    "tiny-extra/original1/body": "body-00058.body",
+    "tiny-extra/source/body": "body-00059.body",
+    "tiny-extra/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json": "body-00060.body",
+    "tiny-extra/union-bytes01/0/body": "body-00061.body",
+    "tiny-extra/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json": "body-00062.body",
+    "tiny-extra/union-bytes01/1/body": "body-00063.body",
+    "tiny-extra/union-bytes01/ORIGINAL_TREES01.json": "body-00064.body",
+    "tiny-extra/union-manifest.json": "body-00065.body",
+    "tiny-link/0-manifest.json": "body-00066.body",
+    "tiny-link/0.tar.gz": "body-00067.body",
+    "tiny-link/1-manifest.json": "body-00068.body",
+    "tiny-link/1.tar.gz": "body-00069.body",
+    "tiny-link/original0/body": "body-00070.body",
+    "tiny-link/original1/body": "body-00071.body",
+    "tiny-link/source/body": "body-00072.body",
+    "tiny-link/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json": "body-00073.body",
+    "tiny-link/union-bytes01/0/body": "body-00074.body",
+    "tiny-link/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json": "body-00075.body",
+    "tiny-link/union-bytes01/1/body": "body-00076.body",
+    "tiny-link/union-bytes01/ORIGINAL_TREES01.json": "body-00077.body",
+    "tiny-link/union-manifest.json": "body-00078.body",
+    "tiny-mode/0-manifest.json": "body-00079.body",
+    "tiny-mode/0.tar.gz": "body-00080.body",
+    "tiny-mode/1-manifest.json": "body-00081.body",
+    "tiny-mode/1.tar.gz": "body-00082.body",
+    "tiny-mode/original0/body": "body-00083.body",
+    "tiny-mode/original1/body": "body-00084.body",
+    "tiny-mode/source/body": "body-00085.body",
+    "tiny-mode/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json": "body-00086.body",
+    "tiny-mode/union-bytes01/0/body": "body-00087.body",
+    "tiny-mode/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json": "body-00088.body",
+    "tiny-mode/union-bytes01/1/body": "body-00089.body",
+    "tiny-mode/union-bytes01/ORIGINAL_TREES01.json": "body-00090.body",
+    "tiny-mode/union-manifest.json": "body-00091.body",
+    "tiny-remove/0-manifest.json": "body-00092.body",
+    "tiny-remove/0.tar.gz": "body-00093.body",
+    "tiny-remove/1-manifest.json": "body-00094.body",
+    "tiny-remove/1.tar.gz": "body-00095.body",
+    "tiny-remove/original1/body": "body-00096.body",
+    "tiny-remove/source/body": "body-00097.body",
+    "tiny-remove/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json": "body-00098.body",
+    "tiny-remove/union-bytes01/0/body": "body-00099.body",
+    "tiny-remove/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json": "body-00100.body",
+    "tiny-remove/union-bytes01/1/body": "body-00101.body",
+    "tiny-remove/union-bytes01/ORIGINAL_TREES01.json": "body-00102.body",
+    "tiny-remove/union-manifest.json": "body-00103.body",
+    "tiny-valid/0-manifest.json": "body-00104.body",
+    "tiny-valid/0.tar.gz": "body-00105.body",
+    "tiny-valid/1-manifest.json": "body-00106.body",
+    "tiny-valid/1.tar.gz": "body-00107.body",
+    "tiny-valid/UNION_AUTHENTICATION01.json": "body-00108.body",
+    "tiny-valid/flat0/body-00000.body": "body-00109.body",
+    "tiny-valid/flat0/body-00001.body": "body-00110.body",
+    "tiny-valid/flat0/body-metadata.json": "body-00111.body",
+    "tiny-valid/flat1/body-00000.body": "body-00112.body",
+    "tiny-valid/flat1/body-00001.body": "body-00113.body",
+    "tiny-valid/flat1/body-metadata.json": "body-00114.body",
+    "tiny-valid/original0/body": "body-00115.body",
+    "tiny-valid/original1/body": "body-00116.body",
+    "tiny-valid/source/body": "body-00117.body",
+    "tiny-valid/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json": "body-00118.body",
+    "tiny-valid/union-bytes01/0/body": "body-00119.body",
+    "tiny-valid/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json": "body-00120.body",
+    "tiny-valid/union-bytes01/1/body": "body-00121.body",
+    "tiny-valid/union-bytes01/ORIGINAL_TREES01.json": "body-00122.body",
+    "tiny-valid/union-manifest.json": "body-00123.body",
+    "tooling-preparation-PROJECTED_ONLY.tar.gz": "body-00124.body",
+    "tooling-review-PROJECTED_ONLY.tar.gz": "body-00125.body"
+  },
+  "manifest": {
+    "members": [
+      {
+        "bytes": 45715,
+        "kind": "file",
+        "mode": 384,
+        "path": "CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "bbce871c8dfc47e44e5bbaa16c8991498a7babec61d04e12d31d8df9e6f2c55a"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "CHECK01.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 1922,
+        "kind": "file",
+        "mode": 384,
+        "path": "CHECK01.out",
+        "sha256": "972bb08661412002387ca8a1296532e18a1520177d8f158100f07d788e7c4484"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "CHECK02.err",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 4,
+        "kind": "file",
+        "mode": 384,
+        "path": "CHECK02.out",
+        "sha256": "8b6fc7ea87404fbb9a4f2055d910a0c96261097418b4385cd0cd0253b95df6bc"
+      },
+      {
+        "bytes": 365588,
+        "kind": "file",
+        "mode": 384,
+        "path": "CHECKS01.json",
+        "sha256": "a4121153689c83ef68e804c562267e1d79c0b8213c023d5f2331c5790cd8f85e"
+      },
+      {
+        "bytes": 45756,
+        "kind": "file",
+        "mode": 384,
+        "path": "CHECKS02.json",
+        "sha256": "ab04d492b173858c075dada709b30681e0d51c8c9a1f937940a317c351a2c42a"
+      },
+      {
+        "bytes": 33737,
+        "kind": "file",
+        "mode": 384,
+        "path": "MANIFEST01.json",
+        "sha256": "d3a12fdeb484ca3b4feccb2c9e84048fc341c97937694444bbd311ec1c952a2f"
+      },
+      {
+        "bytes": 112656,
+        "kind": "file",
+        "mode": 384,
+        "path": "ORIGINAL_CENSUS01.json",
+        "sha256": "215f09708932da30e3ad13328616ed13c5f96c10d7163423208a594e416ef1a7"
+      },
+      {
+        "bytes": 6137,
+        "kind": "file",
+        "mode": 384,
+        "path": "ORIGINAL_INVERSE01.json",
+        "sha256": "c2ac14ec172d3a9657dd39e554db56d9d0a0b2349a4b50bdbb1ca8b6017ad2e8"
+      },
+      {
+        "bytes": 11843,
+        "kind": "file",
+        "mode": 384,
+        "path": "ORIGINAL_MANIFEST01.json",
+        "sha256": "34f28fde09ebce6e586f40555dfbef918a408534ce393e165987c3547085cf7d"
+      },
+      {
+        "bytes": 11781,
+        "kind": "file",
+        "mode": 384,
+        "path": "ORIGINAL_capture_tooling01.py",
+        "sha256": "85368444d94a93df1aa4ba8b0f657d2725bc3d4717e9a07beecc3fa59033a167"
+      },
+      {
+        "bytes": 12045,
+        "kind": "file",
+        "mode": 384,
+        "path": "ORIGINAL_original-capture01.py",
+        "sha256": "1c74338bb78018c8816933c23b850090ef29ebce503ef7420d716e1f2a374749"
+      },
+      {
+        "bytes": 3162,
+        "kind": "file",
+        "mode": 384,
+        "path": "PRIMITIVE_bounded_git01.py",
+        "sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+      },
+      {
+        "bytes": 3099,
+        "kind": "file",
+        "mode": 384,
+        "path": "PRIMITIVE_owned_io.py",
+        "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+      },
+      {
+        "bytes": 23843,
+        "kind": "file",
+        "mode": 384,
+        "path": "PRIMITIVE_recovery04.py",
+        "sha256": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a"
+      },
+      {
+        "bytes": 926,
+        "kind": "file",
+        "mode": 384,
+        "path": "PROJECTION01.json",
+        "sha256": "a73913209cef82fa7b488492487291770e6d742362fa8efdbc5bd7d841edc4a9"
+      },
+      {
+        "bytes": 4714,
+        "kind": "file",
+        "mode": 384,
+        "path": "REPORT01.md",
+        "sha256": "1448e4ffa9ecf6629e9eccab73f48694e6e2ae8830e802a22048d33ededa0c9b"
+      },
+      {
+        "bytes": 1867,
+        "kind": "file",
+        "mode": 384,
+        "path": "VERDICT01.json",
+        "sha256": "6ac0f671190d661dd4b68f4718fcc68ce9593b38b8336437bab0a6b22efcf561"
+      },
+      {
+        "bytes": 10850,
+        "kind": "file",
+        "mode": 384,
+        "path": "check01.py",
+        "sha256": "dda47be2a1e1897ac105aca141b8cf87827bb441a82af0db970f9b7d3509a792"
+      },
+      {
+        "bytes": 3250,
+        "kind": "file",
+        "mode": 384,
+        "path": "check02.py",
+        "sha256": "75dda0bbe9bb2c9b4572ea25a6c33d66dcaf7d23e36e7d8aa1b0ba26f328435e"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-KeyboardInterrupt-KeyboardInterrupt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-KeyboardInterrupt-MemoryError",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-KeyboardInterrupt-OSError",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-KeyboardInterrupt-SystemExit",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-MemoryError-KeyboardInterrupt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-MemoryError-MemoryError",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-MemoryError-OSError",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-MemoryError-SystemExit",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-SystemExit-KeyboardInterrupt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-SystemExit-MemoryError",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-SystemExit-OSError",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "cleanup-SystemExit-SystemExit",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 2105,
+        "kind": "file",
+        "mode": 384,
+        "path": "freeze01.py",
+        "sha256": "71a0ba7111500a79ed84799675fe302d087f208daba7c4079a112b1f9f69406e"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "negative-existing",
+        "sha256": "0682c5f2076f099c34cfdd15a9e063849ed437a49677e6fcc5b4198c76575be5"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "put-KeyboardInterrupt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "put-MemoryError",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "put-OSError",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "kind": "file",
+        "mode": 384,
+        "path": "put-SystemExit",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/0-manifest.json",
+        "sha256": "e7135dc0a8f1bfe0ccbfba9ec44d5ed16534afc46a979d4985aeaadf390511db"
+      },
+      {
+        "bytes": 667,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/0.tar.gz",
+        "sha256": "bddf8ea1e7f6a777424f59e4709b85667bc976ce072c4efdb7e1652458a05e37"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/1-manifest.json",
+        "sha256": "87105451715474c23e0b74e6bb442c2708511cef71fa567d7a27283072e62fc6"
+      },
+      {
+        "bytes": 667,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/1.tar.gz",
+        "sha256": "b994b5ff92b401d82061ed382c9493e442d9e85128c06a095b9f0380f8ee0411"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/original0"
+      },
+      {
+        "bytes": 7,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/original0/body",
+        "sha256": "d67e2e944994496c8d8ec76eed0cf9f09679448d584b532bebf941852a37f5ed"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/original0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/original1"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/original1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/original1/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/source"
+      },
+      {
+        "bytes": 13,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/source/body",
+        "sha256": "7254a7567de91c9ce225d4dcbd02b33c8c7e4f8986c0802638d19163267fdf8a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/union-bytes01"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/union-bytes01/0"
+      },
+      {
+        "bytes": 993,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "a94ee874d99d13fbc295471b3f3991096c545f0fd379e43a18d2d10c89d41f28"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/union-bytes01/0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/union-bytes01/0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/union-bytes01/1"
+      },
+      {
+        "bytes": 993,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "30e4c7531150614ef3159c81e98b0093f9d7ae23661062b9b6e33bfc9d0f7af7"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/union-bytes01/1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-body/union-bytes01/1/empty"
+      },
+      {
+        "bytes": 2495,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/union-bytes01/ORIGINAL_TREES01.json",
+        "sha256": "61f113912c19348f794416365438563669b636d3d4cdc18c82a676543a581593"
+      },
+      {
+        "bytes": 1350,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-body/union-manifest.json",
+        "sha256": "1f4e24397fb29a1aab77726cf6093f99468cc9f3e86e0d4e82c604b46f0d9db2"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/0-manifest.json",
+        "sha256": "5c4ad2ab4804577330a564909ba61fdbe8e745800c8a4ce16e9525b440c97ed5"
+      },
+      {
+        "bytes": 667,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/0.tar.gz",
+        "sha256": "b5f15fd92ac99c2b552ed00bf14d7af4d8af4305a9804f358156b6f775466d6d"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/1-manifest.json",
+        "sha256": "6afe46ada9294cc57993b3742ab501d686c4ce845f9de231cd3838dbaa4c21e2"
+      },
+      {
+        "bytes": 668,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/1.tar.gz",
+        "sha256": "edf529caedb788ed7df93cd7bbe7304b736b7abc814d58b56054712e8f7cc8ed"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/original0"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/original0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/original0/empty"
+      },
+      {
+        "bytes": 4,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/original0/late",
+        "sha256": "089001a35679a33ef3db0ca350db9b9a2f0136e0e327577b04b3b98127470961"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/original1"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/original1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/original1/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/source"
+      },
+      {
+        "bytes": 13,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/source/body",
+        "sha256": "7254a7567de91c9ce225d4dcbd02b33c8c7e4f8986c0802638d19163267fdf8a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/union-bytes01"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/union-bytes01/0"
+      },
+      {
+        "bytes": 994,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "ee40e1a85bc3704bedebe24249df8b0901b98e45680be61721bd56e3266e378c"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/union-bytes01/0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/union-bytes01/0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/union-bytes01/1"
+      },
+      {
+        "bytes": 994,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "158740773ad05b78cd13ca791346ea62a12bfe1c587e242ec6972eba513290e9"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/union-bytes01/1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-extra/union-bytes01/1/empty"
+      },
+      {
+        "bytes": 2497,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/union-bytes01/ORIGINAL_TREES01.json",
+        "sha256": "d27a09cf8c9c2b81681b4d1e55d4708c5a18e942c27c69ccdebd9316971cf918"
+      },
+      {
+        "bytes": 1350,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-extra/union-manifest.json",
+        "sha256": "a495b58bfb7beab24e3f2057e5a925d867ccb44a8e62f5fda7945bc35374ea48"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/0-manifest.json",
+        "sha256": "010615037bab54d71ddb32cfbf4bdb59290ec15a2828f888438e2860894e4862"
+      },
+      {
+        "bytes": 667,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/0.tar.gz",
+        "sha256": "0fb4a27996325c433911445fbe5486dec44dcef795a30bb0de5428c75fb325f0"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/1-manifest.json",
+        "sha256": "9fd0fc3d8e7ef3fe60e6dedac55622ec0bb5583bcbb75c1f8b95e76c2e5f6a3b"
+      },
+      {
+        "bytes": 667,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/1.tar.gz",
+        "sha256": "156ce85ccb8d87b15c9dac7a10b9d1a13b6302f853f4b09f3ca30a4166c69e95"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/original0"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/original0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/original0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/original1"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/original1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/original1/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/source"
+      },
+      {
+        "bytes": 13,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/source/body",
+        "sha256": "7254a7567de91c9ce225d4dcbd02b33c8c7e4f8986c0802638d19163267fdf8a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/union-bytes01"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/union-bytes01/0"
+      },
+      {
+        "bytes": 993,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "eda32827e626f5e92b4ec920081148182d2bb955b909d5176a81c86b758f3937"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/union-bytes01/0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/union-bytes01/0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/union-bytes01/1"
+      },
+      {
+        "bytes": 993,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "373096f7c8817a41200162ea5243e525888b1e951a69dd8b1c65fbfbb6ecb998"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/union-bytes01/1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-link/union-bytes01/1/empty"
+      },
+      {
+        "bytes": 2495,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/union-bytes01/ORIGINAL_TREES01.json",
+        "sha256": "291bf9e95b216a90af8e38b27d48c447cc4d1cea7662cb5110156ade33cd7cba"
+      },
+      {
+        "bytes": 1350,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-link/union-manifest.json",
+        "sha256": "9f82d61865cf068d1fec48355690ca53546bf20ef72d0fe6bd932200308c31e4"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/0-manifest.json",
+        "sha256": "c0a7fce081197144f2c09faffab736f123129eff36f4642377c8301b5fe460f5"
+      },
+      {
+        "bytes": 667,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/0.tar.gz",
+        "sha256": "3e69b4cab8a4ed6ce5e2eda185b9c39b5ceb2ca6d2492056d6e7a334b0d0153a"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/1-manifest.json",
+        "sha256": "172c6607a45ad07b8e8826ce62a3c9be21efb4cbdf96ef3f39805971cace0221"
+      },
+      {
+        "bytes": 667,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/1.tar.gz",
+        "sha256": "3773d6d9cc9d9784a2297ab534e1d7d8c7228218fad6524b5c280e4851cf3837"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/original0"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/original0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/original0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/original1"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/original1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/original1/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/source"
+      },
+      {
+        "bytes": 13,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/source/body",
+        "sha256": "7254a7567de91c9ce225d4dcbd02b33c8c7e4f8986c0802638d19163267fdf8a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/union-bytes01"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/union-bytes01/0"
+      },
+      {
+        "bytes": 993,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "30d4a703d9eb11d342a5d084478ebc4b8b19282acc30fe957c7c974647b0d4f1"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/union-bytes01/0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/union-bytes01/0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/union-bytes01/1"
+      },
+      {
+        "bytes": 993,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "c47db79702c967a5f7bfa437413a0a68033f993a950aa2fbaf068da616e23564"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/union-bytes01/1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-mode/union-bytes01/1/empty"
+      },
+      {
+        "bytes": 2495,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/union-bytes01/ORIGINAL_TREES01.json",
+        "sha256": "d9146fad4a3c1bd55b9c03e5b5da36895a2d3dbe7bbbb25b1618ad4cc76dee54"
+      },
+      {
+        "bytes": 1350,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-mode/union-manifest.json",
+        "sha256": "278f84baa524f860fef536873833a41d6c32efeb66d731324f90f1c2f31d74f1"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/0-manifest.json",
+        "sha256": "a293398d95973096c9b024b1320f9747259861ffc246b663a266aed89f8c281b"
+      },
+      {
+        "bytes": 667,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/0.tar.gz",
+        "sha256": "7b468ca7c71041cd86cb8c5de8a904f3a8ac0e90799a10cfb1cab30ce1c1ff3b"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/1-manifest.json",
+        "sha256": "e9ea067c2a03440591876248516d44c389afb047ba7e0e0cba216b751f2d59ef"
+      },
+      {
+        "bytes": 668,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/1.tar.gz",
+        "sha256": "a7da3726d2a5bb376c6a9691c1f4f5597c11c326832b59f6574b280a9533a4c2"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/original0"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/original0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/original1"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/original1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/original1/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/source"
+      },
+      {
+        "bytes": 13,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/source/body",
+        "sha256": "7254a7567de91c9ce225d4dcbd02b33c8c7e4f8986c0802638d19163267fdf8a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/union-bytes01"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/union-bytes01/0"
+      },
+      {
+        "bytes": 995,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "91391c8488405f1f8b1f0f9e5abef006a61a15f8c5b789d279893fd9436720e5"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/union-bytes01/0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/union-bytes01/0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/union-bytes01/1"
+      },
+      {
+        "bytes": 995,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "e9f8b792018198fdf953f66a91b4d0f501426ac527293b9ed3024db36674d9cb"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/union-bytes01/1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-remove/union-bytes01/1/empty"
+      },
+      {
+        "bytes": 2499,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/union-bytes01/ORIGINAL_TREES01.json",
+        "sha256": "6b4078ad3fff55b7bc5f594e70dc8f7519f3cfda6812d1022195fe5337a70c99"
+      },
+      {
+        "bytes": 1350,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-remove/union-manifest.json",
+        "sha256": "aeb93cc83ac2123174ef0c7b475f980141157201f43895076eacd81f6336d19b"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/0-manifest.json",
+        "sha256": "e094afb3a31e407192cd32282d7e698453defa8eab2ebbe5817ff4c1713085d7"
+      },
+      {
+        "bytes": 668,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/0.tar.gz",
+        "sha256": "7f83a1a46f8f64e6854d2b53ead39643a0f31259568d31ce7231de68d109e0db"
+      },
+      {
+        "bytes": 526,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/1-manifest.json",
+        "sha256": "ed7043e2e5ab444f7805836a9fe4e7e2b1c43672f1d12dde1ba0307b8994d9f4"
+      },
+      {
+        "bytes": 668,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/1.tar.gz",
+        "sha256": "257edde01eca2c8bbcbe859d27da38a32ebfcef61f378aa7b5520af499384717"
+      },
+      {
+        "bytes": 1945,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/UNION_AUTHENTICATION01.json",
+        "sha256": "bb864fe278fcbd1f22c2f1da6db7f65b639a062661146ca10d858b7b61ba2a7d"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/flat0"
+      },
+      {
+        "bytes": 994,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/flat0/body-00000.body",
+        "sha256": "1ab203e52b05316fd48a8d931aa2cf5b88d8277835b6e28ccebe2e71c775d44c"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/flat0/body-00001.body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "bytes": 935,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/flat0/body-metadata.json",
+        "sha256": "6087b785daa8d3f8d01133c6113ba5545dcbdebf8bd459f32ea2431d85780309"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/flat1"
+      },
+      {
+        "bytes": 994,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/flat1/body-00000.body",
+        "sha256": "7326213b32684e3e5afc20c843d84d4ba9d4fc2dd2a209029b98463058460c03"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/flat1/body-00001.body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "bytes": 935,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/flat1/body-metadata.json",
+        "sha256": "c4e04868b69df2b14f4313b46fd17b1d96d00305e41fe55fd333e8b16823e74c"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/original0"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/original0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/original0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/original1"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/original1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/original1/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/source"
+      },
+      {
+        "bytes": 13,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/source/body",
+        "sha256": "7254a7567de91c9ce225d4dcbd02b33c8c7e4f8986c0802638d19163267fdf8a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/union-bytes01"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/union-bytes01/0"
+      },
+      {
+        "bytes": 994,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/union-bytes01/0/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "1ab203e52b05316fd48a8d931aa2cf5b88d8277835b6e28ccebe2e71c775d44c"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/union-bytes01/0/body",
+        "sha256": "845bd4c252aeaacb9ed4bb7809bbe44f97b780c96594d52a9c811b366af95e4a"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/union-bytes01/0/empty"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/union-bytes01/1"
+      },
+      {
+        "bytes": 994,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/union-bytes01/1/CAPTURE_ORIGINAL_TREE01.json",
+        "sha256": "7326213b32684e3e5afc20c843d84d4ba9d4fc2dd2a209029b98463058460c03"
+      },
+      {
+        "bytes": 8,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/union-bytes01/1/body",
+        "sha256": "542a54f3a69883c0048852956e739592eba50c33917566cfe5b2012883c39799"
+      },
+      {
+        "kind": "directory",
+        "mode": 448,
+        "path": "tiny-valid/union-bytes01/1/empty"
+      },
+      {
+        "bytes": 2497,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/union-bytes01/ORIGINAL_TREES01.json",
+        "sha256": "28be288d7e8256048f85fb3d8f27343ffbf2c60837576e482d8a48ea50466a1a"
+      },
+      {
+        "bytes": 1350,
+        "kind": "file",
+        "mode": 384,
+        "path": "tiny-valid/union-manifest.json",
+        "sha256": "9f5d751c4b8e0477ccde2f4a0b956c523d253f279c8bc5d2379a7e8af32766d6"
+      },
+      {
+        "bytes": 181135,
+        "kind": "file",
+        "mode": 384,
+        "path": "tooling-preparation-PROJECTED_ONLY.tar.gz",
+        "sha256": "55dd8b239af7de41d67070ee1a5df9a338c79512b057b8055e28cd6c1704eda4"
+      },
+      {
+        "bytes": 250945,
+        "kind": "file",
+        "mode": 384,
+        "path": "tooling-review-PROJECTED_ONLY.tar.gz",
+        "sha256": "caead83453395783ef157bb31ee22342ed50ea6a5b547168c01bd4e4a6ff6380"
+      }
+    ],
+    "root_mode": 448,
+    "schema_version": 1
+  },
+  "schema_version": 1
+}

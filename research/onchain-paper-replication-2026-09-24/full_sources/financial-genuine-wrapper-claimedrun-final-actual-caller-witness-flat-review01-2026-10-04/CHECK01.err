@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-final-actual-caller-witness-flat-review01-2026-10-04/check01.py", line 72, in <module>
+    source=B/'financial-genuine-wrapper-root-claimedrun-source339-capture01-2026-10-04';sm=json.loads(pin(source/'source-manifest.json','fdf77348b81a4d6df8b420b98530f5485900a0461636e1c201506106b036dfd8'));cap=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source');O.same(cap,sm);ok(True,'actual whole Source339 unchanged');ok(O.read(cap,'.git/HEAD').strip()==b'0a2e7639b42b9423b90743feadcda4078aa21816','actual current design Source0a2 HEAD')
+                                                                                                                                                                                                                                                                                                                                                                                                            ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-final-actual-caller-witness-flat-review01-2026-10-04/check01.py", line 9, in ok
+    if not v:raise AssertionError(label)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual current design Source0a2 HEAD
