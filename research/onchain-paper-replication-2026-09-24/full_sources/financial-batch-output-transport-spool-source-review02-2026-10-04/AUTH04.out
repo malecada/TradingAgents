@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-source-review02-2026-10-04/auth04.py", line 11, in <module>
+    ok(sorted(str(p.relative_to(root)) for p in root.rglob('*') if p!=root/'MANIFEST01.json')==[r['path'] for r in rows])
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-source-review02-2026-10-04/auth04.py", line 8, in ok
+    assert v;checks+=1
+           ^
+AssertionError

@@ -1,0 +1,51 @@
+{
+  "CS1": {
+    "actual_result": {
+      "authority": null,
+      "logical_bytes": 128,
+      "members": [
+        "chunk-00000.bin",
+        "chunk-00001.bin",
+        "chunk-00002.bin",
+        "chunk-00003.bin",
+        "page-0000.json",
+        "start.json",
+        "terminal.json"
+      ],
+      "raw_sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+      "representation_complete": false,
+      "status": "complete-byte-proof-only"
+    },
+    "calls": [
+      "terminal.json",
+      "start.json",
+      "page-0000.json",
+      "chunk-00000.bin",
+      "chunk-00001.bin",
+      "chunk-00002.bin",
+      "chunk-00003.bin"
+    ],
+    "refused": false
+  },
+  "CS2": {
+    "poisoned": false,
+    "prefix_bytes": 32,
+    "primary_identity_preserved": true,
+    "retry_succeeded": true
+  },
+  "CS3": {
+    "actual_64MiB_capacity_measured": false,
+    "actual_allocated": 12288,
+    "error": "whole sampled allocated/logical bound",
+    "production_limit": 67108864,
+    "retained": [
+      "start.json",
+      "terminal.json"
+    ],
+    "scaled_limit": 8192,
+    "scaled_only": true
+  },
+  "checks": 5,
+  "codec_sha256": "00d06377c4567bd7880dd7ddbf396b613a78968a7317a565f7e034319c9ed4fe",
+  "sink_sha256": "2614242ebc8395f859e704db1971dd46172ff8ea9802fb4c77397c80970bdb52"
+}

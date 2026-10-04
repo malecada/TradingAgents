@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-04T11:07:43.711617+00:00",
+  "actual_full_stage_check": {
+    "chunk": "f2ea03",
+    "exit_code": 2,
+    "finding": "Eight trailing-space findings are four unchanged unified-diff blank context records in each of two immutable inverse evidence files."
+  },
+  "raw_exceptions": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation02-2026-10-04/INVERSE01.diff",
+      "sha256": "d55680133fb06abcc0ca83d3e197f5fa84c74ca65e986271d6a909de6ac08cb3",
+      "literal_context_lines": [
+        4,
+        15,
+        16,
+        30
+      ]
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-source-review02-2026-10-04/AUTHOR_INVERSE01.diff",
+      "sha256": "d55680133fb06abcc0ca83d3e197f5fa84c74ca65e986271d6a909de6ac08cb3",
+      "literal_context_lines": [
+        4,
+        15,
+        16,
+        30
+      ]
+    }
+  ],
+  "qualification": "Exact raw inverse evidence is preserved unchanged. Only these two raw .diff artifacts are excluded from the style-only check; all staged implementation, documents, tests and remaining evidence are checked. No functional check or source admission is waived."
+}

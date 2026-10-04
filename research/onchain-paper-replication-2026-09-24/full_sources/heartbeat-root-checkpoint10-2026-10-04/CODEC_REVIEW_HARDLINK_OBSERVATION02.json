@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-10-04T10:56:47.785637+00:00",
+  "review_manifest_sha256": "b0a83b95fe7d8b4b6c5e04e5aa01946db8261d63880be58930c141a76efa44a1",
+  "physical_groups": [
+    {
+      "device": 66310,
+      "inode": 10777638,
+      "members": [
+        {
+          "path": "member-hardlink/retained-hardlink",
+          "nlink": 2,
+          "bytes": 728,
+          "sha256": "0e2ad1ca84e69d7032a8093f2cdf4acc8c93cd248cf4438b9c5c57b8e8adb7f5",
+          "mode": 384
+        },
+        {
+          "path": "member-hardlink/start.json",
+          "nlink": 2,
+          "bytes": 728,
+          "sha256": "0e2ad1ca84e69d7032a8093f2cdf4acc8c93cd248cf4438b9c5c57b8e8adb7f5",
+          "mode": 384
+        }
+      ]
+    }
+  ],
+  "qualification": "Original actual shared-inode hardlink refusal pair retained unchanged; Git preserves both bytes plus literal physical metadata, not POSIX reconstruction. No unlink/deletion/external recovery claim."
+}

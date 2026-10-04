@@ -1,0 +1,67 @@
+{
+  "bounded_git01.py": {
+    "AST_inverse": true,
+    "byte_inverse": true,
+    "edits": [],
+    "original_sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f",
+    "successor_sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+  },
+  "codec01.py": {
+    "AST_inverse": true,
+    "byte_inverse": true,
+    "edits": [
+      {
+        "after": "start=time.monotonic();total=descriptor(expected);expected=parse(canonical(expected));pin(terminal_pin)",
+        "before": "start=time.monotonic();total=descriptor(expected);pin(terminal_pin)"
+      }
+    ],
+    "original_sha256": "00d06377c4567bd7880dd7ddbf396b613a78968a7317a565f7e034319c9ed4fe",
+    "successor_sha256": "f10f6803a637735bc490de8846056a34e9090451d92773d075a7025b19bd3d55"
+  },
+  "local_store01.py": {
+    "AST_inverse": true,
+    "byte_inverse": true,
+    "edits": [
+      {
+        "after": "FLOOR=10*1024**3\n# Conservative ENGINEERING reservation, not a filesystem quota theorem.\n# No filesystem scratch is written; headroom reserves bounded IO transient space.\nBLOCK=65536\nDIRECTORY_HEADROOM=1024**2\nSCRATCH_HEADROOM=4*1024**2\nENTRY_HEADROOM=BLOCK\n\ndef project(reserved,logical,size,limit=LIMIT):\n C.require(all(type(x)is int for x in (reserved,logical,size,limit)) and reserved>=0 and logical>=0 and 0<size<=C.FILE,'reservation integers')\n cost=((size+BLOCK-1)//BLOCK)*BLOCK+ENTRY_HEADROOM\n C.require(logical+size<=limit and reserved+cost<=limit,'pre-write no-refund whole reservation')\n return reserved+cost,logical+size\n",
+        "before": "FLOOR=10*1024**3"
+      },
+      {
+        "after": "self.names=set();self.total=0;self.reserved=0;self.reserved_logical=0;self.begin=time.monotonic()",
+        "before": "self.names=set();self.total=0;self.begin=time.monotonic()"
+      },
+      {
+        "after": "C.require(stat.S_IMODE(s.st_mode)==0o700 and not os.listdir(self.fd),'fresh empty private root')\n   fs=os.fstatvfs(self.fd)\n   C.require(0<fs.f_bsize<=BLOCK and 0<fs.f_frsize<=BLOCK and 0<s.st_blksize<=BLOCK,'unsupported filesystem block size')\n   self.reserved=s.st_blocks*512+DIRECTORY_HEADROOM+SCRATCH_HEADROOM\n   C.require(self.reserved<=LIMIT,'initial directory/scratch reservation exceeds local cap');self.check()",
+        "before": "C.require(stat.S_IMODE(s.st_mode)==0o700 and not os.listdir(self.fd),'fresh empty private root');self.check()"
+      },
+      {
+        "after": "C.require(allocated<=self.reserved<=LIMIT and logical==self.total<=self.reserved_logical<=LIMIT,'whole sampled allocated/logical/reserved bound')",
+        "before": "C.require(allocated<=LIMIT and logical==self.total<=LIMIT,'whole sampled allocated/logical bound')"
+      },
+      {
+        "after": "projected,logical=project(self.reserved,self.reserved_logical,len(b),LIMIT)\n   C.require(shutil.disk_usage(self.root).free>=FLOOR+projected,'pre-write disk floor plus reservation headroom')\n   self.reserved=projected;self.reserved_logical=logical\n   self.names.add(n) # Reservation is not refunded after failure.",
+        "before": "self.names.add(n) # Reservation is not refunded after failure."
+      },
+      {
+        "after": "  try:\n   self.check();result=C.verify_stream(lambda n:R.read(self.root,name(n)),terminal_pin,descriptor,provisional)\n   C.require(set(result['members'])==self.names,'complete local member denominator');self.check();return result\n  except BaseException:\n   self.poisoned=True;raise",
+        "before": "  self.check();result=C.verify_stream(lambda n:R.read(self.root,name(n)),terminal_pin,descriptor,provisional)\n  C.require(set(result['members'])==self.names,'complete local member denominator');self.check();return result"
+      }
+    ],
+    "original_sha256": "2614242ebc8395f859e704db1971dd46172ff8ea9802fb4c77397c80970bdb52",
+    "successor_sha256": "ceec61446f678f8749fa1e24530b5b4e3e344a59cce75f7906e322f03dd8ad89"
+  },
+  "owned_io.py": {
+    "AST_inverse": true,
+    "byte_inverse": true,
+    "edits": [],
+    "original_sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+    "successor_sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+  },
+  "recovery04.py": {
+    "AST_inverse": true,
+    "byte_inverse": true,
+    "edits": [],
+    "original_sha256": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a",
+    "successor_sha256": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a"
+  }
+}

@@ -1,0 +1,55 @@
+  | ExceptionGroup: body/cleanup failures (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/spool01.py", line 191, in transfer
+    |     self.check()
+    |     ~~~~~~~~~~^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/spool01.py", line 162, in check
+    |     require(not self.failed and not self.closed, 'terminal failed/closed spool')
+    |     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/spool01.py", line 23, in require
+    |     raise ValueError(why)
+    | ValueError: terminal failed/closed spool
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/owned_io.py", line 34, in _cleanup
+    |     try:close()
+    |         ~~~~~^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/spool01.py", line 207, in retain
+    |     self._write('terminal',canonical({'status':'FAILED','index':i,'exception_type':type(error).__name__,'states':self._states,'consumed':self.consumed}))
+    |     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/spool01.py", line 155, in _write
+    |     padded=raw+b'\0'*(size-len(raw));fd=self._fds[name]
+    |                                         ~~~~~~~~~^^^^^^
+    | KeyError: 'terminal'
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/check01.py", line 24, in case
+    try:fn()
+        ~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/check01.py", line 39, in <lambda>
+    case('closed replay',lambda:s.transfer(bodies[0],ack,None),ValueError)
+                                ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/spool01.py", line 208, in transfer
+    io._cleanup((retain,),primary=error)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/owned_io.py", line 52, in _cleanup
+    raise failure
+owned_io.CleanupFailure: score storage cleanup unresolved; worker must stop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/check01.py", line 39, in <module>
+    case('closed replay',lambda:s.transfer(bodies[0],ack,None),ValueError)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/check01.py", line 26, in case
+    ok(isinstance(e,expected),name+' exact category')
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-transport-spool-preparation01-2026-10-04/check01.py", line 11, in ok
+    assert value,label
+           ^^^^^
+AssertionError: closed replay exact category
