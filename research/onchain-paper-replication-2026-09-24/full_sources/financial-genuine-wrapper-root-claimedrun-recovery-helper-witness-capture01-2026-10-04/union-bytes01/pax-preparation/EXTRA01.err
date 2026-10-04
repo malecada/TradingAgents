@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04/owned_io.py", line 34, in _cleanup
+    try:close()
+        ~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/gzip.py", line 373, in close
+    fileobj.write(self.compress.flush())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04/recovery_pax01.py", line 175, in write
+    def write(self,b):require(b==self.expected[self.count:self.count+len(b)],'noncanonical exact compressed bytes');return super().write(b)
+                      ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04/recovery_pax01.py", line 11, in require
+    if not v:raise ValueError(msg)
+             ^^^^^^^^^^^^^^^^^^^^^
+ValueError: noncanonical exact compressed bytes
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04/check_extra01.py", line 27, in <module>
+    b=encode(a);p=H/(label+'.gz');p.write_bytes(b);out=H/('extra-refusal-'+label);out.mkdir(mode=0o700);info={'bytes':len(b),'sha256':R.digest(b),'manifest_sha256':R.digest(R.encode(m))};refuse(lambda:R.restore(p,info,m,out),label)
+                                                                                                                                                                                           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04/check_extra01.py", line 6, in refuse
+    try:fn()
+        ~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04/check_extra01.py", line 27, in <lambda>
+    b=encode(a);p=H/(label+'.gz');p.write_bytes(b);out=H/('extra-refusal-'+label);out.mkdir(mode=0o700);info={'bytes':len(b),'sha256':R.digest(b),'manifest_sha256':R.digest(R.encode(m))};refuse(lambda:R.restore(p,info,m,out),label)
+                                                                                                                                                                                                         ~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04/recovery_pax01.py", line 200, in restore
+    require(seen==set(expected),'missing tar member');sink=ExactSink(raw);flat_tar_stream(output,m,mapping,sink);require(sink.count==len(raw) and sink.hash.hexdigest()==digest(raw),'noncanonical/trailing archive framing')
+                                                                          ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04/recovery_pax01.py", line 186, in flat_tar_stream
+    finally:_cleanup((() if tar is None else (tar.close,))+(() if gz is None else (gz.close,)))
+            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-witness-pax-framer-correction-preparation01-2026-10-04/owned_io.py", line 52, in _cleanup
+    raise failure
+owned_io.CleanupFailure: score storage cleanup unresolved; worker must stop

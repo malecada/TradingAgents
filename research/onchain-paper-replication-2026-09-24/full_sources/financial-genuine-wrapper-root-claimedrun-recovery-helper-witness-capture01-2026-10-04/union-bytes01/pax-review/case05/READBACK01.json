@@ -1,0 +1,281 @@
+{
+  "actual_Root_restore": false,
+  "actual_archive_red_green": [
+    {
+      "actual_restore": false,
+      "members": 136,
+      "path": "shards/shard-0035.tar.gz",
+      "sha256": "55a2e77d065cbf98370dd8e50bb8133a3737a8f910bb8ac89e426b2efb25feb9"
+    },
+    {
+      "actual_restore": false,
+      "members": 255,
+      "path": "shards/shard-0049.tar.gz",
+      "sha256": "5dd2114ccc90ad36af91c85ca286a6e13ea8164a334e05599bc487389af20962"
+    }
+  ],
+  "author_manifest_sha256": "27abd99dc0dfe68de28e78cb6d1923dd8616aed38f10df20a0590b92906c0035",
+  "checks": 892,
+  "decision": "accepted-source-only-witness-pax-framer-correction",
+  "numerical_or_research_authority": false,
+  "original_sha256": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a",
+  "refusals": [
+    {
+      "cleanup_causes": [],
+      "control": "original actual RED 35",
+      "exception": "ValueError",
+      "message": "noncanonical raw member slash/type"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "original actual RED 49",
+      "exception": "ValueError",
+      "message": "noncanonical raw member slash/type"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "original tiny RED",
+      "exception": "ValueError",
+      "message": "noncanonical raw member slash/type"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad nonPAX 'bad/'",
+      "exception": "ValueError",
+      "message": "noncanonical raw member slash/type"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad effective PAX 'bad/'",
+      "exception": "ValueError",
+      "message": "noncanonical effective member slash/type"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad nonPAX 'bad//'",
+      "exception": "ValueError",
+      "message": "noncanonical raw member slash/type"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad effective PAX 'bad//'",
+      "exception": "ValueError",
+      "message": "noncanonical effective member slash/type"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad nonPAX '../x'",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad effective PAX '../x'",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad nonPAX '/absolute'",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad effective PAX '/absolute'",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad nonPAX 'a/../x'",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad effective PAX 'a/../x'",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad nonPAX 'a//x'",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad effective PAX 'a//x'",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad nonPAX ''",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad effective PAX ''",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad nonPAX 'keys/file'",
+      "exception": "ValueError",
+      "message": "protected path refused before IO"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad effective PAX 'keys/file'",
+      "exception": "ValueError",
+      "message": "protected path refused before IO"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "effective PAX NUL",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad raw type b'2'",
+      "exception": "ValueError",
+      "message": "TAR extension/sparse/link type refused before payload"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad raw type b'1'",
+      "exception": "ValueError",
+      "message": "TAR extension/sparse/link type refused before payload"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad raw type b'6'",
+      "exception": "ValueError",
+      "message": "TAR extension/sparse/link type refused before payload"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad raw type b'3'",
+      "exception": "ValueError",
+      "message": "TAR extension/sparse/link type refused before payload"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad raw type b'4'",
+      "exception": "ValueError",
+      "message": "TAR extension/sparse/link type refused before payload"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad raw type b'S'",
+      "exception": "ValueError",
+      "message": "TAR extension/sparse/link type refused before payload"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad PAX schema/bound",
+      "exception": "ValueError",
+      "message": "unselected PAX extension"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad PAX schema/bound",
+      "exception": "ValueError",
+      "message": "PAX type/extent refused before payload"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "bad PAX schema/bound",
+      "exception": "ValueError",
+      "message": "unsafe member path"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "nonempty directory",
+      "exception": "ValueError",
+      "message": "TAR member bound before payload"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "4MiB member extent before body",
+      "exception": "ValueError",
+      "message": "TAR member bound before payload"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full restore nonzero-footer",
+      "exception": "ValueError",
+      "message": "inflated/trailing TAR bound"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full restore missing-footer",
+      "exception": "ValueError",
+      "message": "truncated TAR framing"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full restore gzip-corruption",
+      "exception": "BadGzipFile",
+      "message": "CRC check failed 0x62646162 != 0x22c7cf81"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full restore truncated",
+      "exception": "EOFError",
+      "message": "Compressed file ended before the end-of-stream marker was reached"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full restore canonical-header",
+      "exception": "ValueError",
+      "message": "noncanonical exact compressed bytes"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full restore extra",
+      "exception": "ValueError",
+      "message": "extra/repeated tar member"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full restore semantic-pax-slash",
+      "exception": "ValueError",
+      "message": "noncanonical effective member slash/type"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full restore duplicate",
+      "exception": "ValueError",
+      "message": "extra/repeated tar member"
+    },
+    {
+      "cleanup_causes": [
+        "ValueError: noncanonical exact compressed bytes"
+      ],
+      "control": "full restore order",
+      "exception": "CleanupFailure",
+      "message": "score storage cleanup unresolved; worker must stop"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full restore missing",
+      "exception": "ValueError",
+      "message": "missing tar member"
+    },
+    {
+      "cleanup_causes": [],
+      "control": "full manifest mode",
+      "exception": "ValueError",
+      "message": "archive mode"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Only witness archive framing; source/final caller recovery primitives remain immutable; actual integration/release and restored union verification remain separate.",
+  "source_sha256": "a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2"
+}

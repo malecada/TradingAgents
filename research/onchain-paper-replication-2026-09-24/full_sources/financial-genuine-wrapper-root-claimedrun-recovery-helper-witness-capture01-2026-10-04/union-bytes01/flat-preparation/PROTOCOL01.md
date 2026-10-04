@@ -1,0 +1,13 @@
+# Fixed witness57 shards plus exact direct-body flat recovery
+
+This executable caller derives from accepted f0fa final-union adapter. Fixed output is financial-genuine-wrapper-claimedrun-witness-sharded-flat-20261004-01 and must be absent. No actual Root restoration, network, admission or numerical run occurs in preparation. Run CLI --request and --sha256 only after Root supplies authentic remote receipt/commit, exact review and five-field independent release. Template retains NULL future evidence and refuses.
+
+Actual virtual manifest42896378, index784b3431, authenticationd0af9053 are fixed. Expected original census binds every member of the exact five roots:2302originalfiles59literal links, including one direct rawREADBACK2532973/c47f. The archived ordinary virtual tree has2703typed/2302files includingmapping;57deterministic2MiB/256typed shards. Full original path/mode/hash/literal-link metadata and Source0a2/b5b6/fdf7/468d context remain authenticated. Archived+direct exact disjoint cover is required; shards alone cannot complete.
+
+Only exact PAX successor a054 is imported from this caller directory, with original owned_io/boundedGit and9c38planner. Genuine independent framer MACHINE64bc091e must be provided and match accepted-source-only decision/source. This does not replace the caller's own different-author review/release. Existing f0fa/b40 final11flat adapter remains unchanged.
+
+Remote selection verifies every actual selected body hash/size/Git blob identity with <=506rows/64MiBselected. Direct rawbody must match exact Mainrelative path/size/hash and Git100644; original POSIX0600 is preserved as metadata. Each shard restores via original unchanged restore_ordinary logic into exclusive0700subdirectory, retaining original canonical full-compression verification. Direct rawbytes are copied exclusively0600 into separate private directory, fully read back and enumerated. Complete output joins include both direct result and every shard, never fake aggregate archive or POSIX tree.
+
+Logical whole bound includes direct original plus fullmapping and remains64MiB. Original perbody/archive4MiB,10GiB floor,120s entire operation and shard checks remain enforced. Completed first/partial later shards, failed direct outputs, original exceptions and genuine fatal cleanup are retained. Actual final selected bytes are reauthenticated before a final time/disk check and COMPLETE metadata.
+
+Original body modes/empty directories/links remain metadata only. No installed-runtime/empirical/financial/capacity/numerical authority is claimed. Original failed aggregate archive/terminal and tooling capture remain separate Root preservation obligations.
