@@ -1,0 +1,39 @@
+{
+  "kind": "complete-final-union-shards-v1",
+  "limits": {
+    "archive_bytes": 4194304,
+    "logical_bytes": 2097152,
+    "typed_members": 256
+  },
+  "regular_bodies": 2,
+  "schema_version": 1,
+  "shards": [
+    {
+      "archive": {
+        "bytes": 954,
+        "manifest_sha256": "86d1c3ba7af627b1af23c27265fd76243eaa76b316eb634dc666af1504474862",
+        "path": "shards/shard-0000.tar.gz",
+        "sha256": "e430ca928a0ec977c90842cadcf5cd6a87d21156428ff05885954275ecb9a2b6"
+      },
+      "id": "shard-0000",
+      "logical_bytes": 1557,
+      "manifest": {
+        "bytes": 528,
+        "path": "shards/shard-0000-manifest.json",
+        "sha256": "86d1c3ba7af627b1af23c27265fd76243eaa76b316eb634dc666af1504474862"
+      },
+      "members": 3,
+      "regular_bodies": 2,
+      "regular_paths": [
+        "ORIGINAL_TREES01.json",
+        "single/byte"
+      ],
+      "tar_bytes_bound": 10240
+    }
+  ],
+  "virtual_manifest": {
+    "bytes": 528,
+    "path": "union-manifest.json",
+    "sha256": "86d1c3ba7af627b1af23c27265fd76243eaa76b316eb634dc666af1504474862"
+  }
+}

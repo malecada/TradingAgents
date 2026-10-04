@@ -1,0 +1,9 @@
+# Complete sharded witness preservation
+
+This Root-only exporter preserves the five complete frozen preparation/review trees as opaque ordinary bodies plus literal original path/mode/link metadata. Empty original directories are retained. Literal links are never followed or extracted. The fifth genuine actual capture review seal is required before release; the historical NULL draft and its refusal witness remain preserved.
+
+Only the fixed Root namespace, five declared scopes and genuine seals, mapping description, and byte-only authentication status/qualification differ from accepted final-capture02. The exact planner9c38, original R4/owned IO/bounded Git, physical shard executor, all Source339 full scan and Source/archive/full-recovery pins, actual Parent529, and independent verifier-review0c399 anchors remain unchanged. The complete mapping is separate from the original twenty-tree union; no prior union mapping hash or archive identity is reused for this new scope.
+
+Shards remain deterministic sorted disjoint body cover with required ancestors, at most2MiB logical/256 typed entries and4MiB actual archive or individual body. Entire original byte scope plus mapping must remain within64MiB;10GiB remaining disk and120seconds are enforced. All original roots are rescanned after archiving, preserving late-extra refusal. Partial archives, trees, and original cleanup errors remain retained on failure. A new Root namespace is mandatory; no old attempt is resumed.
+
+Only Root may install both exact capture_witness01.py and shards01.py, run the complete exporter once after source review, transport its actual output, obtain independent release, and recover every shard and mapping. This source preparation proves none of those actual actions. It grants no scientific, numerical, native, registration or budget authority. Original failed aggregate capture/terminal/stderr remains a separate explicit preservation requirement.

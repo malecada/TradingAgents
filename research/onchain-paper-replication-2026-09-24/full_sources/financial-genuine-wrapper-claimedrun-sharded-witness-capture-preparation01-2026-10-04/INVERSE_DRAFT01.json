@@ -1,0 +1,28 @@
+{
+  "edits": [
+    {
+      "old": "root-claimedrun-final-capture02-2026-10-04",
+      "new": "root-claimedrun-sharded-witness-capture01-2026-10-04"
+    },
+    {
+      "old": "SCOPES = {\n    'actual-parent': PARENT,\n    'root-parent-adoption': BASE / 'financial-genuine-wrapper-root-claimedrun-parent-adoption01-2026-10-04',\n    'root-parent-final-contract': BASE / 'financial-genuine-wrapper-root-claimedrun-parent-final-contract01-2026-10-04',\n    'caller-preparation': BASE / 'financial-genuine-wrapper-claimedrun-parent-preparation01-2026-10-04',\n    'caller-review': BASE / 'financial-genuine-wrapper-claimedrun-parent-review01-2026-10-04',\n    'final-parent-review': BASE / 'financial-genuine-wrapper-claimedrun-parent-final-release-review01-2026-10-04',\n    'binder-preparation01': BASE / 'financial-genuine-wrapper-claimedrun-outcome-binding-preparation01-2026-10-04',\n    'binder-preparation02': BASE / 'financial-genuine-wrapper-claimedrun-outcome-binding-preparation02-2026-10-04',\n    'binder-review': BASE / 'financial-genuine-wrapper-claimedrun-outcome-binding-review02-2026-10-04',\n    'root-verifier-binding': BASE / 'financial-genuine-wrapper-root-claimedrun-outcome-binding-generation01-2026-10-04',\n    'actual-verifier-review': BASE / 'financial-genuine-wrapper-claimedrun-actual-outcome-binding-review01-2026-10-04',\n    'claim-window-review': BASE / 'financial-genuine-wrapper-claimedrun-claim-window-review01-2026-10-04',\n    'withheld-source-recovery-preparation': BASE / 'financial-genuine-wrapper-claimedrun-source-recovery-preparation01-2026-10-04',\n    'withheld-source-recovery-review': BASE / 'financial-genuine-wrapper-claimedrun-source-recovery-review01-2026-10-04',\n    'witness-capture-preparation': BASE / 'financial-genuine-wrapper-claimedrun-witness-capture-preparation01-2026-10-04',\n    'witness-capture-review': BASE / 'financial-genuine-wrapper-claimedrun-witness-capture-review01-2026-10-04',\n    'original-verifier-preparation': BASE / 'financial-genuine-wrapper-first-outcome-verifier-preparation03-2026-10-04',\n    'original-verifier-review': BASE / 'financial-genuine-wrapper-first-outcome-verifier-review03-2026-10-04',\n    'original-binder-preparation': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-preparation01-2026-10-04',\n    'original-binder-review': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-review01-2026-10-04',\n}\n",
+      "new": "SCOPES = {\n    'capture-preparation': BASE / 'financial-genuine-wrapper-claimedrun-final-capture-preparation02-2026-10-04',\n    'capture-review': BASE / 'financial-genuine-wrapper-claimedrun-final-capture-review02-2026-10-04',\n    'recovery-preparation': BASE / 'financial-genuine-wrapper-claimedrun-final-union-recovery-preparation02-2026-10-04',\n    'recovery-review': BASE / 'financial-genuine-wrapper-claimedrun-final-union-recovery-review02-2026-10-04',\n    'actual-capture-review': BASE / 'financial-genuine-wrapper-claimedrun-actual-final-capture-review02-2026-10-04',\n}\nSEALS = {'capture-preparation': 'a2b07ace33f3f6a1394e04949c5089a3552567573d858f76f5a5f1462bcb6ea3', 'capture-review': 'e2c313a07bb3051cd95d08931a626301b84c87e004425a33f8ef64e3a1ff5bc9', 'recovery-preparation': '6381d52f220a8a2669e8bb03a4614601e3a41ed916863a77a95bff78a3d4897a', 'recovery-review': '348a5c6a0b72fb62e989ff5cda2b3fab4ad13fcc9cd2c01487eefe1f885bfeb3', 'actual-capture-review': None}\n"
+    },
+    {
+      "old": "    require(digest((SCOPES['actual-verifier-review'] / 'MANIFEST01.json').read_bytes()) == '0c39988229162fd10b0d0df77f71163a4675a778251a8d75634283e40482bea2', 'actual independent binding review')",
+      "new": "    require(digest((BASE / 'financial-genuine-wrapper-claimedrun-actual-outcome-binding-review01-2026-10-04/MANIFEST01.json').read_bytes()) == '0c39988229162fd10b0d0df77f71163a4675a778251a8d75634283e40482bea2', 'actual independent binding review')\n    for label, root in SCOPES.items():\n        require(type(SEALS[label]) is str and len(SEALS[label]) == 64, 'genuine final witness seal unavailable')\n        require(digest(r4.read(root, 'MANIFEST01.json')) == SEALS[label], 'exact frozen witness seal')"
+    },
+    {
+      "old": "complete actual final caller, concrete verifier, source preparations and independent full witness trees; links are literal metadata only",
+      "new": "complete five sharded-capture and recovery source/review witness trees; original final caller union is separately preserved; links are literal metadata only"
+    },
+    {
+      "old": "complete-final-caller-review-sharded-byte-capture",
+      "new": "complete-sharded-witness-review-byte-capture"
+    },
+    {
+      "old": "Byte-only complete final-caller supplement; original Source339 remains separately completely recovered. No POSIX instantiation, installed-runtime recovery, empirical result or resource capacity follows.",
+      "new": "Byte-only complete five-tree witness supplement; original Source339 and final caller union remain separate preservation scopes. No POSIX instantiation, installed-runtime recovery, empirical result or resource capacity follows."
+    }
+  ]
+}
