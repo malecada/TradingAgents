@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-10-04T10:43:56.840045+00:00",
+  "review_manifest_sha256": "21c95e8ca55a7c76f7eb6cdb4cd293e1efb7f77d0122587dd67a2cb92f22e1f0",
+  "physical_groups": [
+    {
+      "device": 66310,
+      "inode": 10776981,
+      "members": [
+        {
+          "path": "ownership-hardlink/page-0000.json",
+          "nlink": 2,
+          "bytes": 6,
+          "sha256": "6d229884c1268bb0ab32d8da315d0fe52f9147228bd830a37bc9fb28a954940d",
+          "mode": 384
+        },
+        {
+          "path": "ownership-hardlink/start.json",
+          "nlink": 2,
+          "bytes": 6,
+          "sha256": "6d229884c1268bb0ab32d8da315d0fe52f9147228bd830a37bc9fb28a954940d",
+          "mode": 384
+        }
+      ]
+    }
+  ],
+  "qualification": "Original actual hardlink-refusal witnesses remain physically unchanged. Git preserves both named regular bodies plus this explicit literal shared-inode metadata; it does not preserve or prove POSIX hardlink reconstruction. No unlink, deletion, historical replay, byte rewrite or external recovery claim."
+}

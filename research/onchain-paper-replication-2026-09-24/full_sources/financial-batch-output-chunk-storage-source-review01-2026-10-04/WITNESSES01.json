@@ -1,0 +1,102 @@
+{
+  "CS1": {
+    "encoded_descriptor": {
+      "dtype": "<f4",
+      "kind": "mcm-batch-output-bytes",
+      "motifs": 32,
+      "order": "C",
+      "role": "mcm-output",
+      "schema_version": 1,
+      "scope": {
+        "dictionary": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "graph": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "matching": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "node_order": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ordered_motifs": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "workflow": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "shape": [
+        1,
+        32
+      ],
+      "spent_samples": 512
+    },
+    "initial_expected": {
+      "dtype": "<f4",
+      "kind": "mcm-batch-output-bytes",
+      "motifs": 32,
+      "order": "C",
+      "role": "mcm-output",
+      "schema_version": 1,
+      "scope": {
+        "dictionary": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "graph": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "matching": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "node_order": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ordered_motifs": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "workflow": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "shape": [
+        1,
+        32
+      ],
+      "spent_samples": 512
+    },
+    "pure_reader_control_refusal": "exact descriptor",
+    "reader_mutates_only_expected_graph": true,
+    "result": {
+      "authority": null,
+      "logical_bytes": 128,
+      "members": [
+        "chunk-00000.bin",
+        "chunk-00001.bin",
+        "chunk-00002.bin",
+        "chunk-00003.bin",
+        "page-0000.json",
+        "start.json",
+        "terminal.json"
+      ],
+      "raw_sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+      "representation_complete": false,
+      "status": "complete-byte-proof-only"
+    }
+  },
+  "CS2": {
+    "fatal_type": "KeyboardInterrupt",
+    "poisoned_after_failure": false,
+    "provisional_prefix_bytes": 32,
+    "retry_result": {
+      "authority": null,
+      "logical_bytes": 128,
+      "members": [
+        "chunk-00000.bin",
+        "chunk-00001.bin",
+        "chunk-00002.bin",
+        "chunk-00003.bin",
+        "page-0000.json",
+        "start.json",
+        "terminal.json"
+      ],
+      "raw_sha256": "471fb943aa23c511f6f72f8d1652d9c880cfa392ad80503120547703e56a2be5",
+      "representation_complete": false,
+      "status": "complete-byte-proof-only"
+    },
+    "same_original_exception": true
+  },
+  "CS3": {
+    "actual64MiB_measurement": false,
+    "error": "whole sampled allocated/logical bound",
+    "partial_files_retained": [
+      "start.json",
+      "terminal.json"
+    ],
+    "production_limit": 67108864,
+    "retained_allocated_after_failure": 12288,
+    "root_allocated_before": 4096,
+    "scaled_test_only": true,
+    "test_limit": 8192
+  },
+  "codec_sha256": "00d06377c4567bd7880dd7ddbf396b613a78968a7317a565f7e034319c9ed4fe",
+  "no_scientific_authority_or_actual_arrays": true,
+  "sink_sha256": "2614242ebc8395f859e704db1971dd46172ff8ea9802fb4c77397c80970bdb52"
+}
