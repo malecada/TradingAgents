@@ -1,0 +1,45 @@
+{
+  "actual_local_git_operation": {
+    "cleanup_failures": [],
+    "exit": 0,
+    "operation": "--version",
+    "pid": 247804,
+    "seconds": 0.0018736970087047666,
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 19,
+    "stdout_sha256": "30279da57eb04a496cb207bc2f7c7e04d9c94788be5bc68824e6727e283b264b"
+  },
+  "checks": [
+    "actual local Git version successful",
+    "actual original child and group absent",
+    "same observed FD numbers before/after",
+    "unguarded close replaces first fatal MemoryError",
+    "unguarded close replaces first fatal KeyboardInterrupt",
+    "unguarded close replaces first fatal SystemExit"
+  ],
+  "close_finally_witness": [
+    {
+      "errno": 9,
+      "observed_type": "OSError",
+      "primary_only_context": true,
+      "primary_type": "MemoryError"
+    },
+    {
+      "errno": 9,
+      "observed_type": "OSError",
+      "primary_only_context": true,
+      "primary_type": "KeyboardInterrupt"
+    },
+    {
+      "errno": 9,
+      "observed_type": "OSError",
+      "primary_only_context": true,
+      "primary_type": "SystemExit"
+    }
+  ],
+  "count": 6,
+  "fd_scope": "Snapshot of current process FD numbers, not complete historical FD provenance",
+  "network_operations": 0,
+  "qualification": "Exact source finally block over actually owned closed descriptors; isolated branch counterexample, not a production IO failure or native action."
+}

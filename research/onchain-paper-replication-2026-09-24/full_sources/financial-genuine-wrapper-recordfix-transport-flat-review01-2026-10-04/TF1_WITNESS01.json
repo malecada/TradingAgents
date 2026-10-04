@@ -1,0 +1,27 @@
+{
+  "actual_receipts_fabricated": false,
+  "actual_source_restores": 0,
+  "candidate": "remote recover01.py",
+  "finding": "inherited top-level failure-journal write replaces first fatal",
+  "transport_operations": 0,
+  "witnesses": [
+    {
+      "observed": "FileExistsError",
+      "original_marker_unchanged": true,
+      "primary": "MemoryError",
+      "primary_retained_only_as_context": true
+    },
+    {
+      "observed": "FileExistsError",
+      "original_marker_unchanged": true,
+      "primary": "KeyboardInterrupt",
+      "primary_retained_only_as_context": true
+    },
+    {
+      "observed": "FileExistsError",
+      "original_marker_unchanged": true,
+      "primary": "SystemExit",
+      "primary_retained_only_as_context": true
+    }
+  ]
+}

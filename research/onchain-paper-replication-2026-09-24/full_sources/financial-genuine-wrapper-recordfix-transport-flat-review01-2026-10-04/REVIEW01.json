@@ -1,0 +1,48 @@
+{
+  "actual_flat_recovery": null,
+  "actual_release": null,
+  "actual_remote_commit": null,
+  "actual_remote_receipt": null,
+  "actual_selected_scope": null,
+  "actual_source_restores": 0,
+  "fatal_witness_sha256": "4e7ad358b7eefeb7865b92ec455f2a3342cb1972c4ea5f29560e1602c90c6bd4",
+  "flat_manifest_sha256": "ea35a2f4baf6014a333d620d26d7695ad82c80ea3ff7584cf4fa1509e3229b37",
+  "flat_source_sha256": "b5c775a24e19c97cf0ef032a7598347689b8dfc27de5e273bccbe5710d9d519d",
+  "flat_verdict": "ACCEPTED_SOURCE_ONLY_PENDING_ACTUAL_REMOTE_AND_RELEASE",
+  "independent_control_invocations": 1439,
+  "limits": [
+    "original capture PID history remains unavailable",
+    "600s Git entry guard is not a hard total outer deadline",
+    "flat source acceptance does not accept remote01 or fabricate future recovery",
+    "only local git --version process observed; no all-branches or historical FD proof",
+    "full actual Source325 not restored here"
+  ],
+  "main_checks_sha256": "547982337682fcff0a3f60f573b4164b1cfa7779b357054465bd63c32e227de9",
+  "material_findings": [
+    {
+      "file": "remote-source/recover01.py",
+      "id": "TF1",
+      "impact": "later journal or close failure replaces original fatal",
+      "lines": [
+        49,
+        201
+      ],
+      "remedy": "protected first-fatal cleanup/publication reducer, preserving secondary evidence"
+    }
+  ],
+  "native_executions": 0,
+  "network_operations": 0,
+  "numerical_authority": null,
+  "opaque_utility_pipeline": {
+    "logical_members": 986,
+    "opaque_bodies": 713,
+    "private_flat_files": 714
+  },
+  "remote_manifest_sha256": "78c07fcf2b96fba04573bfeb097b7cbc3b55260f7d8703e5a37043329fd0d56a",
+  "remote_source_sha256": "54b5b7028a1fb22fcffa9f24bf77314d042aa106a5f78a97f3021b13286a210f",
+  "remote_verdict": "WITHHELD_TF1",
+  "report_sha256": "f6d87541bf50c39aa4c0b58a80c1d1267e8b3ab95bdc39a9461b2abc9ad7610d",
+  "schema_version": 1,
+  "supplement_sha256": "81cebe4df403a3b7214eeea0bdfd7402971fdbd99c7fd5992aff39efaa09a705",
+  "verdict": "WITHHELD_REMOTE_TF1_FLAT_SOURCE_ONLY_ACCEPTED"
+}

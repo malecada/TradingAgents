@@ -1,0 +1,36 @@
+{
+  "edits": [
+    {
+      "old": "fresh-financial04.git",
+      "new": "fresh-recordfix-source325-01.git"
+    },
+    {
+      "old": "1 <= len(rows) <= 512",
+      "new": "1 <= len(rows) <= 506"
+    },
+    {
+      "old": "len(wanted) <= 512",
+      "new": "len(wanted) <= 506"
+    },
+    {
+      "old": "    require(encode(selection) == selection_body, 'frozen canonical selection')",
+      "new": "    require(encode(selection) == selection_body, 'frozen canonical selection')\n    validate_fixed_selection(selection)"
+    },
+    {
+      "old": "fresh-actual-remote-financial-source290-failed-parent-outer-recovered",
+      "new": "fresh-actual-remote-recordfix-source325-recovered"
+    },
+    {
+      "old": "Complete original financial source290, permanently reserved failed external Parent30 and original Rootouter8 byte archives, exact manifests/request/capture/actual terminals and selected independent review bodies were actually fetched from external Git. Original unexpected pre-dispatch exit1, NULL Parent self-exit, zero numerical claims and absence of native dispatch/checkpoints remain preserved. This is recovery of the original failed outer attempt; no budget refund, identity reuse, corrected source release or numerical authority follows. Fresh complete three-target flat recovery and independent acceptance remain separate; shared runtime bodies and empirical stores are excluded.",
+      "new": "Corrected Source325 complete opaque archive, complete986 manifest, actual source authentication, request and original capture/Root terminal bytes recovered from actual external Git. This is byte preservation only. Original capture session44125 is not an observed PID. Fresh complete flat recovery and independent acceptance remain separate. Shared runtime bodies, empirical stores, POSIX instantiation, native capacity and numerical authority are excluded."
+    },
+    {
+      "old": "    receipt = {'schema_version': 1",
+      "new": "    require(len(CALLS) == 11 + 2*len(rows), 'exact finite operation denominator')\n    receipt = {'schema_version': 1"
+    },
+    {
+      "old": "\ndef main():",
+      "new": "\nREQUIRED={'research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-root-recordfix-capture01-2026-10-04/source.tar.gz': {'bytes': 3481434, 'sha256': '8d49d60b509bc9c95cd04274127b12387b8070295499dad3d24db63b9a376efb'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-root-recordfix-capture01-2026-10-04/source-manifest.json': {'bytes': 196346, 'sha256': '26c67e9c9b28dd4cd607ab3833fa14143d6e8e4c7c3617024275294940ffbc53'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-root-recordfix-capture01-2026-10-04/source-authentication.json': {'bytes': 50487, 'sha256': 'a73865063fc845dd824cb2b8ddaaa0cf8445c216e93674d6b5ca259f55bfe336'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-root-recordfix-capture01-2026-10-04/terminal.json': {'bytes': 512, 'sha256': '550554037a4aece6f204fcb94cd7e406c2388ccfd2254df180316271d81257c4'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-root-recordfix-capture01-2026-10-04/request.json': {'bytes': 210485, 'sha256': 'b6d6486622cea62c40317b1c554451bd01e0d60a55a4a0b4e798939a950bcadf'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-root-recordfix-capture01-2026-10-04/ACTUAL_TERMINAL02.json': {'bytes': 1954, 'sha256': 'a25e499cd720c06957ab8807d9128e1e48d3dc94f0743d12b8b725b807328052'}}\n\ndef validate_fixed_selection(selection):\n    require(type(selection) is dict and set(selection)=={'remote_commit','rows'}, 'exact selection schema')\n    rows=selection['rows'];require(type(rows) is list and 1<=len(rows)<=506, 'finite selected paths')\n    by={}\n    for row in rows:\n        require(type(row) is dict and set(row)=={'path','bytes','sha256'}, 'selected row schema')\n        n=row['path'];require(type(n)is str and n.startswith('research/') and Path(n).as_posix()==n and '..' not in Path(n).parts and n not in by, 'selected safe unique path')\n        require(type(row['bytes'])is int and 0<=row['bytes']<=FILE and type(row['sha256'])is str and len(row['sha256'])==64 and all(c in '0123456789abcdef' for c in row['sha256']), 'exact selected body pin')\n        by[n]=row\n    for n,pin in REQUIRED.items():require(by.get(n)==dict(path=n,**pin), 'current capture selection absent/changed')\n\ndef main():"
+    }
+  ]
+}

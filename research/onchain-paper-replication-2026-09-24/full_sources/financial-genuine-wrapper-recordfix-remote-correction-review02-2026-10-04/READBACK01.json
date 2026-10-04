@@ -1,0 +1,259 @@
+{
+  "actual_collision_witness": [
+    {
+      "observed": "FileExistsError",
+      "primary": "MemoryError",
+      "same_original": false,
+      "source": "original"
+    },
+    {
+      "observed": "MemoryError",
+      "primary": "MemoryError",
+      "same_original": true,
+      "source": "corrected"
+    },
+    {
+      "observed": "FileExistsError",
+      "primary": "KeyboardInterrupt",
+      "same_original": false,
+      "source": "original"
+    },
+    {
+      "observed": "KeyboardInterrupt",
+      "primary": "KeyboardInterrupt",
+      "same_original": true,
+      "source": "corrected"
+    },
+    {
+      "observed": "FileExistsError",
+      "primary": "SystemExit",
+      "same_original": false,
+      "source": "original"
+    },
+    {
+      "observed": "SystemExit",
+      "primary": "SystemExit",
+      "same_original": true,
+      "source": "corrected"
+    }
+  ],
+  "actual_write_and_entry_exception_pairs": [
+    [
+      "ValueError",
+      "ValueError",
+      "ValueError"
+    ],
+    [
+      "ValueError",
+      "OSError",
+      "ValueError"
+    ],
+    [
+      "ValueError",
+      "MemoryError",
+      "MemoryError"
+    ],
+    [
+      "ValueError",
+      "KeyboardInterrupt",
+      "KeyboardInterrupt"
+    ],
+    [
+      "ValueError",
+      "SystemExit",
+      "SystemExit"
+    ],
+    [
+      "ValueError",
+      "BaseException",
+      "BaseException"
+    ],
+    [
+      "OSError",
+      "ValueError",
+      "OSError"
+    ],
+    [
+      "OSError",
+      "OSError",
+      "OSError"
+    ],
+    [
+      "OSError",
+      "MemoryError",
+      "MemoryError"
+    ],
+    [
+      "OSError",
+      "KeyboardInterrupt",
+      "KeyboardInterrupt"
+    ],
+    [
+      "OSError",
+      "SystemExit",
+      "SystemExit"
+    ],
+    [
+      "OSError",
+      "BaseException",
+      "BaseException"
+    ],
+    [
+      "MemoryError",
+      "ValueError",
+      "MemoryError"
+    ],
+    [
+      "MemoryError",
+      "OSError",
+      "MemoryError"
+    ],
+    [
+      "MemoryError",
+      "MemoryError",
+      "MemoryError"
+    ],
+    [
+      "MemoryError",
+      "KeyboardInterrupt",
+      "MemoryError"
+    ],
+    [
+      "MemoryError",
+      "SystemExit",
+      "MemoryError"
+    ],
+    [
+      "MemoryError",
+      "BaseException",
+      "MemoryError"
+    ],
+    [
+      "KeyboardInterrupt",
+      "ValueError",
+      "KeyboardInterrupt"
+    ],
+    [
+      "KeyboardInterrupt",
+      "OSError",
+      "KeyboardInterrupt"
+    ],
+    [
+      "KeyboardInterrupt",
+      "MemoryError",
+      "KeyboardInterrupt"
+    ],
+    [
+      "KeyboardInterrupt",
+      "KeyboardInterrupt",
+      "KeyboardInterrupt"
+    ],
+    [
+      "KeyboardInterrupt",
+      "SystemExit",
+      "KeyboardInterrupt"
+    ],
+    [
+      "KeyboardInterrupt",
+      "BaseException",
+      "KeyboardInterrupt"
+    ],
+    [
+      "SystemExit",
+      "ValueError",
+      "SystemExit"
+    ],
+    [
+      "SystemExit",
+      "OSError",
+      "SystemExit"
+    ],
+    [
+      "SystemExit",
+      "MemoryError",
+      "SystemExit"
+    ],
+    [
+      "SystemExit",
+      "KeyboardInterrupt",
+      "SystemExit"
+    ],
+    [
+      "SystemExit",
+      "SystemExit",
+      "SystemExit"
+    ],
+    [
+      "SystemExit",
+      "BaseException",
+      "SystemExit"
+    ],
+    [
+      "BaseException",
+      "ValueError",
+      "BaseException"
+    ],
+    [
+      "BaseException",
+      "OSError",
+      "BaseException"
+    ],
+    [
+      "BaseException",
+      "MemoryError",
+      "BaseException"
+    ],
+    [
+      "BaseException",
+      "KeyboardInterrupt",
+      "BaseException"
+    ],
+    [
+      "BaseException",
+      "SystemExit",
+      "BaseException"
+    ],
+    [
+      "BaseException",
+      "BaseException",
+      "BaseException"
+    ]
+  ],
+  "candidate_manifest_sha256": "c2cd422d4aeb9e1f4185cfdf482767be4c56405553773326fb4c9247abc9f2db",
+  "checks": 188,
+  "decision": "ACCEPTED_NARROW_REMOTE_FATAL_CORRECTION_SOURCE_ONLY",
+  "full_byte_inverse": true,
+  "native_or_numerical_authority": false,
+  "network_or_actual_recovery": false,
+  "original_source_sha256": "54b5b7028a1fb22fcffa9f24bf77314d042aa106a5f78a97f3021b13286a210f",
+  "qualification": "Real exceptions and tiny actual owned FDs only. Allocation/OOM equivalence and runtime/capacity are not proved; unchanged Git kill/reap semantics reviewed as source, not a new actual process receipt.",
+  "refusals": [
+    {
+      "case": "missing_required",
+      "message": "current capture selection absent/changed"
+    },
+    {
+      "case": "duplicate",
+      "message": "selected safe unique path"
+    },
+    {
+      "case": "boolean_extent",
+      "message": "exact selected body pin"
+    },
+    {
+      "case": "unsafe_path",
+      "message": "selected safe unique path"
+    },
+    {
+      "case": "uppercase_hash",
+      "message": "exact selected body pin"
+    },
+    {
+      "case": "extra_schema",
+      "message": "exact selection schema"
+    }
+  ],
+  "schema_version": 1,
+  "source_sha256": "0b397ccd0a014f60a414ce79d67dfd53c58a0fb61ca616a6576cc43da4bbf0aa",
+  "unchanged_git_main_selection_AST": true
+}
