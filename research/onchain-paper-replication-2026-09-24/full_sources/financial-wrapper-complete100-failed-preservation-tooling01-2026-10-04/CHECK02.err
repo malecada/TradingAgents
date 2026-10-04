@@ -1,0 +1,46 @@
+  | ExceptionGroup: body/cleanup failures (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/check02.py", line 35, in <module>
+    |     try:raise primary
+    |         ^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/check02.py", line 35, in <module>
+    |     try:raise primary
+    |         ^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/check02.py", line 35, in <module>
+    |     try:raise primary
+    |         ^^^^^^^^^^^^^
+    | ValueError: p
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/utilities/owned_io.py", line 34, in _cleanup
+    |     try:close()
+    |         ~~~~~^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/check02.py", line 37, in <lambda>
+    |     R._cleanup((lambda e=secondary:(_ for _ in ()).throw(e),),primary=primary)
+    |                                    ~~~~~~~~~~~~~~~~~~~~~^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/check02.py", line 37, in <genexpr>
+    |     R._cleanup((lambda e=secondary:(_ for _ in ()).throw(e),),primary=primary)
+    | OSError: s
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/check02.py", line 37, in <module>
+    R._cleanup((lambda e=secondary:(_ for _ in ()).throw(e),),primary=primary)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/utilities/owned_io.py", line 52, in _cleanup
+    raise failure
+owned_io.CleanupFailure: score storage cleanup unresolved; worker must stop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/check02.py", line 41, in <module>
+    ok(actualerror is expected)
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling01-2026-10-04/check02.py", line 7, in ok
+    assert v;n+=1
+           ^
+AssertionError

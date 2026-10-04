@@ -1,0 +1,23 @@
+--- predecessor_workflow_storage.py
++++ workflow_storage.py
+@@ -58,8 +58,18 @@
+         # An uncertain close is never eligible for a namespace retry.
+         fatal=lambda e:not isinstance(e,Exception) or isinstance(e,MemoryError)
+         if primary is not None and fatal(primary):
+-            try:primary.storage_cleanup_errors=(error,)
+-            except BaseException:pass
++            try:
++                # Use the builtin exception dictionary descriptor directly: no
++                # overridden getattr/setattr/property or diagnostic callback.
++                state=BaseException.__dict__['__dict__'].__get__(primary)
++                previous=dict.get(state,'storage_cleanup_errors',())
++                if type(previous) is not tuple:previous=(previous,)
++                dict.__setitem__(state,'storage_cleanup_errors',previous+(error,))
++            except BaseException as attachment_error:
++                # Keep the original fatal even if evidence attachment fails.
++                # The attachment error's context retains the current close error;
++                # the previous tuple has not been overwritten before success.
++                raise primary from attachment_error
+             raise primary
+         if fatal(error):raise error from primary
+         failure=StorageCleanupFailure('storage owned close uncertain; no scan retry')

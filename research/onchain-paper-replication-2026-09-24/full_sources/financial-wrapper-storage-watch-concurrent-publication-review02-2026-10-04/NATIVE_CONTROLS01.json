@@ -1,0 +1,52 @@
+[
+  {
+    "case": "genuine-observe-success",
+    "peak": 6
+  },
+  {
+    "case": "genuine-boundaries-disk-floor",
+    "free": 99,
+    "floor": 100,
+    "refused": true
+  },
+  {
+    "case": "genuine-boundaries-deadline",
+    "refused": true
+  },
+  {
+    "case": "genuine-native-storage-failure",
+    "state": {
+      "phase": "failed",
+      "limit_reason": "StorageLimit: storage logical limit exceeded",
+      "storage_breach": {
+        "allocated_bytes": 8192,
+        "logical_file_bytes": 6,
+        "regular_files": 1,
+        "directories": 1,
+        "entries": 1,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    }
+  },
+  {
+    "case": "genuine-native-firstfatal-diagnostic",
+    "original_selected": true,
+    "phase": "failed"
+  },
+  {
+    "case": "genuine-native-finalization",
+    "selected_first_actual_fatal": true,
+    "all_actions": [
+      0,
+      1,
+      2
+    ],
+    "phase": "failed"
+  },
+  {
+    "case": "ordinary-real-close-error",
+    "closed_once": true,
+    "no_retry": true
+  }
+]

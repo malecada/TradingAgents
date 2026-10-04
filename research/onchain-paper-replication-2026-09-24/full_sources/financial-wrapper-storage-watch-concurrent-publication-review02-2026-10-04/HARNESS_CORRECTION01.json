@@ -1,0 +1,6 @@
+{
+  "retained_original": "INDEPENDENT01.json",
+  "issue": "cleanup-descriptor-overrides row stored a mutable hooks list; later full-watch annotation controls appended three setattr entries before final serialization. The immediate assertion required no hooks in direct cleanup and passed; final list no longer represents that earlier instant.",
+  "additive_correction": "ADDITIONAL_CONTROLS01.json independently repeats direct cleanup with an immutable snapshot copy; hooks_snapshot=[] and all originals retained. Full Watch does invoke diagnostic setattr hooks, but that separate control preserves the original fatal.",
+  "original_bytes_preserved": true
+}

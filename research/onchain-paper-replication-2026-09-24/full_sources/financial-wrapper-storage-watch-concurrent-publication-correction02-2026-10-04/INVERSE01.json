@@ -1,0 +1,10 @@
+{
+  "all_other_ast_equal": true,
+  "full_byte_inverse": true,
+  "new_literal": "            try:\n                # Use the builtin exception dictionary descriptor directly: no\n                # overridden getattr/setattr/property or diagnostic callback.\n                state=BaseException.__dict__['__dict__'].__get__(primary)\n                previous=dict.get(state,'storage_cleanup_errors',())\n                if type(previous) is not tuple:previous=(previous,)\n                dict.__setitem__(state,'storage_cleanup_errors',previous+(error,))\n            except BaseException as attachment_error:\n                # Keep the original fatal even if evidence attachment fails.\n                # The attachment error's context retains the current close error;\n                # the previous tuple has not been overwritten before success.\n                raise primary from attachment_error\n",
+  "new_sha256": "21e21dddc5b5008c3dc016839fc5b05c60dfbd345d224e91b8a9c3fb551c62cf",
+  "old_literal": "            try:primary.storage_cleanup_errors=(error,)\n            except BaseException:pass\n",
+  "old_sha256": "75cdf844080ec6d71e37ae81ce98f62e11beee19c81173fcd4f76ee1c1ac45d8",
+  "only_changed_function": "_cleanup",
+  "replacement_count": 1
+}

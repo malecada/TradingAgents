@@ -1,0 +1,42 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01/parent01.py", line 214, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01/parent01.py", line 212, in main
+    if a.launch:raise SystemExit(launch(q))
+                                 ~~~~~~^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01/parent01.py", line 207, in launch
+    if primary is not None:raise primary
+                           ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01/parent01.py", line 198, in launch
+    result=supervise(command,CAP,env,directory,1840,checked,spawned)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01/supervisor01.py", line 60, in supervise
+    if primary is not None:raise primary
+                           ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01/supervisor01.py", line 29, in supervise
+    R.require(time.monotonic()<deadline,'outer active deadline');joined();watch();tree.scan()
+                                                                          ~~~~~^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-complete100-root-launch-20261004-01/parent01.py", line 185, in checked
+    watch.check();parentwatch.check();require(shutil.disk_usage(CAP).free>=10*GIB,'active disk floor')
+    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 76, in check
+    try:return self._check(begin,history)
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 86, in _check
+    result=self._scan(begin)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 153, in _scan
+    visit(root_fd,0,Path('.'))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 140, in visit
+    visit(child,depth+1,relative/entry.name)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 140, in visit
+    visit(child,depth+1,relative/entry.name)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 140, in visit
+    visit(child,depth+1,relative/entry.name)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  [Previous line repeated 1 more time]
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 132, in visit
+    before=os.stat(entry.name,dir_fd=fd,follow_symlinks=False)
+FileNotFoundError: [Errno 2] No such file or directory: '.pending-bfcc60df908b42b880ddb3c8a52deb9a'

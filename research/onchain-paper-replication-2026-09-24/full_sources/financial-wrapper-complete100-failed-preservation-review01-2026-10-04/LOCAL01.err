@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-review01-2026-10-04/local01.py", line 43, in <module>
+    origin=Path(roots[kind+'_original']);target=support/('final-contract'if kind=='contract'else 'failed-outcome-review');ok(R.scan(origin)==R.scan(target),'whole original support '+kind)
+                                                                                                                                             ~~~~~~^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-final-supplement-tooling01-2026-10-04/utilities/recovery_pax01.py", line 52, in scan
+    visit(root,'');return {'schema_version':1,'root_mode':stat.S_IMODE(root.lstat().st_mode),'members':sorted(rows,key=lambda r:r['path'])}
+    ~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-final-supplement-tooling01-2026-10-04/utilities/recovery_pax01.py", line 41, in visit
+    fd=os.open(p,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);pin=sig(os.fstat(fd));allocated+=os.fstat(fd).st_blocks*512;it=os.scandir(fd);names=[]
+FileNotFoundError: [Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-outcome-capture01-2026-10-04/support-snapshot/final-contract'

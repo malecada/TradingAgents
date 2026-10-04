@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling02-2026-10-04/recover01.py", line 151, in git
+    action()
+    ~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling02-2026-10-04/recover01.py", line 30, in watch
+    row = W.census(HERE)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling02-2026-10-04/adversarial03.py", line 10, in sample
+    if count>=2:raise exception
+                ^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling02-2026-10-04/recover01.py", line 118, in git
+    watch()
+    ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling02-2026-10-04/recover01.py", line 30, in watch
+    row = W.census(HERE)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling02-2026-10-04/adversarial03.py", line 10, in sample
+    if count>=2:raise exception
+                ^^^^^^^^^^^^^^^
+ValueError: watch breach
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling02-2026-10-04/adversarial03.py", line 14, in <module>
+    try:R.git(['-c','alias.pause=!sleep 5','pause'])
+        ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling02-2026-10-04/recover01.py", line 164, in git
+    raise RuntimeError('actual owned process cleanup uncertain') from (first or failures[0])
+RuntimeError: actual owned process cleanup uncertain
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-complete100-failed-preservation-tooling02-2026-10-04/adversarial03.py", line 15, in <module>
+    except BaseException as e:assert e is exception;n+=1
+                                     ^^^^^^^^^^^^^^
+AssertionError

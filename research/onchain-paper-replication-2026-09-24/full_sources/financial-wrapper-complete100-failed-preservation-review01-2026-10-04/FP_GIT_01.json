@@ -1,0 +1,49 @@
+{
+  "actual_git_call_set": [
+    "CALLS.append",
+    "RuntimeError",
+    "action",
+    "actions.append",
+    "actions.extend",
+    "bytearray",
+    "bytes",
+    "child.wait",
+    "dict",
+    "digest",
+    "env.update",
+    "failures.append",
+    "isinstance",
+    "key.fileobj.fileno",
+    "len",
+    "next",
+    "os.killpg",
+    "os.read",
+    "os.set_blocking",
+    "poller.get_map",
+    "poller.register",
+    "poller.select",
+    "poller.unregister",
+    "require",
+    "selectors.DefaultSelector",
+    "shutil.disk_usage",
+    "stream.fileno",
+    "subprocess.Popen",
+    "target.extend",
+    "time.monotonic",
+    "type"
+  ],
+  "actual_remote_executed": false,
+  "facts": [
+    "Actual subprocess loop bounds streamed stdout/stderr, elapsed time, free disk floor only.",
+    "Neither current whole logical/allocated/member totals nor per-Git writable extent are checked during fetch or before success receipt.",
+    "Separate post-transfer census is never invoked by driver; it cannot retroactively enforce64MiB whole-store limit."
+  ],
+  "finding": "WITHHELD_FP_GIT_01",
+  "required_remedy": "Separate frozen successor with explicit bounded complete writable-tree accounting sampled during and after child work, clear overshoot/blocked-scan limits, firstfatal/processgroup kill and reap. Do not claim selected4MiB bound is universal Gitpack bound.",
+  "source_lines": {
+    "fetches": "173 and184",
+    "git_loop": "70-133",
+    "separate_census": "git_extent_readback01.py"
+  },
+  "source_sha256": "ee8193d1080caaecd4d15ed4e1e4144a4153114eba66b1752105dc173634addd"
+}

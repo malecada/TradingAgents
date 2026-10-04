@@ -1,0 +1,49 @@
+
+def validate_union(bundle, capture, scopes):
+    """Fixed corrected Master and shard coverage; old zero is forensic only."""
+    raw = R.read(bundle, 'CAPSULE_MASTER_MANIFEST01.json')
+    R.require(R.digest(raw) == capture['capsule_master_sha256'] == '537a6553912d10ce59a411e01438499a7a04e07c7929b7c68e8e0cbb033dfec1', 'corrected nonempty Master pin')
+    master = json.loads(raw)
+    R.validate(master)
+    members = {r['path']: r for r in master['members']}
+    files = {k: r for k, r in members.items() if r['kind'] == 'file'}
+    R.require(len(members) == 588 and len(files) == 475 and sum(r['bytes'] for r in files.values()) == 23015911, 'full actual corrected Master denominator')
+    index_raw = R.read(bundle, 'CAPSULE_SHARD_INDEX01.json')
+    R.require(R.digest(index_raw) == capture['shard_index_sha256'], 'actual fixed shard index')
+    index = json.loads(index_raw)
+    R.require(index['master_manifest_sha256'] == R.digest(raw) and index['shards'] == 8 and index['original_typed_members'] == 588 and index['regular_bodies'] == 475 and index['original_logical_bytes'] == 23015911 and index['files_exactly_once'] is True and index['directory_metadata_duplicate_across_shards'] is True, 'index full scope')
+    observed = []
+    cover = {}
+    seen_members = set()
+    for label in LABELS:
+        m = scopes[label]['manifest']
+        row = capture['scopes'][label]
+        R.require(len(m['members']) == row['typed_members'] and sum(r['kind'] == 'file' for r in m['members']) == row['regular_bodies'] and sum(r.get('bytes', 0) for r in m['members']) == row['logical_bytes'], 'each exact complete scope')
+        if label.startswith('capsule'):
+            R.require(m['root_mode'] == master['root_mode'] and row['logical_bytes'] <= 3*1024**2, 'shard original root/3MiB logical')
+            for r in m['members']:
+                R.require(members.get(r['path']) == r, 'shard exact original name/type/mode/body')
+                seen_members.add(r['path'])
+                if r['kind'] == 'file':
+                    R.require(r['path'] not in cover, 'no duplicated capsule file')
+                    cover[r['path']] = label
+                    observed.append({'path':r['path'],'scope':label,'bytes':r['bytes'],'sha256':r['sha256']})
+    R.require(seen_members == set(members) and set(cover) == set(files) and sorted(observed, key=lambda r:r['path']) == index['file_mapping'], 'complete disjoint ordered Master shard cover')
+    errata = json.loads(R.read(bundle, 'PRIOR_FAILED_CAPTURE_ERRATA01.json'))
+    R.require(errata['permanent_disposition'] == 'WITHHELD_ROOT_CAPTURE_MISSING_VISIT' and errata['capture_sha256'] == capture['prior_failed_capture_sha256'], 'permanent original failure disposition')
+    selected_root = bundle
+    for unused in Path(REL).parts:
+        selected_root = selected_root.parent
+    old = selected_root / OLD_REL
+    oldraw = R.read(old, 'CAPTURE01.json')
+    R.require(R.digest(oldraw) == capture['prior_failed_capture_sha256'] == '8b991df1466cf12f7812396b5b6afde3776edf684f1af12f9fa6e4454bf5dce1', 'literal withheld capture retained')
+    prior = json.loads(oldraw)
+    R.require(json.loads(R.read(old, 'CAPSULE_MASTER_MANIFEST01.json'))['members'] == [], 'historical omitted visit preserved not repaired')
+    for label in ('parent','support'):
+        R.require(capture['scopes'][label]['archive'] == prior['scopes'][label]['archive'], 'literal reused original scope archive')
+        for name in (label.upper()+'_MANIFEST01.json','complete-'+label+'01.tar.gz'):
+            R.require(R.read(bundle,name) == R.read(old,name), 'literal old/new reused scope bytes')
+    for name,key in [('ROOT_EVIDENCE_PATHS01.json','root_evidence_mapping_sha256'),('SUPPORT_ROOTS01.json','support_roots_sha256')]:
+        R.require(R.digest(R.read(bundle,name)) == capture[key], 'actual explicit source mapping')
+    return {'capsule_members':588,'capsule_bodies':475,'logical_bytes':23015911,'historical_capture_withheld':True}
+

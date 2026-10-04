@@ -1,0 +1,490 @@
+{
+  "checks": 1072,
+  "cases": [
+    {
+      "case": "full-authentication",
+      "author_members": 284,
+      "actual_source_bodies": 194,
+      "full_inverse": true
+    },
+    {
+      "case": "genuine-publication-original_workflow_storage",
+      "accepted": false,
+      "type": "FileNotFoundError"
+    },
+    {
+      "case": "genuine-publication-workflow_storage",
+      "accepted": true,
+      "logical": 24,
+      "attempts": 2
+    },
+    {
+      "case": "baseline",
+      "accepted": true,
+      "observation": {
+        "allocated_bytes": 8192,
+        "logical_file_bytes": 3,
+        "regular_files": 1,
+        "directories": 1,
+        "entries": 1,
+        "elapsed_seconds": 0.0002998290001414716,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review02-2026-10-04/controls01/baseline",
+        "root_device": 66310,
+        "root_inode": 10880575,
+        "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota, immutable-byte proof or inter-sample growth guarantee. At most three attempts share one time budget. Each accepted attempt includes the whole descriptor census followed, after its cleanup, by a complete literal namespace and metadata rejoin. Each pass independently obeys all registered tree limits. No file name is ignored. Continuous change after any sampled operation remains outside this metadata-only guarantee.",
+        "scan_attempts": 1,
+        "hardlink_observations": [],
+        "mutation_observations": [],
+        "aggregate_entry_visit_bound": 600
+      }
+    },
+    {
+      "case": "pending",
+      "accepted": true,
+      "observation": {
+        "allocated_bytes": 12288,
+        "logical_file_bytes": 9,
+        "regular_files": 2,
+        "directories": 1,
+        "entries": 2,
+        "elapsed_seconds": 0.0003902729949913919,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review02-2026-10-04/controls01/pending",
+        "root_device": 66310,
+        "root_inode": 10880577,
+        "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota, immutable-byte proof or inter-sample growth guarantee. At most three attempts share one time budget. Each accepted attempt includes the whole descriptor census followed, after its cleanup, by a complete literal namespace and metadata rejoin. Each pass independently obeys all registered tree limits. No file name is ignored. Continuous change after any sampled operation remains outside this metadata-only guarantee.",
+        "scan_attempts": 1,
+        "hardlink_observations": [],
+        "mutation_observations": [],
+        "aggregate_entry_visit_bound": 600
+      }
+    },
+    {
+      "case": "logical",
+      "accepted": false,
+      "type": "StorageLimit",
+      "reason": "logical",
+      "observation": {
+        "allocated_bytes": 8192,
+        "logical_file_bytes": 3,
+        "regular_files": 1,
+        "directories": 1,
+        "entries": 1,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "allocated",
+      "accepted": false,
+      "type": "StorageLimit",
+      "reason": "allocated",
+      "observation": {
+        "allocated_bytes": 4096,
+        "logical_file_bytes": 0,
+        "regular_files": 0,
+        "directories": 1,
+        "entries": 0,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "entries",
+      "accepted": false,
+      "type": "StorageLimit",
+      "reason": "entries",
+      "observation": {
+        "allocated_bytes": 8192,
+        "logical_file_bytes": 1,
+        "regular_files": 1,
+        "directories": 1,
+        "entries": 2,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "depth",
+      "accepted": false,
+      "type": "StorageLimit",
+      "reason": "depth",
+      "observation": {
+        "allocated_bytes": 12288,
+        "logical_file_bytes": 3,
+        "regular_files": 1,
+        "directories": 2,
+        "entries": 3,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "symlink",
+      "accepted": false,
+      "type": "ValueError",
+      "reason": null,
+      "observation": {
+        "allocated_bytes": 4096,
+        "logical_file_bytes": 0,
+        "regular_files": 0,
+        "directories": 1,
+        "entries": 1,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "hardlink",
+      "accepted": false,
+      "type": "HardlinkObservation",
+      "reason": null,
+      "observation": {
+        "allocated_bytes": 4096,
+        "logical_file_bytes": 0,
+        "regular_files": 0,
+        "directories": 1,
+        "entries": 1,
+        "hardlink_observations": [
+          {
+            "relative_path": "b",
+            "path_truncated": false,
+            "path_sha256": "3e23e8160039594a33894f6564e1b1348bbd7a0088d42c4acb73eeaed59c009d",
+            "device": 66310,
+            "inode": 10880595,
+            "links": 2,
+            "partial_counts": {
+              "allocated_bytes": 4096,
+              "logical_file_bytes": 0,
+              "regular_files": 0,
+              "directories": 1,
+              "entries": 1
+            }
+          },
+          {
+            "relative_path": "b",
+            "path_truncated": false,
+            "path_sha256": "3e23e8160039594a33894f6564e1b1348bbd7a0088d42c4acb73eeaed59c009d",
+            "device": 66310,
+            "inode": 10880595,
+            "links": 2,
+            "partial_counts": {
+              "allocated_bytes": 4096,
+              "logical_file_bytes": 0,
+              "regular_files": 0,
+              "directories": 1,
+              "entries": 1
+            }
+          },
+          {
+            "relative_path": "b",
+            "path_truncated": false,
+            "path_sha256": "3e23e8160039594a33894f6564e1b1348bbd7a0088d42c4acb73eeaed59c009d",
+            "device": 66310,
+            "inode": 10880595,
+            "links": 2,
+            "partial_counts": {
+              "allocated_bytes": 4096,
+              "logical_file_bytes": 0,
+              "regular_files": 0,
+              "directories": 1,
+              "entries": 1
+            }
+          }
+        ],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "sparse",
+      "accepted": false,
+      "type": "StorageLimit",
+      "reason": "logical",
+      "observation": {
+        "allocated_bytes": 8192,
+        "logical_file_bytes": 1048580,
+        "regular_files": 2,
+        "directories": 1,
+        "entries": 2,
+        "hardlink_observations": [],
+        "mutation_observations": []
+      }
+    },
+    {
+      "case": "mutation-before-assert",
+      "scenario": "late-growth",
+      "actual": 4,
+      "observation": {
+        "allocated_bytes": 16384,
+        "logical_file_bytes": 4,
+        "regular_files": 2,
+        "directories": 2,
+        "entries": 3,
+        "elapsed_seconds": 0.006222652998985723,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review02-2026-10-04/controls01/late-growth",
+        "root_device": 66310,
+        "root_inode": 10880599,
+        "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota, immutable-byte proof or inter-sample growth guarantee. At most three attempts share one time budget. Each accepted attempt includes the whole descriptor census followed, after its cleanup, by a complete literal namespace and metadata rejoin. Each pass independently obeys all registered tree limits. No file name is ignored. Continuous change after any sampled operation remains outside this metadata-only guarantee.",
+        "scan_attempts": 2,
+        "hardlink_observations": [],
+        "mutation_observations": [
+          {
+            "reason": "metadata changed at complete rejoin",
+            "relative_path": "a",
+            "path_truncated": false,
+            "path_sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+            "partial_counts": {
+              "allocated_bytes": 16384,
+              "logical_file_bytes": 3,
+              "regular_files": 2,
+              "directories": 2,
+              "entries": 3
+            }
+          }
+        ],
+        "aggregate_entry_visit_bound": 600
+      }
+    },
+    {
+      "case": "late-growth",
+      "accepted": true,
+      "logical": 4,
+      "attempts": 2
+    },
+    {
+      "case": "mutation-before-assert",
+      "scenario": "late-extra",
+      "actual": 5,
+      "observation": {
+        "allocated_bytes": 20480,
+        "logical_file_bytes": 5,
+        "regular_files": 3,
+        "directories": 2,
+        "entries": 4,
+        "elapsed_seconds": 0.006339776999084279,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review02-2026-10-04/controls01/late-extra",
+        "root_device": 66310,
+        "root_inode": 10880603,
+        "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota, immutable-byte proof or inter-sample growth guarantee. At most three attempts share one time budget. Each accepted attempt includes the whole descriptor census followed, after its cleanup, by a complete literal namespace and metadata rejoin. Each pass independently obeys all registered tree limits. No file name is ignored. Continuous change after any sampled operation remains outside this metadata-only guarantee.",
+        "scan_attempts": 2,
+        "hardlink_observations": [],
+        "mutation_observations": [
+          {
+            "reason": "metadata changed at complete rejoin",
+            "relative_path": ".",
+            "path_truncated": false,
+            "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+            "partial_counts": {
+              "allocated_bytes": 16384,
+              "logical_file_bytes": 2,
+              "regular_files": 2,
+              "directories": 2,
+              "entries": 3
+            }
+          }
+        ],
+        "aggregate_entry_visit_bound": 600
+      }
+    },
+    {
+      "case": "late-extra",
+      "accepted": true,
+      "logical": 5,
+      "attempts": 2
+    },
+    {
+      "case": "mutation-before-assert",
+      "scenario": "disappear",
+      "actual": 1,
+      "observation": {
+        "allocated_bytes": 12288,
+        "logical_file_bytes": 1,
+        "regular_files": 1,
+        "directories": 2,
+        "entries": 2,
+        "elapsed_seconds": 0.006147992011392489,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review02-2026-10-04/controls01/disappear",
+        "root_device": 66310,
+        "root_inode": 10880608,
+        "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota, immutable-byte proof or inter-sample growth guarantee. At most three attempts share one time budget. Each accepted attempt includes the whole descriptor census followed, after its cleanup, by a complete literal namespace and metadata rejoin. Each pass independently obeys all registered tree limits. No file name is ignored. Continuous change after any sampled operation remains outside this metadata-only guarantee.",
+        "scan_attempts": 2,
+        "hardlink_observations": [],
+        "mutation_observations": [
+          {
+            "reason": "metadata changed at complete rejoin",
+            "relative_path": ".",
+            "path_truncated": false,
+            "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+            "partial_counts": {
+              "allocated_bytes": 16384,
+              "logical_file_bytes": 2,
+              "regular_files": 2,
+              "directories": 2,
+              "entries": 3
+            }
+          }
+        ],
+        "aggregate_entry_visit_bound": 600
+      }
+    },
+    {
+      "case": "disappear",
+      "accepted": true,
+      "logical": 1,
+      "attempts": 2
+    },
+    {
+      "case": "mutation-before-assert",
+      "scenario": "replace",
+      "actual": 4,
+      "observation": {
+        "allocated_bytes": 16384,
+        "logical_file_bytes": 4,
+        "regular_files": 2,
+        "directories": 2,
+        "entries": 3,
+        "elapsed_seconds": 0.006311420991551131,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review02-2026-10-04/controls01/replace",
+        "root_device": 66310,
+        "root_inode": 10880612,
+        "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota, immutable-byte proof or inter-sample growth guarantee. At most three attempts share one time budget. Each accepted attempt includes the whole descriptor census followed, after its cleanup, by a complete literal namespace and metadata rejoin. Each pass independently obeys all registered tree limits. No file name is ignored. Continuous change after any sampled operation remains outside this metadata-only guarantee.",
+        "scan_attempts": 2,
+        "hardlink_observations": [],
+        "mutation_observations": [
+          {
+            "reason": "metadata changed at complete rejoin",
+            "relative_path": ".",
+            "path_truncated": false,
+            "path_sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+            "partial_counts": {
+              "allocated_bytes": 16384,
+              "logical_file_bytes": 2,
+              "regular_files": 2,
+              "directories": 2,
+              "entries": 3
+            }
+          }
+        ],
+        "aggregate_entry_visit_bound": 600
+      }
+    },
+    {
+      "case": "replace",
+      "accepted": true,
+      "logical": 4,
+      "attempts": 2
+    },
+    {
+      "case": "churn",
+      "accepted": false,
+      "type": "StorageMutationObservation",
+      "observation": {
+        "allocated_bytes": 16384,
+        "logical_file_bytes": 7,
+        "regular_files": 2,
+        "directories": 2,
+        "entries": 3,
+        "hardlink_observations": [],
+        "mutation_observations": [
+          {
+            "reason": "metadata changed at complete rejoin",
+            "relative_path": "a",
+            "path_truncated": false,
+            "path_sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+            "partial_counts": {
+              "allocated_bytes": 16384,
+              "logical_file_bytes": 3,
+              "regular_files": 2,
+              "directories": 2,
+              "entries": 3
+            }
+          },
+          {
+            "reason": "metadata changed at complete rejoin",
+            "relative_path": "a",
+            "path_truncated": false,
+            "path_sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+            "partial_counts": {
+              "allocated_bytes": 16384,
+              "logical_file_bytes": 5,
+              "regular_files": 2,
+              "directories": 2,
+              "entries": 3
+            }
+          },
+          {
+            "reason": "metadata changed at complete rejoin",
+            "relative_path": "a",
+            "path_truncated": false,
+            "path_sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+            "partial_counts": {
+              "allocated_bytes": 16384,
+              "logical_file_bytes": 7,
+              "regular_files": 2,
+              "directories": 2,
+              "entries": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "cleanup-limit",
+      "accepted": false,
+      "type": "StorageLimit",
+      "observation": {
+        "allocated_bytes": 16384,
+        "logical_file_bytes": 4,
+        "regular_files": 2,
+        "directories": 2,
+        "entries": 3,
+        "hardlink_observations": [],
+        "mutation_observations": [
+          {
+            "reason": "metadata changed at complete rejoin",
+            "relative_path": "a",
+            "path_truncated": false,
+            "path_sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+            "partial_counts": {
+              "allocated_bytes": 16384,
+              "logical_file_bytes": 3,
+              "regular_files": 2,
+              "directories": 2,
+              "entries": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "deadline",
+      "reason": "time"
+    },
+    {
+      "case": "root-replaced",
+      "refused": true
+    },
+    {
+      "case": "nested-cleanup-successor",
+      "first_fatal_preserved": true,
+      "actual_closed_descriptor_errors": 2,
+      "retained_errors": 2,
+      "lost_earlier_error": false,
+      "selected_type": "KeyboardInterrupt"
+    },
+    {
+      "case": "fd-inspection",
+      "baseline": 4,
+      "fds": {
+        "0": "/dev/null",
+        "1": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review02-2026-10-04/COMPATIBILITY01.out",
+        "2": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review02-2026-10-04/COMPATIBILITY01.err",
+        "3": "/dev/urandom"
+      }
+    },
+    {
+      "case": "descriptor-count",
+      "before": 4,
+      "after": 5
+    }
+  ]
+}

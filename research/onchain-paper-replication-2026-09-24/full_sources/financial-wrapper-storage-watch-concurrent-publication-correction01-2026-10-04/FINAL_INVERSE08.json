@@ -1,0 +1,969 @@
+{
+  "added_definitions": [
+    "StorageMutationObservation",
+    "_signature"
+  ],
+  "all_undeclared_ast_equal": true,
+  "changed_original_definitions": [
+    "_cleanup",
+    "StorageWatch._check",
+    "StorageWatch._scan"
+  ],
+  "full_literal_reconstruction": true,
+  "new_sha256": "75cdf844080ec6d71e37ae81ce98f62e11beee19c81173fcd4f76ee1c1ac45d8",
+  "old_sha256": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554",
+  "operations": [
+    {
+      "new_end": 2115,
+      "new_literal": "MutationObservation(ValueError):\n    \"\"\"Discarded incomplete/changed census; never a successful measurement.\"\"\"\n    def __init__(self,reason,relative):\n        path=str(relative)\n        self.evidence={'reason':reason,'relative_path':path[:512],\n            'path_truncated':len(path)>512,\n            'path_sha256':hashlib.sha256(os.fsencode(path)).hexdigest()}\n        super().__init__('storage concurrent namespace or metadata change: '+reason)\n\n\ndef _signature(info):\n    return (info.st_dev,info.st_ino,info.st_mode,info.st_nlink,\n            info.st_size,info.st_blocks,info.st_mtime_ns,info.st_ctime_ns)\n\n\nclass Storage",
+      "new_start": 1489,
+      "old_end": 1489,
+      "old_literal": "",
+      "old_start": 1489
+    },
+    {
+      "new_end": 2255,
+      "new_literal": "# Do not ",
+      "new_start": 2246,
+      "old_end": 1620,
+      "old_literal": "",
+      "old_start": 1620
+    },
+    {
+      "new_end": 2284,
+      "new_literal": "nvoke add_note/str/repr on a",
+      "new_start": 2256,
+      "old_end": 1622,
+      "old_literal": "f",
+      "old_start": 1621
+    },
+    {
+      "new_end": 2295,
+      "new_literal": "wh",
+      "new_start": 2293,
+      "old_end": 1631,
+      "old_literal": "",
+      "old_start": 1631
+    },
+    {
+      "new_end": 2298,
+      "new_literal": "le",
+      "new_start": 2296,
+      "old_end": 1633,
+      "old_literal": "s",
+      "old_start": 1632
+    },
+    {
+      "new_end": 2305,
+      "new_literal": "decidi",
+      "new_start": 2299,
+      "old_end": 1634,
+      "old_literal": "",
+      "old_start": 1634
+    },
+    {
+      "new_end": 2307,
+      "new_literal": "g",
+      "new_start": 2306,
+      "old_end": 1637,
+      "old_literal": "ot",
+      "old_start": 1635
+    },
+    {
+      "new_end": 2315,
+      "new_literal": "precede",
+      "new_start": 2308,
+      "old_end": 1640,
+      "old_literal": "No",
+      "old_start": 1638
+    },
+    {
+      "new_end": 2317,
+      "new_literal": "c",
+      "new_start": 2316,
+      "old_end": 1641,
+      "old_literal": "",
+      "old_start": 1641
+    },
+    {
+      "new_end": 2319,
+      "new_literal": ".",
+      "new_start": 2318,
+      "old_end": 1643,
+      "old_literal": ":",
+      "old_start": 1642
+    },
+    {
+      "new_end": 2329,
+      "new_literal": "#",
+      "new_start": 2328,
+      "old_end": 1652,
+      "old_literal": "",
+      "old_start": 1652
+    },
+    {
+      "new_end": 2331,
+      "new_literal": "A",
+      "new_start": 2330,
+      "old_end": 1668,
+      "old_literal": "   primary.add_",
+      "old_start": 1653
+    },
+    {
+      "new_end": 2332,
+      "new_literal": "",
+      "new_start": 2332,
+      "old_end": 1698,
+      "old_literal": "ote('storage descriptor close",
+      "old_start": 1669
+    },
+    {
+      "new_end": 2342,
+      "new_literal": "",
+      "new_start": 2342,
+      "old_end": 1711,
+      "old_literal": "ty:",
+      "old_start": 1708
+    },
+    {
+      "new_end": 2383,
+      "new_literal": "close is never eligible for a namespace ",
+      "new_start": 2343,
+      "old_end": 1714,
+      "old_literal": "'+",
+      "old_start": 1712
+    },
+    {
+      "new_end": 2386,
+      "new_literal": "t",
+      "new_start": 2385,
+      "old_end": 1717,
+      "old_literal": "p",
+      "old_start": 1716
+    },
+    {
+      "new_end": 2389,
+      "new_literal": "y.",
+      "new_start": 2387,
+      "old_end": 1726,
+      "old_literal": "(error))",
+      "old_start": 1718
+    },
+    {
+      "new_end": 2398,
+      "new_literal": "",
+      "new_start": 2398,
+      "old_end": 1740,
+      "old_literal": "    i",
+      "old_start": 1735
+    },
+    {
+      "new_end": 2400,
+      "new_literal": "a",
+      "new_start": 2399,
+      "old_end": 1751,
+      "old_literal": " not isins",
+      "old_start": 1741
+    },
+    {
+      "new_end": 2411,
+      "new_literal": "l=lambda ",
+      "new_start": 2402,
+      "old_end": 1755,
+      "old_literal": "nc",
+      "old_start": 1753
+    },
+    {
+      "new_end": 2412,
+      "new_literal": "",
+      "new_start": 2412,
+      "old_end": 1810,
+      "old_literal": "(primary,Exception) or isinstance(primary,MemoryError)",
+      "old_start": 1756
+    },
+    {
+      "new_end": 2413,
+      "new_literal": "",
+      "new_start": 2413,
+      "old_end": 1836,
+      "old_literal": "raise primary\n        if ",
+      "old_start": 1811
+    },
+    {
+      "new_end": 2429,
+      "new_literal": "",
+      "new_start": 2429,
+      "old_end": 1856,
+      "old_literal": "rror",
+      "old_start": 1852
+    },
+    {
+      "new_end": 2456,
+      "new_literal": "",
+      "new_start": 2456,
+      "old_end": 1887,
+      "old_literal": "rror",
+      "old_start": 1883
+    },
+    {
+      "new_end": 2659,
+      "new_literal": "rror)\n        if primary is not None and fatal(primary):\n            try:primary.storage_cleanup_errors=(error,)\n            except BaseException:pass\n            raise primary\n        if fatal(e",
+      "new_start": 2464,
+      "old_end": 1895,
+      "old_literal": "",
+      "old_start": 1895
+    },
+    {
+      "new_end": 2796,
+      "new_literal": "stor",
+      "new_start": 2792,
+      "old_end": 2028,
+      "old_literal": "",
+      "old_start": 2028
+    },
+    {
+      "new_end": 2799,
+      "new_literal": "ge",
+      "new_start": 2797,
+      "old_end": 2031,
+      "old_literal": "dd",
+      "old_start": 2029
+    },
+    {
+      "new_end": 2804,
+      "new_literal": "clea",
+      "new_start": 2800,
+      "old_end": 2032,
+      "old_literal": "",
+      "old_start": 2032
+    },
+    {
+      "new_end": 2811,
+      "new_literal": "up_err",
+      "new_start": 2805,
+      "old_end": 2033,
+      "old_literal": "",
+      "old_start": 2033
+    },
+    {
+      "new_end": 2812,
+      "new_literal": "",
+      "new_start": 2812,
+      "old_end": 2037,
+      "old_literal": "te(",
+      "old_start": 2034
+    },
+    {
+      "new_end": 2815,
+      "new_literal": "s=",
+      "new_start": 2813,
+      "old_end": 2041,
+      "old_literal": "epr",
+      "old_start": 2038
+    },
+    {
+      "new_end": 2822,
+      "new_literal": ",",
+      "new_start": 2821,
+      "old_end": 2047,
+      "old_literal": "",
+      "old_start": 2047
+    },
+    {
+      "new_end": 2832,
+      "new_literal": "\n        ",
+      "new_start": 2823,
+      "old_end": 2050,
+      "old_literal": ");",
+      "old_start": 2048
+    },
+    {
+      "new_end": 4576,
+      "new_literal": "mutations=[]\n        ",
+      "new_start": 4555,
+      "old_end": 3773,
+      "old_literal": "",
+      "old_start": 3773
+    },
+    {
+      "new_end": 4780,
+      "new_literal": ",'mutation_observations':mutations",
+      "new_start": 4746,
+      "old_end": 3943,
+      "old_literal": "",
+      "old_start": 3943
+    },
+    {
+      "new_end": 4861,
+      "new_literal": "(",
+      "new_start": 4860,
+      "old_end": 4023,
+      "old_literal": "",
+      "old_start": 4023
+    },
+    {
+      "new_end": 4908,
+      "new_literal": ",StorageMutationObservation)",
+      "new_start": 4880,
+      "old_end": 4042,
+      "old_literal": "",
+      "old_start": 4042
+    },
+    {
+      "new_end": 4936,
+      "new_literal": "r",
+      "new_start": 4935,
+      "old_end": 4073,
+      "old_literal": "hist",
+      "old_start": 4069
+    },
+    {
+      "new_end": 4939,
+      "new_literal": "w=",
+      "new_start": 4937,
+      "old_end": 4084,
+      "old_literal": "ry.append(",
+      "old_start": 4074
+    },
+    {
+      "new_end": 5196,
+      "new_literal": "\n                if isinstance(error,HardlinkObservation):history.append(row",
+      "new_start": 5120,
+      "old_end": 4265,
+      "old_literal": "",
+      "old_start": 4265
+    },
+    {
+      "new_end": 5285,
+      "new_literal": "else:mutations.append(row)\n                ",
+      "new_start": 5242,
+      "old_end": 4311,
+      "old_literal": "",
+      "old_start": 4311
+    },
+    {
+      "new_end": 5386,
+      "new_literal": ")\n                error.observation['mutation_observations']=list(mutations",
+      "new_start": 5311,
+      "old_end": 4337,
+      "old_literal": "",
+      "old_start": 4337
+    },
+    {
+      "new_end": 5615,
+      "new_literal": "",
+      "new_start": 5615,
+      "old_end": 4568,
+      "old_literal": "os",
+      "old_start": 4566
+    },
+    {
+      "new_end": 5620,
+      "new_literal": "anup",
+      "new_start": 5616,
+      "old_end": 4569,
+      "old_literal": "",
+      "old_start": 4569
+    },
+    {
+      "new_end": 5644,
+      "new_literal": ".",
+      "new_start": 5643,
+      "old_end": 4593,
+      "old_literal": ";",
+      "old_start": 4592
+    },
+    {
+      "new_end": 5649,
+      "new_literal": "All ",
+      "new_start": 5645,
+      "old_end": 4595,
+      "old_literal": "n",
+      "old_start": 4594
+    },
+    {
+      "new_end": 5652,
+      "new_literal": "ld",
+      "new_start": 5650,
+      "old_end": 4596,
+      "old_literal": "",
+      "old_start": 4596
+    },
+    {
+      "new_end": 5656,
+      "new_literal": "cou",
+      "new_start": 5653,
+      "old_end": 4598,
+      "old_literal": "i",
+      "old_start": 4597
+    },
+    {
+      "new_end": 5662,
+      "new_literal": "s ar",
+      "new_start": 5658,
+      "old_end": 4600,
+      "old_literal": "",
+      "old_start": 4600
+    },
+    {
+      "new_end": 5664,
+      "new_literal": " ",
+      "new_start": 5663,
+      "old_end": 4607,
+      "old_literal": "rrupte",
+      "old_start": 4601
+    },
+    {
+      "new_end": 5666,
+      "new_literal": "i",
+      "new_start": 5665,
+      "old_end": 4609,
+      "old_literal": " ",
+      "old_start": 4608
+    },
+    {
+      "new_end": 5671,
+      "new_literal": "rd",
+      "new_start": 5669,
+      "old_end": 4623,
+      "old_literal": "n is accept",
+      "old_start": 4612
+    },
+    {
+      "new_end": 6014,
+      "new_literal": "\n                error.observation['mutation_observations']=list(mutations)\n                ",
+      "new_start": 5922,
+      "old_end": 4875,
+      "old_literal": ";",
+      "old_start": 4874
+    },
+    {
+      "new_end": 6192,
+      "new_literal": "mutation_observations']=mutations\n            result['",
+      "new_start": 6138,
+      "old_end": 4999,
+      "old_literal": "",
+      "old_start": 4999
+    },
+    {
+      "new_end": 6223,
+      "new_literal": "6",
+      "new_start": 6222,
+      "old_end": 5030,
+      "old_literal": "3",
+      "old_start": 5029
+    },
+    {
+      "new_end": 6293,
+      "new_literal": "",
+      "new_start": 6293,
+      "old_end": 5138,
+      "old_literal": "  # Includes final descriptor cleanup.",
+      "old_start": 5100
+    },
+    {
+      "new_end": 6485,
+      "new_literal": "att",
+      "new_start": 6482,
+      "old_end": 5329,
+      "old_literal": "fr",
+      "old_start": 5327
+    },
+    {
+      "new_end": 6486,
+      "new_literal": "",
+      "new_start": 6486,
+      "old_end": 5335,
+      "old_literal": "sh co",
+      "old_start": 5330
+    },
+    {
+      "new_end": 6488,
+      "new_literal": "",
+      "new_start": 6488,
+      "old_end": 5339,
+      "old_literal": "le",
+      "old_start": 5337
+    },
+    {
+      "new_end": 6489,
+      "new_literal": "",
+      "new_start": 6489,
+      "old_end": 5346,
+      "old_literal": "e scan",
+      "old_start": 5340
+    },
+    {
+      "new_end": 6513,
+      "new_literal": ".",
+      "new_start": 6512,
+      "old_end": 5370,
+      "old_literal": ";",
+      "old_start": 5369
+    },
+    {
+      "new_end": 6515,
+      "new_literal": "E",
+      "new_start": 6514,
+      "old_end": 5395,
+      "old_literal": "only singly linked regul",
+      "old_start": 5371
+    },
+    {
+      "new_end": 6516,
+      "new_literal": "",
+      "new_start": 6516,
+      "old_end": 5405,
+      "old_literal": "r files o",
+      "old_start": 5396
+    },
+    {
+      "new_end": 6518,
+      "new_literal": "h",
+      "new_start": 6517,
+      "old_end": 5415,
+      "old_literal": "cur in an",
+      "old_start": 5406
+    },
+    {
+      "new_end": 6557,
+      "new_literal": "attempt includes the whole de",
+      "new_start": 6528,
+      "old_end": 5425,
+      "old_literal": "",
+      "old_start": 5425
+    },
+    {
+      "new_end": 6583,
+      "new_literal": "riptor census followed, ",
+      "new_start": 6559,
+      "old_end": 5427,
+      "old_literal": "",
+      "old_start": 5427
+    },
+    {
+      "new_end": 6652,
+      "new_literal": "fter its cleanup, by a complete literal namespace and metadata rejoi",
+      "new_start": 6584,
+      "old_end": 5428,
+      "old_literal": "",
+      "old_start": 5428
+    },
+    {
+      "new_end": 6656,
+      "new_literal": "E",
+      "new_start": 6655,
+      "old_end": 5433,
+      "old_literal": "Tr",
+      "old_start": 5431
+    },
+    {
+      "new_end": 6666,
+      "new_literal": "ch pass i",
+      "new_start": 6657,
+      "old_end": 5434,
+      "old_literal": "",
+      "old_start": 5434
+    },
+    {
+      "new_end": 6673,
+      "new_literal": "depend",
+      "new_start": 6667,
+      "old_end": 5437,
+      "old_literal": "si",
+      "old_start": 5435
+    },
+    {
+      "new_end": 6704,
+      "new_literal": "ly obeys all registered tree",
+      "new_start": 6676,
+      "old_end": 5440,
+      "old_literal": "",
+      "old_start": 5440
+    },
+    {
+      "new_end": 6721,
+      "new_literal": "mits. No file ",
+      "new_start": 6707,
+      "old_end": 5443,
+      "old_literal": "",
+      "old_start": 5443
+    },
+    {
+      "new_end": 6727,
+      "new_literal": "ame i",
+      "new_start": 6722,
+      "old_end": 5445,
+      "old_literal": "k",
+      "old_start": 5444
+    },
+    {
+      "new_end": 6751,
+      "new_literal": "ignored. Continuous ch",
+      "new_start": 6729,
+      "old_end": 5448,
+      "old_literal": "m",
+      "old_start": 5447
+    },
+    {
+      "new_end": 6764,
+      "new_literal": "nge after an",
+      "new_start": 6752,
+      "old_end": 5449,
+      "old_literal": "",
+      "old_start": 5449
+    },
+    {
+      "new_end": 6766,
+      "new_literal": "",
+      "new_start": 6766,
+      "old_end": 5474,
+      "old_literal": "occur between/during di",
+      "old_start": 5451
+    },
+    {
+      "new_end": 6767,
+      "new_literal": "",
+      "new_start": 6767,
+      "old_end": 5476,
+      "old_literal": "c",
+      "old_start": 5475
+    },
+    {
+      "new_end": 6771,
+      "new_literal": "mpl",
+      "new_start": 6768,
+      "old_end": 5479,
+      "old_literal": "rd",
+      "old_start": 5477
+    },
+    {
+      "new_end": 6776,
+      "new_literal": "p",
+      "new_start": 6775,
+      "old_end": 5485,
+      "old_literal": "bs",
+      "old_start": 5483
+    },
+    {
+      "new_end": 6778,
+      "new_literal": "",
+      "new_start": 6778,
+      "old_end": 5488,
+      "old_literal": "v",
+      "old_start": 5487
+    },
+    {
+      "new_end": 6790,
+      "new_literal": " remain",
+      "new_start": 6783,
+      "old_end": 5493,
+      "old_literal": "",
+      "old_start": 5493
+    },
+    {
+      "new_end": 6828,
+      "new_literal": " outside this metadata-only guarantee",
+      "new_start": 6791,
+      "old_end": 5494,
+      "old_literal": "",
+      "old_start": 5494
+    },
+    {
+      "new_end": 7101,
+      "new_literal": ";seals={};names={}",
+      "new_start": 7083,
+      "old_end": 5749,
+      "old_literal": "",
+      "old_start": 5749
+    },
+    {
+      "new_end": 8263,
+      "new_literal": ";seals[str(relative)]=_signature(info)",
+      "new_start": 8225,
+      "old_end": 6873,
+      "old_literal": "",
+      "old_start": 6873
+    },
+    {
+      "new_end": 8330,
+      "new_literal": ";listed=[]",
+      "new_start": 8320,
+      "old_end": 6930,
+      "old_literal": "",
+      "old_start": 6930
+    },
+    {
+      "new_end": 8464,
+      "new_literal": ";listed.append(entry.name)",
+      "new_start": 8438,
+      "old_end": 7038,
+      "old_literal": "",
+      "old_start": 7038
+    },
+    {
+      "new_end": 8598,
+      "new_literal": "\n                    child_relative=relative/entry.name",
+      "new_start": 8543,
+      "old_end": 7117,
+      "old_literal": "",
+      "old_start": 7117
+    },
+    {
+      "new_end": 8810,
+      "new_literal": ";",
+      "new_start": 8809,
+      "old_end": 7353,
+      "old_literal": "\n                        ",
+      "old_start": 7328
+    },
+    {
+      "new_end": 8944,
+      "new_literal": "_signature",
+      "new_start": 8934,
+      "old_end": 7477,
+      "old_literal": "",
+      "old_start": 7477
+    },
+    {
+      "new_end": 8951,
+      "new_literal": "",
+      "new_start": 8951,
+      "old_end": 7505,
+      "old_literal": ".st_dev,before.st_ino",
+      "old_start": 7484
+    },
+    {
+      "new_end": 8964,
+      "new_literal": "_signature",
+      "new_start": 8954,
+      "old_end": 7508,
+      "old_literal": "",
+      "old_start": 7508
+    },
+    {
+      "new_end": 8971,
+      "new_literal": "",
+      "new_start": 8971,
+      "old_end": 7536,
+      "old_literal": ".st_dev,opened.st_ino",
+      "old_start": 7515
+    },
+    {
+      "new_end": 8980,
+      "new_literal": "S",
+      "new_start": 8979,
+      "old_end": 7557,
+      "old_literal": "ValueError('s",
+      "old_start": 7544
+    },
+    {
+      "new_end": 9007,
+      "new_literal": "MutationObservation('",
+      "new_start": 8986,
+      "old_end": 7564,
+      "old_literal": " ",
+      "old_start": 7563
+    },
+    {
+      "new_end": 9054,
+      "new_literal": ",child_relative",
+      "new_start": 9039,
+      "old_end": 7596,
+      "old_literal": "",
+      "old_start": 7596
+    },
+    {
+      "new_end": 9110,
+      "new_literal": "child_",
+      "new_start": 9104,
+      "old_end": 7646,
+      "old_literal": "",
+      "old_start": 7646
+    },
+    {
+      "new_end": 9117,
+      "new_literal": "",
+      "new_start": 9117,
+      "old_end": 7664,
+      "old_literal": "e/entry.nam",
+      "old_start": 7653
+    },
+    {
+      "new_end": 9249,
+      "new_literal": "_signature",
+      "new_start": 9239,
+      "old_end": 7786,
+      "old_literal": "",
+      "old_start": 7786
+    },
+    {
+      "new_end": 9257,
+      "new_literal": "",
+      "new_start": 9257,
+      "old_end": 7816,
+      "old_literal": ".st_dev,current.st_ino",
+      "old_start": 7794
+    },
+    {
+      "new_end": 9270,
+      "new_literal": "_signature",
+      "new_start": 9260,
+      "old_end": 7819,
+      "old_literal": "",
+      "old_start": 7819
+    },
+    {
+      "new_end": 9277,
+      "new_literal": "",
+      "new_start": 9277,
+      "old_end": 7847,
+      "old_literal": ".st_dev,opened.st_ino",
+      "old_start": 7826
+    },
+    {
+      "new_end": 9286,
+      "new_literal": "S",
+      "new_start": 9285,
+      "old_end": 7868,
+      "old_literal": "ValueError('s",
+      "old_start": 7855
+    },
+    {
+      "new_end": 9313,
+      "new_literal": "MutationObservation('",
+      "new_start": 9292,
+      "old_end": 7875,
+      "old_literal": " ",
+      "old_start": 7874
+    },
+    {
+      "new_end": 9365,
+      "new_literal": ",child_relative",
+      "new_start": 9350,
+      "old_end": 7912,
+      "old_literal": "",
+      "old_start": 7912
+    },
+    {
+      "new_end": 9545,
+      "new_literal": "\n                        ",
+      "new_start": 9520,
+      "old_end": 8067,
+      "old_literal": "",
+      "old_start": 8067
+    },
+    {
+      "new_end": 9566,
+      "new_literal": "child_",
+      "new_start": 9560,
+      "old_end": 8082,
+      "old_literal": "",
+      "old_start": 8082
+    },
+    {
+      "new_end": 9577,
+      "new_literal": ");s",
+      "new_start": 9574,
+      "old_end": 8091,
+      "old_literal": "/",
+      "old_start": 8090
+    },
+    {
+      "new_end": 9583,
+      "new_literal": "als[s",
+      "new_start": 9578,
+      "old_end": 8093,
+      "old_literal": "n",
+      "old_start": 8092
+    },
+    {
+      "new_end": 9607,
+      "new_literal": "(child_relative)]=_sig",
+      "new_start": 9585,
+      "old_end": 8097,
+      "old_literal": "y.",
+      "old_start": 8095
+    },
+    {
+      "new_end": 9619,
+      "new_literal": "ture(befor",
+      "new_start": 9609,
+      "old_end": 8100,
+      "old_literal": "m",
+      "old_start": 8099
+    },
+    {
+      "new_end": 10131,
+      "new_literal": "    if len(listed)!=len(set(listed)):raise StorageMutationObservation('duplicate enumerated name',relative)\n            names[str(relative)]=tuple(sorted(listed))\n            if _signature(os.fstat(fd))!=_signature(info):raise StorageMutationObservation('directory changed after enumeration cleanup',relative)\n        root_fd=None;primary=None\n        try:\n            ",
+      "new_start": 9762,
+      "old_end": 8243,
+      "old_literal": "",
+      "old_start": 8243
+    },
+    {
+      "new_end": 10163,
+      "new_literal": "",
+      "new_start": 10163,
+      "old_end": 8301,
+      "old_literal": ";primary=None\n        try:",
+      "old_start": 8275
+    },
+    {
+      "new_end": 13481,
+      "new_literal": "except FileNotFoundError as error:\n            primary=StorageMutationObservation('entry disappeared before census completed','.')\n            _annotate(primary,observed,[]);raise primary from error\n        except BaseException as error:\n            primary=error;_annotate(error,observed,[]);raise\n        finally:\n            if root_fd is not None:_close(root_fd,primary)\n        # Every owned descriptor/scandir cleanup has completed. Rejoin the ENTIRE\n        # root and each recorded directory/name/stat; missing/new names cannot be\n        # accepted by skipping temporary entries. This is a finite sampled audit,\n        # not a lock or proof that later writes cannot occur.\n        first=dict(observed);observed={key:0 for key in observed};rejoin_entries=0\n        try:\n            # Finish every namespace iterator and its cleanup before the final\n            # full metadata pass. A later-directory close can alter an earlier\n            # file; interleaving these phases would accept stale earlier counts.\n            for relative in sorted(names):\n                enforce();path=self.root if relative=='.' else self.root/relative\n                if path.resolve(strict=True)!=path:raise ValueError('storage rejoin path redirected')\n                if _signature(path.lstat())!=seals[relative]:raise StorageMutationObservation('directory changed at namespace rejoin',relative)\n                listed=[];entries=os.scandir(path);iterator_primary=None\n                try:\n                    for entry in entries:\n                        listed.append(entry.name);rejoin_entries+=1\n                        if rejoin_entries>limits['max_entries']:raise StorageLimit('entries',{**observed,'entries':rejoin_entries})\n                        enforce()\n                except BaseException as error:iterator_primary=error;raise\n                finally:_cleanup(entries.close,iterator_primary)\n                if tuple(sorted(listed))!=names[relative] or _signature(path.lstat())!=seals[relative]:\n                    raise StorageMutationObservation('complete namespace rejoin differs',relative)\n            for relative in sorted(seals):\n                enforce();path=self.root if relative=='.' else self.root/relative\n                current=path.lstat()\n                if path.resolve(strict=True)!=path:raise ValueError('storage rejoin path redirected')\n                if relative!='.':observed['entries']+=1\n                account(current,relative)\n                if _signature(current)!=seals[relative]:raise StorageMutationObservation('metadata changed at complete rejoin',relative)\n            if observed!=first:raise StorageMutationObservation('complete accounting rejoin differs','.')\n            enforce()\n        ",
+      "new_start": 10744,
+      "old_end": 8882,
+      "old_literal": "",
+      "old_start": 8882
+    },
+    {
+      "new_end": 13789,
+      "new_literal": ", immutable-byte proof",
+      "new_start": 13767,
+      "old_end": 9168,
+      "old_literal": "",
+      "old_start": 9168
+    },
+    {
+      "new_end": 14094,
+      "new_literal": "FileNotFoundError as error:\n            failure=StorageMutationObservation('entry disappeared during complete rejoin','.')\n            _annotate(failure,{key:max(first[key],observed[key]) for key in observed},[]);raise failure from error\n        except ",
+      "new_start": 13841,
+      "old_end": 9220,
+      "old_literal": "",
+      "old_start": 9220
+    },
+    {
+      "new_end": 14130,
+      "new_literal": "",
+      "new_start": 14130,
+      "old_end": 9270,
+      "old_literal": "primary=error;",
+      "old_start": 9256
+    },
+    {
+      "new_end": 14166,
+      "new_literal": "{key:max(first[key],",
+      "new_start": 14146,
+      "old_end": 9286,
+      "old_literal": "",
+      "old_start": 9286
+    },
+    {
+      "new_end": 14201,
+      "new_literal": "[key]) for key in observed}",
+      "new_start": 14174,
+      "old_end": 9294,
+      "old_literal": "",
+      "old_start": 9294
+    },
+    {
+      "new_end": 14212,
+      "new_literal": "",
+      "new_start": 14212,
+      "old_end": 9345,
+      "old_literal": "        finally:_close(root_fd,primary)\n",
+      "old_start": 9305
+    }
+  ]
+}

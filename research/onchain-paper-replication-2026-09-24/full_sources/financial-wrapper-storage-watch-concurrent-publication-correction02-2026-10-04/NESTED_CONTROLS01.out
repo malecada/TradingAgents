@@ -1,0 +1,166 @@
+{
+  "status": "SOURCE_ONLY_NESTED_CLEANUP_CONTROLS",
+  "cases": 24,
+  "results": [
+    {
+      "case": "exact-reviewer-nested-predecessor_workflow_storage",
+      "first_fatal_retained": true,
+      "close_errors_reachable": [
+        false,
+        true
+      ],
+      "actual_descriptors_closed": 2,
+      "no_reclose": true
+    },
+    {
+      "case": "exact-reviewer-nested-workflow_storage",
+      "first_fatal_retained": true,
+      "close_errors_reachable": [
+        true,
+        true
+      ],
+      "actual_descriptors_closed": 2,
+      "no_reclose": true
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "ValueError",
+      "secondary": "RuntimeError",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "ValueError",
+      "secondary": "KeyboardInterrupt",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "ValueError",
+      "secondary": "MemoryError",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "ValueError",
+      "secondary": "SystemExit",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "RuntimeError",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "KeyboardInterrupt",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "MemoryError",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "KeyboardInterrupt",
+      "secondary": "SystemExit",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "MemoryError",
+      "secondary": "RuntimeError",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "MemoryError",
+      "secondary": "KeyboardInterrupt",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "MemoryError",
+      "secondary": "MemoryError",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "MemoryError",
+      "secondary": "SystemExit",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "SystemExit",
+      "secondary": "RuntimeError",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "SystemExit",
+      "secondary": "KeyboardInterrupt",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "SystemExit",
+      "secondary": "MemoryError",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "three-nested-matrix",
+      "primary": "SystemExit",
+      "secondary": "SystemExit",
+      "all_four_original_objects_reachable": true,
+      "actual_close_calls": 3
+    },
+    {
+      "case": "hostile-diagnostic-hooks-not-called",
+      "hooks_called": [],
+      "retained_errors": 2
+    },
+    {
+      "case": "existing-tuple",
+      "both_error_objects_retained": true
+    },
+    {
+      "case": "existing-non-tuple",
+      "both_error_objects_retained": true
+    },
+    {
+      "case": "successful-cleanup",
+      "primary_supplied": false,
+      "returned": true
+    },
+    {
+      "case": "successful-cleanup",
+      "primary_supplied": true,
+      "returned": true
+    },
+    {
+      "case": "reviewer-descriptor-count",
+      "before": 4,
+      "after": 4
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review01-2026-10-04/audit02.py", line 104, in <module>
+    try:r=w.check();ck(case not in ('churn','cleanup-limit'),'must fail mutation control');actual=sum(x.stat().st_size for x in p.rglob('*') if x.is_file());ck(r['logical_file_bytes']==actual and r['scan_attempts']==2,'full changed rejoin');record(case,accepted=True,logical=actual,attempts=r['scan_attempts'])
+                                                                                                                                                             ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-review01-2026-10-04/audit02.py", line 13, in ck
+    if not v:raise AssertionError(label)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: full changed rejoin

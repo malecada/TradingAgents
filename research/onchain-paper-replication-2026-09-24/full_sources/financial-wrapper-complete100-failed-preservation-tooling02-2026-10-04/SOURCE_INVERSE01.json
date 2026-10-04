@@ -1,0 +1,96 @@
+{
+  "recover01.py": {
+    "original_sha256": "ee8193d1080caaecd4d15ed4e1e4144a4153114eba66b1752105dc173634addd",
+    "candidate_sha256": "8b97e0219fdb8a85a9c0cdd0dde2cd8297d355d2cb5ef48ea661bae79f822d5c",
+    "edits": [
+      {
+        "old": "import time\n",
+        "new": "import time\nimport resource\nimport watch01 as W\n"
+      },
+      {
+        "old": "CALLS = []",
+        "new": "CALLS = []\nWATCHES = []\nBASELINE = None\n\ndef watch():\n    global BASELINE\n    require(len(WATCHES) < W.POLICY['samples'] and time.monotonic()-START < 600, 'finite whole-tree supervision')\n    row = W.census(HERE)\n    if BASELINE is None: BASELINE = dict(row)\n    WATCHES.append(row)\n    return row"
+      },
+      {
+        "old": "    require(len(body) <= FILE, 'per selected body bound')",
+        "new": "    watch()\n    require(len(body) <= FILE, 'per selected body bound')"
+      },
+      {
+        "old": "    require(path.read_bytes() == body, 'actual saved-byte readback')",
+        "new": "    require(path.read_bytes() == body, 'actual saved-byte readback')\n    watch()"
+      },
+      {
+        "old": "    child = poller = None",
+        "new": "    child = poller = None\n    ready_read = ready_write = None\n    ready = None"
+      },
+      {
+        "old": "    try:\n        child = subprocess.Popen(['git', *args], cwd=cwd, env=env,",
+        "new": "    try:\n        watch()\n        ready_read, ready_write = os.pipe()\n        def limits():\n            resource.setrlimit(resource.RLIMIT_FSIZE, (FILE, FILE))\n            actual = resource.getrlimit(resource.RLIMIT_FSIZE)\n            require(actual == (FILE, FILE), 'actual child hard/soft FSIZE')\n            os.write(ready_write, encode({'pid':os.getpid(),'fsize':list(actual)}))\n            os.close(ready_write)\n        child = subprocess.Popen(['git', *args], cwd=cwd, env=env,"
+      },
+      {
+        "old": "stderr=subprocess.PIPE, start_new_session=True)",
+        "new": "stderr=subprocess.PIPE, start_new_session=True, preexec_fn=limits, pass_fds=(ready_write,))\n        os.close(ready_write); ready_write = None\n        ready_raw = os.read(ready_read, 512)\n        os.close(ready_read); ready_read = None\n        ready = json.loads(ready_raw)\n        require(ready == {'pid':child.pid,'fsize':[FILE, FILE]}, 'genuine child OS limit readback')"
+      },
+      {
+        "old": "        while poller.get_map():",
+        "new": "        while poller.get_map():\n            watch()"
+      },
+      {
+        "old": "        require(code == 0, 'actual Git operation failed')",
+        "new": "        require(code == 0, 'actual Git operation failed')\n        watch()"
+      },
+      {
+        "old": "    failures = []\n    for action in actions:",
+        "new": "    if ready_read is not None: actions.append(lambda: os.close(ready_read))\n    if ready_write is not None: actions.append(lambda: os.close(ready_write))\n    actions.append(watch)\n    failures = []\n    for action in actions:"
+      },
+      {
+        "old": "'exit': code, 'seconds': time.monotonic() - begun,",
+        "new": "'exit': code, 'seconds': time.monotonic() - begun, 'actual_child_limits':ready,"
+      },
+      {
+        "old": "fresh-complete100-failed-outcome02-01.git",
+        "new": "fresh-complete100-failed-outcome02-02.git"
+      },
+      {
+        "old": "    git(['fetch', '--no-tags', 'origin', *wanted], repo)",
+        "new": "    for oid in wanted:\n        git(['fetch', '--no-tags', 'origin', oid], repo)"
+      },
+      {
+        "old": "len(CALLS) == 11 + 2*len(rows)",
+        "new": "len(CALLS) == 10 + len(wanted) + 2*len(rows)"
+      },
+      {
+        "old": "    receipt = {'schema_version': 1,",
+        "new": "    watch()\n    receipt = {'whole_tree_policy':dict(W.POLICY),'initial_owned_allocation':BASELINE,'whole_tree_observations':list(WATCHES),'unique_selected_objects':len(wanted),'expected_operations':10+len(wanted)+2*len(rows),'schema_version': 1,"
+      },
+      {
+        "old": "fresh-actual-remote-complete100-failed-outcome02-recovered",
+        "new": "fresh-actual-remote-complete100-failed-outcome02-supervised-recovered"
+      },
+      {
+        "old": "Selected bodies are bounded4MiB; writable Git pack extents are not universally bounded4MiB and require separate actual readback.",
+        "new": "Every receiver child inherits actual-readback hard/soft4MiB FSIZE; entire owned tree including baseline sampled at fixed64MiB logical/96MiB allocated/32768members/depth32. Single-blob fetches and exact dynamic unique-object operation denominator; transient aggregate/physical wire not measured."
+      }
+    ],
+    "whole_byte_AST_inverse": true
+  },
+  "restore01.py": {
+    "original_sha256": "d78cd2ff8463c2dc7b7f1f2463ae351ac993a994570812a9fe5131c4917f8657",
+    "candidate_sha256": "8a4cb8e01a1b639430c1e2f7dd77514a0b6b85ae19616ce2d724b0b173704d86",
+    "edits": [
+      {
+        "old": "fresh-actual-remote-complete100-failed-outcome02-recovered",
+        "new": "fresh-actual-remote-complete100-failed-outcome02-supervised-recovered"
+      },
+      {
+        "old": "len(remote['operations']) == 11 + 2 * len(rows)",
+        "new": "len(remote['operations']) == remote['expected_operations'] == 10 + len({row['git_object'] for row in records}) + 2 * len(rows) and remote['unique_selected_objects'] == len({row['git_object'] for row in records})"
+      },
+      {
+        "old": "    return rows\n\n\ndef load_scopes",
+        "new": "    R.require(remote['whole_tree_policy'] == {'logical':67108864,'allocated':100663296,'members':32768,'depth':32,'file':4194304,'sample_seconds':5,'floor':10737418240,'samples':8192}, 'fixed whole writable tree policy')\n    R.require(all(row['actual_child_limits'] == {'pid':row['pid'],'fsize':[4194304,4194304]} for row in remote['operations']), 'actual per-child hard/soft OS limit readbacks')\n    observations = remote['whole_tree_observations']\n    R.require(type(observations) is list and 1 <= len(observations) <= 8192 and remote['initial_owned_allocation'] == observations[0], 'initial baseline and complete sampled storage observations')\n    R.require(all(0 <= row['logical_bytes'] <= 67108864 and 0 <= row['allocated_bytes'] <= 100663296 and 1 <= row['members'] <= 32768 and 0 <= row['seconds'] < 5 and 1 <= row['complete_attempts'] <= 3 for row in observations), 'actual fixed finite storage samples')\n    return rows\n\n\ndef load_scopes"
+      }
+    ],
+    "whole_byte_AST_inverse": true
+  }
+}

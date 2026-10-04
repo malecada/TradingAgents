@@ -1,0 +1,35 @@
+{
+  "status": "WITHHELD_FOR_CLEANUP_EVIDENCE",
+  "author_manifest_sha256": "ffbcc1efc6e56d1bf5b19830dd46a279e79f0a2b242e0e3a8ca182da421aaafb",
+  "candidate_sha256": "75cdf844080ec6d71e37ae81ce98f62e11beee19c81173fcd4f76ee1c1ac45d8",
+  "findings": [
+    {
+      "priority": "P2",
+      "file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-storage-watch-concurrent-publication-correction01-2026-10-04/workflow_storage.py",
+      "line": 61,
+      "issue": "Nested cleanup overwrites earlier secondary error objects; first fatal retained but earlier close failure unreachable.",
+      "witness": "CLEANUP_PROBE01.json"
+    }
+  ],
+  "authentication_assertions_and_control_assertions": 1072,
+  "audit04_record_rows": 27,
+  "native_subset_cases": 7,
+  "late_same_signature_probe_total": 12,
+  "late_same_signature_stale_samples": 6,
+  "author_case_denominator": [
+    37,
+    9,
+    2
+  ],
+  "actual_source_bodies": 194,
+  "actual_publication_red_green": true,
+  "no_financial_execution": true,
+  "no_source_integration": true,
+  "reviewer_failed_runs_retained": [
+    "AUDIT01",
+    "AUDIT02",
+    "AUDIT03"
+  ],
+  "acceptance_scope": "sampled filesystem metadata only",
+  "report_sha256": "25a0eeaba288ce27c8681deecab14b38d07058e30802d4bc2ee65785d5bd9e7b"
+}
