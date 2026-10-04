@@ -1,0 +1,11 @@
+# Independent router successor03 review
+
+Accepted as a source-only engineering routing utility. IR3 is corrected: the compact pin now validates complete derived partition slices and exact original spool plans, and the instance retains its original immutable route reference. Checks bracket each external engineering callback. The preserved old witness accepts its changed raw offset; the successor refuses both the malformed pin and public route replacement before recovery.
+
+Complete current source1930, predecessor1710, preceding review1608, original3431 and earlier review1673 typed members were authenticated, together with underlying utility scopes. The complete literal and AST inverse contains only the four declared functions. Six copied utility bodies and their source evidence remain unchanged. No format, cap, scientific method or accounting change was inferred.
+
+A fresh real opaque 95-file, 14-retained-plan pipeline completed. Independent checks compared every recovered body and mode and reconstructed both ordered raw payloads. All nested primitive and derivative mutations, callback-boundary replacement, retained-state and cross-envelope controls refused. Nine actual primary-fatal/secondary-owned-close pairs preserved the first exception and drained descriptors. Original IR1 and IR2 regressions passed.
+
+One independent harness initially expected ValueError/TypeError for production refusal, while the source correctly raises RuntimeError. The failed script and stderr are retained; independent02 adds the actual exception class without changing source or fixtures.
+
+Protection is sampled at implemented boundaries, not continuous race immunity or callback preemption. Original and recovered complete stores remain local and retained; no sliding reuse, retirement or deletion is admitted. The arithmetic 8952 aggregate files/280 retained plans is not an observed full population or capacity result. Source339 does not thereby gain these modules or revised source/gate authority. Genuine Target/Owner/Binding publication, typed external recovery, whole resource capacity and financial admission remain unavailable. No numerical imports, genuine claims, network or live integration occurred.

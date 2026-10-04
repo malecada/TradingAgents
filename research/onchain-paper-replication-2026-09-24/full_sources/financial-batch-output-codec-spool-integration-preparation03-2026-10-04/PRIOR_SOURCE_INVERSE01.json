@@ -1,0 +1,151 @@
+{
+  "changed_functions": [
+    "Inventory.pin",
+    "Route.encoded",
+    "Router.__init__",
+    "Router.check",
+    "Router.run",
+    "_file_schema",
+    "_inventory_schema",
+    "_route_schema",
+    "current",
+    "estimate",
+    "route",
+    "validate_route"
+  ],
+  "complete_original_scopes": [
+    {
+      "manifest_sha256": "086bf7c37b795e339ab9937265ef81b353a36cc12ff132cf2fd69c4ce60666e6",
+      "members": 3431,
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-codec-spool-integration-preparation01-2026-10-04"
+    },
+    {
+      "manifest_sha256": "1119810eb6035aa92a563258597bc26e05d1c0012a137fb2c8e9b8dc0cb1b491",
+      "members": 1673,
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-codec-spool-integration-source-review01-2026-10-04"
+    }
+  ],
+  "original_sha256": "24bb42b49baba8ea330ced3864d28019a5b30745d5739de3cafc2cbea8a74454",
+  "reverse_line_edits": [
+    {
+      "end": 66,
+      "replace": [
+        "    def pin(self):return sha(encode(D.asdict(self)))\n"
+      ],
+      "start": 63
+    },
+    {
+      "end": 134,
+      "replace": [],
+      "start": 100
+    },
+    {
+      "end": 136,
+      "replace": [
+        "    require(type(inventory) is Inventory,'exact immutable inventory')\n"
+      ],
+      "start": 135
+    },
+    {
+      "end": 157,
+      "replace": [],
+      "start": 156
+    },
+    {
+      "end": 181,
+      "replace": [],
+      "start": 167
+    },
+    {
+      "end": 184,
+      "replace": [],
+      "start": 183
+    },
+    {
+      "end": 203,
+      "replace": [
+        "    require(type(value) is Route,'exact immutable route')\n"
+      ],
+      "start": 202
+    },
+    {
+      "end": 209,
+      "replace": [
+        "    require(type(value) is Route,'route type')\n"
+      ],
+      "start": 208
+    },
+    {
+      "end": 272,
+      "replace": [
+        "        self.deadline=time.monotonic()+seconds;self._files={};self._attempted=();self._completed=();self._retained=()\n"
+      ],
+      "start": 271
+    },
+    {
+      "end": 318,
+      "replace": [],
+      "start": 312
+    },
+    {
+      "end": 390,
+      "replace": [],
+      "start": 389
+    }
+  ],
+  "successor_sha256": "5d13a47c3f8997b215be50d8bee165b8d3d5f7fc4e292689f90a16d6e32b8acc",
+  "unchanged_functions": [
+    "Envelope.pin",
+    "Route.pin",
+    "Router._check_retained",
+    "Router._floor",
+    "Router._identity",
+    "Router._rootcheck",
+    "Router._write",
+    "Router.attempted",
+    "Router.close",
+    "Router.completed",
+    "Router.consumed",
+    "Router.limit",
+    "Router.release",
+    "encode",
+    "inspect",
+    "production",
+    "require",
+    "sha"
+  ],
+  "unchanged_six_copies": [
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "codec01.py",
+      "sha256": "f10f6803a637735bc490de8846056a34e9090451d92773d075a7025b19bd3d55"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "local_store01.py",
+      "sha256": "ceec61446f678f8749fa1e24530b5b4e3e344a59cce75f7906e322f03dd8ad89"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "owned_io.py",
+      "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "recovery04.py",
+      "sha256": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "bounded_git01.py",
+      "sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "spool05.py",
+      "sha256": "704e26d5d35c546ce61438e0ba1597526f92e6b33fdb8719a2a2765c6f1cbd5f"
+    }
+  ],
+  "whole_AST_inverse": true,
+  "whole_byte_inverse": true
+}

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-codec-spool-integration-source-review03-2026-10-04/independent01.py", line 30, in <module>
+    refuse(lambda:R.production(),'production unavailable') if hasattr(R,'production') else None
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-codec-spool-integration-source-review03-2026-10-04/independent01.py", line 7, in refuse
+    try:fn()
+        ~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-codec-spool-integration-source-review03-2026-10-04/independent01.py", line 30, in <lambda>
+    refuse(lambda:R.production(),'production unavailable') if hasattr(R,'production') else None
+                  ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-codec-spool-integration-preparation03-2026-10-04/router06.py", line 270, in production
+    raise RuntimeError('UNAVAILABLE: genuine original Target/Owner/Binding/Produced ancestry, authenticated reservation/transport/typed recovery/retirement/native capacity are not integrated')
+RuntimeError: UNAVAILABLE: genuine original Target/Owner/Binding/Produced ancestry, authenticated reservation/transport/typed recovery/retirement/native capacity are not integrated

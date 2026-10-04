@@ -1,0 +1,301 @@
+{
+  "calls": [
+    {
+      "handoff": "Actual ImportedExecution + GraphSnapshot -> Target -> held Owner/Stage -> completed stream -> closed Stage -> publication -> genuine Produced; current source has no codec consumer",
+      "role": "current genuine production",
+      "source": {
+        "functions": [
+          {
+            "end_line": 221,
+            "line": 200,
+            "name": "Produced._check"
+          },
+          {
+            "end_line": 247,
+            "line": 243,
+            "name": "produce_imported"
+          },
+          {
+            "end_line": 356,
+            "line": 250,
+            "name": "_produce_locked"
+          }
+        ],
+        "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/compact_mcm.py",
+        "sha256": "6673fa484f37c0c3556c3d158035bb0c7f1db8f4a9f834ca50374c57c1e21b81"
+      },
+      "state": "implemented_in_current_source_no_execution_observed"
+    },
+    {
+      "handoff": "Only while original Stage active and actual stream completed; exact original f64 member bytes, aligned <=1MiB, retain metadata/terminal and full Target.check",
+      "role": "f64 original ranges",
+      "source": {
+        "functions": [
+          {
+            "end_line": 188,
+            "line": 85,
+            "name": "HeldBatches"
+          },
+          {
+            "end_line": 136,
+            "line": 117,
+            "name": "HeldBatches._authority"
+          },
+          {
+            "end_line": 167,
+            "line": 163,
+            "name": "HeldBatches.read_part"
+          },
+          {
+            "end_line": 195,
+            "line": 191,
+            "name": "open_held"
+          }
+        ],
+        "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neural-cold-feature-handoff-held-score-reader-preparation01-2026-10-03/held_score_reader.py",
+        "sha256": "3836bbcdc8b5b1be6a08c47a6d97c76c7c0875eeba7e91e6d363bdc6b4ade209"
+      },
+      "state": "prepared_source_not_installed"
+    },
+    {
+      "handoff": "Actual Produced and original held token after Stage close, current Owner before close, original matrix.f32 plus manifest; no NPY/scientific lineage substitution",
+      "role": "completed raw-f32 original ranges",
+      "source": {
+        "functions": [
+          {
+            "end_line": 121,
+            "line": 58,
+            "name": "CompletedF32"
+          },
+          {
+            "end_line": 91,
+            "line": 80,
+            "name": "CompletedF32._authority"
+          },
+          {
+            "end_line": 105,
+            "line": 100,
+            "name": "CompletedF32.read_part"
+          },
+          {
+            "end_line": 151,
+            "line": 131,
+            "name": "completed_worker"
+          },
+          {
+            "end_line": 165,
+            "line": 153,
+            "name": "consume_if_selected"
+          }
+        ],
+        "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-preparation02-2026-10-03/completed_f32.py",
+        "sha256": "ba739fb8711287f365abca061544a712bfdb0fd65a52836188da1c959ac9f266"
+      },
+      "state": "prepared_source_not_installed"
+    },
+    {
+      "handoff": "Actual ResearchRun -> Context -> exact typed original source -> Ledger -> one-use Operation; independent original population and no-refund reservations",
+      "role": "durable original non-tail accounting",
+      "source": {
+        "functions": [
+          {
+            "end_line": 242,
+            "line": 159,
+            "name": "Context"
+          },
+          {
+            "end_line": 269,
+            "line": 244,
+            "name": "Ledger"
+          },
+          {
+            "end_line": 307,
+            "line": 271,
+            "name": "Operation"
+          },
+          {
+            "end_line": 286,
+            "line": 276,
+            "name": "Operation.reserve_next"
+          },
+          {
+            "end_line": 296,
+            "line": 287,
+            "name": "Operation.verify_local_recovery"
+          }
+        ],
+        "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-preparation02-2026-10-03/archive_non_tail.py",
+        "sha256": "c62e1521969b7665baca6d29b3125be9214d4eb8c4f42f980622d9d670e56fac"
+      },
+      "state": "prepared_source_not_installed"
+    },
+    {
+      "handoff": "Real source-derived operation, fixed registered bounded SSH roundtrip, full original container recovery, no disposition authority or wire-metering claim",
+      "role": "selected original transport",
+      "source": {
+        "functions": [
+          {
+            "end_line": 243,
+            "line": 235,
+            "name": "Session._reserve"
+          },
+          {
+            "end_line": 265,
+            "line": 244,
+            "name": "Session._command"
+          },
+          {
+            "end_line": 298,
+            "line": 266,
+            "name": "Session.run"
+          },
+          {
+            "end_line": 389,
+            "line": 382,
+            "name": "dispatch"
+          }
+        ],
+        "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/batch-output-produced-f32-adapter-preparation02-2026-10-03/selected_non_tail_transport.py",
+        "sha256": "e3cea797bb51eab1d423399686dfb331b2e4697242f42c7cec1f3f4f026eb7c8"
+      },
+      "state": "prepared_source_not_installed_no_actual_transfer"
+    },
+    {
+      "handoff": "Already complete codec directories -> unchanged partitions -> callback engineering acknowledgments -> retained recovered LocalStore; production and release refuse",
+      "role": "engineering router",
+      "source": {
+        "functions": [
+          {
+            "end_line": 96,
+            "line": 67,
+            "name": "inspect"
+          },
+          {
+            "end_line": 147,
+            "line": 131,
+            "name": "route"
+          },
+          {
+            "end_line": 171,
+            "line": 155,
+            "name": "estimate"
+          },
+          {
+            "end_line": 203,
+            "line": 202,
+            "name": "production"
+          },
+          {
+            "end_line": 340,
+            "line": 280,
+            "name": "Router.run"
+          },
+          {
+            "end_line": 343,
+            "line": 343,
+            "name": "Router.release"
+          }
+        ],
+        "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-codec-spool-integration-preparation01-2026-10-04/router04.py",
+        "sha256": "24bb42b49baba8ea330ced3864d28019a5b30745d5739de3cafc2cbea8a74454"
+      },
+      "state": "candidate_source_only"
+    },
+    {
+      "handoff": "Original graph/node-order/dictionary/ordered-motif/matching/workflow six hashes plus full actual source/input/import ancestry; full checks cannot be replaced with caller callback",
+      "role": "current target boundary",
+      "source": {
+        "functions": [
+          {
+            "end_line": 68,
+            "line": 59,
+            "name": "Target.derive_scope"
+          },
+          {
+            "end_line": 76,
+            "line": 70,
+            "name": "Target.final"
+          },
+          {
+            "end_line": 81,
+            "line": 78,
+            "name": "Target.lease"
+          },
+          {
+            "end_line": 87,
+            "line": 83,
+            "name": "Target.check"
+          }
+        ],
+        "path": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/imported_mcm_identity.py",
+        "sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1"
+      },
+      "state": "implemented_in_current_source_no_execution_observed"
+    }
+  ],
+  "future_actual_pins": {
+    "complete_per_target_inventory": null,
+    "measured_capacity": null,
+    "production_source": null,
+    "registration": null,
+    "remote_recovery": null,
+    "retirement": null,
+    "transport_release": null
+  },
+  "late_source_hashes_unchanged": 33,
+  "no_new_claim_or_budget": true,
+  "readback_sha256": "b38651701a0413e578382a6a8a65fd49b7850f22b51f5e64f8ad821ed0e909af",
+  "report_sha256": "229533d15bfe08fa336eaadb444b626475088fb9eab33a7b481c9a97c9dfe0e6",
+  "requirements": [
+    {
+      "evidence": "four prepared modules absent; current financial_wrapper differs from prepared compact_resource and two-tiny-target closure",
+      "id": "P1",
+      "missing": "actual current-code integration and coherent new admitted source closure"
+    },
+    {
+      "evidence": "router inspect requires complete codec source; neither genuine range adapter emits codec frames; preserve every original companion and derived whole hash",
+      "id": "P2",
+      "missing": "genuine original-source to codec cursor"
+    },
+    {
+      "evidence": "prepared two tiny targets and 8KiB ledger; router16 targets/20000members/2048plans/4MiB intent; actual input-derived node/chunk/member population unobserved",
+      "id": "P3",
+      "missing": "production route capacity and complete per-target inputs"
+    },
+    {
+      "evidence": "current Owner, publication reservation, sampled whole watch and router engineering ledger are separate; all physical duplicates still retained",
+      "id": "P4",
+      "missing": "common cumulative original+codec+spool+recovery storage lease and finite outer guard"
+    },
+    {
+      "evidence": "prepared Session handles original member containers; engineering RoutedAck/Recovery callbacks do not verify remote origin or genuine ownership",
+      "id": "P5",
+      "missing": "typed actual codec transport/recovery receipt and current authority bridge"
+    },
+    {
+      "evidence": "current original checks require local complete membership/inodes; every prepared non-tail receipt says no disposal and zero bytes retired",
+      "id": "P6",
+      "missing": "separately admitted retirement and cold/external-backed readers"
+    },
+    {
+      "evidence": "f32 raw route is not graph NPY/edges/component context and imported resource output is not completed scientific cold publication",
+      "id": "P7",
+      "missing": "complete graph-artifact companion handling and scientific lineage"
+    },
+    {
+      "evidence": "resident kernel matrix, fixed tensors, graph activations, joint gradients/Adam/RNG/checkpoint, all registered examples retained; no numeric execution performed",
+      "id": "P8",
+      "missing": "genuine whole-method resource and agreement evidence"
+    }
+  ],
+  "status": "BOUNDED_SOURCE_INVESTIGATION_COMPLETE_PRODUCTION_UNAVAILABLE",
+  "unperformed": [
+    "numerical import/execution",
+    "genuine authority construction or admission",
+    "whole 338-source rerun",
+    "byte transfer/recovery",
+    "capacity measurement",
+    "retirement/deletion",
+    "current completed Target inventory"
+  ]
+}

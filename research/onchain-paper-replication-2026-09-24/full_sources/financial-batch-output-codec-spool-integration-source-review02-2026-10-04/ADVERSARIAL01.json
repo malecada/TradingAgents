@@ -1,0 +1,49 @@
+[
+  {
+    "attack": "retained-change",
+    "attempted": [
+      0,
+      1
+    ],
+    "calls": 3,
+    "completed": [
+      0
+    ],
+    "consumed_unchanged": true,
+    "error": "ValueError",
+    "message": "closed retained spool body changed"
+  },
+  {
+    "attack": "readonly-reservation",
+    "attempted": [
+      0
+    ],
+    "calls": 1,
+    "completed": [],
+    "consumed_unchanged": true,
+    "error": "AttributeError",
+    "message": "property 'consumed' of 'Router' object has no setter"
+  },
+  {
+    "attack": "cross-envelope",
+    "attempted": [
+      0
+    ],
+    "calls": 2,
+    "completed": [],
+    "consumed_unchanged": true,
+    "error": "ValueError",
+    "message": "exact routed acknowledgment"
+  },
+  {
+    "attack": "cleanup-only",
+    "attempted": [
+      0
+    ],
+    "calls": 1,
+    "completed": [],
+    "consumed_unchanged": true,
+    "error": "SystemExit",
+    "message": "actual cleanup fatal"
+  }
+]

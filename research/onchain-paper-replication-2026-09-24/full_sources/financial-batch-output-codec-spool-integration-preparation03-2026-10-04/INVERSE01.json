@@ -1,0 +1,123 @@
+{
+  "changed_functions": [
+    "Router.__init__",
+    "Router.check",
+    "Router.run",
+    "_route_schema"
+  ],
+  "complete_original_scopes": [
+    {
+      "manifest_sha256": "54f093aad27ee39824e9e2f99f35f5c81789bbf3455f29929706538bd711186b",
+      "members": 1710,
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-codec-spool-integration-preparation02-2026-10-04"
+    },
+    {
+      "manifest_sha256": "bc8b10eaca1289026543229995a3d755821beb13acb840d8b6bedc4c5db0d76a",
+      "members": 1608,
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-batch-output-codec-spool-integration-source-review02-2026-10-04"
+    }
+  ],
+  "original_sha256": "5d13a47c3f8997b215be50d8bee165b8d3d5f7fc4e292689f90a16d6e32b8acc",
+  "reverse_line_edits": [
+    {
+      "end": 194,
+      "replace": [],
+      "start": 179
+    },
+    {
+      "end": 285,
+      "replace": [
+        "        self.route=value;self._route_pin=value.pin();self._reserved=need;self._reservation_pin=need;self._limits=(logical_limit,allocated_limit)\n"
+      ],
+      "start": 284
+    },
+    {
+      "end": 321,
+      "replace": [],
+      "start": 320
+    },
+    {
+      "end": 382,
+      "replace": [],
+      "start": 381
+    },
+    {
+      "end": 384,
+      "replace": [],
+      "start": 383
+    },
+    {
+      "end": 389,
+      "replace": [],
+      "start": 388
+    },
+    {
+      "end": 391,
+      "replace": [],
+      "start": 390
+    }
+  ],
+  "successor_sha256": "fb113ee1644c1a6c716904865de2ecbc54090d707b2e0ea018ca63da4ea1607e",
+  "unchanged_functions": [
+    "Envelope.pin",
+    "Inventory.pin",
+    "Route.encoded",
+    "Route.pin",
+    "Router._check_retained",
+    "Router._floor",
+    "Router._identity",
+    "Router._rootcheck",
+    "Router._write",
+    "Router.attempted",
+    "Router.close",
+    "Router.completed",
+    "Router.consumed",
+    "Router.limit",
+    "Router.release",
+    "_file_schema",
+    "_inventory_schema",
+    "current",
+    "encode",
+    "estimate",
+    "inspect",
+    "production",
+    "require",
+    "route",
+    "sha",
+    "validate_route"
+  ],
+  "unchanged_six_copies": [
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "codec01.py",
+      "sha256": "f10f6803a637735bc490de8846056a34e9090451d92773d075a7025b19bd3d55"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "local_store01.py",
+      "sha256": "ceec61446f678f8749fa1e24530b5b4e3e344a59cce75f7906e322f03dd8ad89"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "owned_io.py",
+      "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "recovery04.py",
+      "sha256": "b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "bounded_git01.py",
+      "sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+    },
+    {
+      "literal_and_AST_unchanged": true,
+      "name": "spool05.py",
+      "sha256": "704e26d5d35c546ce61438e0ba1597526f92e6b33fdb8719a2a2765c6f1cbd5f"
+    }
+  ],
+  "whole_AST_inverse": true,
+  "whole_byte_inverse": true
+}

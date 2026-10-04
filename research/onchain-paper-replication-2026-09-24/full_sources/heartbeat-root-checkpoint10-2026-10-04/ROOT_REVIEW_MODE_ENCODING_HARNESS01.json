@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "failed_tool": "8f67f6",
+  "failed_exit": 1,
+  "raw_stderr": "Traceback (most recent call last):\n  File \"<stdin>\", line 10, in <module>\nAssertionError\n",
+  "census_followup_tool": "281563",
+  "mode_followup_tool": "9c2fac",
+  "root_error": "Compared actual integer mode with literal octal mode string without decoding. No reviewed source difference or source mutation.",
+  "corrected_check": "Strict octal-string decoding for all1927 existing manifest members, then exact actual mode equality.",
+  "candidate_modified": false
+}

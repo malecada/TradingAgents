@@ -1,0 +1,58 @@
+--- predecessor/router05.py
++++ successor/router06.py
+@@ -177,6 +177,21 @@
+         for file in part.files:_file_schema(file)
+         require(type(part.plan) is S.Plan, 'original exact spool Plan')
+         part.plan.validate()
++    # Compact metadata omits derivative files. Reconstruct every derivative
++    # before accepting its compact pin, without changing that wire format.
++    cursor=0
++    for target,inventory in enumerate(value.inventories):
++        for start in range(0,len(inventory.files),value.members_per_plan):
++            require(cursor<len(value.partitions), 'missing derived partition')
++            part=value.partitions[cursor]
++            files=inventory.files[start:start+value.members_per_plan]
++            members=tuple(S.Member(0,j,f.size,f.sha256) for j,f in enumerate(files))
++            expected=S.Plan(members,len(members),0,0)
++            logical,allocated=expected.required()
++            expected=D.replace(expected,logical_reservation=logical,allocated_reservation=allocated)
++            require((part.target,part.index,part.start)==(target,cursor,start) and part.files==files and part.plan==expected, 'partition inventory/spool derivative differs')
++            cursor+=1
++    require(cursor==len(value.partitions), 'extra derived partition')
+ 
+ 
+ def route(inventories,members_per_plan=32):
+@@ -267,7 +282,7 @@
+         require(type(logical_limit) is int and type(allocated_limit) is int and logical_limit>0 and allocated_limit>0,'strict whole reservation limits')
+         require(type(seconds) in (int,float) and 0<seconds<=120,'finite sampled routing deadline')
+         need=estimate(value);require(need[0]<=logical_limit and need[1]<=allocated_limit,'whole shared reservation exhausted')
+-        self.route=value;self._route_pin=value.pin();self._reserved=need;self._reservation_pin=need;self._limits=(logical_limit,allocated_limit)
++        self.route=value;self._bound_route=value;self._route_pin=value.pin();self._reserved=need;self._reservation_pin=need;self._limits=(logical_limit,allocated_limit)
+         self.root=Path(root);self.failed=True;self.closed=False;self.started=False;self.finished=False
+         self.deadline=time.monotonic()+seconds;self._files={};self._attempted=();self._completed=();self._retained=();self._recovered=()
+         self._rootcheck(empty=True);self.rootpin=self._identity();self._floor(need[1])
+@@ -303,6 +318,7 @@
+     def check(self):
+         require(not self.failed and not self.closed,'failed/closed routing instance')
+         require(time.monotonic()<self.deadline,'routing sampled deadline')
++        require(self.route is self._bound_route, 'original immutable route reference replaced')
+         self._rootcheck();require(self._identity()==self.rootpin and self.route.pin()==self._route_pin,'root/route changed')
+         require(set(os.listdir(self.root))==set(self._files),'whole ledger membership')
+         for name,pin in self._files.items():
+@@ -363,12 +379,16 @@
+                             received=[]
+                             def sending(identity,member,data):
+                                 require(identity==env.spool_plan_sha256 and member.sha256==f.sha256 and data==body,'original spool routing join')
++                                self.check()
+                                 response=send(env,data)
++                                self.check()
+                                 require(type(response) is RoutedAck and type(response.envelope_sha256) is str and response.envelope_sha256==env.pin() and S.valid_ack(response.ack),'exact routed acknowledgment')
+                                 received.append(response);return response.ack
+                             def recovering(ack):
+                                 require(len(received)==1 and ack==received[0].ack,'single original routed ack')
++                                self.check()
+                                 response=recover(env,received[0])
++                                self.check()
+                                 require(type(response) is RoutedRecovery and type(response.envelope_sha256) is str and response.envelope_sha256==env.pin() and S.valid_ack(response.ack) and response.ack==ack and type(response.body) is bytes and response.body==body,'exact routed recovery')
+                                 stores[part.target].put(f.name,response.body)
+                                 return S.Recovery(ack,response.body)
