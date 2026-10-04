@@ -1,0 +1,80 @@
+{
+  "kind": "complete-final-union-shards-v1",
+  "limits": {
+    "archive_bytes": 4194304,
+    "logical_bytes": 2097152,
+    "typed_members": 256
+  },
+  "regular_bodies": 3,
+  "schema_version": 1,
+  "shards": [
+    {
+      "archive": {
+        "bytes": 4691,
+        "manifest_sha256": "b24f914d7eac94604d752ece159f4be3f51c7cf0ffd54d7b22c79d176cf7991e",
+        "path": "shards/shard-0000.tar.gz",
+        "sha256": "3d157c9d1e38400a086afead7bc4ec0aeeef5f780e70648090b160519d9ce2b8"
+      },
+      "id": "shard-0000",
+      "logical_bytes": 1100000,
+      "manifest": {
+        "bytes": 245,
+        "path": "shards/shard-0000-manifest.json",
+        "sha256": "b24f914d7eac94604d752ece159f4be3f51c7cf0ffd54d7b22c79d176cf7991e"
+      },
+      "members": 1,
+      "regular_bodies": 1,
+      "regular_paths": [
+        "0"
+      ],
+      "tar_bytes_bound": 1105920
+    },
+    {
+      "archive": {
+        "bytes": 4694,
+        "manifest_sha256": "d602e6bc6044929768973d7404a23ea3473e96775e679803fa0fe49c6099e6e1",
+        "path": "shards/shard-0001.tar.gz",
+        "sha256": "094895ec70ef3b0d92106714c477c7596a622c9638329b948755de3f458f2087"
+      },
+      "id": "shard-0001",
+      "logical_bytes": 1100000,
+      "manifest": {
+        "bytes": 245,
+        "path": "shards/shard-0001-manifest.json",
+        "sha256": "d602e6bc6044929768973d7404a23ea3473e96775e679803fa0fe49c6099e6e1"
+      },
+      "members": 1,
+      "regular_bodies": 1,
+      "regular_paths": [
+        "1"
+      ],
+      "tar_bytes_bound": 1105920
+    },
+    {
+      "archive": {
+        "bytes": 4685,
+        "manifest_sha256": "7871446c94fa1eac8b98624da73ecdb289b9d73a9092feda7df62c1995b9a2ad",
+        "path": "shards/shard-0002.tar.gz",
+        "sha256": "d3060d8b95ee6ddeb60c4d07f5af086204638081201870777a8a4394ecd8ed88"
+      },
+      "id": "shard-0002",
+      "logical_bytes": 1100000,
+      "manifest": {
+        "bytes": 245,
+        "path": "shards/shard-0002-manifest.json",
+        "sha256": "7871446c94fa1eac8b98624da73ecdb289b9d73a9092feda7df62c1995b9a2ad"
+      },
+      "members": 1,
+      "regular_bodies": 1,
+      "regular_paths": [
+        "2"
+      ],
+      "tar_bytes_bound": 1105920
+    }
+  ],
+  "virtual_manifest": {
+    "bytes": 686,
+    "path": "union-manifest.json",
+    "sha256": "40580e2ec12bd0f6bbda549eaac910cd31137ad6d3d01a40a4d3b25e6dc25a76"
+  }
+}

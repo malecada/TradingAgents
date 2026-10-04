@@ -1,0 +1,250 @@
+{
+  "candidate_sha256": "f0fa6231ed61dea322021e75578187c604633df21c3acee7eade4f0497e9cab7",
+  "chunks": [
+    {
+      "new_end": 9,
+      "new_start": 0,
+      "new_text": "\"\"\"Final union ordinary-byte flat restore. Literal links are never interpreted.\"\"\"\nimport argparse,hashlib,json,os,re,shutil,stat\nfrom pathlib import Path\nimport recovery04 as R\nH=Path(__file__).resolve().parent\nBASE=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources')\nPINS={'recovery04.py':'b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a','owned_io.py':'09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb','bounded_git01.py':'db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f'}\nfor n,pin in PINS.items():R.require(R.digest(R.read(H,n))==pin,'unchanged accepted primitive')\n\n",
+      "old_end": 9,
+      "old_start": 0,
+      "old_text": "\"\"\"Final union ordinary-byte flat restore. Literal links are never interpreted.\"\"\"\nimport argparse,hashlib,json,os,re,shutil,stat\nfrom pathlib import Path\nimport recovery04 as R\nH=Path(__file__).resolve().parent\nBASE=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources')\nPINS={'recovery04.py':'b40e5f06a0fd57b689e44ae82afd73ca8fe6721c43400beefe992ec12b17c18a','owned_io.py':'09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb','bounded_git01.py':'db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f'}\nfor n,pin in PINS.items():R.require(R.digest(R.read(H,n))==pin,'unchanged accepted primitive')\n\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 15,
+      "new_start": 9,
+      "new_text": "import time\nfrom pathlib import PurePosixPath\nR.require(R.digest(R.read(H,'shards01.py'))=='9c38c0893790c22e3b0142a8ab175dceb9b14dd0aeeb80edc206e5329ffcbbba','exact shard planner source')\nimport shards01 as PLAN\nR.require(Path(PLAN.__file__).resolve()==H/'shards01.py','actual pinned planner module origin')\n\n",
+      "old_end": 9,
+      "old_start": 9,
+      "old_text": "",
+      "tag": "insert"
+    },
+    {
+      "new_end": 22,
+      "new_start": 15,
+      "new_text": "def hashed(v):R.require(type(v)is str and re.fullmatch('[0-9a-f]{64}',v) is not None,'exact SHA256');return v\n\ndef reference(ref):\n R.require(type(ref)is dict and set(ref)=={'path','sha256'},'exact proof reference');p=Path(ref['path']);raw=R.read(p.parent,p.name);R.require(R.digest(raw)==hashed(ref['sha256']),'proof changed');return raw\n\ndef contract(q):return R.digest(R.encode({k:v for k,v in q.items() if k!='release'}))\n\n",
+      "old_end": 16,
+      "old_start": 9,
+      "old_text": "def hashed(v):R.require(type(v)is str and re.fullmatch('[0-9a-f]{64}',v) is not None,'exact SHA256');return v\n\ndef reference(ref):\n R.require(type(ref)is dict and set(ref)=={'path','sha256'},'exact proof reference');p=Path(ref['path']);raw=R.read(p.parent,p.name);R.require(R.digest(raw)==hashed(ref['sha256']),'proof changed');return raw\n\ndef contract(q):return R.digest(R.encode({k:v for k,v in q.items() if k!='release'}))\n\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 30,
+      "new_start": 22,
+      "new_text": "def reserve(out):\n fd=None\n try:\n  R.require(out.parent.resolve()==out.parent,'parent canonical');fd=os.open(out.parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);s=os.fstat(fd);pin=(s.st_dev,s.st_ino,s.st_mode)\n  def stable():\n   t=out.parent.lstat();R.require(out.parent.resolve()==out.parent and (t.st_dev,t.st_ino,t.st_mode)==pin,'parent changed')\n  stable();os.mkdir(out.name,0o700,dir_fd=fd);stable();R.require(out.resolve()==out and stat.S_IMODE(out.stat().st_mode)==0o700,'fresh private output');os.fsync(fd)\n finally:R._cleanup(() if fd is None else (lambda:os.close(fd),))\n",
+      "old_end": 31,
+      "old_start": 16,
+      "old_text": "def request(q):\n fields={'schema_version','remote_root','remote_receipt_sha256','remote_commit','archive','manifest','union_auth','expected_members','expected_files','expected_logical_bytes','output_root','review','release'}\n R.require(type(q)is dict and set(q)==fields and type(q['schema_version'])is int and q['schema_version']==1,'exact final union request')\n for n in fields-{'schema_version'}:R.require(q[n] is not None,'unreleased '+n)\n remote=Path(q['remote_root']);out=Path(q['output_root']);R.require(remote.is_absolute() and remote.resolve()==remote,'remote canonical')\n R.require(out.parent==BASE and out.resolve()==out and out.name=='financial-genuine-wrapper-claimedrun-final-union-flat-20261004-01' and not os.path.lexists(out),'fresh fixed-scope Root flat namespace')\n R.require(not out.is_relative_to(remote) and not remote.is_relative_to(out),'remote/output overlap')\n hashed(q['remote_receipt_sha256']);R.require(type(q['remote_commit'])is str and re.fullmatch('[0-9a-f]{40}',q['remote_commit']) is not None,'actual remote commit')\n for role in ('archive','manifest','union_auth'):\n  x=q[role];R.require(type(x)is dict and set(x)=={'path','sha256','bytes'},'exact selected role');R.path_name(x['path']);R.require(x['path'].startswith('research/'),'selected research scope');hashed(x['sha256']);R.require(type(x['bytes'])is int and 0<=x['bytes']<=R.FILE,'bounded role size')\n R.require(len({q[k]['path'] for k in ('archive','manifest','union_auth')})==3,'distinct archive/manifest/auth roles')\n R.require(type(q['expected_members'])is int and 0<q['expected_members']<=32768 and type(q['expected_files'])is int and 0<q['expected_files']<=q['expected_members'] and type(q['expected_logical_bytes'])is int and 0<=q['expected_logical_bytes']<=R.BASE,'finite exact union denominator')\n review=reference(q['review']);release=json.loads(reference(q['release']))\n R.require(release=={'schema_version':1,'decision':'accepted-exact-one-use-final-union-flat','contract_sha256':contract(q),'helper_sha256':R.digest(R.read(H,'restore_union01.py')),'review_sha256':R.digest(review)},'genuine exact independent one-use release')\n return remote,out\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 31,
+      "new_start": 30,
+      "new_text": "\n",
+      "old_end": 32,
+      "old_start": 31,
+      "old_text": "\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 37,
+      "new_start": 31,
+      "new_text": "def restore_ordinary(archive,info,m,destination):\n # Only ordinary members pass R.validate; link descriptions are opaque file bytes.\n R.validate(m);result=R.restore(archive,info,m,destination)\n metadata=json.loads(R.read(destination,result['metadata_file']));R.require(R.digest(R.encode(metadata))==result['metadata_sha256'] and metadata['manifest']==m,'actual flat manifest mapping')\n names={r['path'] for r in m['members'] if r['kind']=='file'};R.require(set(metadata['flat_members'])==names and result['regular_bodies']==len(names),'every regular union body recovered')\n return result\n",
+      "old_end": 46,
+      "old_start": 32,
+      "old_text": "def selected(remote,q):\n raw=R.read(remote,'REMOTE_RECOVERY01.json');R.require(R.digest(raw)==q['remote_receipt_sha256'],'actual remote receipt');receipt=json.loads(raw)\n R.require(receipt['status']=='fresh-actual-remote-recordfix-source325-recovered' and receipt['genuine_run_or_native_started'] is False and receipt['remote_commit']==q['remote_commit'],'actual accepted transport scope/commit')\n rows=receipt['selected_blobs'];R.require(type(rows)is list and 1<=len(rows)<=506 and len({r['path'] for r in rows})==len(rows) and receipt['selected_count']==len(rows),'complete remote selection denominator')\n entries={r['path']:r for r in rows};raws={}\n for role in ('archive','manifest','union_auth'):\n  pin=q[role];row=entries[pin['path']];body=R.read(remote/'selected',pin['path']);R.require(row['sha256']==pin['sha256']==R.digest(body) and row['bytes']==pin['bytes']==len(body) and row['git_mode'] in ('100644','100755'),'actual selected union body')\n  R.require(row['git_object']==hashlib.sha1(b'blob '+str(len(body)).encode()+b'\\0'+body).hexdigest(),'selected Git OID');raws[role]=body\n return raws\n\ndef manifest_join(q,raw):\n m=json.loads(raw);R.validate(m);R.require(R.encode(m)==raw,'canonical ordinary union manifest')\n R.require(len(m['members'])==q['expected_members'] and sum(r['kind']=='file' for r in m['members'])==q['expected_files'] and sum(r.get('bytes',0) for r in m['members'])==q['expected_logical_bytes'],'exact complete union denominator')\n return m\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 59,
+      "new_start": 37,
+      "new_text": "\nEXPECTED_ORIGINALS_SHA256='40b4002ee1b0edf1d2d4e4202cf3d5c98834eb9656b02558caedf40d7261dc30'\n\ndef validate_expected_trees(trees):\n raw=R.read(H,'EXPECTED_ORIGINALS01.json');R.require(R.digest(raw)==EXPECTED_ORIGINALS_SHA256,'exact complete original census pin');expected=json.loads(raw)\n R.require(type(trees)is list and len(trees)==20 and trees==expected['scope_trees'],'complete exact twenty original roots/membership/body/modes/literal links')\n # Explicit anchors independently prevent substitution of stale caller/source contexts.\n by={t['scope']:{r['path']:r for r in t['members']} for t in trees}\n anchors={\n  ('actual-parent','parent01.py'):'5d5cbdae455c62c3e66b53208b0f79e6e5bbc7ce05d3ded77126da5e0692deda',\n  ('actual-parent','REQUEST_FINAL03.json'):'529c9bf3c587e6160a217e8eb339882e59433b6fc0f759d0009d261f872b2bd8',\n  ('actual-parent','proofs/FINAL_REVIEW01.json'):'95dadb68b74693212dece8b363156ddc5d98c4b4726a9c50577d2655bb8f3c38',\n  ('actual-parent','proofs/CUMULATIVE19_REVIEW01.json'):'3268b76971e4e721222707d16d25dfe84e94104779931e647fb4d7a2bf01202e',\n  ('actual-parent','proofs/INDEPENDENT_SOURCE_INPUT_RUNTIME01.json'):'059232d0f7fc8922cee526a1bd30fef2ecb51ee17103284bcaac18c77e77641c',\n  ('actual-parent','proofs/FULL_SOURCE_RECOVERY01.json'):'468dac2c06e570a89a30771c3f7e1b8e064e6f27e610acf01edcccf91c9a2825',\n  ('root-verifier-binding','generated-claimedrun01/verifier01.py'):'14089451a225aa541eb6faf30c78cb31c79b1380d7ef54d77e895575e3ce250c',\n  ('root-verifier-binding','generated-claimedrun01/BINDING01.json'):'57e3b72754668f3be5d1611475b9c29be3fabd91ffe71c5cad60792fa4881989',\n  ('actual-verifier-review','MANIFEST01.json'):'0c39988229162fd10b0d0df77f71163a4675a778251a8d75634283e40482bea2',\n }\n for (scope,path),pin in anchors.items():R.require(by[scope][path]['kind']=='file' and by[scope][path]['sha256']==pin,'genuine fixed actual caller/verifier proof '+scope+'/'+path)\n return expected\n\n",
+      "old_end": 68,
+      "old_start": 46,
+      "old_text": "\nEXPECTED_ORIGINALS_SHA256='40b4002ee1b0edf1d2d4e4202cf3d5c98834eb9656b02558caedf40d7261dc30'\n\ndef validate_expected_trees(trees):\n raw=R.read(H,'EXPECTED_ORIGINALS01.json');R.require(R.digest(raw)==EXPECTED_ORIGINALS_SHA256,'exact complete original census pin');expected=json.loads(raw)\n R.require(type(trees)is list and len(trees)==20 and trees==expected['scope_trees'],'complete exact twenty original roots/membership/body/modes/literal links')\n # Explicit anchors independently prevent substitution of stale caller/source contexts.\n by={t['scope']:{r['path']:r for r in t['members']} for t in trees}\n anchors={\n  ('actual-parent','parent01.py'):'5d5cbdae455c62c3e66b53208b0f79e6e5bbc7ce05d3ded77126da5e0692deda',\n  ('actual-parent','REQUEST_FINAL03.json'):'529c9bf3c587e6160a217e8eb339882e59433b6fc0f759d0009d261f872b2bd8',\n  ('actual-parent','proofs/FINAL_REVIEW01.json'):'95dadb68b74693212dece8b363156ddc5d98c4b4726a9c50577d2655bb8f3c38',\n  ('actual-parent','proofs/CUMULATIVE19_REVIEW01.json'):'3268b76971e4e721222707d16d25dfe84e94104779931e647fb4d7a2bf01202e',\n  ('actual-parent','proofs/INDEPENDENT_SOURCE_INPUT_RUNTIME01.json'):'059232d0f7fc8922cee526a1bd30fef2ecb51ee17103284bcaac18c77e77641c',\n  ('actual-parent','proofs/FULL_SOURCE_RECOVERY01.json'):'468dac2c06e570a89a30771c3f7e1b8e064e6f27e610acf01edcccf91c9a2825',\n  ('root-verifier-binding','generated-claimedrun01/verifier01.py'):'14089451a225aa541eb6faf30c78cb31c79b1380d7ef54d77e895575e3ce250c',\n  ('root-verifier-binding','generated-claimedrun01/BINDING01.json'):'57e3b72754668f3be5d1611475b9c29be3fabd91ffe71c5cad60792fa4881989',\n  ('actual-verifier-review','MANIFEST01.json'):'0c39988229162fd10b0d0df77f71163a4675a778251a8d75634283e40482bea2',\n }\n for (scope,path),pin in anchors.items():R.require(by[scope][path]['kind']=='file' and by[scope][path]['sha256']==pin,'genuine fixed actual caller/verifier proof '+scope+'/'+path)\n return expected\n\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 112,
+      "new_start": 59,
+      "new_text": "def request(q):\n fields={'schema_version','remote_root','remote_receipt_sha256','remote_commit','manifest','shard_index','union_auth','expected_members','expected_files','expected_logical_bytes','expected_shards','output_root','review','release'}\n R.require(type(q)is dict and set(q)==fields and type(q['schema_version'])is int and q['schema_version']==1,'exact sharded request')\n for n in fields-{'schema_version'}:R.require(q[n] is not None,'unreleased '+n)\n remote=Path(q['remote_root']);out=Path(q['output_root']);R.require(remote.is_absolute() and remote.resolve()==remote,'remote canonical')\n R.require(out.parent==BASE and out.resolve()==out and out.name=='financial-genuine-wrapper-claimedrun-final-union-sharded-flat-20261004-01' and not os.path.lexists(out),'fresh exact sharded output')\n R.require(not out.is_relative_to(remote) and not remote.is_relative_to(out),'remote output disjoint')\n hashed(q['remote_receipt_sha256']);R.require(type(q['remote_commit'])is str and re.fullmatch('[0-9a-f]{40}',q['remote_commit']) is not None,'actual remote commit')\n for role in ('manifest','shard_index','union_auth'):selected_reference(q[role])\n R.require(len({q[k]['path'] for k in ('manifest','shard_index','union_auth')})==3,'distinct actual selected roles')\n R.require(type(q['expected_members'])is int and 0<q['expected_members']<=32768 and type(q['expected_files'])is int and 0<q['expected_files']<=q['expected_members'],'complete virtual count')\n R.require(type(q['expected_logical_bytes'])is int and 0<q['expected_logical_bytes']<=64*1024**2 and type(q['expected_shards'])is int and 0<q['expected_shards']<=251,'bounded actual logical/shard counts')\n review=reference(q['review']);release=json.loads(reference(q['release']))\n R.require(release=={'schema_version':1,'decision':'accepted-exact-one-use-final-union-sharded-flat','contract_sha256':contract(q),'helper_sha256':R.digest(R.read(H,'restore_sharded01.py')),'review_sha256':R.digest(review)},'genuine exact independent sharded release')\n return remote,out\n\ndef selected_reference(ref):\n R.require(type(ref)is dict and set(ref)=={'path','bytes','sha256'},'exact selected body reference');R.path_name(ref['path']);R.require(ref['path'].startswith('research/'),'selected research scope');hashed(ref['sha256']);R.require(type(ref['bytes'])is int and 0<=ref['bytes']<=R.FILE,'selected body bounded');return ref\n\ndef selected(remote,q,refs):\n raw=R.read(remote,'REMOTE_RECOVERY01.json');R.require(R.digest(raw)==q['remote_receipt_sha256'],'actual remote receipt pin');receipt=json.loads(raw)\n R.require(receipt['status']=='fresh-actual-remote-recordfix-source325-recovered' and receipt['genuine_run_or_native_started'] is False and receipt['remote_commit']==q['remote_commit'],'actual transport status/commit')\n rows=receipt['selected_blobs'];R.require(type(rows)is list and 1<=len(rows)<=506 and receipt['selected_count']==len(rows) and len({r['path'] for r in rows})==len(rows),'finite complete remote selection');entries={r['path']:r for r in rows}\n R.require(1<=len(refs)<=506 and len({r['path'] for r in refs})==len(refs) and sum(r['bytes'] for r in refs)<=64*1024**2,'finite unique selected shard bytes');result={}\n for ref in refs:\n  selected_reference(ref);row=entries[ref['path']];body=R.read(remote/'selected',ref['path']);R.require(row['sha256']==ref['sha256']==R.digest(body) and row['bytes']==ref['bytes']==len(body) and row['git_mode'] in ('100644','100755'),'actual selected shard body')\n  R.require(row['git_object']==hashlib.sha1(b'blob '+str(len(body)).encode()+b'\\0'+body).hexdigest(),'actual selected Git blob');result[ref['path']]=body\n return result\n\ndef manifest_join(q,raw):\n m=json.loads(raw);R.validate(m);R.require(R.encode(m)==raw,'canonical complete virtual manifest')\n R.require(len(m['members'])==q['expected_members'] and sum(r['kind']=='file' for r in m['members'])==q['expected_files'] and sum(r.get('bytes',0) for r in m['members'])==q['expected_logical_bytes']<=64*1024**2,'actual complete virtual denominator');return m\n\ndef validate_index(q,m,raw):\n index=json.loads(raw);R.require(R.encode(index)==raw,'canonical sharded index')\n fields={'schema_version','kind','virtual_manifest','limits','regular_bodies','shards'}\n R.require(type(index)is dict and set(index)==fields and type(index['schema_version'])is int and index['schema_version']==1 and index['kind']=='complete-final-union-shards-v1','exact sharded index schema')\n R.require(index['limits']=={'logical_bytes':2097152,'typed_members':256,'archive_bytes':4194304},'unchanged shard limits')\n R.require(type(index['regular_bodies'])is int and index['regular_bodies']==q['expected_files'],'index regular denominator')\n prefix=str(PurePosixPath(q['shard_index']['path']).parent);virtual=index['virtual_manifest'];R.require(type(virtual)is dict and set(virtual)=={'path','bytes','sha256'} and virtual=={'path':'union-manifest.json','bytes':q['manifest']['bytes'],'sha256':q['manifest']['sha256']} and q['manifest']['path']==prefix+'/'+virtual['path'],'actual virtual manifest binding')\n plans=PLAN.partition(m);shards=index['shards'];R.require(type(shards)is list and len(shards)==len(plans)==q['expected_shards'] and 1<=len(shards)<=251,'exact deterministic shard count');refs=[]\n for i,(row,plan) in enumerate(zip(shards,plans)):\n  fields={'id','regular_paths','manifest','archive','members','regular_bodies','logical_bytes','tar_bytes_bound'}\n  R.require(type(row)is dict and set(row)==fields and row['id']=='shard-'+str(i).zfill(4),'ordered canonical shard id')\n  R.require(row['regular_paths']==plan['regular_paths'] and row['members']==len(plan['manifest']['members']) and row['regular_bodies']==len(plan['regular_paths']) and row['logical_bytes']==plan['logical_bytes'] and row['tar_bytes_bound']==plan['tar_bytes_bound'],'exact sorted disjoint deterministic shard cover')\n  for name in ('members','regular_bodies','logical_bytes','tar_bytes_bound'):R.require(type(row[name])is int,'integer shard denominator')\n  mr=row['manifest'];ar=row['archive'];R.require(type(mr)is dict and set(mr)=={'path','bytes','sha256'} and type(ar)is dict and set(ar)=={'path','bytes','sha256','manifest_sha256'},'exact shard body refs')\n  mrbody=R.encode(plan['manifest']);R.require(mr=={'path':'shards/'+row['id']+'-manifest.json','bytes':len(mrbody),'sha256':R.digest(mrbody)},'deterministic shard manifest reference')\n  R.require(ar['path']=='shards/'+row['id']+'.tar.gz' and type(ar['bytes'])is int and 0<ar['bytes']<=R.FILE and ar['manifest_sha256']==mr['sha256'],'bounded actual shard archive reference');hashed(ar['sha256'])\n  refs.extend({'path':prefix+'/'+r['path'],'bytes':r['bytes'],'sha256':r['sha256']} for r in (mr,ar))\n R.require(len({r['path'] for r in refs})==len(refs),'distinct shard bodies')\n return index,plans,refs\ndef authenticate_union(q,m,index,auth_raw,metadata_raw):\n",
+      "old_end": 69,
+      "old_start": 68,
+      "old_text": "def authenticate_union(q,m,auth_raw,metadata_raw):\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 113,
+      "new_start": 112,
+      "new_text": " auth=json.loads(auth_raw);mapping=json.loads(metadata_raw)\n",
+      "old_end": 70,
+      "old_start": 69,
+      "old_text": " auth=json.loads(auth_raw);mapping=json.loads(metadata_raw)\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 117,
+      "new_start": 113,
+      "new_text": " fields={'schema_version','status','index','shard_count','union_mapping_sha256','ordinary_members','original_trees','original_typed_members','original_regular_members','original_lexical_links','source_capture_reused_unchanged','genuine_native_or_numerical_started','elapsed_seconds','free_bytes','qualification'}\n R.require(type(auth)is dict and set(auth)==fields and type(auth['schema_version'])is int and auth['schema_version']==1 and auth['status']=='complete-final-caller-review-sharded-byte-capture','actual sharded union auth schema/status')\n R.require(auth['index']=={'path':'SHARD_INDEX01.json','bytes':q['shard_index']['bytes'],'sha256':q['shard_index']['sha256'],'virtual_manifest_sha256':q['manifest']['sha256']} and auth['union_mapping_sha256']==R.digest(metadata_raw),'actual sharded index/mapping binding')\n R.require(type(auth['shard_count'])is int and auth['shard_count']==len(index['shards'])==q['expected_shards'],'actual complete shard denominator')\n",
+      "old_end": 73,
+      "old_start": 70,
+      "old_text": " fields={'schema_version','status','archive','union_mapping_sha256','ordinary_members','original_trees','original_typed_members','original_regular_members','original_lexical_links','source_capture_reused_unchanged','genuine_native_or_numerical_started','elapsed_seconds','free_bytes','qualification'}\n R.require(type(auth)is dict and set(auth)==fields and type(auth['schema_version'])is int and auth['schema_version']==1 and auth['status']=='complete-final-caller-review-byte-capture','actual union auth schema/status')\n R.require(auth['archive']=={'bytes':q['archive']['bytes'],'sha256':q['archive']['sha256'],'manifest_sha256':q['manifest']['sha256']} and auth['union_mapping_sha256']==R.digest(metadata_raw),'actual archive/mapping joins')\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 119,
+      "new_start": 117,
+      "new_text": " R.require(auth['source_capture_reused_unchanged'] is True and auth['genuine_native_or_numerical_started'] is False and type(auth['free_bytes'])is int and auth['free_bytes']>=R.FLOOR,'actual capture qualification')\n mf={'schema_version','scope','source_manifest_sha256','source_archive_sha256','source_full_recovery_readback_sha256','source_commit','scope_trees','original_regular_logical_bytes','runtime_bodies_or_empirical_stores_recovered','links_followed_or_extracted','native_or_numerical_started'}\n",
+      "old_end": 75,
+      "old_start": 73,
+      "old_text": " R.require(auth['source_capture_reused_unchanged'] is True and auth['genuine_native_or_numerical_started'] is False and type(auth['free_bytes'])is int and auth['free_bytes']>=R.FLOOR,'actual capture qualification')\n mf={'schema_version','scope','source_manifest_sha256','source_archive_sha256','source_full_recovery_readback_sha256','source_commit','scope_trees','original_regular_logical_bytes','runtime_bodies_or_empirical_stores_recovered','links_followed_or_extracted','native_or_numerical_started'}\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 124,
+      "new_start": 119,
+      "new_text": " R.require(type(mapping)is dict and set(mapping)==mf and type(mapping['schema_version'])is int and mapping['schema_version']==1 and R.encode(mapping)==metadata_raw,'canonical original trees schema')\n R.require(mapping['source_commit']=='0a2e7639b42b9423b90743feadcda4078aa21816' and mapping['source_manifest_sha256']=='fdf77348b81a4d6df8b420b98530f5485900a0461636e1c201506106b036dfd8' and mapping['source_archive_sha256']=='b5b6aad2f515447dc6566cfb716a20ef90031313d48f1ac903ab756735431e24' and mapping['source_full_recovery_readback_sha256']=='468dac2c06e570a89a30771c3f7e1b8e064e6f27e610acf01edcccf91c9a2825','separate genuine Source339 full recovery pins')\n R.require(all(mapping[k] is False for k in ('runtime_bodies_or_empirical_stores_recovered','links_followed_or_extracted','native_or_numerical_started')),'byte only scope')\n trees=mapping['scope_trees'];validate_expected_trees(trees);ordinary={r['path']:r for r in m['members']};expected={'ORIGINAL_TREES01.json'};typed=regular=links=logical=0\n R.require(ordinary['ORIGINAL_TREES01.json']['kind']=='file' and ordinary['ORIGINAL_TREES01.json']['sha256']==R.digest(metadata_raw) and ordinary['ORIGINAL_TREES01.json']['bytes']==len(metadata_raw),'virtual original metadata binding')\n",
+      "old_end": 81,
+      "old_start": 75,
+      "old_text": " R.require(type(mapping)is dict and set(mapping)==mf and type(mapping['schema_version'])is int and mapping['schema_version']==1,'original trees schema')\n R.require(mapping['source_commit']=='0a2e7639b42b9423b90743feadcda4078aa21816' and mapping['source_manifest_sha256']=='fdf77348b81a4d6df8b420b98530f5485900a0461636e1c201506106b036dfd8' and mapping['source_archive_sha256']=='b5b6aad2f515447dc6566cfb716a20ef90031313d48f1ac903ab756735431e24' and mapping['source_full_recovery_readback_sha256']=='468dac2c06e570a89a30771c3f7e1b8e064e6f27e610acf01edcccf91c9a2825','separate original Source recovery pins')\n R.require(all(mapping[k] is False for k in ('runtime_bodies_or_empirical_stores_recovered','links_followed_or_extracted','native_or_numerical_started')),'byte-only mapping scope')\n trees=mapping['scope_trees'];validate_expected_trees(trees)\n ordinary={r['path']:r for r in m['members']};expected={'ORIGINAL_TREES01.json'};typed=regular=links=logical=0\n R.require(ordinary['ORIGINAL_TREES01.json']['kind']=='file' and ordinary['ORIGINAL_TREES01.json']['sha256']==R.digest(metadata_raw) and ordinary['ORIGINAL_TREES01.json']['bytes']==len(metadata_raw),'ordinary metadata body binding')\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 125,
+      "new_start": 124,
+      "new_text": " for tree in trees:\n",
+      "old_end": 82,
+      "old_start": 81,
+      "old_text": " for tree in trees:\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 134,
+      "new_start": 125,
+      "new_text": "  scope=tree['scope'];by={r['path']:r for r in tree['members']}\n  for row in tree['members']:\n   typed+=1;n=row['path'];kind=row['kind'];target=scope if n=='.' else scope+'/'+n\n   if n!='.':R.path_name(n);R.require(by.get(str(PurePosixPath(n).parent),{}).get('kind')=='directory','complete original parent')\n   if kind=='lexical-symlink':R.require(target not in ordinary,'link remains literal only');links+=1;continue\n   expected.add(target);R.require(target in ordinary and ordinary[target]['kind']==kind,'complete virtual original member')\n   if kind=='file':R.require(row['union_path']==target and row['bytes']==ordinary[target]['bytes'] and row['sha256']==ordinary[target]['sha256'],'exact original regular body mapping');regular+=1;logical+=row['bytes']\n R.require(expected==set(ordinary),'no missing/extra virtual union member')\n for k,v in {'ordinary_members':len(ordinary),'original_trees':20,'original_typed_members':typed,'original_regular_members':regular,'original_lexical_links':links}.items():R.require(type(auth[k])is int and auth[k]==v,'actual auth denominator '+k)\n",
+      "old_end": 97,
+      "old_start": 82,
+      "old_text": "  R.require(set(tree)=={'scope','original_root','members'} and type(tree['original_root'])is str and Path(tree['original_root']).is_absolute(),'original root metadata')\n  scope=tree['scope'];rows=tree['members'];R.require(type(rows)is list and 0<len(rows)<=32768 and [r['path'] for r in rows]==sorted({r['path'] for r in rows}),'complete sorted original names');by={r['path']:r for r in rows}\n  R.require(by.get('.',{}).get('kind')=='directory','original root directory')\n  for row in rows:\n   typed+=1;n=row['path'];kind=row['kind'];R.require(type(row['mode'])is int and 0<=row['mode']<=0o7777,'literal original mode')\n   if n!='.':R.path_name(n);parent=str(Path(n).parent);R.require(by.get(parent,{}).get('kind')=='directory','original parent membership')\n   target=scope if n=='.' else scope+'/'+n\n   if kind=='lexical-symlink':\n    R.require(set(row)=={'path','mode','kind','target'} and type(row['target'])is str and n!='.' and target not in ordinary,'lexical link literal only');links+=1;continue\n   expected.add(target);R.require(target in ordinary and ordinary[target]['kind']==kind,'ordinary tree membership')\n   if kind=='directory':R.require(set(row)=={'path','mode','kind'},'original directory fields')\n   else:\n    R.require(kind=='file' and set(row)=={'path','mode','kind','bytes','sha256','union_path'} and row['union_path']==target and row['bytes']==ordinary[target]['bytes'] and row['sha256']==ordinary[target]['sha256'],'complete original regular body mapping');regular+=1;logical+=row['bytes']\n R.require(expected==set(ordinary),'no missing/extra ordinary union members')\n for k,v in {'ordinary_members':len(ordinary),'original_trees':len(trees),'original_typed_members':typed,'original_regular_members':regular,'original_lexical_links':links}.items():R.require(type(auth[k])is int and auth[k]==v,'union auth denominator '+k)\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 135,
+      "new_start": 134,
+      "new_text": " R.require(type(mapping['original_regular_logical_bytes'])is int and mapping['original_regular_logical_bytes']==logical<=64*1024**2,'complete original logical denominator')\n",
+      "old_end": 98,
+      "old_start": 97,
+      "old_text": " R.require(type(mapping['original_regular_logical_bytes'])is int and mapping['original_regular_logical_bytes']==logical<=64*1024**2,'complete original logical denominator')\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 136,
+      "new_start": 135,
+      "new_text": " return {'original_trees':20,'original_typed_members':typed,'original_regular_members':regular,'original_lexical_links':links,'ordinary_members':len(ordinary),'shard_count':len(index['shards']),'links_followed':False}\n",
+      "old_end": 99,
+      "old_start": 98,
+      "old_text": " return {'original_trees':len(trees),'original_typed_members':typed,'original_regular_members':regular,'original_lexical_links':links,'ordinary_members':len(ordinary),'links_followed':False}\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 137,
+      "new_start": 136,
+      "new_text": "\n",
+      "old_end": 100,
+      "old_start": 99,
+      "old_text": "\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 150,
+      "new_start": 137,
+      "new_text": "def restore_shards(remote,q,m,index,plans,out,floor,results=None):\n prefix=PurePosixPath(q['shard_index']['path']).parent;global_files={};results={} if results is None else results;started=time.monotonic()\n for row,plan in zip(index['shards'],plans):\n  R.require(time.monotonic()-started<120,'bounded whole sharded restore');dest=out/row['id'];reserve(dest);floor()\n  archive=remote/'selected'/str(prefix/row['archive']['path']);info={k:row['archive'][k] for k in ('bytes','sha256','manifest_sha256')}\n  result=restore_ordinary(archive,info,plan['manifest'],dest);metadata=json.loads(R.read(dest,result['metadata_file']))\n  R.require(set(metadata['flat_members'])==set(row['regular_paths']),'exact recovered shard file set')\n  for name,leaf in metadata['flat_members'].items():\n   R.require(name not in global_files,'no reused regular file');body=R.read(dest,leaf);r=next(r for r in plan['manifest']['members'] if r['path']==name)\n   R.require(len(body)==r['bytes'] and R.digest(body)==r['sha256'],'actual recovered virtual body');global_files[name]={'shard':row['id'],'file':leaf,'bytes':len(body),'sha256':R.digest(body)}\n  results[row['id']]=result;floor()\n R.require(set(global_files)=={r['path'] for r in m['members'] if r['kind']=='file'},'complete global regular cover')\n return global_files,results\n",
+      "old_end": 115,
+      "old_start": 100,
+      "old_text": "def reserve(out):\n fd=None\n try:\n  R.require(out.parent.resolve()==out.parent,'parent canonical');fd=os.open(out.parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);s=os.fstat(fd);pin=(s.st_dev,s.st_ino,s.st_mode)\n  def stable():\n   t=out.parent.lstat();R.require(out.parent.resolve()==out.parent and (t.st_dev,t.st_ino,t.st_mode)==pin,'parent changed')\n  stable();os.mkdir(out.name,0o700,dir_fd=fd);stable();R.require(out.resolve()==out and stat.S_IMODE(out.stat().st_mode)==0o700,'fresh private output');os.fsync(fd)\n finally:R._cleanup(() if fd is None else (lambda:os.close(fd),))\n\ndef restore_ordinary(archive,info,m,destination):\n # Only ordinary members pass R.validate; link descriptions are opaque file bytes.\n R.validate(m);result=R.restore(archive,info,m,destination)\n metadata=json.loads(R.read(destination,result['metadata_file']));R.require(R.digest(R.encode(metadata))==result['metadata_sha256'] and metadata['manifest']==m,'actual flat manifest mapping')\n names={r['path'] for r in m['members'] if r['kind']=='file'};R.require(set(metadata['flat_members'])==names and result['regular_bodies']==len(names),'every regular union body recovered')\n return result\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 155,
+      "new_start": 150,
+      "new_text": "\ndef run(q):\n remote,out=request(q);floors=[]\n def floor():\n  n=shutil.disk_usage(BASE).free;R.require(n>=R.FLOOR,'observed10GiB floor');floors.append(n)\n",
+      "old_end": 120,
+      "old_start": 115,
+      "old_text": "\ndef run(q):\n remote,out=request(q);floors=[]\n def floor():\n  n=shutil.disk_usage(BASE).free;R.require(n>=R.FLOOR,'observed10GiB floor');floors.append(n)\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 159,
+      "new_start": 155,
+      "new_text": " floor();base_refs=[q[k] for k in ('manifest','shard_index','union_auth')];first=selected(remote,q,base_refs);m=manifest_join(q,first[q['manifest']['path']]);index,plans,shard_refs=validate_index(q,m,first[q['shard_index']['path']]);refs=base_refs+shard_refs;bodies=selected(remote,q,refs)\n prefix=PurePosixPath(q['shard_index']['path']).parent\n for row,plan in zip(index['shards'],plans):R.require(bodies[str(prefix/row['manifest']['path'])]==R.encode(plan['manifest']),'actual selected shard manifest exact')\n floor();reserve(out);primary=None;results={}\n",
+      "old_end": 121,
+      "old_start": 120,
+      "old_text": " floor();bodies=selected(remote,q);m=manifest_join(q,bodies['manifest']);floor();reserve(out);primary=None;result=None\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 160,
+      "new_start": 159,
+      "new_text": " try:\n",
+      "old_end": 122,
+      "old_start": 121,
+      "old_text": " try:\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 166,
+      "new_start": 160,
+      "new_text": "  R.put(out/'request.json',q);R.put(out/'intent.json',{'pid':os.getpid(),'contract_sha256':contract(q),'remote_receipt_sha256':q['remote_receipt_sha256'],'lexical_links_interpreted':False,'shard_count':len(plans)})\n  global_files,results=restore_shards(remote,q,m,index,plans,out,floor,results)\n  ref=global_files['ORIGINAL_TREES01.json'];mapping_raw=R.read(out/ref['shard'],ref['file']);union=authenticate_union(q,m,index,bodies[q['union_auth']['path']],mapping_raw)\n  R.require(selected(remote,q,refs)==bodies,'all actual remote shard bodies unchanged')\n  virtual={'schema_version':1,'virtual_manifest':m,'flat_members':global_files,'shards':results,'union_semantic_joins':union,'posix_tree_instantiated':False,'links_followed':False,'runtime_or_empirical_stores':False,'research_authority':False};R.put(out/'VIRTUAL_RECOVERY01.json',virtual)\n  R.put(out/'RECOVERY01.json',{'status':'COMPLETE_FINAL_UNION_SHARDED_ORDINARY_FLAT_BYTES','virtual_manifest':q['manifest'],'shard_index':q['shard_index'],'union_auth':q['union_auth'],'remote_receipt_sha256':q['remote_receipt_sha256'],'virtual_recovery_sha256':R.digest(R.encode(virtual)),'actual_shards':results,'union_semantic_joins':union,'observed_free_bytes':floors,'lexical_links_followed':False,'posix_tree_instantiated':False,'runtime_or_empirical_stores':False,'research_authority':False,'single_archive_identity':None})\n",
+      "old_end": 129,
+      "old_start": 122,
+      "old_text": "  R.put(out/'request.json',q);R.put(out/'intent.json',{'pid':os.getpid(),'contract_sha256':contract(q),'remote_receipt_sha256':q['remote_receipt_sha256'],'lexical_links_interpreted':False})\n  floor();dest=out/'flat';reserve(dest)\n  info={'bytes':q['archive']['bytes'],'sha256':q['archive']['sha256'],'manifest_sha256':q['manifest']['sha256']}\n  result=restore_ordinary(remote/'selected'/q['archive']['path'],info,m,dest);floor()\n  flat_metadata=json.loads(R.read(dest,result['metadata_file']));mapping_raw=R.read(dest,flat_metadata['flat_members']['ORIGINAL_TREES01.json']);union=authenticate_union(q,m,bodies['union_auth'],mapping_raw)\n  R.require(selected(remote,q)==bodies,'remote bytes changed during recovery')\n  R.put(out/'RECOVERY01.json',{'status':'COMPLETE_FINAL_UNION_ORDINARY_FLAT_BYTES','archive':q['archive'],'manifest':q['manifest'],'union_auth':q['union_auth'],'remote_receipt_sha256':q['remote_receipt_sha256'],'actual':result,'union_semantic_joins':union,'observed_free_bytes':floors,'lexical_links_followed':False,'posix_tree_instantiated':False,'runtime_or_empirical_stores':False,'research_authority':False,'union_auth_semantics':'actual complete twenty-original mapping/body/mode/link-count joins; no link followed or POSIX tree instantiated'})\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 169,
+      "new_start": 166,
+      "new_text": " except BaseException as e:primary=e\n finally:\n  def failed():\n",
+      "old_end": 132,
+      "old_start": 129,
+      "old_text": " except BaseException as e:primary=e\n finally:\n  def failed():\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 170,
+      "new_start": 169,
+      "new_text": "   if primary is not None:R.put(out/'FAILED01.json',{'status':'FAILED_RETAINED','error_type':type(primary).__name__,'partial_shard_results':results,'observed_free_bytes':floors})\n",
+      "old_end": 133,
+      "old_start": 132,
+      "old_text": "   if primary is not None:R.put(out/'FAILED01.json',{'status':'FAILED_RETAINED','error_type':type(primary).__name__,'partial_recovery':result,'observed_free_bytes':floors})\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 172,
+      "new_start": 170,
+      "new_text": "  R._cleanup((failed,),primary=primary)\n if primary is not None:raise primary\n",
+      "old_end": 135,
+      "old_start": 133,
+      "old_text": "  R._cleanup((failed,),primary=primary)\n if primary is not None:raise primary\n",
+      "tag": "equal"
+    },
+    {
+      "new_end": 173,
+      "new_start": 172,
+      "new_text": " return results\n",
+      "old_end": 136,
+      "old_start": 135,
+      "old_text": " return result\n",
+      "tag": "replace"
+    },
+    {
+      "new_end": 176,
+      "new_start": 173,
+      "new_text": "\nif __name__=='__main__':\n p=argparse.ArgumentParser();p.add_argument('--request',type=Path,required=True);p.add_argument('--sha256',required=True);a=p.parse_args();raw=R.read(a.request.parent.resolve(),a.request.name);R.require(R.digest(raw)==hashed(a.sha256),'actual Root request pin');print(json.dumps(run(json.loads(raw)),sort_keys=True))\n",
+      "old_end": 139,
+      "old_start": 136,
+      "old_text": "\nif __name__=='__main__':\n p=argparse.ArgumentParser();p.add_argument('--request',type=Path,required=True);p.add_argument('--sha256',required=True);a=p.parse_args();raw=R.read(a.request.parent.resolve(),a.request.name);R.require(R.digest(raw)==hashed(a.sha256),'actual Root request pin');print(json.dumps(run(json.loads(raw)),sort_keys=True))\n",
+      "tag": "equal"
+    }
+  ],
+  "kind": "complete ordered source chunk inverse; declared new sharded orchestration, not identical single archive algorithm",
+  "original_sha256": "4992e3685e0ffd977c305e3a943197a1f57a2f38dc19ec7447b4f2ef08a9eb60"
+}

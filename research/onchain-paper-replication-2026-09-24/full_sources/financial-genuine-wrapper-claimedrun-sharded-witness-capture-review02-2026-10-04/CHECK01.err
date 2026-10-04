@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-sharded-witness-capture-review02-2026-10-04/check01.py", line 45, in <module>
+    rr=seal(root,'MANIFEST02.json' if label=='actual-capture-review' else 'MANIFEST01.json',ns['SEALS'][label]);census.append({'scope':label,'original_root':str(root),'members':rr})
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-sharded-witness-capture-review02-2026-10-04/check01.py", line 31, in seal
+    ck(r==by[r['path']],'full sealed typed member '+root.name+'/'+r['path'])
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-genuine-wrapper-claimedrun-sharded-witness-capture-review02-2026-10-04/check01.py", line 7, in ck
+    if not v:raise AssertionError(n)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: full sealed typed member financial-genuine-wrapper-claimedrun-final-union-recovery-preparation02-2026-10-04/complete-capture-preparation02/late-extra/original0/literal

@@ -1,0 +1,79 @@
+{
+  "edits": [
+    {
+      "old": "HERE = Path(__file__).resolve().parent",
+      "new": "HERE = BASE / 'financial-genuine-wrapper-root-claimedrun-final-capture01-2026-10-04'",
+      "count": 1
+    },
+    {
+      "old": "genuine-financial-wrapper-recordfix-root-launch-20261004-01",
+      "new": "genuine-financial-wrapper-claimedrun-root-launch-20261004-01",
+      "count": 1
+    },
+    {
+      "old": "genuine-financial-wrapper-recordfix-native-20261004-01/source",
+      "new": "genuine-financial-wrapper-claimedrun-native-20261004-02/source",
+      "count": 1
+    },
+    {
+      "old": "financial-genuine-wrapper-root-recordfix-capture01-2026-10-04",
+      "new": "financial-genuine-wrapper-root-claimedrun-source339-capture01-2026-10-04",
+      "count": 1
+    },
+    {
+      "old": "SCOPES = {\n    'actual-parent': PARENT,\n    'root-parent-adoption': BASE / 'financial-genuine-wrapper-root-recordfix-parent-adoption01-2026-10-04',\n    'final-parent-review': BASE / 'financial-genuine-wrapper-recordfix-final-parent-review01-2026-10-04',\n    'root-verifier-binding': BASE / 'financial-genuine-wrapper-root-recordfix-verifier-binding01-2026-10-04',\n    'actual-verifier-review': BASE / 'financial-genuine-wrapper-recordfix-generated-verifier-review01-2026-10-04',\n    'binder-preparation': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-preparation01-2026-10-04',\n    'binder-review': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-review01-2026-10-04',\n    'caller-preparation': BASE / 'financial-genuine-wrapper-recordfix-parent-preparation01-2026-10-04',\n    'caller-review': BASE / 'financial-genuine-wrapper-recordfix-parent-review01-2026-10-04',\n    'verifier-preparation': BASE / 'financial-genuine-wrapper-first-outcome-verifier-preparation03-2026-10-04',\n    'verifier-review': BASE / 'financial-genuine-wrapper-first-outcome-verifier-review03-2026-10-04',\n}\n",
+      "new": "SCOPES = {\n    'actual-parent': PARENT,\n    'root-parent-adoption': BASE / 'financial-genuine-wrapper-root-claimedrun-parent-adoption01-2026-10-04',\n    'root-parent-final-contract': BASE / 'financial-genuine-wrapper-root-claimedrun-parent-final-contract01-2026-10-04',\n    'caller-preparation': BASE / 'financial-genuine-wrapper-claimedrun-parent-preparation01-2026-10-04',\n    'caller-review': BASE / 'financial-genuine-wrapper-claimedrun-parent-review01-2026-10-04',\n    'final-parent-review': BASE / 'financial-genuine-wrapper-claimedrun-parent-final-release-review01-2026-10-04',\n    'binder-preparation01': BASE / 'financial-genuine-wrapper-claimedrun-outcome-binding-preparation01-2026-10-04',\n    'binder-preparation02': BASE / 'financial-genuine-wrapper-claimedrun-outcome-binding-preparation02-2026-10-04',\n    'binder-review': BASE / 'financial-genuine-wrapper-claimedrun-outcome-binding-review02-2026-10-04',\n    'root-verifier-binding': BASE / 'financial-genuine-wrapper-root-claimedrun-outcome-binding-generation01-2026-10-04',\n    'actual-verifier-review': BASE / 'financial-genuine-wrapper-claimedrun-actual-outcome-binding-review01-2026-10-04',\n    'claim-window-review': BASE / 'financial-genuine-wrapper-claimedrun-claim-window-review01-2026-10-04',\n    'withheld-source-recovery-preparation': BASE / 'financial-genuine-wrapper-claimedrun-source-recovery-preparation01-2026-10-04',\n    'withheld-source-recovery-review': BASE / 'financial-genuine-wrapper-claimedrun-source-recovery-review01-2026-10-04',\n    'witness-capture-preparation': BASE / 'financial-genuine-wrapper-claimedrun-witness-capture-preparation01-2026-10-04',\n    'witness-capture-review': BASE / 'financial-genuine-wrapper-claimedrun-witness-capture-review01-2026-10-04',\n    'original-verifier-preparation': BASE / 'financial-genuine-wrapper-first-outcome-verifier-preparation03-2026-10-04',\n    'original-verifier-review': BASE / 'financial-genuine-wrapper-first-outcome-verifier-review03-2026-10-04',\n    'original-binder-preparation': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-preparation01-2026-10-04',\n    'original-binder-review': BASE / 'financial-genuine-wrapper-recordfix-outcome-verifier-review01-2026-10-04',\n}\n",
+      "count": 1
+    },
+    {
+      "old": "    require(not os.path.lexists(HERE / 'union-bytes01'), 'one-use union namespace')",
+      "new": "    require(Path(__file__).resolve().parent == HERE, 'fixed Root-installed final capture')\n    require(not os.path.lexists(PARENT / 'attempt'), 'prelaunch final caller only')\n    require(not os.path.lexists(HERE / 'union-bytes01'), 'one-use union namespace')",
+      "count": 1
+    },
+    {
+      "old": "26c67e9c9b28dd4cd607ab3833fa14143d6e8e4c7c3617024275294940ffbc53",
+      "new": "fdf77348b81a4d6df8b420b98530f5485900a0461636e1c201506106b036dfd8",
+      "count": 2
+    },
+    {
+      "old": "8d49d60b509bc9c95cd04274127b12387b8070295499dad3d24db63b9a376efb",
+      "new": "b5b6aad2f515447dc6566cfb716a20ef90031313d48f1ac903ab756735431e24",
+      "count": 2
+    },
+    {
+      "old": "REQUEST_FINAL02.json",
+      "new": "REQUEST_FINAL03.json",
+      "count": 1
+    },
+    {
+      "old": "28f2ae5340d38ac71450c8947c5b1ad30ac4192481da81596684445c9cf9b52e",
+      "new": "529c9bf3c587e6160a217e8eb339882e59433b6fc0f759d0009d261f872b2bd8",
+      "count": 1
+    },
+    {
+      "old": "c856494d3c46b5f26241a72e66219adf35d79905b1117291cdc5b22e1601814a",
+      "new": "0c39988229162fd10b0d0df77f71163a4675a778251a8d75634283e40482bea2",
+      "count": 1
+    },
+    {
+      "old": "f86497ee97d6b5d91066db1aa2520d1bed844165b4e08d7169a5917c5bfda4df",
+      "new": "468dac2c06e570a89a30771c3f7e1b8e064e6f27e610acf01edcccf91c9a2825",
+      "count": 1
+    },
+    {
+      "old": "649fb8a11089524aaef7843dffeeb90a3a55ca17",
+      "new": "0a2e7639b42b9423b90743feadcda4078aa21816",
+      "count": 1
+    },
+    {
+      "old": "original Source325 remains separately completely recovered",
+      "new": "original Source339 remains separately completely recovered",
+      "count": 1
+    },
+    {
+      "old": "    union = HERE / 'union-bytes01'",
+      "new": "    require(digest((PARENT / 'proofs/FULL_SOURCE_RECOVERY01.json').read_bytes()) == '468dac2c06e570a89a30771c3f7e1b8e064e6f27e610acf01edcccf91c9a2825', 'actual Source339 recovery proof')\n    union = HERE / 'union-bytes01'",
+      "count": 1
+    }
+  ]
+}

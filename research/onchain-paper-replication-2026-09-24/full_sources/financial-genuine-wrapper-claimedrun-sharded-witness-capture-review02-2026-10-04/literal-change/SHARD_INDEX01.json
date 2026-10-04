@@ -1,0 +1,53 @@
+{
+  "direct_bodies": [
+    {
+      "bytes": 13,
+      "mode": 384,
+      "path": "direct",
+      "scope": "0",
+      "sha256": "0bd65b8f8406446dd019205ef8d48375ce3dff9a66670d14cfc56d674b79964f",
+      "source_path": "literal-change/original0/direct"
+    }
+  ],
+  "kind": "complete-witness-shards-plus-direct-v1",
+  "limits": {
+    "archive_bytes": 4194304,
+    "logical_bytes": 2097152,
+    "typed_members": 256
+  },
+  "regular_bodies": 6,
+  "schema_version": 1,
+  "shards": [
+    {
+      "archive": {
+        "bytes": 1228,
+        "manifest_sha256": "be0ca4501ea7eaa200a4d6766b051a18ff00efd682d194087b101d49f9511c34",
+        "path": "shards/shard-0000.tar.gz",
+        "sha256": "9e81e6dd13719e2c6a957117c84864af170cfcb397d251758eb6ea87558c016a"
+      },
+      "id": "shard-0000",
+      "logical_bytes": 5832,
+      "manifest": {
+        "bytes": 1547,
+        "path": "shards/shard-0000-manifest.json",
+        "sha256": "be0ca4501ea7eaa200a4d6766b051a18ff00efd682d194087b101d49f9511c34"
+      },
+      "members": 11,
+      "regular_bodies": 6,
+      "regular_paths": [
+        "0/small",
+        "1/small",
+        "2/small",
+        "3/small",
+        "4/small",
+        "ORIGINAL_TREES01.json"
+      ],
+      "tar_bytes_bound": 20480
+    }
+  ],
+  "virtual_manifest": {
+    "bytes": 1962,
+    "path": "union-manifest.json",
+    "sha256": "e5020a5983f3273280ef2abcdeb00481fdeadc92a5c662ceb3427a2c8a1b3642"
+  }
+}

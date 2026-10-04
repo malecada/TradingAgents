@@ -1,0 +1,9 @@
+# Final-union recovery preparation
+
+Concrete callable request/remote-selection/ordinary-restore/union-semantic validation and CLI are complete. Frozen Root capture source is included only to document the inspected schema; it was not executed. All three original R4 helper bodies remain exact. No upcoming capture hashes, final selection, remote receipt or release are guessed.
+
+Meaningful tests use genuinely owned tiny opaque files and a metadata file containing a literal external link description. Canonical R4 archive/flat recovery preserved every ordinary body and never created the link. Duplicate/present target, malformed/partial manifest, wrong denominator, corrupt archive and ordinary-link-member refusals passed. Nine actual cleanup-callback pairs exercised ordinary/fatal behavior. Separate clearly labeled synthetic eleven-tree schema projections exercised all auth counters and source-reuse qualifications; they are not receipts or proof of an actual union.
+
+CHECK01 failed because the test expected _cleanup to rethrow an already active fatal or ordinary exception directly. The original helper returns to the caller for an active first fatal and wraps ordinary cleanup uncertainty with original causes. Fresh CHECK02 corrects only this harness expectation; original failed outputs and owned tree remain. No helper or policy was relaxed. CHECK03 schema controls passed. No numerical imports, actual union restore, network, native jobs, Run/Owner or Git mutation occurred.
+
+Root must provide the genuine capture/manifest/auth and accepted remote receipt, final request/review/release and exact output namespace, then obtain independent source review before one actual restore. Completion is ordinary archival byte recovery, not reconstruction of original POSIX trees or execution authority.

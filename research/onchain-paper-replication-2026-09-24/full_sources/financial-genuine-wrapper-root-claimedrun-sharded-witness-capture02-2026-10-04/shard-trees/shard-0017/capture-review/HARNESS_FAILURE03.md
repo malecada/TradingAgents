@@ -1,0 +1,1 @@
+Original malformed checksum was correctly rejected by actual tarfile.InvalidHeaderError; reviewer catch list omitted tarfile.HeaderError. Original failed harness and tiny partial retained. Separate framing04 explicitly expects the actual typed parser refusal in a fresh directory; candidate unchanged.

@@ -1,0 +1,34 @@
+{
+  "candidate_sha256": "4992e3685e0ffd977c305e3a943197a1f57a2f38dc19ec7447b4f2ef08a9eb60",
+  "edits": [
+    {
+      "new": "out.name=='financial-genuine-wrapper-claimedrun-final-union-flat-20261004-01'",
+      "old": "out.name.startswith('financial-genuine-wrapper-recordfix-final-union-flat-')"
+    },
+    {
+      "new": "mapping['source_commit']=='0a2e7639b42b9423b90743feadcda4078aa21816' and mapping['source_manifest_sha256']=='fdf77348b81a4d6df8b420b98530f5485900a0461636e1c201506106b036dfd8' and mapping['source_archive_sha256']=='b5b6aad2f515447dc6566cfb716a20ef90031313d48f1ac903ab756735431e24' and mapping['source_full_recovery_readback_sha256']=='468dac2c06e570a89a30771c3f7e1b8e064e6f27e610acf01edcccf91c9a2825'",
+      "old": "mapping['source_commit']=='649fb8a11089524aaef7843dffeeb90a3a55ca17' and mapping['source_manifest_sha256']=='26c67e9c9b28dd4cd607ab3833fa14143d6e8e4c7c3617024275294940ffbc53' and mapping['source_archive_sha256']=='8d49d60b509bc9c95cd04274127b12387b8070295499dad3d24db63b9a376efb' and mapping['source_full_recovery_readback_sha256']=='f86497ee97d6b5d91066db1aa2520d1bed844165b4e08d7169a5917c5bfda4df'"
+    },
+    {
+      "new": " trees=mapping['scope_trees'];validate_expected_trees(trees)",
+      "old": " scopes={'actual-parent','root-parent-adoption','final-parent-review','root-verifier-binding','actual-verifier-review','binder-preparation','binder-review','caller-preparation','caller-review','verifier-preparation','verifier-review'}\n trees=mapping['scope_trees'];R.require(type(trees)is list and len(trees)==11 and {t['scope'] for t in trees}==scopes,'complete eleven originals')"
+    },
+    {
+      "new": "for k,v in {'ordinary_members':len(ordinary),'original_trees':len(trees),",
+      "old": "for k,v in {'ordinary_members':len(ordinary),'original_trees':11,"
+    },
+    {
+      "new": "return {'original_trees':len(trees),",
+      "old": "return {'original_trees':11,"
+    },
+    {
+      "new": "actual complete twenty-original mapping/body/mode/link-count joins; no link followed or POSIX tree instantiated",
+      "old": "actual eleven-original mapping/body/mode/link-count joins; no link followed or POSIX tree instantiated"
+    },
+    {
+      "new": "EXPECTED_ORIGINALS_SHA256='40b4002ee1b0edf1d2d4e4202cf3d5c98834eb9656b02558caedf40d7261dc30'\n\ndef validate_expected_trees(trees):\n raw=R.read(H,'EXPECTED_ORIGINALS01.json');R.require(R.digest(raw)==EXPECTED_ORIGINALS_SHA256,'exact complete original census pin');expected=json.loads(raw)\n R.require(type(trees)is list and len(trees)==20 and trees==expected['scope_trees'],'complete exact twenty original roots/membership/body/modes/literal links')\n # Explicit anchors independently prevent substitution of stale caller/source contexts.\n by={t['scope']:{r['path']:r for r in t['members']} for t in trees}\n anchors={\n  ('actual-parent','parent01.py'):'5d5cbdae455c62c3e66b53208b0f79e6e5bbc7ce05d3ded77126da5e0692deda',\n  ('actual-parent','REQUEST_FINAL03.json'):'529c9bf3c587e6160a217e8eb339882e59433b6fc0f759d0009d261f872b2bd8',\n  ('actual-parent','proofs/FINAL_REVIEW01.json'):'95dadb68b74693212dece8b363156ddc5d98c4b4726a9c50577d2655bb8f3c38',\n  ('actual-parent','proofs/CUMULATIVE19_REVIEW01.json'):'3268b76971e4e721222707d16d25dfe84e94104779931e647fb4d7a2bf01202e',\n  ('actual-parent','proofs/INDEPENDENT_SOURCE_INPUT_RUNTIME01.json'):'059232d0f7fc8922cee526a1bd30fef2ecb51ee17103284bcaac18c77e77641c',\n  ('actual-parent','proofs/FULL_SOURCE_RECOVERY01.json'):'468dac2c06e570a89a30771c3f7e1b8e064e6f27e610acf01edcccf91c9a2825',\n  ('root-verifier-binding','generated-claimedrun01/verifier01.py'):'14089451a225aa541eb6faf30c78cb31c79b1380d7ef54d77e895575e3ce250c',\n  ('root-verifier-binding','generated-claimedrun01/BINDING01.json'):'57e3b72754668f3be5d1611475b9c29be3fabd91ffe71c5cad60792fa4881989',\n  ('actual-verifier-review','MANIFEST01.json'):'0c39988229162fd10b0d0df77f71163a4675a778251a8d75634283e40482bea2',\n }\n for (scope,path),pin in anchors.items():R.require(by[scope][path]['kind']=='file' and by[scope][path]['sha256']==pin,'genuine fixed actual caller/verifier proof '+scope+'/'+path)\n return expected\n\ndef authenticate_union(q,m,auth_raw,metadata_raw):",
+      "old": "def authenticate_union(q,m,auth_raw,metadata_raw):"
+    }
+  ],
+  "original_sha256": "2bda6b41ef21c1ed8e1e38a10d5cc3f982ae8d30beb5ae4425fe2b701ee3cc02"
+}
