@@ -1,0 +1,11 @@
+{
+  "helper_sha256": "24b6c2a51759bf992fb0da479f46ba6d582b0e24f1c5c40c5055a34f859de71e",
+  "operation": "Reader.finish after cache reads of two owned files",
+  "later_real_descriptor_closed": true,
+  "returned_without_error": true,
+  "earlier_cached_hex": "6f726967696e616c",
+  "earlier_current_hex": "6368616e67656421",
+  "explicit_mtime_change": true,
+  "closed_descriptor_count": 22,
+  "qualification": "Mutation occurs inside actual owned IO cleanup before finish returns; no public Admission/Run/success constructed, no live file changed. This is not proof of post-return or continuous writer exclusion."
+}

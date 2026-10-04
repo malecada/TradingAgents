@@ -1,0 +1,146 @@
+--- original-b8c160
++++ two-scope-successor02
+@@ -11,7 +11,7 @@
+ import time
+ 
+ HERE = Path(__file__).absolute().parent
+-PINS = {'utilities/recovery_pax01.py': 'a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2', 'utilities/owned_io.py': '09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb', 'utilities/bounded_git01.py': 'db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f', 'watch01.py': 'cd2200b071cf14c8191c7b7e95ee660b6bc9a10c49a6de252e77f9832ede8673'}
++PINS = {'utilities/recovery_pax01.py': 'a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2', 'utilities/owned_io.py': '09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb', 'utilities/bounded_git01.py': 'db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f', 'watch01.py': 'bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18'}
+ for name, pin in PINS.items():
+     p = HERE / name
+     s = p.lstat()
+@@ -29,10 +29,13 @@
+ REMOTE_STATUS = 'fresh-actual-remote-operational-source-policy01-supervised-recovered'
+ BRANCH = 'refs/heads/research/onchain-paper-replication-2026-09-24'
+ ORIGIN = 'git@github.com:malecada/TradingAgents.git'
+-REQUIRED = {'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/MACHINE01.json': {'bytes': 2676, 'sha256': '27367565dc31fdbe190a80cfecca7f609ca9e2391c8335a3a85321669e794a6a'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/MANIFEST01.json': {'bytes': 127520, 'sha256': '82b1066539316421d5d58ab43583ba2a5ac1fad065f5360cb12e1441b0832361'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/READBACK01.json': {'bytes': 64208, 'sha256': '54f08e320c6671e6179b4a515d0e048672032a25711b286153e005af3889f4e6'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/REPORT01.md': {'bytes': 5361, 'sha256': '03330ea8378429a7846a5826af75646aaac3b3daa581ea552bf404a651fa9835'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/REVIEW_PROOF01.json': {'bytes': 466, 'sha256': '0a0db0cb8fafce00024aa25c048cb9efa27d1411e57586f7217b0bc209a41cd5'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/CAPTURE01.json': {'bytes': 1249, 'sha256': '61f3560c6fc64b7122f12a690ab728407803c7bb3c3406fd1a754456e207f939'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/ORIGIN_MAP01.json': {'bytes': 9451, 'sha256': '0f096484bb25ce6faf59edbc4a4af388ecb91d1a2687608cf8e1f252465c4bd1'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/PAYLOAD_MANIFEST01.json': {'bytes': 8265, 'sha256': 'a04069280b7bf7b49fc075e640109f935f65b292fe69e1f4e96342bc08ad246e'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/operational-delta01.tar.gz': {'bytes': 225862, 'sha256': 'a60e19140e04a6ec1877bf17134ee7b16d560068e1296b13c05535ea6212357e'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/root_delta_capture05.py': {'bytes': 6633, 'sha256': '9e7ac229e24453ae1fc89b84c575cdfd8fc557ad2d8bd9576d7bac4f04770ad4'}}
++REQUIRED = {'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/MACHINE01.json': {'bytes': 2676, 'sha256': '27367565dc31fdbe190a80cfecca7f609ca9e2391c8335a3a85321669e794a6a'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/MANIFEST01.json': {'bytes': 127520, 'sha256': '82b1066539316421d5d58ab43583ba2a5ac1fad065f5360cb12e1441b0832361'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/READBACK01.json': {'bytes': 64208, 'sha256': '54f08e320c6671e6179b4a515d0e048672032a25711b286153e005af3889f4e6'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/REPORT01.md': {'bytes': 5361, 'sha256': '03330ea8378429a7846a5826af75646aaac3b3daa581ea552bf404a651fa9835'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-concrete-policy-review01-2026-10-04/REVIEW_PROOF01.json': {'bytes': 466, 'sha256': '0a0db0cb8fafce00024aa25c048cb9efa27d1411e57586f7217b0bc209a41cd5'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/CAPTURE01.json': {'bytes': 1249, 'sha256': '61f3560c6fc64b7122f12a690ab728407803c7bb3c3406fd1a754456e207f939'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/ORIGIN_MAP01.json': {'bytes': 9451, 'sha256': '0f096484bb25ce6faf59edbc4a4af388ecb91d1a2687608cf8e1f252465c4bd1'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/PAYLOAD_MANIFEST01.json': {'bytes': 8265, 'sha256': 'a04069280b7bf7b49fc075e640109f935f65b292fe69e1f4e96342bc08ad246e'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/operational-delta01.tar.gz': {'bytes': 225862, 'sha256': 'a60e19140e04a6ec1877bf17134ee7b16d560068e1296b13c05535ea6212357e'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-capture02-2026-10-04/root_delta_capture05.py': {'bytes': 6633, 'sha256': '9e7ac229e24453ae1fc89b84c575cdfd8fc557ad2d8bd9576d7bac4f04770ad4'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-failed-remote-capture02-2026-10-04/CAPTURE01.json': {'bytes': 1875, 'sha256': '58d76ef3d7da87994ec7052e1d16c6facadcfd53535c15fe7532956515eab740'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-failed-remote-capture02-2026-10-04/FAILED_PAYLOAD_MANIFEST01.json': {'bytes': 8102, 'sha256': '9843ad4d50df192912c19920198da454a5e5f0f7515b407206a56ca5c4fc7e37'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-failed-remote-capture02-2026-10-04/ORIGINAL_FAILED_ROOT_SCOPE43.json': {'bytes': 9840, 'sha256': '7995f07ef7660d77a40fed81f9a7fc14054a5d1b609b6e81002332c8033b6a4b'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-failed-remote-capture02-2026-10-04/failed-remote02.tar.gz': {'bytes': 33372, 'sha256': '06c8a9cd583bebb3f03fe4800a6f17972b490cff552509097a1e1ed09695b1da'}, 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-failed-remote-capture02-2026-10-04/root_remote_failure_capture02.py': {'bytes': 3066, 'sha256': '6f06bef1476024d01b730fb9f37add1ebe05b7913a549d80d8daed81415b1614'}}
+ LOGICAL = 64 * 1024**2
+ ALLOCATION = 96 * 1024**2
+ OUTPUT = 'flat-operational-delta01'
++FAILED_OUTPUT = 'flat-failed-remote02-01'
++FAILED_REL = 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-failed-remote-capture02-2026-10-04'
++FAILED_CAPTURE = '58d76ef3d7da87994ec7052e1d16c6facadcfd53535c15fe7532956515eab740'
+ FAILURE_OBJECTS = []
+ 
+ 
+@@ -49,10 +52,11 @@
+     R.require(type(selection) is dict and set(selection) == {'remote_commit', 'rows'}, 'exact selection schema')
+     hexpin(selection['remote_commit'], 40)
+     rows = selection['rows']
+-    R.require(type(rows) is list and len(rows) == len(REQUIRED) == 10, 'exact ten selected rows')
++    R.require(type(rows) is list and len(rows) == len(REQUIRED) == 15, 'exact fifteen selected rows')
+     expected = [dict(path=name, **pin) for name, pin in sorted(REQUIRED.items())]
++    R.require(all(type(row) is dict and set(row)=={'path','bytes','sha256'} and type(row['path']) is str and type(row['bytes']) is int and type(row['sha256']) is str for row in rows), 'strict selected field types')
+     R.require(rows == expected, 'complete sorted fixed selection; no extras, duplicates or changed pins')
+-    R.require(sum(row['bytes'] for row in rows) == 451691 and all(0 <= row['bytes'] <= R.FILE for row in rows), 'exact finite selected extents')
++    R.require(sum(row['bytes'] for row in rows) == 507946 and all(0 <= row['bytes'] <= R.FILE for row in rows), 'exact finite selected extents')
+     for row in rows:
+         R.path_name(row['path'])
+     return rows
+@@ -64,16 +68,16 @@
+     R.require(remote['schema_version'] == 1 and remote['status'] == REMOTE_STATUS and remote['genuine_run_or_native_started'] is False, 'actual operational delta remote status required')
+     R.require(remote['selection_sha256'] == hexpin(selection_sha256) and remote['remote_commit'] == selection['remote_commit'] and remote['origin'] == ORIGIN and remote['branch'] == BRANCH, 'actual selected remote context')
+     records = remote['selected_blobs']
+-    R.require(type(records) is list and len(records) == 10, 'actual selected denominator')
++    R.require(type(records) is list and len(records) == 15, 'actual selected denominator')
+     for record, selected in zip(records, rows):
+         R.require(type(record) is dict and set(record) == {'path','bytes','sha256','git_mode','git_object'}, 'actual selected record fields')
+         R.require({key: record[key] for key in selected} == selected and record['git_mode'] in ('100644','100755'), 'exact selected row and regular Git mode')
+         hexpin(record['git_object'], 40)
+     unique = len({row['git_object'] for row in records})
+     expected = 10 + unique + 2 * len(rows)
+-    R.require(remote['selected_count'] == 10 and remote['selected_logical_bytes'] == 451691 and remote['unique_selected_objects'] == unique and remote['expected_operations'] == expected, 'exact actual operation and object denominators')
++    R.require(remote['selected_count'] == 15 and remote['selected_logical_bytes'] == 507946 and remote['unique_selected_objects'] == unique and remote['expected_operations'] == expected, 'exact actual operation and object denominators')
+     operations = remote['operations']
+-    names = ['remote','ls-remote','init','remote','config','config','fetch','rev-parse','ls-tree'] + ['fetch'] * unique + ['cat-file','cat-file'] * 10 + ['ls-remote']
++    names = ['remote','ls-remote','init','remote','config','config','fetch','rev-parse','ls-tree'] + ['fetch'] * unique + ['cat-file','cat-file'] * 15 + ['ls-remote']
+     R.require(type(operations) is list and len(operations) == expected and [row['operation'] for row in operations] == names, 'complete ordered actual operation sequence')
+     for row in operations:
+         R.require(type(row['pid']) is int and row['pid'] > 0 and type(row['exit']) is int and row['exit'] == 0 and type(row['actual_reaped_exit']) is int and row['actual_reaped_exit'] == 0 and row['cleanup_failures'] == [], 'actual successful main/reaped exits and cleanup')
+@@ -90,7 +94,7 @@
+ 
+ def authenticate_selected(root, remote, selection, selection_sha256):
+     records = validate_remote(remote, selection, selection_sha256)
+-    R.require(remote['fresh_git_root'] == str(root / 'fresh-operational-source-policy01.git'), 'actual same-root remote receiver namespace')
++    R.require(remote['fresh_git_root'] == str(root / 'fresh-operational-source-policy02.git'), 'actual same-root remote receiver namespace')
+     for row in records:
+         body = R.read(root / 'selected', row['path'])
+         R.require(len(body) == row['bytes'] and R.digest(body) == row['sha256'] and hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest() == row['git_object'], 'actual selected body SHA/extent/Git OID')
+@@ -158,9 +162,43 @@
+     return result
+ 
+ 
++def load_failed_capture(bundle):
++    raw = R.read(bundle, 'CAPTURE01.json')
++    R.require(R.digest(raw) == FAILED_CAPTURE, 'exact failed capture pin')
++    capture = json.loads(raw)
++    R.require(capture['status'] == 'COMPLETE_ORIGINAL_FAILED_FORENSIC_ROOT02_LOCAL_CAPTURE_NO_EXTERNAL_RECOVERY' and capture['actual_external_or_flat_receipt'] is None and capture['native_or_ResearchRun_claim_started'] is False, 'failed capture status and nulls')
++    R.require((capture['original_typed_including_root'],capture['payload_descendants'],capture['regular_bodies'],capture['logical_original_body_bytes']) == (43,42,31,114237), 'failed complete original and descendant denominators')
++    R.require(capture['Root_outer_exit'] == 1 and capture['original_init_observed_exit'] is None and capture['separate_init_actual_reaped_exit'] == 0 and capture['historical_changed_directory_path_or_field'] is None and capture['permanent_disposition'] == 'FAILED_SPENT_FORENSIC_NAMESPACE_NO_NUMERICAL_CLAIM', 'original failure observations unchanged')
++    manifest_raw = R.read(bundle,'FAILED_PAYLOAD_MANIFEST01.json')
++    manifest = json.loads(manifest_raw); R.validate(manifest)
++    R.require(R.digest(manifest_raw) == capture['manifest_sha256'] == capture['archive']['manifest_sha256'] and R.encode(manifest) == manifest_raw, 'failed canonical manifest pin')
++    R.require(len(manifest['members']) == 42 and sum(x['kind']=='file' for x in manifest['members']) == 31 and sum(x.get('bytes',0) for x in manifest['members']) == 114237, 'failed complete body population')
++    original_raw = R.read(bundle,'ORIGINAL_FAILED_ROOT_SCOPE43.json')
++    R.require(R.digest(original_raw) == capture['original_scope_sha256'], 'original failed full scope pin')
++    original = json.loads(original_raw)
++    roots = [x for x in original['members'] if x['path']=='.']
++    R.require(len(roots)==1 and roots[0]['kind']=='directory' and roots[0]['mode']==manifest['root_mode'], 'original root mode retained separately')
++    projected = [{k:v for k,v in x.items() if k!='allocated_bytes'} for x in original['members'] if x['path']!='.']
++    R.require(projected == manifest['members'] and len(original['members'])==43, 'every original descendant kind/path/mode/body retained')
++    archive = R.read(bundle,'failed-remote02.tar.gz')
++    R.require(len(archive)==capture['archive']['bytes'] <= R.FILE and R.digest(archive)==capture['archive']['sha256'], 'failed archive full byte pin')
++    return capture, manifest
++
++
++def restore_failed_delta(bundle, capture, manifest, root, boundary):
++    destination = root / FAILED_OUTPUT
++    R.require(root.is_absolute() and root.resolve()==root and not os.path.lexists(destination), 'fresh canonical failed flat namespace')
++    boundary()
++    destination.mkdir(mode=0o700)
++    R.require(destination.resolve()==destination and stat.S_IMODE(destination.lstat().st_mode)==0o700, 'existing private failed destination')
++    result = R.restore(bundle/'failed-remote02.tar.gz',capture['archive'],manifest,destination)
++    verify_flat(destination,result,capture,manifest,boundary)
++    return result
++
++
+ def run(remote_sha256, selection_sha256):
+     hexpin(remote_sha256); hexpin(selection_sha256)
+-    R.require(all(not os.path.lexists(HERE/name) for name in (OUTPUT,'FLAT_INTENT01.json','FLAT_RECOVERY01.json','FLAT_FAILED01.json','FLAT_POSTWRITE_OBSERVATION01.json')), 'fresh one-use flat identity')
++    R.require(all(not os.path.lexists(HERE/name) for name in (OUTPUT,FAILED_OUTPUT,'FLAT_INTENT01.json','FLAT_RECOVERY01.json','FLAT_FAILED01.json','FLAT_POSTWRITE_OBSERVATION01.json')), 'fresh one-use flat identity')
+     begun = time.monotonic(); observations = []
+     def boundary():
+         R.require(time.monotonic()-begun < 180 and len(observations) < 64, '180-second/64-sample flat bound')
+@@ -176,21 +214,27 @@
+     authenticate_selected(HERE,remote,selection,selection_sha256)
+     bundle = HERE/'selected'/REL
+     capture,manifest = load_capture(bundle)
+-    boundary()
+-    R.put(HERE/'FLAT_INTENT01.json',{'schema_version':1,'source':SOURCE,'policy_sha256':POLICY,'capture_sha256':CAPTURE,'remote_receipt_sha256':remote_sha256,'selection_sha256':selection_sha256,'one_use':True,'native_or_claim_started':False})
++    failed_bundle = HERE/'selected'/FAILED_REL
++    failed_capture,failed_manifest = load_failed_capture(failed_bundle)
++    boundary()
++    R.put(HERE/'FLAT_INTENT01.json',{'schema_version':1,'source':SOURCE,'policy_sha256':POLICY,'capture_sha256':CAPTURE,'failed_capture_sha256':FAILED_CAPTURE,'remote_receipt_sha256':remote_sha256,'selection_sha256':selection_sha256,'one_use':True,'native_or_claim_started':False})
+     boundary()
+     restored = restore_delta(bundle,capture,manifest,HERE,boundary)
++    failed_restored = restore_failed_delta(failed_bundle,failed_capture,failed_manifest,HERE,boundary)
+     authenticate_selected(HERE,remote,selection,selection_sha256)
+     capture2,manifest2 = load_capture(bundle)
++    failed_capture2,failed_manifest2 = load_failed_capture(failed_bundle)
++    R.require(failed_capture2 == failed_capture and failed_manifest2 == failed_manifest, 'original failed capture retained')
+     R.require(capture2 == capture and manifest2 == manifest and R.read(HERE,'REMOTE_RECOVERY01.json') == raw and R.read(HERE,'SELECTED_BODIES01.json') == selected_raw, 'all immutable receipts/payload retained')
+     verify_flat(HERE/OUTPUT,restored,capture,manifest,boundary)
+-    result = {'schema_version':1,'status':'COMPLETE_OPERATIONAL_SOURCE_POLICY_DELTA_FLAT_BYTES','source':SOURCE,'policy_sha256':POLICY,'capture_sha256':CAPTURE,'remote_receipt_sha256':remote_sha256,'selection_sha256':selection_sha256,'remote_commit':remote['remote_commit'],'restored':restored,'original_mapping_sha256':capture['origin_map_sha256'],'whole_tree_policy':dict(W.POLICY),'initial_owned_allocation':observations[0],'whole_tree_observations':list(observations),'native_or_claim_started':False,'actual_root_exit':None,'posix_tree_restored':False,'whole_fit_capacity':None,'numerical_release':None,'qualification':'Exact41 typed/33 body operational source-policy delta only. Old385 Git recovery is separate; nine additional objects are opaque retained bytes, not reconstructed or fsck here. Whole owned-tree limits observed at finite before/after boundaries, not continuous quota or atomic coverage. Root tool exit is a separate later observation; original capture nulls and failed/spent identities remain unchanged.'}
++    verify_flat(HERE/FAILED_OUTPUT,failed_restored,failed_capture,failed_manifest,boundary)
++    result = {'schema_version':1,'status':'COMPLETE_OPERATIONAL_DELTA_AND_FAILED_ROOT_FLAT_BYTES','source':SOURCE,'policy_sha256':POLICY,'capture_sha256':CAPTURE,'failed_capture_sha256':FAILED_CAPTURE,'remote_receipt_sha256':remote_sha256,'selection_sha256':selection_sha256,'remote_commit':remote['remote_commit'],'restored':restored,'failed_restored':failed_restored,'original_mapping_sha256':capture['origin_map_sha256'],'whole_tree_policy':dict(W.POLICY),'initial_owned_allocation':observations[0],'whole_tree_observations':list(observations),'native_or_claim_started':False,'actual_root_exit':None,'posix_tree_restored':False,'whole_fit_capacity':None,'numerical_release':None,'qualification':'Exact41 typed/33 body operational delta plus failedRoot42 descendants/31 bodies (43 including original root) preserved. Original failed init observed exit null, separately reaped0, Root exit1 and unknown directory component remain unchanged. No failed namespace replay. Old385 Git recovery is separate; nine additional objects are opaque retained bytes, not reconstructed or fsck here. Whole owned-tree limits observed at finite before/after boundaries, not continuous quota or atomic coverage. Root tool exit is a separate later observation; original capture nulls and failed/spent identities remain unchanged.'}
+     R.put(HERE/'FLAT_RECOVERY01.json',result)
+     boundary()
+     R.require(R.read(HERE,'FLAT_RECOVERY01.json') == R.encode(result), 'durable final receipt readback')
+     R.put(HERE/'FLAT_POSTWRITE_OBSERVATION01.json',{'schema_version':1,'recovery_sha256':R.digest(R.encode(result)),'observation':observations[-1],'qualification':'post recovery-receipt write; this sidecar itself is outside that observation'})
+     boundary()
+-    print(json.dumps({'status':result['status'],'regular_bodies':restored['regular_bodies'],'postwrite_observation':observations[-1]}))
++    print(json.dumps({'status':result['status'],'regular_bodies':restored['regular_bodies']+failed_restored['regular_bodies'],'postwrite_observation':observations[-1]}))
+ 
+ 
+ def main():

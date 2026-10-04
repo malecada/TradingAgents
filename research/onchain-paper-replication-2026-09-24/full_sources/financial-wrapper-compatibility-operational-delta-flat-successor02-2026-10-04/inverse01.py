@@ -1,0 +1,8 @@
+from pathlib import Path
+import ast,difflib,json,hashlib
+O=Path(__file__).resolve().parent;old=(O/'ORIGINAL_restore01.py').read_text();new=(O/'restore01.py').read_text();edits=[]
+for tag,a,b,c,d in difflib.SequenceMatcher(None,old,new,autojunk=False).get_opcodes():
+ if tag!='equal':edits.append({'old_start':a,'old_end':b,'new_start':c,'new_end':d,'old':old[a:b],'new':new[c:d]})
+x=new
+for e in reversed(edits):assert x[e['new_start']:e['new_end']]==e['new'];x=x[:e['new_start']]+e['old']+x[e['new_end']:]
+assert x==old and ast.dump(ast.parse(x))==ast.dump(ast.parse(old));a={x.name:ast.dump(x,include_attributes=False) for x in ast.parse(old).body if isinstance(x,ast.FunctionDef)};b={x.name:ast.dump(x,include_attributes=False) for x in ast.parse(new).body if isinstance(x,ast.FunctionDef)};changed=sorted(n for n in a if a[n]!=b.get(n));added=sorted(set(b)-set(a));assert changed==['authenticate_selected','run','selection_rows','validate_remote'];assert added==['load_failed_capture','restore_failed_delta'];r={'schema_version':1,'original_sha256':hashlib.sha256(old.encode()).hexdigest(),'source_sha256':hashlib.sha256(new.encode()).hexdigest(),'byte_inverse':True,'ast_inverse':True,'changed_functions':changed,'added_functions':added,'unchanged_functions':sorted(set(a)-set(changed)),'edits':edits,'qualification':'Two-role orchestration, exact15scope, explicit watched namespace/dependency adaptation; no claim entire original AST unchanged.'};(O/'SOURCE_INVERSE01.json').write_text(json.dumps(r,indent=2)+'\n');(O/'SOURCE_DIFF01.patch').write_text(''.join(difflib.unified_diff(old.splitlines(True),new.splitlines(True),fromfile='original-b8c160',tofile='two-scope-successor02')));print('PASS byte/AST inverse',changed,added)

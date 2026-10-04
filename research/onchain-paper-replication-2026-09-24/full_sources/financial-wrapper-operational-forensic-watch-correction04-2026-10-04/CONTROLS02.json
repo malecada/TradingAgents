@@ -1,0 +1,131 @@
+[
+  {
+    "name": "continuous-publication",
+    "changes": [
+      0,
+      1,
+      2
+    ],
+    "elapsed": 0.2058751150034368,
+    "error_type": "ValueError",
+    "error": "no complete census in three bounded attempts",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 49, in _sample\n    elif now!=s:raise ChangingTree('incomplete/changing directory census refused')\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nwatch01.ChangingTree: incomplete/changing directory census refused\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls02.py\", line 10, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls02.py\", line 31, in <lambda>\n    try:result,e=trial(lambda:W.census(root))\n                              ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 73, in census\n    raise ValueError('no complete census in three bounded attempts') from last\nValueError: no complete census in three bounded attempts\n"
+  },
+  {
+    "name": "directory-mode",
+    "changes": [
+      0,
+      1,
+      2
+    ],
+    "elapsed": 0.20360799098853022,
+    "error_type": "ValueError",
+    "error": "no complete census in three bounded attempts",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 49, in _sample\n    elif now!=s:raise ChangingTree('incomplete/changing directory census refused')\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nwatch01.ChangingTree: incomplete/changing directory census refused\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls02.py\", line 10, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls02.py\", line 31, in <lambda>\n    try:result,e=trial(lambda:W.census(root))\n                              ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 73, in census\n    raise ValueError('no complete census in three bounded attempts') from last\nValueError: no complete census in three bounded attempts\n"
+  },
+  {
+    "name": "directory-replacement",
+    "changes": [
+      0,
+      1,
+      2
+    ],
+    "elapsed": 0.20329887300613336,
+    "error_type": "ValueError",
+    "error": "no complete census in three bounded attempts",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 49, in _sample\n    elif now!=s:raise ChangingTree('incomplete/changing directory census refused')\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nwatch01.ChangingTree: incomplete/changing directory census refused\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls02.py\", line 10, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls02.py\", line 31, in <lambda>\n    try:result,e=trial(lambda:W.census(root))\n                              ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 73, in census\n    raise ValueError('no complete census in three bounded attempts') from last\nValueError: no complete census in three bounded attempts\n"
+  },
+  {
+    "name": "regular-growth",
+    "changes": [
+      128
+    ],
+    "elapsed": 0.0512463339837268,
+    "returned": {
+      "logical_bytes": 192,
+      "allocated_bytes": 12288,
+      "members": 3,
+      "seconds": 0.051171882019843906,
+      "regular_extent_changes": 1,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    }
+  },
+  {
+    "name": "regular-shrink",
+    "changes": [
+      1
+    ],
+    "elapsed": 0.0013814639823976904,
+    "returned": {
+      "logical_bytes": 128,
+      "allocated_bytes": 12288,
+      "members": 3,
+      "seconds": 0.0013160230009816587,
+      "regular_extent_changes": 1,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    }
+  },
+  {
+    "name": "aggregate-growth",
+    "changes": [
+      128
+    ],
+    "elapsed": 0.05072643302264623,
+    "error_type": "ValueError",
+    "error": "whole rejoin logical/allocated cap",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls02.py\", line 10, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls02.py\", line 31, in <lambda>\n    try:result,e=trial(lambda:W.census(root))\n                              ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 50, in _sample\n    require(logical<=POLICY['logical'] and allocated<=POLICY['allocated'],'whole rejoin logical/allocated cap')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: whole rejoin logical/allocated cap\n"
+  },
+  {
+    "name": "vanish-after-enumeration",
+    "closed": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/owned02/vanish-after-enumeration",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/owned02/vanish-after-enumeration"
+    ],
+    "fd_before": 4,
+    "fd_after": 4,
+    "elapsed": 0.10113830098998733,
+    "returned": {
+      "logical_bytes": 0,
+      "allocated_bytes": 4096,
+      "members": 1,
+      "seconds": 0.0003212009905837476,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 2
+    }
+  },
+  {
+    "name": "late-close-publication",
+    "closed": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/owned02/late-close-publication",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/owned02/late-close-publication",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/owned02/late-close-publication/late"
+    ],
+    "fd_before": 4,
+    "fd_after": 4,
+    "elapsed": 0.10138616900076158,
+    "returned": {
+      "logical_bytes": 6,
+      "allocated_bytes": 12288,
+      "members": 3,
+      "seconds": 0.0007666499877814204,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 2
+    }
+  },
+  {
+    "name": "unchanged8192-sample-ceiling",
+    "error_type": "ValueError",
+    "error": "finite whole-tree supervision",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls02.py\", line 10, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/recover01.py\", line 29, in watch\n    require(len(WATCHES) < W.POLICY['samples'] and time.monotonic()-START < 600, 'finite whole-tree supervision')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/recover01.py\", line 38, in require\n    raise ValueError(message)\nValueError: finite whole-tree supervision\n"
+  },
+  {
+    "name": "complete",
+    "rows_before_completion": 9,
+    "no_network": true,
+    "no_entry": true
+  }
+]

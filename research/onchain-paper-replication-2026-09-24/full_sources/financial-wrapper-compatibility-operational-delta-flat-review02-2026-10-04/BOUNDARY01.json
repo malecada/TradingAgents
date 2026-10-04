@@ -1,0 +1,41 @@
+{
+  "exact_original_ast": true,
+  "no_actual_receipt_created": true,
+  "rows": [
+    {
+      "kind": "normal",
+      "accepted_synthetic_boundary_only": true,
+      "census_calls": 1,
+      "rows_after": 64,
+      "error": null
+    },
+    {
+      "kind": "sample-ceiling",
+      "accepted_synthetic_boundary_only": false,
+      "census_calls": 0,
+      "rows_after": 64,
+      "error": "180-second/64-sample flat bound"
+    },
+    {
+      "kind": "initial-deadline",
+      "accepted_synthetic_boundary_only": false,
+      "census_calls": 0,
+      "rows_after": 0,
+      "error": "180-second/64-sample flat bound"
+    },
+    {
+      "kind": "after-deadline",
+      "accepted_synthetic_boundary_only": false,
+      "census_calls": 1,
+      "rows_after": 0,
+      "error": "final observed floor/deadline"
+    },
+    {
+      "kind": "floor",
+      "accepted_synthetic_boundary_only": false,
+      "census_calls": 1,
+      "rows_after": 0,
+      "error": "final observed floor/deadline"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "old_sha256": "cd2200b071cf14c8191c7b7e95ee660b6bc9a10c49a6de252e77f9832ede8673",
+  "new_sha256": "bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18",
+  "old_segment": "   require(time.monotonic()-begun<POLICY['sample_seconds'],'changing census deadline')\n",
+  "new_segment": "   require(time.monotonic()-begun<POLICY['sample_seconds'],'changing census deadline')\n   if attempt<2:\n    # Fixed scheduling deviation: at most two 100ms waits, inside the same\n    # five-second whole-census deadline. No partial attempt is accepted.\n    require(time.monotonic()-begun+.1<POLICY['sample_seconds'],'changing census retry delay budget')\n    time.sleep(.1)\n    require(time.monotonic()-begun<POLICY['sample_seconds'],'changing census retry delay deadline')\n",
+  "exact_inverse": true,
+  "all_other_ast_equal": true,
+  "recover_sha256": "9ddc59dd7862d4b0d11c4057e3afc14fec61e260bb375a54d3286a44c1036b46"
+}

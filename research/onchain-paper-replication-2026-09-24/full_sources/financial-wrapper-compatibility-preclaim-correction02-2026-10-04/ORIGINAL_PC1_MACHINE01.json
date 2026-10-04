@@ -1,0 +1,56 @@
+{
+  "actual_genuine_historical_verify_claim": true,
+  "author_additional_declared_freeze_logs": 2,
+  "author_manifest_sha256": "9de716edc934f28145e49d15811710bc462f3650a56fd9b0a714981946159116",
+  "author_sealed_typed_members": 40,
+  "candidate_sha256": "24b6c2a51759bf992fb0da479f46ba6d582b0e24f1c5c40c5055a34f859de71e",
+  "decision": "WITHHELD_PRECLAIM_CURRENTNESS_PC1",
+  "finding": {
+    "function": "Reader.finish / Reader._physical cleanup",
+    "id": "PC1",
+    "impact": "Earlier registered/policy/source bytes can become stale inside later owned cleanup before preclaim return. Downstream post-start checks may then fail after a claim is spent. No invalid scientific outcome was executed.",
+    "lines": [
+      106,
+      115
+    ],
+    "witness_returned_success_after_current_bytes_changed": true,
+    "witness_sha256": "f7e4467e893beb1d39c547a91da95b98fa9ceff1b7285f47249ba8939c6b58cc"
+  },
+  "future_recovery_COMPLETE_fabricated": false,
+  "independent_passing_checks": 350,
+  "limits": {
+    "original_verify_claim_outside_counter": true,
+    "own_file": 4194304,
+    "own_reader_total": 8388608,
+    "sampled_deadline_seconds": 120,
+    "source195_bytes": 2062446,
+    "source195_double_read_bytes": 4124892,
+    "whole_parent_capacity_unproved": true
+  },
+  "negative_control": {
+    "allocated_bytes": 0,
+    "bytes": 4194305,
+    "deliberately_nonadmitted": true,
+    "path": "owned01/over-cap-negative",
+    "retain_original_sparse_file": true,
+    "sha256": "95e441ca65cd41fa01b2a71799e79fd60db59ed34f13af32a91e85f90378676c"
+  },
+  "no_numerical_or_native_execution": true,
+  "no_release": true,
+  "no_source_or_gate_edits": true,
+  "prior_failures_retained": [
+    "INSPECTION_FAILURE01.json",
+    "CHECK01.err (review harness initially omitted author declared FREEZE log exclusions)"
+  ],
+  "public_Admission_Run_Owner_constructed": false,
+  "public_preclaim_success_tested": false,
+  "schema_version": 1,
+  "scoped_passes": [
+    "actual195 source pins/191 unchanged historical bodies grounded in fixed policy",
+    "exact real review proof/machine/report/manifest joins",
+    "actual historical FAILED claim/fit/schedule/checkpoint opaque state joins",
+    "all tested descriptor cleanup first-fatal/secondary retention",
+    "missing/future COMPLETE and recovery refusals",
+    "source-only bounds and genuine class guard"
+  ]
+}

@@ -1,0 +1,743 @@
+[
+  {
+    "name": "publication-old-0",
+    "error_type": "ValueError",
+    "error": "no complete census in three bounded attempts",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch.original03.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch.original03.py\", line 49, in _sample\n    elif now!=s:raise ChangingTree('incomplete/changing directory census refused')\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\noldwatch.ChangingTree: incomplete/changing directory census refused\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 43, in <lambda>\n    try:result,error=trial(lambda:module.census(root))\n                                  ~~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch.original03.py\", line 67, in census\n    raise ValueError('no complete census in three bounded attempts') from last\nValueError: no complete census in three bounded attempts\n",
+    "events": [
+      {
+        "name": "published-2",
+        "before": [
+          66310,
+          10885242,
+          16893,
+          2,
+          4096,
+          1791139485982478333,
+          1791139485982478333,
+          8
+        ],
+        "after": [
+          66310,
+          10885242,
+          16893,
+          3,
+          4096,
+          1791139485983478324,
+          1791139485983478324,
+          8
+        ],
+        "time": 200515.142537653
+      },
+      {
+        "name": "published-4",
+        "before": [
+          66310,
+          10885242,
+          16893,
+          3,
+          4096,
+          1791139485983478324,
+          1791139485983478324,
+          8
+        ],
+        "after": [
+          66310,
+          10885242,
+          16893,
+          4,
+          4096,
+          1791139485983478324,
+          1791139485983478324,
+          8
+        ],
+        "time": 200515.142945947
+      },
+      {
+        "name": "published-6",
+        "before": [
+          66310,
+          10885242,
+          16893,
+          4,
+          4096,
+          1791139485983478324,
+          1791139485983478324,
+          8
+        ],
+        "after": [
+          66310,
+          10885242,
+          16893,
+          5,
+          4096,
+          1791139485984478314,
+          1791139485984478314,
+          8
+        ],
+        "time": 200515.143423942
+      }
+    ],
+    "elapsed": 0.0035191729839425534,
+    "root_lstat_calls": 6,
+    "source_sha256": "cd2200b071cf14c8191c7b7e95ee660b6bc9a10c49a6de252e77f9832ede8673"
+  },
+  {
+    "name": "publication-new-0",
+    "returned": {
+      "logical_bytes": 19,
+      "allocated_bytes": 12288,
+      "members": 3,
+      "seconds": 0.0010212920024059713,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 2
+    },
+    "events": [
+      {
+        "name": "published-2",
+        "before": [
+          66310,
+          10885248,
+          16893,
+          2,
+          4096,
+          1791139485986478296,
+          1791139485986478296,
+          8
+        ],
+        "after": [
+          66310,
+          10885248,
+          16893,
+          3,
+          4096,
+          1791139485987478286,
+          1791139485987478286,
+          8
+        ],
+        "time": 200515.146372021
+      }
+    ],
+    "elapsed": 0.10189958300907165,
+    "root_lstat_calls": 4,
+    "source_sha256": "bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18"
+  },
+  {
+    "name": "publication-old-1",
+    "error_type": "ValueError",
+    "error": "no complete census in three bounded attempts",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch.original03.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch.original03.py\", line 49, in _sample\n    elif now!=s:raise ChangingTree('incomplete/changing directory census refused')\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\noldwatch.ChangingTree: incomplete/changing directory census refused\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 43, in <lambda>\n    try:result,error=trial(lambda:module.census(root))\n                                  ~~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch.original03.py\", line 67, in census\n    raise ValueError('no complete census in three bounded attempts') from last\nValueError: no complete census in three bounded attempts\n",
+    "events": [
+      {
+        "name": "published-2",
+        "before": [
+          66310,
+          10885251,
+          16893,
+          2,
+          4096,
+          1791139486089477323,
+          1791139486089477323,
+          8
+        ],
+        "after": [
+          66310,
+          10885251,
+          16893,
+          3,
+          4096,
+          1791139486090477314,
+          1791139486090477314,
+          8
+        ],
+        "time": 200515.249350935
+      },
+      {
+        "name": "published-4",
+        "before": [
+          66310,
+          10885251,
+          16893,
+          3,
+          4096,
+          1791139486090477314,
+          1791139486090477314,
+          8
+        ],
+        "after": [
+          66310,
+          10885251,
+          16893,
+          4,
+          4096,
+          1791139486090477314,
+          1791139486090477314,
+          8
+        ],
+        "time": 200515.249776968
+      },
+      {
+        "name": "published-6",
+        "before": [
+          66310,
+          10885251,
+          16893,
+          4,
+          4096,
+          1791139486090477314,
+          1791139486090477314,
+          8
+        ],
+        "after": [
+          66310,
+          10885251,
+          16893,
+          5,
+          4096,
+          1791139486091477304,
+          1791139486091477304,
+          8
+        ],
+        "time": 200515.250299592
+      }
+    ],
+    "elapsed": 0.001984128000913188,
+    "root_lstat_calls": 6,
+    "source_sha256": "cd2200b071cf14c8191c7b7e95ee660b6bc9a10c49a6de252e77f9832ede8673"
+  },
+  {
+    "name": "publication-new-1",
+    "returned": {
+      "logical_bytes": 19,
+      "allocated_bytes": 12288,
+      "members": 3,
+      "seconds": 0.0009226060064975172,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 2
+    },
+    "events": [
+      {
+        "name": "published-2",
+        "before": [
+          66310,
+          10885256,
+          16893,
+          2,
+          4096,
+          1791139486094477276,
+          1791139486094477276,
+          8
+        ],
+        "after": [
+          66310,
+          10885256,
+          16893,
+          3,
+          4096,
+          1791139486095477267,
+          1791139486095477267,
+          8
+        ],
+        "time": 200515.254834191
+      }
+    ],
+    "elapsed": 0.10220185702200979,
+    "root_lstat_calls": 4,
+    "source_sha256": "bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18"
+  },
+  {
+    "name": "publication-old-2",
+    "error_type": "ValueError",
+    "error": "no complete census in three bounded attempts",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch.original03.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch.original03.py\", line 49, in _sample\n    elif now!=s:raise ChangingTree('incomplete/changing directory census refused')\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\noldwatch.ChangingTree: incomplete/changing directory census refused\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 43, in <lambda>\n    try:result,error=trial(lambda:module.census(root))\n                                  ~~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch.original03.py\", line 67, in census\n    raise ValueError('no complete census in three bounded attempts') from last\nValueError: no complete census in three bounded attempts\n",
+    "events": [
+      {
+        "name": "published-2",
+        "before": [
+          66310,
+          10885259,
+          16893,
+          2,
+          4096,
+          1791139486197476304,
+          1791139486197476304,
+          8
+        ],
+        "after": [
+          66310,
+          10885259,
+          16893,
+          3,
+          4096,
+          1791139486198476294,
+          1791139486198476294,
+          8
+        ],
+        "time": 200515.357222594
+      },
+      {
+        "name": "published-4",
+        "before": [
+          66310,
+          10885259,
+          16893,
+          3,
+          4096,
+          1791139486198476294,
+          1791139486198476294,
+          8
+        ],
+        "after": [
+          66310,
+          10885259,
+          16893,
+          4,
+          4096,
+          1791139486198476294,
+          1791139486198476294,
+          8
+        ],
+        "time": 200515.357641993
+      },
+      {
+        "name": "published-6",
+        "before": [
+          66310,
+          10885259,
+          16893,
+          4,
+          4096,
+          1791139486198476294,
+          1791139486198476294,
+          8
+        ],
+        "after": [
+          66310,
+          10885259,
+          16893,
+          5,
+          4096,
+          1791139486199476285,
+          1791139486199476285,
+          8
+        ],
+        "time": 200515.358119778
+      }
+    ],
+    "elapsed": 0.0018732890021055937,
+    "root_lstat_calls": 6,
+    "source_sha256": "cd2200b071cf14c8191c7b7e95ee660b6bc9a10c49a6de252e77f9832ede8673"
+  },
+  {
+    "name": "publication-new-2",
+    "returned": {
+      "logical_bytes": 19,
+      "allocated_bytes": 12288,
+      "members": 3,
+      "seconds": 0.0008101619896478951,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 2
+    },
+    "events": [
+      {
+        "name": "published-2",
+        "before": [
+          66310,
+          10885264,
+          16893,
+          2,
+          4096,
+          1791139486203476247,
+          1791139486203476247,
+          8
+        ],
+        "after": [
+          66310,
+          10885264,
+          16893,
+          3,
+          4096,
+          1791139486204476238,
+          1791139486204476238,
+          8
+        ],
+        "time": 200515.363154791
+      }
+    ],
+    "elapsed": 0.1018356780114118,
+    "root_lstat_calls": 4,
+    "source_sha256": "bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18"
+  },
+  {
+    "name": "all original policy values unchanged",
+    "policy": {
+      "logical": 67108864,
+      "allocated": 100663296,
+      "members": 32768,
+      "depth": 32,
+      "file": 4194304,
+      "sample_seconds": 5,
+      "floor": 10737418240,
+      "samples": 8192
+    }
+  },
+  {
+    "name": "schedule-changing",
+    "calls": 3,
+    "sleeps": [
+      0.1,
+      0.1
+    ],
+    "error_type": "ValueError",
+    "error": "no complete census in three bounded attempts",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nnewwatch.ChangingTree: directory metadata\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 73, in census\n    raise ValueError('no complete census in three bounded attempts') from last\nValueError: no complete census in three bounded attempts\n"
+  },
+  {
+    "name": "schedule-missing",
+    "calls": 3,
+    "sleeps": [
+      0.1,
+      0.1
+    ],
+    "error_type": "ValueError",
+    "error": "no complete census in three bounded attempts",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nFileNotFoundError: vanished namespace\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 73, in census\n    raise ValueError('no complete census in three bounded attempts') from last\nValueError: no complete census in three bounded attempts\n"
+  },
+  {
+    "name": "schedule-value",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "limit",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nValueError: limit\n"
+  },
+  {
+    "name": "schedule-permission",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "PermissionError",
+    "error": "permission",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nPermissionError: permission\n"
+  },
+  {
+    "name": "schedule-memory",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "MemoryError",
+    "error": "fatal",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nMemoryError: fatal\n"
+  },
+  {
+    "name": "schedule-interrupt",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "KeyboardInterrupt",
+    "error": "fatal",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nKeyboardInterrupt: fatal\n"
+  },
+  {
+    "name": "schedule-exit",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "SystemExit",
+    "error": "fatal",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nSystemExit: fatal\n"
+  },
+  {
+    "name": "schedule-remaining",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "changing census retry delay budget",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nnewwatch.ChangingTree: late\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 70, in census\n    require(time.monotonic()-begun+.1<POLICY['sample_seconds'],'changing census retry delay budget')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: changing census retry delay budget\n"
+  },
+  {
+    "name": "schedule-oversleep",
+    "calls": 1,
+    "sleeps": [
+      0.1
+    ],
+    "error_type": "ValueError",
+    "error": "changing census retry delay deadline",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nnewwatch.ChangingTree: late\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 72, in census\n    require(time.monotonic()-begun<POLICY['sample_seconds'],'changing census retry delay deadline')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: changing census retry delay deadline\n"
+  },
+  {
+    "name": "schedule-sleepfatal",
+    "calls": 1,
+    "sleeps": [
+      0.1
+    ],
+    "error_type": "KeyboardInterrupt",
+    "error": "wait fatal",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 70, in sample\n    if cause is not None:raise cause\n                         ^^^^^^^^^^^\nnewwatch.ChangingTree: metadata\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 73, in <lambda>\n    try:result,error=trial(lambda:W.census(ROOT))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 71, in census\n    time.sleep(.1)\n    ~~~~~~~~~~^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 60, in sleep\n    if self.fatal is not None:raise self.fatal\n                              ^^^^^^^^^^^^^^^^\nKeyboardInterrupt: wait fatal\n"
+  },
+  {
+    "name": "schedule-success",
+    "calls": 1,
+    "sleeps": [],
+    "returned": {
+      "complete": true,
+      "complete_attempts": 1
+    }
+  },
+  {
+    "name": "resource-fifo",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "owned tree type/path/device",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 96, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 94, in sample\n    def sample(root):calls.append(root);return saved_sample(root)\n                                               ~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 31, in visit\n    for name in sorted(names):visit(p/name,depth+1)\n                              ~~~~~^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 17, in visit\n    require(depth<=POLICY['depth'] and time.monotonic()-begun<POLICY['sample_seconds'],'finite complete census');s=p.lstat();require(p.resolve()==p and s.st_dev==device and (stat.S_ISDIR(s.st_mode) or stat.S_ISREG(s.st_mode)),'owned tree type/path/device');require(len(rows)<POLICY['members'],'whole member cap');saved[p]=signature(s);allocated+=s.st_blocks*512\n                                                                                                                             ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: owned tree type/path/device\n"
+  },
+  {
+    "name": "resource-symlink",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "owned tree type/path/device",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 96, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 94, in sample\n    def sample(root):calls.append(root);return saved_sample(root)\n                                               ~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 31, in visit\n    for name in sorted(names):visit(p/name,depth+1)\n                              ~~~~~^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 17, in visit\n    require(depth<=POLICY['depth'] and time.monotonic()-begun<POLICY['sample_seconds'],'finite complete census');s=p.lstat();require(p.resolve()==p and s.st_dev==device and (stat.S_ISDIR(s.st_mode) or stat.S_ISREG(s.st_mode)),'owned tree type/path/device');require(len(rows)<POLICY['members'],'whole member cap');saved[p]=signature(s);allocated+=s.st_blocks*512\n                                                                                                                             ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: owned tree type/path/device\n"
+  },
+  {
+    "name": "resource-hardlink",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "owned per-file/hardlink bound",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 96, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 94, in sample\n    def sample(root):calls.append(root);return saved_sample(root)\n                                               ~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 31, in visit\n    for name in sorted(names):visit(p/name,depth+1)\n                              ~~~~~^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 19, in visit\n    require(s.st_nlink==1 and s.st_size<=POLICY['file'],'owned per-file/hardlink bound');logical+=s.st_size\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: owned per-file/hardlink bound\n"
+  },
+  {
+    "name": "resource-file",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "owned per-file/hardlink bound",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 96, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 94, in sample\n    def sample(root):calls.append(root);return saved_sample(root)\n                                               ~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 31, in visit\n    for name in sorted(names):visit(p/name,depth+1)\n                              ~~~~~^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 19, in visit\n    require(s.st_nlink==1 and s.st_size<=POLICY['file'],'owned per-file/hardlink bound');logical+=s.st_size\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: owned per-file/hardlink bound\n"
+  },
+  {
+    "name": "resource-logical",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "whole logical/allocated cap",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 96, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 94, in sample\n    def sample(root):calls.append(root);return saved_sample(root)\n                                               ~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 31, in visit\n    for name in sorted(names):visit(p/name,depth+1)\n                              ~~~~~^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 20, in visit\n    require(logical<=POLICY['logical'] and allocated<=POLICY['allocated'],'whole logical/allocated cap');rows.append((str(p.relative_to(root)),s.st_size,s.st_blocks*512))\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: whole logical/allocated cap\n"
+  },
+  {
+    "name": "resource-allocated",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "whole logical/allocated cap",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 96, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 94, in sample\n    def sample(root):calls.append(root);return saved_sample(root)\n                                               ~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 20, in visit\n    require(logical<=POLICY['logical'] and allocated<=POLICY['allocated'],'whole logical/allocated cap');rows.append((str(p.relative_to(root)),s.st_size,s.st_blocks*512))\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: whole logical/allocated cap\n"
+  },
+  {
+    "name": "resource-members",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "bounded directory enumeration",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 96, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 94, in sample\n    def sample(root):calls.append(root);return saved_sample(root)\n                                               ~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 30, in visit\n    if primary is not None:raise primary\n                           ^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 27, in visit\n    require(len(names)+len(rows)<POLICY['members'] and time.monotonic()-begun<POLICY['sample_seconds'],'bounded directory enumeration');names.append(e.name)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: bounded directory enumeration\n"
+  },
+  {
+    "name": "resource-depth",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "finite complete census",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 96, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 94, in sample\n    def sample(root):calls.append(root);return saved_sample(root)\n                                               ~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 31, in visit\n    for name in sorted(names):visit(p/name,depth+1)\n                              ~~~~~^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 17, in visit\n    require(depth<=POLICY['depth'] and time.monotonic()-begun<POLICY['sample_seconds'],'finite complete census');s=p.lstat();require(p.resolve()==p and s.st_dev==device and (stat.S_ISDIR(s.st_mode) or stat.S_ISREG(s.st_mode)),'owned tree type/path/device');require(len(rows)<POLICY['members'],'whole member cap');saved[p]=signature(s);allocated+=s.st_blocks*512\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: finite complete census\n"
+  },
+  {
+    "name": "resource-floor",
+    "calls": 1,
+    "sleeps": [],
+    "error_type": "ValueError",
+    "error": "10GiB disk floor",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 96, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 94, in sample\n    def sample(root):calls.append(root);return saved_sample(root)\n                                               ~~~~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 33, in _sample\n    require(shutil.disk_usage(root).free>=POLICY['floor'],'10GiB disk floor')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 10, in require\n    if not v:raise ValueError(m)\n             ^^^^^^^^^^^^^^^^^^^\nValueError: 10GiB disk floor\n"
+  },
+  {
+    "name": "real-iterator-KeyboardInterrupt",
+    "fd_before": 4,
+    "fd_after": 4,
+    "error_type": "KeyboardInterrupt",
+    "error": "iterator fatal",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 109, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 30, in visit\n    if primary is not None:raise primary\n                           ^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 26, in visit\n    for e in it:\n             ^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 106, in __next__\n    def __next__(self):raise primary\n                       ^^^^^^^^^^^^^\nKeyboardInterrupt: iterator fatal\n"
+  },
+  {
+    "name": "real-iterator-MemoryError",
+    "fd_before": 4,
+    "fd_after": 4,
+    "error_type": "MemoryError",
+    "error": "iterator memory",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 109, in <lambda>\n    try:result,error=trial(lambda:W.census(root))\n                                  ~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 60, in census\n    result=_sample(root)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 32, in _sample\n    visit(root,0)\n    ~~~~~^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 30, in visit\n    if primary is not None:raise primary\n                           ^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/watch01.py\", line 26, in visit\n    for e in it:\n             ^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 106, in __next__\n    def __next__(self):raise primary\n                       ^^^^^^^^^^^^^\nMemoryError: iterator memory\n"
+  },
+  {
+    "name": "tiny-local-git-init",
+    "call": {
+      "operation": "init",
+      "pid": 958942,
+      "exit": 0,
+      "actual_reaped_exit": 0,
+      "seconds": 0.0164676470158156,
+      "actual_child_limits": {
+        "fsize": [
+          4194304,
+          4194304
+        ],
+        "pid": 958942
+      },
+      "stdout_bytes": 244,
+      "stderr_bytes": 485,
+      "stdout_sha256": "7e987058666fce6043ed4ff39b73f3c43f7232e9377b1b813b8aa666cf12e352",
+      "stderr_sha256": "7cc74f74cc8a8f9938bd00571e2c171ce3c59d048f2242a836ccca722182d430",
+      "cleanup_failures": []
+    },
+    "stdout": "Initialized empty Git repository in /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/owned01/tinygit/one.git/\n",
+    "watch_samples": [
+      {
+        "logical_bytes": 0,
+        "allocated_bytes": 4096,
+        "members": 1,
+        "seconds": 0.00011789301061071455,
+        "regular_extent_changes": 0,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations",
+        "complete_attempts": 1
+      },
+      {
+        "logical_bytes": 0,
+        "allocated_bytes": 4096,
+        "members": 1,
+        "seconds": 0.00015721400268375874,
+        "regular_extent_changes": 0,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations",
+        "complete_attempts": 1
+      },
+      {
+        "logical_bytes": 23844,
+        "allocated_bytes": 110592,
+        "members": 25,
+        "seconds": 0.0028254369972273707,
+        "regular_extent_changes": 0,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations",
+        "complete_attempts": 1
+      },
+      {
+        "logical_bytes": 23844,
+        "allocated_bytes": 122880,
+        "members": 28,
+        "seconds": 0.0029940349922981113,
+        "regular_extent_changes": 0,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations",
+        "complete_attempts": 1
+      },
+      {
+        "logical_bytes": 23844,
+        "allocated_bytes": 122880,
+        "members": 28,
+        "seconds": 0.0030553560063708574,
+        "regular_extent_changes": 0,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations",
+        "complete_attempts": 1
+      },
+      {
+        "logical_bytes": 23844,
+        "allocated_bytes": 122880,
+        "members": 28,
+        "seconds": 0.0029699399892706424,
+        "regular_extent_changes": 0,
+        "measurement": "complete sampled namespace; maximum of two regular extent observations",
+        "complete_attempts": 1
+      }
+    ],
+    "fd_before": 4,
+    "fd_after": 4
+  },
+  {
+    "name": "actual-kill-reap-KeyboardInterrupt",
+    "call": {
+      "operation": "-c",
+      "pid": 958943,
+      "exit": null,
+      "actual_reaped_exit": -9,
+      "seconds": 0.0038792070117779076,
+      "actual_child_limits": {
+        "fsize": [
+          4194304,
+          4194304
+        ],
+        "pid": 958943
+      },
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cleanup_failures": []
+    },
+    "fd_before": 4,
+    "fd_after": 4,
+    "error_type": "KeyboardInterrupt",
+    "error": "owned child fatal",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 132, in <lambda>\n    try:result,error=trial(lambda:R.git(['-c','alias.pause=!sleep 5','pause'],cwd=R.HERE))\n                                  ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/recover01.py\", line 166, in git\n    raise fatal\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/recover01.py\", line 119, in git\n    watch()\n    ~~~~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 129, in watch\n    if count==2:raise primary\n                ^^^^^^^^^^^^^\nKeyboardInterrupt: owned child fatal\n"
+  },
+  {
+    "name": "actual-kill-reap-MemoryError",
+    "call": {
+      "operation": "-c",
+      "pid": 958944,
+      "exit": null,
+      "actual_reaped_exit": -9,
+      "seconds": 0.003584334976039827,
+      "actual_child_limits": {
+        "fsize": [
+          4194304,
+          4194304
+        ],
+        "pid": 958944
+      },
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cleanup_failures": []
+    },
+    "fd_before": 4,
+    "fd_after": 4,
+    "error_type": "MemoryError",
+    "error": "owned child memory",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 132, in <lambda>\n    try:result,error=trial(lambda:R.git(['-c','alias.pause=!sleep 5','pause'],cwd=R.HERE))\n                                  ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/recover01.py\", line 166, in git\n    raise fatal\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/recover01.py\", line 119, in git\n    watch()\n    ~~~~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 129, in watch\n    if count==2:raise primary\n                ^^^^^^^^^^^^^\nMemoryError: owned child memory\n"
+  },
+  {
+    "name": "actual-kill-reap-ValueError",
+    "call": {
+      "operation": "-c",
+      "pid": 958945,
+      "exit": null,
+      "actual_reaped_exit": -9,
+      "seconds": 0.0034517060266807675,
+      "actual_child_limits": {
+        "fsize": [
+          4194304,
+          4194304
+        ],
+        "pid": 958945
+      },
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cleanup_failures": []
+    },
+    "fd_before": 4,
+    "fd_after": 4,
+    "error_type": "ValueError",
+    "error": "owned child limit",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 18, in trial\n    try:return {'returned':fn()},None\n                           ~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 132, in <lambda>\n    try:result,error=trial(lambda:R.git(['-c','alias.pause=!sleep 5','pause'],cwd=R.HERE))\n                                  ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/recover01.py\", line 170, in git\n    raise first\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/recover01.py\", line 119, in git\n    watch()\n    ~~~~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-operational-forensic-watch-correction04-2026-10-04/controls01.py\", line 129, in watch\n    if count==2:raise primary\n                ^^^^^^^^^^^^^\nValueError: owned child limit\n"
+  },
+  {
+    "name": "complete",
+    "rows_before_completion": 33,
+    "source_only": true,
+    "no_network": true,
+    "no_entry": true
+  }
+]

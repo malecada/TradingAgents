@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-preclaim-review02-2026-10-04/check01.py", line 13, in <module>
+    ck('complete-author-tree',{p.relative_to(T).as_posix() for p in T.rglob('*')}=={x['path'] for x in m['members']}|{'MANIFEST01.json'})
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-preclaim-review02-2026-10-04/check01.py", line 4, in ck
+    def ck(n,v):assert v,n;checks.append(n)
+                       ^
+AssertionError: complete-author-tree

@@ -1,0 +1,13 @@
+# Preclaim correction02 independent source review
+
+Accepted for the exact sampled Reader currentness correction only. Complete140-member author scope was verified by type, literal mode, body hash and symlink/FIFO metadata without following links or reading FIFO fixtures. Explicitly excluded freeze streams were pinned separately. One initial review-harness membership assertion omitted those declared exclusions; its raw failure remains and the corrected check passed.
+
+The exact three literal substitutions were independently reversed and reapplied. Only Reader.__init__, Reader._physical and Reader.finish change. Every other AST remains identical. Each exact final byte reread records its signature before cleanup; a finite final descriptor-free path/type/dev/inode/mode/nlink/size/mtime/ctime population comparison then follows all real read cleanup. A final deadline sample remains. The original first-fatal reducer is unchanged.
+
+Five independent real later-file-close controls changed an earlier body by extent, mode, inode replacement, symlink redirection or removal. The original Reader accepted each stale state; correction02 refused each. No timestamp reset was used. Intact rereads, exact cumulative byte accounting, deadline refusal and nine genuine descriptor-close primary/fatal pairs passed. All attempted files and raw evidence remain. The independent check count is 318.
+
+The complete preclaim interface was source-reviewed: exact genuine Admission type/origins, registered source/role hashes, concrete policy and full195 map, genuine review/recovery manifest joins, final Parent contract and helper hashes, original failed historical paths and opaque checkpoint hashes, actual COMPLETE dependencies and strict policy/provenance checks remain unchanged. No fake Admission, Owner, Run, recovery receipt or COMPLETE result was created. The genuine public success path remains untested and must not be inferred from Reader controls.
+
+Limits remain4 MiB per own file,8 MiB aggregate actual own reads including final rereads, and120 seconds sampled deadline. Original verify_claim's internal reads remain outside that counter and retain their separate policy. Blocked calls are not preempted. Metadata equality is not continuous writer exclusion or ABA immunity; the check is a bounded sample tied to the earlier exact bytes. Actual final-bundle capacity, fresh independently accepted recovery, final Parent, source adoption and numerical release remain absent.
+
+Original PC1 evidence and author CHECK03 descriptor-number assumption/CHECK04 deadline expectation failures remain authenticated in the untouched author scope. This acceptance does not amend or release the independently withheld two-target flat candidate.

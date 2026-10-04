@@ -1,0 +1,42 @@
+{
+  "actual_flat_root_outcome": null,
+  "actual_remote_receipt": null,
+  "author_machine_sha256": "951535ba7e1607402ad9d6adb0a93dce68936fc9d9862e580ec68d6026d7ba20",
+  "author_manifest_sha256": "176757247c276f1cc2b609eb6a4f7860c00c3334fab7e2e187340ce910ff69cc",
+  "author_members_authenticated": 169,
+  "caller_boundary_checks": 5,
+  "claim": null,
+  "decision": "WITHHELD_FLAT_TERMINAL_CURRENTNESS_01",
+  "failed_original_including_root": 43,
+  "finding": {
+    "function": "verify_flat",
+    "impact": "Earlier hashed body/mode or exact namespace changes during later real owned FD cleanup can be accepted by terminal flat verification.",
+    "line": 144,
+    "priority": "P1"
+  },
+  "genuine_owned_counterexamples": 3,
+  "independent_watch_acceptance": null,
+  "native": null,
+  "positive_or_refusal_checks": 301,
+  "release": null,
+  "report_sha256": "e7334323bb5be7dd9186e144c468e290a156c6d6c32817935260115216204cee",
+  "reviewer": "storage_watch_review; different author of flat successor02",
+  "schema_version": 1,
+  "scope_members": [
+    41,
+    42
+  ],
+  "scope_regular": [
+    33,
+    31
+  ],
+  "selected_bytes": 507946,
+  "selected_count": 15,
+  "source_adoption": null,
+  "source_sha256": "4832c8f2664f1e97c339a5b6c80fdde6f73a6ca808856deb6324608e8f2e290e",
+  "watch_role": "exact byte-pinned dependency only; own source not independently reviewed here",
+  "witnesses": {
+    "WITNESS01.json": "c28fb4ed3f9bcdf3df4b6a026a0661e5c1c33af8bc5d622c8dcfde0ec3725d8e",
+    "WITNESS02.json": "972c9d210249c0d3be0df485960a6bd199f5a636d2db30c8099194c15c7beb22"
+  }
+}
