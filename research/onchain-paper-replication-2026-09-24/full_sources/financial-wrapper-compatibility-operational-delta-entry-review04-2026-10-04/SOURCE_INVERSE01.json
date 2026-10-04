@@ -1,0 +1,20 @@
+{
+  "original_source_sha256": "91b1bc524b614fe6b84cfc1df74d887e94c267b91509b679b563e21f304b83c7",
+  "new_source_sha256": "169c638054cacd242335be40eed2507d49172885a9bdfd106b6f07fe31650e28",
+  "complete_two_edit_literal_inverse": true,
+  "edits": [
+    {
+      "old": "financial-wrapper-compatibility-operational-delta-entry-review03-2026-10-04",
+      "new": "financial-wrapper-compatibility-operational-delta-entry-review04-2026-10-04"
+    },
+    {
+      "old": "assert not (D/'ROOT_REMOTE03_INTENT01.json').exists();s=json.loads((D/'ROOT_INSTALLATION_DRAFT01.json').read_bytes())",
+      "new": "assert not (D/'ROOT_REMOTE03_INTENT01.json').exists();draft_raw=(D/'ROOT_INSTALLATION_DRAFT01.json').read_bytes();assert h(draft_raw)==v['installation_draft_sha256'];s=json.loads(draft_raw)\nassert h((D/'recover01.py').read_bytes())==v['remote_helper_sha256']"
+    }
+  ],
+  "same_unspent_remote03_definition": true,
+  "original_source03_preserved": true,
+  "prior_entry_or_intent": false,
+  "release": null,
+  "change": "Actual installation draft is hashed against reviewed pin before JSON parse/trust; actual installed receiver is directly hashed against reviewed helper pin. No cap/resource/selection/identity/launcher mechanics change."
+}

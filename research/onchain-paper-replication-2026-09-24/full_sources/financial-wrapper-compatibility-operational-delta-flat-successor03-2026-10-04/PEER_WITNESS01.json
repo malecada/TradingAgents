@@ -1,0 +1,69 @@
+{
+  "decision": "COUNTEREXAMPLE_REPRODUCED",
+  "source_sha256": "4832c8f2664f1e97c339a5b6c80fdde6f73a6ca808856deb6324608e8f2e290e",
+  "function_returned_success": true,
+  "expected_sha256": "7491cc3c1940b68cab9b218e972a13c925f5ce1ff21d9f0a2f32ee416246268a",
+  "actual_sha256": "069eb8482b84c9f2233ef196256d4adc7fee298ce1b3791416a4ca5ed2c114b4",
+  "changed_fingerprint_observable": true,
+  "events": [
+    {
+      "real_closed_fd": 4,
+      "trigger": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-flat-review02-2026-10-04/witness-owned01/flat-failed-remote02-01/body-00030.body",
+      "victim": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-flat-review02-2026-10-04/witness-owned01/flat-failed-remote02-01/body-00000.body",
+      "before_mtime_ns": 1791140273714842339,
+      "after_mtime_ns": 1791140274714842339
+    }
+  ],
+  "fd_before": 4,
+  "fd_after": 4,
+  "boundaries": [
+    {
+      "logical_bytes": 0,
+      "allocated_bytes": 4096,
+      "members": 1,
+      "seconds": 0.0001434550213161856,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    },
+    {
+      "logical_bytes": 125308,
+      "allocated_bytes": 212992,
+      "members": 34,
+      "seconds": 0.0034053309937007725,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    },
+    {
+      "logical_bytes": 125308,
+      "allocated_bytes": 212992,
+      "members": 34,
+      "seconds": 0.003452262986684218,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    },
+    {
+      "logical_bytes": 125308,
+      "allocated_bytes": 212992,
+      "members": 34,
+      "seconds": 0.004160666023381054,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    },
+    {
+      "logical_bytes": 125308,
+      "allocated_bytes": 212992,
+      "members": 34,
+      "seconds": 0.003433126985328272,
+      "regular_extent_changes": 0,
+      "measurement": "complete sampled namespace; maximum of two regular extent observations",
+      "complete_attempts": 1
+    }
+  ],
+  "actual_remote_receipt": null,
+  "run_or_entry_executed": false,
+  "qualification": "Later genuine owned descriptor close changed earlier already-hashed body with explicit mtime change. Final full-tree resource census sees stable new metadata and accepts it; no terminal body-fingerprint cohort rejoin."
+}

@@ -1,0 +1,37 @@
+from pathlib import Path
+import json,hashlib,stat,datetime
+p=Path(__file__).resolve().parent
+h=lambda x:hashlib.sha256(x).hexdigest()
+r=json.loads((p/'READBACK03.json').read_bytes())
+report='''# Actual operational remote03 review
+
+**Accepted actual remote bytes; flat entry withheld (RM1).** This review authenticates the actual completed remote operation only. No restoration entry, network request, numerical import, research admission or claim was performed by the reviewer.
+
+RM1 — `recover01.py:63` creates nested selected directories with `Path.mkdir(mode=0700, parents=True)`. Python applies the requested mode to the leaf, while intermediate directories are created under the process umask. The actual `selected` root and intermediate directories have mode0775. Accepted flat03 `restore01.py:73,183` requires the selected root/private directories to be0700. Calling its genuine pure `authenticate_selected` on the actual receipt and selected bytes refuses `cohort root private owner/mode`. The untouched original CHECK01 traceback and complete actual selected mode map in READBACK03 retain the witness. This is a concrete integration precondition failure; no actual flat operation was attempted and no bytes were changed. Root needs a separately reviewed, explicitly declared ownership/mode transition or safe preparation and exact future installed-entry review. Do not silently relax the private-directory contract or mutate the closed original transfer during this review.
+
+The successful independent reconstruction includes all15 selected bodies (507,946 bytes),15 unique SHA1 Git blobs, the exact committed mode/OID/path tree, actual initial and final remote HEAD stdout digests, historical fetched commit stdout and current fetched commit object. All55 recorded Git child operations have actual hard/soft4MiB FSIZE readbacks, main exit0, separately reaped0 and empty cleanup failures. All563 recorded complete samples are within fixed bounds; initial baseline joins the first sample. Maximum sampled logical3,727,985B/allocated4,014,080B/member112,17 total observed regular extent changes, actual final free16,539,328,512B. These are sampled metadata observations, not continuous resource or byte immutability guarantees.
+
+Both selected archives have complete independent header/type/mode/path/body validation, accepted framing/footer parsing and full exact canonical gzip recompression against current complete snapshots. Operational delta41typed/33files943,578B and failed remote42descendants/31files114,237B are complete. The failed original root contributes its separately retained root row (43 original typed). All22 operational original path/body/mode joins match, retaining source7b056/policyae8f and all four exact adopted control-plane bodies. Private archival modes and original literal mode metadata remain distinct.
+
+The genuine release87fbe286, caller169c6380, installed sourceada3dafc/watchbdeaca/primitives, draft4ac66420, selectiond2f64f4a/Main4d0, actual intent/spawn, raw stdout/empty stderr and Root exit0f0eba1a join. Actual caller elapsed31.900950665s differs correctly from receiver31.811295529s. Every recorded parent/receiver/Git PID and matching process-group ID is absent at the review timestamp. Historical start ticks and unrecorded descendant/group history are not reconstructed. Root supplied tool attribution session95574/c2f812; source/file receipts are independently joined without pretending to own the original tool event.
+
+Original failed remote02 raw7491 remains byte-exact: Gitinit observed exitNULL versus separately reaped0; original Root exit1 persists. Its historical unavailable changed component stays unavailable. Current FAILED and both flat destinations/flat receipt/intent are absent. Prior financial failures, budgets and source authority were not changed.
+
+CHECK01 is the material actual refusal. CHECK02 is a retained reviewer harness failure: it incorrectly expected current FETCH_HEAD to remain the commit after15 later blob fetches. CHECK03 correctly verifies the recorded historical commit result and the current last-fetched blob separately;1,224 assertions pass. No failed assertion is counted as a pass. All durable scripts/logs and actual exported source/receipt/selected bodies are retained.
+
+Not tested or granted: actual fresh flat recovery, final recovery proof, future flat-entry release, continuous census/ABA exclusion, wire or memory measurements, POSIX/runtime reconstruction, whole numerical capacity, financial outcomes or scientific currentness beyond the declared metadata/body joins. No flat release is issued by this review.
+'''
+(p/'REPORT01.md').write_text(report)
+m={'schema_version':1,'decision':'ACCEPTED_ACTUAL_REMOTE_BYTES_WITHHELD_FLAT_ENTRY_RM1','reviewer':'combined_worker_review','remote_receipt_sha256':r['remote_sha256'],'root_exit_sha256':r['root_exit_sha256'],'selection_sha256':r['selection_sha256'],'commit':r['commit'],'assertions':r['assertions'],'selected_count':15,'selected_bytes':507946,'unique_git_blobs':15,'actual_git_operations':55,'whole_samples':563,'sample_maxima':r['sample_maxima'],'actual_archives':r['archival_scopes'],'flat_entry_released':False,'actual_flat_recovery':None,'numerical_authority':False,'finding':{'id':'RM1','source':'recover01.py:63; accepted flat03 restore01.py:73,183','actual_selected_root_mode':0o775,'required_mode':0o700,'observed_error':'cohort root private owner/mode','witness':'CHECK01.stderr','required_action':'Separately reviewed exact private ownership/mode preparation, then installed-entry review; preserve original mode evidence and do not relax source contract.'},'readback_sha256':h((p/'READBACK03.json').read_bytes()),'report_sha256':h((p/'REPORT01.md').read_bytes()),'raw_failed_controls':['CHECK01.stderr','CHECK02.stderr'],'successful_control':'CHECK03.stdout','time':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+(p/'MACHINE01.json').write_text(json.dumps(m,indent=2,sort_keys=True)+'\n')
+rows=[]
+for q in sorted(p.rglob('*')):
+ if q.name=='MANIFEST01.json':continue
+ s=q.lstat();row={'path':q.relative_to(p).as_posix(),'mode':stat.S_IMODE(s.st_mode)}
+ if stat.S_ISDIR(s.st_mode):row['kind']='directory'
+ elif stat.S_ISREG(s.st_mode):row.update(kind='file',bytes=s.st_size,sha256=h(q.read_bytes()))
+ else:raise AssertionError('unexpected type')
+ rows.append(row)
+manifest={'schema_version':1,'scope':'Complete review tree except self; no exclusion of raw failures','members':rows}
+(p/'MANIFEST01.json').write_text(json.dumps(manifest,indent=2,sort_keys=True)+'\n')
+print(json.dumps({'manifest':h((p/'MANIFEST01.json').read_bytes()),'machine':h((p/'MACHINE01.json').read_bytes()),'report':m['report_sha256'],'readback':m['readback_sha256'],'members':len(rows)}))

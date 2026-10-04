@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "original_sha256": "4832c8f2664f1e97c339a5b6c80fdde6f73a6ca808856deb6324608e8f2e290e",
+  "source_sha256": "6d7688080efb716b7a79d1291b4f27e62e0315e5d7a8153b2890d1f9fab35214",
+  "full_byte_AST_inverse": true,
+  "changed_functions": [
+    "authenticate_selected",
+    "load_capture",
+    "load_failed_capture",
+    "run",
+    "verify_flat"
+  ],
+  "added_class": "VerifiedCohort",
+  "unchanged_functions": [
+    "entry",
+    "hexpin",
+    "main",
+    "number",
+    "restore_delta",
+    "restore_failed_delta",
+    "selection_rows",
+    "validate_remote"
+  ],
+  "edits": [
+    {
+      "old_start": 6076,
+      "old_end": 6076,
+      "new_start": 6076,
+      "new_end": 10971,
+      "old": "",
+      "new": "class VerifiedCohort:\n    \"\"\"Finite sampled names/signatures tied to actual verified byte reads.\n\n    No held writer exclusion, no atomicity or same-signature ABA guarantee.\n    Every iterator is closed before the final descriptor-free signature pass.\n    \"\"\"\n    def __init__(self):\n        self.deadline = time.monotonic() + 180\n        self.pins = {}\n        self.byte_proofs = {}\n        self.trees = {}\n        self.anchors = {}\n    def tick(self):\n        R.require(time.monotonic() < self.deadline and len(self.pins) <= 32768, 'finite verified cohort')\n    def signature(self, path):\n        self.tick(); path = Path(path)\n        R.require(path.is_absolute() and path.resolve(strict=True) == path, 'cohort canonical current path')\n        s = path.lstat()\n        R.require(stat.S_ISDIR(s.st_mode) or (stat.S_ISREG(s.st_mode) and s.st_nlink == 1 and s.st_size <= R.FILE), 'cohort regular/directory identity')\n        return (s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns,s.st_blocks)\n    def pin(self, path):\n        path = Path(path); sig = self.signature(path)\n        R.require(path not in self.pins or self.pins[path] == sig, 'verified cohort member changed')\n        self.pins[path] = sig\n        return sig\n    def anchor(self, root):\n        # The receiver root gains deliberate intent/output/receipt names. Pin\n        # its canonical private identity, not a pre-publication directory mtime.\n        root = Path(root); self.tick()\n        R.require(root.is_absolute() and root.resolve(strict=True)==root, 'cohort root canonical identity')\n        s = root.lstat()\n        R.require(stat.S_ISDIR(s.st_mode) and stat.S_IMODE(s.st_mode)==0o700 and s.st_uid==os.geteuid(), 'cohort root private owner/mode')\n        pin = (s.st_dev,s.st_ino,s.st_mode,s.st_uid)\n        R.require(root not in self.anchors or self.anchors[root]==pin, 'cohort root identity changed')\n        self.anchors[root] = pin\n    def read(self, root, name, limit=R.FILE):\n        self.anchor(root)\n        path = Path(root)/R.path_name(name)\n        before = self.pin(path)\n        raw = R.read(root,name,limit)\n        R.require(self.signature(path) == before, 'verified read changed during descriptor cleanup')\n        proof = (len(raw),R.digest(raw))\n        R.require(path not in self.byte_proofs or self.byte_proofs[path] == proof, 'cohort byte proof differs')\n        self.byte_proofs[path] = proof\n        return raw\n    def tree(self, root, files, directory_mode=0o700, file_mode=0o600):\n        root = Path(root); self.anchor(root); expected = frozenset(files)\n        R.require(len(expected) <= 32768 and all(type(n) is str and R.path_name(n) == n for n in expected), 'bounded exact cohort file names')\n        seen = set()\n        def visit(path, depth):\n            self.tick(); R.require(depth <= 32, 'cohort path depth')\n            before = self.pin(path)\n            if stat.S_ISREG(before[2]):\n                name = path.relative_to(root).as_posix()\n                R.require(name in expected and stat.S_IMODE(before[2]) == file_mode, 'cohort private complete file membership')\n                seen.add(name); return\n            R.require(stat.S_IMODE(before[2]) == directory_mode, 'cohort private directory mode')\n            iterator = None; primary = None; names = []\n            try:\n                iterator = os.scandir(path)\n                for entry in iterator:\n                    self.tick(); R.require(len(names) + len(self.pins) < 32768, 'cohort finite directory members')\n                    names.append(entry.name)\n            except BaseException as error:\n                primary = error\n            R._cleanup(() if iterator is None else (iterator.close,),primary=primary)\n            if primary is not None: raise primary\n            R.require(self.signature(path) == before, 'cohort directory changed during iterator cleanup')\n            for name in sorted(names): visit(path/name, depth+1)\n        visit(root,0)\n        R.require(seen == expected, 'cohort missing current body')\n        previous = self.trees.get(root)\n        R.require(previous is None or previous == (expected,directory_mode,file_mode), 'cohort expected population changed')\n        self.trees[root] = (expected,directory_mode,file_mode)\n    def check(self):\n        # Finish all enumeration/iterator cleanup before the final whole-cohort\n        # descriptor-free pass, which also covers earlier scopes and prerequisites.\n        for root,(files,dm,fm) in tuple(self.trees.items()): self.tree(root,files,dm,fm)\n        for root in tuple(self.anchors): self.anchor(root)\n        for path,pin in tuple(self.pins.items()):\n            R.require(self.signature(path) == pin, 'terminal verified cohort signature differs')\n            if stat.S_ISREG(pin[2]):\n                R.require(path in self.byte_proofs, 'terminal member lacks actual byte proof')\n        self.tick()\n\n\n"
+    },
+    {
+      "old_start": 11123,
+      "old_end": 11123,
+      "new_start": 16018,
+      "new_end": 16031,
+      "old": "",
+      "new": ", cohort=None"
+    },
+    {
+      "old_start": 11125,
+      "old_end": 11125,
+      "new_start": 16033,
+      "new_end": 16141,
+      "old": "",
+      "new": "\n    cohort = VerifiedCohort() if cohort is None else cohort\n    cohort.tree(root/'selected', set(REQUIRED))"
+    },
+    {
+      "old_start": 11373,
+      "old_end": 11374,
+      "new_start": 16389,
+      "new_end": 16395,
+      "old": "R",
+      "new": "cohort"
+    },
+    {
+      "old_start": 12166,
+      "old_end": 12166,
+      "new_start": 17187,
+      "new_end": 17206,
+      "old": "",
+      "new": "cohort.check()\n    "
+    },
+    {
+      "old_start": 12206,
+      "old_end": 12206,
+      "new_start": 17246,
+      "new_end": 17259,
+      "old": "",
+      "new": ", cohort=None"
+    },
+    {
+      "old_start": 12208,
+      "old_end": 12208,
+      "new_start": 17261,
+      "new_end": 17314,
+      "old": "",
+      "new": "\n    read = R.read if cohort is None else cohort.read"
+    },
+    {
+      "old_start": 12219,
+      "old_end": 12221,
+      "new_start": 17325,
+      "new_end": 17325,
+      "old": "R.",
+      "new": ""
+    },
+    {
+      "old_start": 13068,
+      "old_end": 13070,
+      "new_start": 18172,
+      "new_end": 18172,
+      "old": "R.",
+      "new": ""
+    },
+    {
+      "old_start": 13579,
+      "old_end": 13581,
+      "new_start": 18681,
+      "new_end": 18681,
+      "old": "R.",
+      "new": ""
+    },
+    {
+      "old_start": 14387,
+      "old_end": 14389,
+      "new_start": 19487,
+      "new_end": 19487,
+      "old": "R.",
+      "new": ""
+    },
+    {
+      "old_start": 14782,
+      "old_end": 14782,
+      "new_start": 19880,
+      "new_end": 19893,
+      "old": "",
+      "new": ", cohort=None"
+    },
+    {
+      "old_start": 14784,
+      "old_end": 14784,
+      "new_start": 19895,
+      "new_end": 19955,
+      "old": "",
+      "new": "\n    cohort = VerifiedCohort() if cohort is None else cohort"
+    },
+    {
+      "old_start": 14962,
+      "old_end": 14963,
+      "new_start": 20133,
+      "new_end": 20139,
+      "old": "R",
+      "new": "cohort"
+    },
+    {
+      "old_start": 15691,
+      "old_end": 15691,
+      "new_start": 20867,
+      "new_end": 20947,
+      "old": "",
+      "new": "cohort.tree(destination, set(mapping.values()) | {result['metadata_file']})\n    "
+    },
+    {
+      "old_start": 15897,
+      "old_end": 15898,
+      "new_start": 21153,
+      "new_end": 21159,
+      "old": "R",
+      "new": "cohort"
+    },
+    {
+      "old_start": 16125,
+      "old_end": 16125,
+      "new_start": 21386,
+      "new_end": 21405,
+      "old": "",
+      "new": "()\n    cohort.check"
+    },
+    {
+      "old_start": 16804,
+      "old_end": 16804,
+      "new_start": 22084,
+      "new_end": 22097,
+      "old": "",
+      "new": ", cohort=None"
+    },
+    {
+      "old_start": 16806,
+      "old_end": 16806,
+      "new_start": 22099,
+      "new_end": 22152,
+      "old": "",
+      "new": "\n    read = R.read if cohort is None else cohort.read"
+    },
+    {
+      "old_start": 16817,
+      "old_end": 16819,
+      "new_start": 22163,
+      "new_end": 22163,
+      "old": "R.",
+      "new": ""
+    },
+    {
+      "old_start": 17822,
+      "old_end": 17824,
+      "new_start": 23166,
+      "new_end": 23166,
+      "old": "R.",
+      "new": ""
+    },
+    {
+      "old_start": 18340,
+      "old_end": 18342,
+      "new_start": 23682,
+      "new_end": 23682,
+      "old": "R.",
+      "new": ""
+    },
+    {
+      "old_start": 19020,
+      "old_end": 19022,
+      "new_start": 24360,
+      "new_end": 24360,
+      "old": "R.",
+      "new": ""
+    },
+    {
+      "old_start": 20215,
+      "old_end": 20215,
+      "new_start": 25553,
+      "new_end": 25580,
+      "old": "",
+      "new": "; cohort = VerifiedCohort()"
+    },
+    {
+      "old_start": 20650,
+      "old_end": 20651,
+      "new_start": 26015,
+      "new_end": 26021,
+      "old": "R",
+      "new": "cohort"
+    },
+    {
+      "old_start": 20704,
+      "old_end": 20705,
+      "new_start": 26074,
+      "new_end": 26080,
+      "old": "R",
+      "new": "cohort"
+    },
+    {
+      "old_start": 21092,
+      "old_end": 21092,
+      "new_start": 26467,
+      "new_end": 26474,
+      "old": "",
+      "new": ",cohort"
+    },
+    {
+      "old_start": 21169,
+      "old_end": 21169,
+      "new_start": 26551,
+      "new_end": 26558,
+      "old": "",
+      "new": ",cohort"
+    },
+    {
+      "old_start": 21288,
+      "old_end": 21288,
+      "new_start": 26677,
+      "new_end": 26684,
+      "old": "",
+      "new": ",cohort"
+    },
+    {
+      "old_start": 21837,
+      "old_end": 21837,
+      "new_start": 27233,
+      "new_end": 27240,
+      "old": "",
+      "new": ",cohort"
+    },
+    {
+      "old_start": 21883,
+      "old_end": 21883,
+      "new_start": 27286,
+      "new_end": 27293,
+      "old": "",
+      "new": ",cohort"
+    },
+    {
+      "old_start": 21957,
+      "old_end": 21957,
+      "new_start": 27367,
+      "new_end": 27374,
+      "old": "",
+      "new": ",cohort"
+    },
+    {
+      "old_start": 22148,
+      "old_end": 22149,
+      "new_start": 27565,
+      "new_end": 27571,
+      "old": "R",
+      "new": "cohort"
+    },
+    {
+      "old_start": 22197,
+      "old_end": 22198,
+      "new_start": 27619,
+      "new_end": 27625,
+      "old": "R",
+      "new": "cohort"
+    },
+    {
+      "old_start": 22357,
+      "old_end": 22357,
+      "new_start": 27784,
+      "new_end": 27791,
+      "old": "",
+      "new": ",cohort"
+    },
+    {
+      "old_start": 22449,
+      "old_end": 22449,
+      "new_start": 27883,
+      "new_end": 27890,
+      "old": "",
+      "new": ",cohort"
+    },
+    {
+      "old_start": 23134,
+      "old_end": 23134,
+      "new_start": 28575,
+      "new_end": 28750,
+      "old": "",
+      "new": "cohort_currentness':'sampled complete private membership/signature population tied to exact byte reads after IO cleanup; no writer exclusion or same-signature ABA assurance','"
+    },
+    {
+      "old_start": 23768,
+      "old_end": 23768,
+      "new_start": 29384,
+      "new_end": 29403,
+      "old": "",
+      "new": "cohort.check()\n    "
+    },
+    {
+      "old_start": 23839,
+      "old_end": 23840,
+      "new_start": 29474,
+      "new_end": 29480,
+      "old": "R",
+      "new": "cohort"
+    },
+    {
+      "old_start": 24186,
+      "old_end": 24186,
+      "new_start": 29826,
+      "new_end": 29845,
+      "old": "",
+      "new": "()\n    cohort.check"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+"""Exact extracted installation guard only. No synthetic review/entry/launch."""
+from pathlib import Path
+import ast,hashlib,json,traceback
+D=Path(__file__).resolve().parent;I=D.parent/'financial-wrapper-compatibility-operational-delta-root-remote03-2026-10-04';source=(D/'root_operational_remote03.py').read_bytes();tree=ast.parse(source);assign=next(x for x in tree.body if isinstance(x,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='s' for t in x.targets));loop=next(x for x in tree.body if isinstance(x,ast.For) and isinstance(x.iter,ast.Call) and isinstance(x.iter.func,ast.Attribute) and isinstance(x.iter.func.value,ast.Subscript) and isinstance(x.iter.func.value.value,ast.Name) and x.iter.func.value.value.id=='s');code=compile(ast.Module(body=[assign,loop],type_ignores=[]),'<exact installed caller draft-load and hash-loop AST>','exec');h=lambda b:hashlib.sha256(b).hexdigest();owned=D/'owned-witness01';owned.mkdir();draft=json.loads((I/'ROOT_INSTALLATION_DRAFT01.json').read_bytes())
+for n in draft['helpers_and_selection']:
+ p=owned/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((I/n).read_bytes())
+(owned/'ROOT_INSTALLATION_DRAFT01.json').write_bytes((I/'ROOT_INSTALLATION_DRAFT01.json').read_bytes());env={'D':owned,'h':h,'json':json};exec(code,env);rows=[{'case':'literal installed copy','installation_loop_passed':True}]
+helper=owned/'recover01.py';old=helper.read_bytes();helper.write_bytes(old+b'\n# owned review opaque source substitution; never executed\n')
+try:exec(code,env)
+except AssertionError:rows.append({'case':'helper changed alone','installation_loop_passed':False,'traceback':traceback.format_exc()})
+else:raise AssertionError('control must refuse isolated helper drift')
+draft['helpers_and_selection']['recover01.py']['sha256']=h(helper.read_bytes());draft['helpers_and_selection']['recover01.py']['bytes']=len(helper.read_bytes());(owned/'ROOT_INSTALLATION_DRAFT01.json').write_text(json.dumps(draft,indent=2,sort_keys=True)+'\n');exec(code,env)
+assert h((owned/'ROOT_INSTALLATION_DRAFT01.json').read_bytes())!='4ac66420883fe2605db005152c4492e0597aaab1593ebc9976d1857b0ff6a96d' and h(helper.read_bytes())!='ada3dafc7250452cb6db2eb33cdd5b5ecddb776511e247efcbc858dbb446aabf';rows.append({'case':'helper and its unauthenticated draft pin changed','installation_loop_passed':True,'actual_owned_draft_sha256':h((owned/'ROOT_INSTALLATION_DRAFT01.json').read_bytes()),'actual_owned_helper_sha256':h(helper.read_bytes())})
+(D/'WITNESS01.json').write_text(json.dumps({'decision':'CALLER_INSTALLATION_BINDING_COUNTEREXAMPLE','caller_sha256':h(source),'exact_ast_extracted_lines':[assign.lineno,loop.lineno],'rows':rows,'actual_review_or_release_fabricated':False,'main_entry_launch_executed':False,'actual_installation_modified':False},indent=2)+'\n');print(json.dumps(rows))

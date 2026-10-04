@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/watch01.py", line 60, in census
+    result=_sample(root)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/watch01.py", line 49, in _sample
+    elif now!=s:raise ChangingTree('incomplete/changing directory census refused')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+watch01.ChangingTree: incomplete/changing directory census refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/recover01.py", line 271, in <module>
+    entry()
+    ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/recover01.py", line 267, in entry
+    _raise_retained(primary, secondary)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/recover01.py", line 55, in _raise_retained
+    raise primary
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/recover01.py", line 256, in entry
+    main()
+    ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/recover01.py", line 207, in main
+    git(['init', '--bare', str(repo)])
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/recover01.py", line 170, in git
+    raise first
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/recover01.py", line 119, in git
+    watch()
+    ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/recover01.py", line 30, in watch
+    row = W.census(HERE)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-operational-delta-root-remote02-2026-10-04/watch01.py", line 67, in census
+    raise ValueError('no complete census in three bounded attempts') from last
+ValueError: no complete census in three bounded attempts
