@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-outcome-chunked-preservation-review01-2026-10-04/check01.py", line 18, in <module>
+    if e['type']=='file':ok(stat.S_ISREG(s.st_mode) and s.st_size==e['bytes'] and sha(p)==e['sha256'],'candidate body hash/extent')
+       ~^^^^^^^^
+KeyError: 'type'

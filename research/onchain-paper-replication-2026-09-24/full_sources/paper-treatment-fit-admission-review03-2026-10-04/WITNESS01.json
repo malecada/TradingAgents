@@ -1,0 +1,190 @@
+{
+  "actual_postmortem_row": {
+    "id": "treatment-eth-whale-2020-01-06",
+    "status": "unavailable",
+    "reason": "owned worker ended before durable cell disposition; no retry"
+  },
+  "cases": [
+    {
+      "case": "canonical-absent",
+      "source": "original",
+      "result": "accepted",
+      "error": null,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/absent",
+      "exists": false,
+      "lexists": false,
+      "is_symlink": false
+    },
+    {
+      "case": "canonical-absent",
+      "source": "successor",
+      "result": "accepted",
+      "error": null,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/absent",
+      "exists": false,
+      "lexists": false,
+      "is_symlink": false
+    },
+    {
+      "case": "canonical-nested-absent",
+      "source": "original",
+      "result": "accepted",
+      "error": null,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/real-dir/missing",
+      "exists": false,
+      "lexists": false,
+      "is_symlink": false
+    },
+    {
+      "case": "canonical-nested-absent",
+      "source": "successor",
+      "result": "accepted",
+      "error": null,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/real-dir/missing",
+      "exists": false,
+      "lexists": false,
+      "is_symlink": false
+    },
+    {
+      "case": "regular",
+      "source": "original",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/file",
+      "exists": true,
+      "lexists": true,
+      "is_symlink": false
+    },
+    {
+      "case": "regular",
+      "source": "successor",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/file",
+      "exists": true,
+      "lexists": true,
+      "is_symlink": false
+    },
+    {
+      "case": "directory",
+      "source": "original",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/real-dir",
+      "exists": true,
+      "lexists": true,
+      "is_symlink": false
+    },
+    {
+      "case": "directory",
+      "source": "successor",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/real-dir",
+      "exists": true,
+      "lexists": true,
+      "is_symlink": false
+    },
+    {
+      "case": "live-leaf-link",
+      "source": "original",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/link-live",
+      "exists": true,
+      "lexists": true,
+      "is_symlink": true
+    },
+    {
+      "case": "live-leaf-link",
+      "source": "successor",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/link-live",
+      "exists": true,
+      "lexists": true,
+      "is_symlink": true
+    },
+    {
+      "case": "dangling-leaf-link",
+      "source": "original",
+      "result": "accepted",
+      "error": null,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/link-dangling",
+      "exists": false,
+      "lexists": true,
+      "is_symlink": true
+    },
+    {
+      "case": "dangling-leaf-link",
+      "source": "successor",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/link-dangling",
+      "exists": false,
+      "lexists": true,
+      "is_symlink": true
+    },
+    {
+      "case": "live-ancestor-missing",
+      "source": "original",
+      "result": "accepted",
+      "error": null,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/ancestor-live/missing",
+      "exists": false,
+      "lexists": false,
+      "is_symlink": false
+    },
+    {
+      "case": "live-ancestor-missing",
+      "source": "successor",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/ancestor-live/missing",
+      "exists": false,
+      "lexists": false,
+      "is_symlink": false
+    },
+    {
+      "case": "dangling-ancestor-missing",
+      "source": "original",
+      "result": "accepted",
+      "error": null,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/ancestor-dangling/missing",
+      "exists": false,
+      "lexists": false,
+      "is_symlink": false
+    },
+    {
+      "case": "dangling-ancestor-missing",
+      "source": "successor",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/ancestor-dangling/missing",
+      "exists": false,
+      "lexists": false,
+      "is_symlink": false
+    },
+    {
+      "case": "loop-link",
+      "source": "original",
+      "result": "accepted",
+      "error": null,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/link-loop",
+      "exists": false,
+      "lexists": true,
+      "is_symlink": true
+    },
+    {
+      "case": "loop-link",
+      "source": "successor",
+      "result": "refused",
+      "error": "ValueError",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/paper-treatment-fit-admission-review03-2026-10-04/owned-paths/link-loop",
+      "exists": false,
+      "lexists": true,
+      "is_symlink": true
+    }
+  ],
+  "scope": "actual owned paths and exact extracted predicate; no admitted Run/Owner"
+}

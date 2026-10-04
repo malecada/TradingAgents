@@ -1,0 +1,28 @@
+{
+  "baseline_sha256": "211df94b976ea36facb5b7d1d248f69e4011e9fc4af628cb09001a632628588d",
+  "candidate_sha256": "0dba250ee4b5b5f0f741e1412ad958cb8cb7a3608aaa3664eca268c4e09604b4",
+  "edits": [
+    {
+      "old": "def disposition(claim, terminal, ledger, claim_hash, ledger_hash, plan, week, variant, asset):",
+      "new": "def disposition(claim, terminal, ledger, claim_hash, ledger_hash, plan, week, variant, asset, *, absent=False):"
+    },
+    {
+      "old": "    require(selected.get('asset') == asset and selected.get('week') == week, 'cell asset/week differs')",
+      "new": "    if absent:\n        require(terminal['status'] == 'failed' and selected['status'] == 'unavailable' and set(selected) == {'id', 'status', 'reason'}, 'exact failed absent-row shape required')\n        # Cell identity is already bound to registered asset/variant/week above.\n        # Return the real fallback unchanged; never fabricate asset/week fields.\n    else:\n        require(selected.get('asset') == asset and selected.get('week') == week, 'cell asset/week differs')"
+    },
+    {
+      "old": "row = disposition(claim, terminal, ledger, sha(craw), sha(lraw), plan, week, variant, asset)",
+      "new": "row = disposition(claim, terminal, ledger, sha(craw), sha(lraw), plan, week, variant, asset, absent=reference['disposition_input'] is None)"
+    },
+    {
+      "old": "        import os, stat\n        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)\n        with os.fdopen(fd, 'rb') as stream:\n            require(stat.S_ISREG(os.fstat(stream.fileno()).st_mode), 'regular metadata required')\n            raw = stream.read(LIMIT + 1)\n",
+      "new": "        raw = _owned_metadata_bytes(path)\n"
+    },
+    {
+      "old": "def _reader(run, name, metadata=True):",
+      "new": "def _reader_cleanup(actions, primary):\n    \"\"\"All cleanup attempted; first fatal retained, then first ordinary error.\"\"\"\n    selected = primary\n    errors = []\n    for action in actions:\n        try:\n            action()\n        except BaseException as error:\n            errors.append(error)\n            fatal = lambda e: isinstance(e, MemoryError) or not isinstance(e, Exception)\n            if selected is None or (fatal(error) and not fatal(selected)):\n                selected = error\n    if selected is not None:\n        others = [e for e in ([primary] if primary is not None else []) + errors if e is not selected]\n        if others:\n            try:\n                if selected.__cause__ is not None and all(selected.__cause__ is not e for e in others):\n                    others.append(selected.__cause__)\n                selected.__cause__ = BaseExceptionGroup('treatment metadata cleanup failures', others)\n            except BaseException:\n                pass\n        raise selected\n\n\ndef _owned_metadata_bytes(path):\n    \"\"\"Transfer one real fd to one stream; failures preserve acquired ownership.\"\"\"\n    import os, stat\n    fd = None\n    stream = None\n    primary = None\n    try:\n        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)\n        stream = os.fdopen(fd, 'rb')\n        fd = None  # Ownership transfers only after fdopen returned successfully.\n        require(stat.S_ISREG(os.fstat(stream.fileno()).st_mode), 'regular metadata required')\n        raw = stream.read(LIMIT + 1)\n    except BaseException as error:\n        primary = error\n    finally:\n        _reader_cleanup((lambda: stream.close() if stream is not None else None,\n                         lambda: os.close(fd) if fd is not None else None), primary)\n    return raw\n\n\ndef _reader(run, name, metadata=True):"
+    }
+  ],
+  "exact_byte_inverse": true,
+  "exact_ast_inverse": true
+}

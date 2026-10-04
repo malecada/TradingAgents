@@ -1,0 +1,43 @@
+{
+  "authority": {
+    "SourceInstalled": false,
+    "claim": null,
+    "financial_credit": 0,
+    "gate": null,
+    "native_execution": null,
+    "producer_source_pins": null,
+    "registration": null,
+    "source_commit": null
+  },
+  "candidate_sha256": "492e15e271a6092db6ba65e3e8a347328e4c2fcc9f28604e694ef1cb5506e2ab",
+  "checks": 234,
+  "correction": "One exact absence-predicate substitution: reject symlink leaf, reject existing leaf, require lexical path equal resolved path to reject ancestor redirection. No import/default/API change.",
+  "limits": [
+    "No actual Run/Owner/claim/native/numerical execution",
+    "Predicate controls use actual owned filesystem entries; no concurrent path mutation or atomic whole-tree absence guarantee",
+    "Four owned symlink witnesses are typed in the manifest; this is no external recovery/POSIX reconstruction claim",
+    "Root must independently review, bind genuine source maps, integrate/register/preserve/recover and admit resources before numerical release"
+  ],
+  "path_case_count": 16,
+  "prior_candidate_manifest": "d11820c9ccb8f34e7a482b8c33fd5ad9c5fb34edf51ceb8c268ae98d1fa2a897",
+  "prior_review_machine": "6656bb315c97923ccc2e37a880938197f7fbbda9b6e8235e8dd5f4c62f06920c",
+  "prior_withheld_review_manifest": "35979c64eeb9f69bf8a7049240a2ac50685b13dc2ccbd6e117f3036a998b5d1e",
+  "schema_version": 1,
+  "source_change": {
+    "candidate_sha256": "492e15e271a6092db6ba65e3e8a347328e4c2fcc9f28604e694ef1cb5506e2ab",
+    "full_ast_inverse": true,
+    "full_byte_inverse": true,
+    "new": "and not actual_row_path.is_symlink() and not actual_row_path.exists() and actual_row_path.resolve() == actual_row_path, 'only failed absent cell may use postmortem absence'",
+    "old": "and not actual_row_path.exists(), 'only failed absent cell may use postmortem absence'",
+    "old_sha256": "0dba250ee4b5b5f0f741e1412ad958cb8cb7a3608aaa3664eca268c4e09604b4"
+  },
+  "status": "uninstalled-source-only-successor-awaiting-different-author-review",
+  "unchanged": [
+    "All source outside the one predicate",
+    "Original01/02 and independent review02 bytes preserved",
+    "DA1 exact failed fallback/retained-row distinction and no fabricated fields",
+    "DA2 ownership transfer/closure and DA3 first-fatal/secondary-error behavior",
+    "Source/input/claim/terminal/parent/component/coverage/per-week config/common-mask/causal rules",
+    "PRODUCER_SOURCE_PINS=None; complete fund consumption remains refused"
+  ]
+}

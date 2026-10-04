@@ -1,0 +1,14 @@
+--- 
++++ 
+@@ -44,7 +44,10 @@
+  for label,m in manifests.items():
+   floor();destination=HERE/('flat-'+label+'01');destination.mkdir(mode=0o700)
+   actual[label]=R.restore(bundle/('complete-'+label+'01.tar.gz'),cap['archives'][label],m,destination);floor()
+- R.require(R.digest(R.read(HERE/'flat-parent01','files/REQUEST_FINAL03.json'))==cap['final_request_sha256'],'restored complete final request')
++ parent_metadata=json.loads(R.read(HERE/'flat-parent01',actual['parent']['metadata_file']))
++ R.require(R.digest(R.encode(parent_metadata))==actual['parent']['metadata_sha256'],'actual parent flat mapping')
++ parent_leaf=parent_metadata['flat_members']['REQUEST_FINAL03.json']
++ R.require(R.digest(R.read(HERE/'flat-parent01',parent_leaf))==cap['final_request_sha256'],'restored complete final request')
+  result={'status':'actual-financial-source290-final-parent-review-fresh-flat-recovered','source':SOURCE,'remote_receipt_sha256':a.remote_receipt_sha256,'independent_flat_source_review_manifest_sha256':a.review_manifest_sha256,'capture_sha256':EXPECTED['CAPTURE01.json'],'actual':actual,'elapsed_seconds':time.monotonic()-begin,'disk_floor_observations':floors,'continuous_floor_watch_claim':False,'shared_runtime_bodies':False,'empirical_stores':False,'final_request_sha256':cap['final_request_sha256'],'complete_final_release_bytes_recovered':True,'independent_final_union_acceptance':False,'native_or_claim_started':False}
+  R.put(HERE/'RECOVERY01.json',result);print(json.dumps({k:result[k] for k in ('status','source','elapsed_seconds')},sort_keys=True))
+ if __name__=='__main__':main()

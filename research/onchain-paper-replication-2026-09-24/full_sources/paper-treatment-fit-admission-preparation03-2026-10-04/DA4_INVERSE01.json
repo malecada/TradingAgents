@@ -1,0 +1,8 @@
+{
+  "candidate_sha256": "492e15e271a6092db6ba65e3e8a347328e4c2fcc9f28604e694ef1cb5506e2ab",
+  "full_ast_inverse": true,
+  "full_byte_inverse": true,
+  "new": "and not actual_row_path.is_symlink() and not actual_row_path.exists() and actual_row_path.resolve() == actual_row_path, 'only failed absent cell may use postmortem absence'",
+  "old": "and not actual_row_path.exists(), 'only failed absent cell may use postmortem absence'",
+  "old_sha256": "0dba250ee4b5b5f0f741e1412ad958cb8cb7a3608aaa3664eca268c4e09604b4"
+}

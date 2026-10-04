@@ -1,0 +1,21 @@
+{
+  "baseline_sha256": "d41518c7a7feaac03f66b50e7fce296ce3061e65d740b3117b34d34a6c99aa96",
+  "changes": [
+    {
+      "old": "job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource')",
+      "new": "job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource', 'treatments')"
+    },
+    {
+      "old": "job['kind'] in ('graphs','neighborhood_census','hub_edge_census','neural_resource')",
+      "new": "job['kind'] in ('graphs','neighborhood_census','hub_edge_census','neural_resource','treatments')"
+    },
+    {
+      "old": "    elif kind == 'hub_edge_census':",
+      "new": "    elif kind == 'treatments':\n        from .treatment_production import produce_registered_treatments\n        cells, summary, directory = produce_registered_treatments(run, payload['plan_input'])\n    elif kind == 'hub_edge_census':"
+    },
+    {
+      "old": "job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census')",
+      "new": "job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'treatments')"
+    }
+  ]
+}

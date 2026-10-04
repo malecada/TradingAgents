@@ -1,0 +1,4 @@
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-outcome-chunked-preservation-review01-2026-10-04/check_framing03.py", line 11
+    archive=root/case;shutil.copytree(original,archive);idx=copy.deepcopy(index);pages=[json.loads((archive[p['name']).read_bytes()) for p in idx['pages']];allrows=[r for p in pages for r in p];row=next(r for r in allrows if r['path']=='multi-chunk.bin')
+                                                                                                                     ^
+SyntaxError: closing parenthesis ')' does not match opening parenthesis '['
