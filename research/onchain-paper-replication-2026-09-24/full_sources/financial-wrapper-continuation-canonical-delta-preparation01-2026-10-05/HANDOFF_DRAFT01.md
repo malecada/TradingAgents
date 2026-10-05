@@ -1,0 +1,14 @@
+Concrete source checkpoint, not complete actual scope/recovery acceptance.
+
+CLI after Root freezes actual inputs:
+`.venv/bin/python -B delta01.py --request ABSOLUTE_ROOT_REQUEST --sha256 ACTUAL_SHA256`
+
+Fixed output: full_sources/financial-wrapper-continuation-canonical-delta-root01-2026-10-05. It must be absent. The helper writes snapshot/body-NNNN + COMPOSITION01.json, then exact existing R4 canonical increment.tar.gz, archive-manifest.json and CAPTURE01.json. CAPTURE keeps kind continuation-current-incremental-byte-capture and actual derived archive_pin/regular/typed/logical_bytes. FourMiB file/archive,16MiB new payload, accepted128MiB cumulative census reads/120s/10GiBfloor remain finite. Oversized compressed output refuses and retains the original partial; no cap ladder.
+
+Request fields are schema_version=1, fixed source d4c81c0, parent_manifest:{path,sha256} (R4 typed complete actual Parent manifest), parent_request:{path,sha256}, dependencies:[{root,manifest:{path,sha256}}] (whole closed ordinary source/review/proof scopes, at most8), proofs:{source_review,parent_review,source_input_runtime,cumulative} exact refs. All four proof files must occur in complete declared scopes. Current source/caller metadata and cumulative4spent/20ceiling joins are checked. Root final request/release and external recovery are not manufactured. Parent/proofs currently unavailable; draft nulls refuse before capture.
+
+The accepted97faaa53 proof/review and65ee768b complete composition establish the immutable823-file/1049-member/416-object basis. Only actual prior/gate bytes and six authentic logical Git objects are recopied;407/416 old Git bodies and821 unchanged CAP bodies/runtime251 are not reread. Current whole CAP metadata membership/type/mode/size is checked against the composed manifest, and exact committed diff is two paths. New complete fresh Parent and every declared sealed dependency are read through unchanged bind03.Census, with earlier verified signature conflicts refused. Final small-scope re-enumeration and final signature checks remain sampled; no continuous writer exclusion or newly measured old-content hash is asserted.
+
+Original bind03, owned_io, bounded_git and PAX are byte-identical copies pinned in REUSED01. Sixteen focused pure-delta/null/refusal/real small-census checks passed. The original tiny late-extra case was refused by full tree census but inherited signature-only finish missed an equal-time directory change; that failed harness is retained. Corrected signature control explicitly moves mtime and is not called evidence of universal detection. Complete small-scope re-enumeration is now mandatory in collect. No actual original capture/public collect/network/numerical execution occurred.
+
+The source checkpoint remains pending actual Parent/proof dependency population; do not call it a complete frozen scope. No new authority, scientific result, POSIX restoration or capacity claim follows.

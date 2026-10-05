@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-canonical-delta-preparation01-2026-10-05/check01.py", line 18, in <module>
+    r=H/'tiny-owned';r.mkdir(mode=0o700);(r/'opaque').write_bytes(b'opaque\x00metadata');c=D.B.Census();m=c.tree(r,{'opaque':'file'},{'opaque'});ck('actual tiny bytes',c.saved[(str(r),'opaque')]==b'opaque\x00metadata');c.finish();(r/'late').write_bytes(b'late');refusal('actual extra namespace',lambda:D.B.Census().tree(r,{'opaque':'file'},{'opaque'}));refusal('late signature',c.finish)
+                                                                                                                                                                                                                                                                                                                                                                 ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-canonical-delta-preparation01-2026-10-05/check01.py", line 9, in refusal
+    raise AssertionError(n)
+AssertionError: late signature

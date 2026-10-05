@@ -1,0 +1,15 @@
+# Canonical continuation byte transport source preparation
+
+The receiver, callers, PAX, owned I/O, bounded Git, watcher, cohort and flat restoration primitives are copied byte-for-byte from the accepted current transport preparation. The three contextual source files have complete literal and AST inverses. Their changes select the canonical source, fresh receiver/flat namespaces and status strings, and replace the obsolete capture author helper with the actual-pin binder. No scientific or native execution source changes.
+
+`bind_capture01.py` requires the three genuine non-null SHA256 values of Root's actual canonical delta. It checks their bounded bytes, manifest counts, scope and exclusions; then binds only the capture hash in a fresh source bundle. Actual counts, archive identity, remote commit, receipts and independent entry releases are not yet available and remain null. No actual capture, source materialization, receiver or flat entry has run in this preparation. The final input fingerprint check is a finite metadata sample, not writer exclusion or an atomic filesystem guarantee.
+
+Root sequence after the actual capture is independently accepted:
+
+1. Run `bind_capture01.py --capture-sha256 ACTUAL --manifest-sha256 ACTUAL --archive-sha256 ACTUAL --materialize` from this source directory. It creates only the fixed fresh canonical-transport-bound01 source bundle.
+2. From that bundle run `bind_entry01.py --commit ACTUAL_PUSHED_COMMIT --phase remote`. The exact three-body canonical selection and generated caller/receiver contract then require independent actual binding and entry release before Root invokes the caller. No entry is invoked by either binder.
+3. After the genuine receiver completes, run the same bound `bind_entry01.py --commit SAME_COMMIT --phase flat`; bind its real receipt, selected mode profile and exact inner/outer releases before one fresh flat entry.
+
+The original 818 bodies are not recopied. Accepted full capsule/416 Git ancestry is reused; the actual new two metadata bodies, six Git objects and complete final Parent/proof population belong to the forthcoming capture. Transport utility availability and preservation are separate from the three selected payloads. The unchanged 4 MiB per-body/archive, finite selection/read/watch/time bounds and 10 GiB floor remain. The 192 MiB shared space check is conservative headroom, not a kernel reservation or whole-fit capacity proof.
+
+Validation: 26 focused source/null/refusal checks; 12 unchanged source/template byte joins; full inverse for all three contextual files. Missing actual pins refuse before a Root route can be produced. No fake receipt, successful authority, actual restoration or financial run was used. Future actual binding, independent entry review, Root execution and complete outcome composition remain required. Installed runtime package bytes, POSIX reconstruction, writer exclusion, capacity and numerical authority are excluded. The unrelated optional Parent builder remains withheld and untouched.
