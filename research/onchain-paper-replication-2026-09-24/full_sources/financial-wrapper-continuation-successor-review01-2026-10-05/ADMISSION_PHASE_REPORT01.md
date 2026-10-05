@@ -1,0 +1,9 @@
+# Concrete successor registration and admission review
+
+The actual source/design a5bcc943167ad035b45e12ddf9864d46e685b124 contains 367 tracked paths and 366 selected source pins. The old four gate definitions and top-level program/family objects are unchanged. Exactly one successor is added, under the same family, original failed interrupt parent, cell, model/training, execution job and extension20. The old gate itself is now source-pinned. Only two installed operational bodies changed; all other 193 implementation hashes remain fixed. The new plan changes only identity and namespace. All 34 registered input bodies were independently hash-checked.
+
+The installed external caller, its source binding, candidate preclaim and immutable proof-reuse contract join the exact current gate and source. Six accepted helpers remain unchanged. The actual read-only job._admitted call passed once with the genuine Admission type, ready current/design source, effective allowance20, no numerical imports and fresh prospective namespaces. Its source and output were inspected; the reviewer did not rerun admission or the runtime inventory.
+
+Accounting remains base18/prior0/highest20, four lifecycle claims (one COMPLETE and three FAILED), sixteen remaining. The reserved old continuation has no claim and remains terminal/no-reuse; its refusal is additional preserved history, not a refund. Claim and terminal hashes and the closed four-claim namespace were checked against the accepted cumulative basis.
+
+No ResearchRun.start, Owner/native launch, full external preclaim execution, numerical continuation, full-size capacity or economic result is established. The final Parent contract and complete current changed-byte recovery are still pending. The original eight external proof roots and unchanged 251-record runtime mapping are reused; no historical evidence matrix or installed runtime package population is rescanned.
