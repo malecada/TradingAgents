@@ -110,7 +110,7 @@ def worker(config_path,config_sha):
     try:
         # Connection metadata is only consumed in the actually released worker.
         module=load(root,c['transport_source'],'reviewed_array_transport')
-        transport=module.Transport(json.loads(checked(root,c['connection'])),rate=262144,maximum_payload_bytes=8*GIB)
+        transport=module.Transport(json.loads(checked(root,c['connection'])),rate=262144,maximum_payload_bytes=MAX_BODY)
         require(transport.available()>=TOTAL+GIB,'remote capacity unavailable')
         transport.mkdir(c['remote']);transport.put(here/'manifest.json',c['remote']+'/manifest.json');transport.get(c['remote']+'/manifest.json',here/'recovered-manifest.json')
         require(old.sha(here/'manifest.json')==old.sha(here/'recovered-manifest.json'),'configuration roundtrip differs')
