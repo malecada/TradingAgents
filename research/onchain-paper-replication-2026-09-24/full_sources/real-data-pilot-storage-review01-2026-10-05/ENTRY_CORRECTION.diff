@@ -1,0 +1,26 @@
+--- 
++++ 
+@@ -55,11 +55,13 @@
+ def entry_bindings():
+  bindings=json.loads((HERE/'bindings.json').read_bytes())
+  release=json.loads((HERE/'release-bindings01.json').read_bytes())
++ required_release={str((HERE/name).relative_to(ROOT)) for name in ('RELEASE_REVIEW.json','RELEASE_REVIEW.md','bindings.json')}
++ if type(release) is not dict or set(release)!=required_release:raise ValueError('exact review/report/bindings release pins required')
+  for path,h in {**bindings,**release}.items():
+   if path in bindings and path in release and bindings[path]!=release[path]:raise ValueError('release binding conflicts')
+   if old.sha(ROOT/path)!=h:raise ValueError('entry binding changed: '+path)
+  review=json.loads((HERE/'RELEASE_REVIEW.json').read_bytes())
+- if review['decision']!='accepted' or review['manifest_sha256']!=old.sha(HERE/'manifest.json') or review['worker_sha256']!=old.sha(HERE/'offload.py') or review['transport_sha256']!=old.sha(HERE/'transport.py'):raise ValueError('exact independent release review required')
++ if review['decision']!='accepted' or review['manifest_sha256']!=old.sha(HERE/'manifest.json') or review['worker_sha256']!=old.sha(HERE/'offload.py') or review['transport_sha256']!=old.sha(HERE/'transport.py') or review['bindings_sha256']!=old.sha(HERE/'bindings.json'):raise ValueError('exact independent release review required')
+  return {**bindings,**release}
+ 
+ 
+@@ -70,6 +72,8 @@
+  if branch!='research/onchain-paper-replication-2026-09-24':raise ValueError('unexpected source branch')
+  remote=subprocess.check_output(['git','ls-remote','--exit-code','origin','refs/heads/'+branch],cwd=ROOT,text=True).split()[0]
+  if remote!=source:raise ValueError('source not externally committed')
++ release_path=str((HERE/'release-bindings01.json').relative_to(ROOT))
++ if subprocess.check_output(['git','show',source+':'+release_path],cwd=ROOT)!=(HERE/'release-bindings01.json').read_bytes():raise ValueError('release table not committed')
+  for path,h in bindings.items():
+   if path==c['connection_path']:
+    if subprocess.check_output(['git','ls-files','--',path],cwd=ROOT):raise ValueError('connection metadata must remain untracked')

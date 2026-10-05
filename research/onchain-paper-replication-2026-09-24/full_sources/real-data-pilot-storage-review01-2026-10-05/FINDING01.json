@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "decision": "WITHHELD_UNTIL_ENTRY_CORRECTION",
+  "source_sha256": "d8267c8db23c31c73bfb7f3c7edcbba0fc8b3f45ebfa8d35441fb47c8568c7d6",
+  "location": "offload.py:55-76",
+  "finding": "An empty release-bindings01.json permits acceptance of an uncommitted RELEASE_REVIEW.json: the review fields are inspected but the review is absent from the committed-body loop.",
+  "reproduction": "CHECK01.json positive fake-entry case used release-bindings01.json={} and a local uncommitted review. It passed at the exact full-scratch threshold; fake Git show covered only bound.txt.",
+  "impact": "The source/entry's advertised committed independent-review gate is optional unless release binding membership is enforced.",
+  "minimal_fix": "Require the exact current RELEASE_REVIEW.json, RELEASE_REVIEW.md and bindings.json paths in the release table, then retain existing current-byte and committed-byte verification.",
+  "real_native_network_or_deletion": false
+}

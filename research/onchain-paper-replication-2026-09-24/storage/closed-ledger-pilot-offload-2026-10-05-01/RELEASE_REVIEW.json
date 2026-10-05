@@ -1,0 +1,49 @@
+{
+  "bindings_sha256": "bad4362b3547f6b5c10202ee35d24a2ed28a4a7600b47a25d51446e8421c4ceb",
+  "capacity_proven": false,
+  "connection_contents_inspected": false,
+  "corrected_finding": "Mandatory committed independent-review membership; original evidence retained in FINDING01.json.",
+  "decision": "accepted",
+  "execution_performed": false,
+  "financial_or_pilot_claim": false,
+  "independent_checks": {
+    "corrected_entry_sha256": "4fa68caeafe1934036c0498c3807dd4a9983432e305ae5c41832df1f966c3922",
+    "metadata_and_initial_entry_sha256": "4ec0ac0f3b06ad72cafda46be01d217f61bf01efffcbbdcb42bbf51873cdefda",
+    "review_directory": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-review01-2026-10-05"
+  },
+  "ledger_or_array_body_read": false,
+  "manifest_sha256": "73cc7210e33d613ca90069a43a636a888606e3f92b97407d92bbba5288b6c166",
+  "release_conditions": [
+    "Root creates exact three-entry release-bindings01.json for RELEASE_REVIEW.json, RELEASE_REVIEW.md and bindings.json.",
+    "Commit all bound source/table/review bodies and release table; push and verify remote HEAD equals the frozen Main HEAD.",
+    "Fresh reviewed outer-entry preflight: unused local identity, unchanged closure/stat/bytes bindings, no ledger journals/sidecars or active consumers/native owners, at least3.5GiB RAM and10GiB plus entire recovery scratch plus16MiB free disk.",
+    "Fresh bounded transport capacity check and exclusive remote namespace creation must succeed.",
+    "Retain one launch identity, no retry, unchanged HEAD/bound bytes and no concurrent ledger consumer through cleanup.",
+    "Before unlink require original source rehash, full fresh recovery size/hash, roundtripped restore metadata, durable verified receipt and source sidecar, then repeated source/descriptor verification.",
+    "Review actual outcome/guard/exits and preserve failed scratch; restore exact ledger before future historical local-path verification."
+  ],
+  "remote_recovery_proven": false,
+  "review_report_sha256": "16d6b1c90188a11774e2a3cb9ff6c9ab3e61796dd1c454053b7381f4b2197348",
+  "schema_version": 1,
+  "scope": {
+    "files": [
+      {
+        "bytes": 3662934016,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/aggregation/ledger.sqlite",
+        "sha256": "2543a858c9054d2fb0a7d9349610d21cfaf5de93fc1efda4d2ec6a9c12269251",
+        "stat_identity": [
+          66310,
+          8423719,
+          3662934016,
+          1790784016633345247,
+          1790784016633345247
+        ]
+      }
+    ],
+    "kind": "one fresh byte-exact closed Graph10 ledger offload",
+    "no_other_local_retirement": true,
+    "total_bytes": 3662934016
+  },
+  "transport_sha256": "ee551abbb81bec2b42355ce073c2a570d6ed0b37bd763b047b539f8c1148de16",
+  "worker_sha256": "edf1ade0f56113515316c210dea8b256e11589f9c1eda4c94b077d1bbae08e5d"
+}

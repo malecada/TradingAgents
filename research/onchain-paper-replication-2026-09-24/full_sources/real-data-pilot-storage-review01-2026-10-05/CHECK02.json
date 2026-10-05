@@ -1,0 +1,42 @@
+{
+  "actual_native_network_transfer_or_deletion": false,
+  "binding_changes": [
+    "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-pilot-offload-2026-10-05-01/offload.py"
+  ],
+  "bindings_sha256": "bad4362b3547f6b5c10202ee35d24a2ed28a4a7600b47a25d51446e8421c4ceb",
+  "checks": [
+    {
+      "case": "exact-committed-table",
+      "git_shows": [
+        "entry/release-bindings01.json",
+        "bound.txt",
+        "entry/RELEASE_REVIEW.json",
+        "entry/RELEASE_REVIEW.md",
+        "entry/bindings.json"
+      ],
+      "status": "passed"
+    },
+    {
+      "case": "empty-release-table",
+      "git_shows": [],
+      "reason": "exact review/report/bindings release pins required",
+      "status": "refused"
+    },
+    {
+      "case": "uncommitted-release-table",
+      "git_shows": [
+        "entry/release-bindings01.json"
+      ],
+      "reason": "release table not committed",
+      "status": "refused"
+    },
+    {
+      "case": "wrong-review-bindings-hash",
+      "git_shows": [],
+      "reason": "exact independent release review required",
+      "status": "refused"
+    }
+  ],
+  "status": "PASS_CORRECTED_ENTRY_ONLY",
+  "worker_sha256": "edf1ade0f56113515316c210dea8b256e11589f9c1eda4c94b077d1bbae08e5d"
+}
