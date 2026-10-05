@@ -1,5 +1,21 @@
 # Current execution checkpoint — October 5, 2026
 
+**TOP73: overhead reduction is the priority. The complete final Parent preflight passed; no numerical claim or native job has been started.**
+
+Main/actual remote b1eb960565e1f74a701454bae411eb17c0d8331c. Actual baseline recovery is independently accepted (proof02900ae1, machine25d187e0, manifest2eca005b):323 restored bodies, complete605-source/407-Git composition and original Parent draft10. Original remote success and failed FLAT1 remain preserved; FLAT2 completed. Installed runtime package bodies/POSIX/whole capacity remain excluded.
+
+Different-author final Parent release6fd92ad2/contractf2639188, review8d7388bb/b34145df binds genuine three proofs to final requestcfecfd3e. Actual read-only preflight tool36115/54aadc exited0, complete Reader8,267,882B under8MiB, source/runtime/admission/fresh namespaces/startup RAM/disk checks passed. No Owner/ResearchRun.start/claim/numerical import. The original unused compatibility100 identity remains unused; engineering3FAILED/highest19/prospective20 unchanged.
+
+One concrete PAX final capture completed(b1b534/0):106 payload bodies121typed, archiveb8d36136/287,926B, manifest51d4ab00. It preserves all12 current Parent bodies/finalQ/release/proofs, closed reviews/transport and original failed-flat receipts while reusing actual baseline evidence. One envelope outside the archive freezes that finite selection. The accepted separate receiver/flat helper adaptation is prepared; storage_watch_review owns ONE consolidated substantive source+capture+exact-entry review. Root alone owns live integration/registrations/STATE/Git/network/fresh recovery/ONE native launcher. Other bounded assignments are complete.
+
+Next executable step: commit/push this bundled finite selection; bind current actual commit, recover it ONCE through the fixed fresh final supplement receiver/flat roots, independently authenticate recovered final caller/proofs, then fresh native checks and ONE unused100 reference. Accepted/recovered COMPLETE precedes continuation/prediction and real eligible-population capacity. Detached graph/MCM handoff02 is implemented and narrowly source accepted; live install, numerical equivalence and memory savings remain unverified. Reuse accepted evidence, keep checkpoints brief and avoid broad repeated matrices or extra tiers for ordinary metadata copies.
+
+All1,420 paper fits remain pending. Paper36closed27COMPLETE9FAILED/highest64, coverage77/109/resource7COMPLETE102UNAVAILABLE. Full13tasks/C01–C18/originalarchitecture/bothassets/history/comparisons/all32Task8 requirements remain. Original32motifs512spent samples26sourceobjects/allraw/failed/withheld/reserved identities/native limits/16GBphysical/10GiBfloor unchanged. No rerun/refund/transfer/capladder/scope reduction/test tuning/resampling/reclustering/credentials/paid/provider-authorcontact/trading/deployment/VPSsystemdSSH. Full55.44GB MCM still requires typed tails AND batch/output offload/common reservation/measured capacity/full recovery before deletion. Exact earlier evidence remains below.
+
+---
+
+# Current execution checkpoint — October 5, 2026
+
 **TOP72 2026-10-04T23:46:01.261680+00:00: actual fresh FLAT2 restoration completed successfully in2.08749seconds, using the already recovered44-body input set. No model fit or new numerical claim is active.**
 
 Main/confirmed remote d15e720ff6143350052b90c563ead1f950dd8be3 remain; later closed evidence awaits one bundled commit/push. CAP32d57eac/355tracked354pins11roles/605typed491files/407Git, threeFAILED/highestused19/prospective20unused remain fixed. All1,420 paper fits remain pending.
