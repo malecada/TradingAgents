@@ -1,0 +1,27 @@
+{
+  "baseline_sha256": "f86e272762865b9fd57442d4cf58e2bad5d976b200515a083b81ed8f07fe55af",
+  "behavior": "Updates minimum_sampled_disk_free_bytes from each existing complete disk_free_bytes snapshot before existing disk-floor refusal. Shared state carries cumulative minima into existing live/final publishers. No additional sample, launch, native control, numerical method, limit or finalization action.",
+  "exact_inverse": true,
+  "integration": "Root only; candidate and test retained here, no live resources.py/tests edits. Test currently loads adjacent candidate source; integrated test must point to installed reviewed resources module.",
+  "limitations": [
+    "Whole-volume sampled minima include unnamed temporary usage and unrelated activity.",
+    "Not continuous minimum, kernel quota or per-job attribution; short peaks between samples can be missed.",
+    "Paths may share one device; values must not be summed as independent volume usage.",
+    "No extra final disk sample; final receipt retains minima from actual existing boundaries."
+  ],
+  "schema_version": 1,
+  "source_sha256": "7735c451511b99f293d658c608afcdb21956d470c117d72104d1f55228041f44",
+  "status": "source_candidate_only",
+  "tests": {
+    "command": ".venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-disk-telemetry01-2026-10-05/test_onchain_replication_disk_minimum.py -v",
+    "elapsed_seconds": 0.023,
+    "failures": 0,
+    "passed": 3,
+    "scope": [
+      "actual guarded_run startup boundaries and existing final publication",
+      "two paths with falling and rebounding samples",
+      "floor-breach minimum retained before unchanged refusal",
+      "unobserved paths remain empty; no invented zero"
+    ]
+  }
+}

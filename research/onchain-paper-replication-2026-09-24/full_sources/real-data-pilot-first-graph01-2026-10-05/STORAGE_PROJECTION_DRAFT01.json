@@ -1,0 +1,24 @@
+{
+  "closed_ledger_reference": {
+    "bytes": 3662934016,
+    "path": "research_runs/eth-paper-graph-resource-20260930-10/outputs/artifact-index.json",
+    "sha256": "2c94b682542073dc1736303195b4bbfdd513a2dbb2d07f6ad68e7b52434307c9"
+  },
+  "created_at": "2026-10-05T19:26:44.284274+00:00",
+  "density_projected_arrays_bytes": 506035596,
+  "density_projected_ledger_bytes": 3287608581,
+  "formula": "2*projected_ledger + projected_arrays + largest_projected_parquet +64MiB; includes a full-ledger rollback-journal allowance as a deliberately conservative overlap estimate",
+  "largest_projected_parquet_logical_bytes": 402554503,
+  "pilot_expected_rows": 7734878,
+  "prospective_growth_estimate_bytes": 7550916125,
+  "prospective_startup_free_bytes": 18288334365,
+  "qualification": "Derived from actual completed source dimensions and current declared7day/source extents. Input density, unique nodes/edges, SQLite journal/index/sort files and filesystem allocation may differ; no hard peak/capacity bound is proved. Fresh actual post-offload free bytes, a whole-source-tree sampled watch and final changed-entry review remain required before one native launch. No numeric raw/array body or test label was read.",
+  "retained_graph_reference": {
+    "declared_raw_rows": 8617920,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-10-2026-09-30/result.json",
+    "saved_array_bytes": 563806472,
+    "sha256": "f2a7bcfb8f385bf3059fdda079139cb8dc5be8172a2cc4108b39311c7eb5862d"
+  },
+  "scratch_margin_bytes": 67108864,
+  "status": "DRAFT_ESTIMATE_NOT_CAPACITY_NOT_RELEASE"
+}

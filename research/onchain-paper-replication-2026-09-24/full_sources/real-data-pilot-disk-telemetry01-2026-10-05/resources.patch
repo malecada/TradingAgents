@@ -1,0 +1,23 @@
+--- a/tradingagents/research/onchain_replication/resources.py
++++ b/tradingagents/research/onchain_replication/resources.py
+@@ -267,7 +267,9 @@
+              'disk_paths':[str(p) for p in disk_paths], 'disk_floor_bytes':disk_floor_bytes,'wall_seconds':wall_seconds,
+              'phase': 'waiting_for_host_reserve', 'child_exit_code': None,
+              'limit_reason': None, 'peak_sampled_memory_current_bytes': 0,
+-             'elapsed_time_kill': False, 'retry': False}
++             'elapsed_time_kill': False, 'retry': False,
++             'minimum_sampled_disk_free_bytes': {},
++             'disk_minimum_qualification': 'Sampled whole-volume free-space minimum per guarded path; includes unnamed temporary files and unrelated activity. Not a kernel quota, continuous minimum or per-job attribution.'}
+     if physical_policy is not None:state['physical_policy']=physical_policy
+     launched = False
+     cgroup = None
+@@ -307,6 +309,9 @@
+                 raise RuntimeError('bounded child.log file limit reached; output may be incomplete')
+         observe_storage()
+         state['disk_free_bytes']={str(p):shutil.disk_usage(p).free for p in disk_paths}
++        for path, free in state['disk_free_bytes'].items():
++            previous = state['minimum_sampled_disk_free_bytes'].get(path, free)
++            state['minimum_sampled_disk_free_bytes'][path] = min(previous, free)
+         if any(v<disk_floor_bytes for v in state['disk_free_bytes'].values()):raise RuntimeError('disk floor breached')
+         if time.monotonic()-begin>wall_seconds:raise RuntimeError('registered wall-clock limit exceeded')
+ 

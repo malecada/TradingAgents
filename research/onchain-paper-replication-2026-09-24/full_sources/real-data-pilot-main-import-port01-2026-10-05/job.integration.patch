@@ -1,0 +1,47 @@
+--- a/tradingagents/research/onchain_replication/job.py
++++ b/tradingagents/research/onchain_replication/job.py
+@@ -77,8 +77,12 @@
+ def job_schema(job):
+     if 'physical_policy' in job.get('resources',{}) and job.get('kind')!='neural_resource':
+         raise ValueError('physical policy is restricted to explicit neural resource jobs')
+-    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource', 'treatments'):
++    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource', 'treatments', 'compact_resource'):
+         raise ValueError('execution job schema/kind differs')
++    if job['kind']=='compact_resource':
++        from . import resource_fixture, real_pilot_import_caller
++        route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
++        route.schema(job)
+     if job['kind'] in ('graphs','neighborhood_census','hub_edge_census','neural_resource','treatments') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
+         raise ValueError('graph/census job requires an explicit registered plan input')
+     if job['kind'] in ('neighborhood_census','hub_edge_census') and (type(job['resources'].get('wall_seconds')) is not int or not 0<job['resources']['wall_seconds']<=540):
+@@ -114,6 +118,10 @@
+     job = json.loads(raw)
+     job_schema(job)
+     resource_policy(job['resources'], admitted.root)
++    if job['kind']=='compact_resource':
++        from . import resource_fixture, real_pilot_import_caller
++        route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
++        route.admitted(admitted,job)
+     source = admitted.experiment['source_files']
+     if not required_sources() <= set(source):
+         raise ValueError('execution dependency source closure not registered')
+@@ -299,7 +307,7 @@
+         signal.signal(signal.SIGINT, stop)
+         with ResearchRun.start(root=root, registration=args.registration, experiment=args.experiment, source=args.source) as run:
+             from .environment import inventory
+-            if inventory(root, include_torch=job['kind'] in ('fit','neural_resource')) != json.loads(run.read_input(job['environment_input'])):
++            if inventory(root, include_torch=job['kind'] in ('fit','neural_resource','compact_resource')) != json.loads(run.read_input(job['environment_input'])):
+                 raise ValueError('registered execution environment differs')
+             if job['kind'] == 'neural_resource':
+                 from .neural_resource import produce_registered_neural_resource, finalize_storage
+@@ -309,6 +317,10 @@
+                 run.write_json('artifact-index.json', {str(p.relative_to(root)): {'sha256': file_hash(p), 'bytes': p.stat().st_size}
+                     for p in directory.rglob('*') if p.is_file()})
+                 finalize_storage(run, directory, job['payload']['plan_input'])
++            elif job['kind']=='compact_resource':
++                from . import resource_fixture, real_pilot_import_caller
++                route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
++                cells=route.execute(run,job['payload'])
+             elif job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'treatments'):
+                 cells = execute_source_job(run, job['kind'], job['payload'])
+             else:

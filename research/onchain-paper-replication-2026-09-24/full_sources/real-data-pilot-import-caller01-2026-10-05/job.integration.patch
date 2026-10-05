@@ -1,0 +1,38 @@
+--- a/tradingagents/research/onchain_replication/job.py
++++ b/tradingagents/research/onchain_replication/job.py
+@@ -89,8 +89,9 @@
+     if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource', 'compact_resource'):
+         raise ValueError('execution job schema/kind differs')
+     if job['kind']=='compact_resource':
+-        from . import resource_fixture
+-        resource_fixture.schema(job)
++        from . import resource_fixture, real_pilot_import_caller
++        route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
++        route.schema(job)
+     if job['kind'] in ('graphs','neighborhood_census','hub_edge_census','neural_resource') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
+         raise ValueError('graph/census job requires an explicit registered plan input')
+     if job['kind'] in ('neighborhood_census','hub_edge_census') and (type(job['resources'].get('wall_seconds')) is not int or not 0<job['resources']['wall_seconds']<=540):
+@@ -127,8 +128,9 @@
+     job_schema(job)
+     resource_policy(job['resources'], admitted.root)
+     if job['kind']=='compact_resource':
+-        from . import resource_fixture
+-        resource_fixture.admitted(admitted,job)
++        from . import resource_fixture, real_pilot_import_caller
++        route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
++        route.admitted(admitted,job)
+     if _cold_native(job):
+         from . import compact_cold_proof_native
+         compact_cold_proof_native.admitted(admitted,job)
+@@ -352,8 +354,9 @@
+                     for p in directory.rglob('*') if p.is_file()})
+                 finalize_storage(run, directory, job['payload']['plan_input'])
+             elif job['kind']=='compact_resource':
+-                from . import resource_fixture
+-                cells=resource_fixture.execute(run,job['payload'])
++                from . import resource_fixture, real_pilot_import_caller
++                route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
++                cells=route.execute(run,job['payload'])
+             elif job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census'):
+                 cells = execute_source_job(run, job['kind'], job['payload'])
+             else:

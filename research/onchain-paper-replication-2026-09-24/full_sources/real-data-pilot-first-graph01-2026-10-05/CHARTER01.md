@@ -21,10 +21,14 @@ actual eligible claim. Original1,420 fits,32motifs/512samples and criteria stay
 fixed. Only the pilot goal is active; broader study/heartbeat remain paused.
 
 Native limits are fixed from successful Graph10:5.5GiB max,5GiB high,swap0,
-3GiB host reserve,8.5GiB startup,2CPUs,28,800s wall and10GiB disk floor. Before
-launch a concrete scratch projection and sampled storage watch must be frozen
-from actual post-offload capacity, SQLite/source temporary extents and saved
-payload evidence. No admission follows from this incomplete scratch policy.
+3GiB host reserve,8.5GiB startup,2CPUs,28,800s wall and10GiB disk floor.
+STORAGE_POLICY01.json freezes the actual shared-source-parent baseline and a
+7,550,916,125-byte incremental estimate, including projected ledger, full-ledger
+rollback overlap, arrays, largest projected Parquet and64MiB scratch margin.
+Require18,288,334,365 bytes free at entry. Named-tree sampling and whole-volume
+minimum free space remain separate; unnamed temporaries are outside the tree
+scan, and unrelated disk activity can affect the volume minimum. The projection
+is not a proven capacity bound or filesystem quota. Preserve any actual breach.
 One job at a time. Failure stays terminal; no cap ladder or same-ID retry.
 Require exact reviewed committed source/Git/runtime/environment, raw metadata
 hashes/extents, fresh namespace/process absence and accepted complete ledger

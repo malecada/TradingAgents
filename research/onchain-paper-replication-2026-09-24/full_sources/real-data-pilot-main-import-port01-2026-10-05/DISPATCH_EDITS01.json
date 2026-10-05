@@ -1,0 +1,24 @@
+{
+  "edits": [
+    [
+      "'neural_resource', 'treatments'):",
+      "'neural_resource', 'treatments', 'compact_resource'):"
+    ],
+    [
+      "    if job['kind'] in ('graphs','neighborhood_census','hub_edge_census','neural_resource','treatments')",
+      "    if job['kind']=='compact_resource':\n        from . import resource_fixture, real_pilot_import_caller\n        route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture\n        route.schema(job)\n    if job['kind'] in ('graphs','neighborhood_census','hub_edge_census','neural_resource','treatments')"
+    ],
+    [
+      "    resource_policy(job['resources'], admitted.root)\n    source =",
+      "    resource_policy(job['resources'], admitted.root)\n    if job['kind']=='compact_resource':\n        from . import resource_fixture, real_pilot_import_caller\n        route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture\n        route.admitted(admitted,job)\n    source ="
+    ],
+    [
+      "include_torch=job['kind'] in ('fit','neural_resource')",
+      "include_torch=job['kind'] in ('fit','neural_resource','compact_resource')"
+    ],
+    [
+      "            elif job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'treatments')",
+      "            elif job['kind']=='compact_resource':\n                from . import resource_fixture, real_pilot_import_caller\n                route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture\n                cells=route.execute(run,job['payload'])\n            elif job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'treatments')"
+    ]
+  ]
+}
