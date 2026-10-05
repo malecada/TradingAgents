@@ -1,0 +1,16 @@
+{
+  "actual_first_graph": "Refused before metadata body reads because claim.json is absent. No arrays or ledger bodies read.",
+  "authority": false,
+  "correction": "Conservatively reject active inputs within the selected producer root, including result/graph metadata, as well as ancestor-directory references. Keep fresh entry checks and cold03 full-get-before-retirement separate.",
+  "counterexample": {
+    "actual_tool": "69e2c6",
+    "check_sha256": "4367c78d1b1ac07bed2d1b563a13b8a75f59aa6fc9f6e2f7fe4355faa405bafa",
+    "exit_code": 0,
+    "result_sha256": "86a06554ee82b2e596478eea192134cd8b8c35155dcaa0659b495ae4a3c25d78"
+  },
+  "decision": "withheld-one-material-active-consumer-gap",
+  "impact": "An active registered consumer of producer result.json is not excluded, although that authenticated result exposes the aggregation workspace containing the selected ledger. The prospective no-active-consumer condition is therefore incomplete.",
+  "location": "select01.py:20-23,84-86",
+  "schema_version": 1,
+  "source_sha256": "e02325e898567427ea65c9e346e78338d3533701222addc94da7596b469948da"
+}

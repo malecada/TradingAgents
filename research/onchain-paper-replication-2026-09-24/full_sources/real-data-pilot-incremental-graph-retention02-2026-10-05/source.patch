@@ -1,0 +1,24 @@
+--- source01/select01.py
++++ source02/select01.py
+@@ -17,10 +17,10 @@
+     require(guard['phase']=='complete' and guard['child_exit_code']==0 and guard['cleanup_verified'] is True and guard.get('limit_reason') is None,'producer guard incomplete')
+     require(guard['owner_identity']==owner and owner['experiment']==claim['experiment_id'] and owner['source_commit']==claim['source'],'producer owner differs')
+ 
+-def active_reference(root,rows,inputs):
++def active_reference(root,rows,inputs,producer):
+     for info in inputs.values():
+         q=(root/info['path']).resolve()
+-        require(not any(p==q or p.is_relative_to(q) or p.parent==q.parent for p in rows),'active consumer references ledger/producer directory')
++        require(not q.is_relative_to(producer) and not any(p==q or p.is_relative_to(q) or p.parent==q.parent for p in rows),'active consumer references ledger/producer directory')
+ 
+ def select(root,experiment):
+     root=Path(root).resolve();dates={f'eth-paper-real-pilot-graph-{w.replace("-","")}-20261005-01':w for w in WEEKS}
+@@ -83,7 +83,7 @@
+     require(not subprocess.check_output(['git','ls-files','--',rel],cwd=root),'tracked ledger refused')
+     for active in (root/'research_runs').glob('*/claim.json'):
+         if active.with_name('complete.json').exists() or active.with_name('failed.json').exists():continue
+-        a=read(str(active.relative_to(root)));active_reference(root,[p.resolve()],a['experiment']['inputs'])
++        a=read(str(active.relative_to(root)));active_reference(root,[p.resolve()],a['experiment']['inputs'],(root/base).resolve())
+     row['stat_identity']=[s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns]
+     return {'schema_version':1,'status':'DRAFT','experiment':experiment,'files':[row],'total_bytes':s.st_size,'metadata_pins':pins,'source_commit':c['source'],'source_files':c['experiment']['source_files'],'retained_graph_manifest':graph['manifest_path'],'array_retirement':False,'ledger_body_read':False,'launch_authority':False,'required_before_release':'Independent closure and fresh exact storage config/native entry/recovery review; rerun selection before transfer.'}
+ 

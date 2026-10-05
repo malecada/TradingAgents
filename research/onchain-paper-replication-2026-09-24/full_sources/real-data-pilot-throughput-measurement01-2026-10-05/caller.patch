@@ -1,0 +1,47 @@
+--- a/tradingagents/research/onchain_replication/real_pilot_import_caller.py
++++ b/tradingagents/research/onchain_replication/real_pilot_import_caller.py
+@@ -292,6 +292,9 @@
+     validated_execution = validate_execution(p['model_execution'])
+     selected_execution = None if validated_execution is None else dict(validated_execution)
+     journal = owner = None; targets = []; events = []; began = time.monotonic()
++    from .real_pilot_throughput import MCMMeasurements
++    measurements = MCMMeasurements({key:len(g.node_ids) for key,g in graphs.items()},
++        population_scope=p.get('population_scope','full_fold_input'))
+     terminal = training = None; primary = None
+     def mark(phase):
+         events.append({'phase':phase,'elapsed_seconds':time.monotonic()-began})
+@@ -308,8 +311,11 @@
+             compact_mcm._prepare(target,target.key,s['compact_mcm_input'],s['compact_mcm_output_input'])
+         for key,g in graphs.items():
+             watch.check()
++            measurements.begin(key)
+             result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'])
+-            targets.append(result); result.check(); resource_fixture.verify_retained(result,owner)
++            targets.append(result); result.check()
++            retained = resource_fixture.verify_retained(result,owner)
++            measurements.completed(key,retained)
+             mark('mcm-'+key)
+         import torch
+         torch.set_num_threads(2)
+@@ -344,15 +350,21 @@
+         terminal = _close(journal,owner,targets,reference,binding,p,training,artifact/'real-pilot-one-update')
+     except BaseException as error:
+         primary = error
++        try: measurements.failed(error)
++        except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
+         if journal is not None and not journal.sealed:
+             try: journal.seal('failed',reason=type(error).__name__+': '+str(error)[:1024])
+             except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
++    throughput = None
++    try: throughput = measurements.summary(training)
++    except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
+     # Independently attempt each remaining publication; retain the first fatal.
+     row = {'id':p['cell_id'],'status':'complete' if primary is None else 'failed','resource_only':True,
+            'financial_fit_complete':False,'paper_financial_fits':0}
+     if primary is not None: row['reason'] = type(primary).__name__+': '+str(primary)[:1024]
+     summary = {'schema_version':1,'kind':KIND,'cell':row,'original_samples':512,'original_motifs':32,
+                'full_graphs':7,'retained_target_count':len(targets),'training':training,'events':events,
++               'throughput':throughput,
+                'financial_fit_complete':False,'full_size_capacity':False,'final_outer_inventory_required':True}
+     terminal = terminal or {'schema_version':1,'kind':KIND,'status':'failed','resource_only':True,'reason':row['reason']}
+     actions = [lambda:watch.check(),lambda:run.write_json(p['outputs']['binding'],terminal),

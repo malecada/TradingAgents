@@ -1,0 +1,80 @@
+{
+  "candidate_sha256": "b6474907e6efa98cb39bc46cd2cfdd0687d4754b46d322391c50ef9a39393379",
+  "edits": [
+    {
+      "new": [
+        "    from .real_pilot_throughput import MCMMeasurements\n",
+        "    measurements = MCMMeasurements({key:len(g.node_ids) for key,g in graphs.items()},\n",
+        "        population_scope=p.get('population_scope','full_fold_input'))\n"
+      ],
+      "new_end": 297,
+      "new_start": 294,
+      "old": [],
+      "old_end": 294,
+      "old_start": 294
+    },
+    {
+      "new": [
+        "            measurements.begin(key)\n"
+      ],
+      "new_end": 314,
+      "new_start": 313,
+      "old": [],
+      "old_end": 310,
+      "old_start": 310
+    },
+    {
+      "new": [
+        "            targets.append(result); result.check()\n",
+        "            retained = resource_fixture.verify_retained(result,owner)\n",
+        "            measurements.completed(key,retained)\n"
+      ],
+      "new_end": 318,
+      "new_start": 315,
+      "old": [
+        "            targets.append(result); result.check(); resource_fixture.verify_retained(result,owner)\n"
+      ],
+      "old_end": 312,
+      "old_start": 311
+    },
+    {
+      "new": [
+        "        try: measurements.failed(error)\n",
+        "        except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)\n"
+      ],
+      "new_end": 354,
+      "new_start": 352,
+      "old": [],
+      "old_end": 346,
+      "old_start": 346
+    },
+    {
+      "new": [
+        "    throughput = None\n",
+        "    try: throughput = measurements.summary(training)\n",
+        "    except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)\n"
+      ],
+      "new_end": 360,
+      "new_start": 357,
+      "old": [],
+      "old_end": 349,
+      "old_start": 349
+    },
+    {
+      "new": [
+        "               'throughput':throughput,\n"
+      ],
+      "new_end": 367,
+      "new_start": 366,
+      "old": [],
+      "old_end": 355,
+      "old_start": 355
+    }
+  ],
+  "execution_authority": false,
+  "helper_sha256": "8311d706c89aadabb967aaef0073f08b313976c62d2dbd35af3a5331731a8c63",
+  "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-model-entry-composition01-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+  "origin_manifest_sha256": "685c890108acf6d3d51ab3846e9fe462a79297ce266a12c729c92ec0e2e89ffd",
+  "origin_sha256": "e3e5bd544d470e870780305a9ed3bfdb8b669c703a921a34baf9175552272593",
+  "schema_version": 1
+}

@@ -1,0 +1,18 @@
+{
+  "actual_exit": 0,
+  "baseline_manifest_sha256": "7b0e2e9f32ce8bc2b4c29ed4f9da176ecab9d11c5c80726ca9a828de61fa64c7",
+  "baseline_sha256": "e02325e898567427ea65c9e346e78338d3533701222addc94da7596b469948da",
+  "candidate_sha256": "d9d63840c8f4510ac4e1b784ab31762d91f74c4de8d2258bdd7011823f921205",
+  "checks": [
+    "reviewer result.json input accepted by old selector, refused by new selector",
+    "graph manifest, source coverage, producer root and ancestor inputs refuse; unrelated sibling remains allowed",
+    "three exact edits invert byte-for-byte to sealed source01"
+  ],
+  "numerical_native_network_payload_reads": false,
+  "profile": "checkout-local .venv/bin/python -B, synthetic metadata only",
+  "review_finding_sha256": "228ee2df79e1d198d6e32d5557de70107ba4d609ad8398a2a5d1c72d7c96abe6",
+  "review_witness_sha256": "4367c78d1b1ac07bed2d1b563a13b8a75f59aa6fc9f6e2f7fe4355faa405bafa",
+  "schema_version": 1,
+  "tests": 3,
+  "tool": "5f2951"
+}
