@@ -1,0 +1,117 @@
+--- a/tradingagents/research/onchain_replication/training_batch_observer.py
++++ b/tradingagents/research/onchain_replication/training_batch_observer.py
+@@ -64,7 +64,81 @@
+   return {'training_rows':projections,'uses':uses,'unique_graph_objects':list(objects.values()),'hash_to_object_ids':{h:sorted(v) for h,v in hash_objects.items()},'ordered_week_union':weeks,'eligible_row_calendar_gaps':gaps,'epoch_cursor':None,'identity_scope':'single event; addresses may be recycled after return','values_or_labels_read':False}
+  finally:
+   graph=None;sequence=None;row=None;value=None;selected=None;inputs=None;rows=None;tensor_reader=None
+-def authority(run,features):
++def _retention_policy(p):
++ require(type(p)is dict and set(p)=={'kind','max_graphs','max_arrays','max_bytes'} and p['kind']=='known-resident-parent-paths-v1','retention policy schema')
++ for key,cap in (('max_graphs',1024),('max_arrays',8192),('max_bytes',128*1024)):
++  require(type(p[key])is int and 0<p[key]<=cap,'retention policy bound')
++ return p
++
++def _array_metadata(a):
++ # Native arrays already exist; do not import numerical packages or read values.
++ import sys
++ np=sys.modules.get('numpy')
++ require(np is not None and type(a)is np.ndarray,'exact already-loaded ndarray required')
++ require(len(a.shape)<=4,'retained array rank bound')
++ return {'object_id':id(a),'shape':[int(n) for n in a.shape],'strides':[int(n) for n in a.strides],'dtype':str(a.dtype),'nbytes':int(a.nbytes)}
++
++def _retained_snapshot(closure,p,*,array_reader=_array_metadata):
++ """Pure bounded known-path mechanics; this function confers no authority."""
++ _retention_policy(p);arrays=[];nodes=[];edges=[];seen=set();graph_ids=set()
++ def link(parent,name,obj):
++  edges.append({'from':id(parent),'attribute':name,'to':id(obj)})
++  require(len(edges)<=12*p['max_graphs']+64,'retention path bound')
++ def node(obj,kind):
++  if id(obj) not in seen:
++   seen.add(id(obj));nodes.append({'object_id':id(obj),'kind':kind})
++ def array(parent,name,a):
++  if a is None:return
++  require(len(arrays)<p['max_arrays'],'retention array bound')
++  meta=array_reader(a);require(type(meta)is dict and set(meta)=={'object_id','shape','strides','dtype','nbytes'},'array metadata whitelist')
++  require(meta['object_id']==id(a) and type(meta['shape'])is list and type(meta['strides'])is list and len(meta['shape'])==len(meta['strides'])<=4 and all(type(x)is int and x>=0 for x in meta['shape']) and all(type(x)is int for x in meta['strides']) and type(meta['dtype'])is str and len(meta['dtype'])<=128 and type(meta['nbytes'])is int and meta['nbytes']>=0,'array scalar metadata differs')
++  arrays.append({'parent_object_id':id(parent),'attribute':name,**meta})
++ def graph(g):
++  if id(g) in graph_ids:return
++  require(len(graph_ids)<p['max_graphs'],'retained graph bound');graph_ids.add(id(g));node(g,'original_graph')
++  for name in ('node_features','edge_index','edge_features','edge_aggregates'):array(g,name,getattr(g,name,None))
++ node(closure,'closure');dictionary=closure._dictionary;node(dictionary,'dictionary_producer');link(closure,'_dictionary',dictionary)
++ published=closure._graphs;require(type(published)is tuple and len(published)<=p['max_graphs'],'published graph population bound');link(closure,'_graphs',published)
++ for i,pub in enumerate(published):
++  node(pub,'graph_publication');link(published,str(i),pub);f=pub._features;node(f,'original_features');link(pub,'_features',f)
++  m=f._mcm;node(m,'mcm_producer');link(f,'_mcm',m);require(m._dictionary is dictionary,'shared original dictionary differs');link(m,'_dictionary',dictionary)
++  link(m,'_graph',m._graph);graph(m._graph);array(m,'_matrix',m._matrix)
++ original_dictionary=dictionary._dictionary;node(original_dictionary,'original_dictionary');link(dictionary,'_dictionary',original_dictionary)
++ representatives=original_dictionary.representatives;require(type(representatives) in (tuple,list) and len(representatives)<=p['max_graphs'],'dictionary representative bound');link(original_dictionary,'representatives',representatives)
++ for g in representatives:graph(g)
++ proof=dictionary._proof;sample_pub=proof._published;draws=sample_pub._draws;training=draws._training
++ for parent,name,obj in ((dictionary,'_proof',proof),(proof,'_published',sample_pub),(sample_pub,'_draws',draws),(draws,'_training',training)):
++  node(obj,'retained_ancestry');link(parent,name,obj)
++ populations={}
++ for name in ('_graphs','_training'):
++  population=getattr(training,name);require(type(population) in (tuple,list) and len(population)<=p['max_graphs'],'training population bound');link(training,name,population)
++  populations[name]={'container_object_id':id(population),'entries':len(population),'object_ids':[id(g) for g in population]}
++  for g in population:graph(g)
++ value={'schema_version':1,'scope':'known strong-reference paths sampled in one event','nodes':nodes,'paths':edges,'training_populations':populations,'arrays':arrays,'unique_graph_objects':len(graph_ids),'unique_array_objects':len({x['object_id'] for x in arrays}),'array_metadata_entries':len(arrays),'whole_heap_or_alias_census':False,'dictionary_representatives':{'container_object_id':id(representatives),'entries':len(representatives),'object_ids':[id(g) for g in representatives]},'not_enumerated':['dictionary matrices','sample population','array bases','other strong references'],'unique_allocated_bytes':None,'values_or_labels_read':False,'capacity_or_saving_claim':False}
++ require(len(encode(value))<=p['max_bytes'],'retention metadata byte bound')
++ return value
++
++def _resident_retention(terminal,p):
++ import sys,types
++ verify=terminal._verify
++ require(type(verify)is types.FunctionType and verify.__module__==__package__+'.compact_terminal' and verify.__qualname__=='finish.<locals>.verify','original terminal verifier required')
++ names=verify.__code__.co_freevars;cells=verify.__closure__
++ require(type(cells)is tuple and len(cells)==len(names)<=64 and names.count('published')==1,'known terminal publication cell required')
++ published=cells[names.index('published')].cell_contents
++ def exact(obj,module,name):
++  loaded=sys.modules.get(__package__+'.'+module);require(loaded is not None and type(obj)is getattr(loaded,name),'original retained class differs')
++ exact(published,'compact_publication','Published');closure=published._closure;exact(closure,'compact_closure','Receipt')
++ require(type(closure._graphs)is tuple and len(closure._graphs)<=p['max_graphs'],'retained publication bound')
++ for pub in closure._graphs:
++  exact(pub,'compact_graph_artifacts','Published');exact(pub._features,'compact_features','Features');exact(pub._features._mcm,'compact_mcm','Produced')
++ exact(closure._dictionary,'compact_dictionary','Produced')
++ training=closure._dictionary._proof._published._draws._training;exact(training,'compact_training','Training')
++ result=_retained_snapshot(closure,p)
++ result['terminal_publication_path']={'terminal_object_id':id(terminal),'verifier_object_id':id(verify),'closure_cell':'published','publication_object_id':id(published),'closure_object_id':id(closure)}
++ require(len(encode(result))<=p['max_bytes'],'retention final metadata byte bound')
++ return result
++
++def authority(run,features,*,parent_retention=None):
+  from ..lifecycle import ResearchRun
+  require(type(run)is ResearchRun,'genuine existing ResearchRun required')
+  source=Path(__file__).resolve();require(source.is_relative_to(run.admission.root),'observer must load from actual admitted source root')
+@@ -90,7 +164,7 @@
+   bound=owner.bound;require(type(bound)is Binding and bound._run is run and owner._run is run,'genuine same-run Binding')
+   terminal.check();bound._guard();run._active();run._check_source()
+   require(terminal.record['resident_originals_retained'] is True,'resident-parent declaration changed')
+-  return {'owner_id':owner.identity,'binding_sha256':owner._binding_sha256,'terminal_record_sha256':sha(encode(thaw(terminal.record))),'resident_originals_retained':True,'parent_population_object_census':None,'parent_retention_basis':'genuine checked resident terminal; no heap/alias census'}
++  return {'owner_id':owner.identity,'binding_sha256':owner._binding_sha256,'terminal_record_sha256':sha(encode(thaw(terminal.record))),'resident_originals_retained':True,'parent_population_object_census':None if parent_retention is None else _resident_retention(terminal,parent_retention),'parent_retention_basis':'genuine checked resident terminal; no heap/alias census'}
+  finally:terminal=None;owner=None;bound=None;detached=None;saved=None;features=None;run=None
+ def prepare(run,cell,provenance,examples,feature_binding,training_config,features):
+  """Called after existing evaluate_cell admission and component-byte validation."""
+@@ -100,7 +174,9 @@
+  require(training_config['batch_size']==16 and training_config['shuffle'] is False,'original batch16 chronological training')
+  authority(run,features)
+  raw=run.read_input(ROLE);require(len(raw)<=65536,'observer policy bound');p=json.loads(raw)
+- require(set(p)=={'schema_version','cell_id','source_commit','train_hash','fold_hash','metadata_input','call_ordinals','outputs','max_event_bytes','max_total_bytes'} and p['schema_version']==1,'observer policy schema')
++ retention=type(p.get('schema_version'))is int and p['schema_version']==2
++ require(set(p)==({'schema_version','cell_id','source_commit','train_hash','fold_hash','metadata_input','call_ordinals','outputs','max_event_bytes','max_total_bytes'} | ({'parent_retention'} if retention else set())) and (retention or p['schema_version']==1),'observer policy schema')
++ if retention:_retention_policy(p['parent_retention'])
+  require(p['cell_id']==cell==provenance['cell_id'] and p['source_commit']==run.admission.source and p['train_hash']==examples.train_hash and p['fold_hash']==examples.fold_hash,'observer exact current cell/population')
+  calls=p['call_ordinals'];outputs=p['outputs'];require(type(calls)is list and 0<len(calls)<=32 and all(type(x)is int and 0<=x<1000000 for x in calls) and calls==sorted(set(calls)),'finite fixed selected training calls')
+  require(type(outputs)is list and len(outputs)==len(calls) and len(set(outputs))==len(outputs) and all(type(x)is str and re.fullmatch('[A-Za-z0-9][A-Za-z0-9_.-]{0,127}',x) for x in outputs) and set(outputs)<=set(run.admission.experiment['outputs']),'exact registered output names')
+@@ -128,9 +204,9 @@
+   require(sha(policy_raw)==state['policy_sha256'] and json.loads(policy_raw)==p and sha(projection_raw)==state['projection_sha256'],'observer policy/projection current')
+   require(json.loads(run.read_input('execution_job'))['resources']['storage_budget']==state['storage'],'original whole-storage policy current')
+   watch=StorageWatch(run.admission.root,state['storage']['limits']);watch.check()
+-  context=authority(run,features);event=snapshot(indices,rows,inputs)
++  context=authority(run,features,parent_retention=p.get('parent_retention'));event=snapshot(indices,rows,inputs)
+   require(event['training_rows']==[{'eligible_index':i,**projection['rows'][i]} for i in indices] and state['exclusions']==projection['exclusions'],'actual selected metadata still matches registered projection')
+-  event.update(schema_version=1,kind='training-batch-metadata-only',call_ordinal=call,source=state['source'],experiment=state['identity'],cell_id=p['cell_id'],train_hash=p['train_hash'],fold_hash=p['fold_hash'],policy_sha256=state['policy_sha256'],projection_sha256=state['projection_sha256'],feature_binding_sha256=state['feature_binding_sha256'],claim_sha256=state['claim_sha256'],authority=context,training_exclusions=state['exclusions'],sampled_calls=p['call_ordinals'],complete_population_census=False,capacity_or_saving_claim=False)
++  event.update(schema_version=2 if type(p['schema_version'])is int and p['schema_version']==2 else 1,kind='training-batch-metadata-only',call_ordinal=call,source=state['source'],experiment=state['identity'],cell_id=p['cell_id'],train_hash=p['train_hash'],fold_hash=p['fold_hash'],policy_sha256=state['policy_sha256'],projection_sha256=state['projection_sha256'],feature_binding_sha256=state['feature_binding_sha256'],claim_sha256=state['claim_sha256'],authority=context,training_exclusions=state['exclusions'],sampled_calls=p['call_ordinals'],complete_population_census=False,capacity_or_saving_claim=False)
+   raw=_encode(event);require(len(raw)<=p['max_event_bytes'] and state['bytes']+len(raw)<=p['max_total_bytes'],'metadata output reservation');state['bytes']+=len(raw)
+   authority(run,features);require(shutil.disk_usage(run.admission.root).free>=10*1024**3,'prewrite10GiB floor');watch.check()
+   run.write_json(p['outputs'][p['call_ordinals'].index(call)],event)
