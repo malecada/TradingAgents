@@ -1,0 +1,11 @@
+{
+  "cause": "FlatOutput.begin requires existing private output; original creates OUT but not OUT/flat",
+  "corrected_sha256": "b1a64ac74a44e195cef215ffacd929c5d399c6d53215d4e429319ae57af25c37",
+  "correction": "exact one-line explicit private0700 flat-directory creation; all other source/AST unchanged",
+  "impact": "FileNotFoundError after reserving OUT; no actual invocation occurred",
+  "original_location": "CANONICAL_CONTINUATION_REFUSAL_FLAT01.py:28",
+  "original_sha256": "67e28bb5c8ab3ad6b9324f0fe095f12ae1309dfc730ba3a827f971df5bd9beaa",
+  "primitive_location": "recovery04.py:143",
+  "schema_version": 1,
+  "status": "ORIGINAL_UNEXECUTED_FLAT_SOURCE_WITHHELD_CORRECTED"
+}

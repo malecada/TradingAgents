@@ -1,11 +1,8 @@
 # Current parallel coordination
 
-Read the [latest study checkpoint](../../STATE.md) for actual evidence, accounting and the next safe action. Do not duplicate its text here.
+Read the [latest study checkpoint](../../STATE.md) for evidence, accounting and next safe action. Root alone owns live Main/CAP/Parent/Git, registration, STATE, actual external preservation and one native numerical launcher.
 
-Root alone owns live Main/CAP/Parent integration, registrations, STATE, Git, actual external recovery and one native numerical launcher.
+- `continuation_successor_admission`: bounded read-only investigation complete; no live edits.
+- `continuation_successor_implementation`: owns only NEW financial-wrapper-continuation-successor-source01-2026-10-05; implements the finite compatibility edge and focused nonnumerical regressions.
 
-- `combined_worker_review`: financial-execution-main-integration01 source is sealed; no live edits.
-- `outcome_archive`: owns NEW financial-execution-main-integration-review01; independent source review only.
-- `storage_watch_review`: owns the single OPEN financial-wrapper-continuation-outcome-review01; remaining scope is actual external increment recovery. Prior canonical review is closed.
-
-The continuation launcher is terminal/reserved, with no lifecycle claim. Never relaunch it. Preserve all original evidence and exclusive file ownership.
+Previous integration and refusal-outcome reviews are closed. No numerical job is active. The old continuation Parent and identity are permanently reserved; never relaunch. Reuse accepted immutable evidence and review changed seams once.
