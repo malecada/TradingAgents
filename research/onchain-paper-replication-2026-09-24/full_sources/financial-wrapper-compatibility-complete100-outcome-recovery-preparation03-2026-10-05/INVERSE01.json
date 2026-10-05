@@ -1,0 +1,12 @@
+{
+  "outcome01.py": {
+    "old": " R.put(HERE/'LANE_RECOVERY01.json',{'schema_version':1,'lane':i,'capture_sha256':CAPTURE,'request_sha256':request_sha,'piece_ids':list(LANES[i]),'scopes':results,'numerical_authority':False,'requires_cross_lane_original_review':True})\n inputs.read(HERE,'LANE_RECOVERY01.json');boundary()\n",
+    "new": " receipt={'schema_version':1,'lane':i,'capture_sha256':CAPTURE,'request_sha256':request_sha,'piece_ids':list(LANES[i]),'scopes':results,'numerical_authority':False,'requires_cross_lane_original_review':True}\n expected_receipt=R.encode(receipt)\n R.put(HERE/'LANE_RECOVERY01.json',receipt)\n R.require(inputs.read(HERE,'LANE_RECOVERY01.json')==expected_receipt,'published receipt differs from intended canonical bytes');boundary()\n",
+    "original_sha256": "2cb992d405a5e5aa99f35c3c5358e8704e20472b15b569decfd6ea3711c797e3"
+  },
+  "join01.py": {
+    "old": " R.put(HERE/'FOUR_LANE_RECOVERY01.json',{'schema_version':1,'capture_sha256':CAPTURE,'complete_original_files':845,'original_typed':1074,'original_raw_bytes':77970429,'piece_count':26,'lanes':4,'source':SOURCE,'Git407':'separate pinned baseline reused','POSIX':False,'numerical_authority':False,'request_sha256':request_sha})\n inputs.read(HERE,'FOUR_LANE_RECOVERY01.json')\n",
+    "new": " receipt={'schema_version':1,'capture_sha256':CAPTURE,'complete_original_files':845,'original_typed':1074,'original_raw_bytes':77970429,'piece_count':26,'lanes':4,'source':SOURCE,'Git407':'separate pinned baseline reused','POSIX':False,'numerical_authority':False,'request_sha256':request_sha}\n expected_receipt=R.encode(receipt)\n R.put(HERE/'FOUR_LANE_RECOVERY01.json',receipt)\n R.require(inputs.read(HERE,'FOUR_LANE_RECOVERY01.json')==expected_receipt,'published receipt differs from intended canonical bytes')\n",
+    "original_sha256": "f7124a869c0e2ac62adcbb77e8419bad3032dfdd8d14d465dc5323fb3e52b1b1"
+  }
+}

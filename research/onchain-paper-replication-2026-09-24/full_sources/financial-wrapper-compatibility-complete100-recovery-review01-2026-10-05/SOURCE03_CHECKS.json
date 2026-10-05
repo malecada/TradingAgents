@@ -1,0 +1,59 @@
+{
+  "actual_network_or_recovery_entry": false,
+  "capture_proof_sha256": "5db589619e8df5cec1755ebc3a36bffa2d3a8cd3e4c66e41e8d68bc9befc7b18",
+  "checks": 1159,
+  "controls": [
+    {
+      "actual_receipt_fd_closed_once": true,
+      "authority": false,
+      "case": "healthy",
+      "function": "run",
+      "result": "passed"
+    },
+    {
+      "actual_receipt_fd_closed_once": true,
+      "authority": false,
+      "case": "corrupt",
+      "function": "run",
+      "result": "ValueError"
+    },
+    {
+      "actual_receipt_fd_closed_once": true,
+      "authority": false,
+      "case": "fatal",
+      "function": "run",
+      "result": "MemoryError"
+    },
+    {
+      "actual_receipt_fd_closed_once": true,
+      "authority": false,
+      "case": "healthy",
+      "function": "join",
+      "result": "passed"
+    },
+    {
+      "actual_receipt_fd_closed_once": true,
+      "authority": false,
+      "case": "corrupt",
+      "function": "join",
+      "result": "ValueError"
+    },
+    {
+      "actual_receipt_fd_closed_once": true,
+      "authority": false,
+      "case": "fatal",
+      "function": "join",
+      "result": "MemoryError"
+    }
+  ],
+  "decision": "ACCEPTED_CORRECTED_FOUR_LANE_SOURCE_ONLY_PENDING_ACTUAL_ENTRY_BINDINGS",
+  "literal_AST_inverse_to02": true,
+  "numerical_authority": false,
+  "original_receipt_witnesses_now_refuse": true,
+  "schema_version": 1,
+  "signing02_and_all_other_source_unchanged": true,
+  "sources": {
+    "join01.py": "8f2643adcf98eb6e41542f8c93e9fea5de5e41851a69f58f5de0d9f3e8c80010",
+    "outcome01.py": "883127897d7f8f6cd3093bcb4ad74222bcd45b6c66c3c7b593cf7b82e23085ec"
+  }
+}

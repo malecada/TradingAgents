@@ -1,0 +1,18 @@
+{
+  "original_path": "research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation01-2026-10-05/outcome01.py",
+  "original_sha256": "60654ae063ee11d6d08493169030d21a89378ba76077c231aaa5014f9265f37f",
+  "changes": [
+    [
+      "def run(request,request_sha,release,release_sha):",
+      "REQUEST_FIELDS={'schema_version','status','lane','source','commit','required','proofs','remote','profile','release'}\ndef request_core_sha256(q):\n R.require(type(q)is dict and set(q)==REQUEST_FIELDS and type(q['schema_version'])is int and q['schema_version']==1,'exact request signing fields')\n ref=q['release']\n R.require(ref is None or (type(ref)is dict and set(ref)=={'name','sha256'} and type(ref['name'])is str and R.path_name(ref['name'])==ref['name'] and type(ref['sha256'])is str and len(ref['sha256'])==64 and all(c in '0123456789abcdef' for c in ref['sha256'])),'exact nullable release reference')\n return R.digest(R.encode({k:v for k,v in q.items() if k!='release'}))\n\ndef run(request,request_sha,release,release_sha):"
+    ],
+    [
+      "'request_sha256':request_sha,'source_sha256':R.digest(input_read(inputs,HERE,'outcome01.py'))",
+      "'request_core_sha256':request_core_sha256(q),'source_sha256':R.digest(input_read(inputs,HERE,'outcome01.py'))"
+    ],
+    [
+      "inputs=VerifiedCohort();raw=input_read(inputs,HERE,request);R.require(R.digest(raw)==request_sha,'actual request pin');q=json.loads(raw);i=q['lane'];R.require(HERE==lane_root(i,'flat'),'fixed fresh flat root')",
+      "inputs=VerifiedCohort();raw=input_read(inputs,HERE,request);R.require(R.digest(raw)==request_sha,'actual request pin');q=json.loads(raw);i=q['lane'];R.require(HERE==lane_root(i,'flat'),'fixed fresh flat root')\n request_core_sha256(q);R.require(q['release']=={'name':release,'sha256':release_sha},'actual release ref must equal full authenticated request')"
+    ]
+  ]
+}

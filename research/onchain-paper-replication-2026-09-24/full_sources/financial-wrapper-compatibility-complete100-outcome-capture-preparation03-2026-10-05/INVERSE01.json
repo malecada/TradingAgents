@@ -1,0 +1,34 @@
+{
+  "original": "research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-capture-preparation02-2026-10-05/capture01.py",
+  "original_sha256": "f4077c810588a076f84bf4eba810565aba9627a313f041c62b84cdda14823eab",
+  "changes": [
+    [
+      "for role,root in roots.items():pins.update(signatures(root,scopes[role]))",
+      "for role,root in roots.items():\n  current=signatures(root,scopes[role]);R.require(all(k not in pins or pins[k]==v for k,v in current.items()),'earlier authenticated evidence changed');pins.update(current)"
+    ],
+    [
+      "def ref_read(ref,pins):\n R.require(type(ref)is dict and set(ref)=={'path','sha256'},'actual evidence reference required');p=Path(ref['path']);R.require(p.is_absolute() and p.resolve()==p,'canonical evidence');before=R.sig(p.lstat());raw=R.read(p.parent,p.name);R.require(R.digest(raw)==ref['sha256'] and R.sig(p.lstat())==before,'actual evidence pin');pins[str(p)]=before;return raw\n",
+      "def pinned_read(root,name,pins,expected=None):\n p=root/R.path_name(name);before=R.sig(p.lstat())\n R.require(str(p) not in pins or pins[str(p)]==before,'earlier authenticated input changed')\n raw=R.read(root,name);R.require(R.sig(p.lstat())==before,'input changed during descriptor cleanup')\n if expected is not None:R.require(R.digest(raw)==expected,'actual evidence/source pin')\n pins.setdefault(str(p),before);return raw\n\ndef ref_read(ref,pins):\n R.require(type(ref)is dict and set(ref)=={'path','sha256'},'actual evidence reference required');p=Path(ref['path']);R.require(p.is_absolute() and p.resolve()==p,'canonical evidence')\n return pinned_read(p.parent,p.name,pins,ref['sha256'])\n"
+    ],
+    [
+      "start=time.monotonic();pins={};raw=ref_read({'path':str(request),'sha256':request_hash},pins);q=json.loads(raw)",
+      "start=time.monotonic();pins={}\n R.require(Path(R.__file__).resolve()==HERE/'utilities/recovery_pax01.py' and Path(R._cleanup.__code__.co_filename).resolve()==HERE/'utilities/owned_io.py' and Path(R.git.__code__.co_filename).resolve()==HERE/'utilities/bounded_git01.py','exact executed helper origins')\n source_raw=pinned_read(HERE,'capture01.py',pins)\n for name,h in {'bounded_git01.py': 'db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f', 'owned_io.py': '09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb', 'recovery_pax01.py': 'a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2'}.items():pinned_read(HERE/'utilities',name,pins,h)\n raw=ref_read({'path':str(request),'sha256':request_hash},pins);q=json.loads(raw)"
+    ],
+    [
+      "'source_sha256':R.digest(R.read(HERE,'capture01.py'))",
+      "'source_sha256':R.digest(source_raw)"
+    ],
+    [
+      "for name,h in parent['source_files'].items():R.require(R.digest(R.read(CAP,name))==h,'current registered source body differs')",
+      "for name,h in parent['source_files'].items():pinned_read(CAP,name,pins,h)"
+    ],
+    [
+      "git_head=R.read(CAP,'.git/HEAD').decode().strip()",
+      "git_head=pinned_read(CAP,'.git/HEAD',pins).decode().strip()"
+    ],
+    [
+      "git_head=R.read(CAP,'.git/'+R.path_name(git_head[5:])).decode().strip()",
+      "git_head=pinned_read(CAP,'.git/'+R.path_name(git_head[5:]),pins).decode().strip()"
+    ]
+  ]
+}
