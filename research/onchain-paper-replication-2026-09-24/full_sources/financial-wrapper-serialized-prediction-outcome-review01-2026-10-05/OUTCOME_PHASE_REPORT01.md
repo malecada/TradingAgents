@@ -1,0 +1,7 @@
+The one fixed synthetic prediction attempt completed one registered cell with zero unavailable cells and zero optimizer updates. Six engineering claims are now spent: three COMPLETE and three FAILED, with fourteen remaining under the unchanged effective20 allowance.
+
+The registered saved-model replay reported sixteen comparisons, maximum absolute difference0, atol1e-5 and rtol1e-4. Output/index/checkpoint hashes and the pinned source path were authenticated. No tensor arrays were decoded or numerical result recomputed; this is consistency of a restored synthetic model, not empirical forecasting accuracy or validated returns.
+
+Root and child exited0. The original Parent actual_parent_exit remains null. Stop returned5 because the unit was already unloaded; before/after/current unit state is inactive/dead with no cgroup and no known recorded PID present. Native PID history remains incomplete, not reconstructed as empty. CPU affinity used two CPUs; the CPU quota controller was unavailable, so no quota-controller enforcement claim is made.
+
+Actual new raw evidence is pinned by RAW_SCOPE01. Complete outcome external preservation and recovery are pending. The reported read-only inspector tool3dffc4 failed on list.items and corrected toole1730f succeeded; that coordinator inspection issue is distinct from the single successful numerical attempt, whose actual Root receipt predates it. Inspector tool outputs were provided by Root context and were not independently reconstructed from a saved inspector artifact.

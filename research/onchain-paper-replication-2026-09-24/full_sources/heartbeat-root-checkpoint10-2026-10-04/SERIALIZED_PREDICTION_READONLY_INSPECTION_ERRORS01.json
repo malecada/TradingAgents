@@ -1,0 +1,26 @@
+{
+  "cases": [
+    {
+      "actual_exit_code": 1,
+      "corrected_exit": 0,
+      "corrected_readonly_tool": "e1730f",
+      "reason": "cell-ledger.json is a list; inspector attempted items().",
+      "tool_chunk": "3dffc4"
+    },
+    {
+      "actual_exit_code": 1,
+      "reason": "Requested optional path ORIGINAL_ENVELOPE_PATH_MODE_JOIN01.json does not exist; rg located actual FINAL_TYPED_SCOPE01.json.",
+      "tool_chunk": "4d31fc"
+    },
+    {
+      "actual_exit_code": 1,
+      "reason": "FINAL_TYPED_SCOPE01 schema uses original_regular_files, not original_members; inspect corrected before capture.",
+      "tool_chunk": "c8c521"
+    }
+  ],
+  "claim_or_budget_effect": false,
+  "kind": "ordinary-readonly-inspector-errors",
+  "numerical_failure": false,
+  "qualification": "Original tool failures retained as read-only inspection errors; no numerical retry or disposition change. Full original tool streams are in task history, not synthesized here.",
+  "schema_version": 1
+}
