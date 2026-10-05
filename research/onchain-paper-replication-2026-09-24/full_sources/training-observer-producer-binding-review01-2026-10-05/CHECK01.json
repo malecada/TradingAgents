@@ -1,0 +1,34 @@
+{
+  "baseline_pins": {
+    "population_assembly.py": "b287792dbb605438ac2629e2c576de7cf59caea8e776c8baa3f708b32317a450",
+    "population_batch_projection.py": "cc388ced1969c52dea94646733284edd763a427390be297c90097c6ed77a6267"
+  },
+  "checks": [
+    "v1/treatmentFalse: accepted with exact 3 outputs",
+    "v1/treatmentTrue: accepted with exact 3 outputs",
+    "v2/treatmentFalse: accepted with exact 4 outputs",
+    "v2/treatmentTrue: accepted with exact 4 outputs",
+    "v3/treatmentFalse: accepted with exact 5 outputs",
+    "v3/treatmentTrue: accepted with exact 5 outputs",
+    "missing_fifth: refused",
+    "duplicate_fifth: refused",
+    "missing_projection_policy: refused",
+    "extra_output: refused",
+    "unregistered_fifth: refused",
+    "published_fifth: refused"
+  ],
+  "decision": "ACCEPTED_FUNCTIONAL_SOURCE_AND_PLAN_SCHEMA_ONLY",
+  "genuine_run_constructed": false,
+  "numerical_imports": false,
+  "prior_five_test_receipt_sha256": "dbb68ed22dc0539a24672cacaa74ebda3f77b950a6c198a10f5eafe4c3263c61",
+  "publication_executed": false,
+  "schema_version": 1,
+  "source_pins": {
+    "evaluation.py": "1b2dd721423e0408d8e7ccea23a8cacacdd3d04b45ca9da85e35fd34c82e7fac",
+    "population_assembly.py": "4995037a26d2e6d7a8c18085acb59c535e31af48f1732dfb12a5b97604550263",
+    "population_batch_projection.py": "09f11459e077066e16a5501378cf424f057b2b9cb39bffef8f961fe00b7039cf",
+    "training_batch_observer.py": "ffe88d0743a06fdec73a911b4fb0c78a5b7e418f1428a16daeb51cf28a3211ae"
+  },
+  "test_sha256": "1a731e527c9c99a699fb99f1dd93cf50fc61792a1f2aac5564d0c51a2a92255d",
+  "unchanged_original_projection_functions": true
+}

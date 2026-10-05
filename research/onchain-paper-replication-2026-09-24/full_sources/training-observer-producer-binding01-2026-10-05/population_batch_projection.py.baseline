@@ -136,26 +136,6 @@ def _run_class():
     from ..lifecycle import ResearchRun
     return ResearchRun
 
-def _training_metadata(projected):
-    """Exact observer whitelist from an already checked population projection.
-
-    Publication provides the genuine source and output lineage. This pure
-    conversion confers no feature authority or population capacity claim.
-    """
-    membership=projected['membership']
-    value={'schema_version':1,'train_hash':membership['train_hash'],
-        'fold_hash':membership['fold_hash'],'source_hashes':list(membership['source_hashes']),
-        'rows':[{k:row[k] for k in ('decision_at','input_dates','graph_hashes','graph_available_at')}
-            for row in projected['rows'] if row['partition']=='train'],
-        'exclusions':[dict(row) for row in projected['exclusions'] if row['partition']=='train']}
-    require(len(value['rows'])<=2048 and len(value['exclusions'])<=8192,'observer metadata population bound exceeded')
-    encode(value,OUTPUT_LIMIT)
-    return value
-
-def training_metadata(population,binding,assembly,components):
-    """Validate original population and emit only the existing observer schema."""
-    return _training_metadata(project(population,binding,assembly,components))
-
 def _runtime(root):
     from . import environment
     require(Path(environment.__file__).resolve()==root/SOURCES[2],'loaded runtime inventory outside admitted root')
@@ -218,14 +198,9 @@ def publish_projection(run,plan_input,plan,result):
     """
     initial=_context(run)
     require(_input(run,plan_input,POLICY_LIMIT)==plan,'registered population plan changed')
-    outputs=plan['outputs'];training_projection=type(plan.get('schema_version')) is int and plan['schema_version']==3
-    expected={'population','binding','assembly','projection'} | ({'training_observer_projection'} if training_projection else set())
-    require(set(outputs)==expected and len(set(outputs.values()))==len(expected),'projection output names differ')
+    outputs=plan['outputs'];require(set(outputs)=={'population','binding','assembly','projection'} and len(set(outputs.values()))==4,'projection output names differ')
     for name in outputs.values():_name(name);require(name in run.admission.experiment['outputs'],'projection output not registered')
     require(outputs['projection'] not in run._published_outputs and not (run.directory/'outputs'/outputs['projection']).exists(),'projection output already born')
-    if training_projection:
-        name=outputs['training_observer_projection']
-        require(name not in run._published_outputs and not (run.directory/'outputs'/name).exists(),'training observer projection already born')
     policy=_input(run,plan['projection_input'],POLICY_LIMIT)
     fields={'schema_version','kind','environment_input','model_input','training_input','components_input'}
     require(type(policy) is dict and set(policy)==fields and type(policy['schema_version']) is int and policy['schema_version']==1 and policy['kind']=='population-batch-projection-v1','projection policy differs')
@@ -269,15 +244,4 @@ def publish_projection(run,plan_input,plan,result):
     require(original_outputs()[1]==refs,'original outputs changed after projection')
     raw=_read(run.directory/'outputs'/outputs['projection'],OUTPUT_LIMIT)
     require(digest(raw)==run._published_outputs.get(outputs['projection']) and encode(parse(raw))==encode(projected),'published projection changed')
-    if training_projection:
-        metadata=_training_metadata(projected)
-        require(_context(run)==initial and _runtime(run.admission.root)==environment,'training projection authority/runtime changed')
-        require(original_outputs()[1]==refs,'original outputs changed before training projection')
-        run.write_json(outputs['training_observer_projection'],metadata)
-        require(_context(run)==initial and _runtime(run.admission.root)==environment,'training projection authority/runtime changed after publication')
-        require(original_outputs()[1]==refs,'original outputs changed after training projection')
-        raw=_read(run.directory/'outputs'/outputs['training_observer_projection'],OUTPUT_LIMIT)
-        require(digest(raw)==run._published_outputs.get(outputs['training_observer_projection']) and encode(parse(raw))==encode(metadata),'published training projection changed')
-        raw=_read(run.directory/'outputs'/outputs['projection'],OUTPUT_LIMIT)
-        require(digest(raw)==run._published_outputs.get(outputs['projection']) and encode(parse(raw))==encode(projected),'full projection changed after training publication')
     return projected

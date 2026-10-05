@@ -1,0 +1,97 @@
+{
+  "author_test_receipt": {
+    "bytes": 1514,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/training-observer-producer-binding01-2026-10-05/CHECKS01.json",
+    "sha256": "dbb68ed22dc0539a24672cacaa74ebda3f77b950a6c198a10f5eafe4c3263c61"
+  },
+  "author_tests_reused_not_rerun": {
+    "chunk": "1e1ab7",
+    "exit": 0,
+    "seconds": 0.046,
+    "tests": 5
+  },
+  "baseline_commit": "91cc2c13417e04f7af0b8b78d9dff9c67b1e7516",
+  "decision": "accepted-changed-source-only",
+  "financial_fits": 0,
+  "independent_verification": {
+    "actual_source_and_baseline_byte_joins": true,
+    "added_functions": [
+      "_training_metadata",
+      "training_metadata"
+    ],
+    "changed_existing_functions": [
+      "produce_registered_population",
+      "publish_projection"
+    ],
+    "manual_review": [
+      "Exact v1/v2 output sets preserved; v3 requires five distinct registered names and explicit projection policy.",
+      "Training metadata derives from checked complete project; train row order/gaps and train exclusions preserved without truncation; output excludes test rows, prices, targets and labels.",
+      "Original complete projection retains unavailable/missing component metadata; adapter does not confer feature authority.",
+      "Genuine ResearchRun/source/input/runtime guards and original published byte joins retained; fifth output brackets source/runtime/original-output checks and finishes with actual fifth and fourth output byte/hash joins.",
+      "Exact observer six-field schema retained; observer/evaluation source unchanged. Existing 32 selected-call observation and unknown parent object census remain."
+    ],
+    "other_existing_function_ast_equal": true,
+    "tool_chunks": [
+      "212c84",
+      "685a64",
+      "9a5fb1",
+      "fe8019"
+    ],
+    "unchanged_observer_evaluation_against_git_baseline": true,
+    "verification_command_correction": "685a64 completed baseline/source AST checks then failed at incorrectly named training_observer.py; fe8019 used actual training_batch_observer.py and completed unchanged-source/test joins. No mutation or test run occurred."
+  },
+  "launch_authority": false,
+  "material_findings": [],
+  "not_tested": [
+    "Actual genuine plan-v3 publication and subsequent observer consumption",
+    "Real MCM bodies, scientific Owner/Binding, complete empirical population or capacity",
+    "Economic timing/PnL/fees/funding outcomes, model fitting, numerical correctness or resource sufficiency",
+    "Concurrent mutation beyond existing sampled metadata/source rejoin semantics"
+  ],
+  "numerical_imports": false,
+  "previous_partial_review": {
+    "members": {
+      "CHECK01.json": {
+        "bytes": 1628,
+        "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/training-observer-producer-binding-review01-2026-10-05/CHECK01.json",
+        "sha256": "ec97dea04a24127177fb432e14db969825c7c9e8da612af19012a9dafdaa4891"
+      },
+      "check01.py": {
+        "bytes": 5231,
+        "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/training-observer-producer-binding-review01-2026-10-05/check01.py",
+        "sha256": "2f946554341909e2beedbb1e9f26282f1ede2de1c4001f3527ab1339facfe735"
+      }
+    },
+    "status": "preserved raw unsealed draft; not a separate completed independent review"
+  },
+  "publication_executed": false,
+  "schema_version": 1,
+  "scope": "Explicit plan v3 separately registered fifth training_observer_projection; no empirical release",
+  "source_pins": {
+    "evaluation.py": {
+      "bytes": 16891,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/evaluation.py",
+      "sha256": "1b2dd721423e0408d8e7ccea23a8cacacdd3d04b45ca9da85e35fd34c82e7fac"
+    },
+    "population_assembly.py": {
+      "bytes": 12569,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/population_assembly.py",
+      "sha256": "4995037a26d2e6d7a8c18085acb59c535e31af48f1732dfb12a5b97604550263"
+    },
+    "population_batch_projection.py": {
+      "bytes": 22321,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/population_batch_projection.py",
+      "sha256": "09f11459e077066e16a5501378cf424f057b2b9cb39bffef8f961fe00b7039cf"
+    },
+    "training_batch_observer.py": {
+      "bytes": 13517,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/training_batch_observer.py",
+      "sha256": "ffe88d0743a06fdec73a911b4fb0c78a5b7e418f1428a16daeb51cf28a3211ae"
+    }
+  },
+  "test": {
+    "bytes": 5750,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_training_observer_projection.py",
+    "sha256": "1a731e527c9c99a699fb99f1dd93cf50fc61792a1f2aac5564d0c51a2a92255d"
+  }
+}

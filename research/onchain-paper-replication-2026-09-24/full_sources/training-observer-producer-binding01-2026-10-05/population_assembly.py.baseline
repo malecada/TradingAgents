@@ -145,14 +145,12 @@ def produce_registered_population(run, plan_input):
     from .contracts import Fold, PricePanel
     plan = json.loads(run.read_input(plan_input))
     treatment = 'treatment_input' in plan
-    projection = type(plan.get('schema_version')) is int and plan['schema_version'] in (2, 3)
-    training_projection = projection and plan['schema_version'] == 3
+    projection = type(plan.get('schema_version')) is int and plan['schema_version'] == 2
     if set(plan) != ({'schema_version','graphs','price_input','fold','calendar_input',
                      'expected_weeks','admission_input','outputs'} | ({'projection_input'} if projection else set()) | ({'treatment_input'} if treatment else set())) or (not projection and plan['schema_version'] != 1):
         raise ValueError('population producer plan schema differs')
     outputs = plan['outputs']
-    expected_outputs = {'population','binding','assembly'} | ({'projection'} if projection else set()) | ({'training_observer_projection'} if training_projection else set())
-    if (set(outputs) != expected_outputs or len(set(outputs.values())) != len(expected_outputs)
+    if (set(outputs) != ({'population','binding','assembly'} | ({'projection'} if projection else set())) or len(set(outputs.values())) != (4 if projection else 3)
             or not set(outputs.values()) <= set(run.admission.experiment['outputs'])):
         raise ValueError('population producer outputs not registered')
     if set(outputs.values()) & set(run._published_outputs):
