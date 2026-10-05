@@ -44,7 +44,7 @@ def same_process_alive(pid, ticks):
 def resource_policy(value, root):
     required = {'memory_max_bytes', 'memory_high_bytes', 'reserve_bytes', 'start_reserve_bytes',
                 'disk_floor_bytes', 'disk_paths', 'wall_seconds'}
-    if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'}):
+    if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'},required|{'storage_budget','native_unit_limits'}):
         raise ValueError('execution resource policy fields differ')
     for name in required-{'disk_paths'}:
         if type(value[name]) is not int or value[name] <= 0:
@@ -71,14 +71,21 @@ def resource_policy(value, root):
     if 'physical_policy' in value:
         from .neural_physical import validate
         validate(value['physical_policy'])
+    if 'native_unit_limits' in value:resources._native_policy(value['native_unit_limits'])
     return value
 
 
 def job_schema(job):
+    if 'native_unit_limits' in job.get('resources',{}) and job.get('kind')!='compact_resource':
+        raise ValueError('native-only file limits require compact_resource')
     if 'physical_policy' in job.get('resources',{}) and job.get('kind')!='neural_resource':
         raise ValueError('physical policy is restricted to explicit neural resource jobs')
-    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource', 'treatments'):
+    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource', 'treatments', 'compact_resource'):
         raise ValueError('execution job schema/kind differs')
+    if job['kind']=='compact_resource':
+        from . import resource_fixture, real_pilot_import_caller
+        route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
+        route.schema(job)
     if job['kind'] in ('graphs','neighborhood_census','hub_edge_census','neural_resource','treatments') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
         raise ValueError('graph/census job requires an explicit registered plan input')
     if job['kind'] in ('neighborhood_census','hub_edge_census') and (type(job['resources'].get('wall_seconds')) is not int or not 0<job['resources']['wall_seconds']<=540):
@@ -114,6 +121,10 @@ def _admitted(args):
     job = json.loads(raw)
     job_schema(job)
     resource_policy(job['resources'], admitted.root)
+    if job['kind']=='compact_resource':
+        from . import resource_fixture, real_pilot_import_caller
+        route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
+        route.admitted(admitted,job)
     source = admitted.experiment['source_files']
     if not required_sources() <= set(source):
         raise ValueError('execution dependency source closure not registered')
@@ -218,9 +229,24 @@ def launch(args):
                 else:raise
 
 
+def _resource_limit_receipt(args,job,role,live=None):
+    if job['kind']!='compact_resource':raise ValueError('native receipt requires selected compact resource job')
+    from . import resource_fixture
+    readback=resource_fixture.worker_limits()
+    expected=job['resources']['native_unit_limits']
+    if expected!={'file_size_bytes':readback['rlimit_fsize']}:raise ValueError('registered process file limit differs')
+    if role=='worker' and (live is None or live.get('native_unit_limits')!=expected):raise ValueError('worker native authority missing')
+    value={'schema_version':1,'experiment':args.experiment,'source_commit':args.source,'role':role,'pid':os.getpid(),'file_size_limit':[readback['rlimit_fsize']]*2,'before_claim':True,'native_unit':None if live is None else live['unit'],'native_cgroup':None if live is None else live['cgroup']}
+    value['native_environment']={key:os.environ.get(key) for key in resources._native_owned_env(Path(args.root))}
+    if value['native_environment']!=resources._native_owned_env(Path(args.root)):raise ValueError('actual process environment differs from owned routing')
+    resources._native_receipt(_base(args),role+'-file-limit.json',value)
+
+
+
 def monitor(args):
     resources.bind_parent_death(args.owner_pid)
     _, job = _admitted(args)
+    if job['kind']=='compact_resource':_resource_limit_receipt(args,job,'monitor')
     scope=_physical_scope(args,job)
     with metadata_scope(scope):
         base = _base(args)
@@ -231,8 +257,13 @@ def monitor(args):
         owner = {**launch_record, 'monitor_pid': os.getpid(),
                  'monitor_start_ticks': Path('/proc/self/stat').read_text().rsplit(')', 1)[1].split()[19]}
         _immutable(base/'owner.json', owner)
-        result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',
-            memory_swap_max_bytes=0, owner_identity=owner, **job['resources'])
+        if 'native_unit_limits' in job['resources']:
+            guard_policy={k:v for k,v in job['resources'].items() if k!='native_unit_limits'}
+            result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',
+                memory_swap_max_bytes=0, owner_identity=owner, native_unit_limits=job['resources']['native_unit_limits'], **guard_policy)
+        else:
+            result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',
+                memory_swap_max_bytes=0, owner_identity=owner, **job['resources'])
         signal.signal(signal.SIGTERM, signal.SIG_IGN)
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         if scope is not None:scope.tail=True
@@ -279,6 +310,9 @@ def execute_source_job(run, kind, payload):
 
 def worker(args):
     admitted, job = _admitted(args)
+    if job['kind']=='compact_resource':
+        from . import resource_fixture
+        resource_fixture.worker_limits()
     scope=_physical_scope(args,job)
     if scope is not None:scope.verify_environment()
     with metadata_scope(scope):
@@ -293,13 +327,14 @@ def worker(args):
             raise ValueError('execution worker ownership differs')
         if any(live[k] != v for k, v in policy.items()):
             raise ValueError('execution guard policy differs from registration')
+        if job['kind']=='compact_resource':_resource_limit_receipt(args,job,'worker',live)
         def stop(signum, frame):
             raise SystemExit('owned execution interrupted; never relaunch this identity')
         signal.signal(signal.SIGTERM, stop)
         signal.signal(signal.SIGINT, stop)
         with ResearchRun.start(root=root, registration=args.registration, experiment=args.experiment, source=args.source) as run:
             from .environment import inventory
-            if inventory(root, include_torch=job['kind'] in ('fit','neural_resource')) != json.loads(run.read_input(job['environment_input'])):
+            if inventory(root, include_torch=job['kind'] in ('fit','neural_resource','compact_resource')) != json.loads(run.read_input(job['environment_input'])):
                 raise ValueError('registered execution environment differs')
             if job['kind'] == 'neural_resource':
                 from .neural_resource import produce_registered_neural_resource, finalize_storage
@@ -309,6 +344,10 @@ def worker(args):
                 run.write_json('artifact-index.json', {str(p.relative_to(root)): {'sha256': file_hash(p), 'bytes': p.stat().st_size}
                     for p in directory.rglob('*') if p.is_file()})
                 finalize_storage(run, directory, job['payload']['plan_input'])
+            elif job['kind']=='compact_resource':
+                from . import resource_fixture, real_pilot_import_caller
+                route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
+                cells=route.execute(run,job['payload'])
             elif job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'treatments'):
                 cells = execute_source_job(run, job['kind'], job['payload'])
             else:

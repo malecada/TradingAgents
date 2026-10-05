@@ -48,6 +48,9 @@ class _HeldTransition:
 def _held(owner):
     """Own one exact transition; its token cannot outlive or cross this scope."""
     require(type(owner) is Owner, 'actual compact owner required')
+    if owner.required[0]=='dictionary-import':
+        with _held_import(owner) as token:yield token
+        return
     lock = owner._transition
     require(lock.acquire(blocking=False), 'concurrent compact owner transition')
     token = _HeldTransition(owner, lock); owner._held_transition = token
@@ -63,8 +66,32 @@ def _held(owner):
             fatal.add_note(repr(error)); raise fatal from (primary if primary is not None else error)
 
 
+@contextmanager
+def _held_import(owner):
+    from . import import_metadata as import_io
+    lock=owner._transition
+    require(lock.acquire(blocking=False),'concurrent compact owner transition')
+    token=None
+    def release():
+        try:lock.release()
+        except BaseException:
+            owner.poisoned=True
+            raise
+    try:
+        token=_HeldTransition(owner,lock);owner._held_transition=token
+        token.check(owner);yield token;token.check(owner)
+    finally:
+        if token is not None:
+            object.__setattr__(token,'active',False)
+            if getattr(owner,'_held_transition',None) is token:del owner._held_transition
+        import_io.close_actions((release,))
+
+
 def _stage_content(stage):
     """Callback-free content only; callers supply active or terminal authority."""
+    if getattr(stage,'kind',None)=='dictionary-import':
+        from .original_import_stage import content
+        return content(stage)
     contract = thaw(stage.contract)
     if 'archive' not in contract:
         return compact_stage.verify(stage.root, expected_sha256=stage.reference,
@@ -78,7 +105,11 @@ def transition(function):
     def call(self, *args, **kwargs):
         require(self._transition.acquire(blocking=False), 'concurrent compact owner transition')
         try: return function(self, *args, **kwargs)
-        finally: self._transition.release()
+        finally:
+            def release():
+                try:self._transition.release()
+                except BaseException:self.poisoned=True;raise
+            io._release(release)
     return call
 
 
@@ -90,11 +121,14 @@ def body(value):
     return raw
 
 
-def entries(root, allowed, *, required):
+def entries(root, allowed, *, required,_imported=False):
+    if _imported:
+        from . import import_metadata as import_io
+        return import_io.entries(root,allowed,required=required)
     path, fd = io._open(root)
     try:
         seen = set()
-        with os.scandir(fd) as iterator:
+        with io._closing(os.scandir(fd)) as iterator:
             for entry in iterator:
                 require(len(seen) < len(allowed) and entry.name in allowed, 'foreign compact owner inventory')
                 seen.add(entry.name)
@@ -124,12 +158,12 @@ class Stage:
         self.root.mkdir()
         parent, fd = io._open(owner.root)
         try: os.fsync(fd); io._root(parent, fd)
-        finally: os.close(fd)
+        finally: io._release(lambda: os.close(fd))
         root, fd = io._open(self.root)
         try:
             self.inode = (os.fstat(fd).st_dev, os.fstat(fd).st_ino)
             io._write(fd, 'intent.json', self.intent); io._root(root, fd)
-        finally: os.close(fd)
+        finally: io._release(lambda: os.close(fd))
 
     def intent_value(self):
         value = {'schema_version': 1, 'owner': self.owner.identity, 'stage': self.name,
@@ -158,13 +192,21 @@ class Stage:
 
 
 class Owner:
-    def __init__(self, bound, policy_input, envelope, descriptor):
+    def __init__(self, bound, policy_input, envelope, descriptor, *, imported=None):
         self.bound = bound; self.policy = freeze(envelope['stage_policy'])
         self._bound = bound; self._run = bound._run
         self._binding_sha256 = cache_key(self.binding_value())
         self.maximum = envelope['max_workflow_retained_logical_bytes']
         self.matching = freeze(descriptor['configs']['matching'])
-        self.required = ('dictionary',) + tuple('mcm-' + h for h in descriptor['required_graphs'])
+        if imported is None:
+            require('dictionary_origin' not in descriptor,'imported stage requires typed prebirth preparation')
+            self.required = ('dictionary',) + tuple('mcm-' + h for h in descriptor['required_graphs'])
+        else:
+            from .original_import_preparation import PreparedImport
+            require(type(imported) is PreparedImport and imported._bound is bound,'actual original preparation required')
+            contract=imported.stage_contract()
+            require(contract['descriptor_sha256']==bound.record['workflow_identity'],'imported owner descriptor differs')
+            self.required=tuple(contract['required_stages'])
         require(len(set(self.required)) == len(self.required), 'duplicate compact required stage')
         self.root = Path(bound.record['journal_directory']) / 'compact'
         self.active = None; self.stages = {}; self.reserved = self._reserved = OWNER_BYTES
@@ -175,17 +217,23 @@ class Owner:
             'context': thaw(bound.context), 'policy_input': policy_input,
             'policy_sha256': bound._run.admission.inputs[policy_input]['sha256'],
             'required_stages': list(self.required), 'maximum_retained_logical_bytes': self.maximum}
+        if imported is not None:record['original_import']=contract
         self.identity = cache_key(record); self.start = body(record)
         self.configuration_sha256 = cache_key(self.configuration())
-        bound.check(); self.root.mkdir()
-        parent, fd = io._open(self.root.parent)
-        try: os.fsync(fd); io._root(parent, fd)
-        finally: os.close(fd)
-        root, fd = io._open(self.root)
-        try:
-            self.inode = (os.fstat(fd).st_dev, os.fstat(fd).st_ino)
-            io._write(fd, 'owner.json', self.start); io._root(root, fd)
-        finally: os.close(fd)
+        if imported is not None:
+            from . import import_metadata
+            bound.check();self.inode=import_metadata.birth(self.root)
+            import_metadata.write(self.root,'owner.json',self.start)
+        else:
+            bound.check(); self.root.mkdir()
+            parent, fd = io._open(self.root.parent)
+            try: os.fsync(fd); io._root(parent, fd)
+            finally: io._release(lambda: os.close(fd))
+            root, fd = io._open(self.root)
+            try:
+                self.inode = (os.fstat(fd).st_dev, os.fstat(fd).st_ino)
+                io._write(fd, 'owner.json', self.start); io._root(root, fd)
+            finally: io._release(lambda: os.close(fd))
         self.lease()
 
     def configuration(self):
@@ -216,7 +264,10 @@ class Owner:
         self.check_binding()
         info = self.root.lstat()
         require((info.st_dev, info.st_ino) == self.inode, 'compact owner directory changed')
-        exact(self.root, 'owner.json', self.start)
+        if self.required[0]=='dictionary-import':
+            from .import_metadata import exact as import_exact
+            import_exact(self.root,'owner.json',self.start)
+        else:exact(self.root, 'owner.json', self.start)
         require(not present(self.root / 'failed.json') and
             (self.closing or not present(self.root / 'complete.json')), 'compact owner terminal marker exists')
 
@@ -225,11 +276,12 @@ class Owner:
         self.bound.check(); self.lease()
         allowed = {'owner.json'} | set(self.stages)
         if self.closing: allowed.add('complete.json')
-        entries(self.root, allowed, required={'owner.json'} | set(self.stages))
+        entries(self.root, allowed, required={'owner.json'} | set(self.stages),_imported=self.required[0]=='dictionary-import')
         total = OWNER_BYTES
         for name, stage in self.stages.items():
             require(name == stage.name and stage.owner is self, 'compact stage membership changed')
-            stage.integrity(); exact(stage.root, 'intent.json', stage.intent)
+            stage.integrity()
+            if stage.kind!='dictionary-import':exact(stage.root, 'intent.json', stage.intent)
             total += stage.reservation
         require(total == self.reserved <= self.maximum, 'compact workflow cumulative reservation differs')
 
@@ -266,8 +318,10 @@ class Owner:
         self.boundary()
         require(self.active is None and name in self.required and name not in self.stages,
                 'compact stage absent, active or already claimed')
-        require(name == 'dictionary' or ('dictionary' in self.stages and self.stages['dictionary'].closed),
-                'dictionary must complete before MCM stage')
+        prerequisite=self.required[0]
+        require(name!='dictionary-import','use actual imported stage constructor')
+        require(name == 'dictionary' or (prerequisite in self.stages and self.stages[prerequisite].closed),
+                'dictionary/import must complete before MCM stage')
         io._identity(workload_sha256)
         kind = 'dictionary' if name == 'dictionary' else 'mcm'
         require(('restart_retention' in self.policy)==(retention_selection is not None),
@@ -322,6 +376,8 @@ class Owner:
             self.poisoned = True; raise
 
     def _stage_bindings(self, stage):
+        if stage.kind=='dictionary-import':
+            _stage_content(stage);return
         if stage.count_policy is not None:
             require(stage.kind == 'dictionary' and thaw(stage.count_policy) == self._dictionary_count_policy()
                 and stage.pairs == stage.count_policy['capacity']['max_pairs'],
@@ -341,6 +397,11 @@ class Owner:
         digest = hashlib.sha256(); count = pairs = 0
         for name in self.required:
             stage = self.stages[name]
+            if stage.kind=='dictionary-import':
+                result=_stage_content(stage)
+                digest.update(body({'stage':name,'receipt_sha256':stage.reference}));count+=1
+                require(result['completed_pairs']==0,'import cannot credit historical pairs')
+                continue
             self._stage_bindings(stage)
             exact(stage.root, 'intent.json', stage.intent)
             entries(stage.root, {'intent.json', 'matching', 'checkpoints', 'stage-complete.json'} |
@@ -365,13 +426,18 @@ class Owner:
             raw = body(result); self.closing = True
             self.lease(); require(self._verified_stages() == {k: result[k] for k in ('stages', 'pairs', 'stage_receipts_sha256')},
                                   'compact stages changed before closure')
-            root, fd = io._open(self.root)
-            try: ref = io._write(fd, 'complete.json', raw); io._root(root, fd)
-            finally: os.close(fd)
+            if self.required[0]=='dictionary-import':
+                from . import import_metadata
+                ref=import_metadata.write(self.root,'complete.json',raw)
+            else:
+                root, fd = io._open(self.root)
+                try: ref = io._write(fd, 'complete.json', raw); io._root(root, fd)
+                finally: io._release(lambda: os.close(fd))
             self.boundary()
             require(self._verified_stages() == {k: result[k] for k in ('stages', 'pairs', 'stage_receipts_sha256')},
                     'compact stages changed during closure')
-            exact(self.root, 'complete.json', raw)
+            if self.required[0]=='dictionary-import':import_metadata.exact(self.root,'complete.json',raw)
+            else:exact(self.root, 'complete.json', raw)
             ledger = getattr(self, '_archive_operations', None)
             if ledger is not None:
                 require(ledger.owner is self and not ledger._closed and not ledger._poisoned
@@ -400,23 +466,31 @@ def verify_current(owner):
         'current run terminal marker exists')
     journal = Path(owner.bound.record['journal_directory'])
     require(owner.bound._ancestry_arguments is None,'fresh compact owner required')
-    entries(journal.parent,{journal.name},required={journal.name})
+    entries(journal.parent,{journal.name},required={journal.name},_imported=owner.required[0]=='dictionary-import')
     require(not any(present(journal/name) for name in ('failed.json','complete.json')),
         'representation terminal marker exists')
+    reader=matching_owner.metadata
+    if owner.bound.record.get('resource_only') is True:
+        from .import_metadata import metadata as reader
     for path,expected in owner.bound._snapshots.items():
-        require(matching_owner.metadata(path,owner.bound._run.admission.root)[1] == expected,
+        require(reader(path,owner.bound._run.admission.root)[1] == expected,
             'compact binding metadata changed')
     require(owner.root == journal/'compact' and owner.root.resolve() == owner.root,'compact owner root redirected')
     require(owner.root.stat().st_dev == owner.bound._run.admission.root.stat().st_dev,'compact owner device changed')
     info = owner.root.lstat()
     require((info.st_dev,info.st_ino) == owner.inode,'compact owner directory changed')
-    exact(owner.root,'owner.json',owner.start)
+    if owner.required[0]=='dictionary-import':
+        from .import_metadata import exact as import_exact
+        import_exact(owner.root,'owner.json',owner.start)
+    else:exact(owner.root,'owner.json',owner.start)
     expected = {'owner.json'} | set(owner.stages)
-    entries(owner.root,expected,required=expected)
+    entries(owner.root,expected,required=expected,_imported=owner.required[0]=='dictionary-import')
     total = OWNER_BYTES
     for name,stage in owner.stages.items():
         require(name == stage.name and stage.owner is owner,'compact stage membership changed')
-        stage.integrity();exact(stage.root,'intent.json',stage.intent);total += stage.reservation
+        stage.integrity()
+        if stage.kind!='dictionary-import':exact(stage.root,'intent.json',stage.intent)
+        total += stage.reservation
     require(total == owner.reserved <= owner.maximum,'compact cumulative reservation differs')
 
 

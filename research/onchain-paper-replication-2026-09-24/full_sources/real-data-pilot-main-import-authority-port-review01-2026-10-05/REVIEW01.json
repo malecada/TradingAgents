@@ -1,0 +1,119 @@
+{
+  "candidate_manifest_sha256": "042c564377e50ba377baf6f7aa2c18a33af3b5301faf849cceffa1caf27e5c20",
+  "changed_modules": [
+    {
+      "baseline_sha256": "36b43349bdcca5f36bd47181f47af6b03987d59fd2f20ac73472d648a58fbf97",
+      "candidate_sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+      "cap_sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+      "path": "tradingagents/research/onchain_replication/matching_owner.py"
+    },
+    {
+      "baseline_sha256": "d997b27bf3c5d5a1db0c77a6ce5bf9ed696800a4c88300634eec3efed349ff59",
+      "candidate_sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+      "cap_sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+      "path": "tradingagents/research/onchain_replication/feature_journal.py"
+    },
+    {
+      "baseline_sha256": "f4ff82b6405af36175509431440ee93e70787f46a8e3ab844ee2bccece6cfb51",
+      "candidate_sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171",
+      "cap_sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171",
+      "path": "tradingagents/research/onchain_replication/compact_owner.py"
+    },
+    {
+      "baseline_sha256": "5858ad9fe26c2f9937dbfdf520a503b91157b4840083580ee8d6d6920c89548a",
+      "candidate_sha256": "6661a8668d04bdff4afa84161932e12daa351d2654c5c481eba5faafcd938a4c",
+      "cap_sha256": "6661a8668d04bdff4afa84161932e12daa351d2654c5c481eba5faafcd938a4c",
+      "path": "tradingagents/research/onchain_replication/compact_mcm.py"
+    },
+    {
+      "baseline_sha256": "c70b23d4f8d16aa418109647bdba7ccd2139a2c1ef910b5acad8535aeebde1d7",
+      "candidate_sha256": "ee7931cea3d28ad0719b5f3db171a5d5d3ab95db9ff7cad0cc8379101948b79e",
+      "cap_sha256": "ee7931cea3d28ad0719b5f3db171a5d5d3ab95db9ff7cad0cc8379101948b79e",
+      "path": "tradingagents/research/onchain_replication/mcm_score_stream.py"
+    },
+    {
+      "baseline_sha256": "715125e543edd383c4bdeab59d10f7a269faec18f3b5fd16af79013e1bb37555",
+      "candidate_sha256": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+      "cap_sha256": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+      "path": "tradingagents/research/onchain_replication/score_batches.py"
+    },
+    {
+      "baseline_sha256": "d80315a270fab3c4a349e22cd114fa46041c121cdbfccbdc47ae7ce4b04edd25",
+      "candidate_sha256": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a",
+      "cap_sha256": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a",
+      "path": "tradingagents/research/onchain_replication/compact_mcm_publication.py"
+    }
+  ],
+  "checks": {
+    "actual_exit": 0,
+    "actual_tool_chunk": "9e23fa",
+    "changed_inverses_and_CAP_origins": 7,
+    "consumer_modules": 47,
+    "direct_API_references": 812,
+    "manifest_members": 48,
+    "metadata_io": [
+      "short writes complete exactly",
+      "oversize refused",
+      "exclusive existing body preserved",
+      "zero-progress partial retained"
+    ],
+    "old_callable_signatures": 112,
+    "reused_origin_bodies": 17,
+    "unchanged_Main_modules": 126
+  },
+  "decision": "ACCEPT_EXACT_COUPLED_SOURCE_ONLY_NOT_EXECUTION_RELEASE",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-import-caller-review01-2026-10-05/REVIEW02.json": "57734dcc51a5abc12e5e513400342aa21c02a395d29f1ea0a5ba6585845ebc77",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port-review01-2026-10-05/CHECK03.json": "8abb0775aa4e0b40bfc63bd8dd70bb606865e223784ce090724db4231f551e70",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port-review01-2026-10-05/REPORT01.md": "8423741998ae24859dbe0a69afe50bde45882f229eebdf10f17838637383b1b6",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port-review01-2026-10-05/check01.py": "174e49969deb7030e59a40f11c5300e7e53078af824ef6fe02135c35c8cd46ec",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/CHECKS01.json": "dead10b4b0ba8be18959267111bdc212918b2308fffa8e6b8b3913b3829aeccf",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/MANIFEST01.json": "042c564377e50ba377baf6f7aa2c18a33af3b5301faf849cceffa1caf27e5c20",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/REPORT01.md": "fcdb8c50208c618a154a8eb3396757e9c4f7bbf2ec31158646f33e722354fdea",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/SOURCE_DELTA01.json": "01f24fc00f2a2fd8f65de049a769b62858b5f91a912502ef7a7bd83d7c600387",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/TEST01.stderr": "14a681995a71e82467be937f7ab71f31a5c2ceffb190c295e98e45321aa2b392",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/TEST02.stderr": "dc748f9d8f8331b769bd6e199b2ed5c67d08023eb6f12bbc65d0d73e2a08ef6e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/cold_files.py": "3740b149a69ed10448ae0d4f177f8d93c3300765b9e20846d4cbda5aec75ca85",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_cold_features.py": "9231e784a2085cbe4130568d748cbacb63d61e41fc955f3f0685831853ebd2c0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_cold_proof.py": "d3e401618b214647d27387d18182153ab493e69177394823e483546b44a6a153",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_cold_proof_inputs.py": "cae64e3531207a9c3d62031a6e0969af72a0b0f8eb93814e643bfbe16ad8c42a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_cold_proof_native.py": "efbda343637395a88d6349aacbb77421430d59bbad745a375aad989b107e0aba",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_mcm.py": "6661a8668d04bdff4afa84161932e12daa351d2654c5c481eba5faafcd938a4c",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_mcm_publication.py": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_owner.py": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/feature_journal.py": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/held_score_consumer.py": "35da29691a5ef6c23f4bbdf178a55fd51bb6779214c1d38fb5a162e712ea0d41",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/import_metadata.py": "1c9455bc80b8f424bf63d6fdd5b94338ce54c14ead720990a2f787aef9e93dfe",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/imported_mcm_identity.py": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/job.py": "4dca6079896dd1394ccf65fbcd1a9bc601608fc8be22675b6f0f496e51ddd5e9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/matching_owner.py": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/mcm_score_stream.py": "ee7931cea3d28ad0719b5f3db171a5d5d3ab95db9ff7cad0cc8379101948b79e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/original_dictionary.py": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/original_import_preparation.py": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/original_import_stage.py": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/owned_io.py": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py": "c093094f9c107be3a983413a288263d39037400f702f5fefda581ecc758b81ba",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/resource_binding.py": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/resource_fixture.py": "3ea9902ec4067edc59bc897081c5ad5f6738350ccd3a339b0b423c863212a97e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/resources.py": "9410243896ebc21ee445ea17b6fd56b5c28942661dced6427674f124713b22f4",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/score_batches.py": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-native-port-review01-2026-10-05/REVIEW01.json": "687b91a35190d429422e571e740fd6d98d056a8fa2b3b865ec3173be9adaf8d7"
+  },
+  "findings": [],
+  "not_tested": [
+    "Genuine Run/Binding/Owner/Target admission or authority objects",
+    "Arrays, raw data, labels, numerical or native execution, network or credentials",
+    "Full-size resource policy, storage transport/recovery, population/scaler/batch or capacity",
+    "Financial accounting, fees/funding, performance, full model or study completion"
+  ],
+  "preserved_checker_failures": [
+    "CHECK01.stderr: alias resolver incorrectly substituted owned_io._require for unchanged local _require",
+    "CHECK02.stderr: static resolver omitted implicit module __file__"
+  ],
+  "schema_version": 1,
+  "scope": [
+    "Exact candidate overlay source and metadata algorithms only; no live integration",
+    "Legacy successful paths preserved; cleanup/fatal-error and poisoning behavior intentionally stricter",
+    "Existing registered pins do not acquire compatibility or authority from this source acceptance"
+  ]
+}

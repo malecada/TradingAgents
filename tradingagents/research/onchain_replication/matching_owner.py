@@ -96,8 +96,11 @@ class Binding:
         else:
             ancestry.verify(run,**self._ancestry_arguments,current_journal=directory)
         require(not any((directory/name).exists() for name in ('complete.json','failed.json')),'representation journal is terminal')
+        reader=metadata
+        if self.record.get('resource_only') is True:
+            from .import_metadata import metadata as reader
         for path,expected in self._snapshots.items():
-            require(metadata(path,run.admission.root)[1]==expected,'owner metadata changed after binding')
+            require(reader(path,run.admission.root)[1]==expected,'owner metadata changed after binding')
         self._guard()
 
     def check(self):
@@ -155,13 +158,19 @@ def _source(run,numerical):
 
 
 def bind(run,*,representation,plan_input,producer,policy_input,journal_directory=None,
-         continuation_input=None,death_input=None,_create=False,_first=False):
+         continuation_input=None,death_input=None,_create=False,_first=False,job_input='execution_job',_resource=False):
     require(isinstance(run,ResearchRun),'actual admitted ResearchRun required')
     run._active();run._check_source()
     ad=run.admission
-    execution=json.loads(run.read_input('execution_job'));job.job_schema(execution)
+    execution=json.loads(run.read_input(job_input))
+    if _resource:
+        from .resource_binding import validate_job
+        validate_job(execution)
+        require(continuation_input is None and death_input is None,'resource successor not admitted')
+    else:
+        require(job_input=='execution_job','legacy matching job input differs');job.job_schema(execution)
     require(type(execution['schema_version']) is int,'execution schema version must be integer')
-    require(execution['kind']=='fit','matching producer requires admitted fit job')
+    require(execution['kind']==('compact_resource' if _resource else 'fit'),'matching producer job kind differs')
     policy_resources=job.resource_policy(execution['resources'],ad.root)
     jobs=execution['payload'].get('representation_jobs',{})
     require(representation in jobs,'representation absent from execution job')
@@ -187,6 +196,10 @@ def bind(run,*,representation,plan_input,producer,policy_input,journal_directory
     descriptor=item['descriptor']
     require(descriptor.get('arm')=='proposed','checkpoint backend requires motif representation')
     require(equal(descriptor.get('pair_execution'),{'backend':policy['backend'],'policy_sha256':ad.inputs[policy_input]['sha256']}),'explicit backend/policy workflow identity differs')
+    if _resource:
+        from .original_import_preparation import required_stages
+        required_stages(descriptor)
+        require(selected.get('original_dictionary_input')==item.get('original_dictionary_input') and type(selected.get('original_dictionary_input')) is str,'original import selection differs')
     identity=cache_key(descriptor)
     expected=ad.root/'research_artifacts/onchain_representations'/identity/ad.experiment_id
     if not _create:
@@ -201,7 +214,10 @@ def bind(run,*,representation,plan_input,producer,policy_input,journal_directory
     base=ad.root/job.PREFIX/'runs'/ad.experiment_id
     snapshots={}
     def read(path):
-        value,h=metadata(path,ad.root);snapshots[path]=h;return value
+        reader=metadata
+        if _resource:
+            from .import_metadata import metadata as reader
+        value,h=reader(path,ad.root);snapshots[path]=h;return value
     launch=read(base/'launch.json');guard_owner=read(base/'owner.json')
     require(set(launch)=={'experiment','source_commit','supervisor_pid','nonce'} and launch['experiment']==ad.experiment_id and launch['source_commit']==ad.source,'guard launch differs')
     require(set(guard_owner)==set(launch)|{'monitor_pid','monitor_start_ticks'} and all(equal(guard_owner[k],v) for k,v in launch.items()),'guard owner/launch join differs')
@@ -225,18 +241,29 @@ def bind(run,*,representation,plan_input,producer,policy_input,journal_directory
             owner={'experiment':ad.experiment_id,'source_commit':ad.source,'producer':producer,'workflow_identity':identity}
             run._active();_guard(run,policy_resources,guard_owner,base)
             try:
-                journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent)
-                _immutable(expected/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
+                from .feature_journal import _RESOURCE_METADATA
+                journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent,
+                    **({'_metadata_role':_RESOURCE_METADATA} if _resource else {}))
+                publish=_immutable
+                if _resource:
+                    from .import_metadata import write as write_metadata
+                    publish=lambda path,value:write_metadata(path.parent,path.name,canonical_bytes(value))
+                publish(expected/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
                     'binding_output':item['binding_output'],'registration_sha256':ad.registration_sha256,
                     'pair_checkpoint_input':policy_input,'pair_checkpoint_policy_sha256':ad.inputs[policy_input]['sha256'],
-                    'continuation_input':continuation_input,'death_input':death_input})
+                    'continuation_input':continuation_input,'death_input':death_input,
+                    **({'job_input':job_input,'job_sha256':ad.inputs[job_input]['sha256'],'resource_only':True} if _resource else {})})
             except BaseException as error:
+                if _resource and (not isinstance(error,Exception) or isinstance(error,MemoryError)):
+                    error.add_note('partial resource journal preserved at '+str(expected));raise
                 if not _first:raise
                 raise JournalConstructionError('partial journal construction preserved at '+str(expected)) from error
         try:
             return journal,bind(run,representation=representation,plan_input=plan_input,producer=producer,
-                policy_input=policy_input,journal_directory=expected,continuation_input=continuation_input,death_input=death_input)
+                policy_input=policy_input,journal_directory=expected,continuation_input=continuation_input,death_input=death_input,job_input=job_input,_resource=_resource)
         except BaseException as error:
+            if _resource and (not isinstance(error,Exception) or isinstance(error,MemoryError)):
+                error.add_note('unbound resource journal preserved at '+str(expected));raise
             if not _first:raise
             raise JournalConstructionError('unbound journal construction preserved at '+str(expected)) from error
     directory=Path(journal_directory)
@@ -253,11 +280,13 @@ def bind(run,*,representation,plan_input,producer,policy_input,journal_directory
     claim=read(directory/'claim.json')
     required_claim={'owner':owner,'descriptor':descriptor,'plan_input':plan_input,'binding_output':item['binding_output'],
         'registration_sha256':ad.registration_sha256,'pair_checkpoint_input':policy_input,'pair_checkpoint_policy_sha256':ad.inputs[policy_input]['sha256']}
+    if _resource:required_claim.update(job_input=job_input,job_sha256=ad.inputs[job_input]['sha256'],resource_only=True)
     require(all(k in claim and equal(claim[k],v) for k,v in required_claim.items()),'representation claim differs')
     record={'experiment':ad.experiment_id,'source_commit':ad.source,'claim_sha256':run._claim_sha256,
         'registration_sha256':ad.registration_sha256,'representation':representation,'producer':producer,
         'workflow_identity':identity,'policy_sha256':ad.inputs[policy_input]['sha256'],
         'journal_directory':str(directory),'numerical_source':policy['numerical_source']}
+    if _resource:record.update(job_input=job_input,job_sha256=ad.inputs[job_input]['sha256'],resource_only=True)
     context={'namespace':identity,'source_commit':policy['numerical_source']['commit'],'runtime_hash':digest(canonical_bytes(env))}
     bound=Binding(run,record,context,limits,policy_resources,snapshots,guard_owner,base,ancestry_arguments)
     bound.lease()
