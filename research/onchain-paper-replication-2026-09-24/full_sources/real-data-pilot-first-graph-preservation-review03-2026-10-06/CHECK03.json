@@ -1,0 +1,86 @@
+{
+  "active_claim_metadata_observed": [
+    {
+      "path": "research_runs/options-timing-20260915/claim.json",
+      "program_id": "strategy-search-2026-09-11",
+      "sha256": "550c753279b8ae290ca988c9a23d5201b18ef4fd85b3c405a2f6e8a1078e8a73"
+    }
+  ],
+  "controls": [
+    {
+      "body_reads": 1,
+      "name": "replication",
+      "refused": true
+    },
+    {
+      "body_reads": 1,
+      "name": "unrelated",
+      "refused": false
+    },
+    {
+      "body_reads": 1,
+      "name": "missing",
+      "refused": true
+    },
+    {
+      "body_reads": 1,
+      "name": "empty",
+      "refused": true
+    },
+    {
+      "body_reads": 1,
+      "name": "null",
+      "refused": true
+    },
+    {
+      "body_reads": 1,
+      "name": "numeric",
+      "refused": true
+    },
+    {
+      "body_reads": 1,
+      "name": "malformed-json",
+      "refused": true
+    },
+    {
+      "body_reads": 1,
+      "name": "nonobject",
+      "refused": true
+    },
+    {
+      "body_reads": 0,
+      "name": "symlink",
+      "refused": true
+    },
+    {
+      "body_reads": 0,
+      "name": "not-regular",
+      "refused": true
+    },
+    {
+      "body_reads": 0,
+      "name": "oversize",
+      "refused": true
+    },
+    {
+      "body_reads": 0,
+      "name": "closed-skipped",
+      "refused": false
+    }
+  ],
+  "decision": "accepted-correction03-source",
+  "entry_sha256": "fc733b766a86c176e6572432e20129b2e584a289c59e673bbad599d14ce54b37",
+  "envelope_sha256": "0ef52a88eeb3fa07d778c8649f6c85e2d5e770a11117c6787b9964e8c7776484",
+  "exact_entry_inverse": true,
+  "exact_envelope_inverse": true,
+  "markers_absent": [
+    "preflight01.json",
+    "launch-attempt01.json",
+    "guard01",
+    "intent.json",
+    "complete.json",
+    "failed.json",
+    "outer-exit01.json"
+  ],
+  "qualification": "Discriminator/regular-size validation only, not independent claim admission; existing global native-unit refusal unchanged. No connection/payload read, native or network action."
+}
