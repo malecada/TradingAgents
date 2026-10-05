@@ -1,0 +1,22 @@
+{
+  "original": "research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-capture-preparation01-2026-10-05/capture01.py",
+  "original_sha256": "1b383b39c8d78593f1f5fb4b072e1a43d3c3c77f96a111d4f0ee378f91fd0c02",
+  "changes": [
+    [
+      "def capture(roots,output,start):",
+      "def capture(roots,output,start,evidence_pins=None):"
+    ],
+    [
+      "scopes={role:inventory(root,role=='capsule') for role,root in roots.items()};pins={}",
+      "scopes={role:inventory(root,role=='capsule') for role,root in roots.items()};pins=dict(evidence_pins or {})"
+    ],
+    [
+      "write(output/'CAPTURE01.json',R.encode(result),start);unchanged(pins);return result",
+      "write(output/'CAPTURE01.json',R.encode(result),start)\n # Receipt close is not the success boundary: rejoin the complete retained outputs.\n names={'CAPTURE01.json'}\n for row in records:names.update({'piece-%03d'%row['id'],row['manifest'],row['archive']})\n pins[str(output)]=R.sig(output.lstat())\n R.require(set(p.name for p in output.iterdir())==names,'exact final output namespace')\n for row in records:\n  shard=output/('piece-%03d'%row['id']);mp=output/row['manifest'];ap=output/row['archive']\n  pins[str(mp)]=R.sig(mp.lstat());pins[str(ap)]=R.sig(ap.lstat())\n  raw=R.read(output,row['manifest']);R.require(R.digest(raw)==row['archive_pin']['manifest_sha256'],'retained manifest changed');m=json.loads(raw)\n  pins.update(signatures(shard,m));R.same(shard,m)\n  raw=R.read(output,row['archive']);R.require(len(raw)==row['archive_pin']['bytes'] and R.digest(raw)==row['archive_pin']['sha256'],'retained archive changed')\n cp=output/'CAPTURE01.json';pins[str(cp)]=R.sig(cp.lstat());R.require(R.read(output,cp.name)==R.encode(result),'final capture receipt changed')\n R.require(set(p.name for p in output.iterdir())==names,'late final output namespace changed')\n # All owned reads/iterators closed before resource sampling and final descriptor-free join.\n boundary(start);unchanged(pins);return result"
+    ],
+    [
+      "result=capture({'capsule':CAP,'parent':PARENT},output,start);unchanged(pins);return result",
+      "result=capture({'capsule':CAP,'parent':PARENT},output,start,pins);return result"
+    ]
+  ]
+}

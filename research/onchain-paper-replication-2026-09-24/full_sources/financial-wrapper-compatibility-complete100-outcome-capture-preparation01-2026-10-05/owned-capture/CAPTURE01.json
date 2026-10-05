@@ -1,0 +1,127 @@
+{
+  "Git407": "separate authenticated baseline; not captured here",
+  "POSIX_instantiation": false,
+  "exclusions": {
+    "capsule": [
+      ".git"
+    ],
+    "parent": []
+  },
+  "kind": "complete-terminal-opaque-sharded-capture-v1",
+  "numerical_authority": false,
+  "originals": {
+    "capsule": {
+      "manifest": {
+        "members": [
+          {
+            "bytes": 900000,
+            "kind": "file",
+            "mode": 416,
+            "path": "body-0",
+            "sha256": "222e577834e78131fdd650be189643ffa9764acb77768f5650e06f247bf2b37e"
+          },
+          {
+            "bytes": 900000,
+            "kind": "file",
+            "mode": 416,
+            "path": "body-1",
+            "sha256": "e539c06cb2695b3b2d7ec76f750193e8d9d463cf67546b89627b2957358f0ee6"
+          },
+          {
+            "kind": "directory",
+            "mode": 448,
+            "path": "empty"
+          }
+        ],
+        "root_mode": 448,
+        "schema_version": 1
+      },
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-capture-preparation01-2026-10-05/opaque-capsule"
+    },
+    "parent": {
+      "manifest": {
+        "members": [
+          {
+            "bytes": 900000,
+            "kind": "file",
+            "mode": 416,
+            "path": "body-0",
+            "sha256": "222e577834e78131fdd650be189643ffa9764acb77768f5650e06f247bf2b37e"
+          },
+          {
+            "bytes": 900000,
+            "kind": "file",
+            "mode": 416,
+            "path": "body-1",
+            "sha256": "e539c06cb2695b3b2d7ec76f750193e8d9d463cf67546b89627b2957358f0ee6"
+          },
+          {
+            "kind": "directory",
+            "mode": 448,
+            "path": "empty"
+          }
+        ],
+        "root_mode": 448,
+        "schema_version": 1
+      },
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-capture-preparation01-2026-10-05/opaque-parent"
+    }
+  },
+  "pieces": [
+    {
+      "archive": "piece-000.tar.gz",
+      "archive_pin": {
+        "bytes": 2809,
+        "manifest_sha256": "e0af8bd69c4fc7ccb9c3000bfdb1840352fb11e6a78787ac47bd37739b6cdf51",
+        "sha256": "9c9f0d9d08d9663fd5af13919d081b50d442032ffaf0fb20c93326d0740f70f7"
+      },
+      "bodies": [
+        {
+          "bytes": 900000,
+          "member": "body-0000.bin",
+          "path": "body-0",
+          "role": "capsule",
+          "sha256": "222e577834e78131fdd650be189643ffa9764acb77768f5650e06f247bf2b37e"
+        },
+        {
+          "bytes": 900000,
+          "member": "body-0001.bin",
+          "path": "body-1",
+          "role": "capsule",
+          "sha256": "e539c06cb2695b3b2d7ec76f750193e8d9d463cf67546b89627b2957358f0ee6"
+        },
+        {
+          "bytes": 900000,
+          "member": "body-0002.bin",
+          "path": "body-0",
+          "role": "parent",
+          "sha256": "222e577834e78131fdd650be189643ffa9764acb77768f5650e06f247bf2b37e"
+        }
+      ],
+      "id": 0,
+      "manifest": "piece-000.json",
+      "tar_bound": 2703360
+    },
+    {
+      "archive": "piece-001.tar.gz",
+      "archive_pin": {
+        "bytes": 982,
+        "manifest_sha256": "005acff5bf40ea059e8a9dbba3b3e447248d1e13c5079c5296b6b1e392f6283a",
+        "sha256": "354cc796c8c9060732cc3588342074ee59f82e07e2aa8c8e4afdfbbac842634c"
+      },
+      "bodies": [
+        {
+          "bytes": 900000,
+          "member": "body-0000.bin",
+          "path": "body-1",
+          "role": "parent",
+          "sha256": "e539c06cb2695b3b2d7ec76f750193e8d9d463cf67546b89627b2957358f0ee6"
+        }
+      ],
+      "id": 1,
+      "manifest": "piece-001.json",
+      "tar_bound": 911360
+    }
+  ],
+  "schema_version": 1
+}

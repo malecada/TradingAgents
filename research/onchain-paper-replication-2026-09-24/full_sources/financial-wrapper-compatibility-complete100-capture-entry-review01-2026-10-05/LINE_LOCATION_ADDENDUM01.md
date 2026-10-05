@@ -1,0 +1,1 @@
+REPORT01 source-location typo: the final CAPTURE receipt write/unchanged/return is capture01.py:80, not87. The public run final return is capture01.py:106. Findings C1/C2, exact source hash and executable witnesses are unchanged. Original report and first seal are preserved.

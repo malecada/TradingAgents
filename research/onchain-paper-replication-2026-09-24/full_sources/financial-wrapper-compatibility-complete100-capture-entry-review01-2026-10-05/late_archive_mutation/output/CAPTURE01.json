@@ -1,0 +1,76 @@
+{
+  "Git407": "separate authenticated baseline; not captured here",
+  "POSIX_instantiation": false,
+  "exclusions": {
+    "capsule": [
+      ".git"
+    ],
+    "parent": []
+  },
+  "kind": "complete-terminal-opaque-sharded-capture-v1",
+  "numerical_authority": false,
+  "originals": {
+    "capsule": {
+      "manifest": {
+        "members": [
+          {
+            "bytes": 25,
+            "kind": "file",
+            "mode": 436,
+            "path": "one.body",
+            "sha256": "ef8458ff6c7b163d3810206a0547323cd2574864280b9302cd6141724ac8bf49"
+          }
+        ],
+        "root_mode": 448,
+        "schema_version": 1
+      },
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-capture-entry-review01-2026-10-05/late_archive_mutation/capsule"
+    },
+    "parent": {
+      "manifest": {
+        "members": [
+          {
+            "bytes": 14,
+            "kind": "file",
+            "mode": 436,
+            "path": "two.body",
+            "sha256": "82c4934959a29b804a4f8f953534b9c403476f9f3b2f1e7e49063a4803c98af2"
+          }
+        ],
+        "root_mode": 448,
+        "schema_version": 1
+      },
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-capture-entry-review01-2026-10-05/late_archive_mutation/parent"
+    }
+  },
+  "pieces": [
+    {
+      "archive": "piece-000.tar.gz",
+      "archive_pin": {
+        "bytes": 150,
+        "manifest_sha256": "75e7b2761ac4b2eae7d24e4af19ee2aeb020810caf5dc78be0bd047990207bf4",
+        "sha256": "2ac957a969769c6e625f902b275530e50d142ce70dc009b5b61b1e313bdd6c50"
+      },
+      "bodies": [
+        {
+          "bytes": 25,
+          "member": "body-0000.bin",
+          "path": "one.body",
+          "role": "capsule",
+          "sha256": "ef8458ff6c7b163d3810206a0547323cd2574864280b9302cd6141724ac8bf49"
+        },
+        {
+          "bytes": 14,
+          "member": "body-0001.bin",
+          "path": "two.body",
+          "role": "parent",
+          "sha256": "82c4934959a29b804a4f8f953534b9c403476f9f3b2f1e7e49063a4803c98af2"
+        }
+      ],
+      "id": 0,
+      "manifest": "piece-000.json",
+      "tar_bound": 10240
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-baseline-recovery-review01-2026-10-05/review_remote01.py", line 53, in <module>
+    for sample in exitrow['observations']:ok(0<=sample['logical_bytes']<=64*1024**2 and 0<=sample['allocated_bytes']<=96*1024**2 and sample['free_bytes']>=10*1024**3 and sample['seconds']<5,'actual whole Root bounded observation')
+                                                                                                                                     ~~~~~~^^^^^^^^^^^^^^
+KeyError: 'free_bytes'

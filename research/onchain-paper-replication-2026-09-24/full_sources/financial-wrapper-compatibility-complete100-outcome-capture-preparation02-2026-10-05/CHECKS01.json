@@ -1,0 +1,49 @@
+{
+  "results": [
+    {
+      "version": "old",
+      "case": "late_archive_mutation",
+      "returned": true,
+      "error": null,
+      "actual_final_receipt_close": true
+    },
+    {
+      "version": "old",
+      "case": "late_expired_deadline",
+      "returned": true,
+      "error": null,
+      "actual_final_receipt_close": true
+    },
+    {
+      "version": "old",
+      "case": "healthy",
+      "returned": true,
+      "error": null,
+      "actual_final_receipt_close": true
+    },
+    {
+      "version": "new",
+      "case": "late_archive_mutation",
+      "returned": false,
+      "error": "retained archive changed",
+      "actual_final_receipt_close": true
+    },
+    {
+      "version": "new",
+      "case": "late_expired_deadline",
+      "returned": false,
+      "error": "capture deadline",
+      "actual_final_receipt_close": true
+    },
+    {
+      "version": "new",
+      "case": "healthy",
+      "returned": true,
+      "error": null,
+      "actual_final_receipt_close": true
+    }
+  ],
+  "exact_inverse": true,
+  "utilities_unchanged": true,
+  "actual_Root_capture": false
+}
