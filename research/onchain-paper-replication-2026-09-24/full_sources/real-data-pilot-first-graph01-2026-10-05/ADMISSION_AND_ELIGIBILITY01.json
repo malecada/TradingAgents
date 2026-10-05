@@ -1,0 +1,34 @@
+{
+  "actual_claim_exists": false,
+  "actual_launch_attempt_exists": false,
+  "actual_remote_readback": {
+    "exit_code": 0,
+    "head": "660188afe2d06017ecc772acb77470202f202a64",
+    "tool": "7018bf"
+  },
+  "at": "2026-10-05T20:04:03.700831+00:00",
+  "metadata_admission": {
+    "exit_code": 0,
+    "ready": true,
+    "run_started": false,
+    "tool": "18e831"
+  },
+  "new_observation": {
+    "free_disk_bytes": 18379575296,
+    "frozen_startup_requirement_bytes": 9126805504,
+    "mem_available_bytes": 9081778176,
+    "planning_startup_disk_requirement_bytes": 18288334365
+  },
+  "push": {
+    "exit_code": 0,
+    "tool": "d03187"
+  },
+  "qualification": "Actual metadata-only refusal; original identity remains unused and no empirical attempt/budget adoption occurred. RAM at the refused instant was not printed and stays unknown; later observation is not substituted. Keep fixed limits, continue independent implementation and repeat only fresh eligibility when justified.",
+  "read_only_preflight": {
+    "available_bytes_at_refusal": null,
+    "exit_code": 1,
+    "reason": "frozen startup RAM reserve unavailable",
+    "tool": "91ae83"
+  },
+  "source": "660188afe2d06017ecc772acb77470202f202a64"
+}

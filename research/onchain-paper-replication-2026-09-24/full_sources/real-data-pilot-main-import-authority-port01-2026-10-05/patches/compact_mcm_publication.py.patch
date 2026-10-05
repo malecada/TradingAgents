@@ -1,0 +1,51 @@
+--- a/tradingagents/research/onchain_replication/compact_mcm_publication.py
++++ b/tradingagents/research/onchain_replication/compact_mcm_publication.py
+@@ -25,13 +25,19 @@
+     require(type(owner) is owners.Owner, 'actual compact owner required')
+     require(owner._transition.acquire(blocking=False), 'concurrent compact output transition')
+     try: yield
+-    finally: owner._transition.release()
++    except BaseException:
++        owner.poisoned=True;raise
++    finally:
++        def release():
++            try:owner._transition.release()
++            except BaseException:owner.poisoned=True;raise
++        io._release(release)
+ 
+ 
+ def _output_policy(owner, output_input, pairs):
+     """Selected output reservation, usable before numerical stage creation."""
+     run = owner.bound._run; record = owner.bound.record
+-    selected = json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][record['representation']]
++    selected = json.loads(run.read_input(record.get('job_input','execution_job')))['payload']['representation_jobs'][record['representation']]
+     plan = json.loads(run.read_input(selected['plan_input']))['producers'][record['producer']]
+     require(type(output_input) is str and output_input in run.admission.inputs
+         and selected.get('compact_mcm_output_input') == plan.get('compact_mcm_output_input') == output_input
+@@ -117,6 +123,9 @@
+ def _publish(owner, stage, *, output_input, expected_scope):
+     """Caller holds the owner transition lock."""
+     attempt, args, proof, lease = _prepare(owner, stage, output_input, expected_scope)
++    if owner.bound.record.get('resource_only') is True:
++        from .resource_fixture import publication_boundary
++        publication_boundary(owner,stage)
+     require(not owners.present(attempt), 'compact output namespace already claimed')
+     lease(); durable_mkdir(attempt.parent)
+     require(attempt.resolve() == attempt, 'compact output parent redirected')
+@@ -124,14 +133,14 @@
+     try:
+         parent, fd = io._open(attempt.parent)
+         try: os.fsync(fd); io._root(parent, fd)
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+         artifact = output.publish(attempt / 'artifact', **args, lease=lease)
+         owner.boundary(); lease()
+         root, fd = io._open(attempt)
+         try:
+             ref = io._write(fd, 'receipt.json', io._json(proof | {'artifact_sha256': artifact}))
+             _verify(attempt, args, proof, lease, ref); io._root(root, fd)
+-        finally: os.close(fd)
++        finally: io._release(lambda: os.close(fd))
+         return {'directory': str(attempt), 'receipt_sha256': ref, 'artifact_sha256': artifact}
+     except BaseException:
+         owner.poisoned = True; raise

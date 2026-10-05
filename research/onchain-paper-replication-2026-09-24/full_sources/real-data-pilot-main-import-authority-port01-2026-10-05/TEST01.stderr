@@ -1,0 +1,23 @@
+test_01_exact_inverse_and_protected_main (__main__.Checks.test_01_exact_inverse_and_protected_main) ... ok
+test_02_candidate_syntax_and_direct_relative_symbols (__main__.Checks.test_02_candidate_syntax_and_direct_relative_symbols) ... ok
+test_03_coupled_interfaces_and_original_guards (__main__.Checks.test_03_coupled_interfaces_and_original_guards) ... ok
+test_04_real_metadata_exclusive_and_hardlink_refusal (__main__.Checks.test_04_real_metadata_exclusive_and_hardlink_refusal) ... ok
+test_05_selected_journal_algorithms_and_unknown_role (__main__.Checks.test_05_selected_journal_algorithms_and_unknown_role) ... ok
+test_06_legacy_journal_metadata_identical (__main__.Checks.test_06_legacy_journal_metadata_identical) ... ok
+test_07_exact_stage_population_and_no_new_dictionary (__main__.Checks.test_07_exact_stage_population_and_no_new_dictionary) ... ok
+test_08_cleanup_preserves_fatal_and_attempts_each_close (__main__.Checks.test_08_cleanup_preserves_fatal_and_attempts_each_close) ... FAIL
+test_09_no_numerical_imports (__main__.Checks.test_09_no_numerical_imports) ... ok
+
+======================================================================
+FAIL: test_08_cleanup_preserves_fatal_and_attempts_each_close (__main__.Checks.test_08_cleanup_preserves_fatal_and_attempts_each_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/test_authority01.py", line 120, in test_08_cleanup_preserves_fatal_and_attempts_each_close
+    with self.assertRaises(MemoryError) as caught:owned._cleanup((fail,lambda:seen.append(2)),primary=primary)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: MemoryError not raised
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.428s
+
+FAILED (failures=1)

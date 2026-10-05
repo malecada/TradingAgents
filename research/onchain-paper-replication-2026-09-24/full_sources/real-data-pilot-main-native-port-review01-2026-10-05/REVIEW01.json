@@ -1,0 +1,61 @@
+{
+  "author_checks_reused": {
+    "focused_mock_methods": 10,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-native-port01-2026-10-05/CHECKS01.json",
+    "rerun": false,
+    "sha256": "7324b66d32e9a7b6d272d477a118c8f87a959dcf2ddb6e6c75b72a8a612c73d3"
+  },
+  "capsule_resources_sha256": "e1d305e41938815d60ae2f465fcb2b543768c6862d176f4f6075ced53c8069c7",
+  "checks": {
+    "job.py": {
+      "ast_parse": true,
+      "baseline_sha256": "74441a908670bf25983b4eddd4143245d4a68a45a0865ae58da3184516c3c39d",
+      "candidate_sha256": "4dca6079896dd1394ccf65fbcd1a9bc601608fc8be22675b6f0f496e51ddd5e9",
+      "change_blocks": 8,
+      "exact_inverse": true
+    },
+    "resources.py": {
+      "ast_parse": true,
+      "baseline_sha256": "7735c451511b99f293d658c608afcdb21956d470c117d72104d1f55228041f44",
+      "candidate_sha256": "9410243896ebc21ee445ea17b6fd56b5c28942661dced6427674f124713b22f4",
+      "change_blocks": 22,
+      "exact_inverse": true
+    }
+  },
+  "decision": "ACCEPT_NATIVE_SOURCE_SLICE_ONLY_PENDING_COUPLED_CLOSURE",
+  "findings": [],
+  "limits": [
+    "No live kernel/systemd/worker run, numerical imports, arrays, claim, Owner or network.",
+    "Owned_io and coupled import/Owner source port remain separate dependencies; this is not acceptance of their full closure or live integration.",
+    "Original4MiB file/other tiny-envelope limits still do not establish executable full-real-data capacity; no new policy/cap accepted.",
+    "RuntimeMaxSec readback and resource acceptance require future actual native evidence.",
+    "Whole-volume disk minima remain sampled and include unrelated activity; no per-job attribution."
+  ],
+  "native_helpers_identical_to_accepted_capsule": [
+    "_native_atomic",
+    "_native_finalize",
+    "_native_owned_env",
+    "_native_policy",
+    "_native_ready",
+    "_native_reason",
+    "_native_receipt",
+    "_native_seconds",
+    "_native_select",
+    "_native_sync",
+    "_native_write"
+  ],
+  "owned_io_dependency_sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+  "resolved_provisional_finding": {
+    "disposition": "Not reachable for valid admitted compact_resource: existing resource_fixture.schema and prospective real_pilot_import_caller.schema already require explicit native file limit. NativeNone remains available to legacy noncompact paths and direct guarded_run. No correction requested; earlier provisional message withdrawn.",
+    "question": "Unconditional compact_resource receipt paths might impose native limits on an optional None legacy job."
+  },
+  "schema_version": 1,
+  "verified_seams": [
+    "Optional native policy remains exact integer file_size_bytes up to original4MiB; cannot combine physical authority.",
+    "Actual systemd command sets LimitFSIZE and RuntimeMaxSec plus owned environment. Child OS hard/soft file readback and environment precede readiness; monitor verifies unit hard/soft/runtime plus child values before release.",
+    "Worker asserts live native policy and current RLIMIT/environment; actual worker receipt precedes ResearchRun.start. Monitor current-process file receipt precedes owned unit launch.",
+    "Native cleanup independently attempts signal masking/stop/unit readback/cgroup emptiness/storage/disk/evidence/restoration; fatal precedence and additive finalization-failure path reused exactly.",
+    "Main memory snapshot function retained byte-for-byte; existing disk-minimum state/update remains, with additional native final-disk sample.",
+    "Exact inverse restores both Main baselines; no legacy physical branch/cap changes."
+  ]
+}

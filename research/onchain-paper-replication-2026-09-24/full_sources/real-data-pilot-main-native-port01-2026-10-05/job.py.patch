@@ -1,0 +1,84 @@
+--- a/tradingagents/research/onchain_replication/job.py
++++ b/tradingagents/research/onchain_replication/job.py
+@@ -44,7 +44,7 @@
+ def resource_policy(value, root):
+     required = {'memory_max_bytes', 'memory_high_bytes', 'reserve_bytes', 'start_reserve_bytes',
+                 'disk_floor_bytes', 'disk_paths', 'wall_seconds'}
+-    if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'}):
++    if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'},required|{'storage_budget','native_unit_limits'}):
+         raise ValueError('execution resource policy fields differ')
+     for name in required-{'disk_paths'}:
+         if type(value[name]) is not int or value[name] <= 0:
+@@ -71,10 +71,13 @@
+     if 'physical_policy' in value:
+         from .neural_physical import validate
+         validate(value['physical_policy'])
++    if 'native_unit_limits' in value:resources._native_policy(value['native_unit_limits'])
+     return value
+ 
+ 
+ def job_schema(job):
++    if 'native_unit_limits' in job.get('resources',{}) and job.get('kind')!='compact_resource':
++        raise ValueError('native-only file limits require compact_resource')
+     if 'physical_policy' in job.get('resources',{}) and job.get('kind')!='neural_resource':
+         raise ValueError('physical policy is restricted to explicit neural resource jobs')
+     if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census', 'neural_resource', 'treatments', 'compact_resource'):
+@@ -226,9 +229,24 @@
+                 else:raise
+ 
+ 
++def _resource_limit_receipt(args,job,role,live=None):
++    if job['kind']!='compact_resource':raise ValueError('native receipt requires selected compact resource job')
++    from . import resource_fixture
++    readback=resource_fixture.worker_limits()
++    expected=job['resources']['native_unit_limits']
++    if expected!={'file_size_bytes':readback['rlimit_fsize']}:raise ValueError('registered process file limit differs')
++    if role=='worker' and (live is None or live.get('native_unit_limits')!=expected):raise ValueError('worker native authority missing')
++    value={'schema_version':1,'experiment':args.experiment,'source_commit':args.source,'role':role,'pid':os.getpid(),'file_size_limit':[readback['rlimit_fsize']]*2,'before_claim':True,'native_unit':None if live is None else live['unit'],'native_cgroup':None if live is None else live['cgroup']}
++    value['native_environment']={key:os.environ.get(key) for key in resources._native_owned_env(Path(args.root))}
++    if value['native_environment']!=resources._native_owned_env(Path(args.root)):raise ValueError('actual process environment differs from owned routing')
++    resources._native_receipt(_base(args),role+'-file-limit.json',value)
++
++
++
+ def monitor(args):
+     resources.bind_parent_death(args.owner_pid)
+     _, job = _admitted(args)
++    if job['kind']=='compact_resource':_resource_limit_receipt(args,job,'monitor')
+     scope=_physical_scope(args,job)
+     with metadata_scope(scope):
+         base = _base(args)
+@@ -239,8 +257,13 @@
+         owner = {**launch_record, 'monitor_pid': os.getpid(),
+                  'monitor_start_ticks': Path('/proc/self/stat').read_text().rsplit(')', 1)[1].split()[19]}
+         _immutable(base/'owner.json', owner)
+-        result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',
+-            memory_swap_max_bytes=0, owner_identity=owner, **job['resources'])
++        if 'native_unit_limits' in job['resources']:
++            guard_policy={k:v for k,v in job['resources'].items() if k!='native_unit_limits'}
++            result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',
++                memory_swap_max_bytes=0, owner_identity=owner, native_unit_limits=job['resources']['native_unit_limits'], **guard_policy)
++        else:
++            result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',
++                memory_swap_max_bytes=0, owner_identity=owner, **job['resources'])
+         signal.signal(signal.SIGTERM, signal.SIG_IGN)
+         signal.signal(signal.SIGINT, signal.SIG_IGN)
+         if scope is not None:scope.tail=True
+@@ -287,6 +310,9 @@
+ 
+ def worker(args):
+     admitted, job = _admitted(args)
++    if job['kind']=='compact_resource':
++        from . import resource_fixture
++        resource_fixture.worker_limits()
+     scope=_physical_scope(args,job)
+     if scope is not None:scope.verify_environment()
+     with metadata_scope(scope):
+@@ -301,6 +327,7 @@
+             raise ValueError('execution worker ownership differs')
+         if any(live[k] != v for k, v in policy.items()):
+             raise ValueError('execution guard policy differs from registration')
++        if job['kind']=='compact_resource':_resource_limit_receipt(args,job,'worker',live)
+         def stop(signum, frame):
+             raise SystemExit('owned execution interrupted; never relaunch this identity')
+         signal.signal(signal.SIGTERM, stop)

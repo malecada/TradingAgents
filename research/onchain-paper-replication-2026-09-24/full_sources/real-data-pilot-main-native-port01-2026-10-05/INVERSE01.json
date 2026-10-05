@@ -1,0 +1,254 @@
+{
+  "job.py": {
+    "baseline_sha256": "74441a908670bf25983b4eddd4143245d4a68a45a0865ae58da3184516c3c39d",
+    "candidate_sha256": "4dca6079896dd1394ccf65fbcd1a9bc601608fc8be22675b6f0f496e51ddd5e9",
+    "changes": [
+      {
+        "after": "    if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'},required|{'storage_budget','native_unit_limits'}):\n",
+        "after_end": 47,
+        "after_start": 46,
+        "before": "    if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'}):\n",
+        "before_end": 47,
+        "before_start": 46
+      },
+      {
+        "after": "    if 'native_unit_limits' in value:resources._native_policy(value['native_unit_limits'])\n",
+        "after_end": 74,
+        "after_start": 73,
+        "before": "",
+        "before_end": 73,
+        "before_start": 73
+      },
+      {
+        "after": "    if 'native_unit_limits' in job.get('resources',{}) and job.get('kind')!='compact_resource':\n        raise ValueError('native-only file limits require compact_resource')\n",
+        "after_end": 80,
+        "after_start": 78,
+        "before": "",
+        "before_end": 77,
+        "before_start": 77
+      },
+      {
+        "after": "def _resource_limit_receipt(args,job,role,live=None):\n    if job['kind']!='compact_resource':raise ValueError('native receipt requires selected compact resource job')\n    from . import resource_fixture\n    readback=resource_fixture.worker_limits()\n    expected=job['resources']['native_unit_limits']\n    if expected!={'file_size_bytes':readback['rlimit_fsize']}:raise ValueError('registered process file limit differs')\n    if role=='worker' and (live is None or live.get('native_unit_limits')!=expected):raise ValueError('worker native authority missing')\n    value={'schema_version':1,'experiment':args.experiment,'source_commit':args.source,'role':role,'pid':os.getpid(),'file_size_limit':[readback['rlimit_fsize']]*2,'before_claim':True,'native_unit':None if live is None else live['unit'],'native_cgroup':None if live is None else live['cgroup']}\n    value['native_environment']={key:os.environ.get(key) for key in resources._native_owned_env(Path(args.root))}\n    if value['native_environment']!=resources._native_owned_env(Path(args.root)):raise ValueError('actual process environment differs from owned routing')\n    resources._native_receipt(_base(args),role+'-file-limit.json',value)\n\n\n\n",
+        "after_end": 245,
+        "after_start": 231,
+        "before": "",
+        "before_end": 228,
+        "before_start": 228
+      },
+      {
+        "after": "    if job['kind']=='compact_resource':_resource_limit_receipt(args,job,'monitor')\n",
+        "after_end": 249,
+        "after_start": 248,
+        "before": "",
+        "before_end": 231,
+        "before_start": 231
+      },
+      {
+        "after": "        if 'native_unit_limits' in job['resources']:\n            guard_policy={k:v for k,v in job['resources'].items() if k!='native_unit_limits'}\n            result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',\n                memory_swap_max_bytes=0, owner_identity=owner, native_unit_limits=job['resources']['native_unit_limits'], **guard_policy)\n        else:\n            result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',\n                memory_swap_max_bytes=0, owner_identity=owner, **job['resources'])\n",
+        "after_end": 266,
+        "after_start": 259,
+        "before": "        result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',\n            memory_swap_max_bytes=0, owner_identity=owner, **job['resources'])\n",
+        "before_end": 243,
+        "before_start": 241
+      },
+      {
+        "after": "    if job['kind']=='compact_resource':\n        from . import resource_fixture\n        resource_fixture.worker_limits()\n",
+        "after_end": 315,
+        "after_start": 312,
+        "before": "",
+        "before_end": 289,
+        "before_start": 289
+      },
+      {
+        "after": "        if job['kind']=='compact_resource':_resource_limit_receipt(args,job,'worker',live)\n",
+        "after_end": 330,
+        "after_start": 329,
+        "before": "",
+        "before_end": 303,
+        "before_start": 303
+      }
+    ]
+  },
+  "resources.py": {
+    "baseline_sha256": "7735c451511b99f293d658c608afcdb21956d470c117d72104d1f55228041f44",
+    "candidate_sha256": "9410243896ebc21ee445ea17b6fd56b5c28942661dced6427674f124713b22f4",
+    "changes": [
+      {
+        "after": "def _native_receipt(directory,name,value):\n    # Pure metadata only: usable by monitor before any numerical import.\n    from tradingagents.research.onchain_replication.owned_io import _cleanup\n    import stat\n    raw=(json.dumps(value,sort_keys=True,allow_nan=False)+'\\n').encode()\n    if len(raw)>65536 or '/' in name or name in ('','.','..'):raise ValueError('bounded native receipt required')\n    directory=Path(directory);parent=fd=None\n    try:\n        if directory.resolve()!=directory:raise ValueError('native receipt parent redirected')\n        parent=os.open(directory,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)\n        original=os.fstat(parent)\n        fd=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=parent)\n        opened=os.fstat(fd)\n        if not stat.S_ISREG(opened.st_mode) or opened.st_nlink!=1:raise ValueError('native receipt file differs')\n        offset=0\n        while offset<len(raw):\n            wrote=os.write(fd,raw[offset:])\n            if wrote<=0:raise OSError('native receipt short write')\n            offset+=wrote\n        os.fsync(fd);os.fsync(parent)\n        now=directory.stat();child=os.stat(name,dir_fd=parent,follow_symlinks=False)\n        if directory.resolve()!=directory or (now.st_dev,now.st_ino)!=(original.st_dev,original.st_ino) or (child.st_dev,child.st_ino,child.st_nlink,child.st_size)!=(opened.st_dev,opened.st_ino,1,len(raw)):raise ValueError('native receipt path changed')\n    finally:\n        _cleanup(tuple((lambda descriptor=descriptor:os.close(descriptor)) for descriptor in (fd,parent) if descriptor is not None))\n\n\ndef _native_policy(value):\n    if value is None:return None\n    if type(value) is not dict or set(value)!={'file_size_bytes'} or type(value['file_size_bytes']) is not int or not 0<value['file_size_bytes']<=4*1024**2:\n        raise ValueError('native unit file limit schema differs')\n    return dict(value)\n\n\ndef _native_owned_env(cwd):\n    root=Path(cwd);base=root/'fixture_runtime'\n    return {'PYTHONPATH':str(root),'TMPDIR':str(base/'tmp'),'XDG_CACHE_HOME':str(base/'cache'),'TORCH_HOME':str(base/'torch'),'MPLCONFIGDIR':str(base/'matplotlib'),'HF_HOME':str(base/'hf'),'TORCH_EXTENSIONS_DIR':str(base/'torch-extensions'),'PYTHONDONTWRITEBYTECODE':'1','PYTEST_DISABLE_PLUGIN_AUTOLOAD':'1','OPENBLAS_NUM_THREADS':'2','OMP_NUM_THREADS':'2','MKL_NUM_THREADS':'2','NUMEXPR_NUM_THREADS':'2'}\n\n\ndef _native_seconds(text):\n    factors={'us':0.000001,'ms':0.001,'s':1,'min':60,'h':3600}\n    total=0\n    for part in text.split():\n        unit=next((u for u in factors if part.endswith(u) and part[:-len(u)].isdigit()),None)\n        if unit is None:raise ValueError('unsupported native duration readback')\n        total+=int(part[:-len(unit)])*factors[unit]\n    if not text or total<=0:raise ValueError('missing native duration readback')\n    return total\n\n\ndef _native_ready(policy,ready,properties,wall_seconds,cwd):\n    policy=_native_policy(policy);expected=policy['file_size_bytes']\n    if ready.get('native_environment')!=_native_owned_env(cwd):raise ValueError('native child environment differs')\n    limits=ready.get('file_size_limit')\n    if ready.get('native_unit_limits')!=policy or type(limits) is not list or len(limits)!=2 or any(type(v) is not int or v!=expected for v in limits):\n        raise ValueError('native child file limit readback differs')\n    if any(properties.get(k)!=str(expected) for k in ('LimitFSIZE','LimitFSIZESoft')):\n        raise ValueError('native unit file limit readback differs')\n    if _native_seconds(properties.get('RuntimeMaxUSec',''))!=wall_seconds:raise ValueError('native unit wall readback differs')\n\n\ndef _child(receipt,cpus,lease_seconds,command,physical=False,physical_context=None,native_unit_limits=None):\n    native_unit_limits=_native_policy(native_unit_limits)\n    if physical and native_unit_limits is not None:raise ValueError('physical and native-only limits cannot be combined')\n    if not physical:\n        if native_unit_limits is None:return _child_legacy(receipt,cpus,lease_seconds,command)\n        return _child_legacy(receipt,cpus,lease_seconds,command,native_unit_limits=native_unit_limits)\n",
+        "after_end": 215,
+        "after_start": 149,
+        "before": "def _child(receipt,cpus,lease_seconds,command,physical=False,physical_context=None):\n    if not physical:return _child_legacy(receipt,cpus,lease_seconds,command)\n",
+        "before_end": 151,
+        "before_start": 149
+      },
+      {
+        "after": "def _child_legacy(receipt, cpus, lease_seconds, command, native_unit_limits=None):\n",
+        "after_end": 229,
+        "after_start": 228,
+        "before": "def _child_legacy(receipt, cpus, lease_seconds, command):\n",
+        "before_end": 165,
+        "before_start": 164
+      },
+      {
+        "after": "        if scope is not None or native_unit_limits is not None:\n",
+        "after_end": 245,
+        "after_start": 244,
+        "before": "        if scope is not None:\n",
+        "before_end": 181,
+        "before_start": 180
+      },
+      {
+        "after": "        if native_unit_limits is not None:\n            expected=_native_policy(native_unit_limits)['file_size_bytes']\n            if ready['file_size_limit']!=[expected,expected]:raise ValueError('inherited native file limit differs')\n            ready['native_unit_limits']=dict(native_unit_limits)\n            ready['native_environment']={key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}\n            if ready['native_environment']!=_native_owned_env(Path.cwd()):raise ValueError('inherited native environment differs')\n",
+        "after_end": 253,
+        "after_start": 247,
+        "before": "",
+        "before_end": 183,
+        "before_start": 183
+      },
+      {
+        "after": "def _native_select(primary,later,io):\n    \"\"\"First actual fatal precedes synthetic cleanup uncertainty and ordinary errors.\"\"\"\n    if primary is not None and io._fatal(primary):return primary\n    try:\n        causes=io._flatten(tuple(e for e in (primary,later) if e is not None))\n        actual=next((e for e in causes if io._fatal(e)),None)\n        if actual is not None:return actual\n        if isinstance(primary,io.CleanupFailure):return primary\n        if isinstance(later,io.CleanupFailure):return later\n        return primary if primary is not None else later\n    except BaseException as selection_error:\n        if later is not None and io._fatal(later):return later\n        return selection_error\n\n\ndef _native_reason(state,error,io):\n    # Store the original before any diagnostic formatting or attachment.\n    selected=error\n    try:\n        state['phase']='failed'\n        state['limit_reason']=state.get('limit_reason') or 'selected native guard failed; see raised exception'\n        text=type(error).__name__+': '+str(error)\n        if state['limit_reason']=='selected native guard failed; see raised exception':state['limit_reason']=text\n    except BaseException as diagnostic:selected=_native_select(selected,diagnostic,io)\n    return selected\n\n\ndef _native_finalize(state,primary,actions,io):\n    \"\"\"Attempt every independent action once; retain the original actual fatal.\"\"\"\n    failed=False\n    for name,action in actions:\n        try:\n            state['phase']='complete' if primary is None and state.get('limit_reason') is None else 'failed'\n            action()\n        except BaseException as error:\n            failed=True\n            primary=_native_select(primary,error,io)\n            primary=_native_select(primary,_native_reason(state,error,io),io)\n    if primary is not None:state['phase']='failed'\n    return primary,failed\n\n\ndef _native_write(path,state,io):\n    with io._opened(path,'xb') as stream:\n        raw=json.dumps(state,indent=2,sort_keys=True).encode()+b'\\n'\n        stream.write(raw);stream.flush();os.fsync(stream.fileno())\n\n\ndef _native_sync(path,io):\n    fd=os.open(path,os.O_RDONLY|os.O_DIRECTORY)\n    try:os.fsync(fd)\n    finally:io._cleanup((lambda:os.close(fd),))\n\n\ndef _native_atomic(path,state,io):\n    temporary=path.with_suffix('.tmp')\n    _native_write(temporary,state,io)\n    temporary.replace(path)\n    _native_sync(path.parent,io)\n\n\n",
+        "after_end": 339,
+        "after_start": 278,
+        "before": "",
+        "before_end": 208,
+        "before_start": 208
+      },
+      {
+        "after": "                lease_seconds=15., wait_seconds=30., disk_paths=(), disk_floor_bytes=20*GIB, wall_seconds=28800., owner_identity=None, storage_budget=None, physical_policy=None, native_unit_limits=None):\n",
+        "after_end": 343,
+        "after_start": 342,
+        "before": "                lease_seconds=15., wait_seconds=30., disk_paths=(), disk_floor_bytes=20*GIB, wall_seconds=28800., owner_identity=None, storage_budget=None, physical_policy=None):\n",
+        "before_end": 212,
+        "before_start": 211
+      },
+      {
+        "after": "    native_unit_limits=_native_policy(native_unit_limits)\n    if native_unit_limits is not None and physical_policy is not None:raise ValueError('conflicting file-limit authorities')\n",
+        "after_end": 354,
+        "after_start": 352,
+        "before": "",
+        "before_end": 221,
+        "before_start": 221
+      },
+      {
+        "after": "    if native_unit_limits is not None:state['native_unit_limits']=native_unit_limits\n",
+        "after_end": 407,
+        "after_start": 406,
+        "before": "",
+        "before_end": 273,
+        "before_start": 273
+      },
+      {
+        "after": "    if native_unit_limits is not None:\n        from tradingagents.research.onchain_replication import owned_io as native_io\n",
+        "after_end": 414,
+        "after_start": 412,
+        "before": "",
+        "before_end": 278,
+        "before_start": 278
+      },
+      {
+        "after": "            if native_unit_limits is not None:\n                selected=_native_reason(state,error,native_io)\n                try:\n                    if hasattr(error,'observation'):state.setdefault('storage_breach',dict(error.observation))\n                except BaseException as diagnostic:selected=_native_select(selected,diagnostic,native_io)\n                raise selected\n",
+        "after_end": 431,
+        "after_start": 425,
+        "before": "",
+        "before_end": 289,
+        "before_start": 289
+      },
+      {
+        "after": "    if native_unit_limits is not None:prior_signals={}\n    else:prior_signals={sig:signal.signal(sig,stopped) for sig in (signal.SIGTERM,signal.SIGINT)}\n",
+        "after_end": 462,
+        "after_start": 460,
+        "before": "    prior_signals={sig:signal.signal(sig,stopped) for sig in (signal.SIGTERM,signal.SIGINT)}\n",
+        "before_end": 319,
+        "before_start": 318
+      },
+      {
+        "after": "        if native_unit_limits is not None:_native_atomic(receipt/'live.json',state,native_io)\n        else:_atomic(receipt / 'live.json', state)\n",
+        "after_end": 468,
+        "after_start": 466,
+        "before": "        _atomic(receipt / 'live.json', state)\n",
+        "before_end": 324,
+        "before_start": 323
+      },
+      {
+        "after": "        if native_unit_limits is not None:\n            prior_signals={sig:signal.getsignal(sig) for sig in (signal.SIGTERM,signal.SIGINT)}\n            for sig in (signal.SIGTERM,signal.SIGINT):signal.signal(sig,stopped)\n",
+        "after_end": 473,
+        "after_start": 470,
+        "before": "",
+        "before_end": 326,
+        "before_start": 326
+      },
+      {
+        "after": "        if native_unit_limits is not None:\n            position=args.index(sys.executable)\n            args[position:position]=['--property=LimitFSIZE='+str(native_unit_limits['file_size_bytes']),'--property=RuntimeMaxSec='+str(wall_seconds)]+['--setenv='+key+'='+value for key,value in _native_owned_env(cwd).items()]\n            position=args.index('--',args.index('--lease'))\n            args[position:position]=['--native-file-limit',str(native_unit_limits['file_size_bytes'])]\n",
+        "after_end": 510,
+        "after_start": 505,
+        "before": "",
+        "before_end": 358,
+        "before_start": 358
+      },
+      {
+        "after": "        if native_unit_limits is not None:\n            selected=_systemctl('show',unit,'--property=LimitFSIZE,LimitFSIZESoft,RuntimeMaxUSec')\n            state['native_unit_properties']=dict(line.split('=',1) for line in selected.stdout.splitlines() if '=' in line)\n            _native_ready(native_unit_limits,ready,state['native_unit_properties'],wall_seconds,cwd)\n            state['native_environment']=ready['native_environment']\n",
+        "after_end": 534,
+        "after_start": 529,
+        "before": "",
+        "before_end": 377,
+        "before_start": 377
+      },
+      {
+        "after": "        if native_unit_limits is not None:_native_atomic(receipt/'release.json',{'kernel_controls_verified':True},native_io)\n        else:_atomic(receipt / 'release.json', {'kernel_controls_verified': True})\n",
+        "after_end": 549,
+        "after_start": 547,
+        "before": "        _atomic(receipt / 'release.json', {'kernel_controls_verified': True})\n",
+        "before_end": 391,
+        "before_start": 390
+      },
+      {
+        "after": "        if native_unit_limits is not None:\n            selected_primary=selected_body_error=exc\n            selected_primary=_native_reason(state,selected_primary,native_io)\n        else:\n            state['limit_reason'] = f'{type(exc).__name__}: {exc}'\n            if physical_policy is not None:\n                selected_primary=exc\n                selected_body_error=exc\n",
+        "after_end": 591,
+        "after_start": 583,
+        "before": "        state['limit_reason'] = f'{type(exc).__name__}: {exc}'\n        if physical_policy is not None:\n            selected_primary=exc\n            selected_body_error=exc\n",
+        "before_end": 429,
+        "before_start": 425
+      },
+      {
+        "after": "        elif native_unit_limits is not None:\n            # Signals, stop, readback, storage, evidence and restores are separate\n            # cleanup attempts. No physical scope is fabricated for this route.\n            actions=[]\n            for sig in (signal.SIGTERM,signal.SIGINT):\n                actions.append(('ignore-signal-'+str(sig),lambda sig=sig:signal.signal(sig,signal.SIG_IGN)))\n            stop_state={}\n            if launched:\n                state['cleanup_verified']=False\n                def stop_unit():\n                    result=_systemctl('stop',unit,check=False)\n                    state['cleanup_stop_returncode']=result.returncode;stop_state['stop']=True\n                def read_unit():\n                    after=_properties(unit);state['cleanup_unit_properties']=after\n                    if after.get('ActiveState') not in ('inactive','failed'):raise RuntimeError('native unit did not stop')\n                    stop_state['unit']=True\n                def read_cgroup():\n                    if cgroup is not None and cgroup.exists() and 'populated 1' in (cgroup/'cgroup.events').read_text():\n                        raise RuntimeError('native unit cgroup remains populated after stop')\n                    stop_state['cgroup']=True\n                def verify_stop():\n                    if set(stop_state)!={'stop','unit','cgroup'}:raise RuntimeError('native stop/readback is incomplete')\n                    state['cleanup_verified']=True\n                actions.extend((('stop-unit',stop_unit),('read-unit',read_unit),('read-cgroup',read_cgroup),('verify-stop',verify_stop)))\n            actions.append(('observe-storage',observe_storage))\n            def final_disk():\n                state['disk_free_bytes']={str(p):shutil.disk_usage(p).free for p in disk_paths}\n                for path, free in state['disk_free_bytes'].items():\n                    previous = state['minimum_sampled_disk_free_bytes'].get(path, free)\n                    state['minimum_sampled_disk_free_bytes'][path] = min(previous, free)\n                if any(v<disk_floor_bytes for v in state['disk_free_bytes'].values()):raise RuntimeError('native final disk floor breached')\n            actions.append(('final-disk-floor',final_disk))\n            actions.append(('publish',publish))\n            # Restore signals before the immutable final attempt, so failures\n            # already known at that boundary are represented as failed.\n            for sig,previous in prior_signals.items():\n                actions.append(('restore-signal-'+str(sig),lambda sig=sig,previous=previous:signal.signal(sig,previous)))\n            actions.extend((('final-receipt',lambda:_native_write(receipt/'final.json',state,native_io)),\n                ('directory-sync',lambda:_native_sync(receipt,native_io))))\n            selected_primary,selected_finalization_failed=_native_finalize(state,selected_primary,actions,native_io)\n            if selected_finalization_failed:\n                # An immutable final body may precede a late close/fsync error.\n                # It never overrides this failed invocation and additive marker.\n                tail=(('failed-live',publish),('failed-marker',lambda:_native_write(receipt/'native-finalization-failed.json',state,native_io)),\n                    ('failed-directory-sync',lambda:_native_sync(receipt,native_io)))\n                selected_primary,_=_native_finalize(state,selected_primary,tail,native_io)\n",
+        "after_end": 676,
+        "after_start": 630,
+        "before": "",
+        "before_end": 468,
+        "before_start": 468
+      },
+      {
+        "after": "            raise selected_primary\n    elif native_unit_limits is not None:\n        if selected_primary is not None and (selected_finalization_failed or selected_primary is not selected_body_error\n                or native_io._fatal(selected_primary) or isinstance(selected_primary,native_io.CleanupFailure)):\n",
+        "after_end": 710,
+        "after_start": 706,
+        "before": "",
+        "before_end": 498,
+        "before_start": 498
+      },
+      {
+        "after": "    if 'native_unit_limits' in live:\n        import resource\n        expected=_native_policy(live['native_unit_limits'])['file_size_bytes']\n        if resource.getrlimit(resource.RLIMIT_FSIZE)!=(expected,expected):raise RuntimeError('native worker file limit differs')\n        if {key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}!=_native_owned_env(Path.cwd()):raise RuntimeError('native worker environment differs')\n",
+        "after_end": 750,
+        "after_start": 745,
+        "before": "",
+        "before_end": 533,
+        "before_start": 533
+      },
+      {
+        "after": "    parser.add_argument('--native-file-limit',type=int)\n",
+        "after_end": 761,
+        "after_start": 760,
+        "before": "",
+        "before_end": 543,
+        "before_start": 543
+      },
+      {
+        "after": "    raise SystemExit(_child(arguments.child, [int(cpu) for cpu in arguments.cpus.split(',')], arguments.lease, command, arguments.physical, arguments.physical_context, None if arguments.native_file_limit is None else {'file_size_bytes':arguments.native_file_limit}))\n",
+        "after_end": 765,
+        "after_start": 764,
+        "before": "    raise SystemExit(_child(arguments.child, [int(cpu) for cpu in arguments.cpus.split(',')], arguments.lease, command, arguments.physical, arguments.physical_context))\n",
+        "before_end": 547,
+        "before_start": 546
+      }
+    ]
+  }
+}

@@ -1,0 +1,116 @@
+--- a/tradingagents/research/onchain_replication/feature_journal.py
++++ b/tradingagents/research/onchain_replication/feature_journal.py
+@@ -5,6 +5,9 @@
+ from .provenance import file_hash,durable_mkdir,sync_directory,canonical_bytes,require_hash,utc
+ from .cache import cache_key
+ from ..lifecycle import _immutable
++
++from . import import_metadata as checked_io
++_RESOURCE_METADATA=object()
+ 
+ STAGES={'samples_complete','dictionary_progress','dictionary_complete','mcm_progress',
+         'embedding_progress','graph_complete','representation_complete'}
+@@ -29,8 +32,41 @@
+ 
+ 
+ class FeatureJournal:
+-    def __init__(self,directory,owner,*,required_graphs,parent=None):
+-        self.directory=Path(directory);durable_mkdir(self.directory.parent)
++    def __setattr__(self,name,value):
++        if hasattr(self,'_resource_pin') and name in {'_resource_pin','directory','_metadata_role','owner','required','parent','identity','records','sealed'}:raise AttributeError('resource journal identity is immutable')
++        object.__setattr__(self,name,value)
++
++    def __delattr__(self,name):
++        if hasattr(self,'_resource_pin') and name in {'_resource_pin','directory','_metadata_role','owner','required','parent','identity','records','sealed'}:raise AttributeError('resource journal identity is immutable')
++        object.__delattr__(self,name)
++
++    def _resource_check(self):
++        path,inode,owner_raw,start_raw,config=self._resource_pin
++        if self._metadata_role is not _RESOURCE_METADATA or self.directory!=path or path.resolve()!=path:raise ValueError('resource journal original role/path differs')
++        info=path.lstat()
++        if not path.is_dir() or path.is_symlink() or (info.st_dev,info.st_ino)!=inode:raise ValueError('resource journal original inode differs')
++        now=canonical_bytes({'owner':self.owner,'required':self.required,'parent':self.parent,'identity':self.identity,'records':self.records})
++        if now!=config:raise ValueError('resource journal original configuration differs')
++        checked_io.exact(path,'owner.json',owner_raw);checked_io.exact(path,'start.json',start_raw)
++        final=path.lstat()
++        if path.resolve()!=path or (final.st_dev,final.st_ino)!=inode:raise ValueError('resource journal changed during identity readback')
++
++    def __init__(self,directory,owner,*,required_graphs,parent=None,_metadata_role=None):
++        if _metadata_role is not None and _metadata_role is not _RESOURCE_METADATA:raise ValueError('unknown journal metadata role')
++        self._metadata_role=_metadata_role
++        self.directory=Path(directory)
++        if _metadata_role is _RESOURCE_METADATA:
++            if parent is not None:raise ValueError('resource journal successor is not admitted')
++            if set(owner)!={'experiment','source_commit','producer','workflow_identity'} or any(type(x) is not str or not x for x in owner.values()):raise ValueError('resource journal owner role differs')
++            require_hash(owner['workflow_identity'])
++            if len(owner['source_commit'])!=40 or any(c not in '0123456789abcdef' for c in owner['source_commit']):raise ValueError('resource journal source differs')
++            missing=[];ancestor=self.directory.parent
++            while not ancestor.exists():
++                if len(missing)>=16:raise ValueError('journal parent depth exceeds bound')
++                missing.append(ancestor);ancestor=ancestor.parent
++            if ancestor.resolve()!=ancestor or not ancestor.is_dir():raise ValueError('journal parent redirected')
++            for path in reversed(missing):checked_io.birth(path)
++        else:durable_mkdir(self.directory.parent)
+         self.required=required_set(required_graphs)
+         self.parent=parent
+         inherited_identity=None
+@@ -41,13 +77,30 @@
+             if metadata['status']!='failed' or canonical_bytes(metadata['owner'])!=canonical_bytes(parent['owner']) or metadata['required_graphs']!=self.required:raise ValueError('journal parent owner/status/membership differs')
+             inherited_identity=metadata['workflow_identity']
+             if inherited_identity is not None:require_hash(inherited_identity)
+-        self.directory.mkdir(exist_ok=False);sync_directory(self.directory.parent)
+-        _immutable(self.directory/'owner.json',owner)
+-        _immutable(self.directory/'start.json',{'schema_version':1,'owner':owner,
++        if self._metadata_role is _RESOURCE_METADATA:birth_inode=checked_io.birth(self.directory)
++        else:self.directory.mkdir(exist_ok=False);sync_directory(self.directory.parent)
++        self._publish(self.directory/'owner.json',owner)
++        self._publish(self.directory/'start.json',{'schema_version':1,'owner':owner,
+             'required_graphs':self.required,'parent':parent,'workflow_identity':inherited_identity})
+         self.owner=owner;self.records=[];self.identity=inherited_identity;self.sealed=False
++        if self._metadata_role is _RESOURCE_METADATA:
++            owner_raw=canonical_bytes(owner)
++            start_raw=canonical_bytes({'schema_version':1,'owner':owner,'required_graphs':self.required,'parent':parent,'workflow_identity':inherited_identity})
++            config=canonical_bytes({'owner':self.owner,'required':self.required,'parent':self.parent,'identity':self.identity,'records':self.records})
++            self._resource_pin=(self.directory,birth_inode,owner_raw,start_raw,config)
++            self._resource_check()
++
++    def _publish(self,path,value):
++        if hasattr(self,'_resource_pin'):self._resource_check()
++        if self._metadata_role is _RESOURCE_METADATA:
++            if path.parent!=self.directory:raise ValueError('resource journal metadata directory differs')
++            raw=canonical_bytes(value);checked_io.write(self.directory,path.name,raw);checked_io.exact(self.directory,path.name,raw)
++        elif self._metadata_role is None:_immutable(path,value)
++        else:raise ValueError('journal metadata role changed')
++        if hasattr(self,'_resource_pin'):self._resource_check()
+ 
+     def __call__(self,stage,context,payload):
++        if self._metadata_role is not None:raise ValueError('resource journal numerical component publication not admitted')
+         if self.sealed or stage not in STAGES:raise ValueError('closed/unknown representation stage')
+         identity=context['workflow_identity']
+         if self.identity is not None and self.identity!=identity:raise ValueError('mixed representation workflow')
+@@ -60,14 +113,23 @@
+         _immutable(self.directory/f'event-{index:06d}.json',record)
+         self.records.append(record)
+ 
++    def resource_complete(self,proof):
++        """Explicit resource terminal, not a scientific representation."""
++        self._resource_check()
++        from .resource_fixture import complete_journal
++        return complete_journal(self,proof)
++
+     def seal(self,status,*,reason=None):
++        if hasattr(self,'_resource_pin'):self._resource_check()
+         if self.sealed or status not in ('complete','failed'):raise ValueError('invalid journal closure')
+         if status=='complete' and (not self.records or self.records[-1]['stage']!='representation_complete'):raise ValueError('representation completion not reached')
+         path=self.directory/(status+'.json')
+-        _immutable(path,{'schema_version':1,'status':status,'reason':reason,'owner':self.owner,
++        self._publish(path,{'schema_version':1,'status':status,'reason':reason,'owner':self.owner,
+                          'workflow_identity':self.identity,'events':self.records,'parent':self.parent,
+                          'required_graphs':self.required})
+-        self.sealed=True;return path
++        if hasattr(self,'_resource_pin'):self._resource_check();object.__setattr__(self,'sealed',True)
++        else:self.sealed=True
++        return path
+ 
+ 
+ def read_feature_journal(path,expected_hash,expected_owner,*,required_graphs,max_array_bytes,lazy_features=False,_ancestors=()):

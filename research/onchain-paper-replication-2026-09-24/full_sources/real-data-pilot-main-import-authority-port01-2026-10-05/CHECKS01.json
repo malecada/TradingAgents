@@ -1,0 +1,37 @@
+{
+  "actual_exit": 0,
+  "actual_test_command": ".venv/bin/python -B /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/test_authority01.py",
+  "actual_tool_chunk": "3df807",
+  "decision": "candidate-only-coupled-import-authority-source-prepared",
+  "delta_sha256": "01f24fc00f2a2fd8f65de049a769b62858b5f91a912502ef7a7bd83d7c600387",
+  "external_kernel_and_workload": [
+    {
+      "byte_equal": true,
+      "cap_sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287",
+      "main_sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py"
+    },
+    {
+      "byte_equal": true,
+      "cap_sha256": "30a957ad48997a3236203e1af2ccf9e0874b172ffac73773c31efc6bece9fc67",
+      "main_sha256": "30a957ad48997a3236203e1af2ccf9e0874b172ffac73773c31efc6bece9fc67",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py"
+    }
+  ],
+  "genuine_binding_or_owner_instantiated": false,
+  "initial_test_failure": {
+    "cause": "Test incorrectly expected _cleanup(primary=existing fatal) to re-raise outside active exception; accepted helper leaves original propagation to caller. Corrected test uses actual try/finally exception context. Candidate unchanged.",
+    "source": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-authority-port01-2026-10-05/test_authority01.before-cleanup-expectation.py",
+    "stderr_sha256": "14a681995a71e82467be937f7ab71f31a5c2ceffb190c295e98e45321aa2b392"
+  },
+  "live_changes": false,
+  "native_run": false,
+  "numerical_imports": false,
+  "population_from_record_ast_identical_to_cap": true,
+  "registration_or_capacity_authority": false,
+  "schema_version": 1,
+  "stderr_sha256": "dc748f9d8f8331b769bd6e199b2ed5c67d08023eb6f12bbc65d0d73e2a08ef6e",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "test_sha256": "a105fa3a089cb1be53f75e6daef119263d24b649b8c23492fefa831c53214b7a",
+  "tests": 9
+}

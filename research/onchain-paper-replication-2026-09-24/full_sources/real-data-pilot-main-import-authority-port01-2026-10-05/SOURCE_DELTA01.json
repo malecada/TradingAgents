@@ -1,0 +1,1894 @@
+{
+  "changed": [
+    {
+      "baseline_sha256": "36b43349bdcca5f36bd47181f47af6b03987d59fd2f20ac73472d648a58fbf97",
+      "candidate_sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+      "cap_sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+      "edits": [
+        {
+          "new": [
+            "        reader=metadata\n",
+            "        if self.record.get('resource_only') is True:\n",
+            "            from .import_metadata import metadata as reader\n"
+          ],
+          "new_end": 101,
+          "new_start": 98,
+          "old": [],
+          "old_end": 98,
+          "old_start": 98
+        },
+        {
+          "new": [
+            "            require(reader(path,run.admission.root)[1]==expected,'owner metadata changed after binding')\n"
+          ],
+          "new_end": 103,
+          "new_start": 102,
+          "old": [
+            "            require(metadata(path,run.admission.root)[1]==expected,'owner metadata changed after binding')\n"
+          ],
+          "old_end": 100,
+          "old_start": 99
+        },
+        {
+          "new": [
+            "         continuation_input=None,death_input=None,_create=False,_first=False,job_input='execution_job',_resource=False):\n"
+          ],
+          "new_end": 161,
+          "new_start": 160,
+          "old": [
+            "         continuation_input=None,death_input=None,_create=False,_first=False):\n"
+          ],
+          "old_end": 158,
+          "old_start": 157
+        },
+        {
+          "new": [
+            "    execution=json.loads(run.read_input(job_input))\n",
+            "    if _resource:\n",
+            "        from .resource_binding import validate_job\n",
+            "        validate_job(execution)\n",
+            "        require(continuation_input is None and death_input is None,'resource successor not admitted')\n",
+            "    else:\n",
+            "        require(job_input=='execution_job','legacy matching job input differs');job.job_schema(execution)\n"
+          ],
+          "new_end": 171,
+          "new_start": 164,
+          "old": [
+            "    execution=json.loads(run.read_input('execution_job'));job.job_schema(execution)\n"
+          ],
+          "old_end": 162,
+          "old_start": 161
+        },
+        {
+          "new": [
+            "    require(execution['kind']==('compact_resource' if _resource else 'fit'),'matching producer job kind differs')\n"
+          ],
+          "new_end": 173,
+          "new_start": 172,
+          "old": [
+            "    require(execution['kind']=='fit','matching producer requires admitted fit job')\n"
+          ],
+          "old_end": 164,
+          "old_start": 163
+        },
+        {
+          "new": [
+            "    if _resource:\n",
+            "        from .original_import_preparation import required_stages\n",
+            "        required_stages(descriptor)\n",
+            "        require(selected.get('original_dictionary_input')==item.get('original_dictionary_input') and type(selected.get('original_dictionary_input')) is str,'original import selection differs')\n"
+          ],
+          "new_end": 202,
+          "new_start": 198,
+          "old": [],
+          "old_end": 189,
+          "old_start": 189
+        },
+        {
+          "new": [
+            "        reader=metadata\n",
+            "        if _resource:\n",
+            "            from .import_metadata import metadata as reader\n",
+            "        value,h=reader(path,ad.root);snapshots[path]=h;return value\n"
+          ],
+          "new_end": 220,
+          "new_start": 216,
+          "old": [
+            "        value,h=metadata(path,ad.root);snapshots[path]=h;return value\n"
+          ],
+          "old_end": 204,
+          "old_start": 203
+        },
+        {
+          "new": [
+            "                from .feature_journal import _RESOURCE_METADATA\n",
+            "                journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent,\n",
+            "                    **({'_metadata_role':_RESOURCE_METADATA} if _resource else {}))\n",
+            "                publish=_immutable\n",
+            "                if _resource:\n",
+            "                    from .import_metadata import write as write_metadata\n",
+            "                    publish=lambda path,value:write_metadata(path.parent,path.name,canonical_bytes(value))\n",
+            "                publish(expected/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,\n"
+          ],
+          "new_end": 251,
+          "new_start": 243,
+          "old": [
+            "                journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent)\n",
+            "                _immutable(expected/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,\n"
+          ],
+          "old_end": 229,
+          "old_start": 227
+        },
+        {
+          "new": [
+            "                    'continuation_input':continuation_input,'death_input':death_input,\n",
+            "                    **({'job_input':job_input,'job_sha256':ad.inputs[job_input]['sha256'],'resource_only':True} if _resource else {})})\n"
+          ],
+          "new_end": 255,
+          "new_start": 253,
+          "old": [
+            "                    'continuation_input':continuation_input,'death_input':death_input})\n"
+          ],
+          "old_end": 232,
+          "old_start": 231
+        },
+        {
+          "new": [
+            "                if _resource and (not isinstance(error,Exception) or isinstance(error,MemoryError)):\n",
+            "                    error.add_note('partial resource journal preserved at '+str(expected));raise\n"
+          ],
+          "new_end": 258,
+          "new_start": 256,
+          "old": [],
+          "old_end": 233,
+          "old_start": 233
+        },
+        {
+          "new": [
+            "                policy_input=policy_input,journal_directory=expected,continuation_input=continuation_input,death_input=death_input,job_input=job_input,_resource=_resource)\n"
+          ],
+          "new_end": 263,
+          "new_start": 262,
+          "old": [
+            "                policy_input=policy_input,journal_directory=expected,continuation_input=continuation_input,death_input=death_input)\n"
+          ],
+          "old_end": 238,
+          "old_start": 237
+        },
+        {
+          "new": [
+            "            if _resource and (not isinstance(error,Exception) or isinstance(error,MemoryError)):\n",
+            "                error.add_note('unbound resource journal preserved at '+str(expected));raise\n"
+          ],
+          "new_end": 266,
+          "new_start": 264,
+          "old": [],
+          "old_end": 239,
+          "old_start": 239
+        },
+        {
+          "new": [
+            "    if _resource:required_claim.update(job_input=job_input,job_sha256=ad.inputs[job_input]['sha256'],resource_only=True)\n"
+          ],
+          "new_end": 283,
+          "new_start": 282,
+          "old": [],
+          "old_end": 255,
+          "old_start": 255
+        },
+        {
+          "new": [
+            "    if _resource:record.update(job_input=job_input,job_sha256=ad.inputs[job_input]['sha256'],resource_only=True)\n"
+          ],
+          "new_end": 289,
+          "new_start": 288,
+          "old": [],
+          "old_end": 260,
+          "old_start": 260
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/matching_owner.py"
+    },
+    {
+      "baseline_sha256": "d997b27bf3c5d5a1db0c77a6ce5bf9ed696800a4c88300634eec3efed349ff59",
+      "candidate_sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+      "cap_sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+      "edits": [
+        {
+          "new": [
+            "\n",
+            "from . import import_metadata as checked_io\n",
+            "_RESOURCE_METADATA=object()\n"
+          ],
+          "new_end": 10,
+          "new_start": 7,
+          "old": [],
+          "old_end": 7,
+          "old_start": 7
+        },
+        {
+          "new": [
+            "    def __setattr__(self,name,value):\n",
+            "        if hasattr(self,'_resource_pin') and name in {'_resource_pin','directory','_metadata_role','owner','required','parent','identity','records','sealed'}:raise AttributeError('resource journal identity is immutable')\n",
+            "        object.__setattr__(self,name,value)\n",
+            "\n",
+            "    def __delattr__(self,name):\n",
+            "        if hasattr(self,'_resource_pin') and name in {'_resource_pin','directory','_metadata_role','owner','required','parent','identity','records','sealed'}:raise AttributeError('resource journal identity is immutable')\n",
+            "        object.__delattr__(self,name)\n",
+            "\n",
+            "    def _resource_check(self):\n",
+            "        path,inode,owner_raw,start_raw,config=self._resource_pin\n",
+            "        if self._metadata_role is not _RESOURCE_METADATA or self.directory!=path or path.resolve()!=path:raise ValueError('resource journal original role/path differs')\n",
+            "        info=path.lstat()\n",
+            "        if not path.is_dir() or path.is_symlink() or (info.st_dev,info.st_ino)!=inode:raise ValueError('resource journal original inode differs')\n",
+            "        now=canonical_bytes({'owner':self.owner,'required':self.required,'parent':self.parent,'identity':self.identity,'records':self.records})\n",
+            "        if now!=config:raise ValueError('resource journal original configuration differs')\n",
+            "        checked_io.exact(path,'owner.json',owner_raw);checked_io.exact(path,'start.json',start_raw)\n",
+            "        final=path.lstat()\n",
+            "        if path.resolve()!=path or (final.st_dev,final.st_ino)!=inode:raise ValueError('resource journal changed during identity readback')\n",
+            "\n",
+            "    def __init__(self,directory,owner,*,required_graphs,parent=None,_metadata_role=None):\n",
+            "        if _metadata_role is not None and _metadata_role is not _RESOURCE_METADATA:raise ValueError('unknown journal metadata role')\n",
+            "        self._metadata_role=_metadata_role\n",
+            "        self.directory=Path(directory)\n",
+            "        if _metadata_role is _RESOURCE_METADATA:\n",
+            "            if parent is not None:raise ValueError('resource journal successor is not admitted')\n",
+            "            if set(owner)!={'experiment','source_commit','producer','workflow_identity'} or any(type(x) is not str or not x for x in owner.values()):raise ValueError('resource journal owner role differs')\n",
+            "            require_hash(owner['workflow_identity'])\n",
+            "            if len(owner['source_commit'])!=40 or any(c not in '0123456789abcdef' for c in owner['source_commit']):raise ValueError('resource journal source differs')\n",
+            "            missing=[];ancestor=self.directory.parent\n",
+            "            while not ancestor.exists():\n",
+            "                if len(missing)>=16:raise ValueError('journal parent depth exceeds bound')\n",
+            "                missing.append(ancestor);ancestor=ancestor.parent\n",
+            "            if ancestor.resolve()!=ancestor or not ancestor.is_dir():raise ValueError('journal parent redirected')\n",
+            "            for path in reversed(missing):checked_io.birth(path)\n",
+            "        else:durable_mkdir(self.directory.parent)\n"
+          ],
+          "new_end": 69,
+          "new_start": 34,
+          "old": [
+            "    def __init__(self,directory,owner,*,required_graphs,parent=None):\n",
+            "        self.directory=Path(directory);durable_mkdir(self.directory.parent)\n"
+          ],
+          "old_end": 33,
+          "old_start": 31
+        },
+        {
+          "new": [
+            "        if self._metadata_role is _RESOURCE_METADATA:birth_inode=checked_io.birth(self.directory)\n",
+            "        else:self.directory.mkdir(exist_ok=False);sync_directory(self.directory.parent)\n",
+            "        self._publish(self.directory/'owner.json',owner)\n",
+            "        self._publish(self.directory/'start.json',{'schema_version':1,'owner':owner,\n"
+          ],
+          "new_end": 83,
+          "new_start": 79,
+          "old": [
+            "        self.directory.mkdir(exist_ok=False);sync_directory(self.directory.parent)\n",
+            "        _immutable(self.directory/'owner.json',owner)\n",
+            "        _immutable(self.directory/'start.json',{'schema_version':1,'owner':owner,\n"
+          ],
+          "old_end": 46,
+          "old_start": 43
+        },
+        {
+          "new": [
+            "        if self._metadata_role is _RESOURCE_METADATA:\n",
+            "            owner_raw=canonical_bytes(owner)\n",
+            "            start_raw=canonical_bytes({'schema_version':1,'owner':owner,'required_graphs':self.required,'parent':parent,'workflow_identity':inherited_identity})\n",
+            "            config=canonical_bytes({'owner':self.owner,'required':self.required,'parent':self.parent,'identity':self.identity,'records':self.records})\n",
+            "            self._resource_pin=(self.directory,birth_inode,owner_raw,start_raw,config)\n",
+            "            self._resource_check()\n",
+            "\n",
+            "    def _publish(self,path,value):\n",
+            "        if hasattr(self,'_resource_pin'):self._resource_check()\n",
+            "        if self._metadata_role is _RESOURCE_METADATA:\n",
+            "            if path.parent!=self.directory:raise ValueError('resource journal metadata directory differs')\n",
+            "            raw=canonical_bytes(value);checked_io.write(self.directory,path.name,raw);checked_io.exact(self.directory,path.name,raw)\n",
+            "        elif self._metadata_role is None:_immutable(path,value)\n",
+            "        else:raise ValueError('journal metadata role changed')\n",
+            "        if hasattr(self,'_resource_pin'):self._resource_check()\n"
+          ],
+          "new_end": 100,
+          "new_start": 85,
+          "old": [],
+          "old_end": 48,
+          "old_start": 48
+        },
+        {
+          "new": [
+            "        if self._metadata_role is not None:raise ValueError('resource journal numerical component publication not admitted')\n"
+          ],
+          "new_end": 103,
+          "new_start": 102,
+          "old": [],
+          "old_end": 50,
+          "old_start": 50
+        },
+        {
+          "new": [
+            "    def resource_complete(self,proof):\n",
+            "        \"\"\"Explicit resource terminal, not a scientific representation.\"\"\"\n",
+            "        self._resource_check()\n",
+            "        from .resource_fixture import complete_journal\n",
+            "        return complete_journal(self,proof)\n",
+            "\n"
+          ],
+          "new_end": 121,
+          "new_start": 115,
+          "old": [],
+          "old_end": 62,
+          "old_start": 62
+        },
+        {
+          "new": [
+            "        if hasattr(self,'_resource_pin'):self._resource_check()\n"
+          ],
+          "new_end": 123,
+          "new_start": 122,
+          "old": [],
+          "old_end": 63,
+          "old_start": 63
+        },
+        {
+          "new": [
+            "        self._publish(path,{'schema_version':1,'status':status,'reason':reason,'owner':self.owner,\n"
+          ],
+          "new_end": 127,
+          "new_start": 126,
+          "old": [
+            "        _immutable(path,{'schema_version':1,'status':status,'reason':reason,'owner':self.owner,\n"
+          ],
+          "old_end": 67,
+          "old_start": 66
+        },
+        {
+          "new": [
+            "        if hasattr(self,'_resource_pin'):self._resource_check();object.__setattr__(self,'sealed',True)\n",
+            "        else:self.sealed=True\n",
+            "        return path\n"
+          ],
+          "new_end": 132,
+          "new_start": 129,
+          "old": [
+            "        self.sealed=True;return path\n"
+          ],
+          "old_end": 70,
+          "old_start": 69
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/feature_journal.py"
+    },
+    {
+      "baseline_sha256": "f4ff82b6405af36175509431440ee93e70787f46a8e3ab844ee2bccece6cfb51",
+      "candidate_sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171",
+      "cap_sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171",
+      "edits": [
+        {
+          "new": [
+            "    if owner.required[0]=='dictionary-import':\n",
+            "        with _held_import(owner) as token:yield token\n",
+            "        return\n"
+          ],
+          "new_end": 53,
+          "new_start": 50,
+          "old": [],
+          "old_end": 50,
+          "old_start": 50
+        },
+        {
+          "new": [
+            "@contextmanager\n",
+            "def _held_import(owner):\n",
+            "    from . import import_metadata as import_io\n",
+            "    lock=owner._transition\n",
+            "    require(lock.acquire(blocking=False),'concurrent compact owner transition')\n",
+            "    token=None\n",
+            "    def release():\n",
+            "        try:lock.release()\n",
+            "        except BaseException:\n",
+            "            owner.poisoned=True\n",
+            "            raise\n",
+            "    try:\n",
+            "        token=_HeldTransition(owner,lock);owner._held_transition=token\n",
+            "        token.check(owner);yield token;token.check(owner)\n",
+            "    finally:\n",
+            "        if token is not None:\n",
+            "            object.__setattr__(token,'active',False)\n",
+            "            if getattr(owner,'_held_transition',None) is token:del owner._held_transition\n",
+            "        import_io.close_actions((release,))\n",
+            "\n",
+            "\n"
+          ],
+          "new_end": 89,
+          "new_start": 68,
+          "old": [],
+          "old_end": 65,
+          "old_start": 65
+        },
+        {
+          "new": [
+            "    if getattr(stage,'kind',None)=='dictionary-import':\n",
+            "        from .original_import_stage import content\n",
+            "        return content(stage)\n"
+          ],
+          "new_end": 94,
+          "new_start": 91,
+          "old": [],
+          "old_end": 67,
+          "old_start": 67
+        },
+        {
+          "new": [
+            "        finally:\n",
+            "            def release():\n",
+            "                try:self._transition.release()\n",
+            "                except BaseException:self.poisoned=True;raise\n",
+            "            io._release(release)\n"
+          ],
+          "new_end": 112,
+          "new_start": 107,
+          "old": [
+            "        finally: self._transition.release()\n"
+          ],
+          "old_end": 81,
+          "old_start": 80
+        },
+        {
+          "new": [
+            "def entries(root, allowed, *, required,_imported=False):\n",
+            "    if _imported:\n",
+            "        from . import import_metadata as import_io\n",
+            "        return import_io.entries(root,allowed,required=required)\n"
+          ],
+          "new_end": 127,
+          "new_start": 123,
+          "old": [
+            "def entries(root, allowed, *, required):\n"
+          ],
+          "old_end": 93,
+          "old_start": 92
+        },
+        {
+          "new": [
+            "        with io._closing(os.scandir(fd)) as iterator:\n"
+          ],
+          "new_end": 131,
+          "new_start": 130,
+          "old": [
+            "        with os.scandir(fd) as iterator:\n"
+          ],
+          "old_end": 97,
+          "old_start": 96
+        },
+        {
+          "new": [
+            "        finally: io._release(lambda: os.close(fd))\n"
+          ],
+          "new_end": 161,
+          "new_start": 160,
+          "old": [
+            "        finally: os.close(fd)\n"
+          ],
+          "old_end": 127,
+          "old_start": 126
+        },
+        {
+          "new": [
+            "        finally: io._release(lambda: os.close(fd))\n"
+          ],
+          "new_end": 166,
+          "new_start": 165,
+          "old": [
+            "        finally: os.close(fd)\n"
+          ],
+          "old_end": 132,
+          "old_start": 131
+        },
+        {
+          "new": [
+            "    def __init__(self, bound, policy_input, envelope, descriptor, *, imported=None):\n"
+          ],
+          "new_end": 195,
+          "new_start": 194,
+          "old": [
+            "    def __init__(self, bound, policy_input, envelope, descriptor):\n"
+          ],
+          "old_end": 161,
+          "old_start": 160
+        },
+        {
+          "new": [
+            "        if imported is None:\n",
+            "            require('dictionary_origin' not in descriptor,'imported stage requires typed prebirth preparation')\n",
+            "            self.required = ('dictionary',) + tuple('mcm-' + h for h in descriptor['required_graphs'])\n",
+            "        else:\n",
+            "            from .original_import_preparation import PreparedImport\n",
+            "            require(type(imported) is PreparedImport and imported._bound is bound,'actual original preparation required')\n",
+            "            contract=imported.stage_contract()\n",
+            "            require(contract['descriptor_sha256']==bound.record['workflow_identity'],'imported owner descriptor differs')\n",
+            "            self.required=tuple(contract['required_stages'])\n"
+          ],
+          "new_end": 209,
+          "new_start": 200,
+          "old": [
+            "        self.required = ('dictionary',) + tuple('mcm-' + h for h in descriptor['required_graphs'])\n"
+          ],
+          "old_end": 167,
+          "old_start": 166
+        },
+        {
+          "new": [
+            "        if imported is not None:record['original_import']=contract\n"
+          ],
+          "new_end": 220,
+          "new_start": 219,
+          "old": [],
+          "old_end": 177,
+          "old_start": 177
+        },
+        {
+          "new": [
+            "        if imported is not None:\n",
+            "            from . import import_metadata\n",
+            "            bound.check();self.inode=import_metadata.birth(self.root)\n",
+            "            import_metadata.write(self.root,'owner.json',self.start)\n",
+            "        else:\n",
+            "            bound.check(); self.root.mkdir()\n",
+            "            parent, fd = io._open(self.root.parent)\n",
+            "            try: os.fsync(fd); io._root(parent, fd)\n",
+            "            finally: io._release(lambda: os.close(fd))\n",
+            "            root, fd = io._open(self.root)\n",
+            "            try:\n",
+            "                self.inode = (os.fstat(fd).st_dev, os.fstat(fd).st_ino)\n",
+            "                io._write(fd, 'owner.json', self.start); io._root(root, fd)\n",
+            "            finally: io._release(lambda: os.close(fd))\n"
+          ],
+          "new_end": 236,
+          "new_start": 222,
+          "old": [
+            "        bound.check(); self.root.mkdir()\n",
+            "        parent, fd = io._open(self.root.parent)\n",
+            "        try: os.fsync(fd); io._root(parent, fd)\n",
+            "        finally: os.close(fd)\n",
+            "        root, fd = io._open(self.root)\n",
+            "        try:\n",
+            "            self.inode = (os.fstat(fd).st_dev, os.fstat(fd).st_ino)\n",
+            "            io._write(fd, 'owner.json', self.start); io._root(root, fd)\n",
+            "        finally: os.close(fd)\n"
+          ],
+          "old_end": 188,
+          "old_start": 179
+        },
+        {
+          "new": [
+            "        if self.required[0]=='dictionary-import':\n",
+            "            from .import_metadata import exact as import_exact\n",
+            "            import_exact(self.root,'owner.json',self.start)\n",
+            "        else:exact(self.root, 'owner.json', self.start)\n"
+          ],
+          "new_end": 270,
+          "new_start": 266,
+          "old": [
+            "        exact(self.root, 'owner.json', self.start)\n"
+          ],
+          "old_end": 219,
+          "old_start": 218
+        },
+        {
+          "new": [
+            "        entries(self.root, allowed, required={'owner.json'} | set(self.stages),_imported=self.required[0]=='dictionary-import')\n"
+          ],
+          "new_end": 279,
+          "new_start": 278,
+          "old": [
+            "        entries(self.root, allowed, required={'owner.json'} | set(self.stages))\n"
+          ],
+          "old_end": 228,
+          "old_start": 227
+        },
+        {
+          "new": [
+            "            stage.integrity()\n",
+            "            if stage.kind!='dictionary-import':exact(stage.root, 'intent.json', stage.intent)\n"
+          ],
+          "new_end": 284,
+          "new_start": 282,
+          "old": [
+            "            stage.integrity(); exact(stage.root, 'intent.json', stage.intent)\n"
+          ],
+          "old_end": 232,
+          "old_start": 231
+        },
+        {
+          "new": [
+            "        prerequisite=self.required[0]\n",
+            "        require(name!='dictionary-import','use actual imported stage constructor')\n",
+            "        require(name == 'dictionary' or (prerequisite in self.stages and self.stages[prerequisite].closed),\n",
+            "                'dictionary/import must complete before MCM stage')\n"
+          ],
+          "new_end": 324,
+          "new_start": 320,
+          "old": [
+            "        require(name == 'dictionary' or ('dictionary' in self.stages and self.stages['dictionary'].closed),\n",
+            "                'dictionary must complete before MCM stage')\n"
+          ],
+          "old_end": 270,
+          "old_start": 268
+        },
+        {
+          "new": [
+            "        if stage.kind=='dictionary-import':\n",
+            "            _stage_content(stage);return\n"
+          ],
+          "new_end": 380,
+          "new_start": 378,
+          "old": [],
+          "old_end": 324,
+          "old_start": 324
+        },
+        {
+          "new": [
+            "            if stage.kind=='dictionary-import':\n",
+            "                result=_stage_content(stage)\n",
+            "                digest.update(body({'stage':name,'receipt_sha256':stage.reference}));count+=1\n",
+            "                require(result['completed_pairs']==0,'import cannot credit historical pairs')\n",
+            "                continue\n"
+          ],
+          "new_end": 404,
+          "new_start": 399,
+          "old": [],
+          "old_end": 343,
+          "old_start": 343
+        },
+        {
+          "new": [
+            "            if self.required[0]=='dictionary-import':\n",
+            "                from . import import_metadata\n",
+            "                ref=import_metadata.write(self.root,'complete.json',raw)\n",
+            "            else:\n",
+            "                root, fd = io._open(self.root)\n",
+            "                try: ref = io._write(fd, 'complete.json', raw); io._root(root, fd)\n",
+            "                finally: io._release(lambda: os.close(fd))\n"
+          ],
+          "new_end": 435,
+          "new_start": 428,
+          "old": [
+            "            root, fd = io._open(self.root)\n",
+            "            try: ref = io._write(fd, 'complete.json', raw); io._root(root, fd)\n",
+            "            finally: os.close(fd)\n"
+          ],
+          "old_end": 370,
+          "old_start": 367
+        },
+        {
+          "new": [
+            "            if self.required[0]=='dictionary-import':import_metadata.exact(self.root,'complete.json',raw)\n",
+            "            else:exact(self.root, 'complete.json', raw)\n"
+          ],
+          "new_end": 440,
+          "new_start": 438,
+          "old": [
+            "            exact(self.root, 'complete.json', raw)\n"
+          ],
+          "old_end": 374,
+          "old_start": 373
+        },
+        {
+          "new": [
+            "    entries(journal.parent,{journal.name},required={journal.name},_imported=owner.required[0]=='dictionary-import')\n"
+          ],
+          "new_end": 469,
+          "new_start": 468,
+          "old": [
+            "    entries(journal.parent,{journal.name},required={journal.name})\n"
+          ],
+          "old_end": 403,
+          "old_start": 402
+        },
+        {
+          "new": [
+            "    reader=matching_owner.metadata\n",
+            "    if owner.bound.record.get('resource_only') is True:\n",
+            "        from .import_metadata import metadata as reader\n"
+          ],
+          "new_end": 474,
+          "new_start": 471,
+          "old": [],
+          "old_end": 405,
+          "old_start": 405
+        },
+        {
+          "new": [
+            "        require(reader(path,owner.bound._run.admission.root)[1] == expected,\n"
+          ],
+          "new_end": 476,
+          "new_start": 475,
+          "old": [
+            "        require(matching_owner.metadata(path,owner.bound._run.admission.root)[1] == expected,\n"
+          ],
+          "old_end": 407,
+          "old_start": 406
+        },
+        {
+          "new": [
+            "    if owner.required[0]=='dictionary-import':\n",
+            "        from .import_metadata import exact as import_exact\n",
+            "        import_exact(owner.root,'owner.json',owner.start)\n",
+            "    else:exact(owner.root,'owner.json',owner.start)\n"
+          ],
+          "new_end": 485,
+          "new_start": 481,
+          "old": [
+            "    exact(owner.root,'owner.json',owner.start)\n"
+          ],
+          "old_end": 413,
+          "old_start": 412
+        },
+        {
+          "new": [
+            "    entries(owner.root,expected,required=expected,_imported=owner.required[0]=='dictionary-import')\n"
+          ],
+          "new_end": 487,
+          "new_start": 486,
+          "old": [
+            "    entries(owner.root,expected,required=expected)\n"
+          ],
+          "old_end": 415,
+          "old_start": 414
+        },
+        {
+          "new": [
+            "        stage.integrity()\n",
+            "        if stage.kind!='dictionary-import':exact(stage.root,'intent.json',stage.intent)\n",
+            "        total += stage.reservation\n"
+          ],
+          "new_end": 493,
+          "new_start": 490,
+          "old": [
+            "        stage.integrity();exact(stage.root,'intent.json',stage.intent);total += stage.reservation\n"
+          ],
+          "old_end": 419,
+          "old_start": 418
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/compact_owner.py"
+    },
+    {
+      "baseline_sha256": "5858ad9fe26c2f9937dbfdf520a503b91157b4840083580ee8d6d6920c89548a",
+      "candidate_sha256": "6661a8668d04bdff4afa84161932e12daa351d2654c5c481eba5faafcd938a4c",
+      "cap_sha256": "6661a8668d04bdff4afa84161932e12daa351d2654c5c481eba5faafcd938a4c",
+      "edits": [
+        {
+          "new": [
+            "def _imported(dictionary):\n",
+            "    from .imported_mcm_identity import Target\n",
+            "    return type(dictionary) is Target\n",
+            "\n",
+            "\n",
+            "def _owner(dictionary):\n",
+            "    if _imported(dictionary):return dictionary.owner\n",
+            "    require(type(dictionary) is compact_dictionary.Produced,'exact admitted dictionary type required')\n",
+            "    return dictionary._proof.owner\n",
+            "\n",
+            "\n"
+          ],
+          "new_end": 42,
+          "new_start": 31,
+          "old": [],
+          "old_end": 31,
+          "old_start": 31
+        },
+        {
+          "new": [
+            "    bound = _owner(dictionary).bound\n"
+          ],
+          "new_end": 47,
+          "new_start": 46,
+          "old": [
+            "    bound = dictionary._proof.owner.bound\n"
+          ],
+          "old_end": 36,
+          "old_start": 35
+        },
+        {
+          "new": [
+            "    if _imported(dictionary):return dictionary.sources()\n"
+          ],
+          "new_end": 53,
+          "new_start": 52,
+          "old": [],
+          "old_end": 41,
+          "old_start": 41
+        },
+        {
+          "new": [
+            "def _source_evidence(dictionary, sources):\n",
+            "    \"\"\"Keep imported receipt metadata bounded; full sources remain validated.\"\"\"\n",
+            "    if not _imported(dictionary):return sources\n",
+            "    require(type(sources) is dict and sources and all(type(name) is str\n",
+            "        and type(pin) is str and len(pin)==64 and all(c in '0123456789abcdef' for c in pin)\n",
+            "        for name,pin in sources.items()),'imported source evidence differs')\n",
+            "    return {'kind':'registered-source-map-v1','source_count':len(sources),\n",
+            "        'source_sha256':cache_key(sources)}\n",
+            "\n",
+            "\n",
+            "def _kernel(dictionary=None):\n",
+            "    path=KERNEL\n",
+            "    if dictionary is not None and _imported(dictionary):\n",
+            "        from .imported_mcm_identity import KERNEL as imported_kernel\n",
+            "        path=imported_kernel\n",
+            "    spec = importlib.util.spec_from_file_location('compact_mcm_kernel',ROOT/path)\n"
+          ],
+          "new_end": 76,
+          "new_start": 60,
+          "old": [
+            "def _kernel():\n",
+            "    spec = importlib.util.spec_from_file_location('compact_mcm_kernel',ROOT/KERNEL)\n"
+          ],
+          "old_end": 50,
+          "old_start": 48
+        },
+        {
+          "new": [
+            "    if _imported(dictionary):\n",
+            "        dictionary.check();require(dictionary.key==key,'imported target key differs');return dictionary.graph\n"
+          ],
+          "new_end": 82,
+          "new_start": 80,
+          "old": [],
+          "old_end": 54,
+          "old_start": 54
+        },
+        {
+          "new": [
+            "    if _imported(dictionary):\n",
+            "        require(dictionary.graph is graph and dictionary.key==key,'original target object changed')\n",
+            "        dictionary.final();return\n"
+          ],
+          "new_end": 93,
+          "new_start": 90,
+          "old": [],
+          "old_end": 62,
+          "old_start": 62
+        },
+        {
+          "new": [
+            "    dictionary.check(); sources = _sources(dictionary); owner = _owner(dictionary)\n"
+          ],
+          "new_end": 109,
+          "new_start": 108,
+          "old": [
+            "    dictionary.check(); sources = _sources(dictionary); owner = dictionary._proof.owner\n"
+          ],
+          "old_end": 78,
+          "old_start": 77
+        },
+        {
+          "new": [
+            "    if _imported(dictionary):expected=dictionary.derive_scope();require(expected==dictionary.scope,'imported producer scope differs')\n"
+          ],
+          "new_end": 119,
+          "new_start": 118,
+          "old": [],
+          "old_end": 87,
+          "old_start": 87
+        },
+        {
+          "new": [
+            "    selected = json.loads(run.read_input(bound.get('job_input','execution_job')))['payload']['representation_jobs'][bound['representation']]\n"
+          ],
+          "new_end": 121,
+          "new_start": 120,
+          "old": [
+            "    selected = json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][bound['representation']]\n"
+          ],
+          "old_end": 89,
+          "old_start": 88
+        },
+        {
+          "new": [
+            "    kernel = _kernel(dictionary); kernel.validate_policy(policy['numeric'],pairs)\n"
+          ],
+          "new_end": 133,
+          "new_start": 132,
+          "old": [
+            "    kernel = _kernel(); kernel.validate_policy(policy['numeric'],pairs)\n"
+          ],
+          "old_end": 101,
+          "old_start": 100
+        },
+        {
+          "new": [
+            "        'reserved_workflow_output_bytes':output_reserved,'sources':_source_evidence(dictionary,sources),'representation_admitted':False,'resumable':False}\n"
+          ],
+          "new_end": 150,
+          "new_start": 149,
+          "old": [
+            "        'reserved_workflow_output_bytes':output_reserved,'sources':sources,'representation_admitted':False,'resumable':False}\n"
+          ],
+          "old_end": 118,
+          "old_start": 117
+        },
+        {
+          "new": [
+            "        self._integrity(); owner = _owner(self._dictionary); stage = self._stage\n"
+          ],
+          "new_end": 182,
+          "new_start": 181,
+          "old": [
+            "        self._integrity(); owner = self._dictionary._proof.owner; stage = self._stage\n"
+          ],
+          "old_end": 150,
+          "old_start": 149
+        },
+        {
+          "new": [
+            "        if _imported(self._dictionary):\n",
+            "            require(thaw(self._start)['sources']==_source_evidence(self._dictionary,_sources(self._dictionary)),\n",
+            "                'imported source receipt reference differs')\n",
+            "        owner = _owner(self._dictionary); ticket = self.record['output']\n"
+          ],
+          "new_end": 205,
+          "new_start": 201,
+          "old": [
+            "        owner = self._dictionary._proof.owner; ticket = self.record['output']\n"
+          ],
+          "old_end": 170,
+          "old_start": 169
+        },
+        {
+          "new": [
+            "        self.lease()\n",
+            "        if _imported(self._dictionary):\n",
+            "            require(thaw(self._start)['sources']==_source_evidence(self._dictionary,_sources(self._dictionary)),\n",
+            "                'imported source receipt reference differs')\n",
+            "        _original(self._dictionary,self._graph,self.record['graph_hash']); self._numeric(); self._evidence()\n"
+          ],
+          "new_end": 217,
+          "new_start": 212,
+          "old": [
+            "        self.lease(); _original(self._dictionary,self._graph,self.record['graph_hash']); self._numeric(); self._evidence()\n"
+          ],
+          "old_end": 178,
+          "old_start": 177
+        },
+        {
+          "new": [
+            "        owner = _owner(self._dictionary)\n"
+          ],
+          "new_end": 224,
+          "new_start": 223,
+          "old": [
+            "        owner = self._dictionary._proof.owner\n"
+          ],
+          "old_end": 185,
+          "old_start": 184
+        },
+        {
+          "new": [
+            "        except BaseException:\n",
+            "            owner.poisoned=True;raise\n",
+            "        finally:\n",
+            "            def release():\n",
+            "                try:owner._transition.release()\n",
+            "                except BaseException:owner.poisoned=True;raise\n",
+            "            io._release(release)\n"
+          ],
+          "new_end": 233,
+          "new_start": 226,
+          "old": [
+            "        finally: owner._transition.release()\n"
+          ],
+          "old_end": 188,
+          "old_start": 187
+        },
+        {
+          "new": [
+            "    owner = _owner(dictionary)\n"
+          ],
+          "new_end": 238,
+          "new_start": 237,
+          "old": [
+            "    owner = dictionary._proof.owner\n"
+          ],
+          "old_end": 193,
+          "old_start": 192
+        },
+        {
+          "new": [
+            "def produce_imported(execution,graph,*,graph_hash,input_name,output_input):\n",
+            "    from .imported_mcm_identity import Target\n",
+            "    target=Target(execution,graph,graph_hash)\n",
+            "    with compact_owner._held(target.owner) as held:\n",
+            "        return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)\n",
+            "\n",
+            "\n"
+          ],
+          "new_end": 249,
+          "new_start": 242,
+          "old": [],
+          "old_end": 197,
+          "old_start": 197
+        },
+        {
+          "new": [
+            "    owner = _owner(dictionary); held.check(owner)\n"
+          ],
+          "new_end": 251,
+          "new_start": 250,
+          "old": [
+            "    owner = dictionary._proof.owner; held.check(owner)\n"
+          ],
+          "old_end": 199,
+          "old_start": 198
+        },
+        {
+          "new": [
+            "        held_consumer = None\n",
+            "        if _imported(dictionary):\n",
+            "            from . import held_score_consumer\n",
+            "            held_consumer = held_score_consumer.preflight(dictionary)\n"
+          ],
+          "new_end": 257,
+          "new_start": 253,
+          "old": [],
+          "old_end": 201,
+          "old_start": 201
+        },
+        {
+          "new": [
+            "                owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live,\n",
+            "                **({'_imported':dictionary} if _imported(dictionary) else {}))\n"
+          ],
+          "new_end": 289,
+          "new_start": 287,
+          "old": [
+            "                owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live)\n"
+          ],
+          "old_end": 232,
+          "old_start": 231
+        },
+        {
+          "new": [
+            "                backend=BACKEND,max_entries=policy['max_entries'],score_pair=stream,policy=policy['numeric'],lease=live,\n",
+            "                **({'imported':dictionary} if _imported(dictionary) else {}))\n"
+          ],
+          "new_end": 294,
+          "new_start": 292,
+          "old": [
+            "                backend=BACKEND,max_entries=policy['max_entries'],score_pair=stream,policy=policy['numeric'],lease=live)\n"
+          ],
+          "old_end": 236,
+          "old_start": 235
+        },
+        {
+          "new": [
+            "            stream_terminal = stream.finish()['terminal_sha256']\n",
+            "            if held_consumer is not None:\n",
+            "                held_score_consumer.consume(dictionary,stage,held,stream)\n",
+            "            return actual,stream_terminal,numeric_pin\n"
+          ],
+          "new_end": 300,
+          "new_start": 296,
+          "old": [
+            "            return actual,stream.finish()['terminal_sha256'],numeric_pin\n"
+          ],
+          "old_end": 239,
+          "old_start": 238
+        },
+        {
+          "new": [
+            "        actions=[]\n",
+            "        if stream is not None and not stream.closed:actions.append(stream.close)\n",
+            "        if log is not None and not log.closed:\n",
+            "            actions.append(lambda:log.fail('MCM producer failed'))\n",
+            "            actions.append(log.close)\n",
+            "        if claimed and fd is not None:\n",
+            "            actions.append(lambda:io._write(fd,'failed.json',io._json({'schema_version':1,'status':'failed','owner':owner.identity})))\n",
+            "        try:io._cleanup(actions,primary=primary)\n",
+            "        finally:owner.poisoned=True\n"
+          ],
+          "new_end": 342,
+          "new_start": 333,
+          "old": [
+            "        cleanup = []\n",
+            "        if claimed:\n",
+            "            try:\n",
+            "                if stream is not None and not stream.closed:\n",
+            "                    try: stream.close()\n",
+            "                    except BaseException as failure: cleanup.append(failure)\n",
+            "                if log is not None and not log.closed:\n",
+            "                    try: log.fail('MCM producer failed')\n",
+            "                    except BaseException as failure:\n",
+            "                        if isinstance(failure, io.CleanupFailure): cleanup.append(failure)\n",
+            "                        primary.add_note('Failed MCM log terminal: '+repr(failure))\n",
+            "                        try: log.close()\n",
+            "                        except BaseException as failure: cleanup.append(failure)\n",
+            "            finally:\n",
+            "                owner.poisoned = True\n",
+            "                if fd is not None:\n",
+            "                    try: io._write(fd,'failed.json',io._json({'schema_version':1,'status':'failed','owner':owner.identity}))\n",
+            "                    except (OSError,ValueError) as failure: primary.add_note('Failed MCM marker: '+repr(failure))\n",
+            "            if cleanup:\n",
+            "                fatal = compact_matcher.CleanupFailure('MCM producer cleanup unresolved; worker must stop')\n",
+            "                for failure in cleanup: fatal.add_note(repr(failure))\n",
+            "                raise fatal from primary\n"
+          ],
+          "old_end": 294,
+          "old_start": 272
+        },
+        {
+          "new": [
+            "\n"
+          ],
+          "new_end": 344,
+          "new_start": 343,
+          "old": [],
+          "old_end": 295,
+          "old_start": 295
+        },
+        {
+          "new": [],
+          "new_end": 345,
+          "new_start": 345,
+          "old": [
+            "        primary = sys.exception()\n"
+          ],
+          "old_end": 297,
+          "old_start": 296
+        },
+        {
+          "new": [
+            "            owned_fd=fd;fd=None\n",
+            "            def close_owned():\n",
+            "                try:os.close(owned_fd)\n",
+            "                except BaseException as close_error:\n",
+            "                    owner.poisoned=True\n",
+            "                    def marker():\n",
+            "                        path,fresh=io._open(root)\n",
+            "                        try:\n",
+            "                            info=os.fstat(fresh)\n",
+            "                            require(inode==(info.st_dev,info.st_ino),'MCM failed attempt inode changed')\n",
+            "                            if not compact_owner.present(root/'failed.json'):\n",
+            "                                io._write(fresh,'failed.json',io._json({'schema_version':1,'status':'failed','owner':owner.identity}))\n",
+            "                            io._root(path,fresh)\n",
+            "                        finally:io._release(lambda:os.close(fresh))\n",
+            "                    io._close_after_failure(marker,close_error)\n",
+            "                    raise\n",
+            "            io._release(close_owned)\n"
+          ],
+          "new_end": 363,
+          "new_start": 346,
+          "old": [
+            "            try: io._cleanup((lambda: os.close(fd),))\n",
+            "            except BaseException as cleanup:\n",
+            "                owner.poisoned = True\n",
+            "                # Never retry the ambiguous fd. A fresh descriptor may mark\n",
+            "                # only the original pinned attempt, retaining successful\n",
+            "                # outputs if cleanup failed after the return was prepared.\n",
+            "                try:\n",
+            "                    path, fresh = io._open(root)\n",
+            "                    try:\n",
+            "                        info = os.fstat(fresh)\n",
+            "                        require(inode == (info.st_dev,info.st_ino),'MCM failed attempt inode changed')\n",
+            "                        if not compact_owner.present(root/'failed.json'):\n",
+            "                            io._write(fresh,'failed.json',io._json({'schema_version':1,'status':'failed','owner':owner.identity}))\n",
+            "                        io._root(path,fresh)\n",
+            "                    finally: io._cleanup((lambda: os.close(fresh),))\n",
+            "                except BaseException as marker_error: cleanup.add_note('Failure marker: '+repr(marker_error))\n",
+            "                if primary is not None: raise cleanup from primary\n",
+            "                raise\n"
+          ],
+          "old_end": 316,
+          "old_start": 298
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/compact_mcm.py"
+    },
+    {
+      "baseline_sha256": "c70b23d4f8d16aa418109647bdba7ccd2139a2c1ef910b5acad8535aeebde1d7",
+      "candidate_sha256": "ee7931cea3d28ad0719b5f3db171a5d5d3ab95db9ff7cad0cc8379101948b79e",
+      "cap_sha256": "ee7931cea3d28ad0719b5f3db171a5d5d3ab95db9ff7cad0cc8379101948b79e",
+      "edits": [
+        {
+          "new": [
+            "import stat\n",
+            "from weakref import WeakKeyDictionary\n",
+            "\n",
+            "_COMPLETED = WeakKeyDictionary()\n"
+          ],
+          "new_end": 14,
+          "new_start": 10,
+          "old": [],
+          "old_end": 10,
+          "old_start": 10
+        },
+        {
+          "new": [
+            "                 backend, owner, chunk_cells, compute, lease, _imported=None):\n"
+          ],
+          "new_end": 29,
+          "new_start": 28,
+          "old": [
+            "                 backend, owner, chunk_cells, compute, lease):\n"
+          ],
+          "old_end": 25,
+          "old_start": 24
+        },
+        {
+          "new": [
+            "        self._imported=self._imported_pin=_imported\n",
+            "        if _imported is None:\n",
+            "            require(dictionary_hash(dictionary) == dictionary.identity\n",
+            "                and cache_key(dictionary.config.get('pair_execution')) == cache_key(backend)\n",
+            "                and dictionary.matching_config_hash == cache_key({'config': matching_config, 'backend': backend}),\n",
+            "                'dictionary/backend/matching identity differs')\n",
+            "        else:\n",
+            "            from .imported_mcm_identity import Target\n",
+            "            require(type(_imported) is Target,'genuine imported target required')\n",
+            "            _imported.check()\n",
+            "            require(graph is _imported.graph and dictionary is _imported.dictionary and owner==_imported.owner.identity and workflow==_imported.owner.bound.record['workflow_identity'],'imported stream authority differs')\n",
+            "            require(cache_key(matching_config)==cache_key(thaw(_imported.owner.matching)),'imported stream matching differs')\n"
+          ],
+          "new_end": 44,
+          "new_start": 32,
+          "old": [
+            "        require(dictionary_hash(dictionary) == dictionary.identity\n",
+            "            and cache_key(dictionary.config.get('pair_execution')) == cache_key(backend)\n",
+            "            and dictionary.matching_config_hash == cache_key({'config': matching_config, 'backend': backend}),\n",
+            "            'dictionary/backend/matching identity differs')\n"
+          ],
+          "old_end": 32,
+          "old_start": 28
+        },
+        {
+          "new": [
+            "        if _imported is not None:\n",
+            "            expected=_imported.derive_scope()\n",
+            "            require(expected==_imported.scope,'imported stream independently derived workload differs')\n",
+            "            self.scope=expected;self.workload=expected['workflow']\n"
+          ],
+          "new_end": 60,
+          "new_start": 56,
+          "old": [],
+          "old_end": 44,
+          "old_start": 44
+        },
+        {
+          "new": [
+            "        finally: batch._release(lambda: os.close(parent_fd))\n"
+          ],
+          "new_end": 69,
+          "new_start": 68,
+          "old": [
+            "        finally:\n",
+            "            os.close(parent_fd)\n"
+          ],
+          "old_end": 54,
+          "old_start": 52
+        },
+        {
+          "new": [
+            "        require(self._imported is self._imported_pin,'imported stream authority replaced')\n",
+            "        if self._imported is not None:\n",
+            "            self._imported.final(full_graph=False)\n",
+            "            require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')\n"
+          ],
+          "new_end": 90,
+          "new_start": 86,
+          "old": [],
+          "old_end": 71,
+          "old_start": 71
+        },
+        {
+          "new": [
+            "        finally: batch._release(lambda: os.close(fd))\n"
+          ],
+          "new_end": 121,
+          "new_start": 120,
+          "old": [
+            "        finally:\n",
+            "            os.close(fd)\n"
+          ],
+          "old_end": 103,
+          "old_start": 101
+        },
+        {
+          "new": [
+            "                with batch._closing(os.scandir(fd)) as entries:\n"
+          ],
+          "new_end": 144,
+          "new_start": 143,
+          "old": [
+            "                with os.scandir(fd) as entries:\n"
+          ],
+          "old_end": 126,
+          "old_start": 125
+        },
+        {
+          "new": [
+            "            finally: batch._release(lambda: os.close(fd))\n"
+          ],
+          "new_end": 152,
+          "new_start": 151,
+          "old": [
+            "            finally:\n",
+            "                os.close(fd)\n"
+          ],
+          "old_end": 135,
+          "old_start": 133
+        },
+        {
+          "new": [
+            "            directory_pins = _directory_identity(self)\n"
+          ],
+          "new_end": 211,
+          "new_start": 210,
+          "old": [],
+          "old_end": 193,
+          "old_start": 193
+        },
+        {
+          "new": [
+            "            _directory_rejoin(self,directory_pins)\n"
+          ],
+          "new_end": 220,
+          "new_start": 219,
+          "old": [],
+          "old_end": 201,
+          "old_start": 201
+        },
+        {
+          "new": [
+            "        _COMPLETED[self] = (_completion_identity(self), raw, result, directory_pins)\n"
+          ],
+          "new_end": 225,
+          "new_start": 224,
+          "old": [],
+          "old_end": 205,
+          "old_start": 205
+        },
+        {
+          "new": [
+            "\n",
+            "\n",
+            "def _completion_identity(stream):\n",
+            "    return (stream._imported,stream.batches,stream.root,stream.owner,stream.start_sha,stream.head,\n",
+            "        stream.n,stream.k,stream.cells,stream.batches.chunks,stream.batches.chunk_cells,stream.batches.start_sha)\n",
+            "\n",
+            "\n",
+            "def completed_evidence(stream):\n",
+            "    \"\"\"Successful post-close finish only; no caller-supplied completion receipt.\"\"\"\n",
+            "    require(type(stream) is MCMScoreStream,'original score stream required')\n",
+            "    record=_COMPLETED.get(stream)\n",
+            "    require(record is not None and stream.closed and stream.batches.closed and stream.active is None,\n",
+            "        'successful score stream finish required')\n",
+            "    require(all(type(v) is int for v in (stream.n,stream.k,stream.cells,stream.batches.chunks,stream.batches.chunk_cells))\n",
+            "        and stream._imported is stream._imported_pin and _completion_identity(stream)==record[0],\n",
+            "        'completed score stream objects or denominator changed')\n",
+            "    _directory_rejoin(stream,record[3])\n",
+            "    return record\n",
+            "\n",
+            "\n",
+            "def _directory_identity(stream):\n",
+            "    result=[]\n",
+            "    for root,fd in ((stream.root,stream.fd),(stream.batches.root,stream.batches.fd)):\n",
+            "        info=os.fstat(fd);path=root.lstat()\n",
+            "        require(stat.S_ISDIR(info.st_mode) and root.resolve()==root\n",
+            "            and (info.st_dev,info.st_ino)==(path.st_dev,path.st_ino),'original live stream directory differs')\n",
+            "        result.append((str(root),info.st_dev,info.st_ino))\n",
+            "    return tuple(result)\n",
+            "\n",
+            "\n",
+            "def _directory_rejoin(stream,pins):\n",
+            "    require(tuple(str(p) for p in (stream.root,stream.batches.root))==tuple(x[0] for x in pins),\n",
+            "        'completed stream root changed')\n",
+            "    for name,device,inode in pins:\n",
+            "        path=Path(name);info=path.lstat()\n",
+            "        require(path.resolve()==path and stat.S_ISDIR(info.st_mode)\n",
+            "            and (info.st_dev,info.st_ino)==(device,inode),'completed original stream directory replaced')\n"
+          ],
+          "new_end": 272,
+          "new_start": 235,
+          "old": [],
+          "old_end": 215,
+          "old_start": 215
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/mcm_score_stream.py"
+    },
+    {
+      "baseline_sha256": "715125e543edd383c4bdeab59d10f7a269faec18f3b5fd16af79013e1bb37555",
+      "candidate_sha256": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+      "cap_sha256": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+      "edits": [
+        {
+          "new": [
+            "from .owned_io import CleanupFailure,_fatal,_flatten,_cleanup,_close_after_failure,_release,_closing,_opened,_read_path\n",
+            "\n"
+          ],
+          "new_end": 18,
+          "new_start": 16,
+          "old": [],
+          "old_end": 16,
+          "old_start": 16
+        },
+        {
+          "new": [],
+          "new_end": 25,
+          "new_start": 25,
+          "old": [
+            "class CleanupFailure(BaseException):\n",
+            "    \"\"\"An owned close was uncertain; stop the worker, never retry its fd integer.\"\"\"\n"
+          ],
+          "old_end": 25,
+          "old_start": 23
+        },
+        {
+          "new": [],
+          "new_end": 27,
+          "new_start": 27,
+          "old": [
+            "def _cleanup(actions):\n",
+            "    \"\"\"Attempt every independent close once, without masking fatal uncertainty.\"\"\"\n",
+            "    failures = []\n",
+            "    for close in actions:\n",
+            "        try: close()\n",
+            "        except BaseException as error: failures.append(error)\n",
+            "    if failures:\n",
+            "        fatal = CleanupFailure('score storage cleanup unresolved; worker must stop')\n",
+            "        for error in failures: fatal.add_note(repr(error))\n",
+            "        raise fatal from failures[0]\n"
+          ],
+          "old_end": 37,
+          "old_start": 27
+        },
+        {
+          "new": [],
+          "new_end": 29,
+          "new_start": 29,
+          "old": [
+            "def _close_after_failure(close, primary):\n",
+            "    try: close()\n",
+            "    except BaseException as error:\n",
+            "        fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')\n",
+            "        if fatal is not error: fatal.add_note(repr(error))\n",
+            "        raise fatal from primary\n"
+          ],
+          "old_end": 45,
+          "old_start": 39
+        },
+        {
+          "new": [
+            "\n",
+            "\n",
+            "\n",
+            "\n",
+            "\n"
+          ],
+          "new_end": 36,
+          "new_start": 31,
+          "old": [
+            "def _release(close):\n",
+            "    \"\"\"Close an owned read resource once, retaining any primary failure.\"\"\"\n",
+            "    primary = sys.exception()\n",
+            "    if primary is None: _cleanup((close,))\n",
+            "    else: _close_after_failure(close, primary)\n"
+          ],
+          "old_end": 52,
+          "old_start": 47
+        },
+        {
+          "new": [
+            "def _write(fd,name,body):\n",
+            "    # Immutable descriptor-relative publication; partial bytes always remain.\n",
+            "    child=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=fd)\n",
+            "    try:\n",
+            "        offset=0\n",
+            "        while offset<len(body):\n",
+            "            count=os.write(child,memoryview(body)[offset:])\n",
+            "            _require(count>0,'score write made no progress');offset+=count\n",
+            "        os.fsync(child)\n",
+            "    finally:_release(lambda:os.close(child))\n"
+          ],
+          "new_end": 90,
+          "new_start": 80,
+          "old": [
+            "def _write(fd, name, body):\n",
+            "    # Exclusive publication. A failure leaves bytes for forensics; no overwrite,\n",
+            "    # retry under this identity, or cleanup that could erase interrupted work.\n",
+            "    child = os.open(name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, dir_fd=fd)\n",
+            "    with os.fdopen(child, 'wb') as stream:\n",
+            "        stream.write(body)\n",
+            "        stream.flush()\n",
+            "        os.fsync(stream.fileno())\n"
+          ],
+          "old_end": 104,
+          "old_start": 96
+        },
+        {
+          "new": [
+            "def _read(fd,name,limit,observations=None):\n",
+            "    child=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=fd)\n"
+          ],
+          "new_end": 106,
+          "new_start": 104,
+          "old": [
+            "def _read(fd, name, limit, observations=None):\n",
+            "    child = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=fd)\n",
+            "    stream = None\n"
+          ],
+          "old_end": 121,
+          "old_start": 118
+        },
+        {
+          "new": [
+            "        before=os.fstat(child)\n",
+            "        _require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<=before.st_size<=limit,'score file type/size')\n",
+            "        pieces=[];size=0\n",
+            "        while size<=limit:\n",
+            "            block=os.read(child,min(65536,limit+1-size))\n",
+            "            if not block:break\n",
+            "            pieces.append(block);size+=len(block)\n",
+            "        raw=b''.join(pieces)\n",
+            "        after=os.fstat(child);current=os.stat(name,dir_fd=fd,follow_symlinks=False)\n",
+            "        _require(len(raw)==before.st_size and _signature(before)==_signature(after)==_signature(current),'score file changed during read')\n",
+            "    finally:_release(lambda:os.close(child))\n"
+          ],
+          "new_end": 118,
+          "new_start": 107,
+          "old": [
+            "        # Keep descriptor ownership explicit even if fdopen construction fails.\n",
+            "        stream = os.fdopen(child, 'rb', closefd=False)\n",
+            "        before = os.fstat(stream.fileno())\n",
+            "        _require(stat.S_ISREG(before.st_mode) and before.st_nlink == 1\n",
+            "                 and before.st_size <= limit, 'score file type/size')\n",
+            "        raw = stream.read(limit + 1)\n",
+            "        after = os.fstat(stream.fileno())\n",
+            "        current = os.stat(name, dir_fd=fd, follow_symlinks=False)\n",
+            "    finally:\n",
+            "        actions = (() if stream is None else (stream.close,)) + (lambda: os.close(child),)\n",
+            "        _release(lambda: _cleanup(actions))\n",
+            "    _require(len(raw) == before.st_size and _signature(before) == _signature(after)\n",
+            "             and _signature(current) == _signature(after),\n",
+            "             'score file changed during read')\n"
+          ],
+          "old_end": 136,
+          "old_start": 122
+        },
+        {
+          "new": [
+            "        observations[0]+=1\n",
+            "        observations[1]=(observations[1]+_stamp(name,after))%2**256\n",
+            "        observations[2]=(observations[2]+int(_hash(_json([name,_hash(raw)])),16))%2**256\n"
+          ],
+          "new_end": 122,
+          "new_start": 119,
+          "old": [
+            "        observations[0] += 1\n",
+            "        observations[1] = (observations[1] + _stamp(name, after)) % 2**256\n",
+            "        observations[2] = (observations[2] + int(_hash(_json([name, _hash(raw)])), 16)) % 2**256\n"
+          ],
+          "old_end": 140,
+          "old_start": 137
+        },
+        {
+          "new": [
+            "        finally: _release(lambda: os.close(parent_fd))\n"
+          ],
+          "new_end": 158,
+          "new_start": 157,
+          "old": [
+            "        finally:\n",
+            "            os.close(parent_fd)\n"
+          ],
+          "old_end": 177,
+          "old_start": 175
+        },
+        {
+          "new": [
+            "        with _closing(os.scandir(fd)) as entries:\n"
+          ],
+          "new_end": 313,
+          "new_start": 312,
+          "old": [
+            "        with os.scandir(fd) as entries:\n"
+          ],
+          "old_end": 332,
+          "old_start": 331
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/score_batches.py"
+    },
+    {
+      "baseline_sha256": "d80315a270fab3c4a349e22cd114fa46041c121cdbfccbdc47ae7ce4b04edd25",
+      "candidate_sha256": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a",
+      "cap_sha256": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a",
+      "edits": [
+        {
+          "new": [
+            "    except BaseException:\n",
+            "        owner.poisoned=True;raise\n",
+            "    finally:\n",
+            "        def release():\n",
+            "            try:owner._transition.release()\n",
+            "            except BaseException:owner.poisoned=True;raise\n",
+            "        io._release(release)\n"
+          ],
+          "new_end": 34,
+          "new_start": 27,
+          "old": [
+            "    finally: owner._transition.release()\n"
+          ],
+          "old_end": 28,
+          "old_start": 27
+        },
+        {
+          "new": [
+            "    selected = json.loads(run.read_input(record.get('job_input','execution_job')))['payload']['representation_jobs'][record['representation']]\n"
+          ],
+          "new_end": 40,
+          "new_start": 39,
+          "old": [
+            "    selected = json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][record['representation']]\n"
+          ],
+          "old_end": 34,
+          "old_start": 33
+        },
+        {
+          "new": [
+            "    if owner.bound.record.get('resource_only') is True:\n",
+            "        from .resource_fixture import publication_boundary\n",
+            "        publication_boundary(owner,stage)\n"
+          ],
+          "new_end": 128,
+          "new_start": 125,
+          "old": [],
+          "old_end": 119,
+          "old_start": 119
+        },
+        {
+          "new": [
+            "        finally: io._release(lambda: os.close(fd))\n"
+          ],
+          "new_end": 136,
+          "new_start": 135,
+          "old": [
+            "        finally: os.close(fd)\n"
+          ],
+          "old_end": 127,
+          "old_start": 126
+        },
+        {
+          "new": [
+            "        finally: io._release(lambda: os.close(fd))\n"
+          ],
+          "new_end": 143,
+          "new_start": 142,
+          "old": [
+            "        finally: os.close(fd)\n"
+          ],
+          "old_end": 134,
+          "old_start": 133
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/compact_mcm_publication.py"
+    }
+  ],
+  "integration_authority": false,
+  "main_unchanged_package": {
+    "tradingagents/research/onchain_replication/__init__.py": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1",
+    "tradingagents/research/onchain_replication/aggregation.py": "768c2ca743b2146fcc6bf606e4fa0bf41273ac15d06344d3a25a6aac78e8038f",
+    "tradingagents/research/onchain_replication/archive_chunks.py": "f26f1cb62334497494f9b02579f53be9e2238889a81f56c04fd4e781542b38fe",
+    "tradingagents/research/onchain_replication/archive_consume.py": "9cfa242b77e42c2385e3c4cb8e51086965cc7d42768f2c52364fa3fd4ec77dc5",
+    "tradingagents/research/onchain_replication/archive_dispatch.py": "05eafe349dfafefe0b17ed8b8efaa3a480eff0f943988212846cabcec414f953",
+    "tradingagents/research/onchain_replication/archive_owner_operations.py": "5882578d065e94af588511356071b8f575aa1e8a1bbd7a9ab116e5853eb4c83f",
+    "tradingagents/research/onchain_replication/archive_owner_policy.py": "81b0e2fa4220c45461ffad850209e92819b65a56a7037887d1d7ba92c97956c9",
+    "tradingagents/research/onchain_replication/archive_owner_seal.py": "7c8c01ce43756605e4765f8e04e1cbbf1665d651d076b36eab74340acb0b07fa",
+    "tradingagents/research/onchain_replication/archive_owner_stage.py": "21a1f134c4ed0d4f57c266f21d4dd130d61241117b11e7f66a6466db3ddec39c",
+    "tradingagents/research/onchain_replication/archive_owner_writer.py": "7980139206c4b2a0e8b11763f44d23a73c4e9f067d9c10799a081664c42135d1",
+    "tradingagents/research/onchain_replication/archive_pair_reader.py": "11aedf0b9e5e8698831854952033f36db185c0cb4948f226912731ffc68d16df",
+    "tradingagents/research/onchain_replication/archive_pair_writer.py": "c714c350f372be1b4e3c7840b5187deb7f72ee80549edfed4e48450e2d0ca052",
+    "tradingagents/research/onchain_replication/archive_transport.py": "ef0fdc052a354af5b83e487cbc2d2cf92170149d64f90117adcb5ee37e3b572d",
+    "tradingagents/research/onchain_replication/archived_pair_log.py": "e01d267c54be8bc786478d5647c90505f75f66dd96e1d57349ba3f76e6259b3f",
+    "tradingagents/research/onchain_replication/archived_stage.py": "1e4b09210a0a9384b778a71e1573298cb923711bcf7c7dcd3b464460001dc407",
+    "tradingagents/research/onchain_replication/array_neighborhoods.py": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+    "tradingagents/research/onchain_replication/baselines.py": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a",
+    "tradingagents/research/onchain_replication/btc.py": "775838b3fc00534849d747f38c942f13187762b81c35ef5b1af52d67882a2dd0",
+    "tradingagents/research/onchain_replication/btc_source.py": "deb5f4003ab63a69f945756f1e40fdd6212733331b2ef0133bab2ba0f69acead",
+    "tradingagents/research/onchain_replication/btc_store.py": "79f78d1bfc46d3e975f506407f3fcea102835235b5aa5b68cf6b1d7674c10452",
+    "tradingagents/research/onchain_replication/btc_subsets.py": "79f1cc4de5b5bf52e491201d05941bbe0ff29555d814f343294411f4591ed736",
+    "tradingagents/research/onchain_replication/btc_weekly.py": "6d52650e2bc6225c73da9841e51ab03be33ba8f3dd32a5ae504d6b76908c4aed",
+    "tradingagents/research/onchain_replication/cache.py": "5fbbe0df14cfc1802dd1df4da6c8bdbd1153a9fcbb4c89dd202e791d1811ddba",
+    "tradingagents/research/onchain_replication/calendar.py": "c96e984a7d3482500a3a98231d859da1678cae4ca63960f33515a06dbda760f2",
+    "tradingagents/research/onchain_replication/cells.py": "1a15e33377030b6f3c533fd498bf75825778a59c35f2b0b8702cfaf79bb9bcfd",
+    "tradingagents/research/onchain_replication/census_production.py": "37ec0a081edaf2928146fab3984e362f1241809af43009eb05de307f247665b1",
+    "tradingagents/research/onchain_replication/checkpoints.py": "5bd40b1e573bad25807d8596472b437fee93eb7c644bc03e4cd45512e74437f0",
+    "tradingagents/research/onchain_replication/coinmetrics_prices.py": "5e14eae6fafccdfe562ab07c73ac3854f5e86751d74e468807b82be0a3a0a62f",
+    "tradingagents/research/onchain_replication/compact_closure.py": "d59dc91c8aaeba381d104cd065adc2eeeb4698360a58009492ec8dd7730c22bf",
+    "tradingagents/research/onchain_replication/compact_denominator.py": "6579c4aa57804ecfd35010beb81df0e81f722285bea9fda856d1a7f8e466b372",
+    "tradingagents/research/onchain_replication/compact_detached_handoff.py": "6513f1f5899e803d75166f4fae106133c28b05b03c8b610db97ef776ccd79e52",
+    "tradingagents/research/onchain_replication/compact_dictionary.py": "1c2618cc3706f4bdbfaba0ec957e1fb908f63857403bbdcc9341181effe313dc",
+    "tradingagents/research/onchain_replication/compact_features.py": "584268806ac6b6ea713737e4f54a6ba0bd923397165c089f2f359dfb3d916752",
+    "tradingagents/research/onchain_replication/compact_graph_artifacts.py": "fd1395b0c274b1b51dc26365fd0c2954f904492cf77ddb3d553ce40c6dc6bf8a",
+    "tradingagents/research/onchain_replication/compact_matcher.py": "75e4b8bad423ed198bef5017fd4c22670ff3c552bcacd2cc967901efa95bed73",
+    "tradingagents/research/onchain_replication/compact_mcm_output.py": "bd118be0c2f9c44eebb1f459184c676dfc66f0ee46cd7f2c0271dea1db11bc99",
+    "tradingagents/research/onchain_replication/compact_native_features.py": "361de501e325663a65348059bcb5bc3d1e58d14d2c5b833e589b716c6343e1f7",
+    "tradingagents/research/onchain_replication/compact_native_producer.py": "8e46984f21c04fedfd91f235829de0aa7109da476680a19447c2656edb17aa54",
+    "tradingagents/research/onchain_replication/compact_pair_log.py": "4c65ca7f8caf46760eeef23e2bd44e9bc87a64a54bb18a862662be2b15da0089",
+    "tradingagents/research/onchain_replication/compact_policy.py": "4f4e4f91df881249540e8f7b0e33029f21e680bf7595fb0bbe075a8d8aee9d7d",
+    "tradingagents/research/onchain_replication/compact_publication.py": "a620e5f84c2ec5095ae1715aae4a7962e64180075d139e424c671a2d486e935a",
+    "tradingagents/research/onchain_replication/compact_sample_proof.py": "cb94729af806f10b1c719cc240ec8c2546a1aa2a79591ef62cbf852c29256893",
+    "tradingagents/research/onchain_replication/compact_sampler.py": "7820254d9a9ac287e55b0d20d2c26e1907b625dd743e194fae0602110593a608",
+    "tradingagents/research/onchain_replication/compact_samples.py": "f14a11212edd281901aab69fbe9b1164251988472baa65da6b319d50ff436d7b",
+    "tradingagents/research/onchain_replication/compact_stage.py": "78a5164a711ee69b3a0406ca63a620e781776798864075c9dd820229ccd4ccc4",
+    "tradingagents/research/onchain_replication/compact_terminal.py": "72e2604eb4f2829e15de6afac58966d0cc82ff88c91c15335ef0e66dde932328",
+    "tradingagents/research/onchain_replication/compact_training.py": "ef70263e79cf743aff6a389866a7fd86615b5bcdbd5b834ebe922ffd420bebd3",
+    "tradingagents/research/onchain_replication/comparison.py": "b157f41b2b98517c67152209bac46fbedf3a2eb9471fd27f9c588a41e60c8c23",
+    "tradingagents/research/onchain_replication/component_store.py": "ba0cf44dd7cf5af8c0b99cbe129f107ef7b40833a76b8162ae9d91512b566b68",
+    "tradingagents/research/onchain_replication/contracts.py": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a",
+    "tradingagents/research/onchain_replication/dataset.py": "c8d701b5646395bb94e5037aefcc2d0d29a55de95cca05e019ce35d3f53561df",
+    "tradingagents/research/onchain_replication/dictionary.py": "32e27a4a17dc2aa993d1440d6486c75b0d4dcff341969dbf99bdff412dd7e446",
+    "tradingagents/research/onchain_replication/environment.py": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+    "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+    "tradingagents/research/onchain_replication/evaluation.py": "1b2dd721423e0408d8e7ccea23a8cacacdd3d04b45ca9da85e35fd34c82e7fac",
+    "tradingagents/research/onchain_replication/feature_pipeline.py": "19ebe96275095ded92743a1a1bcadc4178f85cd5d39f1ed23786fba279b5fa41",
+    "tradingagents/research/onchain_replication/feature_residency.py": "4ea5370958b65edf0d37950f12d358ab562291c786f28a287514c77c3838ddcd",
+    "tradingagents/research/onchain_replication/financial_execution.py": "e16402d8625ed9b1c9fe5d308d18867b811b3acb2bb90b2e0bcb7132cd4a602e",
+    "tradingagents/research/onchain_replication/gat.py": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6",
+    "tradingagents/research/onchain_replication/graph_baselines.py": "f284a85a0ce3aa5dee24c748c6a376d9d44a2d775409b874540215ff0e594907",
+    "tradingagents/research/onchain_replication/graph_legacy_coverage.py": "da4bccabb15f69ce55024cc291f963498ffdc473c30d1d69d7d8e4ea7a7c20e7",
+    "tradingagents/research/onchain_replication/graph_production.py": "7d7a7a3f45825905a63bac49f0edb5085320a9c222efef10e629a65b9f60dd4e",
+    "tradingagents/research/onchain_replication/graph_residency.py": "1ded72ad7c25135780a718455b430eafa020e8f3de6ca608b04e005b798609a6",
+    "tradingagents/research/onchain_replication/graph_store.py": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da",
+    "tradingagents/research/onchain_replication/hub_census_production.py": "b9c406f19c32f2b78409b9a3260edebcad0ced042e9e4d187ff44e574d763d2a",
+    "tradingagents/research/onchain_replication/hub_edges.py": "e5858170437f6d9f0a994315e2b2aa30d502844cf0a1c1b8ec782a1e693887e9",
+    "tradingagents/research/onchain_replication/job_payload.py": "0303ea2e516e57e1d4a850b3eadf13b3b23ee047b48df1417e8ae559ff171ab0",
+    "tradingagents/research/onchain_replication/journal_recovery.py": "1f5a280789572a01d943e80081930e324e621127b742ef67b6d93b6041ed009d",
+    "tradingagents/research/onchain_replication/mapped_graph.py": "c5e93b325599a82bf65e5b31074e9c76a73b25d479ddea7d3ff3687e75f7b197",
+    "tradingagents/research/onchain_replication/matching.py": "e5a4cb7966a53522532158a13ef7293d4d081a26cffba56c2eb0761a628c72a6",
+    "tradingagents/research/onchain_replication/matching_ancestry.py": "51221522256e3f1babb03512a8dad4d293d12638c4579d4bddcf92945db5e4bc",
+    "tradingagents/research/onchain_replication/matching_annealing.py": "c1331bf7fd6bc436c2663c626c69c6bcecffcc16a8e56992c9c6bcf520ab0b47",
+    "tradingagents/research/onchain_replication/matching_checkpoint.py": "de8f7077e513105719fffcf6ea13e96bfb0199056acf0227ecf744df189ee35c",
+    "tradingagents/research/onchain_replication/matching_death.py": "f76a96274e77d4f728d9d7e0b93db2a8bb4e663654ae59c0480f6c66192c3ff8",
+    "tradingagents/research/onchain_replication/matching_hardening.py": "c0c4a2eb21ad62d3a966e8619d84370be388e1e4a402f7608fc91abb3f796312",
+    "tradingagents/research/onchain_replication/matching_identity.py": "f011658abf3b56b04a0ec33a7bdfed2c68e2e2e79791aa96c5ca7f8fd1653f89",
+    "tradingagents/research/onchain_replication/matching_pair.py": "3fc8a0666b2b4bf334411a85decd7dbf484b038827255714c6727ffe3846621c",
+    "tradingagents/research/onchain_replication/matching_policy.py": "5d552673fb772f61344d212606a5d9d2c22c91c8de44dfa501d57422c9b4e739",
+    "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332",
+    "tradingagents/research/onchain_replication/matching_sparse.py": "06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e",
+    "tradingagents/research/onchain_replication/mcm.py": "d2527cdc34f1032f6ed9a3ff175fd1e7c21412e19e1d449ac53f773bd582f9df",
+    "tradingagents/research/onchain_replication/metrics.py": "9476c2052e02be278c01360fa598a3a136a791ffaa90d90f1fde992c8a27c84b",
+    "tradingagents/research/onchain_replication/model.py": "2f55b04d3a707e212b2a1d9e0fb591eb3ec2b4828614edcc1a5a5d8f313d3b8e",
+    "tradingagents/research/onchain_replication/model_registry.py": "5a8be9dc05a1844528c1353cf2177185b4aa48cdc8a52581fdbb7acc5d910339",
+    "tradingagents/research/onchain_replication/native_producer.py": "5b7dff71ffe2b1e6c0570b859020d82af337d753665ae77cbea95ff07d1914ed",
+    "tradingagents/research/onchain_replication/native_reuse.py": "a84274b035278fb5d840f58420cdc4d70eb7c5d8ca2ee5247392cf6bb29b2bbb",
+    "tradingagents/research/onchain_replication/neighborhood_census.py": "be4704d1b19028c2ce734c35483986d6b49d7eecd6f6bd9048c96208b51c02a9",
+    "tradingagents/research/onchain_replication/neighborhood_policy.py": "f86e19de0bedd4c12ef73fe2ba243990256f592c604c083d8e772ce8131bc12a",
+    "tradingagents/research/onchain_replication/neighborhoods.py": "b53901125dc20dbb8a38b6e0e539866fb04109053afbcba0d75b2a2a8dc38271",
+    "tradingagents/research/onchain_replication/neural_authority.py": "eed5f79f4c34819fb64ac2d79069ff56e4b24d175f2d391da9856f9d50186fb2",
+    "tradingagents/research/onchain_replication/neural_phases.py": "11af32f66fa1d9289c713da0304a5c7e0d6dd7a0623f783597bd0f9368988d71",
+    "tradingagents/research/onchain_replication/neural_physical.py": "8891e3ed52142f23ae987b8985cd4ee8e09caf86658623e43a37df7140dfe190",
+    "tradingagents/research/onchain_replication/neural_resource.py": "ae7cd7ff76b0ddfd5e55645ea7a36a56d12089388add620a99fc70b1bc6759b9",
+    "tradingagents/research/onchain_replication/parquet_ranges.py": "482c0686e552aae3157bf6cf12f802e0d284c68ce14d879000253b895450b044",
+    "tradingagents/research/onchain_replication/pooling.py": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303",
+    "tradingagents/research/onchain_replication/population_assembly.py": "4995037a26d2e6d7a8c18085acb59c535e31af48f1732dfb12a5b97604550263",
+    "tradingagents/research/onchain_replication/population_batch_projection.py": "09f11459e077066e16a5501378cf424f057b2b9cb39bffef8f961fe00b7039cf",
+    "tradingagents/research/onchain_replication/preservation.py": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+    "tradingagents/research/onchain_replication/price_source.py": "66af531218352999667f2cac88c8393e70ddcf956b8e9f05db16a52c6b2f6e74",
+    "tradingagents/research/onchain_replication/prices.py": "5f44f1e689b614121c4b9cab5da75e17322074a9ec9f2a30a174ac353093798f",
+    "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+    "tradingagents/research/onchain_replication/range_source.py": "5f1e004a89e2339d1f21c941415dc3976e9523f509a1d1591f23a8ea7a836bd7",
+    "tradingagents/research/onchain_replication/real_pilot_training.py": "140ee71f01b89f0f07b2ffb47178b0f8d96f7616c13080ebf48899103ee277c8",
+    "tradingagents/research/onchain_replication/registered_features.py": "8a79c459336773bd139f377fe44fe1006796378651d30a8eb22c966c72f7b267",
+    "tradingagents/research/onchain_replication/replay.py": "f9f016afad09ec5ec177a7fac04a0ca5d2fbb84262b06c6ea51e893e6b6433a0",
+    "tradingagents/research/onchain_replication/restart_retention.py": "15e7b2090ce87081b0cd6e2338b4d62d348d779082947729cacf0210d3c6dc7d",
+    "tradingagents/research/onchain_replication/run.py": "27b05e965606632de8c379d476ac1363af1a1f2bb1858de4a364f7f8d958730a",
+    "tradingagents/research/onchain_replication/sampling_policy.py": "79d1253009e6ba5e8815f82fdf3422113d5559b92e5e0e36bfec84fc2963354d",
+    "tradingagents/research/onchain_replication/sampling_weights.py": "5f1837f93fe0523d7c851654390584fc6c04fb803f2025fd027e74a5da8318d1",
+    "tradingagents/research/onchain_replication/score_tail.py": "b5e807e022349ca7e0d18c02512812932103865ba0779d641be6877995694870",
+    "tradingagents/research/onchain_replication/serialization.py": "f711a0a931fe9fb91aadf0ad7ba6e68b638f3874e736790e05edd21acdefc65b",
+    "tradingagents/research/onchain_replication/source_footers.py": "65005ceca3072760befb09680f9c7aa469d5aaa5ab3f2af6a741d4ed2fef660e",
+    "tradingagents/research/onchain_replication/source_inventory.py": "6d868efe77d4d84af97fdb1657585ad86fda15866b44541f111656d3e09759db",
+    "tradingagents/research/onchain_replication/stage_retention.py": "2f608ba1735fd07fdf18eab8969854f61e9769603b84b16869a008cde108b478",
+    "tradingagents/research/onchain_replication/stage_retention_reader.py": "c2ae559de8721bea87a3520d9d13591f6c47ee6cad9971c7166c2c63937736f5",
+    "tradingagents/research/onchain_replication/streamed_gat.py": "e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f",
+    "tradingagents/research/onchain_replication/subsets.py": "59a17cb12711d8ec518f6f25ec4518f143647b79c3ef3286399dada114b7a22c",
+    "tradingagents/research/onchain_replication/temporal.py": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226",
+    "tradingagents/research/onchain_replication/training.py": "0e5ae299f48f21cde666d78319b7710208f6d959c0c2b1aea7e848f4252ff482",
+    "tradingagents/research/onchain_replication/training_batch_observer.py": "2a498466909e35849318d8256f40d47f20b7e356dfc1f9ca47757e2f54cca057",
+    "tradingagents/research/onchain_replication/treatment_admission.py": "65ffe3efecd0c972341ec2af8deaa2594560b5a36bc9ca2dcd3e1b8da006d81e",
+    "tradingagents/research/onchain_replication/treatment_contract.py": "fb148eb922431bdd46c2bd4c310d48b180d1f040c50e1d64d63ca0dc859a11fc",
+    "tradingagents/research/onchain_replication/treatment_production.py": "210db787eaf830974357831c4142260baf8d0043e8049f6794f31f05eb1d208c",
+    "tradingagents/research/onchain_replication/verification.py": "c492cc9be2eb0956035800c26bde5d6cc2999844cd7466eb151bd3ea82815873",
+    "tradingagents/research/onchain_replication/weekly.py": "079a427f212738759109b31da23933549a8b7751851e3033703cdd03dc5f054a",
+    "tradingagents/research/onchain_replication/workflow_storage.py": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554"
+  },
+  "reused": [
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/cold_files.py",
+      "path": "tradingagents/research/onchain_replication/cold_files.py",
+      "sha256": "3740b149a69ed10448ae0d4f177f8d93c3300765b9e20846d4cbda5aec75ca85"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_cold_features.py",
+      "path": "tradingagents/research/onchain_replication/compact_cold_features.py",
+      "sha256": "9231e784a2085cbe4130568d748cbacb63d61e41fc955f3f0685831853ebd2c0"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_cold_proof.py",
+      "path": "tradingagents/research/onchain_replication/compact_cold_proof.py",
+      "sha256": "d3e401618b214647d27387d18182153ab493e69177394823e483546b44a6a153"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_cold_proof_inputs.py",
+      "path": "tradingagents/research/onchain_replication/compact_cold_proof_inputs.py",
+      "sha256": "cae64e3531207a9c3d62031a6e0969af72a0b0f8eb93814e643bfbe16ad8c42a"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/compact_cold_proof_native.py",
+      "path": "tradingagents/research/onchain_replication/compact_cold_proof_native.py",
+      "sha256": "efbda343637395a88d6349aacbb77421430d59bbad745a375aad989b107e0aba"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/held_score_consumer.py",
+      "path": "tradingagents/research/onchain_replication/held_score_consumer.py",
+      "sha256": "35da29691a5ef6c23f4bbdf178a55fd51bb6779214c1d38fb5a162e712ea0d41"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/import_metadata.py",
+      "path": "tradingagents/research/onchain_replication/import_metadata.py",
+      "sha256": "1c9455bc80b8f424bf63d6fdd5b94338ce54c14ead720990a2f787aef9e93dfe"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "path": "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/original_dictionary.py",
+      "path": "tradingagents/research/onchain_replication/original_dictionary.py",
+      "sha256": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/original_import_preparation.py",
+      "path": "tradingagents/research/onchain_replication/original_import_preparation.py",
+      "sha256": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/original_import_stage.py",
+      "path": "tradingagents/research/onchain_replication/original_import_stage.py",
+      "sha256": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/owned_io.py",
+      "path": "tradingagents/research/onchain_replication/owned_io.py",
+      "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "sha256": "c093094f9c107be3a983413a288263d39037400f702f5fefda581ecc758b81ba"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/resource_binding.py",
+      "path": "tradingagents/research/onchain_replication/resource_binding.py",
+      "sha256": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-import-port01-2026-10-05/candidate/tradingagents/research/onchain_replication/resource_fixture.py",
+      "path": "tradingagents/research/onchain_replication/resource_fixture.py",
+      "sha256": "3ea9902ec4067edc59bc897081c5ad5f6738350ccd3a339b0b423c863212a97e"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-native-port01-2026-10-05/job.py",
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "sha256": "4dca6079896dd1394ccf65fbcd1a9bc601608fc8be22675b6f0f496e51ddd5e9"
+    },
+    {
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-native-port01-2026-10-05/resources.py",
+      "path": "tradingagents/research/onchain_replication/resources.py",
+      "sha256": "9410243896ebc21ee445ea17b6fd56b5c28942661dced6427674f124713b22f4"
+    }
+  ]
+}

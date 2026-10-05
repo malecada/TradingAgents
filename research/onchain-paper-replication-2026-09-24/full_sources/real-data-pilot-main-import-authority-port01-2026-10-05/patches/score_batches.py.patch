@@ -1,0 +1,147 @@
+--- a/tradingagents/research/onchain_replication/score_batches.py
++++ b/tradingagents/research/onchain_replication/score_batches.py
+@@ -14,6 +14,8 @@
+ import stat
+ import sys
+ 
++from .owned_io import CleanupFailure,_fatal,_flatten,_cleanup,_close_after_failure,_release,_closing,_opened,_read_path
++
+ import numpy as np
+ 
+ META_LIMIT = 8192
+@@ -21,35 +23,17 @@
+ SCOPE_FIELDS = {'graph', 'node_order', 'dictionary', 'ordered_motifs', 'matching', 'workflow'}
+ 
+ 
+-class CleanupFailure(BaseException):
+-    """An owned close was uncertain; stop the worker, never retry its fd integer."""
+-
+-
+-def _cleanup(actions):
+-    """Attempt every independent close once, without masking fatal uncertainty."""
+-    failures = []
+-    for close in actions:
+-        try: close()
+-        except BaseException as error: failures.append(error)
+-    if failures:
+-        fatal = CleanupFailure('score storage cleanup unresolved; worker must stop')
+-        for error in failures: fatal.add_note(repr(error))
+-        raise fatal from failures[0]
+-
+-
+-def _close_after_failure(close, primary):
+-    try: close()
+-    except BaseException as error:
+-        fatal = error if isinstance(error, CleanupFailure) else CleanupFailure('score cleanup unresolved; worker must stop')
+-        if fatal is not error: fatal.add_note(repr(error))
+-        raise fatal from primary
+-
+-
+-def _release(close):
+-    """Close an owned read resource once, retaining any primary failure."""
+-    primary = sys.exception()
+-    if primary is None: _cleanup((close,))
+-    else: _close_after_failure(close, primary)
++
++
++
++
++
++
++
++
++
++
++
+ 
+ 
+ def _require(condition, message):
+@@ -94,14 +78,16 @@
+     return raw
+ 
+ 
+-def _write(fd, name, body):
+-    # Exclusive publication. A failure leaves bytes for forensics; no overwrite,
+-    # retry under this identity, or cleanup that could erase interrupted work.
+-    child = os.open(name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, dir_fd=fd)
+-    with os.fdopen(child, 'wb') as stream:
+-        stream.write(body)
+-        stream.flush()
+-        os.fsync(stream.fileno())
++def _write(fd,name,body):
++    # Immutable descriptor-relative publication; partial bytes always remain.
++    child=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=fd)
++    try:
++        offset=0
++        while offset<len(body):
++            count=os.write(child,memoryview(body)[offset:])
++            _require(count>0,'score write made no progress');offset+=count
++        os.fsync(child)
++    finally:_release(lambda:os.close(child))
+     os.fsync(fd)
+     return _hash(body)
+ 
+@@ -116,28 +102,24 @@
+     return int(_hash(_json([name, _signature(info)])), 16)
+ 
+ 
+-def _read(fd, name, limit, observations=None):
+-    child = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=fd)
+-    stream = None
++def _read(fd,name,limit,observations=None):
++    child=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=fd)
+     try:
+-        # Keep descriptor ownership explicit even if fdopen construction fails.
+-        stream = os.fdopen(child, 'rb', closefd=False)
+-        before = os.fstat(stream.fileno())
+-        _require(stat.S_ISREG(before.st_mode) and before.st_nlink == 1
+-                 and before.st_size <= limit, 'score file type/size')
+-        raw = stream.read(limit + 1)
+-        after = os.fstat(stream.fileno())
+-        current = os.stat(name, dir_fd=fd, follow_symlinks=False)
+-    finally:
+-        actions = (() if stream is None else (stream.close,)) + (lambda: os.close(child),)
+-        _release(lambda: _cleanup(actions))
+-    _require(len(raw) == before.st_size and _signature(before) == _signature(after)
+-             and _signature(current) == _signature(after),
+-             'score file changed during read')
++        before=os.fstat(child)
++        _require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<=before.st_size<=limit,'score file type/size')
++        pieces=[];size=0
++        while size<=limit:
++            block=os.read(child,min(65536,limit+1-size))
++            if not block:break
++            pieces.append(block);size+=len(block)
++        raw=b''.join(pieces)
++        after=os.fstat(child);current=os.stat(name,dir_fd=fd,follow_symlinks=False)
++        _require(len(raw)==before.st_size and _signature(before)==_signature(after)==_signature(current),'score file changed during read')
++    finally:_release(lambda:os.close(child))
+     if observations is not None:
+-        observations[0] += 1
+-        observations[1] = (observations[1] + _stamp(name, after)) % 2**256
+-        observations[2] = (observations[2] + int(_hash(_json([name, _hash(raw)])), 16)) % 2**256
++        observations[0]+=1
++        observations[1]=(observations[1]+_stamp(name,after))%2**256
++        observations[2]=(observations[2]+int(_hash(_json([name,_hash(raw)])),16))%2**256
+     return raw
+ 
+ 
+@@ -173,8 +155,7 @@
+         parent, parent_fd = _open(root.parent)
+         try:
+             os.fsync(parent_fd); _root(parent, parent_fd)
+-        finally:
+-            os.close(parent_fd)
++        finally: _release(lambda: os.close(parent_fd))
+         self.root, self.fd = _open(root)
+         self.lease = lease; self.chunk_cells = chunk_cells
+         self.cells = self.chunks = 0
+@@ -329,7 +310,7 @@
+         # No list of all cell/chunk identities is retained in memory.
+         lease(); _root(root, fd)
+         count = 0; final_observations = [0, 0, 0]
+-        with os.scandir(fd) as entries:
++        with _closing(os.scandir(fd)) as entries:
+             for entry in entries:
+                 count += 1
+                 _require(count <= 2 + 2 * chunks + len(names), 'unexpected score files')

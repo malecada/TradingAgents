@@ -1,0 +1,38 @@
+{
+  "actual_admission": false,
+  "actual_native_execution": false,
+  "decision": "candidate-native-source-slice-complete; integration-and-native-execution-not-tested",
+  "files": {
+    "INVERSE01.json": "018437aa713bae10df93e5bf6efbf22c4bf4183a46feeb8d2b93972823cb1bec",
+    "REPORT01.md": "5b39dc07b754a3e46f386311aebb70e5369afe0fad28ae4c0aef268eca72608b",
+    "SOURCE_REUSE01.json": "e93890752c050a9cd26b237672c7649e8c59c4909853759109de979ef8a899f2",
+    "job.py": "4dca6079896dd1394ccf65fbcd1a9bc601608fc8be22675b6f0f496e51ddd5e9",
+    "job.py.baseline": "74441a908670bf25983b4eddd4143245d4a68a45a0865ae58da3184516c3c39d",
+    "job.py.patch": "21962edb4594828501615a062845e1890a373829c60257cbc06a25c7d3280c74",
+    "resources.py": "9410243896ebc21ee445ea17b6fd56b5c28942661dced6427674f124713b22f4",
+    "resources.py.baseline": "7735c451511b99f293d658c608afcdb21956d470c117d72104d1f55228041f44",
+    "resources.py.patch": "da0b57e464b8223a9c49f55411f677af6f64a1d1d326ce9b31776570f78349f4",
+    "test_native01.before-harness-correction.py": "1b772121860a5c64fcb6e2c88ebac40692652fe9f3198da9df836592666461c8",
+    "test_native01.py": "c7b1f4e88986c5924784536cc45a494a8ec1b69e8ffe076975686f9e553c0a7c"
+  },
+  "numerical_imports": false,
+  "retained_test_diagnostics": [
+    {
+      "exit": 1,
+      "reason": "legacy test namespace lacked __file__; no source defect",
+      "tool": "e0abe8"
+    },
+    {
+      "exit": 1,
+      "reason": "finite test iterator supplied3disk samples for actual4reads; no source defect",
+      "tool": "c1f0ad"
+    }
+  ],
+  "schema_version": 1,
+  "tests": {
+    "exit": 0,
+    "methods": 10,
+    "seconds": 0.142,
+    "tool": "a1accc"
+  }
+}
