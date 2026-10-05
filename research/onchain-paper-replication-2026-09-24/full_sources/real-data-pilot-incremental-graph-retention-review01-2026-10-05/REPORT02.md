@@ -1,0 +1,7 @@
+# Correction accepted — prospective selector only
+
+Source02 `d9d63840c8f4510ac4e1b784ab31762d91f74c4de8d2258bdd7011823f921205` closes the independently reproduced active-consumer gap. Its exact three edits add the resolved producer root to the existing predicate and reject registered active inputs anywhere within that root. Existing ancestor/direct-ledger exclusions remain intact. Source01 and FINDING01 remain preserved and withheld.
+
+Independent check02 authenticated all five source02 manifest members and reconstructed the entire new source from the three declared substitutions. The genuine selector on a synthetic metadata fixture refused active result, graph-manifest, coverage, producer-root, ancestor and aggregation inputs; an unrelated producer input still returned DRAFT. Actual tool d3a3ba exited 0. Earlier actual unproduced-first-graph refusal and unchanged production/schema/claim/component/guard joins are reused from CHECK01, without rerunning the old matrix or rereading payload bodies.
+
+Acceptance is limited to corrected DRAFT selector source. No ledger/array bodies, numerical computation, network, native work, live mutations, transfer or deletion were performed. Cold03 full-download/hash-before-retirement and separate original producer closure, fresh file identity/consumer/process checks, exact storage configuration and entry review remain mandatory. This receipt authorizes neither graph execution nor ledger retirement. No throughput, financial or whole-capacity claim was tested.
