@@ -1,0 +1,31 @@
+--- a/tradingagents/research/onchain_replication/job.py
++++ b/tradingagents/research/onchain_replication/job.py
+@@ -229,10 +229,16 @@
+                 else:raise
+ 
+ 
++def _resource_worker_limits(job):
++    from . import resource_fixture, real_pilot_import_caller
++    if real_pilot_import_caller.selected(job):
++        return real_pilot_import_caller.worker_limits(job)
++    return resource_fixture.worker_limits()
++
++
+ def _resource_limit_receipt(args,job,role,live=None):
+     if job['kind']!='compact_resource':raise ValueError('native receipt requires selected compact resource job')
+-    from . import resource_fixture
+-    readback=resource_fixture.worker_limits()
++    readback=_resource_worker_limits(job)
+     expected=job['resources']['native_unit_limits']
+     if expected!={'file_size_bytes':readback['rlimit_fsize']}:raise ValueError('registered process file limit differs')
+     if role=='worker' and (live is None or live.get('native_unit_limits')!=expected):raise ValueError('worker native authority missing')
+@@ -311,8 +317,7 @@
+ def worker(args):
+     admitted, job = _admitted(args)
+     if job['kind']=='compact_resource':
+-        from . import resource_fixture
+-        resource_fixture.worker_limits()
++        _resource_worker_limits(job)
+     scope=_physical_scope(args,job)
+     if scope is not None:scope.verify_environment()
+     with metadata_scope(scope):

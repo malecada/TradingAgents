@@ -1,0 +1,238 @@
+{
+  "concrete_resource_envelope_selected": false,
+  "execution_authority": false,
+  "files": [
+    {
+      "baseline_sha256": "c093094f9c107be3a983413a288263d39037400f702f5fefda581ecc758b81ba",
+      "candidate_sha256": "d9ab2f402b96506fd22147d39aca44f3381383b5671d7357d65496e78b424573",
+      "edits": [
+        {
+          "new": [
+            "    require(type(p) is dict, 'pilot plan must be an object')\n",
+            "    full = type(p.get('schema_version')) is int and p['schema_version'] == 2\n",
+            "    require(set(p) == fields | ({'resource_policy'} if full else set()), 'pilot plan fields differ')\n",
+            "    require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND\n"
+          ],
+          "new_end": 45,
+          "new_start": 41,
+          "old": [
+            "    require(type(p) is dict and set(p) == fields, 'pilot plan fields differ')\n",
+            "    require(type(p['schema_version']) is int and p['schema_version'] == 1 and p['kind'] == KIND\n"
+          ],
+          "old_end": 43,
+          "old_start": 41
+        },
+        {
+          "new": [
+            "    if full:_finite_resources(p['resource_policy'])\n"
+          ],
+          "new_end": 70,
+          "new_start": 69,
+          "old": [],
+          "old_end": 67,
+          "old_start": 67
+        },
+        {
+          "new": [
+            "    _finite_resources(job['resources'])\n",
+            "\n",
+            "\n",
+            "def _tiny_resources(p):\n"
+          ],
+          "new_end": 87,
+          "new_start": 83,
+          "old": [
+            "    p = job['resources']\n"
+          ],
+          "old_end": 81,
+          "old_start": 80
+        },
+        {
+          "new": [
+            "\n",
+            "\n",
+            "\n",
+            "def _finite_resources(p):\n",
+            "    \"\"\"Registered finite envelope, bounded by the existing job authority.\n",
+            "\n",
+            "    This validates declared numbers, not available headroom or full-size capacity.\n",
+            "    Schema2 additionally pins this exact object in real_pilot_input at admission.\n",
+            "    \"\"\"\n",
+            "    fields={'memory_max_bytes','memory_high_bytes','reserve_bytes','start_reserve_bytes',\n",
+            "            'disk_floor_bytes','disk_paths','wall_seconds','storage_budget','native_unit_limits'}\n",
+            "    require(type(p) is dict and set(p)==fields, 'explicit real pilot resource fields required')\n",
+            "    numeric=fields-{'disk_paths','storage_budget','native_unit_limits'}\n",
+            "    require(all(type(p[k]) is int and 0<p[k]<2**63 for k in numeric), 'finite integer resource limits required')\n",
+            "    require(p['memory_high_bytes']<=p['memory_max_bytes']<=6*GIB and p['reserve_bytes']>=3*GIB\n",
+            "            and p['start_reserve_bytes']>=p['memory_max_bytes']+p['reserve_bytes'], 'existing job memory/reserve authority exceeded')\n",
+            "    require(p['wall_seconds']<=28800 and p['disk_floor_bytes']>=10*GIB, 'existing job disk/wall authority exceeded')\n",
+            "    paths=p['disk_paths']\n",
+            "    require(type(paths) is list and bool(paths) and all(type(v) is str and Path(v).is_absolute() for v in paths)\n",
+            "            and len(paths)==len(set(paths)), 'explicit distinct absolute guard volumes required')\n",
+            "    native=p['native_unit_limits']\n",
+            "    require(type(native) is dict and set(native)=={'file_size_bytes'} and type(native['file_size_bytes']) is int\n",
+            "            and 0<native['file_size_bytes']<2**63, 'finite registered native file limit required')\n",
+            "    budget=p['storage_budget']\n",
+            "    require(type(budget) is dict and set(budget)=={'root','limits'} and type(budget['root']) is str\n",
+            "            and Path(budget['root']).is_absolute(), 'explicit whole-root budget required')\n",
+            "    limits=budget['limits']\n",
+            "    require(type(limits) is dict and set(limits)=={'max_allocated_bytes','max_logical_bytes','max_entries','max_depth','max_scan_seconds'}\n",
+            "            and all(type(v) is int and 0<v<2**63 for v in limits.values()), 'finite storage limits required')\n",
+            "    require(limits['max_depth']<=64 and limits['max_scan_seconds']<=5, 'existing bounded census controls exceeded')\n",
+            "    require(native['file_size_bytes']<=min(limits['max_logical_bytes'],limits['max_allocated_bytes']), 'native file ceiling exceeds whole-tree reservation')\n",
+            "\n",
+            "\n",
+            "def _bind_resources(ad,job,plan):\n",
+            "    resources=job['resources']\n",
+            "    if plan['schema_version']==1:\n",
+            "        _tiny_resources(resources)\n",
+            "    else:\n",
+            "        from .provenance import canonical_bytes\n",
+            "        require(canonical_bytes(plan['resource_policy'])==canonical_bytes(resources), 'pilot plan/job resource policy differs')\n",
+            "    from .job import resource_policy\n",
+            "    resource_policy(resources,ad.root)\n",
+            "    # Physical volume capacity is only an upper bound. Available growth and\n",
+            "    # completed graph/MCM reservations need separate registered entry evidence.\n",
+            "    if plan['schema_version']==2:\n",
+            "        import os\n",
+            "        fs=os.statvfs(ad.root);usable=fs.f_blocks*fs.f_frsize-resources['disk_floor_bytes']\n",
+            "        limits=resources['storage_budget']['limits']\n",
+            "        require(0<usable and max(limits['max_allocated_bytes'],limits['max_logical_bytes'])<=usable,\n",
+            "                'declared tree budget exceeds physical volume less fixed floor')\n",
+            "\n",
+            "\n",
+            "def worker_limits(job):\n",
+            "    \"\"\"Exact selected RLIMIT; no default, adaptive increase or fallback.\"\"\"\n",
+            "    import resource\n",
+            "    schema(job)\n",
+            "    expected=job['resources']['native_unit_limits']['file_size_bytes']\n",
+            "    resource.setrlimit(resource.RLIMIT_FSIZE,(expected,expected))\n",
+            "    require(resource.getrlimit(resource.RLIMIT_FSIZE)==(expected,expected), 'selected worker file limit not enforced')\n",
+            "    return {'rlimit_fsize':expected,'scope':'worker and inherited descendants; outer launcher/log limits separately required'}\n",
+            "\n",
+            "\n",
+            "def publication_boundary(owner,stage,job):\n",
+            "    \"\"\"Actual real-route stage; never applies the synthetic failure selector.\"\"\"\n",
+            "    from . import compact_owner\n",
+            "    require(type(owner) is compact_owner.Owner and type(stage) is compact_owner.Stage\n",
+            "            and stage.owner is owner and owner.bound.record.get('resource_only') is True, 'actual same-owner resource stage required')\n",
+            "    run=owner.bound._run\n",
+            "    run._active();run._check_source();owner.check_binding()\n",
+            "    _,selected_plan,plan=admitted(run.admission,job)\n",
+            "    require(owner.bound.record['job_input']=='execution_job' and stage.kind=='mcm'\n",
+            "            and stage.name in tuple('mcm-'+h for h in sorted(plan['graph_inputs']))\n",
+            "            and selected_plan['descriptor']['required_graphs']==sorted(plan['graph_inputs']), 'real target publication differs')\n"
+          ],
+          "new_end": 167,
+          "new_start": 94,
+          "old": [],
+          "old_end": 88,
+          "old_start": 88
+        },
+        {
+          "new": [
+            "    _bind_resources(ad,job,p)\n"
+          ],
+          "new_end": 184,
+          "new_start": 183,
+          "old": [],
+          "old_end": 104,
+          "old_start": 104
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py"
+    },
+    {
+      "baseline_sha256": "3ea9902ec4067edc59bc897081c5ad5f6738350ccd3a339b0b423c863212a97e",
+      "candidate_sha256": "31cc0329e7246b260f64d6b608df9d9eb4d812cacbb90b9202d9d6f5f8886bc5",
+      "edits": [
+        {
+          "new": [
+            "    run=owner.bound._run;job=json.loads(run.read_input(owner.bound.record['job_input']))\n",
+            "    from . import real_pilot_import_caller\n",
+            "    if real_pilot_import_caller.selected(job):\n",
+            "        return real_pilot_import_caller.publication_boundary(owner,stage,job)\n",
+            "    schema(job)\n"
+          ],
+          "new_end": 175,
+          "new_start": 170,
+          "old": [
+            "    run=owner.bound._run;job=json.loads(run.read_input(owner.bound.record['job_input']));schema(job)\n"
+          ],
+          "old_end": 171,
+          "old_start": 170
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/resource_fixture.py"
+    },
+    {
+      "baseline_sha256": "9410243896ebc21ee445ea17b6fd56b5c28942661dced6427674f124713b22f4",
+      "candidate_sha256": "bd7c08b53cf7526898277cb798789d4d6e6fbfab530a0a3a9a9dbf17eed3c4aa",
+      "edits": [
+        {
+          "new": [
+            "    if type(value) is not dict or set(value)!={'file_size_bytes'} or type(value['file_size_bytes']) is not int or not 0<value['file_size_bytes']<2**63:\n"
+          ],
+          "new_end": 178,
+          "new_start": 177,
+          "old": [
+            "    if type(value) is not dict or set(value)!={'file_size_bytes'} or type(value['file_size_bytes']) is not int or not 0<value['file_size_bytes']<=4*1024**2:\n"
+          ],
+          "old_end": 178,
+          "old_start": 177
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/resources.py"
+    },
+    {
+      "baseline_sha256": "4dca6079896dd1394ccf65fbcd1a9bc601608fc8be22675b6f0f496e51ddd5e9",
+      "candidate_sha256": "c4e9623e6222300ea83dc8fc430f6ef16644b918ee7ccba24e9ac56e93b40177",
+      "edits": [
+        {
+          "new": [
+            "def _resource_worker_limits(job):\n",
+            "    from . import resource_fixture, real_pilot_import_caller\n",
+            "    if real_pilot_import_caller.selected(job):\n",
+            "        return real_pilot_import_caller.worker_limits(job)\n",
+            "    return resource_fixture.worker_limits()\n",
+            "\n",
+            "\n"
+          ],
+          "new_end": 238,
+          "new_start": 231,
+          "old": [],
+          "old_end": 231,
+          "old_start": 231
+        },
+        {
+          "new": [
+            "    readback=_resource_worker_limits(job)\n"
+          ],
+          "new_end": 241,
+          "new_start": 240,
+          "old": [
+            "    from . import resource_fixture\n",
+            "    readback=resource_fixture.worker_limits()\n"
+          ],
+          "old_end": 235,
+          "old_start": 233
+        },
+        {
+          "new": [
+            "        _resource_worker_limits(job)\n"
+          ],
+          "new_end": 320,
+          "new_start": 319,
+          "old": [
+            "        from . import resource_fixture\n",
+            "        resource_fixture.worker_limits()\n"
+          ],
+          "old_end": 315,
+          "old_start": 313
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/job.py"
+    }
+  ],
+  "schema_version": 1
+}

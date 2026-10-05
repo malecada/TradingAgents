@@ -1,0 +1,71 @@
+{
+  "bound_available_metadata": {
+    "calendar": {
+      "bytes": 3694,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/calendar-coinmetrics-v5.json",
+      "sha256": "21bb348b9c779238b212d0e4074cf806f6a54d0ce3b7713d97bc3ad65d57ef22"
+    },
+    "model": {
+      "bytes": 1628,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/model.json",
+      "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+    },
+    "price_panel": {
+      "bytes": 131283,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources/paper-prices-coinmetrics-eth-20260924/price-panel.json",
+      "sha256": "f7a4d89ff66d37ec00d8d4d834a1a771ac55f36bc9b210cfbecb6768ecc3bbbe"
+    },
+    "resource_population_scope": {
+      "bytes": 2607,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-scope01-2026-10-05/POPULATION_SCOPE_DRAFT01.json",
+      "sha256": "57a97518d2b12e0c787b49f91d9bf509888f9c63fb8f644d1ace90b5bd05e2a8"
+    },
+    "training": {
+      "bytes": 3934,
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/training.json",
+      "sha256": "d5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0"
+    }
+  },
+  "checks": {
+    "actual_population_execution": false,
+    "caller_patch_matches_baseline": true,
+    "failed": 0,
+    "numeric_imports": false,
+    "passed": 4
+  },
+  "graph_reference_template": {
+    "2022-05-02T00:00:00Z": null,
+    "2022-05-09T00:00:00Z": null,
+    "2022-05-16T00:00:00Z": null,
+    "2022-05-23T00:00:00Z": null,
+    "2022-05-30T00:00:00Z": null,
+    "2022-06-06T00:00:00Z": null,
+    "2022-06-13T00:00:00Z": {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+      "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+    }
+  },
+  "input_denominator": {
+    "explanation": "scope + calendar + retained price panel + seven full graph manifest roles; plus population-plan input. Model/training and original dictionary/import/MCM roles remain caller-specific unchanged.",
+    "population_direct_roles": 10
+  },
+  "known_price_body_handling": "Existing price-panel body hashed opaquely only; no values or labels parsed before registered worker.",
+  "missing_inputs": [
+    "Six registered complete graph manifests/coverage from the new full-week source jobs; no stand-in hashes.",
+    "Root-reviewed resource scope, native/storage policy and exact registered producer/Owner/package/input binding.",
+    "Actual worker eligibility, selected row positions, subset scaler and typed original import/MCM/checkpoint outcomes."
+  ],
+  "original_source_pins": {
+    "dataset.py": "c8d701b5646395bb94e5037aefcc2d0d29a55de95cca05e019ce35d3f53561df",
+    "job_payload.py": "0303ea2e516e57e1d4a850b3eadf13b3b23ee047b48df1417e8ae559ff171ab0",
+    "population_assembly.py": "4995037a26d2e6d7a8c18085acb59c535e31af48f1732dfb12a5b97604550263",
+    "real_pilot_import_caller.py": "c093094f9c107be3a983413a288263d39037400f702f5fefda581ecc758b81ba"
+  },
+  "outputs": [
+    "resource-population.json",
+    "resource-population-binding.json"
+  ],
+  "population_scope": "resource_pilot_subset",
+  "schema_version": 1,
+  "status": "source_preparation_not_admitted"
+}

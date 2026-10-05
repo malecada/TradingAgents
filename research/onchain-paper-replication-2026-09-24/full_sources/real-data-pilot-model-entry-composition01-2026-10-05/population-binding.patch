@@ -1,0 +1,147 @@
+--- population-binding/real_pilot_import_caller.py
++++ candidate/real_pilot_import_caller.py
+@@ -39,11 +39,12 @@
+               'cell_id','graph_inputs','indices','decisions','graph_sequences',
+               'population_plan_input','model_input','training_input','model_execution',
+               'max_checkpoint_bytes','outputs'}
+-    resource_subset = type(p) is dict and p.get('schema_version') == 2
+-    if resource_subset: fields = fields | {'population_scope'}
+-    require(type(p) is dict and set(p) == fields, 'pilot plan fields differ')
+-    if resource_subset: require(p['population_scope'] == 'resource_pilot_subset', 'explicit subset scope required')
+-    require(type(p['schema_version']) is int and p['schema_version'] in (1,2) and p['kind'] == KIND
++    require(type(p) is dict, 'pilot plan must be an object')
++    full = type(p.get('schema_version')) is int and p['schema_version'] == 2
++    resource_subset = 'population_scope' in p
++    require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
++    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()), 'pilot plan fields differ')
++    require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+             and type(p['lookback_days']) is int and p['lookback_days'] == 28, 'fixed real ETH pilot differs')
+@@ -71,6 +72,7 @@
+     require(type(outputs) is dict and set(outputs) == {'summary','ledger','binding','journal'}
+             and all(type(n) is str and n and not Path(n).is_absolute() and '..' not in Path(n).parts for n in outputs.values())
+             and len(set(outputs.values())) == 4, 'four distinct registered output names required')
++    if full:_finite_resources(p['resource_policy'])
+     return p
+ 
+ 
+@@ -84,7 +86,10 @@
+     d = s['descriptor']
+     require(type(d) is dict and d.get('arm') == 'proposed' and d.get('dictionary_origin') == 'imported-original-v1'
+             and 'resource_fixture' not in d, 'original real proposed descriptor required')
+-    p = job['resources']
++    _finite_resources(job['resources'])
++
++
++def _tiny_resources(p):
+     require('physical_policy' not in p and 'storage_budget' in p, 'whole workspace storage guard required')
+     require(type(p.get('wall_seconds')) is int and 0 < p['wall_seconds'] <= 1800
+             and type(p.get('memory_max_bytes')) is int and 0 < p['memory_max_bytes'] <= 3*GIB, 'original native envelope exceeded')
+@@ -92,6 +97,79 @@
+     limits = p['storage_budget']['limits']
+     ceilings = {'max_allocated_bytes':GIB,'max_logical_bytes':GIB,'max_entries':32768,'max_depth':32,'max_scan_seconds':5}
+     require(set(limits) == set(ceilings) and all(type(limits[k]) is int and 0 < limits[k] <= v for k,v in ceilings.items()), 'original storage envelope exceeded')
++
++
++
++def _finite_resources(p):
++    """Registered finite envelope, bounded by the existing job authority.
++
++    This validates declared numbers, not available headroom or full-size capacity.
++    Schema2 additionally pins this exact object in real_pilot_input at admission.
++    """
++    fields={'memory_max_bytes','memory_high_bytes','reserve_bytes','start_reserve_bytes',
++            'disk_floor_bytes','disk_paths','wall_seconds','storage_budget','native_unit_limits'}
++    require(type(p) is dict and set(p)==fields, 'explicit real pilot resource fields required')
++    numeric=fields-{'disk_paths','storage_budget','native_unit_limits'}
++    require(all(type(p[k]) is int and 0<p[k]<2**63 for k in numeric), 'finite integer resource limits required')
++    require(p['memory_high_bytes']<=p['memory_max_bytes']<=6*GIB and p['reserve_bytes']>=3*GIB
++            and p['start_reserve_bytes']>=p['memory_max_bytes']+p['reserve_bytes'], 'existing job memory/reserve authority exceeded')
++    require(p['wall_seconds']<=28800 and p['disk_floor_bytes']>=10*GIB, 'existing job disk/wall authority exceeded')
++    paths=p['disk_paths']
++    require(type(paths) is list and bool(paths) and all(type(v) is str and Path(v).is_absolute() for v in paths)
++            and len(paths)==len(set(paths)), 'explicit distinct absolute guard volumes required')
++    native=p['native_unit_limits']
++    require(type(native) is dict and set(native)=={'file_size_bytes'} and type(native['file_size_bytes']) is int
++            and 0<native['file_size_bytes']<2**63, 'finite registered native file limit required')
++    budget=p['storage_budget']
++    require(type(budget) is dict and set(budget)=={'root','limits'} and type(budget['root']) is str
++            and Path(budget['root']).is_absolute(), 'explicit whole-root budget required')
++    limits=budget['limits']
++    require(type(limits) is dict and set(limits)=={'max_allocated_bytes','max_logical_bytes','max_entries','max_depth','max_scan_seconds'}
++            and all(type(v) is int and 0<v<2**63 for v in limits.values()), 'finite storage limits required')
++    require(limits['max_depth']<=64 and limits['max_scan_seconds']<=5, 'existing bounded census controls exceeded')
++    require(native['file_size_bytes']<=min(limits['max_logical_bytes'],limits['max_allocated_bytes']), 'native file ceiling exceeds whole-tree reservation')
++
++
++def _bind_resources(ad,job,plan):
++    resources=job['resources']
++    if plan['schema_version']==1:
++        _tiny_resources(resources)
++    else:
++        from .provenance import canonical_bytes
++        require(canonical_bytes(plan['resource_policy'])==canonical_bytes(resources), 'pilot plan/job resource policy differs')
++    from .job import resource_policy
++    resource_policy(resources,ad.root)
++    # Physical volume capacity is only an upper bound. Available growth and
++    # completed graph/MCM reservations need separate registered entry evidence.
++    if plan['schema_version']==2:
++        import os
++        fs=os.statvfs(ad.root);usable=fs.f_blocks*fs.f_frsize-resources['disk_floor_bytes']
++        limits=resources['storage_budget']['limits']
++        require(0<usable and max(limits['max_allocated_bytes'],limits['max_logical_bytes'])<=usable,
++                'declared tree budget exceeds physical volume less fixed floor')
++
++
++def worker_limits(job):
++    """Exact selected RLIMIT; no default, adaptive increase or fallback."""
++    import resource
++    schema(job)
++    expected=job['resources']['native_unit_limits']['file_size_bytes']
++    resource.setrlimit(resource.RLIMIT_FSIZE,(expected,expected))
++    require(resource.getrlimit(resource.RLIMIT_FSIZE)==(expected,expected), 'selected worker file limit not enforced')
++    return {'rlimit_fsize':expected,'scope':'worker and inherited descendants; outer launcher/log limits separately required'}
++
++
++def publication_boundary(owner,stage,job):
++    """Actual real-route stage; never applies the synthetic failure selector."""
++    from . import compact_owner
++    require(type(owner) is compact_owner.Owner and type(stage) is compact_owner.Stage
++            and stage.owner is owner and owner.bound.record.get('resource_only') is True, 'actual same-owner resource stage required')
++    run=owner.bound._run
++    run._active();run._check_source();owner.check_binding()
++    _,selected_plan,plan=admitted(run.admission,job)
++    require(owner.bound.record['job_input']=='execution_job' and stage.kind=='mcm'
++            and stage.name in tuple('mcm-'+h for h in sorted(plan['graph_inputs']))
++            and selected_plan['descriptor']['required_graphs']==sorted(plan['graph_inputs']), 'real target publication differs')
+ 
+ 
+ def _read(ad, name):
+@@ -108,6 +186,7 @@
+     schema(job)
+     name,s = next(iter(job['payload']['representation_jobs'].items()))
+     p = validate_plan(_read(ad, s['real_pilot_input']))
++    _bind_resources(ad,job,p)
+     require(ad.family['mechanism_id'] == 'celik-sefer-transaction-graph-full-neural-replication' and ad.experiment['cells'] == [p['cell_id']], 'separate one-cell resource pilot admission required')
+     require(Path(job['resources']['storage_budget']['root']) == ad.root and (ad.root/'.git').is_dir(), 'complete isolated workspace watch required')
+     from .job import required_sources
+@@ -181,7 +260,8 @@
+     require(job['payload'] == payload, 'exact registered pilot payload required')
+     name,s,p = admitted(run.admission,job)
+     watch = StorageWatch(run.admission.root,job['resources']['storage_budget']['limits']); watch.check()
+-    if p['schema_version'] == 2:
++    resource_subset = p.get('population_scope') == 'resource_pilot_subset'
++    if resource_subset:
+         from .real_pilot_population import produce
+         examples,scaler,indices = produce(run,p['population_plan_input'],p)
+     else:
+@@ -193,7 +273,7 @@
+     require([x.decision_at for x in chosen] == p['decisions']
+             and [list(x.graph_hashes) for x in chosen] == p['graph_sequences']
+             and all(len(x.input_prices) == 28 for x in chosen), 'actual checked eligible rows differ')
+-    if p['schema_version'] == 1:
++    if not resource_subset:
+         require(assembly['provenance']['source_admission']['asset'] == 'ETH', 'real ETH source required')
+     control = json.loads(run.read_input(s['original_dictionary_input']))
+     original_dictionary.policy_check(control)

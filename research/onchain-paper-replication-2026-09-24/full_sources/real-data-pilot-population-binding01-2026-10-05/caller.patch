@@ -1,0 +1,51 @@
+--- a/real_pilot_import_caller.py
++++ b/real_pilot_import_caller.py
+@@ -39,14 +39,20 @@
+               'cell_id','graph_inputs','indices','decisions','graph_sequences',
+               'population_plan_input','model_input','training_input','model_execution',
+               'max_checkpoint_bytes','outputs'}
++    resource_subset = type(p) is dict and p.get('schema_version') == 2
++    if resource_subset: fields = fields | {'population_scope'}
+     require(type(p) is dict and set(p) == fields, 'pilot plan fields differ')
+-    require(type(p['schema_version']) is int and p['schema_version'] == 1 and p['kind'] == KIND
++    if resource_subset: require(p['population_scope'] == 'resource_pilot_subset', 'explicit subset scope required')
++    require(type(p['schema_version']) is int and p['schema_version'] in (1,2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+             and type(p['lookback_days']) is int and p['lookback_days'] == 28, 'fixed real ETH pilot differs')
+     indices = p['indices']
+-    require(type(indices) is list and len(indices) == 16 and all(type(i) is int and i >= 0 for i in indices)
+-            and indices == list(range(indices[0], indices[0]+16)), 'consecutive eligible batch16 required')
++    if resource_subset:
++        require(indices is None, 'resource indices must be derived by the registered worker')
++    else:
++        require(type(indices) is list and len(indices) == 16 and all(type(i) is int and i >= 0 for i in indices)
++                and indices == list(range(indices[0], indices[0]+16)), 'consecutive eligible batch16 required')
+     mapping = p['graph_inputs']
+     require(type(mapping) is dict and len(mapping) == 7 and len(set(mapping.values())) == 7
+             and all(type(h) is str and len(h) == 64 and all(c in '0123456789abcdef' for c in h)
+@@ -175,15 +181,20 @@
+     require(job['payload'] == payload, 'exact registered pilot payload required')
+     name,s,p = admitted(run.admission,job)
+     watch = StorageWatch(run.admission.root,job['resources']['storage_budget']['limits']); watch.check()
+-    assembly = produce_registered_population(run,p['population_plan_input'])
+-    examples,scaler = population_from_record(assembly['population'])
+-    indices = p['indices']
++    if p['schema_version'] == 2:
++        from .real_pilot_population import produce
++        examples,scaler,indices = produce(run,p['population_plan_input'],p)
++    else:
++        assembly = produce_registered_population(run,p['population_plan_input'])
++        examples,scaler = population_from_record(assembly['population'])
++        indices = p['indices']
+     require(indices[-1] < len(examples.train), 'registered eligible batch outside actual training population')
+     chosen = [examples.train[i] for i in indices]
+     require([x.decision_at for x in chosen] == p['decisions']
+             and [list(x.graph_hashes) for x in chosen] == p['graph_sequences']
+             and all(len(x.input_prices) == 28 for x in chosen), 'actual checked eligible rows differ')
+-    require(assembly['provenance']['source_admission']['asset'] == 'ETH', 'real ETH source required')
++    if p['schema_version'] == 1:
++        require(assembly['provenance']['source_admission']['asset'] == 'ETH', 'real ETH source required')
+     control = json.loads(run.read_input(s['original_dictionary_input']))
+     original_dictionary.policy_check(control)
+     graphs = {}

@@ -1,0 +1,25 @@
+test_01_exact_inverse_and_legacy_controls (__main__.Checks.test_01_exact_inverse_and_legacy_controls) ... ok
+test_02_schema1_original_small_policy (__main__.Checks.test_02_schema1_original_small_policy) ... ERROR
+test_03_schema2_exact_registered_resources (__main__.Checks.test_03_schema2_exact_registered_resources) ... ok
+test_04_finite_existing_authority_refusals (__main__.Checks.test_04_finite_existing_authority_refusals) ... ok
+test_05_physical_capacity_refuses_impossible_tree (__main__.Checks.test_05_physical_capacity_refuses_impossible_tree) ... ok
+test_06_exact_native_ready_large_and_legacy (__main__.Checks.test_06_exact_native_ready_large_and_legacy) ... ok
+test_07_selected_monitor_worker_and_tiny_file_limit (__main__.Checks.test_07_selected_monitor_worker_and_tiny_file_limit) ... ok
+test_08_publication_selection_and_no_duck_owner (__main__.Checks.test_08_publication_selection_and_no_duck_owner) ... ok
+test_09_science_and_checkpoint_unchanged (__main__.Checks.test_09_science_and_checkpoint_unchanged) ... ok
+
+======================================================================
+ERROR: test_02_schema1_original_small_policy (__main__.Checks.test_02_schema1_original_small_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/test_policy01.py", line 55, in test_02_schema1_original_small_policy
+    self.assertEqual(original.validate_plan(p),caller.validate_plan(p));original.schema(j);caller.schema(j)
+                                                                        ~~~~~~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/baseline/real_pilot_import_caller.py", line 72, in schema
+    from .resource_binding import validate_job
+ImportError: attempted relative import with no known parent package
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.086s
+
+FAILED (errors=1)

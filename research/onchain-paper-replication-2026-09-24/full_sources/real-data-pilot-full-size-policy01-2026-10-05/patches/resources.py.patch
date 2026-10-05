@@ -1,0 +1,11 @@
+--- a/tradingagents/research/onchain_replication/resources.py
++++ b/tradingagents/research/onchain_replication/resources.py
+@@ -175,7 +175,7 @@
+ 
+ def _native_policy(value):
+     if value is None:return None
+-    if type(value) is not dict or set(value)!={'file_size_bytes'} or type(value['file_size_bytes']) is not int or not 0<value['file_size_bytes']<=4*1024**2:
++    if type(value) is not dict or set(value)!={'file_size_bytes'} or type(value['file_size_bytes']) is not int or not 0<value['file_size_bytes']<2**63:
+         raise ValueError('native unit file limit schema differs')
+     return dict(value)
+ 

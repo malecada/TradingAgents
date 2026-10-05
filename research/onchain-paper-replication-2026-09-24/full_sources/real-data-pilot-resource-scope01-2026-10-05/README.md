@@ -1,0 +1,1 @@
+The resource pilot uses an explicit16-decision training subset to measure the full original architecture. The same scaler algorithm operates on the declared subset; full financial-fold coverage and accuracy remain unclaimed. Exact source, inputs, storage policy and committed registration must be accepted before numerical execution.

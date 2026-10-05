@@ -1,0 +1,271 @@
+{
+  "baselines": [
+    {
+      "edits": [
+        {
+          "new": [
+            "    resource_subset = 'population_scope' in p\n",
+            "    require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')\n",
+            "    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()), 'pilot plan fields differ')\n"
+          ],
+          "new_end": 46,
+          "new_start": 43,
+          "old": [
+            "    require(set(p) == fields | ({'resource_policy'} if full else set()), 'pilot plan fields differ')\n"
+          ],
+          "old_end": 44,
+          "old_start": 43
+        },
+        {
+          "new": [
+            "    if resource_subset:\n",
+            "        require(indices is None, 'resource indices must be derived by the registered worker')\n",
+            "    else:\n",
+            "        require(type(indices) is list and len(indices) == 16 and all(type(i) is int and i >= 0 for i in indices)\n",
+            "                and indices == list(range(indices[0], indices[0]+16)), 'consecutive eligible batch16 required')\n"
+          ],
+          "new_end": 56,
+          "new_start": 51,
+          "old": [
+            "    require(type(indices) is list and len(indices) == 16 and all(type(i) is int and i >= 0 for i in indices)\n",
+            "            and indices == list(range(indices[0], indices[0]+16)), 'consecutive eligible batch16 required')\n"
+          ],
+          "old_end": 51,
+          "old_start": 49
+        },
+        {
+          "new": [
+            "    resource_subset = p.get('population_scope') == 'resource_pilot_subset'\n",
+            "    if resource_subset:\n",
+            "        from .real_pilot_population import produce\n",
+            "        examples,scaler,indices = produce(run,p['population_plan_input'],p)\n",
+            "    else:\n",
+            "        assembly = produce_registered_population(run,p['population_plan_input'])\n",
+            "        examples,scaler = population_from_record(assembly['population'])\n",
+            "        indices = p['indices']\n"
+          ],
+          "new_end": 270,
+          "new_start": 262,
+          "old": [
+            "    assembly = produce_registered_population(run,p['population_plan_input'])\n",
+            "    examples,scaler = population_from_record(assembly['population'])\n",
+            "    indices = p['indices']\n"
+          ],
+          "old_end": 260,
+          "old_start": 257
+        },
+        {
+          "new": [
+            "    if not resource_subset:\n",
+            "        require(assembly['provenance']['source_admission']['asset'] == 'ETH', 'real ETH source required')\n"
+          ],
+          "new_end": 277,
+          "new_start": 275,
+          "old": [
+            "    require(assembly['provenance']['source_admission']['asset'] == 'ETH', 'real ETH source required')\n"
+          ],
+          "old_end": 266,
+          "old_start": 265
+        }
+      ],
+      "manifest": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/MANIFEST01.json",
+      "manifest_sha256": "ca40a8638e3e2a722ebab86aeab8c35f5d08f144ddcc29fca9c21efc311f8972",
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "sha256": "d9ab2f402b96506fd22147d39aca44f3381383b5671d7357d65496e78b424573"
+    },
+    {
+      "edits": [
+        {
+          "new": [
+            "    require(type(p) is dict, 'pilot plan must be an object')\n",
+            "    full = type(p.get('schema_version')) is int and p['schema_version'] == 2\n",
+            "    resource_subset = 'population_scope' in p\n",
+            "    require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')\n",
+            "    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()), 'pilot plan fields differ')\n",
+            "    require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND\n"
+          ],
+          "new_end": 47,
+          "new_start": 41,
+          "old": [
+            "    resource_subset = type(p) is dict and p.get('schema_version') == 2\n",
+            "    if resource_subset: fields = fields | {'population_scope'}\n",
+            "    require(type(p) is dict and set(p) == fields, 'pilot plan fields differ')\n",
+            "    if resource_subset: require(p['population_scope'] == 'resource_pilot_subset', 'explicit subset scope required')\n",
+            "    require(type(p['schema_version']) is int and p['schema_version'] in (1,2) and p['kind'] == KIND\n"
+          ],
+          "old_end": 46,
+          "old_start": 41
+        },
+        {
+          "new": [
+            "    if full:_finite_resources(p['resource_policy'])\n"
+          ],
+          "new_end": 75,
+          "new_start": 74,
+          "old": [],
+          "old_end": 73,
+          "old_start": 73
+        },
+        {
+          "new": [
+            "    _finite_resources(job['resources'])\n",
+            "\n",
+            "\n",
+            "def _tiny_resources(p):\n"
+          ],
+          "new_end": 92,
+          "new_start": 88,
+          "old": [
+            "    p = job['resources']\n"
+          ],
+          "old_end": 87,
+          "old_start": 86
+        },
+        {
+          "new": [
+            "\n",
+            "\n",
+            "\n",
+            "def _finite_resources(p):\n",
+            "    \"\"\"Registered finite envelope, bounded by the existing job authority.\n",
+            "\n",
+            "    This validates declared numbers, not available headroom or full-size capacity.\n",
+            "    Schema2 additionally pins this exact object in real_pilot_input at admission.\n",
+            "    \"\"\"\n",
+            "    fields={'memory_max_bytes','memory_high_bytes','reserve_bytes','start_reserve_bytes',\n",
+            "            'disk_floor_bytes','disk_paths','wall_seconds','storage_budget','native_unit_limits'}\n",
+            "    require(type(p) is dict and set(p)==fields, 'explicit real pilot resource fields required')\n",
+            "    numeric=fields-{'disk_paths','storage_budget','native_unit_limits'}\n",
+            "    require(all(type(p[k]) is int and 0<p[k]<2**63 for k in numeric), 'finite integer resource limits required')\n",
+            "    require(p['memory_high_bytes']<=p['memory_max_bytes']<=6*GIB and p['reserve_bytes']>=3*GIB\n",
+            "            and p['start_reserve_bytes']>=p['memory_max_bytes']+p['reserve_bytes'], 'existing job memory/reserve authority exceeded')\n",
+            "    require(p['wall_seconds']<=28800 and p['disk_floor_bytes']>=10*GIB, 'existing job disk/wall authority exceeded')\n",
+            "    paths=p['disk_paths']\n",
+            "    require(type(paths) is list and bool(paths) and all(type(v) is str and Path(v).is_absolute() for v in paths)\n",
+            "            and len(paths)==len(set(paths)), 'explicit distinct absolute guard volumes required')\n",
+            "    native=p['native_unit_limits']\n",
+            "    require(type(native) is dict and set(native)=={'file_size_bytes'} and type(native['file_size_bytes']) is int\n",
+            "            and 0<native['file_size_bytes']<2**63, 'finite registered native file limit required')\n",
+            "    budget=p['storage_budget']\n",
+            "    require(type(budget) is dict and set(budget)=={'root','limits'} and type(budget['root']) is str\n",
+            "            and Path(budget['root']).is_absolute(), 'explicit whole-root budget required')\n",
+            "    limits=budget['limits']\n",
+            "    require(type(limits) is dict and set(limits)=={'max_allocated_bytes','max_logical_bytes','max_entries','max_depth','max_scan_seconds'}\n",
+            "            and all(type(v) is int and 0<v<2**63 for v in limits.values()), 'finite storage limits required')\n",
+            "    require(limits['max_depth']<=64 and limits['max_scan_seconds']<=5, 'existing bounded census controls exceeded')\n",
+            "    require(native['file_size_bytes']<=min(limits['max_logical_bytes'],limits['max_allocated_bytes']), 'native file ceiling exceeds whole-tree reservation')\n",
+            "\n",
+            "\n",
+            "def _bind_resources(ad,job,plan):\n",
+            "    resources=job['resources']\n",
+            "    if plan['schema_version']==1:\n",
+            "        _tiny_resources(resources)\n",
+            "    else:\n",
+            "        from .provenance import canonical_bytes\n",
+            "        require(canonical_bytes(plan['resource_policy'])==canonical_bytes(resources), 'pilot plan/job resource policy differs')\n",
+            "    from .job import resource_policy\n",
+            "    resource_policy(resources,ad.root)\n",
+            "    # Physical volume capacity is only an upper bound. Available growth and\n",
+            "    # completed graph/MCM reservations need separate registered entry evidence.\n",
+            "    if plan['schema_version']==2:\n",
+            "        import os\n",
+            "        fs=os.statvfs(ad.root);usable=fs.f_blocks*fs.f_frsize-resources['disk_floor_bytes']\n",
+            "        limits=resources['storage_budget']['limits']\n",
+            "        require(0<usable and max(limits['max_allocated_bytes'],limits['max_logical_bytes'])<=usable,\n",
+            "                'declared tree budget exceeds physical volume less fixed floor')\n",
+            "\n",
+            "\n",
+            "def worker_limits(job):\n",
+            "    \"\"\"Exact selected RLIMIT; no default, adaptive increase or fallback.\"\"\"\n",
+            "    import resource\n",
+            "    schema(job)\n",
+            "    expected=job['resources']['native_unit_limits']['file_size_bytes']\n",
+            "    resource.setrlimit(resource.RLIMIT_FSIZE,(expected,expected))\n",
+            "    require(resource.getrlimit(resource.RLIMIT_FSIZE)==(expected,expected), 'selected worker file limit not enforced')\n",
+            "    return {'rlimit_fsize':expected,'scope':'worker and inherited descendants; outer launcher/log limits separately required'}\n",
+            "\n",
+            "\n",
+            "def publication_boundary(owner,stage,job):\n",
+            "    \"\"\"Actual real-route stage; never applies the synthetic failure selector.\"\"\"\n",
+            "    from . import compact_owner\n",
+            "    require(type(owner) is compact_owner.Owner and type(stage) is compact_owner.Stage\n",
+            "            and stage.owner is owner and owner.bound.record.get('resource_only') is True, 'actual same-owner resource stage required')\n",
+            "    run=owner.bound._run\n",
+            "    run._active();run._check_source();owner.check_binding()\n",
+            "    _,selected_plan,plan=admitted(run.admission,job)\n",
+            "    require(owner.bound.record['job_input']=='execution_job' and stage.kind=='mcm'\n",
+            "            and stage.name in tuple('mcm-'+h for h in sorted(plan['graph_inputs']))\n",
+            "            and selected_plan['descriptor']['required_graphs']==sorted(plan['graph_inputs']), 'real target publication differs')\n"
+          ],
+          "new_end": 172,
+          "new_start": 99,
+          "old": [],
+          "old_end": 94,
+          "old_start": 94
+        },
+        {
+          "new": [
+            "    _bind_resources(ad,job,p)\n"
+          ],
+          "new_end": 189,
+          "new_start": 188,
+          "old": [],
+          "old_end": 110,
+          "old_start": 110
+        },
+        {
+          "new": [
+            "    resource_subset = p.get('population_scope') == 'resource_pilot_subset'\n",
+            "    if resource_subset:\n"
+          ],
+          "new_end": 264,
+          "new_start": 262,
+          "old": [
+            "    if p['schema_version'] == 2:\n"
+          ],
+          "old_end": 184,
+          "old_start": 183
+        },
+        {
+          "new": [
+            "    if not resource_subset:\n"
+          ],
+          "new_end": 276,
+          "new_start": 275,
+          "old": [
+            "    if p['schema_version'] == 1:\n"
+          ],
+          "old_end": 196,
+          "old_start": 195
+        }
+      ],
+      "manifest": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-population-binding01-2026-10-05/MANIFEST01.json",
+      "manifest_sha256": "ebaeef904719723ee77ceb477185b81ad443d7f908802e0abf75b3e0cc9fc848",
+      "origin": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-population-binding01-2026-10-05/real_pilot_import_caller.py",
+      "sha256": "6164919ae45ee706959582d35982b44a139bf27d4399a7f88c5020cf02517eeb"
+    }
+  ],
+  "caller_sha256": "e3e5bd544d470e870780305a9ed3bfdb8b669c703a921a34baf9175552272593",
+  "helper": {
+    "byte_identical": true,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-population-binding01-2026-10-05/real_pilot_population.py",
+    "sha256": "e4671b48754c8f56d989d1905e7803d8111c10334f1110ff07cfcc79a1fb45db"
+  },
+  "live_integration": false,
+  "native_policy_reuse": [
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/candidate/tradingagents/research/onchain_replication/resources.py",
+      "sha256": "bd7c08b53cf7526898277cb798789d4d6e6fbfab530a0a3a9a9dbf17eed3c4aa"
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/candidate/tradingagents/research/onchain_replication/job.py",
+      "sha256": "c4e9623e6222300ea83dc8fc430f6ef16644b918ee7ccba24e9ac56e93b40177"
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/candidate/tradingagents/research/onchain_replication/resource_fixture.py",
+      "sha256": "31cc0329e7246b260f64d6b608df9d9eb4d812cacbb90b9202d9d6f5f8886bc5"
+    }
+  ],
+  "resource_envelope_chosen": false,
+  "schema_version": 1
+}
