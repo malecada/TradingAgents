@@ -1,0 +1,34 @@
+{
+  "baseline": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-eligible-population-inventory01-2026-10-05/inventory01.py",
+    "sha256": "02aa47911f20a792760d7fd4db64cce15d9670731b89682db2e129f158c25a91"
+  },
+  "candidate_sha256": "931e9f6b605bcba9dda21ea2568dfd0ea1c7e943a1735456357435d9b4e35c70",
+  "exact_inverse": true,
+  "literal_edits": [
+    {
+      "new": "",
+      "old": "def utc(x):return datetime.fromisoformat(x.replace('Z','+00:00'))\n"
+    },
+    {
+      "new": "ns={'datetime':datetime,'timedelta':timedelta}",
+      "old": "ns={'utc':utc,'datetime':datetime,'timedelta':timedelta}"
+    },
+    {
+      "new": "[('provenance.py',{'utc'}),('calendar.py',{'stamp','eligible','expected_week'}),('population_assembly.py',{'required_weeks'})]",
+      "old": "[('calendar.py',{'stamp','eligible','expected_week'}),('population_assembly.py',{'required_weeks'})]"
+    },
+    {
+      "new": "F,SOURCE_PINS=source_functions()\nutc=F['utc']",
+      "old": "F,SOURCE_PINS=source_functions()"
+    },
+    {
+      "new": "w=F['stamp'](g['start_utc']);require(w not in by_week",
+      "old": "w=g['start_utc'];require(w not in by_week"
+    }
+  ],
+  "numerical_or_execution_authority": false,
+  "qualification": "Saved inventory01 remains accepted only within its actual UTC/Z scope. This new source fixes two source-reuse defects before integration, preserving the original failed candidate and actual evidence.",
+  "saved_actual_inventory_changed": false,
+  "schema_version": 1
+}

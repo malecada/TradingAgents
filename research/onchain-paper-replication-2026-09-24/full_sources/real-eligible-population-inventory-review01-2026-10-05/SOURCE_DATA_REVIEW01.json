@@ -1,0 +1,50 @@
+{
+  "check": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-eligible-population-inventory-review01-2026-10-05/CHECK01.json",
+    "sha256": "a81eec4ee4884fc24a567f049ba34872d0d5204d5bf50f34c08b30b0c762a5c5"
+  },
+  "checker": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-eligible-population-inventory-review01-2026-10-05/check01.py",
+    "sha256": "6da926cc94670968b12f99d5365c7a77da2bd7ac5f27760e22fe74eadf319559"
+  },
+  "decision": "ACCEPT_SAVED_SCOPED_INVENTORY_SOURCE_REUSE_REQUIRES_UTC_CANONICALIZATION",
+  "findings": [
+    {
+      "file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-eligible-population-inventory01-2026-10-05/inventory01.py",
+      "impact": "reusable helper differs from original UTC validation and permits ambiguous equal-instant weekly graph keys",
+      "lines": [
+        12,
+        16,
+        32,
+        33
+      ],
+      "priority": "P2",
+      "required_change": "reuse/pin original provenance.utc and canonicalize week keys with original stamp before duplicate validation",
+      "saved_inventory_counts_affected": false
+    }
+  ],
+  "inventory": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-eligible-population-inventory01-2026-10-05/INVENTORY01.json",
+    "sha256": "df36f171066934b5464ea104fd25ab80c75205f3af06cd4b52bf071b562c6161"
+  },
+  "member_body_authentication": false,
+  "member_extent_checks": 45,
+  "numerical_authority": false,
+  "observed_graphs": {
+    "BTC": 0,
+    "ETH": 9
+  },
+  "preparation_manifest": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-eligible-population-inventory01-2026-10-05/MANIFEST01.json",
+    "sha256": "23b3b5bd8a86d798c726e6b417dfcb7bd60803f19ff8bc54529d9128e53f3e6e"
+  },
+  "report": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-eligible-population-inventory-review01-2026-10-05/REPORT01.md",
+    "sha256": "77e091a28308d187293646a92c3520a89ab46f0926662f9e75aae9a1a7751132"
+  },
+  "reviewed_utc": "2026-10-05T14:56:20.317822+00:00",
+  "schema_version": 1,
+  "scope": "actual studyartifact root only",
+  "source_reuse_accepted": false,
+  "true_eligible_population_known": false
+}

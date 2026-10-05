@@ -1,0 +1,11 @@
+# Focused UTC/source correction review
+
+**Accepted: exact corrected reporting source only. Both demonstrated defects are resolved.** Candidate `inventory02.py` SHA-256 `931e9f6b605bcba9dda21ea2568dfd0ea1c7e943a1735456357435d9b4e35c70`; preparation manifest `989cd54aae59dd136f4ece741f280bc2dcf6fa5aead2afc10926025a3b2b6141`.
+
+All five sealed members were authenticated. Independent reconstruction verified exactly the five declared literal edits and their byte-exact inverse to original helper `02aa4791`. `inventory02.py:17–24` now extracts and records the actual `provenance.utc` source hash, binds it into the original calendar-function namespace, and uses that same function globally. The extracted function's bytecode/constants match the current original definition. Nonzero-offset, naive and nonstring inputs fail with the original `ValueError` behavior.
+
+`inventory02.py:33` canonicalizes week keys with the original `stamp` before duplicate detection. The earlier mixed `Z`/`+00:00` duplicate now fails. A separate positive control changed every fixture week to `+00:00` and retained the exact same supported-row metadata as `Z`; valid alias spelling no longer becomes a false missing week. No remaining defect was found in this correction.
+
+The earlier source remains withheld for reuse, and its saved artifact remains unchanged. Accepted saved scope/count/calendar findings from review `2e46a07a` / manifest `fce15a5a`, with supporting-line correction `b7863e08`, are reused. The 14 asset/fold inventory was not rerun, and the actual artifact root was not rescanned. Only source, sealed metadata and the small clock/key controls were read/executed; no arrays, prices, labels or scientific libraries were loaded.
+
+Root may integrate this exact reporting source under its source-controlled preparation workflow. It still provides graph-support diagnostics only: source-bound price membership/availability, original population/binding/assembly/hashes, complete scientific components and current genuine Owner/Binding remain required before true eligibility, scientific admission or capacity claims. No live integration, numerical execution, whole-population capacity, global raw-store absence, array integrity or financial result was tested or authorized by this review. Main/CAP/Parent, registrations, Git, STATE and network were untouched.

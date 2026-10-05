@@ -1,0 +1,3 @@
+# UTC-correct graph-support inventory source
+
+The saved inventory01 and its original source remain preserved. The saved scoped UTC/Z result is unaffected. The new candidate extracts the actual provenance.utc function with the existing calendar functions and normalizes week keys through calendar.stamp, closing the two reviewer counterexamples. No raw arrays, prices, labels, census rerun, scientific admission or live source integration occurred. Focused complete-lookback, purge, missing/late, UTC-alias duplicate and non-UTC/naive clock checks passed. True eligible populations and runtime object identity remain unknown.
