@@ -1,0 +1,9 @@
+# Serialized storage binding source review
+
+Accepted changed source and exact prospective edge only. The authentic 2263 terminal recovery joins the accepted bdf current recovery and original a535 refusal. Both reserved identities and four spent claims remain immutable, with 16 remaining and no refund. The helper changes only the finite successor identity/refusal chain; original contract and scientific/reference comparisons remain unchanged. Complete original/current195 maps are checked; only the installed helper changes from the previous accepted map and the fixture stays exact.
+
+The prospective gate retains the original five definitions and adds one fresh definition with 36 inputs. Original family, cell, model, training, numerical/native job and budget fields remain unchanged; its descriptive question adds the scheduling explanation. Parent changes only six binding lines; the accepted scheduling launch function is identical. Source binding, complete source map, actual recovery proof and final release remain unresolved.
+
+Two changed-seam tests passed independently, with the previous eleven source checks and five scheduling checks reused. No numerical imports, claims, Owner creation, checkpoint decoding or launch occurred. The original mutated directory remains unknown; removal of duplicate active Parent CAP sampling does not guarantee all concurrency will succeed.
+
+The 8 MiB reader limit and final exact-byte rereads remain unchanged. Compact serialization can reduce overhead without changing parsed authority, but the final actual metadata total depends on final concrete references and must pass genuine full preflight. No capacity, strategy or numerical-agreement claim was tested. This review remains open for the actual source increment recovery and later concrete source/caller joins.

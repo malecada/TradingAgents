@@ -1,0 +1,58 @@
+--- a/operational_source_compatibility.py
++++ b/operational_source_compatibility.py
+@@ -280,13 +280,16 @@
+ SUCCESSOR_PROOFS=(SUCCESSOR_ROLE+'_review',SUCCESSOR_ROLE+'_recovery')
+ ORIGINAL_POLICY_SHA='ae8fbdc9d13e75fc453b70b5ee633c89fb4577e9b68a35b4147cf1bbd58c6887'
+ ORIGINAL_HELPER_SHA='d0d770b45def89e8e00e81fa1bbb35416034eaace5ecab0f15193fd43b7a32d8'
+-SUCCESSOR_ID='financial-wrapper-classification-eager-continue100-resource-successor-20261005-01'
+-RESERVED_ID='financial-wrapper-classification-eager-continue100-compatibility-20261004-01'
++SUCCESSOR_ID='financial-wrapper-classification-eager-continue100-serialized-storage-successor-20261005-01'
++RESERVED_ID='financial-wrapper-classification-eager-continue100-resource-successor-20261005-01'
++ORIGINAL_RESERVED_ID='financial-wrapper-classification-eager-continue100-compatibility-20261004-01'
+ SUCCESSOR_CELL='financial-wrapper-classification-eager-continued-20261003-01'
+-REFUSAL_SHA='a5357602f130838bbf52fd6fe54288401e91bfd045c96aac73fa128f4be41a42'
++REFUSAL_SHA='2263ea2cd9f6e6b2fe6100498a917fb971328d9e4ae3478e4f544a07f93d908b'
++PREVIOUS_RECOVERY_SHA='bdf0f39710054d34f2274eec35a192dc13200ff146b4a79d3f4822235efba7df'
++ORIGINAL_REFUSAL_SHA='a5357602f130838bbf52fd6fe54288401e91bfd045c96aac73fa128f4be41a42'
+ SUCCESSOR_DELTA={HELPER,PREFIX+'financial_wrapper_fixture.py'}
+ 
+-def validate_successor(original,original_raw,edge,helper_sha,refusal_raw):
++def validate_successor(original,original_raw,edge,helper_sha,refusal_raw,previous_recovery_raw=None,original_refusal_raw=None):
+  """Finite pure metadata predicate; never mints admission or changes provenance."""
+  require(sha(original_raw)==ORIGINAL_POLICY_SHA and json.loads(original_raw)==original,'immutable original policy bytes required')
+  validate_contract(original,ORIGINAL_HELPER_SHA)
+@@ -300,15 +303,13 @@
+  for key in ('original_closure_input','refusal_input'):
+   require(type(edge[key])is str and edge[key] and '/' not in edge[key] and '..' not in edge[key],'exact successor evidence role required')
+  require(edge['original_closure_input']!=original['target']['closure_input'],'original closure must retain separate role')
+- require(sha(refusal_raw)==REFUSAL_SHA,'exact independently recovered reserved refusal required')
+- refusal=json.loads(refusal_raw)
+- require(refusal['identity']==RESERVED_ID and refusal['decision']=='accepted-actual-terminal-not-admitted-evidence-byte-recovery' and refusal['lifecycle_claim_created'] is False and refusal['namespace_reserved'] is True and refusal['namespace_reuse_authorized'] is False and refusal['numerical_updates']==0 and refusal['numerical_authority'] is False,'refusal ancestry cannot confer claim/refund/reuse authority')
++ validate_terminal_refusal(refusal_raw,previous_recovery_raw,original_refusal_raw)
+  effective=json.loads(json.dumps(original));effective['target']['installed']=after;effective['consumers']['continue100']=edge['consumer']
+  return effective
+ 
+ def successor_context(original,original_raw,read,sources,inputs,helper_sha):
+  raw=read(SUCCESSOR_ROLE);edge=json.loads(raw)
+- effective=validate_successor(original,original_raw,edge,helper_sha,read(edge['refusal_input']))
++ effective=validate_successor(original,original_raw,edge,helper_sha,read(edge['refusal_input']),read('successor_previous_recovery'),read('successor_original_refusal'))
+  closure=json.loads(read(edge['original_closure_input']))
+  require(type(closure)is dict and set(closure)=={'schema_version','installed','scientific_model','scientific_training','candidate02'} and type(closure['schema_version'])is int and closure['schema_version']==1 and closure['installed']==original['target']['installed'] and closure['scientific_model']==MODEL and closure['scientific_training']==TRAINING and closure['candidate02']==original['target']['installed'][PREFIX+'financial_execution.py'],'retained reference closure/source/science differs')
+  for role in (SUCCESSOR_ROLE,)+SUCCESSOR_PROOFS:
+@@ -329,3 +330,16 @@
+  require(old['source_hashes']==sorted(set(before.values())) and new['source_hashes']==sorted(set(after.values())),'reference and successor complete source hash lists differ')
+  exclude={'source_commit','source_hashes','cell_id'}
+  require({k:v for k,v in old.items() if k not in exclude}=={k:v for k,v in new.items() if k not in exclude},'reference non-source scientific provenance differs')
++
++
++def validate_terminal_refusal(refusal_raw,previous_recovery_raw,original_refusal_raw):
++ """Authenticate genuine new terminal fields and retain the original refusal authority."""
++ require(type(refusal_raw)is bytes and sha(refusal_raw)==REFUSAL_SHA,'exact independently recovered reserved terminal refusal required')
++ require(type(previous_recovery_raw)is bytes and sha(previous_recovery_raw)==PREVIOUS_RECOVERY_SHA,'exact accepted unchanged-byte recovery basis required')
++ require(type(original_refusal_raw)is bytes and sha(original_refusal_raw)==ORIGINAL_REFUSAL_SHA,'exact original recovered refusal must remain available')
++ terminal=json.loads(refusal_raw);basis=json.loads(previous_recovery_raw);refusal=json.loads(original_refusal_raw)
++ require(terminal['schema_version']==1 and terminal['identity']==RESERVED_ID and terminal['source']=='a5bcc943167ad035b45e12ddf9864d46e685b124' and terminal['decision']=='accepted-actual-complete-terminal-refusal-byte-recovery' and terminal['genuine_claim_present'] is False and terminal['namespace_reserved'] is True and terminal['namespace_reuse_authorized'] is False and terminal['numerical_updates']==0 and terminal['new_checkpoint_present'] is False and terminal['new_launch_authority'] is False,'actual terminal refusal cannot confer claim/checkpoint/reuse authority')
++ require(terminal['accepted_unchanged_byte_basis']['sha256']==PREVIOUS_RECOVERY_SHA and basis['accepted_baseline']['sha256']==ORIGINAL_REFUSAL_SHA,'exact terminal-to-basis-to-original-refusal chain required')
++ require(basis['identity']==RESERVED_ID and basis['source']==basis['design_source']==terminal['source'] and basis['decision']=='accepted-actual-complete-current-successor-byte-recovery' and basis['namespace_reuse_authority'] is False and basis['numerical_authority'] is False,'previous recovery is ancestry, not launch or numerical authority')
++ require(refusal['identity']==ORIGINAL_RESERVED_ID and refusal['decision']=='accepted-actual-terminal-not-admitted-evidence-byte-recovery' and refusal['lifecycle_claim_created'] is False and refusal['namespace_reserved'] is True and refusal['namespace_reuse_authorized'] is False and refusal['numerical_updates']==0 and refusal['numerical_authority'] is False,'refusal ancestry cannot confer claim/refund/reuse authority')
++ require(terminal['lifecycle_accounting']=={'base':18,'basis':'accepted preparation cumulative proof plus unchanged exact claim namespace','complete':1,'failed':3,'highest':20,'prior':0,'refund':False,'remaining':16,'spent':4,'terminal_reserved_without_claim':2},'original spent budget and both no-claim reservations remain unchanged')

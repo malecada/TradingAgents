@@ -1,9 +1,9 @@
 # Current parallel coordination
 
-Read the [latest study checkpoint](../../STATE.md) for evidence, accounting and next safe action. Root alone owns live Main/CAP/Parent/Git, registration, STATE, actual external preservation and one native numerical launcher.
+Read the [current study checkpoint](../../STATE.md). Root owns live Main/CAP/Parent/Git, registrations/accounting/STATE, actual external preservation/recovery and one numerical launcher.
 
-- `continuation_successor_admission`: bounded storage investigation complete.
-- `continuation_successor_implementation`: owns NEW serialized-storage-binding source candidate, exact fresh consumer and genuine terminal schema only; no live integration or numerical execution.
-- `continuation_successor_review`: closed preparation, actual terminal recovery and scheduling source reviews; all reused without reopening.
+- continuation_successor_implementation: fresh serialized binding completed and sealed; helper/preclaim changed, fixture unchanged,13focused checks passed. No live integration or claim.
+- continuation_successor_review: new combined binding/source/entry/recovery/release review; source edge accepted, actual increment recovery pending. Prior preparation/outcome/scheduling reviews remain closed and reused.
+- continuation_successor_admission: storage investigation completed.
 
-No numerical job is active. Both old and current successor continuation Parents/identities are permanently reserved; never relaunch. Current storage refusal is fully externally byte-recovered. Scheduling correction is source-accepted; active implementation binds a fresh consumer to truthful recovery facts. Original numerical/native limits and4spent/16remaining accounting remain unchanged. Preserve only actual new bytes incrementally and review changed seams once.
+No numerical job or new claim. Both terminal no-claim identities remain permanently reserved. Source-only prediction has an unavailable fixed parent. Next Root action is actual source-increment preservation, one-helper/gate/current caller binding, genuine recovery/release/preflight and at most one fresh eligible serialized continuation. Accounting4spent16remaining; caps/numerics unchanged. Reuse immutable evidence; preserve only actual increments and review changed seams once.
