@@ -1,0 +1,37 @@
+{
+  "bitwise_equal": {
+    "gradient_tensors": 20,
+    "logits": true,
+    "loss": true,
+    "model": true,
+    "optimizer": true,
+    "rng": true
+  },
+  "edges_per_graph": 3,
+  "graph_forward_entries": [
+    7,
+    14
+  ],
+  "graphs": 7,
+  "lookback": 28,
+  "memory_savings_measured": false,
+  "nodes_per_graph": 3,
+  "paper_financial_fits": 0,
+  "policies": [
+    {
+      "backend": "streamed-gat-mulsum-v1",
+      "block_edges": 4,
+      "schema_version": 1
+    },
+    {
+      "backend": "streamed-gat-mulsum-v1",
+      "block_edges": 4,
+      "graph_activation_checkpointing": true,
+      "schema_version": 2
+    }
+  ],
+  "rows": 16,
+  "schema_version": 1,
+  "scope": "one fresh synthetic paired CPU update, not empirical capacity",
+  "source_original_configs_unchanged": true
+}

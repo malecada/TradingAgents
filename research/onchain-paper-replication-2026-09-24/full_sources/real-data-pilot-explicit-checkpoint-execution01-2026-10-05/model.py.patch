@@ -1,0 +1,31 @@
+--- a/tradingagents/research/onchain_replication/model.py
++++ b/tradingagents/research/onchain_replication/model.py
+@@ -12,9 +12,13 @@
+ def validate_execution(value):
+     """Explicit execution metadata, separate from scientific model config."""
+     if value is None:return None
+-    if type(value) is not dict or set(value)!={'schema_version','backend','block_edges'}:
++    checkpointed=type(value) is dict and type(value.get('schema_version')) is int and value['schema_version']==2
++    fields={'schema_version','backend','block_edges'} | ({'graph_activation_checkpointing'} if checkpointed else set())
++    if type(value) is not dict or set(value)!=fields:
+         raise ValueError('model execution policy fields differ')
+-    if type(value['schema_version']) is not int or value['schema_version']!=1 or value['backend']!='streamed-gat-mulsum-v1':
++    if checkpointed and value['graph_activation_checkpointing'] is not True:
++        raise ValueError('explicit activation checkpointing selection required')
++    if type(value['schema_version']) is not int or value['schema_version'] not in (1,2) or value['backend']!='streamed-gat-mulsum-v1':
+         raise ValueError('model execution backend/schema differs')
+     if type(value['block_edges']) is not int or not 0<value['block_edges']<=65536:
+         raise ValueError('model execution block bound differs')
+@@ -57,6 +61,12 @@
+     def __init__(self,config,task,*,execution=None):
+         selected=validate_execution(execution)
+         super().__init__();self._configure(config,task)
++        if selected is not None and selected['schema_version']==2:
++            if self.graph_activation_checkpointing:
++                raise ValueError('checkpoint execution must not change scientific config')
++            if type(config.get('gat_dropout')) not in (int,float) or config['gat_dropout']!=0:
++                raise ValueError('checkpoint execution requires original zero GAT dropout')
++            self.graph_activation_checkpointing=True
+         self.execution=selected
+         self.graph=GraphEncoder(config,execution=None if selected is None else dict(selected))
+         self.temporal=TemporalHead(config['graph_vector_width']+config['price_input_width'],config['lstm_width'],config['attention_width'],task,config['lstm_depth'])

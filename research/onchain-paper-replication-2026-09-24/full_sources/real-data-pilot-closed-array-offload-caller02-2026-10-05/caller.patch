@@ -1,0 +1,53 @@
+--- caller01/caller01.py
++++ caller02/caller01.py
+@@ -44,7 +44,7 @@
+     for p in (root/'research_runs').glob('*/claim.json'):
+         if p.with_name('complete.json').exists() or p.with_name('failed.json').exists():continue
+         claim=json.loads(metadata(p))
+-        for info in claim.get('inputs',{}).values():
++        for info in claim['experiment']['inputs'].values():
+             q=(root/info['path']).resolve()
+             require(not any(q==(root/r['path']).resolve() or q.parent==(root/r['path']).parent or (root/r['path']).resolve().is_relative_to(q) for r in rows),'active consumer references selected graph')
+     require(not subprocess.check_output(['git','ls-files','--',*[r['path'] for r in rows]],cwd=root),'tracked array retirement forbidden')
+@@ -66,6 +66,22 @@
+             raise
+     return records
+ 
++def verify_source(root,here,c,config_sha):
++    """Committed code ancestry plus the actual one-use entry observation."""
++    anchor=c['source_commit']
++    require(isinstance(anchor,str) and len(anchor)==40 and all(x in '0123456789abcdef' for x in anchor),'full source commit required')
++    head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
++    preflight=json.loads(metadata(here/'preflight01.json'))
++    require(isinstance(preflight,dict) and preflight.get('identity')==ID and preflight.get('manifest_sha256')==config_sha and preflight.get('head')==head and preflight.get('source_anchor')==anchor,'actual preflight/source binding differs')
++    require(subprocess.run(['git','merge-base','--is-ancestor',anchor,head],cwd=root,check=False).returncode==0,'source anchor is not an ancestor')
++    require(isinstance(c['source_files'],dict) and c['source_files'],'source closure missing')
++    for path,h in c['source_files'].items():
++        checked(root,{'path':path,'sha256':h})
++        obj=anchor+':'+path
++        require(subprocess.check_output(['git','cat-file','-t',obj],cwd=root,text=True).strip()=='blob','source object is not a blob')
++        require(int(subprocess.check_output(['git','cat-file','-s',obj],cwd=root,text=True))<=4*1024**2,'source object exceeds metadata bound')
++        require(hashlib.sha256(subprocess.check_output(['git','cat-file','blob',obj],cwd=root)).hexdigest()==h,'source anchor body differs')
++
+ def worker(config_path,config_sha):
+     here=Path(__file__).resolve().parent
+     root=next(p for p in here.parents if (p/'tradingagents/research/onchain_replication/resources.py').is_file())
+@@ -74,8 +90,7 @@
+     raw=metadata(config_path);require(hashlib.sha256(raw).hexdigest()==config_sha,'reviewed config hash differs');c=json.loads(raw)
+     require(c['identity']==ID and c['remote']=='research-backups/onchain-paper-replication-2026-09-24/'+ID,'fresh exact storage identity required')
+     require(c['source_files'][str(Path(__file__).relative_to(root))]==hashlib.sha256(metadata(__file__)).hexdigest(),'caller source binding differs')
+-    for path,h in c['source_files'].items():checked(root,{'path':path,'sha256':h})
+-    require(subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()==c['source_commit'],'source changed after release')
++    verify_source(root,here,c,config_sha)
+     draft=json.loads(checked(root,c['draft']));require(c['draft']['sha256']==DRAFT_SHA,'original sealed selection differs')
+     rows=selected_rows(draft)
+     protected=[(root/p).resolve() for p in c['protected_roots']]
+@@ -95,7 +110,7 @@
+     try:
+         # Connection metadata is only consumed in the actually released worker.
+         module=load(root,c['transport_source'],'reviewed_array_transport')
+-        transport=module.Transport(json.loads(checked(root,c['connection'])),rate=262144,maximum_payload_bytes=8*GIB)
++        transport=module.Transport(json.loads(checked(root,c['connection'])),rate=262144,maximum_payload_bytes=MAX_BODY)
+         require(transport.available()>=TOTAL+GIB,'remote capacity unavailable')
+         transport.mkdir(c['remote']);transport.put(here/'manifest.json',c['remote']+'/manifest.json');transport.get(c['remote']+'/manifest.json',here/'recovered-manifest.json')
+         require(old.sha(here/'manifest.json')==old.sha(here/'recovered-manifest.json'),'configuration roundtrip differs')

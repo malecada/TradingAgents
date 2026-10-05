@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "scope": "offline changed seams only; no native/transfer/array body reads",
+  "command": ".venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-closed-array-offload-caller02-2026-10-05/test_changed01.py",
+  "exit_code": 0,
+  "tests": 3,
+  "checks": [
+    "Actual experiment.inputs graph-manifest consumer refuses before transfer; original ValueError retained in failure flow",
+    "Actual Main HEAD parent is ancestor; AGENTS current and anchor Git blob match; missing/mutated preflight, current/anchor source mismatch and invalid ancestor refuse",
+    "Literal inverse equals sealed caller01; exact MAX_BODY transport ceiling"
+  ],
+  "expected_diagnostic": "Git fatal invalid all-zero commit is expected negative control, not an empirical failure",
+  "caller_sha256": "fba35f244beb740a54a3d2f4edcccee13a7d6ab38d9ff32514f3d80d20273564",
+  "baseline_sha256": "bc4b464243e25902d22a3b009de73a11da392cd8a273e3cc11fed389bc5675e5"
+}

@@ -1,0 +1,100 @@
+{
+  "empirical_selection": false,
+  "files": [
+    {
+      "baseline_sha256": "2f55b04d3a707e212b2a1d9e0fb591eb3ec2b4828614edcc1a5a5d8f313d3b8e",
+      "candidate_sha256": "e15b1be0442437800a19a205ab048f5f6444b79c0811704ebbbcf72a37da2faa",
+      "edits": [
+        {
+          "new": [
+            "    checkpointed=type(value) is dict and type(value.get('schema_version')) is int and value['schema_version']==2\n",
+            "    fields={'schema_version','backend','block_edges'} | ({'graph_activation_checkpointing'} if checkpointed else set())\n",
+            "    if type(value) is not dict or set(value)!=fields:\n"
+          ],
+          "new_end": 17,
+          "new_start": 14,
+          "old": [
+            "    if type(value) is not dict or set(value)!={'schema_version','backend','block_edges'}:\n"
+          ],
+          "old_end": 15,
+          "old_start": 14
+        },
+        {
+          "new": [
+            "    if checkpointed and value['graph_activation_checkpointing'] is not True:\n",
+            "        raise ValueError('explicit activation checkpointing selection required')\n",
+            "    if type(value['schema_version']) is not int or value['schema_version'] not in (1,2) or value['backend']!='streamed-gat-mulsum-v1':\n"
+          ],
+          "new_end": 21,
+          "new_start": 18,
+          "old": [
+            "    if type(value['schema_version']) is not int or value['schema_version']!=1 or value['backend']!='streamed-gat-mulsum-v1':\n"
+          ],
+          "old_end": 17,
+          "old_start": 16
+        },
+        {
+          "new": [
+            "        if selected is not None and selected['schema_version']==2:\n",
+            "            if self.graph_activation_checkpointing:\n",
+            "                raise ValueError('checkpoint execution must not change scientific config')\n",
+            "            if type(config.get('gat_dropout')) not in (int,float) or config['gat_dropout']!=0:\n",
+            "                raise ValueError('checkpoint execution requires original zero GAT dropout')\n",
+            "            self.graph_activation_checkpointing=True\n"
+          ],
+          "new_end": 69,
+          "new_start": 63,
+          "old": [],
+          "old_end": 59,
+          "old_start": 59
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/model.py"
+    },
+    {
+      "baseline_sha256": "140ee71f01b89f0f07b2ffb47178b0f8d96f7616c13080ebf48899103ee277c8",
+      "candidate_sha256": "ca77a32b0c7b882fed6e6af7f5929c16264aad1084e47d07b05ab52940d47782",
+      "edits": [
+        {
+          "new": [
+            "    model_execution defaults to eager (None). Known streamed and explicit\n",
+            "    checkpointed-streamed policies must be registered by the caller; neither\n",
+            "    changes the frozen scientific config or grants execution admission.\n"
+          ],
+          "new_end": 77,
+          "new_start": 74,
+          "old": [
+            "    model_execution defaults to eager (None); a known streamed policy must be\n",
+            "    explicitly registered by the caller. Policy selection itself is not admission.\n"
+          ],
+          "old_end": 76,
+          "old_start": 74
+        },
+        {
+          "new": [
+            "        selected_checkpointing = selected_execution is not None and selected_execution.get('graph_activation_checkpointing',False)\n"
+          ],
+          "new_end": 139,
+          "new_start": 138,
+          "old": [],
+          "old_end": 137,
+          "old_start": 137
+        },
+        {
+          "new": [
+            "                 and model.task == task and model.graph_activation_checkpointing is selected_checkpointing, 'original trainable model/config or selected checkpoint execution differs')\n"
+          ],
+          "new_end": 162,
+          "new_start": 161,
+          "old": [
+            "                 and model.task == task and model.graph_activation_checkpointing is False, 'original trainable model/config required')\n"
+          ],
+          "old_end": 160,
+          "old_start": 159
+        }
+      ],
+      "path": "tradingagents/research/onchain_replication/real_pilot_training.py"
+    }
+  ],
+  "schema_version": 1
+}

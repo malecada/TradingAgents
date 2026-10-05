@@ -1,0 +1,34 @@
+{
+  "caller_sha256": "bc4b464243e25902d22a3b009de73a11da392cd8a273e3cc11fed389bc5675e5",
+  "native_policy_proposed": {
+    "cpus": 2,
+    "disk_floor_bytes": 10737418240,
+    "memory_high_bytes": 201326592,
+    "memory_max_bytes": 268435456,
+    "memory_swap_max_bytes": 0,
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 3758096384,
+    "wall_seconds": 14400
+  },
+  "no_array_body_reads": true,
+  "no_transfers": true,
+  "opaque_dependencies": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-28-09/transfer.py",
+      "sha256": "c07745682d5d4879a801d02934a4040719ae26f18bcdfde614eb8877099a2d82"
+    }
+  ],
+  "schema_version": 1,
+  "status": "candidate_only_not_launched",
+  "tests": {
+    "failed": 0,
+    "passed": 4,
+    "scope": "offline ordering, failed-row/skipped-row retention, selection bound, original exception preservation"
+  },
+  "unresolved_release_fields": [
+    "Actual fresh installed caller/source_files closure and committed source",
+    "Root independent dictionary protection confirmation; defaultfalse refuses execution",
+    "Exact reviewed config SHA and actual guarded worker command/current live controls",
+    "Independent changed caller/entry review and external release"
+  ]
+}
