@@ -1,9 +1,9 @@
 # Current parallel coordination
 
-Read [current study state](../../STATE.md). Root owns live Main/CAP/Parent/Git, registrations/accounting/STATE, external preservation/recovery and one numerical launcher.
+Read [current study state](../../STATE.md). Root alone owns live Main/CAP/Parent/Git, registrations/accounting/STATE, external preservation/recovery and one numerical launcher.
 
-- continuation_successor_implementation: fresh numerical binding completed; completed sealed accepted git-watch-hardlink-retry-source02, observed-aggregate-before-discarded-link correction. Preserve withheld01/source02 unexecuted drafts.
-- continuation_successor_review: combined concrete correction/source-retrieval/failure/recovery/release review; fresh numerical source accepted, actual source retrieval01 FAILED and sourceRecovery withheld. Review only changed seams.
-- continuation_successor_admission: bounded storage and Git-watch investigations completed.
+- continuation_successor_review: open combined changed-seam/current-capture/recovery/final-release review; exact capture02 executed once, actual increment check is next.
+- continuation_successor_implementation: accepted fresh numerical binding and scoped Git-watch correction02 completed. Withheld01 remains preserved.
+- continuation_successor_admission: bounded storage/Git-watch investigations completed.
 
-No numerical job, capsule adoption or new claim. Actualsource receiver01 terminal; no selected bodies/receipt, complete failed93/104 archive retained. Watchcandidate01 withheld for specific aggregate guard-precedence counterexample; corrected02 independently accepted; Root fresh03 binding ready, actual retrieval pending. Next Root source transport uses a fresh03 namespace only after exact accepted correction/entry, then actualsource proof/adoption/current caller recovery/release/preflight. Original two financial identities remain reserved, financial fresh serialized identity unused. Accounting4spent16remaining and all caps/numerics unchanged. Reuse immutable evidence; actual increments only; no repeated frameworks/matrices or historical copies.
+Actual source03 recovery complete/accepted; failed source01 full byte recovery complete/accepted. Actual CAP6b07/375tracked374pins/36roles adopted; genuine read-only Admission passed. Current capture856regular1088typed/454Git objects/93increment bodies1871149B ran once8db87a exit0. Next actual current external/flat recovery and final envelope release/preflight. Fresh serialized financial identity unused; both earlier continuation identities permanently reserved. No numerical job/Owner/claim. Accounting4spent16remaining and all limits/numerics fixed. Reuse accepted evidence; actual increments only; do not repeat frameworks, historical stores or unchanged checks.

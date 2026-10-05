@@ -1,0 +1,32 @@
+from pathlib import Path
+import json,hashlib,stat,os
+M=Path.cwd();F=M/'research/onchain-paper-replication-2026-09-24/full_sources';D=Path(__file__).parent;R=F/'financial-wrapper-serialized-storage-source-remote03-2026-10-05';H=lambda b:hashlib.sha256(b).hexdigest()
+def read(p):return json.loads(p.read_bytes())
+def ref(p):b=p.read_bytes();return {'path':str(p),'bytes':len(b),'sha256':H(b)}
+def put(n,x):p=D/n;assert not p.exists();p.write_text(json.dumps(x,sort_keys=True,separators=(',',':'))+'\n');p.chmod(0o444);print(n,ref(p)['sha256'])
+r=read(R/'REMOTE_RECOVERY01.json');root=read(R/'ACTUAL_ROOT_EXIT01.json');sel=read(R/'SELECTED_BODIES01.json');assert ref(R/'REMOTE_RECOVERY01.json')['sha256']=='dccc4b1154b442d0cf4259a31deba9032b778c67399a8addc4038eae8782c72f';assert root['actual_root_exit']==0 and root['session_id']==82679 and root['final_tool_chunk']=='a9461c' and root['remote_receipt_sha256']==ref(R/'REMOTE_RECOVERY01.json')['sha256'] and root['entry_sha256']==ref(D/'SOURCE_REMOTE03_ENTRY_RELEASE01.json')['sha256'] and root['recorded_operations']==193 and root['all_recorded_reaped_exit_zero'] is True
+assert sel['remote_commit']==r['remote_commit']=='e1da0fbb4aa9ff21da9545575adbc0f2505991c4' and ref(R/'SELECTED_BODIES01.json')['sha256']==r['selection_sha256']=='1f07d93fee503ccdfdfb6a853e9a2b663414da2772b4ade675195ec50260c9d3'
+assert r['selected_count']==len(r['selected_blobs'])==62 and r['selected_logical_bytes']==3898860 and r['unique_selected_objects']==59
+wanted={x['path']:x for x in sel['rows']};selected={}
+for row in r['selected_blobs']:
+ p=R/'selected'/row['path'];b=p.read_bytes();assert len(b)==row['bytes']==wanted[row['path']]['bytes'] and H(b)==row['sha256']==wanted[row['path']]['sha256'];assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==row['git_object'] and row['git_mode']=='100644';assert stat.S_ISREG(p.lstat().st_mode) and p.stat().st_nlink==1;assert (M/row['path']).read_bytes()==b;selected[row['path']]=b
+assert set(str(p.relative_to(R/'selected')) for p in (R/'selected').rglob('*') if p.is_file())==set(wanted)
+ops=r['operations'];assert len(ops)==r['expected_operations']==193 and [o['operation'] for o in ops]==['remote','ls-remote','init','remote','config','config','fetch','rev-parse','ls-tree']+['fetch']*59+['cat-file']*124+['ls-remote']
+for o in ops:assert o['actual_reaped_exit']==o['exit']==0 and o['cleanup_failures']==[] and o['actual_child_limits']=={'fsize':[4194304,4194304],'pid':o['pid']} and o['seconds']<60 and o['stdout_bytes']<=4194304 and o['stderr_bytes']<=65536
+head=(r['remote_commit']+'\t'+r['branch']+'\n').encode()
+for o in [ops[1],ops[-1]]:assert o['stdout_sha256']==H(head) and o['stdout_bytes']==len(head)
+assert r['elapsed_seconds']<600 and r['free_bytes']>=10737418240 and r['genuine_run_or_native_started'] is False
+for row in r['whole_tree_observations']:
+ assert row['logical_bytes']<=67108864 and row['allocated_bytes']<=100663296 and row['members']<=32768 and row['seconds']<5 and 1<=row['complete_attempts']<=3
+logical=allocated=members=0
+for p in [R]+list(R.rglob('*')):
+ s=p.lstat();assert stat.S_ISDIR(s.st_mode) or stat.S_ISREG(s.st_mode);allocated+=s.st_blocks*512
+ if p!=R:members+=1
+ if stat.S_ISREG(s.st_mode):logical+=s.st_size;assert s.st_size<=4194304 and s.st_nlink==1
+assert logical<67108864 and allocated<100663296 and members<32768
+original29=read(F/'financial-wrapper-serialized-storage-source-remote01-2026-10-05/SELECTED_BODIES01.json')['rows'];assert all(row['path'] in wanted and wanted[row['path']]==row for row in original29)
+archive='research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-storage-source-failed-capture01-2026-10-05/failed-source-receiver.tar.gz';assert H(selected[archive])=='da7d27f13dd9c2ff3cf091252249ba9f43dd3cad87059321c53a758609e0d0ae'
+x={'schema_version':1,'decision':'accepted-actual-serialized-storage-source-byte-recovery','receipt_sha256':ref(R/'REMOTE_RECOVERY01.json')['sha256'],'actual_receiver_root_exit':ref(R/'ACTUAL_ROOT_EXIT01.json'),'remote_commit':r['remote_commit'],'selected_count':62,'selected_bytes':3898860,'unique_objects':59,'actual_operations':193,'all_exit_and_reaped_zero':True,'cleanup_failures':[],'complete62body_sha_size_OID_Gitmode_current_origin_joins':True,'original29source_preparation_review_rows_recovered':True,'accepted_corrected_watch_recovered':True,'withheld_source_and_actual_failed_archive_recovered':True,'failed_archive_sha256':H(selected[archive]),'failed_archive_fresh_flat_pending':True,'original_failed_receiver_status_unchanged':True,'current_whole_tree':{'members':members,'logical_bytes':logical,'allocated_bytes':allocated},'all_successful_samples_single_link_and_within_bounds':True,'numerical_or_namespace_reuse_authority':False,'qualification':'Genuine fresh03 retrieval only. Full actual current source/Parent/Git/release preservation remains pending after adoption. Failed01 retained; no claim of complete historical child census or original hardlink cause.'};put('SOURCE_REMOTE_CHECK01.json',x)
+proof=read(D/'SOURCE_REVIEW_PROOF01.json');proof['kind']='continuation_source_successor_recovery';put('SOURCE_RECOVERY_PROOF01.json',proof)
+check=read(D/'FAILED_FLAT_SOURCE_CHECK01.json');source=Path(check['source_path']);assert ref(source)['sha256']==check['source_sha256']=='573413fa3c61f649b116966970641bba9fd75f40afe41bb02ff5094e9ae1a368';out=F/'financial-wrapper-serialized-storage-source-failed-flat01-2026-10-05';assert not os.path.lexists(out)
+entry={'schema_version':1,'decision':'ACCEPTED_EXACT_ONE_USE_FAILED_SOURCE_RECEIVER_FLAT','argv':[str(M/'.venv/bin/python'),'-B',str(source)],'cwd':str(M),'source_sha256':check['source_sha256'],'accepted_source_check_sha256':ref(D/'FAILED_FLAT_SOURCE_CHECK01.json')['sha256'],'actual_receiver_receipt_sha256':ref(R/'REMOTE_RECOVERY01.json')['sha256'],'actual_root_exit_sha256':ref(R/'ACTUAL_ROOT_EXIT01.json')['sha256'],'archive_sha256':H(selected[archive]),'manifest_sha256':check['manifest_sha256'],'output_root':str(out),'original_regular':93,'original_typed':104,'original_failed_attempt_last_exit':None,'original_actual_reaped_exit':-9,'helper_sha256':check['unchanged_restore_helper_sha256'],'disk_floor_bytes':10737418240,'numerical_or_reuse_authority':False,'qualification':'Fresh failedreceiver01 archive BYTE restoration only; no retry of01 or02 and no repaired historical exit. Independent93body validation required after actual restore.'};put('FAILED_FLAT_ENTRY_RELEASE01.json',entry)
