@@ -1,14 +1,14 @@
 # Parallel execution coordination
 
-**TOP81 2026-10-05T01:26:29.633408+00:00**
+**TOP85 2026-10-05T02:32:01.219939+00:00**
 
-Read only the current [STATE](../../STATE.md) checkpoint and the exact evidence needed for the next action. Full previous coordination bytes are retained in [history](COORDINATION_HISTORY_THROUGH_TOP77_2026-10-05.md).
+Read only current [STATE](../../STATE.md) and exact evidence needed. Full previous bytes remain in [history](COORDINATION_HISTORY_THROUGH_TOP77_2026-10-05.md).
 
-| Owner | Exclusive current responsibility |
+| Owner | Exclusive responsibility |
 |---|---|
-| Root | Live Main/CAP/Parent/Git; registrations/accounting/STATE; actual external transfer/recovery; ONE native numerical launcher |
-| outcome_archive | recovery-preparation04/continuation-parent/observer reviews sealed; available for bounded independent implementation |
-| storage_watch_review | NEW recovery-outcome-review02, actual four failed metadata attempts/inline bundle/fresh entry/full recovered outcome; review01 is sealed |
-| combined_worker_review | financial-training-batch-observer01 is sealed; available for bounded independent implementation |
+| Root | Live Main/CAP/Parent/Git; registrations/accounting/STATE; actual external preservation/recovery; ONE native numerical launcher |
+| outcome_archive | NEW continuation-current-admission-review01: actual359source/29inputs/251runtime/caller/global accounting proof joins |
+| combined_worker_review | NEW continuation-current-preservation-preparation01: concrete typed current CAP/new Parent/Git-tail incremental preservation manifest/helper |
+| storage_watch_review | recovery03 sealed; available for next exact final recovery/entry verification |
 
-No numerical job is active. Four metadata receiver identities FAILED before Git operations; no numerical claim or flat entry occurred. Never reuse those identities. Check actual agents, namespaces and receipts before dispatch or launch. Preserve others' edits and every original store/result/failure/spent identity. Implement the next independent step immediately; reuse immutable accepted proofs, avoid duplicate broad matrices/review tiers and keep final releases tied to genuine exact source/inputs/resources. Scope, accounting and next safe executable actions are in STATE.
+No numerical or metadata transfer job is active. All four fresh canonical02 receivers and four flats are COMPLETE, independently recovered845/1074+failed110/119. Original failed identities remain spent. Fresh continuation Parent is DRAFT only, no claim or public preflight. Never duplicate active work or reopen terminal identities. Preserve others' edits, original stores/results/failures. Continue the next executable step immediately, reusing accepted immutable proofs and combining review/preservation; no repeated broad matrices. Root current authority and exact next actions are in STATE.
