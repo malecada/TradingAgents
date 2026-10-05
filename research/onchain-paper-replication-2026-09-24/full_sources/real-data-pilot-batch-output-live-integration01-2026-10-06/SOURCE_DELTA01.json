@@ -1,0 +1,266 @@
+{
+  "compact_mcm_output.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-batch-output-live-integration01-2026-10-06/baseline/compact_mcm_output.py",
+    "baseline_sha256": "bd118be0c2f9c44eebb1f459184c676dfc66f0ee46cd7f2c0271dea1db11bc99",
+    "candidate_sha256": "3e373a9eb2a02a85a3e1217a2d62c8298959cf3fbd2f59017970555b41de5a3d",
+    "edits": [
+      {
+        "old_start": 28,
+        "old_end": 29,
+        "new_start": 28,
+        "new_end": 29,
+        "old": [
+          "def _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes):\n"
+        ],
+        "new": [
+          "def _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes, storage_policy=None):\n"
+        ]
+      },
+      {
+        "old_start": 35,
+        "old_end": 36,
+        "new_start": 35,
+        "new_end": 36,
+        "old": [
+          "    return dict(stage_root=root, stage_sha256=stage_sha256, contract=copy.deepcopy(contract),\n"
+        ],
+        "new": [
+          "    args = dict(stage_root=root, stage_sha256=stage_sha256, contract=copy.deepcopy(contract),\n"
+        ]
+      },
+      {
+        "old_start": 37,
+        "old_end": 37,
+        "new_start": 37,
+        "new_end": 41,
+        "old": [],
+        "new": [
+          "    if storage_policy is not None:\n",
+          "        from .mcm_raw_parts import storage_policy as validate_storage\n",
+          "        args['storage_policy'] = validate_storage(storage_policy)\n",
+          "    return args\n"
+        ]
+      },
+      {
+        "old_start": 97,
+        "old_end": 97,
+        "new_start": 101,
+        "new_end": 104,
+        "old": [],
+        "new": [
+          "    if 'storage_policy' in args:\n",
+          "        from .mcm_raw_parts import inspect_output\n",
+          "        return inspect_output(directory, expected_sha256, args)\n"
+        ]
+      },
+      {
+        "old_start": 136,
+        "old_end": 137,
+        "new_start": 143,
+        "new_end": 145,
+        "old": [
+          "def publish(directory, *, stage_root, stage_sha256, contract, expected_scope, max_output_bytes, lease):\n"
+        ],
+        "new": [
+          "def publish(directory, *, stage_root, stage_sha256, contract, expected_scope, max_output_bytes, lease,\n",
+          "            storage_policy=None, storage_owner=None, storage_stage=None):\n"
+        ]
+      },
+      {
+        "old_start": 138,
+        "old_end": 139,
+        "new_start": 146,
+        "new_end": 151,
+        "old": [
+          "    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes)\n"
+        ],
+        "new": [
+          "    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes, storage_policy)\n",
+          "    if storage_policy is not None:\n",
+          "        from .mcm_raw_parts import publish_output\n",
+          "        return publish_output(directory, args=args, owner=storage_owner, stage=storage_stage, lease=lease)\n",
+          "    require(storage_owner is None and storage_stage is None, 'unselected output storage authority')\n"
+        ]
+      },
+      {
+        "old_start": 172,
+        "old_end": 174,
+        "new_start": 184,
+        "new_end": 186,
+        "old": [
+          "           expected_scope, max_output_bytes, lease):\n",
+          "    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes)\n"
+        ],
+        "new": [
+          "           expected_scope, max_output_bytes, lease, storage_policy=None):\n",
+          "    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes, storage_policy)\n"
+        ]
+      },
+      {
+        "old_start": 179,
+        "old_end": 180,
+        "new_start": 191,
+        "new_end": 192,
+        "old": [
+          "                  expected_scope, max_output_bytes, lease):\n"
+        ],
+        "new": [
+          "                  expected_scope, max_output_bytes, lease, storage_policy=None):\n"
+        ]
+      },
+      {
+        "old_start": 185,
+        "old_end": 186,
+        "new_start": 197,
+        "new_end": 198,
+        "old": [
+          "    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes)\n"
+        ],
+        "new": [
+          "    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes, storage_policy)\n"
+        ]
+      },
+      {
+        "old_start": 206,
+        "old_end": 206,
+        "new_start": 218,
+        "new_end": 235,
+        "old": [],
+        "new": [
+          "\n",
+          "\n",
+          "def _archived_chunks(owner, stage, args, start, recovery_root):\n",
+          "    \"\"\"Selected genuine recovered f64 batches; original cast expression unchanged.\"\"\"\n",
+          "    from . import typed_score_store\n",
+          "    count = start['rows'] * start['motifs']; chunk = start['chunk_cells']\n",
+          "    with typed_score_store.batch_reader(owner, stage) as reader:\n",
+          "        for index, offset in enumerate(range(0, count, chunk)):\n",
+          "            size = min(chunk, count - offset)\n",
+          "            raw = reader.read(index, recovery_root / f'batch-{index:012d}')\n",
+          "            header, _ = stages.read(args['stage_root'] / 'stream/batches', f'chunk-{index:012d}.json')\n",
+          "            require(type(raw) is bytes and len(raw) == size * 8 and io._hash(raw) == header['payload_sha256'],\n",
+          "                'recovered original MCM score bytes differ')\n",
+          "            with np.errstate(over='raise', invalid='raise'):\n",
+          "                values = np.frombuffer(raw, dtype='<f8').astype('<f4')\n",
+          "            require(np.isfinite(values).all(), 'nonfinite MCM output')\n",
+          "            yield raw, values.tobytes()\n"
+        ]
+      }
+    ],
+    "changed_existing_definitions": [
+      "_arguments",
+      "_inspect",
+      "publish",
+      "verify",
+      "open_verified"
+    ],
+    "new_definitions": [
+      "_archived_chunks"
+    ]
+  },
+  "compact_mcm_publication.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-batch-output-live-integration01-2026-10-06/baseline/compact_mcm_publication.py",
+    "baseline_sha256": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a",
+    "candidate_sha256": "713d92d8aee98ae3ab8b8cdd6b47b10369c3e2a62ea5ea3fc5ca6a2730467b46",
+    "edits": [
+      {
+        "old_start": 46,
+        "old_end": 48,
+        "new_start": 46,
+        "new_end": 50,
+        "old": [
+          "    require(set(policy) == {'schema_version', 'backend', 'max_artifact_bytes', 'max_workflow_output_bytes'}\n",
+          "        and type(policy['schema_version']) is int and policy['schema_version'] == 1\n"
+        ],
+        "new": [
+          "    archived = type(policy.get('schema_version')) is int and policy['schema_version'] == 2\n",
+          "    fields = {'schema_version', 'backend', 'max_artifact_bytes', 'max_workflow_output_bytes'}\n",
+          "    require(set(policy) == fields | ({'payload_archive_input'} if archived else set())\n",
+          "        and type(policy['schema_version']) is int and policy['schema_version'] in (1, 2)\n"
+        ]
+      },
+      {
+        "old_start": 49,
+        "old_end": 49,
+        "new_start": 51,
+        "new_end": 58,
+        "old": [],
+        "new": [
+          "    if archived:\n",
+          "        from . import typed_payload_operations\n",
+          "        selection = typed_payload_operations.selected(owner)\n",
+          "        require(selection is not None and type(policy['payload_archive_input']) is str\n",
+          "            and selection['input'] == policy['payload_archive_input']\n",
+          "            and selection['input_sha256'] == run.admission.inputs[policy['payload_archive_input']]['sha256'],\n",
+          "            'output requires the same genuine registered typed payload budget')\n"
+        ]
+      },
+      {
+        "old_start": 50,
+        "old_end": 50,
+        "new_start": 59,
+        "new_end": 62,
+        "old": [],
+        "new": [
+          "    if archived:\n",
+          "        require(4*pairs + 2*io.META_LIMIT <= policy['max_artifact_bytes'],\n",
+          "            'selected matrix plus original manifest and recovery proof reservation insufficient')\n"
+        ]
+      },
+      {
+        "old_start": 82,
+        "old_end": 82,
+        "new_start": 94,
+        "new_end": 103,
+        "old": [],
+        "new": [
+          "    if policy['schema_version'] == 2:\n",
+          "        from . import typed_payload_operations\n",
+          "        selection = typed_payload_operations.selected(owner)\n",
+          "        require(selection is not None, 'selected typed output context absent')\n",
+          "        args['storage_policy'] = {'schema_version': 1, 'kind': 'mcm-output-f32-archive',\n",
+          "            'input': policy['payload_archive_input'],\n",
+          "            'input_sha256': run.admission.inputs[policy['payload_archive_input']]['sha256'],\n",
+          "            'part_bytes': selection['policy']['graphs'][stage.name[4:]]['kinds']['mcm-output-f32']['chunk_bytes'],\n",
+          "            'closed_check_assumption': 'original-full-recovery-and-cast-proof; current-remote-availability-unasserted'}\n"
+        ]
+      },
+      {
+        "old_start": 112,
+        "old_end": 113,
+        "new_start": 133,
+        "new_end": 135,
+        "old": [
+          "    compact_stage.inventory(attempt, {'artifact', 'receipt.json'})\n"
+        ],
+        "new": [
+          "    compact_stage.inventory(attempt, {'artifact', 'receipt.json'} |\n",
+          "        ({'transport'} if 'storage_policy' in args else set()))\n"
+        ]
+      },
+      {
+        "old_start": 136,
+        "old_end": 137,
+        "new_start": 158,
+        "new_end": 163,
+        "old": [
+          "        artifact = output.publish(attempt / 'artifact', **args, lease=lease)\n"
+        ],
+        "new": [
+          "        if 'storage_policy' in args:\n",
+          "            artifact = output.publish(attempt / 'artifact', **args, lease=lease,\n",
+          "                storage_owner=owner, storage_stage=stage)\n",
+          "        else:\n",
+          "            artifact = output.publish(attempt / 'artifact', **args, lease=lease)\n"
+        ]
+      }
+    ],
+    "changed_existing_definitions": [
+      "_output_policy",
+      "_prepare",
+      "_verify",
+      "_publish"
+    ],
+    "new_definitions": []
+  }
+}

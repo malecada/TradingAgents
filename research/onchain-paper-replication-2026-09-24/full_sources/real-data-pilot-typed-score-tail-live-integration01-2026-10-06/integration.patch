@@ -1,0 +1,1180 @@
+--- a/tradingagents/research/onchain_replication/archive_dispatch.py
++++ b/tradingagents/research/onchain_replication/archive_dispatch.py
+@@ -56,7 +56,9 @@
+ def policy(value):
+     fields={'schema_version','format','connection','rate_kbit','max_seconds','max_payload_bytes',
+         'max_commands','max_diagnostic_bytes','max_control_bytes','namespace','receipt_output','terminal_output'}
+-    require(type(value) is dict and set(value)==fields and value['schema_version']==1 and value['format']==FORMAT,'archive dispatch policy schema')
++    typed=type(value) is dict and value.get('schema_version')==2
++    require(type(value) is dict and set(value)==fields|({'typed_payload_input'} if typed else set()) and value['schema_version']==(2 if typed else 1) and value['format']==FORMAT,'archive dispatch policy schema')
++    if typed:require(type(value['typed_payload_input']) is str and bool(value['typed_payload_input']),'registered typed payload input required')
+     _connection(value['connection'])
+     require(all(type(value[k]) is int and 0<value[k]<2**63 for k in
+         ('rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes')),'positive transport limits required')
+@@ -120,6 +122,21 @@
+     if not selected:return None
+     require(len(names)==1,'all archive representations require one job-wide transport policy input')
+     name=names.pop();config=policy(json.loads(run.read_input(name)))
++    typed_record=None
++    if config['schema_version']==2:
++        require(execution['kind']=='compact_resource' and len(selected)==1,'typed storage only selected single real resource representation')
++        # Load selected helpers before the imported authority lease captures its
++        # actual module/code baseline. Legacy policies do not import this path.
++        from . import typed_payload_policy, typed_payload_operations, typed_score_store, typed_tail_binding, mcm_raw_parts
++        role=config['typed_payload_input']
++        require(role in run.admission.inputs,'typed payload input unregistered')
++        raw=run.read_input(role);typed=typed_payload_policy.validate(json.loads(raw))
++        expected_graphs=set()
++        for item in payload['representation_jobs'].values():expected_graphs.update(item['descriptor']['required_graphs'])
++        require(set(typed['graphs'])==expected_graphs,'typed full graph roster differs')
++        extra=typed_payload_policy.capacity(typed)
++        for k in total:total[k]+=extra[k]
++        typed_record={'input':role,'input_sha256':digest(raw),'policy':typed,'capacity':extra}
+     require(total['rounded_bytes']<=config['max_payload_bytes'] and total['commands']<=config['max_commands'],'insufficient whole-job rounded transport allowance')
+     # Each diagnostic has a finite escaped stderr receipt, plus the finite payload.
+     require(config['max_diagnostic_bytes']>=config['max_payload_bytes']+META*config['max_commands'],'insufficient cumulative diagnostic allowance')
+@@ -130,6 +147,7 @@
+         'job_sha256':digest(canonical_bytes(execution)),'policy':config,'representations':selected,'capacity':total,
+         'job_input':job_input,'job_input_sha256':run.admission.inputs[job_input]['sha256'],
+         'units':'logical reservations and rounded payload reservations exclude SSH wire overhead','execution_admitted':False}
++    if typed_record is not None:record['typed_payloads']=typed_record
+     return Plan(run,freeze(record))
+ 
+ 
+--- a/tradingagents/research/onchain_replication/archive_owner_operations.py
++++ b/tradingagents/research/onchain_replication/archive_owner_operations.py
+@@ -87,6 +87,9 @@
+             'selection':thaw(self.selection.record),'owner':self.owner.identity}
+ 
+     def _evidence(self):
++        if hasattr(self,'_typed_expected'):
++            from .typed_payload_operations import ledger_evidence
++            ledger_evidence(self)
+         require(owners.cache_key(self._configuration()) == self._identity,
+             'archive reservation identity changed')
+         require(owners.cache_key(self._spent) == self._spent_sha,'archive reservation accounting changed')
+--- a/tradingagents/research/onchain_replication/archive_owner_seal.py
++++ b/tradingagents/research/onchain_replication/archive_owner_seal.py
+@@ -180,9 +180,26 @@
+     if ledger._closed:
+         expected['closed.json']=io._json({'schema_version':1,'reserved':thaw(ledger.reserved),
+             'poisoned':False,'execution_admitted':False})
++    if hasattr(ledger,'_typed_expected'):
++        from .typed_payload_operations import ledger_evidence
++        expected.update(ledger_evidence(ledger,terminal=True))
+     require(ledger._expected==expected,'archive terminal canonical ledger metadata differs')
+     ledger._evidence()
+-    require(set(ledger._writers)==set(owner.required),'archive required writers incomplete')
++    writer_stages=set(owner.required);import_pin=None
++    if owner.required[0]=='dictionary-import':
++        from . import original_import_stage
++        imported=owner.stages.get('dictionary-import')
++        require(type(imported) is original_import_stage.ImportStage and imported.owner is owner
++            and imported.prepared._bound is owner.bound and imported.closed
++            and owner.active is not imported,'original completed imported stage required')
++        imported_result=original_import_stage.content(imported)
++        require(imported_result['completed_pairs']==0 and imported_result['imported_original'] is True
++            and imported_result['receipt_sha256']==imported.reference,'import cannot supply numerical writer credit')
++        import_pin={'stage':'dictionary-import','receipt_sha256':imported.reference,'original_dictionary':imported_result['original_dictionary']}
++        writer_stages.remove('dictionary-import')
++        require(all(name.startswith('mcm-') and type(owner.stages.get(name)) is operations.owners.Stage
++            and owner.stages[name].kind=='mcm' for name in writer_stages),'imported archive requires exact MCM stages')
++    require(set(ledger._writers)==writer_stages,'archive required writers incomplete')
+     names={ledger.root.name};claims={}
+     for name,op in ledger._operations.items():
+         require(op._ledger is ledger and owner.stages.get(op.record['stage']) is op._stage
+@@ -195,6 +212,10 @@
+             'inode':list(ledger._pins[name])}
+     pin=operations.owners.cache_key({'ledger':ledger._identity,'claims':claims,
+         'reads':ledger._reads,'reserved':thaw(ledger.reserved)})
++    if hasattr(ledger,'_typed_expected'):
++        pin=operations.owners.cache_key({'original':pin,'typed_metadata':ledger._typed_expected,'typed_reserved':ledger._typed_payload_registry,'typed_control_bytes':ledger._typed_control_spent})
++    if import_pin is not None:
++        pin=operations.owners.cache_key({'original':pin,'nonnumerical_import':import_pin})
+     return names,pin
+ 
+ 
+--- a/tradingagents/research/onchain_replication/archived_stage.py
++++ b/tradingagents/research/onchain_replication/archived_stage.py
+@@ -164,6 +164,10 @@
+         'event_read_complete_sha256':io._hash(read_complete_raw),
+         'matching_scores_sha256':record['matching_scores_sha256'],'checkpoints':count,
+         'checkpoints_sha256':digest.hexdigest(),'execution_admitted':False}
++    if kind=='mcm':
++        complete,_=local.read(root/'stream','complete.json',stream_terminal_sha256)
++        if complete.get('schema_version')==2:
++            result['typed_score_recovery_sha256']=complete['typed_proof_sha256']
+     result['checkpoint_reserved_logical_bytes' if retention_result is not None else 'checkpoint_logical_bytes']=logical
+     if retention_result is not None:result['retention']=c['retention']|{'claim_sha256':retention_result['claim_sha256'],'spent':retention_result['spent']}
+     return result
+--- a/tradingagents/research/onchain_replication/compact_owner.py
++++ b/tradingagents/research/onchain_replication/compact_owner.py
+@@ -467,6 +467,16 @@
+     journal = Path(owner.bound.record['journal_directory'])
+     require(owner.bound._ancestry_arguments is None,'fresh compact owner required')
+     entries(journal.parent,{journal.name},required={journal.name},_imported=owner.required[0]=='dictionary-import')
++    ledger=getattr(owner,'_archive_operations',None)
++    if ledger is not None:
++        from . import archive_owner_operations
++        require(type(ledger) is archive_owner_operations.Ledger and ledger.owner is owner
++            and ledger.selection._owner is owner and ledger._transition is owner._transition
++            and ledger.root==journal/'archive-operations' and not ledger._closed and not ledger._poisoned,
++            'current original attached archive ledger differs')
++        # Ledger lives INSIDE journal, beside compact. The parent inventory above
++        # is unchanged; only the genuine exact attached ledger is joined here.
++        ledger._evidence()
+     require(not any(present(journal/name) for name in ('failed.json','complete.json')),
+         'representation terminal marker exists')
+     reader=matching_owner.metadata
+--- a/tradingagents/research/onchain_replication/compact_stage.py
++++ b/tradingagents/research/onchain_replication/compact_stage.py
+@@ -125,6 +125,10 @@
+ 
+ def stream(root, *, owner, scope, terminal, policy, pairs):
+     complete, _ = read(root, 'complete.json', terminal)
++    if complete.get('schema_version')==2:
++        from . import typed_score_store
++        proof=typed_score_store.check(root,terminal=terminal,owner=owner,scope=scope,pairs=pairs,chunk_cells=policy['score_chunk_cells'])
++        return proof['matching_scores_sha256'],proof['stream_start_sha256']
+     require(set(complete) == {'schema_version', 'start_sha256', 'head', 'cells', 'chunks',
+         'batch_terminal_sha256'} and type(complete['schema_version']) is int
+         and complete['schema_version'] == 1, 'stream terminal schema')
+--- a/tradingagents/research/onchain_replication/mcm_score_stream.py
++++ b/tradingagents/research/onchain_replication/mcm_score_stream.py
+@@ -75,7 +75,20 @@
+             start = {'schema_version': 1, 'kind': 'mcm-score-stream', 'scope': self.scope,
+                 'owner': owner, 'rows': self.n, 'motifs': self.k,
+                 'batch_start_sha256': self.batches.start_sha, 'chunk_cells': chunk_cells}
++            typed=None
++            if _imported is not None:
++                ledger=getattr(_imported.owner,'_archive_operations',None)
++                context=getattr(getattr(getattr(ledger,'selection',None),'_transport',None),'_context',None)
++                if getattr(context,'_record',{}).get('typed_payloads') is not None:
++                    from . import typed_payload_operations
++                    typed=typed_payload_operations.selected(_imported.owner)
++            if typed is not None:
++                start.update(schema_version=2,typed_payload_input=typed['input'],typed_payload_sha256=typed['input_sha256'])
+             self.start_sha = self.head = batch._write(self.fd, 'start.json', batch._json(start))
++            self._typed_store=self._typed_store_pin=None
++            if typed is not None:
++                from . import typed_score_store
++                self._typed_store=self._typed_store_pin=typed_score_store.selected(self)
+             self._check()
+         except BaseException as primary:
+             batch._close_after_failure(self.close, primary)
+@@ -84,6 +97,7 @@
+     def _check(self):
+         require(not self.closed, 'score stream is closed')
+         self.lease(); batch._root(self.root, self.fd)
++        require(self._typed_store is self._typed_store_pin,'typed score store replaced')
+         require(self._imported is self._imported_pin,'imported stream authority replaced')
+         if self._imported is not None:
+             if getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
+@@ -128,6 +142,10 @@
+ 
+     def _history_check(self, terminal, complete_raw):
+         """All external callbacks have finished; no numerical work is repeated."""
++        if self._typed_store is not None:
++            from . import typed_score_store
++            typed_score_store.check(self.root,terminal=batch._hash(complete_raw),owner=self.owner,scope=self.scope,pairs=self.cells,chunk_cells=self.batches.chunk_cells)
++            return
+         result = batch.verify(self.batches.root, scope=self.scope, owner=self.owner,
+             terminal_sha256=terminal, lease=lambda: None)
+         require(result['status'] == 'complete' and result['cells'] == self.cells
+@@ -206,6 +224,7 @@
+                 require(batch._read(self.fd, name, batch.META_LIMIT) == raw, 'seal link publication changed')
+                 self._seal_check(index, self.head)
+                 self.active = None
++                if self._typed_store is not None:self._typed_store.seal(index)
+             return saved
+         except BaseException as primary:
+             # Preserve evidence; cleanup uncertainty must stay worker-fatal.
+@@ -223,6 +242,8 @@
+             terminal = self.batches.finish()
+             record = {'schema_version': 1, 'start_sha256': self.start_sha, 'head': self.head,
+                 'cells': self.cells, 'chunks': self.batches.chunks, 'batch_terminal_sha256': terminal}
++            if self._typed_store is not None:
++                record.update(schema_version=2,typed_proof_sha256=self._typed_store.finish(terminal))
+             raw = batch._json(record); result = batch._write(self.fd, 'complete.json', raw)
+             self._check()
+             require(batch._read(self.fd, 'complete.json', batch.META_LIMIT) == raw,
+@@ -247,7 +268,7 @@
+ 
+ 
+ def _completion_identity(stream):
+-    return (stream._imported,stream.batches,stream.root,stream.owner,stream.start_sha,stream.head,
++    return (stream._imported,stream._typed_store,stream.batches,stream.root,stream.owner,stream.start_sha,stream.head,
+         stream.n,stream.k,stream.cells,stream.batches.chunks,stream.batches.chunk_cells,stream.batches.start_sha)
+ 
+ 
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/score_tail_archive.py
+@@ -0,0 +1,269 @@
++"""Engineering candidate: exact 80-byte tail codec and retained local archive seal.
++
++No numerical imports, network, disposal or live producer substitution. LocalChunk
++is a storage primitive, NOT Owner/ResearchRun authority. Its externally trusted
++contract must be derived by an admitted owner adapter before empirical use.
++Receipt semantics explicitly mean local verification, never remote recovery.
++"""
++import hashlib
++import json
++import math
++import os
++from pathlib import Path
++import re
++import stat
++import struct
++import sys
++
++MAX_CELLS=65536
++MAX_BYTES=8*1024**2
++META=8192
++BLOCK=65536
++FRAME=struct.Struct('<Qd32s')
++SCOPE={'graph','node_order','dictionary','ordered_motifs','matching','workflow'}
++HASHES={'owner','stage_intent_sha256','job_sha256','binding_sha256','original_matching_sha256',
++    'previous_mapping_sha256','batch_start_sha256','batch_previous_sha256','transport_identity',
++    'tail_start_sha256','tail_terminal_sha256','batch_header_sha256','batch_payload_sha256'}
++FIELDS=HASHES|{'schema_version','format','stage','source_commit','job_input','scope','ordered_motifs',
++    'rows','motifs','chunk_cells','index','batch_directory','remote'}
++MEMBERS={'contract.json','tail-start.json','tail-terminal.json','records.bin','batch-header.json','batch.bin','complete.json'}
++
++
++def require(test,message):
++    if not test:raise ValueError(message)
++
++
++def digest(raw):return hashlib.sha256(raw).hexdigest()
++
++
++def identity(value):require(type(value) is str and re.fullmatch('[0-9a-f]{64}',value),'hash identity differs')
++
++
++def encode(value):
++    raw=(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
++    require(len(raw)<=META,'metadata bound exceeded');return raw
++
++
++def decode(raw):
++    require(type(raw) is bytes and len(raw)<=META,'bounded metadata required')
++    value=json.loads(raw)
++    require(type(value) is dict and encode(value)==raw,'canonical metadata object required');return value
++
++
++def contract(value):
++    require(type(value) is dict and set(value)==FIELDS,'tail archive contract schema')
++    require(type(value['schema_version']) is int and value['schema_version']==1
++        and value['format']=='score-tail-archive-v1','tail archive format')
++    for key in HASHES:identity(value[key])
++    require(type(value['source_commit']) is str and re.fullmatch('[0-9a-f]{40}',value['source_commit']),'source commit')
++    require(type(value['scope']) is dict and set(value['scope'])==SCOPE,'tail scope schema')
++    for v in value['scope'].values():identity(v)
++    require(type(value['ordered_motifs']) is list and len(value['ordered_motifs'])==32,'exact 32 ordered motifs required')
++    for v in value['ordered_motifs']:identity(v)
++    require(digest(json.dumps(value['ordered_motifs'],separators=(',',':')).encode())==value['scope']['ordered_motifs'],'ordered motif identity differs')
++    require(type(value['stage']) is str and value['stage']=='mcm-'+value['scope']['graph'],'graph/stage differs')
++    require(type(value['job_input']) is str and re.fullmatch('[A-Za-z][A-Za-z0-9_-]{0,127}',value['job_input']),'job input')
++    require(type(value['remote']) is str and re.fullmatch('[A-Za-z0-9][A-Za-z0-9_-]{0,127}',value['remote']),'remote object name')
++    for key in ('rows','motifs','chunk_cells','index'):require(type(value[key]) is int,'integer denominator required')
++    total=value['rows']*32
++    require(value['rows']>0 and total<2**63 and value['motifs']==32
++        and 0<value['chunk_cells']<=MAX_CELLS and 0<=value['index']<10**12
++        and value['index']*value['chunk_cells']<total,'tail archive denominator')
++    path=Path(value['batch_directory'])
++    require(type(value['batch_directory']) is str and path.is_absolute() and '..' not in path.parts,'batch directory')
++    return decode(encode(value))
++
++
++def verify_bytes(value,start_raw,terminal_raw,records,header_raw,payload):
++    """Callback-free exact original tail and float64-batch comparison, <=5 MiB.
++
++    Purpose hashes are preserved and ordered, but derivation from actual graph
++    neighborhoods remains the genuine matcher/stage's separate responsibility.
++    """
++    c=contract(value);begin=c['index']*c['chunk_cells'];cells=min(c['chunk_cells'],c['rows']*32-begin)
++    require(type(records) is bytes and len(records)==cells*80<=MAX_BYTES
++        and type(payload) is bytes and len(payload)==cells*8,'tail/batch exact extent')
++    for raw,key in ((start_raw,'tail_start_sha256'),(terminal_raw,'tail_terminal_sha256'),(header_raw,'batch_header_sha256'),(payload,'batch_payload_sha256')):
++        require(type(raw) is bytes and digest(raw)==c[key],'tail/batch source hash differs')
++    start=decode(start_raw);terminal=decode(terminal_raw);header=decode(header_raw)
++    destination=digest(encode(dict(directory=c['batch_directory'],start_sha256=c['batch_start_sha256'],
++        index=c['index'],start_cell=begin,cells=cells)))
++    expected=dict(schema_version=1,kind='mcm-score-tail',scope=c['scope'],owner=c['owner'],start_cell=begin,cells=cells,
++        destination=destination,record_format='<Qd32s32s',record_bytes=80)
++    require(start==expected and all(type(start[k]) is int for k in ('schema_version','start_cell','cells','record_bytes')),'tail start differs')
++    require(set(terminal)=={'schema_version','start_sha256','status','reason','acknowledged_cells','head','records_bytes','records_sha256'}
++        and type(terminal['schema_version']) is int and terminal['schema_version']==1
++        and type(terminal['acknowledged_cells']) is int and terminal['acknowledged_cells']==cells
++        and type(terminal['records_bytes']) is int and terminal['records_bytes']==len(records)
++        and terminal['start_sha256']==c['tail_start_sha256'] and terminal['records_sha256']==digest(records)
++        and terminal['status']=='complete' and terminal['reason']=='','complete original tail required')
++    expected_header=dict(schema_version=1,start_sha256=c['batch_start_sha256'],previous=c['batch_previous_sha256'],
++        index=c['index'],start_cell=begin,cells=cells,payload_sha256=c['batch_payload_sha256'])
++    require(header==expected_header and all(type(header[k]) is int for k in ('schema_version','index','start_cell','cells')),'batch header differs')
++    head=c['tail_start_sha256'];scores=hashlib.sha256()
++    for slot in range(cells):
++        raw=records[slot*80:(slot+1)*80];frame=raw[:48];ordinal,score,purpose=FRAME.unpack(frame)
++        head=digest(bytes.fromhex(head)+frame)
++        require(ordinal==begin+slot and math.isfinite(score) and 0<=score<=1
++            and raw[48:]==bytes.fromhex(head) and frame[8:16]==payload[slot*8:(slot+1)*8],
++            'tail order, float64 value or checksum differs')
++        scores.update(frame)
++    require(head==terminal['head'],'tail acknowledged head differs')
++    return dict(schema_version=1,contract_sha256=digest(encode(c)),start_cell=begin,cells=cells,
++        payload_sha256=digest(records),head=head,score_sha256=scores.hexdigest(),
++        batch_payload_sha256=digest(payload),semantics='local-bytes-verified-only',remote_verified=False)
++
++
++class CleanupFailure(BaseException):pass
++
++
++def cleanup(actions,primary=None):
++    """Each descriptor once; retain the first fatal object even across cleanup."""
++    failures=[]
++    for action in actions:
++        try:action()
++        except BaseException as error:failures.append(error)
++    if not failures:return
++    candidates=(([primary] if primary is not None else [])+failures)
++    fatal=next((e for e in candidates if not isinstance(e,Exception) or isinstance(e,MemoryError)),None)
++    if fatal is None:fatal=CleanupFailure('owned descriptor cleanup uncertain; stop worker')
++    for error in failures:
++        if error is not fatal:fatal.add_note('cleanup: '+repr(error))
++    raise fatal from (primary if primary is not fatal else None)
++
++
++def signature(s):return tuple(getattr(s,k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns','st_blocks'))
++
++
++def name_check(name):require(type(name) is str and re.fullmatch('[a-z][a-z0-9.-]{0,63}',name),'single owned member name required')
++
++
++def root_check(root,fd):
++    s=os.fstat(fd);p=root.lstat()
++    require(root.resolve()==root and stat.S_ISDIR(p.st_mode) and (s.st_dev,s.st_ino)==(p.st_dev,p.st_ino),'directory redirected')
++
++
++def open_root(root):
++    root=Path(root);require(root.is_absolute() and root.resolve()==root,'canonical owned directory required')
++    fd=os.open(root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    try:root_check(root,fd)
++    except BaseException as error:cleanup((lambda:os.close(fd),),error);raise
++    return root,fd
++
++
++def read_member(fd,name,limit):
++    name_check(name);require(type(limit) is int and 0<limit<=MAX_BYTES,'read bound')
++    child=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK|os.O_CLOEXEC,dir_fd=fd)
++    try:
++        before=os.fstat(child)
++        require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<=before.st_size<=limit,'regular unaliased bounded file required')
++        blocks=[];remaining=before.st_size
++        while remaining:
++            raw=os.read(child,min(BLOCK,remaining));require(bool(raw),'truncated member');blocks.append(raw);remaining-=len(raw)
++        require(not os.read(child,1) and signature(before)==signature(os.fstat(child))
++            ==signature(os.stat(name,dir_fd=fd,follow_symlinks=False)),'member identity changed')
++        return b''.join(blocks)
++    finally:cleanup((lambda:os.close(child),),sys.exception())
++
++
++def publish(fd,name,raw):
++    """Exclusive bounded write + fsync; no overwrite, unlink or descriptor retry."""
++    name_check(name);require(type(raw) is bytes and len(raw)<=MAX_BYTES,'write bound')
++    child=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,0o600,dir_fd=fd)
++    try:
++        before=os.fstat(child);position=0
++        while position<len(raw):
++            n=os.write(child,raw[position:position+BLOCK]);require(n>0,'write made no progress');position+=n
++        os.fsync(child);after=os.fstat(child)
++        require(stat.S_ISREG(after.st_mode) and after.st_nlink==1 and after.st_size==len(raw)
++            and (before.st_dev,before.st_ino)==(after.st_dev,after.st_ino)
++            and signature(after)==signature(os.stat(name,dir_fd=fd,follow_symlinks=False)),'published member identity changed')
++    finally:cleanup((lambda:os.close(child),),sys.exception())
++    os.fsync(fd);require(read_member(fd,name,max(1,len(raw)))==raw,'published readback differs')
++    return digest(raw)
++
++
++def publish_receipt(fd,name,raw):
++    """Atomically link a fully fsynced new receipt; never overwrite a target.
++
++    Only this invocation's successful pending hardlink is removed. Any failure
++    leaves all partial evidence. Readers reject the temporary two-link state.
++    """
++    name_check(name);require(type(raw) is bytes and len(raw)<=META,'receipt metadata bound')
++    pending='pending-'+name
++    publish(fd,pending,raw)
++    before=os.stat(pending,dir_fd=fd,follow_symlinks=False)
++    require(stat.S_ISREG(before.st_mode) and before.st_nlink==1,'pending receipt identity')
++    os.link(pending,name,src_dir_fd=fd,dst_dir_fd=fd,follow_symlinks=False)
++    for member in (pending,name):
++        now=os.stat(member,dir_fd=fd,follow_symlinks=False)
++        require(now.st_nlink==2 and (now.st_dev,now.st_ino)==(before.st_dev,before.st_ino),
++            'receipt link publication differs')
++    os.fsync(fd);os.unlink(pending,dir_fd=fd);os.fsync(fd)
++    require(read_member(fd,name,max(1,len(raw)))==raw,'atomic receipt readback differs')
++    return digest(raw)
++
++
++def inventory(fd,names):
++    seen=set()
++    with os.scandir(fd) as entries:
++        for entry in entries:
++            require(entry.name in names and entry.name not in seen,'unexpected archive member');seen.add(entry.name)
++    require(seen==names,'missing archive member')
++
++
++class LocalChunk:
++    """Single-use retained byte snapshot, not upload or source-disposal authority."""
++    def __init__(self,root,value,*,lease):
++        self.contract=contract(value);self.pin=encode(self.contract);require(callable(lease),'live storage lease required')
++        self.lease=lease;self.closed=False;self.fd=None
++        self.root=Path(root);require(self.root.is_absolute() and self.root.resolve()==self.root,'canonical new directory required')
++        lease();parent,pfd=open_root(self.root.parent)
++        try:
++            try:
++                root_check(parent,pfd);os.mkdir(self.root.name,mode=0o700,dir_fd=pfd);os.fsync(pfd)
++                self.root,self.fd=open_root(self.root);root_check(parent,pfd)
++            finally:cleanup((lambda:os.close(pfd),),sys.exception())
++        except BaseException as error:
++            self.close(primary=error);raise
++        try:
++            publish(self.fd,'contract.json',self.pin);self._check()
++        except BaseException as error:self.close(primary=error);raise
++    def _check(self):
++        require(not self.closed,'chunk terminal');self.lease()
++        require(encode(self.contract)==self.pin,'chunk contract changed during callback');root_check(self.root,self.fd)
++        require(read_member(self.fd,'contract.json',META)==self.pin,'contract source changed')
++    def seal(self,*parts):
++        try:
++            self._check();result=verify_bytes(self.contract,*parts)
++            names=('tail-start.json','tail-terminal.json','records.bin','batch-header.json','batch.bin')
++            for name,raw in zip(names,parts,strict=True):self._check();publish(self.fd,name,raw)
++            self._check()
++            saved=tuple(read_member(self.fd,n,MAX_BYTES if n in ('records.bin','batch.bin') else META) for n in names)
++            require(saved==parts and verify_bytes(self.contract,*saved)==result,'snapshot changed')
++            raw=encode(result);ref=publish_receipt(self.fd,'complete.json',raw)
++            self._check();inventory(self.fd,MEMBERS)
++            require(read_local(self.root,contract=self.contract,receipt_sha256=ref,lease=lambda:None)==result,'sealed snapshot differs')
++            self.close();return ref
++        except BaseException as error:self.close(primary=error);raise
++    def close(self,primary=None):
++        if self.closed:return
++        self.closed=True;fd=self.fd;self.fd=None
++        if fd is not None:cleanup((lambda:os.close(fd),),primary)
++
++
++def read_local(root,*,contract,receipt_sha256,lease):
++    """A local snapshot cannot assert remote availability or numerical authority."""
++    c=globals()['contract'](contract);identity(receipt_sha256);require(callable(lease),'live read lease required');lease()
++    path,fd=open_root(root)
++    try:
++        inventory(fd,MEMBERS);pin=encode(c);require(read_member(fd,'contract.json',META)==pin,'local contract differs')
++        names=('tail-start.json','tail-terminal.json','records.bin','batch-header.json','batch.bin')
++        parts=tuple(read_member(fd,n,MAX_BYTES if n in ('records.bin','batch.bin') else META) for n in names)
++        result=verify_bytes(c,*parts);raw=read_member(fd,'complete.json',META)
++        require(raw==encode(result) and digest(raw)==receipt_sha256,'local completion differs')
++        lease();root_check(path,fd);inventory(fd,MEMBERS)
++        require(read_member(fd,'contract.json',META)==pin and read_member(fd,'complete.json',META)==raw,'metadata changed after lease')
++        for n,expected in zip(names,parts,strict=True):require(read_member(fd,n,max(1,len(expected)))==expected,'body changed after lease')
++        return result
++    finally:cleanup((lambda:os.close(fd),),sys.exception())
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/score_tail_semantics.py
+@@ -0,0 +1,132 @@
++"""Streaming COMPLETE score-tail semantics, not provenance or execution authority.
++
++The caller authenticates original metadata, source, scope, owner and transport;
++provides an already-open, bounded read(n); and owns its lifetime/deadline. This
++single content pass neither opens files nor establishes immutability or leases.
++"""
++import hashlib
++import json
++import math
++import re
++import struct
++
++RECORD_BYTES = 80
++FRAME = struct.Struct('<Qd32s')
++META_LIMIT = 8192
++MAX_CHUNK_BYTES = 8 * 1024**2
++SCOPE_FIELDS = {'graph', 'node_order', 'dictionary', 'ordered_motifs', 'matching', 'workflow'}
++START_FIELDS = {'schema_version', 'kind', 'scope', 'owner', 'start_cell', 'cells',
++                'destination', 'record_format', 'record_bytes'}
++TERMINAL_FIELDS = {'schema_version', 'start_sha256', 'status', 'reason',
++                   'acknowledged_cells', 'head', 'records_bytes', 'records_sha256'}
++
++
++def _require(ok, message):
++    if not ok:
++        raise ValueError(message)
++
++
++def _identity(value):
++    _require(isinstance(value, str) and re.fullmatch('[0-9a-f]{64}', value), 'hash identity')
++
++
++def _scope(value):
++    _require(isinstance(value, dict) and set(value) == SCOPE_FIELDS, 'score scope schema')
++    for entry in value.values():
++        _identity(entry)
++    return dict(value)
++
++
++def _pairs(pairs):
++    result = {}
++    for key, value in pairs:
++        _require(key not in result, 'duplicate metadata key')
++        result[key] = value
++    return result
++
++
++def _metadata(raw, expected):
++    _identity(expected)
++    _require(type(raw) is bytes and 0 < len(raw) <= META_LIMIT, 'bounded metadata bytes required')
++    _require(hashlib.sha256(raw).hexdigest() == expected, 'original metadata hash differs')
++    value = json.loads(raw, object_pairs_hook=_pairs)
++    _require(type(value) is dict, 'metadata object required')
++    return value
++
++
++def _read_exact(read, size):
++    parts = bytearray()
++    while len(parts) < size:
++        left = size - len(parts)
++        part = read(left)
++        _require(type(part) is bytes and len(part) <= left, 'reader violated requested byte bound')
++        _require(bool(part), 'complete tail truncated')
++        parts.extend(part)
++    return bytes(parts)
++
++
++def verify_complete(read, *, start_raw, terminal_raw, start_sha256,
++                    terminal_sha256, scope, owner):
++    """Validate one entire original COMPLETE tail with O(80 + metadata) memory.
++
++    read(n) must return at most n bytes and b'' only at EOF. It may perform short
++    reads; errors propagate. It must start at the records body's first byte.
++    An FD adapter is lambda n: os.read(fd, n). Reader calls are bounded to the
++    declared body plus one EOF byte, each request <=80 bytes. No rewind/close.
++    Pinned source semantics bound a tail to 8MiB, not an entire multi-tail MCM.
++    Full history requires the caller's independently authenticated tail roster.
++    """
++    _require(callable(read), 'bounded binary reader required')
++    scope = _scope(scope)
++    _identity(owner)
++    start = _metadata(start_raw, start_sha256)
++    terminal = _metadata(terminal_raw, terminal_sha256)
++    _require(set(start) == START_FIELDS and type(start['schema_version']) is int
++             and start['schema_version'] == 1, 'tail start schema')
++    _require(start['kind'] == 'mcm-score-tail' and start['scope'] == scope
++             and start['owner'] == owner and start['record_format'] == '<Qd32s32s'
++             and type(start['record_bytes']) is int and start['record_bytes'] == RECORD_BYTES,
++             'tail scope/owner/format differs')
++    first, count = start['start_cell'], start['cells']
++    _require(type(first) is int and 0 <= first < 2**63 and type(count) is int
++             and 0 < count <= MAX_CHUNK_BYTES // RECORD_BYTES and first + count < 2**63,
++             'tail ordinal/capacity bound')
++    _identity(start['destination'])
++    _require(set(terminal) == TERMINAL_FIELDS and type(terminal['schema_version']) is int
++             and terminal['schema_version'] == 1, 'tail terminal schema')
++    _require(terminal['start_sha256'] == start_sha256, 'tail start identity differs')
++    _require(terminal['status'] == 'complete', 'only original COMPLETE tail supported')
++    _require(type(terminal['acknowledged_cells']) is int
++             and terminal['acknowledged_cells'] == count
++             and type(terminal['records_bytes']) is int
++             and terminal['records_bytes'] == count * RECORD_BYTES, 'complete tail denominator')
++    _require(isinstance(terminal['reason'], str) and len(terminal['reason'].encode()) <= 1024,
++             'tail terminal reason bound')
++    _identity(terminal['head'])
++    _identity(terminal['records_sha256'])
++    head = bytes.fromhex(start_sha256)
++    body_hash = hashlib.sha256()
++    for index in range(count):
++        record = _read_exact(read, RECORD_BYTES)
++        ordinal, value, purpose = FRAME.unpack(record[:48])
++        checksum = hashlib.sha256(head + record[:48]).digest()
++        _require(ordinal == first + index and math.isfinite(value) and 0 <= value <= 1
++                 and record[48:] == checksum, 'tail record order/value/checksum differs')
++        # purpose is exactly 32 stored bytes, bound by the original chain.
++        # It is intentionally not interpreted as authenticated matcher ancestry.
++        head = checksum
++        body_hash.update(record)
++    trailing = read(1)
++    _require(type(trailing) is bytes and len(trailing) <= 1, 'reader violated requested byte bound')
++    _require(not trailing, 'complete tail has trailing bytes')
++    _require(head.hex() == terminal['head'], 'tail acknowledged chain differs')
++    _require(body_hash.hexdigest() == terminal['records_sha256'], 'tail body hash differs')
++    return {'schema_version': 1, 'kind': 'engineering-complete-score-tail-semantics',
++            'start_sha256': start_sha256, 'terminal_sha256': terminal_sha256,
++            'scope': scope, 'owner': owner, 'destination': start['destination'],
++            'start_cell': first, 'cells_verified': count, 'bytes_verified': count * RECORD_BYTES,
++            'records_sha256': body_hash.hexdigest(), 'head': head.hex(),
++            'content_passes': 1, 'purpose_ancestry_verified': False,
++            'whole_history_roster_verified': False, 'immutable_storage_verified': False,
++            'execution_admission': False, 'scientific_completion': False,
++            'capacity_verified': False, 'deletion_authority': False}
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/typed_payload_operations.py
+@@ -0,0 +1,256 @@
++"""Selected typed payload operations under an actual held archive Owner.
++
++Owned writer children are sequential; the original parent remains active. Closed
++MCM output uses a separate durable operation while no parent is active. All
++reservations are monotone and use the SAME dispatch transport/physical budget.
++Historical receipts assert a previous full read, never present availability.
++"""
++from contextlib import contextmanager
++import json
++import os
++from pathlib import Path
++from threading import get_ident
++from . import typed_payload_policy as policy
++from .provenance import thaw
++
++require=policy.require
++
++def selected(owner):
++    from . import archive_dispatch as dispatch, archive_owner_operations as ops
++    ledger=getattr(owner,'_archive_operations',None)
++    if ledger is None:return None
++    require(type(ledger) is ops.Ledger and ledger.owner is owner,'typed actual ledger')
++    view=ledger.selection._transport
++    if type(view) is not dispatch.View:return None
++    record=view._context._record.get('typed_payloads')
++    if record is None:return None
++    require(owner.bound._run is view._context._run,'typed actual run')
++    return json.loads(policy.raw(record))
++
++def _read(path, limit=131072):
++    from . import archive_chunks as a
++    root,fd=a.io._open(Path(path).parent)
++    try:
++        raw=a.io._read(fd,Path(path).name,limit);a.io._root(root,fd);return raw
++    finally:a.io._release(lambda:os.close(fd))
++
++def _write(path,value):
++    from . import archive_chunks as a
++    root,fd=a.io._open(Path(path).parent)
++    try:a.io._write(fd,Path(path).name,policy.raw(value));a.io._root(root,fd)
++    finally:a.io._release(lambda:os.close(fd))
++
++def dispose(path, size, sha):
++    """Only caller-owned verified payload; sampled no-callback final join."""
++    from . import archive_chunks as a
++    root,fd=a.io._open(Path(path).parent)
++    try:
++        before=os.stat(Path(path).name,dir_fd=fd,follow_symlinks=False)
++        a._read(Path(path),size,sha)
++        require(a.io._signature(before)==a.io._signature(os.stat(Path(path).name,dir_fd=fd,follow_symlinks=False)),'typed disposal source changed')
++        a.io._root(root,fd);os.unlink(Path(path).name,dir_fd=fd);os.fsync(fd)
++    finally:a.io._release(lambda:os.close(fd))
++
++class _Operation:
++    def __init__(self,owner,stage,kind,binding,payload_bytes,chunk_count):
++        from . import archive_dispatch as d, archive_owner_operations as a
++        self.owner=owner;self.stage=stage;self.ledger=getattr(owner,'_archive_operations',None)
++        require(type(owner) is a.owners.Owner and type(stage) is a.owners.Stage and type(self.ledger) is a.Ledger,'actual typed Owner/Stage/ledger required')
++        self.held=getattr(owner,'_held_transition',None)
++        require(type(self.held) is a.owners._HeldTransition,'actual owned transition required');self.held.check(owner)
++        self.view=self.ledger.selection._transport;require(type(self.view) is d.View,'actual dispatch transport required')
++        self.context=self.view._context;self.parent=self.context._cap
++        record=selected(owner);require(record is not None,'typed payload not selected')
++        self.policy=policy.validate(record['policy']);self.graph=stage.name[4:]
++        require(stage.kind=='mcm' and stage.name=='mcm-'+self.graph and owner.stages.get(stage.name) is stage and stage.name in owner.required,'actual required MCM stage')
++        require(self.graph in self.policy['graphs'] and kind in policy.KINDS,'registered typed graph/kind')
++        self.budget=self.policy['graphs'][self.graph]['kinds'][kind]
++        require(stage.pairs==32*self.policy['graphs'][self.graph]['rows'],'typed full original row population')
++        require(type(binding) is dict and 0<len(policy.raw(binding))<=8192,'bounded typed source binding')
++        require(type(payload_bytes) is int and 0<=payload_bytes<=self.budget['max_preserved_bytes'] and type(chunk_count) is int and 0<=chunk_count<=self.budget['max_chunks'],'typed operation finite declaration')
++        if self.parent is not None:
++            require(self.parent['ledger'] is self.ledger and self.parent['held'] is self.held and self.parent['view'] is self.view and self.parent['thread']==get_ident(),'typed parent capability differs')
++            require((self.ledger._active is not None and self.ledger._active._stage is stage) or (type(self.parent.get('typed_operation')) is _Operation and self.parent['typed_operation'].stage is stage),'typed actual parent operation')
++            self.parent_operation=self.ledger._active
++        else:
++            require(stage.closed and owner.active is None and self.ledger._active is None,'typed standalone requires actual closed stage and idle ledger')
++            self.parent_operation=None
++        self.context._outer();self.ledger._current(full=True);self.ledger._stage(stage)
++        registry=getattr(self.ledger,'_typed_payload_registry',None)
++        if registry is None:
++            registry={};self.ledger._typed_payload_registry=registry
++        require(getattr(self.ledger,'_typed_payload_registry_pin',policy.sha(policy.raw({})))==policy.sha(policy.raw(registry)),'typed cumulative registry changed/refunded')
++        self.registry=registry;key=self.graph+':'+kind
++        previous=registry.get(key,dict(operations=0,preserved=0,recovered=0,chunks=0))
++        self.counter=dict(previous);self.counter['operations']+=1
++        require(self.counter['operations']<=self.budget['max_operations'],'typed operation allowance exhausted')
++        self.counter['preserved']+=payload_bytes;self.counter['chunks']+=chunk_count
++        require(self.counter['preserved']<=self.budget['max_preserved_bytes'] and self.counter['chunks']<=self.budget['max_chunks'],'typed reservation exhausted')
++        self.key=key;registry[key]=self.counter;self.ledger._typed_payload_registry_pin=policy.sha(policy.raw(registry))
++        self.record={'schema_version':1,'format':'typed-payload-operation-v1','owner':owner.identity,'stage':stage.name,
++            'stage_intent_sha256':stage.intent_sha256,'stage_reference':stage.reference if stage.closed else None,
++            'kind':kind,'binding':binding,'input':record['input'],'input_sha256':record['input_sha256'],
++            'ledger_identity':self.ledger._identity,'parent_claim_sha256':None if self.parent is None else self.parent['claim_sha256'],
++            'ordinal':self.counter['operations'],'reserved_payload_bytes':payload_bytes,'reserved_chunks':chunk_count,'reserved':dict(self.counter)}
++        self.sha=policy.sha(policy.raw(self.record));self.closed=False;self.proofs=[];self.preserved=0;self.recovered=0
++        self.claim_name='typed-'+self.sha+'.json';self._publish(self.claim_name,self.record)
++        # Context also persists the reservation before any command. Parent event
++        # reservation stays charged; these are additional selected payload bytes.
++        self.context._spent['logical_bytes']+=2*payload_bytes
++        # canonical_bytes uses no newline; retain the actual source encoder.
++        from .provenance import canonical_bytes
++        self.context._spent_pin=canonical_bytes(self.context._spent)
++        require(self.context._spent['logical_bytes']<=self.context._record['capacity']['logical_bytes'],'typed shared logical capacity')
++        self.context._publish(self.claim_name,{'claim':self.record,'spent':self.context._spent})
++        self.remote=self.ledger.selection.writer_policy(stage.name)['remote_prefix']+'-p'+self.sha[:16]
++        require(len(self.remote)+13<=127,'typed remote namespace bound')
++        self.cap={'ledger':self.ledger,'held':self.held,'lease':self.lease,'view':self.view,'thread':get_ident(),'claim_sha256':self.sha,'remote_prefix':self.remote,'typed_operation':self}
++        self.context._cap=self.cap
++        self.pin=policy.raw(self.record);self._counter_pin=policy.raw(self.counter)
++        self._authority=(self.owner,self.stage,self.ledger,self.held,self.view,self.context,self.parent,self.parent_operation,self.registry,self.counter,self.budget,self.policy)
++        self._policy_pin=policy.raw(self.policy)
++
++    def _publish(self,name,value):
++        raw=policy.raw(value)
++        require(len(raw)<=8192,'typed ledger metadata bound')
++        spent=getattr(self.ledger,'_typed_control_spent',0)
++        require(type(spent) is int and getattr(self.ledger,'_typed_control_pin',policy.sha(policy.raw(0)))==policy.sha(policy.raw(spent)),'typed control counter changed')
++        spent+=len(raw);self.ledger._typed_control_spent=spent;self.ledger._typed_control_pin=policy.sha(policy.raw(spent))
++        require(spent<=self.policy['max_control_bytes'],'typed cumulative metadata exhausted')
++        self.ledger._write(self.ledger.root,name,raw);self.ledger._expected[name]=raw
++        if not hasattr(self.ledger,'_typed_expected'):self.ledger._typed_expected={}
++        self.ledger._typed_expected[name]=policy.sha(raw)
++        self.ledger._typed_expected_pin=policy.sha(policy.raw(self.ledger._typed_expected))
++
++    def lease(self):
++        self.held.check(self.owner)
++        require(all(a is b for a,b in zip(self._authority,(self.owner,self.stage,self.ledger,self.held,self.view,self.context,self.parent,self.parent_operation,self.registry,self.counter,self.budget,self.policy))) and policy.raw(self.policy)==self._policy_pin,'typed authority/policy object changed')
++        require(not self.closed and self.context._cap is self.cap and self.ledger._typed_payload_registry is self.registry and self.registry.get(self.key) is self.counter and policy.raw(self.counter)==self._counter_pin and policy.raw(self.record)==self.pin and self.ledger._typed_payload_registry_pin==policy.sha(policy.raw(self.registry)),'typed operation replaced/refunded')
++        if self.parent is not None:
++            require(self.ledger._active is self.parent_operation,'typed parent changed')
++            self.parent['lease']()
++        else:
++            self.ledger._current(full=False);self.ledger._stage(self.stage)
++            require(self.stage.closed and self.owner.active is None and self.ledger._active is None and self.stage.reference==self.record['stage_reference'],'typed closed stage changed')
++        self.held.check(self.owner)
++
++    def preserve(self,source,*,expected_sha256,expected_bytes,index,attempt):
++        from . import archive_chunks as a
++        self.lease();require(type(index) is int and index==len(self.proofs) and index<self.record['reserved_chunks'],'typed chunk order')
++        require(0<expected_bytes<=self.budget['chunk_bytes'] and self.preserved+expected_bytes<=self.record['reserved_payload_bytes'],'typed chunk extent')
++        attempt=Path(attempt);source=Path(source)
++        self._path(source);self._path(attempt)
++        scope=policy.sha(policy.raw({'operation':self.sha,'index':index,'bytes':expected_bytes,'sha256':expected_sha256}))
++        ref=a.preserve(source=source,attempt=attempt,expected_sha256=expected_sha256,expected_bytes=expected_bytes,scope=scope,remote=self.remote+f'-{index:012d}',transport=self.view,lease=self.lease,free_floor_bytes=self.policy['local_free_floor_bytes'])
++        receipt=json.loads(_read(attempt/'complete.json'));require(policy.sha(policy.raw(receipt))==ref,'typed preserved receipt differs')
++        proof={'schema_version':1,'operation_sha256':self.sha,'index':index,'source':str(source),'receipt':receipt,'receipt_sha256':ref,'fresh_full_recovery':True}
++        self._publish('typed-part-'+self.sha+f'-{index:012d}.json',proof)
++        self.lease()
++        for name in ('snapshot.bin','readback.bin'):dispose(attempt/name,expected_bytes,expected_sha256)
++        _write(attempt/'disposed.json',{'schema_version':1,'receipt_sha256':ref,'owned_transfer_payloads_disposed':True})
++        self.proofs.append(proof);self.preserved+=expected_bytes
++        return receipt
++
++    def _path(self,path):
++        require(path.is_absolute() and path.resolve()==path,'typed canonical owned path')
++        root=self.owner.bound._run.admission.root/'research_artifacts'
++        require(path.is_relative_to(root),'typed payload outside actual owned artifacts')
++
++    def recover(self,receipt,*,attempt):
++        from . import archive_consume
++        from .provenance import canonical_bytes
++        self.lease();self._path(Path(attempt))
++        require(type(receipt) is dict and receipt['transport_identity']==self.view.identity,'typed recovery endpoint')
++        # Original scope is authenticated by consumer's anchored receipt; remote
++        # is deliberately restricted to this actual stage's typed namespace.
++        prefix=self.ledger.selection.writer_policy(self.stage.name)['remote_prefix']+'-p'
++        require(receipt['remote'].startswith(prefix),'typed recovery foreign stage')
++        n=receipt['bytes'];require(type(n) is int and 0<n<=self.budget['chunk_bytes'],'typed recovery extent')
++        self.counter['recovered']+=n;self.counter['chunks']+=1;self._counter_pin=policy.raw(self.counter);self.ledger._typed_payload_registry_pin=policy.sha(policy.raw(self.registry))
++        require(self.counter['recovered']<=self.budget['max_recovered_bytes'] and self.counter['chunks']<=self.budget['max_chunks'],'typed recovery allowance exhausted')
++        self.context._spent['logical_bytes']+=n;self.context._spent_pin=canonical_bytes(self.context._spent)
++        require(self.context._spent['logical_bytes']<=self.context._record['capacity']['logical_bytes'],'typed shared recovery allowance')
++        self._publish('typed-read-'+self.sha+f'-{self.recovered:016d}.json',{'receipt_sha256':policy.sha(policy.raw(receipt)),'bytes':n,'reserved':dict(self.counter)})
++        # View checks exact operation remote prefix; restrict the temporary child
++        # to the authenticated requested historical object, restore on any error.
++        previous=self.cap['remote_prefix'];self.cap['remote_prefix']=receipt['remote'].rsplit('-',1)[0]
++        try:return archive_consume.consume(receipt_bytes=policy.raw(receipt),receipt_sha256=policy.sha(policy.raw(receipt)),expected_scope=receipt['scope'],attempt=attempt,transport=self.view,lease=self.lease,free_floor_bytes=self.policy['local_free_floor_bytes'])
++        finally:self.cap['remote_prefix']=previous;self.recovered+=n
++
++    def retire_source(self,source,*,expected_sha256,expected_bytes):
++        self.lease();source=Path(source);self._path(source)
++        require(any(p['source']==str(source) and p['receipt']['source_sha256']==expected_sha256 and p['receipt']['bytes']==expected_bytes for p in self.proofs),'typed original source lacks successful full recovery')
++        dispose(source,expected_bytes,expected_sha256)
++
++    def history(self):
++        require(self.closed,'typed completion not yet anchored')
++        return {'directory':str(self.ledger.root),'intent':self.claim_name,'intent_sha256':self.sha,'complete':self.complete_name,'complete_sha256':self.complete_sha}
++
++@contextmanager
++def operation(owner,stage,*,kind,binding,payload_bytes,chunk_count):
++    op=None
++    try:
++        op=_Operation(owner,stage,kind,binding,payload_bytes,chunk_count)
++        op.lease();yield op;op.lease()
++        require(op.preserved==payload_bytes and len(op.proofs)==chunk_count,'typed operation incomplete')
++        result={'schema_version':1,'operation_sha256':op.sha,'parts':len(op.proofs),'parts_sha256':policy.sha(b''.join(bytes.fromhex(policy.sha(policy.raw(p))) for p in op.proofs)),'preserved_bytes':op.preserved,'recovered_bytes':op.recovered,'assumption':policy.ASSUMPTION}
++        op.complete_name='typed-complete-'+op.sha+'.json';op.complete_sha=policy.sha(policy.raw(result));op._publish(op.complete_name,result)
++        op.lease();op.context._outer()
++        op.closed=True
++    except BaseException as error:
++        owner.poisoned=True
++        ledger=getattr(owner,'_archive_operations',None)
++        if ledger is not None:ledger._poisoned=True
++        if op is not None:
++            op.context._failed=True
++            try:op._publish('typed-failed-'+op.sha+'.json',{'error_type':type(error).__name__,'reservations_retained':True})
++            except BaseException as failure:error.add_note('typed failure evidence: '+repr(failure))
++        raise
++    finally:
++        if op is not None:op.closed=True;op.context._cap=op.parent
++
++def check_history(record,*,binding,kind):
++    """Caller MUST anchor record in original scientific/output completion hash."""
++    require(type(record) is dict and set(record)=={'directory','intent','intent_sha256','complete','complete_sha256'},'typed historical reference schema')
++    for k in ('intent','complete'):require(Path(record[k]).name==record[k] and record[k] not in ('.','..'),'typed history member')
++    require(record['intent']=='typed-'+record['intent_sha256']+'.json' and record['complete']=='typed-complete-'+record['intent_sha256']+'.json','typed original claim names')
++    root=Path(record['directory']);intent_raw=_read(root/record['intent']);complete_raw=_read(root/record['complete'])
++    require(policy.sha(intent_raw)==record['intent_sha256'] and policy.sha(complete_raw)==record['complete_sha256'],'typed historical anchored bytes differ')
++    intent=json.loads(intent_raw);complete=json.loads(complete_raw)
++    require(intent['format']=='typed-payload-operation-v1' and intent['kind']==kind and intent['binding']==binding and complete['operation_sha256']==record['intent_sha256'] and complete['assumption']==policy.ASSUMPTION,'typed historical binding differs')
++    count=complete['parts'];require(type(count) is int and 0<=count==intent['reserved_chunks']<=10**12,'typed historical part count')
++    require(complete['preserved_bytes']==intent['reserved_payload_bytes'],'typed historical byte reservation')
++    return complete
++
++def iter_history_parts(record,*,binding,kind):
++    import hashlib
++    complete=check_history(record,binding=binding,kind=kind);root=Path(record['directory']);count=complete['parts'];chain=hashlib.sha256();total=0
++    for index in range(count):
++        p=json.loads(_read(root/('typed-part-'+record['intent_sha256']+f'-{index:012d}.json')))
++        require(p['index']==index and p['operation_sha256']==record['intent_sha256'] and p['fresh_full_recovery'] is True and policy.sha(policy.raw(p['receipt']))==p['receipt_sha256'],'typed historical part differs')
++        require(_read(root/('typed-part-'+record['intent_sha256']+f'-{index:012d}.json'))==policy.raw(p),'typed original ledger part changed')
++        receipt=p['receipt']
++        require(set(receipt)=={'schema_version','format','transport_identity','remote','member','scope','source_sha256','bytes'} and receipt['schema_version']==1 and receipt['format']=='archive-chunk-v1' and receipt['member']==receipt['remote']+'/payload.bin' and type(receipt['bytes']) is int and 0<receipt['bytes']<=4*1024**2,'typed original receipt schema')
++        require(receipt['scope']==policy.sha(policy.raw({'operation':record['intent_sha256'],'index':index,'bytes':receipt['bytes'],'sha256':receipt['source_sha256']})),'typed original receipt operation join')
++        chain.update(bytes.fromhex(policy.sha(policy.raw(p))));total+=receipt['bytes']
++        yield p
++    require(total==complete['preserved_bytes'] and chain.hexdigest()==complete['parts_sha256'],'typed historical part chain')
++
++
++def ledger_evidence(ledger,*,terminal=False):
++    if not hasattr(ledger,'_typed_expected'):return {}
++    require(policy.sha(policy.raw(ledger._typed_expected))==ledger._typed_expected_pin and policy.sha(policy.raw(ledger._typed_payload_registry))==ledger._typed_payload_registry_pin and policy.sha(policy.raw(ledger._typed_control_spent))==ledger._typed_control_pin,'typed ledger pins changed')
++    result={}
++    for name,sha in ledger._typed_expected.items():
++        require(name.startswith('typed-') and Path(name).name==name,'typed ledger member')
++        raw=ledger._expected[name];require(policy.sha(raw)==sha and _read(ledger.root/name)==raw,'typed ledger original bytes changed');result[name]=raw
++        if terminal:
++            item=json.loads(raw)
++            require(not name.startswith('typed-failed-'),'typed failed operation cannot complete')
++            if item.get('format')=='typed-payload-operation-v1':
++                complete='typed-complete-'+sha+'.json'
++                require(complete in ledger._typed_expected,'typed unfinished operation')
++                history=dict(directory=str(ledger.root),intent=name,intent_sha256=sha,complete=complete,complete_sha256=ledger._typed_expected[complete])
++                for _ in iter_history_parts(history,binding=item['binding'],kind=item['kind']):pass
++    require(sum(len(v) for v in result.values())==ledger._typed_control_spent,'typed cumulative metadata accounting differs')
++    return result
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/typed_payload_policy.py
+@@ -0,0 +1,50 @@
++"""Finite selected payload accounting; neither scientific nor launch authority."""
++import hashlib
++import json
++import re
++
++KINDS = {'score-tail-f64':80,'score-batch-f64':8,'mcm-output-f32':4}
++ASSUMPTION = ('Historical proof authenticates prior full byte and semantic recovery against '
++ 'the original roster. It does not establish current remote byte availability; '
++ 'every future restore/use must freshly retrieve and authenticate its bytes.')
++
++def require(ok, message):
++    if not ok: raise ValueError(message)
++
++def raw(value):
++    return (json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
++
++def sha(value):return hashlib.sha256(value).hexdigest()
++
++def validate(value):
++    require(type(value) is dict and set(value)=={'schema_version','format','assumption','graphs','local_free_floor_bytes','max_control_bytes'},'typed payload policy fields')
++    require(type(value['schema_version']) is int and value['schema_version']==1 and value['format']=='typed-payload-budget-v1' and value['assumption']==ASSUMPTION,'explicit selected historical recovery assumption required')
++    require(type(value['local_free_floor_bytes']) is int and value['local_free_floor_bytes']>=0,'typed floor')
++    require(type(value['max_control_bytes']) is int and 0<value['max_control_bytes']<2**63,'typed cumulative metadata allowance')
++    graphs=value['graphs'];require(type(graphs) is dict and 0<len(graphs)<=1024,'finite typed graph roster')
++    for graph, entry in graphs.items():
++        require(type(graph) is str and re.fullmatch('[0-9a-f]{64}',graph),'typed graph hash')
++        require(type(entry) is dict and set(entry)=={'rows','chunk_cells','kinds'},'typed graph fields')
++        require(all(type(entry[k]) is int and 0<entry[k]<2**63 for k in ('rows','chunk_cells')) and entry['chunk_cells']<=65536,'typed population bound')
++        require(type(entry['kinds']) is dict and set(entry['kinds'])==set(KINDS),'all three original payload types must be explicitly budgeted')
++        for kind, budget in entry['kinds'].items():
++            require(type(budget) is dict and set(budget)=={'max_operations','max_preserved_bytes','max_recovered_bytes','max_chunks','chunk_bytes'},'typed budget fields')
++            require(all(type(v) is int and 0<v<2**63 for v in budget.values()),'finite positive typed budget')
++            require(budget['chunk_bytes']<=4*1024**2 and budget['chunk_bytes']%KINDS[kind]==0,'aligned native-bounded typed part')
++            if kind=='score-batch-f64':require(budget['chunk_bytes']>=entry['chunk_cells']*8,'original bounded f64 batch must fit registered part')
++            require(budget['max_preserved_bytes']>=entry['rows']*32*KINDS[kind],'full original graph payload allowance required')
++    return value
++
++def capacity(value):
++    validate(value);result=dict(logical_bytes=0,rounded_bytes=0,commands=0,chunks=0)
++    for graph in value['graphs'].values():
++        for b in graph['kinds'].values():
++            # reserve whole finite registered byte envelope; each read rounds at
++            # most one transport block above its actual decoded payload.
++            p,r,n=b['max_preserved_bytes'],b['max_recovered_bytes'],b['max_chunks']
++            result['logical_bytes']+=2*p+r
++            result['rounded_bytes']+=2*p+r+2*n*65536
++            result['commands']+=4*n
++            result['chunks']+=n
++    require(all(v<2**63 for v in result.values()),'typed capacity overflow')
++    return result
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/typed_score_store.py
+@@ -0,0 +1,217 @@
++"""Selected original f64 score evidence, recovered in bounded typed parts.
++
++No numerical method is implemented here. The genuine stream performs original
++local seal validation first. Successful parts retain remote originals, original
++metadata and durable prior full-recovery proofs. Future byte use retrieves anew.
++"""
++import hashlib
++import json
++import os
++from pathlib import Path
++from . import typed_payload_operations as operations, typed_payload_policy as policy
++from . import score_tail_semantics as semantics
++
++require=policy.require
++
++def read(root,name,expected=None):
++    raw=operations._read(Path(root)/name,8192)
++    if expected is not None:require(policy.sha(raw)==expected,'typed original metadata hash differs')
++    return raw,json.loads(raw)
++
++def write(root,name,value):
++    operations._write(Path(root)/name,value);return policy.sha(policy.raw(value))
++
++def inventory(root,names):
++    from .archive_chunks import _inventory,io
++    path,fd=io._open(root)
++    try:_inventory(fd,set(names));io._root(path,fd)
++    finally:io._release(lambda:os.close(fd))
++
++class _Parts:
++    def __init__(self,op,receipts,root):self.op=op;self.receipts=iter(receipts);self.root=root;self.raw=b'';self.index=0;self.pos=0
++    def read(self,n):
++        require(type(n) is int and 0<n<=80,'typed semantic read bound')
++        if self.pos==len(self.raw):
++            receipt=next(self.receipts,None)
++            if receipt is None:return b''
++            self.raw=self.op.recover(receipt,attempt=self.root/f'read-{self.index:012d}');self.index+=1;self.pos=0
++        result=self.raw[self.pos:self.pos+n];self.pos+=len(result);return result
++
++def selected(stream):
++    target=stream._imported
++    if target is None:return None
++    record=operations.selected(target.owner)
++    if record is None:return None
++    owner=target.owner;stage=owner.active
++    require(stage is not None and stage.kind=='mcm' and stage.name=='mcm-'+stream.parent,'typed live original MCM stage')
++    graph=record['policy']['graphs'].get(stream.parent)
++    require(graph is not None and graph['rows']==stream.n and graph['chunk_cells']==stream.batches.chunk_cells and stream.k==32,'typed actual original denominator differs')
++    return Store(stream,owner,stage,record)
++
++class Store:
++    def __init__(self,stream,owner,stage,record):
++        self.stream=stream;self.owner=owner;self.stage=stage;self.record=record
++        self.frames=hashlib.sha256();self.chain=hashlib.sha256();self.count=0
++
++    def seal(self,index):
++        s=self.stream;require(index==self.count,'typed seal order')
++        tr=s.root/'tails'/f'tail-{index:012d}'
++        sr,start=read(tr,'start.json');er,end=read(tr,'terminal.json')
++        lr,link=read(s.root,f'seal-{index:012d}.json');hr,header=read(s.batches.root,f'chunk-{index:012d}.json',link['batch_header_sha256'])
++        require(policy.sha(er)==link['tail_terminal_sha256'],'typed terminal/seal join')
++        batch=operations._read(s.batches.root/f'chunk-{index:012d}.bin',start['cells']*8)
++        require(policy.sha(batch)==header['payload_sha256'] and len(batch)==start['cells']*8,'typed f64 original hash/extent')
++        binding={'schema_version':1,'owner':s.owner,'scope':s.scope,'stream_start_sha256':s.start_sha,'seal_sha256':policy.sha(lr),'tail_start_sha256':policy.sha(sr),'tail_terminal_sha256':policy.sha(er),'batch_header_sha256':policy.sha(hr),'index':index}
++        maxpart=self.record['policy']['graphs'][s.parent]['kinds']['score-tail-f64']['chunk_bytes']
++        size=end['records_bytes'];parts=(size+maxpart-1)//maxpart
++        scratch=tr/'typed';scratch.mkdir();receipts=[]
++        from .archive_chunks import io
++        parent,pfd=io._open(tr)
++        try:os.fsync(pfd);io._root(parent,pfd)
++        finally:io._release(lambda:os.close(pfd))
++        with operations.operation(self.owner,self.stage,kind='score-tail-f64',binding=binding,payload_bytes=size,chunk_count=parts) as op:
++            from .archive_chunks import io
++            root,fd=io._open(tr)
++            try:
++                source=os.open('records.bin',os.O_RDONLY|os.O_NOFOLLOW,dir_fd=fd)
++                try:
++                    pin=io._signature(os.fstat(source));h=hashlib.sha256();offset=0
++                    for part in range(parts):
++                        n=min(maxpart,size-offset);raw=os.pread(source,n,offset);require(len(raw)==n,'typed source truncation');h.update(raw)
++                        path=scratch/f'part-{part:012d}.bin'
++                        sf=io._open(scratch)
++                        try:io._write(sf[1],path.name,raw)
++                        finally:io._release(lambda:os.close(sf[1]))
++                        receipt=op.preserve(path,expected_sha256=policy.sha(raw),expected_bytes=n,index=part,attempt=scratch/f'put-{part:012d}');receipts.append(receipt)
++                        op.retire_source(path,expected_sha256=policy.sha(raw),expected_bytes=n);offset+=n
++                    require(h.hexdigest()==end['records_sha256'] and io._signature(os.fstat(source))==pin and io._signature(os.stat('records.bin',dir_fd=fd,follow_symlinks=False))==pin,'typed original records changed')
++                finally:io._release(lambda:os.close(source))
++            finally:io._release(lambda:os.close(fd))
++            reader=_Parts(op,receipts,scratch);position=0;frame=bytearray();frames=hashlib.sha256()
++            def observed(n):
++                nonlocal position
++                raw=reader.read(n);frame.extend(raw)
++                if len(frame)==80:
++                    require(bytes(frame[8:16])==batch[position*8:(position+1)*8],'typed recovered original f64 bits differ')
++                    frames.update(frame[:48]);self.frames.update(frame[:48]);position+=1;frame.clear()
++                require(len(frame)<80,'typed frame fragmentation bound')
++                return raw
++            semantic=semantics.verify_complete(observed,start_raw=sr,terminal_raw=er,start_sha256=policy.sha(sr),terminal_sha256=policy.sha(er),scope=s.scope,owner=s.owner)
++            require(position==start['cells'] and not frame,'typed recovered full frame population')
++        tail_history=op.history()
++        # Batch payload is unchanged original f64; preserve it independently.
++        batchbinding=dict(binding,kind='score-batch-f64')
++        with operations.operation(self.owner,self.stage,kind='score-batch-f64',binding=batchbinding,payload_bytes=len(batch),chunk_count=1) as batchop:
++            receipt=batchop.preserve(s.batches.root/f'chunk-{index:012d}.bin',expected_sha256=header['payload_sha256'],expected_bytes=len(batch),index=0,attempt=scratch/'batch-put')
++            batchop.retire_source(s.batches.root/f'chunk-{index:012d}.bin',expected_sha256=header['payload_sha256'],expected_bytes=len(batch))
++        proof={'schema_version':1,'format':'typed-score-seal-v1','binding':binding,'semantic':semantic,'frames_sha256':frames.hexdigest(),'tail_history':tail_history,'batch_binding':batchbinding,'batch_history':batchop.history(),'assumption':policy.ASSUMPTION}
++        ref=write(tr,'typed.json',proof)
++        # Prior semantic full recovery and both durable ledger completions exist.
++        self.owner.lease();operations.dispose(tr/'records.bin',size,end['records_sha256'])
++        self.chain.update(bytes.fromhex(ref));self.count+=1
++
++    def finish(self,terminal):
++        s=self.stream
++        require(self.count==s.batches.chunks and s.cells==s.n*32,'typed full stream population')
++        summary={'schema_version':1,'format':'typed-score-history-v1','owner':s.owner,'scope':s.scope,'stream_start_sha256':s.start_sha,'batch_terminal_sha256':terminal,'cells':s.cells,'chunks':self.count,'seal_head':s.head,'typed_seals_sha256':self.chain.hexdigest(),'matching_scores_sha256':self.frames.hexdigest(),'policy_input':self.record['input'],'policy_sha256':self.record['input_sha256'],'assumption':policy.ASSUMPTION}
++        return write(s.root,'typed-complete.json',summary)
++
++def check(root,*,terminal,owner,scope,pairs,chunk_cells):
++    """Anchored historical recovery only; no current remote availability claim."""
++    root=Path(root);cr,complete=read(root,'complete.json',terminal)
++    require(set(complete)=={'schema_version','start_sha256','head','cells','chunks','batch_terminal_sha256','typed_proof_sha256'} and complete['schema_version']==2,'selected typed completion schema')
++    _,start=read(root,'start.json',complete['start_sha256'])
++    _,proof=read(root,'typed-complete.json',complete['typed_proof_sha256'])
++    require(start['schema_version']==2 and start['kind']=='mcm-score-stream' and start['owner']==owner and start['scope']['workflow']==scope['workflow'] and start['motifs']==32 and start['rows']*32==pairs and start['chunk_cells']==chunk_cells,'typed original stream scope/denominator')
++    require(proof=={'schema_version':1,'format':'typed-score-history-v1','owner':owner,'scope':start['scope'],'stream_start_sha256':complete['start_sha256'],'batch_terminal_sha256':complete['batch_terminal_sha256'],'cells':pairs,'chunks':complete['chunks'],'seal_head':complete['head'],'typed_seals_sha256':proof['typed_seals_sha256'],'matching_scores_sha256':proof['matching_scores_sha256'],'policy_input':start['typed_payload_input'],'policy_sha256':start['typed_payload_sha256'],'assumption':policy.ASSUMPTION},'typed recovery summary binding')
++    count=(pairs+chunk_cells-1)//chunk_cells;require(complete['cells']==pairs and complete['chunks']==count,'typed complete denominator')
++    _,bs=read(root/'batches','start.json',start['batch_start_sha256']);_,bt=read(root/'batches','terminal.json',complete['batch_terminal_sha256'])
++    require(bs=={'schema_version':1,'scope':start['scope'],'owner':owner,'rows':start['rows'],'motifs':32,'chunk_cells':chunk_cells,'dtype':'<f8','order':'row-major'} and bt['status']=='complete' and bt['cells']==pairs and bt['chunks']==count and not bt['pending'],'typed batch completion')
++    previous=complete['start_sha256'];batchprevious=start['batch_start_sha256'];chain=hashlib.sha256()
++    for index in range(count):
++        lr,link=read(root,f'seal-{index:012d}.json');offset=index*chunk_cells;cells=min(chunk_cells,pairs-offset)
++        require(link=={'schema_version':1,'start_sha256':complete['start_sha256'],'previous':previous,'index':index,'start_cell':offset,'cells':cells,'tail_terminal_sha256':link['tail_terminal_sha256'],'batch_header_sha256':link['batch_header_sha256']},'typed original seal predecessor')
++        tr=root/'tails'/f'tail-{index:012d}';sr,ts=read(tr,'start.json');er,te=read(tr,'terminal.json',link['tail_terminal_sha256']);pr,p=read(tr,'typed.json')
++        hr,bh=read(root/'batches',f'chunk-{index:012d}.json',link['batch_header_sha256'])
++        binding={'schema_version':1,'owner':owner,'scope':start['scope'],'stream_start_sha256':complete['start_sha256'],'seal_sha256':policy.sha(lr),'tail_start_sha256':policy.sha(sr),'tail_terminal_sha256':policy.sha(er),'batch_header_sha256':policy.sha(hr),'index':index}
++        require(p['binding']==binding and p['batch_binding']==dict(binding,kind='score-batch-f64') and p['assumption']==policy.ASSUMPTION,'typed historical seal join')
++        tailproof=operations.check_history(p['tail_history'],binding=binding,kind='score-tail-f64');batchproof=operations.check_history(p['batch_history'],binding=p['batch_binding'],kind='score-batch-f64')
++        partcount=tailproof['parts']
++        inventory(tr/'typed',{'batch-put'}|{f'put-{i:012d}' for i in range(partcount)}|{f'read-{i:012d}' for i in range(partcount)})
++        for part in operations.iter_history_parts(p['tail_history'],binding=binding,kind='score-tail-f64'):
++            i=part['index'];check_attempt(tr/'typed'/f'put-{i:012d}',part['receipt'],reading=False);check_attempt(tr/'typed'/f'read-{i:012d}',part['receipt'],reading=True)
++        batchparts=list(operations.iter_history_parts(p['batch_history'],binding=p['batch_binding'],kind='score-batch-f64'))
++        require(len(batchparts)==1,'typed batch part denominator')
++        check_attempt(tr/'typed/batch-put',batchparts[0]['receipt'],reading=False)
++        require(tailproof['preserved_bytes']==cells*80 and batchproof['preserved_bytes']==cells*8 and p['semantic']['records_sha256']==te['records_sha256'] and p['semantic']['terminal_sha256']==policy.sha(er) and p['semantic']['start_sha256']==policy.sha(sr) and p['semantic']['cells_verified']==cells and p['semantic']['start_cell']==offset,'typed original recovered semantic count')
++        require(bh=={'schema_version':1,'start_sha256':start['batch_start_sha256'],'previous':batchprevious,'index':index,'start_cell':offset,'cells':cells,'payload_sha256':bh['payload_sha256']} and batchparts[0]['receipt']['source_sha256']==bh['payload_sha256'],'typed original f64 header join')
++        require(ts['scope']==start['scope'] and ts['owner']==owner and ts['start_cell']==offset and ts['cells']==cells and ts['destination']==policy.sha(policy.raw({'directory':str(root/'batches'),'start_sha256':start['batch_start_sha256'],'index':index,'start_cell':offset,'cells':cells})),'typed original tail destination')
++        inventory(tr,{'start.json','terminal.json','typed.json','typed'});chain.update(bytes.fromhex(policy.sha(pr)));previous=policy.sha(lr);batchprevious=policy.sha(hr)
++    require(previous==complete['head'] and batchprevious==bt['head'] and chain.hexdigest()==proof['typed_seals_sha256'],'typed historical full roster/head')
++    inventory(root,{'start.json','complete.json','typed-complete.json','batches','tails'}|{f'seal-{i:012d}.json' for i in range(count)})
++    inventory(root/'tails',{f'tail-{i:012d}' for i in range(count)})
++    inventory(root/'batches',{'start.json','terminal.json'}|{f'chunk-{i:012d}.json' for i in range(count)})
++    return proof
++
++def batch_bytes(owner,stage,index,attempt):
++    """Fresh original f64 payload use under genuine current held authority."""
++    from . import compact_owner
++    compact_owner._stage_content(stage)
++    from .typed_tail_binding import bind_archived
++    from .provenance import thaw
++    bind_archived(stage.root,expected_stage_sha256=stage.reference,contract=thaw(stage.contract))
++    tr=stage.root/'stream/tails'/f'tail-{index:012d}';raw,p=read(tr,'typed.json')
++    compact_owner._stage_content(stage)
++    require(read(tr,'typed.json')[0]==raw,'typed batch original marker changed')
++    history=operations.check_history(p['batch_history'],binding=p['batch_binding'],kind='score-batch-f64')
++    parts=list(operations.iter_history_parts(p['batch_history'],binding=p['batch_binding'],kind='score-batch-f64'))
++    require(len(parts)==1,'typed original bounded batch part')
++    with operations.operation(owner,stage,kind='score-batch-f64',binding={'restore_of':p['batch_history'],'index':index},payload_bytes=0,chunk_count=0) as op:
++        result=op.recover(parts[0]['receipt'],attempt=attempt)
++    return result
++
++
++def check_attempt(root,receipt,*,reading):
++    ref=policy.sha(policy.raw(receipt))
++    if reading:
++        intent={'schema_version':1,'format':'archive-consume-v1','receipt_sha256':ref,'receipt':receipt}
++        verified={'schema_version':1,'intent_sha256':policy.sha(policy.raw(intent)),'bytes':receipt['bytes'],'payload_sha256':receipt['source_sha256']}
++        bodies={'intent.json':intent,'verified.json':verified,'complete.json':{'schema_version':1,'verified_sha256':policy.sha(policy.raw(verified)),'owned_cache_disposed':True}}
++    else:bodies={'intent.json':receipt,'complete.json':receipt,'disposed.json':{'schema_version':1,'receipt_sha256':ref,'owned_transfer_payloads_disposed':True}}
++    inventory(root,set(bodies))
++    for name,value in bodies.items():require(read(root,name)[0]==policy.raw(value),'typed actual transfer/disposal proof changed')
++
++
++class _BatchReader:
++    def __init__(self,op,stage,proof):
++        self.op=op;self.stage=stage;self.proof=proof;self.next=0;self.chain=hashlib.sha256()
++    def read(self,index,attempt):
++        self.op.lease();require(index==self.next and type(index) is int and index<self.proof['chunks'],'typed original batch order')
++        raw,p=read(self.stage.root/'stream/tails'/f'tail-{index:012d}','typed.json')
++        require(p['binding']['index']==index and p['binding']['owner']==self.op.owner.identity and p['binding']['scope']==self.proof['scope'] and p['binding']['stream_start_sha256']==self.proof['stream_start_sha256'],'typed batch scope differs')
++        parts=list(operations.iter_history_parts(p['batch_history'],binding=p['batch_binding'],kind='score-batch-f64'));require(len(parts)==1,'typed f64 batch part')
++        result=self.op.recover(parts[0]['receipt'],attempt=attempt)
++        self.chain.update(bytes.fromhex(policy.sha(raw)));self.next+=1
++        return result
++
++
++from contextlib import contextmanager
++@contextmanager
++def batch_reader(owner,stage):
++    """One actual held reader, full scientific evidence at both boundaries.
++
++    Every ordered chunk is freshly recovered. The original anchored marker chain
++    is exhausted before success; earlier returned bytes remain provisional until
++    context exit. No random access, shortcut, or partial completion is accepted.
++    """
++    from . import compact_owner
++    from .provenance import thaw
++    from .typed_tail_binding import bind_archived
++    compact_owner._stage_content(stage);contract=thaw(stage.contract)
++    anchored=bind_archived(stage.root,expected_stage_sha256=stage.reference,contract=contract)
++    _,proof=read(stage.root/'stream','typed-complete.json',anchored.recovery_sha256)
++    with operations.operation(owner,stage,kind='score-batch-f64',binding={'read_stream':anchored.stream_sha256,'recovery_sha256':anchored.recovery_sha256},payload_bytes=0,chunk_count=0) as op:
++        reader=_BatchReader(op,stage,proof);yield reader
++        require(reader.next==proof['chunks'] and reader.chain.hexdigest()==proof['typed_seals_sha256'],'typed full original batch roster not exhausted')
++    compact_owner._stage_content(stage)
++    require(thaw(stage.contract)==contract and bind_archived(stage.root,expected_stage_sha256=stage.reference,contract=contract)==anchored,'typed scientific boundary changed')
+--- a/tradingagents/research/onchain_replication/typed_tail_binding.py
++++ b/tradingagents/research/onchain_replication/typed_tail_binding.py
+@@ -233,3 +233,29 @@
+ 
+ def activate(*args,**kwargs):
+     raise ValueError('Genuine closed-Stage/Owner/Target roster, held lease and typed transport ledger activation remain caller-bound; content metadata is not authority')
++
++
++@dataclass(frozen=True)
++class ArchivedBinding:
++    stage_sha256: str
++    contract_sha256: str
++    stream_sha256: str
++    recovery_sha256: str
++    matching_scores_sha256: str
++    cells: int
++
++
++def bind_archived(stage_root,*,expected_stage_sha256,contract):
++    """Actual archived marker, never a synthesized legacy stage receipt.
++
++    The externally trusted original marker anchors prior full byte/semantic
++    recovery. This content-only binding grants no live capability and asserts
++    no present remote availability. Any byte use requires fresh typed recovery.
++    """
++    from . import archive_owner_seal, typed_score_store
++    result=archive_owner_seal.check_content(Path(stage_root),expected_sha256=expected_stage_sha256,contract=contract)
++    require(result['kind']=='mcm' and 'typed_score_recovery_sha256' in result,'selected genuine archived score result required')
++    proof=typed_score_store.check(Path(stage_root)/'stream',terminal=contract['stream_terminal_sha256'],owner=contract['owner'],scope=contract['scope'],pairs=contract['pairs'],chunk_cells=contract['policy']['score_chunk_cells'])
++    complete,_=typed_score_store.read(Path(stage_root)/'stream','typed-complete.json',result['typed_score_recovery_sha256'])
++    require(bank.digest(complete)==result['typed_score_recovery_sha256'] and proof['matching_scores_sha256']==result['matching_scores_sha256'] and proof['cells']==result['completed_pairs'],'archived original scientific recovery join')
++    return ArchivedBinding(expected_stage_sha256,bank.digest(bank.encode(contract)),contract['stream_terminal_sha256'],result['typed_score_recovery_sha256'],result['matching_scores_sha256'],result['completed_pairs'])

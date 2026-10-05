@@ -1,0 +1,371 @@
+{
+  "archive_dispatch.py": {
+    "target": "tradingagents/research/onchain_replication/archive_dispatch.py",
+    "candidate_sha256": "ff3bf9f128ed520222871bbfbc15b66c11e38bb89d92d6d9bac1cbdd89fb9840",
+    "bytes": 31261,
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-preimport-archive-owner-seam01-2026-10-06/candidate/tradingagents/research/onchain_replication/archive_dispatch.py",
+    "baseline_sha256": "ad951c4c556d123ac8e0961ba1f5a8ee288823174fafeec7d301649948603489",
+    "literal_inverse": true,
+    "edits": [
+      {
+        "new_start": 58,
+        "new_end": 61,
+        "old": [
+          "    require(type(value) is dict and set(value)==fields and value['schema_version']==1 and value['format']==FORMAT,'archive dispatch policy schema')\n"
+        ],
+        "new": [
+          "    typed=type(value) is dict and value.get('schema_version')==2\n",
+          "    require(type(value) is dict and set(value)==fields|({'typed_payload_input'} if typed else set()) and value['schema_version']==(2 if typed else 1) and value['format']==FORMAT,'archive dispatch policy schema')\n",
+          "    if typed:require(type(value['typed_payload_input']) is str and bool(value['typed_payload_input']),'registered typed payload input required')\n"
+        ]
+      },
+      {
+        "new_start": 124,
+        "new_end": 139,
+        "old": [],
+        "new": [
+          "    typed_record=None\n",
+          "    if config['schema_version']==2:\n",
+          "        require(execution['kind']=='compact_resource' and len(selected)==1,'typed storage only selected single real resource representation')\n",
+          "        # Load selected helpers before the imported authority lease captures its\n",
+          "        # actual module/code baseline. Legacy policies do not import this path.\n",
+          "        from . import typed_payload_policy, typed_payload_operations, typed_score_store, typed_tail_binding, mcm_raw_parts\n",
+          "        role=config['typed_payload_input']\n",
+          "        require(role in run.admission.inputs,'typed payload input unregistered')\n",
+          "        raw=run.read_input(role);typed=typed_payload_policy.validate(json.loads(raw))\n",
+          "        expected_graphs=set()\n",
+          "        for item in payload['representation_jobs'].values():expected_graphs.update(item['descriptor']['required_graphs'])\n",
+          "        require(set(typed['graphs'])==expected_graphs,'typed full graph roster differs')\n",
+          "        extra=typed_payload_policy.capacity(typed)\n",
+          "        for k in total:total[k]+=extra[k]\n",
+          "        typed_record={'input':role,'input_sha256':digest(raw),'policy':typed,'capacity':extra}\n"
+        ]
+      },
+      {
+        "new_start": 149,
+        "new_end": 150,
+        "old": [],
+        "new": [
+          "    if typed_record is not None:record['typed_payloads']=typed_record\n"
+        ]
+      }
+    ]
+  },
+  "archive_owner_operations.py": {
+    "target": "tradingagents/research/onchain_replication/archive_owner_operations.py",
+    "candidate_sha256": "2a92f5d6ac569ffa922871e92e981e328708c10294d95f2c30178d747dbdc76f",
+    "bytes": 14963,
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_owner_operations.py",
+    "baseline_sha256": "5882578d065e94af588511356071b8f575aa1e8a1bbd7a9ab116e5853eb4c83f",
+    "literal_inverse": true,
+    "edits": [
+      {
+        "new_start": 89,
+        "new_end": 92,
+        "old": [],
+        "new": [
+          "        if hasattr(self,'_typed_expected'):\n",
+          "            from .typed_payload_operations import ledger_evidence\n",
+          "            ledger_evidence(self)\n"
+        ]
+      }
+    ]
+  },
+  "archive_owner_seal.py": {
+    "target": "tradingagents/research/onchain_replication/archive_owner_seal.py",
+    "candidate_sha256": "dc010ad083293e4bb7230adc879f410785bb92bb238dde95d9cf4f03ce82cef5",
+    "bytes": 20237,
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_owner_seal.py",
+    "baseline_sha256": "7c8c01ce43756605e4765f8e04e1cbbf1665d651d076b36eab74340acb0b07fa",
+    "literal_inverse": true,
+    "edits": [
+      {
+        "new_start": 182,
+        "new_end": 185,
+        "old": [],
+        "new": [
+          "    if hasattr(ledger,'_typed_expected'):\n",
+          "        from .typed_payload_operations import ledger_evidence\n",
+          "        expected.update(ledger_evidence(ledger,terminal=True))\n"
+        ]
+      },
+      {
+        "new_start": 187,
+        "new_end": 202,
+        "old": [
+          "    require(set(ledger._writers)==set(owner.required),'archive required writers incomplete')\n"
+        ],
+        "new": [
+          "    writer_stages=set(owner.required);import_pin=None\n",
+          "    if owner.required[0]=='dictionary-import':\n",
+          "        from . import original_import_stage\n",
+          "        imported=owner.stages.get('dictionary-import')\n",
+          "        require(type(imported) is original_import_stage.ImportStage and imported.owner is owner\n",
+          "            and imported.prepared._bound is owner.bound and imported.closed\n",
+          "            and owner.active is not imported,'original completed imported stage required')\n",
+          "        imported_result=original_import_stage.content(imported)\n",
+          "        require(imported_result['completed_pairs']==0 and imported_result['imported_original'] is True\n",
+          "            and imported_result['receipt_sha256']==imported.reference,'import cannot supply numerical writer credit')\n",
+          "        import_pin={'stage':'dictionary-import','receipt_sha256':imported.reference,'original_dictionary':imported_result['original_dictionary']}\n",
+          "        writer_stages.remove('dictionary-import')\n",
+          "        require(all(name.startswith('mcm-') and type(owner.stages.get(name)) is operations.owners.Stage\n",
+          "            and owner.stages[name].kind=='mcm' for name in writer_stages),'imported archive requires exact MCM stages')\n",
+          "    require(set(ledger._writers)==writer_stages,'archive required writers incomplete')\n"
+        ]
+      },
+      {
+        "new_start": 214,
+        "new_end": 218,
+        "old": [],
+        "new": [
+          "    if hasattr(ledger,'_typed_expected'):\n",
+          "        pin=operations.owners.cache_key({'original':pin,'typed_metadata':ledger._typed_expected,'typed_reserved':ledger._typed_payload_registry,'typed_control_bytes':ledger._typed_control_spent})\n",
+          "    if import_pin is not None:\n",
+          "        pin=operations.owners.cache_key({'original':pin,'nonnumerical_import':import_pin})\n"
+        ]
+      }
+    ]
+  },
+  "archived_stage.py": {
+    "target": "tradingagents/research/onchain_replication/archived_stage.py",
+    "candidate_sha256": "229ac226ad48de0da3569ea1211eb171ea23f12396a513cce9cc65d04770428f",
+    "bytes": 21000,
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archived_stage.py",
+    "baseline_sha256": "1e4b09210a0a9384b778a71e1573298cb923711bcf7c7dcd3b464460001dc407",
+    "literal_inverse": true,
+    "edits": [
+      {
+        "new_start": 166,
+        "new_end": 170,
+        "old": [],
+        "new": [
+          "    if kind=='mcm':\n",
+          "        complete,_=local.read(root/'stream','complete.json',stream_terminal_sha256)\n",
+          "        if complete.get('schema_version')==2:\n",
+          "            result['typed_score_recovery_sha256']=complete['typed_proof_sha256']\n"
+        ]
+      }
+    ]
+  },
+  "compact_owner.py": {
+    "target": "tradingagents/research/onchain_replication/compact_owner.py",
+    "candidate_sha256": "4d4d5d76aba2f3421be5b1b7c2d5f22003808b498a7fcd1f8dfb96d2079018fb",
+    "bytes": 29320,
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_owner.py",
+    "baseline_sha256": "c1f4f1b70ab5e955d5302cda5a1fd2dfc1c02a9df15589acabc7a36c80873171",
+    "literal_inverse": true,
+    "edits": [
+      {
+        "new_start": 469,
+        "new_end": 479,
+        "old": [],
+        "new": [
+          "    ledger=getattr(owner,'_archive_operations',None)\n",
+          "    if ledger is not None:\n",
+          "        from . import archive_owner_operations\n",
+          "        require(type(ledger) is archive_owner_operations.Ledger and ledger.owner is owner\n",
+          "            and ledger.selection._owner is owner and ledger._transition is owner._transition\n",
+          "            and ledger.root==journal/'archive-operations' and not ledger._closed and not ledger._poisoned,\n",
+          "            'current original attached archive ledger differs')\n",
+          "        # Ledger lives INSIDE journal, beside compact. The parent inventory above\n",
+          "        # is unchanged; only the genuine exact attached ledger is joined here.\n",
+          "        ledger._evidence()\n"
+        ]
+      }
+    ]
+  },
+  "compact_stage.py": {
+    "target": "tradingagents/research/onchain_replication/compact_stage.py",
+    "candidate_sha256": "838e380a2b5e9d2fbc7f90f1284570250d2d6969ae9aa68af558a10e5f77e57d",
+    "bytes": 14368,
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_stage.py",
+    "baseline_sha256": "78a5164a711ee69b3a0406ca63a620e781776798864075c9dd820229ccd4ccc4",
+    "literal_inverse": true,
+    "edits": [
+      {
+        "new_start": 127,
+        "new_end": 131,
+        "old": [],
+        "new": [
+          "    if complete.get('schema_version')==2:\n",
+          "        from . import typed_score_store\n",
+          "        proof=typed_score_store.check(root,terminal=terminal,owner=owner,scope=scope,pairs=pairs,chunk_cells=policy['score_chunk_cells'])\n",
+          "        return proof['matching_scores_sha256'],proof['stream_start_sha256']\n"
+        ]
+      }
+    ]
+  },
+  "mcm_score_stream.py": {
+    "target": "tradingagents/research/onchain_replication/mcm_score_stream.py",
+    "candidate_sha256": "7ea894ae381cedae04096de7ed696eda1ef67208f35a15495f0012756e9561a6",
+    "bytes": 18133,
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-functional-composition02-2026-10-06/candidate/tradingagents/research/onchain_replication/mcm_score_stream.py",
+    "baseline_sha256": "1df4e165149447f184b09759b80fca5a09c61fa77c71eba424d281d9b7298989",
+    "literal_inverse": true,
+    "edits": [
+      {
+        "new_start": 77,
+        "new_end": 86,
+        "old": [],
+        "new": [
+          "            typed=None\n",
+          "            if _imported is not None:\n",
+          "                ledger=getattr(_imported.owner,'_archive_operations',None)\n",
+          "                context=getattr(getattr(getattr(ledger,'selection',None),'_transport',None),'_context',None)\n",
+          "                if getattr(context,'_record',{}).get('typed_payloads') is not None:\n",
+          "                    from . import typed_payload_operations\n",
+          "                    typed=typed_payload_operations.selected(_imported.owner)\n",
+          "            if typed is not None:\n",
+          "                start.update(schema_version=2,typed_payload_input=typed['input'],typed_payload_sha256=typed['input_sha256'])\n"
+        ]
+      },
+      {
+        "new_start": 87,
+        "new_end": 91,
+        "old": [],
+        "new": [
+          "            self._typed_store=self._typed_store_pin=None\n",
+          "            if typed is not None:\n",
+          "                from . import typed_score_store\n",
+          "                self._typed_store=self._typed_store_pin=typed_score_store.selected(self)\n"
+        ]
+      },
+      {
+        "new_start": 99,
+        "new_end": 100,
+        "old": [],
+        "new": [
+          "        require(self._typed_store is self._typed_store_pin,'typed score store replaced')\n"
+        ]
+      },
+      {
+        "new_start": 144,
+        "new_end": 148,
+        "old": [],
+        "new": [
+          "        if self._typed_store is not None:\n",
+          "            from . import typed_score_store\n",
+          "            typed_score_store.check(self.root,terminal=batch._hash(complete_raw),owner=self.owner,scope=self.scope,pairs=self.cells,chunk_cells=self.batches.chunk_cells)\n",
+          "            return\n"
+        ]
+      },
+      {
+        "new_start": 226,
+        "new_end": 227,
+        "old": [],
+        "new": [
+          "                if self._typed_store is not None:self._typed_store.seal(index)\n"
+        ]
+      },
+      {
+        "new_start": 244,
+        "new_end": 246,
+        "old": [],
+        "new": [
+          "            if self._typed_store is not None:\n",
+          "                record.update(schema_version=2,typed_proof_sha256=self._typed_store.finish(terminal))\n"
+        ]
+      },
+      {
+        "new_start": 270,
+        "new_end": 271,
+        "old": [
+          "    return (stream._imported,stream.batches,stream.root,stream.owner,stream.start_sha,stream.head,\n"
+        ],
+        "new": [
+          "    return (stream._imported,stream._typed_store,stream.batches,stream.root,stream.owner,stream.start_sha,stream.head,\n"
+        ]
+      }
+    ]
+  },
+  "score_tail_archive.py": {
+    "target": "tradingagents/research/onchain_replication/score_tail_archive.py",
+    "candidate_sha256": "dbd6c4ca56ca2ae30f7c0f779b5a62a81258654c4c82802cdbc2d5ebeb78f20c",
+    "bytes": 15453,
+    "baseline": null,
+    "baseline_sha256": null,
+    "literal_inverse": false,
+    "edits": [],
+    "unchanged_banked_source": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-typed-tail-binding01-2026-10-06/score_tail_archive.py"
+  },
+  "score_tail_semantics.py": {
+    "target": "tradingagents/research/onchain_replication/score_tail_semantics.py",
+    "candidate_sha256": "cff38dda5367882d35d18c3f95ab6d6af849d5918e5005e41e1d4205a40cd009",
+    "bytes": 6393,
+    "baseline": null,
+    "baseline_sha256": null,
+    "literal_inverse": false,
+    "edits": [],
+    "unchanged_banked_source": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-typed-tail-binding01-2026-10-06/score_tail_semantics.py"
+  },
+  "typed_payload_operations.py": {
+    "target": "tradingagents/research/onchain_replication/typed_payload_operations.py",
+    "candidate_sha256": "a527b761d12b3da02607c32f38c7261b129952fdeaed7b0f0b6fe5bf0c2875c1",
+    "bytes": 20601,
+    "baseline": null,
+    "baseline_sha256": null,
+    "literal_inverse": false,
+    "edits": []
+  },
+  "typed_payload_policy.py": {
+    "target": "tradingagents/research/onchain_replication/typed_payload_policy.py",
+    "candidate_sha256": "abe2a2a40cc7085aea088c9576d6f9e6ebf361a1c81ed1aa184643b33c4a3b1e",
+    "bytes": 3440,
+    "baseline": null,
+    "baseline_sha256": null,
+    "literal_inverse": false,
+    "edits": []
+  },
+  "typed_score_store.py": {
+    "target": "tradingagents/research/onchain_replication/typed_score_store.py",
+    "candidate_sha256": "433bab5d6c8bcb9581ff7e4b2bf12e61ddb0ffc60ed0e29b48cf468ac3ce5bee",
+    "bytes": 18002,
+    "baseline": null,
+    "baseline_sha256": null,
+    "literal_inverse": false,
+    "edits": []
+  },
+  "typed_tail_binding.py": {
+    "target": "tradingagents/research/onchain_replication/typed_tail_binding.py",
+    "candidate_sha256": "985bb44185e9a5dc6293d2e7b25c8815c2390c7f0326a568043d562d3f731706",
+    "bytes": 20961,
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-typed-tail-binding01-2026-10-06/typed_tail_binding.py",
+    "baseline_sha256": "8c5fc912008942b4d904aa96da82cbe3ef37f87da4e3f1cdf1a99898e5a2c62e",
+    "literal_inverse": true,
+    "edits": [
+      {
+        "new_start": 235,
+        "new_end": 261,
+        "old": [],
+        "new": [
+          "\n",
+          "\n",
+          "@dataclass(frozen=True)\n",
+          "class ArchivedBinding:\n",
+          "    stage_sha256: str\n",
+          "    contract_sha256: str\n",
+          "    stream_sha256: str\n",
+          "    recovery_sha256: str\n",
+          "    matching_scores_sha256: str\n",
+          "    cells: int\n",
+          "\n",
+          "\n",
+          "def bind_archived(stage_root,*,expected_stage_sha256,contract):\n",
+          "    \"\"\"Actual archived marker, never a synthesized legacy stage receipt.\n",
+          "\n",
+          "    The externally trusted original marker anchors prior full byte/semantic\n",
+          "    recovery. This content-only binding grants no live capability and asserts\n",
+          "    no present remote availability. Any byte use requires fresh typed recovery.\n",
+          "    \"\"\"\n",
+          "    from . import archive_owner_seal, typed_score_store\n",
+          "    result=archive_owner_seal.check_content(Path(stage_root),expected_sha256=expected_stage_sha256,contract=contract)\n",
+          "    require(result['kind']=='mcm' and 'typed_score_recovery_sha256' in result,'selected genuine archived score result required')\n",
+          "    proof=typed_score_store.check(Path(stage_root)/'stream',terminal=contract['stream_terminal_sha256'],owner=contract['owner'],scope=contract['scope'],pairs=contract['pairs'],chunk_cells=contract['policy']['score_chunk_cells'])\n",
+          "    complete,_=typed_score_store.read(Path(stage_root)/'stream','typed-complete.json',result['typed_score_recovery_sha256'])\n",
+          "    require(bank.digest(complete)==result['typed_score_recovery_sha256'] and proof['matching_scores_sha256']==result['matching_scores_sha256'] and proof['cells']==result['completed_pairs'],'archived original scientific recovery join')\n",
+          "    return ArchivedBinding(expected_stage_sha256,bank.digest(bank.encode(contract)),contract['stream_terminal_sha256'],result['typed_score_recovery_sha256'],result['matching_scores_sha256'],result['completed_pairs'])\n"
+        ]
+      }
+    ]
+  }
+}

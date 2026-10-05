@@ -1,0 +1,62 @@
+{
+  "qualification": "Actual extracted try AST with fake path unlink/sync/publication; no file deleted, no native/network/graph read.",
+  "results": [
+    {
+      "actual_removed": [
+        "ledger.sqlite"
+      ],
+      "escaped_message": "synthetic directory sync failure",
+      "escaped_type": "OSError",
+      "notes": [],
+      "records": {
+        "failed01.json": {
+          "error_type": "OSError",
+          "identity": "offline-only",
+          "no_retry": true,
+          "removed": [
+            "ledger.sqlite"
+          ]
+        },
+        "ledger.sqlite.remote.json": {}
+      },
+      "syncs": 1
+    },
+    {
+      "actual_removed": [
+        "ledger.sqlite",
+        "00-recovered.bin"
+      ],
+      "escaped_message": "synthetic directory sync failure",
+      "escaped_type": "OSError",
+      "notes": [],
+      "records": {
+        "failed01.json": {
+          "error_type": "OSError",
+          "identity": "offline-only",
+          "no_retry": true,
+          "removed": [
+            "ledger.sqlite",
+            "00-recovered.bin"
+          ]
+        },
+        "ledger.sqlite.remote.json": {}
+      },
+      "syncs": 2
+    },
+    {
+      "actual_removed": [
+        "ledger.sqlite"
+      ],
+      "escaped_message": "synthetic directory sync failure",
+      "escaped_type": "OSError",
+      "notes": [
+        "Retirement failure evidence unavailable: RuntimeError('synthetic failure receipt write failure')"
+      ],
+      "records": {
+        "ledger.sqlite.remote.json": {}
+      },
+      "syncs": 1
+    }
+  ],
+  "source_sha256": "93b938adbd7f5ef25b4946c8bb2f23973c14a4e73fdb8761c1dd5ce20756dc9d"
+}

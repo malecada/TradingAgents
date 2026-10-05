@@ -1,0 +1,66 @@
+--- baseline/compact_mcm_publication.py
++++ candidate/compact_mcm_publication.py
+@@ -44,10 +44,22 @@
+         and selected.get('native_backend') == plan.get('native_backend') == compact_policy.BACKEND,
+         'explicit compact MCM output route differs')
+     policy = json.loads(run.read_input(output_input))
+-    require(set(policy) == {'schema_version', 'backend', 'max_artifact_bytes', 'max_workflow_output_bytes'}
+-        and type(policy['schema_version']) is int and policy['schema_version'] == 1
++    archived = type(policy.get('schema_version')) is int and policy['schema_version'] == 2
++    fields = {'schema_version', 'backend', 'max_artifact_bytes', 'max_workflow_output_bytes'}
++    require(set(policy) == fields | ({'payload_archive_input'} if archived else set())
++        and type(policy['schema_version']) is int and policy['schema_version'] in (1, 2)
+         and policy['backend'] == compact_policy.BACKEND, 'compact MCM output policy schema')
++    if archived:
++        from . import typed_payload_operations
++        selection = typed_payload_operations.selected(owner)
++        require(selection is not None and type(policy['payload_archive_input']) is str
++            and selection['input'] == policy['payload_archive_input']
++            and selection['input_sha256'] == run.admission.inputs[policy['payload_archive_input']]['sha256'],
++            'output requires the same genuine registered typed payload budget')
+     compact_policy.positive((policy['max_artifact_bytes'], policy['max_workflow_output_bytes']))
++    if archived:
++        require(4*pairs + 2*io.META_LIMIT <= policy['max_artifact_bytes'],
++            'selected matrix plus original manifest and recovery proof reservation insufficient')
+     # Reserve every required graph's full artifact allowance plus receipt before
+     # publishing any graph. This is separate from retained pair/score evidence.
+     reserved = (len(owner.required) - 1) * (policy['max_artifact_bytes'] + io.META_LIMIT)
+@@ -80,6 +92,15 @@
+     require(attempt.is_absolute() and attempt.resolve() == attempt, 'compact output path redirected')
+     args = dict(stage_root=stage.root, stage_sha256=stage.reference, contract=contract,
+         expected_scope=scope, max_output_bytes=policy['max_artifact_bytes'])
++    if policy['schema_version'] == 2:
++        from . import typed_payload_operations
++        selection = typed_payload_operations.selected(owner)
++        require(selection is not None, 'selected typed output context absent')
++        args['storage_policy'] = {'schema_version': 1, 'kind': 'mcm-output-f32-archive',
++            'input': policy['payload_archive_input'],
++            'input_sha256': run.admission.inputs[policy['payload_archive_input']]['sha256'],
++            'part_bytes': selection['policy']['graphs'][stage.name[4:]]['kinds']['mcm-output-f32']['chunk_bytes'],
++            'closed_check_assumption': 'original-full-recovery-and-cast-proof; current-remote-availability-unasserted'}
+     # Includes dictionary/node/motif order before consuming a namespace.
+     output._source(args)
+     proof = {'schema_version': 1, 'kind': 'owned-compact-mcm-output', 'owner': owner.identity,
+@@ -110,7 +131,8 @@
+     lease()
+     # Callback-free final checks reject mutations from the last live callback.
+     compact_stage.read(attempt, 'receipt.json', receipt_sha256)
+-    compact_stage.inventory(attempt, {'artifact', 'receipt.json'})
++    compact_stage.inventory(attempt, {'artifact', 'receipt.json'} |
++        ({'transport'} if 'storage_policy' in args else set()))
+     output.verify(attempt / 'artifact', expected_sha256=saved['artifact_sha256'], **args, lease=lambda: None)
+     return saved
+ 
+@@ -134,7 +156,11 @@
+         parent, fd = io._open(attempt.parent)
+         try: os.fsync(fd); io._root(parent, fd)
+         finally: io._release(lambda: os.close(fd))
+-        artifact = output.publish(attempt / 'artifact', **args, lease=lease)
++        if 'storage_policy' in args:
++            artifact = output.publish(attempt / 'artifact', **args, lease=lease,
++                storage_owner=owner, storage_stage=stage)
++        else:
++            artifact = output.publish(attempt / 'artifact', **args, lease=lease)
+         owner.boundary(); lease()
+         root, fd = io._open(attempt)
+         try:

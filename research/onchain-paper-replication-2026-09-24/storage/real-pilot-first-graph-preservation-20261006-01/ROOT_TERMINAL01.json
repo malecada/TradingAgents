@@ -1,0 +1,58 @@
+{
+  "actual_guard": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-8484cf8240bd4d959eacdf76b55b7005.service",
+    "child_exit_code": 0,
+    "cleanup_verified": true,
+    "elapsed_seconds": 1771.581349082997,
+    "last_unit_kernel_peak_bytes": 203927552,
+    "memory_events": {
+      "high": 20764,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "minimum_sampled_disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 13700825088
+    },
+    "peak_sampled_memory_current_bytes": 203583488,
+    "phase": "complete",
+    "unit": "onchain-replication-8484cf8240bd4d959eacdf76b55b7005.service"
+  },
+  "actual_outer": {
+    "cleanup_verified": true,
+    "entry_selected_exit_code": 0,
+    "fatal_type": null,
+    "guard_child_exit_code": 0,
+    "guard_phase": "complete",
+    "identity": "real-pilot-first-graph-preservation-20261006-01",
+    "qualification": "Actual returned native fields; null remains unknown. Tool exit is separate. Never retry this identity."
+  },
+  "actual_root_tool_completion_chunk": "785e19",
+  "actual_root_tool_exit_code": 0,
+  "actual_root_tool_session": 12884,
+  "actual_systemctl": {
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "MainPID=0\nResult=success\nActiveState=inactive\nSubState=dead\n"
+  },
+  "at": "2026-10-05T23:26:47.518780+00:00",
+  "cgroup_absent": true,
+  "complete_sha256": "c7c95a2c8e7dac4c10d367324c7540cfdbe1996f2b9399627931c25a3f1b34b3",
+  "current_disk_free_bytes": 13699784704,
+  "identity": "real-pilot-first-graph-preservation-20261006-01",
+  "originals_retained": true,
+  "recoveries_retained": true,
+  "selected_bytes": 3794768609,
+  "selected_count": 36,
+  "selected_pid_qualification": "Union of original final cpu_thread_readback plus original monitor and worker-ready IDs only; not a fabricated complete lifetime PID history.",
+  "selected_recorded_pids_absent": {
+    "634314": true,
+    "634370": true,
+    "634375": true,
+    "664251": true
+  },
+  "source": "1a25eaec1192c9427966647bd2840286a79a8376",
+  "source_Git_freeze": "ENDED after actual terminal/selected process/cgroup cleanup; independent full recovery review still pending."
+}

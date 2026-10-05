@@ -1,0 +1,57 @@
+{
+  "qualification": "Actual extracted try AST with fake path unlink/sync/publication; no file deleted, no native/network/graph read.",
+  "results": [
+    {
+      "actual_removed": [
+        "ledger.sqlite"
+      ],
+      "escaped_message": "synthetic directory sync failure",
+      "escaped_type": "OSError",
+      "notes": [],
+      "records": {
+        "failed01.json": {
+          "error_type": "OSError",
+          "identity": "offline-only",
+          "no_retry": true,
+          "removed": []
+        },
+        "ledger.sqlite.remote.json": {}
+      },
+      "syncs": 1
+    },
+    {
+      "actual_removed": [
+        "ledger.sqlite",
+        "00-recovered.bin"
+      ],
+      "escaped_message": "synthetic directory sync failure",
+      "escaped_type": "OSError",
+      "notes": [],
+      "records": {
+        "failed01.json": {
+          "error_type": "OSError",
+          "identity": "offline-only",
+          "no_retry": true,
+          "removed": [
+            "ledger.sqlite"
+          ]
+        },
+        "ledger.sqlite.remote.json": {}
+      },
+      "syncs": 2
+    },
+    {
+      "actual_removed": [
+        "ledger.sqlite"
+      ],
+      "escaped_message": "synthetic failure receipt write failure",
+      "escaped_type": "RuntimeError",
+      "notes": [],
+      "records": {
+        "ledger.sqlite.remote.json": {}
+      },
+      "syncs": 1
+    }
+  ],
+  "source_sha256": "718a14a13a3c962b02f16a921e871fe99fb7ecd7fffd66c6ecebef169a448150"
+}
