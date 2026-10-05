@@ -77,7 +77,15 @@ def _telemetry(cgroup):
     """Best-effort observations only; never alter admission or pressure policy."""
     def one(path):
         value = {'path': str(path), 'pressure': None, 'anon_bytes': None,
-                 'file_bytes': None, 'swap_current_bytes': None, 'unavailable': {}}
+                 'file_bytes': None, 'swap_current_bytes': None,
+                 'kernel_peak_bytes': None, 'unavailable': {}}
+        try:
+            peak = int((path / 'memory.peak').read_text())
+            if peak < 0:
+                raise ValueError('negative kernel memory peak')
+            value['kernel_peak_bytes'] = peak
+        except (OSError, ValueError) as exc:
+            value['unavailable']['kernel_peak_bytes'] = type(exc).__name__
         try:
             value['pressure'] = (path / 'memory.pressure').read_text().strip()
         except OSError as exc:
@@ -95,7 +103,11 @@ def _telemetry(cgroup):
     ancestor = next((p for p in cgroup.parents
                      if p.name.startswith('user@') and p.name.endswith('.service')), None)
     return {'unit': one(cgroup), 'user_ancestor': one(ancestor) if ancestor else None,
-            'qualification': 'Optional last observations; unavailable is unknown, not zero. No PSI policy change.'}
+            'qualification': 'Optional last observations; unavailable is unknown, not zero. '
+                             'Kernel peak is the last memory.peak readback for that cgroup lifetime, '
+                             'including charged file cache; the ancestor is not workload-only. '
+                             'A last read before abrupt termination need not be the final lifetime peak. '
+                             'No PSI policy change.'}
 
 
 def _own_cgroup():

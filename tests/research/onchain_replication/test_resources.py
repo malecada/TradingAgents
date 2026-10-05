@@ -14,6 +14,36 @@ import pytest
 from tradingagents.research.onchain_replication import resources as guard
 
 
+def test_kernel_peak_retains_burst_between_current_samples(tmp_path):
+    (tmp_path / 'memory.events').write_text('oom 0\noom_kill 0\n')
+    (tmp_path / 'memory.current').write_text('42\n')
+    (tmp_path / 'memory.peak').write_text('900\n')
+    snapshot = guard._snapshot(tmp_path)
+    assert snapshot['memory_current_bytes'] == 42
+    assert snapshot['optional_memory_telemetry']['unit']['kernel_peak_bytes'] == 900
+
+
+@pytest.mark.parametrize('body', [None, '-1\n', 'max\n', 'invalid\n'])
+def test_unavailable_kernel_peak_is_unknown_not_zero(tmp_path, body):
+    if body is not None:
+        (tmp_path / 'memory.peak').write_text(body)
+    observation = guard._telemetry(tmp_path)['unit']
+    assert observation['kernel_peak_bytes'] is None
+    assert observation['unavailable']['kernel_peak_bytes'] == (
+        'FileNotFoundError' if body is None else 'ValueError')
+
+
+def test_ancestor_kernel_peak_is_separate_from_workload(tmp_path):
+    ancestor = tmp_path / 'user@1000.service'
+    unit = ancestor / 'pilot.service'
+    unit.mkdir(parents=True)
+    (ancestor / 'memory.peak').write_text('9000\n')
+    (unit / 'memory.peak').write_text('900\n')
+    telemetry = guard._telemetry(unit)
+    assert telemetry['unit']['kernel_peak_bytes'] == 900
+    assert telemetry['user_ancestor']['kernel_peak_bytes'] == 9000
+
+
 def test_available_requires_kernel_field(tmp_path):
     path = tmp_path / 'meminfo'
     path.write_text('MemFree: 123 kB\nMemAvailable: 456 kB\n')
