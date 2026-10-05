@@ -1,0 +1,1167 @@
+--- a/tradingagents/research/onchain_replication/compact_mcm.py
++++ b/tradingagents/research/onchain_replication/compact_mcm.py
+@@ -274,7 +274,11 @@
+             retention_selection=selection)
+         stage_inode = list(stage.inode)
+         def lease():
+-            stage.lease(); dictionary.lease(); io._root(root,fd)
++            if _imported(dictionary) and getattr(dictionary.execution,'_sampled_authority_lease',None) is not None:
++                from .imported_authority_lease import target_lease
++                require(owner.active is stage,'actual active producer stage differs');target_lease(dictionary)
++            else:stage.lease(); dictionary.lease()
++            io._root(root,fd)
+             require(io._read(fd,'start.json',io.META_LIMIT) == io._json(start),'MCM producer start changed')
+         p = thaw(owner.policy)
+         def compute(event_log, live):
+@@ -312,6 +316,9 @@
+         require(actual['workload_sha256'] == scope['workflow'] and actual['completed_rows'] == start['rows']
+             and actual['completed_cells'] == stream.cells == log.state['completed_pairs'] == start['cells']
+             and actual['output_bytes'] == 4*start['cells'],'MCM completed denominator differs')
++        if _imported(dictionary) and getattr(dictionary.execution,'_sampled_authority_lease',None) is not None:
++            from .imported_authority_lease import target_lease
++            target_lease(dictionary,boundary=True)
+         if ledger is None:
+             log_terminal = log.finish()
+             stage_ref = owner._finish_stage(stage,log_terminal_sha256=log_terminal,stream_terminal_sha256=stream_terminal)
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/imported_authority_interval.py
+@@ -0,0 +1,54 @@
++"""Finite sampled-validation scheduler and metadata fingerprints, not authority."""
++import math,os,stat,time
++from pathlib import Path
++from types import MappingProxyType
++KIND='imported-authority-sampled-stage-interval'
++ASSUMPTION='Source/input/runtime and live claim/Owner/native revocation detection are sampled within registered intervals; full validation precedes successful boundaries. Independent native enforcement remains. No atomic writer exclusion.'
++def require(ok,why):
++    if not ok:raise ValueError('import lease: '+why)
++def policy(value):
++    fields={'schema_version','kind','live_interval_ms','fingerprint_interval_ms','full_interval_ms','max_stale_ms','max_calls_between_full','assumption'}
++    require(type(value) is dict and set(value)==fields and type(value['schema_version']) is int and value['schema_version']==1 and value['kind']==KIND and value['assumption']==ASSUMPTION,'explicit sampled contract required')
++    require(all(type(value[k]) is int and 0<value[k]<2**31 for k in fields-{'schema_version','kind','assumption'}),'finite positive interval/call bounds required')
++    require(value['live_interval_ms']<=value['fingerprint_interval_ms']<=value['full_interval_ms']<value['max_stale_ms'],'ordered finite intervals required')
++    return dict(value)
++def fingerprint(path):
++    p=Path(path);s=p.lstat()
++    require(stat.S_ISREG(s.st_mode) and s.st_nlink>=1 and p.resolve(strict=True)==p,'regular canonical evidence required')
++    return (s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
++class Interval:
++    """Callback-neutral scheduler; callers must supply genuine authority checks."""
++    def __init__(self,selected,clock=time.monotonic):
++        self.policy=MappingProxyType(policy(selected));self.clock=clock;self._clock_pin=clock;self.closed=False;self.last=None;self.full=None;self.finger=None;self.live=None;self.calls=0
++    def now(self):
++        require(self.clock is self._clock_pin,'monotonic clock replaced')
++        t=self.clock();require(type(t) in (int,float) and math.isfinite(t) and t>=0,'invalid monotonic clock')
++        require(self.last is None or t>=self.last,'backward clock')
++        self.last=t;return t
++    def validate(self,full_check,fingerprint_check,live_check,*,boundary=False):
++        require(not self.closed,'poisoned/closed interval')
++        try:
++            start=self.now();old_full=self.full
++            def freshness(now):
++                origin=start if old_full is None else old_full
++                require((now-origin)*1000<=self.policy['max_stale_ms'],'stale interval cannot refresh')
++            freshness(start)
++            full=boundary or old_full is None or self.calls>=self.policy['max_calls_between_full'] or (start-old_full)*1000>=self.policy['full_interval_ms']
++            if full or self.live is None or (start-self.live)*1000>=self.policy['live_interval_ms']:
++                live_check();live_done=self.now();freshness(live_done);self.live=live_done
++            now=self.now();freshness(now)
++            full=full or old_full is None or (now-old_full)*1000>=self.policy['full_interval_ms']
++            full_done=finger_done=None
++            if full:
++                full_check();full_done=self.now();freshness(full_done)
++                fingerprint_check();finger_done=self.now();freshness(finger_done)
++            elif (now-self.finger)*1000>=self.policy['fingerprint_interval_ms']:
++                fingerprint_check();finger_done=self.now();freshness(finger_done)
++            now=self.now();freshness(now)
++            if (now-self.live)*1000>=self.policy['live_interval_ms']:
++                live_check();live_done=self.now();freshness(live_done);self.live=live_done
++            # Actual validation times only; never assign a later callback's time.
++            if full_done is not None:self.full=full_done;self.calls=0
++            if finger_done is not None:self.finger=finger_done
++            self.calls+=1
++        except BaseException:self.closed=True;raise
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/imported_authority_lease.py
+@@ -0,0 +1,135 @@
++"""Opt-in genuine imported authority with explicit sampled detection timing."""
++import contextlib,hashlib,json,sys,types
++from pathlib import Path
++from .imported_authority_interval import Interval,fingerprint,policy,require
++
++AUTHORITY_CLASSES={'ImportedOriginal','PreparedImport','MaterializedOriginal','ImportStage','ImportedExecution','Binding','Owner','Stage','Target','Lease','Interval'}
++
++def _loaded(root,sources):
++    result={}
++    for name,module in tuple(sys.modules.items()):
++        path=getattr(module,'__file__',None)
++        if not path:continue
++        p=Path(path)
++        if not p.is_absolute() or not p.is_relative_to(root):continue
++        rel=str(p.relative_to(root))
++        if rel not in sources:continue
++        functions=[]
++        def add(label,value):
++            if isinstance(value,(staticmethod,classmethod)):value=value.__func__
++            if type(value) is types.FunctionType and value.__module__==name:
++                if value.__globals__ is not vars(module):
++                    wrapped=getattr(value,'__wrapped__',None)
++                    require(type(wrapped) is types.FunctionType and wrapped.__globals__ is vars(module),'loaded globals differ')
++                    exemplar=contextlib.contextmanager(wrapped)
++                    require(value.__globals__ is vars(contextlib) and value.__code__ is exemplar.__code__ and value.__closure__ is not None and len(value.__closure__)==1 and value.__closure__[0].cell_contents is wrapped,'contextmanager wrapper differs')
++                    functions.append((label+'.contextmanager',value,value.__code__))
++                    functions.append((label+'.wrapped',wrapped,wrapped.__code__))
++                else:functions.append((label,value,value.__code__))
++            elif type(value) is property:
++                for role in ('fget','fset','fdel'):
++                    if getattr(value,role) is not None:add(label+'.'+role,getattr(value,role))
++        for key,value in tuple(vars(module).items()):
++            add(key,value)
++            if isinstance(value,type) and value.__module__==name and value.__name__ in AUTHORITY_CLASSES:
++                for attr,item in tuple(vars(value).items()):add(key+'.'+attr,item)
++        result[name]=(module,p,tuple(functions))
++    return result
++
++def _authenticate_loaded(loaded,sources,root):
++    for module,p,functions in loaded.values():
++        raw=p.read_bytes();require(hashlib.sha256(raw).hexdigest()==sources[str(p.relative_to(root))],'loaded source body differs')
++        compiled=compile(raw,str(p),'exec',dont_inherit=True,optimize=sys.flags.optimize);codes=[]
++        def walk(code):
++            codes.append(code)
++            for value in code.co_consts:
++                if type(value) is types.CodeType:walk(value)
++        walk(compiled)
++        for label,fn,code in functions:
++            if label.endswith('.contextmanager'):
++                wrapped=getattr(fn,'__wrapped__',None)
++                require(type(wrapped) is types.FunctionType and fn.__code__ is contextlib.contextmanager(wrapped).__code__ and fn.__globals__ is vars(contextlib) and len(fn.__closure__ or ())==1 and fn.__closure__[0].cell_contents is wrapped,'contextmanager changed')
++            else:require(code.co_filename==str(p) and any(code==candidate for candidate in codes),'loaded code not bound to authenticated source: '+label)
++
++_TOKEN=object()
++class Lease:
++    def __init__(self,token,execution,selected):
++        require(token is _TOKEN,'use genuine registered activation')
++        from .provenance import canonical_bytes,thaw
++        self.execution=execution;self.owner=execution._owner;self.stage=execution._stage;self.prepared=self.stage.prepared;self.bound=execution._bound;self.run=self.bound._run
++        self.objects=(execution,self.owner,self.stage,self.prepared,self.bound,self.run,execution._materialized,self.prepared._cap)
++        self.scheduler=Interval(selected);self._scheduler_pin=self.scheduler;self._policy_pin=self.scheduler.policy;self._clock_pin=self.scheduler.clock;self.closed=False;self.target=None;self.targets={}
++        self.configuration=canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':execution._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':thaw(self.run.admission.inputs),'sources':thaw(self.run.admission.experiment['source_files']),'runtime':thaw(self.bound.context)})
++        self.sources=dict(self.run.admission.experiment['source_files']);root=self.run.admission.root
++        paths={root/name for name in self.sources} # registered source paths; inputs appended below
++        paths.update(root/v['path'] for v in self.run.admission.inputs.values())
++        paths.add(root/'uv.lock');require(len(paths)<=2048,'bounded evidence roster exceeded')
++        self.paths=tuple(sorted(paths));self.fingerprints=tuple(fingerprint(p) for p in self.paths)
++        self.loaded=_loaded(root,self.sources);_authenticate_loaded(self.loaded,self.sources,root)
++        self.value=canonical_bytes(execution.check())
++        self.scheduler.validate(self._full,self._finger,self._live,boundary=True)
++    def _identity(self):
++        from .provenance import canonical_bytes,thaw
++        e=self.execution
++        require(self.scheduler is self._scheduler_pin and self.scheduler.policy is self._policy_pin and self.scheduler.clock is self._clock_pin,'registered scheduler/policy/clock changed')
++        require(not self.closed and all(a is b for a,b in zip((e,e._owner,e._stage,e._stage.prepared,e._bound,e._bound._run,e._materialized,e._stage.prepared._cap),self.objects,strict=True)),'import authority objects changed')
++        require(not self.prepared._closed and not self.prepared._cap._closed and self.stage.closed and not self.owner.closed and not self.owner.poisoned,'import owner/prepared is closed/poisoned/incomplete')
++    def _finger(self):
++        from .provenance import canonical_bytes,thaw
++        e=self.execution
++        current=canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':e._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':thaw(self.run.admission.inputs),'sources':thaw(self.run.admission.experiment['source_files']),'runtime':thaw(self.bound.context)})
++        require(current==self.configuration,'import interval baseline changed')
++        self._identity();require(tuple(fingerprint(p) for p in self.paths)==self.fingerprints,'source/input identity changed')
++        current=_loaded(self.run.admission.root,self.sources)
++        require(current==self.loaded,'loaded module/function identity changed')
++    def _full(self):
++        from .provenance import canonical_bytes
++        self._identity();require(canonical_bytes(self.execution.check())==self.value,'full imported baseline differs')
++        _authenticate_loaded(self.loaded,self.sources,self.run.admission.root)
++        if self.target is not None:self.target.final(full_graph=False)
++    def _live(self):
++        from . import compact_owner
++        self._identity();active=self.owner.active
++        if active is None:self.owner.lease()
++        else:
++            require(type(active) is compact_owner.Stage,'actual active MCM stage required');active.lease()
++        compact_owner.verify_current(self.owner)
++    def check(self,*,boundary=False):
++        from . import compact_owner
++        try:
++            self._identity()
++            if self.target is not None:self.target._pins()
++            self.scheduler.validate(self._full,self._finger,self._live,boundary=boundary)
++            self._identity()
++        except BaseException:self.closed=True;self.scheduler.closed=True;raise
++
++def activate(execution,input_name):
++    from .original_import_stage import ImportedExecution
++    require(type(execution) is ImportedExecution and not hasattr(execution,'_sampled_authority_lease'),'genuine unused imported execution required')
++    execution.check();run=execution._bound._run
++    from .real_pilot_import_caller import admitted
++    job=json.loads(run.read_input('execution_job'));_,_,plan=admitted(run.admission,job)
++    require(plan['schema_version']==2 and plan.get('imported_authority_lease_input')==input_name and input_name in run.admission.inputs,'explicit registered schema2 interval input required')
++    selected=policy(json.loads(run.read_input(input_name)))
++    contract=Lease(_TOKEN,execution,selected);execution._sampled_authority_lease=contract
++    return contract
++
++def check(execution,*,boundary=False):
++    contract=getattr(execution,'_sampled_authority_lease',None)
++    if contract is None:return execution.check()
++    require(type(contract) is Lease and contract.execution is execution,'typed original interval required')
++    return contract.check(boundary=boundary)
++
++
++def target_lease(target,*,boundary=False):
++    from .imported_mcm_identity import Target
++    require(type(target) is Target,'genuine target required')
++    execution=target.execution;contract=getattr(execution,'_sampled_authority_lease',None)
++    require(type(contract) is Lease and contract.execution is execution,'original sampled contract required')
++    try:
++        if id(target) not in contract.targets:
++            require(boundary,'target requires full entry boundary')
++            target.final(full_graph=False);contract.targets[id(target)]=target
++        require(contract.targets[id(target)] is target,'target identity reused')
++        contract.target=target;contract.check(boundary=boundary)
++    except BaseException:contract.closed=True;contract.scheduler.closed=True;raise
+--- a/tradingagents/research/onchain_replication/imported_mcm_identity.py
++++ b/tradingagents/research/onchain_replication/imported_mcm_identity.py
+@@ -68,6 +68,9 @@
+           'ordered_motifs':cache_key(ordered),'matching':current['execution_matching'],'workflow':workload}
+ 
+     def final(self,*,full_graph=True):
++        if full_graph and getattr(self.execution,'_sampled_authority_lease',None) is not None:
++            from .imported_authority_lease import target_lease
++            target_lease(self,boundary=True)
+         self._pins();compact_owner.verify_current(self.owner)
+         original_import_stage.content(self.execution._stage)
+         require(self.execution._materialized._integrity()['ordered_motifs']==self._motifs,'original motif order changed')
+@@ -78,9 +81,15 @@
+     def lease(self):
+         # Inner callbacks keep frozen input contract; full graph hashes run at
+         # producer/kernel boundaries, not once per pair on a million-node graph.
+-        self.execution.check();self.final(full_graph=False)
++        if getattr(self.execution,'_sampled_authority_lease',None) is not None:
++            from .imported_authority_lease import target_lease
++            target_lease(self)
++        else:self.execution.check();self.final(full_graph=False)
+ 
+     def check(self):
++        if getattr(self.execution,'_sampled_authority_lease',None) is not None:
++            from .imported_authority_lease import target_lease
++            target_lease(self,boundary=True)
+         self.lease();run=self.owner.bound._run
+         require(run.admission.inputs[self._input]['sha256']==self._manifest_sha and original_dictionary._read_registered(run,self._input)==self._manifest,'target manifest changed')
+         require(canonical_bytes(self.execution.check())==self._execution_pin,'completed imported execution identity changed')
+--- a/tradingagents/research/onchain_replication/job.py
++++ b/tradingagents/research/onchain_replication/job.py
+@@ -41,7 +41,7 @@
+         return False
+ 
+ 
+-def resource_policy(value, root):
++def resource_policy(value, root, *, pilot_context=None):
+     required = {'memory_max_bytes', 'memory_high_bytes', 'reserve_bytes', 'start_reserve_bytes',
+                 'disk_floor_bytes', 'disk_paths', 'wall_seconds'}
+     if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'},required|{'storage_budget','native_unit_limits'}):
+@@ -63,11 +63,24 @@
+     if 'storage_budget' in value:
+         from .workflow_storage import StorageWatch
+         budget=value['storage_budget']
+-        if type(budget) is not dict or set(budget)!={'root','limits'} or type(budget['root']) is not str:
+-            raise ValueError('registered storage budget schema differs')
+-        watch=StorageWatch(budget['root'],budget['limits'])
+-        if not watch.root.is_relative_to(Path(root).resolve()):
+-            raise ValueError('registered storage root is outside the admitted workspace')
++        if type(budget) is dict and budget.get('schema_version')==2:
++            if pilot_context is None:raise ValueError('writable union requires explicit real-pilot selection')
++            from ..admission import Admission
++            from .real_pilot_import_caller import selected,_read,validate_plan
++            ad,execution=pilot_context
++            if not isinstance(ad,Admission) or ad.root!=Path(root) or not selected(execution) or execution['kind']!='compact_resource' or execution['resources']!=value:raise ValueError('original real-pilot admission context required')
++            selected_plan=next(iter(execution['payload']['representation_jobs'].values()))
++            plan=validate_plan(_read(ad,selected_plan['real_pilot_input']))
++            if plan['schema_version']!=2 or plan['resource_policy']!=value:raise ValueError('authenticated schema2 policy required')
++            from .real_pilot_storage import validate,EXPERIMENT
++            if ad.experiment_id!=EXPERIMENT:raise ValueError('fixed real-pilot identity required')
++            validate(budget,Path(root))
++        else:
++            if type(budget) is not dict or set(budget)!={'root','limits'} or type(budget['root']) is not str:
++                raise ValueError('registered storage budget schema differs')
++            watch=StorageWatch(budget['root'],budget['limits'])
++            if not watch.root.is_relative_to(Path(root).resolve()):
++                raise ValueError('registered storage root is outside the admitted workspace')
+     if 'physical_policy' in value:
+         from .neural_physical import validate
+         validate(value['physical_policy'])
+@@ -120,7 +133,7 @@
+         raise ValueError('execution job bytes differ')
+     job = json.loads(raw)
+     job_schema(job)
+-    resource_policy(job['resources'], admitted.root)
++    resource_policy(job['resources'], admitted.root,pilot_context=(admitted,job))
+     if job['kind']=='compact_resource':
+         from . import resource_fixture, real_pilot_import_caller
+         route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
+@@ -205,7 +218,13 @@
+         with metadata_scope(scope):
+             _immutable(base/'launch.json', {'experiment': args.experiment, 'source_commit': args.source,
+                                           'supervisor_pid': os.getpid(), 'nonce': nonce})
+-            monitor = subprocess.Popen(_command(args, 'monitor')+['--owner-pid', str(os.getpid()), '--nonce', nonce], cwd=args.root)
++            budget=job['resources'].get('storage_budget')
++            extra={}
++            if type(budget) is dict and budget.get('schema_version')==2:
++                from .real_pilot_storage import prepare_environment
++                env=resources._native_owned_env(Path(args.root),budget);prepare_environment(Path(args.root),budget,env)
++                extra['env']={**os.environ,**env}
++            monitor = subprocess.Popen(_command(args, 'monitor')+['--owner-pid', str(os.getpid()), '--nonce', nonce], cwd=args.root,**extra)
+             def stop(signum, frame):
+                 if monitor.poll() is None:
+                     monitor.terminate()
+@@ -229,16 +248,22 @@
+                 else:raise
+ 
+ 
++def _resource_worker_limits(job):
++    from . import resource_fixture, real_pilot_import_caller
++    if real_pilot_import_caller.selected(job):
++        return real_pilot_import_caller.worker_limits(job)
++    return resource_fixture.worker_limits()
++
++
+ def _resource_limit_receipt(args,job,role,live=None):
+     if job['kind']!='compact_resource':raise ValueError('native receipt requires selected compact resource job')
+-    from . import resource_fixture
+-    readback=resource_fixture.worker_limits()
++    readback=_resource_worker_limits(job)
+     expected=job['resources']['native_unit_limits']
+     if expected!={'file_size_bytes':readback['rlimit_fsize']}:raise ValueError('registered process file limit differs')
+     if role=='worker' and (live is None or live.get('native_unit_limits')!=expected):raise ValueError('worker native authority missing')
+     value={'schema_version':1,'experiment':args.experiment,'source_commit':args.source,'role':role,'pid':os.getpid(),'file_size_limit':[readback['rlimit_fsize']]*2,'before_claim':True,'native_unit':None if live is None else live['unit'],'native_cgroup':None if live is None else live['cgroup']}
+-    value['native_environment']={key:os.environ.get(key) for key in resources._native_owned_env(Path(args.root))}
+-    if value['native_environment']!=resources._native_owned_env(Path(args.root)):raise ValueError('actual process environment differs from owned routing')
++    value['native_environment']={key:os.environ.get(key) for key in resources._native_owned_env(Path(args.root),job['resources'].get('storage_budget'))}
++    if value['native_environment']!=resources._native_owned_env(Path(args.root),job['resources'].get('storage_budget')):raise ValueError('actual process environment differs from owned routing')
+     resources._native_receipt(_base(args),role+'-file-limit.json',value)
+ 
+ 
+@@ -311,8 +336,7 @@
+ def worker(args):
+     admitted, job = _admitted(args)
+     if job['kind']=='compact_resource':
+-        from . import resource_fixture
+-        resource_fixture.worker_limits()
++        _resource_worker_limits(job)
+     scope=_physical_scope(args,job)
+     if scope is not None:scope.verify_environment()
+     with metadata_scope(scope):
+--- a/tradingagents/research/onchain_replication/matching_owner.py
++++ b/tradingagents/research/onchain_replication/matching_owner.py
+@@ -171,7 +171,7 @@
+         require(job_input=='execution_job','legacy matching job input differs');job.job_schema(execution)
+     require(type(execution['schema_version']) is int,'execution schema version must be integer')
+     require(execution['kind']==('compact_resource' if _resource else 'fit'),'matching producer job kind differs')
+-    policy_resources=job.resource_policy(execution['resources'],ad.root)
++    policy_resources=job.resource_policy(execution['resources'],ad.root,pilot_context=(ad,execution) if _resource else None)
+     jobs=execution['payload'].get('representation_jobs',{})
+     require(representation in jobs,'representation absent from execution job')
+     selected=jobs[representation]
+--- a/tradingagents/research/onchain_replication/mcm_score_stream.py
++++ b/tradingagents/research/onchain_replication/mcm_score_stream.py
+@@ -86,8 +86,13 @@
+         self.lease(); batch._root(self.root, self.fd)
+         require(self._imported is self._imported_pin,'imported stream authority replaced')
+         if self._imported is not None:
+-            self._imported.final(full_graph=False)
+-            require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')
++            if getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
++                from .imported_authority_lease import target_lease
++                target_lease(self._imported)
++                require(self.scope==self._imported.scope and self.workload==self.scope['workflow'],'sampled stream scope changed')
++            else:
++                self._imported.final(full_graph=False)
++                require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')
+ 
+     def _seal_check(self, index, expected_sha):
+         """Callback-free bounded verification of one tail/link/destination."""
+@@ -185,6 +190,9 @@
+             saved = self.active.append(self.cells, key, result['score'])
+             self.cells += 1
+             if self.active.acknowledged == self.active.start['cells']:
++                if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
++                    from .imported_authority_lease import target_lease
++                    target_lease(self._imported,boundary=True)
+                 index = self.batches.chunks; start_cell = self.active.start['start_cell']
+                 root = self.active.root; terminal = self.active.finish()
+                 head = tail.seal(root, terminal_sha256=terminal, batches=self.batches, lease=self.lease)
+@@ -205,6 +213,9 @@
+             raise
+ 
+     def finish(self):
++        if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
++            from .imported_authority_lease import target_lease
++            target_lease(self._imported,boundary=True)
+         self._check()
+         require(self.cells == self.n * self.k and self.active is None, 'MCM stream incomplete')
+         try:
+--- a/tradingagents/research/onchain_replication/model.py
++++ b/tradingagents/research/onchain_replication/model.py
+@@ -12,9 +12,13 @@
+ def validate_execution(value):
+     """Explicit execution metadata, separate from scientific model config."""
+     if value is None:return None
+-    if type(value) is not dict or set(value)!={'schema_version','backend','block_edges'}:
++    checkpointed=type(value) is dict and type(value.get('schema_version')) is int and value['schema_version']==2
++    fields={'schema_version','backend','block_edges'} | ({'graph_activation_checkpointing'} if checkpointed else set())
++    if type(value) is not dict or set(value)!=fields:
+         raise ValueError('model execution policy fields differ')
+-    if type(value['schema_version']) is not int or value['schema_version']!=1 or value['backend']!='streamed-gat-mulsum-v1':
++    if checkpointed and value['graph_activation_checkpointing'] is not True:
++        raise ValueError('explicit activation checkpointing selection required')
++    if type(value['schema_version']) is not int or value['schema_version'] not in (1,2) or value['backend']!='streamed-gat-mulsum-v1':
+         raise ValueError('model execution backend/schema differs')
+     if type(value['block_edges']) is not int or not 0<value['block_edges']<=65536:
+         raise ValueError('model execution block bound differs')
+@@ -57,6 +61,12 @@
+     def __init__(self,config,task,*,execution=None):
+         selected=validate_execution(execution)
+         super().__init__();self._configure(config,task)
++        if selected is not None and selected['schema_version']==2:
++            if self.graph_activation_checkpointing:
++                raise ValueError('checkpoint execution must not change scientific config')
++            if type(config.get('gat_dropout')) not in (int,float) or config['gat_dropout']!=0:
++                raise ValueError('checkpoint execution requires original zero GAT dropout')
++            self.graph_activation_checkpointing=True
+         self.execution=selected
+         self.graph=GraphEncoder(config,execution=None if selected is None else dict(selected))
+         self.temporal=TemporalHead(config['graph_vector_width']+config['price_input_width'],config['lstm_width'],config['attention_width'],task,config['lstm_depth'])
+--- a/tradingagents/research/onchain_replication/real_pilot_import_caller.py
++++ b/tradingagents/research/onchain_replication/real_pilot_import_caller.py
+@@ -39,14 +39,23 @@
+               'cell_id','graph_inputs','indices','decisions','graph_sequences',
+               'population_plan_input','model_input','training_input','model_execution',
+               'max_checkpoint_bytes','outputs'}
+-    require(type(p) is dict and set(p) == fields, 'pilot plan fields differ')
+-    require(type(p['schema_version']) is int and p['schema_version'] == 1 and p['kind'] == KIND
++    require(type(p) is dict, 'pilot plan must be an object')
++    full = type(p.get('schema_version')) is int and p['schema_version'] == 2
++    interval='imported_authority_lease_input' in p
++    require(not interval or (full and type(p['imported_authority_lease_input']) is str and bool(p['imported_authority_lease_input'])),'explicit schema2 interval input required')
++    resource_subset = 'population_scope' in p
++    require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
++    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()), 'pilot plan fields differ')
++    require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+             and type(p['lookback_days']) is int and p['lookback_days'] == 28, 'fixed real ETH pilot differs')
+     indices = p['indices']
+-    require(type(indices) is list and len(indices) == 16 and all(type(i) is int and i >= 0 for i in indices)
+-            and indices == list(range(indices[0], indices[0]+16)), 'consecutive eligible batch16 required')
++    if resource_subset:
++        require(indices is None, 'resource indices must be derived by the registered worker')
++    else:
++        require(type(indices) is list and len(indices) == 16 and all(type(i) is int and i >= 0 for i in indices)
++                and indices == list(range(indices[0], indices[0]+16)), 'consecutive eligible batch16 required')
+     mapping = p['graph_inputs']
+     require(type(mapping) is dict and len(mapping) == 7 and len(set(mapping.values())) == 7
+             and all(type(h) is str and len(h) == 64 and all(c in '0123456789abcdef' for c in h)
+@@ -65,6 +74,7 @@
+     require(type(outputs) is dict and set(outputs) == {'summary','ledger','binding','journal'}
+             and all(type(n) is str and n and not Path(n).is_absolute() and '..' not in Path(n).parts for n in outputs.values())
+             and len(set(outputs.values())) == 4, 'four distinct registered output names required')
++    if full:_finite_resources(p['resource_policy'])
+     return p
+ 
+ 
+@@ -78,14 +88,94 @@
+     d = s['descriptor']
+     require(type(d) is dict and d.get('arm') == 'proposed' and d.get('dictionary_origin') == 'imported-original-v1'
+             and 'resource_fixture' not in d, 'original real proposed descriptor required')
+-    p = job['resources']
++    _finite_resources(job['resources'])
++
++
++def _tiny_resources(p):
+     require('physical_policy' not in p and 'storage_budget' in p, 'whole workspace storage guard required')
++    require('schema_version' not in p['storage_budget'],'tiny route cannot select writable union')
+     require(type(p.get('wall_seconds')) is int and 0 < p['wall_seconds'] <= 1800
+             and type(p.get('memory_max_bytes')) is int and 0 < p['memory_max_bytes'] <= 3*GIB, 'original native envelope exceeded')
+     require(p.get('native_unit_limits') == {'file_size_bytes':FILE_MAX}, 'native file cap differs')
+     limits = p['storage_budget']['limits']
+     ceilings = {'max_allocated_bytes':GIB,'max_logical_bytes':GIB,'max_entries':32768,'max_depth':32,'max_scan_seconds':5}
+     require(set(limits) == set(ceilings) and all(type(limits[k]) is int and 0 < limits[k] <= v for k,v in ceilings.items()), 'original storage envelope exceeded')
++
++
++
++def _finite_resources(p):
++    """Registered finite envelope, bounded by the existing job authority.
++
++    This validates declared numbers, not available headroom or full-size capacity.
++    Schema2 additionally pins this exact object in real_pilot_input at admission.
++    """
++    fields={'memory_max_bytes','memory_high_bytes','reserve_bytes','start_reserve_bytes',
++            'disk_floor_bytes','disk_paths','wall_seconds','storage_budget','native_unit_limits'}
++    require(type(p) is dict and set(p)==fields, 'explicit real pilot resource fields required')
++    numeric=fields-{'disk_paths','storage_budget','native_unit_limits'}
++    require(all(type(p[k]) is int and 0<p[k]<2**63 for k in numeric), 'finite integer resource limits required')
++    require(p['memory_high_bytes']<=p['memory_max_bytes']<=6*GIB and p['reserve_bytes']>=3*GIB
++            and p['start_reserve_bytes']>=p['memory_max_bytes']+p['reserve_bytes'], 'existing job memory/reserve authority exceeded')
++    require(p['wall_seconds']<=28800 and p['disk_floor_bytes']>=10*GIB, 'existing job disk/wall authority exceeded')
++    paths=p['disk_paths']
++    require(type(paths) is list and bool(paths) and all(type(v) is str and Path(v).is_absolute() for v in paths)
++            and len(paths)==len(set(paths)), 'explicit distinct absolute guard volumes required')
++    native=p['native_unit_limits']
++    require(type(native) is dict and set(native)=={'file_size_bytes'} and type(native['file_size_bytes']) is int
++            and 0<native['file_size_bytes']<2**63, 'finite registered native file limit required')
++    budget=p['storage_budget']
++    if type(budget) is dict and budget.get('schema_version')==2:
++        require(set(budget)=={'schema_version','kind','authority_root','experiment','roots','shared_files','limits'} and budget['kind']=='real-pilot-writable-union','explicit writable union fields required')
++    else:
++        require(type(budget) is dict and set(budget)=={'root','limits'} and type(budget['root']) is str
++                and Path(budget['root']).is_absolute(), 'explicit whole-root budget required')
++    limits=budget['limits']
++    require(type(limits) is dict and set(limits)=={'max_allocated_bytes','max_logical_bytes','max_entries','max_depth','max_scan_seconds'}
++            and all(type(v) is int and 0<v<2**63 for v in limits.values()), 'finite storage limits required')
++    require(limits['max_depth']<=64 and limits['max_scan_seconds']<=5, 'existing bounded census controls exceeded')
++    require(native['file_size_bytes']<=min(limits['max_logical_bytes'],limits['max_allocated_bytes']), 'native file ceiling exceeds whole-tree reservation')
++
++
++def _bind_resources(ad,job,plan):
++    resources=job['resources']
++    if plan['schema_version']==1:
++        _tiny_resources(resources)
++    else:
++        from .provenance import canonical_bytes
++        require(canonical_bytes(plan['resource_policy'])==canonical_bytes(resources), 'pilot plan/job resource policy differs')
++    from .job import resource_policy
++    resource_policy(resources,ad.root,pilot_context=(ad,job))
++    # Physical volume capacity is only an upper bound. Available growth and
++    # completed graph/MCM reservations need separate registered entry evidence.
++    if plan['schema_version']==2:
++        import os
++        fs=os.statvfs(ad.root);usable=fs.f_blocks*fs.f_frsize-resources['disk_floor_bytes']
++        limits=resources['storage_budget']['limits']
++        require(0<usable and max(limits['max_allocated_bytes'],limits['max_logical_bytes'])<=usable,
++                'declared tree budget exceeds physical volume less fixed floor')
++
++
++def worker_limits(job):
++    """Exact selected RLIMIT; no default, adaptive increase or fallback."""
++    import resource
++    schema(job)
++    expected=job['resources']['native_unit_limits']['file_size_bytes']
++    resource.setrlimit(resource.RLIMIT_FSIZE,(expected,expected))
++    require(resource.getrlimit(resource.RLIMIT_FSIZE)==(expected,expected), 'selected worker file limit not enforced')
++    return {'rlimit_fsize':expected,'scope':'worker and inherited descendants; outer launcher/log limits separately required'}
++
++
++def publication_boundary(owner,stage,job):
++    """Actual real-route stage; never applies the synthetic failure selector."""
++    from . import compact_owner
++    require(type(owner) is compact_owner.Owner and type(stage) is compact_owner.Stage
++            and stage.owner is owner and owner.bound.record.get('resource_only') is True, 'actual same-owner resource stage required')
++    run=owner.bound._run
++    run._active();run._check_source();owner.check_binding()
++    _,selected_plan,plan=admitted(run.admission,job)
++    require(owner.bound.record['job_input']=='execution_job' and stage.kind=='mcm'
++            and stage.name in tuple('mcm-'+h for h in sorted(plan['graph_inputs']))
++            and selected_plan['descriptor']['required_graphs']==sorted(plan['graph_inputs']), 'real target publication differs')
+ 
+ 
+ def _read(ad, name):
+@@ -102,8 +192,16 @@
+     schema(job)
+     name,s = next(iter(job['payload']['representation_jobs'].items()))
+     p = validate_plan(_read(ad, s['real_pilot_input']))
++    _bind_resources(ad,job,p)
+     require(ad.family['mechanism_id'] == 'celik-sefer-transaction-graph-full-neural-replication' and ad.experiment['cells'] == [p['cell_id']], 'separate one-cell resource pilot admission required')
+-    require(Path(job['resources']['storage_budget']['root']) == ad.root and (ad.root/'.git').is_dir(), 'complete isolated workspace watch required')
++    budget=job['resources']['storage_budget']
++    if budget.get('schema_version')==2:
++        from .real_pilot_storage import validate,EXPERIMENT
++        require(p['schema_version']==2 and ad.experiment_id==EXPERIMENT,'union requires fixed schema2 real pilot')
++        validate(budget,ad.root)
++        require((ad.root/'.git').is_dir(),'original source authority root required')
++    else:
++        require(Path(budget['root']) == ad.root and (ad.root/'.git').is_dir(), 'complete isolated workspace watch required')
+     from .job import required_sources
+     require(required_sources() <= set(ad.experiment['source_files']), 'complete current package closure required')
+     own = 'tradingagents/research/onchain_replication/real_pilot_import_caller.py'
+@@ -117,6 +215,9 @@
+     require(all(item.get(k) == v for k,v in s.items()) and item['binding_output'] == p['outputs']['binding']
+             and item['journal_output'] == p['outputs']['journal'], 'producer/selected pilot mismatch')
+     roles = set(p['graph_inputs'].values()) | {p[k] for k in ('population_plan_input','model_input','training_input')}
++    if p.get('imported_authority_lease_input') is not None:
++        from .imported_authority_interval import policy
++        policy(_read(ad,p['imported_authority_lease_input']));roles.add(p['imported_authority_lease_input'])
+     require(roles <= set(ad.inputs), 'real population/config/graph inputs not registered')
+     control = _read(ad, s['original_dictionary_input'])
+     require(control['sample_count'] == 512 and control['motif_count'] == 32
+@@ -174,16 +275,31 @@
+     job = json.loads(run.read_input('execution_job'))
+     require(job['payload'] == payload, 'exact registered pilot payload required')
+     name,s,p = admitted(run.admission,job)
+-    watch = StorageWatch(run.admission.root,job['resources']['storage_budget']['limits']); watch.check()
+-    assembly = produce_registered_population(run,p['population_plan_input'])
+-    examples,scaler = population_from_record(assembly['population'])
+-    indices = p['indices']
++    budget=job['resources']['storage_budget']
++    if budget.get('schema_version')==2:
++        from .real_pilot_storage import WritableUnion
++        watch=WritableUnion(budget,run.admission.root)
++        from .resources import assert_guarded_worker
++        limits=job['resources']
++        live=assert_guarded_worker(run.admission.root/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/run.admission.experiment_id/'guard',__import__('sys').orig_argv,required_paths=[run.admission.root],wall_seconds=limits['wall_seconds'],memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'],disk_floor_bytes=limits['disk_floor_bytes'])
++        require(live.get('storage_budget')==budget,'worker/monitor writable scopes differ')
++    else:watch=StorageWatch(run.admission.root,budget['limits'])
++    watch.check()
++    resource_subset = p.get('population_scope') == 'resource_pilot_subset'
++    if resource_subset:
++        from .real_pilot_population import produce
++        examples,scaler,indices = produce(run,p['population_plan_input'],p)
++    else:
++        assembly = produce_registered_population(run,p['population_plan_input'])
++        examples,scaler = population_from_record(assembly['population'])
++        indices = p['indices']
+     require(indices[-1] < len(examples.train), 'registered eligible batch outside actual training population')
+     chosen = [examples.train[i] for i in indices]
+     require([x.decision_at for x in chosen] == p['decisions']
+             and [list(x.graph_hashes) for x in chosen] == p['graph_sequences']
+             and all(len(x.input_prices) == 28 for x in chosen), 'actual checked eligible rows differ')
+-    require(assembly['provenance']['source_admission']['asset'] == 'ETH', 'real ETH source required')
++    if not resource_subset:
++        require(assembly['provenance']['source_admission']['asset'] == 'ETH', 'real ETH source required')
+     control = json.loads(run.read_input(s['original_dictionary_input']))
+     original_dictionary.policy_check(control)
+     graphs = {}
+@@ -201,6 +317,9 @@
+     validated_execution = validate_execution(p['model_execution'])
+     selected_execution = None if validated_execution is None else dict(validated_execution)
+     journal = owner = None; targets = []; events = []; began = time.monotonic()
++    from .real_pilot_throughput import MCMMeasurements
++    measurements = MCMMeasurements({key:len(g.node_ids) for key,g in graphs.items()},
++        population_scope=p.get('population_scope','full_fold_input'))
+     terminal = training = None; primary = None
+     def mark(phase):
+         events.append({'phase':phase,'elapsed_seconds':time.monotonic()-began})
+@@ -210,6 +329,9 @@
+         prepared = original_import_preparation.prepare(bound,input_name=s['original_dictionary_input'],job_input='execution_job')
+         owner,stage = original_import_stage.attach(prepared,policy_input=s['compact_policy_input'],stage_policy_input=s['original_dictionary_stage_input'])
+         execution = original_import_stage.ImportedExecution(stage)
++        if p.get('imported_authority_lease_input') is not None:
++            from .imported_authority_lease import activate
++            activate(execution,p['imported_authority_lease_input'])
+         require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
+         mark('original_import')
+         checked = [Target(execution,g,k) for k,g in graphs.items()]
+@@ -217,8 +339,11 @@
+             compact_mcm._prepare(target,target.key,s['compact_mcm_input'],s['compact_mcm_output_input'])
+         for key,g in graphs.items():
+             watch.check()
++            measurements.begin(key)
+             result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'])
+-            targets.append(result); result.check(); resource_fixture.verify_retained(result,owner)
++            targets.append(result); result.check()
++            retained = resource_fixture.verify_retained(result,owner)
++            measurements.completed(key,retained)
+             mark('mcm-'+key)
+         import torch
+         torch.set_num_threads(2)
+@@ -253,15 +378,21 @@
+         terminal = _close(journal,owner,targets,reference,binding,p,training,artifact/'real-pilot-one-update')
+     except BaseException as error:
+         primary = error
++        try: measurements.failed(error)
++        except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
+         if journal is not None and not journal.sealed:
+             try: journal.seal('failed',reason=type(error).__name__+': '+str(error)[:1024])
+             except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
++    throughput = None
++    try: throughput = measurements.summary(training)
++    except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
+     # Independently attempt each remaining publication; retain the first fatal.
+     row = {'id':p['cell_id'],'status':'complete' if primary is None else 'failed','resource_only':True,
+            'financial_fit_complete':False,'paper_financial_fits':0}
+     if primary is not None: row['reason'] = type(primary).__name__+': '+str(primary)[:1024]
+     summary = {'schema_version':1,'kind':KIND,'cell':row,'original_samples':512,'original_motifs':32,
+                'full_graphs':7,'retained_target_count':len(targets),'training':training,'events':events,
++               'throughput':throughput,
+                'financial_fit_complete':False,'full_size_capacity':False,'final_outer_inventory_required':True}
+     terminal = terminal or {'schema_version':1,'kind':KIND,'status':'failed','resource_only':True,'reason':row['reason']}
+     actions = [lambda:watch.check(),lambda:run.write_json(p['outputs']['binding'],terminal),
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/real_pilot_population.py
+@@ -0,0 +1,108 @@
++"""Explicit resource subset, derived only in the genuine registered worker.
++
++This does not emit a schema1 financial population or full-fold scaler claim.
++Importing this module is metadata-only; numerical imports stay in produce().
++"""
++import hashlib
++import json
++from datetime import datetime, timedelta
++
++SCOPE = 'resource_pilot_subset'
++SCOPE_SHA = '57a97518d2b12e0c787b49f91d9bf509888f9c63fb8f644d1ace90b5bd05e2a8'
++PRICE_PANEL_SHA = 'f7a4d89ff66d37ec00d8d4d834a1a771ac55f36bc9b210cfbecb6768ecc3bbbe'
++CALENDAR_SHA = '21bb348b9c779238b212d0e4074cf806f6a54d0ce3b7713d97bc3ad65d57ef22'
++PRICE_SOURCE_SHA = '46b18f3df967405374b1f6ee8a3d11ee1b7a5b176ac9fb4342caf6bf8648f2cc'
++GRAPH_CONFIG_SHA = '01ed0f0dc76b2685598dd7687466dd81880e5d332c0c6827da8f90f8f17a4a9d'
++DECISIONS = [(datetime(2022,6,7)+timedelta(days=i)).isoformat()+'Z' for i in range(16)]
++WEEKS = [(datetime(2022,5,2)+timedelta(days=7*i)).isoformat()+'Z' for i in range(7)]
++
++
++def require(value, message):
++    if not value: raise ValueError('resource population: '+message)
++
++
++def validate_plan(plan, pilot):
++    require(type(plan) is dict and set(plan)=={'schema_version','population_scope','financial_fit_complete','fold','scope_input','calendar_input','price_panel_input','graphs','outputs'}, 'plan fields differ')
++    require(type(plan['schema_version']) is int and plan['schema_version']==1
++            and plan['population_scope']==SCOPE and plan['financial_fit_complete'] is False
++            and plan['fold']=='2024', 'explicit resource subset required')
++    require(pilot['schema_version']==2 and pilot['population_scope']==SCOPE
++            and pilot['indices'] is None and pilot['decisions']==DECISIONS, 'fixed deferred eligible selection differs')
++    require(type(plan['graphs']) is dict and set(plan['graphs'])==set(WEEKS)
++            and set(plan['graphs'].values())==set(pilot['graph_inputs'].values()), 'seven complete graph roles required')
++    roles=[plan['scope_input'],plan['calendar_input'],plan['price_panel_input'],*plan['graphs'].values()]
++    require(all(type(x) is str and x for x in roles) and len(set(roles))==10, 'distinct registered input roles required')
++    outputs=plan['outputs']
++    require(type(outputs) is dict and set(outputs)=={'resource_population','binding'}
++            and len(set(outputs.values()))==2 and all(type(x) is str and x for x in outputs.values()), 'explicit distinct output roles required')
++    return plan
++
++
++def selected_positions(train, decisions):
++    """Pure membership seam, operating on already derived actual training rows."""
++    require(decisions==DECISIONS, 'frozen decision dates differ')
++    dates=[row.decision_at for row in train]
++    require(dates==sorted(set(dates)), 'training order differs')
++    positions=[]
++    for decision in decisions:
++        require(decision in dates, 'selected decision is not genuinely eligible')
++        positions.append(dates.index(decision))
++    require(positions==list(range(positions[0],positions[0]+16)), 'selected eligible rows are not consecutive')
++    return positions
++
++
++def produce(run, plan_input, pilot):
++    from tradingagents.research.lifecycle import ResearchRun
++    require(type(run) is ResearchRun, 'genuine registered worker required')
++    run._active(); run._check_source()
++    from dataclasses import asdict
++    from .contracts import Fold, PricePanel
++    from .dataset import CalendarGraph, ExampleManifest, build_examples_from_metadata, fit_scaler
++    from .provenance import canonical_bytes, digest
++    plan=validate_plan(json.loads(run.read_input(plan_input)),pilot)
++    require(set(plan['outputs'].values()) <= set(run.admission.experiment['outputs']), 'outputs not admitted')
++    require(not set(plan['outputs'].values()) & set(run._published_outputs), 'outputs already published')
++    require(hashlib.sha256(run.read_input(plan['scope_input'])).hexdigest()==SCOPE_SHA, 'registered subset scope differs')
++    raw=run.read_input(plan['calendar_input'])
++    require(hashlib.sha256(raw).hexdigest()==CALENDAR_SHA, 'fixed calendar differs')
++    calendar=json.loads(raw);fold_record=next(f for f in calendar['folds'] if f['id']=='2024')
++    fold=Fold(**fold_record,member_hash=digest(canonical_bytes(fold_record)))
++    price_raw=run.read_input(plan['price_panel_input'])
++    require(hashlib.sha256(price_raw).hexdigest()==PRICE_PANEL_SHA, 'retained original price panel differs')
++    price_record=json.loads(price_raw)
++    prices=PricePanel(**{k:tuple(v) if k in ('dates','closes','missing_dates') else v for k,v in price_record.items()})
++    require(prices.symbol=='ETH-USD' and prices.source_hash==PRICE_SOURCE_SHA, 'original actual price source differs')
++    graphs=[];manifest_pins={}
++    for week,role in sorted(plan['graphs'].items()):
++        raw=run.read_input(role);value=json.loads(raw);metadata=value['metadata'];key=value['graph_hash']
++        require(metadata['asset']=='ETH' and metadata['start_utc']==week
++                and metadata['graph_config_hash']==GRAPH_CONFIG_SHA
++                and pilot['graph_inputs'].get(key)==role, 'complete graph identity differs')
++        graphs.append(CalendarGraph(metadata['asset'],metadata['start_utc'],metadata['end_utc'],metadata['available_at'],tuple(metadata['source_hashes']),key))
++        manifest_pins[week]=digest(raw)
++    # Original date/price/availability/label checks; original paper assembler is untouched.
++    observed=build_examples_from_metadata(graphs,prices,fold,calendar)
++    positions=selected_positions(observed.train,pilot['decisions'])
++    selected=tuple(observed.train[i] for i in positions)
++    require([list(x.graph_hashes) for x in selected]==pilot['graph_sequences'], 'actual selected graph sequences differ')
++    require({h for x in selected for h in x.graph_hashes}==set(pilot['graph_inputs']), 'exact seven graph membership differs')
++    examples=ExampleManifest(selected,(),(),digest(canonical_bytes([asdict(x) for x in selected])),
++                             digest(canonical_bytes([])),observed.source_hashes,observed.fold_hash)
++    # Same scaler algorithm, explicitly fitted to this selected resource population.
++    scaler=fit_scaler(examples,prices,fold)
++    indices=list(range(len(examples.train)))
++    value={'schema_version':1,'population_scope':SCOPE,'financial_fit_complete':False,
++           'paper_financial_fits':0,'full_fold_population':False,'full_fold_scaler':False,
++           'decision_dates':pilot['decisions'],'source_candidate_positions':positions,'subset_indices':indices,
++           'resource_train_hash':examples.train_hash,'resource_scaler':asdict(scaler),
++           'resource_rows':[asdict(x) for x in selected], 'graph_manifest_hashes':manifest_pins,
++           'source_population_eligible_training_count':len(observed.train),
++           'source_population_exclusions':[dict(x) for x in observed.exclusions],
++           'qualification':'Original eligibility and scaler algorithms applied to prospectively declared16-row resource subset. No full-fold population, scaler, test-mask, accuracy or financial completion claim.'}
++    # The wrapper deliberately cannot pass population_from_record or assemble_population.
++    run.write_json(plan['outputs']['resource_population'],value)
++    run.write_json(plan['outputs']['binding'],{'schema_version':1,'population_scope':SCOPE,
++        'financial_fit_complete':False,'plan_sha256':run.admission.inputs[plan_input]['sha256'],
++        'pilot_population_sha256':digest(canonical_bytes(value)),'resource_train_hash':examples.train_hash,
++        'graph_manifest_hashes':manifest_pins,'price_panel_sha256':run.admission.inputs[plan['price_panel_input']]['sha256']})
++    return examples,scaler,indices
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/real_pilot_storage.py
+@@ -0,0 +1,125 @@
++"""Exact pilot writable closure; historical claim siblings are read-only inputs."""
++import os,stat,time
++from pathlib import Path
++from types import MappingProxyType
++from .workflow_storage import StorageWatch,StorageLimit,FIELDS,_close
++KIND='real-pilot-writable-union'
++EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261005-01'
++COUNTS={'allocated_bytes':'max_allocated_bytes','logical_file_bytes':'max_logical_bytes','entries':'max_entries'}
++
++def selected(budget):return type(budget) is dict and budget.get('schema_version')==2
++
++def validate(budget,root):
++    root=Path(root)
++    if type(budget) is not dict or set(budget)!={'schema_version','kind','authority_root','experiment','roots','shared_files','limits'} or budget['schema_version']!=2 or budget['kind']!=KIND:raise ValueError('explicit real-pilot writable closure required')
++    if not root.is_absolute() or root.resolve(strict=True)!=root or budget['authority_root']!=str(root) or budget['experiment']!=EXPERIMENT:raise ValueError('original authority/experiment differs')
++    parent=root/'research_runs';target=parent/EXPERIMENT
++    if budget['roots']!=[str(root/'research_artifacts'),str(target)] or budget['shared_files']!=[str(parent/'.lock')]:raise ValueError('exact writer roots and shared lock required')
++    limits=budget['limits']
++    if type(limits) is not dict or set(limits)!=FIELDS or any(type(x) is not int or not 0<x<2**63 for x in limits.values()) or limits['max_depth']>64 or limits['max_scan_seconds']>5:raise ValueError('finite aggregate storage limits required')
++    if parent.resolve(strict=True)!=parent or not stat.S_ISDIR(parent.lstat().st_mode) or parent.stat().st_dev!=root.stat().st_dev:raise ValueError('canonical existing lifecycle parent required')
++    artifact=StorageWatch(root/'research_artifacts',dict(limits))
++    if artifact.identity[0]!=root.stat().st_dev:raise ValueError('writer volume differs')
++    if target.exists() or target.is_symlink():
++        target_watch=StorageWatch(target,dict(limits))
++        if target_watch.identity[0]!=artifact.identity[0]:raise ValueError('experiment volume differs')
++    return artifact
++
++class WritableUnion:
++    def __init__(self,budget,root):
++        self.artifact=validate(budget,root);self.root=Path(root);self.limits=MappingProxyType(dict(budget['limits']))
++        self.parent=self.root/'research_runs';s=self.parent.lstat();self.parent_identity=(s.st_dev,s.st_ino)
++        self.target=self.parent/EXPERIMENT;self.lock=self.parent/'.lock';self.target_identity=None;self.lock_identity=None
++        self.budget={**budget,'roots':list(budget['roots']),'shared_files':list(budget['shared_files']),'limits':dict(self.limits)}
++        self.identities=[{'root':str(self.artifact.root),'device':self.artifact.identity[0],'inode':self.artifact.identity[1]}, {'root':str(self.target),'device':None,'inode':None,'state':'prospective-unobserved'}, {'shared_parent':str(self.parent),'device':s.st_dev,'inode':s.st_ino}]
++        # If already born at binding, pin immediately. No invented absent inode.
++        if self.target.exists() or self.target.is_symlink():self._birth()
++    def _parent_check(self):
++        s=self.parent.lstat()
++        if not stat.S_ISDIR(s.st_mode) or self.parent.resolve(strict=True)!=self.parent or (s.st_dev,s.st_ino)!=self.parent_identity:raise ValueError('lifecycle parent replaced/redirected')
++        return s
++    def _birth(self):
++        self._parent_check()
++        try:s=self.target.lstat()
++        except FileNotFoundError:
++            if self.target_identity is not None:raise ValueError('experiment disappeared after birth')
++            self.identities[1]={'root':str(self.target),'device':None,'inode':None,'state':'observed-absent-before-birth'}
++            return None
++        if not stat.S_ISDIR(s.st_mode) or self.target.resolve(strict=True)!=self.target or s.st_dev!=self.parent_identity[0]:raise ValueError('experiment birth type/volume/path differs')
++        identity=(s.st_dev,s.st_ino)
++        if self.target_identity is not None and identity!=self.target_identity:raise ValueError('experiment rebirth refused')
++        self.target_identity=identity
++        self.identities[1]={'root':str(self.target),'device':s.st_dev,'inode':s.st_ino,'state':'observed-born'}
++        return s
++    def check(self):
++        begin=time.monotonic();total={k:0 for k in (*COUNTS,'regular_files','directories')};observations=[]
++        def enforce():
++            for key,limit in COUNTS.items():
++                if total[key]>self.limits[limit]:raise StorageLimit('aggregate '+key,{**total,'roots':observations})
++            if time.monotonic()-begin>self.limits['max_scan_seconds']:raise StorageLimit('aggregate time',{**total,'roots':observations})
++        parent=self._parent_check();total['allocated_bytes']+=parent.st_blocks*512;total['directories']+=1
++        # Lifecycle's existing shared lock is a separate writer, never followed.
++        fd=os.open(self.lock,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        primary=None
++        try:
++            s=os.fstat(fd);current=self.lock.lstat();identity=(s.st_dev,s.st_ino)
++            if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1 or identity!=(current.st_dev,current.st_ino) or identity[0]!=self.parent_identity[0] or (self.lock_identity is not None and identity!=self.lock_identity):raise ValueError('shared lock type/link/identity differs')
++            self.lock_identity=identity;lock_start=s
++            total['allocated_bytes']+=s.st_blocks*512;total['logical_file_bytes']+=s.st_size;total['entries']+=1;total['regular_files']+=1
++            observations.append({'shared_file':str(self.lock),'device':s.st_dev,'inode':s.st_ino,'allocated_bytes':s.st_blocks*512,'logical_file_bytes':s.st_size})
++            enforce()
++        except BaseException as error:primary=error;raise
++        finally:_close(fd,primary)
++        born=self._birth();total['entries']+=int(born is not None);enforce()
++        roots=[(self.artifact.root,self.artifact.identity)]
++        if born is not None:roots.append((self.target,self.target_identity))
++        else:observations.append({'root':str(self.target),'state':'observed-absent-before-birth','device':None,'inode':None,'counts':'no existing subtree observed; no baseline credit'})
++        for path,identity in roots:
++            remaining=dict(self.limits)
++            for key,limit in COUNTS.items():
++                remaining[limit]-=total[key]
++                if remaining[limit]<=0:raise StorageLimit('aggregate '+key,{**total,'roots':observations})
++            current=StorageWatch(path,remaining)
++            if current.identity!=identity:raise ValueError('watched writer root replaced')
++            root_begin=time.monotonic()
++            try:obs=current._check(begin,[])
++            except BaseException as error:
++                partial=getattr(error,'observation',{})
++                try:error.observation={**{k:total[k]+partial.get(k,0) for k in total},'roots':observations,'failed_root':str(path),'partial_root':partial}
++                except BaseException as later:
++                    if not isinstance(error,Exception) or isinstance(error,MemoryError):raise error
++                    raise later from error
++                raise
++            obs['shared_scan_elapsed_seconds']=time.monotonic()-begin;obs['elapsed_seconds']=time.monotonic()-root_begin;observations.append(obs)
++            for k in total:total[k]+=obs[k]
++            enforce()
++        last_parent=self._parent_check()
++        total['allocated_bytes']+=max(0,(last_parent.st_blocks-parent.st_blocks)*512)
++        # Birth during an absence observation is not silently credited as empty.
++        after=self._birth()
++        if born is None and after is not None:raise ValueError('experiment born during scan; complete new observation required')
++        a=self.artifact.root.lstat()
++        if (a.st_dev,a.st_ino)!=self.artifact.identity or self.artifact.root.resolve(strict=True)!=self.artifact.root:raise ValueError('artifact root changed')
++        l=self.lock.lstat()
++        if not stat.S_ISREG(l.st_mode) or l.st_nlink!=1 or (l.st_dev,l.st_ino)!=self.lock_identity:raise ValueError('shared lock changed during scan')
++        total['allocated_bytes']+=max(0,(l.st_blocks-lock_start.st_blocks)*512)
++        total['logical_file_bytes']+=max(0,l.st_size-lock_start.st_size)
++        enforce()
++        return {**total,'roots':observations,'root_identities':[dict(x) for x in self.identities],'shared_parent_identity':list(self.parent_identity),'authority_root':str(self.root),'elapsed_seconds':time.monotonic()-begin,'qualification':'Sampled exact writer closure including shared parent directory allocation and lock. Historical claim siblings/source/runtime outside writer scope; no kernel quota, atomic snapshot, or absent-tree allocation credit.'}
++
++def environment(root,original):
++    root=Path(root);base=root/'research_artifacts/real_pilot_runtime'
++    result=dict(original)
++    routes={'TMPDIR':'tmp','TMP':'tmp','TEMP':'tmp','XDG_CACHE_HOME':'cache','TORCH_HOME':'torch','MPLCONFIGDIR':'matplotlib','HF_HOME':'hf','TORCH_EXTENSIONS_DIR':'torch-extensions','TORCHINDUCTOR_CACHE_DIR':'torchinductor','TRITON_CACHE_DIR':'triton','NUMBA_CACHE_DIR':'numba','CUDA_CACHE_PATH':'cuda','XDG_CONFIG_HOME':'config','XDG_DATA_HOME':'data'}
++    result.update({k:str(base/v) for k,v in routes.items()})
++    return result
++
++def prepare_environment(root,budget,env):
++    validate(budget,root)
++    for key,value in env.items():
++        if key in ('PYTHONPATH','PYTHONDONTWRITEBYTECODE','PYTEST_DISABLE_PLUGIN_AUTOLOAD','OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS'):continue
++        p=Path(value)
++        if not p.is_relative_to(Path(root)/'research_artifacts/real_pilot_runtime'):raise ValueError('unaccounted native writer route')
++        if p.resolve(strict=False)!=p:raise ValueError('native writer parent redirected')
++        p.mkdir(parents=True,exist_ok=True)
++        if p.resolve(strict=True)!=p:raise ValueError('native writer route redirected')
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/real_pilot_throughput.py
+@@ -0,0 +1,86 @@
++"""Seven-graph pilot measurements only; never source or completion authority."""
++import math
++import time
++
++
++def require(value,message):
++    if not value:raise ValueError('pilot timing: '+message)
++
++
++def seconds(value):
++    require(type(value) in (int,float) and math.isfinite(value) and value>=0,'invalid monotonic elapsed time')
++    return float(value)
++
++
++class MCMMeasurements:
++    """Counts become completed only after the caller's genuine retained check.
++
++    Timings include imported MCM production and its mandatory retained checks,
++    excluding the preceding outer storage scan. Partial work is uncredited and
++    unknown. No guard memory, physical storage or numerical-fit proof is inferred.
++    """
++    def __init__(self,nodes,*,population_scope,clock=time.monotonic):
++        require(type(nodes) is dict and len(nodes)==7 and all(type(k) is str and len(k)==64
++                and all(c in '0123456789abcdef' for c in k) and type(n) is int and n>0 for k,n in nodes.items()),'seven actual graph extents required')
++        require(population_scope in ('resource_pilot_subset','full_fold_input'),'unknown population scope')
++        self.clock=clock;self.began=seconds(clock());self.population_scope=population_scope
++        self.rows={k:{'graph_hash':k,'expected_nodes':n,'motifs':32,'expected_motif_cells':n*32,
++                      'status':'unavailable','reason':'not_attempted','elapsed_seconds':None,
++                      'completed_nodes':None,'completed_motif_cells':None} for k,n in sorted(nodes.items())}
++        self.active=None;self.start=None;self.closed=False
++
++    def begin(self,key):
++        require(not self.closed and self.active is None and key in self.rows and self.rows[key]['status']=='unavailable','graph already attempted or transition active')
++        now=seconds(self.clock());require(now>=self.began,'monotonic clock moved backwards')
++        self.active=key;self.start=now;self.rows[key].update(status='active',reason=None)
++
++    def completed(self,key,retained):
++        require(not self.closed and self.active==key,'different active graph')
++        row=self.rows[key]
++        require(type(retained) is dict and retained.get('graph_hash')==key
++                and type(retained.get('rows')) is int and retained['rows']==row['expected_nodes']
++                and type(retained.get('motifs')) is int and retained['motifs']==32
++                and type(retained.get('cells')) is int and retained['cells']==row['expected_motif_cells'],
++                'retained full-graph denominator differs')
++        elapsed=seconds(self.clock()-self.start)
++        row.update(status='complete',elapsed_seconds=elapsed,completed_nodes=retained['rows'],completed_motif_cells=retained['cells'])
++        self.active=None;self.start=None
++
++    def failed(self,error):
++        require(not self.closed and isinstance(error,BaseException),'actual failure required')
++        if self.active is not None:
++            self.rows[self.active].update(status='failed',elapsed_seconds=seconds(self.clock()-self.start),
++                                         reason=type(error).__name__+': '+str(error)[:1024])
++            self.active=None;self.start=None
++        for row in self.rows.values():
++            if row['status']=='unavailable':row['reason']='not_attempted_after_failure'
++        self.closed=True
++
++    def summary(self,training):
++        require(self.active is None,'unfinished graph interval cannot be reported complete')
++        rows=[dict(row) for row in self.rows.values()]
++        require(len(rows)==7 and all(row['status'] in ('complete','failed','unavailable') for row in rows),'graph disposition denominator differs')
++        complete=[row for row in rows if row['status']=='complete']
++        completed_cells=sum(row['completed_motif_cells'] for row in complete)
++        completed_seconds=sum(row['elapsed_seconds'] for row in complete)
++        attempted_seconds=sum(row['elapsed_seconds'] for row in rows if row['elapsed_seconds'] is not None)
++        phase_seconds=None
++        if training is not None:
++            require(type(training) is dict and training.get('status')=='complete' and training.get('optimizer_steps')==1
++                    and training.get('financial_fit_complete') is False and type(training.get('seconds')) is dict,
++                    'actual one-update completion required')
++            phase_seconds={key:seconds(value) for key,value in training['seconds'].items()}
++        return {'schema_version':1,'scope':'seven full graphs/original32 motifs and one resource update only',
++                'population_scope':self.population_scope,'decisions':16,'lookback_days':28,'original_samples':512,
++                'full_fold_fit':False,'financial_fit_complete':False,'paper_financial_fits':0,
++                'graphs':rows,'graph_denominator':7,'complete_graphs':len(complete),
++                'failed_graphs':sum(row['status']=='failed' for row in rows),
++                'unavailable_graphs':sum(row['status']=='unavailable' for row in rows),
++                'verified_completed_nodes':sum(row['completed_nodes'] for row in complete),
++                'verified_completed_motif_cells':completed_cells,'completed_mcm_seconds':completed_seconds,
++                'attempted_mcm_seconds':attempted_seconds,
++                'completed_motif_cells_per_second':completed_cells/completed_seconds if complete and completed_seconds>0 else None,
++                'verified_motif_cells_per_attempted_second':completed_cells/attempted_seconds if complete and attempted_seconds>0 else None,
++                'scope_elapsed_seconds':seconds(self.clock()-self.began),'one_update_phase_seconds':phase_seconds,
++                'guard_resource_evidence':None,
++                'qualification':'Intervals start after population and graph loading; MCM intervals include production plus retained verification. Partial failed work is unknown and receives no completed count. Guard/kernel peaks, storage and actual outer exits require separately joined closure evidence.'}
+--- a/tradingagents/research/onchain_replication/real_pilot_training.py
++++ b/tradingagents/research/onchain_replication/real_pilot_training.py
+@@ -72,8 +72,9 @@
+     Owner evidence. graph_sequences is the registered 16x28 hash membership;
+     indices names exactly16 consecutive eligible rows in the existing batch factory.
+     model_factory runs after seed_all(11) and must return the original model.
+-    model_execution defaults to eager (None); a known streamed policy must be
+-    explicitly registered by the caller. Policy selection itself is not admission.
++    model_execution defaults to eager (None). Known streamed and explicit
++    checkpointed-streamed policies must be registered by the caller; neither
++    changes the frozen scientific config or grants execution admission.
+     authority_check raises on lost Run/Binding/Owner/guard authority.
+     """
+     _require(callable(authority_check), 'current caller authority checker required')
+@@ -135,6 +136,7 @@
+         _require(torch.get_num_threads() <= 2, 'caller must establish at most two torch threads')
+         validated_execution = validate_execution(execution_input)
+         selected_execution = None if validated_execution is None else dict(validated_execution)
++        selected_checkpointing = selected_execution is not None and selected_execution.get('graph_activation_checkpointing',False)
+ 
+         def validate_graphs():
+             for key, contract in contracts.items():
+@@ -157,7 +159,7 @@
+         rng = seed_all(seed)
+         model = phase('model', model_factory)
+         _require(type(model) is ReplicationModel and model.config == model_config and model.graph.config == model_config
+-                 and model.task == task and model.graph_activation_checkpointing is False, 'original trainable model/config required')
++                 and model.task == task and model.graph_activation_checkpointing is selected_checkpointing, 'original trainable model/config or selected checkpoint execution differs')
+         _require(model.execution == selected_execution and model.graph.execution == selected_execution,
+                  'model and graph execution differ from explicit selection')
+         _require(all(p.requires_grad and p.device.type == 'cpu' and p.dtype == torch.float32 for p in model.parameters()), 'all original CPUfloat32 parameters must train')
+--- a/tradingagents/research/onchain_replication/resource_fixture.py
++++ b/tradingagents/research/onchain_replication/resource_fixture.py
+@@ -168,7 +168,11 @@
+ 
+ def publication_boundary(owner,stage):
+     if owner.bound.record.get('resource_only') is not True:return
+-    run=owner.bound._run;job=json.loads(run.read_input(owner.bound.record['job_input']));schema(job)
++    run=owner.bound._run;job=json.loads(run.read_input(owner.bound.record['job_input']))
++    from . import real_pilot_import_caller
++    if real_pilot_import_caller.selected(job):
++        return real_pilot_import_caller.publication_boundary(owner,stage,job)
++    schema(job)
+     _,s,f=selection(job)
+     if f['case']=='second_target_publication_failure' and stage.name=='mcm-'+s['descriptor']['required_graphs'][1]:
+         raise FixturePublicationFailure('registered second-target publication boundary; retain first output; no retry')
+--- a/tradingagents/research/onchain_replication/resources.py
++++ b/tradingagents/research/onchain_replication/resources.py
+@@ -175,14 +175,18 @@
+ 
+ def _native_policy(value):
+     if value is None:return None
+-    if type(value) is not dict or set(value)!={'file_size_bytes'} or type(value['file_size_bytes']) is not int or not 0<value['file_size_bytes']<=4*1024**2:
++    if type(value) is not dict or set(value)!={'file_size_bytes'} or type(value['file_size_bytes']) is not int or not 0<value['file_size_bytes']<2**63:
+         raise ValueError('native unit file limit schema differs')
+     return dict(value)
+ 
+ 
+-def _native_owned_env(cwd):
++def _native_owned_env(cwd,storage_budget=None):
+     root=Path(cwd);base=root/'fixture_runtime'
+-    return {'PYTHONPATH':str(root),'TMPDIR':str(base/'tmp'),'XDG_CACHE_HOME':str(base/'cache'),'TORCH_HOME':str(base/'torch'),'MPLCONFIGDIR':str(base/'matplotlib'),'HF_HOME':str(base/'hf'),'TORCH_EXTENSIONS_DIR':str(base/'torch-extensions'),'PYTHONDONTWRITEBYTECODE':'1','PYTEST_DISABLE_PLUGIN_AUTOLOAD':'1','OPENBLAS_NUM_THREADS':'2','OMP_NUM_THREADS':'2','MKL_NUM_THREADS':'2','NUMEXPR_NUM_THREADS':'2'}
++    result={'PYTHONPATH':str(root),'TMPDIR':str(base/'tmp'),'XDG_CACHE_HOME':str(base/'cache'),'TORCH_HOME':str(base/'torch'),'MPLCONFIGDIR':str(base/'matplotlib'),'HF_HOME':str(base/'hf'),'TORCH_EXTENSIONS_DIR':str(base/'torch-extensions'),'PYTHONDONTWRITEBYTECODE':'1','PYTEST_DISABLE_PLUGIN_AUTOLOAD':'1','OPENBLAS_NUM_THREADS':'2','OMP_NUM_THREADS':'2','MKL_NUM_THREADS':'2','NUMEXPR_NUM_THREADS':'2'}
++    if storage_budget is not None and storage_budget.get('schema_version')==2:
++        from tradingagents.research.onchain_replication.real_pilot_storage import validate,environment
++        validate(storage_budget,root);return environment(root,result)
++    return result
+ 
+ 
+ def _native_seconds(text):
+@@ -196,9 +200,9 @@
+     return total
+ 
+ 
+-def _native_ready(policy,ready,properties,wall_seconds,cwd):
++def _native_ready(policy,ready,properties,wall_seconds,cwd,storage_budget=None):
+     policy=_native_policy(policy);expected=policy['file_size_bytes']
+-    if ready.get('native_environment')!=_native_owned_env(cwd):raise ValueError('native child environment differs')
++    if ready.get('native_environment')!=_native_owned_env(cwd,storage_budget):raise ValueError('native child environment differs')
+     limits=ready.get('file_size_limit')
+     if ready.get('native_unit_limits')!=policy or type(limits) is not list or len(limits)!=2 or any(type(v) is not int or v!=expected for v in limits):
+         raise ValueError('native child file limit readback differs')
+@@ -249,8 +253,9 @@
+             expected=_native_policy(native_unit_limits)['file_size_bytes']
+             if ready['file_size_limit']!=[expected,expected]:raise ValueError('inherited native file limit differs')
+             ready['native_unit_limits']=dict(native_unit_limits)
+-            ready['native_environment']={key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}
+-            if ready['native_environment']!=_native_owned_env(Path.cwd()):raise ValueError('inherited native environment differs')
++            budget=json.loads((receipt/'live.json').read_text()).get('storage_budget')
++            ready['native_environment']={key:os.environ.get(key) for key in _native_owned_env(Path.cwd(),budget)}
++            if ready['native_environment']!=_native_owned_env(Path.cwd(),budget):raise ValueError('inherited native environment differs')
+         _atomic(receipt/'cpu_ready.json',ready)
+         signal.signal(signal.SIGTERM,stop);signal.signal(signal.SIGINT,stop)
+         while not stopping:
+@@ -378,9 +383,14 @@
+     storage_watch=None
+     if storage_budget is not None:
+         from .workflow_storage import StorageWatch
+-        if type(storage_budget) is not dict or set(storage_budget)!={'root','limits'}:
+-            raise ValueError('storage budget schema differs')
+-        storage_watch=StorageWatch(storage_budget['root'],storage_budget['limits'])
++        if type(storage_budget) is dict and storage_budget.get('schema_version')==2:
++            from tradingagents.research.onchain_replication.real_pilot_storage import WritableUnion,EXPERIMENT
++            if native_unit_limits is None or not isinstance(owner_identity,dict) or owner_identity.get('experiment')!=EXPERIMENT:raise ValueError('union requires fixed real-pilot native owner')
++            storage_watch=WritableUnion(storage_budget,Path(cwd))
++        else:
++            if type(storage_budget) is not dict or set(storage_budget)!={'root','limits'}:
++                raise ValueError('storage budget schema differs')
++            storage_watch=StorageWatch(storage_budget['root'],storage_budget['limits'])
+     disk_paths=tuple(Path(p).resolve(strict=True) for p in disk_paths)
+     cwd = Path(cwd).resolve(strict=True)
+     receipt = Path(receipt_dir).absolute()
+@@ -414,8 +424,12 @@
+         from tradingagents.research.onchain_replication import owned_io as native_io
+ 
+     if storage_watch is not None:
+-        state['storage_budget']={'root':str(storage_watch.root),'limits':dict(storage_watch.limits)}
+-        state['storage_root_identity']=list(storage_watch.identity)
++        if hasattr(storage_watch,'budget'):
++            state['storage_budget']=storage_watch.budget
++            state['storage_watched_root_identities']=storage_watch.identities
++        else:
++            state['storage_budget']={'root':str(storage_watch.root),'limits':dict(storage_watch.limits)}
++            state['storage_root_identity']=list(storage_watch.identity)
+         state['storage_enforcement']='Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.'
+ 
+     def observe_storage():
+@@ -505,7 +519,7 @@
+             args[position:position]=['--physical','--physical-context',json.dumps(context,sort_keys=True)]
+         if native_unit_limits is not None:
+             position=args.index(sys.executable)
+-            args[position:position]=['--property=LimitFSIZE='+str(native_unit_limits['file_size_bytes']),'--property=RuntimeMaxSec='+str(wall_seconds)]+['--setenv='+key+'='+value for key,value in _native_owned_env(cwd).items()]
++            args[position:position]=['--property=LimitFSIZE='+str(native_unit_limits['file_size_bytes']),'--property=RuntimeMaxSec='+str(wall_seconds)]+['--setenv='+key+'='+value for key,value in _native_owned_env(cwd,storage_budget).items()]
+             position=args.index('--',args.index('--lease'))
+             args[position:position]=['--native-file-limit',str(native_unit_limits['file_size_bytes'])]
+         # Even an uncertain dispatch is cleaned up using this unique identity.
+@@ -530,7 +544,7 @@
+         if native_unit_limits is not None:
+             selected=_systemctl('show',unit,'--property=LimitFSIZE,LimitFSIZESoft,RuntimeMaxUSec')
+             state['native_unit_properties']=dict(line.split('=',1) for line in selected.stdout.splitlines() if '=' in line)
+-            _native_ready(native_unit_limits,ready,state['native_unit_properties'],wall_seconds,cwd)
++            _native_ready(native_unit_limits,ready,state['native_unit_properties'],wall_seconds,cwd,storage_budget)
+             state['native_environment']=ready['native_environment']
+         state['kernel_controls'] = _read_controls(cgroup)
+         _verify_controls(state['kernel_controls'], memory_max_bytes, memory_high_bytes, memory_swap_max_bytes)
+@@ -747,7 +761,7 @@
+         import resource
+         expected=_native_policy(live['native_unit_limits'])['file_size_bytes']
+         if resource.getrlimit(resource.RLIMIT_FSIZE)!=(expected,expected):raise RuntimeError('native worker file limit differs')
+-        if {key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}!=_native_owned_env(Path.cwd()):raise RuntimeError('native worker environment differs')
++        if {key:os.environ.get(key) for key in _native_owned_env(Path.cwd(),live.get('storage_budget'))}!=_native_owned_env(Path.cwd(),live.get('storage_budget')):raise RuntimeError('native worker environment differs')
+     return live
+ 
+ 

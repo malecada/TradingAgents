@@ -1,0 +1,75 @@
+{
+  "original_import_stage.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/original_import_stage.py",
+    "baseline_sha256": "7e1596c76e2af76eede19f5d9a6fd368c4f87eaf92156b4ac7be9def069d717a",
+    "candidate_sha256": "8ee6994070e52953773de5e6615211eacefcb7ecedc8081a8a72e528b810bc8b",
+    "edits": [
+      {
+        "old": "def attach(prepared,*,policy_input,stage_policy_input):",
+        "new": "def attach(prepared,*,policy_input,stage_policy_input,archive_transport=None):"
+      },
+      {
+        "old": "    policy=resource_binding.import_policy(original.parse(original._read_registered(run,stage_policy_input)))",
+        "new": "    archive_name=selected.get('compact_archive_input')\n    archive_selected=archive_name is not None or item.get('compact_archive_input') is not None\n    require(archive_selected==(archive_transport is not None),'registered archive requires genuine preimport transport; local route cannot accept one')\n    if archive_selected:\n        from . import archive_dispatch,archive_owner_policy,archive_owner_operations\n        from .real_pilot_import_caller import admitted\n        _,current,pilot=admitted(run.admission,original.parse(original._read_registered(run,prepared._job_input)))\n        require(pilot['schema_version']==2 and canonical_bytes(current)==canonical_bytes(selected),'exact schema2 real-pilot archive selection required')\n        require(type(archive_transport) is archive_dispatch.View and type(archive_transport._context) is archive_dispatch.Context,'genuine archive dispatch view required')\n        context=archive_transport._context\n        require(context._run is run and context.view(bound.record['representation']) is archive_transport and context._record['job_input']==prepared._job_input,'archive view belongs to another original Run/representation')\n        context._outer();prepared._check()\n    policy=resource_binding.import_policy(original.parse(original._read_registered(run,stage_policy_input)))"
+      },
+      {
+        "old": "    return owner,complete_import(owner,prepared,stage_policy=policy)",
+        "new": "    if archive_transport is None:return owner,complete_import(owner,prepared,stage_policy=policy)\n    try:\n        # Real selection and durable ledger birth occur while Owner is still empty.\n        archive_owner_operations.attach(archive_owner_policy.select(owner,input_name=archive_name,transport=archive_transport))\n        context._outer();prepared._check()\n        return owner,complete_import(owner,prepared,stage_policy=policy)\n    except BaseException as primary:\n        owner.poisoned=True\n        ledger=getattr(owner,'_archive_operations',None)\n        if ledger is not None:\n            ledger._poisoned=True\n            io._close_after_failure(ledger.close,primary)\n        raise"
+      }
+    ]
+  },
+  "archive_dispatch.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_dispatch.py",
+    "baseline_sha256": "05eafe349dfafefe0b17ed8b8efaa3a480eff0f943988212846cabcec414f953",
+    "candidate_sha256": "ad951c4c556d123ac8e0961ba1f5a8ee288823174fafeec7d301649948603489",
+    "edits": [
+      {
+        "old": "    require(execution['kind']=='fit' and canonical_bytes(execution['payload'])==canonical_bytes(payload),'archive dispatch actual job differs')",
+        "new": "    if execution.get('kind')=='compact_resource':\n        require(type(run) is ResearchRun,'actual real-pilot archive Run required')\n        run._active();run._check_source()\n        from .real_pilot_import_caller import admitted\n        name,selected,pilot=admitted(run.admission,execution)\n        require(pilot['schema_version']==2 and 'archive_inputs' in pilot and compact_routes=={name:True},'explicit schema2 real-pilot archive dispatch required')\n        require(canonical_bytes(execution['payload'])==canonical_bytes(payload),'archive dispatch actual job differs')\n    else:\n        require(execution['kind']=='fit' and canonical_bytes(execution['payload'])==canonical_bytes(payload),'archive dispatch actual job differs')"
+      }
+    ]
+  },
+  "real_pilot_import_caller.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-functional-composition02-2026-10-06/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+    "baseline_sha256": "d07ba8b8be42bdbd09d6036e7442926f7a8fd28e248a3816af0d861e1a2918a7",
+    "candidate_sha256": "6167b380b0e058af9843ddb5246f77121a3c5a2737a77bab5cc7b8c082af23c7",
+    "edits": [
+      {
+        "old": "    interval='imported_authority_lease_input' in p",
+        "new": "    archive='archive_inputs' in p\n    if archive:\n        refs=p['archive_inputs']\n        require(full and type(refs) is dict and set(refs)=={'policy_input','transport_input'} and all(type(v) is str and v for v in refs.values()) and len(set(refs.values()))==2,'explicit schema2 archive input pair required')\n    interval='imported_authority_lease_input' in p"
+      },
+      {
+        "old": " | ({'imported_authority_lease_input'} if interval else set()), 'pilot plan fields differ')",
+        "new": " | ({'imported_authority_lease_input'} if interval else set()) | ({'archive_inputs'} if archive else set()), 'pilot plan fields differ')"
+      },
+      {
+        "old": "    require(type(s) is dict and set(s) == KEYS and s['operation'] == 'produce'\n            and all(type(s[k]) is str and s[k] for k in KEYS-{'descriptor','operation'}), 'pilot producer selection differs')",
+        "new": "    archive_keys={'compact_archive_input','compact_archive_transport_input'}\n    keys=KEYS | (archive_keys if archive_keys & set(s) else set())\n    require(type(s) is dict and set(s) == keys and s['operation'] == 'produce'\n            and all(type(s[k]) is str and s[k] for k in keys-{'descriptor','operation'}), 'pilot producer selection differs')"
+      },
+      {
+        "old": "    _bind_resources(ad,job,p)\n",
+        "new": "    _bind_resources(ad,job,p)\n    expected_archive={'policy_input':s['compact_archive_input'],'transport_input':s['compact_archive_transport_input']} if 'compact_archive_input' in s else None\n    require(p.get('archive_inputs')==expected_archive,'pilot/producer archive input pair differs')\n"
+      },
+      {
+        "old": "    require(roles <= set(ad.inputs), 'real population/config/graph inputs not registered')",
+        "new": "    if 'archive_inputs' in p:roles.update(p['archive_inputs'].values())\n    require(roles <= set(ad.inputs), 'real population/config/graph inputs not registered')"
+      },
+      {
+        "old": "    journal = owner = None; targets = []; events = []; began = time.monotonic()",
+        "new": "    journal = owner = archive_context = None; targets = []; events = []; began = time.monotonic()"
+      },
+      {
+        "old": "    try:\n        journal,bound = resource_binding.open_first",
+        "new": "    try:\n        if 'archive_inputs' in p:\n            from . import archive_dispatch\n            archive_plan=archive_dispatch.preflight(run,payload,{name:True})\n            require(archive_plan is not None,'selected real-pilot archive preflight absent')\n            archive_context=archive_dispatch.Context(archive_plan)\n        journal,bound = resource_binding.open_first"
+      },
+      {
+        "old": "        owner,stage = original_import_stage.attach(prepared,policy_input=s['compact_policy_input'],stage_policy_input=s['original_dictionary_stage_input'])",
+        "new": "        if archive_context is None:\n            owner,stage = original_import_stage.attach(prepared,policy_input=s['compact_policy_input'],stage_policy_input=s['original_dictionary_stage_input'])\n        else:\n            owner,stage = original_import_stage.attach(prepared,policy_input=s['compact_policy_input'],stage_policy_input=s['original_dictionary_stage_input'],archive_transport=archive_context.view(name))"
+      },
+      {
+        "old": "    throughput = None\n",
+        "new": "    if archive_context is not None:\n        try:archive_context.close(primary)\n        except BaseException as later:primary=resource_fixture._preserve_terminal(primary,later)\n    throughput = None\n"
+      }
+    ]
+  }
+}

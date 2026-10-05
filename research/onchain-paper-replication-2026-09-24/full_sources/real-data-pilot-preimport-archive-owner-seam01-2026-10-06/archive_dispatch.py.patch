@@ -1,0 +1,19 @@
+--- baseline/archive_dispatch.py
++++ candidate/archive_dispatch.py
+@@ -75,7 +75,15 @@
+ def preflight(run,payload,compact_routes,*,job_input='execution_job'):
+     """All selected representations before population work; creates no namespace."""
+     execution=json.loads(run.read_input(job_input))
+-    require(execution['kind']=='fit' and canonical_bytes(execution['payload'])==canonical_bytes(payload),'archive dispatch actual job differs')
++    if execution.get('kind')=='compact_resource':
++        require(type(run) is ResearchRun,'actual real-pilot archive Run required')
++        run._active();run._check_source()
++        from .real_pilot_import_caller import admitted
++        name,selected,pilot=admitted(run.admission,execution)
++        require(pilot['schema_version']==2 and 'archive_inputs' in pilot and compact_routes=={name:True},'explicit schema2 real-pilot archive dispatch required')
++        require(canonical_bytes(execution['payload'])==canonical_bytes(payload),'archive dispatch actual job differs')
++    else:
++        require(execution['kind']=='fit' and canonical_bytes(execution['payload'])==canonical_bytes(payload),'archive dispatch actual job differs')
+     selected={};names=set();remote=set();total={'logical_bytes':0,'rounded_bytes':0,'commands':0,'chunks':0}
+     from . import compact_training, archive_pair_writer, archive_owner_policy
+     for representation,job in payload['representation_jobs'].items():

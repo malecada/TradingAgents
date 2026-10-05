@@ -1,0 +1,31 @@
+{
+  "actual_refusal_sha256": "d94f2d2e86453036e8f5d5bf37f308728f26fd5cf59e7fc34a7b7408f10d25a1",
+  "connection_contents_read": false,
+  "decision": "accepted-correction-only",
+  "entry_sha256": "d30eb6f38bec48fec0b310658839d7b7baf201a795ba7400422bcc0f696ea443",
+  "envelope_sha256": "6ad29a00b5746f223ded8e6598855111f1b3bca2aaa705f78d132735dd1e868f",
+  "markers_absent": [
+    "preflight01.json",
+    "launch-attempt01.json",
+    "guard01",
+    "intent.json",
+    "complete.json",
+    "failed.json",
+    "outer-exit01.json"
+  ],
+  "network_native_execution": false,
+  "old_entry_exact_inverse": true,
+  "old_envelope_exact_inverse": true,
+  "payloads_read": false,
+  "qualification": "Actual AST condition/loop exercised with offline bytes; original source/protocol reused, entry must enforce fresh commit/remote/resource checks.",
+  "refusal_controls": [
+    "extra",
+    "duplicate",
+    "source-only",
+    "empty",
+    "connection-as-executable-source",
+    "git-changed-code.py",
+    "git-changed-evidence.json",
+    "local-changed-local-connection.json"
+  ]
+}
