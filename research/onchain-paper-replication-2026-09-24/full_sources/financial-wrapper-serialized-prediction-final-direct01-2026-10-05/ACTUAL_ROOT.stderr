@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct01-2026-10-05/recover02.py", line 273, in <module>
+    entry()
+    ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct01-2026-10-05/recover02.py", line 269, in entry
+    _raise_retained(primary, secondary)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct01-2026-10-05/recover02.py", line 55, in _raise_retained
+    raise primary
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct01-2026-10-05/recover02.py", line 258, in entry
+    main()
+    ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct01-2026-10-05/recover02.py", line 221, in main
+    wanted = sorted(set(objects[r['path']][2] for r in rows))
+                    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct01-2026-10-05/recover02.py", line 221, in <genexpr>
+    wanted = sorted(set(objects[r['path']][2] for r in rows))
+                        ~~~~~~~^^^^^^^^^^^
+KeyError: 'research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-current-flat01-2026-10-05/flat/body-metadata.json'
