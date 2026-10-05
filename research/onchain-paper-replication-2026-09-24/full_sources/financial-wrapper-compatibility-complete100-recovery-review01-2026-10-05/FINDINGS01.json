@@ -1,0 +1,24 @@
+{
+  "capture_disposition": "Accepted separately by ACTUAL_CAPTURE_REVIEW01.json; no external recovery release",
+  "findings": [
+    {
+      "id": "RR1",
+      "impact": "Request includes release SHA while release requires full request SHA; ordinary concrete signing cannot terminate.",
+      "line": 79,
+      "related": "restore_bundle01.py:5",
+      "required_change": "Sign canonical exact request core excluding only release; independently authenticate full request and release refs.",
+      "source": "financial-wrapper-compatibility-complete100-outcome-recovery-preparation01-2026-10-05/outcome01.py",
+      "status": "Corrected and independently checked in source02 2cb992d4; original source01 preserved."
+    },
+    {
+      "id": "RR2",
+      "impact": "Real final receipt FD cleanup can alter intended receipt before its first retained read. Both exact publication seams then accept corrupted bytes through final cohort check.",
+      "line": 103,
+      "related": "join01.py:24",
+      "required_change": "Require first retained receipt read to equal canonical intended bytes before final cohort join.",
+      "source": "financial-wrapper-compatibility-complete100-outcome-recovery-preparation02-2026-10-05/outcome01.py",
+      "status": "WITHHELD; concrete real FD witnesses retained in RECEIPT_WITNESS01.json."
+    }
+  ],
+  "schema_version": 1
+}

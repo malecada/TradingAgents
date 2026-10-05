@@ -1,0 +1,966 @@
+{
+  "checks": 3330,
+  "complete100_disposition_unchanged": true,
+  "decision": "ACCEPTED_ACTUAL_FOUR_FAILED_METADATA_RECEIVER_DISPOSITIONS_ONLY",
+  "existing_complete100_and_capture_pins_unchanged": {
+    "capture": "ef82889318080bf2fec673d6c558c4afe3d95260c1a4d783c9b5eb16d8979442",
+    "capture_review": "5db589619e8df5cec1755ebc3a36bffa2d3a8cd3e4c66e41e8d68bc9befc7b18",
+    "outcome": "27e29cab0b784748bdd0fef2ca484215b39b2b025784a469de443f619ae9b124"
+  },
+  "external_recovery_accepted": false,
+  "lanes": [
+    {
+      "actual_git_operations": 0,
+      "canonical_same_object_sha256": "09fc2633ca8777cf9f741f10ded042397a8c5537d25f9bc9bcb5a0c13d253342",
+      "child_pid": 1249388,
+      "cleanup_failures": [],
+      "error": "frozen canonical selection",
+      "evidence": {
+        "exit": {
+          "bytes": 1152,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane01-2026-10-05/ROOT_OUTCOME_LANE01_REMOTE02_EXIT.json",
+          "sha256": "69bd56270701e5e45ca29b965888dddc0de0a3fb15f8e39a6a0d3c2433e5b7fb"
+        },
+        "failure": {
+          "bytes": 458,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane01-2026-10-05/FAILED01.json",
+          "sha256": "c0719bc5bddc997294c7252f83bf89a8d8b4b51fd45e1719d7f6cd1a461a391c"
+        },
+        "intent": {
+          "bytes": 651,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane01-2026-10-05/ROOT_OUTCOME_LANE01_REMOTE02_INTENT.json",
+          "sha256": "2054835b7296dedce3b6eb4c1e058e90eea9cc7e25f3b5eb2835145f1e4af238"
+        },
+        "spawn": {
+          "bytes": 435,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane01-2026-10-05/ROOT_OUTCOME_LANE01_REMOTE02_SPAWN.json",
+          "sha256": "96a992d1a95df9cfba37810ea9550c554354cff8c7b15e44ed751b4fa814ff66"
+        },
+        "stderr": {
+          "bytes": 1816,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane01-2026-10-05/ROOT_OUTCOME_LANE01_REMOTE02.stderr",
+          "sha256": "6b1d9a57c2751e98a41ee3a30e23883caea050e3a13a3c5fd601d402f7960d84"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane01-2026-10-05/ROOT_OUTCOME_LANE01_REMOTE02.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "inner_child_exit": 1,
+      "lane": 0,
+      "literal_selection_sha256": "8d30012a5d146e232fcb651a1e2eb37a126c7d9fd71cf90135c5ac41edd1e9f7",
+      "manifest": {
+        "members": [
+          {
+            "bytes": 458,
+            "kind": "file",
+            "mode": 384,
+            "path": "FAILED01.json",
+            "sha256": "c0719bc5bddc997294c7252f83bf89a8d8b4b51fd45e1719d7f6cd1a461a391c"
+          },
+          {
+            "bytes": 1956,
+            "kind": "file",
+            "mode": 384,
+            "path": "REMOTE_CONTRACT01.json",
+            "sha256": "37dde211e41ecc0fea22eeea5ee50f7b1018ea14ea64d49f01a9c99e6e28b402"
+          },
+          {
+            "bytes": 296,
+            "kind": "file",
+            "mode": 384,
+            "path": "REMOTE_ENTRY_RELEASE01.json",
+            "sha256": "e164cb5edf0ded71dfc668228e9b33c62ca77fa3197f72916ad29ad47d704366"
+          },
+          {
+            "bytes": 5993,
+            "kind": "file",
+            "mode": 384,
+            "path": "REQUEST_GENERATION_DRAFT01.json",
+            "sha256": "7a009dd198bc36f577b4cee0c6287d788202eb22ccd868c58564ab85dbc3070e"
+          },
+          {
+            "bytes": 1816,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE01_REMOTE02.stderr",
+            "sha256": "6b1d9a57c2751e98a41ee3a30e23883caea050e3a13a3c5fd601d402f7960d84"
+          },
+          {
+            "bytes": 0,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE01_REMOTE02.stdout",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 1152,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE01_REMOTE02_EXIT.json",
+            "sha256": "69bd56270701e5e45ca29b965888dddc0de0a3fb15f8e39a6a0d3c2433e5b7fb"
+          },
+          {
+            "bytes": 651,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE01_REMOTE02_INTENT.json",
+            "sha256": "2054835b7296dedce3b6eb4c1e058e90eea9cc7e25f3b5eb2835145f1e4af238"
+          },
+          {
+            "bytes": 435,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE01_REMOTE02_SPAWN.json",
+            "sha256": "96a992d1a95df9cfba37810ea9550c554354cff8c7b15e44ed751b4fa814ff66"
+          },
+          {
+            "bytes": 5976,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_REQUEST01.json",
+            "sha256": "6a2ac06e69ae5f9d2c10a52012fca4e582db1170227de0e9da199f8875170ff3"
+          },
+          {
+            "bytes": 4837,
+            "kind": "file",
+            "mode": 384,
+            "path": "SELECTED_BODIES01.json",
+            "sha256": "8d30012a5d146e232fcb651a1e2eb37a126c7d9fd71cf90135c5ac41edd1e9f7"
+          },
+          {
+            "bytes": 7489,
+            "kind": "file",
+            "mode": 384,
+            "path": "caller01.py",
+            "sha256": "68ab99af99f96644d2c36fd3f136d599cfdcfcbac6cc54d42a14b962f14f9e59"
+          },
+          {
+            "bytes": 10833,
+            "kind": "file",
+            "mode": 384,
+            "path": "cohort01.py",
+            "sha256": "0bf4cb4ca7f2ce8182b775614be4c54b577f4959852fe191186195a8b0ad75ab"
+          },
+          {
+            "bytes": 2650,
+            "kind": "file",
+            "mode": 384,
+            "path": "flat_primitives01.py",
+            "sha256": "2e8c9b10da14f61f03d1d3bc40359009678e77f124f74ba5ef36d532ad06be8b"
+          },
+          {
+            "bytes": 3975,
+            "kind": "file",
+            "mode": 384,
+            "path": "join01.py",
+            "sha256": "8f2643adcf98eb6e41542f8c93e9fea5de5e41851a69f58f5de0d9f3e8c80010"
+          },
+          {
+            "bytes": 1761,
+            "kind": "file",
+            "mode": 384,
+            "path": "original_tree01.py",
+            "sha256": "b1fec36e21d2658efc467a3a5863ae0a5c7d6c1a3fe5b298e0e048b4aaf20b3d"
+          },
+          {
+            "bytes": 11111,
+            "kind": "file",
+            "mode": 384,
+            "path": "outcome01.py",
+            "sha256": "883127897d7f8f6cd3093bcb4ad74222bcd45b6c66c3c7b593cf7b82e23085ec"
+          },
+          {
+            "bytes": 5419,
+            "kind": "file",
+            "mode": 384,
+            "path": "receipt01.py",
+            "sha256": "eaada532d8538fb0cc7d170f7ba08a86bee215b701880d99ce27f5747757f455"
+          },
+          {
+            "bytes": 18067,
+            "kind": "file",
+            "mode": 384,
+            "path": "recover01.py",
+            "sha256": "ba94dbdbc924ddb24d13e21a5c786457452d3555b0f32273408f0db6790a9cfe"
+          },
+          {
+            "bytes": 489,
+            "kind": "file",
+            "mode": 384,
+            "path": "restore_bundle01.py",
+            "sha256": "613e5e5e7dbe3bc4e52a2a5c150bafa3f32fcbcb000649dd6e77c4231fdd3dfb"
+          },
+          {
+            "bytes": 902,
+            "kind": "file",
+            "mode": 384,
+            "path": "space01.py",
+            "sha256": "e9099131dfc99c9ffe85d0161c5b2b33f00f187ce55b975363c02ba7499692cc"
+          },
+          {
+            "kind": "directory",
+            "mode": 448,
+            "path": "utilities"
+          },
+          {
+            "bytes": 3162,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/bounded_git01.py",
+            "sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+          },
+          {
+            "bytes": 3099,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/owned_io.py",
+            "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+          },
+          {
+            "bytes": 24007,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/recovery_pax01.py",
+            "sha256": "a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2"
+          },
+          {
+            "bytes": 4670,
+            "kind": "file",
+            "mode": 384,
+            "path": "watch01.py",
+            "sha256": "bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18"
+          }
+        ],
+        "root_mode": 448,
+        "schema_version": 1
+      },
+      "original_parent_exit": null,
+      "parent_pid": 1249382,
+      "review_omission": "Prior review checked parsed table and Git/body/hash joins but omitted receiver encode equality.",
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane01-2026-10-05",
+      "status": "FAILED_PERMANENTLY_BEFORE_ANY_GIT_OPERATION"
+    },
+    {
+      "actual_git_operations": 0,
+      "canonical_same_object_sha256": "7a45048a6927f0f87d9211ca3f402590330f0a4d66e6f06b1f72568b64d124cf",
+      "child_pid": 1249386,
+      "cleanup_failures": [],
+      "error": "frozen canonical selection",
+      "evidence": {
+        "exit": {
+          "bytes": 1156,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/ROOT_OUTCOME_LANE02_REMOTE02_EXIT.json",
+          "sha256": "385831f0e33e87cab115101509f97c6ae8afc7dc9b6dd3e0f813785d6e44633c"
+        },
+        "failure": {
+          "bytes": 458,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/FAILED01.json",
+          "sha256": "c0719bc5bddc997294c7252f83bf89a8d8b4b51fd45e1719d7f6cd1a461a391c"
+        },
+        "intent": {
+          "bytes": 651,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/ROOT_OUTCOME_LANE02_REMOTE02_INTENT.json",
+          "sha256": "2c78bea197cce5e0ffc928bfc4fbcaa1f47ca2833c8b01f748952364613b66f4"
+        },
+        "spawn": {
+          "bytes": 435,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/ROOT_OUTCOME_LANE02_REMOTE02_SPAWN.json",
+          "sha256": "03799a8da1f523f224e7776d07931d9edc7e3e8cb57bc8b54dc36be62174e184"
+        },
+        "stderr": {
+          "bytes": 1816,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/ROOT_OUTCOME_LANE02_REMOTE02.stderr",
+          "sha256": "5bf07b8cb4a7fb7b5bf9cef5388c82b86f8dd2f0152c213b8e498e0776ac54cc"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/ROOT_OUTCOME_LANE02_REMOTE02.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "inner_child_exit": 1,
+      "lane": 1,
+      "literal_selection_sha256": "9a6095f79ad4ba8233b67fc227ea2c326c4fbdd5c7953b28ba6d94ff9b56ef3f",
+      "manifest": {
+        "members": [
+          {
+            "bytes": 458,
+            "kind": "file",
+            "mode": 384,
+            "path": "FAILED01.json",
+            "sha256": "c0719bc5bddc997294c7252f83bf89a8d8b4b51fd45e1719d7f6cd1a461a391c"
+          },
+          {
+            "bytes": 1956,
+            "kind": "file",
+            "mode": 384,
+            "path": "REMOTE_CONTRACT01.json",
+            "sha256": "3451b28f3eeae07be9416148d173f6e1338b8e1dc2a0b160d810875d748b8008"
+          },
+          {
+            "bytes": 296,
+            "kind": "file",
+            "mode": 384,
+            "path": "REMOTE_ENTRY_RELEASE01.json",
+            "sha256": "fc815b5929a26ecb388c5fbec2dacad4b2e88e60f9a3c8704f269b554f782604"
+          },
+          {
+            "bytes": 5992,
+            "kind": "file",
+            "mode": 384,
+            "path": "REQUEST_GENERATION_DRAFT01.json",
+            "sha256": "38e1361956e195284fcef8f0e68b5de8351e69dff8aeacb5be0daa0573230165"
+          },
+          {
+            "bytes": 1816,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE02_REMOTE02.stderr",
+            "sha256": "5bf07b8cb4a7fb7b5bf9cef5388c82b86f8dd2f0152c213b8e498e0776ac54cc"
+          },
+          {
+            "bytes": 0,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE02_REMOTE02.stdout",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 1156,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE02_REMOTE02_EXIT.json",
+            "sha256": "385831f0e33e87cab115101509f97c6ae8afc7dc9b6dd3e0f813785d6e44633c"
+          },
+          {
+            "bytes": 651,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE02_REMOTE02_INTENT.json",
+            "sha256": "2c78bea197cce5e0ffc928bfc4fbcaa1f47ca2833c8b01f748952364613b66f4"
+          },
+          {
+            "bytes": 435,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE02_REMOTE02_SPAWN.json",
+            "sha256": "03799a8da1f523f224e7776d07931d9edc7e3e8cb57bc8b54dc36be62174e184"
+          },
+          {
+            "bytes": 5975,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_REQUEST01.json",
+            "sha256": "d074cb5905f23d41229656e52974fd40c9769a01de5f2776c70f02ca6f196bf9"
+          },
+          {
+            "bytes": 4836,
+            "kind": "file",
+            "mode": 384,
+            "path": "SELECTED_BODIES01.json",
+            "sha256": "9a6095f79ad4ba8233b67fc227ea2c326c4fbdd5c7953b28ba6d94ff9b56ef3f"
+          },
+          {
+            "bytes": 7489,
+            "kind": "file",
+            "mode": 384,
+            "path": "caller01.py",
+            "sha256": "1a501521007262d3a58785b8e01dc5c897db3a2af4725e964c56f424c3ca2dd4"
+          },
+          {
+            "bytes": 10833,
+            "kind": "file",
+            "mode": 384,
+            "path": "cohort01.py",
+            "sha256": "0bf4cb4ca7f2ce8182b775614be4c54b577f4959852fe191186195a8b0ad75ab"
+          },
+          {
+            "bytes": 2650,
+            "kind": "file",
+            "mode": 384,
+            "path": "flat_primitives01.py",
+            "sha256": "2e8c9b10da14f61f03d1d3bc40359009678e77f124f74ba5ef36d532ad06be8b"
+          },
+          {
+            "bytes": 3975,
+            "kind": "file",
+            "mode": 384,
+            "path": "join01.py",
+            "sha256": "8f2643adcf98eb6e41542f8c93e9fea5de5e41851a69f58f5de0d9f3e8c80010"
+          },
+          {
+            "bytes": 1761,
+            "kind": "file",
+            "mode": 384,
+            "path": "original_tree01.py",
+            "sha256": "b1fec36e21d2658efc467a3a5863ae0a5c7d6c1a3fe5b298e0e048b4aaf20b3d"
+          },
+          {
+            "bytes": 11111,
+            "kind": "file",
+            "mode": 384,
+            "path": "outcome01.py",
+            "sha256": "883127897d7f8f6cd3093bcb4ad74222bcd45b6c66c3c7b593cf7b82e23085ec"
+          },
+          {
+            "bytes": 5419,
+            "kind": "file",
+            "mode": 384,
+            "path": "receipt01.py",
+            "sha256": "659b4980ee3b00762cf1fd0c1256adc83854c9f56b801ef8a3956a68a8e0e1d6"
+          },
+          {
+            "bytes": 18066,
+            "kind": "file",
+            "mode": 384,
+            "path": "recover01.py",
+            "sha256": "0c9f7459dc1dc8a4bec7d2f5f3248c4ab198d703b2ee47a3e5871127c8cef21c"
+          },
+          {
+            "bytes": 489,
+            "kind": "file",
+            "mode": 384,
+            "path": "restore_bundle01.py",
+            "sha256": "613e5e5e7dbe3bc4e52a2a5c150bafa3f32fcbcb000649dd6e77c4231fdd3dfb"
+          },
+          {
+            "bytes": 902,
+            "kind": "file",
+            "mode": 384,
+            "path": "space01.py",
+            "sha256": "e9099131dfc99c9ffe85d0161c5b2b33f00f187ce55b975363c02ba7499692cc"
+          },
+          {
+            "kind": "directory",
+            "mode": 448,
+            "path": "utilities"
+          },
+          {
+            "bytes": 3162,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/bounded_git01.py",
+            "sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+          },
+          {
+            "bytes": 3099,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/owned_io.py",
+            "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+          },
+          {
+            "bytes": 24007,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/recovery_pax01.py",
+            "sha256": "a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2"
+          },
+          {
+            "bytes": 4670,
+            "kind": "file",
+            "mode": 384,
+            "path": "watch01.py",
+            "sha256": "bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18"
+          }
+        ],
+        "root_mode": 448,
+        "schema_version": 1
+      },
+      "original_parent_exit": null,
+      "parent_pid": 1249383,
+      "review_omission": "Prior review checked parsed table and Git/body/hash joins but omitted receiver encode equality.",
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05",
+      "status": "FAILED_PERMANENTLY_BEFORE_ANY_GIT_OPERATION"
+    },
+    {
+      "actual_git_operations": 0,
+      "canonical_same_object_sha256": "629d5354572f19d39a6ade96bec5ad9df76f44a024ccda2812a0897ec65ad125",
+      "child_pid": 1249385,
+      "cleanup_failures": [],
+      "error": "frozen canonical selection",
+      "evidence": {
+        "exit": {
+          "bytes": 1155,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane03-2026-10-05/ROOT_OUTCOME_LANE03_REMOTE02_EXIT.json",
+          "sha256": "9ca355ea9af94a1d979c7cb96c29641d4373b3ef1e0960565c053f6fd64a6baa"
+        },
+        "failure": {
+          "bytes": 458,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane03-2026-10-05/FAILED01.json",
+          "sha256": "c0719bc5bddc997294c7252f83bf89a8d8b4b51fd45e1719d7f6cd1a461a391c"
+        },
+        "intent": {
+          "bytes": 651,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane03-2026-10-05/ROOT_OUTCOME_LANE03_REMOTE02_INTENT.json",
+          "sha256": "ef2754d08a7f7aebdb8f289eebdf996b68dd353faf6a35ae5e58fa4fcadd6b69"
+        },
+        "spawn": {
+          "bytes": 435,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane03-2026-10-05/ROOT_OUTCOME_LANE03_REMOTE02_SPAWN.json",
+          "sha256": "958a6b65d58bcdfaf3a257a02c517d2f4b942567c8495b69f7e5c9b01f791a32"
+        },
+        "stderr": {
+          "bytes": 1816,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane03-2026-10-05/ROOT_OUTCOME_LANE03_REMOTE02.stderr",
+          "sha256": "47cb871db5be48ee350d11089cb354b35f8aeb0e1f9288e6ee7d4e5d32221c8e"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane03-2026-10-05/ROOT_OUTCOME_LANE03_REMOTE02.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "inner_child_exit": 1,
+      "lane": 2,
+      "literal_selection_sha256": "68319bce9f64d21b26494b347ad8734179c3875527dc0b469b0e88d64856ca9e",
+      "manifest": {
+        "members": [
+          {
+            "bytes": 458,
+            "kind": "file",
+            "mode": 384,
+            "path": "FAILED01.json",
+            "sha256": "c0719bc5bddc997294c7252f83bf89a8d8b4b51fd45e1719d7f6cd1a461a391c"
+          },
+          {
+            "bytes": 1956,
+            "kind": "file",
+            "mode": 384,
+            "path": "REMOTE_CONTRACT01.json",
+            "sha256": "dd992caf5acd8b864e5f7c9e1541a7ee020ffd3c8a6293759e2270edd74b5a9d"
+          },
+          {
+            "bytes": 296,
+            "kind": "file",
+            "mode": 384,
+            "path": "REMOTE_ENTRY_RELEASE01.json",
+            "sha256": "218c96e5cbd94359cab364df8d8de225f482c5323c953964f7552cec1fe9f49a"
+          },
+          {
+            "bytes": 5508,
+            "kind": "file",
+            "mode": 384,
+            "path": "REQUEST_GENERATION_DRAFT01.json",
+            "sha256": "f296d9ae5dc2d20fb3b4480b05fb6b551527c493af5d44c8b1e5c3de4d72cb82"
+          },
+          {
+            "bytes": 1816,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE03_REMOTE02.stderr",
+            "sha256": "47cb871db5be48ee350d11089cb354b35f8aeb0e1f9288e6ee7d4e5d32221c8e"
+          },
+          {
+            "bytes": 0,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE03_REMOTE02.stdout",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 1155,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE03_REMOTE02_EXIT.json",
+            "sha256": "9ca355ea9af94a1d979c7cb96c29641d4373b3ef1e0960565c053f6fd64a6baa"
+          },
+          {
+            "bytes": 651,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE03_REMOTE02_INTENT.json",
+            "sha256": "ef2754d08a7f7aebdb8f289eebdf996b68dd353faf6a35ae5e58fa4fcadd6b69"
+          },
+          {
+            "bytes": 435,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE03_REMOTE02_SPAWN.json",
+            "sha256": "958a6b65d58bcdfaf3a257a02c517d2f4b942567c8495b69f7e5c9b01f791a32"
+          },
+          {
+            "bytes": 5491,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_REQUEST01.json",
+            "sha256": "b89ad84100cf0732bdf20c1e601f8deaa579008d58f294a1e68cbb7bf47411af"
+          },
+          {
+            "bytes": 4338,
+            "kind": "file",
+            "mode": 384,
+            "path": "SELECTED_BODIES01.json",
+            "sha256": "68319bce9f64d21b26494b347ad8734179c3875527dc0b469b0e88d64856ca9e"
+          },
+          {
+            "bytes": 7489,
+            "kind": "file",
+            "mode": 384,
+            "path": "caller01.py",
+            "sha256": "b61c22b51b16327599e57346b976ee51f0f2ad032fa448610307ee656cff5cb1"
+          },
+          {
+            "bytes": 10833,
+            "kind": "file",
+            "mode": 384,
+            "path": "cohort01.py",
+            "sha256": "0bf4cb4ca7f2ce8182b775614be4c54b577f4959852fe191186195a8b0ad75ab"
+          },
+          {
+            "bytes": 2650,
+            "kind": "file",
+            "mode": 384,
+            "path": "flat_primitives01.py",
+            "sha256": "2e8c9b10da14f61f03d1d3bc40359009678e77f124f74ba5ef36d532ad06be8b"
+          },
+          {
+            "bytes": 3975,
+            "kind": "file",
+            "mode": 384,
+            "path": "join01.py",
+            "sha256": "8f2643adcf98eb6e41542f8c93e9fea5de5e41851a69f58f5de0d9f3e8c80010"
+          },
+          {
+            "bytes": 1761,
+            "kind": "file",
+            "mode": 384,
+            "path": "original_tree01.py",
+            "sha256": "b1fec36e21d2658efc467a3a5863ae0a5c7d6c1a3fe5b298e0e048b4aaf20b3d"
+          },
+          {
+            "bytes": 11111,
+            "kind": "file",
+            "mode": 384,
+            "path": "outcome01.py",
+            "sha256": "883127897d7f8f6cd3093bcb4ad74222bcd45b6c66c3c7b593cf7b82e23085ec"
+          },
+          {
+            "bytes": 5419,
+            "kind": "file",
+            "mode": 384,
+            "path": "receipt01.py",
+            "sha256": "55a1b43ae0cabdb314f674477f66ea27c6f623d03917c71f3f37507c9e01cde9"
+          },
+          {
+            "bytes": 17572,
+            "kind": "file",
+            "mode": 384,
+            "path": "recover01.py",
+            "sha256": "50bae077b1b9b479ee806b791b210deec717f32b18caa8a1ba0c128e625c8545"
+          },
+          {
+            "bytes": 489,
+            "kind": "file",
+            "mode": 384,
+            "path": "restore_bundle01.py",
+            "sha256": "613e5e5e7dbe3bc4e52a2a5c150bafa3f32fcbcb000649dd6e77c4231fdd3dfb"
+          },
+          {
+            "bytes": 902,
+            "kind": "file",
+            "mode": 384,
+            "path": "space01.py",
+            "sha256": "e9099131dfc99c9ffe85d0161c5b2b33f00f187ce55b975363c02ba7499692cc"
+          },
+          {
+            "kind": "directory",
+            "mode": 448,
+            "path": "utilities"
+          },
+          {
+            "bytes": 3162,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/bounded_git01.py",
+            "sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+          },
+          {
+            "bytes": 3099,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/owned_io.py",
+            "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+          },
+          {
+            "bytes": 24007,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/recovery_pax01.py",
+            "sha256": "a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2"
+          },
+          {
+            "bytes": 4670,
+            "kind": "file",
+            "mode": 384,
+            "path": "watch01.py",
+            "sha256": "bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18"
+          }
+        ],
+        "root_mode": 448,
+        "schema_version": 1
+      },
+      "original_parent_exit": null,
+      "parent_pid": 1249375,
+      "review_omission": "Prior review checked parsed table and Git/body/hash joins but omitted receiver encode equality.",
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane03-2026-10-05",
+      "status": "FAILED_PERMANENTLY_BEFORE_ANY_GIT_OPERATION"
+    },
+    {
+      "actual_git_operations": 0,
+      "canonical_same_object_sha256": "fd9c7694a4119ccea58e021c1019d4bf63a656fd2dec58c59d9a9b3692e945ba",
+      "child_pid": 1249387,
+      "cleanup_failures": [],
+      "error": "frozen canonical selection",
+      "evidence": {
+        "exit": {
+          "bytes": 1157,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane04-2026-10-05/ROOT_OUTCOME_LANE04_REMOTE02_EXIT.json",
+          "sha256": "9a7f1f7d39b67af7f738f1da10e71dabf3359fe62539ead6896237acf83ae5ae"
+        },
+        "failure": {
+          "bytes": 458,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane04-2026-10-05/FAILED01.json",
+          "sha256": "c0719bc5bddc997294c7252f83bf89a8d8b4b51fd45e1719d7f6cd1a461a391c"
+        },
+        "intent": {
+          "bytes": 651,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane04-2026-10-05/ROOT_OUTCOME_LANE04_REMOTE02_INTENT.json",
+          "sha256": "ce0d9d4fac4dfe5740f4c800d4e27cb77370135a6971d60ff7ffd69ab3338524"
+        },
+        "spawn": {
+          "bytes": 435,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane04-2026-10-05/ROOT_OUTCOME_LANE04_REMOTE02_SPAWN.json",
+          "sha256": "0edf2ff9b0ed4702179eb81cb75c5672ffca26cdb5e770d35cd02e93eec8d3c9"
+        },
+        "stderr": {
+          "bytes": 1816,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane04-2026-10-05/ROOT_OUTCOME_LANE04_REMOTE02.stderr",
+          "sha256": "1ee8d253e13f1955bc67ad2ae26b8402054ad940378b0dd2786d938b1b43a08a"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane04-2026-10-05/ROOT_OUTCOME_LANE04_REMOTE02.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "inner_child_exit": 1,
+      "lane": 3,
+      "literal_selection_sha256": "a1eede5dbb8c03770038873635f63e0abdc2efb7b9a01d45ba8c41685662c4cc",
+      "manifest": {
+        "members": [
+          {
+            "bytes": 458,
+            "kind": "file",
+            "mode": 384,
+            "path": "FAILED01.json",
+            "sha256": "c0719bc5bddc997294c7252f83bf89a8d8b4b51fd45e1719d7f6cd1a461a391c"
+          },
+          {
+            "bytes": 1956,
+            "kind": "file",
+            "mode": 384,
+            "path": "REMOTE_CONTRACT01.json",
+            "sha256": "dd80ca473a3624f0755d30f2538614f9663c554f1deed571e625fe8422152c54"
+          },
+          {
+            "bytes": 296,
+            "kind": "file",
+            "mode": 384,
+            "path": "REMOTE_ENTRY_RELEASE01.json",
+            "sha256": "9ff8b158f2a9ff894792ae27d7a7371d332d62b17b52903837b7442eb3f8cdfc"
+          },
+          {
+            "bytes": 5507,
+            "kind": "file",
+            "mode": 384,
+            "path": "REQUEST_GENERATION_DRAFT01.json",
+            "sha256": "3814cb217e7bc54fa4af592f3e7531203ae8b9b0dc622112d8155f4da7bc9703"
+          },
+          {
+            "bytes": 1816,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE04_REMOTE02.stderr",
+            "sha256": "1ee8d253e13f1955bc67ad2ae26b8402054ad940378b0dd2786d938b1b43a08a"
+          },
+          {
+            "bytes": 0,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE04_REMOTE02.stdout",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "bytes": 1157,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE04_REMOTE02_EXIT.json",
+            "sha256": "9a7f1f7d39b67af7f738f1da10e71dabf3359fe62539ead6896237acf83ae5ae"
+          },
+          {
+            "bytes": 651,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE04_REMOTE02_INTENT.json",
+            "sha256": "ce0d9d4fac4dfe5740f4c800d4e27cb77370135a6971d60ff7ffd69ab3338524"
+          },
+          {
+            "bytes": 435,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_OUTCOME_LANE04_REMOTE02_SPAWN.json",
+            "sha256": "0edf2ff9b0ed4702179eb81cb75c5672ffca26cdb5e770d35cd02e93eec8d3c9"
+          },
+          {
+            "bytes": 5490,
+            "kind": "file",
+            "mode": 384,
+            "path": "ROOT_REQUEST01.json",
+            "sha256": "04f0bc9e603b836079c2b76d00e1e5df29d68b2981f6437eda65c1ae68c03236"
+          },
+          {
+            "bytes": 4337,
+            "kind": "file",
+            "mode": 384,
+            "path": "SELECTED_BODIES01.json",
+            "sha256": "a1eede5dbb8c03770038873635f63e0abdc2efb7b9a01d45ba8c41685662c4cc"
+          },
+          {
+            "bytes": 7489,
+            "kind": "file",
+            "mode": 384,
+            "path": "caller01.py",
+            "sha256": "af9844de0db19978337378e81754c920613dbe16f707b8f8d3923c048081d3ce"
+          },
+          {
+            "bytes": 10833,
+            "kind": "file",
+            "mode": 384,
+            "path": "cohort01.py",
+            "sha256": "0bf4cb4ca7f2ce8182b775614be4c54b577f4959852fe191186195a8b0ad75ab"
+          },
+          {
+            "bytes": 2650,
+            "kind": "file",
+            "mode": 384,
+            "path": "flat_primitives01.py",
+            "sha256": "2e8c9b10da14f61f03d1d3bc40359009678e77f124f74ba5ef36d532ad06be8b"
+          },
+          {
+            "bytes": 3975,
+            "kind": "file",
+            "mode": 384,
+            "path": "join01.py",
+            "sha256": "8f2643adcf98eb6e41542f8c93e9fea5de5e41851a69f58f5de0d9f3e8c80010"
+          },
+          {
+            "bytes": 1761,
+            "kind": "file",
+            "mode": 384,
+            "path": "original_tree01.py",
+            "sha256": "b1fec36e21d2658efc467a3a5863ae0a5c7d6c1a3fe5b298e0e048b4aaf20b3d"
+          },
+          {
+            "bytes": 11111,
+            "kind": "file",
+            "mode": 384,
+            "path": "outcome01.py",
+            "sha256": "883127897d7f8f6cd3093bcb4ad74222bcd45b6c66c3c7b593cf7b82e23085ec"
+          },
+          {
+            "bytes": 5419,
+            "kind": "file",
+            "mode": 384,
+            "path": "receipt01.py",
+            "sha256": "8f022373ac8520da227d53f62b1b6d1244379c1e1e52be932961ec7654663cf1"
+          },
+          {
+            "bytes": 17571,
+            "kind": "file",
+            "mode": 384,
+            "path": "recover01.py",
+            "sha256": "34205d66ef924a5d0a89c9ea9ee601dac9935988950dcbbf15f5ad844523596b"
+          },
+          {
+            "bytes": 489,
+            "kind": "file",
+            "mode": 384,
+            "path": "restore_bundle01.py",
+            "sha256": "613e5e5e7dbe3bc4e52a2a5c150bafa3f32fcbcb000649dd6e77c4231fdd3dfb"
+          },
+          {
+            "bytes": 902,
+            "kind": "file",
+            "mode": 384,
+            "path": "space01.py",
+            "sha256": "e9099131dfc99c9ffe85d0161c5b2b33f00f187ce55b975363c02ba7499692cc"
+          },
+          {
+            "kind": "directory",
+            "mode": 448,
+            "path": "utilities"
+          },
+          {
+            "bytes": 3162,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/bounded_git01.py",
+            "sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+          },
+          {
+            "bytes": 3099,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/owned_io.py",
+            "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+          },
+          {
+            "bytes": 24007,
+            "kind": "file",
+            "mode": 384,
+            "path": "utilities/recovery_pax01.py",
+            "sha256": "a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2"
+          },
+          {
+            "bytes": 4670,
+            "kind": "file",
+            "mode": 384,
+            "path": "watch01.py",
+            "sha256": "bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18"
+          }
+        ],
+        "root_mode": 448,
+        "schema_version": 1
+      },
+      "original_parent_exit": null,
+      "parent_pid": 1249384,
+      "review_omission": "Prior review checked parsed table and Git/body/hash joins but omitted receiver encode equality.",
+      "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane04-2026-10-05",
+      "status": "FAILED_PERMANENTLY_BEFORE_ANY_GIT_OPERATION"
+    }
+  ],
+  "new_financial_claims": 0,
+  "numerical_authority": false,
+  "read_bytes": 1473046,
+  "recorded_owned_child_groups_absent": [
+    1249388,
+    1249386,
+    1249385,
+    1249387
+  ],
+  "recorded_pids_absent": [
+    1249382,
+    1249388,
+    1249383,
+    1249386,
+    1249375,
+    1249385,
+    1249384,
+    1249387
+  ],
+  "schema_version": 1,
+  "universal_process_history": null
+}

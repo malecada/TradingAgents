@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/recover01.py", line 273, in <module>
+    entry()
+    ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/recover01.py", line 269, in entry
+    _raise_retained(primary, secondary)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/recover01.py", line 55, in _raise_retained
+    raise primary
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/recover01.py", line 258, in entry
+    main()
+    ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/recover01.py", line 199, in main
+    require(encode(selection) == selection_body, 'frozen canonical selection')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-remote-lane02-2026-10-05/recover01.py", line 38, in require
+    raise ValueError(message)
+ValueError: frozen canonical selection

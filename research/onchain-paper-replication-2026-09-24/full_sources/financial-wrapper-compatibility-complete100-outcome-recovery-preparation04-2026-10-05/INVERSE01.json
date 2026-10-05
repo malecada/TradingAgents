@@ -1,0 +1,60 @@
+{
+  "outcome01.py": [
+    [
+      "-lane%02d-2026-10-05",
+      "-lane%02d-canonical02-2026-10-05"
+    ],
+    [
+      "from cohort01 import VerifiedCohort",
+      "from cohort01 import VerifiedCohort\nfrom receipt01 import encode as selection_encode"
+    ],
+    [
+      "suffix='compatibility-complete100-outcome-lane%02d'",
+      "suffix='compatibility-complete100-outcome-lane%02d-canonical02'"
+    ],
+    [
+      "ROOT_BOUND_OUTCOME_LANE%02d_ENTRY",
+      "ROOT_BOUND_OUTCOME_LANE%02d_CANONICAL02_ENTRY"
+    ],
+    [
+      "ACCEPTED_EXACT_ONE_USE_OUTCOME_LANE%02d_",
+      "ACCEPTED_EXACT_ONE_USE_OUTCOME_LANE%02d_CANONICAL02_"
+    ],
+    [
+      "ROOT_OUTCOME_LANE%02d_",
+      "ROOT_OUTCOME_LANE%02d_CANONICAL02_"
+    ],
+    [
+      "return {'receiver':s,'receipt':receipts,'callers':callers,'receiver_changes':changes}",
+      "selection={'remote_commit':q['commit'],'rows':[dict(path=n,**v) for n,v in sorted(required.items())]}\n return {'receiver':s,'receipt':receipts,'callers':callers,'receiver_changes':changes,'selection_body':selection_encode(selection)}"
+    ],
+    [
+      "R.digest(R.encode(selection))",
+      "R.digest(selection_encode(selection))"
+    ],
+    [
+      "fresh-compatibility-complete100-outcome-lane%02d.git",
+      "fresh-compatibility-complete100-outcome-lane%02d-canonical02.git"
+    ]
+  ],
+  "space01.py": [
+    [
+      "-lane%02d-2026-10-05",
+      "-lane%02d-canonical02-2026-10-05"
+    ]
+  ],
+  "receipt01.py": [
+    [
+      "import math",
+      "import math\nimport json"
+    ],
+    [
+      "def hexpin(value, length=64):",
+      "def encode(value):\n    return (json.dumps(value, sort_keys=True, indent=2) + '\\n').encode()\n\ndef hexpin(value, length=64):"
+    ],
+    [
+      "    rows = selection_rows(selection, required)\n",
+      "    rows = selection_rows(selection, required)\n    R.require(R.digest(encode(selection)) == hexpin(selection_sha256), 'canonical receiver selection digest')\n"
+    ]
+  ]
+}

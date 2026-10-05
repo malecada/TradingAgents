@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/check01.py", line 19, in <module>
+    root=O.lane_root(i,phase);ck('fresh name '+root.name,root in O.W.ROOTS and not os.path.lexists(root));ck('generated caller root '+phase,str(root) in generated['callers'][phase]);seen.add(str(root));ast.parse(generated['callers'][phase])
+                                                                                                          ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/check01.py", line 5, in ck
+    def ck(n,v):assert v,n;checks.append(n)
+                       ^
+AssertionError: generated caller root remote
