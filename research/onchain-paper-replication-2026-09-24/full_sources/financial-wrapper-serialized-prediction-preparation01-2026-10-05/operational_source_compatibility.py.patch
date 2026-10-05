@@ -1,0 +1,105 @@
+--- a/operational_source_compatibility.py
++++ b/operational_source_compatibility.py
+@@ -148,13 +148,14 @@
+  helper_sha=sha(_read(Path(__file__),budget))
+  original_policy=policy;original_raw=raw
+  if SUCCESSOR_ROLE in ad.inputs:
+-  policy=successor_context(policy,raw,read,ad.experiment['source_files'],ad.inputs,helper_sha)
++  policy=successor_context(policy,raw,read,ad.experiment['source_files'],ad.inputs,CONTINUATION_HELPER_SHA if PREDICTION_ROLE in ad.inputs else helper_sha)
++  if PREDICTION_ROLE in ad.inputs:policy=prediction_context(policy,read,ad.experiment['source_files'],ad.inputs,helper_sha)
+  else:validate_contract(policy,helper_sha)
+  hist=policy['historical'];target=policy['target'];consumers=policy['consumers']
+  require(ad.experiment['family']==FAMILY and ad.spec['program_id']==PROGRAM,'same original family required')
+  job=json.loads(read('execution_job'));fixture.schema(job)
+  plan=json.loads(read(job['payload']['plan_input']));fixture.validate_plan(plan)
+- require(SUCCESSOR_ROLE not in ad.inputs or plan['phase']=='continue100','successor only authorizes continuation')
++ require(SUCCESSOR_ROLE not in ad.inputs or plan['phase']==('predict' if PREDICTION_ROLE in ad.inputs else 'continue100'),'successor exact phase required')
+  require(plan['phase'] in consumers and consumers[plan['phase']]=={'experiment':ad.experiment_id,'cell_id':plan['cell_id']} and plan['task']=='classification' and plan['execution']=='eager','exact prospective engineering consumer')
+  require(ad.experiment['parent']==({'complete100':None,'continue100':HISTORICAL_ID,'predict':consumers['continue100']['experiment']}[plan['phase']]),'exact phase parent topology differs')
+  require(plan['closure_input']==target['closure_input'],'target closure role mismatch')
+@@ -268,9 +269,13 @@
+  return {'policy_sha256':policy_sha256,'parent_experiment':parent_identity,'target_map_sha256':sha(canonical(target['installed']))}
+ 
+ 
+-def require_prediction_policy(run,claim):
++def require_prediction_policy(run,claim,old=None,new=None):
+  policy,plan,read,budget,pin=_context(run,_registered_normal)
+  require(plan['phase']=='predict','prediction policy join is unavailable outside prediction')
++ if PREDICTION_ROLE in run.admission.inputs:
++  edge=json.loads(read(PREDICTION_ROLE));continued=json.loads(read(SUCCESSOR_ROLE))
++  validate_prediction_successor_parent(continued,policy,claim,old,new,sha(read(edge['continuation_closure_input'])))
++  return {'policy_sha256':sha(read(PREDICTION_ROLE)),'parent_experiment':claim['experiment_id']}
+  # financial_wrapper_fixture._parent already verified this exact claim and its
+  # actual COMPLETE lifecycle, and preserved the strict scientific comparison.
+  return validate_prediction_parent(policy,pin,sha(read(policy['target']['closure_input'])),claim['experiment_id'],claim['inputs'],claim['experiment']['source_files'],claim['experiment']['cells'])
+@@ -343,3 +348,70 @@
+  require(basis['identity']==RESERVED_ID and basis['source']==basis['design_source']==terminal['source'] and basis['decision']=='accepted-actual-complete-current-successor-byte-recovery' and basis['namespace_reuse_authority'] is False and basis['numerical_authority'] is False,'previous recovery is ancestry, not launch or numerical authority')
+  require(refusal['identity']==ORIGINAL_RESERVED_ID and refusal['decision']=='accepted-actual-terminal-not-admitted-evidence-byte-recovery' and refusal['lifecycle_claim_created'] is False and refusal['namespace_reserved'] is True and refusal['namespace_reuse_authorized'] is False and refusal['numerical_updates']==0 and refusal['numerical_authority'] is False,'refusal ancestry cannot confer claim/refund/reuse authority')
+  require(terminal['lifecycle_accounting']=={'base':18,'basis':'accepted preparation cumulative proof plus unchanged exact claim namespace','complete':1,'failed':3,'highest':20,'prior':0,'refund':False,'remaining':16,'spent':4,'terminal_reserved_without_claim':2},'original spent budget and both no-claim reservations remain unchanged')
++
++PREDICTION_ROLE='prediction_source_successor'
++PREDICTION_PROOFS=(PREDICTION_ROLE+'_review',PREDICTION_ROLE+'_recovery')
++PREDICTION_ID='financial-wrapper-classification-eager-predict-serialized-storage-successor-20261005-01'
++CONTINUATION_SOURCE='6b07c0f841e7d38102814aabb335751fd71fb7f7'
++CONTINUATION_CLAIM_SHA='2dd47f07f3ad3e250ff2e668a8e1a62d88f450635c056c2391cba0d27f9064ea'
++CONTINUATION_POLICY_SHA='f5b6521770ba21dc33c42816093e97739dca51b3abc7e53c4b5c48630fe9ec28'
++CONTINUATION_HELPER_SHA='a775caf89d19c881824e02915b07f1cfa045c1818d3ea927698b24c86159e93e'
++PREDICTION_DELTA=SUCCESSOR_DELTA|{PREFIX+'evaluation.py'}
++
++def validate_prediction_successor(continued,continuation_raw,edge,helper_sha):
++ """Source metadata only; the fixed parent still requires actual COMPLETE evidence."""
++ require(sha(continuation_raw)==CONTINUATION_POLICY_SHA,'exact accepted continuation policy required')
++ parent_edge=json.loads(continuation_raw)
++ require(continued['target']['installed']==parent_edge['installed'] and continued['consumers']['continue100']==parent_edge['consumer'],'accepted continuation projection differs')
++ fields={'schema_version','kind','continuation_policy_sha256','consumer','installed','allowed_delta','continuation_closure_input','parent_recovery_input'}
++ require(type(edge)is dict and set(edge)==fields and type(edge['schema_version'])is int and edge['schema_version']==1 and edge['kind']=='same-family-prediction-source-successor-v1','strict prediction successor schema')
++ require(edge['continuation_policy_sha256']==CONTINUATION_POLICY_SHA and edge['consumer']=={'experiment':PREDICTION_ID,'cell_id':SUCCESSOR_CELL},'fixed prediction identity/cell required')
++ before=continued['target']['installed'];after=edge['installed']
++ require(type(after)is dict and set(after)==set(before) and all(digest(v) for v in after.values()),'complete prediction and continuation maps required')
++ delta=[{'path':k,'old_sha256':before[k],'new_sha256':after[k]} for k in sorted(before) if before[k]!=after[k]]
++ require({x['path'] for x in delta}==PREDICTION_DELTA and edge['allowed_delta']==delta and after[HELPER]==helper_sha,'exact three metadata-source replacements required')
++ for k in ('continuation_closure_input','parent_recovery_input'):
++  require(type(edge[k])is str and edge[k] and '/' not in edge[k] and '..' not in edge[k],'registered prediction ancestry role required')
++ require(edge['continuation_closure_input']!=continued['target']['closure_input'],'continuation closure needs distinct retained role')
++ effective=json.loads(json.dumps(continued));effective['target']['installed']=after;effective['consumers']['predict']=edge['consumer'];return effective
++
++def prediction_context(continued,read,sources,inputs,helper_sha):
++ raw=read(PREDICTION_ROLE);edge=json.loads(raw)
++ effective=validate_prediction_successor(continued,read(SUCCESSOR_ROLE),edge,helper_sha)
++ closure=json.loads(read(edge['continuation_closure_input']))
++ require(type(closure)is dict and set(closure)=={'schema_version','installed','scientific_model','scientific_training','candidate02'} and type(closure['schema_version'])is int and closure['schema_version']==1 and closure['installed']==continued['target']['installed'] and closure['scientific_model']==MODEL and closure['scientific_training']==TRAINING and closure['candidate02']==continued['target']['installed'][PREFIX+'financial_execution.py'],'exact retained continuation closure required')
++ for role in (PREDICTION_ROLE,)+PREDICTION_PROOFS:
++  body=read(role);require(sources.get(inputs[role]['path'])==sha(body),'prediction policy/proofs must be committed source-pinned')
++  if role!=PREDICTION_ROLE:
++   require(json.loads(body)=={'schema_version':1,'kind':role,'decision':'accepted','policy_sha256':sha(raw),'continuation_policy_sha256':CONTINUATION_POLICY_SHA,'historical_map_sha256':sha(canonical(continued['target']['installed'])),'target_map_sha256':sha(canonical(edge['installed'])),'checker_sha256':helper_sha,'parent_recovery_sha256':sha(read(edge['parent_recovery_input']))},'separate exact prediction review/recovery required')
++ return effective
++
++def validate_prediction_successor_parent(continued_edge,effective,claim,old,new,closure_sha):
++ require(claim['experiment_id']==SUCCESSOR_ID and claim['source']==claim['design_source']==CONTINUATION_SOURCE and claim['program_id']==PROGRAM and claim['experiment']['family']==FAMILY and claim['bindings'] is None and claim['bindings_sha256'] is None,'exact genuine continued-parent identity/source required')
++ require(claim['inputs'].get(ROLE,{}).get('sha256')==ORIGINAL_POLICY_SHA and claim['inputs'].get(SUCCESSOR_ROLE,{}).get('sha256')==CONTINUATION_POLICY_SHA and claim['inputs'].get('source_closure',{}).get('sha256')==closure_sha and claim['experiment']['cells']==[SUCCESSOR_CELL],'continued-parent original policy/edge/closure/cell differs')
++ before=continued_edge['installed'];after=effective['target']['installed']
++ require(all(claim['experiment']['source_files'].get(k)==v for k,v in before.items()),'complete continued-parent source map required')
++ require(type(old)is dict and type(new)is dict and set(old)==set(new) and old['source_commit']==CONTINUATION_SOURCE and old['cell_id']==new['cell_id']==SUCCESSOR_CELL,'original and current prediction provenance identity/schema required')
++ require(type(new['source_commit'])is str and len(new['source_commit'])==40 and all(c in '0123456789abcdef' for c in new['source_commit']) and new['source_commit']!=CONTINUATION_SOURCE,'honest current prediction source required')
++ require(old['source_hashes']==sorted(set(before.values())) and new['source_hashes']==sorted(set(after.values())),'both prediction ancestry source lists must authenticate complete maps')
++ require({k:v for k,v in old.items() if k not in ('source_commit','source_hashes')}=={k:v for k,v in new.items() if k not in ('source_commit','source_hashes')},'prediction non-source science differs')
++
++def require_prediction_recovery(run,old,new):
++ """Recheck genuine completed parent at the original recovery boundary."""
++ from ..verify import verify_claim
++ policy,plan,read,budget,pin=_context(run,_registered_normal)
++ require(PREDICTION_ROLE in run.admission.inputs and plan['phase']=='predict' and new['source_commit']==run.admission.source,'exact active prediction context required')
++ prior=json.loads(read(plan['prior_input']));require(prior['parent']==SUCCESSOR_ID and prior['provenance']==old,'exact continued parent descriptor required')
++ directory=run.admission.root/'research_runs'/SUCCESSOR_ID;claim=verify_claim(directory)
++ claim_raw=read(prior['claim_input']);terminal_raw=read(prior['terminal_input']);terminal=json.loads(terminal_raw)
++ require(sha(claim_raw)==CONTINUATION_CLAIM_SHA and json.loads(claim_raw)==claim and claim_raw==_read(directory/'claim.json',budget) and terminal_raw==_read(directory/'complete.json',budget) and not (directory/'failed.json').exists(),'actual continued COMPLETE lifecycle required')
++ require(terminal['status']=='complete' and terminal['experiment_id']==SUCCESSOR_ID and terminal['claim_sha256']==sha(claim_raw),'continued COMPLETE terminal join required')
++ edge=json.loads(read(PREDICTION_ROLE));continued_edge=json.loads(read(SUCCESSOR_ROLE))
++ validate_prediction_successor_parent(continued_edge,policy,claim,old,new,sha(read(edge['continuation_closure_input'])))
++ recovery=json.loads(read(edge['parent_recovery_input']))
++ validate_prediction_recovery_record(recovery,claim_raw,terminal_raw,read(prior['checkpoint_input']))
++ return {'parent_experiment':SUCCESSOR_ID,'prediction_policy_sha256':sha(read(PREDICTION_ROLE))}
++
++
++def validate_prediction_recovery_record(recovery,claim_raw,terminal_raw,checkpoint_raw):
++ require(type(recovery)is dict and recovery.get('kind')=='continue100_outcome_recovery' and recovery.get('decision')=='accepted-actual-continue100-byte-recovery' and recovery.get('source')==CONTINUATION_SOURCE and recovery.get('identity')==SUCCESSOR_ID and recovery.get('claim_sha256')==sha(claim_raw) and recovery.get('terminal_sha256')==sha(terminal_raw) and recovery.get('checkpoint_sha256')==sha(checkpoint_raw),'actual continued-parent outcome recovery required')

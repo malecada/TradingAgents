@@ -1,0 +1,14 @@
+--- a/evaluation.py
++++ b/evaluation.py
+@@ -163,7 +163,10 @@
+     validate_cell_admission(run,cell_id,provenance)
+     old=recovery['provenance'];parent=run.admission.experiment['parent']
+     if parent is None or parent==run.admission.experiment_id:raise ValueError('prediction recovery requires registered prior parent')
+-    if {k:v for k,v in old.items() if k!='source_commit'}!={k:v for k,v in provenance.items() if k!='source_commit'}:raise ValueError('recovery science differs')
++    if 'prediction_source_successor' in run.admission.inputs:
++        from .operational_source_compatibility import require_prediction_recovery
++        require_prediction_recovery(run,old,provenance)
++    elif {k:v for k,v in old.items() if k!='source_commit'}!={k:v for k,v in provenance.items() if k!='source_commit'}:raise ValueError('recovery science differs')
+     completion=json.loads(run.read_input(recovery['completion_input']))
+     checkpoint_info=run.admission.inputs[recovery['checkpoint_input']]
+     run.read_input(recovery['checkpoint_input'])

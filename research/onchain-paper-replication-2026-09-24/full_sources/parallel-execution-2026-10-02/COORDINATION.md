@@ -1,9 +1,10 @@
 # Current parallel coordination
 
-Read [current study state](../../STATE.md). Root alone owns live integration, registrations/accounting/STATE/Git, external preservation/recovery and one launcher.
+Read [current study state](../../STATE.md). Root alone owns live integration/accounting/STATE/Git, actual external preservation/recovery and one numerical launcher.
 
-- continuation_successor_review: open combined final direct-envelope recovery/full preflight/one-use release review; current94-body recovery and fullcurrent3aef accepted. Frozen prior phase checks reused.
-- continuation_successor_implementation: accepted numerical binding/transport correction complete.
-- continuation_successor_admission: completed exact8MiB reader size investigation; use unchanged caller and exact REQUEST_FINAL01 filename. Estimatedfinal bytes8387520/headroom1088; actualpreflight required.
+- continuation_successor_review: NEW serialized-continuation-outcome-review01 owns actual terminal/capture/recovery review. Prior binding review sealed81d417 stays closed.
+- continuation_successor_implementation: serialized prediction preparation01 sealedb7e5 complete; actual parent continuation metadata bound, recovery/release unresolved.
+- continuation_successor_admission: reader-size investigation complete, reused.
+- serialized_prediction_review: source/prospective-entry review dispatched, initial model-capacity error; retry bounded existing agent when available.
 
-Actual currentCAP6b07/375tracked374pins36roles adopted; genuine read-only Admission passed. Complete current93-body increment actually recovered via8selected remote bodies and94freshflat, independentacceptance. Genuine finalrequest83233639 and exactreview ec19 installed; fixed20-body directfinal scope (original16 draft withheld and retained) prepared, source/entry/actualrecovery pending. Both earlier continuation identities remain permanently reserved; fresh serialized identity unused. No numerical job/Owner/claim. Engineering4spent16remaining; allnative/scientific/accounting limits fixed. Accepted/recovered COMPLETE continuation precedes prediction and realgraph-capacity pilot. Reuse accepted immutable evidence and actualincrements only.
+Once-only continuation80533 COMPLETE:99updates to100epochs, strict reference agreement and16prediction replay/maxdiff0. Genuine2ddclaim/da854terminal; Root0/Parent originalexitnull/PIDhistoryincomplete. No numerical job active, no relaunch. Engineering5spent2COMPLETE3FAILED15remaining; paper0/1420fits. Actual capture02 exited0:399new bodies53,391,070B/19shards, all99states retained. Reviewer authenticates capture; Root immediately preserves/retrieves/restores actual increments before dependent prediction. Reuse immutable evidence; no historical recopy, unchanged test matrix or generic framework.

@@ -1,0 +1,36 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/heartbeat-root-checkpoint10-2026-10-04/SERIALIZED_OUTCOME_CAPTURE01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/heartbeat-root-checkpoint10-2026-10-04/SERIALIZED_OUTCOME_CAPTURE02.py
+@@ -11,7 +11,7 @@
+ terminal=json.loads(R.read(P/'attempt','parent-terminal.json'));cleanup=json.loads(R.read(P/'attempt','owned-tree-cleanup.json'));assert terminal['actual_parent_exit'] is None and terminal['actual_child_exit']==0 and terminal['cleanup']['cgroup_absent'];assert not os.path.lexists(terminal['cleanup']['cgroup'])
+ for rec in cleanup['owned_pid_start_records']:
+  proc=Path('/proc')/str(rec['pid'])
+- if proc.exists():assert int((proc/'stat').read_text().rsplit(')',1)[1].split()[19])!=rec['ticks']
++ if proc.exists():assert int((proc/'stat').read_text().rsplit(')',1)[1].split()[19])!=int(rec['ticks'])
+ basis=review/'FULL_CURRENT_RECOVERY_PROOF01.json';assert R.digest(R.read(review,basis.name))=='3aef2b627c679d753a43b7055ea412fcf55a34b3e51d82afbe666c6c45a245b9';oldraw=R.read(F/'financial-wrapper-serialized-storage-current-capture01-2026-10-05/snapshot','COMPOSITION01.json');assert R.digest(oldraw)=='c64ea59653e5acca064b21c2e0d4a9f93718fc9f82c923d3fbe7d045136daa4b';old=json.loads(oldraw)
+ assert R.digest(R.read(review,'FINAL_ENVELOPE_RECOVERY_CHECK01.json'))=='40a2e5ab80678acdd391230e9f639a393f42067ec01aec7e656d3d54e825347b'
+ def metadata(base,omit_git=False):
+@@ -30,7 +30,8 @@
+ assert sum(n.endswith('/state.pt') and n.startswith(prefixes[3]+'/checkpoints/') for n in new)==99
+ gitbefore=metadata(CAP/'.git');assert gitbefore==[{k:v for k,v in r.items() if k!='sha256'} for r in old['scopes']['Git']['manifest']['members']]
+ head=R.read(CAP/'.git','HEAD').decode().strip();assert head.startswith('ref: ') and R.read(CAP/'.git',head[5:]).decode().strip()==source
+-pk={r['path']:r for r in old['scopes']['Parent']['manifest']['members']};direct=json.loads(R.read(F/'financial-wrapper-serialized-storage-final-direct01-2026-10-05','FINAL_TYPED_SCOPE01.json'));final=next(v for v in direct['original_members'] if v['original_path']==str(P/'REQUEST_FINAL01.json'));pk['REQUEST_FINAL01.json']={k:final[k] for k in ('kind','mode','bytes','sha256')}|{'path':'REQUEST_FINAL01.json'};pbefore=metadata(P);pa={r['path']:r for r in pbefore};assert set(pk)<=set(pa)
++assert stat.S_IMODE(P.lstat().st_mode)==old['scopes']['Parent']['manifest']['root_mode'] and stat.S_IMODE((CAP/'.git').lstat().st_mode)==old['scopes']['Git']['manifest']['root_mode']
++pk={r['path']:r for r in old['scopes']['Parent']['manifest']['members']};directraw=R.read(F/'financial-wrapper-serialized-storage-final-direct01-2026-10-05','FINAL_TYPED_SCOPE01.json');assert R.digest(directraw)=='49d562d38330b03ab512b34c34fb31518a4a0cc5252242bb4938ffca9b485f18';direct=json.loads(directraw);final=next(v for v in direct['original_members'] if v['original_path']==str(P/'REQUEST_FINAL01.json'));pk['REQUEST_FINAL01.json']={k:final[k] for k in ('kind','mode','bytes','sha256')}|{'path':'REQUEST_FINAL01.json'};pbefore=metadata(P);pa={r['path']:r for r in pbefore};assert set(pk)<=set(pa)
+ for n,row in pk.items():assert pa[n]=={k:v for k,v in row.items() if k!='sha256'}
+ pnew=set(pa)-set(pk);assert pnew and all(n=='attempt' or n.startswith('attempt/') for n in pnew)
+ out.mkdir(mode=0o700);snapshot=out/'new-bodies';snapshot.mkdir(mode=0o700);mapped={};total=0
+@@ -50,12 +51,13 @@
+  if row['kind']=='file' and n in pnew:
+   b=R.read(P,n);assert len(b)==row['bytes'];save('Parent/'+n,b);pc.append(dict(row,sha256=R.digest(b)))
+  else:pc.append(pk.get(n,row))
++assert R.digest(R.read(review,'MANIFEST01.json'))=='81d41754f0f5fd8aef18a93da7af1024d187df177f9b9a5a78c6a38beebf1a2f'
+ closed=R.scan(review)
+ for row in closed['members']:
+  if row['kind']=='file':save('closed-preparation-review/'+row['path'],R.read(review,row['path']))
+ phase=('LIVE_SAMPLE01.json','CLAIM_CHECK01.json','TERMINAL_RAW_INDEX01.json','OUTCOME_CHECK01.json');phasepins={n:R.digest(R.read(outcome,n)) for n in phase}
+ for n in phase:save('outcome-phase/'+n,R.read(outcome,n))
+-rootnames=('SERIALIZED_NUMERICAL_ROOT01.stdout','SERIALIZED_NUMERICAL_ROOT01.stderr','SERIALIZED_NUMERICAL_ROOT_EXIT01.json','SERIALIZED_GENUINE_CLAIM_OBSERVED01.json','SERIALIZED_FULL_PREFLIGHT01.json','SERIALIZED_FULL_PREFLIGHT01.stdout','SERIALIZED_FULL_PREFLIGHT01.stderr','SERIALIZED_FRESH_ELIGIBILITY01.json','SERIALIZED_OUTCOME_CAPTURE01.py')
++rootnames=('SERIALIZED_NUMERICAL_ROOT01.stdout','SERIALIZED_NUMERICAL_ROOT01.stderr','SERIALIZED_NUMERICAL_ROOT_EXIT01.json','SERIALIZED_GENUINE_CLAIM_OBSERVED01.json','SERIALIZED_FULL_PREFLIGHT01.json','SERIALIZED_FULL_PREFLIGHT01.stdout','SERIALIZED_FULL_PREFLIGHT01.stderr','SERIALIZED_FRESH_ELIGIBILITY01.json','SERIALIZED_OUTCOME_CAPTURE02.py')
+ for n in rootnames:save('Root/'+n,R.read(C,n))
+ composition={'schema_version':1,'kind':'closed-continuation-actual-byte-increment','identity':i,'source':source,'basis':{'path':str(basis),'sha256':'3aef2b627c679d753a43b7055ea412fcf55a34b3e51d82afbe666c6c45a245b9'},'final_envelope_basis':{'path':str(review/'FINAL_ENVELOPE_RECOVERY_CHECK01.json'),'sha256':'40a2e5ab80678acdd391230e9f639a393f42067ec01aec7e656d3d54e825347b'},'capsule':{'schema_version':1,'root_mode':old['capsule']['root_mode'],'members':capcurrent},'Parent':{'root':str(P),'manifest':{'schema_version':1,'root_mode':old['scopes']['Parent']['manifest']['root_mode'],'members':pc}},'Git':old['scopes']['Git'],'Git_logical_objects':454,'closed_preparation_review':{'root':str(review),'manifest':closed},'outcome_phase':{'root':str(outcome),'exact_files':phasepins},'materialized':mapped,'accepted_unchanged_CAP_regular_reused':856,'accepted_unchanged_Parent_regular_reused':12,'accepted_unchanged_Git_regular_reused':479,'all99_checkpoint_states_included':True,'original_parent_exit':None,'actual_Root_exit':0,'actual_child_exit':0,'native_PID_history_complete':False,'numerical_updates':99,'paper_financial_fits':0,'POSIX_reconstruction':False,'installed_runtime_body_recovery':False,'immutable_writer_exclusion':False,'external_recovery':None,'qualification':'Complete retained CAP/Git/Parent byte scope through accepted current and final direct byte bases plus every new case-owned body, all99opaque epoch checkpoints, fixed genuine review and Root records. No unchanged empirical-store recopy, numerical rerun, fabricated original null or full-size capacity claim.'}
+ R.put(snapshot/'COMPOSITION01.json',composition);assert before==metadata(CAP,True) and pbefore==metadata(P) and gitbefore==metadata(CAP/'.git');R.same(review,closed);assert all(R.digest(R.read(outcome,n))==pin for n,pin in phasepins.items());result=S.capture({'increment':snapshot},out/'shards',start);assert before==metadata(CAP,True) and pbefore==metadata(P) and gitbefore==metadata(CAP/'.git');R.same(review,closed);assert all(R.digest(R.read(outcome,n))==pin for n,pin in phasepins.items())

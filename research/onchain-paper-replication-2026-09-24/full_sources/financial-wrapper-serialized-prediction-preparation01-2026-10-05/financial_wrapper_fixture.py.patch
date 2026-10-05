@@ -1,0 +1,32 @@
+--- a/financial_wrapper_fixture.py
++++ b/financial_wrapper_fixture.py
+@@ -44,6 +44,7 @@
+  return {'rlimit_fsize':FILE}
+ 
+ def require_compatibility_roles(inputs):
++ require('prediction_source_successor' not in inputs or 'continuation_source_successor' in inputs,'prediction successor requires continuation authority')
+  require('continuation_source_successor' not in inputs or 'operational_source_compatibility' in inputs,'successor requires original compatibility authority')
+ 
+ def admitted(ad,job):
+@@ -271,6 +272,7 @@
+  return {'bytes':len(body),'sha256':sha(body)}
+ 
+ def _parent(run,p,prov):
++ require_compatibility_roles(run.admission.inputs)
+  from ..verify import verify_claim
+  from .provenance import file_hash
+  value=json.loads(run.read_input(p['prior_input']));fields={'parent','claim_input','terminal_input','checkpoint_input','completion_input','provenance'}
+@@ -284,11 +286,11 @@
+  if 'operational_source_compatibility' in run.admission.inputs and p['phase']=='continue100':
+   from .operational_source_compatibility import require_parent_compatibility
+   require_parent_compatibility(run,value['provenance'],prov,run.admission.root/run.admission.inputs[value['checkpoint_input']]['path'])
+- else:
++ elif 'prediction_source_successor' not in run.admission.inputs:
+   require({k:v for k,v in value['provenance'].items() if k!='source_commit'}=={k:v for k,v in prov.items() if k!='source_commit'},'prior scientific provenance differs')
+  if 'operational_source_compatibility' in run.admission.inputs and p['phase']=='predict':
+   from .operational_source_compatibility import require_prediction_policy
+-  require_prediction_policy(run,claim)
++  require_prediction_policy(run,claim,value['provenance'],prov)
+  info=run.admission.inputs[value['checkpoint_input']];run.read_input(value['checkpoint_input']);checkpoint=run.admission.root/info['path']
+  manifest=json.loads(checkpoint.read_bytes())
+  require(manifest['provenance']==value['provenance'],'prior artifact provenance differs')
