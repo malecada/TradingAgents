@@ -1,0 +1,14 @@
+test_actual_original_child_four_mib_limit (accepted_unchanged_checks.Watch.test_actual_original_child_four_mib_limit) ... ok
+test_exact_inverse_caps_and_owned_active_caller (accepted_unchanged_checks.Watch.test_exact_inverse_caps_and_owned_active_caller) ... ok
+test_outside_objects_hardlink_remains_strict (accepted_unchanged_checks.Watch.test_outside_objects_hardlink_remains_strict) ... ok
+test_oversize_and_zero_link_immediate_fatal (accepted_unchanged_checks.Watch.test_oversize_and_zero_link_immediate_fatal) ... ok
+test_persistent_links_strict_default_and_three_active_attempts (accepted_unchanged_checks.Watch.test_persistent_links_strict_default_and_three_active_attempts) ... ok
+test_transient_actual_links_initial_and_rejoin_red_green (accepted_unchanged_checks.Watch.test_transient_actual_links_initial_and_rejoin_red_green) ... ok
+test_actual_observed_breach_cannot_shrink_into_success (__main__.Precedence.test_actual_observed_breach_cannot_shrink_into_success) ... ok
+test_exact_inverse_and_unchanged_retry_caller_context (__main__.Precedence.test_exact_inverse_and_unchanged_retry_caller_context) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.069s
+
+OK
+COUNTEREXAMPLE_ROWS [{"bound": "logical", "green": {"corrected_immediate_fatal": true, "retry_requests": 0}, "red": {"accepted": {"allocated_bytes": 16384, "complete_attempts": 2, "logical_bytes": 2, "measurement": "complete sampled namespace; maximum of two regular extent observations", "members": 4, "regular_extent_changes": 0, "seconds": 0.00032825400012370665}, "withheld_accepted_after_observed_breach": true}, "stage": "initial"}, {"bound": "allocated", "green": {"corrected_immediate_fatal": true, "retry_requests": 0}, "red": {"accepted": {"allocated_bytes": 12288, "complete_attempts": 2, "logical_bytes": 0, "measurement": "complete sampled namespace; maximum of two regular extent observations", "members": 4, "regular_extent_changes": 0, "seconds": 0.0003080000005866168}, "withheld_accepted_after_observed_breach": true}, "stage": "initial"}, {"bound": "logical", "green": {"corrected_immediate_fatal": true, "retry_requests": 0}, "red": {"accepted": {"allocated_bytes": 16384, "complete_attempts": 2, "logical_bytes": 2, "measurement": "complete sampled namespace; maximum of two regular extent observations", "members": 4, "regular_extent_changes": 0, "seconds": 0.0003076510001847055}, "withheld_accepted_after_observed_breach": true}, "stage": "rejoin"}, {"bound": "allocated", "green": {"corrected_immediate_fatal": true, "retry_requests": 0}, "red": {"accepted": {"allocated_bytes": 12288, "complete_attempts": 2, "logical_bytes": 0, "measurement": "complete sampled namespace; maximum of two regular extent observations", "members": 4, "regular_extent_changes": 0, "seconds": 0.0003077910005231388}, "withheld_accepted_after_observed_breach": true}, "stage": "rejoin"}]

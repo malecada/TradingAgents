@@ -1,0 +1,51 @@
+--- a/watch01.py
++++ b/watch01.py
+@@ -10,13 +10,20 @@
+  if not v:raise ValueError(m)
+ def signature(s):return (s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns,s.st_blocks)
+ class ChangingTree(ValueError):pass
+-def _sample(root):
++def _sample(root,owned_fetch_objects=None):
+  root=Path(root);require(root.is_absolute() and root.resolve()==root,'canonical owned root');begun=time.monotonic();rows=[];logical=allocated=0;saved={};device=root.stat().st_dev
++ if owned_fetch_objects is not None:
++  require(isinstance(owned_fetch_objects,Path) and owned_fetch_objects.is_absolute() and owned_fetch_objects.resolve()==owned_fetch_objects and owned_fetch_objects.name=='objects' and owned_fetch_objects.is_relative_to(root) and owned_fetch_objects!=root,'canonical owned fetch objects scope')
++  scope=owned_fetch_objects.lstat();require(stat.S_ISDIR(scope.st_mode) and scope.st_dev==device,'owned fetch objects directory/device')
+  def visit(p,depth):
+   nonlocal logical,allocated
+   require(depth<=POLICY['depth'] and time.monotonic()-begun<POLICY['sample_seconds'],'finite complete census');s=p.lstat();require(p.resolve()==p and s.st_dev==device and (stat.S_ISDIR(s.st_mode) or stat.S_ISREG(s.st_mode)),'owned tree type/path/device');require(len(rows)<POLICY['members'],'whole member cap');saved[p]=signature(s);allocated+=s.st_blocks*512
+   if stat.S_ISREG(s.st_mode):
+-   require(s.st_nlink==1 and s.st_size<=POLICY['file'],'owned per-file/hardlink bound');logical+=s.st_size
++   require(s.st_size<=POLICY['file'],'owned per-file/hardlink bound')
++   if s.st_nlink!=1:
++    require(owned_fetch_objects is not None and p.is_relative_to(owned_fetch_objects) and s.st_nlink>1,'owned per-file/hardlink bound')
++    raise ChangingTree('owned regular hardlink observed: '+str(p.relative_to(root))+' nlink='+str(s.st_nlink))
++   logical+=s.st_size
+   require(logical<=POLICY['logical'] and allocated<=POLICY['allocated'],'whole logical/allocated cap');rows.append((str(p.relative_to(root)),s.st_size,s.st_blocks*512))
+   if stat.S_ISDIR(s.st_mode):
+    # Iteration is closed before final descriptor-free whole namespace rejoin.
+@@ -38,7 +45,10 @@
+   current=p.lstat();now=signature(current)
+   require(current.st_dev==device and (stat.S_ISDIR(current.st_mode) or stat.S_ISREG(current.st_mode)),'owned rejoin type/device')
+   if stat.S_ISREG(current.st_mode):
+-   require(current.st_nlink==1 and current.st_size<=POLICY['file'],'owned rejoin per-file/hardlink bound')
++   require(current.st_size<=POLICY['file'],'owned rejoin per-file/hardlink bound')
++   if current.st_nlink!=1:
++    require(owned_fetch_objects is not None and p.is_relative_to(owned_fetch_objects) and current.st_nlink>1,'owned rejoin per-file/hardlink bound')
++    raise ChangingTree('owned rejoin regular hardlink observed: '+str(p.relative_to(root))+' nlink='+str(current.st_nlink))
+    if now[:4]!=s[:4]:raise ChangingTree('owned regular identity changed')
+    # Count both observed endpoints of every regular body. Growing Git pack
+    # extents do not imply incomplete directory membership. This is a sampled
+@@ -53,11 +63,11 @@
+  return {'logical_bytes':logical,'allocated_bytes':allocated,'members':len(rows),'seconds':time.monotonic()-begun,'regular_extent_changes':extent_changes,'measurement':'complete sampled namespace; maximum of two regular extent observations'}
+ 
+ 
+-def census(root):
++def census(root,owned_fetch_objects=None):
+  begun=time.monotonic();last=None
+  for attempt in range(3):
+   try:
+-   result=_sample(root)
++   result=_sample(root,owned_fetch_objects=owned_fetch_objects)
+    require(time.monotonic()-begun<POLICY['sample_seconds'],'complete sampled census deadline')
+    result['complete_attempts']=attempt+1
+    return result

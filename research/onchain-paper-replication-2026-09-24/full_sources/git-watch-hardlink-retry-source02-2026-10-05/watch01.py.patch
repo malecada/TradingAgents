@@ -1,0 +1,36 @@
+--- a/watch01.py
++++ b/watch01.py
+@@ -20,10 +20,11 @@
+   require(depth<=POLICY['depth'] and time.monotonic()-begun<POLICY['sample_seconds'],'finite complete census');s=p.lstat();require(p.resolve()==p and s.st_dev==device and (stat.S_ISDIR(s.st_mode) or stat.S_ISREG(s.st_mode)),'owned tree type/path/device');require(len(rows)<POLICY['members'],'whole member cap');saved[p]=signature(s);allocated+=s.st_blocks*512
+   if stat.S_ISREG(s.st_mode):
+    require(s.st_size<=POLICY['file'],'owned per-file/hardlink bound')
++   logical+=s.st_size
++   require(logical<=POLICY['logical'] and allocated<=POLICY['allocated'],'whole logical/allocated cap')
+    if s.st_nlink!=1:
+     require(owned_fetch_objects is not None and p.is_relative_to(owned_fetch_objects) and s.st_nlink>1,'owned per-file/hardlink bound')
+     raise ChangingTree('owned regular hardlink observed: '+str(p.relative_to(root))+' nlink='+str(s.st_nlink))
+-   logical+=s.st_size
+   require(logical<=POLICY['logical'] and allocated<=POLICY['allocated'],'whole logical/allocated cap');rows.append((str(p.relative_to(root)),s.st_size,s.st_blocks*512))
+   if stat.S_ISDIR(s.st_mode):
+    # Iteration is closed before final descriptor-free whole namespace rejoin.
+@@ -46,15 +47,16 @@
+   require(current.st_dev==device and (stat.S_ISDIR(current.st_mode) or stat.S_ISREG(current.st_mode)),'owned rejoin type/device')
+   if stat.S_ISREG(current.st_mode):
+    require(current.st_size<=POLICY['file'],'owned rejoin per-file/hardlink bound')
+-   if current.st_nlink!=1:
+-    require(owned_fetch_objects is not None and p.is_relative_to(owned_fetch_objects) and current.st_nlink>1,'owned rejoin per-file/hardlink bound')
+-    raise ChangingTree('owned rejoin regular hardlink observed: '+str(p.relative_to(root))+' nlink='+str(current.st_nlink))
+-   if now[:4]!=s[:4]:raise ChangingTree('owned regular identity changed')
+    # Count both observed endpoints of every regular body. Growing Git pack
+    # extents do not imply incomplete directory membership. This is a sampled
+    # bound, not immutable body content or a continuously atomic quota.
+    logical+=max(s[4],now[4])-s[4]
+    allocated+=max(s[7],now[7])*512-s[7]*512
++   require(logical<=POLICY['logical'] and allocated<=POLICY['allocated'],'whole rejoin logical/allocated cap')
++   if current.st_nlink!=1:
++    require(owned_fetch_objects is not None and p.is_relative_to(owned_fetch_objects) and current.st_nlink>1,'owned rejoin per-file/hardlink bound')
++    raise ChangingTree('owned rejoin regular hardlink observed: '+str(p.relative_to(root))+' nlink='+str(current.st_nlink))
++   if now[:4]!=s[:4]:raise ChangingTree('owned regular identity changed')
+    extent_changes+=int(now!=s)
+   elif now!=s:raise ChangingTree('incomplete/changing directory census refused')
+   require(logical<=POLICY['logical'] and allocated<=POLICY['allocated'],'whole rejoin logical/allocated cap')

@@ -1,0 +1,24 @@
+--- a/recover01.py
++++ b/recover01.py
+@@ -24,10 +24,10 @@
+ WATCHES = []
+ BASELINE = None
+ 
+-def watch():
++def watch(owned_fetch_objects=None):
+     global BASELINE
+     require(len(WATCHES) < W.POLICY['samples'] and time.monotonic()-START < 600, 'finite whole-tree supervision')
+-    row = W.census(HERE)
++    row = W.census(HERE, owned_fetch_objects=owned_fetch_objects)
+     if BASELINE is None: BASELINE = dict(row)
+     WATCHES.append(row)
+     return row
+@@ -116,7 +116,7 @@
+             os.set_blocking(stream.fileno(), False)
+             poller.register(stream, selectors.EVENT_READ)
+         while poller.get_map():
+-            watch()
++            watch(owned_fetch_objects=Path(cwd)/'objects' if args and args[0]=='fetch' and Path(cwd)==HERE/'fresh-serialized-storage-source01.git' and child.poll() is None else None)
+             require(time.monotonic() - begun < 60, '60-second per-operation deadline')
+             require(shutil.disk_usage(HERE).free >= FLOOR, '10GiB observed free-space floor')
+             for key, event in poller.select(.1):
