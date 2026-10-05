@@ -1,0 +1,169 @@
+{
+  "authenticated_members": [
+    {
+      "end_utc": "2022-06-14T00:00:00Z",
+      "expected_rows": 1109435,
+      "format": "projected_zstd",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-13.json",
+      "sha256": "89a337e96f886bcf0cc076562d4bbe7ee9f58ee55ce0034e792577911bcf04b3",
+      "start_utc": "2022-06-13T00:00:00Z"
+    },
+    {
+      "end_utc": "2022-06-15T00:00:00Z",
+      "expected_rows": 1086757,
+      "format": "projected_zstd",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-14.json",
+      "sha256": "d20442fbcb8b455fed90d1390ec56bc24e5d3b2bd369e96b785c79c789b80ad7",
+      "start_utc": "2022-06-14T00:00:00Z"
+    },
+    {
+      "end_utc": "2022-06-16T00:00:00Z",
+      "expected_rows": 1097000,
+      "format": "projected_zstd",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-15.json",
+      "sha256": "238fb121b282dce970ca7cbdaff102769a11817ebe42cfac16b85e5584dfc6f7",
+      "start_utc": "2022-06-15T00:00:00Z"
+    },
+    {
+      "end_utc": "2022-06-17T00:00:00Z",
+      "expected_rows": 1100312,
+      "format": "projected_zstd",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-16.json",
+      "sha256": "3c221307faaa331561d8251630874befc885872e1f06e9fed2821141999edc5d",
+      "start_utc": "2022-06-16T00:00:00Z"
+    },
+    {
+      "end_utc": "2022-06-18T00:00:00Z",
+      "expected_rows": 1110579,
+      "format": "projected_zstd",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-17.json",
+      "sha256": "42afe182bbf8e9a3689008a01f65ea43e986602c03ad058e89a37c72d3de4151",
+      "start_utc": "2022-06-17T00:00:00Z"
+    },
+    {
+      "end_utc": "2022-06-19T00:00:00Z",
+      "expected_rows": 1058336,
+      "format": "projected_zstd",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-18.json",
+      "sha256": "a9eaea951a39f052cfc75dc87b80427ef60688653fb1cdef18fcbbf3426cafe2",
+      "start_utc": "2022-06-18T00:00:00Z"
+    },
+    {
+      "end_utc": "2022-06-20T00:00:00Z",
+      "expected_rows": 1018674,
+      "format": "projected_zstd",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-19.json",
+      "sha256": "6f97d58f35f84c7e302b22b9076819a5ed14f94175037d6ec57d9d7bf72119a2",
+      "start_utc": "2022-06-19T00:00:00Z"
+    }
+  ],
+  "checked_joins": [
+    "failed terminal to claim",
+    "claim and phase intent to original source index",
+    "seven original source mapping body hashes to source index and intent",
+    "exact seven graph source hashes and contiguous full-week intervals",
+    "7581093 expected rows equals phase rows and graph raw_count",
+    "complete worker result and closed cell007 with worker_exit_code0",
+    "postmortem artifact-index pins graph manifest/result/intent/cell007",
+    "postmortem ledger preserves decode_graph component complete",
+    "current selection pins same graph manifest"
+  ],
+  "claim_sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca",
+  "current_source_pins": {
+    "research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py": "0bc95f7e33d97485cd9e2fba6802dde168c26aa162b987ef762f9e28ee3a1522",
+    "research/onchain-paper-replication-2026-09-24/pilot_successor_02/run.py": "90dc7fc1fb6780174502e395db073d27c511a30aea8762ea968f256e4820c5e6",
+    "tradingagents/research/onchain_replication/graph_production.py": "ef5ee5e2c8f6438e4e334d1a468397ad6f60e176d157e7849b7132737c7c85e8"
+  },
+  "decision": "ORIGINAL_CONTIGUOUS_COVERAGE_METADATA_AUTHENTICATED_CURRENT_REUSE_SCHEMA_UNAVAILABLE",
+  "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+  "graph_manifest_sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59",
+  "limits": [
+    "Array bodies and raw spans not read, rehashed or decoded.",
+    "Postmortem index is a retained hash journal; this investigation does not independently establish external recovery or a signed terminal commitment to outputs (failed terminal output_sha256 is empty).",
+    "Current source hashes are observations, not a fresh audit of the entire historical Git tree.",
+    "No numerical imports, authority objects, claims or network."
+  ],
+  "missing_evidence_for_unmodified_modern_consumer": [
+    "No original graph/coverage.json exists.",
+    "No legacy modern graph_production plan identity exists; old source-index is not silently relabelled as a modern plan.",
+    "No original proof with source_input/source_manifest_sha256 member fields was emitted by legacy phase."
+  ],
+  "modern_consumer": "graph_production._verify_graph_coverage requires exact schema_version/asset/week/end_utc/graph_config_hash/graph_manifest_sha256/members/claim_sha256/plan_sha256; existing legacy bodies cannot pass unchanged.",
+  "next_step": "Root may commission a narrow separately reviewed legacy evidence bridge consuming these unchanged genuine bodies and preserving failed-job/completed-component distinction. Do not fabricate original coverage, assign the old index a modern plan role, or rebuild the closed graph. No such bridge was implemented or authorized by this report.",
+  "original_claim_status": "failed; completed graph component preserved",
+  "original_producer_behavior": "phase.perform(decode_graph) used declared weekly index, decode_eth and build_weekly with full source interval, then save_graph and count/hash result. It did not emit modern coverage proof. No separate aggregation receipt exists in decode_graph directory.",
+  "pins": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-end-to-end-pilot-preparation01-2026-10-05/INPUT_SELECTION_DRAFT01.json": {
+      "bytes": 6301,
+      "sha256": "a855951c6490a22efca0dec9e4e2b02e44a0a3644eab8cbf2ca4761e2595cee0"
+    },
+    "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-13.json": {
+      "bytes": 16022,
+      "sha256": "89a337e96f886bcf0cc076562d4bbe7ee9f58ee55ce0034e792577911bcf04b3"
+    },
+    "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-14.json": {
+      "bytes": 16021,
+      "sha256": "d20442fbcb8b455fed90d1390ec56bc24e5d3b2bd369e96b785c79c789b80ad7"
+    },
+    "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-15.json": {
+      "bytes": 16021,
+      "sha256": "238fb121b282dce970ca7cbdaff102769a11817ebe42cfac16b85e5584dfc6f7"
+    },
+    "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-16.json": {
+      "bytes": 16020,
+      "sha256": "3c221307faaa331561d8251630874befc885872e1f06e9fed2821141999edc5d"
+    },
+    "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-17.json": {
+      "bytes": 12249,
+      "sha256": "42afe182bbf8e9a3689008a01f65ea43e986602c03ad058e89a37c72d3de4151"
+    },
+    "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-18.json": {
+      "bytes": 12246,
+      "sha256": "a9eaea951a39f052cfc75dc87b80427ef60688653fb1cdef18fcbbf3426cafe2"
+    },
+    "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-19.json": {
+      "bytes": 12247,
+      "sha256": "6f97d58f35f84c7e302b22b9076819a5ed14f94175037d6ec57d9d7bf72119a2"
+    },
+    "research/onchain-paper-replication-2026-09-24/pilot_successor_02/source-index.json": {
+      "bytes": 29870,
+      "sha256": "18f2548bdec2602995935d951075162537b6369b8bf18647cdc7a96962cffc1a"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json": {
+      "bytes": 1604,
+      "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json": {
+      "bytes": 19664,
+      "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json": {
+      "bytes": 817,
+      "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-007.json": {
+      "bytes": 920,
+      "sha256": "7922b9cb48fc4f72c0ba008e3de4161e67934c655853f21001baa37873a27a27"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/artifact-index.json": {
+      "bytes": 18389,
+      "sha256": "208d00df2c42441ee512ca31011bed336de75282a3c492fd88f4994c3c3d3f59"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/cell-ledger.json": {
+      "bytes": 28400,
+      "sha256": "09750888389e7bba366818aa4134ae07e72f6fdeeb4af59594e7f0f627cc3e5c"
+    },
+    "research_runs/eth-paper-resource-pilot-20260924-02/claim.json": {
+      "bytes": 50765,
+      "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+    },
+    "research_runs/eth-paper-resource-pilot-20260924-02/failed.json": {
+      "bytes": 490,
+      "sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+    }
+  },
+  "schema_version": 1,
+  "selected_week": "2022-06-13",
+  "source_commit": "c6b568d4b1c177ab94ac37fbad462c2decc721c0",
+  "source_index_sha256": "18f2548bdec2602995935d951075162537b6369b8bf18647cdc7a96962cffc1a"
+}

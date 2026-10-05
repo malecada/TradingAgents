@@ -1,7 +1,9 @@
-# Coordination — narrow real-data pilot goal
+# Coordination — real-data pilot goal
 
-Root: integration, eligible input assembly, pilot registration/accounting, STATE/Git/preservation and one numerical launcher. No pilot claim or numerical job active. Broader study and heartbeat remain paused.
+Root owns live integration, exact registrations/accounting,STATE/Git, actual external preservation/recovery and one numerical launcher. Broader study/heartbeat paused. No real-data claim or native job active.
 
-`continuation_successor_review`: completed the optional memory.peak changed-seam review in `full_sources/real-data-pilot-peak-telemetry-review01-2026-10-05`, accepted against the actual 45-pass resource completion. No pilot admission or launch authority. All agents completed/interrupted; historical raw review remains incomplete.
+Legacy investigation/validator and independent review completed; source bridge is accepted. Corrected training helper and its independent81-state-tensor comparison are accepted for internal engineering only. All bounded agents completed; no active delegation.
 
-Next Root action: authenticate selected legacy graph reuse and actual eligible batch, then exact resource-pilot integration/registration. Preserve unused engineering namespaces; do not launch a historical checkpoint's suggested case unless this goal requires it. See [current checkpoint](../../STATE.md).
+Root next: reviewed retained-ledger offload preparation, proposed71 allowance and first graph-stage registration; implement genuine imported-original MCM/training caller. All draft claims unused. Source/admission/capacity remain separate; never rerun old jobs or substitute fresh dictionary/synthetic fixture.
+
+See [current checkpoint](../../STATE.md).

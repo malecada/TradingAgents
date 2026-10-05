@@ -109,12 +109,7 @@ def _source_inventory(run, plan):
 
 
 
-def _verify_graph_coverage(proof, graph, manifest_sha, *, read_input=None):
-    if isinstance(proof, dict) and proof.get('schema_version') == 2:
-        if read_input is None:
-            raise ValueError('legacy graph evidence requires admitted original inputs')
-        from .graph_legacy_coverage import verify_legacy_coverage
-        return verify_legacy_coverage(proof, graph, manifest_sha, read_input)
+def _verify_graph_coverage(proof, graph, manifest_sha):
     required = {'schema_version','asset','week','end_utc','graph_config_hash',
                 'graph_manifest_sha256','members','claim_sha256','plan_sha256'}
     if (not isinstance(proof,dict) or set(proof) != required or proof['schema_version'] != 1
@@ -189,7 +184,7 @@ def produce_registered_graphs(run, plan_input):
                         or list(graph.source_hashes) != reference['source_hashes']):
                     raise ValueError('reused graph identity/source membership differs')
                 coverage_raw = run.read_input(reference['coverage_input'])
-                _verify_graph_coverage(json.loads(coverage_raw),graph,digest(raw),read_input=run.read_input)
+                _verify_graph_coverage(json.loads(coverage_raw),graph,digest(raw))
                 coverage_path = local_path(root,run.admission.inputs[reference['coverage_input']]['path'])
                 ref = {'manifest_path': str(path.relative_to(root)), 'manifest_sha256': digest(raw),
                        'raw_count': graph.raw_count, 'admitted_count': graph.admitted_count,

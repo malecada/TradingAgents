@@ -1,0 +1,7 @@
+Both requested fidelity corrections implemented; no other scope changed.
+
+Eligible indices must now equal range(first, first+16). The [0..14,16] counterexample refuses before output birth and before the batch factory is called; calendar-date gaps are not checked or confused with row gaps here.
+
+The API adds model_execution=None. The supplied policy is frozen before model birth, validated by existing model.validate_execution, and compared with both model.execution and model.graph.execution. None selects eager and refuses an implicitly streamed factory. Explicit existing streamed policy is accepted without adding a backend or altering model architecture. The selected policy is retained in checkpoint.pt and complete.json. This is an internal selector only: actual pilot registration and genuine Run/Binding/imported Owner authorization remain Root caller obligations.
+
+Original source, tests and pending implementation report were copied byte-exact into before_* files here; the previous implementation report directory remains sealed and unchanged. Three focused regressions were first run against the original helper and failed as expected: gapped selection reached batch fetch, implicit streamed factory was accepted, explicit-policy API was absent (session65962/tool6c7ce2). Corrected full helper suite:13 passed5.23s, session56882/tool5aa711 exit0. No retained empirical data, native job, claim, Owner or financial fit was run.

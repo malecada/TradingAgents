@@ -1,0 +1,16 @@
+{
+  "density_extrapolation_new_ledger_bytes": 19714110879,
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": 14739959808,
+  "existing_retained_ledger": {
+    "closure_sha256": "bed162bd481d2afe1d9b5d9988b6a27c48ceb03ff95d9010ecb19ef9d70aac3b",
+    "database_body_rehashed": false,
+    "declared_closed_rows": 8617920,
+    "observed_bytes": 3662934016,
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/aggregation/ledger.sqlite"
+  },
+  "headroom_bytes": 4002541568,
+  "observed_at": "2026-10-05T18:49:39.209417+00:00",
+  "qualification": "One actual retained full-week ledger extent and closed row count provide a scratch-size estimate, not a hard capacity bound. SQLite indexes/journals/temp, graph outputs, MCM/tails and training are additional. All six ledgers cannot be assumed to fit current headroom; sequential creation plus verified external preservation/offload needs a concrete admitted storage policy. No store has been deleted or offloaded by this observation.",
+  "selected_new_raw_rows": 46382116
+}
