@@ -1,0 +1,31 @@
+{
+  "material_source_findings": [],
+  "reviewer_verification_attempts": [
+    {
+      "chunk": "bd180a",
+      "error": "unexpected indentation; no code ran",
+      "exit": 1,
+      "script": "check_actual_remote01.py"
+    },
+    {
+      "chunk": "d3a062",
+      "completed": "All eleven actual recovered/original byte/OID/mode joins, operation exits/RLIMIT/cleanup and storage bounds passed before policy AST evaluation.",
+      "error": "literal_eval cannot evaluate policy arithmetic; no proof written",
+      "exit": 1,
+      "script": "check_actual_remote02.py"
+    },
+    {
+      "chunk": "fb312e",
+      "correction": "Resumed after completed loops; exact watch policy compared to accepted baseline receipt. No duplicate11body read.",
+      "exit": 0,
+      "script": "check_actual_remote03.py"
+    },
+    {
+      "chunk": "a634cb",
+      "error": "Initial inverse expected source-count literal in baseline; actual baseline had no count guard.",
+      "exit": 1,
+      "resolution": "1bbf8a showed additive381 guard. Corrected inverse removes only that added guard; no weakening."
+    }
+  ],
+  "schema_version": 1
+}

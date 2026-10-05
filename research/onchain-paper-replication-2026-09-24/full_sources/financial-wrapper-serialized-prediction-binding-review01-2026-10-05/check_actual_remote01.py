@@ -1,0 +1,41 @@
+from pathlib import Path
+import json,hashlib,stat,os,subprocess,ast,shutil,datetime
+M=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes');F=M/'research/onchain-paper-replication-2026-09-24/full_sources';D=Path(__file__).parent;R=F/'financial-wrapper-serialized-prediction-source-remote01-2026-10-05';C=F/'heartbeat-root-checkpoint10-2026-10-04';CAP=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source');PARENT=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-predict-serialized-storage-root-launch-20261005-01');OLD=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-serialized-storage-root-launch-20261005-01')
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def ref(p):return {'path':str(p),'sha256':sha(p.read_bytes())}
+def save(n,v):
+ with (D/n).open('x') as f:f.write(json.dumps(v,sort_keys=True,separators=(',',':'))+'\n')
+ return ref(D/n)
+rr=(R/'REMOTE_RECOVERY01.json').read_bytes();assert sha(rr)=='02e8bbe38464c77e7b2c38f8abdadd59ffdb1543c37998e96106dc34efb06ef1';r=json.loads(rr);rootraw=(R/'ACTUAL_ROOT_EXIT01.json').read_bytes();assert sha(rootraw)=='f40715ded24fe243c7000a434afc5c5e6e6d98b014af765932ebc21583fe74a0';root=json.loads(rootraw);assert root['actual_exit']==0 and root['session']==46720
+s=json.loads((R/'SELECTED_BODIES01.json').read_bytes());assert r['selection_sha256']==sha((R/'SELECTED_BODIES01.json').read_bytes()) and r['remote_commit']==s['remote_commit']=='5642fcb3842cfb38bfa82927b5dd532d2340ecee'
+assert r['selected_count']==len(r['selected_blobs'])==len(s['rows'])==11 and r['selected_logical_bytes']==831068 and r['expected_operations']==len(r['operations'])==43 and r['elapsed_seconds']<600 and r['free_bytes']>=10737418240 and r['genuine_run_or_native_started'] is False
+assert (R/'ACTUAL_ROOT01.stderr').read_bytes()==b''
+stdout=json.loads((R/'ACTUAL_ROOT01.stdout').read_bytes());assert all(stdout[k]==r[k] for k in stdout)
+for row,selected in zip(s['rows'],r['selected_blobs'],strict=True):
+ assert all(selected[k]==v for k,v in row.items());p=R/'selected'/row['path'];b=p.read_bytes();assert len(b)==row['bytes'] and sha(b)==row['sha256'] and b==(M/row['path']).read_bytes();assert selected['git_object']==hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest() and selected['git_mode']=='100644';st=p.lstat();assert stat.S_ISREG(st.st_mode) and st.st_nlink==1
+assert r['unique_selected_objects']==len({x['git_object'] for x in r['selected_blobs']})==11
+for operation in r['operations']:
+ assert operation['exit']==operation['actual_reaped_exit']==0 and operation['cleanup_failures']==[] and operation['actual_child_limits']=={'fsize':[4194304,4194304],'pid':operation['pid']} and operation['seconds']<65
+assert all(x['logical_bytes']<=67108864 and x['allocated_bytes']<=100663296 for x in r['whole_tree_observations'])
+policy=ast.literal_eval(next(n.value for n in ast.parse((R/'watch01.py').read_bytes()).body if isinstance(n,ast.Assign) and isinstance(n.targets[0],ast.Name) and n.targets[0].id=='POLICY'));assert policy==r['whole_tree_policy']
+assert not any((Path('/proc')/str(o['pid'])).exists() for o in r['operations'])
+draft_rel=(C/'SERIALIZED_PREDICTION_BOUND_PARENT_DRAFT01.json').relative_to(M);draft=json.loads((R/'selected'/draft_rel).read_bytes());exp=draft['gate_literal_insert'][draft['identity']];embedded=[]
+for path,body in draft['new_input_bodies'].items():
+ if body is None:continue
+ pin=next(v['sha256'] for v in exp['inputs'].values() if v['path']==path);assert sha(body.encode())==pin;embedded.append({'path':path,'sha256':pin,'bytes':len(body.encode())})
+assert len(embedded)==5
+proof=json.loads((D/'SOURCE_REVIEW_PROOF01.json').read_bytes());proof['kind']='prediction_source_successor_recovery'
+check={'schema_version':1,'decision':'accepted-actual-serialized-prediction-source-byte-recovery','receipt_sha256':sha(rr),'receipt':ref(R/'REMOTE_RECOVERY01.json'),'actual_root_exit':ref(R/'ACTUAL_ROOT_EXIT01.json'),'source':ref(R/'recover01.py'),'selection':ref(R/'SELECTED_BODIES01.json'),'selected_count':11,'selected_bytes':831068,'operations':43,'all_operations_reaped_zero':True,'cleanup_failures':[],'recorded_pids_currently_absent':True,'Git_blob_OIDs_and_modes_joined':True,'actual_original_and_recovered_bytes_joined':True,'embedded_new_inputs':embedded,'excluded_pending_input_roles':['prediction_source_successor_review','prediction_source_successor_recovery'],'accepted_installed_ancestry_basis':draft['accepted_completed_parent_recovery'],'scope':'Exact prospective source, external preclaim, caller draft and five embedded inputs. Remaining192 unchanged installed bodies use accepted continuation byte basis; no old-body rescan. No actual current CAP/full Parent/final envelope recovery.','original_parent_exit':None,'native_PID_history_complete':False,'numerical_authority':False,'final_release':None}
+cp=save('SOURCE_REMOTE_CHECK01.json',check);rp=save('SOURCE_RECOVERY_PROOF01.json',proof)
+script=C/'SERIALIZED_PREDICTION_ADOPT01.py';raw=script.read_bytes();assert len(raw)==11269 and sha(raw)=='1ab96e8b4d30437fefd112e98cc5f64b008a0abd28f4348fa2c087c0eac9365f';ast.parse(raw)
+assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=CAP).decode().strip()=='6b07c0f841e7d38102814aabb335751fd71fb7f7';assert subprocess.check_output(['git','status','--short','--untracked-files=no'],cwd=CAP)==b''
+assert not os.path.lexists(PARENT) and not os.path.lexists(CAP/'fixture_inputs/financial_wrapper_serialized_prediction01') and not os.path.lexists(CAP/'research_runs'/draft['identity']) and not os.path.lexists(CAP/'research_artifacts/financial_wrapper_engineering'/draft['identity']) and not os.path.lexists(C/'SERIALIZED_PREDICTION_ADOPTION_INTENT01.json')
+q=json.loads((OLD/'REQUEST_FINAL01.json').read_bytes());helpers={}
+for n in ('supervisor01.py','descendants01.py','recovery04.py','owned_io.py','bounded_git01.py','PROTOCOL_PINS01.json'):
+ helpers[n]=sha((OLD/n).read_bytes());assert helpers[n]==q['helper_hashes'][n]
+assert sha((OLD/'proof_reuse_contract01.json').read_bytes())==q['helper_hashes']['proof_reuse_contract01.json'];assert sha((OLD/'REQUEST_FINAL01.json').read_bytes())=='832336399cb52e595022c190f6564aba63197d8ce93a4aa67e8f7a4af5039a4e'
+assert len(exp['source_files'])==381 and len(exp['inputs'])==29
+free=shutil.disk_usage(CAP).free;assert free>=10737418240
+adoption={'schema_version':1,'decision':'accepted-exact-once-source-adoption-only','source':ref(script),'source_review':ref(D/'SOURCE_REVIEW_PROOF01.json'),'source_recovery':rp,'actual_source_remote_check':cp,'source_before':'6b07c0f841e7d38102814aabb335751fd71fb7f7','target_identity':draft['identity'],'expected_tracked':382,'expected_source_pins':381,'expected_roles':29,'installed_count':195,'changed_installed':3,'added_inputs':7,'historical_gate_definitions':6,'unchanged_helper_pins':helpers,'manual_review':['Every mutation follows actual source review/recovery/receipt/root-exit and selected byte joins.','Gate insertion preserves exact old gate bytes; only new experiment gains filled policy-proof pins.','Only three reviewed installed files and seven new input bodies are adopted; all expected381 pins rejoined before commit.','Caller SOURCE_BINDING contains actual post-commit source/map/gate counts; six old helpers copied exactly and preclaim5f pinned.','Reuse contract changes only consumer/current_source; old completed-parent and policy anchors remain.','Request status stays DRAFT_NOT_RELEASED, every current proof and final_review remain null; no admission/Owner/Run/native execution.'],'fresh_namespaces_absent':True,'free_disk_bytes':free,'cwd':str(M),'argv':[str(M/'.venv/bin/python'),'-B',str(script)],'one_use':True,'numerical_authority':False,'qualification':'Root-owned finite engineering integration only. Actual post-adoption current source/input/runtime proof, full current recovery and final preflight remain required. If a mutation fails retain intent and actual partial state; no automatic retry or rollback implied.'}
+ ap=save('ADOPTION_ENTRY_RELEASE01.json',adoption)
+print(json.dumps({'remotecheck':cp,'recoveryproof':rp,'adoption':ap}))

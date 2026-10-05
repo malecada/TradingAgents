@@ -1,0 +1,43 @@
+{
+  "actual_capture_executed": false,
+  "decision": "withheld-before-execution-fixed-baseline-exceeded",
+  "entry_issued": false,
+  "material_finding": {
+    "allocated_by_root": {
+      "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source": 142168064,
+      "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-predict-serialized-storage-root-launch-20261005-01": 258048
+    },
+    "combined_allocated_bytes": 142426112,
+    "excess_bytes": 8208384,
+    "impact": "Actual whole CAP scan exceeds the unchanged128MiB baseline; later combined allocation assertion also fails. No entry/recovery claim is valid for this source.",
+    "limit_bytes": 134217728,
+    "locations": [
+      {
+        "line": 53,
+        "source": "whole = R.scan(CAP)"
+      },
+      {
+        "line": 95,
+        "source": "assert allocated <= 128 * 1024**2"
+      }
+    ],
+    "recommendation": "Retain unexecuted source01. Adapt accepted incremental metadata/composition capture to the exact new bodies using genuine6bbe complete basis; preserve all typed CAP/Git names and original bounds. Do not increase caps or omit historical byte ancestry.",
+    "severity": "blocking"
+  },
+  "metadata_census": {
+    "CAP_regular": 1188,
+    "CAP_typed": 1530,
+    "regular_type_link_extent_violations": []
+  },
+  "numerical_execution": false,
+  "review_scope": "Read-only metadata census, pinned source inspection and unchanged primitive inspection; no historical bodies read.",
+  "schema_version": 1,
+  "source": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/heartbeat-root-checkpoint10-2026-10-04/SERIALIZED_PREDICTION_CURRENT_CAPTURE01.py",
+    "sha256": "03b82afc39e7707512a684fe43e29a8208c2ebc0f47167db15da53f33e3cfbdf"
+  },
+  "verification_chunks": [
+    "a23073",
+    "995a5b"
+  ]
+}
