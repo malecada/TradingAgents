@@ -1,0 +1,33 @@
+--- b/fixture_tools/capsule_builder01.py
++++ a/fixture_tools/capsule_builder01.py
+@@ -112,9 +112,6 @@
+ # Separate held-resource metadata route. Legacy exporter remains unchanged.
+ HELD_COUNTS=(199,148)
+ HELD_S2='fb9fad1d93836b4f92f2be8111da4adf22b7e069'
+-HELD_CANONICAL_ANCHOR='55e7d50431654aba952b4541ca506524d9feece1'
+-HELD_CANONICAL_PARENT='d443208795f59292c156c5b81b687594efacea4d'
+-HELD_CANONICAL_DICTIONARY='e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9'
+ HELD_SOURCE04_ANCHOR='0cfc2c03200880534b7c91c2f16ac659a265a35b'
+ HELD_SOURCE04='fa9712c36daf2896ef3f6a8a8a5d99ec696cfdf4'
+ HELD_SOURCE04_LINEAGE=((HELD_SOURCE04,HELD_SOURCE04_ANCHOR),(HELD_SOURCE04_ANCHOR,'903488c49ad25e8026ec849a1c8b30ca5f90bcff'),('903488c49ad25e8026ec849a1c8b30ca5f90bcff','76a4bd766722e0f5177412f6945117d9c2b5fc45'),('76a4bd766722e0f5177412f6945117d9c2b5fc45','b8c6c280fb229ffaa5195c95baf3f57485e972b0'),('b8c6c280fb229ffaa5195c95baf3f57485e972b0',HELD_S2))
+@@ -173,11 +170,7 @@
+         require(not os.path.lexists(root/'.git'/name),'Git indirection refused')
+     _held_git(root,'merge-base','--is-ancestor',anchor,source)
+     parents=_held_git(root,'show','-s','--format=%P',anchor).decode().strip().split()
+-    canonical=anchor==HELD_CANONICAL_ANCHOR
+-    if canonical:
+-        require(parents==[HELD_CANONICAL_PARENT],'canonical anchor sole parent differs')
+-        _held_git(root,'merge-base','--is-ancestor',HELD_SOURCE04,HELD_CANONICAL_PARENT)
+-    source04=anchor==HELD_SOURCE04_ANCHOR or canonical
++    source04=anchor==HELD_SOURCE04_ANCHOR
+     if source04:
+         for child,parent in HELD_SOURCE04_LINEAGE:
+             actual=_held_git(root,'show','-s','--format=%P',child).decode().strip().split()
+@@ -193,7 +186,6 @@
+     registered={x['path']:x['sha256'] for x in rows};expected={**baseline,**HELD_ADDITIONS}
+     expected.update({'tradingagents/research/onchain_replication/'+k:v for k,v in HELD_PACKAGE_CHANGES.items()})
+     if source04:expected.update({'tradingagents/research/onchain_replication/'+k:v for k,v in HELD_SOURCE04_PACKAGE_CHANGES.items()})
+-    if canonical:expected['tradingagents/research/onchain_replication/original_dictionary.py']=HELD_CANONICAL_DICTIONARY
+     expected['tradingagents/research/verify.py']='1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce'
+     for name in set(expected)-HELD_SUCCESSOR_HELPERS:require(registered[name]==expected[name],'undeclared held source replacement')
+     package=sorted(n for n in names if n=='tradingagents/__init__.py' or (n.endswith('.py') and str(Path(n).parent) in ('tradingagents/research','tradingagents/research/onchain_replication')))
