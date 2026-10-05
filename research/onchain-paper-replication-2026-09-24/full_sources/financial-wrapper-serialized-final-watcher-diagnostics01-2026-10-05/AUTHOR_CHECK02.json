@@ -1,0 +1,22 @@
+{
+  "observations": [
+    {
+      "error": "owned per-file/hardlink bound; observation={'relative_path': 'objects/second', 'nlink': 2, 'allowed_owned_fetch_objects': None}",
+      "error_type": "ValueError",
+      "scope": null
+    },
+    {
+      "error": "owned regular hardlink observed: objects/second nlink=2",
+      "error_type": "ChangingTree",
+      "scope": "objects"
+    },
+    {
+      "error": "owned per-file/hardlink bound; observation={'relative_path': 'objects/second', 'nlink': 3, 'allowed_owned_fetch_objects': 'outside/objects'}",
+      "error_type": "ValueError",
+      "scope": "outside"
+    }
+  ],
+  "qualification": "Actual filesystem link failures retain context without changing strict predicates. This does not establish the original failed fetch cause or admit a retry.",
+  "schema_version": 1,
+  "status": "THREE_REAL_FILESYSTEM_OBSERVATIONS_PASSED"
+}

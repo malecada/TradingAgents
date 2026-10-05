@@ -1,0 +1,43 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/recover01.py", line 273, in <module>
+    entry()
+    ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/recover01.py", line 269, in entry
+    _raise_retained(primary, secondary)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/recover01.py", line 55, in _raise_retained
+    raise primary
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/recover01.py", line 258, in entry
+    main()
+    ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/recover01.py", line 224, in main
+    git(['fetch', '--no-tags', 'origin', oid], repo)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/recover01.py", line 170, in git
+    raise first
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/recover01.py", line 119, in git
+    watch(owned_fetch_objects=Path(cwd)/'objects' if args and args[0]=='fetch' and Path(cwd)==HERE/'fresh-serialized-prediction-final-direct02.git' and child.poll() is None else None)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/recover01.py", line 30, in watch
+    row = W.census(HERE, owned_fetch_objects=owned_fetch_objects)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/watch01.py", line 72, in census
+    result=_sample(root,owned_fetch_objects=owned_fetch_objects)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/watch01.py", line 40, in _sample
+    visit(root,0)
+    ~~~~~^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/watch01.py", line 39, in visit
+    for name in sorted(names):visit(p/name,depth+1)
+                              ~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/watch01.py", line 39, in visit
+    for name in sorted(names):visit(p/name,depth+1)
+                              ~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/watch01.py", line 39, in visit
+    for name in sorted(names):visit(p/name,depth+1)
+                              ~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/watch01.py", line 26, in visit
+    require(owned_fetch_objects is not None and p.is_relative_to(owned_fetch_objects) and s.st_nlink>1,'owned per-file/hardlink bound')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-serialized-prediction-final-direct02-2026-10-05/watch01.py", line 10, in require
+    if not v:raise ValueError(m)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: owned per-file/hardlink bound
