@@ -1,0 +1,87 @@
+{
+  "failed_cli_entry": {
+    "actual_ActiveState": "inactive",
+    "actual_ControlGroup": "",
+    "actual_LoadState": "not-found",
+    "actual_unit_readback_chunk": "b1631d",
+    "correction": "remove unsupported write property; LimitFSIZE scalar sets hard/soft and successful child readback verifies both4194304",
+    "reason": "Unknown assignment: LimitFSIZESoft=4194304",
+    "root_exit_code": 1,
+    "tool_chunk": "5550fc",
+    "unit": "onchain-main-financial-integration-check-20261005-01"
+  },
+  "files": {
+    "ROOT.stderr": {
+      "bytes": 43,
+      "sha256": "e23c07ee80f32e899d0399292c6666e0cda01627cd4b4dfc9446f7352755146f"
+    },
+    "ROOT.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ROOT02.stderr": {
+      "bytes": 213,
+      "sha256": "cc230ba1ef49cb120900e9c5754924c80c309e68d5bd58a49cdee5082983b61d"
+    },
+    "ROOT02.stdout": {
+      "bytes": 919,
+      "sha256": "7b38287c1d848c3df93f2cc5d8c672403db9d7c1852d6a087da6a51991717422"
+    },
+    "SOURCE_PINS01.json": {
+      "bytes": 2294,
+      "sha256": "21c966c6ecc5824241680d5fe9f36b054e5286691fd44ec8a25813cdc356aacf"
+    },
+    "SYSTEMD_FINAL01.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "SYSTEMD_FINAL01.stdout": {
+      "bytes": 115,
+      "sha256": "9db57a69b7aabc576d2638d0d0bb265d4ff8d2f3198d10a24cc18e0f6fa7c8fd"
+    }
+  },
+  "kind": "ordinary focused subset of named reviewed offline profile",
+  "numeric_imports_only_inside_native_unit": true,
+  "paper_fit_or_capacity_claim": false,
+  "pytest_seconds": 34.76,
+  "recorded_at": "2026-10-05T05:32:31.378048+00:00",
+  "source_pins": 18,
+  "successful_entry": {
+    "cgroup_absent": true,
+    "controls": {
+      "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-main-financial-integration-check-20261005-02.service",
+      "controls": {
+        "memory.high": "1073741824",
+        "memory.max": "1073741824",
+        "memory.swap.max": "0"
+      },
+      "cpus": [
+        0,
+        1
+      ],
+      "fsize": [
+        4194304,
+        4194304
+      ],
+      "kind": "ordinary existing synthetic offline tests; no paper fit or empirical pilot",
+      "sources_checked": 18,
+      "tests": [
+        "tests/research/onchain_replication/test_training.py",
+        "tests/research/onchain_replication/test_checkpoint.py",
+        "tests/research/onchain_replication/test_replay.py",
+        "tests/research/onchain_replication/test_registry.py",
+        "tests/research/onchain_replication/test_evaluation.py",
+        "tests/research/onchain_replication/test_run.py"
+      ]
+    },
+    "initial_chunk": "e02f5f",
+    "root_exit_code": 0,
+    "root_session": 85540,
+    "terminal_chunk": "f5159e",
+    "unit": "onchain-main-financial-integration-check-20261005-02",
+    "unit_exit_code": 0,
+    "unit_seconds": 36.675
+  },
+  "synthetic_generated_outputs_retained_locally": true,
+  "tests_passed": 45
+}

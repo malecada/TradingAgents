@@ -1,0 +1,1004 @@
+{
+  "modules": {
+    "checkpoints.py": {
+      "CAP": {
+        "candidate_sha256": "5bd40b1e573bad25807d8596472b437fee93eb7c644bc03e4cd45512e74437f0",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [],
+        "original_sha256": "5bd40b1e573bad25807d8596472b437fee93eb7c644bc03e4cd45512e74437f0"
+      },
+      "Main": {
+        "candidate_sha256": "5bd40b1e573bad25807d8596472b437fee93eb7c644bc03e4cd45512e74437f0",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": "\nfrom . import financial_execution as financial",
+            "candidate_offsets": [
+              176,
+              223
+            ],
+            "original": "",
+            "original_offsets": [
+              176,
+              176
+            ]
+          },
+          {
+            "candidate": "f",
+            "candidate_offsets": [
+              741,
+              742
+            ],
+            "original": "",
+            "original_offsets": [
+              694,
+              694
+            ]
+          },
+          {
+            "candidate": "eld",
+            "candidate_offsets": [
+              743,
+              746
+            ],
+            "original": "f ",
+            "original_offsets": [
+              695,
+              697
+            ]
+          },
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              747,
+              747
+            ],
+            "original": "et(value)!",
+            "original_offsets": [
+              698,
+              708
+            ]
+          },
+          {
+            "candidate": "\n    if set(value) not in (fields,fields|{'model_execution'})",
+            "candidate_offsets": [
+              846,
+              907
+            ],
+            "original": "",
+            "original_offsets": [
+              807,
+              807
+            ]
+          },
+          {
+            "candidate": "')\n    if 'model_execution' in value and financial.identity(value['model_execution']) is None:raise ValueError('checkpoint selected execution absent",
+            "candidate_offsets": [
+              954,
+              1102
+            ],
+            "original": "",
+            "original_offsets": [
+              854,
+              854
+            ]
+          },
+          {
+            "candidate": "financial.check_model(model,provenance.get('model_execution'))\n    ",
+            "candidate_offsets": [
+              1714,
+              1781
+            ],
+            "original": "",
+            "original_offsets": [
+              1466,
+              1466
+            ]
+          },
+          {
+            "candidate": "if 'model_execution' in provenance:\n        state['model_execution']=financial.identity(provenance['model_execution'])\n        state['model_contract']=financial.model_contract(model,provenance['model_execution'])\n    ",
+            "candidate_offsets": [
+              2317,
+              2534
+            ],
+            "original": "",
+            "original_offsets": [
+              2002,
+              2002
+            ]
+          },
+          {
+            "candidate": "financial.check_model(model,expected_provenance.get('model_execution'))\n    ",
+            "candidate_offsets": [
+              2847,
+              2923
+            ],
+            "original": "",
+            "original_offsets": [
+              2315,
+              2315
+            ]
+          },
+          {
+            "candidate": "financial.check_state_model(state,model,expected_provenance)\n    required=REQUIRED|({'model_execution','model_contract'} if 'model_execution' in expected_provenance else set())\n    ",
+            "candidate_offsets": [
+              3060,
+              3241
+            ],
+            "original": "",
+            "original_offsets": [
+              2452,
+              2452
+            ]
+          },
+          {
+            "candidate": "required",
+            "candidate_offsets": [
+              3256,
+              3264
+            ],
+            "original": "REQUIRED",
+            "original_offsets": [
+              2467,
+              2475
+            ]
+          }
+        ],
+        "original_sha256": "74e7bd16d4331cbac45143884e1f35a52687b19280c214457834b0cf19a457bc"
+      }
+    },
+    "evaluation.py": {
+      "CAP": {
+        "candidate_sha256": "1b2dd721423e0408d8e7ccea23a8cacacdd3d04b45ca9da85e35fd34c82e7fac",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": "e,observation=Non",
+            "candidate_offsets": [
+              864,
+              881
+            ],
+            "original": "",
+            "original_offsets": [
+              864,
+              864
+            ]
+          },
+          {
+            "candidate": "if observation is not None:\n            from .training_batch_observer import observe\n            observe(observation[0],observation[1],indices,examples,inputs,features)\n        ",
+            "candidate_offsets": [
+              2064,
+              2241
+            ],
+            "original": "",
+            "original_offsets": [
+              2047,
+              2047
+            ]
+          },
+          {
+            "candidate": "=None,treatment_reference",
+            "candidate_offsets": [
+              2583,
+              2608
+            ],
+            "original": "",
+            "original_offsets": [
+              2389,
+              2389
+            ]
+          },
+          {
+            "candidate": ")\n    from .treatment_admission import preflight_treatment\n    preflight_treatment(run, {} if treatment_reference is None else treatment_reference, cell, examples",
+            "candidate_offsets": [
+              3050,
+              3212
+            ],
+            "original": "",
+            "original_offsets": [
+              2831,
+              2831
+            ]
+          },
+          {
+            "candidate": "from .training_batch_observer import prepare\n        observation=prepare(run,registered_id,provenance,examples,feature_binding,training_config,features)\n        ",
+            "candidate_offsets": [
+              7295,
+              7456
+            ],
+            "original": "",
+            "original_offsets": [
+              6914,
+              6914
+            ]
+          },
+          {
+            "candidate": ",observation=None if observation is None else (run,observation)",
+            "candidate_offsets": [
+              7558,
+              7621
+            ],
+            "original": "",
+            "original_offsets": [
+              7016,
+              7016
+            ]
+          }
+        ],
+        "original_sha256": "e671f622101eced67b5807bb74f069bbc10cc45eec0c2f410157bd46399f33e2"
+      },
+      "Main": {
+        "candidate_sha256": "1b2dd721423e0408d8e7ccea23a8cacacdd3d04b45ca9da85e35fd34c82e7fac",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": "\nfrom . import financial_execution as financial",
+            "candidate_offsets": [
+              514,
+              561
+            ],
+            "original": "",
+            "original_offsets": [
+              514,
+              514
+            ]
+          },
+          {
+            "candidate": ",execution=None",
+            "candidate_offsets": [
+              2613,
+              2628
+            ],
+            "original": "",
+            "original_offsets": [
+              2566,
+              2566
+            ]
+          },
+          {
+            "candidate": "\n    execution=financial.for_run(run,execution)\n    if financial.identity(provenance.get('model_execution'))!=execution or ('model_execution' in provenance)!=(execution is not None):raise ValueError('evaluation execution provenance differs')",
+            "candidate_offsets": [
+              2724,
+              2965
+            ],
+            "original": "",
+            "original_offsets": [
+              2662,
+              2662
+            ]
+          },
+          {
+            "candidate": " if execution is None else build_model(arm,task,model_config,execution=execution)",
+            "candidate_offsets": [
+              7205,
+              7286
+            ],
+            "original": "",
+            "original_offsets": [
+              6902,
+              6902
+            ]
+          },
+          {
+            "candidate": "\n                financial.check_model(model,execution)",
+            "candidate_offsets": [
+              8227,
+              8282
+            ],
+            "original": "",
+            "original_offsets": [
+              7843,
+              7843
+            ]
+          },
+          {
+            "candidate": "tion)\n            financial.check_model(fitted.model,execu",
+            "candidate_offsets": [
+              10100,
+              10158
+            ],
+            "original": "",
+            "original_offsets": [
+              9661,
+              9661
+            ]
+          },
+          {
+            "candidate": "financial.validate_state(state,old)\n        ",
+            "candidate_offsets": [
+              15320,
+              15364
+            ],
+            "original": "",
+            "original_offsets": [
+              14823,
+              14823
+            ]
+          },
+          {
+            "candidate": ");financial.check_state_model(state,model,old",
+            "candidate_offsets": [
+              15378,
+              15423
+            ],
+            "original": "",
+            "original_offsets": [
+              14837,
+              14837
+            ]
+          }
+        ],
+        "original_sha256": "861c5459ce2622508d4d04bd4bc68110e1e80e1827644502800f15204d3a8ebe"
+      }
+    },
+    "financial_execution.py": {
+      "CAP": {
+        "candidate_sha256": "e16402d8625ed9b1c9fe5d308d18867b811b3acb2bb90b2e0bcb7132cd4a602e",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [],
+        "original_sha256": "e16402d8625ed9b1c9fe5d308d18867b811b3acb2bb90b2e0bcb7132cd4a602e"
+      },
+      "Main": {
+        "candidate_sha256": "e16402d8625ed9b1c9fe5d308d18867b811b3acb2bb90b2e0bcb7132cd4a602e",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": "\"\"\"Explicit financial execution identity; no admission or numerical import at load.\"\"\"\nimport hashlib\nimport json\nimport weakref\nfrom pathlib import Path\nSOURCE='tradingagents/research/onchain_replication/streamed_gat.py'\nSHA='e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f'\nARMS={'proposed','training_label_permutation'}\nPLAN_KEYS={'schema_version','cells','populations','representations','model','training','ledger_output','controls_output'}\n\ndef canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode('utf-8')\n\ndef identity(value):\n    if value is None:return None\n    keys={'policy','policy_sha256','source_path','source_sha256','candidate_sha256'}\n    if type(value) is not dict or set(value)!=keys:raise ValueError('financial execution identity fields')\n    p=value['policy']\n    if type(p) is not dict or set(p)!={'schema_version','backend','block_edges'}:raise ValueError('financial execution policy fields')\n    if type(p['schema_version']) is not int or p['schema_version']!=1 or type(p['block_edges']) is not int or p['block_edges']!=65536 or type(p['backend']) is not str or p['backend']!='streamed-gat-mulsum-v1':raise ValueError('financial execution policy differs')\n    if any(type(value[k]) is not str for k in keys-{'policy'}) or value['policy_sha256']!=hashlib.sha256(canonical(p)).hexdigest() or value['source_path']!=SOURCE or value['source_sha256']!=SHA or value['candidate_sha256']!=SHA:raise ValueError('financial execution source/hash differs')\n    return {**value,'policy':dict(p)}\n\ndef authenticate(value):\n    selected=identity(value)\n    if selected is None:return None\n    path=Path(__file__).resolve().parent/'streamed_gat.py'\n    if path.resolve()!=path or path.is_symlink() or not 0<path.stat().st_size<=65536:raise ValueError('financial backend source path/extent differs')\n    with path.open('rb') as stream:raw=stream.read(65537)\n    if len(raw)>65536 or hashlib.sha256(raw).hexdigest()!=SHA:raise ValueError('financial backend source bytes differ')\n    return selected\n\ndef for_run(run,value):\n    selected=authenticate(value)\n    if selected is not None:\n        expected=run.admission.root/SOURCE\n        if Path(__file__).resolve().parent/'streamed_gat.py'!=expected or run.admission.experiment['source_files'].get(SOURCE)!=SHA:raise ValueError('financial backend not selected in admitted source')\n    return selected\n\ndef plan_selection(plan):\n    if set(plan)==PLAN_KEYS and plan['schema_version']==1:return {}\n    if set(plan)!=PLAN_KEYS|{'model_execution'} or type(plan['schema_version']) is not int or plan['schema_version']!=2:raise ValueError('batch plan schema differs')\n    mapping=plan['model_execution'];present={item['cell']['arm'] for item in plan['cells']}\n    if type(mapping) is not dict or not mapping or not set(mapping)<=ARMS & present:raise ValueError('financial selected arm mapping differs')\n    if plan['model'].get('graph_activation_checkpointing',False) is not False:raise ValueError('financial streamed checkpoint policy differs')\n    result={}\n    for arm,value in mapping.items():\n        selected=identity(value)\n        if selected is None:raise ValueError('selected financial execution binding absent')\n        result[arm]=selected\n    return result\n\n# Private construction records are not taken from mutable model labels.\n_PINS=weakref.WeakKeyDictionary()\nATTRS=('in_features','out_features','input_size','hidden_size','num_layers','bias','batch_first','dropout','bidirectional','proj_size','inplace','p','block_edges','concat','activation','slope')\n\ndef _classes():\n    from .model import ReplicationModel\n    from .streamed_gat import GraphAttention\n    return ReplicationModel,GraphAttention\n\ndef _structure(model):\n    modules=[];module_refs=[]\n    for name,module in model.named_modules():\n        attrs={}\n        for key in ATTRS:\n            value=getattr(module,key,None)\n            if type(value) in (int,float,bool,str) or value is None:attrs[key]=value\n        modules.append({'name':name,'class':type(module).__module__+'.'+type(module).__qualname__,'attributes':attrs})\n        module_refs.append((name,id(module),type(module),getattr(type(module),'forward',None),module.__dict__.get('forward')))\n    parameters=[];parameter_refs=[]\n    for name,param in model.named_parameters():\n        parameters.append({'name':name,'class':type(param).__module__+'.'+type(param).__qualname__,'shape':list(param.shape),'requires_grad':param.requires_grad,'dtype':str(param.dtype),'device':str(param.device.type),'device_index':param.device.index})\n        parameter_refs.append((name,id(param),type(param)))\n    buffers=[];buffer_refs=[]\n    for name,value in model.named_buffers():\n        buffers.append({'name':name,'class':type(value).__module__+'.'+type(value).__qualname__,'shape':list(value.shape),'dtype':str(value.dtype),'device':str(value.device.type),'device_index':value.device.index})\n        buffer_refs.append((name,id(value),type(value)))\n    contract={'schema_version':1,'model_config':model.config,'graph_config':model.graph.config,'task':model.task,\n      'graph_activation_checkpointing':model.graph_activation_checkpointing,'modules':modules,'parameters':parameters,'buffers':buffers}\n    return (tuple(module_refs),tuple(parameter_refs),tuple(buffer_refs)),canonical(contract)\n\ndef construct(config,task,value):\n    selected=authenticate(value)\n    if selected is None:raise ValueError('selected model execution missing')\n    constructor,layer_class=_classes()\n    config_raw=canonical(config);detached=json.loads(config_raw)\n    if detached.get('graph_activation_checkpointing',False) is not False or task not in ('classification','regression'):raise ValueError('financial constructor science differs')\n    # Only this fresh real constructor can establish a private construction pin.\n    model=constructor(detached,task,execution=selected['policy'])\n    if type(model) is not constructor or canonical(model.config)!=config_raw or canonical(model.graph.config)!=config_raw or model.task!=task:raise ValueError('financial constructor reference differs')\n    if any(p.requires_grad is not True for p in model.parameters()):raise ValueError('financial constructor froze parameters')\n    runtime,contract_raw=_structure(model)\n    marker=hashlib.sha256(canonical({'execution':selected,'config':detached,'task':task})).hexdigest()\n    if model in _PINS:raise ValueError('financial constructor object already captured')\n    _PINS[model]=(canonical(selected),config_raw,task,runtime,contract_raw,marker,constructor)\n    model._financial_execution=canonical(selected);model._financial_pin=marker\n    check_model(model,selected)\n    return model\n\ndef check_model(model,value):\n    selected=authenticate(value);constructor,layer_class=_classes()\n    modules=tuple(model.modules()) if hasattr(model,'modules') else (model,)\n    if selected is None:\n        if model in _PINS or any(isinstance(module,layer_class) for module in modules) or getattr(model,'execution',None) is not None or hasattr(model,'_financial_execution') or hasattr(model,'_financial_pin'):raise ValueError('selected model lacks checkpoint execution binding')\n        return\n    pin=_PINS.get(model)\n    if pin is None or pin[6] is not constructor or type(model) is not constructor:raise ValueError('financial model original constructor pin absent')\n    if pin[0]!=canonical(selected) or getattr(model,'_financial_execution',None)!=pin[0] or getattr(model,'_financial_pin',None)!=pin[5]:raise ValueError('financial model captured execution changed')\n    if canonical(model.config)!=pin[1] or canonical(model.graph.config)!=pin[1] or model.task!=pin[2] or model.graph_activation_checkpointing is not False or dict(model.execution or {})!=selected['policy'] or dict(model.graph.execution or {})!=selected['policy']:raise ValueError('financial model captured science changed')\n    if len(model.graph.gat)!=len(model.config['gat_heads']) or any(type(layer) is not layer_class or layer.block_edges!=65536 for layer in model.graph.gat):raise ValueError('financial actual GAT backend differs')\n    if any(p.device.type!='cpu' or str(p.dtype)!='torch.float32' or p.requires_grad is not True for p in model.parameters()):raise ValueError('financial selected backend trainability/device differs')\n    runtime,contract_raw=_structure(model)\n    if runtime!=pin[3] or contract_raw!=pin[4]:raise ValueError('financial constructor structure/attributes changed')\n\ndef model_contract(model,value):\n    check_model(model,value)\n    if value is None:return None\n    return json.loads(_PINS[model][4])\n\ndef check_state_model(state,model,provenance):\n    validate_state(state,provenance)\n    expected=model_contract(model,provenance.get('model_execution'))\n    if expected is not None and canonical(state['model_contract'])!=canonical(expected):raise ValueError('checkpoint original model contract differs')\n\ndef validate_state(state,provenance):\n    selected=identity(provenance.get('model_execution'))\n    if 'model_execution' in provenance and selected is None:raise ValueError('explicit checkpoint execution missing')\n    if ('model_execution' in state)!=('model_execution' in provenance):raise ValueError('checkpoint execution presence differs')\n    if selected is not None and identity(state['model_execution'])!=selected:raise ValueError('checkpoint execution identity differs')\n    if ('model_contract' in state)!=(selected is not None) or selected is not None and type(state['model_contract']) is not dict:raise ValueError('checkpoint model contract presence differs')\n",
+            "candidate_offsets": [
+              0,
+              9594
+            ],
+            "original": "",
+            "original_offsets": [
+              0,
+              0
+            ]
+          }
+        ],
+        "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "model_registry.py": {
+      "CAP": {
+        "candidate_sha256": "5a8be9dc05a1844528c1353cf2177185b4aa48cdc8a52581fdbb7acc5d910339",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [],
+        "original_sha256": "5a8be9dc05a1844528c1353cf2177185b4aa48cdc8a52581fdbb7acc5d910339"
+      },
+      "Main": {
+        "candidate_sha256": "5a8be9dc05a1844528c1353cf2177185b4aa48cdc8a52581fdbb7acc5d910339",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": "\nfrom . import financial_execution as financial",
+            "candidate_offsets": [
+              116,
+              163
+            ],
+            "original": "",
+            "original_offsets": [
+              116,
+              116
+            ]
+          },
+          {
+            "candidate": ",*,execution=None",
+            "candidate_offsets": [
+              1650,
+              1667
+            ],
+            "original": "",
+            "original_offsets": [
+              1603,
+              1603
+            ]
+          },
+          {
+            "candidate": "\n    selected=financial.authenticate(execution)\n    if selected is not None and (arm not in {'proposed','training_label_permutation'} or config.get('graph_activation_checkpointing',False) is not False):raise ValueError('financial execution unsupported arm/checkpoint policy')",
+            "candidate_offsets": [
+              1669,
+              1944
+            ],
+            "original": "",
+            "original_offsets": [
+              1605,
+              1605
+            ]
+          },
+          {
+            "candidate": "\n        if selected is None:",
+            "candidate_offsets": [
+              2251,
+              2280
+            ],
+            "original": "",
+            "original_offsets": [
+              1912,
+              1912
+            ]
+          },
+          {
+            "candidate": ")\n        return financial.construct(config,task,selected",
+            "candidate_offsets": [
+              2315,
+              2372
+            ],
+            "original": "",
+            "original_offsets": [
+              1947,
+              1947
+            ]
+          }
+        ],
+        "original_sha256": "c0e2202578ae708e2fc0406ece5726541952bf40f29df9dc81812c177c334543"
+      }
+    },
+    "replay.py": {
+      "CAP": {
+        "candidate_sha256": "f9f016afad09ec5ec177a7fac04a0ca5d2fbb84262b06c6ea51e893e6b6433a0",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [],
+        "original_sha256": "f9f016afad09ec5ec177a7fac04a0ca5d2fbb84262b06c6ea51e893e6b6433a0"
+      },
+      "Main": {
+        "candidate_sha256": "f9f016afad09ec5ec177a7fac04a0ca5d2fbb84262b06c6ea51e893e6b6433a0",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": "l\nfrom .model_registry import build_model\nfrom . import financial_execution as financia",
+            "candidate_offsets": [
+              201,
+              288
+            ],
+            "original": "",
+            "original_offsets": [
+              201,
+              201
+            ]
+          },
+          {
+            "candidate": ".py')\nSELECTED_CODE=CODE+('financial_execution.py','model_registry.py','checkpoints.py','streamed_gat",
+            "candidate_offsets": [
+              526,
+              627
+            ],
+            "original": "",
+            "original_offsets": [
+              439,
+              439
+            ]
+          },
+          {
+            "candidate": ",*,execution=None",
+            "candidate_offsets": [
+              972,
+              989
+            ],
+            "original": "",
+            "original_offsets": [
+              784,
+              784
+            ]
+          },
+          {
+            "candidate": "\n    execution=financial.authenticate(execution)",
+            "candidate_offsets": [
+              991,
+              1039
+            ],
+            "original": "",
+            "original_offsets": [
+              786,
+              786
+            ]
+          },
+          {
+            "candidate": ") if execution is None else build_model('proposed','classification',config,execution=execution",
+            "candidate_offsets": [
+              1548,
+              1642
+            ],
+            "original": "",
+            "original_offsets": [
+              1295,
+              1295
+            ]
+          },
+          {
+            "candidate": "if execution is not None:provenance['model_execution']=execution\n    ",
+            "candidate_offsets": [
+              2320,
+              2389
+            ],
+            "original": "",
+            "original_offsets": [
+              1973,
+              1973
+            ]
+          },
+          {
+            "candidate": "(SELECTED_",
+            "candidate_offsets": [
+              2940,
+              2950
+            ],
+            "original": "",
+            "original_offsets": [
+              2524,
+              2524
+            ]
+          },
+          {
+            "candidate": " if execution is not None else CODE)",
+            "candidate_offsets": [
+              2954,
+              2990
+            ],
+            "original": "",
+            "original_offsets": [
+              2528,
+              2528
+            ]
+          },
+          {
+            "candidate": "execution=financial.authenticate(manifest['provenance'].get('model_execution'))\n    ",
+            "candidate_offsets": [
+              3669,
+              3753
+            ],
+            "original": "",
+            "original_offsets": [
+              3207,
+              3207
+            ]
+          },
+          {
+            "candidate": "(SELECTED_",
+            "candidate_offsets": [
+              3868,
+              3878
+            ],
+            "original": "",
+            "original_offsets": [
+              3322,
+              3322
+            ]
+          },
+          {
+            "candidate": " if execution is not None else CODE)",
+            "candidate_offsets": [
+              3882,
+              3918
+            ],
+            "original": "",
+            "original_offsets": [
+              3326,
+              3326
+            ]
+          },
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              3966,
+              3966
+            ],
+            "original": "model=Repli",
+            "original_offsets": [
+              3374,
+              3385
+            ]
+          },
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              3967,
+              3967
+            ],
+            "original": "ati",
+            "original_offsets": [
+              3386,
+              3389
+            ]
+          },
+          {
+            "candidate": "fig=",
+            "candidate_offsets": [
+              3969,
+              3973
+            ],
+            "original": "Model(",
+            "original_offsets": [
+              3391,
+              3397
+            ]
+          },
+          {
+            "candidate": "\n    task=manifest.get('task'",
+            "candidate_offsets": [
+              4022,
+              4051
+            ],
+            "original": "",
+            "original_offsets": [
+              3446,
+              3446
+            ]
+          },
+          {
+            "candidate": ")\n    if task not in ('classification','regression'):raise ValueError('explicit replay task differs')\n    model=ReplicationModel(config,task) if execution is None else build_model('proposed',task,config,execution=execution",
+            "candidate_offsets": [
+              4068,
+              4290
+            ],
+            "original": "",
+            "original_offsets": [
+              3463,
+              3463
+            ]
+          },
+          {
+            "candidate": ");financial.validate_state(state,manifest['provenance']);financial.check_state_model(state,model,manifest['provenance']",
+            "candidate_offsets": [
+              4458,
+              4577
+            ],
+            "original": "",
+            "original_offsets": [
+              3631,
+              3631
+            ]
+          }
+        ],
+        "original_sha256": "37cb3925ac1e4a453ed385fd560b463e88f1ddb91cf00af338c08230ed244691"
+      }
+    },
+    "run.py": {
+      "CAP": {
+        "candidate_sha256": "27b05e965606632de8c379d476ac1363af1a1f2bb1858de4a364f7f8d958730a",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": ")\n        from .treatment_admission import preflight_treatment\n        preflight_treatment(run, reference, cell, examples",
+            "candidate_offsets": [
+              5558,
+              5679
+            ],
+            "original": "",
+            "original_offsets": [
+              5558,
+              5558
+            ]
+          },
+          {
+            "candidate": "treatment_reference=reference, ",
+            "candidate_offsets": [
+              13020,
+              13051
+            ],
+            "original": "",
+            "original_offsets": [
+              12899,
+              12899
+            ]
+          }
+        ],
+        "original_sha256": "c61e67f749dbc133c16e2f6569846f8adf2242bfb9b1c1d86ec5f520bbbaf2d1"
+      },
+      "Main": {
+        "candidate_sha256": "27b05e965606632de8c379d476ac1363af1a1f2bb1858de4a364f7f8d958730a",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": "\nfrom . import financial_execution as financial",
+            "candidate_offsets": [
+              820,
+              867
+            ],
+            "original": "",
+            "original_offsets": [
+              820,
+              820
+            ]
+          },
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              1915,
+              1915
+            ],
+            "original": "if ",
+            "original_offsets": [
+              1868,
+              1871
+            ]
+          },
+          {
+            "candidate": "lec",
+            "candidate_offsets": [
+              1917,
+              1920
+            ],
+            "original": "",
+            "original_offsets": [
+              1873,
+              1873
+            ]
+          },
+          {
+            "candidate": "ions=financial.plan_selection",
+            "candidate_offsets": [
+              1921,
+              1950
+            ],
+            "original": "",
+            "original_offsets": [
+              1874,
+              1874
+            ]
+          },
+          {
+            "candidate": "\n",
+            "candidate_offsets": [
+              1956,
+              1957
+            ],
+            "original": "",
+            "original_offsets": [
+              1880,
+              1880
+            ]
+          },
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              1958,
+              1958
+            ],
+            "original": "!=",
+            "original_offsets": [
+              1881,
+              1883
+            ]
+          },
+          {
+            "candidate": "  for exe",
+            "candidate_offsets": [
+              1959,
+              1968
+            ],
+            "original": "{'s",
+            "original_offsets": [
+              1884,
+              1887
+            ]
+          },
+          {
+            "candidate": "ut",
+            "candidate_offsets": [
+              1969,
+              1971
+            ],
+            "original": "hema_vers",
+            "original_offsets": [
+              1888,
+              1897
+            ]
+          },
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              1974,
+              1974
+            ],
+            "original": "',",
+            "original_offsets": [
+              1900,
+              1902
+            ]
+          },
+          {
+            "candidate": "in s",
+            "candidate_offsets": [
+              1975,
+              1979
+            ],
+            "original": "'c",
+            "original_offsets": [
+              1903,
+              1905
+            ]
+          },
+          {
+            "candidate": "ec",
+            "candidate_offsets": [
+              1981,
+              1983
+            ],
+            "original": "ls', 'popula",
+            "original_offsets": [
+              1907,
+              1919
+            ]
+          },
+          {
+            "candidate": ".valu",
+            "candidate_offsets": [
+              1988,
+              1993
+            ],
+            "original": "', 'repr",
+            "original_offsets": [
+              1924,
+              1932
+            ]
+          },
+          {
+            "candidate": "():financial.for_run(run,",
+            "candidate_offsets": [
+              1995,
+              2020
+            ],
+            "original": "",
+            "original_offsets": [
+              1934,
+              1934
+            ]
+          },
+          {
+            "candidate": "xecu",
+            "candidate_offsets": [
+              2021,
+              2025
+            ],
+            "original": "nta",
+            "original_offsets": [
+              1935,
+              1938
+            ]
+          },
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              2029,
+              2029
+            ],
+            "original": "s', 'model', 'training', 'ledger_output', 'controls_output'} or plan['schema_version'] != 1:\n        raise ValueError('batch plan schema differs'",
+            "original_offsets": [
+              1942,
+              2087
+            ]
+          },
+          {
+            "candidate": "execution=financial.plan_selection(plan).get(cell['arm'])\n            execution=financial.for_run(run,execution)\n            if execution is not None:provenance.update(model_execution=execution)\n            ",
+            "candidate_offsets": [
+              11523,
+              11730
+            ],
+            "original": "",
+            "original_offsets": [
+              11581,
+              11581
+            ]
+          },
+          {
+            "candidate": ", execution=execution",
+            "candidate_offsets": [
+              12733,
+              12754
+            ],
+            "original": "",
+            "original_offsets": [
+              12584,
+              12584
+            ]
+          }
+        ],
+        "original_sha256": "077eaeb585748dc40647b0ba46193956e87e6459fe18a92c41cb6b18ce559c1f"
+      }
+    },
+    "training.py": {
+      "CAP": {
+        "candidate_sha256": "0e5ae299f48f21cde666d78319b7710208f6d959c0c2b1aea7e848f4252ff482",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              665,
+              665
+            ],
+            "original": "\n    compatibility=None",
+            "original_offsets": [
+              665,
+              688
+            ]
+          },
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              2486,
+              2486
+            ],
+            "original": "'operational_source_compatibility' in run.admission.inputs:\n                from .operational_source_compatibility import _require_parent_under_fit_lock\n                compatibility=_require_parent_under_fit_lock(run,old,provenance,checkpoint)\n            else:\n                if ",
+            "original_offsets": [
+              2509,
+              2791
+            ]
+          },
+          {
+            "candidate": "",
+            "candidate_offsets": [
+              2854,
+              2854
+            ],
+            "original": ")\n        if compatibility is not None:\n            _immutable(destination/'operational-source-compatibility.json',compatibility",
+            "original_offsets": [
+              3159,
+              3287
+            ]
+          }
+        ],
+        "original_sha256": "6f278f5b0538928827f2be06be5e8b358c5c6fcf2761085ff58b73832a74da00"
+      },
+      "Main": {
+        "candidate_sha256": "0e5ae299f48f21cde666d78319b7710208f6d959c0c2b1aea7e848f4252ff482",
+        "full_AST_inverse": true,
+        "full_byte_inverse": true,
+        "literal_segments": [
+          {
+            "candidate": "\nfrom . import financial_execution as financial",
+            "candidate_offsets": [
+              371,
+              418
+            ],
+            "original": "",
+            "original_offsets": [
+              371,
+              371
+            ]
+          },
+          {
+            "candidate": "financial.check_model(model,provenance.get('model_execution'));",
+            "candidate_offsets": [
+              3824,
+              3887
+            ],
+            "original": "",
+            "original_offsets": [
+              3777,
+              3777
+            ]
+          },
+          {
+            "candidate": ")\n            financial.check_model(model,provenance.get('model_execution')",
+            "candidate_offsets": [
+              5224,
+              5299
+            ],
+            "original": "",
+            "original_offsets": [
+              5114,
+              5114
+            ]
+          }
+        ],
+        "original_sha256": "5c0380de62c670d356ea3546c7b81eed4ccab55a886bc27b6a1bbfd75c2c3369"
+      }
+    }
+  },
+  "qualification": "Literal inverse authenticates the entire original body, including all unrelated Main and CAP differences; only the seven candidate bodies are proposed.",
+  "schema_version": 1
+}

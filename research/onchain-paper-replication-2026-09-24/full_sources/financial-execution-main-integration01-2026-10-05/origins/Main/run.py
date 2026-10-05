@@ -14,7 +14,6 @@ from .baselines import training_controls
 from .cells import lifecycle_cell_id, reconcile_cells
 from .evaluation import evaluate_cell, example_binding, validate_scientific_cell, prediction_directory, validate_manifest
 from .model_registry import PRICE_ARMS, GRAPH_ARMS, VECTOR_WIDTHS
-from . import financial_execution as financial
 from .metrics import classification_metrics
 from .provenance import canonical_bytes, digest, file_hash, durable_mkdir, sync_directory
 
@@ -39,8 +38,8 @@ def preflight_batch(run, populations, representations=None, *, plan_input='batch
     run._active()
     run._check_source()
     plan = json.loads(run.read_input(plan_input))
-    selections=financial.plan_selection(plan)
-    for execution in selections.values():financial.for_run(run,execution)
+    if set(plan) != {'schema_version', 'cells', 'populations', 'representations', 'model', 'training', 'ledger_output', 'controls_output'} or plan['schema_version'] != 1:
+        raise ValueError('batch plan schema differs')
     items = plan['cells']
     expected = [item['cell'] for item in items]
     ids = [c['id'] for c in expected]
@@ -166,9 +165,6 @@ def execute_batch(run, populations, representations, *, plan_input='batch_plan')
                           'input_hash': examples.train_hash, 'fold_id': cell['fold'],
                           'dictionary_hash': binding.get('dictionary_hash', digest(canonical_bytes({'component': 'no_graph_representation'}))),
                           'cell_id': lifecycle_cell_id(cell['id']), 'source_commit': run.admission.source}
-            execution=financial.plan_selection(plan).get(cell['arm'])
-            execution=financial.for_run(run,execution)
-            if execution is not None:provenance.update(model_execution=execution)
             row['attempts'].append(run.admission.experiment_id)
             recovery_args = {}
             if item.get('recovery') is not None:
@@ -182,7 +178,7 @@ def execute_batch(run, populations, representations, *, plan_input='batch_plan')
                                                        'completion_input': recovery['completion_input']}
             try:
                 _, metrics = evaluate_cell(run, cell, examples, scaler, features, plan['model'], plan['training'], provenance,
-                    expected_test_mask=reference['binding']['test_mask_hash'], feature_binding=binding, execution=execution,
+                    expected_test_mask=reference['binding']['test_mask_hash'], feature_binding=binding,
                     example_binding_input=reference.get('input'), example_binding_output=reference.get('output'),
                     feature_binding_input=feature_reference.get('input'),
                     feature_binding_output=feature_reference.get('output'), treatment_reference=reference, **recovery_args)

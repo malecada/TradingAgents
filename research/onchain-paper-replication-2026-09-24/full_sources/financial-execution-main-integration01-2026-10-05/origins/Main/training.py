@@ -7,7 +7,6 @@ import torch
 from ..lifecycle import ResearchRun,_lock,_immutable
 from .provenance import canonical_bytes,digest,durable_mkdir,sync_directory,file_hash
 from .checkpoints import seed_all,save_checkpoint,load_checkpoint
-from . import financial_execution as financial
 
 
 @dataclass
@@ -55,7 +54,7 @@ def fit_cell(run,cell_id,provenance,model_factory,batch_factory,n_examples,task,
     directory=_reserve(run,cell_id,provenance,continuation)
     checkpoint=None
     try:
-        rng=seed_all(seed);model=model_factory();financial.check_model(model,provenance.get('model_execution'));model.train()
+        rng=seed_all(seed);model=model_factory();model.train()
         optimizer=torch.optim.Adam(model.parameters(),lr=training_config['learning_rate'],betas=tuple(training_config['betas']),eps=training_config['epsilon'],weight_decay=training_config['weight_decay'])
         epoch=0;batch=0;logs=[];loss_sum=0.;count=0;checkpoint=None
         schedule={'training':training_config,'seed':seed,'task':task,'n_examples':n_examples}
@@ -71,7 +70,6 @@ def fit_cell(run,cell_id,provenance,model_factory,batch_factory,n_examples,task,
         _immutable(directory/'schedule.json',schedule)
         while epoch<epochs:
             run._active()
-            financial.check_model(model,provenance.get('model_execution'))
             indices=list(range(batch*size,min((batch+1)*size,n_examples)))
             inputs,targets=batch_factory(indices);optimizer.zero_grad(set_to_none=True)
             output=model(**inputs)

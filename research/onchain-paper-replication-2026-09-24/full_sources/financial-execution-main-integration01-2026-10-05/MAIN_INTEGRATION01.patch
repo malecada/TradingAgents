@@ -1,0 +1,399 @@
+--- a/tradingagents/research/onchain_replication/checkpoints.py
++++ b/tradingagents/research/onchain_replication/checkpoints.py
+@@ -4,6 +4,7 @@
+ import numpy as np
+ import torch
+ from .cache import publish,read_artifact
++from . import financial_execution as financial
+ from .provenance import canonical_bytes,digest,require_hash
+ 
+ 
+@@ -19,7 +20,9 @@
+ 
+ 
+ def _provenance(value):
+-    if set(value)!={'source_hashes','config_hash','input_hash','dictionary_hash','fold_id','cell_id','source_commit'}:raise ValueError('checkpoint provenance fields')
++    fields={'source_hashes','config_hash','input_hash','dictionary_hash','fold_id','cell_id','source_commit'}
++    if set(value) not in (fields,fields|{'model_execution'}):raise ValueError('checkpoint provenance fields')
++    if 'model_execution' in value and financial.identity(value['model_execution']) is None:raise ValueError('checkpoint selected execution absent')
+     for key in ('config_hash','input_hash','dictionary_hash'):require_hash(value[key])
+     if not value['source_hashes']:raise ValueError('checkpoint sources required')
+     for h in value['source_hashes']:require_hash(h)
+@@ -29,12 +32,16 @@
+ 
+ def save_checkpoint(root,model,optimizer,rng,provenance,*,epoch,batch,logs,epoch_loss=0.,epoch_count=0):
+     _provenance(provenance)
++    financial.check_model(model,provenance.get('model_execution'))
+     numpy_state=np.random.get_state()
+     state={'model':model.state_dict(),'optimizer':optimizer.state_dict(),'scheduler':None,
+            'epoch':epoch,'batch':batch,'logs':logs,'epoch_loss':epoch_loss,'epoch_count':epoch_count,
+            'rng':{'python':random.getstate(),'numpy_global':(numpy_state[0],numpy_state[1].tolist(),*numpy_state[2:]),
+                   'pcg64':rng.bit_generator.state,'torch_cpu':torch.get_rng_state(),
+                   'torch_cuda':torch.cuda.get_rng_state_all() if torch.cuda.is_available() else []}}
++    if 'model_execution' in provenance:
++        state['model_execution']=financial.identity(provenance['model_execution'])
++        state['model_contract']=financial.model_contract(model,provenance['model_execution'])
+     stream=io.BytesIO();torch.save(state,stream)
+     key=digest(canonical_bytes({'provenance':provenance,'epoch':epoch,'batch':batch}))
+     return publish(root,key,{'state.pt':stream.getvalue()},provenance)
+@@ -42,9 +49,12 @@
+ 
+ def load_checkpoint(path,model,optimizer,rng,expected_provenance):
+     _provenance(expected_provenance)
++    financial.check_model(model,expected_provenance.get('model_execution'))
+     data=read_artifact(path,expected_provenance)
+     state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True)
+-    if set(state)!=REQUIRED or not isinstance(state['rng'],dict) or set(state['rng'])!=RNG_REQUIRED:raise ValueError('incomplete checkpoint state')
++    financial.check_state_model(state,model,expected_provenance)
++    required=REQUIRED|({'model_execution','model_contract'} if 'model_execution' in expected_provenance else set())
++    if set(state)!=required or not isinstance(state['rng'],dict) or set(state['rng'])!=RNG_REQUIRED:raise ValueError('incomplete checkpoint state')
+     if state['scheduler'] is not None or any(type(state[k]) is not int or state[k]<0 for k in ('epoch','batch','epoch_count')):raise ValueError('invalid checkpoint cursor/state')
+     if len(state['rng']['torch_cuda'])!=(torch.cuda.device_count() if torch.cuda.is_available() else 0):raise ValueError('checkpoint device topology mismatch')
+     model.load_state_dict(state['model'],strict=True);optimizer.load_state_dict(state['optimizer'])
+--- a/tradingagents/research/onchain_replication/evaluation.py
++++ b/tradingagents/research/onchain_replication/evaluation.py
+@@ -13,6 +13,7 @@
+ from .dataset import example_binding
+ from .contracts import Prediction
+ from .model_registry import build_model,PRICE_ARMS,VECTOR_WIDTHS
++from . import financial_execution as financial
+ from .training import fit_cell,predict_cell,_reserve
+ from .cells import lifecycle_cell_id
+ from .cache import read_artifact
+@@ -43,8 +44,10 @@
+     return batch
+ 
+ 
+-def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config,provenance,*,expected_test_mask,feature_binding,output_directory=None,feature_binding_input=None,feature_binding_output=None,example_binding_input=None,example_binding_output=None,continuation=None,completed_fit=None,treatment_reference=None):
++def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config,provenance,*,expected_test_mask,feature_binding,output_directory=None,feature_binding_input=None,feature_binding_output=None,example_binding_input=None,example_binding_output=None,continuation=None,completed_fit=None,treatment_reference=None,execution=None):
+     """The caller admits graph/dictionary artifacts; this function enforces their binding."""
++    execution=financial.for_run(run,execution)
++    if financial.identity(provenance.get('model_execution'))!=execution or ('model_execution' in provenance)!=(execution is not None):raise ValueError('evaluation execution provenance differs')
+     examples.require_test_mask(expected_test_mask)
+     validate_scientific_cell(cell)
+     from .treatment_admission import preflight_treatment
+@@ -83,7 +86,7 @@
+     durable_mkdir(directory.parent);directory.mkdir(exist_ok=False);sync_directory(directory.parent)
+     _immutable(directory/'claim.json',{'scientific_id':cell['id'],'lifecycle_id':registered_id,'provenance':provenance,'test_mask_hash':expected_test_mask})
+     try:
+-        arm=cell['arm'];task=cell['task'];factory=lambda:build_model(arm,task,model_config)
++        arm=cell['arm'];task=cell['task'];factory=lambda:build_model(arm,task,model_config) if execution is None else build_model(arm,task,model_config,execution=execution)
+         from .training_batch_observer import prepare
+         observation=prepare(run,registered_id,provenance,examples,feature_binding,training_config,features)
+         train=batch_factory(arm,task,examples.train,scaler,features,permuted=arm=='training_label_permutation',observation=None if observation is None else (run,observation))
+@@ -95,6 +98,7 @@
+                 x,_=test(list(range(len(examples.test))));x=x['x'].numpy().reshape(len(examples.test),-1)
+                 prediction=expit(model.decision_function(x)) if task=='direction' else scaler.inverse(model.predict(x))
+             else:
++                financial.check_model(model,execution)
+                 output=predict_cell(model,test,len(examples.test),training_config['batch_size'])
+                 prediction=torch.softmax(output,1)[:,1].numpy() if task=='direction' else scaler.inverse(output[:,0].numpy())
+         elif arm=='svm':
+@@ -117,6 +121,7 @@
+                 raise
+         else:
+             fitted=fit_cell(run,registered_id,provenance,factory,train,len(examples.train),'classification' if task=='direction' else 'regression',cell['seed'],training_config,continuation=continuation)
++            financial.check_model(fitted.model,execution)
+             output=predict_cell(fitted.model,test,len(examples.test),training_config['batch_size']);checkpoint_hash=fitted.checkpoint_hash
+             prediction=torch.softmax(output,1)[:,1].numpy() if task=='direction' else scaler.inverse(output[:,0].numpy())
+         rows=[]
+@@ -180,7 +185,8 @@
+         model=joblib.load(checkpoint)
+     else:
+         data=read_artifact(checkpoint,old);state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True)
+-        model=factory();model.load_state_dict(state['model'],strict=True)
++        financial.validate_state(state,old)
++        model=factory();financial.check_state_model(state,model,old);model.load_state_dict(state['model'],strict=True)
+     return model,file_hash(checkpoint)
+ 
+ 
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/financial_execution.py
+@@ -0,0 +1,130 @@
++"""Explicit financial execution identity; no admission or numerical import at load."""
++import hashlib
++import json
++import weakref
++from pathlib import Path
++SOURCE='tradingagents/research/onchain_replication/streamed_gat.py'
++SHA='e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f'
++ARMS={'proposed','training_label_permutation'}
++PLAN_KEYS={'schema_version','cells','populations','representations','model','training','ledger_output','controls_output'}
++
++def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode('utf-8')
++
++def identity(value):
++    if value is None:return None
++    keys={'policy','policy_sha256','source_path','source_sha256','candidate_sha256'}
++    if type(value) is not dict or set(value)!=keys:raise ValueError('financial execution identity fields')
++    p=value['policy']
++    if type(p) is not dict or set(p)!={'schema_version','backend','block_edges'}:raise ValueError('financial execution policy fields')
++    if type(p['schema_version']) is not int or p['schema_version']!=1 or type(p['block_edges']) is not int or p['block_edges']!=65536 or type(p['backend']) is not str or p['backend']!='streamed-gat-mulsum-v1':raise ValueError('financial execution policy differs')
++    if any(type(value[k]) is not str for k in keys-{'policy'}) or value['policy_sha256']!=hashlib.sha256(canonical(p)).hexdigest() or value['source_path']!=SOURCE or value['source_sha256']!=SHA or value['candidate_sha256']!=SHA:raise ValueError('financial execution source/hash differs')
++    return {**value,'policy':dict(p)}
++
++def authenticate(value):
++    selected=identity(value)
++    if selected is None:return None
++    path=Path(__file__).resolve().parent/'streamed_gat.py'
++    if path.resolve()!=path or path.is_symlink() or not 0<path.stat().st_size<=65536:raise ValueError('financial backend source path/extent differs')
++    with path.open('rb') as stream:raw=stream.read(65537)
++    if len(raw)>65536 or hashlib.sha256(raw).hexdigest()!=SHA:raise ValueError('financial backend source bytes differ')
++    return selected
++
++def for_run(run,value):
++    selected=authenticate(value)
++    if selected is not None:
++        expected=run.admission.root/SOURCE
++        if Path(__file__).resolve().parent/'streamed_gat.py'!=expected or run.admission.experiment['source_files'].get(SOURCE)!=SHA:raise ValueError('financial backend not selected in admitted source')
++    return selected
++
++def plan_selection(plan):
++    if set(plan)==PLAN_KEYS and plan['schema_version']==1:return {}
++    if set(plan)!=PLAN_KEYS|{'model_execution'} or type(plan['schema_version']) is not int or plan['schema_version']!=2:raise ValueError('batch plan schema differs')
++    mapping=plan['model_execution'];present={item['cell']['arm'] for item in plan['cells']}
++    if type(mapping) is not dict or not mapping or not set(mapping)<=ARMS & present:raise ValueError('financial selected arm mapping differs')
++    if plan['model'].get('graph_activation_checkpointing',False) is not False:raise ValueError('financial streamed checkpoint policy differs')
++    result={}
++    for arm,value in mapping.items():
++        selected=identity(value)
++        if selected is None:raise ValueError('selected financial execution binding absent')
++        result[arm]=selected
++    return result
++
++# Private construction records are not taken from mutable model labels.
++_PINS=weakref.WeakKeyDictionary()
++ATTRS=('in_features','out_features','input_size','hidden_size','num_layers','bias','batch_first','dropout','bidirectional','proj_size','inplace','p','block_edges','concat','activation','slope')
++
++def _classes():
++    from .model import ReplicationModel
++    from .streamed_gat import GraphAttention
++    return ReplicationModel,GraphAttention
++
++def _structure(model):
++    modules=[];module_refs=[]
++    for name,module in model.named_modules():
++        attrs={}
++        for key in ATTRS:
++            value=getattr(module,key,None)
++            if type(value) in (int,float,bool,str) or value is None:attrs[key]=value
++        modules.append({'name':name,'class':type(module).__module__+'.'+type(module).__qualname__,'attributes':attrs})
++        module_refs.append((name,id(module),type(module),getattr(type(module),'forward',None),module.__dict__.get('forward')))
++    parameters=[];parameter_refs=[]
++    for name,param in model.named_parameters():
++        parameters.append({'name':name,'class':type(param).__module__+'.'+type(param).__qualname__,'shape':list(param.shape),'requires_grad':param.requires_grad,'dtype':str(param.dtype),'device':str(param.device.type),'device_index':param.device.index})
++        parameter_refs.append((name,id(param),type(param)))
++    buffers=[];buffer_refs=[]
++    for name,value in model.named_buffers():
++        buffers.append({'name':name,'class':type(value).__module__+'.'+type(value).__qualname__,'shape':list(value.shape),'dtype':str(value.dtype),'device':str(value.device.type),'device_index':value.device.index})
++        buffer_refs.append((name,id(value),type(value)))
++    contract={'schema_version':1,'model_config':model.config,'graph_config':model.graph.config,'task':model.task,
++      'graph_activation_checkpointing':model.graph_activation_checkpointing,'modules':modules,'parameters':parameters,'buffers':buffers}
++    return (tuple(module_refs),tuple(parameter_refs),tuple(buffer_refs)),canonical(contract)
++
++def construct(config,task,value):
++    selected=authenticate(value)
++    if selected is None:raise ValueError('selected model execution missing')
++    constructor,layer_class=_classes()
++    config_raw=canonical(config);detached=json.loads(config_raw)
++    if detached.get('graph_activation_checkpointing',False) is not False or task not in ('classification','regression'):raise ValueError('financial constructor science differs')
++    # Only this fresh real constructor can establish a private construction pin.
++    model=constructor(detached,task,execution=selected['policy'])
++    if type(model) is not constructor or canonical(model.config)!=config_raw or canonical(model.graph.config)!=config_raw or model.task!=task:raise ValueError('financial constructor reference differs')
++    if any(p.requires_grad is not True for p in model.parameters()):raise ValueError('financial constructor froze parameters')
++    runtime,contract_raw=_structure(model)
++    marker=hashlib.sha256(canonical({'execution':selected,'config':detached,'task':task})).hexdigest()
++    if model in _PINS:raise ValueError('financial constructor object already captured')
++    _PINS[model]=(canonical(selected),config_raw,task,runtime,contract_raw,marker,constructor)
++    model._financial_execution=canonical(selected);model._financial_pin=marker
++    check_model(model,selected)
++    return model
++
++def check_model(model,value):
++    selected=authenticate(value);constructor,layer_class=_classes()
++    modules=tuple(model.modules()) if hasattr(model,'modules') else (model,)
++    if selected is None:
++        if model in _PINS or any(isinstance(module,layer_class) for module in modules) or getattr(model,'execution',None) is not None or hasattr(model,'_financial_execution') or hasattr(model,'_financial_pin'):raise ValueError('selected model lacks checkpoint execution binding')
++        return
++    pin=_PINS.get(model)
++    if pin is None or pin[6] is not constructor or type(model) is not constructor:raise ValueError('financial model original constructor pin absent')
++    if pin[0]!=canonical(selected) or getattr(model,'_financial_execution',None)!=pin[0] or getattr(model,'_financial_pin',None)!=pin[5]:raise ValueError('financial model captured execution changed')
++    if canonical(model.config)!=pin[1] or canonical(model.graph.config)!=pin[1] or model.task!=pin[2] or model.graph_activation_checkpointing is not False or dict(model.execution or {})!=selected['policy'] or dict(model.graph.execution or {})!=selected['policy']:raise ValueError('financial model captured science changed')
++    if len(model.graph.gat)!=len(model.config['gat_heads']) or any(type(layer) is not layer_class or layer.block_edges!=65536 for layer in model.graph.gat):raise ValueError('financial actual GAT backend differs')
++    if any(p.device.type!='cpu' or str(p.dtype)!='torch.float32' or p.requires_grad is not True for p in model.parameters()):raise ValueError('financial selected backend trainability/device differs')
++    runtime,contract_raw=_structure(model)
++    if runtime!=pin[3] or contract_raw!=pin[4]:raise ValueError('financial constructor structure/attributes changed')
++
++def model_contract(model,value):
++    check_model(model,value)
++    if value is None:return None
++    return json.loads(_PINS[model][4])
++
++def check_state_model(state,model,provenance):
++    validate_state(state,provenance)
++    expected=model_contract(model,provenance.get('model_execution'))
++    if expected is not None and canonical(state['model_contract'])!=canonical(expected):raise ValueError('checkpoint original model contract differs')
++
++def validate_state(state,provenance):
++    selected=identity(provenance.get('model_execution'))
++    if 'model_execution' in provenance and selected is None:raise ValueError('explicit checkpoint execution missing')
++    if ('model_execution' in state)!=('model_execution' in provenance):raise ValueError('checkpoint execution presence differs')
++    if selected is not None and identity(state['model_execution'])!=selected:raise ValueError('checkpoint execution identity differs')
++    if ('model_contract' in state)!=(selected is not None) or selected is not None and type(state['model_contract']) is not dict:raise ValueError('checkpoint model contract presence differs')
+--- a/tradingagents/research/onchain_replication/model_registry.py
++++ b/tradingagents/research/onchain_replication/model_registry.py
+@@ -1,6 +1,7 @@
+ """Explicit arm assembly; all graph comparators share the frozen temporal head."""
+ import torch
+ from torch import nn
++from . import financial_execution as financial
+ from .model import ReplicationModel
+ from .temporal import TemporalHead
+ from .baselines import PriceRecurrent,HierarchicalLSTM,DiagnosticGraph
+@@ -29,12 +30,16 @@
+         self.temporal=TemporalHead(33,config['lstm_width'],config['attention_width'],task,config['lstm_depth'])
+ 
+ 
+-def build_model(arm,task,config):
++def build_model(arm,task,config,*,execution=None):
++    selected=financial.authenticate(execution)
++    if selected is not None and (arm not in {'proposed','training_label_permutation'} or config.get('graph_activation_checkpointing',False) is not False):raise ValueError('financial execution unsupported arm/checkpoint policy')
+     task={'direction':'classification'}.get(task,task)
+     if task not in {'classification','regression'}:raise ValueError('unknown task')
+     if arm in {'lstm','gru'}:return PriceRecurrent(arm,task)
+     if arm=='hlstm':return HierarchicalLSTM(task)
+-    if arm in {'proposed','training_label_permutation'}:return ReplicationModel(config,task)
++    if arm in {'proposed','training_label_permutation'}:
++        if selected is None:return ReplicationModel(config,task)
++        return financial.construct(config,task,selected)
+     if arm in {'gin','gat_without_mcm','mcm_without_gat'}:return AlternativeGraphTemporal(config,task,arm)
+     if arm in VECTOR_WIDTHS:return VectorTemporal(VECTOR_WIDTHS[arm],task,config,arm=='constant_graph')
+     if arm=='svm':
+--- a/tradingagents/research/onchain_replication/replay.py
++++ b/tradingagents/research/onchain_replication/replay.py
+@@ -5,12 +5,15 @@
+ import numpy as np
+ import torch
+ from .model import ReplicationModel
++from .model_registry import build_model
++from . import financial_execution as financial
+ from .checkpoints import seed_all,save_checkpoint
+ from .cache import read_artifact
+ from .provenance import file_hash,canonical_bytes,digest
+ from ..lifecycle import _immutable
+ 
+ CODE=('model.py','gat.py','pooling.py','temporal.py','replay.py')
++SELECTED_CODE=CODE+('financial_execution.py','model_registry.py','checkpoints.py','streamed_gat.py')
+ 
+ 
+ def inputs(raw):
+@@ -18,18 +21,20 @@
+     return [[graphs[i] for i in row] for row in raw['sequences']],torch.tensor(raw['prices'],dtype=torch.float32)
+ 
+ 
+-def make_synthetic_fixture(directory,config,source_commit):
++def make_synthetic_fixture(directory,config,source_commit,*,execution=None):
++    execution=financial.authenticate(execution)
+     directory=Path(directory);directory.mkdir(parents=True,exist_ok=False)
+     raw={'data_kind':'synthetic_neural_inputs','graphs':[{'mcm':(np.arange(4*32).reshape(4,32)/256+shift).tolist(),'edge_index':[[0,1,2,3,1],[1,2,3,0,0]]} for shift in (0.,.25)],'sequences':[[0]*14+[1]*14,[1]*14+[0]*14],'prices':np.linspace(-1,1,56).reshape(2,28,1).tolist()}
+     _immutable(directory/'inputs.json',raw);_immutable(directory/'model.json',config)
+-    rng=seed_all(314159);model=ReplicationModel(config,'classification');optimizer=torch.optim.Adam(model.parameters(),lr=.001)
++    rng=seed_all(314159);model=ReplicationModel(config,'classification') if execution is None else build_model('proposed','classification',config,execution=execution);optimizer=torch.optim.Adam(model.parameters(),lr=.001)
+     graph,price=inputs(raw);model.train();loss=torch.nn.functional.cross_entropy(model(graph,price),torch.tensor([0,1]));loss.backward();optimizer.step();model.eval()
+     with torch.no_grad():expected=model(graph,price).numpy().astype(float)
+     provenance={'source_hashes':[file_hash(directory/'inputs.json'),file_hash(directory/'model.json')],'config_hash':digest(canonical_bytes(config)),'input_hash':file_hash(directory/'inputs.json'),'dictionary_hash':digest(b'synthetic MCM inputs; not a fitted empirical dictionary'),'fold_id':'synthetic','cell_id':'synthetic-full-model-replay','source_commit':source_commit}
++    if execution is not None:provenance['model_execution']=execution
+     checkpoint=save_checkpoint(directory/'checkpoint',model,optimizer,rng,provenance,epoch=1,batch=0,logs=[{'synthetic_loss':float(loss.detach())}])
+     _immutable(directory/'expected.json',expected.tolist())
+     package=Path(__file__).resolve().parent
+-    _immutable(directory/'manifest.json',{'data_kind':raw['data_kind'],'provenance':provenance,'checkpoint':str(checkpoint.relative_to(directory)),'files':{str(p.relative_to(directory)):file_hash(p) for p in directory.rglob('*') if p.is_file()},'source_files':{name:file_hash(package/name) for name in CODE},'qualification':'One synthetic optimizer step; validates offline checkpoint inference only, not predictive performance, dictionary fitting or empirical raw recovery.'})
++    _immutable(directory/'manifest.json',{'data_kind':raw['data_kind'],'provenance':provenance,'checkpoint':str(checkpoint.relative_to(directory)),'files':{str(p.relative_to(directory)):file_hash(p) for p in directory.rglob('*') if p.is_file()},'source_files':{name:file_hash(package/name) for name in (SELECTED_CODE if execution is not None else CODE)},'qualification':'One synthetic optimizer step; validates offline checkpoint inference only, not predictive performance, dictionary fitting or empirical raw recovery.'})
+     return directory/'manifest.json'
+ 
+ 
+@@ -39,11 +44,15 @@
+     for relative,sha in manifest['files'].items():
+         path=directory/relative
+         if Path(relative).is_absolute() or not path.resolve().is_relative_to(directory.resolve()) or file_hash(path)!=sha:raise ValueError('replay fixture bytes differ')
++    execution=financial.authenticate(manifest['provenance'].get('model_execution'))
+     package=Path(__file__).resolve().parent
+-    if manifest['source_files']!={name:file_hash(package/name) for name in CODE}:raise ValueError('replay source differs')
+-    model=ReplicationModel(json.loads((directory/'model.json').read_bytes()),'classification')
++    if manifest['source_files']!={name:file_hash(package/name) for name in (SELECTED_CODE if execution is not None else CODE)}:raise ValueError('replay source differs')
++    config=json.loads((directory/'model.json').read_bytes())
++    task=manifest.get('task','classification')
++    if task not in ('classification','regression'):raise ValueError('explicit replay task differs')
++    model=ReplicationModel(config,task) if execution is None else build_model('proposed',task,config,execution=execution)
+     data=read_artifact(directory/manifest['checkpoint'],manifest['provenance'])
+-    state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True);model.load_state_dict(state['model'],strict=True);model.eval()
++    state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True);financial.validate_state(state,manifest['provenance']);financial.check_state_model(state,model,manifest['provenance']);model.load_state_dict(state['model'],strict=True);model.eval()
+     graph,price=inputs(json.loads((directory/'inputs.json').read_bytes()))
+     with torch.no_grad():actual=model(graph,price).numpy().astype(float)
+     expected=np.array(json.loads((directory/'expected.json').read_bytes()),dtype=float)
+--- a/tradingagents/research/onchain_replication/run.py
++++ b/tradingagents/research/onchain_replication/run.py
+@@ -14,6 +14,7 @@
+ from .cells import lifecycle_cell_id, reconcile_cells
+ from .evaluation import evaluate_cell, example_binding, validate_scientific_cell, prediction_directory, validate_manifest
+ from .model_registry import PRICE_ARMS, GRAPH_ARMS, VECTOR_WIDTHS
++from . import financial_execution as financial
+ from .metrics import classification_metrics
+ from .provenance import canonical_bytes, digest, file_hash, durable_mkdir, sync_directory
+ 
+@@ -38,8 +39,8 @@
+     run._active()
+     run._check_source()
+     plan = json.loads(run.read_input(plan_input))
+-    if set(plan) != {'schema_version', 'cells', 'populations', 'representations', 'model', 'training', 'ledger_output', 'controls_output'} or plan['schema_version'] != 1:
+-        raise ValueError('batch plan schema differs')
++    selections=financial.plan_selection(plan)
++    for execution in selections.values():financial.for_run(run,execution)
+     items = plan['cells']
+     expected = [item['cell'] for item in items]
+     ids = [c['id'] for c in expected]
+@@ -165,6 +166,9 @@
+                           'input_hash': examples.train_hash, 'fold_id': cell['fold'],
+                           'dictionary_hash': binding.get('dictionary_hash', digest(canonical_bytes({'component': 'no_graph_representation'}))),
+                           'cell_id': lifecycle_cell_id(cell['id']), 'source_commit': run.admission.source}
++            execution=financial.plan_selection(plan).get(cell['arm'])
++            execution=financial.for_run(run,execution)
++            if execution is not None:provenance.update(model_execution=execution)
+             row['attempts'].append(run.admission.experiment_id)
+             recovery_args = {}
+             if item.get('recovery') is not None:
+@@ -178,7 +182,7 @@
+                                                        'completion_input': recovery['completion_input']}
+             try:
+                 _, metrics = evaluate_cell(run, cell, examples, scaler, features, plan['model'], plan['training'], provenance,
+-                    expected_test_mask=reference['binding']['test_mask_hash'], feature_binding=binding,
++                    expected_test_mask=reference['binding']['test_mask_hash'], feature_binding=binding, execution=execution,
+                     example_binding_input=reference.get('input'), example_binding_output=reference.get('output'),
+                     feature_binding_input=feature_reference.get('input'),
+                     feature_binding_output=feature_reference.get('output'), treatment_reference=reference, **recovery_args)
+--- a/tradingagents/research/onchain_replication/training.py
++++ b/tradingagents/research/onchain_replication/training.py
+@@ -7,6 +7,7 @@
+ from ..lifecycle import ResearchRun,_lock,_immutable
+ from .provenance import canonical_bytes,digest,durable_mkdir,sync_directory,file_hash
+ from .checkpoints import seed_all,save_checkpoint,load_checkpoint
++from . import financial_execution as financial
+ 
+ 
+ @dataclass
+@@ -54,7 +55,7 @@
+     directory=_reserve(run,cell_id,provenance,continuation)
+     checkpoint=None
+     try:
+-        rng=seed_all(seed);model=model_factory();model.train()
++        rng=seed_all(seed);model=model_factory();financial.check_model(model,provenance.get('model_execution'));model.train()
+         optimizer=torch.optim.Adam(model.parameters(),lr=training_config['learning_rate'],betas=tuple(training_config['betas']),eps=training_config['epsilon'],weight_decay=training_config['weight_decay'])
+         epoch=0;batch=0;logs=[];loss_sum=0.;count=0;checkpoint=None
+         schedule={'training':training_config,'seed':seed,'task':task,'n_examples':n_examples}
+@@ -70,6 +71,7 @@
+         _immutable(directory/'schedule.json',schedule)
+         while epoch<epochs:
+             run._active()
++            financial.check_model(model,provenance.get('model_execution'))
+             indices=list(range(batch*size,min((batch+1)*size,n_examples)))
+             inputs,targets=batch_factory(indices);optimizer.zero_grad(set_to_none=True)
+             output=model(**inputs)

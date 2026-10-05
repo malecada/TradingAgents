@@ -85,8 +85,6 @@ def preflight_batch(run, populations, representations=None, *, plan_input='batch
             raise ValueError('prepared population denominator differs')
         if reference['asset'] != cell['asset'] or reference['fold'] != cell['fold'] or reference['variant'] != cell['variant']:
             raise ValueError('population asset/fold/variant differs')
-        from .treatment_admission import preflight_treatment
-        preflight_treatment(run, reference, cell, examples)
         mask_key = (cell['asset'], cell['fold'])
         fields = ('decision_at', 'label_start', 'label_end', 'input_dates', 'input_prices', 'target_price', 'up')
         common = digest(canonical_bytes({'fold_hash': examples.fold_hash, 'test_mask_hash': examples.test_mask_hash,
@@ -185,7 +183,7 @@ def execute_batch(run, populations, representations, *, plan_input='batch_plan')
                     expected_test_mask=reference['binding']['test_mask_hash'], feature_binding=binding, execution=execution,
                     example_binding_input=reference.get('input'), example_binding_output=reference.get('output'),
                     feature_binding_input=feature_reference.get('input'),
-                    feature_binding_output=feature_reference.get('output'), treatment_reference=reference, **recovery_args)
+                    feature_binding_output=feature_reference.get('output'), **recovery_args)
                 path = prediction_directory(run, lifecycle_cell_id(cell['id']))/'cell.json'
                 row.update(status='complete', metrics=metrics, cell_record=str(path.relative_to(run.admission.root)),
                            cell_record_sha256=file_hash(path), test_mask_hash=examples.test_mask_hash)

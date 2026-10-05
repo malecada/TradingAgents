@@ -13,7 +13,6 @@ from .provenance import canonical_bytes,digest,file_hash,durable_mkdir,sync_dire
 from .dataset import example_binding
 from .contracts import Prediction
 from .model_registry import build_model,PRICE_ARMS,VECTOR_WIDTHS
-from . import financial_execution as financial
 from .training import fit_cell,predict_cell,_reserve
 from .cells import lifecycle_cell_id
 from .cache import read_artifact
@@ -44,10 +43,8 @@ def batch_factory(arm,task,examples,scaler,features,*,permuted=False,observation
     return batch
 
 
-def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config,provenance,*,expected_test_mask,feature_binding,output_directory=None,feature_binding_input=None,feature_binding_output=None,example_binding_input=None,example_binding_output=None,continuation=None,completed_fit=None,treatment_reference=None,execution=None):
+def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config,provenance,*,expected_test_mask,feature_binding,output_directory=None,feature_binding_input=None,feature_binding_output=None,example_binding_input=None,example_binding_output=None,continuation=None,completed_fit=None,treatment_reference=None):
     """The caller admits graph/dictionary artifacts; this function enforces their binding."""
-    execution=financial.for_run(run,execution)
-    if financial.identity(provenance.get('model_execution'))!=execution or ('model_execution' in provenance)!=(execution is not None):raise ValueError('evaluation execution provenance differs')
     examples.require_test_mask(expected_test_mask)
     validate_scientific_cell(cell)
     from .treatment_admission import preflight_treatment
@@ -86,7 +83,7 @@ def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config
     durable_mkdir(directory.parent);directory.mkdir(exist_ok=False);sync_directory(directory.parent)
     _immutable(directory/'claim.json',{'scientific_id':cell['id'],'lifecycle_id':registered_id,'provenance':provenance,'test_mask_hash':expected_test_mask})
     try:
-        arm=cell['arm'];task=cell['task'];factory=lambda:build_model(arm,task,model_config) if execution is None else build_model(arm,task,model_config,execution=execution)
+        arm=cell['arm'];task=cell['task'];factory=lambda:build_model(arm,task,model_config)
         from .training_batch_observer import prepare
         observation=prepare(run,registered_id,provenance,examples,feature_binding,training_config,features)
         train=batch_factory(arm,task,examples.train,scaler,features,permuted=arm=='training_label_permutation',observation=None if observation is None else (run,observation))
@@ -98,7 +95,6 @@ def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config
                 x,_=test(list(range(len(examples.test))));x=x['x'].numpy().reshape(len(examples.test),-1)
                 prediction=expit(model.decision_function(x)) if task=='direction' else scaler.inverse(model.predict(x))
             else:
-                financial.check_model(model,execution)
                 output=predict_cell(model,test,len(examples.test),training_config['batch_size'])
                 prediction=torch.softmax(output,1)[:,1].numpy() if task=='direction' else scaler.inverse(output[:,0].numpy())
         elif arm=='svm':
@@ -121,7 +117,6 @@ def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config
                 raise
         else:
             fitted=fit_cell(run,registered_id,provenance,factory,train,len(examples.train),'classification' if task=='direction' else 'regression',cell['seed'],training_config,continuation=continuation)
-            financial.check_model(fitted.model,execution)
             output=predict_cell(fitted.model,test,len(examples.test),training_config['batch_size']);checkpoint_hash=fitted.checkpoint_hash
             prediction=torch.softmax(output,1)[:,1].numpy() if task=='direction' else scaler.inverse(output[:,0].numpy())
         rows=[]
@@ -185,8 +180,7 @@ def recover_completed_model(run,cell_id,provenance,recovery,factory,arm):
         model=joblib.load(checkpoint)
     else:
         data=read_artifact(checkpoint,old);state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True)
-        financial.validate_state(state,old)
-        model=factory();financial.check_state_model(state,model,old);model.load_state_dict(state['model'],strict=True)
+        model=factory();model.load_state_dict(state['model'],strict=True)
     return model,file_hash(checkpoint)
 
 

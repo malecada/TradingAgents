@@ -5,15 +5,12 @@ from pathlib import Path
 import numpy as np
 import torch
 from .model import ReplicationModel
-from .model_registry import build_model
-from . import financial_execution as financial
 from .checkpoints import seed_all,save_checkpoint
 from .cache import read_artifact
 from .provenance import file_hash,canonical_bytes,digest
 from ..lifecycle import _immutable
 
 CODE=('model.py','gat.py','pooling.py','temporal.py','replay.py')
-SELECTED_CODE=CODE+('financial_execution.py','model_registry.py','checkpoints.py','streamed_gat.py')
 
 
 def inputs(raw):
@@ -21,20 +18,18 @@ def inputs(raw):
     return [[graphs[i] for i in row] for row in raw['sequences']],torch.tensor(raw['prices'],dtype=torch.float32)
 
 
-def make_synthetic_fixture(directory,config,source_commit,*,execution=None):
-    execution=financial.authenticate(execution)
+def make_synthetic_fixture(directory,config,source_commit):
     directory=Path(directory);directory.mkdir(parents=True,exist_ok=False)
     raw={'data_kind':'synthetic_neural_inputs','graphs':[{'mcm':(np.arange(4*32).reshape(4,32)/256+shift).tolist(),'edge_index':[[0,1,2,3,1],[1,2,3,0,0]]} for shift in (0.,.25)],'sequences':[[0]*14+[1]*14,[1]*14+[0]*14],'prices':np.linspace(-1,1,56).reshape(2,28,1).tolist()}
     _immutable(directory/'inputs.json',raw);_immutable(directory/'model.json',config)
-    rng=seed_all(314159);model=ReplicationModel(config,'classification') if execution is None else build_model('proposed','classification',config,execution=execution);optimizer=torch.optim.Adam(model.parameters(),lr=.001)
+    rng=seed_all(314159);model=ReplicationModel(config,'classification');optimizer=torch.optim.Adam(model.parameters(),lr=.001)
     graph,price=inputs(raw);model.train();loss=torch.nn.functional.cross_entropy(model(graph,price),torch.tensor([0,1]));loss.backward();optimizer.step();model.eval()
     with torch.no_grad():expected=model(graph,price).numpy().astype(float)
     provenance={'source_hashes':[file_hash(directory/'inputs.json'),file_hash(directory/'model.json')],'config_hash':digest(canonical_bytes(config)),'input_hash':file_hash(directory/'inputs.json'),'dictionary_hash':digest(b'synthetic MCM inputs; not a fitted empirical dictionary'),'fold_id':'synthetic','cell_id':'synthetic-full-model-replay','source_commit':source_commit}
-    if execution is not None:provenance['model_execution']=execution
     checkpoint=save_checkpoint(directory/'checkpoint',model,optimizer,rng,provenance,epoch=1,batch=0,logs=[{'synthetic_loss':float(loss.detach())}])
     _immutable(directory/'expected.json',expected.tolist())
     package=Path(__file__).resolve().parent
-    _immutable(directory/'manifest.json',{'data_kind':raw['data_kind'],'provenance':provenance,'checkpoint':str(checkpoint.relative_to(directory)),'files':{str(p.relative_to(directory)):file_hash(p) for p in directory.rglob('*') if p.is_file()},'source_files':{name:file_hash(package/name) for name in (SELECTED_CODE if execution is not None else CODE)},'qualification':'One synthetic optimizer step; validates offline checkpoint inference only, not predictive performance, dictionary fitting or empirical raw recovery.'})
+    _immutable(directory/'manifest.json',{'data_kind':raw['data_kind'],'provenance':provenance,'checkpoint':str(checkpoint.relative_to(directory)),'files':{str(p.relative_to(directory)):file_hash(p) for p in directory.rglob('*') if p.is_file()},'source_files':{name:file_hash(package/name) for name in CODE},'qualification':'One synthetic optimizer step; validates offline checkpoint inference only, not predictive performance, dictionary fitting or empirical raw recovery.'})
     return directory/'manifest.json'
 
 
@@ -44,15 +39,11 @@ def replay(directory):
     for relative,sha in manifest['files'].items():
         path=directory/relative
         if Path(relative).is_absolute() or not path.resolve().is_relative_to(directory.resolve()) or file_hash(path)!=sha:raise ValueError('replay fixture bytes differ')
-    execution=financial.authenticate(manifest['provenance'].get('model_execution'))
     package=Path(__file__).resolve().parent
-    if manifest['source_files']!={name:file_hash(package/name) for name in (SELECTED_CODE if execution is not None else CODE)}:raise ValueError('replay source differs')
-    config=json.loads((directory/'model.json').read_bytes())
-    task=manifest.get('task','classification')
-    if task not in ('classification','regression'):raise ValueError('explicit replay task differs')
-    model=ReplicationModel(config,task) if execution is None else build_model('proposed',task,config,execution=execution)
+    if manifest['source_files']!={name:file_hash(package/name) for name in CODE}:raise ValueError('replay source differs')
+    model=ReplicationModel(json.loads((directory/'model.json').read_bytes()),'classification')
     data=read_artifact(directory/manifest['checkpoint'],manifest['provenance'])
-    state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True);financial.validate_state(state,manifest['provenance']);financial.check_state_model(state,model,manifest['provenance']);model.load_state_dict(state['model'],strict=True);model.eval()
+    state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True);model.load_state_dict(state['model'],strict=True);model.eval()
     graph,price=inputs(json.loads((directory/'inputs.json').read_bytes()))
     with torch.no_grad():actual=model(graph,price).numpy().astype(float)
     expected=np.array(json.loads((directory/'expected.json').read_bytes()),dtype=float)

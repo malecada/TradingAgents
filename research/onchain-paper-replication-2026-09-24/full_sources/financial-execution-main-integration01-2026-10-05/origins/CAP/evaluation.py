@@ -21,7 +21,7 @@ from .baselines import permute_training_labels
 from .metrics import classification_metrics,regression_metrics
 
 
-def batch_factory(arm,task,examples,scaler,features,*,permuted=False,observation=None):
+def batch_factory(arm,task,examples,scaler,features,*,permuted=False):
     values=torch.tensor(scaler.transform([x.input_prices for x in examples]),dtype=torch.float32).unsqueeze(-1)
     labels=np.array([x.up for x in examples])
     if permuted:labels=permute_training_labels(labels)
@@ -37,21 +37,16 @@ def batch_factory(arm,task,examples,scaler,features,*,permuted=False,observation
             vectors=np.asarray([[selected[h] for h in examples[i].graph_hashes] for i in indices])
             inputs={'prices':prices,'graph_vectors':torch.tensor(vectors,dtype=torch.float32)}
         else:inputs={'prices':prices,'graph_sequences':[[selected[h] for h in examples[i].graph_hashes] for i in indices]}
-        if observation is not None:
-            from .training_batch_observer import observe
-            observe(observation[0],observation[1],indices,examples,inputs,features)
         return inputs,targets[indices]
     return batch
 
 
-def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config,provenance,*,expected_test_mask,feature_binding,output_directory=None,feature_binding_input=None,feature_binding_output=None,example_binding_input=None,example_binding_output=None,continuation=None,completed_fit=None,treatment_reference=None,execution=None):
+def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config,provenance,*,expected_test_mask,feature_binding,output_directory=None,feature_binding_input=None,feature_binding_output=None,example_binding_input=None,example_binding_output=None,continuation=None,completed_fit=None,execution=None):
     """The caller admits graph/dictionary artifacts; this function enforces their binding."""
     execution=financial.for_run(run,execution)
     if financial.identity(provenance.get('model_execution'))!=execution or ('model_execution' in provenance)!=(execution is not None):raise ValueError('evaluation execution provenance differs')
     examples.require_test_mask(expected_test_mask)
     validate_scientific_cell(cell)
-    from .treatment_admission import preflight_treatment
-    preflight_treatment(run, {} if treatment_reference is None else treatment_reference, cell, examples)
     registered_id=lifecycle_cell_id(cell['id'])
     validate_cell_admission(run,registered_id,provenance)
     decisions=[x.decision_at for x in examples.test]
@@ -87,9 +82,7 @@ def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config
     _immutable(directory/'claim.json',{'scientific_id':cell['id'],'lifecycle_id':registered_id,'provenance':provenance,'test_mask_hash':expected_test_mask})
     try:
         arm=cell['arm'];task=cell['task'];factory=lambda:build_model(arm,task,model_config) if execution is None else build_model(arm,task,model_config,execution=execution)
-        from .training_batch_observer import prepare
-        observation=prepare(run,registered_id,provenance,examples,feature_binding,training_config,features)
-        train=batch_factory(arm,task,examples.train,scaler,features,permuted=arm=='training_label_permutation',observation=None if observation is None else (run,observation))
+        train=batch_factory(arm,task,examples.train,scaler,features,permuted=arm=='training_label_permutation')
         test=batch_factory(arm,task,examples.test,scaler,features)
         if completed_fit is not None:
             if continuation is not None:raise ValueError('fit continuation and prediction recovery are exclusive')

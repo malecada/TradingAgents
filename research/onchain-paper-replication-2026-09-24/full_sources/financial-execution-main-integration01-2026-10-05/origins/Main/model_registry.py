@@ -1,7 +1,6 @@
 """Explicit arm assembly; all graph comparators share the frozen temporal head."""
 import torch
 from torch import nn
-from . import financial_execution as financial
 from .model import ReplicationModel
 from .temporal import TemporalHead
 from .baselines import PriceRecurrent,HierarchicalLSTM,DiagnosticGraph
@@ -30,16 +29,12 @@ class AlternativeGraphTemporal(ReplicationModel):
         self.temporal=TemporalHead(33,config['lstm_width'],config['attention_width'],task,config['lstm_depth'])
 
 
-def build_model(arm,task,config,*,execution=None):
-    selected=financial.authenticate(execution)
-    if selected is not None and (arm not in {'proposed','training_label_permutation'} or config.get('graph_activation_checkpointing',False) is not False):raise ValueError('financial execution unsupported arm/checkpoint policy')
+def build_model(arm,task,config):
     task={'direction':'classification'}.get(task,task)
     if task not in {'classification','regression'}:raise ValueError('unknown task')
     if arm in {'lstm','gru'}:return PriceRecurrent(arm,task)
     if arm=='hlstm':return HierarchicalLSTM(task)
-    if arm in {'proposed','training_label_permutation'}:
-        if selected is None:return ReplicationModel(config,task)
-        return financial.construct(config,task,selected)
+    if arm in {'proposed','training_label_permutation'}:return ReplicationModel(config,task)
     if arm in {'gin','gat_without_mcm','mcm_without_gat'}:return AlternativeGraphTemporal(config,task,arm)
     if arm in VECTOR_WIDTHS:return VectorTemporal(VECTOR_WIDTHS[arm],task,config,arm=='constant_graph')
     if arm=='svm':

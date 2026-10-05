@@ -20,6 +20,7 @@ class FitResult:
 
 def _reserve(run,cell_id,provenance,continuation):
     if not isinstance(run,ResearchRun):raise ValueError('admitted ResearchRun required')
+    compatibility=None
     with _lock(run.admission.root):
         run._active();run._check_source()
         if cell_id not in run.admission.experiment['cells']:raise ValueError('unregistered fit cell')
@@ -39,10 +40,16 @@ def _reserve(run,cell_id,provenance,continuation):
             if not checkpoint.is_relative_to(previous[0].resolve()):raise ValueError('checkpoint is not from parent fit')
             if not any(info['sha256']==file_hash(checkpoint) and (run.admission.root/info['path']).resolve()==checkpoint for info in run.admission.inputs.values()):raise ValueError('continuation checkpoint not registered input')
             old=continuation['provenance']
-            if {k:v for k,v in old.items() if k!='source_commit'}!={k:v for k,v in provenance.items() if k!='source_commit'}:raise ValueError('continuation scientific provenance mismatch')
+            if 'operational_source_compatibility' in run.admission.inputs:
+                from .operational_source_compatibility import _require_parent_under_fit_lock
+                compatibility=_require_parent_under_fit_lock(run,old,provenance,checkpoint)
+            else:
+                if {k:v for k,v in old.items() if k!='source_commit'}!={k:v for k,v in provenance.items() if k!='source_commit'}:raise ValueError('continuation scientific provenance mismatch')
         elif continuation is not None:raise ValueError('continuation has no prior fit claim')
         destination=root/run.admission.experiment_id
         destination.mkdir();sync_directory(root)
+        if compatibility is not None:
+            _immutable(destination/'operational-source-compatibility.json',compatibility)
         _immutable(destination/'claim.json',{'experiment_id':run.admission.experiment_id,'provenance':provenance,'parent_checkpoint':None if continuation is None else str(continuation['checkpoint'])})
         return destination
 

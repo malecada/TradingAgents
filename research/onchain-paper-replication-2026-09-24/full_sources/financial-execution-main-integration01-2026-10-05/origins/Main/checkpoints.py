@@ -4,7 +4,6 @@ import random
 import numpy as np
 import torch
 from .cache import publish,read_artifact
-from . import financial_execution as financial
 from .provenance import canonical_bytes,digest,require_hash
 
 
@@ -20,9 +19,7 @@ def seed_all(seed):
 
 
 def _provenance(value):
-    fields={'source_hashes','config_hash','input_hash','dictionary_hash','fold_id','cell_id','source_commit'}
-    if set(value) not in (fields,fields|{'model_execution'}):raise ValueError('checkpoint provenance fields')
-    if 'model_execution' in value and financial.identity(value['model_execution']) is None:raise ValueError('checkpoint selected execution absent')
+    if set(value)!={'source_hashes','config_hash','input_hash','dictionary_hash','fold_id','cell_id','source_commit'}:raise ValueError('checkpoint provenance fields')
     for key in ('config_hash','input_hash','dictionary_hash'):require_hash(value[key])
     if not value['source_hashes']:raise ValueError('checkpoint sources required')
     for h in value['source_hashes']:require_hash(h)
@@ -32,16 +29,12 @@ def _provenance(value):
 
 def save_checkpoint(root,model,optimizer,rng,provenance,*,epoch,batch,logs,epoch_loss=0.,epoch_count=0):
     _provenance(provenance)
-    financial.check_model(model,provenance.get('model_execution'))
     numpy_state=np.random.get_state()
     state={'model':model.state_dict(),'optimizer':optimizer.state_dict(),'scheduler':None,
            'epoch':epoch,'batch':batch,'logs':logs,'epoch_loss':epoch_loss,'epoch_count':epoch_count,
            'rng':{'python':random.getstate(),'numpy_global':(numpy_state[0],numpy_state[1].tolist(),*numpy_state[2:]),
                   'pcg64':rng.bit_generator.state,'torch_cpu':torch.get_rng_state(),
                   'torch_cuda':torch.cuda.get_rng_state_all() if torch.cuda.is_available() else []}}
-    if 'model_execution' in provenance:
-        state['model_execution']=financial.identity(provenance['model_execution'])
-        state['model_contract']=financial.model_contract(model,provenance['model_execution'])
     stream=io.BytesIO();torch.save(state,stream)
     key=digest(canonical_bytes({'provenance':provenance,'epoch':epoch,'batch':batch}))
     return publish(root,key,{'state.pt':stream.getvalue()},provenance)
@@ -49,12 +42,9 @@ def save_checkpoint(root,model,optimizer,rng,provenance,*,epoch,batch,logs,epoch
 
 def load_checkpoint(path,model,optimizer,rng,expected_provenance):
     _provenance(expected_provenance)
-    financial.check_model(model,expected_provenance.get('model_execution'))
     data=read_artifact(path,expected_provenance)
     state=torch.load(io.BytesIO(data['state.pt']),map_location='cpu',weights_only=True)
-    financial.check_state_model(state,model,expected_provenance)
-    required=REQUIRED|({'model_execution','model_contract'} if 'model_execution' in expected_provenance else set())
-    if set(state)!=required or not isinstance(state['rng'],dict) or set(state['rng'])!=RNG_REQUIRED:raise ValueError('incomplete checkpoint state')
+    if set(state)!=REQUIRED or not isinstance(state['rng'],dict) or set(state['rng'])!=RNG_REQUIRED:raise ValueError('incomplete checkpoint state')
     if state['scheduler'] is not None or any(type(state[k]) is not int or state[k]<0 for k in ('epoch','batch','epoch_count')):raise ValueError('invalid checkpoint cursor/state')
     if len(state['rng']['torch_cuda'])!=(torch.cuda.device_count() if torch.cuda.is_available() else 0):raise ValueError('checkpoint device topology mismatch')
     model.load_state_dict(state['model'],strict=True);optimizer.load_state_dict(state['optimizer'])
