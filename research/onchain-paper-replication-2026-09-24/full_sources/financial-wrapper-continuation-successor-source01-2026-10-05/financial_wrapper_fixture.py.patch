@@ -1,0 +1,41 @@
+--- a/financial_wrapper_fixture.py
++++ b/financial_wrapper_fixture.py
+@@ -43,7 +43,11 @@
+  require(resource.getrlimit(resource.RLIMIT_FSIZE)==(FILE,FILE),'actual inherited file limit required')
+  return {'rlimit_fsize':FILE}
+ 
++def require_compatibility_roles(inputs):
++ require('continuation_source_successor' not in inputs or 'operational_source_compatibility' in inputs,'successor requires original compatibility authority')
++
+ def admitted(ad,job):
++ require_compatibility_roles(ad.inputs)
+  schema(job);info=ad.inputs.get(job['payload']['plan_input']);require(info is not None,'wrapper plan not registered')
+  raw=(ad.root/info['path']).read_bytes();require(sha(raw)==info['sha256'],'plan bytes differ');p=validate_plan(json.loads(raw))
+  require(p['experiment']==ad.experiment_id and ad.experiment['cells']==[p['cell_id']] and set(ad.experiment['outputs'])==OUTPUTS,'exact separately registered engineering identity/cell/outputs required')
+@@ -354,21 +358,24 @@
+  _immutable(directory/'manifest.json',manifest);return replay.replay(directory)
+ 
+ def _reference_state(run,p,prov,factory,t,checkpoints,torch):
++ require_compatibility_roles(run.admission.inputs)
+  from .provenance import file_hash
+  from ..verify import verify_claim
+  ref=json.loads(run.read_input(p['reference_input']));require(set(ref)=={'checkpoint_input','provenance','completion_input','claim_input','terminal_input'},'uninterrupted reference schema')
+  terminal=json.loads(run.read_input(ref['terminal_input']));claim_raw=run.read_input(ref['claim_input']);claim=json.loads(claim_raw);require(terminal['status']=='complete' and terminal['claim_sha256']==sha(claim_raw) and terminal['experiment_id']==claim['experiment_id'],'genuine uninterrupted complete reference')
+  refdir=run.admission.root/'research_runs'/claim['experiment_id'];verified=verify_claim(refdir)
+  require(verified==claim and claim_raw==(refdir/'claim.json').read_bytes() and run.read_input(ref['terminal_input'])==(refdir/'complete.json').read_bytes() and not (refdir/'failed.json').exists(),'uninterrupted reference actual lifecycle join')
+- require({k:v for k,v in ref['provenance'].items() if k not in ('source_commit','cell_id')}=={k:v for k,v in prov.items() if k not in ('source_commit','cell_id')},'reference scientific provenance differs')
++ if 'continuation_source_successor' not in run.admission.inputs:
++  require({k:v for k,v in ref['provenance'].items() if k not in ('source_commit','cell_id')}=={k:v for k,v in prov.items() if k not in ('source_commit','cell_id')},'reference scientific provenance differs')
+  if 'operational_source_compatibility' in run.admission.inputs:
+   from .operational_source_compatibility import require_reference_policy
+-  require_reference_policy(run,claim)
++  require_reference_policy(run,claim,ref['provenance'],prov)
+  complete=json.loads(run.read_input(ref['completion_input']));require(complete['epochs']==100,'uninterrupted reference incomplete')
+  refcp=run.admission.root/run.admission.inputs[ref['checkpoint_input']]['path'];run.read_input(ref['checkpoint_input']);require(complete['sha256']==file_hash(refcp),'reference checkpoint completion join')
+  expected_fit=run.admission.root/'research_artifacts/onchain_fit_cells'/sha(ref['provenance']['cell_id'].encode())/claim['experiment_id']
+  require(refcp.resolve().is_relative_to(expected_fit.resolve()) and (run.admission.root/run.admission.inputs[ref['completion_input']]['path']).resolve()==(expected_fit/'complete.json').resolve() and Path(complete['checkpoint']).resolve()==refcp.resolve(),'reference completed fit location differs')
+  refmanifest=json.loads(refcp.read_bytes())
++ if 'continuation_source_successor' in run.admission.inputs:require(refmanifest['provenance']==ref['provenance'],'reference manifest exact original provenance differs')
+  for name,item in refmanifest['members'].items():
+   member=refcp.parent/name;require(Path(name).name==name and any(x['path']==str(member.relative_to(run.admission.root)) and x['sha256']==item['sha256'] for x in run.admission.inputs.values()) and member.stat().st_size==item['size']<=FILE and file_hash(member)==item['sha256'],'reference checkpoint body not registered')
+  reference=factory();op=optimizer(torch,reference,t);rng=checkpoints.seed_all(11);state=checkpoints.load_checkpoint(refcp,reference,op,rng,ref['provenance'])

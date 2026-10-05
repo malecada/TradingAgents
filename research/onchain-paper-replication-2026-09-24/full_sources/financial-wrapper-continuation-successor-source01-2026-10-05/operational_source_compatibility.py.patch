@@ -1,0 +1,105 @@
+--- a/operational_source_compatibility.py
++++ b/operational_source_compatibility.py
+@@ -145,11 +145,16 @@
+  require(ROLE in ad.inputs,'explicit registered operational compatibility input absent')
+  raw=read(ROLE);policy=json.loads(raw)
+  require(ad.experiment['source_files'].get(ad.inputs[ROLE]['path'])==sha(raw),'policy must be committed and source-pinned')
+- helper_sha=sha(_read(Path(__file__),budget));validate_contract(policy,helper_sha)
++ helper_sha=sha(_read(Path(__file__),budget))
++ original_policy=policy;original_raw=raw
++ if SUCCESSOR_ROLE in ad.inputs:
++  policy=successor_context(policy,raw,read,ad.experiment['source_files'],ad.inputs,helper_sha)
++ else:validate_contract(policy,helper_sha)
+  hist=policy['historical'];target=policy['target'];consumers=policy['consumers']
+  require(ad.experiment['family']==FAMILY and ad.spec['program_id']==PROGRAM,'same original family required')
+  job=json.loads(read('execution_job'));fixture.schema(job)
+  plan=json.loads(read(job['payload']['plan_input']));fixture.validate_plan(plan)
++ require(SUCCESSOR_ROLE not in ad.inputs or plan['phase']=='continue100','successor only authorizes continuation')
+  require(plan['phase'] in consumers and consumers[plan['phase']]=={'experiment':ad.experiment_id,'cell_id':plan['cell_id']} and plan['task']=='classification' and plan['execution']=='eager','exact prospective engineering consumer')
+  require(ad.experiment['parent']==({'complete100':None,'continue100':HISTORICAL_ID,'predict':consumers['continue100']['experiment']}[plan['phase']]),'exact phase parent topology differs')
+  require(plan['closure_input']==target['closure_input'],'target closure role mismatch')
+@@ -162,7 +167,7 @@
+   proof_raw=read(role);proof=json.loads(proof_raw)
+   require(ad.experiment['source_files'].get(ad.inputs[role]['path'])==sha(proof_raw),'proof input not committed/source-pinned')
+   require(set(proof)=={'schema_version','kind','policy_sha256','historical_map_sha256','target_map_sha256','checker_sha256','decision'} and proof['schema_version']==1 and proof['kind']==role and proof['decision']=='accepted','required actual independent evidence unavailable')
+-  require(proof['policy_sha256']==sha(raw) and proof['historical_map_sha256']==sha(canonical(hist['installed'])) and proof['target_map_sha256']==sha(canonical(target['installed'])) and proof['checker_sha256']==helper_sha,'independent proof exact source/policy pins differ')
++  require(proof['policy_sha256']==sha(original_raw) and proof['historical_map_sha256']==sha(canonical(original_policy['historical']['installed'])) and proof['target_map_sha256']==sha(canonical(original_policy['target']['installed'])) and proof['checker_sha256']==original_policy['target']['installed'][HELPER],'independent proof exact source/policy pins differ')
+  # A registered accepted-proof label is not independent authorship or external
+  # recovery verification by this helper; those are Root release predicates.
+  return policy,plan,read,budget,sha(raw)
+@@ -233,9 +238,15 @@
+  return _parent_predicate(run,old,new,checkpoint,_registered_unlocked)
+ 
+ 
+-def require_reference_policy(run,claim):
++def require_reference_policy(run,claim,old_provenance=None,new_provenance=None):
+  policy,plan,read,budget,pin=_context(run,_registered_normal)
+  require(plan['phase']=='continue100' and claim['experiment_id']==policy['consumers']['complete100']['experiment'],'exact prospective reference identity differs')
++ if SUCCESSOR_ROLE in run.admission.inputs:
++  original=json.loads(read(ROLE))
++  validate_successor_reference(original,policy,claim,old_provenance,new_provenance)
++  edge=json.loads(read(SUCCESSOR_ROLE))
++  require(claim['inputs'].get(original['target']['closure_input'],{}).get('sha256')==sha(read(edge['original_closure_input'])),'reference original closure claim pin differs')
++  return {'policy_sha256':pin,'reference_experiment':claim['experiment_id'],'successor_policy_sha256':sha(read(SUCCESSOR_ROLE))}
+  require(claim['inputs'].get(ROLE,{}).get('sha256')==pin,'reference must have used identical prospective registered policy')
+  require(all(claim['experiment']['source_files'].get(p)==h for p,h in policy['target']['installed'].items()),'reference target implementation differs')
+  # The original wrapper already verifies actual COMPLETE claim/terminal and its
+@@ -263,3 +274,58 @@
+  # financial_wrapper_fixture._parent already verified this exact claim and its
+  # actual COMPLETE lifecycle, and preserved the strict scientific comparison.
+  return validate_prediction_parent(policy,pin,sha(read(policy['target']['closure_input'])),claim['experiment_id'],claim['inputs'],claim['experiment']['source_files'],claim['experiment']['cells'])
++
++# Additive, single-consumer source successor. The original policy remains an input.
++SUCCESSOR_ROLE='continuation_source_successor'
++SUCCESSOR_PROOFS=(SUCCESSOR_ROLE+'_review',SUCCESSOR_ROLE+'_recovery')
++ORIGINAL_POLICY_SHA='ae8fbdc9d13e75fc453b70b5ee633c89fb4577e9b68a35b4147cf1bbd58c6887'
++ORIGINAL_HELPER_SHA='d0d770b45def89e8e00e81fa1bbb35416034eaace5ecab0f15193fd43b7a32d8'
++SUCCESSOR_ID='financial-wrapper-classification-eager-continue100-resource-successor-20261005-01'
++RESERVED_ID='financial-wrapper-classification-eager-continue100-compatibility-20261004-01'
++SUCCESSOR_CELL='financial-wrapper-classification-eager-continued-20261003-01'
++REFUSAL_SHA='a5357602f130838bbf52fd6fe54288401e91bfd045c96aac73fa128f4be41a42'
++SUCCESSOR_DELTA={HELPER,PREFIX+'financial_wrapper_fixture.py'}
++
++def validate_successor(original,original_raw,edge,helper_sha,refusal_raw):
++ """Finite pure metadata predicate; never mints admission or changes provenance."""
++ require(sha(original_raw)==ORIGINAL_POLICY_SHA and json.loads(original_raw)==original,'immutable original policy bytes required')
++ validate_contract(original,ORIGINAL_HELPER_SHA)
++ fields={'schema_version','kind','original_policy_sha256','consumer','installed','allowed_delta','original_closure_input','refusal_input'}
++ require(type(edge)is dict and set(edge)==fields and type(edge['schema_version'])is int and edge['schema_version']==1 and edge['kind']=='same-family-continuation-source-successor-v1','strict successor schema')
++ require(edge['original_policy_sha256']==ORIGINAL_POLICY_SHA and edge['consumer']=={'experiment':SUCCESSOR_ID,'cell_id':SUCCESSOR_CELL},'fixed fresh successor identity/cell required')
++ before=original['target']['installed'];after=edge['installed']
++ require(type(after)is dict and set(after)==set(before) and all(digest(v) for v in after.values()),'both complete195 source maps required')
++ delta=[{'path':k,'old_sha256':before[k],'new_sha256':after[k]} for k in sorted(before) if before[k]!=after[k]]
++ require({x['path'] for x in delta}==SUCCESSOR_DELTA and edge['allowed_delta']==delta and after[HELPER]==helper_sha,'exact two-body nonnumerical source edge required')
++ for key in ('original_closure_input','refusal_input'):
++  require(type(edge[key])is str and edge[key] and '/' not in edge[key] and '..' not in edge[key],'exact successor evidence role required')
++ require(edge['original_closure_input']!=original['target']['closure_input'],'original closure must retain separate role')
++ require(sha(refusal_raw)==REFUSAL_SHA,'exact independently recovered reserved refusal required')
++ refusal=json.loads(refusal_raw)
++ require(refusal['identity']==RESERVED_ID and refusal['decision']=='accepted-actual-terminal-not-admitted-evidence-byte-recovery' and refusal['lifecycle_claim_created'] is False and refusal['namespace_reserved'] is True and refusal['namespace_reuse_authorized'] is False and refusal['numerical_updates']==0 and refusal['numerical_authority'] is False,'refusal ancestry cannot confer claim/refund/reuse authority')
++ effective=json.loads(json.dumps(original));effective['target']['installed']=after;effective['consumers']['continue100']=edge['consumer']
++ return effective
++
++def successor_context(original,original_raw,read,sources,inputs,helper_sha):
++ raw=read(SUCCESSOR_ROLE);edge=json.loads(raw)
++ effective=validate_successor(original,original_raw,edge,helper_sha,read(edge['refusal_input']))
++ closure=json.loads(read(edge['original_closure_input']))
++ require(type(closure)is dict and set(closure)=={'schema_version','installed','scientific_model','scientific_training','candidate02'} and type(closure['schema_version'])is int and closure['schema_version']==1 and closure['installed']==original['target']['installed'] and closure['scientific_model']==MODEL and closure['scientific_training']==TRAINING and closure['candidate02']==original['target']['installed'][PREFIX+'financial_execution.py'],'retained reference closure/source/science differs')
++ for role in (SUCCESSOR_ROLE,)+SUCCESSOR_PROOFS:
++  body=read(role);require(sources.get(inputs[role]['path'])==sha(body),'successor policy/proofs must be committed source-pinned')
++  if role!=SUCCESSOR_ROLE:
++   expected={'schema_version':1,'kind':role,'decision':'accepted','policy_sha256':sha(raw),'original_policy_sha256':ORIGINAL_POLICY_SHA,'historical_map_sha256':sha(canonical(original['target']['installed'])),'target_map_sha256':sha(canonical(edge['installed'])),'checker_sha256':helper_sha,'refusal_sha256':REFUSAL_SHA}
++   require(json.loads(body)==expected,'separate exact successor review/recovery required')
++ return effective
++
++def validate_successor_reference(original,effective,claim,old,new):
++ consumer=original['consumers']['complete100'];before=original['target']['installed'];after=effective['target']['installed']
++ require(claim['experiment_id']==consumer['experiment'] and claim['experiment']['cells']==[consumer['cell_id']] and claim['inputs'].get(ROLE,{}).get('sha256')==ORIGINAL_POLICY_SHA,'original COMPLETE100 policy/consumer authority required')
++ require(claim['program_id']==PROGRAM and claim['experiment']['family']==FAMILY and claim['source']==claim['design_source'] and claim['bindings'] is None and claim['bindings_sha256'] is None,'original COMPLETE100 source/family authority differs')
++ require(all(claim['experiment']['source_files'].get(k)==v for k,v in before.items()),'original COMPLETE100 entire source map differs')
++ require(type(old)is dict and type(new)is dict and set(old)==set(new),'reference provenance schema differs')
++ require(old['source_commit']==claim['source'] and old['cell_id']==consumer['cell_id'] and new['cell_id']==SUCCESSOR_CELL,'reference original provenance identity differs')
++ require(type(new['source_commit'])is str and len(new['source_commit'])==40 and all(c in '0123456789abcdef' for c in new['source_commit']) and new['source_commit']!=old['source_commit'],'reference successor source must be honest and nonreflexive')
++ require(old['source_hashes']==sorted(set(before.values())) and new['source_hashes']==sorted(set(after.values())),'reference and successor complete source hash lists differ')
++ exclude={'source_commit','source_hashes','cell_id'}
++ require({k:v for k,v in old.items() if k not in exclude}=={k:v for k,v in new.items() if k not in exclude},'reference non-source scientific provenance differs')

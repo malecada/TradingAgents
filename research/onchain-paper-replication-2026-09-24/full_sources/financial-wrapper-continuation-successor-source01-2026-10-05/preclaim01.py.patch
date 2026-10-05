@@ -1,0 +1,115 @@
+--- a/preclaim01.py
++++ b/preclaim01.py
+@@ -189,13 +189,13 @@
+         expected={'schema_version':1,'kind':role,'policy_sha256':POLICY_SHA,'historical_map_sha256':sha(canonical(policy['historical']['installed'])),'target_map_sha256':sha(canonical(policy['target']['installed'])),'checker_sha256':HELPER_SHA,'decision':'accepted'}
+         require(json.loads(raw)==expected,'historical policy/map proof differs')
+     machine=json.loads(reader.reference(refs['review_machine']));report=reader.reference(refs['review_report'])
+-    require(machine['decision']=='ACCEPTED_EXACT_CONCRETE_POLICY_ONLY' and machine['consumers']==FIXED and machine['closure_sha256']==sha(inputs.raw(policy['target']['closure_input'])) and machine['report_sha256']==sha(report),'fixed actual concrete-policy authority differs')
++    require(machine['decision']=='ACCEPTED_EXACT_CONCRETE_POLICY_ONLY' and machine['consumers']==FIXED and machine['closure_sha256']==sha(_original_closure_raw(inputs,policy)) and machine['report_sha256']==sha(report),'fixed actual concrete-policy authority differs')
+     return roots
+ 
+-def _reuse_contract(value,q,metadata,reader):
++def _reuse_contract(value,q,metadata,reader,successor=False):
+     fields={'schema_version','kind','current_source','consumer','policy_sha256','historical_map_sha256','target_map_sha256','anchors','outcome_recovery'}
+     require(type(value) is dict and set(value)==fields and value['schema_version']==1 and value['kind']=='finite-continuation-proof-reuse-v1','exact finite proof-reuse contract required')
+-    require(q['expected_phase'] in ('continue100','predict') and value['consumer']==FIXED[q['expected_phase']]['experiment']==q['identity'],'fixed next consumer differs')
++    require(q['expected_phase'] in ('continue100','predict') and value['consumer']==(SUCCESSOR_ID if successor else FIXED[q['expected_phase']]['experiment'])==q['identity'],'fixed next consumer differs')
+     require(type(value['current_source']) is str and len(value['current_source'])==40 and all(c in '0123456789abcdef' for c in value['current_source']),'actual current source unavailable')
+     require(value['current_source']==q['source']==q['design_source'] and value['current_source']!=REUSE_SOURCE,'new honest current/design source required')
+     require(metadata['source']==metadata['design_source']==q['source'] and metadata['identity']==q['identity'] and metadata['decision']=='accepted-source-input-runtime-metadata-only','genuine current source metadata proof required')
+@@ -223,7 +223,7 @@
+     require(digest(pin),'required Root-pinned trusted-proof contract absent')
+     value=json.loads(reader.reference({'path':str(Path(q['parent_root'])/REUSE_CONTRACT_NAME),'sha256':pin}))
+     require(value.get('historical_map_sha256')==sha(canonical(policy['historical']['installed'])) and value.get('target_map_sha256')==sha(canonical(policy['target']['installed'])),'exact current target/historical maps differ')
+-    _reuse_contract(value,q,metadata,reader)
++    _reuse_contract(value,q,metadata,reader,SUCCESSOR_ROLE in inputs.registered)
+     return {'qualification':'fixed immutable historical recovery roots; current source/input/checkpoint and final Parent validation remain mandatory','ancestry':roots['outcome']['identity']}
+ 
+ def _proof_bundle(kind,refs,inputs,policy,reader):
+@@ -240,7 +240,7 @@
+     require(machine.get('schema_version')==1 and machine.get('policy_sha256')==POLICY_SHA and machine.get('checker_sha256')==HELPER_SHA and machine.get('historical_map_sha256')==expected['historical_map_sha256'] and machine.get('target_map_sha256')==expected['target_map_sha256'] and machine.get(kind+'_proof_sha256')==sha(proofraw) and machine.get('report_sha256')==sha(report),'independent evidence source/policy/proof/report joins differ')
+     if kind=='review':
+         require(all(refs['review_'+k]['sha256']==v for k,v in REVIEW_PINS.items()),'fixed genuine independently authored concrete review bodies required')
+-        require(machine.get('decision')=='ACCEPTED_EXACT_CONCRETE_POLICY_ONLY' and machine.get('consumers')==FIXED and machine.get('closure_sha256')==sha(inputs.raw(policy['target']['closure_input'])) and type(machine.get('reviewer')) is str and machine['reviewer'],'genuine concrete policy review unavailable')
++        require(machine.get('decision')=='ACCEPTED_EXACT_CONCRETE_POLICY_ONLY' and machine.get('consumers')==FIXED and machine.get('closure_sha256')==sha(_original_closure_raw(inputs,policy)) and type(machine.get('reviewer')) is str and machine['reviewer'],'genuine concrete policy review unavailable')
+     else:
+         require(machine.get('decision')=='ACCEPTED_ACTUAL_OPERATIONAL_SOURCE_POLICY_BYTE_RECOVERY','actual policy recovery not independently accepted')
+         receipts=machine.get('recovery_receipts')
+@@ -299,17 +299,20 @@
+     return path,manifest
+ 
+ def _complete(inputs,descriptor,policy,phase,provenance,root,helper,verify,reader):
++    effective=policy;successor=SUCCESSOR_ROLE in inputs.registered
++    if successor:policy=inputs.json(ROLE)
+     consumer=policy['consumers'][phase];identity=consumer['experiment'];claim=_claim(inputs,descriptor,root,identity,'complete',verify,reader)
+-    require(claim['inputs'].get(ROLE,{}).get('sha256')==POLICY_SHA and claim['inputs'].get(policy['target']['closure_input'],{}).get('sha256')==sha(inputs.raw(policy['target']['closure_input'])),'completed dependency policy/closure differs')
++    require(claim['inputs'].get(ROLE,{}).get('sha256')==POLICY_SHA and claim['inputs'].get(policy['target']['closure_input'],{}).get('sha256')==sha(_original_closure_raw(inputs,policy)),'completed dependency policy/closure differs')
+     require(claim['experiment']['cells']==[consumer['cell_id']] and all(claim['experiment']['source_files'].get(p)==h for p,h in policy['target']['installed'].items()),'completed dependency fixed cell/195 source map differs')
+     require(claim['program_id']==helper.PROGRAM and claim['experiment']['family']==helper.FAMILY and claim['source']==claim['design_source'] and claim['bindings'] is None and claim['bindings_sha256'] is None,'completed dependency genuine source/program/family differs')
+     old=descriptor['provenance'];exclude={'source_commit','cell_id'} if phase=='complete100' else {'source_commit'}
+-    require({k:v for k,v in old.items() if k not in exclude}=={k:v for k,v in provenance.items() if k not in exclude} and old['source_commit']==claim['source'] and old['cell_id']==consumer['cell_id'],'completed dependency strict scientific/source provenance differs')
++    if successor:helper.validate_successor_reference(policy,effective,claim,old,provenance)
++    else:require({k:v for k,v in old.items() if k not in exclude}=={k:v for k,v in provenance.items() if k not in exclude} and old['source_commit']==claim['source'] and old['cell_id']==consumer['cell_id'],'completed dependency strict scientific/source provenance differs')
+     fit=root/'research_artifacts/onchain_fit_cells'/sha(consumer['cell_id'].encode())/identity
+     path,manifest=_checkpoint(inputs,descriptor['checkpoint_input'],old,fit,reader)
+     completion=inputs.exact(descriptor['completion_input'],fit/'complete.json')
+     require(not os.path.lexists(fit/'failed.json') and set(completion)=={'checkpoint','sha256','epochs'} and type(completion['epochs']) is int and completion['epochs']==100 and completion['checkpoint']==str(path) and completion['sha256']==sha(inputs.raw(descriptor['checkpoint_input'])),'actual COMPLETE100 fit/checkpoint join unavailable')
+-    if phase=='continue100':helper.validate_prediction_parent(policy,POLICY_SHA,sha(inputs.raw(policy['target']['closure_input'])),identity,claim['inputs'],claim['experiment']['source_files'],claim['experiment']['cells'])
++    if phase=='continue100':helper.validate_prediction_parent(policy,POLICY_SHA,sha(_original_closure_raw(inputs,policy)),identity,claim['inputs'],claim['experiment']['source_files'],claim['experiment']['cells'])
+     return claim
+ 
+ def _historical(inputs,prior,policy,plan,provenance,root,helper,fixture,verify,reader):
+@@ -357,19 +360,25 @@
+     fixture=importlib.import_module('tradingagents.research.onchain_replication.financial_wrapper_fixture')
+     verify=importlib.import_module('tradingagents.research.verify')
+     policy=inputs.json(ROLE);require(sha(inputs.raw(ROLE))==POLICY_SHA,'exact concrete reviewed policy required')
++    original_policy=policy
+     _roles(ad.inputs,plan.get('phase'));require(policy['consumers']==FIXED,'fixed three consumer policy required')
+-    require(sha(reader.read(root/HELPER))==HELPER_SHA,'exact accepted installed compatibility helper required')
++    helper_pin=sha(reader.read(root/HELPER))
++    if SUCCESSOR_ROLE in ad.inputs:
++        require(plan.get('phase')=='continue100','successor preclaim is continuation only')
++        policy=helper.successor_context(original_policy,inputs.raw(ROLE),inputs.raw,ad.experiment['source_files'],ad.inputs,helper_pin)
++    fixed=policy['consumers']
++    require(SUCCESSOR_ROLE in ad.inputs or sha(reader.read(root/HELPER))==HELPER_SHA,'exact accepted installed compatibility helper required')
+     for module,rel in ((admission_module,'tradingagents/research/admission.py'),(helper,HELPER),(fixture,PREFIX+'financial_wrapper_fixture.py'),(verify,'tradingagents/research/verify.py')):
+         require(Path(module.__file__).resolve()==root/rel,'original imported module origin differs')
+     for rel,pin in policy['target']['installed'].items():
+         require(ad.experiment['source_files'].get(rel)==pin and sha(reader.read(root/relative(rel)))==pin,'actual full195 registered target source differs')
+-    helper.validate_contract(policy,HELPER_SHA)
++    helper.validate_contract(original_policy,HELPER_SHA)
+     for role in (ROLE,REVIEW_ROLE,RECOVERY_ROLE):require(ad.experiment['source_files'].get(ad.inputs[role]['path'])==ad.inputs[role]['sha256'],'policy/proofs must be committed source-pinned inputs')
+     require(job==inputs.json('execution_job') and plan==inputs.json(job['payload']['plan_input']),'exact registered current job/plan bytes required')
+     fixture.schema(job);fixture.validate_plan(plan)
+     require(job['payload']['plan_input']=='wrapper_plan' and job['environment_input']=='environment' and all(plan[k]==v for k,v in {'model_input':'model','training_input':'training','recipe_input':'synthetic_recipe','runtime_input':'runtime_mapping','closure_input':'source_closure'}.items()),'fixed base role mapping differs')
+-    require(plan['phase'] in FIXED and FIXED[plan['phase']]=={'experiment':ad.experiment_id,'cell_id':plan['cell_id']} and plan['experiment']==plan['namespace']==ad.experiment_id and plan['task']=='classification' and plan['execution']=='eager','exact fixed consumer/method required')
+-    expected_parent={'complete100':None,'continue100':policy['historical']['identity'],'predict':FIXED['continue100']['experiment']}[plan['phase']]
++    require(plan['phase'] in fixed and fixed[plan['phase']]=={'experiment':ad.experiment_id,'cell_id':plan['cell_id']} and plan['experiment']==plan['namespace']==ad.experiment_id and plan['task']=='classification' and plan['execution']=='eager','exact fixed consumer/method required')
++    expected_parent={'complete100':None,'continue100':policy['historical']['identity'],'predict':fixed['continue100']['experiment']}[plan['phase']]
+     require(ad.experiment['parent']==expected_parent and ad.experiment['cells']==[plan['cell_id']] and set(ad.experiment['outputs'])==fixture.OUTPUTS and ad.spec['program_id']==helper.PROGRAM and ad.experiment['family']==helper.FAMILY,'fixed source-edge consumer topology/cell/program differs')
+     require(set(job['resources'])=={'disk_floor_bytes','disk_paths','memory_high_bytes','memory_max_bytes','native_unit_limits','reserve_bytes','start_reserve_bytes','storage_budget','wall_seconds'},'exact original resource field denominator required')
+     require(job['resources']['disk_paths']==[str(root)] and job['resources']['storage_budget']['root']==str(root),'original whole-root resource policy differs')
+@@ -380,8 +389,8 @@
+     closure=inputs.json('source_closure')
+     require(set(closure)=={'schema_version','installed','scientific_model','scientific_training','candidate02'} and closure['schema_version']==1 and closure['installed']==policy['target']['installed'] and closure['scientific_model']==fixture.MODEL and closure['scientific_training']==fixture.TRAINING and closure['candidate02']==fixture.CANDIDATE,'exact full source/scientific closure differs')
+     _parent_release(ad,plan,inputs,release_refs,reader)
+-    _proof_bundle('review',release_refs,inputs,policy,reader)
+-    _proof_bundle('recovery',release_refs,inputs,policy,reader)
++    _proof_bundle('review',release_refs,inputs,original_policy,reader)
++    _proof_bundle('recovery',release_refs,inputs,original_policy,reader)
+     for path in (root/'research_runs'/ad.experiment_id,root/'research_artifacts/financial_wrapper_engineering'/plan['namespace'],root/'research_artifacts/onchain_fit_cells'/sha(plan['cell_id'].encode())/ad.experiment_id):require(not os.path.lexists(path),'prospective consumer namespace already exists')
+     provenance=_provenance(inputs,plan,ad.source,policy['target']['installed'],fixture)
+     if plan['phase']=='complete100':
+@@ -401,3 +410,12 @@
+     require(original_admission==canonical({'source':ad.source,'registration_sha256':ad.registration_sha256,'experiment':ad.experiment,'inputs':ad.inputs,'spec':ad.spec,'family':ad.family}),'admission metadata changed during preclaim')
+     require(not any(n in sys.modules for n in ('numpy','torch','scipy','pandas')),'preclaim introduced numerical imports')
+     return {'schema_version':1,'status':'PRECLAIM_METADATA_VALIDATED_NO_CLAIM','source':ad.source,'experiment':ad.experiment_id,'phase':plan['phase'],'policy_sha256':POLICY_SHA,'input_hashes':{r:sha(v) for r,v in inputs.bodies.items()},'metadata_bytes_read':reader.total,'checkpoint_decoded':False,'qualification':'sampled metadata only; no Run/Admission creation, numerical/native release, full recovery or writer exclusion'}
++
++
++SUCCESSOR_ROLE='continuation_source_successor'
++SUCCESSOR_ID='financial-wrapper-classification-eager-continue100-resource-successor-20261005-01'
++
++def _original_closure_raw(inputs,policy):
++    if SUCCESSOR_ROLE in inputs.registered:
++        return inputs.raw(inputs.json(SUCCESSOR_ROLE)['original_closure_input'])
++    return inputs.raw(policy['target']['closure_input'])
