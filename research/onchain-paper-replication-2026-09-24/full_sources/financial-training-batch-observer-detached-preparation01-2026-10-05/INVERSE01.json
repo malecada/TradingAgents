@@ -1,0 +1,18 @@
+[
+  [
+    " from .compact_native_features import _Features",
+    " from .compact_native_features import _Features,_DetachedFeatures"
+  ],
+  [
+    " terminal=owner=bound=None\n try:\n",
+    " terminal=owner=bound=detached=saved=None\n try:\n  if type(features)is _DetachedFeatures:\n   from .compact_detached_handoff import Authority\n   detached=features._authority;require(type(detached)is Authority and detached._run_ref() is run,'genuine detached authority must belong to this run')\n   detached._record.require_loader();saved=detached.lease()\n   require(saved['lifetime']=='original-reader-sampled-content-v1','original sampled reader lifetime required')\n   require(thaw(features._hashes)==saved['binding']['feature_hashes'],'detached feature hash population differs')\n   require(saved['terminal']['resident_originals_retained'] is True,'original resident terminal declaration changed')\n   return {'owner_id':saved['terminal']['owner'],'binding_sha256':None,'feature_binding_sha256':sha(encode(saved['binding'])),'terminal_record_sha256':sha(encode(saved['terminal'])),'resident_originals_retained':None,'historical_resident_originals_retained':True,'parent_population_object_census':None,'parent_retention_basis':'genuine detached saved lineage; current parent retention unobserved','feature_route':'detached','lifetime':saved['lifetime']}\n"
+  ],
+  [
+    "finally:terminal=None;owner=None;bound=None;features=None;run=None",
+    "finally:terminal=None;owner=None;bound=None;detached=None;saved=None;features=None;run=None"
+  ],
+  [
+    "Only the genuine resident compact feature route is supported.",
+    "Genuine resident and saved-lineage detached compact routes are supported."
+  ]
+]

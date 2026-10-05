@@ -1,0 +1,102 @@
+"""Fixed read-only current-CAP/Parent/Git byte composition; no authority/restore."""
+import hashlib,json,os,shutil,stat,time
+from pathlib import Path
+import owned_io as IO
+from bounded_git01 import git
+H=Path(__file__).resolve().parent;B=H.parent
+CAP=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source')
+PARENT=Path('/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-compatibility-root-launch-20261005-01')
+OLD='32d57eac5ea14435cd9d4aeb3e3b04d98bf16c41';SOURCE='664e2ca5fa11d6640ab79f64c5aa222aeb3a9128'
+ID='financial-wrapper-classification-eager-continue100-compatibility-20261004-01'
+REG='fixture_inputs/financial_wrapper_continuation01/gates.json'
+NEW={f'fixture_inputs/financial_wrapper_continuation01/{n}' for n in ('continue-plan.json','gates.json','predict-plan.json','prior.json','reference.json')}
+PARENT_NAMES={'parent01.py','REQUEST_DRAFT01.json','recovery04.py','bounded_git01.py','owned_io.py','supervisor01.py','descendants01.py','preclaim01.py','PROTOCOL_PINS01.json','proof_reuse_contract01.json'}
+CAPTURE=B/'financial-wrapper-compatibility-complete100-outcome-capture01-2026-10-05/CAPTURE01.json'
+RECOVERY=B/'financial-wrapper-compatibility-complete100-recovery-outcome-review03-2026-10-05/COMPLETE100_OUTCOME_RECOVERY_PROOF01.json'
+REVIEW=RECOVERY.parent/'MACHINE01.json'
+BASELINE=B/'financial-wrapper-compatibility-baseline-recovery-review02-2026-10-05/BASELINE_FULL_RECOVERY_PROOF01.json'
+PINS={str(CAPTURE):'ef82889318080bf2fec673d6c558c4afe3d95260c1a4d783c9b5eb16d8979442',str(RECOVERY):'32acf31622837219bd947d64f135dce90120169fe87b4400094d7cb329b76958',str(REVIEW):'38744ccbf2c9c04d73803028795e4111c55536eda215776498bfd261ad70c9f1',str(BASELINE):'02900ae11c7053a5f691ef2838fa7427b5befd86778331c19b97143e1c6c2e48'}
+sha=lambda b:hashlib.sha256(b).hexdigest()
+encode=lambda v:(json.dumps(v,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
+def require(v,m):
+ if not v:raise ValueError(m)
+def sig(s):return (s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
+class Census:
+ def __init__(self):self.start=time.monotonic();self.read_bytes=0;self.saved={};self.seen={}
+ def tick(self):require(time.monotonic()-self.start<120,'120s finite binding');require(shutil.disk_usage(H).free>=10*1024**3,'10GiB disk floor')
+ def reference(self,p):
+  self.tick();require(p.is_absolute() and p.resolve()==p,'canonical reference');raw=IO._read_path(p,4*1024**2);require(sha(raw)==PINS[str(p)],'accepted basis pin');self.read_bytes+=len(raw);return json.loads(raw)
+ def tree(self,root,expected,save):
+  self.tick();require(root.is_absolute() and root.resolve()==root,'canonical root');rows=[]
+  def visit(path,fd,depth):
+   self.tick();require(depth<=32,'finite tree depth');initial=os.fstat(fd);iterator=None
+   try:
+    iterator=os.scandir(fd);entries=sorted(iterator,key=lambda x:x.name)
+   finally:
+    if iterator is not None:IO._cleanup((iterator.close,))
+   self.tick()
+   for e in entries:
+    n=(path/e.name).as_posix();n=n[2:] if n.startswith('./') else n
+    if n=='.git' and root==CAP:continue
+    require(n in expected and len(rows)<4096,'unlisted current member');before=os.stat(e.name,dir_fd=fd,follow_symlinks=False);mode=stat.S_IMODE(before.st_mode)
+    if stat.S_ISDIR(before.st_mode):
+     require(expected[n]=='directory','member type');child=os.open(e.name,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=fd)
+     try:
+      require(sig(before)==sig(os.fstat(child)),'directory changed');rows.append({'path':n,'kind':'directory','mode':mode});visit(Path(n),child,depth+1)
+     finally:IO._cleanup((lambda:os.close(child),))
+    else:
+     require(expected[n]=='file' and stat.S_ISREG(before.st_mode) and 0<=before.st_size<=4*1024**2,'regular file4MiB');child=os.open(e.name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=fd);digest=hashlib.sha256();size=0;parts=[] if n in save else None
+     try:
+      require(sig(before)==sig(os.fstat(child)),'file changed before read')
+      while True:
+       self.tick();b=os.read(child,65536)
+       if not b:break
+       size+=len(b);self.read_bytes+=len(b);require(size<=before.st_size and self.read_bytes<=128*1024**2,'bounded read extent/total');digest.update(b)
+       if parts is not None:parts.append(b)
+      require(size==before.st_size and sig(before)==sig(os.fstat(child)),'file changed while read')
+     finally:IO._cleanup((lambda:os.close(child),))
+     rows.append({'path':n,'kind':'file','mode':mode,'bytes':size,'sha256':digest.hexdigest()})
+     if parts is not None:self.saved[(str(root),n)]=b''.join(parts)
+    require(sig(before)==sig(os.stat(e.name,dir_fd=fd,follow_symlinks=False)),'member changed after cleanup');self.seen[str(root/n)]=sig(before)
+   require(sig(initial)==sig(os.fstat(fd)),'directory changed during census');self.seen[str(root/path)]=sig(initial)
+  fd=os.open(root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+  try:rootmode=stat.S_IMODE(os.fstat(fd).st_mode);visit(Path('.'),fd,0)
+  finally:IO._cleanup((lambda:os.close(fd),))
+  require({r['path'] for r in rows}==set(expected),'complete current membership');self.tick();return {'schema_version':1,'root_mode':rootmode,'members':sorted(rows,key=lambda r:r['path'])}
+ def finish(self):
+  # Whole final signature rejoin after every callback/read/owned cleanup. Sampled only.
+  for p,s in self.seen.items():self.tick();require(sig(Path(p).lstat())==s,'late current namespace/body signature change')
+  self.tick()
+def collect():
+ c=Census();capture=c.reference(CAPTURE);proof=c.reference(RECOVERY);review=c.reference(REVIEW);baseline=c.reference(BASELINE)
+ require(review['capture_sha256']==PINS[str(CAPTURE)] and proof['review']=={'path':str(REVIEW),'sha256':PINS[str(REVIEW)]} and review['Git407_basis']=={'path':str(BASELINE),'sha256':PINS[str(BASELINE)]},'genuine recovered basis chain')
+ require(proof['source']==OLD and capture['originals']['capsule']['root']==str(CAP),'historical scope/source')
+ old=capture['originals']['capsule']['manifest'];types={r['path']:r['kind'] for r in old['members']};types.update({n:'file' for n in NEW});types['fixture_inputs/financial_wrapper_continuation01']='directory'
+ current=c.tree(CAP,types,NEW);by={r['path']:r for r in current['members']}
+ require(current['root_mode']==old['root_mode'] and all(by[r['path']]==r for r in old['members']),'every old writable CAP body/type/mode remains exact')
+ parent=c.tree(PARENT,{n:'file' for n in PARENT_NAMES},PARENT_NAMES);q=json.loads(c.saved[(str(PARENT),'REQUEST_DRAFT01.json')]);require(q['status']=='DRAFT_NOT_RELEASED' and q['identity']==ID and q['source']==q['design_source']==SOURCE and q['expected_phase']=='continue100' and q['registration']==REG,'actual bound draft context')
+ require(q['caller_sha256']==sha(c.saved[(str(PARENT),'parent01.py')])=='b50d1e727979a989f3da1e18a5b204cc3d29169ad425806e8550aa88af5ed0be','actual installed caller')
+ require(set(q['helper_hashes'])==PARENT_NAMES-{'parent01.py','REQUEST_DRAFT01.json'},'eight exact helpers')
+ for n,pin in q['helper_hashes'].items():require(sha(c.saved[(str(PARENT),n)])==pin,'helper actual bytes')
+ require(q['final_review'] is None and q['proofs']['full_recovery'] is None and q['proofs']['independent_source_input_runtime'] is None,'future full proof/release remains absent')
+ require(len(q['input_hashes'])==29 and len(q['source_files'])==359,'actual continuation source/input counts')
+ require(all(by[n]['sha256']==pin for n,pin in q['source_files'].items()),'all actual current source pins')
+ reg=json.loads(c.saved[(str(CAP),REG)]);require(sha(c.saved[(str(CAP),REG)])==q['registration_sha256'] and reg['experiments'][ID]['source_files']==q['source_files'],'actual gate map')
+ for role,ref in reg['experiments'][ID]['inputs'].items():require(by[ref['path']]['sha256']==ref['sha256']==q['input_hashes'][role],'29 actual registered inputs')
+ require(len(q['runtime_mapping']['distribution_records'])==251,'251 runtime metadata pins only')
+ require(not os.path.lexists(CAP/'research_runs'/ID) and not os.path.lexists(PARENT/'attempt'),'no new claim/attempt')
+ require(git(CAP,['rev-parse','HEAD'],cap=128).decode().strip()==SOURCE,'actual currentHEAD')
+ oldtracked=git(CAP,['ls-tree','-r',OLD]).decode().splitlines();tracked=git(CAP,['ls-tree','-r',SOURCE]).decode().splitlines();oldmap={r.split('\t')[1]:r.split('\t')[0] for r in oldtracked};newmap={r.split('\t')[1]:r.split('\t')[0] for r in tracked}
+ require(len(oldmap)==355 and len(newmap)==360 and all(newmap[n]==v for n,v in oldmap.items()) and set(newmap)-set(oldmap)==NEW,'exact355 unchanged committed source and five additions')
+ require(set(newmap)==set(q['source_files'])|{REG},'current360 full tracked set')
+ oldoids={r.split()[0] for r in git(CAP,['rev-list','--objects',OLD]).decode().splitlines()};oids={r.split()[0] for r in git(CAP,['rev-list','--objects',SOURCE]).decode().splitlines()};require(len(oldoids)==407 and oldoids<=oids,'genuine407 Git ancestry basis retained');tail=sorted(oids-oldoids);require(len(tail)==9,'exact new Git tail')
+ raw=git(CAP,['cat-file','--batch'],''.join(x+'\n' for x in tail).encode());offset=0;objects=[]
+ for oid in tail:
+  end=raw.index(b'\n',offset);actual,kind,size=raw[offset:end].decode().split();size=int(size);body=raw[end+1:end+1+size];offset=end+2+size
+  require(actual==oid and kind in ('commit','tree','blob') and 0<=size<=4*1024**2 and len(body)==size and raw[offset-1:offset]==b'\n' and hashlib.sha1(kind.encode()+b' '+str(size).encode()+b'\0'+body).hexdigest()==oid,'authentic actual Git object framing/type/OID')
+  c.saved[('git',oid)]=body;objects.append({'oid':oid,'kind':kind,'bytes':size,'sha256':sha(body)})
+ require(offset==len(raw),'no Git framing tail')
+ require(git(CAP,['rev-parse','HEAD'],cap=128).decode().strip()==SOURCE,'final currentHEAD');c.finish()
+ return {'schema_version':1,'decision':'CURRENT_BYTE_COMPOSITION_PREPARATION_ONLY','source':SOURCE,'design_source':SOURCE,'basis_refs':[{'path':p,'sha256':pin} for p,pin in PINS.items()],'capsule':current,'parent':parent,'tracked':{'old355':oldmap,'current360':newmap},'git':{'old_source':OLD,'source':SOURCE,'old407':sorted(oldoids),'current416':sorted(oids),'new_objects':objects},'old_capsule_files_reused':sum(r['kind']=='file' for r in old['members']),'new_capsule_files':sorted(NEW),'runtime_metadata_records':251,'read_bytes':c.read_bytes,'elapsed_seconds':time.monotonic()-c.start,'future':{'final_request':None,'source_runtime_proof':None,'whole_current_recovery':None,'final_release':None},'numerical_authority':False,'POSIX_restoration':False,'installed_runtime_bodies':False,'whole_capacity':False,'sampled_currentness_only':True},c.saved
+if __name__=='__main__':
+ result,_=collect();print(json.dumps({'decision':result['decision'],'source':result['source'],'capsule_typed':len(result['capsule']['members']),'parent_files':len(result['parent']['members']),'Git_objects':len(result['git']['current416']),'future':result['future']},sort_keys=True))

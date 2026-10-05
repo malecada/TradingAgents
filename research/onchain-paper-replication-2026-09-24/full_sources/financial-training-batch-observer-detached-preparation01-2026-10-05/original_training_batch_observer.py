@@ -1,6 +1,6 @@
 """Opt-in native TRAINING metadata observation; never reads tensor values or labels.
 
-Genuine resident and saved-lineage detached compact routes are supported. Events contain
+Only the genuine resident compact feature route is supported. Events contain
 scalar identities, not strong/weak references to graph/tensor/parent objects.
 Pointer equality has meaning inside one event only; no lifetime/saving claim.
 """
@@ -69,21 +69,13 @@ def authority(run,features):
  require(type(run)is ResearchRun,'genuine existing ResearchRun required')
  source=Path(__file__).resolve();require(source.is_relative_to(run.admission.root),'observer must load from actual admitted source root')
  name=source.relative_to(run.admission.root).as_posix();require(name in run.admission.experiment['source_files'],'observer source must be in genuine source map')
- from .compact_native_features import _Features,_DetachedFeatures
+ from .compact_native_features import _Features
  from .compact_terminal import Receipt
  from .compact_owner import Owner
  from .matching_owner import Binding
  from .provenance import thaw
- terminal=owner=bound=detached=saved=None
+ terminal=owner=bound=None
  try:
-  if type(features)is _DetachedFeatures:
-   from .compact_detached_handoff import Authority
-   detached=features._authority;require(type(detached)is Authority and detached._run_ref() is run,'genuine detached authority must belong to this run')
-   detached._record.require_loader();saved=detached.lease()
-   require(saved['lifetime']=='original-reader-sampled-content-v1','original sampled reader lifetime required')
-   require(thaw(features._hashes)==saved['binding']['feature_hashes'],'detached feature hash population differs')
-   require(saved['terminal']['resident_originals_retained'] is True,'original resident terminal declaration changed')
-   return {'owner_id':saved['terminal']['owner'],'binding_sha256':None,'feature_binding_sha256':sha(encode(saved['binding'])),'terminal_record_sha256':sha(encode(saved['terminal'])),'resident_originals_retained':None,'historical_resident_originals_retained':True,'parent_population_object_census':None,'parent_retention_basis':'genuine detached saved lineage; current parent retention unobserved','feature_route':'detached','lifetime':saved['lifetime']}
   require(type(run)is ResearchRun and type(features)is _Features,'genuine resident native financial route required; cold/detached unsupported')
   terminal=features._terminal;require(type(terminal)is Receipt,'genuine compact terminal')
   owner=terminal._owner;require(type(owner)is Owner,'genuine compact Owner')
@@ -91,7 +83,7 @@ def authority(run,features):
   terminal.check();bound._guard();run._active();run._check_source()
   require(terminal.record['resident_originals_retained'] is True,'resident-parent declaration changed')
   return {'owner_id':owner.identity,'binding_sha256':owner._binding_sha256,'terminal_record_sha256':sha(encode(thaw(terminal.record))),'resident_originals_retained':True,'parent_population_object_census':None,'parent_retention_basis':'genuine checked resident terminal; no heap/alias census'}
- finally:terminal=None;owner=None;bound=None;detached=None;saved=None;features=None;run=None
+ finally:terminal=None;owner=None;bound=None;features=None;run=None
 def prepare(run,cell,provenance,examples,feature_binding,training_config,features):
  """Called after existing evaluate_cell admission and component-byte validation."""
  if ROLE not in run.admission.inputs:return None

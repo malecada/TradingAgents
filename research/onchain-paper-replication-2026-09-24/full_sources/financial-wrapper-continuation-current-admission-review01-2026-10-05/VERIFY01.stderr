@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-current-admission-review01-2026-10-05/verify01.py", line 36, in <module>
+    p=Path(row['record']);ck('installed RECORD scope',p.is_relative_to(Path(sys.prefix)/'lib/python3.13/site-packages') and p.name=='RECORD' and p.parent.name.endswith('.dist-info'));ck('RECORD '+row['name'],R.digest(read(p))==row['record_sha256']);metadata=email.message_from_bytes(read(p.parent/'METADATA'));norm=lambda s:s.lower().replace('_','-').replace('.','-');ck('direct installed name/version '+row['name'],norm(metadata['Name'])==norm(row['name']) and metadata['Version']==row['version'] and row['name'] not in seen);seen.add(row['name']);ck('default metadata version '+row['name'],importlib.metadata.version(row['name'])==row['version'])
+                                                                                                                                                                                                                                                                                           ~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-current-admission-review01-2026-10-05/verify01.py", line 7, in read
+    p=Path(p);b=R.read(p.parent,p.name);pin=(R.sig(p.lstat()),R.digest(b));ck('unchanged reread '+str(p),p not in pins or pins[p]==pin);pins[p]=pin;return b
+                ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-compatibility-root-launch-20261005-01/recovery04.py", line 25, in read
+    require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_size<=limit,'file type/link/extent')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-compatibility-root-launch-20261005-01/recovery04.py", line 11, in require
+    if not v:raise ValueError(msg)
+             ^^^^^^^^^^^^^^^^^^^^^
+ValueError: file type/link/extent
