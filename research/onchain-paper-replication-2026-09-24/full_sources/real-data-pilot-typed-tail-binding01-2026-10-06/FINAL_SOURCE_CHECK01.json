@@ -1,0 +1,7 @@
+{
+  "ast_valid": true,
+  "candidate_sha256": "e18df13cb72e30d18d36c9cf3a1444e44c1c41fd4b72dbfed07454580e3a03c6",
+  "decision": "pass",
+  "native_check": "Both archive wrappers require actual finite RLIMIT_FSIZE soft/hard >= selected per-file cap; no limits mutated or native readback performed in source check.",
+  "selected_cap": "Explicit 64KiB..4MiB per-file cap, record-aligned payload <=cap; separate existing metadata/transport diagnostics below64KiB. No added wire envelope."
+}

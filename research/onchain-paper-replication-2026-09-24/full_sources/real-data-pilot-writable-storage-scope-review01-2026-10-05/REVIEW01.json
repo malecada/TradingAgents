@@ -1,0 +1,168 @@
+{
+  "at": "2026-10-05T22:07:49.189112+00:00",
+  "candidate_manifest_sha256": "1a4167fa078df446884eba7e99b39b686986dbaaade26e0760e319f5cc78e5bf",
+  "candidate_sources": {
+    "job.py": "05bd32fc4da1d68d8b356a939e11cef27f1e396474bec5e1ecb379f7c948fe3f",
+    "matching_owner.py": "a60d33006ebcb2d9ef2816072f975e2ae1ba5556f363e7de3ef757c3a9dd8c63",
+    "real_pilot_import_caller.py": "fbb7f9839f504286f9bf13b84897ab0b0720e716b3a80a7f26acb724db970ad1",
+    "real_pilot_storage.py": "7bef12cbd4b5b41280c382bfdf2b552d5ef80fdd5c899440290c2901f2250e95",
+    "resources.py": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543"
+  },
+  "checks": {
+    "author_evidence_reused": {
+      "qualification": "Retained source/evidence inspected; original suites and actual metadata scans not rerun.",
+      "scope01_methods": 5,
+      "scope01_tool": "051994",
+      "scope02_metadata_tool": "a0bf15",
+      "scope02_methods": 4,
+      "scope02_tool": "e04f2d"
+    },
+    "independent_refusals": {
+      "cases": [
+        {
+          "case": "birth during absent observation",
+          "reason": "experiment born during scan; complete new observation required",
+          "result": "refused"
+        },
+        {
+          "case": "shared lock replacement between observations",
+          "reason": "shared lock type/link/identity differs",
+          "result": "refused"
+        },
+        {
+          "case": "selected union without admission context",
+          "reason": "writable union requires explicit real-pilot selection",
+          "result": "refused"
+        }
+      ],
+      "exit_code": 0,
+      "tool": "5de119"
+    },
+    "source_inverses": {
+      "exit_code": 0,
+      "tool": "3f6f25"
+    }
+  },
+  "decision": "accepted",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/candidate/tradingagents/research/onchain_replication/job.py": "c4e9623e6222300ea83dc8fc430f6ef16644b918ee7ccba24e9ac56e93b40177",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/candidate/tradingagents/research/onchain_replication/resources.py": "bd7c08b53cf7526898277cb798789d4d6e6fbfab530a0a3a9a9dbf17eed3c4aa",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-population-binding01-2026-10-05/real_pilot_population.py": "e4671b48754c8f56d989d1905e7803d8111c10334f1110ff07cfcc79a1fb45db",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-throughput-measurement01-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py": "b6474907e6efa98cb39bc46cd2cfdd0687d4754b46d322391c50ef9a39393379",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope-review01-2026-10-05/CHECK01.json": "3fabcf472fc75138b8e7446c60678bf7ca5c563ab62c870e42b4cb9ddf5edab0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope-review01-2026-10-05/CHECK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope-review01-2026-10-05/SOURCE_CHECK01.json": "fbc2eff009fc8945018aac97d9130b7c84dd43b5d78287b6f5480fce8d43f3ad",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope-review01-2026-10-05/independent_check01.py": "a5cf22b400785eb3f526da9ade9a8a5f00026ceebceb7939cadd05cd4cbd0206",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/ACTUAL_METADATA01.json": "196c4b6c03faa372a0da3cb2f17ba02dd3febb7f64ff2fb659b4f737982a781b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/CHECKS01.json": "fc3aba51fac6371fe931d439b550c62d8e85e8bea7e319762cf348265415e4f3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/MANIFEST01.json": "b88c9118f8d4ccd1e009d212e3a85fe7321de346a7c811670bb0421b81c7a614",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/REPORT01.md": "0070359ca6f842806b9e0ba23ee1aacc5a1b7fa8ad9ae38f8a810995583e5035",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/SOURCE_DELTA01.json": "27fcd6f2315ed53fb41c2e0b978fb90028985b525593867e0f8ffa1b77c80cff",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/WRITERS01.json": "97fffeae674d7a48100e1c0d9a9cdd70646ec501a829f7d361c67d99ce8f6d11",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/candidate/tradingagents/research/onchain_replication/job.py": "05bd32fc4da1d68d8b356a939e11cef27f1e396474bec5e1ecb379f7c948fe3f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/candidate/tradingagents/research/onchain_replication/matching_owner.py": "a60d33006ebcb2d9ef2816072f975e2ae1ba5556f363e7de3ef757c3a9dd8c63",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py": "94d1163b42c7111d0cce1c09b855fcd9fcc697c8c108376c2c3b21612da97886",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_storage.py": "aa3613ab83302c8ab2d86ba75ada68ffcc61d9e9b204182ff6760a646546774a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/candidate/tradingagents/research/onchain_replication/resources.py": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/job.py.patch": "008b5170539991fb35e07e627941b1d76eb6f23d9c4f066ae54cfe7c81951e12",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/matching_owner.py.patch": "7c44acb0141b203f0216baf6fa4f9c384c5e6b401bcf9de775bc86d64a26a414",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/prepare01.py": "fdde1883a326955086a4da814bfe3280d4e42092fdf5667a642fc25f15e65548",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/real_pilot_import_caller.py.patch": "5b56de9d847b56871390a2091d86dc569506af3da94dddb78495faa814798d9b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/resources.py.patch": "40e18a5abd58243ee661915a910b7156e18ebae171e11c3c4a0800154a8eae75",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope01-2026-10-05/test_scope01.py": "9a511998a71183295708fb9579e4a2681a1d8ab7a4603348585e9227d29b8f50",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/ACTUAL_METADATA01.json": "8c644a8d9ee797ed1eac4d81a5d87cd6c83fa4e3117a5e293d0ab379bd5bf66f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/ACTUAL_METADATA02.json": "f27de777edcfaaaae2eab2d40f1e0dc5ecdd89a0f26b214b34908d5cf8cb6086",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/CHECKS01.json": "bf7419ae3c2c9206171f500a5495b618997f7bdc66e7ce4628e7016a66b33d2e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/MANIFEST01.json": "1a4167fa078df446884eba7e99b39b686986dbaaade26e0760e319f5cc78e5bf",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/REPORT01.md": "415349557f568824c81bcdbcb245fbb154b9d9e853e595832e4a03325119f708",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/SOURCE_DELTA01.json": "0d8684b9be270bf7e5df40a7586e49ea2953a0831e2193c8fcd361b0525b7a5e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/candidate/tradingagents/research/onchain_replication/job.py": "05bd32fc4da1d68d8b356a939e11cef27f1e396474bec5e1ecb379f7c948fe3f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/candidate/tradingagents/research/onchain_replication/matching_owner.py": "a60d33006ebcb2d9ef2816072f975e2ae1ba5556f363e7de3ef757c3a9dd8c63",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py": "fbb7f9839f504286f9bf13b84897ab0b0720e716b3a80a7f26acb724db970ad1",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_storage.py": "7bef12cbd4b5b41280c382bfdf2b552d5ef80fdd5c899440290c2901f2250e95",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/candidate/tradingagents/research/onchain_replication/resources.py": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/job.py.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/matching_owner.py.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/real_pilot_import_caller.py.patch": "be082b409ead9bb9a8da22ac178cfa05e7cb3f368108f2898b6cb554e7349879",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/real_pilot_storage.py.patch": "cdee86a20fec739646964171cafb7c23344897a7f3aa9040ba3737295f3df0da",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/resources.py.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/test_scope02.py": "1150e4a611ac663f986d4f48eb08a0441bd74f0b0406f3cdebc70598aa96bc9e",
+    "tradingagents/research/lifecycle.py": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+    "tradingagents/research/onchain_replication/compact_mcm_publication.py": "f32449d58b9bd3ecc71a6078cd0213fcb27217964de77964d74a41653b05d80a",
+    "tradingagents/research/onchain_replication/job.py": "4dca6079896dd1394ccf65fbcd1a9bc601608fc8be22675b6f0f496e51ddd5e9",
+    "tradingagents/research/onchain_replication/matching_owner.py": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+    "tradingagents/research/onchain_replication/real_pilot_training.py": "140ee71f01b89f0f07b2ffb47178b0f8d96f7616c13080ebf48899103ee277c8",
+    "tradingagents/research/onchain_replication/workflow_storage.py": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554"
+  },
+  "material_findings": [],
+  "next_requirement": "Root must select and commit exact coupled source/runtime/schema2 policy and finite reservation with writer-scope evidence, then perform separate genuine admission and fresh resource checks after freeze. Any additional writer/transport outside these paths requires explicit scope extension/review before use; do not silently exclude it.",
+  "preserved_qualifications": [
+    "Scope01 historical nlink2 claim refusal and initial preparation AssertionError remain sealed; no historical body/topology change or waiver.",
+    "Scope02 ACTUAL_METADATA01 and final source-bound ACTUAL_METADATA02 are diagnostic. Final retained observation: allocated5679349760/logical6106871857/entries15972, pilot root absent with null birth inode. These are not new limits, credit, available growth or capacity proof.",
+    "Not a whole-checkout census, kernel quota, atomic snapshot, write allowlist, continuous lifetime birth detector, read-only mount or complete arbitrary third-party/environment writer guarantee. Unlinked temporary allocations retain separate whole-volume floor/minimum safeguards.",
+    "No numerical imports, empirical/financial computation, source installation, native process, network, claim, registration or Git mutation performed by review. Financial timing/returns/cashflows/exposures/fees/funding and full model capacity not tested."
+  ],
+  "schema_version": 1,
+  "scope": "Selected fixed real-pilot schema2 writable-storage source semantics only; no adopted envelope, current eligibility, capacity or execution authority.",
+  "source_findings": [
+    "Actual admit result and exact execution input hash feed job.resource_policy. Opt-in requires selected compact_resource route, actual Admission class/root/fixed experiment, hash-authenticated schema2 plan and exact policy equality; caller also requires canonical byte equality, source closure/current file pin and original512/32 import contract. Existing genuine Run/Binding/guard checks remain.",
+    "Matching-owner forwards the actual admission/execution context only for the resource path; unselected/default legacy routes preserve their prior behavior. Tiny caller explicitly refuses the union. Three reused scope01 bodies are byte-identical; two-stage literal inverses verified.",
+    "Whole artifacts baseline is included without subtraction. Exact current-run root can begin absent without invented inode or credit, then binds first observed actual birth. Existing birth is pinned at construction; parent change, observed disappearance/rebirth or birth during an absent scan refuses. Changes entirely between observations remain outside sampled guarantees.",
+    "Shared lock is separately no-follow, regular, singly linked and device/inode checked against descriptor/path and subsequent endpoints. Shared parent directory and lock allocation use nonrefunding endpoint lower bounds. Historical siblings remain outside declared writer paths, not exempted from a claimed whole-checkout census.",
+    "Roots share finite remaining allocation/logical/entry counters and common scan start/deadline. Original strict StorageWatch device/link/depth/retry checks and physical floor telemetry remain. No relaxed link check, expanded caps or new retry.",
+    "Selected environment is prepared inside artifacts and explicitly forwarded launcher\u2192monitor; native unit receives matching setenv values and child/monitor/worker validate readbacks. Original unselected environment route remains."
+  ],
+  "writer_coverage": {
+    "job": {
+      "coverage": "Artifacts root includes launch/owner/guard/observer/reconcile and failure publications.",
+      "source": "candidate/job.py:149",
+      "writers": [
+        "research_artifacts/onchain-paper-replication-2026-09-24/runs/<experiment>/**",
+        "research_artifacts/onchain_fit_cells/*/<experiment>/**"
+      ]
+    },
+    "lifecycle": {
+      "coverage": "Shared existing lock explicitly pinned/counted; fixed prospective run root; research_runs parent inode/allocation retained. Outputs and immutable temporary siblings are inside the fixed run.",
+      "source": "tradingagents/research/lifecycle.py:78",
+      "writers": [
+        "research_runs/.lock",
+        "research_runs/eth-paper-real-data-end-to-end-resource-20261005-01/**"
+      ]
+    },
+    "matching": {
+      "coverage": "Whole artifacts root includes journal, compact owner and pair stages.",
+      "source": "candidate/matching_owner.py:204",
+      "writers": [
+        "research_artifacts/onchain_representations/<workflow>/<experiment>/**"
+      ]
+    },
+    "mcm_publication": {
+      "coverage": "Whole artifacts root includes full MCM publication plus metadata parents.",
+      "source": "tradingagents/research/onchain_replication/compact_mcm_publication.py:78",
+      "writers": [
+        "research_artifacts/onchain_compact_outputs/<workflow>/<experiment>/<stage>/**"
+      ]
+    },
+    "native_environment": {
+      "coverage": "Explicit TMPDIR/TMP/TEMP and listed framework/config/data caches; Python bytecode disabled. Declared route coverage, not a kernel filesystem allowlist.",
+      "source": "candidate/real_pilot_storage.py:110",
+      "writers": [
+        "research_artifacts/real_pilot_runtime/**"
+      ]
+    },
+    "population": {
+      "coverage": "Genuine run.write_json path; fullfold registered projection shares lifecycle output route.",
+      "source": "real-data-pilot-population-binding01-2026-10-05/real_pilot_population.py:103",
+      "writers": [
+        "ResearchRun registered outputs within research_runs/<experiment>/**"
+      ]
+    },
+    "training": {
+      "coverage": "Fixed run includes checkpoint, phases, readback, terminal and throughput evidence.",
+      "source": "candidate/real_pilot_import_caller.py:365",
+      "writers": [
+        "research_runs/<experiment>/artifacts/real-pilot-one-update/**"
+      ]
+    }
+  }
+}

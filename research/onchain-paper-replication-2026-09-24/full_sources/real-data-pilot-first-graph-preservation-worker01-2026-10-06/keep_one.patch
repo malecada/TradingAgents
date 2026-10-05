@@ -1,0 +1,38 @@
+--- cold03/offload_one
++++ keep/keep_one
+@@ -1,9 +1,11 @@
+-def offload_one(root, here, row, number, remote, transport):
++def keep_one(root, here, row, number, remote, transport, *, primitives):
++    validate_source=primitives.validate_source;identity=primitives.identity;sha=primitives.sha;publish=primitives.publish;sync_directory=primitives.sync_directory
+     source = root / row['path']
++    if source.resolve(strict=True)!=source or here.resolve(strict=True)!=here or source.is_relative_to(here):
++        raise ValueError('canonical original outside preservation directory required')
+     validate_source(source, row)
+     verified = here / f'{number:02d}-verified.json'
+-    sidecar = source.with_name(source.name + '.remote.json')
+-    if verified.exists() or sidecar.exists():
++    if any((here/f'{number:02d}-{suffix}').exists() for suffix in ('verified.json','recovered.bin','restore.json','recovered-restore.json','kept.json')):
+         raise FileExistsError('identity already attempted; reconcile instead of repeating')
+     body = remote + f'/{number:02d}.bin'
+     recovery = here / f'{number:02d}-recovered.bin'
+@@ -26,14 +28,14 @@
+         transport.get(record['remote_restore'], recovered_metadata)
+         if sha(metadata) != sha(recovered_metadata):
+             raise ValueError('restoration metadata round-trip mismatch; original retained')
+-        publish(verified, record)
+-        publish(sidecar, record)
+         validate_source(source, row)
+         if identity(os.fstat(retained.fileno())) != row['stat_identity']:
+             raise ValueError('opened source drifted')
+-        source.unlink()
+-        sync_directory(source.parent)
+-    publish(here / f'{number:02d}-evicted.json', record)
+-    recovery.unlink()  # Successful verification scratch only; failed scratch is retained.
++        for recovered in (recovery,recovered_metadata):
++            with recovered.open('rb') as checked:os.fsync(checked.fileno())
++        sync_directory(here)
++        record.update(original_retained=True,recovered_body_retained=True)
++        publish(verified, record)
++    publish(here / f'{number:02d}-kept.json', record)
+     sync_directory(here)
+     return record

@@ -1,0 +1,35 @@
+--- baseline/real_pilot_import_caller.py
++++ candidate/real_pilot_import_caller.py
+@@ -41,9 +41,11 @@
+               'max_checkpoint_bytes','outputs'}
+     require(type(p) is dict, 'pilot plan must be an object')
+     full = type(p.get('schema_version')) is int and p['schema_version'] == 2
++    interval='imported_authority_lease_input' in p
++    require(not interval or (full and type(p['imported_authority_lease_input']) is str and bool(p['imported_authority_lease_input'])),'explicit schema2 interval input required')
+     resource_subset = 'population_scope' in p
+     require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
+-    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()), 'pilot plan fields differ')
++    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()), 'pilot plan fields differ')
+     require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+@@ -213,6 +215,9 @@
+     require(all(item.get(k) == v for k,v in s.items()) and item['binding_output'] == p['outputs']['binding']
+             and item['journal_output'] == p['outputs']['journal'], 'producer/selected pilot mismatch')
+     roles = set(p['graph_inputs'].values()) | {p[k] for k in ('population_plan_input','model_input','training_input')}
++    if p.get('imported_authority_lease_input') is not None:
++        from .imported_authority_interval import policy
++        policy(_read(ad,p['imported_authority_lease_input']));roles.add(p['imported_authority_lease_input'])
+     require(roles <= set(ad.inputs), 'real population/config/graph inputs not registered')
+     control = _read(ad, s['original_dictionary_input'])
+     require(control['sample_count'] == 512 and control['motif_count'] == 32
+@@ -324,6 +329,9 @@
+         prepared = original_import_preparation.prepare(bound,input_name=s['original_dictionary_input'],job_input='execution_job')
+         owner,stage = original_import_stage.attach(prepared,policy_input=s['compact_policy_input'],stage_policy_input=s['original_dictionary_stage_input'])
+         execution = original_import_stage.ImportedExecution(stage)
++        if p.get('imported_authority_lease_input') is not None:
++            from .imported_authority_lease import activate
++            activate(execution,p['imported_authority_lease_input'])
+         require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
+         mark('original_import')
+         checked = [Target(execution,g,k) for k,g in graphs.items()]

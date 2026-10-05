@@ -1,0 +1,67 @@
+--- baseline/real_pilot_import_caller.py
++++ candidate/real_pilot_import_caller.py
+@@ -91,6 +91,7 @@
+ 
+ def _tiny_resources(p):
+     require('physical_policy' not in p and 'storage_budget' in p, 'whole workspace storage guard required')
++    require('schema_version' not in p['storage_budget'],'tiny route cannot select writable union')
+     require(type(p.get('wall_seconds')) is int and 0 < p['wall_seconds'] <= 1800
+             and type(p.get('memory_max_bytes')) is int and 0 < p['memory_max_bytes'] <= 3*GIB, 'original native envelope exceeded')
+     require(p.get('native_unit_limits') == {'file_size_bytes':FILE_MAX}, 'native file cap differs')
+@@ -121,8 +122,11 @@
+     require(type(native) is dict and set(native)=={'file_size_bytes'} and type(native['file_size_bytes']) is int
+             and 0<native['file_size_bytes']<2**63, 'finite registered native file limit required')
+     budget=p['storage_budget']
+-    require(type(budget) is dict and set(budget)=={'root','limits'} and type(budget['root']) is str
+-            and Path(budget['root']).is_absolute(), 'explicit whole-root budget required')
++    if type(budget) is dict and budget.get('schema_version')==2:
++        require(set(budget)=={'schema_version','kind','authority_root','roots','limits'} and budget['kind']=='real-pilot-writable-union','explicit writable union fields required')
++    else:
++        require(type(budget) is dict and set(budget)=={'root','limits'} and type(budget['root']) is str
++                and Path(budget['root']).is_absolute(), 'explicit whole-root budget required')
+     limits=budget['limits']
+     require(type(limits) is dict and set(limits)=={'max_allocated_bytes','max_logical_bytes','max_entries','max_depth','max_scan_seconds'}
+             and all(type(v) is int and 0<v<2**63 for v in limits.values()), 'finite storage limits required')
+@@ -138,7 +142,7 @@
+         from .provenance import canonical_bytes
+         require(canonical_bytes(plan['resource_policy'])==canonical_bytes(resources), 'pilot plan/job resource policy differs')
+     from .job import resource_policy
+-    resource_policy(resources,ad.root)
++    resource_policy(resources,ad.root,pilot_context=(ad,job))
+     # Physical volume capacity is only an upper bound. Available growth and
+     # completed graph/MCM reservations need separate registered entry evidence.
+     if plan['schema_version']==2:
+@@ -188,7 +192,14 @@
+     p = validate_plan(_read(ad, s['real_pilot_input']))
+     _bind_resources(ad,job,p)
+     require(ad.family['mechanism_id'] == 'celik-sefer-transaction-graph-full-neural-replication' and ad.experiment['cells'] == [p['cell_id']], 'separate one-cell resource pilot admission required')
+-    require(Path(job['resources']['storage_budget']['root']) == ad.root and (ad.root/'.git').is_dir(), 'complete isolated workspace watch required')
++    budget=job['resources']['storage_budget']
++    if budget.get('schema_version')==2:
++        from .real_pilot_storage import validate,EXPERIMENT
++        require(p['schema_version']==2 and ad.experiment_id==EXPERIMENT,'union requires fixed schema2 real pilot')
++        validate(budget,ad.root)
++        require((ad.root/'.git').is_dir(),'original source authority root required')
++    else:
++        require(Path(budget['root']) == ad.root and (ad.root/'.git').is_dir(), 'complete isolated workspace watch required')
+     from .job import required_sources
+     require(required_sources() <= set(ad.experiment['source_files']), 'complete current package closure required')
+     own = 'tradingagents/research/onchain_replication/real_pilot_import_caller.py'
+@@ -259,7 +270,16 @@
+     job = json.loads(run.read_input('execution_job'))
+     require(job['payload'] == payload, 'exact registered pilot payload required')
+     name,s,p = admitted(run.admission,job)
+-    watch = StorageWatch(run.admission.root,job['resources']['storage_budget']['limits']); watch.check()
++    budget=job['resources']['storage_budget']
++    if budget.get('schema_version')==2:
++        from .real_pilot_storage import WritableUnion
++        watch=WritableUnion(budget,run.admission.root)
++        from .resources import assert_guarded_worker
++        limits=job['resources']
++        live=assert_guarded_worker(run.admission.root/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/run.admission.experiment_id/'guard',__import__('sys').orig_argv,required_paths=[run.admission.root],wall_seconds=limits['wall_seconds'],memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'],disk_floor_bytes=limits['disk_floor_bytes'])
++        require(live.get('storage_budget')==budget,'worker/monitor writable scopes differ')
++    else:watch=StorageWatch(run.admission.root,budget['limits'])
++    watch.check()
+     resource_subset = p.get('population_scope') == 'resource_pilot_subset'
+     if resource_subset:
+         from .real_pilot_population import produce

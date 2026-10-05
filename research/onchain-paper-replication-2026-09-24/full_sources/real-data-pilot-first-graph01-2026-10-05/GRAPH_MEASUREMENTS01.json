@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-05T22:43:49.840113+00:00",
+  "experiment": "eth-paper-real-pilot-graph-20220502-20261005-01",
+  "guard_final_sha256": "2799acc0eb0af1db297dde8b268d53f10373bd6d339b91aadae9318bc774cd42",
+  "completed_raw_rows": 7734878,
+  "admitted_transactions": 3946147,
+  "native_seconds": 1070.226377261999,
+  "whole_graph_pipeline_raw_rows_per_native_second": 7227.328875773398,
+  "last_unit_kernel_peak_bytes": 5370638336,
+  "peak_sampled_memory_current_bytes": 5368233984,
+  "memory_events": {
+    "high": 121,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "minimum_sampled_whole_volume_disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 16720625664
+  },
+  "historical_plus_new_source_tree_peak_allocated_bytes": 5328248832,
+  "historical_plus_new_source_tree_peak_logical_bytes": 5273609583,
+  "new_six_payload_bytes": 3794683296,
+  "mcm_throughput": null,
+  "training_seconds": null,
+  "qualification": "Measured ONE complete weekly raw-to-graph pipeline incl worker verification. Throughput uses native interval, not isolated feature generation or total Parent+RAMwaitingtime. Unit peak includes file cache. Source-tree peak includes historical baseline/excludes unnamed scratch; sampledvolume includes unrelated activity. No wholepilot/training capacity inferred."
+}

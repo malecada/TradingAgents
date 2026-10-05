@@ -1,0 +1,29 @@
+--- baseline/imported_mcm_identity.py
++++ candidate/imported_mcm_identity.py
+@@ -68,6 +68,9 @@
+           'ordered_motifs':cache_key(ordered),'matching':current['execution_matching'],'workflow':workload}
+ 
+     def final(self,*,full_graph=True):
++        if full_graph and getattr(self.execution,'_sampled_authority_lease',None) is not None:
++            from .imported_authority_lease import target_lease
++            target_lease(self,boundary=True)
+         self._pins();compact_owner.verify_current(self.owner)
+         original_import_stage.content(self.execution._stage)
+         require(self.execution._materialized._integrity()['ordered_motifs']==self._motifs,'original motif order changed')
+@@ -78,9 +81,15 @@
+     def lease(self):
+         # Inner callbacks keep frozen input contract; full graph hashes run at
+         # producer/kernel boundaries, not once per pair on a million-node graph.
+-        self.execution.check();self.final(full_graph=False)
++        if getattr(self.execution,'_sampled_authority_lease',None) is not None:
++            from .imported_authority_lease import target_lease
++            target_lease(self)
++        else:self.execution.check();self.final(full_graph=False)
+ 
+     def check(self):
++        if getattr(self.execution,'_sampled_authority_lease',None) is not None:
++            from .imported_authority_lease import target_lease
++            target_lease(self,boundary=True)
+         self.lease();run=self.owner.bound._run
+         require(run.admission.inputs[self._input]['sha256']==self._manifest_sha and original_dictionary._read_registered(run,self._input)==self._manifest,'target manifest changed')
+         require(canonical_bytes(self.execution.check())==self._execution_pin,'completed imported execution identity changed')

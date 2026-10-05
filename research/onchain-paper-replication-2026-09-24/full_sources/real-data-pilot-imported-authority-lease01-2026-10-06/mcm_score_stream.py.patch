@@ -1,0 +1,38 @@
+--- baseline/mcm_score_stream.py
++++ candidate/mcm_score_stream.py
+@@ -86,8 +86,13 @@
+         self.lease(); batch._root(self.root, self.fd)
+         require(self._imported is self._imported_pin,'imported stream authority replaced')
+         if self._imported is not None:
+-            self._imported.final(full_graph=False)
+-            require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')
++            if getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
++                from .imported_authority_lease import target_lease
++                target_lease(self._imported)
++                require(self.scope==self._imported.scope and self.workload==self.scope['workflow'],'sampled stream scope changed')
++            else:
++                self._imported.final(full_graph=False)
++                require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')
+ 
+     def _seal_check(self, index, expected_sha):
+         """Callback-free bounded verification of one tail/link/destination."""
+@@ -185,6 +190,9 @@
+             saved = self.active.append(self.cells, key, result['score'])
+             self.cells += 1
+             if self.active.acknowledged == self.active.start['cells']:
++                if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
++                    from .imported_authority_lease import target_lease
++                    target_lease(self._imported,boundary=True)
+                 index = self.batches.chunks; start_cell = self.active.start['start_cell']
+                 root = self.active.root; terminal = self.active.finish()
+                 head = tail.seal(root, terminal_sha256=terminal, batches=self.batches, lease=self.lease)
+@@ -205,6 +213,9 @@
+             raise
+ 
+     def finish(self):
++        if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
++            from .imported_authority_lease import target_lease
++            target_lease(self._imported,boundary=True)
+         self._check()
+         require(self.cells == self.n * self.k and self.active is None, 'MCM stream incomplete')
+         try:

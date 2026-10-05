@@ -1,0 +1,245 @@
+{
+  "job.py": {
+    "baseline_sha256": "05bd32fc4da1d68d8b356a939e11cef27f1e396474bec5e1ecb379f7c948fe3f",
+    "candidate_sha256": "05bd32fc4da1d68d8b356a939e11cef27f1e396474bec5e1ecb379f7c948fe3f",
+    "edits": []
+  },
+  "matching_owner.py": {
+    "baseline_sha256": "a60d33006ebcb2d9ef2816072f975e2ae1ba5556f363e7de3ef757c3a9dd8c63",
+    "candidate_sha256": "a60d33006ebcb2d9ef2816072f975e2ae1ba5556f363e7de3ef757c3a9dd8c63",
+    "edits": []
+  },
+  "real_pilot_import_caller.py": {
+    "baseline_sha256": "94d1163b42c7111d0cce1c09b855fcd9fcc697c8c108376c2c3b21612da97886",
+    "candidate_sha256": "fbb7f9839f504286f9bf13b84897ab0b0720e716b3a80a7f26acb724db970ad1",
+    "edits": [
+      {
+        "old_start": 125,
+        "old_end": 126,
+        "new_start": 125,
+        "new_end": 126,
+        "old": [
+          "        require(set(budget)=={'schema_version','kind','authority_root','roots','limits'} and budget['kind']=='real-pilot-writable-union','explicit writable union fields required')\n"
+        ],
+        "new": [
+          "        require(set(budget)=={'schema_version','kind','authority_root','experiment','roots','shared_files','limits'} and budget['kind']=='real-pilot-writable-union','explicit writable union fields required')\n"
+        ]
+      }
+    ]
+  },
+  "real_pilot_storage.py": {
+    "baseline_sha256": "aa3613ab83302c8ab2d86ba75ada68ffcc61d9e9b204182ff6760a646546774a",
+    "candidate_sha256": "7bef12cbd4b5b41280c382bfdf2b552d5ef80fdd5c899440290c2901f2250e95",
+    "edits": [
+      {
+        "old_start": 0,
+        "old_end": 2,
+        "new_start": 0,
+        "new_end": 2,
+        "old": [
+          "\"\"\"Explicit real-pilot writable union; unchanged strict scans, no exclusions.\"\"\"\n",
+          "import os,time\n"
+        ],
+        "new": [
+          "\"\"\"Exact pilot writable closure; historical claim siblings are read-only inputs.\"\"\"\n",
+          "import os,stat,time\n"
+        ]
+      },
+      {
+        "old_start": 4,
+        "old_end": 5,
+        "new_start": 4,
+        "new_end": 5,
+        "old": [
+          "from .workflow_storage import StorageWatch,StorageLimit,FIELDS\n"
+        ],
+        "new": [
+          "from .workflow_storage import StorageWatch,StorageLimit,FIELDS,_close\n"
+        ]
+      },
+      {
+        "old_start": 13,
+        "old_end": 17,
+        "new_start": 13,
+        "new_end": 17,
+        "old": [
+          "    if type(budget) is not dict or set(budget)!={'schema_version','kind','authority_root','roots','limits'} or budget['schema_version']!=2 or budget['kind']!=KIND:raise ValueError('explicit real-pilot writable union required')\n",
+          "    if not root.is_absolute() or root.resolve(strict=True)!=root or budget['authority_root']!=str(root):raise ValueError('original authority root differs')\n",
+          "    expected=[str(root/'research_artifacts'),str(root/'research_runs')]\n",
+          "    if budget['roots']!=expected:raise ValueError('exact disjoint writable roots required')\n"
+        ],
+        "new": [
+          "    if type(budget) is not dict or set(budget)!={'schema_version','kind','authority_root','experiment','roots','shared_files','limits'} or budget['schema_version']!=2 or budget['kind']!=KIND:raise ValueError('explicit real-pilot writable closure required')\n",
+          "    if not root.is_absolute() or root.resolve(strict=True)!=root or budget['authority_root']!=str(root) or budget['experiment']!=EXPERIMENT:raise ValueError('original authority/experiment differs')\n",
+          "    parent=root/'research_runs';target=parent/EXPERIMENT\n",
+          "    if budget['roots']!=[str(root/'research_artifacts'),str(target)] or budget['shared_files']!=[str(parent/'.lock')]:raise ValueError('exact writer roots and shared lock required')\n"
+        ]
+      },
+      {
+        "old_start": 19,
+        "old_end": 22,
+        "new_start": 19,
+        "new_end": 26,
+        "old": [
+          "    watches=[StorageWatch(p,dict(limits)) for p in expected]\n",
+          "    if len({w.identity for w in watches})!=2 or any(w.identity[0]!=root.stat().st_dev for w in watches):raise ValueError('writable roots must be distinct on authority volume')\n",
+          "    return watches\n"
+        ],
+        "new": [
+          "    if parent.resolve(strict=True)!=parent or not stat.S_ISDIR(parent.lstat().st_mode) or parent.stat().st_dev!=root.stat().st_dev:raise ValueError('canonical existing lifecycle parent required')\n",
+          "    artifact=StorageWatch(root/'research_artifacts',dict(limits))\n",
+          "    if artifact.identity[0]!=root.stat().st_dev:raise ValueError('writer volume differs')\n",
+          "    if target.exists() or target.is_symlink():\n",
+          "        target_watch=StorageWatch(target,dict(limits))\n",
+          "        if target_watch.identity[0]!=artifact.identity[0]:raise ValueError('experiment volume differs')\n",
+          "    return artifact\n"
+        ]
+      },
+      {
+        "old_start": 25,
+        "old_end": 28,
+        "new_start": 29,
+        "new_end": 53,
+        "old": [
+          "        self.watches=validate(budget,root);self.root=Path(root);self.limits=MappingProxyType(dict(budget['limits']))\n",
+          "        self.budget={'schema_version':2,'kind':KIND,'authority_root':str(self.root),'roots':[str(w.root) for w in self.watches],'limits':dict(self.limits)}\n",
+          "        self.identities=[{'root':str(w.root),'device':w.identity[0],'inode':w.identity[1]} for w in self.watches]\n"
+        ],
+        "new": [
+          "        self.artifact=validate(budget,root);self.root=Path(root);self.limits=MappingProxyType(dict(budget['limits']))\n",
+          "        self.parent=self.root/'research_runs';s=self.parent.lstat();self.parent_identity=(s.st_dev,s.st_ino)\n",
+          "        self.target=self.parent/EXPERIMENT;self.lock=self.parent/'.lock';self.target_identity=None;self.lock_identity=None\n",
+          "        self.budget={**budget,'roots':list(budget['roots']),'shared_files':list(budget['shared_files']),'limits':dict(self.limits)}\n",
+          "        self.identities=[{'root':str(self.artifact.root),'device':self.artifact.identity[0],'inode':self.artifact.identity[1]}, {'root':str(self.target),'device':None,'inode':None,'state':'prospective-unobserved'}, {'shared_parent':str(self.parent),'device':s.st_dev,'inode':s.st_ino}]\n",
+          "        # If already born at binding, pin immediately. No invented absent inode.\n",
+          "        if self.target.exists() or self.target.is_symlink():self._birth()\n",
+          "    def _parent_check(self):\n",
+          "        s=self.parent.lstat()\n",
+          "        if not stat.S_ISDIR(s.st_mode) or self.parent.resolve(strict=True)!=self.parent or (s.st_dev,s.st_ino)!=self.parent_identity:raise ValueError('lifecycle parent replaced/redirected')\n",
+          "        return s\n",
+          "    def _birth(self):\n",
+          "        self._parent_check()\n",
+          "        try:s=self.target.lstat()\n",
+          "        except FileNotFoundError:\n",
+          "            if self.target_identity is not None:raise ValueError('experiment disappeared after birth')\n",
+          "            self.identities[1]={'root':str(self.target),'device':None,'inode':None,'state':'observed-absent-before-birth'}\n",
+          "            return None\n",
+          "        if not stat.S_ISDIR(s.st_mode) or self.target.resolve(strict=True)!=self.target or s.st_dev!=self.parent_identity[0]:raise ValueError('experiment birth type/volume/path differs')\n",
+          "        identity=(s.st_dev,s.st_ino)\n",
+          "        if self.target_identity is not None and identity!=self.target_identity:raise ValueError('experiment rebirth refused')\n",
+          "        self.target_identity=identity\n",
+          "        self.identities[1]={'root':str(self.target),'device':s.st_dev,'inode':s.st_ino,'state':'observed-born'}\n",
+          "        return s\n"
+        ]
+      },
+      {
+        "old_start": 30,
+        "old_end": 31,
+        "new_start": 55,
+        "new_end": 77,
+        "old": [
+          "        for original in self.watches:\n"
+        ],
+        "new": [
+          "        def enforce():\n",
+          "            for key,limit in COUNTS.items():\n",
+          "                if total[key]>self.limits[limit]:raise StorageLimit('aggregate '+key,{**total,'roots':observations})\n",
+          "            if time.monotonic()-begin>self.limits['max_scan_seconds']:raise StorageLimit('aggregate time',{**total,'roots':observations})\n",
+          "        parent=self._parent_check();total['allocated_bytes']+=parent.st_blocks*512;total['directories']+=1\n",
+          "        # Lifecycle's existing shared lock is a separate writer, never followed.\n",
+          "        fd=os.open(self.lock,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)\n",
+          "        primary=None\n",
+          "        try:\n",
+          "            s=os.fstat(fd);current=self.lock.lstat();identity=(s.st_dev,s.st_ino)\n",
+          "            if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1 or identity!=(current.st_dev,current.st_ino) or identity[0]!=self.parent_identity[0] or (self.lock_identity is not None and identity!=self.lock_identity):raise ValueError('shared lock type/link/identity differs')\n",
+          "            self.lock_identity=identity;lock_start=s\n",
+          "            total['allocated_bytes']+=s.st_blocks*512;total['logical_file_bytes']+=s.st_size;total['entries']+=1;total['regular_files']+=1\n",
+          "            observations.append({'shared_file':str(self.lock),'device':s.st_dev,'inode':s.st_ino,'allocated_bytes':s.st_blocks*512,'logical_file_bytes':s.st_size})\n",
+          "            enforce()\n",
+          "        except BaseException as error:primary=error;raise\n",
+          "        finally:_close(fd,primary)\n",
+          "        born=self._birth();total['entries']+=int(born is not None);enforce()\n",
+          "        roots=[(self.artifact.root,self.artifact.identity)]\n",
+          "        if born is not None:roots.append((self.target,self.target_identity))\n",
+          "        else:observations.append({'root':str(self.target),'state':'observed-absent-before-birth','device':None,'inode':None,'counts':'no existing subtree observed; no baseline credit'})\n",
+          "        for path,identity in roots:\n"
+        ]
+      },
+      {
+        "old_start": 35,
+        "old_end": 37,
+        "new_start": 81,
+        "new_end": 83,
+        "old": [
+          "            current=StorageWatch(original.root,remaining)\n",
+          "            if current.identity!=original.identity:raise ValueError('watched root replaced')\n"
+        ],
+        "new": [
+          "            current=StorageWatch(path,remaining)\n",
+          "            if current.identity!=identity:raise ValueError('watched writer root replaced')\n"
+        ]
+      },
+      {
+        "old_start": 41,
+        "old_end": 42,
+        "new_start": 87,
+        "new_end": 88,
+        "old": [
+          "                try:error.observation={**{k:total[k]+partial.get(k,0) for k in total},'roots':observations,'failed_root':str(original.root),'partial_root':partial}\n"
+        ],
+        "new": [
+          "                try:error.observation={**{k:total[k]+partial.get(k,0) for k in total},'roots':observations,'failed_root':str(path),'partial_root':partial}\n"
+        ]
+      },
+      {
+        "old_start": 46,
+        "old_end": 49,
+        "new_start": 92,
+        "new_end": 93,
+        "old": [
+          "            obs['shared_scan_elapsed_seconds']=time.monotonic()-begin\n",
+          "            obs['elapsed_seconds']=time.monotonic()-root_begin\n",
+          "            observations.append(obs)\n"
+        ],
+        "new": [
+          "            obs['shared_scan_elapsed_seconds']=time.monotonic()-begin;obs['elapsed_seconds']=time.monotonic()-root_begin;observations.append(obs)\n"
+        ]
+      },
+      {
+        "old_start": 50,
+        "old_end": 56,
+        "new_start": 94,
+        "new_end": 108,
+        "old": [
+          "            if time.monotonic()-begin>self.limits['max_scan_seconds']:raise StorageLimit('aggregate time',{**total,'roots':observations})\n",
+          "        for watched in self.watches:\n",
+          "            now=watched.root.lstat()\n",
+          "            if watched.root.resolve(strict=True)!=watched.root or (now.st_dev,now.st_ino)!=watched.identity:raise ValueError('watched root changed during aggregate observation')\n",
+          "        if time.monotonic()-begin>self.limits['max_scan_seconds']:raise StorageLimit('aggregate time',{**total,'roots':observations})\n",
+          "        return {**total,'roots':observations,'root_identities':self.identities,'authority_root':str(self.root),'elapsed_seconds':time.monotonic()-begin,'qualification':'Sampled disjoint writable union only; common authority root and read-only source/runtime are not censused. Shared finite counters/time, strict per-root scans, no kernel quota or inter-sample bound.'}\n"
+        ],
+        "new": [
+          "            enforce()\n",
+          "        last_parent=self._parent_check()\n",
+          "        total['allocated_bytes']+=max(0,(last_parent.st_blocks-parent.st_blocks)*512)\n",
+          "        # Birth during an absence observation is not silently credited as empty.\n",
+          "        after=self._birth()\n",
+          "        if born is None and after is not None:raise ValueError('experiment born during scan; complete new observation required')\n",
+          "        a=self.artifact.root.lstat()\n",
+          "        if (a.st_dev,a.st_ino)!=self.artifact.identity or self.artifact.root.resolve(strict=True)!=self.artifact.root:raise ValueError('artifact root changed')\n",
+          "        l=self.lock.lstat()\n",
+          "        if not stat.S_ISREG(l.st_mode) or l.st_nlink!=1 or (l.st_dev,l.st_ino)!=self.lock_identity:raise ValueError('shared lock changed during scan')\n",
+          "        total['allocated_bytes']+=max(0,(l.st_blocks-lock_start.st_blocks)*512)\n",
+          "        total['logical_file_bytes']+=max(0,l.st_size-lock_start.st_size)\n",
+          "        enforce()\n",
+          "        return {**total,'roots':observations,'root_identities':[dict(x) for x in self.identities],'shared_parent_identity':list(self.parent_identity),'authority_root':str(self.root),'elapsed_seconds':time.monotonic()-begin,'qualification':'Sampled exact writer closure including shared parent directory allocation and lock. Historical claim siblings/source/runtime outside writer scope; no kernel quota, atomic snapshot, or absent-tree allocation credit.'}\n"
+        ]
+      }
+    ]
+  },
+  "resources.py": {
+    "baseline_sha256": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543",
+    "candidate_sha256": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543",
+    "edits": []
+  }
+}

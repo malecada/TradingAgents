@@ -1,0 +1,78 @@
+{
+  "imported_mcm_identity.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/imported_mcm_identity.py",
+    "baseline_sha256": "8b062eaf6a9a4d7315591c3b1d96f3fd8de52fae873f4cf31769cf3224fcf5a1",
+    "candidate_sha256": "f54e70c3374f5641dc69f2def29b507fc8ed845d6dc6c97958e0e7759d89497b",
+    "edits": [
+      {
+        "old": "    def final(self,*,full_graph=True):\n        self._pins();",
+        "new": "    def final(self,*,full_graph=True):\n        if full_graph and getattr(self.execution,'_sampled_authority_lease',None) is not None:\n            from .imported_authority_lease import target_lease\n            target_lease(self,boundary=True)\n        self._pins();"
+      },
+      {
+        "old": "        self.execution.check();self.final(full_graph=False)",
+        "new": "        if getattr(self.execution,'_sampled_authority_lease',None) is not None:\n            from .imported_authority_lease import target_lease\n            target_lease(self)\n        else:self.execution.check();self.final(full_graph=False)"
+      },
+      {
+        "old": "    def check(self):\n        self.lease();run=",
+        "new": "    def check(self):\n        if getattr(self.execution,'_sampled_authority_lease',None) is not None:\n            from .imported_authority_lease import target_lease\n            target_lease(self,boundary=True)\n        self.lease();run="
+      }
+    ]
+  },
+  "mcm_score_stream.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/mcm_score_stream.py",
+    "baseline_sha256": "ee7931cea3d28ad0719b5f3db171a5d5d3ab95db9ff7cad0cc8379101948b79e",
+    "candidate_sha256": "1df4e165149447f184b09759b80fca5a09c61fa77c71eba424d281d9b7298989",
+    "edits": [
+      {
+        "old": "            self._imported.final(full_graph=False)\n            require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')",
+        "new": "            if getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:\n                from .imported_authority_lease import target_lease\n                target_lease(self._imported)\n                require(self.scope==self._imported.scope and self.workload==self.scope['workflow'],'sampled stream scope changed')\n            else:\n                self._imported.final(full_graph=False)\n                require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')"
+      },
+      {
+        "old": "                index = self.batches.chunks; start_cell = self.active.start['start_cell']",
+        "new": "                if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:\n                    from .imported_authority_lease import target_lease\n                    target_lease(self._imported,boundary=True)\n                index = self.batches.chunks; start_cell = self.active.start['start_cell']"
+      },
+      {
+        "old": "    def finish(self):\n        self._check()",
+        "new": "    def finish(self):\n        if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:\n            from .imported_authority_lease import target_lease\n            target_lease(self._imported,boundary=True)\n        self._check()"
+      }
+    ]
+  },
+  "compact_mcm.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py",
+    "baseline_sha256": "6661a8668d04bdff4afa84161932e12daa351d2654c5c481eba5faafcd938a4c",
+    "candidate_sha256": "546e31ab392256b210a1675a02678bdaa55487bf5ee23f03558b5e59db0b73b5",
+    "edits": [
+      {
+        "old": "            stage.lease(); dictionary.lease(); io._root(root,fd)",
+        "new": "            if _imported(dictionary) and getattr(dictionary.execution,'_sampled_authority_lease',None) is not None:\n                from .imported_authority_lease import target_lease\n                require(owner.active is stage,'actual active producer stage differs');target_lease(dictionary)\n            else:stage.lease(); dictionary.lease()\n            io._root(root,fd)"
+      },
+      {
+        "old": "        if ledger is None:\n            log_terminal = log.finish()",
+        "new": "        if _imported(dictionary) and getattr(dictionary.execution,'_sampled_authority_lease',None) is not None:\n            from .imported_authority_lease import target_lease\n            target_lease(dictionary,boundary=True)\n        if ledger is None:\n            log_terminal = log.finish()"
+      }
+    ]
+  },
+  "real_pilot_import_caller.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-writable-storage-scope02-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+    "baseline_sha256": "fbb7f9839f504286f9bf13b84897ab0b0720e716b3a80a7f26acb724db970ad1",
+    "candidate_sha256": "d07ba8b8be42bdbd09d6036e7442926f7a8fd28e248a3816af0d861e1a2918a7",
+    "edits": [
+      {
+        "old": "    resource_subset = 'population_scope' in p",
+        "new": "    interval='imported_authority_lease_input' in p\n    require(not interval or (full and type(p['imported_authority_lease_input']) is str and bool(p['imported_authority_lease_input'])),'explicit schema2 interval input required')\n    resource_subset = 'population_scope' in p"
+      },
+      {
+        "old": "| ({'population_scope'} if resource_subset else set()), 'pilot plan fields differ')",
+        "new": "| ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()), 'pilot plan fields differ')"
+      },
+      {
+        "old": "    require(roles <= set(ad.inputs), 'real population/config/graph inputs not registered')",
+        "new": "    if p.get('imported_authority_lease_input') is not None:\n        from .imported_authority_interval import policy\n        policy(_read(ad,p['imported_authority_lease_input']));roles.add(p['imported_authority_lease_input'])\n    require(roles <= set(ad.inputs), 'real population/config/graph inputs not registered')"
+      },
+      {
+        "old": "        execution = original_import_stage.ImportedExecution(stage)",
+        "new": "        execution = original_import_stage.ImportedExecution(stage)\n        if p.get('imported_authority_lease_input') is not None:\n            from .imported_authority_lease import activate\n            activate(execution,p['imported_authority_lease_input'])"
+      }
+    ]
+  }
+}

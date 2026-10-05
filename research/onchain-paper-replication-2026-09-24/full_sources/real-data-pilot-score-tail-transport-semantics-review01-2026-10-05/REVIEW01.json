@@ -1,0 +1,95 @@
+{
+  "accepted_semantics": [
+    "Pinned \u22648192-byte original start/terminal metadata; exact keys, strict integer versions/ordinals/counts, scope and owner, destination identity and original format.",
+    "Original positive capacity floor(8MiB/80), nonnegative start, and strict start+count<2**63. COMPLETE requires acknowledged=count and exactly count*80 body bytes; failed/pending tails outside API.",
+    "Every <Qd32s32s record validates exact global ordinal, finite float64 value in [0,1], 32 opaque purpose bytes and SHA-256 chain from original start hash; complete chain, entire body hash and EOF verified.",
+    "Fragmented reads progress by returned bytes; over-return, wrong type, early EOF and trailing data refuse. Reader exceptions propagate.",
+    "Duplicate JSON keys additionally refuse; canonical original writer emits no duplicates. Nonempty bounded terminal reason and negative zero remain valid original semantics."
+  ],
+  "at": "2026-10-05T21:57:45.244895+00:00",
+  "candidate_manifest_sha256": "eea7464d5a22b6f8fc116df6d5e4e53fd1e12bbac28f72a71fea83c3e1fe8901",
+  "candidate_sha256": "cff38dda5367882d35d18c3f95ab6d6af849d5918e5005e41e1d4205a40cd009",
+  "checks": {
+    "independent_check": {
+      "cases": [
+        {
+          "bytes_returned": 160,
+          "case": "valid_fragmented",
+          "maximum_request": 80,
+          "requests": 55,
+          "result": "accepted",
+          "sum_requested_bytes": 2215
+        },
+        {
+          "bytes_returned": 160,
+          "case": "self_consistent_wrong_ordinal",
+          "maximum_request": 80,
+          "requests": 54,
+          "result": "refused: tail record order/value/checksum differs",
+          "sum_requested_bytes": 2214
+        },
+        {
+          "bytes_returned": 159,
+          "case": "last_byte_missing",
+          "maximum_request": 80,
+          "requests": 55,
+          "result": "refused: complete tail truncated",
+          "sum_requested_bytes": 2215
+        }
+      ],
+      "exit_code": 0,
+      "qualification": "Fresh stdlib two-record reconstruction; no numerical imports or retained-data computation.",
+      "tool": "7cefbf"
+    },
+    "retained_author_tests": {
+      "actual_exit": 0,
+      "methods": 4,
+      "qualification": "Original append AST and stdlib helper harness; no genuine Owner authority. Source and raw retained outputs inspected; suite not repeated.",
+      "seconds": 0.019,
+      "tool": "99c735"
+    },
+    "sealed_body_and_origin_check": {
+      "exit_code": 0,
+      "original_current_sources_equal": 2,
+      "sealed_bodies": 8,
+      "tool": "50ba5d"
+    }
+  },
+  "decision": "accepted",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics-review01-2026-10-05/CHECK01.json": "3252f8817cb2dbd444601fff656901163ce117a096b93931f97ed0c6ac91a5b2",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics-review01-2026-10-05/CHECK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics-review01-2026-10-05/SOURCE_CHECK01.json": "947f31885ce7ad6be7b196197c862fad7f041f7ea5f07a87c5fed80088201cbc",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics-review01-2026-10-05/independent_check01.py": "10e51ea61c582739ef03b942f5b566594487a10775b56e7943fd1385c7526c5d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics01-2026-10-05/CHECKS01.json": "bd9b4477c9e95a96a684d436db76b67b70b60bb55d55a6ff33ff78b042f8d0d6",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics01-2026-10-05/MANIFEST01.json": "eea7464d5a22b6f8fc116df6d5e4e53fd1e12bbac28f72a71fea83c3e1fe8901",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics01-2026-10-05/REPORT01.md": "1d7a97e874d7e1e7d2e7e48d624a04f35a246547940dfb68e1583388bdae05ef",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics01-2026-10-05/TEST01.stderr": "190bac9624039b7329e6f798594765a6fcdbbd31a63eafba3aad88cf9db3af5d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics01-2026-10-05/TEST01.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics01-2026-10-05/original_score_batches.py": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics01-2026-10-05/original_score_tail.py": "b5e807e022349ca7e0d18c02512812932103865ba0779d641be6877995694870",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics01-2026-10-05/score_tail_semantics.py": "cff38dda5367882d35d18c3f95ab6d6af849d5918e5005e41e1d4205a40cd009",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-score-tail-transport-semantics01-2026-10-05/test_semantics.py": "3002b7221b8bf9cad2a1fd8e60d71889b40026a504bf3d02ee6881f880ecdfb8",
+    "tradingagents/research/onchain_replication/score_batches.py": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+    "tradingagents/research/onchain_replication/score_tail.py": "b5e807e022349ca7e0d18c02512812932103865ba0779d641be6877995694870"
+  },
+  "material_findings": [],
+  "minimal_next_requirement": "A selected caller must authenticate original metadata/scope/owner and the complete tail roster, bind each ordinal/destination to that roster, and supply the existing bounded immutable-reader/deadline/transport lifecycle under separate genuine admission. This helper only validates supplied COMPLETE-tail content.",
+  "nonblocking_qualification": {
+    "action": "Use the precise contract in integration documentation; preserve the sealed author report.",
+    "issue": "Short reads can make the sum of requested read(n) arguments exceed count*80+1. This is not a bound on cumulative request arguments.",
+    "location": "score_tail_semantics.py:65-66 and REPORT01.md paragraph 3",
+    "precise_contract": "Per request \u226480; actual bytes consumed \u2264count*80+1 including EOF probe. Each nonempty body read makes progress; deadline and reader resource accounting are external.",
+    "witness": "160 returned bytes in 55 calls, maximum request80, summed requests2215."
+  },
+  "not_tested": [
+    "Whole original tail roster and cross-tail ordinal/destination completeness",
+    "Purpose generation, matching and convergence ancestry",
+    "Genuine Owner/Binding/source/runtime admission",
+    "Immutable FD/storage, directory roster, lease and concurrent change protection or original filesystem verifier second content pass",
+    "Transport codec/spool, deadlines, physical reservation, recovery/deletion safety and full-size capacity",
+    "Financial timing, returns/cashflows, exposures, fees/funding, model numerics or empirical outcomes"
+  ],
+  "schema_version": 1,
+  "scope": "One COMPLETE original score-tail streamed content-semantics candidate only; no integration, transport or execution authority."
+}

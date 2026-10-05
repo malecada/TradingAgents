@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "bytes_returned": 160,
+      "case": "valid_fragmented",
+      "maximum_request": 80,
+      "requests": 55,
+      "result": "accepted",
+      "sum_requested_bytes": 2215
+    },
+    {
+      "bytes_returned": 160,
+      "case": "self_consistent_wrong_ordinal",
+      "maximum_request": 80,
+      "requests": 54,
+      "result": "refused: tail record order/value/checksum differs",
+      "sum_requested_bytes": 2214
+    },
+    {
+      "bytes_returned": 159,
+      "case": "last_byte_missing",
+      "maximum_request": 80,
+      "requests": 55,
+      "result": "refused: complete tail truncated",
+      "sum_requested_bytes": 2215
+    }
+  ],
+  "decision": "pass",
+  "qualification": "The summed read(n) request arguments can exceed body length under short reads; actual returned bytes and per-request size remain bounded. No authority, filesystem concurrency or deadline claim."
+}

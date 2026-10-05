@@ -1,0 +1,8 @@
+{
+  "tool": "4c3e8f",
+  "exit_code": 1,
+  "tests": 5,
+  "failed_test": "fingerprint expected to differ for same-size immediate rewrite with restored mtime",
+  "actual": "dev/ino/mode/nlink/size/mtime_ns/ctime_ns all equal despite changed bytes",
+  "correction": "Do not claim metadata fingerprints detect every rewrite. Mandatory full-byte boundaries and full/call interval bound retained; test now requires body detection there. Original failed test preserved."
+}

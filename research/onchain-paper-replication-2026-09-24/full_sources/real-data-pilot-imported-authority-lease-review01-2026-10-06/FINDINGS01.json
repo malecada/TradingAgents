@@ -1,0 +1,33 @@
+{
+  "authority": false,
+  "decision": "withheld-pending-narrow-corrections",
+  "findings": [
+    {
+      "actual_exit": 0,
+      "actual_tool": "c9ec2a",
+      "issue": "A full check crossing the prior max_stale bound can overwrite the old timestamp before testing staleness; live timestamp also advances after unrelated checks.",
+      "location": "imported_authority_interval.py:40-46",
+      "witness": "CHECK_SCHEDULER02.json"
+    },
+    {
+      "actual_exit": 0,
+      "actual_tool": "b74d7e",
+      "issue": "Existing module-level contextmanager wrappers carry local __module__ but contextlib globals/code, causing genuine loaded-source activation to refuse.",
+      "location": "imported_authority_lease.py:20-21",
+      "witness": "CHECK_CONTEXTMANAGER01.json"
+    },
+    {
+      "issue": "Lease does not pin the scheduler/policy identity; replacing a MappingProxy attribute can change selected timing without baseline refusal.",
+      "location": "imported_authority_lease.py:50,61-65",
+      "method": "direct source inspection; correction requested"
+    }
+  ],
+  "preserved_failed_witness": {
+    "actual_tool": "08d554",
+    "cause": "Synthetic 10.1 boundary rounded below100ms; corrected witness uses margin, not candidate behavior change.",
+    "exit": 1,
+    "raw": "CHECK_SCHEDULER01.stderr",
+    "source": "check_scheduler01.py"
+  },
+  "schema_version": 1
+}

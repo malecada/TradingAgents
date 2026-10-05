@@ -1,0 +1,122 @@
+{
+  "resources.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/candidate/tradingagents/research/onchain_replication/resources.py",
+    "baseline_sha256": "bd7c08b53cf7526898277cb798789d4d6e6fbfab530a0a3a9a9dbf17eed3c4aa",
+    "candidate_sha256": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543",
+    "replacements": [
+      {
+        "old": "def _native_owned_env(cwd):",
+        "new": "def _native_owned_env(cwd,storage_budget=None):"
+      },
+      {
+        "old": "    return {'PYTHONPATH':str(root),",
+        "new": "    result={'PYTHONPATH':str(root),"
+      },
+      {
+        "old": "'NUMEXPR_NUM_THREADS':'2'}\n\n\ndef _native_seconds",
+        "new": "'NUMEXPR_NUM_THREADS':'2'}\n    if storage_budget is not None and storage_budget.get('schema_version')==2:\n        from tradingagents.research.onchain_replication.real_pilot_storage import validate,environment\n        validate(storage_budget,root);return environment(root,result)\n    return result\n\n\ndef _native_seconds"
+      },
+      {
+        "old": "def _native_ready(policy,ready,properties,wall_seconds,cwd):",
+        "new": "def _native_ready(policy,ready,properties,wall_seconds,cwd,storage_budget=None):"
+      },
+      {
+        "old": "ready.get('native_environment')!=_native_owned_env(cwd)",
+        "new": "ready.get('native_environment')!=_native_owned_env(cwd,storage_budget)"
+      },
+      {
+        "old": "            ready['native_environment']={key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}\n            if ready['native_environment']!=_native_owned_env(Path.cwd()):",
+        "new": "            budget=json.loads((receipt/'live.json').read_text()).get('storage_budget')\n            ready['native_environment']={key:os.environ.get(key) for key in _native_owned_env(Path.cwd(),budget)}\n            if ready['native_environment']!=_native_owned_env(Path.cwd(),budget):"
+      },
+      {
+        "old": "        if type(storage_budget) is not dict or set(storage_budget)!={'root','limits'}:\n            raise ValueError('storage budget schema differs')\n        storage_watch=StorageWatch(storage_budget['root'],storage_budget['limits'])",
+        "new": "        if type(storage_budget) is dict and storage_budget.get('schema_version')==2:\n            from tradingagents.research.onchain_replication.real_pilot_storage import WritableUnion,EXPERIMENT\n            if native_unit_limits is None or not isinstance(owner_identity,dict) or owner_identity.get('experiment')!=EXPERIMENT:raise ValueError('union requires fixed real-pilot native owner')\n            storage_watch=WritableUnion(storage_budget,Path(cwd))\n        else:\n            if type(storage_budget) is not dict or set(storage_budget)!={'root','limits'}:\n                raise ValueError('storage budget schema differs')\n            storage_watch=StorageWatch(storage_budget['root'],storage_budget['limits'])"
+      },
+      {
+        "old": "        state['storage_budget']={'root':str(storage_watch.root),'limits':dict(storage_watch.limits)}\n        state['storage_root_identity']=list(storage_watch.identity)",
+        "new": "        if hasattr(storage_watch,'budget'):\n            state['storage_budget']=storage_watch.budget\n            state['storage_watched_root_identities']=storage_watch.identities\n        else:\n            state['storage_budget']={'root':str(storage_watch.root),'limits':dict(storage_watch.limits)}\n            state['storage_root_identity']=list(storage_watch.identity)"
+      },
+      {
+        "old": "for key,value in _native_owned_env(cwd).items()",
+        "new": "for key,value in _native_owned_env(cwd,storage_budget).items()"
+      },
+      {
+        "old": "_native_ready(native_unit_limits,ready,state['native_unit_properties'],wall_seconds,cwd)",
+        "new": "_native_ready(native_unit_limits,ready,state['native_unit_properties'],wall_seconds,cwd,storage_budget)"
+      },
+      {
+        "old": "if {key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}!=_native_owned_env(Path.cwd()):raise RuntimeError('native worker environment differs')",
+        "new": "if {key:os.environ.get(key) for key in _native_owned_env(Path.cwd(),live.get('storage_budget'))}!=_native_owned_env(Path.cwd(),live.get('storage_budget')):raise RuntimeError('native worker environment differs')"
+      }
+    ]
+  },
+  "job.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full-size-policy01-2026-10-05/candidate/tradingagents/research/onchain_replication/job.py",
+    "baseline_sha256": "c4e9623e6222300ea83dc8fc430f6ef16644b918ee7ccba24e9ac56e93b40177",
+    "candidate_sha256": "05bd32fc4da1d68d8b356a939e11cef27f1e396474bec5e1ecb379f7c948fe3f",
+    "replacements": [
+      {
+        "old": "def resource_policy(value, root):",
+        "new": "def resource_policy(value, root, *, pilot_context=None):"
+      },
+      {
+        "old": "        if type(budget) is not dict or set(budget)!={'root','limits'} or type(budget['root']) is not str:\n            raise ValueError('registered storage budget schema differs')\n        watch=StorageWatch(budget['root'],budget['limits'])\n        if not watch.root.is_relative_to(Path(root).resolve()):\n            raise ValueError('registered storage root is outside the admitted workspace')",
+        "new": "        if type(budget) is dict and budget.get('schema_version')==2:\n            if pilot_context is None:raise ValueError('writable union requires explicit real-pilot selection')\n            from ..admission import Admission\n            from .real_pilot_import_caller import selected,_read,validate_plan\n            ad,execution=pilot_context\n            if not isinstance(ad,Admission) or ad.root!=Path(root) or not selected(execution) or execution['kind']!='compact_resource' or execution['resources']!=value:raise ValueError('original real-pilot admission context required')\n            selected_plan=next(iter(execution['payload']['representation_jobs'].values()))\n            plan=validate_plan(_read(ad,selected_plan['real_pilot_input']))\n            if plan['schema_version']!=2 or plan['resource_policy']!=value:raise ValueError('authenticated schema2 policy required')\n            from .real_pilot_storage import validate,EXPERIMENT\n            if ad.experiment_id!=EXPERIMENT:raise ValueError('fixed real-pilot identity required')\n            validate(budget,Path(root))\n        else:\n            if type(budget) is not dict or set(budget)!={'root','limits'} or type(budget['root']) is not str:\n                raise ValueError('registered storage budget schema differs')\n            watch=StorageWatch(budget['root'],budget['limits'])\n            if not watch.root.is_relative_to(Path(root).resolve()):\n                raise ValueError('registered storage root is outside the admitted workspace')"
+      },
+      {
+        "old": "    resource_policy(job['resources'], admitted.root)",
+        "new": "    resource_policy(job['resources'], admitted.root,pilot_context=(admitted,job))"
+      },
+      {
+        "old": "            monitor = subprocess.Popen(_command(args, 'monitor')+['--owner-pid', str(os.getpid()), '--nonce', nonce], cwd=args.root)",
+        "new": "            budget=job['resources'].get('storage_budget')\n            extra={}\n            if type(budget) is dict and budget.get('schema_version')==2:\n                from .real_pilot_storage import prepare_environment\n                env=resources._native_owned_env(Path(args.root),budget);prepare_environment(Path(args.root),budget,env)\n                extra['env']={**os.environ,**env}\n            monitor = subprocess.Popen(_command(args, 'monitor')+['--owner-pid', str(os.getpid()), '--nonce', nonce], cwd=args.root,**extra)"
+      },
+      {
+        "old": "for key in resources._native_owned_env(Path(args.root))",
+        "new": "for key in resources._native_owned_env(Path(args.root),job['resources'].get('storage_budget'))"
+      },
+      {
+        "old": "value['native_environment']!=resources._native_owned_env(Path(args.root))",
+        "new": "value['native_environment']!=resources._native_owned_env(Path(args.root),job['resources'].get('storage_budget'))"
+      }
+    ]
+  },
+  "real_pilot_import_caller.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-throughput-measurement01-2026-10-05/candidate/tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+    "baseline_sha256": "b6474907e6efa98cb39bc46cd2cfdd0687d4754b46d322391c50ef9a39393379",
+    "candidate_sha256": "94d1163b42c7111d0cce1c09b855fcd9fcc697c8c108376c2c3b21612da97886",
+    "replacements": [
+      {
+        "old": "    require('physical_policy' not in p and 'storage_budget' in p, 'whole workspace storage guard required')",
+        "new": "    require('physical_policy' not in p and 'storage_budget' in p, 'whole workspace storage guard required')\n    require('schema_version' not in p['storage_budget'],'tiny route cannot select writable union')"
+      },
+      {
+        "old": "    require(type(budget) is dict and set(budget)=={'root','limits'} and type(budget['root']) is str\n            and Path(budget['root']).is_absolute(), 'explicit whole-root budget required')",
+        "new": "    if type(budget) is dict and budget.get('schema_version')==2:\n        require(set(budget)=={'schema_version','kind','authority_root','roots','limits'} and budget['kind']=='real-pilot-writable-union','explicit writable union fields required')\n    else:\n        require(type(budget) is dict and set(budget)=={'root','limits'} and type(budget['root']) is str\n                and Path(budget['root']).is_absolute(), 'explicit whole-root budget required')"
+      },
+      {
+        "old": "    resource_policy(resources,ad.root)",
+        "new": "    resource_policy(resources,ad.root,pilot_context=(ad,job))"
+      },
+      {
+        "old": "    require(Path(job['resources']['storage_budget']['root']) == ad.root and (ad.root/'.git').is_dir(), 'complete isolated workspace watch required')",
+        "new": "    budget=job['resources']['storage_budget']\n    if budget.get('schema_version')==2:\n        from .real_pilot_storage import validate,EXPERIMENT\n        require(p['schema_version']==2 and ad.experiment_id==EXPERIMENT,'union requires fixed schema2 real pilot')\n        validate(budget,ad.root)\n        require((ad.root/'.git').is_dir(),'original source authority root required')\n    else:\n        require(Path(budget['root']) == ad.root and (ad.root/'.git').is_dir(), 'complete isolated workspace watch required')"
+      },
+      {
+        "old": "    watch = StorageWatch(run.admission.root,job['resources']['storage_budget']['limits']); watch.check()",
+        "new": "    budget=job['resources']['storage_budget']\n    if budget.get('schema_version')==2:\n        from .real_pilot_storage import WritableUnion\n        watch=WritableUnion(budget,run.admission.root)\n        from .resources import assert_guarded_worker\n        limits=job['resources']\n        live=assert_guarded_worker(run.admission.root/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/run.admission.experiment_id/'guard',__import__('sys').orig_argv,required_paths=[run.admission.root],wall_seconds=limits['wall_seconds'],memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'],disk_floor_bytes=limits['disk_floor_bytes'])\n        require(live.get('storage_budget')==budget,'worker/monitor writable scopes differ')\n    else:watch=StorageWatch(run.admission.root,budget['limits'])\n    watch.check()"
+      }
+    ]
+  },
+  "matching_owner.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_owner.py",
+    "baseline_sha256": "22afd3f3a0c52221d43a2fa87d285db4874e08a21adf7c5ac336270e0ece0751",
+    "candidate_sha256": "a60d33006ebcb2d9ef2816072f975e2ae1ba5556f363e7de3ef757c3a9dd8c63",
+    "replacements": [
+      {
+        "old": "    policy_resources=job.resource_policy(execution['resources'],ad.root)",
+        "new": "    policy_resources=job.resource_policy(execution['resources'],ad.root,pilot_context=(ad,execution) if _resource else None)"
+      }
+    ]
+  }
+}

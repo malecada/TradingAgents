@@ -1,0 +1,22 @@
+{
+  "checks": [
+    {
+      "case": "birth during absent observation",
+      "reason": "experiment born during scan; complete new observation required",
+      "result": "refused"
+    },
+    {
+      "case": "shared lock replacement between observations",
+      "reason": "shared lock type/link/identity differs",
+      "result": "refused"
+    },
+    {
+      "case": "selected union without admission context",
+      "reason": "writable union requires explicit real-pilot selection",
+      "result": "refused"
+    }
+  ],
+  "decision": "pass",
+  "genuine_authority_constructed": false,
+  "numerical_imports": false
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "scope": "pure offline mechanical checks; no genuine authority activation",
+  "author_checks": {
+    "tool_chunk": "eb49c2",
+    "exit_code": 0,
+    "methods": 7
+  },
+  "review_counterexample": {
+    "tool_chunk": "12b1be",
+    "old": "incorrectly accepts expiry during full check",
+    "candidate": "refuses and poisons without refreshing old timestamp"
+  },
+  "independent_reviewer_check": {
+    "reported_tool_chunk": "c79b41",
+    "reported_exit_code": 0
+  },
+  "preserved_failure": "FAILED_CHECK01.json",
+  "genuine_activation_performance_capacity": "not established",
+  "legacy_inverses": 4
+}

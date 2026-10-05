@@ -1,0 +1,11 @@
+--- scope01/real_pilot_import_caller.py
++++ scope02/real_pilot_import_caller.py
+@@ -123,7 +123,7 @@
+             and 0<native['file_size_bytes']<2**63, 'finite registered native file limit required')
+     budget=p['storage_budget']
+     if type(budget) is dict and budget.get('schema_version')==2:
+-        require(set(budget)=={'schema_version','kind','authority_root','roots','limits'} and budget['kind']=='real-pilot-writable-union','explicit writable union fields required')
++        require(set(budget)=={'schema_version','kind','authority_root','experiment','roots','shared_files','limits'} and budget['kind']=='real-pilot-writable-union','explicit writable union fields required')
+     else:
+         require(type(budget) is dict and set(budget)=={'root','limits'} and type(budget['root']) is str
+                 and Path(budget['root']).is_absolute(), 'explicit whole-root budget required')
