@@ -1,0 +1,89 @@
+{
+  "actual_readonly_admission": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/heartbeat-root-checkpoint10-2026-10-04/SUCCESSOR_READONLY_ADMISSION01.json",
+    "sha256": "ec5fe2322f3c3fb955303b11ddd4d673b924f399789ab345307adcb246defd3a"
+  },
+  "base_attempt_budget": 18,
+  "claims": [
+    {
+      "claim_sha256": "2e3bbbbf786f784eadb18bc3cdfea68905610ae773bbbd748ea1b2666b9e61f1",
+      "effective_attempt_budget": 19,
+      "identity": "financial-wrapper-classification-eager-complete100-20261003-01",
+      "status": "failed",
+      "terminal_sha256": "abdaef6f01bd02614782e442e2c102c38faa57e76061cba43b69960f3e389fa6"
+    },
+    {
+      "claim_sha256": "c6c1106de459a89f9633ae51501959ecabd47c204534d85e9ebcf15671bcd19f",
+      "effective_attempt_budget": 20,
+      "identity": "financial-wrapper-classification-eager-complete100-compatibility-20261004-01",
+      "status": "complete",
+      "terminal_sha256": "bd54cb0052645e77fa7b0a4f943ab864798a4e05224ee530d4117b47f8f032c1"
+    },
+    {
+      "claim_sha256": "d390980c956aab64d5521698cbb6123ccf01ece94a95277b97755f019adf692b",
+      "effective_attempt_budget": 19,
+      "identity": "financial-wrapper-classification-eager-interrupt1-claimedrun-20261004-01",
+      "status": "failed",
+      "terminal_sha256": "4b2d7b0d162e80fe2074997baed35f2d6e6c86e5f660872fc2b8e97bb9622558"
+    },
+    {
+      "claim_sha256": "4c543d71fad5255be61087eaa3619d9e88cbbdc12fa1398bd7fa7fe6fb75c128",
+      "effective_attempt_budget": 18,
+      "identity": "financial-wrapper-classification-eager-interrupt1-recordfix-20261004-01",
+      "status": "failed",
+      "terminal_sha256": "35158c0ecebfe4dc75203ba87d5372f2f85643c0b5f828a99e17aa28fe79c450"
+    }
+  ],
+  "complete": 1,
+  "cumulative_budget_extension": {
+    "extension": {
+      "path": "fixture_inputs/financial_wrapper_compatibility01/extension20.json",
+      "sha256": "07100b23f9a8c2dfcae98a8647f9f1eeb019f4093192cd4b2576c6a13bf9840e"
+    },
+    "review": {
+      "path": "fixture_inputs/financial_wrapper_compatibility01/extension-review20.json",
+      "sha256": "b5ac7652631ba25296003580774e29b9f0e555a3ed4ef5d2323576099c39f389"
+    }
+  },
+  "decision": "accepted-cumulative-accounting-no-amendment",
+  "design_source": "a5bcc943167ad035b45e12ddf9864d46e685b124",
+  "effective_attempt_budget": 20,
+  "failed": 3,
+  "family": "synthetic-financial-wrapper",
+  "highest_claim_allowance": 20,
+  "identity": "financial-wrapper-classification-eager-continue100-resource-successor-20261005-01",
+  "kind": "cumulative",
+  "new_amendment": false,
+  "numerical_authority": false,
+  "paper_fit_credit": 0,
+  "prior_attempts": 0,
+  "program_id": "financial-wrapper-engineering-2026-10-03",
+  "refund": false,
+  "remaining": 16,
+  "report": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-successor-review01-2026-10-05/ADMISSION_PHASE_REPORT01.md",
+    "sha256": "36d6fccd579b0acc2910dbe75fd258a0b4ce4861f4fcd98b89feb5095d3c83de"
+  },
+  "reserved_no_claim": {
+    "identity": "financial-wrapper-classification-eager-continue100-compatibility-20261004-01",
+    "namespace_reuse_authorized": false,
+    "recovered_refusal": {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-outcome-review01-2026-10-05/FULL_REFUSAL_RECOVERY_PROOF01.json",
+      "sha256": "a5357602f130838bbf52fd6fe54288401e91bfd045c96aac73fa128f4be41a42"
+    },
+    "spent_claim": false
+  },
+  "reused_basis": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-canonical-plan-review01-2026-10-05/CUMULATIVE_PROOF01.json",
+    "sha256": "46e039dcc4411c27697eba5cd85923b880956ad0d537ced11444c104e9591433"
+  },
+  "review": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-successor-review01-2026-10-05/CURRENT_GATE_CHECK01.json",
+    "sha256": "4f0a063c460c87607bd0bc04a0d35c9a54fcb8398cc321cbd86ee1a8eda1b5ec"
+  },
+  "reviewer": "/root/continuation_successor_review",
+  "schema_version": 1,
+  "source": "a5bcc943167ad035b45e12ddf9864d46e685b124",
+  "spent_claims": 4,
+  "transfer": false
+}

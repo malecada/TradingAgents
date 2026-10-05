@@ -1,0 +1,52 @@
+{
+  "actual_guard_source_review": {
+    "file": "tradingagents/research/onchain_replication/resources.py",
+    "lines": [
+      405,
+      429,
+      456,
+      526,
+      529,
+      532,
+      636,
+      640,
+      641
+    ],
+    "retained_boundaries": [
+      "predispatch CAP census",
+      "prerelease CAP census",
+      "active CAP census",
+      "after-stop CAP census",
+      "native final disk floor"
+    ]
+  },
+  "baseline_sha256": "0534945d070521c4dcfe85adcdfe6fa39e698a2a3101f95756828d3d33069375",
+  "decision": "accepted-source-only-active-storage-scheduling",
+  "exact_inverse": true,
+  "findings": [],
+  "fresh_identity_required": true,
+  "independent_test_execution": {
+    "command": ".venv/bin/python -B /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-parent-storage-scheduling-source01-2026-10-05/test_scheduling.py",
+    "exit_code": 0,
+    "seconds": 0.051,
+    "tests": 5,
+    "tool_chunk": "06553f"
+  },
+  "launch_authorized": false,
+  "limitations": [
+    "Injected concurrent-census counterexample establishes duplicate-call removal, not exact original mutating writer.",
+    "Native guard remains sampled fail-closed; concurrent legitimate writes can still cause refusal.",
+    "Active Parent-tree census remains and can independently refuse.",
+    "Candidate retains permanently reserved old identity, source and registration literals; not executable as a new attempt.",
+    "No new registration, recovery, source binding, final caller or launch accepted.",
+    "No numerical imports, experiment rerun, capacity proof or financial claim."
+  ],
+  "schema_version": 1,
+  "source_changes": [
+    "Extract Parent tree and whole-disk-floor check into active_checked.",
+    "Retain CAP census plus active_checked before spawn and after drain.",
+    "Pass only active_checked to active supervisor loop."
+  ],
+  "source_manifest_sha256": "e74906700cab77a040e999480f0405abba24c97b819b5b37a611789b4e8a519d",
+  "source_sha256": "f57bea4491024486d3a1749a9ce896b88df76ad72067cde556a1a76793b207e3"
+}

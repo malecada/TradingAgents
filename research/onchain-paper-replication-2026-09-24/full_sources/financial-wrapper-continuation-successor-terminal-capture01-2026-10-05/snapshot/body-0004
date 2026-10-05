@@ -1,0 +1,109 @@
+{
+  "boot_id": "c3984758-d2a4-4ccc-9916-cc9831982bc6",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-08ef2f4428824300841b8dba5b349c4c.service",
+  "child_exit_code": null,
+  "cleanup_stop_returncode": 0,
+  "cleanup_unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "125",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research.onchain_replication.job",
+    "--mode",
+    "worker",
+    "--root",
+    "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source",
+    "--registration",
+    "fixture_inputs/financial_wrapper_continuation_successor01/gates.json",
+    "--experiment",
+    "financial-wrapper-classification-eager-continue100-resource-successor-20261005-01",
+    "--source",
+    "a5bcc943167ad035b45e12ddf9864d46e685b124"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source",
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source": 15531286528
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source"
+  ],
+  "elapsed_seconds": 0.46799295700020593,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 10465075200,
+  "lease_seconds": 15.0,
+  "limit_reason": "InterruptedError: guard received signal 15",
+  "memory_high_bytes": 3221225472,
+  "memory_max_bytes": 3221225472,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 62941,
+  "monotonic_seconds": 5059.642706209,
+  "native_unit_limits": {
+    "file_size_bytes": 4194304
+  },
+  "owner_identity": {
+    "experiment": "financial-wrapper-classification-eager-continue100-resource-successor-20261005-01",
+    "monitor_pid": 62941,
+    "monitor_start_ticks": "505801",
+    "nonce": "e7bc507b8fcc42fd8ff67a9c4682f95f",
+    "source_commit": "a5bcc943167ad035b45e12ddf9864d46e685b124",
+    "supervisor_pid": 62894
+  },
+  "peak_sampled_memory_current_bytes": 0,
+  "phase": "failed",
+  "receipt_dir": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/research_artifacts/onchain-paper-replication-2026-09-24/runs/financial-wrapper-classification-eager-continue100-resource-successor-20261005-01/guard",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 6442450944,
+  "storage_budget": {
+    "limits": {
+      "max_allocated_bytes": 1073741824,
+      "max_depth": 32,
+      "max_entries": 32768,
+      "max_logical_bytes": 1073741824,
+      "max_scan_seconds": 5
+    },
+    "root": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source"
+  },
+  "storage_enforcement": "Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.",
+  "storage_observation": {
+    "aggregate_entry_visit_bound": 196608,
+    "allocated_bytes": 86536192,
+    "directories": 462,
+    "elapsed_seconds": 0.14152872799968463,
+    "entries": 1770,
+    "hardlink_observations": [],
+    "logical_file_bytes": 81121620,
+    "mutation_observations": [],
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota, immutable-byte proof or inter-sample growth guarantee. At most three attempts share one time budget. Each accepted attempt includes the whole descriptor census followed, after its cleanup, by a complete literal namespace and metadata rejoin. Each pass independently obeys all registered tree limits. No file name is ignored. Continuous change after any sampled operation remains outside this metadata-only guarantee.",
+    "regular_files": 1309,
+    "root": "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source",
+    "root_device": 66310,
+    "root_inode": 10411161,
+    "scan_attempts": 1
+  },
+  "storage_peak_allocated_bytes": 86536192,
+  "storage_peak_entries": 1770,
+  "storage_peak_logical_file_bytes": 81121620,
+  "storage_root_identity": [
+    66310,
+    10411161
+  ],
+  "unit": "onchain-replication-08ef2f4428824300841b8dba5b349c4c.service",
+  "wait_seconds": 30.0,
+  "wall_seconds": 1800
+}

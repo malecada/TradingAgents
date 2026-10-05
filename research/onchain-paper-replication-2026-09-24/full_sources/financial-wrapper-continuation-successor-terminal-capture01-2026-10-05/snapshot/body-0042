@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-resource-successor-root-launch-20261005-01/parent01.py", line 234, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-resource-successor-root-launch-20261005-01/parent01.py", line 230, in main
+    if a.launch:raise SystemExit(launch(q,contract_ref))
+                                 ~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-resource-successor-root-launch-20261005-01/parent01.py", line 223, in launch
+    if primary is not None:raise primary
+                           ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-resource-successor-root-launch-20261005-01/parent01.py", line 214, in launch
+    result=supervise(command,CAP,env,directory,1840,checked,spawned)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-resource-successor-root-launch-20261005-01/supervisor01.py", line 60, in supervise
+    if primary is not None:raise primary
+                           ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-resource-successor-root-launch-20261005-01/supervisor01.py", line 29, in supervise
+    R.require(time.monotonic()<deadline,'outer active deadline');joined();watch();tree.scan()
+                                                                          ~~~~~^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-resource-successor-root-launch-20261005-01/parent01.py", line 201, in checked
+    watch.check();parentwatch.check();require(shutil.disk_usage(CAP).free>=10*GIB,'active disk floor')
+    ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 106, in check
+    try:return self._check(begin,history)
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 124, in _check
+    result=self._scan(begin)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-claimedrun-native-20261004-02/source/tradingagents/research/onchain_replication/workflow_storage.py", line 234, in _scan
+    if _signature(path.lstat())!=seals[relative]:raise StorageMutationObservation('directory changed at namespace rejoin',relative)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents.research.onchain_replication.workflow_storage.StorageMutationObservation: storage concurrent namespace or metadata change: directory changed at namespace rejoin

@@ -1,0 +1,23 @@
+--- a/parent01.py
++++ b/parent01.py
+@@ -197,8 +197,10 @@
+   if b'tradingagents.research.onchain_replication.job' in argv and str(CAP).encode() in argv:raise ValueError('an actual capsule job is active')
+  watch=storage.StorageWatch(CAP,policy['storage_budget']['limits'])
+  parentwatch=storage.StorageWatch(parent,{'max_allocated_bytes':80*1024**2,'max_logical_bytes':64*1024**2,'max_entries':512,'max_depth':12,'max_scan_seconds':5})
++ def active_checked():
++  parentwatch.check();require(shutil.disk_usage(CAP).free>=10*GIB,'active disk floor')
+  def checked():
+-  watch.check();parentwatch.check();require(shutil.disk_usage(CAP).free>=10*GIB,'active disk floor')
++  watch.check();active_checked()
+  checked();memory();resource.setrlimit(resource.RLIMIT_FSIZE,(R.FILE,R.FILE));directory=parent/'attempt';directory.mkdir(mode=0o700)
+  fd=os.open(parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+  try:os.fsync(fd)
+@@ -211,7 +213,7 @@
+  try:
+   R.put(directory/'intent.json',{'identity':q['identity'],'source':q['source'],'contract':contract(q),'command':command,'cwd':str(CAP),'outer_active_seconds':1840,'phase':q['expected_phase'],'preclaim_metadata':preclaim})
+   env=os.environ.copy();env.update(job.resources._native_owned_env(CAP));env['PYTHONPATH']=str(CAP)
+-  result=supervise(command,CAP,env,directory,1840,checked,spawned)
++  result=supervise(command,CAP,env,directory,1840,active_checked,spawned)
+  except BaseException as error:primary=error
+  finally:
+   def retain_cleanup():
