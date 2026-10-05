@@ -1,0 +1,59 @@
+"""Finite local source-evidence packing only. All genuine Root outputs stay untouched."""
+import hashlib,json,os,stat,sys,time
+from pathlib import Path
+H=Path(__file__).resolve().parent;B=H.parent;sys.path[:0]=[str(H/'utilities')]
+import recovery_pax01 as R
+from owned_io import _cleanup
+SCOPES=['financial-wrapper-continuation-current-preservation-preparation01-2026-10-05','financial-wrapper-continuation-current-preservation-preparation02-2026-10-05','financial-wrapper-continuation-current-admission-review01-2026-10-05','financial-wrapper-continuation-current-preservation-review01-2026-10-05']
+BASIS=[('complete100-capture',B/'financial-wrapper-compatibility-complete100-outcome-capture01-2026-10-05/CAPTURE01.json','ef82889318080bf2fec673d6c558c4afe3d95260c1a4d783c9b5eb16d8979442'),('complete100-recovery',B/'financial-wrapper-compatibility-complete100-recovery-outcome-review03-2026-10-05/COMPLETE100_OUTCOME_RECOVERY_PROOF01.json','32acf31622837219bd947d64f135dce90120169fe87b4400094d7cb329b76958'),('complete100-review',B/'financial-wrapper-compatibility-complete100-recovery-outcome-review03-2026-10-05/MACHINE01.json','38744ccbf2c9c04d73803028795e4111c55536eda215776498bfd261ad70c9f1'),('source407-basis',B/'financial-wrapper-compatibility-baseline-recovery-review02-2026-10-05/BASELINE_FULL_RECOVERY_PROOF01.json','02900ae11c7053a5f691ef2838fa7427b5befd86778331c19b97143e1c6c2e48')]
+def census(root,allowed=None):
+ rows=[];start=time.monotonic()
+ def visit(p,rel=''):
+  R.require(time.monotonic()-start<120 and len(rows)<4096,'bounded source census');before=R.sig(p.lstat());it=os.scandir(p)
+  try:names=sorted(e.name for e in it)
+  finally:_cleanup((it.close,))
+  for name in names:
+   n=(rel+'/'+name).lstrip('/')
+   if allowed is not None and n not in allowed:continue
+   R.path_name(n);q=root/n;s=q.lstat();r={'path':n,'mode':stat.S_IMODE(s.st_mode)}
+   if stat.S_ISLNK(s.st_mode):r.update(kind='symlink',target=os.readlink(q))
+   elif stat.S_ISDIR(s.st_mode):r['kind']='directory';visit(q,n)
+   else:
+    R.require(stat.S_ISREG(s.st_mode),'no special source reads');raw=R.read(root,n);r.update(kind='file',bytes=len(raw),sha256=R.digest(raw))
+   R.require(R.sig(q.lstat())==R.sig(s),'source changed');rows.append(r)
+  R.require(R.sig(p.lstat())==before,'namespace changed');R.require(time.monotonic()-start<120,'post-cleanup deadline')
+ visit(root);return {'root':str(root),'root_mode':stat.S_IMODE(root.stat().st_mode),'members':sorted(rows,key=lambda r:r['path'])}
+def rawput(p,raw):
+ with R.new_file(p) as fd:
+  view=memoryview(raw)
+  while view:
+   n=os.write(fd,view);R.require(n>0,'short owned write');view=view[n:]
+  os.fsync(fd)
+def main():
+ import shutil
+ R.require(shutil.disk_usage(H).free>=R.FLOOR,'10GiB floor');snap=H/'snapshot';R.require(not os.path.lexists(snap),'one-use local capture');snap.mkdir(mode=0o700);origins={};total=0
+ depraw=R.read(B/SCOPES[-1],'TRANSPORT_DEPENDENCIES01.json');R.require(R.digest(depraw)=='dd10413fce4f83fbe2f86ca36367633771092e2152ab89654b381b19312fb1bb','actual dependency seal');deps=json.loads(depraw)
+ scopes=[(Path(v['path']), 'MANIFEST01.json',v['manifest_sha256'],False) for v in deps['closed_scopes']]+[(B/SCOPES[-1],'SOURCE_PHASE_MANIFEST01.json','2bd0a0f7a5639c743ddb9bcee5e937e59ba6976d3b344f38d85c30bd50f370e4',True)]
+ allowed_scopes={}
+ for root,sealname,pin,subset in scopes:
+  scope=root.name;sealraw=R.read(root,sealname);R.require(R.digest(sealraw)==pin,'closed scope seal pin');seal=json.loads(sealraw);expected=seal['members'];allowed={r['path'] for r in expected}|{sealname} if subset else None;allowed_scopes[scope]=allowed;m=census(root,allowed);actual=[r for r in m['members'] if r['path']!=sealname];R.require(actual==expected,'full declared closed scope matches seal')
+  origins[scope]=m;dest=snap/scope;dest.mkdir(mode=0o700)
+  for r in m['members']:
+   if r['kind']=='symlink':continue
+   p=dest/r['path']
+   if r['kind']=='directory':p.mkdir(mode=0o700)
+   else:
+    raw=R.read(root,r['path']);R.require(len(raw)==r['bytes'] and R.digest(raw)==r['sha256'],'exact origin');rawput(p,raw);total+=len(raw);R.require(total<=16*1024**2,'finite incremental logical cap')
+ (snap/'basis').mkdir(mode=0o700);basis=[]
+ for i,ref in enumerate(deps['additional_exact_metadata_refs']):
+  p=Path(ref['path']);pin=ref['sha256'];raw=R.read(p.parent,p.name);R.require(R.digest(raw)==pin and len(raw)==ref['bytes'],'genuine immutable basis pin');existing=next((scope+'/'+str(p.relative_to(Path(m['root']))) for scope,m in origins.items() if p.is_relative_to(Path(m['root']))),None);name='basis/%02d.body'%i
+  if existing is None:rawput(snap/name,raw)
+  else:name=existing
+  basis.append(dict(ref,mode=stat.S_IMODE(p.stat().st_mode),snapshot_path=name))
+ table={'schema_version':1,'scopes':origins,'basis':basis,'literal_links_only':True,'all_originals_retained':True,'POSIX_restoration':False};R.put(snap/'ORIGIN_TABLE01.json',table)
+ manifest=R.scan(snap);R.put(H/'archive-manifest.json',manifest);pin=R.pack(snap,manifest,H/'increment.tar.gz')
+ for scope,m in origins.items():R.require(census(B/scope,allowed_scopes[scope])==m,'late original full member/body/mode rejoin')
+ R.require(shutil.disk_usage(H).free>=R.FLOOR,'final10GiB floor')
+ capture={'schema_version':1,'kind':'continuation-current-incremental-byte-capture','source':'664e2ca5fa11d6640ab79f64c5aa222aeb3a9128','archive':'increment.tar.gz','manifest':'archive-manifest.json','archive_pin':pin,'regular':sum(r['kind']=='file' for r in manifest['members']),'typed':len(manifest['members']),'logical_bytes':sum(r.get('bytes',0) for r in manifest['members']),'origin_table_sha256':R.digest(R.read(snap,'ORIGIN_TABLE01.json')),'origin_scopes':{n:{'root':m['root'],'members':len(m['members']),'seal_sha256':R.digest(R.read(B/n,'SOURCE_PHASE_MANIFEST01.json' if allowed_scopes[n] is not None else 'MANIFEST01.json'))} for n,m in origins.items()},'basis':basis,'old818_copied':False,'external_recovery':False,'numerical_authority':False,'future_final_request':None,'future_release':None}
+ R.put(H/'CAPTURE01.json',capture);print(json.dumps(capture,sort_keys=True))
+if __name__=='__main__':main()

@@ -1,0 +1,60 @@
+{
+  "actual_original_plan": {
+    "bytes": 636,
+    "dataset": "synthetic",
+    "path": "fixture_inputs/financial_wrapper_claimedrun01/wrapper_plan.json",
+    "sha256": "15fd8a363806a15b68a6ff23b029847727b5ddbeb9e945454a1f9b5d4c4ac729"
+  },
+  "actual_public_failure": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-current-preservation-review01-2026-10-05/ACTUAL_CONTINUATION_PUBLIC_PREFLIGHT02_FAILED.json",
+    "sha256": "54513aecd7b78e26b77c89fd6bce0391581defa3ac9be6835d8cd5e33ec14a7c"
+  },
+  "author_manifest_sha256": "2e9eca8f6b62e19a651be677dd984f9ea45d404b4131b8a4744549c0302ac3fb",
+  "candidate_pins": {
+    "gates.json": "1f96b8efd7fdd468cb9ef87059c5bba026c4aa238f21580ed3ae6e961146e18d",
+    "prior.json": "b8b4b4f124aebdd5816c8dc0427814139feedd66682f1092bc76c6d25d50b9a9"
+  },
+  "checks": 322,
+  "continue_roles": 29,
+  "controls": [
+    {
+      "case": "actual old prior reproduces public alias failure",
+      "message": "exact historical alias linkage differs",
+      "refused": true
+    },
+    {
+      "accepted_component_only": true,
+      "case": "corrected prior exact actual policy aliases"
+    },
+    {
+      "case": "old registered alias cannot supply canonical role",
+      "message": "missing registered prerequisite",
+      "refused": true
+    },
+    {
+      "case": "wrong original absolute plan path",
+      "message": "registered evidence absolute path differs",
+      "refused": true
+    },
+    {
+      "case": "wrong registered original plan hash",
+      "message": "registered input bytes differ: historical_plan",
+      "refused": true
+    }
+  ],
+  "decision": "ACCEPTED_EXACT_TWO_FILE_CANONICAL_PLAN_CORRECTION_SOURCE_ONLY",
+  "full_public_preflight_passed": false,
+  "literal_and_semantic_inverse": true,
+  "new_Parent_binding_reviewed": false,
+  "numerical_authority": false,
+  "old_pins": {
+    "gates.json": "c4f33416f952ee5e9a2177fc4455bff51662e9fe6639016a92373ca16ba1d693",
+    "prior.json": "f4a61c48432488c40106b94ae6e829007187f2b0e31ebc781395f5f820ae244e"
+  },
+  "preclaim_source_sha256": "079df4afd2ad9cc0c303c400df48aca05f22fceba66fe363f0d0147bfe94800c",
+  "predict_roles": 17,
+  "read_bytes": 1014460,
+  "schema_version": 1,
+  "source_before": "664e2ca5fa11d6640ab79f64c5aa222aeb3a9128",
+  "unchanged_historical_definitions": 2
+}

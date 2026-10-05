@@ -1,0 +1,85 @@
+{
+  "changed_paths": [
+    "fixture_inputs/financial_wrapper_continuation01/gates.json",
+    "fixture_inputs/financial_wrapper_continuation01/prior.json"
+  ],
+  "checks": 113,
+  "commands": [
+    {
+      "arguments": [
+        "log",
+        "-1",
+        "--format=%H %P"
+      ],
+      "bytes": 82,
+      "stdout_sha256": "a6b6242997836a22464575a52b156fceb06fe87fbe2069dc4a8b5670c5615730"
+    },
+    {
+      "arguments": [
+        "diff",
+        "--name-only",
+        "664e2ca5fa11d6640ab79f64c5aa222aeb3a9128",
+        "d4c81c0961342bfe4c5771aabbef1d46a14cffb8"
+      ],
+      "bytes": 118,
+      "stdout_sha256": "d8704f25fbc0df9138f81f081838f4e38957363cbd7fb2deca5898c374d0b8f9"
+    },
+    {
+      "arguments": [
+        "ls-files",
+        "-z"
+      ],
+      "bytes": 24993,
+      "stdout_sha256": "cea73ee725da5217d8df0b6912a43669de04131cfd19f40a2367fb7f7887d670"
+    },
+    {
+      "arguments": [
+        "show",
+        "d4c81c0961342bfe4c5771aabbef1d46a14cffb8:fixture_inputs/financial_wrapper_continuation01/gates.json"
+      ],
+      "bytes": 212509,
+      "stdout_sha256": "1f96b8efd7fdd468cb9ef87059c5bba026c4aa238f21580ed3ae6e961146e18d"
+    },
+    {
+      "arguments": [
+        "show",
+        "664e2ca5fa11d6640ab79f64c5aa222aeb3a9128:fixture_inputs/financial_wrapper_continuation01/gates.json"
+      ],
+      "bytes": 212517,
+      "stdout_sha256": "c4f33416f952ee5e9a2177fc4455bff51662e9fe6639016a92373ca16ba1d693"
+    },
+    {
+      "arguments": [
+        "show",
+        "d4c81c0961342bfe4c5771aabbef1d46a14cffb8:fixture_inputs/financial_wrapper_continuation01/prior.json"
+      ],
+      "bytes": 13852,
+      "stdout_sha256": "b8b4b4f124aebdd5816c8dc0427814139feedd66682f1092bc76c6d25d50b9a9"
+    },
+    {
+      "arguments": [
+        "show",
+        "664e2ca5fa11d6640ab79f64c5aa222aeb3a9128:fixture_inputs/financial_wrapper_continuation01/prior.json"
+      ],
+      "bytes": 13860,
+      "stdout_sha256": "f4a61c48432488c40106b94ae6e829007187f2b0e31ebc781395f5f820ae244e"
+    }
+  ],
+  "continue_inputs": 29,
+  "decision": "ACCEPTED_ACTUAL_EXACT_TWO_FILE_COMMITTED_METADATA_DELTA",
+  "numerical_authority": false,
+  "old818_body_scan_repeated": false,
+  "original_committed_bodies_preserved": true,
+  "parent_source": "664e2ca5fa11d6640ab79f64c5aa222aeb3a9128",
+  "predict_inputs": 17,
+  "read_bytes": 842331,
+  "runtime251_scan_repeated": false,
+  "schema_version": 1,
+  "source": "d4c81c0961342bfe4c5771aabbef1d46a14cffb8",
+  "source_manifest": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/heartbeat-root-checkpoint10-2026-10-04/CANONICAL_PLAN_SOURCE_MANIFEST01.json",
+    "sha256": "1cc3b8796a656db8df02ecec0c871cdd575f4164ef58decda2326ce3fb42be46"
+  },
+  "source_pins": 359,
+  "tracked": 360
+}

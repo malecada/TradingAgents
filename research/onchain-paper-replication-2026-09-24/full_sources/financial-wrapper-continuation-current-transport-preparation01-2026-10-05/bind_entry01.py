@@ -1,0 +1,38 @@
+"""Root-only deterministic source installation; never starts remote/flat operations."""
+import argparse,json,os,shutil
+from pathlib import Path
+import outcome01 as O
+R=O.R
+def put(p,raw):
+ with R.new_file(p) as fd:
+  offset=0
+  while offset<len(raw):n=os.write(fd,raw[offset:]);R.require(n>0,'short write');offset+=n
+  os.fsync(fd)
+def binding(commit):
+ c=O.context(R.read(O.HERE,'CAPTURE01.json'))
+ q={'schema_version':1,'status':'ROOT_FROZEN_CONTINUATION_CURRENT','lane':0,'source':O.SOURCE,'commit':commit,'required':O.expected_required(c),'proofs':{'captured_preservation_source_release':True,'historical_basis_reused':True,'future_full_current_recovery':None},'remote':None,'profile':None,'release':None}
+ generated=O.generate(q,R.read(O.HERE,'CAPTURE01.json'));return q,generated
+def install(commit,phase):
+ q,g=binding(commit);dest=O.lane_root(0,phase);R.require(not os.path.lexists(dest),'fixed fresh Root destination');O.W.check();dest.mkdir(mode=0o700);(dest/'utilities').mkdir(mode=0o700)
+ # Original templates remain selected source; generated receipt/caller are distinct installed bodies.
+ for name in O.HELPERS+('CAPTURE01.json','archive-manifest.json','increment.tar.gz'):
+  put(dest/name,R.read(O.HERE,name))
+ # Fresh generated variants have their own names; replacing source templates is prohibited.
+ put(dest/'recover01.py',g['receiver'].encode());put(dest/'caller01.py',g['callers'][phase].encode())
+ # receipt import must name the generated exact status; preserve original under a distinct name.
+ # The initial copy is immutable: generated receipt is imported via this separately named module.
+ put(dest/'receipt_current01.py',g['receipt'].encode())
+ put(dest/'SELECTED_BODIES01.json',g['selection_body'])
+ helpers={n:R.digest(R.read(dest,n)) for n in O.HELPERS+('CAPTURE01.json','archive-manifest.json','increment.tar.gz','recover01.py','receipt_current01.py')}
+ def ref(name):return {'path':name,'sha256':R.digest(R.read(dest,name))}
+ if phase=='remote':
+  R.put(dest/'REQUEST_DRAFT01.json',q)
+  contract={'schema_version':1,'status':'ROOT_BOUND_CONTINUATION_CURRENT_ENTRY','phase':'REMOTE','owned_root':str(dest),'main_commit':commit,'helpers':helpers,'selection':ref('SELECTED_BODIES01.json'),'request':None,'remote_receipt':None,'remote_root_exit':None,'selected_mode_profile':None,'flat_release':None,'fresh_names':['fresh-continuation-current01.git','selected','REMOTE_RECOVERY01.json','FAILED01.json'],'numerical_authority':False}
+  R.put(dest/'REMOTE_CONTRACT01.json',contract)
+ else:
+  # Real receipt/profile/release cannot be manufactured by this preparation.
+  R.put(dest/'REQUEST_FLAT_DRAFT01.json',q)
+  R.put(dest/'FLAT_BINDING_PENDING01.json',{'schema_version':1,'owned_root':str(dest),'commit':commit,'helpers':helpers,'remote_receipt':None,'remote_root_exit':None,'selected_mode_profile':None,'inner_release':None,'outer_release':None,'execution_released':False,'numerical_authority':False})
+ O.W.check();return {'owned_root':str(dest),'phase':phase,'caller_sha256':R.digest(R.read(dest,'caller01.py')),'execution_released':False}
+if __name__=='__main__':
+ p=argparse.ArgumentParser();p.add_argument('--commit',required=True);p.add_argument('--phase',choices=('remote','flat'),required=True);a=p.parse_args();print(json.dumps(install(a.commit,a.phase),sort_keys=True))

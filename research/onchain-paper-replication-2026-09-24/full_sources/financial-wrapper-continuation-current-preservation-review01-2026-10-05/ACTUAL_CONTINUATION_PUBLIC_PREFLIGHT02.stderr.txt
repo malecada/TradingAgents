@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-compatibility-root-launch-20261005-01/parent01.py", line 233, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-compatibility-root-launch-20261005-01/parent01.py", line 231, in main
+    value=preflight(q,contract_ref);print(json.dumps(value[-1],sort_keys=True))
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-compatibility-root-launch-20261005-01/parent01.py", line 132, in preflight
+    preclaim=PRECLAIM.validate_preclaim(admitted,j,p,refs)
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-compatibility-root-launch-20261005-01/preclaim01.py", line 394, in validate_preclaim
+    _historical(inputs,prior,policy,plan,provenance,root,helper,fixture,verify,reader)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-compatibility-root-launch-20261005-01/preclaim01.py", line 318, in _historical
+    require(prior[descriptor]==hist[key],'exact historical alias linkage differs')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/onchain-financial-isolation/genuine-financial-wrapper-continue100-compatibility-root-launch-20261005-01/preclaim01.py", line 38, in require
+    if not ok: raise Unavailable(why)
+               ^^^^^^^^^^^^^^^^^^^^^^
+preclaim01.Unavailable: exact historical alias linkage differs

@@ -1,0 +1,259 @@
+{
+  "caller_changes": "only exact fixed root/status/decision/qualification and required helper labels; original actual process controls reused",
+  "changes": {
+    "outcome01.py": {
+      "AST_parse": true,
+      "full_ordered_inverse": [
+        {
+          "new": "\"\"\"Exact continuation increment byte scope; no admission or numerical execution.\"\"\"\n",
+          "old": "\"\"\"Exact four-lane closed-outcome byte scope; no admission or numerical execution.\"\"\"\n",
+          "tag": "replace"
+        },
+        {
+          "new": "from pathlib import Path\nimport json,hashlib,os,sys,time,stat\nHERE=Path(__file__).resolve().parent;sys.path[:0]=[str(HERE),str(HERE/'utilities')]\nimport recovery_pax01 as R\nimport space01 as W\nfrom cohort01 import VerifiedCohort\nfrom receipt01 import encode as selection_encode\nfrom flat_primitives01 import input_read,restore_archives\nROOT=W.ROOT;F=W.F\n",
+          "old": "from pathlib import Path\nimport json,hashlib,os,sys,time,stat\nHERE=Path(__file__).resolve().parent;sys.path[:0]=[str(HERE),str(HERE/'utilities')]\nimport recovery_pax01 as R\nimport space01 as W\nfrom cohort01 import VerifiedCohort\nfrom receipt01 import encode as selection_encode\nfrom flat_primitives01 import input_read,restore_archives\nROOT=W.ROOT;F=W.F\n",
+          "tag": "equal"
+        },
+        {
+          "new": "CAPTURE='8f9ef845c73b33076b4a81c4816e2d38528570a497706732f6a7c6ce0eb9d146'\nCAPTURE_PATH='research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-continuation-current-transport-preparation01-2026-10-05/CAPTURE01.json'\nLANES=((0,),)\nSOURCE='664e2ca5fa11d6640ab79f64c5aa222aeb3a9128'\n",
+          "old": "CAPTURE='ef82889318080bf2fec673d6c558c4afe3d95260c1a4d783c9b5eb16d8979442'\nCAPTURE_PATH='research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-capture01-2026-10-05/CAPTURE01.json'\nLANES=(tuple(range(7)),tuple(range(7,14)),tuple(range(14,20)),tuple(range(20,26)))\nSOURCE='32d57eac5ea14435cd9d4aeb3e3b04d98bf16c41'\n",
+          "tag": "replace"
+        },
+        {
+          "new": "def lane_root(i,phase):\n",
+          "old": "def lane_root(i,phase):\n",
+          "tag": "equal"
+        },
+        {
+          "new": " R.require(type(i)is int and i==0 and phase in ('remote','flat'),'one fixed incremental route')\n return F/('financial-wrapper-continuation-current-'+phase+'01-2026-10-05')\nHELPERS=('outcome01.py','restore_bundle01.py','flat_primitives01.py','cohort01.py','space01.py','watch01.py','receipt01.py','recover.template01.py','caller_remote01.py','caller_flat01.py','bind_entry01.py','capture_increment01.py','utilities/recovery_pax01.py','utilities/owned_io.py','utilities/bounded_git01.py')\n",
+          "old": " R.require(type(i)is int and 0<=i<4 and phase in ('remote','flat'),'four fixed lane roots')\n return F/('financial-wrapper-compatibility-complete100-outcome-'+phase+'-lane%02d-canonical02-2026-10-05'%(i+1))\n",
+          "tag": "replace"
+        },
+        {
+          "new": "def context(raw):\n",
+          "old": "def context(raw):\n",
+          "tag": "equal"
+        },
+        {
+          "new": " R.require(R.digest(raw)==CAPTURE,'actual incremental capture pin');c=json.loads(raw)\n R.require(c['kind']=='continuation-current-incremental-byte-capture' and c['source']==SOURCE and c['numerical_authority'] is False and c['external_recovery'] is False and c['old818_copied'] is False,'exact scope and exclusions')\n R.require(c['archive']=='increment.tar.gz' and c['manifest']=='archive-manifest.json','fixed actual archive pair')\n",
+          "old": " R.require(R.digest(raw)==CAPTURE,'actual complete capture pin');c=json.loads(raw)\n R.require(c['kind']=='complete-terminal-opaque-sharded-capture-v1' and c['numerical_authority'] is False and c['POSIX_instantiation'] is False and c['exclusions']=={'capsule':['.git'],'parent':[]},'original opaque scope')\n R.require([p['id'] for p in c['pieces']]==list(range(26)),'all26 pieces exactly once')\n originals={};total=0\n for role,v in c['originals'].items():\n  R.validate(v['manifest'])\n  for r in v['manifest']['members']:\n   if r['kind']=='file':originals[(role,r['path'])]=(r['bytes'],r['sha256']);total+=r['bytes']\n mapped={}\n for p in c['pieces']:\n  R.require(sum(b['bytes'] for b in p['bodies'])<=3*1024**2 and len(p['bodies'])<=256,'original piece bounds')\n  for b in p['bodies']:\n   k=(b['role'],b['path']);R.require(k not in mapped,'no duplicate original');mapped[k]=(b['bytes'],b['sha256'])\n R.require(mapped==originals and len(originals)==845 and total==77970429 and sum(len(v['manifest']['members']) for v in c['originals'].values())==1074,'full original845/1074 exact cover')\n",
+          "tag": "replace"
+        },
+        {
+          "new": " return c\n\n",
+          "old": " return c\n\n",
+          "tag": "equal"
+        },
+        {
+          "new": "def expected_required(c):\n prefix=str(Path(CAPTURE_PATH).parent)+'/'\n required={}\n for name in ('CAPTURE01.json',c['archive'],c['manifest']):\n  raw=R.read(HERE,name);required[prefix+name]={'bytes':len(raw),'sha256':R.digest(raw)}\n R.require(required[CAPTURE_PATH]['sha256']==CAPTURE and required[prefix+c['archive']]=={k:c['archive_pin'][k] for k in ('bytes','sha256')} and required[prefix+c['manifest']]['sha256']==c['archive_pin']['manifest_sha256'],'exact pinned three-body archive closure')\n return required\n\n",
+          "old": "",
+          "tag": "insert"
+        },
+        {
+          "new": "def selected_required(q,i,c):\n",
+          "old": "def selected_required(q,i,c):\n",
+          "tag": "equal"
+        },
+        {
+          "new": " lane_root(i,'remote');R.require(q['status']=='ROOT_FROZEN_CONTINUATION_CURRENT' and q['source']==SOURCE and type(q['lane'])is int and q['lane']==0,'actual fixed request')\n",
+          "old": " lane_root(i,'remote')\n R.require(q['status']=='ROOT_FROZEN_OUTCOME_FOUR_LANES' and q['source']==SOURCE and type(q['lane'])is int and q['lane']==i,'actual fixed request')\n",
+          "tag": "replace"
+        },
+        {
+          "new": " R.require(type(q['commit'])is str and len(q['commit'])==40 and all(x in '0123456789abcdef' for x in q['commit']),'actual final commit')\n",
+          "old": " R.require(type(q['commit'])is str and len(q['commit'])==40 and all(x in '0123456789abcdef' for x in q['commit']),'actual final commit')\n",
+          "tag": "equal"
+        },
+        {
+          "new": " required=q['required'];R.require(required==expected_required(c),'exact complete incremental and helper selection')\n R.require(q['proofs']=={'captured_preservation_source_release':True,'historical_basis_reused':True,'future_full_current_recovery':None},'no fabricated future proof')\n R.require(len(required)<=506 and sum(v['bytes'] for v in required.values())<=28*1024**2,'finite receiver selection')\n for n,v in required.items():R.path_name(n);R.require(type(v['bytes'])is int and 0<=v['bytes']<=R.FILE,'actual body bound')\n",
+          "old": " required=q['required'];R.require(type(required)is dict,'exact selected population')\n prefix=str(Path(CAPTURE_PATH).parent)+'/'\n names={CAPTURE_PATH}\n for j in LANES[i]:names.update(prefix+c['pieces'][j][k] for k in ('archive','manifest'))\n refs=q['proofs'];R.require(set(refs)=={'source407_basis','outcome_disposition','cleanup','actual_capture_review'},'genuine proof roles')\n for ref in refs.values():\n  R.require(type(ref)is dict and set(ref)=={'path','bytes','sha256'},'actual proof refs, no null');names.add(R.path_name(ref['path']))\n R.require(set(required)==names and sum(v['bytes'] for v in required.values())<=28*1024**2,'bounded exact lane selection')\n for n,v in required.items():R.path_name(n);R.require(set(v)=={'bytes','sha256'} and type(v['bytes'])is int and 0<=v['bytes']<=R.FILE and type(v['sha256'])is str and len(v['sha256'])==64 and all(x in '0123456789abcdef' for x in v['sha256']),'exact selected pin')\n R.require(required[CAPTURE_PATH]=={'bytes':705237,'sha256':CAPTURE},'common actual capture')\n for ref in refs.values():R.require(required[ref['path']]=={k:ref[k] for k in ('bytes','sha256')},'proof selected')\n for j in LANES[i]:\n  p=c['pieces'][j];R.require(required[prefix+p['archive']]=={k:p['archive_pin'][k] for k in ('bytes','sha256')} and required[prefix+p['manifest']]['sha256']==p['archive_pin']['manifest_sha256'],'exact selected piece pins')\n",
+          "tag": "replace"
+        },
+        {
+          "new": " return required\n\ndef generate(q,raw):\n \"\"\"Return concrete receiver and caller bodies; Root alone writes/reviews them.\"\"\"\n",
+          "old": " return required\n\ndef generate(q,raw):\n \"\"\"Return concrete receiver and caller bodies; Root alone writes/reviews them.\"\"\"\n",
+          "tag": "equal"
+        },
+        {
+          "new": " c=context(raw);i=q['lane'];required=selected_required(q,i,c);suffix='continuation-current01'\n",
+          "old": " c=context(raw);i=q['lane'];required=selected_required(q,i,c);suffix='compatibility-complete100-outcome-lane%02d-canonical02'%(i+1)\n",
+          "tag": "replace"
+        },
+        {
+          "new": " s=R.read(HERE,'recover.template01.py').decode();changes=[('REQUIRED = None','REQUIRED = '+repr(required)),('FINAL_POPULATION_COUNT = None','FINAL_POPULATION_COUNT = '+str(len(required))),('compatibility-final-bundle01',suffix),('import watch01 as W','import space01 as W')]\n for a,b in changes:R.require(a in s,'receiver exact seam');s=s.replace(a,b)\n # Preserve original operation/FSIZE/watch/cleanup implementation; replace stale scope prose.\n a=\"Exact frozen operational source/policy delta, genuine independent policy review and complete closed failed forensic Root02 scope recovered. Original failed histories remain spent; no claim is started. Old385 actual recovered Git plus nine new bodies form an explicitly checked394-object source basis; final registration/caller/runtime-body recovery remain separate.\"\n",
+          "old": " s=R.read(HERE,'recover.template01.py').decode();changes=[('REQUIRED = None','REQUIRED = '+repr(required)),('FINAL_POPULATION_COUNT = None','FINAL_POPULATION_COUNT = '+str(len(required))),('compatibility-final-bundle01',suffix),('import watch01 as W','import space01 as W')]\n for a,b in changes:R.require(a in s,'receiver exact seam');s=s.replace(a,b)\n # Preserve original operation/FSIZE/watch/cleanup implementation; replace stale scope prose.\n a=\"Exact frozen operational source/policy delta, genuine independent policy review and complete closed failed forensic Root02 scope recovered. Original failed histories remain spent; no claim is started. Old385 actual recovered Git plus nine new bodies form an explicitly checked394-object source basis; final registration/caller/runtime-body recovery remain separate.\"\n",
+          "tag": "equal"
+        },
+        {
+          "new": " b=\"Exact current continuation incremental capture and all declared closed source/review dependencies. Accepted old818 capsule bodies and407 Git basis are reused; five current inputs, eleven Parent bodies, two proof bodies and nine Git payloads are retained. No claim is started; full current recovery still requires independent actual composition.\"\n",
+          "old": " b=\"Exact one of four disjoint complete100 outcome archive lanes; common complete capture and original outcome proofs retained. Separate accepted605/407 source basis is referenced, not reconstructed here. No claim is started and no scientific completion follows.\"\n",
+          "tag": "replace"
+        },
+        {
+          "new": " R.require(a in s,'original qualification seam');s=s.replace(a,b);changes.append((a,b))\n receipts=R.read(HERE,'receipt01.py').decode().replace('compatibility-final-supplement02',suffix)\n callers={}\n for phase in ('remote','flat'):\n  body=R.read(HERE,'caller_'+phase+'01.py').decode()\n  body=body.replace('financial-wrapper-compatibility-final-supplement-root02-2026-10-05',lane_root(i,'remote').name).replace('financial-wrapper-compatibility-final-supplement-flat-root02-2026-10-05',lane_root(i,'flat').name)\n",
+          "old": " R.require(a in s,'original qualification seam');s=s.replace(a,b);changes.append((a,b))\n receipts=R.read(HERE,'receipt01.py').decode().replace('compatibility-final-supplement02',suffix)\n callers={}\n for phase in ('remote','flat'):\n  body=R.read(HERE,'caller_'+phase+'01.py').decode()\n  body=body.replace('financial-wrapper-compatibility-final-supplement-root02-2026-10-05',lane_root(i,'remote').name).replace('financial-wrapper-compatibility-final-supplement-flat-root02-2026-10-05',lane_root(i,'flat').name)\n",
+          "tag": "equal"
+        },
+        {
+          "new": "  body=body.replace('ROOT_BOUND_FINAL_SUPPLEMENT_ENTRY','ROOT_BOUND_CONTINUATION_CURRENT_ENTRY').replace('ACCEPTED_EXACT_ONE_USE_FINAL_SUPPLEMENT_','ACCEPTED_EXACT_ONE_USE_CONTINUATION_CURRENT_').replace('ROOT_FINAL_SUPPLEMENT_','ROOT_CONTINUATION_CURRENT_').replace('fresh-compatibility-final-supplement02.git','fresh-'+suffix+'.git')\n",
+          "old": "  body=body.replace('ROOT_BOUND_FINAL_SUPPLEMENT_ENTRY','ROOT_BOUND_OUTCOME_LANE%02d_CANONICAL02_ENTRY'%(i+1)).replace('ACCEPTED_EXACT_ONE_USE_FINAL_SUPPLEMENT_','ACCEPTED_EXACT_ONE_USE_OUTCOME_LANE%02d_CANONICAL02_'%(i+1)).replace('ROOT_FINAL_SUPPLEMENT_','ROOT_OUTCOME_LANE%02d_CANONICAL02_'%(i+1)).replace('fresh-compatibility-final-supplement02.git','fresh-'+suffix+'.git')\n",
+          "tag": "replace"
+        },
+        {
+          "new": "  body=body.replace('import owned_io as IO;import watch01 as W','import owned_io as IO;import watch01 as W;import space01;space01.check()')\n  body=body.replace(\"'binding01.py'\",\"'outcome01.py','flat_primitives01.py','space01.py'\")\n  callers[phase]=body\n selection={'remote_commit':q['commit'],'rows':[dict(path=n,**v) for n,v in sorted(required.items())]}\n return {'receiver':s,'receipt':receipts,'callers':callers,'receiver_changes':changes,'selection_body':selection_encode(selection)}\n\nREQUEST_FIELDS={'schema_version','status','lane','source','commit','required','proofs','remote','profile','release'}\ndef request_core_sha256(q):\n R.require(type(q)is dict and set(q)==REQUEST_FIELDS and type(q['schema_version'])is int and q['schema_version']==1,'exact request signing fields')\n ref=q['release']\n R.require(ref is None or (type(ref)is dict and set(ref)=={'name','sha256'} and type(ref['name'])is str and R.path_name(ref['name'])==ref['name'] and type(ref['sha256'])is str and len(ref['sha256'])==64 and all(c in '0123456789abcdef' for c in ref['sha256'])),'exact nullable release reference')\n return R.digest(R.encode({k:v for k,v in q.items() if k!='release'}))\n\ndef run(request,request_sha,release,release_sha):\n",
+          "old": "  body=body.replace('import owned_io as IO;import watch01 as W','import owned_io as IO;import watch01 as W;import space01;space01.check()')\n  body=body.replace(\"'binding01.py'\",\"'outcome01.py','flat_primitives01.py','space01.py'\")\n  callers[phase]=body\n selection={'remote_commit':q['commit'],'rows':[dict(path=n,**v) for n,v in sorted(required.items())]}\n return {'receiver':s,'receipt':receipts,'callers':callers,'receiver_changes':changes,'selection_body':selection_encode(selection)}\n\nREQUEST_FIELDS={'schema_version','status','lane','source','commit','required','proofs','remote','profile','release'}\ndef request_core_sha256(q):\n R.require(type(q)is dict and set(q)==REQUEST_FIELDS and type(q['schema_version'])is int and q['schema_version']==1,'exact request signing fields')\n ref=q['release']\n R.require(ref is None or (type(ref)is dict and set(ref)=={'name','sha256'} and type(ref['name'])is str and R.path_name(ref['name'])==ref['name'] and type(ref['sha256'])is str and len(ref['sha256'])==64 and all(c in '0123456789abcdef' for c in ref['sha256'])),'exact nullable release reference')\n return R.digest(R.encode({k:v for k,v in q.items() if k!='release'}))\n\ndef run(request,request_sha,release,release_sha):\n",
+          "tag": "equal"
+        },
+        {
+          "new": " from receipt_current01 import validate_remote\n",
+          "old": " from receipt01 import validate_remote\n",
+          "tag": "replace"
+        },
+        {
+          "new": " inputs=VerifiedCohort();raw=input_read(inputs,HERE,request);R.require(R.digest(raw)==request_sha,'actual request pin');q=json.loads(raw);i=q['lane'];R.require(HERE==lane_root(i,'flat'),'fixed fresh flat root')\n request_core_sha256(q);R.require(q['release']=={'name':release,'sha256':release_sha},'actual release ref must equal full authenticated request')\n def body(ref):\n  b=input_read(inputs,ROOT,ref['path']);R.require(len(b)==ref['bytes'] and R.digest(b)==ref['sha256'],'actual pinned body');return b\n rel=input_read(inputs,HERE,release);R.require(R.digest(rel)==release_sha,'actual release pin')\n",
+          "old": " inputs=VerifiedCohort();raw=input_read(inputs,HERE,request);R.require(R.digest(raw)==request_sha,'actual request pin');q=json.loads(raw);i=q['lane'];R.require(HERE==lane_root(i,'flat'),'fixed fresh flat root')\n request_core_sha256(q);R.require(q['release']=={'name':release,'sha256':release_sha},'actual release ref must equal full authenticated request')\n def body(ref):\n  b=input_read(inputs,ROOT,ref['path']);R.require(len(b)==ref['bytes'] and R.digest(b)==ref['sha256'],'actual pinned body');return b\n rel=input_read(inputs,HERE,release);R.require(R.digest(rel)==release_sha,'actual release pin')\n",
+          "tag": "equal"
+        },
+        {
+          "new": " R.require(json.loads(rel)=={'schema_version':1,'decision':'ACCEPTED_EXACT_CONTINUATION_CURRENT_FLAT','lane':i,'request_core_sha256':request_core_sha256(q),'source_sha256':R.digest(input_read(inputs,HERE,'outcome01.py')),'numerical_authority':False},'different-author lane release')\n for name in HELPERS+('CAPTURE01.json','archive-manifest.json','increment.tar.gz','receipt_current01.py'):input_read(inputs,HERE,name)\n",
+          "old": " R.require(json.loads(rel)=={'schema_version':1,'decision':'ACCEPTED_EXACT_OUTCOME_LANE_FLAT','lane':i,'request_core_sha256':request_core_sha256(q),'source_sha256':R.digest(input_read(inputs,HERE,'outcome01.py')),'numerical_authority':False},'different-author lane release')\n for name in ('outcome01.py','restore_bundle01.py','flat_primitives01.py','cohort01.py','space01.py','watch01.py','receipt01.py','utilities/recovery_pax01.py','utilities/owned_io.py','utilities/bounded_git01.py'):input_read(inputs,HERE,name)\n",
+          "tag": "replace"
+        },
+        {
+          "new": " receiver=lane_root(i,'remote');selected=receiver/'selected';capture_raw=input_read(inputs,selected,CAPTURE_PATH);c=context(capture_raw);required=selected_required(q,i,c)\n remote=json.loads(body(q['remote']));selection={'remote_commit':q['commit'],'rows':[dict(path=n,**v) for n,v in sorted(required.items())]};records=validate_remote(remote,selection,R.digest(selection_encode(selection)),required)\n",
+          "old": " receiver=lane_root(i,'remote');selected=receiver/'selected';capture_raw=input_read(inputs,selected,CAPTURE_PATH);c=context(capture_raw);required=selected_required(q,i,c)\n remote=json.loads(body(q['remote']));selection={'remote_commit':q['commit'],'rows':[dict(path=n,**v) for n,v in sorted(required.items())]};records=validate_remote(remote,selection,R.digest(selection_encode(selection)),required)\n",
+          "tag": "equal"
+        },
+        {
+          "new": " R.require(remote['fresh_git_root']==str(receiver/'fresh-continuation-current01.git'),'actual lane receiver Git root')\n",
+          "old": " R.require(remote['fresh_git_root']==str(receiver/('fresh-compatibility-complete100-outcome-lane%02d-canonical02.git'%(i+1))),'actual lane receiver Git root')\n",
+          "tag": "replace"
+        },
+        {
+          "new": " profile=json.loads(body(q['profile']));R.require(profile['actual_selected_root']==str(selected) and R.scan(selected)==profile['full_manifest'],'actual selected modes/full population');m=profile['full_manifest'];files={r['path']:r for r in m['members'] if r['kind']=='file'};dirs={'.':m['root_mode'],**{r['path']:r['mode'] for r in m['members'] if r['kind']=='directory'}}\n R.require(set(files)==set(required),'full selected exact set');inputs.selected_profile={'actual_selected_root':str(selected),'expected_owner_uid':os.geteuid(),'directory_modes':dirs,'files':files}\n for r in records:\n  b=input_read(inputs,selected,r['path']);R.require(len(b)==r['bytes'] and R.digest(b)==r['sha256'] and hashlib.sha1(b'blob '+str(len(b)).encode()+b'\\0'+b).hexdigest()==r['git_object'],'actual selected Git/body join')\n inputs.tree(selected,set(files));bundles=[];prefix=str(Path(CAPTURE_PATH).parent)+'/'\n",
+          "old": " profile=json.loads(body(q['profile']));R.require(profile['actual_selected_root']==str(selected) and R.scan(selected)==profile['full_manifest'],'actual selected modes/full population');m=profile['full_manifest'];files={r['path']:r for r in m['members'] if r['kind']=='file'};dirs={'.':m['root_mode'],**{r['path']:r['mode'] for r in m['members'] if r['kind']=='directory'}}\n R.require(set(files)==set(required),'full selected exact set');inputs.selected_profile={'actual_selected_root':str(selected),'expected_owner_uid':os.geteuid(),'directory_modes':dirs,'files':files}\n for r in records:\n  b=input_read(inputs,selected,r['path']);R.require(len(b)==r['bytes'] and R.digest(b)==r['sha256'] and hashlib.sha1(b'blob '+str(len(b)).encode()+b'\\0'+b).hexdigest()==r['git_object'],'actual selected Git/body join')\n inputs.tree(selected,set(files));bundles=[];prefix=str(Path(CAPTURE_PATH).parent)+'/'\n",
+          "tag": "equal"
+        },
+        {
+          "new": " mr={'path':prefix+c['manifest'],**required[prefix+c['manifest']]};ar={'path':prefix+c['archive'],**required[prefix+c['archive']]};manifest=json.loads(input_read(inputs,selected,mr['path']));R.validate(manifest)\n R.require(len(manifest['members'])==c['typed'] and sum(x['kind']=='file' for x in manifest['members'])==c['regular'] and sum(x.get('bytes',0) for x in manifest['members'])==c['logical_bytes'],'complete actual incremental population')\n bundles.append({'name':'current-increment','manifest':mr,'archive':ar})\n",
+          "old": " for j in LANES[i]:\n  p=c['pieces'][j];mr={'path':prefix+p['manifest'],**required[prefix+p['manifest']]};ar={'path':prefix+p['archive'],**required[prefix+p['archive']]};manifest=json.loads(input_read(inputs,selected,mr['path']))\n  R.require({x['path']:(x['bytes'],x['sha256']) for x in manifest['members'] if x['kind']=='file'}=={b['member']:(b['bytes'],b['sha256']) for b in p['bodies']},'piece map/body hashes');bundles.append({'name':'piece-%03d'%j,'manifest':mr,'archive':ar})\n",
+          "tag": "replace"
+        },
+        {
+          "new": " begun=time.monotonic()\n def boundary():R.require(time.monotonic()-begun<180,'bounded lane restoration');W.census(HERE)\n R.require(not os.path.lexists(HERE/'LANE_RECOVERY01.json'),'fresh lane receipt');boundary();results,outputs=restore_archives({'bundles':bundles},selected,HERE,boundary,True);boundary()\n",
+          "old": " begun=time.monotonic()\n def boundary():R.require(time.monotonic()-begun<180,'bounded lane restoration');W.census(HERE)\n R.require(not os.path.lexists(HERE/'LANE_RECOVERY01.json'),'fresh lane receipt');boundary();results,outputs=restore_archives({'bundles':bundles},selected,HERE,boundary,True);boundary()\n",
+          "tag": "equal"
+        },
+        {
+          "new": " receipt={'schema_version':1,'lane':i,'capture_sha256':CAPTURE,'request_sha256':request_sha,'scope':'current-increment','scopes':results,'numerical_authority':False,'requires_actual_composition_review':True}\n",
+          "old": " receipt={'schema_version':1,'lane':i,'capture_sha256':CAPTURE,'request_sha256':request_sha,'piece_ids':list(LANES[i]),'scopes':results,'numerical_authority':False,'requires_cross_lane_original_review':True}\n",
+          "tag": "replace"
+        },
+        {
+          "new": " expected_receipt=R.encode(receipt)\n R.put(HERE/'LANE_RECOVERY01.json',receipt)\n R.require(inputs.read(HERE,'LANE_RECOVERY01.json')==expected_receipt,'published receipt differs from intended canonical bytes');boundary()\n for attr in ('pins','byte_proofs','trees','anchors'):\n  target=getattr(inputs,attr);source=getattr(outputs,attr);R.require(all(k not in target or target[k]==v for k,v in source.items()),'cohort overlaps agree');target.update(source)\n inputs.check()\n",
+          "old": " expected_receipt=R.encode(receipt)\n R.put(HERE/'LANE_RECOVERY01.json',receipt)\n R.require(inputs.read(HERE,'LANE_RECOVERY01.json')==expected_receipt,'published receipt differs from intended canonical bytes');boundary()\n for attr in ('pins','byte_proofs','trees','anchors'):\n  target=getattr(inputs,attr);source=getattr(outputs,attr);R.require(all(k not in target or target[k]==v for k,v in source.items()),'cohort overlaps agree');target.update(source)\n inputs.check()\n",
+          "tag": "equal"
+        }
+      ],
+      "new_sha256": "9e28b4ec5e3ef3e7e280378a82dd93484837c5f6820fc1e3d1c2824f3a9aff42",
+      "old_sha256": "bea06f690e6e69783a2f3aa905a4e3f53beba9466059a3d8babdd6e7f397af8e"
+    },
+    "space01.py": {
+      "AST_parse": true,
+      "full_ordered_inverse": [
+        {
+          "new": "\"\"\"Conservative shared-store free-space margin, not a filesystem reservation.\"\"\"\nfrom pathlib import Path\nimport os,shutil,time\nimport watch01 as original\nPOLICY=original.POLICY\nROOT=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes')\nF=ROOT/'research/onchain-paper-replication-2026-09-24/full_sources'\n",
+          "old": "\"\"\"Conservative shared-store free-space margin, not a filesystem reservation.\"\"\"\nfrom pathlib import Path\nimport os,shutil,time\nimport watch01 as original\nPOLICY=original.POLICY\nROOT=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes')\nF=ROOT/'research/onchain-paper-replication-2026-09-24/full_sources'\n",
+          "tag": "equal"
+        },
+        {
+          "new": "MARGIN=2*96*1024**2\nROOTS=tuple(F/('financial-wrapper-continuation-current-'+phase+'01-2026-10-05') for phase in ('remote','flat'))\n",
+          "old": "MARGIN=8*96*1024**2\nROOTS=tuple(F/('financial-wrapper-compatibility-complete100-outcome-'+phase+'-lane%02d-canonical02-2026-10-05'%i) for i in range(1,5) for phase in ('remote','flat'))\n",
+          "tag": "replace"
+        },
+        {
+          "new": "def check():\n dev=F.stat().st_dev\n for p in ROOTS:\n  if os.path.lexists(p):\n",
+          "old": "def check():\n dev=F.stat().st_dev\n for p in ROOTS:\n  if os.path.lexists(p):\n",
+          "tag": "equal"
+        },
+        {
+          "new": "   if not p.is_dir() or p.resolve()!=p or p.stat().st_dev!=dev:raise ValueError('both retained current roots require same canonical store')\n if shutil.disk_usage(F).free<10*1024**3+MARGIN:raise ValueError('10GiB floor plus fixed192MiB conservative shared margin')\n",
+          "old": "   if not p.is_dir() or p.resolve()!=p or p.stat().st_dev!=dev:raise ValueError('all eight retained lane roots require same canonical store')\n if shutil.disk_usage(F).free<10*1024**3+MARGIN:raise ValueError('10GiB floor plus fixed768MiB conservative shared margin')\n",
+          "tag": "replace"
+        },
+        {
+          "new": "def census(root):\n check();row=original.census(root);check();return row\n",
+          "old": "def census(root):\n check();row=original.census(root);check();return row\n",
+          "tag": "equal"
+        }
+      ],
+      "new_sha256": "5b499abf8a82cd046eb7c6f8fbbd349b246fbdcd0eda84848c1d2eb30af77373",
+      "old_sha256": "95ef3963f89f6604c0adbae2cbb91b77ea5cbd2c118c5534f8cf80851091669a"
+    }
+  },
+  "receiver_original_functions_unchanged": "actual complete generated literal/AST inverse checked by check03",
+  "schema_version": 1,
+  "space_margin": "two96MiB owner roots,192MiB conservative shared free headroom; original per-owner64MiBlogical/96MiBallocated10GiBfloor unchanged",
+  "unchanged": [
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/caller_flat01.py",
+      "path": "caller_flat01.py",
+      "sha256": "661ca98c29d44e0dfb7946139f6285b888fe40f083ddab319ed3a67374edf5f6"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/caller_remote01.py",
+      "path": "caller_remote01.py",
+      "sha256": "cf0f9c7e2f6e61cf178178150daa0c2d9b8cc2cbaa912b5793d78012513fb64d"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/cohort01.py",
+      "path": "cohort01.py",
+      "sha256": "0bf4cb4ca7f2ce8182b775614be4c54b577f4959852fe191186195a8b0ad75ab"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/flat_primitives01.py",
+      "path": "flat_primitives01.py",
+      "sha256": "2e8c9b10da14f61f03d1d3bc40359009678e77f124f74ba5ef36d532ad06be8b"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/original_tree01.py",
+      "path": "original_tree01.py",
+      "sha256": "b1fec36e21d2658efc467a3a5863ae0a5c7d6c1a3fe5b298e0e048b4aaf20b3d"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/receipt01.py",
+      "path": "receipt01.py",
+      "sha256": "07bcd9c2ce58eb9ea5c03a8cf6b7ef2cdccc9edd137572a9b78b195d6d40d8e4"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/recover.template01.py",
+      "path": "recover.template01.py",
+      "sha256": "3de8ee4cb459009b0fd3aa39da1512edfc799a301c6869bbffeb22bd55b28233"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/restore_bundle01.py",
+      "path": "restore_bundle01.py",
+      "sha256": "613e5e5e7dbe3bc4e52a2a5c150bafa3f32fcbcb000649dd6e77c4231fdd3dfb"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/watch01.py",
+      "path": "watch01.py",
+      "sha256": "bdeacaadc053e615245b3e2175089842708719448ec7da970d981e5dc077ca18"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/utilities/recovery_pax01.py",
+      "path": "utilities/recovery_pax01.py",
+      "sha256": "a054d5922899b53579f4220ff3b427dc050dff075cb5470b43ff55e621b97eb2"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/utilities/owned_io.py",
+      "path": "utilities/owned_io.py",
+      "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+    },
+    {
+      "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/financial-wrapper-compatibility-complete100-outcome-recovery-preparation04-2026-10-05/utilities/bounded_git01.py",
+      "path": "utilities/bounded_git01.py",
+      "sha256": "db4a65a450bf9930abac04ab794539ebd952b07826d7314b4aea4e989dd9240f"
+    }
+  ]
+}
