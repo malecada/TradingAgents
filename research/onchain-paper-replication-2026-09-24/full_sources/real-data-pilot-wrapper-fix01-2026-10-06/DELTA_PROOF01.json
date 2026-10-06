@@ -1,0 +1,19 @@
+{
+  "baseline_sha256": "35271ab89c09b99f9402f6120a74890d1664bc6438bbfbc79ebfd52a3d35fcb5",
+  "candidate_sha256": "12d11a7a3f8b5cc07117f622978ce43ef537eab20ab80335b95eeb35cf4391bd",
+  "exact_inverse": true,
+  "edits": [
+    {
+      "old": "",
+      "new": "\n                    # This six-field metadata dataclass is not matching_owner.Binding\n                    # or an authority capability. Its standard generated methods are\n                    # outside that roster, like other metadata dataclasses. Authored\n                    # methods/properties (including overrides) remain authenticated.\n                    if (name=='tradingagents.research.onchain_replication.typed_tail_binding'\n                            and key==value.__name__=='Binding'\n                            and attr in {'__init__','__repr__','__eq__','__setattr__','__delattr__','__hash__','__replace__'}\n                            and type(item) is types.FunctionType\n                            and item.__code__.co_filename!=str(p)):\n                        functions.append((key+'.'+attr+'.metadata_generated',item,item.__code__))\n                        continue\n                    ",
+      "baseline_offset": 2172,
+      "candidate_offset": 2172
+    },
+    {
+      "old": "",
+      "new": "\n            if label.endswith('.metadata_generated'):\n                require(module.__name__=='tradingagents.research.onchain_replication.typed_tail_binding'\n                        and label in {'Binding.'+attr+'.metadata_generated' for attr in\n                            ('__init__','__repr__','__eq__','__setattr__','__delattr__','__hash__','__replace__')}\n                        and fn is vars(module.Binding).get(label.split('.')[1])\n                        and code.co_filename!=str(p), 'generated metadata boundary differs')\n                # Generated metadata methods retain identity/code snapshot checks;\n                # their bodies are runtime-generated, not source-authored authority.\n                continue",
+      "baseline_offset": 2807,
+      "candidate_offset": 3716
+    }
+  ]
+}

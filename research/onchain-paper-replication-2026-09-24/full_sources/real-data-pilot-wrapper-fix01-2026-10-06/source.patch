@@ -1,0 +1,39 @@
+--- baseline/imported_authority_lease.py
++++ candidate/imported_authority_lease.py
+@@ -32,7 +32,19 @@
+         for key,value in tuple(vars(module).items()):
+             add(key,value)
+             if isinstance(value,type) and value.__module__==name and value.__name__ in AUTHORITY_CLASSES:
+-                for attr,item in tuple(vars(value).items()):add(key+'.'+attr,item)
++                for attr,item in tuple(vars(value).items()):
++                    # This six-field metadata dataclass is not matching_owner.Binding
++                    # or an authority capability. Its standard generated methods are
++                    # outside that roster, like other metadata dataclasses. Authored
++                    # methods/properties (including overrides) remain authenticated.
++                    if (name=='tradingagents.research.onchain_replication.typed_tail_binding'
++                            and key==value.__name__=='Binding'
++                            and attr in {'__init__','__repr__','__eq__','__setattr__','__delattr__','__hash__','__replace__'}
++                            and type(item) is types.FunctionType
++                            and item.__code__.co_filename!=str(p)):
++                        functions.append((key+'.'+attr+'.metadata_generated',item,item.__code__))
++                        continue
++                    add(key+'.'+attr,item)
+         result[name]=(module,p,tuple(functions))
+     return result
+ 
+@@ -46,6 +58,15 @@
+                 if type(value) is types.CodeType:walk(value)
+         walk(compiled)
+         for label,fn,code in functions:
++            if label.endswith('.metadata_generated'):
++                require(module.__name__=='tradingagents.research.onchain_replication.typed_tail_binding'
++                        and label in {'Binding.'+attr+'.metadata_generated' for attr in
++                            ('__init__','__repr__','__eq__','__setattr__','__delattr__','__hash__','__replace__')}
++                        and fn is vars(module.Binding).get(label.split('.')[1])
++                        and code.co_filename!=str(p), 'generated metadata boundary differs')
++                # Generated metadata methods retain identity/code snapshot checks;
++                # their bodies are runtime-generated, not source-authored authority.
++                continue
+             if label.endswith('.contextmanager'):
+                 wrapped=getattr(fn,'__wrapped__',None)
+                 require(type(wrapped) is types.FunctionType and fn.__code__ is contextlib.contextmanager(wrapped).__code__ and fn.__globals__ is vars(contextlib) and len(fn.__closure__ or ())==1 and fn.__closure__[0].cell_contents is wrapped,'contextmanager changed')

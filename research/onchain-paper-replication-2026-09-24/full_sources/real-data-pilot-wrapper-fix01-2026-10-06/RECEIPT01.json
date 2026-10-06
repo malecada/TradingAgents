@@ -1,0 +1,58 @@
+{
+  "status": "candidate-ready",
+  "baseline_failure": {
+    "offender": "typed_tail_binding.Binding.__repr__",
+    "wrapper_globals": "reprlib",
+    "wrapper_qualname": "recursive_repr.<locals>.decorating_function.<locals>.wrapper",
+    "freevars": [
+      "fillvalue",
+      "repr_running",
+      "user_function"
+    ],
+    "generated_methods": {
+      "__replace__": "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/dataclasses.py",
+      "__hash__": "<string>",
+      "__init__": "<string>",
+      "__repr__": "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/reprlib.py",
+      "__eq__": "<string>",
+      "__setattr__": "<string>",
+      "__delattr__": "<string>"
+    },
+    "status": "RED",
+    "reason": "import lease: contextmanager wrapper differs"
+  },
+  "focused": {
+    "status": "GREEN",
+    "count": 10,
+    "checks": [
+      "real metadata dataclass and genuine authority source accepted",
+      "authored metadata identity corruption refused",
+      "genuine capability Binding corruption refused",
+      "contextmanager wrapper corruption refused",
+      "unknown metadata foreign wrapper refused",
+      "generated metadata method replacement detected by snapshot",
+      "source-path override cannot bypass authentication",
+      "metadata source hash substitution refused",
+      "forged generated suffix refused",
+      "restored source and functions accepted"
+    ],
+    "scope": "source/import only; no arrays, instances, lease activation or claims"
+  },
+  "final_import_authentication": {
+    "status": "passed",
+    "candidate_sha256": "12d11a7a3f8b5cc07117f622978ce43ef537eab20ab80335b95eeb35cf4391bd",
+    "source_modules": 86,
+    "captured_functions": 649,
+    "scope": "imports only; no model construction/arrays/claims or real inputs"
+  },
+  "verification": "checkout-local Python3.13.13; import/source-only custom checks; no broad suite or empirical execution",
+  "remaining_uncertainty": [
+    "Generated metadata method bodies are outside initial capability-code authentication by coordinator-approved scope; subsequent function/code replacement remains snapshot-detectable.",
+    "Actual imported authority activation under a future genuine claim remains untested.",
+    "Secondary failed05 cleanup-history diagnostic is preserved and outside this change."
+  ],
+  "failures_retained": [
+    "RED01 expected baseline ValueError",
+    "draft marker suffix issue identified in review, fixed and covered by GREEN01"
+  ]
+}

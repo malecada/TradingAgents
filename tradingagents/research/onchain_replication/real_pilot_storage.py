@@ -4,7 +4,7 @@ from pathlib import Path
 from types import MappingProxyType
 from .workflow_storage import StorageWatch,StorageLimit,FIELDS,_close
 KIND='real-pilot-writable-union'
-EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261006-05'
+EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261006-06'
 COUNTS={'allocated_bytes':'max_allocated_bytes','logical_file_bytes':'max_logical_bytes','entries':'max_entries'}
 
 def selected(budget):return type(budget) is dict and budget.get('schema_version')==2
