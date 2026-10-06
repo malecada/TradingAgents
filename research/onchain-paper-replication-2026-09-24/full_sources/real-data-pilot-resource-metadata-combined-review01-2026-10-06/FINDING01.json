@@ -1,0 +1,20 @@
+{
+  "decision": "withheld-builder01-domain-mismatch",
+  "path": "real-data-pilot-resource-input-builder01-2026-10-06/build_inputs01.py",
+  "lines": [
+    159,
+    160
+  ],
+  "finding": "Cumulative payload reservation is incorrectly required as simultaneous retained local diagnostic storage. Successful get moves staging into destination. Keep cumulative guards unchanged; explicitly account retained diagnostics, all controls, caller scratch, original matrices and physical overhead separately.",
+  "logical_diagnostic_bound": "131072*max_commands + 8388608",
+  "qualifications": [
+    "Serialized transport; first started-call failure terminally poisons context",
+    "Caller destination/snapshot/readback overlaps remain additional",
+    "Logical bound is not allocated blocks/inode/directory capacity",
+    "Initial review message incorrectly called archive MAX_BYTES4MiB; author corrected actual8MiB alias, distinct from typed4MiB ceiling"
+  ],
+  "independent_tool": "64d7dc",
+  "exit_code": 0,
+  "header_boundary_control": "NPYv2 header-only exact endpoint, extent mismatch refused",
+  "actual_payloads_read": false
+}

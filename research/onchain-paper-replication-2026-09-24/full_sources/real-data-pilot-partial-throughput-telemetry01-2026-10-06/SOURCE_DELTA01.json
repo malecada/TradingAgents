@@ -1,0 +1,54 @@
+{
+  "compact_mcm.py": {
+    "before_sha256": "546e31ab392256b210a1675a02678bdaa55487bf5ee23f03558b5e59db0b73b5",
+    "after_sha256": "be956793d5ebb6111b109fa106aaa485da06b53d9bd410ecd2b14101ed34e0ba",
+    "literal_edits": [
+      {
+        "before": "def produce_imported(execution,graph,*,graph_hash,input_name,output_input):",
+        "after": "def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None):\n    if progress is not None:\n        from .real_pilot_partial_progress import MCMProgress\n        require(type(progress) is MCMProgress,'exact optional pilot telemetry required')"
+      },
+      {
+        "before": "return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)",
+        "after": "return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held,progress=progress)"
+      },
+      {
+        "before": "def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held):",
+        "after": "def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held, progress=None):"
+      },
+      {
+        "before": "        stage_inode = list(stage.inode)\n",
+        "after": "        stage_inode = list(stage.inode)\n        if progress is not None:progress.begin(graph_hash,start['rows'],start['motifs'])\n"
+      },
+      {
+        "before": "            require(io._read(fd,'start.json',io.META_LIMIT) == io._json(start),'MCM producer start changed')\n",
+        "after": "            require(io._read(fd,'start.json',io.META_LIMIT) == io._json(start),'MCM producer start changed')\n            if progress is not None:progress.poll(log,stream)\n"
+      }
+    ]
+  },
+  "real_pilot_import_caller.py": {
+    "before_sha256": "0b5f11bdf09750f2c6d0d2fd7b330a74eb13c7b78a35cb50c6cf975ae4f97266",
+    "after_sha256": "9559605b15ee6f2942d8e85bf47305ac97e32e79b51812ce239cf71d9f6bddcb",
+    "literal_edits": [
+      {
+        "before": "    resource_subset = 'population_scope' in p\n",
+        "after": "    partial = 'partial_progress' in p\n    if partial:\n        from .real_pilot_partial_progress import policy\n        require(full, 'partial progress requires explicit schema2 plan')\n        policy(p['partial_progress'])\n    resource_subset = 'population_scope' in p\n"
+      },
+      {
+        "before": " | ({'archive_inputs'} if archive else set()), 'pilot plan fields differ')",
+        "after": " | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()), 'pilot plan fields differ')"
+      },
+      {
+        "before": "    terminal = training = None; primary = None\n",
+        "after": "    progress = None\n    if 'partial_progress' in p:\n        from .real_pilot_partial_progress import MCMProgress\n        progress = MCMProgress(p['partial_progress'],{key:len(g.node_ids) for key,g in graphs.items()},\n            claim_sha256=run._claim_sha256,source=run.admission.source)\n    terminal = training = None; primary = None\n"
+      },
+      {
+        "before": "result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'])",
+        "after": "result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],\n                **({'progress':progress} if progress is not None else {}))"
+      },
+      {
+        "before": "    terminal = terminal or {'schema_version':1,'kind':KIND,'status':'failed','resource_only':True,'reason':row['reason']}\n",
+        "after": "    if progress is not None:summary['partial_mcm_progress'] = progress.summary()\n    terminal = terminal or {'schema_version':1,'kind':KIND,'status':'failed','resource_only':True,'reason':row['reason']}\n"
+      }
+    ]
+  }
+}

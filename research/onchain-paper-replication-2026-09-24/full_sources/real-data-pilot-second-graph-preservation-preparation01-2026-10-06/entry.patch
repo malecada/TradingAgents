@@ -1,0 +1,44 @@
+--- research/onchain-paper-replication-2026-09-24/storage/real-pilot-first-graph-preservation-20261006-01/entry03.py
++++ entry01.py
+@@ -16,7 +16,7 @@
+ 
+ ROOT = Path(__file__).resolve().parents[4]
+ HERE = Path(__file__).resolve().parent
+-ID = 'real-pilot-first-graph-preservation-20261006-01'
++ID = 'real-pilot-second-graph-preservation-20261006-01'
+ GIB = 1024**3
+ 
+ 
+@@ -51,7 +51,7 @@
+ 
+ 
+ def frozen():
+-    envelope_raw = (HERE / 'envelope03.json').read_bytes()
++    envelope_raw = (HERE / 'envelope01.json').read_bytes()
+     envelope = json.loads(envelope_raw)
+     if (envelope['identity'] != ID
+             or envelope['local_only_evidence'] != [envelope['connection']['path']]
+@@ -98,12 +98,12 @@
+ 
+ def launch():
+     envelope, selection, digest = frozen()
+-    release_path = HERE / 'RELEASE_REVIEW03.json'
++    release_path = HERE / 'RELEASE_REVIEW01.json'
+     release = json.loads(release_path.read_bytes())
+     if release.get('decision') != 'accepted' or release['envelope_sha256'] != digest:
+         raise ValueError('exact independent source/entry release missing')
+     head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+-    for path in ('envelope03.json', 'RELEASE_REVIEW03.json'):
++    for path in ('envelope01.json', 'RELEASE_REVIEW01.json'):
+         relative = str((HERE / path).relative_to(ROOT))
+         if subprocess.check_output(['git', 'show', head + ':' + relative], cwd=ROOT) != (HERE / path).read_bytes():
+             raise ValueError('entry envelope/review not committed')
+@@ -144,7 +144,7 @@
+     selected = 1
+     fatal = None
+     try:
+-        result = guarded_run([str(ROOT / '.venv/bin/python'), '-B', str(HERE / 'entry03.py'), '--worker'],
++        result = guarded_run([str(ROOT / '.venv/bin/python'), '-B', str(HERE / 'entry01.py'), '--worker'],
+             cwd=ROOT, receipt_dir=HERE / 'guard01', memory_max_bytes=256 * 1024**2,
+             memory_high_bytes=192 * 1024**2, memory_swap_max_bytes=0,
+             reserve_bytes=3 * GIB, start_reserve_bytes=int(3.5 * GIB),

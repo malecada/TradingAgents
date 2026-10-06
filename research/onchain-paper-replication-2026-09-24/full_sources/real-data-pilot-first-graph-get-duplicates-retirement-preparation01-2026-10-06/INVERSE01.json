@@ -1,0 +1,1523 @@
+{
+  "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-first-graph-post-recovery-retirement01-2026-10-06/retire02.py",
+  "baseline_sha256": "93b938adbd7f5ef25b4946c8bb2f23973c14a4e73fdb8761c1dd5ce20756dc9d",
+  "candidate_sha256": "0ea52ac0db5f8f6fe726cd4298b6c4d79651380ccd98d673bacfc7a3c3cd32a6",
+  "reverse_replacements": [
+    {
+      "new_start": 3,
+      "new_end": 12,
+      "original": "R"
+    },
+    {
+      "new_start": 17,
+      "new_end": 21,
+      "original": ""
+    },
+    {
+      "new_start": 23,
+      "new_end": 30,
+      "original": "n"
+    },
+    {
+      "new_start": 33,
+      "new_end": 36,
+      "original": "th"
+    },
+    {
+      "new_start": 47,
+      "new_end": 53,
+      "original": "fi"
+    },
+    {
+      "new_start": 54,
+      "new_end": 54,
+      "original": "st g"
+    },
+    {
+      "new_start": 56,
+      "new_end": 57,
+      "original": "ph ledger and its successful"
+    },
+    {
+      "new_start": 62,
+      "new_end": 67,
+      "original": "s"
+    },
+    {
+      "new_start": 68,
+      "new_end": 68,
+      "original": "r"
+    },
+    {
+      "new_start": 70,
+      "new_end": 89,
+      "original": "ch"
+    },
+    {
+      "new_start": 166,
+      "new_end": 172,
+      "original": ""
+    },
+    {
+      "new_start": 295,
+      "new_end": 295,
+      "original": "led"
+    },
+    {
+      "new_start": 297,
+      "new_end": 309,
+      "original": "r"
+    },
+    {
+      "new_start": 334,
+      "new_end": 334,
+      "original": "GRAPH='eth-paper-real-pilot-graph-20220502-20261005-01'\n"
+    },
+    {
+      "new_start": 341,
+      "new_end": 341,
+      "original": "ROOT/"
+    },
+    {
+      "new_start": 445,
+      "new_end": 445,
+      "original": "SELECTOR='research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-incremental-graph-retention02-2026-10-05/select01.py'\n"
+    },
+    {
+      "new_start": 544,
+      "new_end": 793,
+      "original": ""
+    },
+    {
+      "new_start": 798,
+      "new_end": 802,
+      "original": "d"
+    },
+    {
+      "new_start": 803,
+      "new_end": 814,
+      "original": ""
+    },
+    {
+      "new_start": 816,
+      "new_end": 816,
+      "original": "st(path"
+    },
+    {
+      "new_start": 823,
+      "new_end": 834,
+      "original": "h=h"
+    },
+    {
+      "new_start": 835,
+      "new_end": 836,
+      "original": ""
+    },
+    {
+      "new_start": 837,
+      "new_end": 841,
+      "original": "h"
+    },
+    {
+      "new_start": 842,
+      "new_end": 852,
+      "original": "ib."
+    },
+    {
+      "new_start": 853,
+      "new_end": 854,
+      "original": "h"
+    },
+    {
+      "new_start": 855,
+      "new_end": 857,
+      "original": "256("
+    },
+    {
+      "new_start": 859,
+      "new_end": 859,
+      "original": "    with Path(path).open('rb') as s:\n        while b:=s.read(1024**2):h.update(b)\n    return h.hexdigest()"
+    },
+    {
+      "new_start": 866,
+      "new_end": 875,
+      "original": ""
+    },
+    {
+      "new_start": 876,
+      "new_end": 879,
+      "original": "dule("
+    },
+    {
+      "new_start": 891,
+      "new_end": 894,
+      "original": ","
+    },
+    {
+      "new_start": 895,
+      "new_end": 895,
+      "original": "am"
+    },
+    {
+      "new_start": 903,
+      "new_end": 904,
+      "original": "p"
+    },
+    {
+      "new_start": 905,
+      "new_end": 910,
+      "original": "ROOT/"
+    },
+    {
+      "new_start": 918,
+      "new_end": 919,
+      "original": ""
+    },
+    {
+      "new_start": 920,
+      "new_end": 1179,
+      "original": ""
+    },
+    {
+      "new_start": 1197,
+      "new_end": 1258,
+      "original": ""
+    },
+    {
+      "new_start": 1263,
+      "new_end": 1267,
+      "original": ""
+    },
+    {
+      "new_start": 1268,
+      "new_end": 1285,
+      "original": "f"
+    },
+    {
+      "new_start": 1317,
+      "new_end": 1318,
+      "original": "!"
+    },
+    {
+      "new_start": 1322,
+      "new_end": 1325,
+      "original": ":ra"
+    },
+    {
+      "new_start": 1326,
+      "new_end": 1328,
+      "original": "se ValueError('accept"
+    },
+    {
+      "new_start": 1331,
+      "new_end": 1332,
+      "original": "sourc"
+    },
+    {
+      "new_start": 1333,
+      "new_end": 1335,
+      "original": " "
+    },
+    {
+      "new_start": 1336,
+      "new_end": 1336,
+      "original": "iffers')\n    spec=importlib.util.spec_from_file_loc"
+    },
+    {
+      "new_start": 1338,
+      "new_end": 1338,
+      "original": "ion(n"
+    },
+    {
+      "new_start": 1339,
+      "new_end": 1339,
+      "original": "me,p);m=importlib.util.module_from_spec(spec)\n    exec(compile(raw,str(p),'exec'),vars(m));return m\n\ndef execute(review_path,review_sha):\n    if digest(review_path)!=review_sha:raise ValueError('exact independent review"
+    },
+    {
+      "new_start": 1356,
+      "new_end": 1368,
+      "original": "vi"
+    },
+    {
+      "new_start": 1369,
+      "new_end": 1369,
+      "original": "w=json.loads(Path(review_path).read_bytes())\n    i"
+    },
+    {
+      "new_start": 1371,
+      "new_end": 1371,
+      "original": "(review['decision']!='accepted' or review['retirement_"
+    },
+    {
+      "new_start": 1379,
+      "new_end": 1383,
+      "original": "']!=ID\n            or "
+    },
+    {
+      "new_start": 1385,
+      "new_end": 1398,
+      "original": ""
+    },
+    {
+      "new_start": 1399,
+      "new_end": 1405,
+      "original": ""
+    },
+    {
+      "new_start": 1406,
+      "new_end": 1417,
+      "original": ""
+    },
+    {
+      "new_start": 1418,
+      "new_end": 1458,
+      "original": "w['"
+    },
+    {
+      "new_start": 1461,
+      "new_end": 1462,
+      "original": ""
+    },
+    {
+      "new_start": 1463,
+      "new_end": 1463,
+      "original": "y_sha256']!=digest(__file__) "
+    },
+    {
+      "new_start": 1464,
+      "new_end": 1464,
+      "original": "r review['full_scope_byte_recovery'] is n"
+    },
+    {
+      "new_start": 1466,
+      "new_end": 1467,
+      "original": " T"
+    },
+    {
+      "new_start": 1468,
+      "new_end": 1468,
+      "original": "ue\n            "
+    },
+    {
+      "new_start": 1469,
+      "new_end": 1469,
+      "original": "r revie"
+    },
+    {
+      "new_start": 1470,
+      "new_end": 1470,
+      "original": "['retire_only_first_graph_ledger_and_successful_get'] is not True"
+    },
+    {
+      "new_start": 1473,
+      "new_end": 1473,
+      "original": "        raise ValueError('exact outcome/retirement release required')\n    for relative,pin in review['evidence'].items():\n    "
+    },
+    {
+      "new_start": 1485,
+      "new_end": 1490,
+      "original": "el"
+    },
+    {
+      "new_start": 1492,
+      "new_end": 1495,
+      "original": "ive"
+    },
+    {
+      "new_start": 1499,
+      "new_end": 1503,
+      "original": "ROOT"
+    },
+    {
+      "new_start": 1510,
+      "new_end": 1514,
+      "original": "    "
+    },
+    {
+      "new_start": 1515,
+      "new_end": 1521,
+      "original": "f"
+    },
+    {
+      "new_start": 1538,
+      "new_end": 1541,
+      "original": "or"
+    },
+    {
+      "new_start": 1546,
+      "new_end": 1550,
+      "original": ""
+    },
+    {
+      "new_start": 1562,
+      "new_end": 1565,
+      "original": "or"
+    },
+    {
+      "new_start": 1588,
+      "new_end": 1589,
+      "original": "!"
+    },
+    {
+      "new_start": 1591,
+      "new_end": 1592,
+      "original": " or not p.is_file() or p.is_symlink() or p.stat().st_size>4*1024**2:\n            raise ValueError("
+    },
+    {
+      "new_start": 1603,
+      "new_end": 1609,
+      "original": "bound"
+    },
+    {
+      "new_start": 1612,
+      "new_end": 1613,
+      "original": ""
+    },
+    {
+      "new_start": 1614,
+      "new_end": 1622,
+      "original": ""
+    },
+    {
+      "new_start": 1623,
+      "new_end": 1624,
+      "original": "view evidence"
+    },
+    {
+      "new_start": 1640,
+      "new_end": 1645,
+      "original": "    if dige"
+    },
+    {
+      "new_start": 1647,
+      "new_end": 1649,
+      "original": ""
+    },
+    {
+      "new_start": 1650,
+      "new_end": 1650,
+      "original": "p"
+    },
+    {
+      "new_start": 1651,
+      "new_end": 1695,
+      "original": "!=p"
+    },
+    {
+      "new_start": 1697,
+      "new_end": 1702,
+      "original": ":r"
+    },
+    {
+      "new_start": 1703,
+      "new_end": 1704,
+      "original": "ise ValueError('reviewe"
+    },
+    {
+      "new_start": 1706,
+      "new_end": 1706,
+      "original": "ev"
+    },
+    {
+      "new_start": 1710,
+      "new_end": 1723,
+      "original": "ce changed: "
+    },
+    {
+      "new_start": 1724,
+      "new_end": 1726,
+      "original": "+rel"
+    },
+    {
+      "new_start": 1728,
+      "new_end": 1729,
+      "original": ""
+    },
+    {
+      "new_start": 1730,
+      "new_end": 1731,
+      "original": "v"
+    },
+    {
+      "new_start": 1732,
+      "new_end": 1732,
+      "original": ")\n    fi"
+    },
+    {
+      "new_start": 1733,
+      "new_end": 1733,
+      "original": "al=json.loads((BACKUP/'guard01/final.json').read_by"
+    },
+    {
+      "new_start": 1734,
+      "new_end": 1734,
+      "original": "es())\n    outer=json.loads((BACKUP/'outer-ex"
+    },
+    {
+      "new_start": 1736,
+      "new_end": 1736,
+      "original": "01.json').read_b"
+    },
+    {
+      "new_start": 1737,
+      "new_end": 1737,
+      "original": "tes())\n    if ((BACKUP/'failed.json').exists() or final['phase"
+    },
+    {
+      "new_start": 1739,
+      "new_end": 1739,
+      "original": "!='complete' or final['child_exit_code']!=0"
+    },
+    {
+      "new_start": 1748,
+      "new_end": 1751,
+      "original": ""
+    },
+    {
+      "new_start": 1752,
+      "new_end": 1764,
+      "original": "   "
+    },
+    {
+      "new_start": 1765,
+      "new_end": 1766,
+      "original": "r final"
+    },
+    {
+      "new_start": 1768,
+      "new_end": 1771,
+      "original": "cl"
+    },
+    {
+      "new_start": 1772,
+      "new_end": 1773,
+      "original": "anup_verified"
+    },
+    {
+      "new_start": 1776,
+      "new_end": 1780,
+      "original": "i"
+    },
+    {
+      "new_start": 1781,
+      "new_end": 1781,
+      "original": " no"
+    },
+    {
+      "new_start": 1782,
+      "new_end": 1782,
+      "original": " True or P"
+    },
+    {
+      "new_start": 1784,
+      "new_end": 1792,
+      "original": "h"
+    },
+    {
+      "new_start": 1793,
+      "new_end": 1805,
+      "original": "final['cg"
+    },
+    {
+      "new_start": 1807,
+      "new_end": 1808,
+      "original": "up']).exists()\n            or Path('/proc',str(final"
+    },
+    {
+      "new_start": 1812,
+      "new_end": 1812,
+      "original": "nitor_pi"
+    },
+    {
+      "new_start": 1813,
+      "new_end": 1814,
+      "original": ""
+    },
+    {
+      "new_start": 1816,
+      "new_end": 1817,
+      "original": ")).exists() or outer["
+    },
+    {
+      "new_start": 1818,
+      "new_end": 1818,
+      "original": "entry_"
+    },
+    {
+      "new_start": 1826,
+      "new_end": 1828,
+      "original": "_exi"
+    },
+    {
+      "new_start": 1829,
+      "new_end": 1833,
+      "original": "_c"
+    },
+    {
+      "new_start": 1836,
+      "new_end": 1836,
+      "original": "']!=0):\n        raise ValueError('actual preservation parent"
+    },
+    {
+      "new_start": 1838,
+      "new_end": 1839,
+      "original": "at"
+    },
+    {
+      "new_start": 1840,
+      "new_end": 1840,
+      "original": "ve clea"
+    },
+    {
+      "new_start": 1841,
+      "new_end": 1842,
+      "original": "up"
+    },
+    {
+      "new_start": 1857,
+      "new_end": 2046,
+      "original": ""
+    },
+    {
+      "new_start": 2048,
+      "new_end": 3402,
+      "original": ""
+    },
+    {
+      "new_start": 3555,
+      "new_end": 3556,
+      "original": ":\n        raise ValueError("
+    },
+    {
+      "new_start": 3593,
+      "new_end": 3597,
+      "original": ""
+    },
+    {
+      "new_start": 3598,
+      "new_end": 3598,
+      "original": "o"
+    },
+    {
+      "new_start": 3599,
+      "new_end": 3601,
+      "original": "d="
+    },
+    {
+      "new_start": 3602,
+      "new_end": 3606,
+      "original": "odule"
+    },
+    {
+      "new_start": 3607,
+      "new_end": 3608,
+      "original": "C"
+    },
+    {
+      "new_start": 3609,
+      "new_end": 3612,
+      "original": "LD,'0d507711644d962e494e659987ba0a6d479304af7092ba15315630d0b68e1a84',"
+    },
+    {
+      "new_start": 3615,
+      "new_end": 3618,
+      "original": "ti"
+    },
+    {
+      "new_start": 3619,
+      "new_end": 3624,
+      "original": "eme"
+    },
+    {
+      "new_start": 3625,
+      "new_end": 3626,
+      "original": "t_cold03"
+    },
+    {
+      "new_start": 3628,
+      "new_end": 3650,
+      "original": ""
+    },
+    {
+      "new_start": 3655,
+      "new_end": 3676,
+      "original": "s"
+    },
+    {
+      "new_start": 3677,
+      "new_end": 3683,
+      "original": ""
+    },
+    {
+      "new_start": 3685,
+      "new_end": 3685,
+      "original": "c"
+    },
+    {
+      "new_start": 3686,
+      "new_end": 3704,
+      "original": ""
+    },
+    {
+      "new_start": 3706,
+      "new_end": 3711,
+      "original": "="
+    },
+    {
+      "new_start": 3712,
+      "new_end": 3727,
+      "original": "odu"
+    },
+    {
+      "new_start": 3729,
+      "new_end": 3744,
+      "original": ""
+    },
+    {
+      "new_start": 3745,
+      "new_end": 3747,
+      "original": "SELECTOR,'d9d63840"
+    },
+    {
+      "new_start": 3748,
+      "new_end": 3750,
+      "original": "8f4510ac4e1b784ab31762d91f74c4de8d2258bdd7011823f921205','re"
+    },
+    {
+      "new_start": 3752,
+      "new_end": 3754,
+      "original": "r"
+    },
+    {
+      "new_start": 3755,
+      "new_end": 3755,
+      "original": "ment_selector02')"
+    },
+    {
+      "new_start": 3760,
+      "new_end": 3760,
+      "original": "selection=selector.select(ROOT,GRAPH);row=selection['files'][0]\n"
+    },
+    {
+      "new_start": 3764,
+      "new_end": 3765,
+      "original": ""
+    },
+    {
+      "new_start": 3766,
+      "new_end": 3766,
+      "original": "riginal=ROOT/row['path'];selecte"
+    },
+    {
+      "new_start": 3767,
+      "new_end": 3768,
+      "original": ""
+    },
+    {
+      "new_start": 3780,
+      "new_end": 3788,
+      "original": ""
+    },
+    {
+      "new_start": 3789,
+      "new_end": 3794,
+      "original": "BACKUP/'"
+    },
+    {
+      "new_start": 3795,
+      "new_end": 3799,
+      "original": "e"
+    },
+    {
+      "new_start": 3800,
+      "new_end": 3801,
+      "original": "ect"
+    },
+    {
+      "new_start": 3802,
+      "new_end": 3803,
+      "original": "on01.json')"
+    },
+    {
+      "new_start": 3806,
+      "new_end": 3807,
+      "original": ""
+    },
+    {
+      "new_start": 3808,
+      "new_end": 3812,
+      "original": "d"
+    },
+    {
+      "new_start": 3813,
+      "new_end": 3813,
+      "original": "by"
+    },
+    {
+      "new_start": 3814,
+      "new_end": 3815,
+      "original": "es"
+    },
+    {
+      "new_start": 3816,
+      "new_end": 3822,
+      "original": ""
+    },
+    {
+      "new_start": 3829,
+      "new_end": 3829,
+      "original": "indices=[i for i,r in enumerate(selected['files']) if r['path']==row['path']]\n"
+    },
+    {
+      "new_start": 3833,
+      "new_end": 3837,
+      "original": ""
+    },
+    {
+      "new_start": 3838,
+      "new_end": 3839,
+      "original": "f l"
+    },
+    {
+      "new_start": 3840,
+      "new_end": 3840,
+      "original": "n"
+    },
+    {
+      "new_start": 3841,
+      "new_end": 3859,
+      "original": ""
+    },
+    {
+      "new_start": 3860,
+      "new_end": 3860,
+      "original": "n"
+    },
+    {
+      "new_start": 3861,
+      "new_end": 3862,
+      "original": "ices"
+    },
+    {
+      "new_start": 3865,
+      "new_end": 3870,
+      "original": "1:r"
+    },
+    {
+      "new_start": 3872,
+      "new_end": 3929,
+      "original": ""
+    },
+    {
+      "new_start": 3930,
+      "new_end": 3930,
+      "original": "e"
+    },
+    {
+      "new_start": 3931,
+      "new_end": 3931,
+      "original": "ValueError('ex"
+    },
+    {
+      "new_start": 3934,
+      "new_end": 3935,
+      "original": " preser"
+    },
+    {
+      "new_start": 3937,
+      "new_end": 3937,
+      "original": "d original missing"
+    },
+    {
+      "new_start": 3944,
+      "new_end": 3944,
+      "original": "n=indices[0];kept=json.loads((BACKUP/f'{n:02d}-kept.json').read_bytes())\n"
+    },
+    {
+      "new_start": 3947,
+      "new_end": 3947,
+      "original": " if any(kept[k]!=row[k]"
+    },
+    {
+      "new_start": 3952,
+      "new_end": 3955,
+      "original": "k"
+    },
+    {
+      "new_start": 3959,
+      "new_end": 3968,
+      "original": "["
+    },
+    {
+      "new_start": 3969,
+      "new_end": 3971,
+      "original": ""
+    },
+    {
+      "new_start": 3972,
+      "new_end": 3978,
+      "original": "a"
+    },
+    {
+      "new_start": 3979,
+      "new_end": 3979,
+      "original": "h"
+    },
+    {
+      "new_start": 3981,
+      "new_end": 3989,
+      "original": ""
+    },
+    {
+      "new_start": 3990,
+      "new_end": 3994,
+      "original": "by"
+    },
+    {
+      "new_start": 3995,
+      "new_end": 3995,
+      "original": "e"
+    },
+    {
+      "new_start": 3998,
+      "new_end": 4000,
+      "original": "'sha256','stat_identity']"
+    },
+    {
+      "new_start": 4001,
+      "new_end": 4003,
+      "original": ":raise V"
+    },
+    {
+      "new_start": 4007,
+      "new_end": 4007,
+      "original": "Error('original recovery join differ"
+    },
+    {
+      "new_start": 4008,
+      "new_end": 4008,
+      "original": "')\n    if not kept['body_roundtrip_verified'] or not kept['original_retained'] or not kept['recovered_body_retained']:raise ValueError('full successful recovery missing')\n    recovered=BACKUP/f'{n:02d}-recovered.bin'\n    sidecar=original.with_name(original.name+'.remote.json')\n    recovered_identity=cold.identity(recovered.lstat"
+    },
+    {
+      "new_start": 4010,
+      "new_end": 4010,
+      "original": ")\n    cold.validate_source(original,row)\n    if recovered.is_symlink() or recovered.stat().st_nlink!=1 or recovered.stat().st_size!=row['bytes'] or digest(recovered)!=row['sha256']"
+    },
+    {
+      "new_start": 4020,
+      "new_end": 4035,
+      "original": ""
+    },
+    {
+      "new_start": 4036,
+      "new_end": 4041,
+      "original": ""
+    },
+    {
+      "new_start": 4042,
+      "new_end": 4048,
+      "original": "ise ValueE"
+    },
+    {
+      "new_start": 4049,
+      "new_end": 4049,
+      "original": "ror('actual succ"
+    },
+    {
+      "new_start": 4051,
+      "new_end": 4052,
+      "original": "sfu"
+    },
+    {
+      "new_start": 4053,
+      "new_end": 4053,
+      "original": " reco"
+    },
+    {
+      "new_start": 4055,
+      "new_end": 4056,
+      "original": "ry changed'"
+    },
+    {
+      "new_start": 4062,
+      "new_end": 4069,
+      "original": "if"
+    },
+    {
+      "new_start": 4072,
+      "new_end": 4167,
+      "original": ""
+    },
+    {
+      "new_start": 4168,
+      "new_end": 4170,
+      "original": "o"
+    },
+    {
+      "new_start": 4171,
+      "new_end": 4179,
+      "original": ""
+    },
+    {
+      "new_start": 4183,
+      "new_end": 4293,
+      "original": ""
+    },
+    {
+      "new_start": 4314,
+      "new_end": 4694,
+      "original": "!"
+    },
+    {
+      "new_start": 4697,
+      "new_end": 4707,
+      "original": ""
+    },
+    {
+      "new_start": 4708,
+      "new_end": 5028,
+      "original": ""
+    },
+    {
+      "new_start": 5031,
+      "new_end": 5096,
+      "original": ""
+    },
+    {
+      "new_start": 5099,
+      "new_end": 5667,
+      "original": ""
+    },
+    {
+      "new_start": 5669,
+      "new_end": 5684,
+      "original": ""
+    },
+    {
+      "new_start": 5685,
+      "new_end": 5691,
+      "original": ""
+    },
+    {
+      "new_start": 5692,
+      "new_end": 5713,
+      "original": ""
+    },
+    {
+      "new_start": 5716,
+      "new_end": 5725,
+      "original": "V"
+    },
+    {
+      "new_start": 5727,
+      "new_end": 5728,
+      "original": "u"
+    },
+    {
+      "new_start": 5729,
+      "new_end": 5729,
+      "original": "Error('nonc"
+    },
+    {
+      "new_start": 5730,
+      "new_end": 5732,
+      "original": "nonical"
+    },
+    {
+      "new_start": 5735,
+      "new_end": 5884,
+      "original": ""
+    },
+    {
+      "new_start": 5886,
+      "new_end": 5990,
+      "original": ""
+    },
+    {
+      "new_start": 5991,
+      "new_end": 5992,
+      "original": "e"
+    },
+    {
+      "new_start": 5993,
+      "new_end": 6000,
+      "original": "y'"
+    },
+    {
+      "new_start": 6057,
+      "new_end": 6064,
+      "original": "r"
+    },
+    {
+      "new_start": 6065,
+      "new_end": 6066,
+      "original": "w"
+    },
+    {
+      "new_start": 6069,
+      "new_end": 6071,
+      "original": "ow"
+    },
+    {
+      "new_start": 6131,
+      "new_end": 6163,
+      "original": ""
+    },
+    {
+      "new_start": 6181,
+      "new_end": 6187,
+      "original": ""
+    },
+    {
+      "new_start": 6188,
+      "new_end": 6219,
+      "original": ""
+    },
+    {
+      "new_start": 6221,
+      "new_end": 6282,
+      "original": ""
+    },
+    {
+      "new_start": 6283,
+      "new_end": 6303,
+      "original": " os."
+    },
+    {
+      "new_start": 6305,
+      "new_end": 6306,
+      "original": "open("
+    },
+    {
+      "new_start": 6314,
+      "new_end": 6315,
+      "original": "origin"
+    },
+    {
+      "new_start": 6316,
+      "new_end": 6318,
+      "original": "l"
+    },
+    {
+      "new_start": 6345,
+      "new_end": 6346,
+      "original": ",'rb') as "
+    },
+    {
+      "new_start": 6350,
+      "new_end": 6361,
+      "original": ":"
+    },
+    {
+      "new_start": 6362,
+      "new_end": 6366,
+      "original": ""
+    },
+    {
+      "new_start": 6390,
+      "new_end": 6391,
+      "original": "hel"
+    },
+    {
+      "new_start": 6434,
+      "new_end": 6512,
+      "original": ""
+    },
+    {
+      "new_start": 6514,
+      "new_end": 6611,
+      "original": ""
+    },
+    {
+      "new_start": 6613,
+      "new_end": 6626,
+      "original": ""
+    },
+    {
+      "new_start": 6627,
+      "new_end": 6637,
+      "original": ""
+    },
+    {
+      "new_start": 6638,
+      "new_end": 6673,
+      "original": ""
+    },
+    {
+      "new_start": 6674,
+      "new_end": 6698,
+      "original": "."
+    },
+    {
+      "new_start": 6720,
+      "new_end": 6723,
+      "original": ".file"
+    },
+    {
+      "new_start": 6724,
+      "new_end": 6725,
+      "original": "o("
+    },
+    {
+      "new_start": 6727,
+      "new_end": 6728,
+      "original": ")!"
+    },
+    {
+      "new_start": 6732,
+      "new_end": 6744,
+      "original": ""
+    },
+    {
+      "new_start": 6761,
+      "new_end": 6761,
+      "original": ":raise ValueError('original opened identity differs')"
+    },
+    {
+      "new_start": 6774,
+      "new_end": 6774,
+      "original": "cold.publish(sidecar,kept)\n"
+    },
+    {
+      "new_start": 6778,
+      "new_end": 6781,
+      "original": ""
+    },
+    {
+      "new_start": 6782,
+      "new_end": 6782,
+      "original": "       cold.validate_source(original,row)\n            if cold."
+    },
+    {
+      "new_start": 6804,
+      "new_end": 6807,
+      "original": ".file"
+    },
+    {
+      "new_start": 6808,
+      "new_end": 6811,
+      "original": "o("
+    },
+    {
+      "new_start": 6813,
+      "new_end": 6814,
+      "original": ")!"
+    },
+    {
+      "new_start": 6818,
+      "new_end": 6831,
+      "original": ""
+    },
+    {
+      "new_start": 6848,
+      "new_end": 6858,
+      "original": ":"
+    },
+    {
+      "new_start": 6859,
+      "new_end": 6860,
+      "original": "ais"
+    },
+    {
+      "new_start": 6861,
+      "new_end": 6863,
+      "original": " Valu"
+    },
+    {
+      "new_start": 6864,
+      "new_end": 6865,
+      "original": "Error('original"
+    },
+    {
+      "new_start": 6888,
+      "new_end": 6906,
+      "original": ""
+    },
+    {
+      "new_start": 6907,
+      "new_end": 6910,
+      "original": ""
+    },
+    {
+      "new_start": 6911,
+      "new_end": 6924,
+      "original": "igin"
+    },
+    {
+      "new_start": 6925,
+      "new_end": 6947,
+      "original": "l"
+    },
+    {
+      "new_start": 6972,
+      "new_end": 6972,
+      "original": "st"
+    },
+    {
+      "new_start": 6973,
+      "new_end": 6973,
+      "original": "("
+    },
+    {
+      "new_start": 6974,
+      "new_end": 6977,
+      "original": "riginal."
+    },
+    {
+      "new_start": 6979,
+      "new_end": 6991,
+      "original": "l"
+    },
+    {
+      "new_start": 6993,
+      "new_end": 6996,
+      "original": "ive_to(ROOT))"
+    },
+    {
+      "new_start": 7018,
+      "new_end": 7019,
+      "original": "origin"
+    },
+    {
+      "new_start": 7020,
+      "new_end": 7022,
+      "original": "l"
+    },
+    {
+      "new_start": 7039,
+      "new_end": 7279,
+      "original": ""
+    },
+    {
+      "new_start": 7282,
+      "new_end": 7447,
+      "original": ""
+    },
+    {
+      "new_start": 7452,
+      "new_end": 7483,
+      "original": ""
+    },
+    {
+      "new_start": 7491,
+      "new_end": 7526,
+      "original": "("
+    },
+    {
+      "new_start": 7528,
+      "new_end": 7529,
+      "original": "c"
+    },
+    {
+      "new_start": 7532,
+      "new_end": 7535,
+      "original": ""
+    },
+    {
+      "new_start": 7537,
+      "new_end": 7538,
+      "original": "d.lstat())!=rec"
+    },
+    {
+      "new_start": 7541,
+      "new_end": 7632,
+      "original": ""
+    },
+    {
+      "new_start": 7634,
+      "new_end": 7638,
+      "original": ""
+    },
+    {
+      "new_start": 7639,
+      "new_end": 7644,
+      "original": ""
+    },
+    {
+      "new_start": 7645,
+      "new_end": 7693,
+      "original": ""
+    },
+    {
+      "new_start": 7697,
+      "new_end": 7698,
+      "original": "tity:rais"
+    },
+    {
+      "new_start": 7699,
+      "new_end": 7700,
+      "original": " Valu"
+    },
+    {
+      "new_start": 7701,
+      "new_end": 7701,
+      "original": "E"
+    },
+    {
+      "new_start": 7705,
+      "new_end": 7720,
+      "original": ""
+    },
+    {
+      "new_start": 7722,
+      "new_end": 7723,
+      "original": "recovery changed before r"
+    },
+    {
+      "new_start": 7732,
+      "new_end": 7763,
+      "original": ""
+    },
+    {
+      "new_start": 7764,
+      "new_end": 7785,
+      "original": ""
+    },
+    {
+      "new_start": 7796,
+      "new_end": 7799,
+      "original": ""
+    },
+    {
+      "new_start": 7800,
+      "new_end": 7801,
+      "original": "cov"
+    },
+    {
+      "new_start": 7803,
+      "new_end": 7803,
+      "original": "ed.unlink();"
+    },
+    {
+      "new_start": 7804,
+      "new_end": 7804,
+      "original": "em"
+    },
+    {
+      "new_start": 7805,
+      "new_end": 7811,
+      "original": "ved.append(s"
+    },
+    {
+      "new_start": 7813,
+      "new_end": 7813,
+      "original": "(recovered.relative_to(ROOT)));cold.s"
+    },
+    {
+      "new_start": 7814,
+      "new_end": 7815,
+      "original": "nc_directory(BACKUP)"
+    },
+    {
+      "new_start": 7917,
+      "new_end": 7918,
+      "original": "2*row"
+    },
+    {
+      "new_start": 7920,
+      "new_end": 7927,
+      "original": ""
+    },
+    {
+      "new_start": 7936,
+      "new_end": 7936,
+      "original": "remote_rest"
+    },
+    {
+      "new_start": 7938,
+      "new_end": 7945,
+      "original": "e':kept,'"
+    },
+    {
+      "new_start": 7978,
+      "new_end": 7978,
+      "original": "originals_and_"
+    },
+    {
+      "new_start": 8003,
+      "new_end": 8048,
+      "original": ""
+    },
+    {
+      "new_start": 8095,
+      "new_end": 8106,
+      "original": ""
+    },
+    {
+      "new_start": 8125,
+      "new_end": 8125,
+      "original": "\n            "
+    },
+    {
+      "new_start": 8210,
+      "new_end": 8221,
+      "original": ""
+    },
+    {
+      "new_start": 8302,
+      "new_end": 8308,
+      "original": "\n            "
+    },
+    {
+      "new_start": 8309,
+      "new_end": 8313,
+      "original": "ry:"
+    },
+    {
+      "new_start": 8402,
+      "new_end": 8402,
+      "original": "    except BaseException:pass\n        "
+    },
+    {
+      "new_start": 8407,
+      "new_end": 8408,
+      "original": ""
+    },
+    {
+      "new_start": 8439,
+      "new_end": 8443,
+      "original": ""
+    },
+    {
+      "new_start": 8444,
+      "new_end": 8447,
+      "original": "f "
+    },
+    {
+      "new_start": 8460,
+      "new_end": 8461,
+      "original": "!"
+    },
+    {
+      "new_start": 8463,
+      "new_end": 8464,
+      "original": ":raise ValueError("
+    },
+    {
+      "new_start": 8471,
+      "new_end": 8483,
+      "original": ""
+    },
+    {
+      "new_start": 8485,
+      "new_end": 8486,
+      "original": "vi"
+    },
+    {
+      "new_start": 8487,
+      "new_end": 8490,
+      "original": "w"
+    },
+    {
+      "new_start": 8527,
+      "new_end": 8527,
+      "original": "Path("
+    },
+    {
+      "new_start": 8538,
+      "new_end": 8538,
+      "original": ")"
+    }
+  ],
+  "exact_inverse_verified": true
+}

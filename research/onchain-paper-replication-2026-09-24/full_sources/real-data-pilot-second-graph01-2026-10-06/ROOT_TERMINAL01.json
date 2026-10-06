@@ -1,0 +1,66 @@
+{
+  "actual_cleanup_verified": true,
+  "actual_native_unit": "onchain-replication-86f08e36161d4ef68b9fe1ee04610437.service",
+  "actual_parent_exit": {
+    "exit_code": 0,
+    "experiment": "eth-paper-real-pilot-graph-20220509-20261005-01",
+    "qualification": "Actual parent return code; null remains unknown if the call did not return. One-use namespace remains reserved.",
+    "source": "b794d60df4e898d0832fee485ed4e6630b30f4df"
+  },
+  "actual_properties": "MainPID=0\nControlGroup=\nActiveState=inactive\nSubState=dead\n",
+  "actual_root_exec_session": 96133,
+  "actual_root_exit_code": 0,
+  "actual_root_tool_chunk": "fd5604",
+  "at": "2026-10-06T00:37:10.403827+00:00",
+  "cgroup_record": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-86f08e36161d4ef68b9fe1ee04610437.service",
+  "last_native_observation": {
+    "memory_events": {
+      "high": 2016,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "minimum_sampled_disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 15094063104
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 10514432,
+        "file_bytes": 4205461504,
+        "kernel_peak_bytes": 5370802176,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-86f08e36161d4ef68b9fe1ee04610437.service",
+        "pressure": "some avg10=1.91 avg60=0.95 avg300=0.71 total=4817571\nfull avg10=1.91 avg60=0.95 avg300=0.71 total=4813050",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 3567202304,
+        "file_bytes": 7837790208,
+        "kernel_peak_bytes": 13962379264,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.96 avg60=0.53 avg300=0.42 total=24348303\nfull avg10=0.96 avg60=0.52 avg300=0.42 total=23919579",
+        "swap_current_bytes": 1916559360,
+        "unavailable": {}
+      }
+    },
+    "peak_sampled_memory_current_bytes": 5368709120,
+    "storage_peak_allocated_bytes": 6271348736,
+    "storage_peak_logical_file_bytes": 6216590365
+  },
+  "native_child_exit_code": 0,
+  "native_elapsed_seconds": 1223.5381100249942,
+  "native_phase": "complete",
+  "qualification": "Actual Root0 and original native/parent0 are distinct. Selected recorded PIDs and current unit absence are checked; complete lifetime PID history unknown. Last workload memory.peak remains its actual optional record; this is a graph job, not MCM/training/financial completion. Live source/Git freeze may end after outcome source joins.",
+  "selected_recorded_pids": [
+    1033399
+  ],
+  "selected_recorded_pids_absent": true,
+  "sha256": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph01-2026-10-06/outer-exit01.json": "4f06119f0caf087b1302d30916490ba71bbe2ee8040171c19d7f86ae815f394d",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220509-20261005-01/guard/final.json": "e5620f76bd67472df71fa311d78ac1ea580aa3c00d8372ad6854154a2436db7f"
+  },
+  "terminal_cell_count": 2
+}

@@ -1,0 +1,41 @@
+--- baseline/compact_mcm.py
++++ candidate/compact_mcm.py
+@@ -240,14 +240,17 @@
+         return _produce_locked(dictionary,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+ 
+ 
+-def produce_imported(execution,graph,*,graph_hash,input_name,output_input):
++def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None):
++    if progress is not None:
++        from .real_pilot_partial_progress import MCMProgress
++        require(type(progress) is MCMProgress,'exact optional pilot telemetry required')
+     from .imported_mcm_identity import Target
+     target=Target(execution,graph,graph_hash)
+     with compact_owner._held(target.owner) as held:
+-        return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+-
+-
+-def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held):
++        return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held,progress=progress)
++
++
++def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held, progress=None):
+     owner = _owner(dictionary); held.check(owner)
+     fd = None; stream = log = None; claimed = False; inode = None
+     try:
+@@ -273,6 +276,7 @@
+         scope = start['scope']; stage = owner._begin('mcm-'+graph_hash,scope['workflow'],start['cells'],None,
+             retention_selection=selection)
+         stage_inode = list(stage.inode)
++        if progress is not None:progress.begin(graph_hash,start['rows'],start['motifs'])
+         def lease():
+             if _imported(dictionary) and getattr(dictionary.execution,'_sampled_authority_lease',None) is not None:
+                 from .imported_authority_lease import target_lease
+@@ -280,6 +284,7 @@
+             else:stage.lease(); dictionary.lease()
+             io._root(root,fd)
+             require(io._read(fd,'start.json',io.META_LIMIT) == io._json(start),'MCM producer start changed')
++            if progress is not None:progress.poll(log,stream)
+         p = thaw(owner.policy)
+         def compute(event_log, live):
+             nonlocal log,stream

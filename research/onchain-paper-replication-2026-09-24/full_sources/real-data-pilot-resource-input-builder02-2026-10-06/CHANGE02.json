@@ -1,0 +1,25 @@
+{
+  "original_manifest": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-input-builder01-2026-10-06/MANIFEST01.json",
+  "original_manifest_sha256": "f3b70f4e90650839fb63448a1e982e5c647ca49888d824c54299eda0009aafc6",
+  "before_sha256": "544a321c0b6f125c3b5a83898584c53e193431fd7e095223c8ac07a366e961fd",
+  "after_sha256": "166e7e4ec1d03cefc39c1fcf58853fbeef0ab305369a3ebd65438c4c316b9f0e",
+  "exact_inverse": true,
+  "literal_edits": [
+    {
+      "before": "LIMIT=4*1024**2\n",
+      "after": "LIMIT=4*1024**2\nTRANSPORT_META=131072\nARCHIVE_MAX_BYTES=8*1024**2  # archive_chunks.MAX_BYTES == score_batches.MAX_CHUNK_BYTES\n"
+    },
+    {
+      "before": "    store=spec['physical_store'];need(set(store)=={'baseline_evidence','baseline_allocated_bytes','baseline_logical_bytes','reserved_growth_bytes','reserved_control_bytes'},'explicit common store decomposition required');ref_path(root,store['baseline_evidence'])\n    for key in set(store)-{'baseline_evidence'}:positive(store[key])\n    need(store['baseline_allocated_bytes']+store['reserved_growth_bytes']+store['reserved_control_bytes']<=limits['max_allocated_bytes'] and store['baseline_logical_bytes']+store['reserved_growth_bytes']+store['reserved_control_bytes']<=limits['max_logical_bytes'],'common store allocation exceeded')\n",
+      "after": "    store=spec['physical_store'];need(set(store)=={'baseline_evidence','baseline_allocated_bytes','baseline_logical_bytes','reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes','allocation_overhead_bytes'},'explicit retained local store components required');ref_path(root,store['baseline_evidence'])\n    for key in set(store)-{'baseline_evidence'}:positive(store[key])\n"
+    },
+    {
+      "before": "    need(store['reserved_control_bytes']>=typed['max_control_bytes']+archive['max_workflow_metadata_bytes']+transport['max_control_bytes']+transport['max_diagnostic_bytes'],'all selected control reservations must share physical budget')\n",
+      "after": "    # Cumulative rounded network/diagnostic caps above remain unchanged. They\n    # are not simultaneous retained local payloads: successful get staging is\n    # moved to the caller, while each call retains one bounded transport JSON.\n    # Context serialization and first-failure poisoning allow at most one\n    # in-flight/failed get diagnostic body; caller destinations remain separate.\n    local_bounds={'retained_diagnostic_bytes':TRANSPORT_META*transport['max_commands']+ARCHIVE_MAX_BYTES,\n        'reserved_control_bytes':typed['max_control_bytes']+archive['max_workflow_metadata_bytes']+transport['max_control_bytes'],\n        'caller_scratch_bytes':3*ARCHIVE_MAX_BYTES}\n    for key,minimum in local_bounds.items():\n        positive(minimum);need(store[key]>=minimum,'retained local component underfunded: '+key)\n    # Three archive extents cover one source/snapshot/readback lower bound.\n    # Nested original writer/typed buffers can overlap: this is not their full\n    # peak proof. Root must supply a conservative complete scratch declaration.\n    logical_growth=sum(store[k] for k in ('reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes'))\n    allocated_growth=logical_growth+store['allocation_overhead_bytes']\n    positive(logical_growth);positive(allocated_growth)\n    need(store['baseline_allocated_bytes']+allocated_growth<=limits['max_allocated_bytes'] and store['baseline_logical_bytes']+logical_growth<=limits['max_logical_bytes'],'common store allocation exceeded')\n"
+    },
+    {
+      "before": "'largest_matrix_file_bytes':max_matrix}",
+      "after": "'largest_matrix_file_bytes':max_matrix,'retained_local_lower_bounds':local_bounds,'declared_logical_growth_bytes':logical_growth,'declared_allocated_growth_bytes':allocated_growth}"
+    }
+  ]
+}

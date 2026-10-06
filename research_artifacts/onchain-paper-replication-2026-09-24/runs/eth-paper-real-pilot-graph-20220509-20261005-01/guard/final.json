@@ -1,0 +1,209 @@
+{
+  "boot_id": "c3984758-d2a4-4ccc-9916-cc9831982bc6",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-86f08e36161d4ef68b9fe1ee04610437.service",
+  "child_exit_code": 0,
+  "cleanup_stop_returncode": 5,
+  "cleanup_unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research.onchain_replication.job",
+    "--mode",
+    "worker",
+    "--root",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "--registration",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph01-2026-10-06/gate01.json",
+    "--experiment",
+    "eth-paper-real-pilot-graph-20220509-20261005-01",
+    "--source",
+    "b794d60df4e898d0832fee485ed4e6630b30f4df"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "1033607": [
+      0,
+      1
+    ],
+    "1033624": [
+      0,
+      1
+    ],
+    "1034482": [
+      0,
+      1
+    ],
+    "1035348": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 15934709760
+  },
+  "disk_minimum_qualification": "Sampled whole-volume free-space minimum per guarded path; includes unnamed temporary files and unrelated activity. Not a kernel quota, continuous minimum or per-job attribution.",
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+  ],
+  "elapsed_seconds": 1223.5381100249942,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 10646491136,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "5368709120",
+    "memory.max": "5905580032",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": null,
+  "memory_current_bytes": 4309270528,
+  "memory_events": {
+    "high": 2016,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 5368709120,
+  "memory_max_bytes": 5905580032,
+  "memory_swap_max_bytes": 0,
+  "minimum_sampled_disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 15094063104
+  },
+  "monitor_pid": 1033399,
+  "monotonic_seconds": 57991.658482032,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 10514432,
+      "file_bytes": 4205461504,
+      "kernel_peak_bytes": 5370802176,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-86f08e36161d4ef68b9fe1ee04610437.service",
+      "pressure": "some avg10=1.91 avg60=0.95 avg300=0.71 total=4817571\nfull avg10=1.91 avg60=0.95 avg300=0.71 total=4813050",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 3567202304,
+      "file_bytes": 7837790208,
+      "kernel_peak_bytes": 13962379264,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.96 avg60=0.53 avg300=0.42 total=24348303\nfull avg10=0.96 avg60=0.52 avg300=0.42 total=23919579",
+      "swap_current_bytes": 1916559360,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": {
+    "experiment": "eth-paper-real-pilot-graph-20220509-20261005-01",
+    "monitor_pid": 1033399,
+    "monitor_start_ticks": "6637392",
+    "nonce": "8688ffac41a947d1a128f0b62069490d",
+    "source_commit": "b794d60df4e898d0832fee485ed4e6630b30f4df",
+    "supervisor_pid": 1033189
+  },
+  "peak_sampled_memory_current_bytes": 5368709120,
+  "phase": "complete",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220509-20261005-01/guard",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 9126805504,
+  "storage_budget": {
+    "limits": {
+      "max_allocated_bytes": 9673810879,
+      "max_depth": 16,
+      "max_entries": 20000,
+      "max_logical_bytes": 9619207660,
+      "max_scan_seconds": 5
+    },
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources"
+  },
+  "storage_enforcement": "Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.",
+  "storage_observation": {
+    "aggregate_entry_visit_bound": 60000,
+    "allocated_bytes": 5556068352,
+    "directories": 150,
+    "elapsed_seconds": 0.1103508279993548,
+    "entries": 14018,
+    "hardlink_observations": [],
+    "logical_file_bytes": 5501259775,
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+    "regular_files": 13869,
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources",
+    "root_device": 66310,
+    "root_inode": 7882946,
+    "scan_attempts": 1
+  },
+  "storage_peak_allocated_bytes": 6271348736,
+  "storage_peak_entries": 14018,
+  "storage_peak_logical_file_bytes": 6216590365,
+  "storage_root_identity": [
+    66310,
+    7882946
+  ],
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 4309270528,
+    "memory_events": {
+      "high": 2016,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 10514432,
+        "file_bytes": 4205461504,
+        "kernel_peak_bytes": 5370802176,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-86f08e36161d4ef68b9fe1ee04610437.service",
+        "pressure": "some avg10=1.91 avg60=0.95 avg300=0.71 total=4817571\nfull avg10=1.91 avg60=0.95 avg300=0.71 total=4813050",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 3567202304,
+        "file_bytes": 7837790208,
+        "kernel_peak_bytes": 13962379264,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.96 avg60=0.53 avg300=0.42 total=24348303\nfull avg10=0.96 avg60=0.52 avg300=0.42 total=23919579",
+        "swap_current_bytes": 1916559360,
+        "unavailable": {}
+      }
+    }
+  },
+  "unit": "onchain-replication-86f08e36161d4ef68b9fe1ee04610437.service",
+  "unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 28800
+}

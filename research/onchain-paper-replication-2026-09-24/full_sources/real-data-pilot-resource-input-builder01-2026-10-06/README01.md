@@ -1,0 +1,21 @@
+# Using the draft input builder
+
+Run with the pinned interpreter:
+
+`.venv/bin/python -B build_inputs01.py --root /absolute/Main --spec /absolute/spec.json --output /absolute/fresh-draft-directory`
+
+No package source is imported. The utility performs bounded JSON metadata reads and opaque-reference stat checks only. It does not invoke Git, graph loaders, arrays, price readers, numerical libraries, SSH, ResearchRun, Owner, Binding or registration writers. The output directory must be fresh. Results are DRAFT inputs and an index, not an execution permit.
+
+The specification has exactly seven fields:
+
+- `graphs`: seven fixed Monday UTC weeks May2 through June13,2022. Each supplies a distinct `role`, original `manifest` reference and `node_count` reference. A reference is `{path, sha256, bytes}`, relative to root. Manifest and node-count JSON bodies are hash checked. Node-count metadata has `{schema_version:1, kind:"graph-node-count-metadata-v1", graph_manifest_sha256, node_features_sha256, rows, method:"retained-header-only", evidence:{path,sha256,bytes}}`. Its referenced original header-observation evidence is opaque and must be independently authenticated before admission. No count is inferred from an array file's byte length.
+- `references`: role-to-reference table for preserved inputs. Opaque bodies are not hashed or decoded by this utility; claimed hash and extent must be verified by genuine admission later. Include the exact11 original import references, model/training, scope/calendar/price-panel, environment, pair/import-stage/MCM policies and any selected authority-lease role.
+- `template_roles`: exact eight keys `pilot`, `population`, `job`, `producer_plan`, `dictionary`, `compact`, `archive`, `output`, each naming a different metadata reference. Use the already reviewed installed schema2 resource route and original512/32 import control. The builder preserves scientific configurations and original evidence references, replacing only declared graph membership, fixed decisions, deferred subset indices and the generated policy joins.
+- `typed_input_role`: name for the generated shared typed policy.
+- `typed_allocations`: explicit `chunk_cells`, `max_control_bytes`, and `by_week` allocations for all three exact kinds `score-tail-f64`, `score-batch-f64`, `mcm-output-f32`. Each kind supplies `max_operations`, `max_preserved_bytes`, `max_recovered_bytes`, `max_chunks`, `chunk_bytes`. No allowance is invented. Selected chunks must be aligned and at most4MiB; original batches must fit. The builder refuses bounds below one complete production and output-conversion traversal.
+- `physical_store`: explicit original `baseline_evidence` reference, positive `baseline_allocated_bytes`, `baseline_logical_bytes`, `reserved_growth_bytes`, `reserved_control_bytes`. It checks these declared categories against the same job writable-union limits. This is arithmetic on submitted declarations, not a new observation, peak measurement, storage census or guarantee of simultaneous fit.
+- `transport_limits`: explicit `rate_kbit`, `max_seconds`, `max_payload_bytes`, `max_commands`, `max_diagnostic_bytes`, `max_control_bytes`, `namespace`, `receipt_output`, `terminal_output`. No connection object is accepted or read. The generated transport template has `connection:null` and therefore intentionally cannot pass real transport admission until Root supplies the private configuration and validates its identity against the preserved archive policy.
+
+`SYNTHETIC_SPEC01.json` is a schema example only. Its graph metadata, declarations and unread sentinel files are artificial; some claimed opaque hashes deliberately represent the fixed semantic contract rather than sentinel bytes. Never use it for a genuine registration. The large synthetic declared budget tests arithmetic only, not this host's capacity.
+
+The original resource worker must still derive eligible training rows and their16 consecutive positions from the frozen price panel; the builder leaves indices null. It does not fit or copy a full-fold scaler. The installed worker applies the original scaler algorithm to the explicit resource subset, and labels that deviation. Original dates and semantic price identities remain pinned.

@@ -1,0 +1,38 @@
+{
+  "exit_code": 0,
+  "reason": "workload exited",
+  "snapshot_error": null,
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 4309270528,
+    "memory_events": {
+      "high": 2016,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 10514432,
+        "file_bytes": 4205461504,
+        "kernel_peak_bytes": 5370802176,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-86f08e36161d4ef68b9fe1ee04610437.service",
+        "pressure": "some avg10=1.91 avg60=0.95 avg300=0.71 total=4817571\nfull avg10=1.91 avg60=0.95 avg300=0.71 total=4813050",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 3567202304,
+        "file_bytes": 7837790208,
+        "kernel_peak_bytes": 13962379264,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.96 avg60=0.53 avg300=0.42 total=24348303\nfull avg10=0.96 avg60=0.52 avg300=0.42 total=23919579",
+        "swap_current_bytes": 1916559360,
+        "unavailable": {}
+      }
+    }
+  },
+  "workload_pid": 1033624
+}

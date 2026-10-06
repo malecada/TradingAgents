@@ -1,0 +1,56 @@
+--- builder01/build_inputs01.py
++++ builder02/build_inputs02.py
+@@ -3,6 +3,8 @@
+ from datetime import datetime,timedelta,timezone
+ from pathlib import Path
+ LIMIT=4*1024**2
++TRANSPORT_META=131072
++ARCHIVE_MAX_BYTES=8*1024**2  # archive_chunks.MAX_BYTES == score_batches.MAX_CHUNK_BYTES
+ BACKEND='resident-native-compact-current-owner-v1'
+ ASSUMPTION=('Historical proof authenticates prior full byte and semantic recovery against '
+  'the original roster. It does not establish current remote byte availability; '
+@@ -140,9 +142,8 @@
+     budget=resource['storage_budget'];limits=budget['limits'];experiment='eth-paper-real-data-end-to-end-resource-20261005-01'
+     need(budget['authority_root']==str(root) and budget['schema_version']==2 and budget['kind']=='real-pilot-writable-union' and budget['experiment']==experiment and budget['roots']==[str(root/'research_artifacts'),str(root/'research_runs'/experiment)] and budget['shared_files']==[str(root/'research_runs/.lock')],'exact common writable union required')
+     need(resource['disk_floor_bytes']==typed['local_free_floor_bytes']==archive['local_free_floor_bytes'],'one physical-store floor required')
+-    store=spec['physical_store'];need(set(store)=={'baseline_evidence','baseline_allocated_bytes','baseline_logical_bytes','reserved_growth_bytes','reserved_control_bytes'},'explicit common store decomposition required');ref_path(root,store['baseline_evidence'])
++    store=spec['physical_store'];need(set(store)=={'baseline_evidence','baseline_allocated_bytes','baseline_logical_bytes','reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes','allocation_overhead_bytes'},'explicit retained local store components required');ref_path(root,store['baseline_evidence'])
+     for key in set(store)-{'baseline_evidence'}:positive(store[key])
+-    need(store['baseline_allocated_bytes']+store['reserved_growth_bytes']+store['reserved_control_bytes']<=limits['max_allocated_bytes'] and store['baseline_logical_bytes']+store['reserved_growth_bytes']+store['reserved_control_bytes']<=limits['max_logical_bytes'],'common store allocation exceeded')
+     need(store['reserved_growth_bytes']>=sum(v['rows']*128 for v in g.values()),'all retained original f32 outputs require common store reservation')
+     transport=copy.deepcopy(spec['transport_limits']);need('connection' not in transport,'builder must not consume connection credentials')
+     need(set(transport)=={'rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes','namespace','receipt_output','terminal_output'},'exact transport limit template required')
+@@ -157,7 +158,23 @@
+     for value in combined.values():positive(value)
+     need(combined['rounded_bytes']<=transport['max_payload_bytes'] and combined['commands']<=transport['max_commands'],'shared pair/typed transport allowance insufficient')
+     need(transport['max_diagnostic_bytes']>=transport['max_payload_bytes']+131072*transport['max_commands'] and transport['max_control_bytes']>=131072*(8+4*transport['max_commands']),'shared transport diagnostic/control allowance insufficient')
+-    need(store['reserved_control_bytes']>=typed['max_control_bytes']+archive['max_workflow_metadata_bytes']+transport['max_control_bytes']+transport['max_diagnostic_bytes'],'all selected control reservations must share physical budget')
++    # Cumulative rounded network/diagnostic caps above remain unchanged. They
++    # are not simultaneous retained local payloads: successful get staging is
++    # moved to the caller, while each call retains one bounded transport JSON.
++    # Context serialization and first-failure poisoning allow at most one
++    # in-flight/failed get diagnostic body; caller destinations remain separate.
++    local_bounds={'retained_diagnostic_bytes':TRANSPORT_META*transport['max_commands']+ARCHIVE_MAX_BYTES,
++        'reserved_control_bytes':typed['max_control_bytes']+archive['max_workflow_metadata_bytes']+transport['max_control_bytes'],
++        'caller_scratch_bytes':3*ARCHIVE_MAX_BYTES}
++    for key,minimum in local_bounds.items():
++        positive(minimum);need(store[key]>=minimum,'retained local component underfunded: '+key)
++    # Three archive extents cover one source/snapshot/readback lower bound.
++    # Nested original writer/typed buffers can overlap: this is not their full
++    # peak proof. Root must supply a conservative complete scratch declaration.
++    logical_growth=sum(store[k] for k in ('reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes'))
++    allocated_growth=logical_growth+store['allocation_overhead_bytes']
++    positive(logical_growth);positive(allocated_growth)
++    need(store['baseline_allocated_bytes']+allocated_growth<=limits['max_allocated_bytes'] and store['baseline_logical_bytes']+logical_growth<=limits['max_logical_bytes'],'common store allocation exceeded')
+     transport.update(schema_version=2,format='archive-dispatch-v1',typed_payload_input=typed_role,connection=None)
+     # Connection remains a conspicuous invalid template until Root supplies private configuration.
+     selected['descriptor'].update(required_graphs=required,resource_graph_inputs=mapping,original_dictionary_import={'input':selected['original_dictionary_input'],'sha256':sha(raw(control))})
+@@ -172,7 +189,7 @@
+     need(selected['compact_policy_input']==spec['template_roles']['compact'] and selected['compact_archive_input']==spec['template_roles']['archive'],'original compact/archive template roles differ')
+     opaque={role:ref for role,ref in refs.items() if role not in docs}
+     opaque.update({v['role']:v['manifest'] for v in g.values()})
+-    return {'status':'DRAFT_NOT_REGISTERED_NOT_ADMITTED','inputs':docs,'opaque_references':opaque,'source_template_references':{role:refs[role] for role in spec['template_roles'].values()},'graphs':g,'physical_store_declaration':store,'capacity_lower_bounds':{'typed':total,'pair_archive':pair,'shared':combined,'per_graph':minima,'largest_matrix_file_bytes':max_matrix},'remaining':['Root private connection and transport_identity match','genuine complete graph admission and node-count proof review','current source/runtime/Owner/Binding, resource/storage/network admission','worker derives price eligibility, consecutive indices and resource-only scaler; no numeric data read here'],'no_authority_or_capacity_claim':True}
++    return {'status':'DRAFT_NOT_REGISTERED_NOT_ADMITTED','inputs':docs,'opaque_references':opaque,'source_template_references':{role:refs[role] for role in spec['template_roles'].values()},'graphs':g,'physical_store_declaration':store,'capacity_lower_bounds':{'typed':total,'pair_archive':pair,'shared':combined,'per_graph':minima,'largest_matrix_file_bytes':max_matrix,'retained_local_lower_bounds':local_bounds,'declared_logical_growth_bytes':logical_growth,'declared_allocated_growth_bytes':allocated_growth},'remaining':['Root private connection and transport_identity match','genuine complete graph admission and node-count proof review','current source/runtime/Owner/Binding, resource/storage/network admission','worker derives price eligibility, consecutive indices and resource-only scaler; no numeric data read here'],'no_authority_or_capacity_claim':True}
+ 
+ def main():
+     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--root',required=True);ap.add_argument('--spec',required=True);ap.add_argument('--output',required=True);a=ap.parse_args()

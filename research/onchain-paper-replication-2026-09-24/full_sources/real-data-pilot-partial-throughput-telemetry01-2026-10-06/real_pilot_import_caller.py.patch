@@ -1,0 +1,48 @@
+--- baseline/real_pilot_import_caller.py
++++ candidate/real_pilot_import_caller.py
+@@ -47,9 +47,14 @@
+         require(full and type(refs) is dict and set(refs)=={'policy_input','transport_input'} and all(type(v) is str and v for v in refs.values()) and len(set(refs.values()))==2,'explicit schema2 archive input pair required')
+     interval='imported_authority_lease_input' in p
+     require(not interval or (full and type(p['imported_authority_lease_input']) is str and bool(p['imported_authority_lease_input'])),'explicit schema2 interval input required')
++    partial = 'partial_progress' in p
++    if partial:
++        from .real_pilot_partial_progress import policy
++        require(full, 'partial progress requires explicit schema2 plan')
++        policy(p['partial_progress'])
+     resource_subset = 'population_scope' in p
+     require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
+-    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'archive_inputs'} if archive else set()), 'pilot plan fields differ')
++    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()), 'pilot plan fields differ')
+     require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+@@ -375,6 +380,11 @@
+     from .real_pilot_throughput import MCMMeasurements
+     measurements = MCMMeasurements({key:len(g.node_ids) for key,g in graphs.items()},
+         population_scope=p.get('population_scope','full_fold_input'))
++    progress = None
++    if 'partial_progress' in p:
++        from .real_pilot_partial_progress import MCMProgress
++        progress = MCMProgress(p['partial_progress'],{key:len(g.node_ids) for key,g in graphs.items()},
++            claim_sha256=run._claim_sha256,source=run.admission.source)
+     terminal = training = None; primary = None
+     def mark(phase):
+         events.append({'phase':phase,'elapsed_seconds':time.monotonic()-began})
+@@ -403,7 +413,8 @@
+         for key,g in graphs.items():
+             watch.check()
+             measurements.begin(key)
+-            result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'])
++            result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
++                **({'progress':progress} if progress is not None else {}))
+             targets.append(result); result.check()
+             retained = resource_fixture.verify_retained(result,owner)
+             measurements.completed(key,retained)
+@@ -460,6 +471,7 @@
+                'full_graphs':7,'retained_target_count':len(targets),'training':training,'events':events,
+                'throughput':throughput,
+                'financial_fit_complete':False,'full_size_capacity':False,'final_outer_inventory_required':True}
++    if progress is not None:summary['partial_mcm_progress'] = progress.summary()
+     terminal = terminal or {'schema_version':1,'kind':KIND,'status':'failed','resource_only':True,'reason':row['reason']}
+     actions = [lambda:watch.check(),lambda:run.write_json(p['outputs']['binding'],terminal),
+                lambda:run.write_json(p['outputs']['journal'],terminal),

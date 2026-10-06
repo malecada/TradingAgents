@@ -1,0 +1,27 @@
+{
+  "decision": "accepted-current-recorded-cleanup-observation",
+  "tool": "30e8ee",
+  "actual_exit_code": 0,
+  "unit": "onchain-replication-86f08e36161d4ef68b9fe1ee04610437.service",
+  "properties": {
+    "MainPID": "0",
+    "Result": "success",
+    "ExecMainStatus": "0",
+    "ControlGroup": "",
+    "ActiveState": "inactive",
+    "SubState": "dead"
+  },
+  "recorded_cgroup_absent": true,
+  "selected_recorded_pids_absent": [
+    1033189,
+    1033399,
+    1033607,
+    1033624,
+    1034482,
+    1035348
+  ],
+  "original_guard_cleanup_verified": true,
+  "original_cleanup_stop_returncode": 5,
+  "complete_lifetime_pid_history": "unknown",
+  "qualification": "Read-only unit observation plus current /proc and cgroup absence. Recorded six PID values only; no fabricated all-lifetime census."
+}
