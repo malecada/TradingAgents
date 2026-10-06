@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T18:45:15.851262+00:00: fresh pilot13 with user-authorized60s freshness is exactly released subject to original startup eligibility. No numerical job or13attempt/claim active.**
+
+The user explicitly authorized engineering max_stale_ms30000→60000 and ONE fresh pilot. Source/policy8adf7cc7 and synthetic recorded12timing/excess60refusal accepted; live100ms/fingerprint1s/full10s/max65536calls/monotonic timestamps/source-input-runtime-Owner checks remain. Longer sampled detection age is explicit; no scientific matching/model/training/motif/data/native-cap change. Strict successor identity is the only package-source change,179pins/178otherbodies unchanged atb37f2589; both originalhelpers remain preclaimchecked.
+
+Draft/preparation01 reused namespace12 while publicarchivepolicy used13; independent finding7eef5cb8 preserved. Corrected selected02 has exact two namespace preparation changes, same8public bodies and sole13-r2 privatebinding. Original01docs/privatebody and post-binder controlassertion failure retained. Combinedmetadata4056d88b accepted, gate02 has269sources59inputs. Genuine committed readonly30626/a65dac exit0 at3b03eaaf ready84/noOwner/claim/native; binding2a5dd7bd/finalb7f347ab and812ref exactconditionalreleasefae85fdb accepted. Launch ONLY root_io02.py after finalcommit/push/actualremote and originalfresh checks; never invoke root_io.py/preflight01/gate01 draft13.
+
+Pilot12 permanentFAILED/spent83;53closed33COMPLETE20FAILED/highest83. Actual43file444732B/13directory56name failedincrement freshly externallyrecovered atb37f2589, independentlyaccepted85109abba; no deletion/expandedraw/runtime/private scope.84=53closed+28unchangedpending+2permanentpreclaim reserves+ONEunused13; no refund/transfer/capladder/rerun. Original12nulls/unknown Targetcardinality/secondaryerrors intact.
+
+All agents complete. RootsoleMain/accounting/STATE/Git/preservation/ONElauncher. Currentlight RAM~8.0GB is below frozen9663676416B startup; userasked tofree about2GiB existing memory. Finishfinalpush/readback, then freshlight eligibility; ifeligible ONE root_io02 with originalfullpreflight, otherwise remainunusedready. No attempt/preflightinvocation tospend a RAM-ineligible identity. Broadwork/heartbeat/appgoal remain PAUSED; representative pilot still has0MCM/updates/financialfits.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T18:20:17.337546+00:00: pilot12 permanently FAILED/spent83; no native job active. Source/Git freeze ENDED after actual Root closure and verified cleanup.**
 
 Root90344/acd15a exit1 CLOSED; actualParent1/nativechild1/667.171831364s. [Actual terminal](full_sources/real-data-pilot-final12-2026-10-06/ROOT_TERMINAL01.json) verifies cgroupgone/all4recordedPIDsabsent/currentunitfailed/MainPID0. Primary failure is the existing30s import-authority freshness class at Target ENTRY37: priorage24.771937047s +fullcallback5.279688019s =30.051625066s, exceeding30s by0.051625066s. Original import event191.792s; graph loading reached import/Target construction, but Target-constructor cardinality is not recorded. No completed MCM/retained targets/jointupdates/financialfits; seven unavailablegraphs/415968128cells retained. Sourceclosure guard passed before claim; neither the earlier missing-pin refusal nor full MCM execution was reached. Secondary archive stale/poisoned errors preserved. NoOOM/MAX; sampledchargedpeak5368528896B and lastoptionalkernelpeak5371023360B includecache and do not establish full capacity.
