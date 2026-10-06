@@ -1,0 +1,89 @@
+{
+  "decision": "accepted-source-only",
+  "source_sha256": "61320cbea932dca635837c156f22e6a007d1d8f8bea857cd9884fb47d26888d8",
+  "installed_source": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph-post-recovery-retirement02-2026-10-06/retire02.py",
+  "manifest_sha256": "6007921431731987e92528629c44e6fba99d2cdaa1231ca183d9041b168490d8",
+  "members_authenticated": 15,
+  "exact_five_edit_inverse": true,
+  "failed_basis_sha256": "7516cd31e3218d8d3ae22130db9968dc6a61175f0716fe3bf8893ae2ff69c687",
+  "synthetic_valid_metadata_gate_passed": true,
+  "independent_refusals": [
+    {
+      "path": "old/guard01/final.json",
+      "field": "phase",
+      "value": "complete",
+      "refusal": "permanent FAILED old parent/cleanup differs"
+    },
+    {
+      "path": "old/guard01/final.json",
+      "field": "child_exit_code",
+      "value": 0,
+      "refusal": "permanent FAILED old parent/cleanup differs"
+    },
+    {
+      "path": "old/guard01/final.json",
+      "field": "cleanup_verified",
+      "value": false,
+      "refusal": "permanent FAILED old parent/cleanup differs"
+    },
+    {
+      "path": "old/ROOT_TERMINAL01.json",
+      "field": "actual_root_tool_exit_code",
+      "value": 0,
+      "refusal": "permanent FAILED old parent/cleanup differs"
+    },
+    {
+      "path": "old/ROOT_TERMINAL01.json",
+      "field": "separate_actual_worker_exit_code",
+      "value": 0,
+      "refusal": "permanent FAILED old parent/cleanup differs"
+    },
+    {
+      "path": "old/outer-exit01.json",
+      "field": "guard_child_exit_code",
+      "value": 0,
+      "refusal": "permanent FAILED old parent/cleanup differs"
+    },
+    {
+      "path": "new/guard01/final.json",
+      "field": "phase",
+      "value": "failed",
+      "refusal": "actual NEW preservation union/native cleanup differs"
+    },
+    {
+      "path": "new/guard01/final.json",
+      "field": "child_exit_code",
+      "value": null,
+      "refusal": "actual NEW preservation union/native cleanup differs"
+    },
+    {
+      "path": "new/guard01/final.json",
+      "field": "cleanup_verified",
+      "value": false,
+      "refusal": "actual NEW preservation union/native cleanup differs"
+    },
+    {
+      "path": "new/outer-exit01.json",
+      "field": "entry_selected_exit_code",
+      "value": 1,
+      "refusal": "actual NEW preservation union/native cleanup differs"
+    },
+    {
+      "path": "new/outer-exit01.json",
+      "field": "guard_child_exit_code",
+      "value": null,
+      "refusal": "actual NEW preservation union/native cleanup differs"
+    },
+    {
+      "path": "failed.json",
+      "field": "authenticated_body_get_count",
+      "value": 35,
+      "refusal": "old FAILED body proof differs"
+    }
+  ],
+  "retirement_execute_called": false,
+  "payload_reads": 0,
+  "native_or_network_calls": 0,
+  "actual_union_outcome_tested": false,
+  "retirement_release": false
+}
