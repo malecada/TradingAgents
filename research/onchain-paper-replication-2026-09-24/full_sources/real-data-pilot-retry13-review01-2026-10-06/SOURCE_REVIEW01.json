@@ -1,0 +1,36 @@
+{
+  "authority_tradeoff": "The user-authorized change increases permitted elapsed freshness age from30 to60seconds, including full callback duration;100ms live,1000ms fingerprint,10000ms full scheduled intervals and65536 call limit remain. This expands tolerated revocation/source-change detection age. Full boundary validation, callback errors and hard native limits remain; no atomic writer exclusion is claimed.",
+  "candidates": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/candidate/real_pilot_storage.py",
+      "sha256": "beb5c80c12b9c4b994a115aab85667d6dc1168c23d4e7f4bb2922cdcaf73e596"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/candidate/imported_authority_lease.json",
+      "sha256": "dc9aed524375cae84f1d86196cd9145ec076956dcc3ede470816f5b990abb2d6"
+    }
+  ],
+  "checks": [
+    "Only selected policy max_stale_ms changes30000 to60000; every other policy field and exact Interval source unchanged.",
+    "Storage changes one fixed12 to13 literal; builder/controls each change one identity; six remaining dependency refs and successor bytes unchanged.",
+    "Actual unchanged Interval accepts exactly60s and refuses/poisons60.001s; callback exception and permanently closed refusal remain.",
+    "Actual12 aggregate30.051625066 is replayed only as explicit synthetic callback duration, not reconstruction of its measured callback/previous interval."
+  ],
+  "decision": "accepted",
+  "findings": [],
+  "independent_boundary_checks": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry13-review01-2026-10-06/INTERVAL_CHECK01.json",
+    "sha256": "a7e9e1a25ed735c1e6b21ee6a5d601975867b1623ea1e4fd6d0f3616ad41a418"
+  },
+  "manifest": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/MANIFEST01.json",
+    "sha256": "21ada6b2bf57951668cf81fa7d833cd371ec3792bd62150955f34c76b89cfdc0"
+  },
+  "not_tested": [
+    "No genuine admission, Owner, arrays, model, private body, native launch or financial experiment.",
+    "No empirical throughput, whole-fit capacity, numerical results, financial return/cashflow, fees/funding/exposure or leakage claim."
+  ],
+  "qualification": "Narrow policy/source acceptance only. Same model, graph inputs, original32 motifs/512samples, scoring, tolerances and resource caps must be retained in final registration. Actual12 remains permanently FAILED/spent; no automatic resume or elapsed-time/capacity claim.",
+  "reviewer": "pilot09_review independent fresh13 source/policy reviewer",
+  "schema_version": 1
+}

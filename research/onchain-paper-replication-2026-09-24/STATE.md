@@ -1,5 +1,27 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T18:20:17.337546+00:00: pilot12 permanently FAILED/spent83; no native job active. Source/Git freeze ENDED after actual Root closure and verified cleanup.**
+
+Root90344/acd15a exit1 CLOSED; actualParent1/nativechild1/667.171831364s. [Actual terminal](full_sources/real-data-pilot-final12-2026-10-06/ROOT_TERMINAL01.json) verifies cgroupgone/all4recordedPIDsabsent/currentunitfailed/MainPID0. Primary failure is the existing30s import-authority freshness class at Target ENTRY37: priorage24.771937047s +fullcallback5.279688019s =30.051625066s, exceeding30s by0.051625066s. Original import event191.792s; graph loading reached import/Target construction, but Target-constructor cardinality is not recorded. No completed MCM/retained targets/jointupdates/financialfits; seven unavailablegraphs/415968128cells retained. Sourceclosure guard passed before claim; neither the earlier missing-pin refusal nor full MCM execution was reached. Secondary archive stale/poisoned errors preserved. NoOOM/MAX; sampledchargedpeak5368528896B and lastoptionalkernelpeak5371023360B includecache and do not establish full capacity.
+
+Paper53closed33COMPLETE20FAILED/highest83; original preclaim03/08reservations remain separate. No refund/transfer/rerun/capladder or new84 allowance. Exact source fix/unchangedhelperpins/scientific method and originalnative limits remain. All bounded agents complete; Rootsolelive/accounting/STATE/Git/preservation/ONElauncher. Next retain independent12outcome and incrementally externalpreserve/freshrecover, then diagnose actual ENTRY30.0516s boundary before any separately reviewed unused successor. No successor or new launch active. Broadwork/heartbeat/appgoal remain PAUSED; representative real-data pilot remains incomplete.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T18:08:41.398634+00:00: ONE fresh pilot12 genuinely claimed/running. Source/Git freeze ACTIVE.**
+
+Follow ONLY Root session90344; never relaunch12. Launch source and actual remote4be0806f40f46a80866ffbd77252c56c5a708e14. Supervisor297397/monitor297699/nativeonchain-replication-8432da3e1d184ddb994856f7a348b0e8.service. [Actual active receipt](full_sources/real-data-pilot-final12-2026-10-06/ROOT_ACTIVE01.json) joins genuine83 claim and original fresh preflight; startup RAM9675177984B/disk26404319232B passed. Earlier lightweight RAM deferral did not invoke RootIO/reserve or claim; its observation retained. No limit reason at49.0s; original graph loading underway, zero completed MCM/update/financialfit or whole capacity observed.
+
+Focused early source-closure guard and BOTH unchanged helper pins accepted. Original32motifs/512spent samples/full seven realgraphs/MCM/GATattentionLSTM/model/training/native limits unchanged. Exact256sources59inputs/committed readonly83/762ref releasef0b9004d/binding28af4b1c accepted; actual push42336/9c9e29exit0 and remote84912/71debf match4be0806f. Git availability alone does not prove installed runtime/raw/private recovery.
+
+Paper52closed33COMPLETE19FAILED plusONE12active/highest83; permanentpreclaim03/08 reserves preserved, no refund/transfer/capladder/rerun. Prior11actualincrement43files56names freshly externallyreturned/accepted8f7df394, originalfailure/nulls/unknowns intact. All agents complete; Rootsolelive/accounting/STATE/Git/preservation/ONElauncher. No Main/Git/source mutations until actual RootIOclosure/nativecleanup. Next monitor90344 actual phase/resource progress; retain/review/incrementallyrecover every attempted outcome before dependent continuation. Broadwork/heartbeat/appgoal remain PAUSED; direct representative pilot continues.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T18:06:08.767928+00:00: pilot12 genuine committed read-only admission PASSED83; exact762ref release acceptedf0b9004d. No native job active.**
 
 Focused preclaim source-closure correction integrated atd4be4b76: both unchanged off-package helpers now explicit and the early caller checks exact Target.sources membership and hashes. Combined actual metadataad333f54 accepted179package/177otherunchanged/256sources59inputs; original scientific method/motifs32/samples512/sevenfullgraphs/model/training/native limits unchanged. Genuine committed readonly3200/53716b exit0 onf399d1f7 ready83, noOwner/claim/numerical. Actual transport12 bound once, exact publicnewline serialization retained.
