@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T15:45:04.512090+00:00:08 permanently closed native setup refusal before scientific claim; no native job active/sourcefreeze ENDED. RAM now freshly adequate; prepare one reviewed fresh09.**
+
+Root53034/91d189exit1/actualparent1, originalguardchildnull preserved. Guard27.419141s stopped at9649569792B versus9663676416B startup requirement before numericalcommand release. Cleanup/cgroupabsence/allrecordedPIDsabsence verified; no research_runs08 namespace/claim/scientificoutputs/MCM/update/fit. [Actual08terminal](full_sources/real-data-pilot-final08-2026-10-06/ROOT_TERMINAL01.json).08 reservation at79 is permanentlyspent alongside03reserve74, no refund/reuse.49genuinepaperclosed33COMPLETE16FAILED/highestclaimed78 remains; proposed80 must retain49+28pending+two closed preclaimreserves+one fresh09.
+
+User freed RAM: instantaneousavailable10672713728B (~9.94GiB) gives~0.94GiB above frozen9GiBstartup; disk26486120448B. No capacity guarantee. No launcher memory redesign now required by this observation. Preserve original6GiBmax5high/swap0/3GiBhostreserve9startup/twoCPU8h/file1GiB/writable16logical20allocated/10GiBfloor/science. Exact-bytehashing and genuine between-Targetphase checkpoints remain accepted/integrated; actual largestgraph legacy46.868→22.086s same digest+nodeorder1.033s, separatelyclosedengineeringCOMPLETE/recoveryc512.07scientificfailure remains permanentlyspent/fullyincrementallyrecovered98809.
+
+Root owns sourceintegration/Git/STATE/registrations/preservation and ONElauncher. Next preserve/review/freshrecover exact08 refusal increment, prepare fixed09metadata/strictidentity and cumulative80, one independent exactrelease/commitpushfreshchecks, thenONE09 ifeligible. Broaderwork/heartbeat/appgoal remainPAUSED; directpilot authorization continues. Original32motifs512samples/sevenfullgraphs/GATattentionLSTMjointupdate unchanged.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T15:31:09.226957+00:00: fixed08 exact release accepted, genuine committed admission PASSED79; no numerical job active,08 unused/unclaimed. Broaderwork/heartbeat/appgoal PAUSED.**
 
 Actual read-only job._admitted91220/f1ca70exit0 from66a26ffa0b8ca90e1af132ff71ba00614c3dfecb: ready79/210sourcepins59inputs/selectedopaque namespace08 authenticated without printing or inspecting secrets, noOwner/ResearchRun.start/arrays. Gate44613bc6/finalbinding9595e92f/independentbinding4900fcce/exactrelease03eaeb0f accepted and adopted verbatim,584refs/soleopaque08exception. Sourceanchor6125ff284 adopted exact-byte batching+genuine Target constructor phase checkpoints with30s rule unchanged; strictstorage07→08 only, other176packagebodies/scientificmodel/training/32motifs512samples/sevenfullgraphs/caps unchanged. Fixed08metadata utilities clone only two identityliterals; originalhelpers/refusals/baseline raw+wrapper retained. Actualpureprepare exit0dabc19.
