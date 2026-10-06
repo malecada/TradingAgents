@@ -1,0 +1,7 @@
+Accepted actual May23 graph/source completion from source50df679a. Original Root17660/1aa097, outer and child exit0; two COMPLETE cells, zero unavailable. Independent one-pass SHA verifies all six original bodies totaling3,720,674,424B. Five NPY headers captured in the same pass derive1,875,043 nodes and2,642,414 edges. Original float64 nodeNx4/edgeEx2/aggregatesEx2, int64 edge2xE andU42 node IDs remain unchanged. No numerical values were decoded.
+
+Genuine claim/complete/index/manifest/coverage and seven daily metadata joins pass:7,581,075 raw rows =3,762,748 admitted +3,818,327 excluded. All178 source pins,32 compact inputs,7 runtime source hashes and241 raw extent stat identities match. Raw daily bodies were not read.
+
+Native1079.431041689s; last unit kernel peak5,370,728,448B includes charged cache, sampled memory peak5,368,446,976B separate. High228/maxOOM0. Actual Root-selected roster3 absent, cgroup absent/unit inactive withMainPID0; cleanup-stop5 unchanged and complete lifetime PID history unknown. Source-tree scans exclude unnamed extents; whole-volume samples include them and unrelated activity.
+
+Reviewer metadata assertion initially assumed the wrong float32 widths. Original weekly.py83/89 and saved same-pass headers establish float64 widths; exact correction and failure retained, body pass never repeated. Outcome78c299 exit0. No feature/MCM/training/financial capacity or remote preservation claim. Root must now bind concrete backup selection/current source/runtime/envelope before separate entry release.

@@ -1,0 +1,28 @@
+{
+  "failed_tool": "08639b",
+  "exit_code": 1,
+  "reason": "Reviewer wrongly asserted float32 Nx8/Ex4 instead of original float64 Nx4/Ex2. Actual same-pass headers and pinned weekly.py83/89 establish original schema.",
+  "source": "tradingagents/research/onchain_replication/weekly.py",
+  "source_sha256": "079a427f212738759109b31da23933549a8b7751851e3033703cdd03dc5f054a",
+  "exact_inverse": true,
+  "edits": [
+    [
+      "headers['node_features']['shape']==[Nnodes,8]",
+      "headers['node_features']['shape']==[Nnodes,4]"
+    ],
+    [
+      "headers['edge_features']['shape']==[Nedges,4]",
+      "headers['edge_features']['shape']==[Nedges,2]"
+    ],
+    [
+      "headers['node_features']['descr']=='<f4' and headers['edge_features']['descr']=='<f4'",
+      "headers['node_features']['descr']=='<f8' and headers['edge_features']['descr']=='<f8'"
+    ]
+  ],
+  "failed_correction_preparation": {
+    "tool": "899f87",
+    "exit_code": 2,
+    "reason": "Overbroad inverse replacement matched an unchanged shape; assertion refused before writing candidate. Replaced exact full expressions."
+  },
+  "body_hash_pass_already_complete_never_repeated": true
+}

@@ -1,0 +1,29 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-third-graph-preservation-preparation01-2026-10-06/prepare01.py
++++ prepare01.py
+@@ -1,13 +1,13 @@
+-"""Metadata-only, stdout-only May16 preservation selection. Never reads payload bodies."""
++"""Metadata-only, stdout-only May23 preservation selection. Never reads payload bodies."""
+ import hashlib
+ import json
+ import os
+ from pathlib import Path
+ import stat
+ 
+-ID = 'real-pilot-third-graph-preservation-20261006-01'
+-GRAPH = 'eth-paper-real-pilot-graph-20220516-20261005-01'
+-SOURCE = '72b25ad173d8a3ee30d39750df0d7a322ed50880'
++ID = 'real-pilot-fourth-graph-preservation-20261006-01'
++GRAPH = 'eth-paper-real-pilot-graph-20220523-20261005-01'
++SOURCE = '50df679a64cfee1b28b35554acab70d5ff4fa9c7'
+ PROGRAM = 'onchain-paper-replication-2026-09-24'
+ PREFIX = 'research_artifacts/' + PROGRAM
+ ROOTS = ('research_runs/' + GRAPH, PREFIX + '/runs/' + GRAPH, PREFIX + '/sources/' + GRAPH)
+@@ -160,7 +160,7 @@
+     result['source_files'][helper_ref['path']] = helper_ref['sha256']
+     result['selection'] = selection_ref
+     result['evidence'] = [review_ref, bodies_ref]
+-    old = [p for p in result['source_files'] if p == 'research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-20261006-01/entry01.py']
++    old = [p for p in result['source_files'] if p == 'research/onchain-paper-replication-2026-09-24/storage/real-pilot-third-graph-preservation-20261006-01/entry01.py']
+     require(len(old) == 1, 'exact old entry binding required')
+     del result['source_files'][old[0]]
+     result['source_files'][entry_ref['path']] = entry_ref['sha256']

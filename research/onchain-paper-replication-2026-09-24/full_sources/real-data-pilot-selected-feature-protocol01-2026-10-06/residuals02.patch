@@ -1,0 +1,36 @@
+--- residuals01.py
++++ residuals02.py
+@@ -22,7 +22,7 @@
+         'additional_scratch_bytes':scratch,'scratch_files':scratch_files,'scratch_max_file_bytes':scratch_max,
+         'evidence_sha256':digest(),'bound_basis':basis}
+ 
+-def resolve(stage,*,native_file_bytes,training_checkpoint_bytes,runtime_reservation):
++def resolve(stage,*,native_file_bytes,training_checkpoint_bytes,runtime_reservation,lifecycle_reservation=None):
+     positive(native_file_bytes);positive(training_checkpoint_bytes)
+     need(training_checkpoint_bytes<=4*1024**2<=native_file_bytes,'original training/native file limits differ')
+     need(type(stage) is dict and 'restart_retention' in stage,'this concrete route requires explicit original restart retention')
+@@ -67,6 +67,15 @@
+     lifecycle=declaration(64*lifecycle_file_cap+training_checkpoint_bytes+4096,
+         68,16,lifecycle_file_cap,basis=
+         'One update; checkpoint/phase/complete/failed four slots; run claim/terminal and six outputs (four caller plus archive receipt/terminal); lock; job/guard fixed receipts, child.log, atomic/pending and outer controls. Worker AND monitor inherit/read back L. Parent receipt/outer-log ceiling is prospective within sampled union, not an installed independent per-file hard cap. No per-poll append of guard state.')
++    if lifecycle_reservation is not None:
++        d=lifecycle_reservation
++        need(type(d) is dict and set(d)=={'logical_bytes','regular_files','directories','max_file_bytes'}, 'exact selected lifecycle reservation required')
++        for v in d.values():positive(v)
++        need(d['regular_files']>=68 and d['directories']>=16, 'original lifecycle slot inventory must remain covered')
++        need(training_checkpoint_bytes+2*M+4096<=d['logical_bytes']<=d['regular_files']*d['max_file_bytes'], 'selected lifecycle logical extent inconsistent')
++        need(max(training_checkpoint_bytes,M)<=d['max_file_bytes']<=native_file_bytes, 'selected lifecycle file reservation inconsistent')
++        lifecycle=declaration(d['logical_bytes'],d['regular_files'],d['directories'],d['max_file_bytes'],basis=
++            'Explicit prospective sampled lifecycle reservation, not a source-proven maximum encoded-body bound, per-domain quota or overshoot guarantee. Original68 file slots/16 directories retained. Includes checkpoint, bounded partial telemetry and fixed receipts. Parent exception text/log output and native receipt encodings have no newly installed smaller cap. Unexpected growth remains governed by unchanged whole-union watches, native RLIMIT and floor; no automatic retry or grant increase.')
+     d=runtime_reservation
+     need(type(d) is dict and set(d)=={'logical_bytes','regular_files','directories','max_file_bytes'},'explicit runtime domain reservation required')
+     for v in d.values():positive(v)
+@@ -82,7 +91,7 @@
+         'runtime_relative_paths':['research_artifacts/real_pilot_runtime/'+x for x in RUNTIME_PATHS],
+         'source_bounds':{'matching_stages':7,'original_import_recomputation':False,'generations_per_stage':G,'stores_per_stage':S,'selected_endpoints_per_stage':2,'global_live_checkpoint_scratch_bytes':2*K,'current_import_metadata_files':23,'current_import_metadata_bytes':23*M},
+         'prospective_ceilings':['training_and_lifecycle parent/outer receipt headroom','runtime_temp_cache'],
+-        'integration':'Insert residual_domains into inventory01 input. Parent/outer receipt reservations use the same finite L as an explicit prospective ceiling, without claiming the parent has RLIMIT enforcement. Exact root budget, directory/block model and baseline remain required. No seven graph counts are invented.',
++        'integration':('Explicit selected lifecycle reservation replaces only64L; it remains prospective sampled headroom, not a smaller installed per-file bound. Insert residual_domains into inventory01; original root budget/floor/native checks unchanged.' if lifecycle_reservation is not None else 'Insert residual_domains into inventory01 input. Parent/outer receipt reservations use the same finite L as an explicit prospective ceiling, without claiming the parent has RLIMIT enforcement. Exact root budget, directory/block model and baseline remain required. No seven graph counts are invented.'),
+         'enforcement':'Current full writable-union sampling/floor, worker and monitor RLIMIT_FSIZE. This is a finite reservation draft, not a guarantee against theoretical inter-sample overshoot.'}
+ 
+ if __name__=='__main__':

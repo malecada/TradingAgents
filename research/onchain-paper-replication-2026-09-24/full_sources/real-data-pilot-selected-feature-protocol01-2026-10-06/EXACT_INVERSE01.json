@@ -1,0 +1,178 @@
+{
+  "prepare_builder03_input02.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-control-residual-review01-2026-10-06/prepare_builder03_input01.py",
+    "baseline_sha256": "37447ae7126049ffe1de5bf94baf41b1606504618d8935cdfd88704bbd3d35f4",
+    "candidate_sha256": "e7d4c2356037fbaf906d6919338b45b5bef4cc6e5d71b3beabaaaf742cf53825",
+    "edits": [
+      {
+        "after": "selected-",
+        "before": "",
+        "end": 541,
+        "start": 532
+      },
+      {
+        "after": "p",
+        "before": "",
+        "end": 550,
+        "start": 549
+      },
+      {
+        "after": "oto",
+        "before": "esidual-",
+        "end": 554,
+        "start": 551
+      },
+      {
+        "after": "",
+        "before": "ntro",
+        "end": 556,
+        "start": 556
+      },
+      {
+        "after": "",
+        "before": "s",
+        "end": 557,
+        "start": 557
+      },
+      {
+        "after": "2",
+        "before": "1",
+        "end": 582,
+        "start": 581
+      },
+      {
+        "after": "34aeb",
+        "before": "",
+        "end": 593,
+        "start": 588
+      },
+      {
+        "after": "b",
+        "before": "",
+        "end": 595,
+        "start": 594
+      },
+      {
+        "after": "926",
+        "before": "e",
+        "end": 599,
+        "start": 596
+      },
+      {
+        "after": "0",
+        "before": "3",
+        "end": 601,
+        "start": 600
+      },
+      {
+        "after": "",
+        "before": "083",
+        "end": 602,
+        "start": 602
+      },
+      {
+        "after": "04d3777e15ec4c640",
+        "before": "",
+        "end": 621,
+        "start": 604
+      },
+      {
+        "after": "e",
+        "before": "f83c",
+        "end": 623,
+        "start": 622
+      },
+      {
+        "after": "a255",
+        "before": "88c",
+        "end": 628,
+        "start": 624
+      },
+      {
+        "after": "faf309563e58",
+        "before": "",
+        "end": 642,
+        "start": 630
+      },
+      {
+        "after": "2",
+        "before": "",
+        "end": 644,
+        "start": 643
+      },
+      {
+        "after": "",
+        "before": "be8b4ebeb1",
+        "end": 645,
+        "start": 645
+      },
+      {
+        "after": "a",
+        "before": "28cf79fc967",
+        "end": 647,
+        "start": 646
+      },
+      {
+        "after": "1",
+        "before": "c7085f22bb",
+        "end": 650,
+        "start": 649
+      },
+      {
+        "after": "",
+        "before": "a5c4",
+        "end": 651,
+        "start": 651
+      },
+      {
+        "after": " in (",
+        "before": "==",
+        "end": 1264,
+        "start": 1259
+      },
+      {
+        "after": ",keys|{'lifecycle_reservation'})",
+        "before": "",
+        "end": 1300,
+        "start": 1268
+      },
+      {
+        "after": ",lifecycle_reservation=p.get('lifecycle_reservation')",
+        "before": "",
+        "end": 2963,
+        "start": 2910
+      }
+    ]
+  },
+  "residuals02.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-residual-controls01-2026-10-06/residuals01.py",
+    "baseline_sha256": "54e83b083b8ff83c288c17d6be8b4ebeb1528cf79fc96775c7085f22bbaa5c4c",
+    "candidate_sha256": "34aeb5b492680bb804d3777e15ec4c640fe2a25517faf309563e58d265a751ac",
+    "edits": [
+      {
+        "after": ",lifecycle_reservation=None",
+        "before": "",
+        "end": 1317,
+        "start": 1290
+      },
+      {
+        "after": "if lifecycle_reservation is not None:\n        d=lifecycle_reservation\n        need(type(d) is dict and set(d)=={'logical_bytes','regular_files','directories','max_file_bytes'}, 'exact selected lifecycle reservation required')\n        for v in d.values():positive(v)\n        need(d['regular_files']>=68 and d['directories']>=16, 'original lifecycle slot inventory must remain covered')\n        need(training_checkpoint_bytes+2*M+4096<=d['logical_bytes']<=d['regular_files']*d['max_file_bytes'], 'selected lifecycle logical extent inconsistent')\n        need(max(training_checkpoint_bytes,M)<=d['max_file_bytes']<=native_file_bytes, 'selected lifecycle file reservation inconsistent')\n        lifecycle=declaration(d['logical_bytes'],d['regular_files'],d['directories'],d['max_file_bytes'],basis=\n            'Explicit prospective sampled lifecycle reservation, not a source-proven maximum encoded-body bound, per-domain quota or overshoot guarantee. Original68 file slots/16 directories retained. Includes checkpoint, bounded partial telemetry and fixed receipts. Parent exception text/log output and native receipt encodings have no newly installed smaller cap. Unexpected growth remains governed by unchanged whole-union watches, native RLIMIT and floor; no automatic retry or grant increase.')\n    ",
+        "before": "",
+        "end": 7047,
+        "start": 5747
+      },
+      {
+        "after": "('Explicit selected lifecycle reservation replaces only64L; it remains prospective sampled headroom, not a smaller installed per-file bound. Insert residual_domains into inventory01; original root budget/floor/native checks unchanged.' if lifecycle_reservation is not None else ",
+        "before": "",
+        "end": 9247,
+        "start": 8969
+      },
+      {
+        "after": ")",
+        "before": "",
+        "end": 9548,
+        "start": 9547
+      }
+    ]
+  }
+}

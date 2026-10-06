@@ -1,0 +1,15 @@
+--- outcome_check01.py
++++ outcome_check02.py
+@@ -45,9 +45,9 @@
+  info=(R/row['path']).lstat();assert row['stat_identity']==[info.st_dev,info.st_ino,info.st_nlink,info.st_size,info.st_mtime_ns,info.st_ctime_ns]
+ headers={Path(row['path']).stem:row['npy_header'] for row in body['files'] if 'npy_header' in row}
+ Nnodes=headers['node_ids']['shape'][0];Nedges=headers['edge_index']['shape'][1]
+-assert headers['node_features']['shape']==[Nnodes,8] and headers['edge_index']['shape']==[2,Nedges]
+-assert headers['edge_features']['shape']==[Nedges,4] and headers['edge_aggregates']['shape']==[Nedges,2]
+-assert headers['node_features']['descr']=='<f4' and headers['edge_features']['descr']=='<f4' and headers['edge_aggregates']['descr']=='<f8' and headers['edge_index']['descr']=='<i8'
++assert headers['node_features']['shape']==[Nnodes,4] and headers['edge_index']['shape']==[2,Nedges]
++assert headers['edge_features']['shape']==[Nedges,2] and headers['edge_aggregates']['shape']==[Nedges,2]
++assert headers['node_features']['descr']=='<f8' and headers['edge_features']['descr']=='<f8' and headers['edge_aggregates']['descr']=='<f8' and headers['edge_index']['descr']=='<i8'
+ coverage=read(R/t['cells'][1]['coverage_path']);assert digest(R/t['cells'][1]['coverage_path'])==t['cells'][1]['coverage_sha256']
+ assert coverage['claim_sha256']==t['claim_sha256'] and coverage['graph_manifest_sha256']==t['cells'][1]['manifest_sha256'] and coverage['plan_sha256']==e['inputs']['graph_plan']['sha256']
+ weekly=read(R/e['inputs']['weekly_source']['path']);assert weekly['expected_rows']==t['cells'][0]['rows']==sum(x['expected_rows'] for x in coverage['members']) and len(coverage['members'])==7
