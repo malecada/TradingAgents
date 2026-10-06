@@ -137,10 +137,7 @@ def _admitted(args):
     if job['kind']=='compact_resource':
         from . import resource_fixture, real_pilot_import_caller
         route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
-        if route is real_pilot_import_caller:
-            route.admitted(admitted,job,fresh_archive=True)
-        else:
-            route.admitted(admitted,job)
+        route.admitted(admitted,job)
     source = admitted.experiment['source_files']
     if not required_sources() <= set(source):
         raise ValueError('execution dependency source closure not registered')

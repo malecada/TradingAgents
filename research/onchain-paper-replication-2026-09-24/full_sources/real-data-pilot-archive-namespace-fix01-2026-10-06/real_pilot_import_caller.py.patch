@@ -1,0 +1,37 @@
+--- baseline/real_pilot_import_caller.py
++++ candidate/real_pilot_import_caller.py
+@@ -245,7 +245,25 @@
+     return True
+ 
+ 
+-def admitted(ad, job):
++def _archive_namespace(ad, s, p, *, fresh=False):
++    """Authenticate schema2 archive identity; freshness is an entry-only check."""
++    if p['schema_version'] != 2 or 'archive_inputs' not in p:
++        return
++    import os
++    import re
++    transport = _read(ad, s['compact_archive_transport_input'])
++    archive = _read(ad, s['compact_archive_input'])
++    match = re.fullmatch(r'eth-paper-real-data-end-to-end-resource-(\d{8}-\d{2})', ad.experiment_id)
++    require(match is not None, 'fixed real-pilot archive launch identity required')
++    expected = 'ethpilot-' + match.group(1)
++    require(transport.get('namespace') == archive.get('remote_namespace') == expected,
++            'archive transport/remote namespace differs from fixed pilot launch')
++    if fresh:
++        require(not os.path.lexists(ad.root/'research_artifacts'/('archive-dispatch-'+expected)),
++                'archive transport namespace already reserved before claim')
++
++
++def admitted(ad, job, *, fresh_archive=False):
+     schema(job)
+     name,s = next(iter(job['payload']['representation_jobs'].items()))
+     p = validate_plan(_read(ad, s['real_pilot_input']))
+@@ -286,6 +304,7 @@
+     require(control['sample_count'] == 512 and control['motif_count'] == 32
+             and control['required_graphs'] == sorted(p['graph_inputs']), 'exact original512/32 import required')
+     if p['schema_version']==2 and 'archive_inputs' in p:
++        _archive_namespace(ad,s,p,fresh=fresh_archive)
+         from .real_pilot_reservations import validate as reservations
+         output=_read(ad,s['compact_mcm_output_input'])
+         require(output.get('payload_archive_input') in ad.inputs,'registered typed payload reservation required')

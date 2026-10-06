@@ -1,0 +1,46 @@
+{
+  "status": "candidate-ready",
+  "candidate_checks": {
+    "synthetic_only": true,
+    "checks": [
+      "fresh05 passes",
+      "stale02 refuses for fixed05",
+      "transport remote mismatch refuses",
+      "transport hash substitution refuses",
+      "reserved directory refuses",
+      "later admission retains own context",
+      "dangling symlink refuses",
+      "legacy and absent archive unchanged",
+      "actual entry selects freshness only for pilot; legacy fixture unchanged"
+    ],
+    "count": 9
+  },
+  "runtime": {
+    "python": "3.13.13",
+    "locked_sync_check_exit_code": 0,
+    "problems": []
+  },
+  "reviewed_offline_regression": {
+    "module": "tests/research/onchain_replication/test_archive_dispatch.py",
+    "passed": 44,
+    "seconds": 4.16,
+    "exit_code": 0,
+    "qualification": "existing live baseline dispatch module; candidate helpers and routing checked separately without live installation"
+  },
+  "failures": [],
+  "entry_order_review": {
+    "job_admitted_callers": [
+      "launch initial line216",
+      "monitor initial line284",
+      "worker initial line350 before ResearchRun.start"
+    ],
+    "post_birth_job_readmission_loop": false,
+    "internal_admitted_default_fresh_archive": false,
+    "context_birth_check_unchanged": true
+  },
+  "uncertainty": [
+    "Early absence check cannot eliminate races; existing Context lexists/mkdir check remains authoritative.",
+    "No empirical execution, graph loading, model execution, private transport reading or candidate live integration performed."
+  ],
+  "scope": "Only assigned new directory changed; no live/Git/gate/registration edits."
+}
