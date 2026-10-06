@@ -1,0 +1,69 @@
+{
+  "actual_native": {
+    "child_exit_code": 1,
+    "cleanup_verified": true,
+    "elapsed_seconds": 434.466017962,
+    "memory_events": {
+      "high": 1699,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 14319616,
+        "file_bytes": 1977241600,
+        "kernel_peak_bytes": 5370867712,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-da1f98bab6124f4697bef90a4990623c.service",
+        "pressure": "some avg10=0.00 avg60=0.06 avg300=0.12 total=1089432\nfull avg10=0.00 avg60=0.06 avg300=0.12 total=1089432",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 3926462464,
+        "file_bytes": 6138331136,
+        "kernel_peak_bytes": 14278696960,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.09 avg300=0.13 total=1108997\nfull avg10=0.00 avg60=0.09 avg300=0.13 total=1108844",
+        "swap_current_bytes": 3088384,
+        "unavailable": {}
+      }
+    },
+    "peak_sampled_memory_current_bytes": 5368881152,
+    "phase": "failed"
+  },
+  "at": "2026-10-06T11:20:00.866293+00:00",
+  "current_selected_pid_exists": {
+    "25803": false,
+    "26040": false,
+    "26275": false,
+    "26278": false,
+    "27075": false,
+    "27585": false,
+    "27590": false
+  },
+  "disposition": "Permanent FAILED/spent; all seven MCM graphs UNAVAILABLE/not attempted, zero training updates, zero financial fits. Registered budget allowance consumed; no identity relaunch, refund or transfer. Source/Git freeze ended after actual Root/native closure; lifetime PID history remains unknown.",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final01-2026-10-06/FINAL_STORAGE01.json": "ac1ad9b4343f9d427a5632bcb6a10b12c81ae74bc86a53e47b91745a84edf0f7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final01-2026-10-06/ROOT_IO_CLOSED01.json": "1ceb6e679f2b60042e9a81c0aebc3ea888753c66abba61f3263d018a476a2431",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261005-01/guard/child.log": "b5879ef84233a87144e66772c15da3209bb7c6695bc40e1a4c4adf8bf3e14d19",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261005-01/guard/final.json": "933c0a57c18c0060fd11ea24f7d11618cbc3eaa67eab59ede0f6b4ed1c6f0e81",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261005-01/launch.json": "c2ffdade85dcb381588ad0ee2abd044a8e7ec713dca27d9e5900ae7db32b65c5",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261005-01/owner.json": "34fbf2b9c7a2e9a396aa9198be37bc0389692f69fee62131ab8cf03fff80f015",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261005-01/claim.json": "c31e711212a37bac2bca2782c1c1b12c24bb13bd000ddc3434f40e7818ada0d9",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261005-01/failed.json": "1eb571b404f0f083ea8f33ae39be92c60b0dd9212a8d87d6f09487a62d4093dd"
+  },
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261005-01",
+  "original_failure_reason": "ValueError: compact owner policy descriptor differs",
+  "recorded_cgroup_absent": true,
+  "root_actual_exit": {
+    "exit_code": 1,
+    "session": 31993,
+    "terminal_chunk": "0bb0e3"
+  },
+  "selected_active_native_units": [],
+  "source": "74886d1be05ce64e8eca939be42e08c6e5700d9c"
+}

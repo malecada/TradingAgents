@@ -1,0 +1,19 @@
+{
+  "actual_tool": "5c7178",
+  "checker_sha256": "1ceb36a9e37a63834404bd13551a69072b320c1c4410e8f5abdc1f0995b3549f",
+  "decision": "refused_before_release",
+  "envelope_sha256": "dba25d95a265c5eccaa9ed32e0a8de5c0d2a3aa89083ac78922cdbd7dc0296c0",
+  "exit_code": 1,
+  "mismatches": {
+    "tradingagents/research/onchain_replication/resources.py": {
+      "actual": "672ff3ed96c7d5ba1ccbdc2355558b10aa823cbda0c3b07d1d2f44923c8b0185",
+      "expected": "559fc3e8d5718932aa311f90f8263f111d1976b4386b8ac08383178267da767b"
+    },
+    "tradingagents/research/onchain_replication/workflow_storage.py": {
+      "actual": "deff02766685c1e7fb8628766acf0e0c36dc324da4672f3adc094bfac3e24a74",
+      "expected": "a6323c64c903931d7f2c7d18c5d81d8479d377c82e9eaeacc8580a5c4e99d67f"
+    }
+  },
+  "reason": "Two inherited source pins are stale against actual current installed bodies. No transport or experiment executed.",
+  "schema_version": 1
+}
