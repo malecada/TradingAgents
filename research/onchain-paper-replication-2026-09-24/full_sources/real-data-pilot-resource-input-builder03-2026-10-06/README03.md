@@ -1,0 +1,17 @@
+Builder03 prepares DRAFT metadata only. Preserve builder01 and builder02 as sealed predecessors; builder02's tail lower bound is insufficient for the selected mandatory semantic replay.
+
+Use the same seven genuine graph manifest/count references, original512-sample/32-motif import roster, frozen opaque prices/scope/calendar/model/training references and template roles documented by builder02. No numerical body is read. The calculator dependency is the exact sibling resource-buffer-allocation01/allocation01.py body3912e68c, checked before use.
+
+Add these REQUIRED physical_store fields to a builder02 specification:
+- typed_attempt_metadata_bytes: positive finite declared retained attempt metadata, at least four8192B records times the sum of all selected max_chunks across the seven graphs, and at least the sum of mandatory calculator allowances. This conservatively covers admitted quota slack; the runtime quotas are not increased. This is separate from the existing ledger-only typed control quota.
+- remaining_control_inventory: exact dictionary with positive finite stream_tail_batch_headers_bytes, producer_output_controls_bytes and other_selected_controls_bytes. These declarations cover retained controls outside the separately reserved typed ledger/archive/dispatch/transport and typed attempt categories. Root must substantiate their completeness; no inferred zero/unknown is accepted.
+- additional_scratch_bytes: explicit finite nonnegative bytes for simultaneous selected scratch outside the calculator phases. Zero explicitly declares no additional overlap; omission/None is refused, and the builder does not prove that declaration.
+
+caller_scratch_bytes must cover max(old three8MiB-extent lower bound, all calculator selected overlap phases) plus additional_scratch_bytes. All seven original matrices remain charged separately in reserved_growth_bytes. Separate allocation_overhead_bytes remains required for block rounding, directory/inode metadata and filesystem assumptions; it is not inferred from logical payload counts. Actual st_blocks monitoring and the unchanged root allocation/floor guards remain necessary.
+
+The tail's max_recovered_bytes must cover80×32×rows; max_chunks must cover twice the sum of per-original-batch tail preservation parts. Original operation count, chunk alignment, f64 bits, f64→f32 conversion and all existing cumulative IO formulas/caps are unchanged. Existing declarations already sufficient for those minima are preserved exactly; the builder does not automatically raise budgets.
+
+Ordinary preparation command, with an explicitly prepared specification and fresh output directory:
+.venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-input-builder03-2026-10-06/build_inputs03.py --root /absolute/declared/root --spec /absolute/metadata-spec.json --output /absolute/fresh-draft-directory
+
+Connection remains None in the emitted transport DRAFT. Root alone supplies private configuration identity, independently validates complete control/scratch/overhead declarations and current baseline, joins actual seven graph authorities and node counts, commits prospective limits and performs genuine resource/source/runtime/Owner/Binding admission. No capacity, current remote availability, actual16-row price eligibility/scaler, empirical completion or financial claim follows from this utility.

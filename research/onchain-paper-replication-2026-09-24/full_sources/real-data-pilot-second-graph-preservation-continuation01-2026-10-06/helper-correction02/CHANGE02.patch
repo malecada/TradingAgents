@@ -1,0 +1,13 @@
+--- continue01.py
++++ continue02.py
+@@ -99,4 +99,9 @@
+         result={'identity':ID,'parent':PARENT,'parent_status':'FAILED','parent_proof':c['binding'],'files':records,'count':36,'bytes_preserved':original['total_bytes'],'directories':original['directories'],'fresh_body_transfers':0,'fresh_restoration_metadata_rows':[35],'originals_retained':True,'recoveries_retained':True,'no_automatic_retry':True,'qualification':QUALIFICATION}
+         need(len((json.dumps(result,indent=2)+'\n').encode())<=LIMIT,'combined completion exceeds finite metadata bound');guard();parent_state(root,c['binding']);p.finish(here,result,c['remote'],transport);return result
+     except BaseException as error:
+-        p.publish(here/'failed.json',{'identity':ID,'parent':PARENT,'parent_status':'FAILED','error':type(error).__name__+': '+str(error),'no_automatic_retry':True,'originals_and_old_namespace_never_modified':True});raise
++        try:
++            p.publish(here/'failed.json',{'identity':ID,'parent':PARENT,'parent_status':'FAILED','error':type(error).__name__+': '+str(error),'no_automatic_retry':True,'originals_and_old_namespace_never_modified':True})
++        except BaseException as evidence_error:
++            try:error.add_note('Metadata successor failure evidence unavailable: '+repr(evidence_error))
++            except BaseException:pass
++        raise

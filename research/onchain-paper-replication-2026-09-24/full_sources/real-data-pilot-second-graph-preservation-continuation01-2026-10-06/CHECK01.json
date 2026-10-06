@@ -1,0 +1,56 @@
+{
+  "actual_inherited_body_stat_checks": 36,
+  "actual_body_opens": 0,
+  "actual_missing_metadata_rows": [
+    35
+  ],
+  "actual_parent_reclassified": false,
+  "wrong_proof_refused": true,
+  "changed_stat_refused": true,
+  "entry_exact_inverse": true,
+  "synthetic_metadata_only_cases": [
+    {
+      "synthetic_case": "synthetic-success",
+      "calls": [
+        [
+          "mkdir",
+          "research-backups/onchain-paper-replication-2026-09-24/real-pilot-second-graph-preservation-metadata-20261006-01"
+        ],
+        [
+          "put",
+          "research-backups/onchain-paper-replication-2026-09-24/real-pilot-second-graph-preservation-metadata-20261006-01/35-restore.json"
+        ],
+        [
+          "get",
+          "research-backups/onchain-paper-replication-2026-09-24/real-pilot-second-graph-preservation-metadata-20261006-01/35-restore.json"
+        ],
+        [
+          "put",
+          "research-backups/onchain-paper-replication-2026-09-24/real-pilot-second-graph-preservation-metadata-20261006-01/complete.json"
+        ],
+        [
+          "get",
+          "research-backups/onchain-paper-replication-2026-09-24/real-pilot-second-graph-preservation-metadata-20261006-01/complete.json"
+        ]
+      ]
+    },
+    {
+      "synthetic_case": "synthetic-corrupt",
+      "calls": [
+        [
+          "mkdir",
+          "research-backups/onchain-paper-replication-2026-09-24/real-pilot-second-graph-preservation-metadata-20261006-01"
+        ],
+        [
+          "put",
+          "research-backups/onchain-paper-replication-2026-09-24/real-pilot-second-graph-preservation-metadata-20261006-01/35-restore.json"
+        ],
+        [
+          "get",
+          "research-backups/onchain-paper-replication-2026-09-24/real-pilot-second-graph-preservation-metadata-20261006-01/35-restore.json"
+        ]
+      ]
+    }
+  ],
+  "scope": "actual compact metadata/stat joins plus synthetic transport sequencing; no external/native operation or authority"
+}

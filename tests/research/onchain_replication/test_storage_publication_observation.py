@@ -198,7 +198,7 @@ class Checks(unittest.TestCase):
         fatal=KeyboardInterrupt('original fatal');fatal.observation={'hardlink_observations':[{'relative_path':'a','links':2}]}
         class Watch:
             def check(self):raise fatal
-        state={};namespace={'storage_watch':Watch(),'state':state}
+        state={};namespace={'storage_watch':Watch(),'state':state,'native_unit_limits':None}
         exec(compile(ast.Module(body=[function],type_ignores=[]),str(resource_path),'exec'),namespace)
         with self.assertRaises(KeyboardInterrupt) as caught:namespace['observe_storage']()
         self.assertIs(caught.exception,fatal)

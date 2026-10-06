@@ -1,0 +1,11 @@
+{
+  "before_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph-preservation-continuation01-2026-10-06/continue01.py",
+  "before_sha256": "b6201542001d8bc2921488743ceeda6fa3abab84cb799b145b67f8577c37c8ca",
+  "after_sha256": "e7abfd42ba67eea37ba4e3d2e4563d732a4719fd97750df3080fe0c88bf554df",
+  "literal_edits": [
+    {
+      "before": "        p.publish(here/'failed.json',{'identity':ID,'parent':PARENT,'parent_status':'FAILED','error':type(error).__name__+': '+str(error),'no_automatic_retry':True,'originals_and_old_namespace_never_modified':True});raise",
+      "after": "        try:\n            p.publish(here/'failed.json',{'identity':ID,'parent':PARENT,'parent_status':'FAILED','error':type(error).__name__+': '+str(error),'no_automatic_retry':True,'originals_and_old_namespace_never_modified':True})\n        except BaseException as evidence_error:\n            try:error.add_note('Metadata successor failure evidence unavailable: '+repr(evidence_error))\n            except BaseException:pass\n        raise"
+    }
+  ]
+}

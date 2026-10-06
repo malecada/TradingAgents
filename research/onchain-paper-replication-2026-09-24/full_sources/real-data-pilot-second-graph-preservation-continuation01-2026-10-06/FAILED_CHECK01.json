@@ -1,0 +1,6 @@
+{
+  "tool": "945e23",
+  "exit_code": 1,
+  "reason": "same-size immediate synthetic write retained identical filesystem stat identity; changed-stat witness was not actually changed",
+  "correction": "use a different synthetic extent so the intended stat mismatch is guaranteed; product code unchanged"
+}

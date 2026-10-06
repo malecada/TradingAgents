@@ -1,0 +1,43 @@
+{
+  "before_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-input-builder02-2026-10-06/build_inputs02.py",
+  "before_sha256": "166e7e4ec1d03cefc39c1fcf58853fbeef0ab305369a3ebd65438c4c316b9f0e",
+  "after_sha256": "e100a1fa2f8caaa6baf6cde85d5f50aa667ed6e04b6470d9c8368d5424748a2d",
+  "literal_edits": [
+    {
+      "before": "ops=batches;reads=0",
+      "after": "ops=batches;reads=count*80;chunks*=2"
+    },
+    {
+      "before": "def build(root,spec):",
+      "after": "def selected_buffers(g,selection,pair_chunk):\n    # Reuse the sealed scalar calculator, never import the scientific package.\n    path=Path(__file__).resolve().parent.parent/'real-data-pilot-resource-buffer-allocation01-2026-10-06'/'allocation01.py'\n    need(not path.is_symlink() and path.stat().st_size<=LIMIT,'bounded calculator source required')\n    source=path.read_bytes()\n    need(sha(source)=='3912e68c232553f1fab5e39a92c0741c2c0ddab49316321c1189781d19611dfd','pinned allocation calculator changed')\n    functions={};exec(compile(source,str(path),'exec'),functions)\n    result={}\n    for week,item in g.items():\n        kinds=selection['by_week'][week]\n        value=functions['graph'](item['rows'],selection['chunk_cells'],kinds['score-tail-f64']['chunk_bytes'],kinds['mcm-output-f32']['chunk_bytes'],pair_chunk)\n        functions['check_typed_allowances'](value,kinds);result[week]=value\n    return result\n\ndef build(root,spec):"
+    },
+    {
+      "before": "'caller_scratch_bytes','allocation_overhead_bytes'},'explicit retained local store components required'",
+      "after": "'caller_scratch_bytes','allocation_overhead_bytes','typed_attempt_metadata_bytes','remaining_control_inventory','additional_scratch_bytes'},'explicit retained local store components required'"
+    },
+    {
+      "before": "for key in set(store)-{'baseline_evidence'}:positive(store[key])",
+      "after": "for key in set(store)-{'baseline_evidence','remaining_control_inventory','additional_scratch_bytes'}:positive(store[key])\n    inventory=store['remaining_control_inventory']\n    need(type(inventory) is dict and set(inventory)=={'stream_tail_batch_headers_bytes','producer_output_controls_bytes','other_selected_controls_bytes'},'complete remaining control declarations required')\n    for value in inventory.values():positive(value)\n    extra=store['additional_scratch_bytes'];need(type(extra) is int and 0<=extra<2**63,'explicit finite additional scratch declaration required')"
+    },
+    {
+      "before": "local_bounds={'retained_diagnostic_bytes':",
+      "after": "buffers=selected_buffers(g,spec['typed_allocations'],chunk*width)\n    local_bounds={'retained_diagnostic_bytes':"
+    },
+    {
+      "before": "'caller_scratch_bytes':3*ARCHIVE_MAX_BYTES}",
+      "after": "'caller_scratch_bytes':max(3*ARCHIVE_MAX_BYTES,max(v['selected_payload_overlap_upper_bytes'] for v in buffers.values()))+extra,\n        'typed_attempt_metadata_bytes':max(sum(v['typed_attempt_metadata_allowance_bytes'] for v in buffers.values()),4*8192*sum(b['max_chunks'] for kinds in spec['typed_allocations']['by_week'].values() for b in kinds.values()))}"
+    },
+    {
+      "before": "    # Three archive extents cover one source/snapshot/readback lower bound.\n    # Nested original writer/typed buffers can overlap: this is not their full\n    # peak proof. Root must supply a conservative complete scratch declaration.\n    logical_growth=sum(store[k] for k in ('reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes'))",
+      "after": "    # Selected overlap excludes retained matrices and controls, charged separately.\n    # Remaining controls/extra scratch are explicit prospective declarations:\n    # their completeness and actual filesystem overhead require Root admission.\n    logical_growth=sum(store[k] for k in ('reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes','typed_attempt_metadata_bytes'))+sum(inventory.values())"
+    },
+    {
+      "before": "'retained_local_lower_bounds':local_bounds,",
+      "after": "'retained_local_lower_bounds':local_bounds,'selected_buffer_calculations':buffers,'mandatory_typed_attempt_directory_count':sum(v['typed_attempt_directory_count'] for v in buffers.values()),'admitted_typed_attempt_count_bound':sum(b['max_chunks'] for kinds in spec['typed_allocations']['by_week'].values() for b in kinds.values()),'remaining_control_declared_bytes':sum(inventory.values()),"
+    },
+    {
+      "before": "'Root private connection and transport_identity match'",
+      "after": "'Root verifies complete retained-control/scratch inventory, block/directory/inode overhead and current baseline; declared lower bounds are not capacity proof','Root private connection and transport_identity match'"
+    }
+  ]
+}

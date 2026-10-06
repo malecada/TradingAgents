@@ -1,0 +1,79 @@
+--- build_inputs02.py
++++ build_inputs03.py
+@@ -98,7 +98,7 @@
+             for v in b.values():positive(v)
+             part=b['chunk_bytes'];need(part<=LIMIT and part%width==0,'aligned <=4MiB transport chunk required')
+             if kind=='score-tail-f64':
+-                full,last=divmod(count,cells);chunks=full*((cells*80+part-1)//part)+(0 if not last else (last*80+part-1)//part);ops=batches;reads=0
++                full,last=divmod(count,cells);chunks=full*((cells*80+part-1)//part)+(0 if not last else (last*80+part-1)//part);ops=batches;reads=count*80;chunks*=2
+             elif kind=='score-batch-f64':
+                 need(part>=cells*8,'original f64 batch must fit selected part');chunks=2*batches;ops=batches+1;reads=count*8
+             else:chunks=(count*4+part-1)//part;ops=1;reads=0
+@@ -107,6 +107,20 @@
+             p,r,n=b['max_preserved_bytes'],b['max_recovered_bytes'],b['max_chunks'];total['logical_bytes']+=2*p+r;total['rounded_bytes']+=2*p+r+2*n*65536;total['commands']+=4*n;total['chunks']+=n
+         policy['graphs'][item['hash']]={'rows':item['rows'],'chunk_cells':cells,'kinds':budgets};minima[week]=low
+     return policy,total,minima
++
++def selected_buffers(g,selection,pair_chunk):
++    # Reuse the sealed scalar calculator, never import the scientific package.
++    path=Path(__file__).resolve().parent.parent/'real-data-pilot-resource-buffer-allocation01-2026-10-06'/'allocation01.py'
++    need(not path.is_symlink() and path.stat().st_size<=LIMIT,'bounded calculator source required')
++    source=path.read_bytes()
++    need(sha(source)=='3912e68c232553f1fab5e39a92c0741c2c0ddab49316321c1189781d19611dfd','pinned allocation calculator changed')
++    functions={};exec(compile(source,str(path),'exec'),functions)
++    result={}
++    for week,item in g.items():
++        kinds=selection['by_week'][week]
++        value=functions['graph'](item['rows'],selection['chunk_cells'],kinds['score-tail-f64']['chunk_bytes'],kinds['mcm-output-f32']['chunk_bytes'],pair_chunk)
++        functions['check_typed_allowances'](value,kinds);result[week]=value
++    return result
+ 
+ def build(root,spec):
+     need(set(spec)=={'graphs','references','template_roles','typed_input_role','typed_allocations','physical_store','transport_limits'},'exact builder metadata specification required')
+@@ -142,8 +156,12 @@
+     budget=resource['storage_budget'];limits=budget['limits'];experiment='eth-paper-real-data-end-to-end-resource-20261005-01'
+     need(budget['authority_root']==str(root) and budget['schema_version']==2 and budget['kind']=='real-pilot-writable-union' and budget['experiment']==experiment and budget['roots']==[str(root/'research_artifacts'),str(root/'research_runs'/experiment)] and budget['shared_files']==[str(root/'research_runs/.lock')],'exact common writable union required')
+     need(resource['disk_floor_bytes']==typed['local_free_floor_bytes']==archive['local_free_floor_bytes'],'one physical-store floor required')
+-    store=spec['physical_store'];need(set(store)=={'baseline_evidence','baseline_allocated_bytes','baseline_logical_bytes','reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes','allocation_overhead_bytes'},'explicit retained local store components required');ref_path(root,store['baseline_evidence'])
+-    for key in set(store)-{'baseline_evidence'}:positive(store[key])
++    store=spec['physical_store'];need(set(store)=={'baseline_evidence','baseline_allocated_bytes','baseline_logical_bytes','reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes','allocation_overhead_bytes','typed_attempt_metadata_bytes','remaining_control_inventory','additional_scratch_bytes'},'explicit retained local store components required');ref_path(root,store['baseline_evidence'])
++    for key in set(store)-{'baseline_evidence','remaining_control_inventory','additional_scratch_bytes'}:positive(store[key])
++    inventory=store['remaining_control_inventory']
++    need(type(inventory) is dict and set(inventory)=={'stream_tail_batch_headers_bytes','producer_output_controls_bytes','other_selected_controls_bytes'},'complete remaining control declarations required')
++    for value in inventory.values():positive(value)
++    extra=store['additional_scratch_bytes'];need(type(extra) is int and 0<=extra<2**63,'explicit finite additional scratch declaration required')
+     need(store['reserved_growth_bytes']>=sum(v['rows']*128 for v in g.values()),'all retained original f32 outputs require common store reservation')
+     transport=copy.deepcopy(spec['transport_limits']);need('connection' not in transport,'builder must not consume connection credentials')
+     need(set(transport)=={'rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes','namespace','receipt_output','terminal_output'},'exact transport limit template required')
+@@ -163,15 +181,17 @@
+     # moved to the caller, while each call retains one bounded transport JSON.
+     # Context serialization and first-failure poisoning allow at most one
+     # in-flight/failed get diagnostic body; caller destinations remain separate.
++    buffers=selected_buffers(g,spec['typed_allocations'],chunk*width)
+     local_bounds={'retained_diagnostic_bytes':TRANSPORT_META*transport['max_commands']+ARCHIVE_MAX_BYTES,
+         'reserved_control_bytes':typed['max_control_bytes']+archive['max_workflow_metadata_bytes']+transport['max_control_bytes'],
+-        'caller_scratch_bytes':3*ARCHIVE_MAX_BYTES}
++        'caller_scratch_bytes':max(3*ARCHIVE_MAX_BYTES,max(v['selected_payload_overlap_upper_bytes'] for v in buffers.values()))+extra,
++        'typed_attempt_metadata_bytes':max(sum(v['typed_attempt_metadata_allowance_bytes'] for v in buffers.values()),4*8192*sum(b['max_chunks'] for kinds in spec['typed_allocations']['by_week'].values() for b in kinds.values()))}
+     for key,minimum in local_bounds.items():
+         positive(minimum);need(store[key]>=minimum,'retained local component underfunded: '+key)
+-    # Three archive extents cover one source/snapshot/readback lower bound.
+-    # Nested original writer/typed buffers can overlap: this is not their full
+-    # peak proof. Root must supply a conservative complete scratch declaration.
+-    logical_growth=sum(store[k] for k in ('reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes'))
++    # Selected overlap excludes retained matrices and controls, charged separately.
++    # Remaining controls/extra scratch are explicit prospective declarations:
++    # their completeness and actual filesystem overhead require Root admission.
++    logical_growth=sum(store[k] for k in ('reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes','typed_attempt_metadata_bytes'))+sum(inventory.values())
+     allocated_growth=logical_growth+store['allocation_overhead_bytes']
+     positive(logical_growth);positive(allocated_growth)
+     need(store['baseline_allocated_bytes']+allocated_growth<=limits['max_allocated_bytes'] and store['baseline_logical_bytes']+logical_growth<=limits['max_logical_bytes'],'common store allocation exceeded')
+@@ -189,7 +209,7 @@
+     need(selected['compact_policy_input']==spec['template_roles']['compact'] and selected['compact_archive_input']==spec['template_roles']['archive'],'original compact/archive template roles differ')
+     opaque={role:ref for role,ref in refs.items() if role not in docs}
+     opaque.update({v['role']:v['manifest'] for v in g.values()})
+-    return {'status':'DRAFT_NOT_REGISTERED_NOT_ADMITTED','inputs':docs,'opaque_references':opaque,'source_template_references':{role:refs[role] for role in spec['template_roles'].values()},'graphs':g,'physical_store_declaration':store,'capacity_lower_bounds':{'typed':total,'pair_archive':pair,'shared':combined,'per_graph':minima,'largest_matrix_file_bytes':max_matrix,'retained_local_lower_bounds':local_bounds,'declared_logical_growth_bytes':logical_growth,'declared_allocated_growth_bytes':allocated_growth},'remaining':['Root private connection and transport_identity match','genuine complete graph admission and node-count proof review','current source/runtime/Owner/Binding, resource/storage/network admission','worker derives price eligibility, consecutive indices and resource-only scaler; no numeric data read here'],'no_authority_or_capacity_claim':True}
++    return {'status':'DRAFT_NOT_REGISTERED_NOT_ADMITTED','inputs':docs,'opaque_references':opaque,'source_template_references':{role:refs[role] for role in spec['template_roles'].values()},'graphs':g,'physical_store_declaration':store,'capacity_lower_bounds':{'typed':total,'pair_archive':pair,'shared':combined,'per_graph':minima,'largest_matrix_file_bytes':max_matrix,'retained_local_lower_bounds':local_bounds,'selected_buffer_calculations':buffers,'mandatory_typed_attempt_directory_count':sum(v['typed_attempt_directory_count'] for v in buffers.values()),'admitted_typed_attempt_count_bound':sum(b['max_chunks'] for kinds in spec['typed_allocations']['by_week'].values() for b in kinds.values()),'remaining_control_declared_bytes':sum(inventory.values()),'declared_logical_growth_bytes':logical_growth,'declared_allocated_growth_bytes':allocated_growth},'remaining':['Root verifies complete retained-control/scratch inventory, block/directory/inode overhead and current baseline; declared lower bounds are not capacity proof','Root private connection and transport_identity match','genuine complete graph admission and node-count proof review','current source/runtime/Owner/Binding, resource/storage/network admission','worker derives price eligibility, consecutive indices and resource-only scaler; no numeric data read here'],'no_authority_or_capacity_claim':True}
+ 
+ def main():
+     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--root',required=True);ap.add_argument('--spec',required=True);ap.add_argument('--output',required=True);a=ap.parse_args()

@@ -1,0 +1,26 @@
+{
+  "baseline_path": "tradingagents/research/onchain_replication/workflow_storage.py",
+  "baseline_sha256": "bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554",
+  "literal_edits": [
+    {
+      "before": "            except HardlinkObservation as error:\n                history.append({**error.evidence,'partial_counts':{k:v for k,v in getattr(error,'observation',{}).items() if k in ('allocated_bytes','logical_file_bytes','regular_files','directories','entries')}});error.history=list(history)\n",
+      "after": "            except (HardlinkObservation, FileNotFoundError) as error:\n                if isinstance(error, FileNotFoundError):\n                    # Only descendant names observed by this scan are eligible.\n                    # Root/path/input absence remains fatal and is never retried.\n                    if not hasattr(error, 'storage_entry_disappearance'):raise\n                else:\n                    history.append({**error.evidence,'partial_counts':{k:v for k,v in getattr(error,'observation',{}).items() if k in ('allocated_bytes','logical_file_bytes','regular_files','directories','entries')}});error.history=list(history)\n"
+    },
+    {
+      "before": "        flags=os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC\n",
+      "after": "        def descendant(action,relative):\n            try:return action()\n            except FileNotFoundError as error:\n                # A listed owned descendant vanished during publication. Keep\n                # the actual OSError object/errno; discard the entire sample.\n                error.storage_entry_disappearance=str(relative)\n                raise\n        flags=os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC\n"
+    },
+    {
+      "before": "                    before=os.stat(entry.name,dir_fd=fd,follow_symlinks=False)\n",
+      "after": "                    before=descendant(lambda:os.stat(entry.name,dir_fd=fd,follow_symlinks=False),relative/entry.name)\n"
+    },
+    {
+      "before": "                        child=os.open(entry.name,flags,dir_fd=fd)\n",
+      "after": "                        child=descendant(lambda:os.open(entry.name,flags,dir_fd=fd),relative/entry.name)\n"
+    },
+    {
+      "before": "                            current=os.stat(entry.name,dir_fd=fd,follow_symlinks=False)\n",
+      "after": "                            current=descendant(lambda:os.stat(entry.name,dir_fd=fd,follow_symlinks=False),relative/entry.name)\n"
+    }
+  ]
+}

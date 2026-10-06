@@ -1,0 +1,104 @@
+{
+  "files": [
+    {
+      "body_read_or_hash": false,
+      "bytes": 40293440,
+      "current_stat_identity": [
+        66310,
+        7999980,
+        1,
+        40293440,
+        1790260956708565804,
+        1790260956708565804
+      ],
+      "expected_original_sha256": "bb07bd0d91eeeecc21fbb5a93b62a2cb54788f5eaa1c8c5201e4489efd511701",
+      "historical_complete_hash_stat_join_available": false,
+      "mode": 436,
+      "name": "edge_aggregates",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/edge_aggregates.npy"
+    },
+    {
+      "body_read_or_hash": false,
+      "bytes": 40293440,
+      "current_stat_identity": [
+        66310,
+        7999978,
+        1,
+        40293440,
+        1790260956321571681,
+        1790260956321571681
+      ],
+      "expected_original_sha256": "5ba9079bf2c985a826089a949a72e39a3a8791eb18af907930acc8971fdcd7fe",
+      "historical_complete_hash_stat_join_available": false,
+      "mode": 436,
+      "name": "edge_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/edge_features.npy"
+    },
+    {
+      "body_read_or_hash": false,
+      "bytes": 40293440,
+      "current_stat_identity": [
+        66310,
+        7999977,
+        1,
+        40293440,
+        1790260956264572546,
+        1790260956264572546
+      ],
+      "expected_original_sha256": "6c4bd0c87fe1bd4f6863dcbd7a1c792df677752a025c9af092fd97c40d7dbd4d",
+      "historical_complete_hash_stat_join_available": false,
+      "mode": 436,
+      "name": "edge_index",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/edge_index.npy"
+    },
+    {
+      "body_read_or_hash": false,
+      "bytes": 56584704,
+      "current_stat_identity": [
+        66310,
+        7999585,
+        1,
+        56584704,
+        1790260956180573822,
+        1790260956180573822
+      ],
+      "expected_original_sha256": "c77356834b6fcb14e5a289e0fd0f2ff708dd8f118475dbf598565699412948f0",
+      "historical_complete_hash_stat_join_available": false,
+      "mode": 436,
+      "name": "node_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/node_features.npy"
+    },
+    {
+      "body_read_or_hash": false,
+      "bytes": 297069152,
+      "current_stat_identity": [
+        66310,
+        7999979,
+        1,
+        297069152,
+        1790260956615567216,
+        1790260956615567216
+      ],
+      "expected_original_sha256": "e8f1a8e04d0a0167bdb45b112aaacaea66af6f241ca91fef4b3e6f88a9ec850e",
+      "historical_complete_hash_stat_join_available": false,
+      "mode": 436,
+      "name": "node_ids",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/node_ids.npy"
+    }
+  ],
+  "manifest": {
+    "bytes": 1604,
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+    "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+  },
+  "minimal_count_only_subset_bytes": 353653856,
+  "qualification": "Two files suffice for count-only authentication, but all five are the smallest complete graph-reuse body scope. Root may perform one five-file pass to resolve both without repetition.",
+  "required_checks": [
+    "Canonical no-symlink regular single-link descriptors; exact expected extents and original hashes.",
+    "Capture before/after descriptor and path device/inode/nlink/size/mtime_ns/ctime_ns/mode, refusing any mismatch.",
+    "Capture only bounded NPY node_features/node_ids headers during that same pass; use accepted parser and verify matching row dimensions/dtypes/extents.",
+    "Preserve actual tool/exit and explicit failures; independent exact metadata/body proof review before builder count adoption."
+  ],
+  "scope": "One opaque streaming SHA-256 pass across these five exact retained original arrays, total474534176 bytes; no numerical decode, rerun or graph reconstruction.",
+  "status": "REQUIRED_NOT_EXECUTED"
+}

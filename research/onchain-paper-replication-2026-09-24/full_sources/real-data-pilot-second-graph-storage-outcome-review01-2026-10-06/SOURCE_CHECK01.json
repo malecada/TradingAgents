@@ -1,0 +1,32 @@
+{
+  "decision": "accepted-source-only-pending-actual-second-backup",
+  "five_get_accepted_body_proof_reused": true,
+  "five_get_bytes": 509060512,
+  "five_get_original_and_recovery_stats_current": true,
+  "five_get_source_sha256": "0ea52ac0db5f8f6fe726cd4298b6c4d79651380ccd98d673bacfc7a3c3cd32a6",
+  "five_literal_inverse": true,
+  "focused_refusals": [
+    {
+      "control": "wrong-index",
+      "refusal": "fixed five indices differ"
+    },
+    {
+      "control": "original-target-as-get",
+      "refusal": "only exact array gets allowed"
+    },
+    {
+      "control": "wrong-byte-denominator",
+      "refusal": "fixed selection differs"
+    }
+  ],
+  "native_network_deletion": false,
+  "outcome_checker_sha256": "746f813387dfd4e136ba93f69ec4a4e384a6b5fb305fe152ec7eecf54d5c2d8d",
+  "payload_hash_passes": 0,
+  "qualification": "No outcome or entry acceptance while second backup is active. Five-get preparation is still DRAFT and requires exact prospective selection/release. Current original/recovered arrays joined to accepted evidence by stats only; no rehash.",
+  "second_retirement_bytes": 7199408128,
+  "second_retirement_only_paths": [
+    "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/aggregation/ledger.sqlite",
+    "research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-20261006-01/11-recovered.bin"
+  ],
+  "second_retirement_source_sha256": "14b0eaf64db0a87c8330562ebf41816048fc2dd94da5a6087b29adb8587067d5"
+}

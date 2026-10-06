@@ -1,0 +1,32 @@
+{
+  "actual_parent_outcome": "failed",
+  "actual_root_exit": 1,
+  "attempted_rows": 36,
+  "body_bytes": 4204068745,
+  "body_gets_independently_authenticated": 36,
+  "complete_row_metadata_gets": 35,
+  "decision": "accepted-failed-parent-partial-byte-evidence",
+  "get_receipts": 71,
+  "global_complete_or_metadata_full_recovery": false,
+  "guard_cleanup_verified": true,
+  "missing_increment": {
+    "body_get_already_authenticated": true,
+    "global_worker_completion": "absent",
+    "kept_marker": "absent",
+    "local_restore_present": true,
+    "original_and_body_get_bytes": 1936,
+    "original_path": "research_runs/eth-paper-real-pilot-graph-20220509-20261005-01/outputs/source-summary.json",
+    "remote_restore_fresh_get": "absent",
+    "remote_restore_put_status": "unknown",
+    "row": 35,
+    "verified_marker": "absent"
+  },
+  "no_rerun_this_identity": true,
+  "no_retirement_release": true,
+  "original_guard_child_exit": null,
+  "qualification": "All36 body gets exist and byte identity was checked, but row35 restoration metadata get/kept marker and whole-run completion are absent. Preserve failed source/guard/Root and all partial outputs. A new separately named successor may preserve/recover only missing metadata and an honest composition, using these existing bodies as immutable inherited evidence; never forge old markers. Whole lifetime PID history and actual atomic-rename initiator are not established.",
+  "separate_worker_exit": -15,
+  "six_scientific_payload_bytes": 4203980120,
+  "worker_complete_marker": null,
+  "worker_failed_marker": null
+}

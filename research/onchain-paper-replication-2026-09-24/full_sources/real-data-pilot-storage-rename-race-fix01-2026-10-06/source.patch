@@ -1,0 +1,52 @@
+--- tradingagents/research/onchain_replication/workflow_storage.py
++++ candidate/workflow_storage.py
+@@ -84,8 +84,13 @@
+                 raise StorageLimit('time',{'hardlink_observations':history})
+             try:
+                 result=self._scan(begin)
+-            except HardlinkObservation as error:
+-                history.append({**error.evidence,'partial_counts':{k:v for k,v in getattr(error,'observation',{}).items() if k in ('allocated_bytes','logical_file_bytes','regular_files','directories','entries')}});error.history=list(history)
++            except (HardlinkObservation, FileNotFoundError) as error:
++                if isinstance(error, FileNotFoundError):
++                    # Only descendant names observed by this scan are eligible.
++                    # Root/path/input absence remains fatal and is never retried.
++                    if not hasattr(error, 'storage_entry_disappearance'):raise
++                else:
++                    history.append({**error.evidence,'partial_counts':{k:v for k,v in getattr(error,'observation',{}).items() if k in ('allocated_bytes','logical_file_bytes','regular_files','directories','entries')}});error.history=list(history)
+                 _annotate(error,{},history)
+                 if attempt==2:raise
+                 remaining=self.limits['max_scan_seconds']-(time.monotonic()-begin)
+@@ -122,6 +127,13 @@
+             else:raise ValueError('storage special file or symbolic link refused')
+             observed['allocated_bytes']+=info.st_blocks*512
+             enforce()
++        def descendant(action,relative):
++            try:return action()
++            except FileNotFoundError as error:
++                # A listed owned descendant vanished during publication. Keep
++                # the actual OSError object/errno; discard the entire sample.
++                error.storage_entry_disappearance=str(relative)
++                raise
+         flags=os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC
+         def visit(fd,depth,relative):
+             info=os.fstat(fd);account(info,relative)
+@@ -129,16 +141,16 @@
+             try:
+                 for entry in entries:
+                     observed['entries']+=1;enforce()
+-                    before=os.stat(entry.name,dir_fd=fd,follow_symlinks=False)
++                    before=descendant(lambda:os.stat(entry.name,dir_fd=fd,follow_symlinks=False),relative/entry.name)
+                     if stat.S_ISDIR(before.st_mode):
+                         if depth+1>limits['max_depth']:raise StorageLimit('depth',observed)
+-                        child=os.open(entry.name,flags,dir_fd=fd)
++                        child=descendant(lambda:os.open(entry.name,flags,dir_fd=fd),relative/entry.name)
+                         primary=None
+                         try:
+                             opened=os.fstat(child)
+                             if (before.st_dev,before.st_ino)!=(opened.st_dev,opened.st_ino):raise ValueError('storage directory changed while opening')
+                             visit(child,depth+1,relative/entry.name)
+-                            current=os.stat(entry.name,dir_fd=fd,follow_symlinks=False)
++                            current=descendant(lambda:os.stat(entry.name,dir_fd=fd,follow_symlinks=False),relative/entry.name)
+                             if (current.st_dev,current.st_ino)!=(opened.st_dev,opened.st_ino):raise ValueError('storage directory changed during observation')
+                         except BaseException as error:primary=error;raise
+                         finally:_close(child,primary)

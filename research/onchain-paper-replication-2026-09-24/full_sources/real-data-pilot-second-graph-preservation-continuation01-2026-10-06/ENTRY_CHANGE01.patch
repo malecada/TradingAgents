@@ -1,0 +1,43 @@
+--- research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-20261006-01/entry01.py
++++ entry01.py
+@@ -16,7 +16,7 @@
+ 
+ ROOT = Path(__file__).resolve().parents[4]
+ HERE = Path(__file__).resolve().parent
+-ID = 'real-pilot-second-graph-preservation-20261006-01'
++ID = 'real-pilot-second-graph-preservation-metadata-20261006-01'
+ GIB = 1024**3
+ 
+ 
+@@ -53,6 +53,11 @@
+ def frozen():
+     envelope_raw = (HERE / 'envelope01.json').read_bytes()
+     envelope = json.loads(envelope_raw)
++    if envelope.get('status') != 'FROZEN_ROOT_BOUND_REQUIRES_RELEASE':
++        raise ValueError('unreleased draft or scanner binding not adopted')
++    scanner = 'tradingagents/research/onchain_replication/workflow_storage.py'
++    if envelope.get('scanner_sha256') != envelope['source_files'].get(scanner) or envelope.get('scanner_sha256') in (None, 'bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554'):
++        raise ValueError('integrated reviewed scanner correction required')
+     if (envelope['identity'] != ID
+             or envelope['local_only_evidence'] != [envelope['connection']['path']]
+             or envelope['connection']['path'] in envelope['source_files']):
+@@ -66,6 +71,9 @@
+     selection = json.loads(body(envelope['selection']))
+     if selection['identity'] != ID:
+         raise ValueError('fixed selected identity differs')
++    helper = load(envelope['helper'], 'metadata_successor_preflight')
++    if helper.select(ROOT, selection['binding']) != selection:
++        raise ValueError('current inherited proof or metadata-only selection differs')
+     return envelope, selection, hashlib.sha256(envelope_raw).hexdigest()
+ 
+ 
+@@ -102,6 +110,9 @@
+     release = json.loads(release_path.read_bytes())
+     if release.get('decision') != 'accepted' or release['envelope_sha256'] != digest:
+         raise ValueError('exact independent source/entry release missing')
++    required = {ref['path']: ref['sha256'] for ref in envelope['evidence'] + [envelope['selection'], envelope['environment']]}
++    if any(release['evidence'].get(path) != sha for path, sha in required.items()):
++        raise ValueError('release does not bind all inherited proof/configuration bytes')
+     head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+     for path in ('envelope01.json', 'RELEASE_REVIEW01.json'):
+         relative = str((HERE / path).relative_to(ROOT))

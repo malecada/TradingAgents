@@ -1,0 +1,23 @@
+{
+  "before_path": "research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-20261006-01/entry01.py",
+  "before_sha256": "fa49b89896d781b90716991174a230507e23ad46e6181a578507a09e3773059b",
+  "after_sha256": "168ece03da5404f29a56ee124f13e2f5261e80f782c1fcd6feef3921adbaa47d",
+  "literal_edits": [
+    {
+      "before": "ID = 'real-pilot-second-graph-preservation-20261006-01'",
+      "after": "ID = 'real-pilot-second-graph-preservation-metadata-20261006-01'"
+    },
+    {
+      "before": "    envelope = json.loads(envelope_raw)\n",
+      "after": "    envelope = json.loads(envelope_raw)\n    if envelope.get('status') != 'FROZEN_ROOT_BOUND_REQUIRES_RELEASE':\n        raise ValueError('unreleased draft or scanner binding not adopted')\n    scanner = 'tradingagents/research/onchain_replication/workflow_storage.py'\n    if envelope.get('scanner_sha256') != envelope['source_files'].get(scanner) or envelope.get('scanner_sha256') in (None, 'bf52b9408008ac3616f867ebef8130e2f315f8c8febf00ab1815557d68684554'):\n        raise ValueError('integrated reviewed scanner correction required')\n"
+    },
+    {
+      "before": "    return envelope, selection, hashlib.sha256(envelope_raw).hexdigest()",
+      "after": "    helper = load(envelope['helper'], 'metadata_successor_preflight')\n    if helper.select(ROOT, selection['binding']) != selection:\n        raise ValueError('current inherited proof or metadata-only selection differs')\n    return envelope, selection, hashlib.sha256(envelope_raw).hexdigest()"
+    },
+    {
+      "before": "    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()\n    for path in ('envelope01.json', 'RELEASE_REVIEW01.json'):",
+      "after": "    required = {ref['path']: ref['sha256'] for ref in envelope['evidence'] + [envelope['selection'], envelope['environment']]}\n    if any(release['evidence'].get(path) != sha for path, sha in required.items()):\n        raise ValueError('release does not bind all inherited proof/configuration bytes')\n    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()\n    for path in ('envelope01.json', 'RELEASE_REVIEW01.json'):"
+    }
+  ]
+}
