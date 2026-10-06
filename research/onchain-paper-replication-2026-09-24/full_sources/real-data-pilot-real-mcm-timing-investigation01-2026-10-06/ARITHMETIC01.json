@@ -1,0 +1,52 @@
+{
+  "qualification": "metadata/source reconstruction only; required pace is arithmetic, not observed throughput or ETA",
+  "known_nodes": {
+    "2022-05-02T00:00:00Z": 1878300,
+    "2022-05-09T00:00:00Z": 2265481,
+    "2022-05-16T00:00:00Z": 2048710,
+    "2022-05-23T00:00:00Z": 1875043,
+    "2022-06-13T00:00:00Z": 1768268
+  },
+  "known_matching_cells": {
+    "2022-05-02T00:00:00Z": 60105600,
+    "2022-05-09T00:00:00Z": 72495392,
+    "2022-05-16T00:00:00Z": 65558720,
+    "2022-05-23T00:00:00Z": 60001376,
+    "2022-06-13T00:00:00Z": 56584576
+  },
+  "missing_node_counts": [
+    "2022-05-30T00:00:00Z",
+    "2022-06-06T00:00:00Z"
+  ],
+  "known_cells_sum": 314745664,
+  "temperature_iterations": 48,
+  "schedule_ceiling_per_pair": {
+    "operations_per_call": 1000000,
+    "calls_per_checkpoint": 10000,
+    "max_checkpoints": 1,
+    "counted_operations_ceiling": 10000000000,
+    "not_a_wall_time_bound": true
+  },
+  "May9_8hour_required_cells_per_wall_second_before_other_work": 2517.201111111111,
+  "May9_8hour_max_mean_wall_microseconds_per_cell_before_other_work": 397.26662902933197,
+  "known5_8hour_required_cells_per_wall_second_before_other_work": 10928.66888888889,
+  "known5_8hour_max_mean_wall_microseconds_per_cell_before_other_work": 91.50245196070436,
+  "all7_runtime_range_seconds": null,
+  "representative_week_runtime_range_seconds": null,
+  "legacy_bounded_receipts": [
+    {
+      "week": "2022-01-03",
+      "pairs": 32,
+      "elapsed_seconds": 0.44871578399761347,
+      "backend_source": "pilot_successor_02/phase.py:68 match_batch; sampled graph pairs, not current compact scalar imported kernel",
+      "throughput_range_for_real_MCM": null
+    },
+    {
+      "week": "2022-06-13",
+      "pairs": 32,
+      "elapsed_seconds": 0.5806635549961356,
+      "backend_source": "pilot_successor_02/phase.py:68 match_batch; sampled graph pairs, not current compact scalar imported kernel",
+      "throughput_range_for_real_MCM": null
+    }
+  ]
+}

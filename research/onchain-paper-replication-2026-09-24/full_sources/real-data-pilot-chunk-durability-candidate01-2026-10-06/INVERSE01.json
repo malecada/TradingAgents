@@ -1,0 +1,204 @@
+{
+  "compact_pair_log.py": {
+    "baseline": "tradingagents/research/onchain_replication/compact_pair_log.py",
+    "before_sha256": "4c65ca7f8caf46760eeef23e2bd44e9bc87a64a54bb18a862662be2b15da0089",
+    "after_sha256": "70691d78c0f34184db43aa93234685eb3e6100c89573af6c1bc520bafac7e756",
+    "literal_edits": [
+      {
+        "before": "self.closed = self.poisoned = False; self.lease = lease",
+        "after": "self.closed = self.poisoned = False; self.lease = lease; self._durability = None"
+      },
+      {
+        "before": "        self.lease(); io._root(self.root, self.fd)",
+        "after": "        self.lease(); io._root(self.root, self.fd)\n        if self._durability is not None:self._durability.before(self.chunk_fd)"
+      },
+      {
+        "before": "        self._append(3, artifact=checkpoint_sha256)",
+        "after": "        self._append(3, artifact=checkpoint_sha256)\n        self.durability_barrier()"
+      },
+      {
+        "before": "    @property\n    def events(self)",
+        "after": "    def enable_durability(self, policy):\n        require(self._durability is None and self.events == 0 and self.chunk_fd is None,\n                'durability selection only before first event')\n        self._check()\n        from .chunk_durability import BatchSync\n        self._durability = BatchSync(policy, 'pair')\n\n    @property\n    def durability_status(self):\n        return (self._durability.snapshot() if self._durability is not None else\n                {'acknowledged_records':self.events,'durable_records':self.events,'legacy_per_event':True})\n\n    def durability_barrier(self):\n        if self._durability is not None:\n            self._check(failing=True)\n            self._durability.barrier(self.chunk_fd)\n\n    @property\n    def events(self)"
+      },
+      {
+        "before": "        self._check()\n        pending = self.state",
+        "after": "        self._check()\n        if self._durability is not None:self._durability.before(self.chunk_fd)\n        pending = self.state"
+      },
+      {
+        "before": "                    previous = self.chunk_fd; self.chunk_fd = None",
+        "after": "                    self.durability_barrier()\n                    previous = self.chunk_fd; self.chunk_fd = None"
+      },
+      {
+        "before": "            os.fsync(self.chunk_fd); self._check()",
+        "after": "            if self._durability is None:os.fsync(self.chunk_fd)\n            self._check()"
+      },
+      {
+        "before": "            self.state = state; self.head = head",
+        "after": "            self.state = state; self.head = head\n            if self._durability is not None:self._durability.acknowledge(self.chunk_fd,self.events,self.head)"
+      },
+      {
+        "before": "        self._check(failing=status == 'failed')\n        require",
+        "after": "        self._check(failing=status == 'failed')\n        self.durability_barrier()\n        require"
+      },
+      {
+        "before": "            self.closed = True\n            chunk = self.chunk_fd; self.chunk_fd = None\n            actions = []",
+        "after": "            chunk = self.chunk_fd\n            actions = []\n            if self._durability is not None:actions.append(self.durability_barrier)\n            # Mark closed only after the barrier; cleanup still closes every descriptor.\n            actions.append(lambda:setattr(self,'closed',True))\n            actions.append(lambda:setattr(self,'chunk_fd',None))"
+      }
+    ]
+  },
+  "score_tail.py": {
+    "baseline": "tradingagents/research/onchain_replication/score_tail.py",
+    "before_sha256": "b5e807e022349ca7e0d18c02512812932103865ba0779d641be6877995694870",
+    "after_sha256": "91e1c9ba69b2922e2f77ad07ae9de4efc84f94d420ff55316e120b1df19398ca",
+    "literal_edits": [
+      {
+        "before": "destination, lease):",
+        "after": "destination, lease, durability=None):"
+      },
+      {
+        "before": "        self.acknowledged = 0; self.record_fd = None",
+        "after": "        self.acknowledged = 0; self.record_fd = None\n        self._durability = None\n        if durability is not None:\n            from .chunk_durability import BatchSync\n            self._durability = BatchSync(durability, 'tail')"
+      },
+      {
+        "before": "        self.lease(); batch._root(self.root, self.fd)",
+        "after": "        self.lease(); batch._root(self.root, self.fd)\n        if self._durability is not None:self._durability.before(self.record_fd)"
+      },
+      {
+        "before": "    def append(self, ordinal, purpose_sha256, score):",
+        "after": "    @property\n    def durability_status(self):\n        return (self._durability.snapshot() if self._durability is not None else\n                {'acknowledged_records':self.acknowledged,'durable_records':self.acknowledged,'legacy_per_event':True})\n\n    def durability_barrier(self):\n        if self._durability is not None:\n            self._check(pending=True)\n            self._durability.barrier(self.record_fd)\n\n    def append(self, ordinal, purpose_sha256, score):"
+      },
+      {
+        "before": "        self._check(); batch._identity(purpose_sha256)",
+        "after": "        self._check(); batch._identity(purpose_sha256)\n        if self._durability is not None:self._durability.before(self.record_fd)"
+      },
+      {
+        "before": "            os.fsync(self.record_fd)\n            self._check(expected_size",
+        "after": "            if self._durability is None:os.fsync(self.record_fd)\n            self._check(expected_size"
+      },
+      {
+        "before": "            self.head = head; self.acknowledged += 1",
+        "after": "            self.head = head; self.acknowledged += 1\n            if self._durability is not None:self._durability.acknowledge(self.record_fd,self.acknowledged,self.head)"
+      },
+      {
+        "before": "        self._check(pending=status == 'failed')\n        require",
+        "after": "        self._check(pending=status == 'failed')\n        self.durability_barrier()\n        require"
+      },
+      {
+        "before": "            self.closed = True\n            actions = []",
+        "after": "            actions = []\n            if self._durability is not None:actions.append(self.durability_barrier)\n            actions.append(lambda:setattr(self,'closed',True))"
+      }
+    ]
+  },
+  "compact_matcher.py": {
+    "baseline": "tradingagents/research/onchain_replication/compact_matcher.py",
+    "before_sha256": "75e4b8bad423ed198bef5017fd4c22670ff3c552bcacd2cc967901efa95bed73",
+    "after_sha256": "913eab1adc2b0782cf786e9ac22ee8c684851ea793a0151072c1c3932466fbdb",
+    "literal_edits": [
+      {
+        "before": "schedule, lease, retention=None):",
+        "after": "schedule, lease, retention=None, durability_barrier=None):"
+      },
+      {
+        "before": "        self.log = log; self.config",
+        "after": "        require(durability_barrier is None or callable(durability_barrier), \"optional coupled durability barrier\")\n        self._durability_barrier = durability_barrier\n        self.log = log; self.config"
+      },
+      {
+        "before": "        \"\"\"Callback-free fixed-record readback after the combined owner leases.\"\"\"",
+        "after": "        \"\"\"Actual fixed-record byte acknowledgement; selected durability is separate.\"\"\""
+      },
+      {
+        "before": "    def _save(self, state, a, b, identity, purpose):\n        self._check()",
+        "after": "    def _save(self, state, a, b, identity, purpose):\n        self._check()\n        self.log.durability_barrier()\n        if self._durability_barrier is not None:self._durability_barrier()"
+      },
+      {
+        "before": "            self.log.progress(result)\n",
+        "after": "            self.log.progress(result)\n            self.log.durability_barrier()\n"
+      },
+      {
+        "before": "            if self.retention is not None:self.retention.begin(purpose,a,b,identity,expected)",
+        "after": "            if self.retention is not None:\n                self.log.durability_barrier()\n                self.retention.begin(purpose,a,b,identity,expected)"
+      },
+      {
+        "before": "                    if self.retention is not None:\n                        self.retention.complete",
+        "after": "                    if self.retention is not None:\n                        self.log.durability_barrier()\n                        self.retention.complete"
+      },
+      {
+        "before": "            primary = error; self.poisoned = True",
+        "after": "            primary = error; self.poisoned = True\n            for flush in [self.log.durability_barrier] + ([self._durability_barrier] if self._durability_barrier is not None else []):\n                try:flush()\n                except BaseException as durability_error:\n                    error.add_note('Failure durability barrier refused: '+repr(durability_error))"
+      }
+    ]
+  },
+  "mcm_score_stream.py": {
+    "baseline": "tradingagents/research/onchain_replication/mcm_score_stream.py",
+    "before_sha256": "7ea894ae381cedae04096de7ed696eda1ef67208f35a15495f0012756e9561a6",
+    "after_sha256": "94fd45fe16c5d833e5918f461563d9f4b63e7111c8790b0d32dc0000e2604a27",
+    "literal_edits": [
+      {
+        "before": "    def __call__(self, purpose, a, b):",
+        "after": "    def durability_barrier(self):\n        if self.active is not None:self.active.durability_barrier()\n\n    def __call__(self, purpose, a, b):"
+      },
+      {
+        "before": "backend, owner, chunk_cells, compute, lease, _imported=None):",
+        "after": "backend, owner, chunk_cells, compute, lease, _imported=None, durability=None):"
+      },
+      {
+        "before": "        self._imported=self._imported_pin=_imported",
+        "after": "        self._imported=self._imported_pin=_imported\n        self._durability_policy=durability"
+      },
+      {
+        "before": "destination=tail.destination(self.batches), lease=self.lease)",
+        "after": "destination=tail.destination(self.batches), lease=self.lease, durability=self._durability_policy)"
+      }
+    ]
+  },
+  "archive_pair_writer.py": {
+    "baseline": "tradingagents/research/onchain_replication/archive_pair_writer.py",
+    "before_sha256": "c714c350f372be1b4e3c7840b5187deb7f72ee80549edfed4e48450e2d0ca052",
+    "after_sha256": "2719ab99b588736b229fb660b2142f1b50786a7335ca5b966bc234797f9d9fe9",
+    "literal_edits": [
+      {
+        "before": "        descriptor = self.chunk_fd; self.chunk_fd = None",
+        "after": "        self.durability_barrier()\n        descriptor = self.chunk_fd; self.chunk_fd = None"
+      },
+      {
+        "before": "        self.poisoned = True; self._failure(error)",
+        "after": "        self.poisoned = True\n        try:self.durability_barrier()\n        except BaseException as durability_error:error.add_note('Failure durability barrier refused: '+repr(durability_error))\n        self._failure(error)"
+      },
+      {
+        "before": "        self.closed=True;descriptor=self.chunk_fd;self.chunk_fd=None",
+        "after": "        descriptor=self.chunk_fd"
+      },
+      {
+        "before": "            if descriptor is not None:io._cleanup((lambda:os.close(descriptor),))",
+        "after": "            actions=[]\n            if getattr(self,'_durability',None) is not None:actions.append(self.durability_barrier)\n            actions.extend((lambda:setattr(self,'closed',True),lambda:setattr(self,'chunk_fd',None)))\n            if descriptor is not None:actions.append(lambda:os.close(descriptor))\n            io._cleanup(actions)"
+      }
+    ]
+  },
+  "compact_mcm.py": {
+    "baseline": "tradingagents/research/onchain_replication/compact_mcm.py",
+    "before_sha256": "be956793d5ebb6111b109fa106aaa485da06b53d9bd410ecd2b14101ed34e0ba",
+    "after_sha256": "b9b4c853b899b4ec7d053886b3ab5146d6ce081dfa045a408a2e5c34b73154bb",
+    "literal_edits": [
+      {
+        "before": "retention=stage_retention.options(stage))",
+        "after": "retention=stage_retention.options(stage),\n                **({'durability_barrier':lambda:stream.durability_barrier()} if policy.get('schema_version')==2 else {}))"
+      },
+      {
+        "before": "    require(set(policy) == {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'}\n        and type(policy['schema_version']) is int and policy['schema_version'] == 1",
+        "after": "    durability_selected = type(policy.get('schema_version')) is int and policy['schema_version']==2\n    if durability_selected:\n        from .chunk_durability import policy as durability_policy\n        require(_imported(dictionary) and 'real_pilot_input' in selected,\n                'durability requires genuine selected imported resource pilot')\n        resource=json.loads(run.read_input(selected['real_pilot_input']))\n        require(resource['schema_version']==2 and resource.get('population_scope')=='resource_pilot_subset',\n                'explicit registered resource-only pilot required')\n        durability_policy(policy['durability'])\n    require(set(policy) == ({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','durability'}\n            if durability_selected else {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'})\n        and type(policy['schema_version']) is int and policy['schema_version'] in (1,2)"
+      },
+      {
+        "before": "            log=event_log\n            matcher",
+        "after": "            log=event_log\n            if policy.get('schema_version')==2:log.enable_durability(policy['durability'])\n            matcher"
+      },
+      {
+        "before": "owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live,",
+        "after": "owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live,\n                **({'durability':policy['durability']} if policy.get('schema_version')==2 else {}),"
+      },
+      {
+        "before": "            stream_terminal = stream.finish()['terminal_sha256']",
+        "after": "            log.durability_barrier()\n            stream_terminal = stream.finish()['terminal_sha256']"
+      }
+    ]
+  }
+}

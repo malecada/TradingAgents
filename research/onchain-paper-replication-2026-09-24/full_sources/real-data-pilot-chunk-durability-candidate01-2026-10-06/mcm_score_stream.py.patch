@@ -1,0 +1,35 @@
+--- baseline/mcm_score_stream.py
++++ candidate/mcm_score_stream.py
+@@ -26,11 +26,12 @@
+ 
+ class MCMScoreStream:
+     def __init__(self, root, *, graph, dictionary, matching_config, workflow,
+-                 backend, owner, chunk_cells, compute, lease, _imported=None):
++                 backend, owner, chunk_cells, compute, lease, _imported=None, durability=None):
+         batch._identity(workflow); batch._identity(owner)
+         require(callable(compute) and callable(lease), 'compute and live lease required')
+         require(cache_key(backend) == cache_key(BACKEND), 'explicit scalar backend required')
+         self._imported=self._imported_pin=_imported
++        self._durability_policy=durability
+         if _imported is None:
+             require(dictionary_hash(dictionary) == dictionary.identity
+                 and cache_key(dictionary.config.get('pair_execution')) == cache_key(backend)
+@@ -177,6 +178,9 @@
+                 'stream completion changed during verification')
+         batch._root(self.root, self.fd)
+ 
++    def durability_barrier(self):
++        if self.active is not None:self.active.durability_barrier()
++
+     def __call__(self, purpose, a, b):
+         self._check()
+         try:
+@@ -199,7 +203,7 @@
+                 count = min(self.batches.chunk_cells, self.n * self.k - self.cells)
+                 self.active = tail.ScoreTail(self.root / 'tails' / f'tail-{self.batches.chunks:012d}',
+                     scope=self.scope, owner=self.owner, start_cell=self.cells, cells=count,
+-                    destination=tail.destination(self.batches), lease=self.lease)
++                    destination=tail.destination(self.batches), lease=self.lease, durability=self._durability_policy)
+             self._check()
+             result = self.compute(thaw(expected), a, b)
+             self._check()

@@ -1,0 +1,24 @@
+{
+  "status": "SOURCE_ONLY_NO_EMPIRICAL_SELECTION",
+  "selector": "Existing genuine compact MCM policy input schema_version=2 adds durability; original schema1 omitted policy unchanged",
+  "durability_fields": {
+    "schema_version": 1,
+    "scope": "resource-pilot-only",
+    "pair_records": "registered integer1..1000000",
+    "tail_records": "registered integer1..1000000",
+    "max_interval_ms": "registered integer1..60000"
+  },
+  "required_authority": "genuine imported Target and selected registered real_pilot_input schema2/resource_pilot_subset; original Run/Owner/Binding and all leases unchanged",
+  "data_bytes": "Original start manifests/event/tail frames/checksum seeds preserved; policy identity already bound by original producer start policy_sha256",
+  "durable_status": "volatile acknowledged_records,durable_records,durable_head,unflushed_records,poisoned; no restart capability",
+  "barriers": [
+    "pair chunk rotation",
+    "archive chunk snapshot/seal",
+    "checkpoint before writing, progress acknowledgement",
+    "pair and score-tail normal close/failure",
+    "stream finish before held consumption",
+    "original stage/completion/output after flushed terminals"
+  ],
+  "assumption": "max_interval_ms is sampled at writer/live-check activity, not a background or kernel timeout. A blocked numerical/syscall interval can exceed it; next activity flushes before further writes. No original terminal means crash suffix unknown/uncredited. Fsync failures poison; no durable watermark advance.",
+  "integration_requirement": "Eager helper import before sampled authority snapshot in archive and nonarchive selected caller; source/registered policy review and genuine resource execution remain pending."
+}

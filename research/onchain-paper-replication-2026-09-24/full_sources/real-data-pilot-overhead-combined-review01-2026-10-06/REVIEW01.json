@@ -1,0 +1,54 @@
+{
+  "assumptions_and_limits": [
+    "Acknowledgement/readback in selected buffered PairLog/ScoreTail is not crash durability until a successful fsync barrier. Interval checks occur at writer activity; idle or blocked calls are not covered by a background timer. Watermarks are volatile, not restart authority.",
+    "Closed-history detection is sampled at the explicit policy interval/callback bound; mandatory binding/operation/ledger/context completion boundaries force full raw-byte audits. Current Run, Owner, source, native guard, captured held lease and spent counters remain checked. No writer exclusion or adversarial-write immunity is established. A slow audit can expire and stop execution.",
+    "Successful control/diagnostic original byte bodies and logical names are retained in durable hash-chained shards. Standalone successful control inodes are a declared storage-format change. Only verified zero-byte command staging is retired after its name/full stat including mode/empty hash descriptor is durably published; failed, nonempty and oversized records stop and remain. No remote recovery waiver applies to payload bytes.",
+    "Finite sharded retained controls remain separate from cumulative rounded network IO, payload/readback scratch, filesystem allocation, typed controls, original matrices and process memory. The illustrative 472000-command accounting is not a complete seven-graph reservation or measured fit.",
+    "Selected archive preflight eagerly imports archive_control_history and chunk_durability before the existing imported-authority snapshot. This review does not grant a nonarchive imported-lease route late-import exception. Final actual source closure and selected policy must bind installed helpers before activation.",
+    "No actual runtime throughput, power-loss restart, all-seven population, real feature/model capacity, strategy performance, fees/funding, returns or financial exposure claim was tested. Existing retention checkpoints may still impose frequent fsyncs; full history boundary cost remains workload dependent."
+  ],
+  "candidate_manifests": {
+    "real-data-pilot-chunk-durability-candidate01-2026-10-06": "3247ff77ac2f8bb52240ea873c88027f83b3346fa450e28cf137c9c5a7028439",
+    "real-data-pilot-control-history-candidate01-2026-10-06": "00f9eb91ea6d1e3f55eedb4e4a64aa2dbc3b4b55d07a83e84503533c30ba0141"
+  },
+  "candidate_sources": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/candidate/archive_pair_writer.py": "2719ab99b588736b229fb660b2142f1b50786a7335ca5b966bc234797f9d9fe9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/candidate/chunk_durability.py": "da1fa8d8304a5241cdc44054901ecdf75231b8979569bcb373dec1471fb82f1e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/candidate/compact_matcher.py": "913eab1adc2b0782cf786e9ac22ee8c684851ea793a0151072c1c3932466fbdb",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/candidate/compact_mcm.py": "b9b4c853b899b4ec7d053886b3ab5146d6ce081dfa045a408a2e5c34b73154bb",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/candidate/compact_pair_log.py": "70691d78c0f34184db43aa93234685eb3e6100c89573af6c1bc520bafac7e756",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/candidate/mcm_score_stream.py": "94fd45fe16c5d833e5918f461563d9f4b63e7111c8790b0d32dc0000e2604a27",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/candidate/score_tail.py": "91e1c9ba69b2922e2f77ad07ae9de4efc84f94d420ff55316e120b1df19398ca",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-control-history-candidate01-2026-10-06/candidate/archive_control_history.py": "c11835de055bc02cc5c60c8f9866879cae3a3ae696ddb62bff6bfdc998cd4e72",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-control-history-candidate01-2026-10-06/candidate/archive_dispatch.py": "b724aa003839513753ed2ed38da81ea5d724258d6a9708b1ff19f3f476195ddd",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-control-history-candidate01-2026-10-06/candidate/archive_owner_operations.py": "e45fd25c19f2a8f42f270cbb5c5437a823ba71a5e2e75333e928674ad1bec7bf",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-control-history-candidate01-2026-10-06/candidate/archive_transport.py": "d1825c718b48d4267653405d9b637074b4a6d4bf1677842044418a2e8111aa13",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-control-history-candidate01-2026-10-06/candidate/build_inputs03.py": "7564f86165e92cd4c24d4d5845c3dbe96859a1ba9a71c5aba987004a1910b271",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-control-history-candidate01-2026-10-06/candidate/controls01.py": "dc5918b1f15bb53a127067cda51cc95a54a5e7c9e1c4ccc2931f20566f2d5056"
+  },
+  "decision": "accepted",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/INVERSE01.json": "f9d41d0b038d41855f57087df57471523ba4300bc3b84cbcd72d1cb7d0bd19ed",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/MANIFEST01.json": "3247ff77ac2f8bb52240ea873c88027f83b3346fa450e28cf137c9c5a7028439",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-chunk-durability-candidate01-2026-10-06/REPORT01.md": "bf0ea777f0a66d02401dcd2cf7b508a5b8620a9f8e7cc73300831cbc8f2cc234",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-control-history-candidate01-2026-10-06/INVERSE01.json": "bccaa01a077a9c2a0255e463e0d4510fd01cedb4fc9282ea69f23a3d10340d65",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-control-history-candidate01-2026-10-06/MANIFEST01.json": "00f9eb91ea6d1e3f55eedb4e4a64aa2dbc3b4b55d07a83e84503533c30ba0141",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-control-history-candidate01-2026-10-06/REPORT01.md": "67896407897c523b3651d4e10a4e0aa1872cb5d1607a960f9b57554fec3ad884",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-overhead-combined-review01-2026-10-06/DURABILITY_CHECK01.json": "bb38b399631680e19acd81836f22002ead4ffe88718129964e71928c790b2697",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-overhead-combined-review01-2026-10-06/HISTORY_CHECK01.json": "6d49a6b65dc7033fcddcf32061d37b486f2cbbad0f6cdc393678d47041369994",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-overhead-combined-review01-2026-10-06/check_durability01.py": "6c246539c74c9797813bdd287d52b8160c3b1a6603059c1d5ff0403e721f2649",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-overhead-combined-review01-2026-10-06/check_history01.py": "ce5e155cf78f7a52acf2d172191b9a20cf973ccd50e90f1fd56de76f6a885d9c"
+  },
+  "material_findings": [],
+  "release_requirements": [
+    "Root must integrate exact accepted source composition, pin helper/source/runtime closure, explicitly register finite durability/history assumptions and complete physical/transport/control declarations, and obtain final concrete entry release before execution.",
+    "Do not reuse this source review as scientific/Owner/Binding, backup recovery, storage or native capacity evidence."
+  ],
+  "schema_version": 1,
+  "scope": "Independent combined changed-source review only; selected genuine archive schema2 route, optional chunk durability and control-history encoding. No empirical admission, concrete policy release, source integration, throughput or capacity acceptance.",
+  "verification": {
+    "durability_tool": "8b9c47 exit0; automatic threshold fsync failure preserves exact primary, raw partial, unchanged durable watermark, terminal refusal and descriptor cleanup",
+    "history_tool": "68ebc1 exit0; five exact inverses, real Journal/Context._call zero-byte descriptor ordering, publication-failure retention, nonempty refusal and forced boundary audit",
+    "legacy_and_science": "Eleven exact baseline reconstructions in total; unchanged framing/f64 score bits, matching arithmetic, motif/sample/count/model/training definitions reused from accepted source evidence, not numerically rerun. Author byte/default/boundary controls inspected."
+  }
+}

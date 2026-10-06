@@ -1,0 +1,27 @@
+{
+  "scope": "synthetic metadata arithmetic; no selected or admitted real policy",
+  "commands": 472000,
+  "test_policy": {
+    "schema_version": 1,
+    "format": "bounded-archive-control-history-v1",
+    "assumption": "closed-history sampled; no writer exclusion; mandatory boundary full-byte audits",
+    "success_control_bytes": 1024,
+    "success_diagnostic_bytes": 2048,
+    "shard_bytes": 4194304,
+    "full_interval_ms": 1000,
+    "max_stale_ms": 5000,
+    "max_callbacks_between_full": 100
+  },
+  "bounds": {
+    "control_bytes": 2493208576,
+    "diagnostic_bytes": 1114887680,
+    "control_files": 603,
+    "diagnostic_files": 266,
+    "max_file_bytes": 8388608,
+    "payload_budget_semantics": "cumulative rounded IO remains separate; diagnostic bound is retained local bytes"
+  },
+  "sum_selected_control_diagnostic_bytes": 3608096256,
+  "sum_selected_file_slots": 869,
+  "unchanged_cumulative_payload_budget": true,
+  "whole_workflow_physical_capacity": null
+}

@@ -1,0 +1,43 @@
+--- baseline/build_inputs03.py
++++ candidate/build_inputs03.py
+@@ -110,7 +110,7 @@
+ 
+ def selected_buffers(g,selection,pair_chunk):
+     # Reuse the sealed scalar calculator, never import the scientific package.
+-    path=Path(__file__).resolve().parent.parent/'real-data-pilot-resource-buffer-allocation01-2026-10-06'/'allocation01.py'
++    path=Path(__file__).resolve().parent.parent.parent/'real-data-pilot-resource-buffer-allocation01-2026-10-06'/'allocation01.py'
+     need(not path.is_symlink() and path.stat().st_size<=LIMIT,'bounded calculator source required')
+     source=path.read_bytes()
+     need(sha(source)=='3912e68c232553f1fab5e39a92c0741c2c0ddab49316321c1189781d19611dfd','pinned allocation calculator changed')
+@@ -164,7 +164,7 @@
+     extra=store['additional_scratch_bytes'];need(type(extra) is int and 0<=extra<2**63,'explicit finite additional scratch declaration required')
+     need(store['reserved_growth_bytes']>=sum(v['rows']*128 for v in g.values()),'all retained original f32 outputs require common store reservation')
+     transport=copy.deepcopy(spec['transport_limits']);need('connection' not in transport,'builder must not consume connection credentials')
+-    need(set(transport)=={'rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes','namespace','receipt_output','terminal_output'},'exact transport limit template required')
++    need(set(transport)-{'control_history'}=={'rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes','namespace','receipt_output','terminal_output'},'exact transport limit template required')
+     for key in ('rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes'):positive(transport[key])
+     # Existing archive_dispatch capacity formula for eight original stages.
+     log=compact['stage_policy']['log'];events,chunk,reads=log['max_events'],log['chunk_events'],archive['max_stage_verifications'];width=struct.calcsize('<QB7xQdQ32s32s32s')+32
+@@ -175,14 +175,20 @@
+     combined={k:total[k]+pair[k] for k in total}
+     for value in combined.values():positive(value)
+     need(combined['rounded_bytes']<=transport['max_payload_bytes'] and combined['commands']<=transport['max_commands'],'shared pair/typed transport allowance insufficient')
+-    need(transport['max_diagnostic_bytes']>=transport['max_payload_bytes']+131072*transport['max_commands'] and transport['max_control_bytes']>=131072*(8+4*transport['max_commands']),'shared transport diagnostic/control allowance insufficient')
++    history_bounds=None
++    if 'control_history' in transport:
++        from tradingagents.research.onchain_replication.archive_control_history import capacity
++        history_bounds=capacity(transport['control_history'],transport['max_commands'])
++        need(transport['max_diagnostic_bytes']>=history_bounds['diagnostic_bytes'] and transport['max_control_bytes']>=history_bounds['control_bytes'],'selected bounded controls underfunded')
++    else:
++        need(transport['max_diagnostic_bytes']>=transport['max_payload_bytes']+131072*transport['max_commands'] and transport['max_control_bytes']>=131072*(8+4*transport['max_commands']),'shared transport diagnostic/control allowance insufficient')
+     # Cumulative rounded network/diagnostic caps above remain unchanged. They
+     # are not simultaneous retained local payloads: successful get staging is
+     # moved to the caller, while each call retains one bounded transport JSON.
+     # Context serialization and first-failure poisoning allow at most one
+     # in-flight/failed get diagnostic body; caller destinations remain separate.
+     buffers=selected_buffers(g,spec['typed_allocations'],chunk*width)
+-    local_bounds={'retained_diagnostic_bytes':TRANSPORT_META*transport['max_commands']+ARCHIVE_MAX_BYTES,
++    local_bounds={'retained_diagnostic_bytes':history_bounds['diagnostic_bytes'] if history_bounds is not None else TRANSPORT_META*transport['max_commands']+ARCHIVE_MAX_BYTES,
+         'reserved_control_bytes':typed['max_control_bytes']+archive['max_workflow_metadata_bytes']+transport['max_control_bytes'],
+         'caller_scratch_bytes':max(3*ARCHIVE_MAX_BYTES,max(v['selected_payload_overlap_upper_bytes'] for v in buffers.values()))+extra,
+         'typed_attempt_metadata_bytes':max(sum(v['typed_attempt_metadata_allowance_bytes'] for v in buffers.values()),4*8192*sum(b['max_chunks'] for kinds in spec['typed_allocations']['by_week'].values() for b in kinds.values()))}

@@ -1,0 +1,96 @@
+from pathlib import Path
+import hashlib,json,difflib,ast
+R=Path.cwd();O=Path(__file__).parent;C=O/'candidate';B=R/'tradingagents/research/onchain_replication';changes={}
+def edit(name,edits):
+ old=(B/name).read_text();s=old
+ for before,after in edits:
+  assert before in s,(name,before);s=s.replace(before,after)
+ ast.parse(s);(C/name).write_text(s)
+ changes[name]={'baseline':str((B/name).relative_to(R)),'before_sha256':hashlib.sha256(old.encode()).hexdigest(),'after_sha256':hashlib.sha256(s.encode()).hexdigest(),'literal_edits':[{'before':a,'after':b} for a,b in edits]}
+ (O/(name+'.patch')).write_text(''.join(difflib.unified_diff(old.splitlines(True),s.splitlines(True),fromfile='baseline/'+name,tofile='candidate/'+name)))
+edit('compact_pair_log.py',[
+ ("self.closed = self.poisoned = False; self.lease = lease","self.closed = self.poisoned = False; self.lease = lease; self._durability = None"),
+ ('        self.lease(); io._root(self.root, self.fd)', '        self.lease(); io._root(self.root, self.fd)\n        if self._durability is not None:self._durability.before(self.chunk_fd)'),
+ ('        self._append(3, artifact=checkpoint_sha256)', '        self._append(3, artifact=checkpoint_sha256)\n        self.durability_barrier()'),
+ ('    @property\n    def events(self)', '''    def enable_durability(self, policy):
+        require(self._durability is None and self.events == 0 and self.chunk_fd is None,
+                'durability selection only before first event')
+        self._check()
+        from .chunk_durability import BatchSync
+        self._durability = BatchSync(policy, 'pair')
+
+    @property
+    def durability_status(self):
+        return (self._durability.snapshot() if self._durability is not None else
+                {'acknowledged_records':self.events,'durable_records':self.events,'legacy_per_event':True})
+
+    def durability_barrier(self):
+        if self._durability is not None:
+            self._check(failing=True)
+            self._durability.barrier(self.chunk_fd)
+
+    @property
+    def events(self)'''),
+ ('        self._check()\n        pending = self.state', '        self._check()\n        if self._durability is not None:self._durability.before(self.chunk_fd)\n        pending = self.state'),
+ ('                    previous = self.chunk_fd; self.chunk_fd = None','                    self.durability_barrier()\n                    previous = self.chunk_fd; self.chunk_fd = None'),
+ ('            os.fsync(self.chunk_fd); self._check()','            if self._durability is None:os.fsync(self.chunk_fd)\n            self._check()'),
+ ('            self.state = state; self.head = head','            self.state = state; self.head = head\n            if self._durability is not None:self._durability.acknowledge(self.chunk_fd,self.events,self.head)'),
+ ("        self._check(failing=status == 'failed')\n        require", "        self._check(failing=status == 'failed')\n        self.durability_barrier()\n        require"),
+ ('            self.closed = True\n            chunk = self.chunk_fd; self.chunk_fd = None\n            actions = []','            chunk = self.chunk_fd\n            actions = []\n            if self._durability is not None:actions.append(self.durability_barrier)\n            # Mark closed only after the barrier; cleanup still closes every descriptor.\n            actions.append(lambda:setattr(self,\'closed\',True))\n            actions.append(lambda:setattr(self,\'chunk_fd\',None))')])
+edit('score_tail.py',[
+ ('destination, lease):','destination, lease, durability=None):'),
+ ('        self.acknowledged = 0; self.record_fd = None','        self.acknowledged = 0; self.record_fd = None\n        self._durability = None\n        if durability is not None:\n            from .chunk_durability import BatchSync\n            self._durability = BatchSync(durability, \'tail\')'),
+ ('        self.lease(); batch._root(self.root, self.fd)', '        self.lease(); batch._root(self.root, self.fd)\n        if self._durability is not None:self._durability.before(self.record_fd)'),
+ ('    def append(self, ordinal, purpose_sha256, score):','''    @property
+    def durability_status(self):
+        return (self._durability.snapshot() if self._durability is not None else
+                {'acknowledged_records':self.acknowledged,'durable_records':self.acknowledged,'legacy_per_event':True})
+
+    def durability_barrier(self):
+        if self._durability is not None:
+            self._check(pending=True)
+            self._durability.barrier(self.record_fd)
+
+    def append(self, ordinal, purpose_sha256, score):'''),
+ ('        self._check(); batch._identity(purpose_sha256)','        self._check(); batch._identity(purpose_sha256)\n        if self._durability is not None:self._durability.before(self.record_fd)'),
+ ('            os.fsync(self.record_fd)\n            self._check(expected_size', '            if self._durability is None:os.fsync(self.record_fd)\n            self._check(expected_size'),
+ ('            self.head = head; self.acknowledged += 1','            self.head = head; self.acknowledged += 1\n            if self._durability is not None:self._durability.acknowledge(self.record_fd,self.acknowledged,self.head)'),
+ ("        self._check(pending=status == 'failed')\n        require", "        self._check(pending=status == 'failed')\n        self.durability_barrier()\n        require"),
+ ('            self.closed = True\n            actions = []','            actions = []\n            if self._durability is not None:actions.append(self.durability_barrier)\n            actions.append(lambda:setattr(self,\'closed\',True))')])
+edit('compact_matcher.py',[
+ ('schedule, lease, retention=None):','schedule, lease, retention=None, durability_barrier=None):'),
+ ('        self.log = log; self.config', '        require(durability_barrier is None or callable(durability_barrier), "optional coupled durability barrier")\n        self._durability_barrier = durability_barrier\n        self.log = log; self.config'),
+ ('        """Callback-free fixed-record readback after the combined owner leases."""','        """Actual fixed-record byte acknowledgement; selected durability is separate."""'),
+ ('    def _save(self, state, a, b, identity, purpose):\n        self._check()','    def _save(self, state, a, b, identity, purpose):\n        self._check()\n        self.log.durability_barrier()\n        if self._durability_barrier is not None:self._durability_barrier()'),
+ ('            self.log.progress(result)\n','            self.log.progress(result)\n            self.log.durability_barrier()\n'),
+ ('            if self.retention is not None:self.retention.begin(purpose,a,b,identity,expected)','            if self.retention is not None:\n                self.log.durability_barrier()\n                self.retention.begin(purpose,a,b,identity,expected)'),
+ ('                    if self.retention is not None:\n                        self.retention.complete','                    if self.retention is not None:\n                        self.log.durability_barrier()\n                        self.retention.complete'),
+ ('            primary = error; self.poisoned = True','            primary = error; self.poisoned = True\n            for flush in [self.log.durability_barrier] + ([self._durability_barrier] if self._durability_barrier is not None else []):\n                try:flush()\n                except BaseException as durability_error:\n                    error.add_note(\'Failure durability barrier refused: \'+repr(durability_error))')])
+edit('mcm_score_stream.py',[
+ ('    def __call__(self, purpose, a, b):', '    def durability_barrier(self):\n        if self.active is not None:self.active.durability_barrier()\n\n    def __call__(self, purpose, a, b):'),
+ ('backend, owner, chunk_cells, compute, lease, _imported=None):','backend, owner, chunk_cells, compute, lease, _imported=None, durability=None):'),
+ ('        self._imported=self._imported_pin=_imported','        self._imported=self._imported_pin=_imported\n        self._durability_policy=durability'),
+ ('destination=tail.destination(self.batches), lease=self.lease)','destination=tail.destination(self.batches), lease=self.lease, durability=self._durability_policy)')])
+edit('archive_pair_writer.py',[
+ ('        descriptor = self.chunk_fd; self.chunk_fd = None','        self.durability_barrier()\n        descriptor = self.chunk_fd; self.chunk_fd = None'),
+ ('        self.poisoned = True; self._failure(error)','        self.poisoned = True\n        try:self.durability_barrier()\n        except BaseException as durability_error:error.add_note(\'Failure durability barrier refused: \'+repr(durability_error))\n        self._failure(error)'),
+ ('        self.closed=True;descriptor=self.chunk_fd;self.chunk_fd=None','        descriptor=self.chunk_fd'),
+ ('            if descriptor is not None:io._cleanup((lambda:os.close(descriptor),))','            actions=[]\n            if getattr(self,\'_durability\',None) is not None:actions.append(self.durability_barrier)\n            actions.extend((lambda:setattr(self,\'closed\',True),lambda:setattr(self,\'chunk_fd\',None)))\n            if descriptor is not None:actions.append(lambda:os.close(descriptor))\n            io._cleanup(actions)')])
+edit('compact_mcm.py',[
+ ('retention=stage_retention.options(stage))', "retention=stage_retention.options(stage),\n                **({'durability_barrier':lambda:stream.durability_barrier()} if policy.get('schema_version')==2 else {}))"),
+ ("    require(set(policy) == {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'}\n        and type(policy['schema_version']) is int and policy['schema_version'] == 1", """    durability_selected = type(policy.get('schema_version')) is int and policy['schema_version']==2
+    if durability_selected:
+        from .chunk_durability import policy as durability_policy
+        require(_imported(dictionary) and 'real_pilot_input' in selected,
+                'durability requires genuine selected imported resource pilot')
+        resource=json.loads(run.read_input(selected['real_pilot_input']))
+        require(resource['schema_version']==2 and resource.get('population_scope')=='resource_pilot_subset',
+                'explicit registered resource-only pilot required')
+        durability_policy(policy['durability'])
+    require(set(policy) == ({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','durability'}
+            if durability_selected else {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'})
+        and type(policy['schema_version']) is int and policy['schema_version'] in (1,2)"""),
+ ('            log=event_log\n            matcher', "            log=event_log\n            if policy.get('schema_version')==2:log.enable_durability(policy['durability'])\n            matcher"),
+ ("owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live,", "owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live,\n                **({'durability':policy['durability']} if policy.get('schema_version')==2 else {}),"),
+ ("            stream_terminal = stream.finish()['terminal_sha256']", "            log.durability_barrier()\n            stream_terminal = stream.finish()['terminal_sha256']")])
+(O/'INVERSE01.json').write_text(json.dumps(changes,indent=2)+'\n')

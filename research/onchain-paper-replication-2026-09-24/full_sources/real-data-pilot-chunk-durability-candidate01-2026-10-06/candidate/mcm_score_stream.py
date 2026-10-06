@@ -1,0 +1,308 @@
+"""MCM callback adapter for exact-purpose durable tails and sealed score chunks.
+
+The supplied compute callback retains responsibility for matcher convergence,
+checkpointing and cleanup. This does not replace its per-pair journal/scratch,
+provide successor admission, or authorize a registered financial execution.
+"""
+import json
+import os
+from pathlib import Path
+import re
+import stat
+from weakref import WeakKeyDictionary
+
+_COMPLETED = WeakKeyDictionary()
+
+from . import score_batches as batch, score_tail as tail
+from .cache import cache_key
+from .dictionary import dictionary_hash
+from .matching_identity import graph_identity
+from .matching_pair import BACKEND
+from .neighborhoods import graph_hash, node_order_hash
+from .provenance import thaw
+
+require = batch._require
+
+
+class MCMScoreStream:
+    def __init__(self, root, *, graph, dictionary, matching_config, workflow,
+                 backend, owner, chunk_cells, compute, lease, _imported=None, durability=None):
+        batch._identity(workflow); batch._identity(owner)
+        require(callable(compute) and callable(lease), 'compute and live lease required')
+        require(cache_key(backend) == cache_key(BACKEND), 'explicit scalar backend required')
+        self._imported=self._imported_pin=_imported
+        self._durability_policy=durability
+        if _imported is None:
+            require(dictionary_hash(dictionary) == dictionary.identity
+                and cache_key(dictionary.config.get('pair_execution')) == cache_key(backend)
+                and dictionary.matching_config_hash == cache_key({'config': matching_config, 'backend': backend}),
+                'dictionary/backend/matching identity differs')
+        else:
+            from .imported_mcm_identity import Target
+            require(type(_imported) is Target,'genuine imported target required')
+            _imported.check()
+            require(graph is _imported.graph and dictionary is _imported.dictionary and owner==_imported.owner.identity and workflow==_imported.owner.bound.record['workflow_identity'],'imported stream authority differs')
+            require(cache_key(matching_config)==cache_key(thaw(_imported.owner.matching)),'imported stream matching differs')
+        self.nodes = graph.node_ids; self.motifs = tuple(graph_identity(m) for m in dictionary.representatives)
+        self.n = len(self.nodes); self.k = len(self.motifs)
+        batch._shape(self.n, self.k, chunk_cells)
+        tail._shape(0, chunk_cells)
+        self.parent = graph_hash(graph); node_order = node_order_hash(self.nodes)
+        self.workload = cache_key({'schema_version': 1, 'kind': 'mcm', 'workflow': workflow,
+            'backend': backend, 'graph': self.parent, 'node_order': node_order,
+            'dictionary': dictionary.identity, 'ordered_motifs': list(self.motifs),
+            'matching': matching_config, 'dtype': 'float32'})
+        self.scope = {'graph': self.parent, 'node_order': node_order,
+            'dictionary': dictionary.identity, 'ordered_motifs': cache_key(list(self.motifs)),
+            'matching': dictionary.matching_config_hash, 'workflow': self.workload}
+        if _imported is not None:
+            expected=_imported.derive_scope()
+            require(expected==_imported.scope,'imported stream independently derived workload differs')
+            self.scope=expected;self.workload=expected['workflow']
+        self.owner = owner; self.compute = compute; self.lease = lease
+        self.cells = 0; self.closed = False; self.active = None; self.batches = None
+        root = Path(root)
+        require(root.is_absolute() and root.resolve() == root, 'canonical stream root required')
+        lease(); root.mkdir()
+        parent, parent_fd = batch._open(root.parent)
+        try:
+            os.fsync(parent_fd); batch._root(parent, parent_fd)
+        finally: batch._release(lambda: os.close(parent_fd))
+        self.root, self.fd = batch._open(root)
+        try:
+            self.batches = batch.ScoreBatches(root / 'batches', scope=self.scope, owner=owner,
+                rows=self.n, motifs=self.k, chunk_cells=chunk_cells, lease=lease)
+            (root / 'tails').mkdir(); os.fsync(self.fd)
+            start = {'schema_version': 1, 'kind': 'mcm-score-stream', 'scope': self.scope,
+                'owner': owner, 'rows': self.n, 'motifs': self.k,
+                'batch_start_sha256': self.batches.start_sha, 'chunk_cells': chunk_cells}
+            typed=None
+            if _imported is not None:
+                ledger=getattr(_imported.owner,'_archive_operations',None)
+                context=getattr(getattr(getattr(ledger,'selection',None),'_transport',None),'_context',None)
+                if getattr(context,'_record',{}).get('typed_payloads') is not None:
+                    from . import typed_payload_operations
+                    typed=typed_payload_operations.selected(_imported.owner)
+            if typed is not None:
+                start.update(schema_version=2,typed_payload_input=typed['input'],typed_payload_sha256=typed['input_sha256'])
+            self.start_sha = self.head = batch._write(self.fd, 'start.json', batch._json(start))
+            self._typed_store=self._typed_store_pin=None
+            if typed is not None:
+                from . import typed_score_store
+                self._typed_store=self._typed_store_pin=typed_score_store.selected(self)
+            self._check()
+        except BaseException as primary:
+            batch._close_after_failure(self.close, primary)
+            raise
+
+    def _check(self):
+        require(not self.closed, 'score stream is closed')
+        self.lease(); batch._root(self.root, self.fd)
+        require(self._typed_store is self._typed_store_pin,'typed score store replaced')
+        require(self._imported is self._imported_pin,'imported stream authority replaced')
+        if self._imported is not None:
+            if getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
+                from .imported_authority_lease import target_lease
+                target_lease(self._imported)
+                require(self.scope==self._imported.scope and self.workload==self.scope['workflow'],'sampled stream scope changed')
+            else:
+                self._imported.final(full_graph=False)
+                require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')
+
+    def _seal_check(self, index, expected_sha):
+        """Callback-free bounded verification of one tail/link/destination."""
+        batch._root(self.root, self.fd)
+        require(batch._hash(batch._read(self.fd, 'start.json', batch.META_LIMIT)) == self.start_sha,
+                'stream start changed')
+        raw = batch._read(self.fd, f'seal-{index:012d}.json', batch.META_LIMIT)
+        require(batch._hash(raw) == expected_sha, 'seal link hash differs')
+        link = json.loads(raw)
+        offset = index * self.batches.chunk_cells
+        count = min(self.batches.chunk_cells, self.n * self.k - offset)
+        require(set(link) == {'schema_version', 'start_sha256', 'previous', 'index', 'start_cell',
+            'cells', 'tail_terminal_sha256', 'batch_header_sha256'} and link['schema_version'] == 1
+            and link['start_sha256'] == self.start_sha and link['index'] == index
+            and link['start_cell'] == offset and link['cells'] == count, 'seal link identity differs')
+        item = tail.verify(self.root / 'tails' / f'tail-{index:012d}', scope=self.scope,
+            owner=self.owner, terminal_sha256=link['tail_terminal_sha256'], lease=lambda: None)
+        expected_destination = batch._hash(batch._json({'directory': str(self.batches.root),
+            'start_sha256': self.batches.start_sha, 'index': index, 'start_cell': offset, 'cells': count}))
+        require(item['status'] == 'complete' and item['destination'] == expected_destination
+            and item['start_cell'] == offset and item['cells'] == count, 'tail seal destination differs')
+        root, fd = batch._open(self.batches.root)
+        try:
+            require(batch._hash(batch._read(fd, 'start.json', batch.META_LIMIT)) == self.batches.start_sha,
+                    'batch start differs')
+            header = batch._read(fd, f'chunk-{index:012d}.json', batch.META_LIMIT)
+            payload = batch._read(fd, f'chunk-{index:012d}.bin', count * 8)
+            require(batch._hash(header) == link['batch_header_sha256']
+                and payload == item['values'].tobytes(), 'sealed score bytes/header differ')
+            batch._root(root, fd)
+        finally: batch._release(lambda: os.close(fd))
+        return link
+
+    def _history_check(self, terminal, complete_raw):
+        """All external callbacks have finished; no numerical work is repeated."""
+        if self._typed_store is not None:
+            from . import typed_score_store
+            typed_score_store.check(self.root,terminal=batch._hash(complete_raw),owner=self.owner,scope=self.scope,pairs=self.cells,chunk_cells=self.batches.chunk_cells)
+            return
+        result = batch.verify(self.batches.root, scope=self.scope, owner=self.owner,
+            terminal_sha256=terminal, lease=lambda: None)
+        require(result['status'] == 'complete' and result['cells'] == self.cells
+            and result['chunks'] == self.batches.chunks, 'completed batch denominator differs')
+        previous = self.start_sha
+        for index in range(self.batches.chunks):
+            raw = batch._read(self.fd, f'seal-{index:012d}.json', batch.META_LIMIT)
+            digest = batch._hash(raw)
+            link = self._seal_check(index, digest)
+            require(link['previous'] == previous, 'seal chain predecessor differs')
+            previous = digest
+        require(previous == self.head, 'seal chain terminal differs')
+        for root, fixed, pattern, expected in (
+            (self.root, {'start.json', 'batches', 'tails', 'complete.json'}, r'seal-([0-9]{12})\.json', 4),
+            (self.root / 'tails', set(), r'tail-([0-9]{12})', 0)):
+            directory, fd = batch._open(root)
+            try:
+                seen = 0
+                with batch._closing(os.scandir(fd)) as entries:
+                    for entry in entries:
+                        seen += 1; match = re.fullmatch(pattern, entry.name)
+                        require(seen <= expected + self.batches.chunks and (entry.name in fixed
+                            or (match is not None and int(match[1]) < self.batches.chunks)),
+                            'unexpected stream inventory')
+                require(seen == expected + self.batches.chunks, 'incomplete stream inventory')
+                batch._root(directory, fd)
+            finally: batch._release(lambda: os.close(fd))
+        require(batch._read(self.fd, 'complete.json', batch.META_LIMIT) == complete_raw,
+                'stream completion changed during verification')
+        batch._root(self.root, self.fd)
+
+    def durability_barrier(self):
+        if self.active is not None:self.active.durability_barrier()
+
+    def __call__(self, purpose, a, b):
+        self._check()
+        try:
+            require(self.cells < self.n * self.k, 'all MCM cells already completed')
+            center, motif = divmod(self.cells, self.k)
+            require(isinstance(purpose, dict) and type(purpose.get('center_index')) is int
+                and type(purpose.get('motif_index')) is int
+                and purpose['center_index'] == center and purpose['motif_index'] == motif,
+                'MCM occurrence order differs')
+            require(getattr(a, 'parent_hash', None) == self.parent
+                and getattr(a, 'center_id', None) == self.nodes[center], 'MCM local graph attribution differs')
+            typed = [graph_identity(a), graph_identity(b)]
+            require(typed[1] == self.motifs[motif], 'MCM motif identity differs')
+            expected = {'schema_version': 1, 'kind': 'mcm', 'workload_sha256': self.workload,
+                'graph_hash': self.parent, 'center_index': center, 'center_id': self.nodes[center],
+                'motif_index': motif, 'typed_graphs': typed}
+            require(cache_key(purpose) == cache_key(expected), 'exact MCM purpose differs')
+            key = cache_key(expected)
+            if self.active is None:
+                count = min(self.batches.chunk_cells, self.n * self.k - self.cells)
+                self.active = tail.ScoreTail(self.root / 'tails' / f'tail-{self.batches.chunks:012d}',
+                    scope=self.scope, owner=self.owner, start_cell=self.cells, cells=count,
+                    destination=tail.destination(self.batches), lease=self.lease, durability=self._durability_policy)
+            self._check()
+            result = self.compute(thaw(expected), a, b)
+            self._check()
+            require(isinstance(result, dict) and set(result) == {'purpose_sha256', 'score'}
+                and result['purpose_sha256'] == key, 'matcher returned another purpose')
+            saved = self.active.append(self.cells, key, result['score'])
+            self.cells += 1
+            if self.active.acknowledged == self.active.start['cells']:
+                if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
+                    from .imported_authority_lease import target_lease
+                    target_lease(self._imported,boundary=True)
+                index = self.batches.chunks; start_cell = self.active.start['start_cell']
+                root = self.active.root; terminal = self.active.finish()
+                head = tail.seal(root, terminal_sha256=terminal, batches=self.batches, lease=self.lease)
+                link = {'schema_version': 1, 'start_sha256': self.start_sha, 'previous': self.head,
+                    'index': index, 'start_cell': start_cell, 'cells': self.active.start['cells'],
+                    'tail_terminal_sha256': terminal, 'batch_header_sha256': head}
+                raw = batch._json(link)
+                name = f'seal-{index:012d}.json'
+                self.head = batch._write(self.fd, name, raw)
+                self._check()
+                require(batch._read(self.fd, name, batch.META_LIMIT) == raw, 'seal link publication changed')
+                self._seal_check(index, self.head)
+                self.active = None
+                if self._typed_store is not None:self._typed_store.seal(index)
+            return saved
+        except BaseException as primary:
+            # Preserve evidence; cleanup uncertainty must stay worker-fatal.
+            batch._close_after_failure(self.close, primary)
+            raise
+
+    def finish(self):
+        if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
+            from .imported_authority_lease import target_lease
+            target_lease(self._imported,boundary=True)
+        self._check()
+        require(self.cells == self.n * self.k and self.active is None, 'MCM stream incomplete')
+        try:
+            directory_pins = _directory_identity(self)
+            terminal = self.batches.finish()
+            record = {'schema_version': 1, 'start_sha256': self.start_sha, 'head': self.head,
+                'cells': self.cells, 'chunks': self.batches.chunks, 'batch_terminal_sha256': terminal}
+            if self._typed_store is not None:
+                record.update(schema_version=2,typed_proof_sha256=self._typed_store.finish(terminal))
+            raw = batch._json(record); result = batch._write(self.fd, 'complete.json', raw)
+            self._check()
+            require(batch._read(self.fd, 'complete.json', batch.META_LIMIT) == raw,
+                    'MCM completion publication changed')
+            self._history_check(terminal, raw)
+            _directory_rejoin(self,directory_pins)
+        except BaseException as primary:
+            batch._close_after_failure(self.close, primary)
+            raise
+        self.close()
+        _COMPLETED[self] = (_completion_identity(self), raw, result, directory_pins)
+        return {**record, 'terminal_sha256': result}
+
+    def close(self):
+        if not self.closed:
+            self.closed = True
+            actions = []
+            if self.active is not None: actions.append(self.active.close)
+            if self.batches is not None: actions.append(self.batches.close)
+            actions.append(lambda: os.close(self.fd))
+            batch._cleanup(actions)
+
+
+def _completion_identity(stream):
+    return (stream._imported,stream._typed_store,stream.batches,stream.root,stream.owner,stream.start_sha,stream.head,
+        stream.n,stream.k,stream.cells,stream.batches.chunks,stream.batches.chunk_cells,stream.batches.start_sha)
+
+
+def completed_evidence(stream):
+    """Successful post-close finish only; no caller-supplied completion receipt."""
+    require(type(stream) is MCMScoreStream,'original score stream required')
+    record=_COMPLETED.get(stream)
+    require(record is not None and stream.closed and stream.batches.closed and stream.active is None,
+        'successful score stream finish required')
+    require(all(type(v) is int for v in (stream.n,stream.k,stream.cells,stream.batches.chunks,stream.batches.chunk_cells))
+        and stream._imported is stream._imported_pin and _completion_identity(stream)==record[0],
+        'completed score stream objects or denominator changed')
+    _directory_rejoin(stream,record[3])
+    return record
+
+
+def _directory_identity(stream):
+    result=[]
+    for root,fd in ((stream.root,stream.fd),(stream.batches.root,stream.batches.fd)):
+        info=os.fstat(fd);path=root.lstat()
+        require(stat.S_ISDIR(info.st_mode) and root.resolve()==root
+            and (info.st_dev,info.st_ino)==(path.st_dev,path.st_ino),'original live stream directory differs')
+        result.append((str(root),info.st_dev,info.st_ino))
+    return tuple(result)
+
+
+def _directory_rejoin(stream,pins):
+    require(tuple(str(p) for p in (stream.root,stream.batches.root))==tuple(x[0] for x in pins),
+        'completed stream root changed')
+    for name,device,inode in pins:
+        path=Path(name);info=path.lstat()
+        require(path.resolve()==path and stat.S_ISDIR(info.st_mode)
+            and (info.st_dev,info.st_ino)==(device,inode),'completed original stream directory replaced')

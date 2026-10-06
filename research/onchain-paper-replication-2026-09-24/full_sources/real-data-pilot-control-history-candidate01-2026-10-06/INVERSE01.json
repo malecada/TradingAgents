@@ -1,0 +1,705 @@
+{
+  "archive_dispatch.py": {
+    "baseline_sha256": "ff3bf9f128ed520222871bbfbc15b66c11e38bb89d92d6d9bac1cbdd89fb9840",
+    "candidate_sha256": "b724aa003839513753ed2ed38da81ea5d724258d6a9708b1ff19f3f476195ddd",
+    "exact_reverse_reconstruction": true,
+    "hunks": [
+      {
+        "original_start": 59,
+        "original_end": 59,
+        "candidate_start": 59,
+        "candidate_end": 64,
+        "original": [],
+        "candidate": [
+          "    history=type(value) is dict and 'control_history' in value\n",
+          "    if history:\n",
+          "        from .archive_control_history import validate\n",
+          "        require(typed,'control history only explicit typed resource route');validate(value['control_history'])\n",
+          "        fields=fields|{'control_history'}\n"
+        ]
+      },
+      {
+        "original_start": 111,
+        "original_end": 111,
+        "candidate_start": 116,
+        "candidate_end": 121,
+        "original": [],
+        "candidate": [
+          "        if execution.get('kind')=='compact_resource':\n",
+          "            mcm_policy=json.loads(run.read_input(job['compact_mcm_input']))\n",
+          "            if mcm_policy.get('schema_version')==2 and 'durability' in mcm_policy:\n",
+          "                # Eager dependency only; genuine MCM validator admits policy.\n",
+          "                from . import chunk_durability\n"
+        ]
+      },
+      {
+        "original_start": 130,
+        "original_end": 130,
+        "candidate_start": 140,
+        "candidate_end": 143,
+        "original": [],
+        "candidate": [
+          "        if 'control_history' in config:\n",
+          "            from . import archive_control_history\n",
+          "\n"
+        ]
+      },
+      {
+        "original_start": 141,
+        "original_end": 143,
+        "candidate_start": 154,
+        "candidate_end": 161,
+        "original": [
+          "    require(config['max_diagnostic_bytes']>=config['max_payload_bytes']+META*config['max_commands'],'insufficient cumulative diagnostic allowance')\n",
+          "    require(config['max_control_bytes']>=META*(8+4*config['max_commands']),'insufficient durable reservation/failure headroom')\n"
+        ],
+        "candidate": [
+          "    if 'control_history' in config:\n",
+          "        from .archive_control_history import capacity as control_capacity\n",
+          "        bounds=control_capacity(config['control_history'],config['max_commands'])\n",
+          "        require(config['max_diagnostic_bytes']>=bounds['diagnostic_bytes'] and config['max_control_bytes']>=bounds['control_bytes'],'insufficient bounded retained controls/failure headroom')\n",
+          "    else:\n",
+          "        require(config['max_diagnostic_bytes']>=config['max_payload_bytes']+META*config['max_commands'],'insufficient cumulative diagnostic allowance')\n",
+          "        require(config['max_control_bytes']>=META*(8+4*config['max_commands']),'insufficient durable reservation/failure headroom')\n"
+        ]
+      },
+      {
+        "original_start": 150,
+        "original_end": 150,
+        "candidate_start": 168,
+        "candidate_end": 169,
+        "original": [],
+        "candidate": [
+          "    if 'control_history' in config:record['control_history_semantics']={'retention':'original name and exact bytes in hash-chained local shards; complete lower receipts may coexist with failed upper operation','diagnostics':'selected cap bounds retained local receipt shards plus one failed/inflight8MiB payload; cumulative rounded transfer budget unchanged','audit_assumption':config['control_history']['assumption'],'physical_capacity_admitted':False}\n"
+        ]
+      },
+      {
+        "original_start": 190,
+        "original_end": 190,
+        "candidate_start": 209,
+        "candidate_end": 210,
+        "original": [],
+        "candidate": [
+          "        if c._history is not None:c._diagnostic_file=result.name\n"
+        ]
+      },
+      {
+        "original_start": 227,
+        "original_end": 227,
+        "candidate_start": 247,
+        "candidate_end": 253,
+        "original": [],
+        "candidate": [
+          "        self._history_policy=self._limits.get('control_history');self._history=None;self._control_journal=None;self._diagnostic_journal=None\n",
+          "        self._publication_count=0;self._root_control_bytes=0;self._diagnostic_receipts=0;self._diagnostic_file=None\n",
+          "        if self._history_policy is not None:\n",
+          "            from .archive_control_history import Interval,Journal\n",
+          "            self._history=Interval(self._history_policy)\n",
+          "            self._control_journal=Journal(self.root/'controls',record_bytes=self._history_policy['success_control_bytes'],total_bytes=self._limits['max_control_bytes']-8*META,records=4*self._limits['max_commands'],shard_bytes=self._history_policy['shard_bytes'])\n"
+        ]
+      },
+      {
+        "original_start": 240,
+        "original_end": 241,
+        "candidate_start": 266,
+        "candidate_end": 268,
+        "original": [
+          "                lease_callback=self._callback,rate_kbit=self._limits['rate_kbit'],max_seconds=self._limits['max_seconds'])\n"
+        ],
+        "candidate": [
+          "                lease_callback=self._callback,rate_kbit=self._limits['rate_kbit'],max_seconds=self._limits['max_seconds'],\n",
+          "                **({'receipt_sink':self._receive_control} if self._history is not None else {}))\n"
+        ]
+      },
+      {
+        "original_start": 243,
+        "original_end": 243,
+        "candidate_start": 270,
+        "candidate_end": 273,
+        "original": [],
+        "candidate": [
+          "            if self._history is not None:\n",
+          "                self._diagnostic_journal=Journal(self.root/'diagnostic-controls',record_bytes=self._history_policy['success_diagnostic_bytes'],total_bytes=self._limits['max_diagnostic_bytes']-META-low.archive.MAX_BYTES,records=self._limits['max_commands'],shard_bytes=self._history_policy['shard_bytes'])\n",
+          "            self._history_bundle=(self._history,self._control_journal,self._diagnostic_journal)\n"
+        ]
+      },
+      {
+        "original_start": 275,
+        "original_end": 275,
+        "candidate_start": 305,
+        "candidate_end": 315,
+        "original": [],
+        "candidate": [
+          "        if self._history is not None and (name.startswith(('command-','result-','reservation-','operation-','typed-')) and 'failed' not in name):\n",
+          "            if len(raw)>self._history_policy['success_control_bytes']:\n",
+          "                # Preserve the exact refused original record in finite failure\n",
+          "                # headroom; no command success or retry is inferred.\n",
+          "                self._publish('oversize-'+name,value)\n",
+          "                raise ValueError('original success control exceeds selected record cap; retained, stop')\n",
+          "            self._control_journal.append(name,raw);self._bytes+=len(raw);self._publication_count+=1;return\n",
+          "        if self._history is not None:\n",
+          "            require(self._root_control_bytes+len(raw)<=8*META,'failure/control headroom exhausted')\n",
+          "            self._root_control_bytes+=len(raw)\n"
+        ]
+      },
+      {
+        "original_start": 281,
+        "original_end": 282,
+        "candidate_start": 321,
+        "candidate_end": 322,
+        "original": [
+          "        self._expected[name]=raw;self._bytes+=len(raw)\n"
+        ],
+        "candidate": [
+          "        self._expected[name]=raw;self._bytes+=len(raw);self._publication_count+=1\n"
+        ]
+      },
+      {
+        "original_start": 283,
+        "original_end": 284,
+        "candidate_start": 323,
+        "candidate_end": 336,
+        "original": [
+          "    def _outer(self):\n"
+        ],
+        "candidate": [
+          "    def _receive_control(self,path,raw,success):\n",
+          "        require(self._history is not None and self._in_call and path.parent==self.root/'diagnostics' and self._diagnostic_receipts<self._spent['commands'],'receipt outside actual selected command')\n",
+          "        self._diagnostic_receipts+=1\n",
+          "        if success and len(raw)<=self._history_policy['success_diagnostic_bytes']:\n",
+          "            self._diagnostic_journal.append(path.name,raw)\n",
+          "        else:\n",
+          "            require(len(raw)<=META,'failed original diagnostic exceeds finite headroom')\n",
+          "            root,fd=low.archive.io._open(path.parent)\n",
+          "            try:low.archive.io._write(fd,path.name,raw);low.archive.io._root(root,fd)\n",
+          "            finally:_close_owned(lambda:os.close(fd))\n",
+          "            if success:raise ValueError('original successful diagnostic exceeds selected compact cap; bytes retained, stop')\n",
+          "\n",
+          "    def _outer(self,*,sampled=False):\n"
+        ]
+      },
+      {
+        "original_start": 289,
+        "original_end": 290,
+        "candidate_start": 341,
+        "candidate_end": 342,
+        "original": [
+          "            and set(vars(self._transport))=={'identity','host','ssh','scp','rate_bytes','max_seconds','live','budget','diagnostics','counter','_dispatch_context'}\n"
+        ],
+        "candidate": [
+          "            and set(vars(self._transport))=={'identity','host','ssh','scp','rate_bytes','max_seconds','live','budget','diagnostics','counter','_dispatch_context'}|({'_receipt_sink'} if self._history is not None else set())\n"
+        ]
+      },
+      {
+        "original_start": 298,
+        "original_end": 298,
+        "candidate_start": 350,
+        "candidate_end": 358,
+        "original": [],
+        "candidate": [
+          "        if self._history is not None:\n",
+          "            require(all(a is b for a,b in zip((self._history,self._control_journal,self._diagnostic_journal),self._history_bundle)) and self._history.p==self._limits['control_history'] and self._history_policy==self._limits['control_history'],'selected history objects/policy replaced')\n",
+          "            require(self._transport._receipt_sink==self._receive_control,'selected receipt sink replaced')\n",
+          "            self._history.check(self._full_history,force=not sampled)\n",
+          "            return\n",
+          "        self._full_history()\n",
+          "\n",
+          "    def _full_history(self):\n"
+        ]
+      },
+      {
+        "original_start": 300,
+        "original_end": 301,
+        "candidate_start": 360,
+        "candidate_end": 361,
+        "original": [
+          "            low.archive._inventory(fd,set(self._expected)|{'diagnostics'})\n"
+        ],
+        "candidate": [
+          "            low.archive._inventory(fd,set(self._expected)|{'diagnostics'}|({'controls','diagnostic-controls'} if self._history is not None else set()))\n"
+        ]
+      },
+      {
+        "original_start": 306,
+        "original_end": 306,
+        "candidate_start": 366,
+        "candidate_end": 368,
+        "original": [],
+        "candidate": [
+          "        if self._history is not None:\n",
+          "            self._control_journal.audit();self._diagnostic_journal.audit()\n"
+        ]
+      },
+      {
+        "original_start": 328,
+        "original_end": 329,
+        "candidate_start": 390,
+        "candidate_end": 392,
+        "original": [
+          "                    require(len(result)<2*self._spent['commands'],'archive diagnostic count exceeded')\n"
+        ],
+        "candidate": [
+          "                    require(len(result)<(2 if self._history is not None else 2*self._spent['commands']),'archive diagnostic count exceeded')\n",
+          "                    if self._history is not None:require(self._diagnostic_file is not None and name in (self._diagnostic_file,self._diagnostic_file+'.transport.json'),'diagnostic outside actual current command')\n"
+        ]
+      },
+      {
+        "original_start": 332,
+        "original_end": 333,
+        "candidate_start": 395,
+        "candidate_end": 396,
+        "original": [
+          "                        limit=META if name.endswith('.json') else self._limits['max_payload_bytes']\n"
+        ],
+        "candidate": [
+          "                        limit=META if name.endswith('.json') else (low.archive.MAX_BYTES if self._history is not None else self._limits['max_payload_bytes'])\n"
+        ]
+      },
+      {
+        "original_start": 334,
+        "original_end": 335,
+        "candidate_start": 397,
+        "candidate_end": 398,
+        "original": [
+          "                        total+=before.st_size;require(total<=self._limits['max_diagnostic_bytes'],'archive diagnostic cumulative allowance exceeded')\n"
+        ],
+        "candidate": [
+          "                        total+=before.st_size;require(total<=(META+low.archive.MAX_BYTES if self._history is not None else self._limits['max_diagnostic_bytes']),'archive diagnostic cumulative allowance exceeded')\n"
+        ]
+      },
+      {
+        "original_start": 348,
+        "original_end": 349,
+        "candidate_start": 411,
+        "candidate_end": 412,
+        "original": [
+          "        self._outer();cap=self._cap\n"
+        ],
+        "candidate": [
+          "        self._outer(sampled=True);cap=self._cap\n"
+        ]
+      },
+      {
+        "original_start": 352,
+        "original_end": 353,
+        "candidate_start": 415,
+        "candidate_end": 416,
+        "original": [
+          "        self._outer()\n"
+        ],
+        "candidate": [
+          "        self._outer(sampled=True)\n"
+        ]
+      },
+      {
+        "original_start": 360,
+        "original_end": 361,
+        "candidate_start": 423,
+        "candidate_end": 424,
+        "original": [
+          "        self._publish('reservation-%08d.json'%len(self._expected),{'spent':self._spent,'bytes':size,'claim':self._cap['claim_sha256']})\n"
+        ],
+        "candidate": [
+          "        self._publish('reservation-%08d.json'%(self._publication_count if self._history is not None else len(self._expected)),{'spent':self._spent,'bytes':size,'claim':self._cap['claim_sha256']})\n"
+        ]
+      },
+      {
+        "original_start": 380,
+        "original_end": 380,
+        "candidate_start": 443,
+        "candidate_end": 454,
+        "original": [],
+        "candidate": [
+          "            if self._history is not None:\n",
+          "                require(self._diagnostic_receipts==self._spent['commands'],'actual original command receipt absent')\n",
+          "                # Successful command outputs are exactly zero bytes. Preserve\n",
+          "                # their original name/stat/empty hash before removing only that\n",
+          "                # empty staging file; get bodies remain caller-owned.\n",
+          "                empty_records=[]\n",
+          "                for empty in (self.root/'diagnostics').iterdir():\n",
+          "                    if empty.name.startswith('command-') and empty.name.endswith('.bin'):\n",
+          "                        st=empty.lstat();require(stat.S_ISREG(st.st_mode) and st.st_nlink==1 and st.st_size==0,'successful command output not empty')\n",
+          "                        empty_records.append({'name':empty.name,'stat':list(low.archive.io._signature(st)),'sha256':digest(b''),'bytes':0})\n",
+          "                        require(low.archive.io._signature(empty.lstat())==low.archive.io._signature(st),'empty command staging changed')\n"
+        ]
+      },
+      {
+        "original_start": 384,
+        "original_end": 385,
+        "candidate_start": 458,
+        "candidate_end": 468,
+        "original": [
+          "                'diagnostics':delta})\n"
+        ],
+        "candidate": [
+          "                'diagnostics':delta,**({'empty_staging':empty_records} if self._history is not None else {})})\n",
+          "            if self._history is not None:\n",
+          "                # Only after the exact empty-file descriptor is durably in the\n",
+          "                # result shard may its zero-byte staging inode be retired.\n",
+          "                for original in empty_records:\n",
+          "                    empty=self.root/'diagnostics'/original['name']\n",
+          "                    require(list(low.archive.io._signature(empty.lstat()))==original['stat'],'empty staging changed after durable descriptor')\n",
+          "                    empty.unlink()\n",
+          "                    self._diagnostic_pins.pop(original['name'])\n",
+          "                low.sync_directory(self.root/'diagnostics')\n"
+        ]
+      },
+      {
+        "original_start": 409,
+        "original_end": 409,
+        "candidate_start": 492,
+        "candidate_end": 495,
+        "original": [],
+        "candidate": [
+          "        if self._history is not None:\n",
+          "            result['control_history']={name:{'head_sha256':journal.head.hex(),'acknowledged_records':journal.count,'acknowledged_encoded_bytes':journal.bytes,'shards':len(journal.pins),'journal_failed':journal.failed} for name,journal in (('controls',self._control_journal),('diagnostic-controls',self._diagnostic_journal))}\n",
+          "            result['control_history_assumption']=self._history_policy['assumption']\n"
+        ]
+      },
+      {
+        "original_start": 450,
+        "original_end": 451,
+        "candidate_start": 536,
+        "candidate_end": 537,
+        "original": [
+          "        c._live();c._claims.add(key)\n"
+        ],
+        "candidate": [
+          "        c._outer();c._live();c._claims.add(key)\n"
+        ]
+      }
+    ]
+  },
+  "archive_owner_operations.py": {
+    "baseline_sha256": "2a92f5d6ac569ffa922871e92e981e328708c10294d95f2c30178d747dbdc76f",
+    "candidate_sha256": "e45fd25c19f2a8f42f270cbb5c5437a823ba71a5e2e75333e928674ad1bec7bf",
+    "exact_reverse_reconstruction": true,
+    "hunks": [
+      {
+        "original_start": 81,
+        "original_end": 81,
+        "candidate_start": 81,
+        "candidate_end": 89,
+        "original": [],
+        "candidate": [
+          "        self._history=None\n",
+          "        from .archive_dispatch import View\n",
+          "        transport=selection._transport\n",
+          "        if type(transport) is View and transport._context._history is not None:\n",
+          "            from .archive_control_history import Interval\n",
+          "            self._history=Interval(transport._context._history_policy)\n",
+          "            self._history_context=transport._context;self._history_pin=self._history\n",
+          "            self._evidence()\n"
+        ]
+      },
+      {
+        "original_start": 88,
+        "original_end": 89,
+        "candidate_start": 96,
+        "candidate_end": 104,
+        "original": [
+          "    def _evidence(self):\n"
+        ],
+        "candidate": [
+          "    def _evidence(self,*,sampled=False):\n",
+          "        if self._history is not None:\n",
+          "            require(self.selection._transport._context is self._history_context and self._history is self._history_pin and self._history.p==self._history_context._history_policy,'selected history context changed')\n",
+          "            self._history.check(self._full_evidence,force=not sampled)\n",
+          "            return\n",
+          "        self._full_evidence()\n",
+          "\n",
+          "    def _full_evidence(self):\n"
+        ]
+      },
+      {
+        "original_start": 126,
+        "original_end": 127,
+        "candidate_start": 141,
+        "candidate_end": 153,
+        "original": [
+          "        self._evidence()\n"
+        ],
+        "candidate": [
+          "        if self._history is not None:\n",
+          "            require(owners.cache_key(self._configuration())==self._identity and owners.cache_key(self._spent)==self._spent_sha,'live archive identity/accounting changed')\n",
+          "        self._evidence(sampled=not full)\n",
+          "        if self._history is not None and self._active is not None:\n",
+          "            operation=self._active\n",
+          "            root,fd=io._open(operation.root)\n",
+          "            try:\n",
+          "                require(io._signature(os.fstat(fd))[:2]==self._pins[operation.root.name],'active archive operation directory changed')\n",
+          "                require(io._read(fd,'intent.json',io.META_LIMIT)==io._json(thaw(operation.record)),'active archive operation intent changed')\n",
+          "                for name,raw in (operation._terminal or {}).items():require(io._read(fd,name,io.META_LIMIT)==raw,'active archive terminal changed')\n",
+          "                io._root(root,fd)\n",
+          "            finally:_close_descriptor(fd)\n"
+        ]
+      },
+      {
+        "original_start": 241,
+        "original_end": 241,
+        "candidate_start": 267,
+        "candidate_end": 268,
+        "original": [],
+        "candidate": [
+          "            if self._history is not None:self._evidence()\n"
+        ]
+      },
+      {
+        "original_start": 258,
+        "original_end": 258,
+        "candidate_start": 285,
+        "candidate_end": 286,
+        "original": [],
+        "candidate": [
+          "        if self._history is not None:self._evidence()\n"
+        ]
+      }
+    ]
+  },
+  "archive_transport.py": {
+    "baseline_sha256": "ef0fdc052a354af5b83e487cbc2d2cf92170149d64f90117adcb5ee37e3b572d",
+    "candidate_sha256": "d1825c718b48d4267653405d9b637074b4a6d4bf1677842044418a2e8111aa13",
+    "exact_reverse_reconstruction": true,
+    "hunks": [
+      {
+        "original_start": 22,
+        "original_end": 23,
+        "candidate_start": 22,
+        "candidate_end": 23,
+        "original": [
+          "from tradingagents.research.lifecycle import _immutable\n"
+        ],
+        "candidate": [
+          "from tradingagents.research.lifecycle import _immutable, _encode\n"
+        ]
+      },
+      {
+        "original_start": 49,
+        "original_end": 50,
+        "candidate_start": 49,
+        "candidate_end": 50,
+        "original": [
+          "                       bytes_per_second, lease_callback):\n"
+        ],
+        "candidate": [
+          "                       bytes_per_second, lease_callback, receipt_sink=None):\n"
+        ]
+      },
+      {
+        "original_start": 140,
+        "original_end": 141,
+        "candidate_start": 140,
+        "candidate_end": 141,
+        "original": [
+          "        _immutable(receipt, {'status': 'failed' if failure is not None else 'complete',\n"
+        ],
+        "candidate": [
+          "        record = {'status': 'failed' if failure is not None else 'complete',\n"
+        ]
+      },
+      {
+        "original_start": 148,
+        "original_end": 149,
+        "candidate_start": 148,
+        "candidate_end": 151,
+        "original": [
+          "            'stderr_tail': tail.decode('utf-8', errors='replace')})\n"
+        ],
+        "candidate": [
+          "            'stderr_tail': tail.decode('utf-8', errors='replace')}\n",
+          "        if receipt_sink is None:_immutable(receipt, record)\n",
+          "        else:receipt_sink(receipt, _encode(record), failure is None)\n"
+        ]
+      },
+      {
+        "original_start": 172,
+        "original_end": 173,
+        "candidate_start": 174,
+        "candidate_end": 175,
+        "original": [
+          "                 rate_kbit=32768, max_seconds=30):\n"
+        ],
+        "candidate": [
+          "                 rate_kbit=32768, max_seconds=30, receipt_sink=None):\n"
+        ]
+      },
+      {
+        "original_start": 208,
+        "original_end": 208,
+        "candidate_start": 210,
+        "candidate_end": 213,
+        "original": [],
+        "candidate": [
+          "        if receipt_sink is not None:\n",
+          "            if not callable(receipt_sink):raise ValueError(\"actual receipt sink required\")\n",
+          "            self._receipt_sink=receipt_sink\n"
+        ]
+      },
+      {
+        "original_start": 227,
+        "original_end": 228,
+        "candidate_start": 232,
+        "candidate_end": 233,
+        "original": [
+          "            lease_callback=self.live)\n"
+        ],
+        "candidate": [
+          "            lease_callback=self.live, **({\"receipt_sink\":self._receipt_sink} if hasattr(self,\"_receipt_sink\") else {}))\n"
+        ]
+      },
+      {
+        "original_start": 274,
+        "original_end": 275,
+        "candidate_start": 279,
+        "candidate_end": 281,
+        "original": [
+          "            bytes_per_second=self.rate_bytes, lease_callback=self.live)\n"
+        ],
+        "candidate": [
+          "            bytes_per_second=self.rate_bytes, lease_callback=self.live,\n",
+          "            **({\"receipt_sink\":self._receipt_sink} if hasattr(self,\"_receipt_sink\") else {}))\n"
+        ]
+      }
+    ]
+  },
+  "build_inputs03.py": {
+    "baseline_sha256": "e100a1fa2f8caaa6baf6cde85d5f50aa667ed6e04b6470d9c8368d5424748a2d",
+    "candidate_sha256": "7564f86165e92cd4c24d4d5845c3dbe96859a1ba9a71c5aba987004a1910b271",
+    "exact_reverse_reconstruction": true,
+    "hunks": [
+      {
+        "original_start": 112,
+        "original_end": 113,
+        "candidate_start": 112,
+        "candidate_end": 113,
+        "original": [
+          "    path=Path(__file__).resolve().parent.parent/'real-data-pilot-resource-buffer-allocation01-2026-10-06'/'allocation01.py'\n"
+        ],
+        "candidate": [
+          "    path=Path(__file__).resolve().parent.parent.parent/'real-data-pilot-resource-buffer-allocation01-2026-10-06'/'allocation01.py'\n"
+        ]
+      },
+      {
+        "original_start": 166,
+        "original_end": 167,
+        "candidate_start": 166,
+        "candidate_end": 167,
+        "original": [
+          "    need(set(transport)=={'rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes','namespace','receipt_output','terminal_output'},'exact transport limit template required')\n"
+        ],
+        "candidate": [
+          "    need(set(transport)-{'control_history'}=={'rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes','namespace','receipt_output','terminal_output'},'exact transport limit template required')\n"
+        ]
+      },
+      {
+        "original_start": 177,
+        "original_end": 178,
+        "candidate_start": 177,
+        "candidate_end": 184,
+        "original": [
+          "    need(transport['max_diagnostic_bytes']>=transport['max_payload_bytes']+131072*transport['max_commands'] and transport['max_control_bytes']>=131072*(8+4*transport['max_commands']),'shared transport diagnostic/control allowance insufficient')\n"
+        ],
+        "candidate": [
+          "    history_bounds=None\n",
+          "    if 'control_history' in transport:\n",
+          "        from tradingagents.research.onchain_replication.archive_control_history import capacity\n",
+          "        history_bounds=capacity(transport['control_history'],transport['max_commands'])\n",
+          "        need(transport['max_diagnostic_bytes']>=history_bounds['diagnostic_bytes'] and transport['max_control_bytes']>=history_bounds['control_bytes'],'selected bounded controls underfunded')\n",
+          "    else:\n",
+          "        need(transport['max_diagnostic_bytes']>=transport['max_payload_bytes']+131072*transport['max_commands'] and transport['max_control_bytes']>=131072*(8+4*transport['max_commands']),'shared transport diagnostic/control allowance insufficient')\n"
+        ]
+      },
+      {
+        "original_start": 184,
+        "original_end": 185,
+        "candidate_start": 190,
+        "candidate_end": 191,
+        "original": [
+          "    local_bounds={'retained_diagnostic_bytes':TRANSPORT_META*transport['max_commands']+ARCHIVE_MAX_BYTES,\n"
+        ],
+        "candidate": [
+          "    local_bounds={'retained_diagnostic_bytes':history_bounds['diagnostic_bytes'] if history_bounds is not None else TRANSPORT_META*transport['max_commands']+ARCHIVE_MAX_BYTES,\n"
+        ]
+      }
+    ]
+  },
+  "controls01.py": {
+    "baseline_sha256": "d6b3bac4b71fc7cd6d2dfaf63d8aa395fb87e47eef5dbc2b7bd501fd385e59f3",
+    "candidate_sha256": "dc5918b1f15bb53a127067cda51cc95a54a5e7c9e1c4ccc2931f20566f2d5056",
+    "exact_reverse_reconstruction": true,
+    "hunks": [
+      {
+        "original_start": 16,
+        "original_end": 17,
+        "candidate_start": 16,
+        "candidate_end": 17,
+        "original": [
+          "ALLOCATION='../real-data-pilot-resource-buffer-allocation01-2026-10-06/allocation01.py'\n"
+        ],
+        "candidate": [
+          "ALLOCATION='../../real-data-pilot-resource-buffer-allocation01-2026-10-06/allocation01.py'\n"
+        ]
+      },
+      {
+        "original_start": 71,
+        "original_end": 73,
+        "candidate_start": 71,
+        "candidate_end": 74,
+        "original": [
+          "    tr=s['transport'];exact(tr,{'max_commands','max_payload_bytes','max_diagnostic_bytes','max_control_bytes'},'transport')\n",
+          "    for x in tr.values():integer(x)\n"
+        ],
+        "candidate": [
+          "    tr=s['transport'];exact(tr,{'max_commands','max_payload_bytes','max_diagnostic_bytes','max_control_bytes'}|({'control_history'} if 'control_history' in tr else set()),'transport')\n",
+          "    for k,x in tr.items():\n",
+          "        if k!='control_history':integer(x)\n"
+        ]
+      },
+      {
+        "original_start": 76,
+        "original_end": 77,
+        "candidate_start": 77,
+        "candidate_end": 84,
+        "original": [
+          "    need(tr['max_diagnostic_bytes']>=tr['max_payload_bytes']+DMETA*N and tr['max_control_bytes']>=DMETA*(8+4*N),'original transport caps underfunded')\n"
+        ],
+        "candidate": [
+          "    history_bounds=None\n",
+          "    if 'control_history' in tr:\n",
+          "        from tradingagents.research.onchain_replication.archive_control_history import capacity\n",
+          "        history_bounds=capacity(tr['control_history'],N)\n",
+          "        need(tr['max_diagnostic_bytes']>=history_bounds['diagnostic_bytes'] and tr['max_control_bytes']>=history_bounds['control_bytes'],'bounded transport caps underfunded')\n",
+          "    else:\n",
+          "        need(tr['max_diagnostic_bytes']>=tr['max_payload_bytes']+DMETA*N and tr['max_control_bytes']>=DMETA*(8+4*N),'original transport caps underfunded')\n"
+        ]
+      },
+      {
+        "original_start": 80,
+        "original_end": 81,
+        "candidate_start": 87,
+        "candidate_end": 89,
+        "original": [
+          "    need(tr['max_control_bytes']>=dispatch_files*DMETA,'dispatch claims and command controls underfunded')\n"
+        ],
+        "candidate": [
+          "    if history_bounds is None:need(tr['max_control_bytes']>=dispatch_files*DMETA,'dispatch claims and command controls underfunded')\n",
+          "    else:dispatch_files=history_bounds['control_files']\n"
+        ]
+      },
+      {
+        "original_start": 96,
+        "original_end": 98,
+        "candidate_start": 104,
+        "candidate_end": 106,
+        "original": [
+          "      'dispatch':item(tr['max_control_bytes'],dispatch_files,1,DMETA,'Context controls; lease checks create no per-call disk file'),\n",
+          "      'transport_diagnostics':item(DMETA*N+ARCHIVE,2*N,1,ARCHIVE,'one JSON and at most one bin per call; one failed/inflight bin body; successful get staging moves into caller'),\n"
+        ],
+        "candidate": [
+          "      'dispatch':item(tr['max_control_bytes'],dispatch_files,1 if history_bounds is None else 2,DMETA if history_bounds is None else tr['control_history']['shard_bytes'],'Context controls; lease checks create no per-call disk file'),\n",
+          "      'transport_diagnostics':item(DMETA*N+ARCHIVE if history_bounds is None else history_bounds['diagnostic_bytes'],2*N if history_bounds is None else history_bounds['diagnostic_files'],1 if history_bounds is None else 2,ARCHIVE,'one JSON and at most one bin per call; one failed/inflight bin body; successful get staging moves into caller'),\n"
+        ]
+      }
+    ]
+  }
+}

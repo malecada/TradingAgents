@@ -1,0 +1,38 @@
+{
+  "status": "passed-source-only",
+  "five_exact_inverses": true,
+  "manifest_sha256": "00f9eb91ea6d1e3f55eedb4e4a64aa2dbc3b4b55d07a83e84503533c30ba0141",
+  "checks": [
+    {
+      "case": "success",
+      "original_staging_retained": false,
+      "failed": false,
+      "error_type": null,
+      "journal_count": 2
+    },
+    {
+      "case": "publication-failure",
+      "original_staging_retained": true,
+      "failed": true,
+      "error_type": "OSError",
+      "journal_count": 2
+    },
+    {
+      "case": "opaque-refusal",
+      "original_staging_retained": true,
+      "failed": true,
+      "error_type": "ValueError",
+      "journal_count": 2
+    }
+  ],
+  "forced_boundary_audit": true,
+  "illustrative_capacity": {
+    "control_bytes": 2493208576,
+    "diagnostic_bytes": 1114887680,
+    "control_files": 603,
+    "diagnostic_files": 266,
+    "max_file_bytes": 8388608,
+    "payload_budget_semantics": "cumulative rounded IO remains separate; diagnostic bound is retained local bytes"
+  },
+  "not_authority_or_capacity_evidence": true
+}

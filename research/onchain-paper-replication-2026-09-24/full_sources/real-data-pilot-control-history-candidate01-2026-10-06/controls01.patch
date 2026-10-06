@@ -1,0 +1,51 @@
+--- baseline/controls01.py
++++ candidate/controls01.py
+@@ -14,7 +14,7 @@
+ ARCHIVE=8*1024**2
+ WEEKS=tuple('2022-'+x+'T00:00:00Z' for x in ('05-02','05-09','05-16','05-23','05-30','06-06','06-13'))
+ EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261005-01'
+-ALLOCATION='../real-data-pilot-resource-buffer-allocation01-2026-10-06/allocation01.py'
++ALLOCATION='../../real-data-pilot-resource-buffer-allocation01-2026-10-06/allocation01.py'
+ ALLOCATION_SHA='3912e68c232553f1fab5e39a92c0741c2c0ddab49316321c1189781d19611dfd'
+ # These are disjoint from the derived domains below. None may be omitted/zeroed
+ # by default. Evidence must cover success, failure, temporary and ancestor paths.
+@@ -69,16 +69,24 @@
+     need(a['max_stage_bytes']>=a['max_read_metadata_bytes']+40*T+8*META,'archive reference controls underfunded')
+     archive_min=(4+3*ordinary_ops+8)*META+8*(a['max_writer_metadata_bytes']+8*META+R*a['max_stage_bytes'])
+     need(a['max_workflow_metadata_bytes']>=archive_min,'archive workflow controls underfunded')
+-    tr=s['transport'];exact(tr,{'max_commands','max_payload_bytes','max_diagnostic_bytes','max_control_bytes'},'transport')
+-    for x in tr.values():integer(x)
++    tr=s['transport'];exact(tr,{'max_commands','max_payload_bytes','max_diagnostic_bytes','max_control_bytes'}|({'control_history'} if 'control_history' in tr else set()),'transport')
++    for k,x in tr.items():
++        if k!='control_history':integer(x)
+     N=tr['max_commands']
+     # Unchanged cumulative transport guards. This is NOT a complete transport
+     # capacity calculator; builder03 still checks every pair/typed traversal.
+-    need(tr['max_diagnostic_bytes']>=tr['max_payload_bytes']+DMETA*N and tr['max_control_bytes']>=DMETA*(8+4*N),'original transport caps underfunded')
++    history_bounds=None
++    if 'control_history' in tr:
++        from tradingagents.research.onchain_replication.archive_control_history import capacity
++        history_bounds=capacity(tr['control_history'],N)
++        need(tr['max_diagnostic_bytes']>=history_bounds['diagnostic_bytes'] and tr['max_control_bytes']>=history_bounds['control_bytes'],'bounded transport caps underfunded')
++    else:
++        need(tr['max_diagnostic_bytes']>=tr['max_payload_bytes']+DMETA*N and tr['max_control_bytes']>=DMETA*(8+4*N),'original transport caps underfunded')
+     typed_files=3*ops+attempts # intent/complete/failure plus preserved/read parts
+     need(s['typed_control_bytes']>=typed_files*META,'typed ledger controls underfunded')
+     dispatch_files=8+3*N+ordinary_ops+ops # command/result/reservation + claims
+-    need(tr['max_control_bytes']>=dispatch_files*DMETA,'dispatch claims and command controls underfunded')
++    if history_bounds is None:need(tr['max_control_bytes']>=dispatch_files*DMETA,'dispatch claims and command controls underfunded')
++    else:dispatch_files=history_bounds['control_files']
+     def item(n,files,dirs,max_file,basis):
+         for value in (n,files,dirs,max_file):integer(value,True)
+         return dict(logical_bytes=n,regular_files=files,directories=dirs,max_file_bytes=max_file,basis=basis)
+@@ -94,8 +102,8 @@
+       'typed_attempts':item(attempts*4*META,attempts*4,attempts,META,'four metadata slots per selected chunk credit; includes failure headroom'),
+       'typed_ledger':item(s['typed_control_bytes'],typed_files,0,META,'typed claims/complete/failure and part/read records; directory counted by archive'),
+       'archive_ledger_writer_reads':item(a['max_workflow_metadata_bytes'],archive_files,archive_dirs,max(META,40*T),'eight reserved original stages; writer/read metadata and 40-byte checkpoint references'),
+-      'dispatch':item(tr['max_control_bytes'],dispatch_files,1,DMETA,'Context controls; lease checks create no per-call disk file'),
+-      'transport_diagnostics':item(DMETA*N+ARCHIVE,2*N,1,ARCHIVE,'one JSON and at most one bin per call; one failed/inflight bin body; successful get staging moves into caller'),
++      'dispatch':item(tr['max_control_bytes'],dispatch_files,1 if history_bounds is None else 2,DMETA if history_bounds is None else tr['control_history']['shard_bytes'],'Context controls; lease checks create no per-call disk file'),
++      'transport_diagnostics':item(DMETA*N+ARCHIVE if history_bounds is None else history_bounds['diagnostic_bytes'],2*N if history_bounds is None else history_bounds['diagnostic_files'],1 if history_bounds is None else 2,ARCHIVE,'one JSON and at most one bin per call; one failed/inflight bin body; successful get staging moves into caller'),
+       'retained_original_matrices':item(sum(x['retained_matrix_logical_bytes'] for x in by.values()),7,0,max(x['retained_matrix_logical_bytes'] for x in by.values()),'all seven original row-major f32 matrices; no RAM replacement'),
+       'selected_payload_scratch':item(max(3*ARCHIVE,max(x['selected_payload_overlap_upper_bytes'] for x in by.values())),6,0,ARCHIVE,'accepted serial pair/tail/batch/output overlap; six simultaneous regular bodies upper bound; diagnostics counted separately'),
+     }
