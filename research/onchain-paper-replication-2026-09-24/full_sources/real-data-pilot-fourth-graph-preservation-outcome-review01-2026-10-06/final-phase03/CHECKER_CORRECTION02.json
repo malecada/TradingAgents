@@ -1,0 +1,9 @@
+{
+  "failed_tool_chunk": "aa9e8a",
+  "exit_code": 1,
+  "failure": "KeyError retained_graph_reference before resource sampling/output; no payload reads",
+  "reason": "May30 projection explicitly pins original May16 density basis; immediately prior May23 projection is itself a projection",
+  "before": "prior=read(OLD/'STORAGE_PROJECTION01.json');den=",
+  "after": "prior=read(M/projection['basis']['path']);assert h(M/projection['basis']['path'])==projection['basis']['sha256'];den=",
+  "exact_inverse": true
+}

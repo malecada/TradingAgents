@@ -1,0 +1,75 @@
+{
+  "original": "research/onchain-paper-replication-2026-09-24/full_sources/third-graph-preservation-outcome-review01-2026-10-06/final-phase03/check_entry02.py",
+  "original_sha256": "79ce54e565f9b7166af89cb07cc4b4cb08a85fd580e0161fe5524b78cbdbae34",
+  "literal_edits": [
+    [
+      "C=F/'real-data-pilot-fourth-graph01-2026-10-06';OLD=F/'real-data-pilot-third-graph01-2026-10-06'",
+      "C=F/'real-data-pilot-fifth-graph01-2026-10-06';OLD=F/'real-data-pilot-fourth-graph01-2026-10-06'"
+    ],
+    [
+      "20220523",
+      "20220530"
+    ],
+    [
+      "9cb4e2d10cdfd3c12c0b4ff2bd9173084da86bef06dd5f2dd0d447f2a5a2e585",
+      "b0c58b8a610a102ec11d943c9c869ef9162da5a80edac3c8edda3c57135195c3"
+    ],
+    [
+      "'graph-2022-05-23'",
+      "'graph-2022-05-30'"
+    ],
+    [
+      "'start':'2022-05-23T00:00:00Z','end':'2022-05-30T00:00:00Z'",
+      "'start':'2022-05-30T00:00:00Z','end':'2022-06-06T00:00:00Z'"
+    ],
+    [
+      "['2022-05-23T00:00:00Z']",
+      "['2022-05-30T00:00:00Z']"
+    ],
+    [
+      "[['2022-05-23T00:00:00Z','2022-05-30T00:00:00Z']]",
+      "[['2022-05-30T00:00:00Z','2022-06-06T00:00:00Z']]"
+    ],
+    [
+      "7581075",
+      "7507236"
+    ],
+    [
+      "count==241",
+      "count==250"
+    ],
+    [
+      "7402607977",
+      "7568955167"
+    ],
+    [
+      "18140026217",
+      "18306373407"
+    ],
+    [
+      "GET=F/'real-data-pilot-third-graph-get-duplicates-retirement01-2026-10-06'",
+      "GET=F/'real-data-pilot-fourth-graph-get-duplicates-retirement01-2026-10-06'"
+    ],
+    [
+      "13b85a9ec0583f0db92806ccac3b7ad62f727746864396aa469fc1de54f450a4",
+      "41f6b0698a94d3e3d825fae68c0aa1f6b2d8c047c8f176c5ca99045ec4aea8f2"
+    ],
+    [
+      "f57eed",
+      "bcaf37"
+    ],
+    [
+      "544741248",
+      "501845112"
+    ],
+    [
+      "assert h(C/'preflight01.py')=='bbd067391a66bc6439a2761bf998b6c9a16146d66711b6545eb1b5149dd2d750'\nassert raw(C/'launch01.py')==raw(OLD/'launch01.py')\noldpf=raw(F/'real-data-pilot-fourth-graph-entry-candidate01-2026-10-06/preflight01.py');newpf=raw(C/'preflight01.py');assert oldpf.count(b\"root['selected_recorded_pids']\")==1 and oldpf.replace(b\"root['selected_recorded_pids']\",b\"root['actual_selected_recorded_pids']\")==newpf\n",
+      "assert h(C/'preflight01.py').startswith('749879')\nassert raw(C/'launch01.py')==raw(OLD/'launch01.py')\noldpf=raw(OLD/'preflight01.py');newpf=raw(C/'preflight01.py');restored=newpf.decode()\npf_edits=[('fourth real-data pilot graph','fifth real-data pilot graph'),('20220523','20220530'),('COMPLETE May16','COMPLETE May23'),('real-pilot-third-graph','real-pilot-fourth-graph'),('20220516','20220523'),('3310923776','3218829312'),('6621847552','6437658624'),('third-ledger','fourth-ledger')]\nfor before,after in reversed(pf_edits):restored=restored.replace(after,before)\nassert restored.encode()==oldpf\ninv=read(C/'PREPARATION_INVERSE01.json');prepared=raw(C/'prepare01.py').decode();assert h(C/'prepare01.py')==inv['after_sha256']\nfor change in reversed(inv['changes']):prepared=prepared.replace(change['after'],change['before'])\nassert prepared.encode()==raw(OLD/'prepare01.py') and h(OLD/'prepare01.py')==inv['before_sha256']\n"
+    ],
+    [
+      "'corrected_preflight_exact_single_literal':True",
+      "'preflight_and_preparation_exact_literal_inverses':True"
+    ]
+  ],
+  "scope": "Concrete successor identities/dates/counts/pins and exact predecessor inverses; same metadata/source/read-only guards."
+}
