@@ -1,5 +1,27 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T17:45:35.979866+00:00: pilot11 permanently FAILED/spent82; no numerical job active. Source/Git freeze ENDED after verified closure.**
+
+Root92163/fea8c2 exit1 CLOSED; actualParent1/nativechild1/1106.334945160s,cleanupverified/cgroupgone/all recorded PIDs absent. [Actual terminal](full_sources/real-data-pilot-final11-2026-10-06/ROOT_TERMINAL01.json). All seven Target constructors returned, clearing the earlier primary freshness failure. New primary failure at compact_mcm._prepare→Target.sources: two required helper sources are absent from source_files registration: original-import-fixture-bridge-candidate/imported_kernel.py (8d810af1) and pair-workload/workload.py (30a957ad). Bodies exist; no observed hash modification, registered hashes are null. No completed MCM/update/financial fit; seven unavailable graphs retained. Secondary archive stale/poisoned cleanup errors preserved. NoOOM/MAX; sampledchargedpeak5302272000B, lastkernelpeak5370703872B includescache and is not assured final lifetime peak.
+
+Accounting52closed33COMPLETE19FAILED/highestclaimed82, with two permanent preclaim reserves separate. No refund/transfer/identity reuse/cap ladder. Accepted3→2 genuine validation transaction and original method/scientific data/limits remain intact; passing target constructors alone does not establish complete-pipeline capacity or measured callback speed. All bounded agents completed. Root owns live/accounting/STATE/Git/preservation/ONElauncher. Next independently retain/review/incrementally recover11, verify exact helper provenance/source acceptance, and correct source-closure admission before any fresh registered successor. No83/new claim or successor launch yet. Broadwork/heartbeat/appgoal remain PAUSED; direct pilot remains objective.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T17:15:21.556407+00:00: ONE pilot11 native job genuinely claimed/running. Source/Git freeze ACTIVE.**
+
+Follow ONLY Root session92163; never relaunch11. Launch source and actual remote2860e953bf454074f3a94c25f8819c90066d4170; supervisor185004/monitor185318/nativeonchain-replication-3bb4fe07a9df477cbed1d0a9781f550a.service. [Actual active receipt](full_sources/real-data-pilot-final11-2026-10-06/ROOT_ACTIVE01.json) joins genuine claim at82, original preflight and sampled guard. No limit reason at96.2s; real graph loading underway, zero completed MCM/update/financial fit. No actual callback-saving or whole-capacity conclusion.
+
+Accepted focused3→2 Prepared validation transaction retains entry/final checks and all original matching/source/input/runtime/Owner/numeric joins;179package176unchanged at a7100986. Combined source/metadata64f70, binding6260fa, finalbinding9fbb79 and717ref exactrelease5eec244e accepted. Genuine committed readonly35729/ae33f7 exit0 ready82/243sources59inputs. Original motifs32/samples512/seven fullgraphs/MCM/GATattentionLSTM/model/training/30s policy/native limits unchanged. Earlier newline metadata refusal and original drafts retained; private dispatch bound once only.
+
+Paper51closed33COMPLETE18FAILED plusONE11active/highest82. Two permanently closed preclaim reserves remain; no refunds/transfers/cap ladder/reruns. Pilot10 exact43file56name increment externally recovered and accepted10804338, initial retrieval failure retained. All bounded agents completed. Root solelive/STATE/accounting/Git/preservation/ONElauncher; no Main/Git/source mutation until actual terminal/RootIO closure/native cleanup. Next monitor92163 phase/resource progress, retain/review/incrementally recover every attempted outcome before dependent continuation. Broadwork/heartbeat/appgoal remain PAUSED; direct representative pilot continues.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T17:11:41.851101+00:00: pilot11 committed read-only admission passed82; 717ref exact release accepted5eec244e. No native job active.**
 
 Accepted source anchor a7100986 consolidates the genuine import transaction from three to two full Prepared checks, preserving entry/final validation, exact matching reread and original integrity joins. All179package pins/176unchanged bodies are independently accepted. Original motifs/samples/seven graphs/MCM/GAT/attentionLSTM/model/training/30s policy/native limits remain unchanged; real speed and capacity remain unknown.
