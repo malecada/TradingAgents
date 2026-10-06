@@ -1,0 +1,39 @@
+{
+  "all_parent_files": {
+    "CHECK01.json": "04f36284f43582cc1ad8a97f267284f9be10aa655b50e8c2fa3bd961d3545a0d",
+    "MANIFEST01.json": "3ea1cd14e2bd46d348cf5c1245e40763e0d746ed0094912c6a44a7247a7c150d",
+    "REFERENCE_SOURCES01.json": "7172775d4c954fbaa9ebc3c5131c370a996fa507642c8e802910b189f82726fc",
+    "RELEASE_TEMPLATE01.json": "462241790a5e8ac793ee1c6008eb52f53b34126a36067e6f5939eb334fb7863d",
+    "RELOCATION_OUTCOME_REQUIRED01.json": "761ba30a0987b24f7c2dfb5afd8e21d27ec904ae48e5be5ad97fcc56edfc6ce2",
+    "REPORT01.md": "5af826955062e9ff73adf780fdfd47f4e89acc1a4e4203f2f894565c95a4acdf",
+    "SELECTION_TEMPLATE01.json": "99d04243bba7dd607b253cf2dcf8845704da26f3af29c181bd5a4e4f53d581bd",
+    "SOURCE_DELTA01.json": "c20ad057d47b9dc993604c300034903cf540ec03c48f8019bb134a61eda7548c",
+    "SOURCE_PINS01.json": "cb252020d1b642828aa9678cf49eee55f42b09cd646328c6697f7cdf6b89492d",
+    "check01.py": "737ad24e4b22c3132bb55f4d6be5f9120d0f8a28bce4f474e51c7b0fda84d311",
+    "recovery01.py": "88a67bd592b06742cdc42d53bc53ad4fe391344c5d10014f19139ecd1a8dcee8",
+    "retire01.py": "353597e4e6d754714affd9ffdb9bcc039fd8fa7a14e81fa171126f0582d9743d"
+  },
+  "parent": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-july25-get-retirement-preparation01-2026-10-06",
+  "parent_manifest_sha256": "3ea1cd14e2bd46d348cf5c1245e40763e0d746ed0094912c6a44a7247a7c150d",
+  "recovery_source_unchanged": true,
+  "retire_ordered_replacements": [
+    {
+      "after": "PINS_SHA = '07d8553f8567ec3db2f5e922f09f54e0d981e9bc4c8fc33a7d1c2f9896ee16c9'",
+      "before": "PINS_SHA = 'cb252020d1b642828aa9678cf49eee55f42b09cd646328c6697f7cdf6b89492d'"
+    },
+    {
+      "after": "need(bridge['identity'] == RELOCATION and bridge['kind'] == 'closed-ledger-cross-volume-relocation' and bridge['predecessor'] == m.GRAPH",
+      "before": "need(bridge['kind'] == 'closed-ledger-cross-volume-relocation' and bridge['predecessor'] == m.GRAPH"
+    },
+    {
+      "after": "and retire_outer['guard_phase'] is None and retire_outer['guard_child_exit_code'] is None and retire_outer['cleanup_verified'] is None",
+      "before": "and retire_outer['guard_phase'] is None and retire_outer['guard_child_exit_code'] is None"
+    }
+  ],
+  "review_ref": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-july25-get-retirement-review01-2026-10-06/REVIEW01.json",
+    "sha256": "bd74ee9b2fb896825828f5ee08634011e51e6bcba5798893dd45950447334602"
+  },
+  "source_pin_change": "only recovery path preparation01 to preparation02; source body SHA unchanged",
+  "template_bodies_unchanged": true
+}

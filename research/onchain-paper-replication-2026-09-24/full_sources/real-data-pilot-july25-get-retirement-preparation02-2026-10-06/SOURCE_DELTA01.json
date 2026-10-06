@@ -1,0 +1,10 @@
+{
+  "recovery_parent": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-july25-ledger-relocation-preparation02-2026-10-06/recovery01.py",
+  "parent_sha256": "db048cb5e01fca0488c054f70dd5f7ba73e88bf63c4be614a741287c23aaa44a",
+  "candidate_sha256": "88a67bd592b06742cdc42d53bc53ad4fe391344c5d10014f19139ecd1a8dcee8",
+  "sole_replacement": {
+    "before": "    current(root,original);current(root,recovered)",
+    "after": "    require(not os.path.lexists(root/ORIGINAL),'original Root ledger must already be retired')\n    current(root,recovered)"
+  },
+  "inverse_equal": true
+}

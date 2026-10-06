@@ -1,0 +1,8 @@
+{
+  "tool_chunk": "15bd5d",
+  "exit_code": 1,
+  "source_sha256": "aff91fd3afdccbb2c385d8221b94d53539dfd61802485ae193c8b7d44d0833c8",
+  "exception": "AssertionError at raw metadata pre/post complete stat_result equality while reading copy-launch-attempt01.json",
+  "cause": "Review checker incorrectly included access time, which may change from reading metadata. Corrected comparison excludes atime and retains dev/ino/mode/nlink/size/mtime_ns/ctime_ns. Actual backup/COPY disposition unchanged.",
+  "payload_reads": 0
+}

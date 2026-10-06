@@ -1,0 +1,7 @@
+# Exact RETIRE release
+
+The c727c6be envelope and4eec7010 bound draft join the accepted d62c0689 COPY outcome, exact source and all five actual COPY receipt/review/native/outer/Root references. Every required reference is in the release’s public evidence map. Entry93f720a2 and helper6307e816 remain byte-identical to the accepted source. The only unlink is the fixed original Root ledger; the Data target and backup GET are retained. Successful unlink is recorded before fsync, and ambiguous unlink or later publication/close errors preserve their original failure disposition.
+
+Actual focused checker1e5332 exited0. At2026-10-06T10:14:58Z original/get/Data identities still match; the Data directory contains only events.sqlite; RETIRE and bridge namespaces are absent. Genuine metadata recovery, consumer/native inactivity and volume floor predicates passed. Root free19,115,036,672 and Data14,596,304,896 exceed the10,804,527,104-byte floor plus margin on each volume. These observations must be repeated by the entry.
+
+Root alone may install the exact release, commit/push/read back its required bodies and invoke the one unused ordinary RETIRE phase. No deletion was performed during review; actual RETIRE/native/outer outcome is not claimed. COPY remains closed and its unknown lifetime history/stop5 unchanged. This grants no empirical claim, scientific completion, budget change or capacity conclusion.
