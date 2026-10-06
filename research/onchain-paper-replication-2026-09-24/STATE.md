@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T17:11:41.851101+00:00: pilot11 committed read-only admission passed82; 717ref exact release accepted5eec244e. No native job active.**
+
+Accepted source anchor a7100986 consolidates the genuine import transaction from three to two full Prepared checks, preserving entry/final validation, exact matching reread and original integrity joins. All179package pins/176unchanged bodies are independently accepted. Original motifs/samples/seven graphs/MCM/GAT/attentionLSTM/model/training/30s policy/native limits remain unchanged; real speed and capacity remain unknown.
+
+Corrected committed gatebb74931f/243sourcepins59inputs admitted on246828bb: session35729/ae33f7 exit0, ready82, noOwner/claim/native. Earlier read-only newline serialization refusal is preserved with its exact original public drafts; accepted binder serialization restored without rebinding private dispatch. Combined adoption/metadata review64f70c0c and714ref binding review6260fa3b accepted. Finalbinding9fbb79b6 changes onlystatus and genuine reviewref; 717ref exact conditional release5eec244e accepted. No11attempt/claim exists.
+
+Paper accounting51closed33COMPLETE18FAILED/highestclaimed81;82=51+28unchangedpending+two permanent preclaim reserves+oneunused11. Pilot10 public43files56names actual external recovery accepted10804338; initial retrieval failure retained. Root soleintegration/accounting/STATE/Git/preservation/ONElauncher; all bounded agents completed. Next finalrelease/commit/push actualremote readback, originalfresh resource/namespace/source checks then ONE11. Broadwork/heartbeat/appgoal remain PAUSED; directpilot authorized.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T17:05:19.403800+00:00: focused import validation fix integrated; fresh pilot11 metadata prepared; no native job active.**
 
 Pilot10 remains permanently FAILED/spent81. Actual43file/13directory56name public increment was recovered from external Git and independently accepted10804338, preserving the initial lazy-retrieval refusal and separately recorded successful continuation. No original store was deleted or copied beyond the selected increment.
