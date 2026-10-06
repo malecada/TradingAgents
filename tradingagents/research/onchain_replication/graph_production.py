@@ -20,6 +20,9 @@ PREFIX = 'research_artifacts/onchain-paper-replication-2026-09-24/sources'
 def _plan(run, name):
     raw = run.read_input(name)
     plan = json.loads(raw)
+    if isinstance(plan,dict) and plan.get('mode')=='retained-ledger':
+        from .graph_ledger_continuation import plan_check
+        return plan_check(plan),digest(raw)
     base = {'schema_version', 'mode', 'asset', 'graph_config_input', 'coverage', 'expected_weeks'}
     if (not isinstance(plan, dict) or plan.get('schema_version') != 1
             or plan.get('mode') not in ('build', 'reuse') or plan.get('asset') not in ('ETH', 'BTC')
@@ -148,6 +151,9 @@ def produce_registered_graphs(run, plan_input):
         raise ValueError('admitted graph source run required')
     run._active(); run._check_source()
     plan, identity = _plan(run, plan_input)
+    if plan['mode']=='retained-ledger':
+        from .graph_ledger_continuation import produce
+        return produce(run,plan_input)
     config = json.loads(run.read_input(plan['graph_config_input']))
     if config.get('week_anchor') != 'MON':
         raise ValueError('graph week anchor differs')

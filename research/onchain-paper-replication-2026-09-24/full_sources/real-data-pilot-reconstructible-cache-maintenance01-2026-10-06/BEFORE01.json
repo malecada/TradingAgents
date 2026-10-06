@@ -1,0 +1,2373 @@
+{
+  "at": "2026-10-06T05:41:51.759131+00:00",
+  "cache_stat_tool_chunk": "d4526d",
+  "cache_unique_unlinked_allocated_bytes_observed": 731049984,
+  "credential_reads": false,
+  "disk_free_before_bytes": 12709167104,
+  "documentation": "https://docs.astral.sh/uv/concepts/cache/#clearing-the-cache",
+  "environment": {
+    "cpu_count": 12,
+    "lock_sha256": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a",
+    "packages": {
+      "numpy": "2.3.0",
+      "pyarrow": "23.0.1",
+      "scikit-learn": "1.7.2",
+      "scipy": "1.17.1",
+      "torch": "2.10.0"
+    },
+    "python": "3.13.13"
+  },
+  "installed_triton_bodies": [
+    {
+      "bytes": 1087824,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/FileCheck",
+      "sha256": "46e4a34687788f7aaeb078ab3e2fe5c3f2d4aa11498bf6c054834e53193edd2d"
+    },
+    {
+      "bytes": 19464520,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/_C/libproton.so",
+      "sha256": "0572ef53b88038f36dba8e15f14998204bb3cea424ea4a35f2ba990ab0cf7f91"
+    },
+    {
+      "bytes": 2054,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/_C/libtriton/linear_layout.pyi",
+      "sha256": "5ba79b2daaef34108e91fd972f26a8f2bf319143c23d57baeb2579d85cf5efc9"
+    },
+    {
+      "bytes": 415657944,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/_C/libtriton.so",
+      "sha256": "23dd9f5e3808ba6e244278640f61c48bd46a2b14eb5ed3e33f8af6bad5bba72c"
+    },
+    {
+      "bytes": 1661,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/__init__.py",
+      "sha256": "96e68192cab5dd11fa30d5dc95d56c29ceecda53477fc3af8f37bee026b7a021"
+    },
+    {
+      "bytes": 3137,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/_filecheck.py",
+      "sha256": "c1461a37f7659b9ed3b805a7455515e2fcc02cb3f2543db1d68f3f5527f4e7f3"
+    },
+    {
+      "bytes": 8800,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/_internal_testing.py",
+      "sha256": "a3f13576775d898974921d294906138f25015e3b1b45fb751328068166061e19"
+    },
+    {
+      "bytes": 3825,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/_utils.py",
+      "sha256": "631df86cecf90a5fbf2103b2d1d3d0f0bdc5fc68d7e571df9a76e3ae979d936e"
+    },
+    {
+      "bytes": 2554,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/__init__.py",
+      "sha256": "c8bd4497720e736a2f8a7c01667a802d4945083a4aee77d3ac4bfe4305c47a89"
+    },
+    {
+      "bytes": 0,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 22981,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/compiler.py",
+      "sha256": "62556f905349ceed6286f9926f72ced9c5e990807e0791873945e93ca8e287d2"
+    },
+    {
+      "bytes": 18123,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/driver.c",
+      "sha256": "e1dae7bc4a93acf1bce8fd84ad4c8141edbdf50d62ecca96fbe12d92e1644479"
+    },
+    {
+      "bytes": 32542,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/driver.py",
+      "sha256": "8f6569a35754508b27d2a70e1034d33ee19f0ef9f24a9eaa5e4ff999cddf2044"
+    },
+    {
+      "bytes": 11574,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_channel_descriptor.h",
+      "sha256": "bed3e191b56c5444d398db006f17bd66b030d31d2e7a1ca69b5e044d86b1287e"
+    },
+    {
+      "bytes": 31924,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_device_functions.h",
+      "sha256": "4c49dd5f468aa2c8e8a3bd27570326d5fb90654be73d27a3572b5fe067e3167d"
+    },
+    {
+      "bytes": 29043,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_hip_atomic.h",
+      "sha256": "6f3d55c6fda28ce63614e0cb43a70318a573f2b40078b6e0cef481e627685f0c"
+    },
+    {
+      "bytes": 1371,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_hip_common.h",
+      "sha256": "b2731a9c4084dc96c297b618295dd5c9474b4ce7accd3f7352dd82b4d94b42d1"
+    },
+    {
+      "bytes": 3976,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_hip_gl_interop.h",
+      "sha256": "566881ac455970f68f03423c6c947bd20600a6cfd892666b5b8ba1ed57944773"
+    },
+    {
+      "bytes": 14276,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_hip_runtime.h",
+      "sha256": "e51a973fd5dd9e07300cb7c5a51fbd2059531abc33f67a45d7fe7cdef79552c8"
+    },
+    {
+      "bytes": 10359,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_hip_runtime_pt_api.h",
+      "sha256": "be840fd08265680bcf8fc62c3c6293479e24c7cbf617b46b01a6c7ee536dd63c"
+    },
+    {
+      "bytes": 25567,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_hip_unsafe_atomics.h",
+      "sha256": "b5eaaa01260176b641e9c8c25a0a8fc9527318dcd11cc4754e0bd1482ddedd97"
+    },
+    {
+      "bytes": 56477,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_hip_vector_types.h",
+      "sha256": "611f2ea3338a9911e36527dff422dfa5829b6bcce685888bf18f0d9d8284a156"
+    },
+    {
+      "bytes": 3048,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_math_functions.h",
+      "sha256": "58553025db2bf68b564bb8ea4071d3124126b60cde888c7b365560a2f4e7beff"
+    },
+    {
+      "bytes": 18608,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_surface_functions.h",
+      "sha256": "f46860972886f789c31f40a24e6a0aedd8026c19df3ed8e4ea1dd0c98c3da3cc"
+    },
+    {
+      "bytes": 22072,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_warp_functions.h",
+      "sha256": "a3c82e4b2205babb03d241f2f6ce7a8f489880047cf3b37460f52d007c29d75c"
+    },
+    {
+      "bytes": 30172,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/amd_warp_sync_functions.h",
+      "sha256": "119571e114342f7ea237f25604e8c08ceca821b1200149964ef7ce5e3f8c4a21"
+    },
+    {
+      "bytes": 7396,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/device_library_decls.h",
+      "sha256": "fc828035bf5b378e8c894e2db13f996375634f749142a2fde63833d729e4868e"
+    },
+    {
+      "bytes": 4360,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/hip_assert.h",
+      "sha256": "199906029b4ad199320d738419dbb4d32b37a5a3619e7ab2e3c3942cbb15caaa"
+    },
+    {
+      "bytes": 4923,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/hip_fp16_math_fwd.h",
+      "sha256": "e6ed59fc1599959e7d8d83af5db5ac82c3d63bd91018f1f48cd9622b9471b40a"
+    },
+    {
+      "bytes": 3652,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/hip_ldg.h",
+      "sha256": "2801196fd1f8cf80c3ae46a5a0c39e5b36a18837c8d95e9cebcbd64f78dbe5f5"
+    },
+    {
+      "bytes": 738681,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/hip_prof_str.h",
+      "sha256": "3f7b371e6289fc2194a010de87575b19c03a873822348c7e653c6bed67951029"
+    },
+    {
+      "bytes": 2696,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/hip_runtime_prof.h",
+      "sha256": "f6ee65d05b5a60210a29260b79cda355c89ed5e772eb1c8272c9a537411bd95b"
+    },
+    {
+      "bytes": 10131,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/host_defines.h",
+      "sha256": "c3a1f5d1dce7b303205e8ea32414c8be18ce3901b39e180dac79b947f84cbfb5"
+    },
+    {
+      "bytes": 17219,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/math_fwd.h",
+      "sha256": "1a059224f23fa9619f779d283c8864f799598877648eba5691347b75dc29101e"
+    },
+    {
+      "bytes": 14969,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/ockl_image.h",
+      "sha256": "cb313c619a66a56244b3e669380184b436039b7804a58d368595477294497f67"
+    },
+    {
+      "bytes": 18998,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/texture_fetch_functions.h",
+      "sha256": "c0ead499d728f9eb4fa8ee5094a9543f4f92a45c14577c3f75fc6e3ec042a655"
+    },
+    {
+      "bytes": 23136,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/amd_detail/texture_indirect_functions.h",
+      "sha256": "256b3ee718feb9bc0eccd129e90248ee4b80b2a7f12ad864c11bce2974c7dea3"
+    },
+    {
+      "bytes": 1774,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/channel_descriptor.h",
+      "sha256": "d6d585e084c20182969dda448a0179a70154c249982249da5bf7df8b824ef162"
+    },
+    {
+      "bytes": 31339,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/driver_types.h",
+      "sha256": "d1f9df2221456c157e8dc0d8d154606276a74c32bed1ff1c74d849e1c713204f"
+    },
+    {
+      "bytes": 3430,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/hip_common.h",
+      "sha256": "41e51ddfbaf16220dde027e9e0e23c3ba4f019e1b5182df848e23ff5baa06545"
+    },
+    {
+      "bytes": 7758,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/hip_deprecated.h",
+      "sha256": "9334c9333f6e28a3c385b62b29d003d69ed798c3f3a6bf94ca4d6f3b7ed9b33d"
+    },
+    {
+      "bytes": 2869,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/hip_runtime.h",
+      "sha256": "a7fbe286f7cdf9d1deced6fb6d663b48950315fc32caec96435bf78599c3bafa"
+    },
+    {
+      "bytes": 444378,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/hip_runtime_api.h",
+      "sha256": "f0ed814c4f9cd8bcf8905f358acda397ffbcbb8395bb1a65973c5b547ec455c0"
+    },
+    {
+      "bytes": 1237,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/hip_texture_types.h",
+      "sha256": "02192f8c6e1c0e37ff6452e0e52b124df0675c6eb5e0f04ad5754f6bb8ab65b9"
+    },
+    {
+      "bytes": 1631,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/hip_vector_types.h",
+      "sha256": "c1585f3ee359e3036cab65ff7d65eb2e0582b7a4325ee86400614c3b92ba2041"
+    },
+    {
+      "bytes": 408,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/hip_version.h",
+      "sha256": "f2f49e44ccd0509582566a32ff9cf1b104e45b3a5dfc2356208b8f52b7b6c3de"
+    },
+    {
+      "bytes": 2433,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/library_types.h",
+      "sha256": "d9a86ad289e11419696f78917fb96879de2fa9963c27fbd2d41416a9ff327f11"
+    },
+    {
+      "bytes": 6691,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/linker_types.h",
+      "sha256": "057aba5652e78984c2cf2a42cf4c96b9acb6b9c673ab135e93ba27965a627d7b"
+    },
+    {
+      "bytes": 1953,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/surface_types.h",
+      "sha256": "e5eddc787fc90638713bc7341e22d2ee23011051962b50dc8c33900a2c6c9f15"
+    },
+    {
+      "bytes": 6499,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hip/texture_types.h",
+      "sha256": "f25c81c6f2ad63540551128dd692b6ca7811bc0c12d981a0ad20ce1fa1e04d2c"
+    },
+    {
+      "bytes": 5450,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hipblas-common/hipblas-common.h",
+      "sha256": "9d92c7d9662b7030c579fcfd6b4f29db280ff9869820ebb152239b1afc173d3b"
+    },
+    {
+      "bytes": 12754,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hsa/amd_hsa_kernel_code.h",
+      "sha256": "2f48b1fff5432fb96aa460d3c5ac0bccb2e8996adfa5ecdb508722f3911ff9d0"
+    },
+    {
+      "bytes": 191415,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hsa/hsa.h",
+      "sha256": "f0dc5099a15c812cb6cdf33cf67ec35f1386be222a6d0f05896cfff16916e514"
+    },
+    {
+      "bytes": 136290,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hsa/hsa_ext_amd.h",
+      "sha256": "b15af4e0f20b05c60b8b219d15fd949c132c9d99bae96c48535e9b4ec69eacaa"
+    },
+    {
+      "bytes": 56383,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hsa/hsa_ext_image.h",
+      "sha256": "0c52e6bf76790b4d2967886b2a501995e0f08d78a053b23620174ab974b7b71c"
+    },
+    {
+      "bytes": 26146,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hsa/hsa_ven_amd_loader.h",
+      "sha256": "73a7313c0cc0a31eeee886c5cc491065f0ae465f8aaf7f56858dbfc36dd7d51e"
+    },
+    {
+      "bytes": 18767,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/hsa/hsa_ven_amd_pc_sampling.h",
+      "sha256": "d6342f8bdeacf78f868ce1a4b66be9aa3551b1318036e80eb15e979a031f8af9"
+    },
+    {
+      "bytes": 3849,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/roctracer/ext/prof_protocol.h",
+      "sha256": "e8501cbd50fe74d33bbae945b3607e693c70e71380586cba7af743e3251a79b0"
+    },
+    {
+      "bytes": 23849,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/roctracer/roctracer.h",
+      "sha256": "07cb07cf60cc369acfec4a8d5881b054b635290329c6685f572e14a11f1dcf36"
+    },
+    {
+      "bytes": 2940,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/roctracer/roctracer_ext.h",
+      "sha256": "bcb699f29780c52cb4730add11a94a9d402990ab297dad388b0d4caff65c8a8d"
+    },
+    {
+      "bytes": 1432,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/roctracer/roctracer_hip.h",
+      "sha256": "442cd8b8dc35bcb47bc4ae2b6f4e93b4cf53539e3a51828727cdc8307999126f"
+    },
+    {
+      "bytes": 2014,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/roctracer/roctracer_roctx.h",
+      "sha256": "8018c1939bdbd25dcf6c1490ed5f6216d68cfd1ce42032445b503f3d70628413"
+    },
+    {
+      "bytes": 6717,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/include/roctracer/roctx.h",
+      "sha256": "461257517461489e4b444ff5826ec4ebe6e310cadf70504b0cbb9fdd4c40221f"
+    },
+    {
+      "bytes": 24508,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/lib/asanrtl.bc",
+      "sha256": "d71bf64655375af6ddb208479668708877b018cd81e5d2adb396c444ce92f3da"
+    },
+    {
+      "bytes": 246124,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/lib/ockl.bc",
+      "sha256": "c10282ce42ae9081dbbb49728ca5189619dd73b4b6ef1b68e8be78274067f82d"
+    },
+    {
+      "bytes": 205964,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/amd/lib/ocml.bc",
+      "sha256": "50f3535d6d2009750d07e73aa2b498c1bfa6cfdfe68d473bce7cbfbdf1736b8e"
+    },
+    {
+      "bytes": 2834,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/compiler.py",
+      "sha256": "c5d3403b88b5bb728f8ac78c55163198e418430f126c842892c68cb4b6baaa78"
+    },
+    {
+      "bytes": 1802,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/driver.py",
+      "sha256": "25cb0bee9547488335de2d495af738298ba6d4c20f1d37941dc17751c57a211e"
+    },
+    {
+      "bytes": 0,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 569008,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/bin/cuobjdump",
+      "sha256": "ad1d0f0699f46603416eb58e7b9fdf9a293e95f9312c9df7fd6fda56a6c30d41"
+    },
+    {
+      "bytes": 5894744,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/bin/nvdisasm",
+      "sha256": "1080bc909a3020761ff4c78a9b7bd9b4937bdb9c0978709cbe52381de612a1f2"
+    },
+    {
+      "bytes": 31912192,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/bin/ptxas",
+      "sha256": "c960a4f238b17d5c5d3c01ad2bbc1ebd2c5aecc459cb4d223bff10b45f9b8fca"
+    },
+    {
+      "bytes": 34931056,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/bin/ptxas-blackwell",
+      "sha256": "983b0e9283855979f42cebfd80d43f9b6e786eb84f03f7570bf941c4d3a3c461"
+    },
+    {
+      "bytes": 23589,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/compiler.py",
+      "sha256": "eea55698bab00c726b3d1d495b390b72a63aaa8d167781a65ea5212d394d76f6"
+    },
+    {
+      "bytes": 19555,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/driver.c",
+      "sha256": "439c1e886fa9eac7346d7523d03ba0a4c52aa4c9b518ea86d8659b5c07eb7dc9"
+    },
+    {
+      "bytes": 25625,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/driver.py",
+      "sha256": "4ad4b4440aa4a5ee15ac2382ae78a7aa8029986c22ec2acbd072a91810e85e94"
+    },
+    {
+      "bytes": 3513,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/Openacc/cupti_openacc.h",
+      "sha256": "67438ce5efe16ddddcc5d5f29f74821ea04141ac0b83840e467966e7b0abdbe3"
+    },
+    {
+      "bytes": 3491,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/Openmp/cupti_openmp.h",
+      "sha256": "13558d99e6ffec76944a605e82d50d7b8215d62ee95de371833225c8a9f5ceb3"
+    },
+    {
+      "bytes": 37403,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/Openmp/omp-tools.h",
+      "sha256": "026b82ff13c2ed53eedc1f96e0f997b8236e7c56b0858f0f8cd5de3da40500e8"
+    },
+    {
+      "bytes": 3150,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/builtin_types.h",
+      "sha256": "2714fd55fdaadac9f14c138bf400b33666334d60023b654e554bb529d16deff8"
+    },
+    {
+      "bytes": 21846,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/channel_descriptor.h",
+      "sha256": "a192033b591d7b13dbf6396d531d40b17005927bd158002bd78e7af76e4faa28"
+    },
+    {
+      "bytes": 3410,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/common_functions.h",
+      "sha256": "db62d365155c3d9cc41fa30975aee734c0af3202234937b438a47bb04423ea47"
+    },
+    {
+      "bytes": 19122,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/async.h",
+      "sha256": "c6c1070993f79ee118de5da9f12536775db6e97897ba652f0cffc6ca1f0f7556"
+    },
+    {
+      "bytes": 4257,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/coalesced_reduce.h",
+      "sha256": "a41420158ee2eb857ced73404e0d5410840754d60e22d42d1e34b9078ca7f297"
+    },
+    {
+      "bytes": 7314,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/coalesced_scan.h",
+      "sha256": "0df66fe5de56d1726ffad655860ac87632e3b3a682c7fbb4a32d650c8a63a354"
+    },
+    {
+      "bytes": 3964,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/driver_abi.h",
+      "sha256": "bfe6546f852018a264e8d4765825870f7c7fe36cbeb68808d6eac59fbd068be8"
+    },
+    {
+      "bytes": 8905,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/functional.h",
+      "sha256": "d8157c8bc062773d24831b989090806f0171388651cb31e01be73fad52a14737"
+    },
+    {
+      "bytes": 26476,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/helpers.h",
+      "sha256": "2bd8efc675dce7ee85ba6d4a1b811028926b559e018473920096d9478b832f47"
+    },
+    {
+      "bytes": 12465,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/info.h",
+      "sha256": "14eae9dcbb6de0f71b2b67c0339517f63b2c159b63fcba954a1ccb15c2a249a6"
+    },
+    {
+      "bytes": 8616,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/invoke.h",
+      "sha256": "3acab72beb59b971d508c409ef4f0f8cfa3e0703218e18c0a4ee1bd1360b1498"
+    },
+    {
+      "bytes": 5606,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/memory.h",
+      "sha256": "8444b749f817201b23d8c16b0bf33908e5e53a2ad206eba13cc0099d6a08f76c"
+    },
+    {
+      "bytes": 7153,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/partitioning.h",
+      "sha256": "010cfe4e17aa5f7a27a97d91988522a73614541dbbdf384b947270fe45fd0f65"
+    },
+    {
+      "bytes": 23296,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/reduce.h",
+      "sha256": "323a8c0f04f44f2599938256705dd61f0f31b7032aca2cc0e02df3cbb7fc79ed"
+    },
+    {
+      "bytes": 17166,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/scan.h",
+      "sha256": "f93b706f601f10463fb6c9aa2634767688e43e9a11c77f3b4a8ab182f7dd06d4"
+    },
+    {
+      "bytes": 10795,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/details/sync.h",
+      "sha256": "11de0af50acf662e3775d4aa670bf55fc346fc24ec5d4a304909dda14bfcd8b5"
+    },
+    {
+      "bytes": 2960,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/memcpy_async.h",
+      "sha256": "7ab3881ee39b75fc5184159fad7137c2c645e01d8652eab0cd0aec3f028fa5b8"
+    },
+    {
+      "bytes": 2949,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/reduce.h",
+      "sha256": "0748600e4a8cfbab9ea934e06f76f7e00d111f8bc6cfc9817f97b68d3d5d275a"
+    },
+    {
+      "bytes": 2940,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups/scan.h",
+      "sha256": "d8453a4f97163707ed9b607b162715df53e88e823ad72a397c75c6458906938d"
+    },
+    {
+      "bytes": 60684,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cooperative_groups.h",
+      "sha256": "cb6705c5ae9efac684140f5a5b6d99b93c22d30b9dede107abb5cddefdf42d3d"
+    },
+    {
+      "bytes": 13559,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/common_functions.h",
+      "sha256": "f94e387f8c941a6c033f077b43fdc2cf989fd39c4718f4a5033cf9cccca52d24"
+    },
+    {
+      "bytes": 3224,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/cudacc_ext.h",
+      "sha256": "296ea7d0898e64a4b456a5660475935ed1c8f35ea187cf187848148366987555"
+    },
+    {
+      "bytes": 39938,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/device_double_functions.h",
+      "sha256": "035bc1de0d2ac273447dca53d5df518860dac6a3d75e062bf95c5eda8307cb16"
+    },
+    {
+      "bytes": 8568,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/device_double_functions.hpp",
+      "sha256": "61821ba9885be5099ff1ce187dc0bf8f2b60e054707173e3bf74c54f085bdb81"
+    },
+    {
+      "bytes": 51047,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/device_fp128_functions.h",
+      "sha256": "de208aadd98fa753488eb946478edd0993a057d5fa32675f9a3ba0ac5e8312db"
+    },
+    {
+      "bytes": 137919,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/device_functions.h",
+      "sha256": "4f820db9104894b99ddc9100f07e81e571d500d195ea3f20c325138f987f175f"
+    },
+    {
+      "bytes": 37991,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/device_functions.hpp",
+      "sha256": "3951e2a818dd6b2fda5059c3289c53788d150d923c640e8921d50a780291e290"
+    },
+    {
+      "bytes": 1755,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/func_macro.h",
+      "sha256": "10ea4395a33dd7b6e1f5cc0188504f17af3d0c2301c398456abc4bc45b7e8bbe"
+    },
+    {
+      "bytes": 12169,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/host_config.h",
+      "sha256": "d5e922df0e71b98d3480891d61b9927d93b64a823c8226566124d120bdae16cd"
+    },
+    {
+      "bytes": 10102,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/host_defines.h",
+      "sha256": "7c353fd1c41db48bc474cd33645298d0e6e83003443201cb6e589f3da94f18b9"
+    },
+    {
+      "bytes": 10284,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/host_runtime.h",
+      "sha256": "94ea66931159564129f1d70c0061194484ec87ed7da3d8f2dfd91d48d2dcdcd8"
+    },
+    {
+      "bytes": 238284,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/math_functions.h",
+      "sha256": "2f2189d1752d862e96122f985484c89e16bd03a485a01e1f114514f738a2ed4f"
+    },
+    {
+      "bytes": 100207,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/math_functions.hpp",
+      "sha256": "bbe0866ddd11d8565674a1bee9b766192a2bf4a4ffc279884a3eb794f40a0123"
+    },
+    {
+      "bytes": 62695,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/mma.h",
+      "sha256": "068a1600b0d6013bd9ba925a2fbf8615045060ea2d35efc5cb5d48e4d1a1d850"
+    },
+    {
+      "bytes": 66599,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/mma.hpp",
+      "sha256": "b29a342d7ef5b540a2a712b9d7b06cb23d2773e6477fca0c5b3bc7a18601ffa2"
+    },
+    {
+      "bytes": 16900,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/nvfunctional",
+      "sha256": "143334cea58ee9b97d8e924acfd53c08c6e3b7a8932a1d7cb506a5c40bd1b1a8"
+    },
+    {
+      "bytes": 8987,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/sm_100_rt.h",
+      "sha256": "ddc062094d7539c8c6629afce5e742375ab89b6cfdd45686841b6e3b48ace13a"
+    },
+    {
+      "bytes": 6855,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/sm_100_rt.hpp",
+      "sha256": "bdb23608d098d3c74323bcd7c29e8135c7992a5d1c7971b596f7aae30f9535aa"
+    },
+    {
+      "bytes": 6837,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/sm_70_rt.h",
+      "sha256": "29ff37d31ca603ece617b2ecba71472d23728614f952224ca1c8281c141e367b"
+    },
+    {
+      "bytes": 7837,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/sm_70_rt.hpp",
+      "sha256": "ddafeb53e63431207886d043158e0f090fe35e25854deed64f567284cb8224e0"
+    },
+    {
+      "bytes": 7743,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/sm_80_rt.h",
+      "sha256": "31d2475824732ccfff9c30dfd60a3ad6b0ec97dc9d396de88ba49905f8d4c9cf"
+    },
+    {
+      "bytes": 6705,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/sm_80_rt.hpp",
+      "sha256": "a3eac9bbe8e97a109ec8004682ffbc758441ee82530b0b8d76f482ab455445d1"
+    },
+    {
+      "bytes": 11445,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/sm_90_rt.h",
+      "sha256": "6a7e3b9b45c505a277a545fd325138fa792d3f58dbdde2545e14379ed66dcdcf"
+    },
+    {
+      "bytes": 9228,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/sm_90_rt.hpp",
+      "sha256": "62ea95ca0195eab82d5adc7527d70fa4423705729004823e133ea86453f7c2b1"
+    },
+    {
+      "bytes": 4791,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/crt/storage_class.h",
+      "sha256": "77370e675ea92da37c7a3a87697c388876c127a7d75b17da53eb23d908d8cf38"
+    },
+    {
+      "bytes": 12186,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuComplex.h",
+      "sha256": "5a9720a5a88f854fe8f6c4cf31c353119bb25c321cf31deccf8754592ced2f68"
+    },
+    {
+      "bytes": 1156988,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda.h",
+      "sha256": "4568cc9e7a321e47707cd6403980f21ac2e2e55170500d0e0a3f54feb03a9acb"
+    },
+    {
+      "bytes": 39955,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cudaEGL.h",
+      "sha256": "8abb9953dc52180709dbd3845f82bf528d68e0d18ff61820bf67e239939f0d0a"
+    },
+    {
+      "bytes": 5645,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cudaEGLTypedefs.h",
+      "sha256": "c45fc500dd4a6abf68c8727770253b8f3b53a715fc5b29698ae6326291861de9"
+    },
+    {
+      "bytes": 22501,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cudaGL.h",
+      "sha256": "80c4f51cf19afac8ae8e2d2002c298af85f8e4b736f472a0942fedb4d486c943"
+    },
+    {
+      "bytes": 6576,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cudaGLTypedefs.h",
+      "sha256": "742969408f8bb97805f6b3d206c8fb3a4220f20fdf5c38d3d212d94bc4c6a4e8"
+    },
+    {
+      "bytes": 3297,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cudaProfilerTypedefs.h",
+      "sha256": "1766962c82affc084d6f134e69955c46cc4887492eb1c9d5f143165b19010256"
+    },
+    {
+      "bytes": 115169,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cudaTypedefs.h",
+      "sha256": "48a7c0bd33a3d7dcf1b222c62a1a315cf8a8a4aaa87b98638f9897911dbfbfa1"
+    },
+    {
+      "bytes": 12694,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cudaVDPAU.h",
+      "sha256": "369ecd7365a36b3fbe864a5b856e9ff5a6a9afe35b70f0c0824a2dd2c25eadca"
+    },
+    {
+      "bytes": 4144,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cudaVDPAUTypedefs.h",
+      "sha256": "c33f27c8e51dc0cf661fd24edd0656f80f5dcb1b7e22e7d25fb9e08125e908db"
+    },
+    {
+      "bytes": 9340,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_awbarrier.h",
+      "sha256": "dd91fe6655ce0e14a2c1263daea4a78bf110c22db940c1cfe939becce7710701"
+    },
+    {
+      "bytes": 12489,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_awbarrier_helpers.h",
+      "sha256": "382b240adb396c22a5fd12817bd33be3329222c56978f9f8e12fda269d6d1571"
+    },
+    {
+      "bytes": 4699,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_awbarrier_primitives.h",
+      "sha256": "9f9fff1358d8603865807f9fdeef0c423b73e7b519eefe55b2184cc9ed5e89c3"
+    },
+    {
+      "bytes": 204512,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_bf16.h",
+      "sha256": "4d5a2ad88adb17983aef0505ed6ed2a0603497c79c103bba82c928301ea12310"
+    },
+    {
+      "bytes": 136544,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_bf16.hpp",
+      "sha256": "3ae9165e837a6e04650bea7c0856e150dd06d2e0096ffce8b359823da82c7272"
+    },
+    {
+      "bytes": 46986,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_device_runtime_api.h",
+      "sha256": "e7897ae906f07ab5f4c0f2a8242db2eea09d18ff27bf5fc681d98c57c034c789"
+    },
+    {
+      "bytes": 37509,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_egl_interop.h",
+      "sha256": "6b058104462f50533b01444da7698d0fc1fbff990640b46cc11bde5d8072fb7b"
+    },
+    {
+      "bytes": 206851,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_fp16.h",
+      "sha256": "8eb1600a8e2e33d40572bffe7001a27f6046a74949d80353fe02cf88b2563dda"
+    },
+    {
+      "bytes": 120927,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_fp16.hpp",
+      "sha256": "a352130e6b8debb37c61419472f4e957721da52fbac30966eb933f1fef0b60ab"
+    },
+    {
+      "bytes": 13823,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_fp4.h",
+      "sha256": "a531107f9acb7e2694fd43178279ec4b5dcd1f91fd16d1e075e88db96fcd9076"
+    },
+    {
+      "bytes": 35423,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_fp4.hpp",
+      "sha256": "618694bbe611818763f7162ee190e1fee3d57dfc640e512bd020ff6e1945f011"
+    },
+    {
+      "bytes": 13963,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_fp6.h",
+      "sha256": "eb187413848d9a3989643dc7e7f1e865ed3c6d0d25a1413ccb771b3b5f7e01de"
+    },
+    {
+      "bytes": 56455,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_fp6.hpp",
+      "sha256": "a9af37f1bb9978b3f7db1055a9ba3bd6e1525b9467056c7daa9e43f9247fc5cd"
+    },
+    {
+      "bytes": 18072,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_fp8.h",
+      "sha256": "4124cc45bf65ec8f669ef4f5ffc29736a2cee3cc166961201bdedb0e3121d627"
+    },
+    {
+      "bytes": 97230,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_fp8.hpp",
+      "sha256": "e8000164f7cf94afa3990c8c75b4c41343d94e550b8ee2ceaec43467f72e6c1c"
+    },
+    {
+      "bytes": 19150,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_gl_interop.h",
+      "sha256": "55012cc0578e045e8937a434a5d964bdce564fb6c3d459d37ca7b0bc036e9427"
+    },
+    {
+      "bytes": 71302,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_occupancy.h",
+      "sha256": "d076afacc2165c6c48ba36aaef6897df5fbbdd9a6bc7458161d8a59f764d3f6c"
+    },
+    {
+      "bytes": 8130,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_pipeline.h",
+      "sha256": "d1e9d71b8f7037825a8e5422dda85ba767a2fee7d363f3339e273bcdf5a62873"
+    },
+    {
+      "bytes": 13852,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_pipeline_helpers.h",
+      "sha256": "6e8d4bedeeaf0ae33e2b7225f0ad73e302548dae43c9740a768fe149650c13e1"
+    },
+    {
+      "bytes": 8675,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_pipeline_primitives.h",
+      "sha256": "167249b6e57aac7afa2e02f9e970f08a57126c5afa5b51e3ea67f500968c236d"
+    },
+    {
+      "bytes": 98570,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_runtime.h",
+      "sha256": "1aaa84ed2ac4086acdf908390e4f742d28ecfb1bca94766944b9691fb2d47a13"
+    },
+    {
+      "bytes": 655943,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_runtime_api.h",
+      "sha256": "116852112153fef5797986694c112ee04be036d13dae19873f9d375e72061c8b"
+    },
+    {
+      "bytes": 4093,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_stdint.h",
+      "sha256": "5db14e93d0ad2632aa93b3e960da9b495b03c40b1533c6af038ad6a4f8b40634"
+    },
+    {
+      "bytes": 3688,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_surface_types.h",
+      "sha256": "330e4ba386fc43e7fd9a880ebc04c6c8786ef5ddadd8ae973b1baab59ad28770"
+    },
+    {
+      "bytes": 3688,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_texture_types.h",
+      "sha256": "2136d7f893673fb466f894a0355749f69aba93c155a2bf116e7aee0ec2aaeac9"
+    },
+    {
+      "bytes": 7727,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cuda_vdpau_interop.h",
+      "sha256": "6d741a9d67362055d900a58d1a5db1033f672ef1664295b21abb03bdf792f450"
+    },
+    {
+      "bytes": 2717,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cudart_platform.h",
+      "sha256": "60deac2a10746fdc39b465f52182fbba52553eb580897f40e38a8bbf812d5b94"
+    },
+    {
+      "bytes": 4697,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti.h",
+      "sha256": "2645720064c8318cf09bad9d7d5a9ab379cc7082e180ffd6773e9f878fcd103d"
+    },
+    {
+      "bytes": 229848,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_activity.h",
+      "sha256": "809286946d8989f5b7e8bc7eba325c28196752b34ea13c5aaf9d64dbc1ab52d5"
+    },
+    {
+      "bytes": 137602,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_activity_deprecated.h",
+      "sha256": "074a78cdb965daf527d63d089931ba4086e9a7a1e2c3ccbe5f4db56667fb7e51"
+    },
+    {
+      "bytes": 29689,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_callbacks.h",
+      "sha256": "699f9213460c15f4fd47e521e4c1dba0f834ca91cc8de492009c37cdd3fb382b"
+    },
+    {
+      "bytes": 5264,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_checkpoint.h",
+      "sha256": "ad3cfc2685b1a844815f26565216491a6e31798731e0e24eb49ecb775dd3fdbd"
+    },
+    {
+      "bytes": 3514,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_common.h",
+      "sha256": "f399bbe1bc54817a77b4468f4297b379ace6a6c34cc38d4fb2335262641d4f6d"
+    },
+    {
+      "bytes": 77280,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_driver_cbid.h",
+      "sha256": "9a404d3d890b7dc1318506450e8d2260795a1c95860f6bce31db73695fa51149"
+    },
+    {
+      "bytes": 51923,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_events.h",
+      "sha256": "f35c1cbc5bef1e3f1198409b6c4a7915f823248403a02ffcd4586fab39c5ba96"
+    },
+    {
+      "bytes": 32175,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_metrics.h",
+      "sha256": "ce67d9c6ae55914269e938fba171243fda32711370d7307d54d8684256e188de"
+    },
+    {
+      "bytes": 5912,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_nvtx_cbid.h",
+      "sha256": "fdaccfb51d60e2a8afbd7eea6ef1d1520d111c2585ee210e2721cc37da997bd1"
+    },
+    {
+      "bytes": 32144,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_pcsampling.h",
+      "sha256": "c9c2474f7e8398f21a5731ec077c718d792117211f30224e9772db0ac1c58320"
+    },
+    {
+      "bytes": 12430,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_pcsampling_util.h",
+      "sha256": "971f0268d5e8c097b966f734e8b13ebbf66bcbf8ce0ecd6633a8fd4395885fd1"
+    },
+    {
+      "bytes": 20440,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_pmsampling.h",
+      "sha256": "53de6128ec0891949b18d54fd7541298c6b007ca9d26c96363fb54258e2f79d7"
+    },
+    {
+      "bytes": 22155,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_profiler_host.h",
+      "sha256": "32491f5e528146b44be0d7da3c58ae1380f8cff8299b18815964c18b1cb23139"
+    },
+    {
+      "bytes": 32294,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_profiler_target.h",
+      "sha256": "31d2eeb4879fc1d31323bc2c71ed0b3b736e0a6dc5460151dc6c4092a69d32ce"
+    },
+    {
+      "bytes": 18779,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_range_profiler.h",
+      "sha256": "b9ee5b500fb7c42c00b501b20dee4ed5de6b02645b55b72b5ca7c84dde313352"
+    },
+    {
+      "bytes": 13114,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_result.h",
+      "sha256": "c50a81b1946889c05259d935959004fd67998fcf0c2c7e82953a39f28b21c7ef"
+    },
+    {
+      "bytes": 48372,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_runtime_cbid.h",
+      "sha256": "059267cecbdfd918d194728484f8c293409d8cb23dfcbfa70a54f07b8bfd3547"
+    },
+    {
+      "bytes": 19674,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_sass_metrics.h",
+      "sha256": "dd15bdb2726e15074e86b127df00c93abbb4e6ad15ff3b2c5aba83eedbd524ac"
+    },
+    {
+      "bytes": 1263,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_target.h",
+      "sha256": "c78573d54a5bea6f62c6656998668a425743598408dce67ea1c1171b334ad041"
+    },
+    {
+      "bytes": 4506,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/cupti_version.h",
+      "sha256": "2855e68c1e28fa2646bcef256bd49ff54ae0e2ae2cae61229a7c5b3c2c9dd8df"
+    },
+    {
+      "bytes": 9500,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/device_atomic_functions.h",
+      "sha256": "391da33527d22b3685ae2ef8ce1e15b73e4cd33f540c1537aca782d6b61a550b"
+    },
+    {
+      "bytes": 10486,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/device_atomic_functions.hpp",
+      "sha256": "d1eecc3a234d5279e5a17a41febf564f960ec2ce5cc60cd0400cd1098be06850"
+    },
+    {
+      "bytes": 3452,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/device_double_functions.h",
+      "sha256": "294c487796757f1f1259f2d14f13c3ed107eccdef3b25cdbe27ec96892df2f72"
+    },
+    {
+      "bytes": 3410,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/device_functions.h",
+      "sha256": "6d64ab853604f4d425b2cef131230456eb2fb68f63d9f8140d75951f65bf70e0"
+    },
+    {
+      "bytes": 3846,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/device_launch_parameters.h",
+      "sha256": "1f5fc20bebef01a4b6eb2b385ec4c590c813c544dc8808dd8ecc238b3922b2f4"
+    },
+    {
+      "bytes": 3588,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/device_types.h",
+      "sha256": "d8b171a190493e80395741f511b29311a5c38b718324fb7338f7511c36ae7084"
+    },
+    {
+      "bytes": 4625,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/driver_functions.h",
+      "sha256": "70ddc88d1033d8c8f63e3df94b2c4922464d0c3bac9c9a9aab305d333a5029b0"
+    },
+    {
+      "bytes": 200083,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/driver_types.h",
+      "sha256": "98c35b888c20e44de4ed293af396024af9ca6267d0ddbc56bf76e4120cceb4d5"
+    },
+    {
+      "bytes": 1809,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/fatbinary_section.h",
+      "sha256": "367b947f2df9f32189c787a7ab4a419deb63bf5ed459afa73a58184e8522b6bc"
+    },
+    {
+      "bytes": 3115,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/generated_cudaGL_meta.h",
+      "sha256": "75f77642e6917448db4ad38abda40b8b531dfeaae945087c3dfc99ce727c6d66"
+    },
+    {
+      "bytes": 1453,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/generated_cudaVDPAU_meta.h",
+      "sha256": "7c079db28431694de12000290160ce2ac6bd92072e430e2d7727fc9252e6fb79"
+    },
+    {
+      "bytes": 2250,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/generated_cuda_gl_interop_meta.h",
+      "sha256": "2d73aabd009e8f4b028004f52d428a619e3ae84171378848c1ff682215ce2c5d"
+    },
+    {
+      "bytes": 98664,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/generated_cuda_meta.h",
+      "sha256": "0c37607d6f38195b6c19bafb75a3497219a66434bfc5fbc31ef1429b72353847"
+    },
+    {
+      "bytes": 72208,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/generated_cuda_runtime_api_meta.h",
+      "sha256": "0aece2683c0ed8c877de96822c62aa8bbdcf41f60d9b3a77f3062b8402be7e78"
+    },
+    {
+      "bytes": 1367,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/generated_cuda_vdpau_interop_meta.h",
+      "sha256": "f0e2ea58ddba6846294d6517b5b1c9bc0e4662156fdf26d854e4d6ef22b7ef3f"
+    },
+    {
+      "bytes": 5172,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/generated_cudart_removed_meta.h",
+      "sha256": "5f72395979a1b6c24d365818edca09e6f838b75d46e45451e97a3b31ba0879c9"
+    },
+    {
+      "bytes": 7513,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/generated_nvtx_meta.h",
+      "sha256": "6076ff443f20dece26f0f267ed9d309f1bd41daae5ec13805f9003afe04bdc72"
+    },
+    {
+      "bytes": 3380,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/host_config.h",
+      "sha256": "06c707fc66b30196dba2d75d5732f946669f6d0f908d1c7c7fe2353b4d48056f"
+    },
+    {
+      "bytes": 3386,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/host_defines.h",
+      "sha256": "6c1430405e42d4dd5cdaaa4b579ea0d5cfb07aef58b20cfe8087f62a7deecff0"
+    },
+    {
+      "bytes": 5156,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/library_types.h",
+      "sha256": "8be185730f76c2f722c6cd9b4233a3e08feadba1d863f558e03a43bc75900a36"
+    },
+    {
+      "bytes": 7608,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/math_constants.h",
+      "sha256": "715ea103241ef17edfecc06d68a8e3209ab707270e503a7a239722cc95f91cbc"
+    },
+    {
+      "bytes": 3398,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/math_functions.h",
+      "sha256": "e57702ea3f9f24ab6dbe1c1ce2164da0b1cdc3cd3c6b665820eb59eebcbbc9dd"
+    },
+    {
+      "bytes": 2932,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/mma.h",
+      "sha256": "218fd57a7c6e1277301aaf76321ad651bf97b308747a40172f2f516f18716b66"
+    },
+    {
+      "bytes": 14471,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/nvPTXCompiler.h",
+      "sha256": "945d6cb0a96b8ec3560aca7451d85b07a1b23a01420ced6ad19043cceb30963d"
+    },
+    {
+      "bytes": 2975,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/nvfunctional",
+      "sha256": "2241680a2fd0e0e84ff6712e048fb98d6c05951fcf7c6d398491fb95232c7d67"
+    },
+    {
+      "bytes": 17255,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/nvperf_common.h",
+      "sha256": "ca479327923a734cfc2aa310875de194968c6878aaa95501eb4a065ce0aeec18"
+    },
+    {
+      "bytes": 7562,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/nvperf_cuda_host.h",
+      "sha256": "802d095a851d4f200e26cf32e2ea0922189ef57ab8c85e07ce8ba62ec60d5735"
+    },
+    {
+      "bytes": 49197,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/nvperf_host.h",
+      "sha256": "c02078991f1a2075a2a93d53b31ced420581461ff28aae400459bcb1bdff8f08"
+    },
+    {
+      "bytes": 23607,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/nvperf_target.h",
+      "sha256": "8d1a90b6e34b4eb0b33c37727803644eb3c48a34824e32f2d80d6a8cabb449d3"
+    },
+    {
+      "bytes": 4478,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_20_atomic_functions.h",
+      "sha256": "c78c9c20d56afff97d0784903c3f88e3c8d06cac717419a0a7c55fd863b441f8"
+    },
+    {
+      "bytes": 4107,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_20_atomic_functions.hpp",
+      "sha256": "d65e4d2ccf038436ea619fc4e752e8a8495025739b91bc28e7b777afee2e11b1"
+    },
+    {
+      "bytes": 57702,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_20_intrinsics.h",
+      "sha256": "6b1783afbcba9d3d55e8bceb4963526875305e088d8cf6d79f54fa521ee194d3"
+    },
+    {
+      "bytes": 8392,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_20_intrinsics.hpp",
+      "sha256": "9894de8d1870d69acd88ffdac7538f6e4625844a81a8ee27548dc34435c8ce9a"
+    },
+    {
+      "bytes": 16978,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_30_intrinsics.h",
+      "sha256": "6fa5bc571a7dbc3f4e08923a959b86c9961711d437122f0f4c09681cd93009c4"
+    },
+    {
+      "bytes": 24567,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_30_intrinsics.hpp",
+      "sha256": "c97d1e6dddbae6d27e04386f96e3f606169d3ee597a5164f23679e40516de72b"
+    },
+    {
+      "bytes": 5703,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_32_atomic_functions.h",
+      "sha256": "1c69d98101c0084d8001beb369b194511739dc8b1565e95cd81489aafb3d3a06"
+    },
+    {
+      "bytes": 6592,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_32_atomic_functions.hpp",
+      "sha256": "0904d3bce118a7eb3986a0202ef0289f5d6f2d80eb0e9f1c4c775e97e5d1cc14"
+    },
+    {
+      "bytes": 33539,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_32_intrinsics.h",
+      "sha256": "5dd92881db23cb5be1f2edde1aed22e714e61f10460238fafef54647eb2974e1"
+    },
+    {
+      "bytes": 70616,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_32_intrinsics.hpp",
+      "sha256": "1a5f1a48b0cb722b785b7a4a412d7d1ac0c6f1161cc03eb91f0601fc27997bc3"
+    },
+    {
+      "bytes": 2909,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_35_atomic_functions.h",
+      "sha256": "6b75e812c29108439fd10ff963ffeb31f982e2949cbf85645208158152559f8e"
+    },
+    {
+      "bytes": 2664,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_35_intrinsics.h",
+      "sha256": "d264b9f8b0a0bd9893bcbefe306ff863023ecd61af33eb38c7246e324ba7302f"
+    },
+    {
+      "bytes": 13178,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_60_atomic_functions.h",
+      "sha256": "fda9df35a26cbd0a43128ad879428891b8b3624c2b8a705c1bf6428840ad2ea2"
+    },
+    {
+      "bytes": 22903,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_60_atomic_functions.hpp",
+      "sha256": "72020a75d0e7d81dd0cd897378120b00fd48472b3be10082c6c1f442a6951a5b"
+    },
+    {
+      "bytes": 10902,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_61_intrinsics.h",
+      "sha256": "87f3012f55140f1417fea39d752226ceac858dcae1866ffadc6f7ba460f2ade5"
+    },
+    {
+      "bytes": 6787,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/sm_61_intrinsics.hpp",
+      "sha256": "37e9d0bdc06c3cc4f6526cb9cd1ebd73d2b5ab7eba5be26a7bb369a0b4ea4e68"
+    },
+    {
+      "bytes": 6782,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/surface_functions.h",
+      "sha256": "6f53bcd9202f120596c40f6e6535907068a6cd95287a6d906c0113df08777d97"
+    },
+    {
+      "bytes": 10877,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/surface_indirect_functions.h",
+      "sha256": "bf2f50b85555f9ecd93fec76453f512e9daa21481d9e000238299a9527d514f0"
+    },
+    {
+      "bytes": 4530,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/surface_types.h",
+      "sha256": "5e41570f59c76de48c81a8d1f94244f6e43b4c1cb32678dd9d42f8fb21a2b9f9"
+    },
+    {
+      "bytes": 12468,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/texture_fetch_functions.h",
+      "sha256": "28b0a65317f9698e7f51a957f2d48507a7b84eb8c0f21c943f12ce90c165b40a"
+    },
+    {
+      "bytes": 21163,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/texture_indirect_functions.h",
+      "sha256": "947ff2dcd8be86ae11674fcf3056c1334b61e7e3a64e7dd3b6ab699071e103cc"
+    },
+    {
+      "bytes": 6360,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/texture_types.h",
+      "sha256": "ef79ed57283cafc7f32b2e55224eb2baf0b8e460de59ea5a2c8a8893e337462f"
+    },
+    {
+      "bytes": 8003,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/vector_functions.h",
+      "sha256": "5b2a4690bf880db18e95acbb83f1b4a771ceece2c6444d03a3ffc9b621685b16"
+    },
+    {
+      "bytes": 10060,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/vector_functions.hpp",
+      "sha256": "69f5e13527772c54d9a3de843ed7ac4cb7efc5de274e62d5ce0923f7aeeb4d18"
+    },
+    {
+      "bytes": 13396,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/include/vector_types.h",
+      "sha256": "e82278caddca0fbcd055f9b5361ae0a8d618103108656c1a8af945c75da784d8"
+    },
+    {
+      "bytes": 1644872,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/cupti/libcheckpoint.so",
+      "sha256": "06ba82bd09237b934cf16da2172ed5943c582caa35c79b52cfcfeb0ff71f7250"
+    },
+    {
+      "bytes": 7595792,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/cupti/libcupti.so",
+      "sha256": "fccdc5fcc7c32f8cf4b3ed9b17f7f187a185a6fa0a5bcc06e3434cbd1687c808"
+    },
+    {
+      "bytes": 7595792,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/cupti/libcupti.so.12",
+      "sha256": "fccdc5fcc7c32f8cf4b3ed9b17f7f187a185a6fa0a5bcc06e3434cbd1687c808"
+    },
+    {
+      "bytes": 7595792,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/cupti/libcupti.so.2025.1.1",
+      "sha256": "fccdc5fcc7c32f8cf4b3ed9b17f7f187a185a6fa0a5bcc06e3434cbd1687c808"
+    },
+    {
+      "bytes": 43563448,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/cupti/libcupti_static.a",
+      "sha256": "ab6d9db248f9d87527e34c2c27afb983d0050ff698b4e4aa225349adb46a3a4a"
+    },
+    {
+      "bytes": 25825936,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/cupti/libnvperf_host.so",
+      "sha256": "609f54063c253daff6efba79fe49252fdd2324308ab0ffb991cc125d3e9a1eab"
+    },
+    {
+      "bytes": 33480030,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/cupti/libnvperf_host_static.a",
+      "sha256": "b132e85f9606f3525706848a9b77cba3444074fdc7a884a682dc7c2f8ed717ee"
+    },
+    {
+      "bytes": 5275312,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/cupti/libnvperf_target.so",
+      "sha256": "2f10e1109fc341a57434c28e4006b45a89247801e20f5ace135c302c173e0770"
+    },
+    {
+      "bytes": 970064,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/cupti/libpcsamplingutil.so",
+      "sha256": "e6fa2783077974fb2765bfa9cbaebf980736df74eebf994c59c7596988aec83b"
+    },
+    {
+      "bytes": 473728,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/backends/nvidia/lib/libdevice.10.bc",
+      "sha256": "5c2fae37c86e68c3a38605a95f512d7d12d5f3db986310be47f57304aa72a5ee"
+    },
+    {
+      "bytes": 284,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/compiler/__init__.py",
+      "sha256": "4b48885c74d124bf0c52a4e1ba90ed3f22554f43c0f3cd9cd9d379570a8e1b11"
+    },
+    {
+      "bytes": 72793,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/compiler/code_generator.py",
+      "sha256": "c8b82f70c83ad10bc0190fa67864348b895f733d67658a3becaf13746198f778"
+    },
+    {
+      "bytes": 20548,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/compiler/compiler.py",
+      "sha256": "2a063bb7909777d3659945244277e900d9f7cfc35de9a758578469ee4b90fce9"
+    },
+    {
+      "bytes": 1732,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/compiler/errors.py",
+      "sha256": "23d635e690d670bf61798e1259674b78c0ed5ba222ab6a455f329f27a758fc2d"
+    },
+    {
+      "bytes": 0,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/compiler/make_launcher.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 89,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/errors.py",
+      "sha256": "f167e7b9128b1b9efc9a063a701037102aee54c7fd50b10a14d811709e888563"
+    },
+    {
+      "bytes": 0,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 211,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/__init__.py",
+      "sha256": "95c4860a05eab5236a4310ee6613f8b3b052b6a81bf350142dbb4a63f9c48efe"
+    },
+    {
+      "bytes": 0,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/_compiler.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3461,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/_runtime.py",
+      "sha256": "015a1642ecd748a0f4da064b0336d9ea21f0e2e71c7f4ac7f8aa56547fbb71e2"
+    },
+    {
+      "bytes": 45,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/amd/__init__.py",
+      "sha256": "b38777c6012eb82c52000fb4c21a2c64fd5abfd4690df8898eafbbdc1f267657"
+    },
+    {
+      "bytes": 2005,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/amd/gfx1250.py",
+      "sha256": "be5b69eec437cb2765e36c9368af702edfe29c6b6456854b6e5c731ee3e9e6b5"
+    },
+    {
+      "bytes": 2056,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/__init__.py",
+      "sha256": "11668af1c62ebbcda0aeafc266dac8b245d26262e8a238c770664a89ea755eda"
+    },
+    {
+      "bytes": 19736,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/_core.py",
+      "sha256": "adf3765a2e9c1dce5898be50e9951001f24045848072ee8b10e0e8a53ff48de0"
+    },
+    {
+      "bytes": 24444,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/_layouts.py",
+      "sha256": "9af7f5ce533f0039f74dd5104bd6adbd16f4a06bb15eade5b708a123e97e3f8c"
+    },
+    {
+      "bytes": 564,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/_math.py",
+      "sha256": "30df45bedf056904e9c445022a1c3cdc819b930043d9685da7af3a6afe2fbf4e"
+    },
+    {
+      "bytes": 28303,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/_semantic.py",
+      "sha256": "246ac830e2b453f3a0dcd0c3249e1326c079d42ba1e3d238ee1cd9e8695e4259"
+    },
+    {
+      "bytes": 2765,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/_standard.py",
+      "sha256": "dfbf12dde86b80805fca12070f8bf3c9a11ffb738804d51130782d420e0ea2ef"
+    },
+    {
+      "bytes": 220,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/__init__.py",
+      "sha256": "f343542b54680d075131bc0922a2bbf5ab1069d702239ac3d9394edfe1fd17ca"
+    },
+    {
+      "bytes": 7244,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/_layouts.py",
+      "sha256": "8ba4b4ce5fbc66947a36ce9828d3ce8953cb07e156c19aff42d418d9a0e380ab"
+    },
+    {
+      "bytes": 3373,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/_ops.py",
+      "sha256": "9793c89d36f2ac1229dc8906028423ec854b373f1f0fa240b2af3ddfa43eda3b"
+    },
+    {
+      "bytes": 10397,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/cdna3/__init__.py",
+      "sha256": "0d5b7c34e55ae8b634f1f6a916aad8a0c35760e37dd22571fdbf7ff15544c75a"
+    },
+    {
+      "bytes": 5163,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/cdna4/__init__.py",
+      "sha256": "d1eecfb687ef65cd587b9957a022fe29d15ecfe4c36e3e66b54b9eddf7c7e28b"
+    },
+    {
+      "bytes": 7994,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/cdna4/async_copy.py",
+      "sha256": "e54fa0d4fc6a2406d876ffd8659de0d33f02f785a4a19df980f1aa6427ba2498"
+    },
+    {
+      "bytes": 3622,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/gfx1250/__init__.py",
+      "sha256": "3d7031184ea5a2ed2d2944bacc403df71d1e18f909cc745a260e5c3030c1fa3e"
+    },
+    {
+      "bytes": 2589,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/gfx1250/async_copy.py",
+      "sha256": "5e255d7dfe4a6a1362eef474609051bc0ef05217e8f6446db54fd6f6c039d81d"
+    },
+    {
+      "bytes": 2631,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/gfx1250/mbarrier.py",
+      "sha256": "8b501b32036209d2433094c8e621ed091204097d2a0fc837b3973a8eba9e0998"
+    },
+    {
+      "bytes": 7383,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/gfx1250/tdm.py",
+      "sha256": "311e7996773f026e24193305a983fc5bac72d2c82e4d15018e52a3f4a8e16834"
+    },
+    {
+      "bytes": 419,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/rdna3/__init__.py",
+      "sha256": "27d6be3f0ed8f3aa9ec00be36a1846d545374031cac0e31595265e5b44a26885"
+    },
+    {
+      "bytes": 419,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/amd/rdna4/__init__.py",
+      "sha256": "b39ffb3d0621d26d5864df4d3ebfde0d872422bfa3acf0e86ec565dc353d8c93"
+    },
+    {
+      "bytes": 69,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/extra/__init__.py",
+      "sha256": "15a0eabca45bf0cf0ae3b0b761c7b27c5dd98996b22c2f3164ddb8f23365c5e4"
+    },
+    {
+      "bytes": 80,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/__init__.py",
+      "sha256": "48506e0022b93f65e861cbad1c49ca8ea8114dba14e023c3989cf4853e9d1514"
+    },
+    {
+      "bytes": 1605,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/ampere/__init__.py",
+      "sha256": "4d9b5bf15e328cdfde7bb47904f4dba7b431edf3de61c68906097a10f947d1e5"
+    },
+    {
+      "bytes": 2817,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/ampere/async_copy.py",
+      "sha256": "61f07400dd61704296536593c9e7f88205ada7e1c19e8487246a168544cc9a2b"
+    },
+    {
+      "bytes": 2455,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/ampere/mbarrier.py",
+      "sha256": "5339d681a8c896467393725fd13fde94947d7fc0545fecb6a89d447bfa6abfb4"
+    },
+    {
+      "bytes": 17858,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/blackwell/__init__.py",
+      "sha256": "2a519d1c453b2ae809f3107090008452e8b850abea93da4ab4c2345aaa7c54e2"
+    },
+    {
+      "bytes": 3926,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/blackwell/float2.py",
+      "sha256": "5a814bfb0321b014e01d7c8986f8e16c43a117535e88f75839e6ab7591a459d3"
+    },
+    {
+      "bytes": 2065,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/blackwell/tma.py",
+      "sha256": "c2504403e75f3face1cfee530454c7f7154dd2f78fb76be55c4063f73dfb77b8"
+    },
+    {
+      "bytes": 5369,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/hopper/__init__.py",
+      "sha256": "e86546427ebb0e2ed8039b87e0fbba88e4bae92dcfdb47e5b4538a62f9783196"
+    },
+    {
+      "bytes": 1339,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/hopper/mbarrier.py",
+      "sha256": "345d9dbd730a5b34349ad599429096289299ce420d099db877c70a76a0d3eb44"
+    },
+    {
+      "bytes": 6463,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/language/nvidia/hopper/tma.py",
+      "sha256": "41120ad066ff408dc0974adae1c8724caf311450960681246314230f223f5317"
+    },
+    {
+      "bytes": 80,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/nvidia/__init__.py",
+      "sha256": "2125c1e1157b45c08bb14f8985c445780dbd802043564f1c4f03b68fdf62bcb7"
+    },
+    {
+      "bytes": 69,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/nvidia/blackwell.py",
+      "sha256": "725970954084e7f60a5aac9241993bc2dec589eaf3df8e44e55c33b7135118cb"
+    },
+    {
+      "bytes": 1925,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/experimental/gluon/nvidia/hopper.py",
+      "sha256": "b06b928e30a3b8a69e7e15beb4173241950d0ae9beefeed3c261b4832d21f17f"
+    },
+    {
+      "bytes": 6526160,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/instrumentation/libGPUInstrumentationTestLib.so",
+      "sha256": "1cbe14af44e807d3f278cb00a684269bd250a57ee2776bd897f1785745c1d4a9"
+    },
+    {
+      "bytes": 9017144,
+      "mode": 509,
+      "path": ".venv/lib/python3.13/site-packages/triton/instrumentation/libPrintLoadStoreMemSpaces.so",
+      "sha256": "a728f0f49a7c52ba22e545c133cf97814913d9d740b43271afc50ceb44591173"
+    },
+    {
+      "bytes": 17262,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/knobs.py",
+      "sha256": "d84bda664f733f0547f9f4397c2dab11da1f9c58f974a840a3f1c61ea48c76fa"
+    },
+    {
+      "bytes": 6986,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/__init__.py",
+      "sha256": "58ebab210df54a4ea9600d056c49d436b2a43e02313bf39d990d6c4fd4927728"
+    },
+    {
+      "bytes": 123101,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/core.py",
+      "sha256": "9394c60071ea0bbca6c290c44a5a371b8b4a02683d529debc3be04401d93e198"
+    },
+    {
+      "bytes": 655,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/extra/__init__.py",
+      "sha256": "5d15c5bebef8d7aa51b21fd187e5faa95eba4a213254355bc69e0648013599f7"
+    },
+    {
+      "bytes": 407,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/extra/cuda/__init__.py",
+      "sha256": "30106ed84518c6ca7aca08e2c0ee188755f512cc0cb2d7da8914cc48c1ad6dcc"
+    },
+    {
+      "bytes": 2193,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/extra/cuda/gdc.py",
+      "sha256": "adb54e71d0ffc3bdac437fbc97929769fbbe4ebd03e6361c6357f2a24f7c5954"
+    },
+    {
+      "bytes": 56764,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/extra/cuda/libdevice.py",
+      "sha256": "27b2a5d1e8db008bacefe6019f63922bbd65926de90bb1b527ee597477d2f365"
+    },
+    {
+      "bytes": 4426,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/extra/cuda/utils.py",
+      "sha256": "a610dc5c215589aab7a784e1c07acef3e16d53ef00f08de793899964956f4e2a"
+    },
+    {
+      "bytes": 96,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/extra/hip/__init__.py",
+      "sha256": "18572e33e474a820799036f2b2f8c3e54d8a526386356716cccf2bf32a832376"
+    },
+    {
+      "bytes": 17542,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/extra/hip/libdevice.py",
+      "sha256": "2cdca74c4297804dcf499a7e9d4315ab87edfe2d72f536a8fdc02f28a3e7dacd"
+    },
+    {
+      "bytes": 877,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/extra/hip/utils.py",
+      "sha256": "b53abe93473eb37d88bc378692065c9a8b1bf54b6417cb1911a13d10918c6d20"
+    },
+    {
+      "bytes": 6350,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/extra/libdevice.py",
+      "sha256": "f60c2bb2d8eebe1c191f4b8b819844414dd1bce243645635a094f9f92665a58e"
+    },
+    {
+      "bytes": 7399,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/math.py",
+      "sha256": "08abee21ce6230a873ed0831f70f9570b7ce39969dbf9b2f28ae1a1992ee1cc7"
+    },
+    {
+      "bytes": 7116,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/random.py",
+      "sha256": "f44a43511b97420e82438746d1730db6aea312619032077687fb36ffe23727ba"
+    },
+    {
+      "bytes": 101212,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/semantic.py",
+      "sha256": "be3429f6d069a22ddc2ca048d80e1616df85de51a4b0e1e20e3054264a58f1f8"
+    },
+    {
+      "bytes": 16041,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/standard.py",
+      "sha256": "1a2a7b1706fe99659dd86b29d6397d603d7d0cfef4f827fe902a494728ccddc1"
+    },
+    {
+      "bytes": 1364,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/language/target_info.py",
+      "sha256": "5305890c3b133def44e2f3d3405e0fb1fd6ce78d0a28b2127670a195bbe11c66"
+    },
+    {
+      "bytes": 284,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/__init__.py",
+      "sha256": "6f45ed5e2f253e4c541210fd0c7912f51ce2d89bd68f9ed16da90b1ae8b58c0f"
+    },
+    {
+      "bytes": 506,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/context.py",
+      "sha256": "2464350b66cfc293efbdadde21377c47112059c9af024c40b81d6694acfd268d"
+    },
+    {
+      "bytes": 663,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/flags.py",
+      "sha256": "e4605cdce8be77d9966344aade101a740466bf84c336d019eb88533b9be4a1a8"
+    },
+    {
+      "bytes": 123,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/hooks/__init__.py",
+      "sha256": "ab06fcca92d0d2838503787d33746d5353a1251ff07761194ca276a453477aea"
+    },
+    {
+      "bytes": 4793,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/hooks/hook.py",
+      "sha256": "ef1e52234d7a54a8f96bcb772ec3bcb6715147c39537ea7c134684ffa5509e5a"
+    },
+    {
+      "bytes": 14849,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/hooks/instrumentation.py",
+      "sha256": "da8632f455c6538efc6b4cd5c5659c53d652b885730df2c0e49c88834fc724e5"
+    },
+    {
+      "bytes": 1493,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/hooks/launch.py",
+      "sha256": "3d32ab06cf397c64fed7db28a9c3e0d03b5e7c06048bde53f010845dd92d3905"
+    },
+    {
+      "bytes": 2116,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/language.py",
+      "sha256": "bb7252b3960740e4b6b8167e8c46f6c83128ea2cae2e691364a80b425c8ebe5e"
+    },
+    {
+      "bytes": 4367,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/mode.py",
+      "sha256": "fbb3fc8de1bb4a21143a606e01f416bf79f34ef9ac1c906f818521f852570f86"
+    },
+    {
+      "bytes": 8823,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/profile.py",
+      "sha256": "c185d49a6115a5412376d7435b2a78af71549e38ecc7b1b3de6d5e4713ba26c8"
+    },
+    {
+      "bytes": 3086,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/proton.py",
+      "sha256": "f52234eb2db6e52161f95acfc1f0e853607bf02cb81a959ed6f1a5303398df66"
+    },
+    {
+      "bytes": 3831,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/scope.py",
+      "sha256": "dc6ac62e89a29d2e938dd7c0249c9cd46aa0a34361fbe0346afb24183c709a5b"
+    },
+    {
+      "bytes": 2341,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/specs.py",
+      "sha256": "defe79e1622c1c7444305c687c348c110cf5f22d20d16fcc2592a1e8ea779ea3"
+    },
+    {
+      "bytes": 1335,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/state.py",
+      "sha256": "4b25ddc0662f29da4039f1695b7394d0c56496784f5c7017f72a086ef6f6eb00"
+    },
+    {
+      "bytes": 18191,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/profiler/viewer.py",
+      "sha256": "cef9e93d06d47cac9fc980eaafbc0a28b8050152614acc31a8713f5bfb5a2b4b"
+    },
+    {
+      "bytes": 621,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/__init__.py",
+      "sha256": "98a2f972a2010d4c3658ef343510a1e2cd46f0a61aaa0339f534c06d390f3e34"
+    },
+    {
+      "bytes": 1846,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/_allocation.py",
+      "sha256": "5e7ba33687dae54005ab90fbaf400f63ab0e7fd7437a4a0a483ee1d783688429"
+    },
+    {
+      "bytes": 1953,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/_async_compile.py",
+      "sha256": "2703e0cf3fa87ca9fc4da35f3214756a09c2c8393fc36ee1cc2fa7eb7aac1d1c"
+    },
+    {
+      "bytes": 20692,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/autotuner.py",
+      "sha256": "40f5e142806219942585a16742e9f3721d5bfef88145b571cf389f9aec6460bb"
+    },
+    {
+      "bytes": 3928,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/build.py",
+      "sha256": "26c6ddd4dba3534ce54790f12d2b75729f51e467c48b2f740dd62b7c75a85b39"
+    },
+    {
+      "bytes": 11041,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/cache.py",
+      "sha256": "0355c3e3452fa4500122244b8fff8864f22bc05c417a3d6f5dada9f2e92f8040"
+    },
+    {
+      "bytes": 1025,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/driver.py",
+      "sha256": "daac6c247dd21716034887df8f6c173064af8846ad5102e41c572655ba1e2be0"
+    },
+    {
+      "bytes": 1325,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/errors.py",
+      "sha256": "a0cd07a271270659cec7c7bc5d989da005506763e0fd8ac0d4d9885c04317fa8"
+    },
+    {
+      "bytes": 65073,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/interpreter.py",
+      "sha256": "3cb6ed2fda070e4b211f2ff65fddef842287bf321a61e8874ebc93f6c570c953"
+    },
+    {
+      "bytes": 41084,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/runtime/jit.py",
+      "sha256": "0b70358d901afd70937a344a7811e4a2bcd10edca8a7c241e47842dc9ac660c8"
+    },
+    {
+      "bytes": 20476,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/testing.py",
+      "sha256": "44e3fae7b4cc41b4db3b8b41a4f0a818d7fe9d036cfe4e0f4f08036a75eaafe4"
+    },
+    {
+      "bytes": 59,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/__init__.py",
+      "sha256": "375f0c889f1bc4d6b539dab7623612005b40577e55b3847cedcd8ef10c026a63"
+    },
+    {
+      "bytes": 13673,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/build_extern.py",
+      "sha256": "8c2afeda1bb79cb1812098421944358c0cb32edb6e8218e488f184c111632d1d"
+    },
+    {
+      "bytes": 8786,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/compile.py",
+      "sha256": "5a927c1d9943691dce1afad3dd7485946754c889dde20f44aac2f6ad704667e6"
+    },
+    {
+      "bytes": 5026,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/disasm.py",
+      "sha256": "4fd8e24e474aff49c8dd1ff8b9e6b4cef7e2a1875c47ecc86704dfbae720c3a8"
+    },
+    {
+      "bytes": 2172,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/extra/cuda/compile.c",
+      "sha256": "1772bbdb9913234de80133c17516d29c61e93a8d757c66c4d5a39e94f4dc443f"
+    },
+    {
+      "bytes": 332,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/extra/cuda/compile.h",
+      "sha256": "9fd40a2056532f8452b225ed03104ff571929f18f269ebd043d6c1a700ecbc08"
+    },
+    {
+      "bytes": 1862,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/extra/hip/compile.cpp",
+      "sha256": "20676803ee7636b9384bced56ba589388222ec6ff8961599eb28eaf309201bb9"
+    },
+    {
+      "bytes": 348,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/extra/hip/compile.h",
+      "sha256": "048461da5a3890a5d672ca2693cf432b1dec637fd72cc1a80b22791d8be5dc65"
+    },
+    {
+      "bytes": 11871,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/link.py",
+      "sha256": "bbbaad7d944bae266400c10636f8fc605fa4d5cb6198b2fb0701d8a81813eb71"
+    },
+    {
+      "bytes": 11737,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/mxfp.py",
+      "sha256": "61076906b1a439534eb672de4633027951475a44b052e6c6796b08b488cef135"
+    },
+    {
+      "bytes": 3782,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/ragged_tma.py",
+      "sha256": "29788084c4e6c84725147a146bddb241675f1cb61dd5cf07c86d494c86671063"
+    },
+    {
+      "bytes": 1562,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/tensor_descriptor.py",
+      "sha256": "d6e03aa5917c8fb5b404b5dcbf828e7d2761ec12d8ffb54de4a9375c61b6be53"
+    },
+    {
+      "bytes": 19912,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/triton_to_gluon_translater/translator.py",
+      "sha256": "610782bbaa513a0a3d9bb38d765e57492aeb2746adcc64020bad37be39661e88"
+    },
+    {
+      "bytes": 26428,
+      "mode": 436,
+      "path": ".venv/lib/python3.13/site-packages/triton/tools/triton_to_gluon_translater/translator_helpers.py",
+      "sha256": "1dcd65515c27c8eb6074fce204b6fdc9bc4dbd59c1f29906a441ef444410b3bc"
+    }
+  ],
+  "installed_triton_total_bytes": 669054748,
+  "numerical_imports": false,
+  "ordinary_engineering_action": "uv cache clean triton --offline --no-config --cache-dir /home/malecada/.cache/uv",
+  "runtime_record_sha256": {
+    ".venv/lib/python3.13/site-packages/MarkupSafe-3.0.2.dist-info/RECORD": "d1fdd34365ab1469f59a2302a361cf63621f137cb1f068552e5f37337220e042",
+    ".venv/lib/python3.13/site-packages/PyYAML-6.0.2.dist-info/RECORD": "400efb9f44b2b3b0509dd80fe071abcf0815a5fa23bb050ceeba875b9b81fe02",
+    ".venv/lib/python3.13/site-packages/accelerate-1.14.0.dist-info/RECORD": "0aa30d376ddb202c9e628872e0f54d4eee7ab325f4813ac0a0ed1301a84cd0f1",
+    ".venv/lib/python3.13/site-packages/aiohappyeyeballs-2.6.1.dist-info/RECORD": "b4935c6efbf4163023b59715e3b481f2cbae9d20e36670ab17c05dee52fc9c99",
+    ".venv/lib/python3.13/site-packages/aiohttp-3.12.13.dist-info/RECORD": "e6e15336a5d113505a326670819f1ef2827052b6281923df261d9c1639b6812e",
+    ".venv/lib/python3.13/site-packages/aiosignal-1.3.2.dist-info/RECORD": "4b93ef68383c7009d6c304796045a4494ddda8b047fcd92d66a4c69b111e05a9",
+    ".venv/lib/python3.13/site-packages/altair-6.2.1.dist-info/RECORD": "56efc0599e80cd5fdc635fc63d13ba7ede7690c166278732cb083fde27c4abb5",
+    ".venv/lib/python3.13/site-packages/annotated_types-0.7.0.dist-info/RECORD": "5bb4f1ca72420634ebd566dafd9d5fbce3051b0c1c1d13980f6ceeb5c4dbb843",
+    ".venv/lib/python3.13/site-packages/anthropic-0.111.0.dist-info/RECORD": "cceef1b36ce7df4a3af626d9dc71d0a4e544d9cb9480a71a3866d80f6ffbe8ab",
+    ".venv/lib/python3.13/site-packages/antlr4_python3_runtime-4.9.3.dist-info/RECORD": "6579d6c3e961933b46d9aaaf19151e6c73f135e3fdbd2385474447628a9f9c37",
+    ".venv/lib/python3.13/site-packages/anyio-4.9.0.dist-info/RECORD": "c6d4ab72b89dfbc6b0a7ac1b3b148fa61161733491d3c81a67e1b85b4f01bec8",
+    ".venv/lib/python3.13/site-packages/arch-8.0.0.dist-info/RECORD": "f296e9d300fcdee31c637ca5c66d90758873f7a41eeeb12b78256e6190eafdb0",
+    ".venv/lib/python3.13/site-packages/asttokens-3.0.2.dist-info/RECORD": "7f0b4dabfd410366c48fb66b1af7671f17ab499310c80c3103855a7893694314",
+    ".venv/lib/python3.13/site-packages/attrs-25.3.0.dist-info/RECORD": "df12d9b0786a5384b9ceabbb5cb8ceac40046ffd3d4d7fbc990b20a979605941",
+    ".venv/lib/python3.13/site-packages/backoff-2.2.1.dist-info/RECORD": "bcc7259a5ce2df22ffa48690844ec950ffef129bd18ed9488818dcfd33c906d8",
+    ".venv/lib/python3.13/site-packages/backtrader-1.9.78.123.dist-info/RECORD": "649ea6306c49699241fc33f2f4f0b458235c7c2afa29c862067829099f0a7017",
+    ".venv/lib/python3.13/site-packages/beautifulsoup4-4.13.4.dist-info/RECORD": "2eaafb5849c93a632cbd1299ef7b61f828c16d6046328cdaafb1bb3a49a891d6",
+    ".venv/lib/python3.13/site-packages/bitarray-3.8.2.dist-info/RECORD": "6b074d6649bb0cf3eb13a9929523bbcd4118b2c65290fb0c795e907688e6f124",
+    ".venv/lib/python3.13/site-packages/blinker-1.9.0.dist-info/RECORD": "b7152f1474f715b54131cc64bb4c1e5fea3acf74ee3bc611e0e5a3100ab3b2c0",
+    ".venv/lib/python3.13/site-packages/cachetools-5.5.2.dist-info/RECORD": "bc8a74c4c243cef7409dfb864a862673bc7bc5a7588246bd01cf8091243d5fea",
+    ".venv/lib/python3.13/site-packages/catboost-1.2.10.dist-info/RECORD": "38e11b298aa06e428e6656fca522fc21d243aadabc7a9664266ade8cebb35f73",
+    ".venv/lib/python3.13/site-packages/certifi-2025.6.15.dist-info/RECORD": "3321b7a3d929bca5eb24a4bab14e3545a33bf14a01dfa2a52f3b9db59e757002",
+    ".venv/lib/python3.13/site-packages/cffi-2.0.0.dist-info/RECORD": "87dc833c9768f1a6930f848ec7a6dbe57f6486f75262c3a0425d579f527747ca",
+    ".venv/lib/python3.13/site-packages/charset_normalizer-3.4.2.dist-info/RECORD": "a7e97ce69300f6ba103af84ff2b5ae78d1d303937a5ae3ceb25c7adddb9e05ef",
+    ".venv/lib/python3.13/site-packages/chronos_forecasting-2.3.1.dist-info/RECORD": "20a189e01e33ef7cfbebc4bdca005e4c024ca0cb2e44bd3de9a55fb53bc584b2",
+    ".venv/lib/python3.13/site-packages/ckzg-2.1.7.dist-info/RECORD": "0874bb8a261988afb00cc1ed386e5731a6db0f4e8829e4f4a771b4c40589f655",
+    ".venv/lib/python3.13/site-packages/click-8.2.1.dist-info/RECORD": "d3d6200ae2e5e4162cd82456ab92db675f026c74aaa2fa59dbab5ee7a31e135a",
+    ".venv/lib/python3.13/site-packages/comm-0.2.3.dist-info/RECORD": "d4854a07c72d25313dfa1c7322a12a09455a57adbf66939d785aeb8f07b79ee5",
+    ".venv/lib/python3.13/site-packages/contourpy-1.3.3.dist-info/RECORD": "d73b907c306061e2384830321a305994ebd5f3a126eed70c6c90f314656e42ea",
+    ".venv/lib/python3.13/site-packages/cryptography-49.0.0.dist-info/RECORD": "e31d1289313c152741ff7e2935fc2f61424a3fcfe9fcec7436674c1b0ff6b819",
+    ".venv/lib/python3.13/site-packages/cssselect-1.3.0.dist-info/RECORD": "62592bec85669773038cdfc820e2f5100c8b67acb928e28a669c54f28f083bce",
+    ".venv/lib/python3.13/site-packages/cuda_bindings-12.9.4.dist-info/RECORD": "b35a22dd4c40c89f83b2cb6b6335455ac26feaf240a3a1c8c88568750825faf0",
+    ".venv/lib/python3.13/site-packages/cuda_pathfinder-1.6.0.dist-info/RECORD": "c85bfd1226261ba6af05cf2f2a59aeb296e37ec79c4a5be5c4847ee66db7a0d1",
+    ".venv/lib/python3.13/site-packages/curl_cffi-0.11.3.dist-info/RECORD": "4bc30268a3ca8057a959f8e3a7a8b10cd3c4351645f0eb7d7c3eb308d1e56a4b",
+    ".venv/lib/python3.13/site-packages/cycler-0.12.1.dist-info/RECORD": "cbcbee5f18d75bd4935199b135aa33c3ed62df14991110a35c428883798d7979",
+    ".venv/lib/python3.13/site-packages/cytoolz-1.1.0.dist-info/RECORD": "b82444e5fb3b851d8d4711ace816c8bdc6713a38ef3bf2bf6a4b940035384e7f",
+    ".venv/lib/python3.13/site-packages/datasets-4.8.5.dist-info/RECORD": "92ab6ed2a49810fecbdcba21fb69391495dcbdbe324f048907447ddac195f047",
+    ".venv/lib/python3.13/site-packages/dateparser-1.4.1.dist-info/RECORD": "71f9d9bb84be04ec342db68d767112e002d4aedeb9d7dcc37cbf94aa43c41a0c",
+    ".venv/lib/python3.13/site-packages/deprecated-1.3.1.dist-info/RECORD": "04f3900b10c2cb084b781451b586880e64b0f5affd54906b137d2441da63c66e",
+    ".venv/lib/python3.13/site-packages/dieboldmariano-1.1.0.dist-info/RECORD": "805b9bec83f8902633e32e5fc73fa7b5851ce13697ee9eb8d8a4d50212c1e6e3",
+    ".venv/lib/python3.13/site-packages/dill-0.4.1.dist-info/RECORD": "5d9a4eef5ae72473c81253e62f5fb83f587ace24833d6634fd5b4645d3d5bfe9",
+    ".venv/lib/python3.13/site-packages/distro-1.9.0.dist-info/RECORD": "7bcebc6abb03796eb214038af76a5280d65275f2a3c517651804527feaa974ea",
+    ".venv/lib/python3.13/site-packages/docstring_parser-0.18.0.dist-info/RECORD": "ed0a3538437bb77b4efc7e9b93ed802ac99acf1dedd7b1c5b36d0b0ef0f11398",
+    ".venv/lib/python3.13/site-packages/duckdb-1.5.4.dist-info/RECORD": "3a79f343b3a92720619c12ea6e3d5e01fad0485e68a2b7739022e6c2f165c3ca",
+    ".venv/lib/python3.13/site-packages/einops-0.8.2.dist-info/RECORD": "f5ab2503eead94b7dbb3c722415260439feee273c0b91019e1f0788f041400bc",
+    ".venv/lib/python3.13/site-packages/eth_abi-5.2.0.dist-info/RECORD": "2276481bf2c1dffa2936b4f287ecd956f2c1994344446c484fede5e55ca12215",
+    ".venv/lib/python3.13/site-packages/eth_account-0.13.7.dist-info/RECORD": "0131a9f7e73699047fec5b2815469c772e4e0cbe6141c9bf1ca5b15f11c0e649",
+    ".venv/lib/python3.13/site-packages/eth_hash-0.8.0.dist-info/RECORD": "4965c2c8f0acdfe9ff4b167a16246a24094c27ace3b5189316f29935164c377b",
+    ".venv/lib/python3.13/site-packages/eth_keyfile-0.8.1.dist-info/RECORD": "fd89a6fff733d1a06634c323b76dc18c93b4c246493460d2b756c1db8ec8eec4",
+    ".venv/lib/python3.13/site-packages/eth_keys-0.7.0.dist-info/RECORD": "1fafd0dbd2eea064225b8892126fa3dd4e10beba87b19a1724c70ef58da3b51c",
+    ".venv/lib/python3.13/site-packages/eth_rlp-2.2.0.dist-info/RECORD": "ef6a30a097a2d590ff7901582dc3e4a0b53879cfbddcb45884e49f6ae707873d",
+    ".venv/lib/python3.13/site-packages/eth_typing-6.0.0.dist-info/RECORD": "1c5484525ff5bfe8986522328a8aea9bd374c86f814e97c6aa3b4f53b3ef5f6e",
+    ".venv/lib/python3.13/site-packages/eth_utils-6.0.0.dist-info/RECORD": "5f075affff3ea599b3521cab70c8d304442b39886065880bb83c6097a5004a3b",
+    ".venv/lib/python3.13/site-packages/executing-2.2.1.dist-info/RECORD": "483767c8f250006b2655250353b993e605b581fd6f5f41a5b7e2accb9bf3a414",
+    ".venv/lib/python3.13/site-packages/fastapi-0.115.9.dist-info/RECORD": "5267c5a6e566a613b03a764e4f0035e6b870e251786f7b5a55e6d336012b8cdd",
+    ".venv/lib/python3.13/site-packages/fev-0.9.0.dist-info/RECORD": "cfe3aac3c4d801ec54eeab62781359ef67cbb4b6b60dccbeed5a6a4a3b97a660",
+    ".venv/lib/python3.13/site-packages/filelock-3.32.2.dist-info/RECORD": "29872bd99dcbb773451d0a701b019ff5df251ebacf02be4d103b001619b8a4b1",
+    ".venv/lib/python3.13/site-packages/filetype-1.2.0.dist-info/RECORD": "6fdfb98aac5e36a9950596cd7c80504fb40f01cec0a04fa8b6ce015f3fc1060a",
+    ".venv/lib/python3.13/site-packages/fonttools-4.63.0.dist-info/RECORD": "738034cbe150916c537ae661f1b5a78f004bf490355c01a6be8ad3105cbec72f",
+    ".venv/lib/python3.13/site-packages/frozendict-2.4.6.dist-info/RECORD": "544e3ad9cbd20ffb2bd6edb885e68601fb73af883c48363d62ab3e3e090754cd",
+    ".venv/lib/python3.13/site-packages/frozenlist-1.7.0.dist-info/RECORD": "046427dfc7453ffe993ca8b05f3771b46552708cc0d38f08859292cc3127f50e",
+    ".venv/lib/python3.13/site-packages/fsspec-2026.2.0.dist-info/RECORD": "57f70591e84df9e6d90a32569027fb7697e2b64c7d2f254d83bff1abf021c13b",
+    ".venv/lib/python3.13/site-packages/gitdb-4.0.12.dist-info/RECORD": "43a905544c66c64b47d683d76eb347afb791001674e5a774d51e673f7945f834",
+    ".venv/lib/python3.13/site-packages/gitpython-3.1.50.dist-info/RECORD": "daac078bd9c7f7e1413d062450e709dec35b9c18617314417e515a901dc911a9",
+    ".venv/lib/python3.13/site-packages/gluonts-0.17.0.dist-info/RECORD": "55905538617765c86b1c619ac0ebf63e808700750afd0f60559d5f8a8223f6e6",
+    ".venv/lib/python3.13/site-packages/google_auth-2.55.0.dist-info/RECORD": "8778055b098dac36bafbf872f8a3c78622e5989c3aaab6946c7a29ba356e25e2",
+    ".venv/lib/python3.13/site-packages/google_crc32c-1.8.0.dist-info/RECORD": "640b3d7bfe2d705190009c91908e3e68360a5dd2e36f9dc9dc30c5213de08ed0",
+    ".venv/lib/python3.13/site-packages/google_genai-2.8.0.dist-info/RECORD": "f02e7fcb564b3cafc09a241f943dd92ec7e5498cb40e2eb287ab7afe9c1e4671",
+    ".venv/lib/python3.13/site-packages/googlenews-1.6.16.dist-info/RECORD": "f13fe0aea480a9e681fbcf9dae1a79b88374a38f2a717efc89805b723efa43e9",
+    ".venv/lib/python3.13/site-packages/granite_tsfm-0.3.6.dist-info/RECORD": "898e71bcd5679393d50abc5262aa1e0badfae5394bf3802ae0dea2b1cfd72a2c",
+    ".venv/lib/python3.13/site-packages/graphviz-0.21.dist-info/RECORD": "c5c72640417ed3b980703d4900fbd06bbcd8cb3add7bfe6ffd8793b7786af1cb",
+    ".venv/lib/python3.13/site-packages/greenlet-3.2.3.dist-info/RECORD": "5b5654c7a216ff114b5fa155f4c6b0045689778e9626a4d6b632729210c4e244",
+    ".venv/lib/python3.13/site-packages/h11-0.16.0.dist-info/RECORD": "3779e13c17d8e21c769ed9ee8780af123cc3f8656185f5f8d3af258ff5639b3e",
+    ".venv/lib/python3.13/site-packages/hexbytes-1.3.1.dist-info/RECORD": "298d3632ce84275f05113a61205c647a8a3f52d11a5ac33d4b095bf17557c3ce",
+    ".venv/lib/python3.13/site-packages/hf_xet-1.5.2.dist-info/RECORD": "3e94dcbec72065fe639fdd7eb3630877b0e3757157fb846c276eff64f3275c8b",
+    ".venv/lib/python3.13/site-packages/hmmlearn-0.3.3.dist-info/RECORD": "21df9121629de4443a1c5edff6e08742753980a78ac607de451ba274ddf42b40",
+    ".venv/lib/python3.13/site-packages/httpcore-1.0.9.dist-info/RECORD": "67cb4644d84fef1df8c5a0862c57c3380eff058a153bac7a4ba2722779982554",
+    ".venv/lib/python3.13/site-packages/httptools-0.8.0.dist-info/RECORD": "7549abbb10f2c9b81b7cc61e05817a0d48da765725f26e6329bc52b0267ce4ac",
+    ".venv/lib/python3.13/site-packages/httpx-0.28.1.dist-info/RECORD": "461f166bcb55eee08fcfbcb5ee48f28be680cf3f55bfa4c97cfa8471fb59c801",
+    ".venv/lib/python3.13/site-packages/httpx_sse-0.4.0.dist-info/RECORD": "611163007144c861eccbf02c0487aa1df8ae4af72b925b2deecdf70d1b6e2119",
+    ".venv/lib/python3.13/site-packages/huggingface_hub-0.36.2.dist-info/RECORD": "78f6c5cb919971dda4a68e19e80766bd22c38557a6693136386d330362ea12fa",
+    ".venv/lib/python3.13/site-packages/idna-3.10.dist-info/RECORD": "5c0d108e37b975a2cb607b3a36672be5b3ca234c0268ee8807072a218cb7c613",
+    ".venv/lib/python3.13/site-packages/iniconfig-2.3.0.dist-info/RECORD": "4b560f65489a4dc0f32d8403da676d2e6338c371fe844160934b3fe469785185",
+    ".venv/lib/python3.13/site-packages/ipython-9.17.1.dist-info/RECORD": "3ccbe45d3391917331911d77fa9c048a446bcb19c4b19285761d7863e39ffb72",
+    ".venv/lib/python3.13/site-packages/ipython_pygments_lexers-1.1.1.dist-info/RECORD": "a601c87e87a63f4e126ce5e320367930d30129be677cb4a4980332f61b8aff31",
+    ".venv/lib/python3.13/site-packages/ipywidgets-8.1.9.dist-info/RECORD": "ebb52ba6b0316646acd3c98bbd8c2567c414946c16d6afafa761a0d3f1509c58",
+    ".venv/lib/python3.13/site-packages/itsdangerous-2.2.0.dist-info/RECORD": "80583f52df848dbd699dbf2c9b8ed9bb3cc5c1fa81ca5c737b97563feeab729d",
+    ".venv/lib/python3.13/site-packages/jedi-0.20.0.dist-info/RECORD": "8aee5a15141dd898d3356eca862cd70ad85f382c676ced7d51041f98d32e63d9",
+    ".venv/lib/python3.13/site-packages/jinja2-3.1.6.dist-info/RECORD": "4551b3fb657b85a9f01e961c0f8a235da65d758149b619400211964b3ac02bdc",
+    ".venv/lib/python3.13/site-packages/jiter-0.10.0.dist-info/RECORD": "91984d62c2e6a663b25d82f29487b36bf1d4ce0eb249e8338f1c870e05b5dca5",
+    ".venv/lib/python3.13/site-packages/jmespath-1.0.1.dist-info/RECORD": "dc9a067b407413328de8a6d3674172e70a69703f0bceb2c0107b169abcb422dd",
+    ".venv/lib/python3.13/site-packages/joblib-1.5.3.dist-info/RECORD": "de09a1190b65801ed7ada8395671b94da2278e33d15356223b2b2d3201180e76",
+    ".venv/lib/python3.13/site-packages/jsonpatch-1.33.dist-info/RECORD": "3d2ac054d72ef37badb258bc3f398e690cc55d55dab7b743d03f1ec91195cd06",
+    ".venv/lib/python3.13/site-packages/jsonpointer-3.0.0.dist-info/RECORD": "fdffafb75446790ce494014498343197d6c0048368c69a486fe43a932a5604d2",
+    ".venv/lib/python3.13/site-packages/jsonschema-4.26.0.dist-info/RECORD": "36f44fc73ba010c3ab40f93a9059cf049ab715e20317e30d57cec939cfb9dc2f",
+    ".venv/lib/python3.13/site-packages/jsonschema_specifications-2025.9.1.dist-info/RECORD": "0b1047ee6c7d5d7c242b642d689820f4572860ecf7886b2074f821ed85cbe7b6",
+    ".venv/lib/python3.13/site-packages/jupyterlab_widgets-3.0.17.dist-info/RECORD": "b1ea6d70eef35cb76ed8fe7aba120efc99f23bdcf87e617d951e3c60948c2b3f",
+    ".venv/lib/python3.13/site-packages/kiwisolver-1.5.0.dist-info/RECORD": "8ddc563f0220f58745daf29d105069340c66bda1473dc3c81570220b98166e7d",
+    ".venv/lib/python3.13/site-packages/langchain_anthropic-1.4.6.dist-info/RECORD": "8e681b74cecced692d002696be9a6435c3e130174643dcd06a33fb22106ed4cb",
+    ".venv/lib/python3.13/site-packages/langchain_classic-1.0.8.dist-info/RECORD": "c37b6bce3dd177fd8eb706329b9312ddb85cf2850a1e2cb2b40a9658d65d8227",
+    ".venv/lib/python3.13/site-packages/langchain_community-0.4.2.dist-info/RECORD": "8edcef67cb4c170bf96127244b16ec0504767f3f9dc6482b35531693d63adc80",
+    ".venv/lib/python3.13/site-packages/langchain_core-1.4.8.dist-info/RECORD": "0177b81bb9f7f03cdbe769a2fbc1647618efd20c6c513138e2f456a1dbeeeea1",
+    ".venv/lib/python3.13/site-packages/langchain_experimental-0.4.2.dist-info/RECORD": "78df17f47370134c14fc658304fab6c11930dadc1646ce53d882eb4d6f0c742f",
+    ".venv/lib/python3.13/site-packages/langchain_google_genai-4.2.5.dist-info/RECORD": "5cc6d2ff59919ccb477fe73445c07d880489a5bd4c566311b73755c9a48de3c7",
+    ".venv/lib/python3.13/site-packages/langchain_openai-1.3.2.dist-info/RECORD": "1e631446fc08ff4db2738c9d06642debcfd5c57ae87af8b8eea0e2b71326d29d",
+    ".venv/lib/python3.13/site-packages/langchain_protocol-0.0.18.dist-info/RECORD": "25bcf27464b2d7409cb09bb7b57ebedd5441ca20176d937c9ad5fa605e1ce45d",
+    ".venv/lib/python3.13/site-packages/langchain_text_splitters-1.1.2.dist-info/RECORD": "0afce71d62305ed0eb2e900fa0fa0f8dc699763601079c3cdc494b27ea1c2812",
+    ".venv/lib/python3.13/site-packages/langgraph-0.4.8.dist-info/RECORD": "86ff7990eb1ae9e9d80d377cd3cfc4d5b223d1528fd4e639675301f9f14c4c4e",
+    ".venv/lib/python3.13/site-packages/langgraph_checkpoint-2.0.26.dist-info/RECORD": "a2a3f1f704983af08c34d92b923f30ad726d0c2d604a3b12469486d2dd302b27",
+    ".venv/lib/python3.13/site-packages/langgraph_prebuilt-0.2.2.dist-info/RECORD": "184b55caf45765b7fd6f17c6c1f7b4a295771f4fa72874e4b45347cb1b92a4b5",
+    ".venv/lib/python3.13/site-packages/langgraph_sdk-0.1.70.dist-info/RECORD": "a79693c05b4477f285fa2af323bcb478f341eafa68bd4d328319f50c5a012ded",
+    ".venv/lib/python3.13/site-packages/langsmith-0.3.45.dist-info/RECORD": "46d655563e98900f6400e49491ef90231eca35c351ef8b8c698c125ac72111b3",
+    ".venv/lib/python3.13/site-packages/lightgbm-4.6.0.dist-info/RECORD": "197b7298059cb0828c1db0b74c9ea1b19c684c9483db5d27551e14291efc3951",
+    ".venv/lib/python3.13/site-packages/lxml-5.4.0.dist-info/RECORD": "4b923257d301269573b08feddc51c759bcd2c61269edf2e1fe1d94157bd0a4ee",
+    ".venv/lib/python3.13/site-packages/markdown_it_py-3.0.0.dist-info/RECORD": "d19fdc3e46312fa732444d6a16b9357c1ffc5bc58d2f07d3d26adea5ac93b7b4",
+    ".venv/lib/python3.13/site-packages/matplotlib-3.11.0.dist-info/RECORD": "32c9b058c3284a5bc2e0e751b3a0d130091432267bc1f27005ac1448dab49ffb",
+    ".venv/lib/python3.13/site-packages/matplotlib_inline-0.2.2.dist-info/RECORD": "9e3fca031d79eb520bebf44c820c831d604ddb76157308c28e9f7813f71268fe",
+    ".venv/lib/python3.13/site-packages/mdurl-0.1.2.dist-info/RECORD": "9a1b05128e711beabd7684e116fcf408ce8cff7ef10e7e8b359b248924fe529c",
+    ".venv/lib/python3.13/site-packages/mpmath-1.3.0.dist-info/RECORD": "09cbd04e87d0c5ab64aab08291b31883e4ea27e8d2c640710e0beb1995e86b9b",
+    ".venv/lib/python3.13/site-packages/multidict-6.4.4.dist-info/RECORD": "672f89e512e15da442c88f8c35c2c5ca7933716d2823d318bae43711551d801f",
+    ".venv/lib/python3.13/site-packages/multiprocess-0.70.19.dist-info/RECORD": "58216362154a01fd3f87f3e34bff6e0a9983f7c48c27d2edd7f63b3a1592e023",
+    ".venv/lib/python3.13/site-packages/multitasking-0.0.11.dist-info/RECORD": "c6b3ae9ea6d50ff96644978693574c98e164034959411e4e98880a535177f6e4",
+    ".venv/lib/python3.13/site-packages/narwhals-2.22.1.dist-info/RECORD": "ca43c6da3dafe20947b4d96150b53feb8f34d37dd96c5201f425c1dd4f66111d",
+    ".venv/lib/python3.13/site-packages/networkx-3.6.1.dist-info/RECORD": "f6833bb525b720a7809dd6280817601af3dbd78efef02d9e55d4b887ec1f52da",
+    ".venv/lib/python3.13/site-packages/numpy-2.3.0.dist-info/RECORD": "f853d0b421c8551bd802920e6a63f6a1bed7567a135b473f1ee9bd338fc8d947",
+    ".venv/lib/python3.13/site-packages/nvidia_cublas_cu12-12.8.4.1.dist-info/RECORD": "32609e27f052bcf38ac86325906fcc17a92d10aba57bc67f5017d8271d137b48",
+    ".venv/lib/python3.13/site-packages/nvidia_cuda_cupti_cu12-12.8.90.dist-info/RECORD": "bebc6905f6331672653650ef186a05fb1cb4da8d4d59a93cd1f905796b94f680",
+    ".venv/lib/python3.13/site-packages/nvidia_cuda_nvrtc_cu12-12.8.93.dist-info/RECORD": "e3c6d179dab8453950ad1e44acc4747b1a4ea1997e46326873731742a4ab5d22",
+    ".venv/lib/python3.13/site-packages/nvidia_cuda_runtime_cu12-12.8.90.dist-info/RECORD": "a880e64bcd71ca45cae1c821771e8fcee673e043bffd1464b1aefa5f127bec90",
+    ".venv/lib/python3.13/site-packages/nvidia_cudnn_cu12-9.10.2.21.dist-info/RECORD": "2c8f8aabcd98a443b831d245c9d171e2ff2b1ba5e26f8747223b299a5b8a49f5",
+    ".venv/lib/python3.13/site-packages/nvidia_cufft_cu12-11.3.3.83.dist-info/RECORD": "fc6ade9f8e7229dbce075027292a7ee3f803bfc8dbf93449f37d9c05c3f38c5a",
+    ".venv/lib/python3.13/site-packages/nvidia_cufile_cu12-1.13.1.3.dist-info/RECORD": "25f214d2e17ec175717dfeaf5c1690e1f3348a8ada171500b948ab09e23b2256",
+    ".venv/lib/python3.13/site-packages/nvidia_curand_cu12-10.3.9.90.dist-info/RECORD": "8f6ff30756082b4f128f521cad94b97cf821be7617d942cd7aba53401f318030",
+    ".venv/lib/python3.13/site-packages/nvidia_cusolver_cu12-11.7.3.90.dist-info/RECORD": "0c498bbd7fb47d82f861476973ccfd7d039d7d95c559ed673ecad98af48d6278",
+    ".venv/lib/python3.13/site-packages/nvidia_cusparse_cu12-12.5.8.93.dist-info/RECORD": "c621d96e99b26549698cd2d8f5044245727928d7855cb20a5ef787006311f3d7",
+    ".venv/lib/python3.13/site-packages/nvidia_cusparselt_cu12-0.7.1.dist-info/RECORD": "a0d0794ea5e6fbf009a350cd345b93b49c5ce40a57270eecbf0c96233bac8ee0",
+    ".venv/lib/python3.13/site-packages/nvidia_ml_py-13.610.43.dist-info/RECORD": "f6be691475d9c8520acd8e46a955f9a4a01504a343aa9262f1969cb2917b7f4b",
+    ".venv/lib/python3.13/site-packages/nvidia_nccl_cu12-2.27.5.dist-info/RECORD": "11536e10ae6812b21398f820cb8db26cc9ebf08fa73e97f353fc53c50ebf7440",
+    ".venv/lib/python3.13/site-packages/nvidia_nvjitlink_cu12-12.8.93.dist-info/RECORD": "778c44b7415819751cfe4c68919ac4e7db9f384c80db22f2cadd6cd9d6a5cc1a",
+    ".venv/lib/python3.13/site-packages/nvidia_nvshmem_cu12-3.4.5.dist-info/RECORD": "7a627d8939071037225418f0cc848ee8dbb149d82f5fb33d74e1900649cbd0eb",
+    ".venv/lib/python3.13/site-packages/nvidia_nvtx_cu12-12.8.90.dist-info/RECORD": "1c4cae5ca6bd6c1f87f1e2e91215412ca30626e4b552896dc8317c85f0659257",
+    ".venv/lib/python3.13/site-packages/omegaconf-2.3.0.dist-info/RECORD": "35b8f9051e9326b2cbc7d9cb7ca1b8e7f55504a4404a4937d1d7872063b85e72",
+    ".venv/lib/python3.13/site-packages/openai-2.43.0.dist-info/RECORD": "1bc5863b628189715627f5fc67d068394cab06ef7c0ca705278c9c7e604ed46b",
+    ".venv/lib/python3.13/site-packages/orjson-3.10.18.dist-info/RECORD": "2cfbdb6e6d17c0a65fd9093ff1cae53b8d7ccdb0116caf10a08db2c68b52c395",
+    ".venv/lib/python3.13/site-packages/ormsgpack-1.10.0.dist-info/RECORD": "7004e0fa37dc699509cf3d1e74b84ef73d38a9f0fa73ee9b8c4eee3717199701",
+    ".venv/lib/python3.13/site-packages/packaging-24.2.dist-info/RECORD": "6380eb5ccd0a63402b7f385b0046b52d814fc16dd612011e2f8882a977be03e3",
+    ".venv/lib/python3.13/site-packages/pandas-2.3.3.dist-info/RECORD": "f98bbe459da7ebd5cac8fb09f73a6980cce40e4bac233c08c33a9a180ac47a53",
+    ".venv/lib/python3.13/site-packages/parsel-1.10.0.dist-info/RECORD": "e84dedd007d5a42fc0cad9bc0d85cb9e5a45cf8b8a8d3056cf76bd735191623b",
+    ".venv/lib/python3.13/site-packages/parsimonious-0.10.0.dist-info/RECORD": "1f7c9ea3192ccea72a374245e5f9758121a96687a0913cf10957615f28116238",
+    ".venv/lib/python3.13/site-packages/parso-0.8.7.dist-info/RECORD": "f12d7035431df6048bd4ed5e00a3ff1b3e5821c6201e269ac0ad7f1e643cd9b7",
+    ".venv/lib/python3.13/site-packages/password_strength-0.0.3.post2.dist-info/RECORD": "27212d94d7fec57e71a083f16885b5ddda72a25683454a15ffb5fe1ce3755d5e",
+    ".venv/lib/python3.13/site-packages/patsy-1.0.2.dist-info/RECORD": "52fe5e119973ee0ec77c4994b43a387a4af2d02e2e718a41c859a05772d35da2",
+    ".venv/lib/python3.13/site-packages/peewee-3.18.1.dist-info/RECORD": "40ce667be72f90cf5864691405c1d9ef5f8ea1ff7ee83c53e3047dd4d5aa52cd",
+    ".venv/lib/python3.13/site-packages/pexpect-4.9.0.dist-info/RECORD": "18d1ff314a7a49821e1907a870b096a1aa90c0e726f99858d0da77043343a3ac",
+    ".venv/lib/python3.13/site-packages/pillow-12.2.0.dist-info/RECORD": "95f9bebed843ba67125504538496f258c0918d886cc4e381521f7f6a5be9d9e8",
+    ".venv/lib/python3.13/site-packages/platformdirs-4.3.8.dist-info/RECORD": "1ccfaf93cd6f38f3793dc0e833650a6a963256aba753a4ae3129a6d635764562",
+    ".venv/lib/python3.13/site-packages/plotly-6.8.0.dist-info/RECORD": "0b1cd44de9950b735f4e0402be3cadb0a128e840918d242b29b9410ce19f03de",
+    ".venv/lib/python3.13/site-packages/pluggy-1.6.0.dist-info/RECORD": "a42a63bcba12ddb7e7db19158c8d05d8fc41d51f48686b411ad3a0213fbd7721",
+    ".venv/lib/python3.13/site-packages/posthog-7.35.4.dist-info/RECORD": "85f2602f3b34ca53d39971d10aa1b6482a5755fe2a6727e86bff3617e0a2bde2",
+    ".venv/lib/python3.13/site-packages/prompt_toolkit-3.0.51.dist-info/RECORD": "6239806647e4722eb41594ed3ca4ad772b7d0238b21bb2ae7c1644fa223614c8",
+    ".venv/lib/python3.13/site-packages/propcache-0.3.2.dist-info/RECORD": "df6a8820562f5ff27a546fc8e5aec3d697afb088ae36329d18c014a6b22283c3",
+    ".venv/lib/python3.13/site-packages/protobuf-5.29.5.dist-info/RECORD": "d6b0cad882431fa67f71d6b908cf6c771b5f26b5096291adccfd23a95e9bb7c6",
+    ".venv/lib/python3.13/site-packages/psutil-7.2.2.dist-info/RECORD": "2af7e87b12ad6542c1eaaf20a299c109fa09b9dc5d69faf745219bd61e8cfca6",
+    ".venv/lib/python3.13/site-packages/ptyprocess-0.7.0.dist-info/RECORD": "c4033a1a5bbd4f0aabc0b7f57aae33d735a97680c439581546f0a952654f1947",
+    ".venv/lib/python3.13/site-packages/pure_eval-0.2.4.dist-info/RECORD": "a7827467bcdf9877f51deaf911c479feca74b4123dd93953acdc5a155347b933",
+    ".venv/lib/python3.13/site-packages/pyarrow-23.0.1.dist-info/RECORD": "c9c8c671c2d17d882e3a75641980c687e635c0c741544cefe8f375ed47ae46fd",
+    ".venv/lib/python3.13/site-packages/pyasn1-0.6.1.dist-info/RECORD": "5e5a94b4c83183a77e092f3b2514bb8724bbded3e279a94b45055730cd852046",
+    ".venv/lib/python3.13/site-packages/pyasn1_modules-0.4.2.dist-info/RECORD": "6645737688eada1bc4448276028ef35d5a1132cf61f292667af044f0d8703b24",
+    ".venv/lib/python3.13/site-packages/pycoingecko-3.2.0.dist-info/RECORD": "d4e7327b7dcfe27e00b90766839faa7973a6e7d146201adcebf2abf01b3eda4d",
+    ".venv/lib/python3.13/site-packages/pycparser-2.22.dist-info/RECORD": "596c6bfadedc7e0bca5552f567f5d0301ffb7c41e6688e295e737c7ea5237734",
+    ".venv/lib/python3.13/site-packages/pycryptodome-3.23.0.dist-info/RECORD": "56fa05cd571fc45ef933c9af4b88604cab46aef8ef2bf1ef5c9a1c17e5550994",
+    ".venv/lib/python3.13/site-packages/pydantic-2.11.7.dist-info/RECORD": "59eced72f5a0b05f28fc9bc4606cd191852a7569c541bc566bb36b9aef106710",
+    ".venv/lib/python3.13/site-packages/pydantic_core-2.33.2.dist-info/RECORD": "3aa3d46804a5b6317abf020d709c8efc3c318b3b7d79ad13b942c1bf86fd6557",
+    ".venv/lib/python3.13/site-packages/pydantic_settings-2.14.1.dist-info/RECORD": "74d66ad2dfbc07d8ca286dea7dfcf504e3539ff48af60c730d3b5a7bfea11dd1",
+    ".venv/lib/python3.13/site-packages/pydeck-0.9.2.dist-info/RECORD": "949d7b09198970bce5e29fa88cbc36b623051f4108e6a8c911c86c70333080c1",
+    ".venv/lib/python3.13/site-packages/pygments-2.19.1.dist-info/RECORD": "b4a97acf41e56b804c295ce5fc9838e22df5698e2bda53ef49ae65e93935d728",
+    ".venv/lib/python3.13/site-packages/pyparsing-3.3.2.dist-info/RECORD": "239325f438cc3542c4d936b77d4539132f7db3b83d55bf9b811db76cce83f0ee",
+    ".venv/lib/python3.13/site-packages/pytest-9.1.1.dist-info/RECORD": "ab27395734388e0bed04a76b27884ebe92cff474ef5c009480404990dfa0d068",
+    ".venv/lib/python3.13/site-packages/pytest_subtests-0.15.0.dist-info/RECORD": "690dda795f4f5333a79500565dea6f515fd17c2d837b1b927ae9034de4927ed1",
+    ".venv/lib/python3.13/site-packages/python_binance-1.0.37.dist-info/RECORD": "b74077df2f54a863d03526c121f037836c431b1eb98e52ab1c0a4772778c410c",
+    ".venv/lib/python3.13/site-packages/python_dateutil-2.9.0.post0.dist-info/RECORD": "e15e868a50b9c4e71df17b31369843617780146ac5adb1bbfdcced0ebe501824",
+    ".venv/lib/python3.13/site-packages/python_dotenv-1.1.0.dist-info/RECORD": "9815d1ed46797c2836b4fe204be00f86ed7e51920bd5d590d47c3b5fd698ee27",
+    ".venv/lib/python3.13/site-packages/python_multipart-0.0.18.dist-info/RECORD": "4837a6669d019f83c8aaec7a8d238b6dd3c92028281e648f796e99b50387c4f2",
+    ".venv/lib/python3.13/site-packages/pytz-2025.2.dist-info/RECORD": "d625b2a6f2c0e67b1fe611774fb156285d3da6773aa7d7876639dcc51f902c04",
+    ".venv/lib/python3.13/site-packages/pyunormalize-17.0.0.dist-info/RECORD": "d0fbeaeb9b6a3d8cc9f3ffea0a5f984ac64018d624746e78fb9be003372bc2b5",
+    ".venv/lib/python3.13/site-packages/questionary-2.1.0.dist-info/RECORD": "ca463e4ee8d5b8a554bdfddbc8ba28fc81dd53968821c53076646108f5c747cb",
+    ".venv/lib/python3.13/site-packages/rank_bm25-0.2.2.dist-info/RECORD": "7d17227da3ac2193068854f1f82c7bed75d92c76b7019df0ea506077d0880a41",
+    ".venv/lib/python3.13/site-packages/raphtory-0.17.0.dist-info/RECORD": "e6afbeaa80b3f20fb93fb6b2fd3653885b27068610644d31802c96cef2f06eba",
+    ".venv/lib/python3.13/site-packages/redis-6.2.0.dist-info/RECORD": "299af5ed45755c74a5f4be4d22d6e24891fdafb1cbe70c57dbd462bb49556615",
+    ".venv/lib/python3.13/site-packages/referencing-0.37.0.dist-info/RECORD": "d7ecf9906a4a4ea4837d16e324e344f9f00b328570cf695a96a8de46b8766982",
+    ".venv/lib/python3.13/site-packages/regex-2024.11.6.dist-info/RECORD": "b49ac3bb7565d578b365d04eb4a3f4c5ff1689a041978c49eac2afc63c55dca8",
+    ".venv/lib/python3.13/site-packages/requests-2.34.2.dist-info/RECORD": "fc8c5216d0e865d815bd04cc240b5adc5d56f6c3dbe9aef3b4ea3b83d735bdfe",
+    ".venv/lib/python3.13/site-packages/requests_toolbelt-1.0.0.dist-info/RECORD": "fed817b8bd98101990c9bf46cb01dc5ab2771dc039d5581f510fc8aacf415c21",
+    ".venv/lib/python3.13/site-packages/rich-14.0.0.dist-info/RECORD": "b93f10552fadd2f2a3a178bb086996d398dfcc15a7e6146aebcbee29502b4848",
+    ".venv/lib/python3.13/site-packages/rlp-4.1.0.dist-info/RECORD": "4869bb4710938ab80aca363edc5d58a16696a919e6532c83d6ae494e55489bd3",
+    ".venv/lib/python3.13/site-packages/rpds_py-2026.5.1.dist-info/RECORD": "28c797b773bea7ca933727e0ffe276dcb3ca9d0fa684891dd7d4a9dfe9b9f397",
+    ".venv/lib/python3.13/site-packages/ruff-0.16.1.dist-info/RECORD": "0d94b25cb4a4cbbe668510eb9af62fc6bbd6db75c29672606548c75c5fc0c497",
+    ".venv/lib/python3.13/site-packages/safetensors-0.8.0.dist-info/RECORD": "c5110881c0c39a4f163a23b2ccc88cad19ce1823b6dce1ceef353d33f16c004b",
+    ".venv/lib/python3.13/site-packages/scikit_learn-1.7.2.dist-info/RECORD": "17cdd73c553fd3ed84bdb6e95ea1bb15063c20aebbafa1c91f5f8534d0c8dd72",
+    ".venv/lib/python3.13/site-packages/scipy-1.17.1.dist-info/RECORD": "9629674f1d2e09c61114b1742964d0e99c9815a19f2c2095bc37be3957d3f7c2",
+    ".venv/lib/python3.13/site-packages/setuptools-80.9.0.dist-info/RECORD": "d05f27232d4390e8dacd30244d75bc805e7e611710402e89e4962e7a9ed3dcfb",
+    ".venv/lib/python3.13/site-packages/shellingham-1.5.4.dist-info/RECORD": "2a878ed08ec32adc6b08a9b6a83754cd7c30ffb8a67e26527292456da9ff2fee",
+    ".venv/lib/python3.13/site-packages/six-1.17.0.dist-info/RECORD": "d16e50f347969b1e1919fb0c88bac4b9c644f5305bcfcfb00f72b646dbd4065d",
+    ".venv/lib/python3.13/site-packages/smmap-5.0.3.dist-info/RECORD": "e0be5b36472d7e88192f32c26612bf97eb4162bb1e7f76fc7feb8cc671817358",
+    ".venv/lib/python3.13/site-packages/sniffio-1.3.1.dist-info/RECORD": "e6c97953661def7ab6dac78f83c86f31e622bee38ff55ea508cb04e1a604d4ff",
+    ".venv/lib/python3.13/site-packages/soupsieve-2.7.dist-info/RECORD": "6638a7a1a44936f2dfbd868f5c61af55801601d1d30604ddcfcce90bc4095106",
+    ".venv/lib/python3.13/site-packages/sqlalchemy-2.0.41.dist-info/RECORD": "54fc3151a8f645827c3ffb68aeba27cbf10ba50c5c12efbd2ba58de80d64f04d",
+    ".venv/lib/python3.13/site-packages/sseclient_py-1.9.0.dist-info/RECORD": "be39d6ab58f3f94e7c27257f6d5b43220d7f9755828342dba3f901e6e923edea",
+    ".venv/lib/python3.13/site-packages/stack_data-0.6.3.dist-info/RECORD": "522b69b3fb8bc2aba2e176a824f62b51cda7c3c30e78abbf9ebf90ce5e3cb615",
+    ".venv/lib/python3.13/site-packages/starlette-0.41.3.dist-info/RECORD": "5085a75a728cd69328c9adb0c50e856fc5c960cc8b2a93dff9030fb56bcbc638",
+    ".venv/lib/python3.13/site-packages/statsmodels-0.14.6.dist-info/RECORD": "b3902bf83d2a13d4a983ae539ee9bdc0441b1d237cfc82630bafabc061e5406d",
+    ".venv/lib/python3.13/site-packages/stockstats-0.6.5.dist-info/RECORD": "03d04df40f1774547d9578f847dbae7267c4f2227825c999a092c870cf616439",
+    ".venv/lib/python3.13/site-packages/streamlit-1.58.0.dist-info/RECORD": "c1d41c4c1e1449fa1bd807075dbcd31d4d74a33a1ef9598466cf789ca69a2f80",
+    ".venv/lib/python3.13/site-packages/sympy-1.14.0.dist-info/RECORD": "9cf130853eb5f13ec0e984d7c1bd27a1cc172c42269387ad744964a2016d9fee",
+    ".venv/lib/python3.13/site-packages/tabpfn-8.2.0.dist-info/RECORD": "68a1e4d5ff514dc5a8418546a23266cad2f2f8974bdd4a25212b770a2a576651",
+    ".venv/lib/python3.13/site-packages/tabpfn_client-0.3.3.dist-info/RECORD": "177ddc2905a7771fb91f12122f43bcc5ee8e658f4952ebd0701b01cd8a1a748d",
+    ".venv/lib/python3.13/site-packages/tabpfn_common_utils-0.2.19.dist-info/RECORD": "3850334acab445cf3c4492ea60b62ddc0ed63cf649673cb91bbab1bc6edd3a02",
+    ".venv/lib/python3.13/site-packages/tabpfn_time_series-1.2.0.dist-info/RECORD": "a11e9cb6a2c0aee2774b50b8a78899e36d498c779e883690729d811dfc3ea7ce",
+    ".venv/lib/python3.13/site-packages/tenacity-9.1.2.dist-info/RECORD": "864f76fb8274f6e01641f01906dfddb1cc783a9c6c5f966b3d181084ae725e65",
+    ".venv/lib/python3.13/site-packages/threadpoolctl-3.6.0.dist-info/RECORD": "21fd60a7b59ad0785db0d87b7f45a58b9c6961097749168c577efa5b1619e95e",
+    ".venv/lib/python3.13/site-packages/tiktoken-0.9.0.dist-info/RECORD": "aa8ef6fc105d6f68e56c83ab33129a837304737ef8ef292b1f65978c6855956e",
+    ".venv/lib/python3.13/site-packages/tokenizers-0.22.2.dist-info/RECORD": "f6cf016a34d1eb2dbf38bb6b0896b18f1d81651c97ddf514674a42ec3e958bc7",
+    ".venv/lib/python3.13/site-packages/toml-0.10.2.dist-info/RECORD": "a19cbd4c019b3ba4ecd931e230565a8067a6c1e8ad6a9bce0c9483019f63d2c8",
+    ".venv/lib/python3.13/site-packages/toolz-0.12.1.dist-info/RECORD": "163d4a7e372337864e8053c328acaa6983a5032a0685aafd962d14bd3de5b9b0",
+    ".venv/lib/python3.13/site-packages/torch-2.10.0.dist-info/RECORD": "09ef0ab1a4fff112c7a4b89833884ab834d93f5f496cffce357c5d96a6ad11f6",
+    ".venv/lib/python3.13/site-packages/tqdm-4.67.1.dist-info/RECORD": "255d48a76bb26bfe2889357cb21fab7ad26a431ed1d3c5c42b86903d174f2f13",
+    ".venv/lib/python3.13/site-packages/tradingagents-0.2.3.dist-info/RECORD": "95919b2769311dbfcd1833fe7d0656a575ece9c956a40d632dc4c8a067df5af8",
+    ".venv/lib/python3.13/site-packages/traitlets-5.16.1.dist-info/RECORD": "aff43c4596f0dbd321faaca9fe02b93fb1e62b8ff070763cd77ad26a97fc084f",
+    ".venv/lib/python3.13/site-packages/transformers-4.57.6.dist-info/RECORD": "faa96ae7e1e08de9d55bead130ab139b06ace48cee7fad493a882e7e4bfba879",
+    ".venv/lib/python3.13/site-packages/triton-3.6.0.dist-info/RECORD": "384a93cdbdf89ab3aea38b211a2adacf8b7692759abc55bcf813564b07c8143e",
+    ".venv/lib/python3.13/site-packages/typer-0.21.1.dist-info/RECORD": "7390da72cfe2dd97628b0d637b755e85fd5242e92c70597d6699a0d254661368",
+    ".venv/lib/python3.13/site-packages/types_requests-2.33.0.20260518.dist-info/RECORD": "d670718ee163d35b22f9d80f9ab0c92793891aa854b068f135c9dda9f0c57b78",
+    ".venv/lib/python3.13/site-packages/typing_extensions-4.14.0.dist-info/RECORD": "4c9465bbd3be594c0ae7982f5e15b4e3bb1aa93dd8803fa2b76affdd51449c0a",
+    ".venv/lib/python3.13/site-packages/typing_inspection-0.4.1.dist-info/RECORD": "48679c9cfea1b88f49d2d44471e0d7a89a085f9f1f989a403cd1fb385b757a56",
+    ".venv/lib/python3.13/site-packages/tzdata-2025.2.dist-info/RECORD": "76a128e52ea3ec3a4cf92ca4dbca2af66b7d29ecc6e7e6d42fef0173eb996b86",
+    ".venv/lib/python3.13/site-packages/tzlocal-5.4.3.dist-info/RECORD": "a3982aa748f7a45ae370fa6751eca4cec765e71fb0ebf41107ce71fa5237c6b5",
+    ".venv/lib/python3.13/site-packages/urllib3-2.4.0.dist-info/RECORD": "feeed2b03621e8b47673dc07eb02cccc313a24a8ef3a38839413f04857647668",
+    ".venv/lib/python3.13/site-packages/uuid_utils-0.14.0.dist-info/RECORD": "7f88cec8f8c927ba75bb01631b63450d91b0bcade2be31fab02d686b3b901991",
+    ".venv/lib/python3.13/site-packages/uvicorn-0.34.3.dist-info/RECORD": "6f64a3b712108a9f0d98fa47c2494d65b2c409743d52c209259aba007e372909",
+    ".venv/lib/python3.13/site-packages/w3lib-2.3.1.dist-info/RECORD": "ba28664b04e401485b0ad176b223a14e6428c659722754bcb36ef80831b7ddd5",
+    ".venv/lib/python3.13/site-packages/watchdog-6.0.0.dist-info/RECORD": "ddf4e5b51cb12b3d040942a185b466401020beedfbe8b5ae4ac5eabf3fba8f4f",
+    ".venv/lib/python3.13/site-packages/wcwidth-0.2.13.dist-info/RECORD": "ba851d41a7e0e86db75e37e49bae350e113ec9c66c371dbf985ecd0bba3851b9",
+    ".venv/lib/python3.13/site-packages/web3-7.16.0.dist-info/RECORD": "c285d39bbe2350f0a68bcf2dcc49fb60c9e00587545f422776837e59b1905f40",
+    ".venv/lib/python3.13/site-packages/websockets-15.0.1.dist-info/RECORD": "fcbffda9cae388c82f14196c02ae7ee13a07616db944cf8f683f98523cf5131e",
+    ".venv/lib/python3.13/site-packages/widgetsnbextension-4.0.16.dist-info/RECORD": "24f2c12d7c7783bae3c5ed30724e755543ceb55f528aad9871356306f7a7071a",
+    ".venv/lib/python3.13/site-packages/wrapt-2.3.0.dist-info/RECORD": "2f3682429178b81bb701da6a1a3ab90ba00b8b21785e2c33438ddc16c1e4fe5a",
+    ".venv/lib/python3.13/site-packages/xgboost-3.3.0.dist-info/RECORD": "458dd82aadec7e2fe22d236a5e0c14fe0c0d68f1880d1cd3856d27e76b360ba3",
+    ".venv/lib/python3.13/site-packages/xxhash-3.5.0.dist-info/RECORD": "9b2a49424d3fd505b12913f6a92bf8a65cbcc2264505f1705079880f07daf501",
+    ".venv/lib/python3.13/site-packages/yarl-1.20.1.dist-info/RECORD": "c619a60b188eeb44ca4a0c6e1c2871a050ea969f53f88c20f634b06c75682acc",
+    ".venv/lib/python3.13/site-packages/yfinance-0.2.63.dist-info/RECORD": "9a8130e2a791fb3384499234840f986dd675bb90055c9f838ea167274f551c8e",
+    ".venv/lib/python3.13/site-packages/zstandard-0.23.0.dist-info/RECORD": "96fa0ae5386e9f5278b1091c144921536b64851d312b303c0683ea4c4b9a4049"
+  },
+  "scope": "Reconstructible package download/unpack cache only; installed package and all research stores retained. No financial registration or paper claim."
+}

@@ -1,0 +1,38 @@
+{
+  "actual_full30_and_recovered_three_metadata_joins": true,
+  "current_original_get_stat_mode_joins": 6,
+  "decision": "pass",
+  "inactive_or_execute_invoked": false,
+  "installed_sources_byte_exact": true,
+  "literal_inverse_edits": 14,
+  "manifest_sha256": "7a0d3325fd0a09b631176abd7eb4eec97ec74c8c6280886f450937e75748ff23",
+  "network_native_git_or_deletion": false,
+  "payload_reads": 0,
+  "recorded_pids_absent": 64,
+  "refusals": [
+    {
+      "case": "original-as-delete",
+      "reason": "only exact failed-scope duplicate gets allowed"
+    },
+    {
+      "case": "wrong-index",
+      "reason": "fixed three indices differ"
+    },
+    {
+      "case": "null-outcome",
+      "reason": "actual exact recovery ref required"
+    },
+    {
+      "case": "wrong-identity",
+      "reason": "fixed selection differs"
+    },
+    {
+      "case": "wrong-content",
+      "reason": "original/get content join differs"
+    },
+    {
+      "case": "wrong-stat",
+      "reason": "selected stat/mode/nlink differs"
+    }
+  ]
+}

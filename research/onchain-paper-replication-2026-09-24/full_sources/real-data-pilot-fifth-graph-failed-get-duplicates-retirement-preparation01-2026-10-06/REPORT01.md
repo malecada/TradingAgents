@@ -1,0 +1,19 @@
+# Failed May30 recovered-duplicate retirement candidate
+
+Candidate only: fixed one-use identity `real-pilot-fifth-graph-failed-get-duplicates-retirement-20261006-01`. Exact permitted removals are backup `15-recovered.bin` (3,189,231,616 bytes), `23-recovered.bin` (38,817,824), and `24-recovered.bin` (50,606,240), totaling **3,278,655,680 bytes**. Original ledger and both partial arrays remain and are stat-checked before and after removal. The original graph stays FAILED; source COMPLETE 7,507,236 rows and graph UNAVAILABLE are required, together with Root1/native125/cleanup-stop0. No ledger-pair retirement is required or permitted by this candidate.
+
+Fourteen exact transformations of accepted fourth-graph get-retirement source are recorded with reverse reconstruction. The existing one-use reservation, active native/registered consumer refusal, canonical single-link current-stat checks, held file descriptors/flocks, unlink-directory-sync, fatal close handling and failure-evidence preservation remain. `recovery` now binds the actual full30 backup, original failed disposition and the exact recovered-three hash/stat proof253c690d. Independent review c6edefef was used for a bounded positive metadata check; its accepted status does not approve this new deletion source.
+
+`prepare01.py` emits a DRAFT selection. With no arguments, the independent review ref remains null and retirement refuses. With the exact review path/hash, it authenticates the current joins but still emits DRAFT_NOT_RELEASED and null release/committed-source/remote-readback fields. No proof or authority is fabricated. Root may install byte-identical source/helper to the fixed fresh destination, generate the exact selection, obtain different-author source+selection release, and set FROZEN_FOR_REVIEW only after that concrete binding. The required machine release uses decision=accepted, retirement_identity, entry_sha256, retire_only_three_verified_failed_payload_get_duplicates=true, selection={path,sha256}, and exact evidence map.
+
+Root must commit the source/selection/release, push and actually read back that exact commit before the sole execution, following the reused retirement procedure. Git/remote verification is an external Root operational precondition inherited from that procedure; this small helper does not itself implement a new Git/network admission layer. Fresh active-reference/native/current-stat checks occur in execute. Historical full recovery is an explicit storage assumption; no present remote availability is asserted. All other recovered files and originals remain.
+
+Focused check cc4278 exited0: exact inverse; null outcome refusal; original path cannot be selected for removal; old wrong index refusal; actual independent full30 review/three-body proof/current-stat joins passed. No payload bytes, hashes, array headers or SQLite contents were read; no systemctl/inactive check or execute was called. No retirement, external operation or empirical claim occurred. Initial metadata lookup fc2ad6 used nonexistent selection.json and failed before mutation; actual fixed name is selection01.json.
+
+Root preparation command (stdout is only a draft; use a fresh Root-owned output):
+
+```sh
+.venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph-failed-get-duplicates-retirement-preparation01-2026-10-06/prepare01.py research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph-failed-preservation-outcome-review01-2026-10-06/REVIEW01.json c6edefef9784b60ea8ad1ba331f0d12e7f6dea9add644517969f0800fc68a785
+```
+
+After genuine release and Root commit/readback, installed `retire01.py` takes exactly the release path and its SHA. It never hashes either original or recovered scientific bodies again; exact previously verified stats and immutable compact proof hashes are required.

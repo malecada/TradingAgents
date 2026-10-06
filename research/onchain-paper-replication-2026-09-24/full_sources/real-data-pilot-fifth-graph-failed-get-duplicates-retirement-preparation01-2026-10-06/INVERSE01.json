@@ -1,0 +1,65 @@
+{
+  "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fourth-graph-get-duplicates-retirement01-2026-10-06/retire01.py",
+  "baseline_sha256": "4aa566c261529e8e1e665f3b40edc59f06d1d6ddf1dc56ac7a7b3f1fa0dc9fa7",
+  "candidate_sha256": "2899e5f24c545224514a2eb53d4ad7591e388bdb39f5655204b541c8dc338705",
+  "edits": [
+    {
+      "before": "exactly five verified May23 array get duplicates",
+      "after": "exactly three verified FAILED May30 payload get duplicates"
+    },
+    {
+      "before": "ID='real-pilot-fourth-graph-get-duplicates-retirement-20261006-01'",
+      "after": "ID='real-pilot-fifth-graph-failed-get-duplicates-retirement-20261006-01'"
+    },
+    {
+      "before": "BACKUP='research/onchain-paper-replication-2026-09-24/storage/real-pilot-fourth-graph-preservation-20261006-01'",
+      "after": "BACKUP='research/onchain-paper-replication-2026-09-24/storage/real-pilot-fifth-graph-failed-preservation-20261006-01'"
+    },
+    {
+      "before": "INDICES=(21,22,23,25,26)",
+      "after": "INDICES=(15,23,24)"
+    },
+    {
+      "before": "ORIGINAL_PARENT='research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23'",
+      "after": "GRAPH='eth-paper-real-pilot-graph-20220530-20261005-01'\nORIGINAL_PARENT='research_artifacts/onchain-paper-replication-2026-09-24/sources/'+GRAPH\nORIGINALS={15:(ORIGINAL_PARENT+'/aggregation/ledger.sqlite',3189231616),\n    23:(ORIGINAL_PARENT+'/graph-2022-05-30/edge_index.npy',38817824),\n    24:(ORIGINAL_PARENT+'/graph-2022-05-30/node_features.npy',50606240)}\nPARENT_RUN='research_artifacts/onchain-paper-replication-2026-09-24/runs/'+GRAPH\nPARENT_CALLER='research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph01-2026-10-06'\nBODY_PROOF='research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph-failed-recovered-bodyproof01-2026-10-06/RECOVERED_PAYLOAD_HASH01.json'\nBODY_PROOF_SHA='253c690d494afbcf413ce60518b3d4637c15f0a7a74ceee6f20cdce08b5df586'"
+    },
+    {
+      "before": "c['count']==5\n        and c['retire_bytes']==501845112 and len(c['rows'])==5",
+      "after": "c['count']==3\n        and c['retire_bytes']==3278655680 and len(c['rows'])==3"
+    },
+    {
+      "before": "'fixed five indices differ'",
+      "after": "'fixed three indices differ'"
+    },
+    {
+      "before": "Path(original['path']).parent==Path(ORIGINAL_PARENT) and original['path'].endswith('.npy')",
+      "after": "(original['path'],original['bytes'])==ORIGINALS[n]"
+    },
+    {
+      "before": "'only exact array gets allowed'",
+      "after": "'only exact failed-scope duplicate gets allowed'"
+    },
+    {
+      "before": "len(set(originals))==len(set(gets))==5",
+      "after": "len(set(originals))==len(set(gets))==3"
+    },
+    {
+      "before": "def recovery(root,c):\n    basis=c['recovery_basis']\n    require(type(basis) is dict and set(basis)=={'outcome_review','ledger_complete','ledger_root','ledger_entry'},'actual recovery/retirement refs required')\n    def bound(ref):\n        require(type(ref) is dict and set(ref)=={'path','sha256'} and c['evidence'].get(ref['path'])==ref['sha256'],'actual exact recovery ref required')\n        return json.loads(metadata(root,ref['path'],ref['sha256']))\n    def receipt(name):\n        path=BACKUP+'/'+name\n        require(path in c['evidence'],'actual backup receipt missing')\n        return json.loads(metadata(root,path,c['evidence'][path]))\n    outcome=bound(basis['outcome_review'])\n    require(outcome['decision']=='accepted' and outcome['identity']==Path(BACKUP).name\n        and outcome['full_scope_byte_recovery'] is True,'actual full36 BYTE acceptance required')\n    for name in ('complete.json','recovered-complete.json','guard01/final.json','outer-exit01.json','ROOT_TERMINAL01.json'):\n        path=BACKUP+'/'+name\n        require(path in c['evidence'] and outcome['evidence'].get(path)==c['evidence'][path],'independent backup evidence join differs')\n    complete=receipt('complete.json')\n    require(complete==receipt('recovered-complete.json') and complete['identity']==Path(BACKUP).name\n        and complete['count']==len(complete['files'])==36 and complete['originals_retained'] is True\n        and complete['recoveries_retained'] is True,'complete36 backup differs')\n    require(receipt('ROOT_TERMINAL01.json')['actual_root_tool_exit_code']==0,'actual backup Root zero required')\n    for row in c['rows']:\n        kept=json.loads(metadata(root,row['kept'],c['evidence'][row['kept']]))\n        require(complete['files'][row['index']]==kept,'selected get/full36 join differs')\n    entry=basis['ledger_entry']\n    require(type(entry) is dict and set(entry)=={'path','sha256'}\n        and entry['sha256']=='ff206eb781a5755c85da234d5f6dd6d9fb2d6e85bb47aea64cb1bc246a27b4c1'\n        and c['evidence'].get(entry['path'])==entry['sha256'],'exact reviewed ledger entry required')\n    metadata(root,entry['path'],entry['sha256'])\n    retired=bound(basis['ledger_complete']);root_exit=bound(basis['ledger_root'])\n    require(retired['identity']=='real-pilot-fourth-graph-ledger-retirement-20261006-01'\n        and retired['preservation_backup']==Path(BACKUP).name and retired['payload_bytes_retired']==6437658624\n        and retired['arrays_retained'] is True and retired['removed']==c['removed_ledger_paths']\n        and root_exit['actual_root_exit_code']==0 and root_exit['complete_sha256']==basis['ledger_complete']['sha256'],\n        'actual exact ledger-pair retirement and Root zero required')\n",
+      "after": "def recovery(root,c):\n    basis=c['recovery_basis']\n    require(type(basis) is dict and set(basis)=={'outcome_review','recovered_body_proof'},'actual recovery refs required')\n    def bound(ref):\n        require(type(ref) is dict and set(ref)=={'path','sha256'} and c['evidence'].get(ref['path'])==ref['sha256'],'actual exact recovery ref required')\n        return json.loads(metadata(root,ref['path'],ref['sha256']))\n    def receipt(path):\n        require(path in c['evidence'],'actual receipt missing')\n        return json.loads(metadata(root,path,c['evidence'][path]))\n    outcome=bound(basis['outcome_review'])\n    require(outcome['decision']=='accepted' and outcome['identity']==Path(BACKUP).name\n        and outcome['full_scope_byte_recovery'] is True,'actual full30 BYTE acceptance required')\n    joined=[BACKUP+'/'+n for n in ('selection01.json','complete.json','recovered-complete.json','guard01/final.json','outer-exit01.json','ROOT_TERMINAL01.json')]\n    joined += [BODY_PROOF,'research_runs/'+GRAPH+'/failed.json',PARENT_RUN+'/postmortem-cells.json',\n        PARENT_RUN+'/guard/final.json',PARENT_CALLER+'/ROOT_TERMINAL01.json',PARENT_CALLER+'/outer-exit01.json']\n    joined += [r['kept'] for r in c['rows']]\n    for path in joined:\n        require(path in c['evidence'] and outcome['evidence'].get(path)==c['evidence'][path],'independent recovery evidence join differs')\n    complete=receipt(BACKUP+'/complete.json'); selection=receipt(BACKUP+'/selection01.json')\n    require(complete==receipt(BACKUP+'/recovered-complete.json') and complete['identity']==Path(BACKUP).name\n        and complete['count']==len(complete['files'])==selection['count']==30\n        and complete['selection']==selection and complete['originals_retained'] is True\n        and complete['recoveries_retained'] is True,'complete30 failed-scope backup differs')\n    require(selection['graph_terminal_status']=='failed','failed parent selection required')\n    root_exit=receipt(BACKUP+'/ROOT_TERMINAL01.json')\n    require(root_exit['actual_root_tool_exit_code']==0 and root_exit['actual_parent_exit_code']==0\n        and root_exit['complete_sha256']==c['evidence'][BACKUP+'/complete.json']\n        and root_exit['actual_current_cgroup_absent'] is True and root_exit['selected_recorded_pids_absent'] is True,\n        'actual backup Root zero/cleanup required')\n    pids=root_exit['selected_recorded_pids'];require(type(pids) is list and pids and all(type(p) is int and p>0 and not Path('/proc',str(p)).exists() for p in pids),'recorded backup PID remains or unknown')\n    failed=receipt('research_runs/'+GRAPH+'/failed.json'); cells=receipt(PARENT_RUN+'/postmortem-cells.json')\n    parent=receipt(PARENT_CALLER+'/ROOT_TERMINAL01.json'); native=receipt(PARENT_RUN+'/guard/final.json')\n    require(failed['status']=='failed' and failed['experiment_id']==GRAPH and failed['output_sha256']=={}\n        and cells==selection['graph_terminal_cells'] and len(cells)==2\n        and cells[0]['id']=='source-000000' and cells[0]['status']=='complete' and cells[0]['rows']==7507236\n        and cells[1]['id']=='graph-2022-05-30' and cells[1]['status']=='unavailable', 'original FAILED/source COMPLETE/graph UNAVAILABLE differs')\n    require(parent['actual_root_tool_exit_code']==parent['actual_parent_exit_code']==1\n        and receipt(PARENT_CALLER+'/outer-exit01.json')['exit_code']==1\n        and native['phase']=='failed' and native['child_exit_code']==125\n        and native['cleanup_stop_returncode']==0 and native['cleanup_verified'] is True\n        and not Path(native['cgroup']).exists(),'original failed cleanup/disposition differs')\n    require(not (root/'research_runs'/GRAPH/'complete.json').exists()\n        and not (root/ORIGINAL_PARENT/'graph-2022-05-30/manifest.json').exists()\n        and not (root/ORIGINAL_PARENT/'aggregation/complete.json').exists(),'failed graph cannot become complete')\n    require(basis['recovered_body_proof']=={'path':BODY_PROOF,'sha256':BODY_PROOF_SHA},'exact actual three-body proof required')\n    proof=bound(basis['recovered_body_proof'])\n    require(proof['decision']=='pass' and proof['total_bytes']==3278655680\n        and proof['selection_sha256']==c['evidence'][BACKUP+'/selection01.json']\n        and tuple(r['index'] for r in proof['files'])==INDICES,'recovered body proof scope differs')\n    for row,pr in zip(c['rows'],proof['files']):\n        kept=receipt(row['kept'])\n        require(complete['files'][row['index']]==kept,'selected get/full30 join differs')\n        require(pr['original_path']==row['original']['path'] and pr['recovered_path']==row['recovered']['path']\n            and all(pr[k]==row['recovered'][k] for k in ('bytes','sha256','mode','stat_identity')),\n            'actual recovered byte/stat proof join differs')\n"
+    },
+    {
+      "before": "review['retire_only_five_verified_array_get_duplicates']",
+      "after": "review['retire_only_three_verified_failed_payload_get_duplicates']"
+    },
+    {
+      "before": "    for relative in c['removed_ledger_paths']:require(not os.path.lexists(ROOT/relative),'retired ledger reappeared')\n",
+      "after": ""
+    },
+    {
+      "before": "'original_arrays_retained':True",
+      "after": "'original_failed_ledger_and_two_partial_arrays_retained':True,'original_parent_status':'failed','original_graph_status':'unavailable'"
+    }
+  ],
+  "deletion_inverse_anchor": "    recovery(ROOT,c)\\n",
+  "inverse_exact": true
+}
