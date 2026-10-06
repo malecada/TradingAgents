@@ -1,27 +1,9 @@
 {
-  "actual_readonly_admission": {
-    "at": "2026-10-06T11:53:56.620528+00:00",
-    "effective_attempt_budget": 73,
-    "identity": "eth-paper-real-data-end-to-end-resource-20261006-02",
-    "input_roles": 59,
-    "ready": true,
-    "scope": "Actual committed read-only _admitted on canonical inputs03; no Owner/start/claim/native.",
-    "source": "a6421f8b37f61766e44c93662d8c25e4b00b46c7",
-    "source_pins": 201
-  },
-  "binding_review_sha256": "6ddcc49c306de12fd3c407e660f1c612b6e84220835cf40bc0b2e653a317a90a",
-  "binding_sha256": "a575713be1781fdb03e86d30369c9e4936ae1ae2e9172e2c8f956b915bd0f2c3",
-  "cardinality": {
-    "changed_package_pins": 1,
-    "gate_input_roles": 59,
-    "gate_source_pins": 201,
-    "outputs": 8,
-    "package_pins": 178,
-    "released_unique_references": 321,
-    "sole_opaque_private_exceptions": 1
-  },
-  "conditionality": "Final full entry must authenticate this exact release/publicclosure at current committed HEAD, runtime,genuine admission73,unused02 namespaces,absent competingnative/claims,fresh complete writable union plus unchanged growth and10GiBfloor/9GiBRAMstartup and native controls. Actual Owner/Binding must be genuine; no bypass or outcome success granted.",
-  "decision": "accepted",
+  "binder_inverse_equal": true,
+  "changed_source_pins": [
+    "tradingagents/research/onchain_replication/real_pilot_storage.py"
+  ],
+  "descriptor_joins": true,
   "evidence": {
     "research/onchain-paper-replication-2026-09-24/config/calendar-coinmetrics-v5.json": "21bb348b9c779238b212d0e4074cf806f6a54d0ce3b7713d97bc3ad65d57ef22",
     "research/onchain-paper-replication-2026-09-24/config/dictionary.json": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff",
@@ -39,10 +21,6 @@
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction-review01-2026-10-06/successor02/REVIEW01.json": "12198b426f5082ea0c286272ac5facb1842256ea3f88a6e95579e84a3b837090",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction-review01-2026-10-06/successor02/check01.py": "aa3eaf6db8262eb0e1639864ae18b2cd982bef50c0e78042aea606cee8cda8db",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction-review01-2026-10-06/successor02/close01.py": "5515e7d47001fb26adcdd87b5bdf41bb38731c74621ac4721ba77cb4cbefa35c",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction-review01-2026-10-06/successor03/BINDING_REVIEW01.json": "6ddcc49c306de12fd3c407e660f1c612b6e84220835cf40bc0b2e653a317a90a",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction-review01-2026-10-06/successor03/CHECK01.json": "f0a0ab823991e6e9fbcb71b1786d49011664cdbd82f3630b6f3caab526f67898",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction-review01-2026-10-06/successor03/REVIEW01.json": "c6f5e9b38c35cd3ea1eb803eae96070cfa3f5d0cbe1302f09fb9ad6987e49d48",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction-review01-2026-10-06/successor03/check01.py": "5bf8f2ed97262ee1a8ee59bfdfd44faa9cf04cd3ed149337064ce21e9a8fe5e9",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/candidate/build_inputs03.py": "9c6733e8624ec72bd0e70424d8865eaae514ed4d7c6a0b3f982ed4c20a8b430f",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/archive_control_history.py": "c11835de055bc02cc5c60c8f9866879cae3a3ae696ddb62bff6bfdc998cd4e72",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/chunk_durability.py": "da1fa8d8304a5241cdc44054901ecdf75231b8979569bcb373dec1471fb82f1e",
@@ -64,12 +42,10 @@
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final01-2026-10-06/preflight01.py": "dd345e997b2414021805a87a58313653d89d511d6a9582a40ca20e6c77823785",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final01-2026-10-06/root_io.py": "7daebc5746a6e904af2e8db8ef3874f18cf2e5a6a299447bf9c267a6467e275c",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/ACTUAL_READONLY_ADMISSION02.json": "bf6799fb67f5d38ad16305d84eca75dd6ad4c66b22654bdb7ca74bf282782c7f",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/ACTUAL_READONLY_ADMISSION03.json": "9689820d2b4af4d3455f72715853e80e2541dec9e43acbe8d09869f77385b80e",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/BINDING01.json": "a575713be1781fdb03e86d30369c9e4936ae1ae2e9172e2c8f956b915bd0f2c3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/BINDING01.json": "bfbb7836c5a315189aa365a7921fa8919ffa349d9f16f6d1b841e8819de24188",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/BINDING_DRAFT02.json": "2bc04352b96fddc66585e67617b500107b025d60bf98e8146d2e76c13916b00f",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/BINDING_DRAFT03.json": "a2b9b8da3c0ad3c1edc1b87b9b15105d34741ec42a9aa7292ca2255a74d80c6e",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/BINDING_DRAFT05.json": "4e73cabaedbc2202510ba30a9b18ac4004753b6dfe94e0fb93df25e2a10d91cf",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/BINDING_FINAL02.json": "a575713be1781fdb03e86d30369c9e4936ae1ae2e9172e2c8f956b915bd0f2c3",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/CHARTER01.md": "1c3cb85efa41b87e296f239aea13b535525df4af842e62d735347796c30e7818",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/INPUT_DRAFT03.json": "a305838bdb8d9e9fc559faa910428ef42f777e90b92f2d1fcf7212e07665270a",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/INPUT_DRAFT04.json": "817ea3d4adfa8b8a62889de9dde46a72c53e732f68b2b5e33416f6742fa33f42",
@@ -345,16 +321,7 @@
     "tradingagents/research/onchain_replication/workflow_storage.py": "deff02766685c1e7fb8628766acf0e0c36dc324da4672f3adc094bfac3e24a74",
     "tradingagents/research/verify.py": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce"
   },
-  "identity": "eth-paper-real-data-end-to-end-resource-20261006-02",
-  "not_tested": [
-    "Reviewer did not invoke numerical code, native launch, network, ResearchRun.start or genuine Owner/Binding.",
-    "No timing-leakage,return/cashflow,fees/funding,financial or predictive results tested.",
-    "No full-pilot capacity/throughput/training claim.",
-    "Root actual committed _admitted03 succeeded; final full entry must freshly check committed public closure/current runtime/namespace/process/RAM/disk/writable union/native limits and opaquely authenticate the sole private transport."
-  ],
-  "preflight_sha256": "58f899c0bb4c39dde66c25141f7a3cebb1fe83449a914ea124e4d4d51f2bc902",
-  "protected_input": "Exactly one opaque119689 privatearchive_transport02 exception. Oldprivate01 dropped from public evidence map; protected body not opened. Entry authenticates bytes.",
-  "resolved_findings": [
+  "findings": [
     {
       "file": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/inputs02/archive_policy.json",
       "impact": "Later archive/import exact descriptor validation would fail although _admitted passed.",
@@ -374,11 +341,27 @@
       "status": "resolved_inputs03"
     }
   ],
-  "review_basis": "Prior e7ad/673 immutable source/input acceptance, native-identity5a441, fixedbudget73 and genuine0ca97 recovery reused. Narrow currentGit onebody sourceinverse/reanchor, actual pureprepare, full generated-document/canonical-byte inverse, five descriptor joins, finalbinding and actual current committed _admitted03 checked.",
-  "reviewer": "independent pilot_correction_review",
-  "root_io_sha256": "df2f05f218139b0506e0a6907fd3c4a5b3408ee8c24474ae06a0201146b14168",
-  "runtime_outcomes": null,
+  "generated_whole_doc_transform": "Only both pair_execution SHA fields; every other value unchanged. Exact canonical serialized bytes checked.",
+  "genuine_root_admission02": {
+    "at": "2026-10-06T11:51:43.695626+00:00",
+    "effective_attempt_budget": 73,
+    "identity": "eth-paper-real-data-end-to-end-resource-20261006-02",
+    "input_roles": 59,
+    "ready": true,
+    "scope": "Actual committed read-only _admitted; no Owner/start/claim/native.",
+    "source": "c0cd0ceab8b52f12bbb36448d2c4968e9a44a49f",
+    "source_pins": 201
+  },
+  "git_only_changed_package_body": [
+    "tradingagents/research/onchain_replication/real_pilot_storage.py"
+  ],
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-02",
+  "input_roles": 59,
+  "package_pins": 178,
+  "private_body_read": false,
+  "pure_prepare_equal": true,
   "schema_version": 1,
-  "scientific_or_capacity_claim": false,
-  "scope": "EXACT_CONDITIONAL_SOURCE_AND_METADATA_ENTRY_RELEASE"
+  "source_anchor": "093b5b3a0cb7801906b0d757b1b66870a0899b59",
+  "source_pins": 201,
+  "status": "PASS_NARROW_REANCHOR_AND_EXACT_BYTES"
 }

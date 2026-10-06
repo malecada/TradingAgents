@@ -1,0 +1,45 @@
+{
+  "checks": {
+    "all_descriptor_joins": true,
+    "binder_inverse_equal": true,
+    "exact_canonical_generated_bytes": true,
+    "input_roles": 59,
+    "package_pins": 178,
+    "pure_prepare_equal": true,
+    "source_pins": 201
+  },
+  "decision": "accepted",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-writer-baseline03-2026-10-06/BASELINE04.json": "55099943783c012a903b78e29469b146a62a2a913467c5dc733292f2b12ec2db",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/INPUT_DRAFT04.json": "817ea3d4adfa8b8a62889de9dde46a72c53e732f68b2b5e33416f6742fa33f42",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/PREPARATION_RESULT05.json": "35b624aa4d8ef15524aa3fdf21b8162987ff806836597efd37bad60c4b38cd45",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/TRANSPORT_BINDING02.json": "ce1a74ae8304d0f61384dd57cedf471c2ba6548d88e1dbb3bb0d0afe41c2cf60",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/gate01.json": "e3075c0f52d216020bdbf6b1716bec93acbad60ad0ec25ddaacfb3fdc69c3788",
+    "research_artifacts/real_pilot_runtime/pilot-transport-20261006-02/archive_transport02.json": "1196891f50a9179080ac971552c11cf1df134f450ba42cc4ad009a6e940aa1c0"
+  },
+  "findings": [
+    {
+      "file": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/inputs02/archive_policy.json",
+      "impact": "Later archive/import exact descriptor validation would fail although _admitted passed.",
+      "line": 1,
+      "problem": "Pretty serialization changed admitted hash; both descriptors retained canonical hash.",
+      "resolution": "Preserved inputs02/gate02/admission02; current inputs03 are exact binder.raw bytes, all five descriptor joins now pass.",
+      "severity": "P1",
+      "status": "resolved_inputs03"
+    },
+    {
+      "file": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/inputs02/original_import.json",
+      "impact": "Later archive/import exact descriptor validation would fail although _admitted passed.",
+      "line": 1,
+      "problem": "Pretty serialization changed admitted hash; both descriptors retained canonical hash.",
+      "resolution": "Preserved inputs02/gate02/admission02; current inputs03 are exact binder.raw bytes, all five descriptor joins now pass.",
+      "severity": "P1",
+      "status": "resolved_inputs03"
+    }
+  ],
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-02",
+  "private_input_qualification": "Same public binder digest, fresh protected path stat checked. Private body never opened; mandatory opaque entry hash remains.",
+  "reviewer": "independent pilot_correction_review",
+  "schema_version": 1,
+  "scope": "Current exact six-reference composition after accepted one-literal control source reanchor and canonical input serialization correction. Source178 one control pin only; no science/resources/budget changes. Final binding/release and actual current committed admission/fresh entry remain mandatory."
+}
