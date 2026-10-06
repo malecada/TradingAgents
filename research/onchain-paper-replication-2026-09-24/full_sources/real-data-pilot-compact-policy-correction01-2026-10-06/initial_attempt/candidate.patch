@@ -1,0 +1,10 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-input-builder03-2026-10-06/build_inputs03.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-input-builder03-2026-10-06/build_inputs03.py
+@@ -197,6 +197,7 @@
+     need(store['baseline_allocated_bytes']+allocated_growth<=limits['max_allocated_bytes'] and store['baseline_logical_bytes']+logical_growth<=limits['max_logical_bytes'],'common store allocation exceeded')
+     transport.update(schema_version=2,format='archive-dispatch-v1',typed_payload_input=typed_role,connection=None)
+     # Connection remains a conspicuous invalid template until Root supplies private configuration.
++    selected['descriptor']['compact_execution']={'backend':compact['backend'],'policy_sha256':refs[spec['template_roles']['compact']]['sha256']}
+     selected['descriptor'].update(required_graphs=required,resource_graph_inputs=mapping,original_dictionary_import={'input':selected['original_dictionary_input'],'sha256':sha(raw(control))})
+     item=plan['producers'][selected['producer']];item.update(copy.deepcopy(selected));item['binding_output']=p['outputs']['binding'];item['journal_output']=p['outputs']['journal']
+     docs={spec['template_roles'][key]:value for key,value in [('pilot',p),('population',pop),('job',job),('producer_plan',plan),('dictionary',control),('output',output)]};docs[typed_role]=typed;docs[selected['compact_archive_transport_input']]=transport

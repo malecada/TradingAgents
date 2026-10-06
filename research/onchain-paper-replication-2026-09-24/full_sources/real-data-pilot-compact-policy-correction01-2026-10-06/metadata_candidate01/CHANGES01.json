@@ -1,0 +1,76 @@
+{
+  "status": "CANDIDATE_ONLY_NOT_REGISTERED_NOT_ADMITTED",
+  "historical_identity": "eth-paper-real-data-end-to-end-resource-20261005-01",
+  "historical_state": "FAILED_SPENT_NEVER_REOPEN",
+  "changes": [
+    {
+      "role": "execution_job",
+      "historical_reference": {
+        "bytes": 6143,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final01-2026-10-06/inputs02/execution_job.json",
+        "sha256": "f919deca7912b45b0fa16ded003bf0897cf4b5add9c6591f16d37a10ea5be662"
+      },
+      "candidate_sha256": "a13262888da83922a83050148f379ab16070d3cb25176fd70879136fb6a03536",
+      "candidate_bytes": 6143,
+      "patch": [
+        {
+          "op": "test",
+          "path": "/payload/representation_jobs/original32/descriptor/compact_execution/policy_sha256",
+          "value": "f89dddb0ea710494fe63de22386f2c422ed42738731045e96036508d08be9df9"
+        },
+        {
+          "op": "replace",
+          "path": "/payload/representation_jobs/original32/descriptor/compact_execution/policy_sha256",
+          "value": "fedb41e0f7828117ec401e15698c77433dd765da9f274487d0ddc4fddc06435b"
+        }
+      ],
+      "inverse": [
+        {
+          "op": "test",
+          "path": "/payload/representation_jobs/original32/descriptor/compact_execution/policy_sha256",
+          "value": "fedb41e0f7828117ec401e15698c77433dd765da9f274487d0ddc4fddc06435b"
+        },
+        {
+          "op": "replace",
+          "path": "/payload/representation_jobs/original32/descriptor/compact_execution/policy_sha256",
+          "value": "f89dddb0ea710494fe63de22386f2c422ed42738731045e96036508d08be9df9"
+        }
+      ]
+    },
+    {
+      "role": "producer_plan",
+      "historical_reference": {
+        "bytes": 5180,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final01-2026-10-06/inputs02/producer_plan.json",
+        "sha256": "38989da2acc3c9b63447159f6be080ec92a3efd744cfbc609a55c62a8ea7c32e"
+      },
+      "candidate_sha256": "84ab9d91ff801429730644a9666bd56630a74defb3ac7c3a848bd943099ba8bf",
+      "candidate_bytes": 5180,
+      "patch": [
+        {
+          "op": "test",
+          "path": "/producers/original32/descriptor/compact_execution/policy_sha256",
+          "value": "f89dddb0ea710494fe63de22386f2c422ed42738731045e96036508d08be9df9"
+        },
+        {
+          "op": "replace",
+          "path": "/producers/original32/descriptor/compact_execution/policy_sha256",
+          "value": "fedb41e0f7828117ec401e15698c77433dd765da9f274487d0ddc4fddc06435b"
+        }
+      ],
+      "inverse": [
+        {
+          "op": "test",
+          "path": "/producers/original32/descriptor/compact_execution/policy_sha256",
+          "value": "fedb41e0f7828117ec401e15698c77433dd765da9f274487d0ddc4fddc06435b"
+        },
+        {
+          "op": "replace",
+          "path": "/producers/original32/descriptor/compact_execution/policy_sha256",
+          "value": "f89dddb0ea710494fe63de22386f2c422ed42738731045e96036508d08be9df9"
+        }
+      ]
+    }
+  ],
+  "qualification": "These are concrete two-field repair examples, not a runnable successor identity, registration or release."
+}
