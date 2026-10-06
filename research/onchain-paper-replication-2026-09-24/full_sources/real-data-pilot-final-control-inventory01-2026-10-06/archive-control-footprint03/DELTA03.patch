@@ -1,0 +1,23 @@
+--- a/archive_read_control_capacity.py
++++ b/archive_read_control_capacity.py
+@@ -7,7 +7,7 @@
+ FRAME_OVERHEAD=72 # 8 lengths + <=32 name bytes +32 hash
+ 
+ def policy(value):
+-    require(type(value) is dict and value==POLICY and type(value['schema_version']) is int,'exact packed archive read policy required')
++    require(type(value) is dict and value==POLICY and type(value['schema_version']) is int and type(value['shard_bytes']) is int,'exact packed archive read policy required')
+     return dict(value)
+ 
+ def capacity(chunks, selection):
+--- a/archive_read_controls.py
++++ b/archive_read_controls.py
+@@ -112,7 +112,7 @@
+                     head=hashlib.sha256(head+prefix+body[:-32]).digest();require(head==body[-32:],'packed archive record hash chain differs')
+                     offset+=8+len(body);count+=1
+                 require(offset==before.st_size and not os.read(fd,1) and io._signature(before)==io._signature(os.fstat(fd))==io._signature(os.stat(name,dir_fd=dfd,follow_symlinks=False)),'packed archive shard changed')
+-            finally:os.close(fd)
++            finally:io._cleanup((lambda:os.close(fd),),primary=sys.exc_info()[1])
+         require(next(items,None) is None,'missing packed archive receipt');io._root(path,dfd)
+         return {'records':count,'head_sha256':head.hex()}
+-    finally:os.close(dfd)
++    finally:io._cleanup((lambda:os.close(dfd),),primary=sys.exc_info()[1])

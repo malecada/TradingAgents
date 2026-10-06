@@ -1,0 +1,377 @@
+--- a/tradingagents/research/onchain_replication/archive_dispatch.py
++++ b/tradingagents/research/onchain_replication/archive_dispatch.py
+@@ -104,8 +104,11 @@
+         compact_training._archive_extension(run,job,item)
+         config=policy(json.loads(run.read_input(name)));names.add(name)
+         archived=json.loads(run.read_input(archive))
+-        require(set(archived)==archive_owner_policy.FIELDS and archived['schema_version']==1
++        require(set(archived)-{'read_controls'}==archive_owner_policy.FIELDS and archived['schema_version']==1
+             and archived['backend']==archive_owner_policy.BACKEND,'archive policy schema differs before population')
++        if 'read_controls' in archived:
++            from . import archive_read_controls
++            archive_read_controls.policy(archived['read_controls'])
+         positive=archive_owner_policy.FIELDS-{'schema_version','backend','transport_identity','remote_namespace'}
+         require(all(type(archived[k]) is int and 0<archived[k]<2**63 for k in positive)
+             and archived['max_stage_verifications']<=1024,'archive policy allowances differ before population')
+--- a/tradingagents/research/onchain_replication/archive_owner_policy.py
++++ b/tradingagents/research/onchain_replication/archive_owner_policy.py
+@@ -11,6 +11,7 @@
+ from . import compact_owner, archive_pair_writer as writer
+ from .cache import cache_key
+ from .provenance import freeze, thaw
++from . import archive_read_controls as read_controls
+ 
+ io = writer.io
+ require = io._require
+@@ -27,7 +28,7 @@
+     return {'schema_version':1,'remote_prefix':policy['remote_namespace']+'-'+cache_key({
+         'owner':owner.identity,'stage':name}),'transport_identity':policy['transport_identity'],
+         'max_chunks':count,'max_metadata_bytes':policy['max_writer_metadata_bytes'],
+-        'local_free_floor_bytes':policy['local_free_floor_bytes']}
++        'local_free_floor_bytes':policy['local_free_floor_bytes']} | ({'read_controls':read_controls.policy(policy['read_controls'])} if 'read_controls' in policy else {})
+ 
+ 
+ def _inputs(owner, name):
+@@ -53,7 +54,7 @@
+     require(type(owner) is compact_owner.Owner,'actual current compact owner required')
+     owner.boundary();compact_owner.verify_current(owner)
+     policy,reference = _inputs(owner,name)
+-    require(type(policy) is dict and set(policy) == FIELDS and type(policy['schema_version']) is int
++    require(type(policy) is dict and set(policy)-{'read_controls'} == FIELDS and type(policy['schema_version']) is int
+         and policy['schema_version'] == 1 and policy['backend'] == BACKEND,'archive owner policy schema')
+     positive = FIELDS-{'schema_version','backend','transport_identity','remote_namespace'}
+     require(all(type(policy[k]) is int and 0 < policy[k] < 2**63 for k in positive),
+@@ -66,7 +67,7 @@
+     stages = tuple(owner.required)
+     limits = thaw(owner.policy['log'])
+     w = writer._policy(_writer(owner,policy,stages[0]),limits,transport)
+-    read_bytes = (3*w['max_chunks']+8)*io.META_LIMIT
++    read_bytes = read_controls.capacity(w['max_chunks'],read_controls.selected(w))['logical_bytes']
+     references = 40*owner.policy['schedule']['max_total_checkpoints']
+     require(policy['max_read_metadata_bytes'] >= read_bytes and policy['max_stage_bytes'] >=
+         policy['max_read_metadata_bytes']+references+8*io.META_LIMIT,
+--- a/tradingagents/research/onchain_replication/archive_pair_reader.py
++++ b/tradingagents/research/onchain_replication/archive_pair_reader.py
+@@ -12,6 +12,7 @@
+ 
+ from . import archive_pair_writer as writer, archive_consume as consume
+ from . import archived_pair_log as replay
++from . import archive_read_controls as read_controls
+ 
+ archive = writer.archive
+ events = writer.events
+@@ -57,6 +58,28 @@
+         'bytes':mapping['bytes'], 'payload_sha256':mapping['payload_sha256']})
+     return {'intent.json':intent, 'verified.json':verified, 'complete.json':io._json({
+         'schema_version':1, 'verified_sha256':io._hash(verified), 'owned_cache_disposed':True})}
++
++
++def _read_metadata_capacity(writer_policy):
++    return read_controls.capacity(writer_policy['max_chunks'],read_controls.selected(writer_policy))['logical_bytes']
++
++
++def _check_read_contents(attempt,source,complete=True):
++    fixed={'intent.json'}|({'complete.json'} if complete else set())
++    selected=read_controls.selected(source.policy)
++    if selected is None:
++        _inventory(attempt,fixed,r'chunk-([0-9]{12})',source.count)
++        for index in range(source.count):
++            mapping,_=source.mapping(index)
++            _contents(attempt/writer._chunk(index),_read_bodies(mapping))
++    else:
++        _inventory(attempt,fixed|{'controls'},r'chunk-([0-9]{12})',0)
++        def expected():
++            for index in range(source.count):
++                mapping,_=source.mapping(index)
++                for leaf,raw in _read_bodies(mapping).items():
++                    yield read_controls.record_name(index,leaf),raw
++        read_controls.audit(attempt,expected(),selected,max_chunks=source.policy['max_chunks'])
+ 
+ 
+ class _Snapshot:
+@@ -158,7 +181,7 @@
+         try:
+             source = _Snapshot(root,source_fd,expected_sha256,owner,scope,archive_policy,transport)
+             require(type(max_read_metadata_bytes) is int and
+-                (3*source.policy['max_chunks']+8)*io.META_LIMIT <= max_read_metadata_bytes < 2**63,
++                _read_metadata_capacity(source.policy) <= max_read_metadata_bytes < 2**63,
+                 'cold archive cumulative metadata allowance')
+             require(not attempt.is_relative_to(root) and not root.is_relative_to(attempt),
+                 'cold read attempt must be separate from source')
+@@ -170,6 +193,8 @@
+                 'archive_complete_sha256':expected_sha256,'owner':owner,'scope':scope,
+                 'archive_policy':source.policy,'max_read_metadata_bytes':max_read_metadata_bytes})
+             io._write(fd,'intent.json',intent)
++            packed=(read_controls.Writer(attempt,source.policy['max_chunks'],read_controls.selected(source.policy))
++                    if read_controls.selected(source.policy) is not None else None)
+ 
+             def live():
+                 lease(); io._root(root,source_fd); io._root(attempt,fd)
+@@ -181,6 +206,10 @@
+             def fetch(index,extent):
+                 live(); mapping,_ = source.mapping(index)
+                 require(mapping['bytes'] == extent,'cold archive requested extent differs')
++                if packed is not None:
++                    return packed.consume(index,receipt_bytes=io._json(mapping['receipt']),receipt_sha256=mapping['receipt_sha256'],
++                        expected_scope=mapping['scope'],transport=transport,lease=live,
++                        free_floor_bytes=source.policy['local_free_floor_bytes'])
+                 return consume.consume(receipt_bytes=io._json(mapping['receipt']),receipt_sha256=mapping['receipt_sha256'],
+                     expected_scope=mapping['scope'],attempt=attempt/writer._chunk(index),transport=transport,
+                     lease=live,free_floor_bytes=source.policy['local_free_floor_bytes'])
+@@ -195,11 +224,8 @@
+ 
+             def check(complete):
+                 source.check()
+-                _inventory(attempt,{'intent.json'}|({'complete.json'} if complete else set()),r'chunk-([0-9]{12})',source.count)
++                _check_read_contents(attempt,source,complete)
+                 require(io._read(fd,'intent.json',io.META_LIMIT) == intent,'cold read intent changed')
+-                for index in range(source.count):
+-                    mapping,_ = source.mapping(index)
+-                    _contents(attempt/writer._chunk(index),_read_bodies(mapping))
+                 if complete: require(io._read(fd,'complete.json',io.META_LIMIT) == raw,'cold read completion changed')
+                 io._root(attempt,fd)
+ 
+--- a/tradingagents/research/onchain_replication/archive_pair_writer.py
++++ b/tradingagents/research/onchain_replication/archive_pair_writer.py
+@@ -13,16 +13,18 @@
+ 
+ from . import compact_pair_log as events, archive_chunks as archive
+ from . import archive_consume as consume, archived_pair_log as replay
++from . import archive_read_controls as read_controls
+ 
+ io = events.io
+ require = io._require
+ 
+ 
+ def _policy(value, limits, transport):
+-    require(isinstance(value, dict) and set(value) == {'schema_version', 'remote_prefix',
++    require(isinstance(value, dict) and set(value)-{'read_controls'} == {'schema_version', 'remote_prefix',
+         'transport_identity', 'max_chunks', 'max_metadata_bytes', 'local_free_floor_bytes'},
+         'archive writer policy schema')
+     result = json.loads(io._json(value))
++    if 'read_controls' in result:read_controls.policy(result['read_controls'])
+     require(type(result['schema_version']) is int and result['schema_version'] == 1
+         and isinstance(result['remote_prefix'], str)
+         and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,99}', result['remote_prefix'])
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/archive_read_control_capacity.py
+@@ -0,0 +1,20 @@
++"""Pure scalar schema bounds for selected exact packed archive read receipts."""
++def require(value,message):
++    if not value:raise ValueError(message)
++POLICY={'schema_version':1,'format':'packed-archive-read-controls-v1','shard_bytes':4194304}
++ROLE_BYTES={'intent.json':748,'verified.json':204,'complete.json':134}
++# Names are chunk- +12 decimal digits + '-' + longest leaf(13), <=32B.
++FRAME_OVERHEAD=72 # 8 lengths + <=32 name bytes +32 hash
++
++def policy(value):
++    require(type(value) is dict and value==POLICY and type(value['schema_version']) is int and type(value['shard_bytes']) is int,'exact packed archive read policy required')
++    return dict(value)
++
++def capacity(chunks, selection):
++    require(type(chunks) is int and 0<chunks<10**12,'finite archive read chunk bound')
++    if selection is None:return {'logical_bytes':(3*chunks+8)*8192,'files':3*chunks+8,'directories':chunks,'journal_bytes':None}
++    p=policy(selection)
++    size=chunks*(sum(ROLE_BYTES.values())+3*FRAME_OVERHEAD)+4*(8192+FRAME_OVERHEAD)
++    # A next largest frame may close a shard. Failure markers remain full8192.
++    shards=1+size//(p['shard_bytes']-(8192+FRAME_OVERHEAD))
++    return {'logical_bytes':size+8*8192,'files':shards+8,'directories':1,'journal_bytes':size}
+--- /dev/null
++++ b/tradingagents/research/onchain_replication/archive_read_controls.py
+@@ -0,0 +1,118 @@
++"""Opt-in exact archive read receipts in the existing bounded Journal format.
++
++Only reader controls change physical layout. Numerical payload, original receipt
++bytes/hashes, event replay, fixed top controls and legacy defaults are unchanged.
++"""
++import hashlib
++import json
++import os
++from pathlib import Path
++import stat
++import struct
++import sys
++from . import archive_control_history as history, archive_chunks as archive
++from . import archive_consume as legacy
++io=archive.io
++require=io._require
++from .archive_read_control_capacity import POLICY, ROLE_BYTES, FRAME_OVERHEAD, policy, capacity
++
++def selected(writer_policy):
++    value=writer_policy.get('read_controls')
++    return None if value is None else policy(value)
++
++
++def bodies(receipt,receipt_sha):
++    # Caller first validates canonical original receipt / endpoint / extent.
++    intent=io._json({'schema_version':1,'format':'archive-consume-v1','receipt_sha256':receipt_sha,'receipt':receipt})
++    verified=io._json({'schema_version':1,'intent_sha256':io._hash(intent),'bytes':receipt['bytes'],'payload_sha256':receipt['source_sha256']})
++    result={'intent.json':intent,'verified.json':verified,'complete.json':io._json({'schema_version':1,'verified_sha256':io._hash(verified),'owned_cache_disposed':True})}
++    for name,raw in result.items():require(len(raw)<=ROLE_BYTES[name],'archive read encoded role exceeds schema bound')
++    return result
++
++def record_name(index,leaf):
++    require(type(index) is int and 0<=index<10**12,'archive read ordinal width')
++    return f'chunk-{index:012d}-'+leaf
++
++class Writer:
++    def __init__(self,root,chunks,selection):
++        self.root=Path(root);self.policy=policy(selection);self.chunks=chunks;self.next=0;self.failed=False
++        bound=capacity(chunks,self.policy)
++        self.journal=history.Journal(self.root/'controls',record_bytes=8192,total_bytes=bound['journal_bytes'],records=3*chunks+4,shard_bytes=self.policy['shard_bytes'])
++        self._pin=(self.root,self.chunks,id(self.journal),self.journal.root,self.journal.record_bytes,self.journal.total_bytes,self.journal.records,self.journal.shard_bytes)
++    def _check(self):
++        require(self._pin==(self.root,self.chunks,id(self.journal),self.journal.root,self.journal.record_bytes,self.journal.total_bytes,self.journal.records,self.journal.shard_bytes) and self.policy==POLICY,'packed archive writer binding changed')
++        self.journal._root()
++        for index,pin in enumerate(self.journal.pins):
++            require(history.signature(self.journal._path(index).lstat())==pin,'packed archive acknowledged shard changed')
++    def consume(self,index,*,receipt_bytes,receipt_sha256,expected_scope,transport,lease,free_floor_bytes):
++        self._check()
++        require(not self.failed and index==self.next and index<self.chunks,'packed archive read order/terminal differs')
++        fd=None;identity_fd=None
++        try:
++            io._identity(receipt_sha256);io._identity(expected_scope)
++            require(type(receipt_bytes) is bytes and len(receipt_bytes)<=io.META_LIMIT and io._hash(receipt_bytes)==receipt_sha256,'trusted bounded receipt bytes required')
++            receipt=json.loads(receipt_bytes)
++            require(type(receipt) is dict and set(receipt)=={'schema_version','format','transport_identity','remote','member','scope','source_sha256','bytes'} and type(receipt['schema_version']) is int and receipt['schema_version']==1 and receipt['format']=='archive-chunk-v1' and io._json(receipt)==receipt_bytes,'canonical archive receipt schema required')
++            identity=archive._transport(transport)
++            require(receipt['scope']==expected_scope and receipt['transport_identity']==identity and receipt['member']==archive._remote(receipt['remote']),'archive scope/endpoint/member differs')
++            archive._extent(receipt['bytes'],receipt['source_sha256']);encoded=bodies(receipt,receipt_sha256)
++            require(callable(lease),'mandatory archive consumption lease');lease();archive._capacity(self.root,free_floor_bytes,1,receipt['bytes'])
++            root,fd=io._open(self.root);identity_fd=io._signature(os.fstat(fd))[:2]
++            payload=self.root/('payload-%012d.bin'%index)
++            def live():
++                lease();io._root(root,fd);require(archive._transport(transport)==identity,'archive transport identity changed')
++                self._check();require(not self.failed and self.next==index,'packed read writer changed')
++            self.journal.append(record_name(index,'intent.json'),encoded['intent.json']);live()
++            transport.get(receipt['member'],payload,expected_bytes=receipt['bytes']);live()
++            archive._read(payload,receipt['bytes'],receipt['source_sha256'])
++            self.journal.append(record_name(index,'verified.json'),encoded['verified.json']);live()
++            before=payload.lstat();result=archive._read(payload,receipt['bytes'],receipt['source_sha256'])
++            require(io._signature(before)==io._signature(payload.lstat()),'cache identity changed before disposal')
++            # Every exact receipt is durably acknowledged before disposal. This
++            # disposes only the existing verified temporary payload, never controls.
++            payload.unlink();os.fsync(fd)
++            self.journal.append(record_name(index,'complete.json'),encoded['complete.json']);live()
++            require(type(result) is bytes and len(result)==receipt['bytes'] and io._hash(result)==receipt['source_sha256'],'returned archive bytes differ')
++            self.next+=1
++            return result
++        except BaseException as error:
++            self.failed=True
++            try:self.journal.append(record_name(index,'failed.json'),io._json({'schema_version':1,'error_type':type(error).__name__}))
++            except BaseException as evidence:error.add_note('packed failure receipt unavailable: '+repr(evidence))
++            raise
++        finally:
++            if fd is not None:legacy._close_attempt(self.root,fd,identity_fd,sys.exc_info()[1])
++
++def audit(root,expected,selection,*,max_chunks):
++    """Cold exact inverse: expected iterable comes from trusted source mappings.
++
++    Keeps one record only; validates names/raw bytes/order/chaining/EOF/inodes.
++    No per-read manifest anchor can substitute for source-derived equality.
++    """
++    p=policy(selection);root=Path(root)/'controls';path,dfd=io._open(root)
++    head=bytes(32);count=0;items=iter(expected)
++    try:
++        names=[];bound=capacity(max_chunks,p)
++        with os.scandir(dfd) as entries:
++            for entry in entries:
++                require(len(names)<bound['files']-8,'packed archive shard count exceeded');names.append(entry.name)
++        names.sort();require(names==['control-%08d.bin'%i for i in range(len(names))],'packed archive shard membership differs')
++        for name in names:
++            fd=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=dfd)
++            try:
++                before=os.fstat(fd);require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<before.st_size<=p['shard_bytes'],'packed archive shard extent/type')
++                offset=0
++                while offset<before.st_size:
++                    prefix=os.read(fd,8);require(len(prefix)==8,'partial packed archive header')
++                    nl,rl=struct.unpack('<II',prefix);require(0<nl<=32 and rl<=8192,'packed archive frame bounds')
++                    body=os.read(fd,nl+rl+32);require(len(body)==nl+rl+32,'partial packed archive record')
++                    expected_item=next(items,None);require(expected_item is not None,'extra packed archive record')
++                    expected_name,expected_raw=expected_item
++                    require(body[:nl]==expected_name.encode() and body[nl:nl+rl]==expected_raw,'packed archive exact original receipt differs')
++                    head=hashlib.sha256(head+prefix+body[:-32]).digest();require(head==body[-32:],'packed archive record hash chain differs')
++                    offset+=8+len(body);count+=1
++                require(offset==before.st_size and not os.read(fd,1) and io._signature(before)==io._signature(os.fstat(fd))==io._signature(os.stat(name,dir_fd=dfd,follow_symlinks=False)),'packed archive shard changed')
++            finally:io._cleanup((lambda:os.close(fd),),primary=sys.exc_info()[1])
++        require(next(items,None) is None,'missing packed archive receipt');io._root(path,dfd)
++        return {'records':count,'head_sha256':head.hex()}
++    finally:io._cleanup((lambda:os.close(dfd),),primary=sys.exc_info()[1])
+--- a/tradingagents/research/onchain_replication/archived_stage.py
++++ b/tradingagents/research/onchain_replication/archived_stage.py
+@@ -104,22 +104,19 @@
+     path,sfd = io._open(root/'matching')
+     try:
+         source = reader._Snapshot(path,sfd,archive_complete_sha256,owner,scope,archive_policy,transport)
+-        require((3*source.policy['max_chunks']+8)*io.META_LIMIT <= c['max_read_metadata_bytes'],
++        require(reader._read_metadata_capacity(source.policy) <= c['max_read_metadata_bytes'],
+             'archived event read metadata allowance insufficient')
+         require(source.complete['terminal_sha256'] == log_terminal_sha256
+             and source.start['limits'] == policy['log']
+             and io._json(source.complete['replay']) == io._json(record) and scope['policy'] == cache_key({
+                 'pair':policy['pair'],'schedule':policy['schedule']}), 'archived scientific policy/terminal differs')
+-        reader._inventory(attempt/'events',{'intent.json','complete.json'},r'chunk-([0-9]{12})',source.count)
++        reader._check_read_contents(attempt/'events',source)
+         rpath,rfd = io._open(attempt/'events')
+         try:
+             require(io._read(rfd,'intent.json',io.META_LIMIT) == read_intent_raw
+                 and io._read(rfd,'complete.json',io.META_LIMIT) == read_complete_raw,'archived read receipt changed')
+             io._root(rpath,rfd)
+         finally:_close(rfd,sys.exc_info()[1])
+-        for index in range(source.count):
+-            mapping,_ = source.mapping(index)
+-            reader._contents(attempt/'events'/reader.writer._chunk(index),reader._read_bodies(mapping))
+         start_sha = source.start_sha
+     finally:_close(sfd,sys.exc_info()[1])
+     info = os.fstat(ref_fd)
+--- a/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/controls01.py
++++ b/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/controls01.py
+@@ -59,13 +59,18 @@
+             attempts+=g['allowances'][kind]['max_chunks'];ops+=g['allowances'][kind]['max_operations']
+         need(set(g['allowances'])==set(x['required_typed_allowances']),'typed kinds differ')
+         batches+=x['batch_count'];by[week]=x
+-    a=s['archive'];exact(a,{'max_stage_verifications','max_writer_metadata_bytes','max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes'},'archive')
+-    for x in a.values():integer(x)
++    a=s['archive'];exact(a,{'max_stage_verifications','max_writer_metadata_bytes','max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes'}|({'read_controls'} if 'read_controls' in a else set()),'archive')
++    for key,x in a.items():
++        if key!='read_controls':integer(x)
+     R=a['max_stage_verifications'];need(R<=1024,'archive read bound')
+     Q=(st['max_events']+st['chunk_events']-1)//st['chunk_events'];T=st['max_total_checkpoints']
+     ordinary_ops=8*(1+R)
+     writer_files=7*Q+8;read_files=3*Q+8
+-    need(a['max_writer_metadata_bytes']>=writer_files*META and a['max_read_metadata_bytes']>=read_files*META,'archive per-stage controls underfunded')
++    read_bound=read_files*META;read_dirs=Q;archive_max_file=max(META,40*T)
++    if 'read_controls' in a:
++        from tradingagents.research.onchain_replication.archive_read_control_capacity import capacity as read_capacity
++        packed=read_capacity(Q,a['read_controls']);read_bound=packed['logical_bytes'];read_files=packed['files'];read_dirs=packed['directories'];archive_max_file=max(archive_max_file,a['read_controls']['shard_bytes'])
++    need(a['max_writer_metadata_bytes']>=writer_files*META and a['max_read_metadata_bytes']>=read_bound,'archive per-stage controls underfunded')
+     need(a['max_stage_bytes']>=a['max_read_metadata_bytes']+40*T+8*META,'archive reference controls underfunded')
+     archive_min=(4+3*ordinary_ops+8)*META+8*(a['max_writer_metadata_bytes']+8*META+R*a['max_stage_bytes'])
+     need(a['max_workflow_metadata_bytes']>=archive_min,'archive workflow controls underfunded')
+@@ -95,13 +100,13 @@
+     # headroom. Directory count includes operation roots and nested event/copy/
+     # read attempts; no checkpoint-retention files are included here.
+     archive_files=4+3*ordinary_ops+8+8*(writer_files+8+R*(read_files+9))
+-    archive_dirs=1+ordinary_ops+8*(5+2*Q+R*(5+Q))
++    archive_dirs=1+ordinary_ops+8*(5+2*Q+R*(5+read_dirs))
+     categories={
+       'stream_tail_batch_headers':item(streams*META,streams,21+2*batches,META,'per graph 5B+5 JSON; stream/batches/tails plus 2B tail/typed directories'),
+       'producer_output_controls':item(7*6*META,7*6,7*4,META,'per graph producer start/complete/failure; output manifest/storage/receipt; producer + attempt/artifact/transport'),
+       'typed_attempts':item(attempts*4*META,attempts*4,attempts,META,'four metadata slots per selected chunk credit; includes failure headroom'),
+       'typed_ledger':item(s['typed_control_bytes'],typed_files,0,META,'typed claims/complete/failure and part/read records; directory counted by archive'),
+-      'archive_ledger_writer_reads':item(a['max_workflow_metadata_bytes'],archive_files,archive_dirs,max(META,40*T),'eight reserved original stages; writer/read metadata and 40-byte checkpoint references'),
++      'archive_ledger_writer_reads':item(a['max_workflow_metadata_bytes'],archive_files,archive_dirs,archive_max_file,'eight reserved original stages; writer/read metadata and 40-byte checkpoint references'),
+       'dispatch':item(tr['max_control_bytes'],dispatch_files,1 if history_bounds is None else 2,DMETA if history_bounds is None else tr['control_history']['shard_bytes'],'Context controls; lease checks create no per-call disk file'),
+       'transport_diagnostics':item(DMETA*N+ARCHIVE if history_bounds is None else history_bounds['diagnostic_bytes'],2*N if history_bounds is None else history_bounds['diagnostic_files'],1 if history_bounds is None else 2,ARCHIVE,'one JSON and at most one bin per call; one failed/inflight bin body; successful get staging moves into caller'),
+       'retained_original_matrices':item(sum(x['retained_matrix_logical_bytes'] for x in by.values()),7,0,max(x['retained_matrix_logical_bytes'] for x in by.values()),'all seven original row-major f32 matrices; no RAM replacement'),
+--- a/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/prepare_builder03_input02.py
++++ b/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/prepare_builder03_input02.py
+@@ -47,7 +47,7 @@
+             'allowances':{name:{k:v for k,v in value.items() if k!='chunk_bytes'} for name,value in kinds.items()}}
+     inventory={'schema_version':1,'graphs':counted,'chunk_cells':typed['chunk_cells'],'typed_control_bytes':typed['max_control_bytes'],
+         'stage':{k:stage['log'][k] for k in ('max_events','chunk_events')}|{'max_total_checkpoints':stage['schedule']['max_total_checkpoints']},
+-        'archive':{k:archive[k] for k in ('max_stage_verifications','max_writer_metadata_bytes','max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes')},
++        'archive':{k:archive[k] for k in ('max_stage_verifications','max_writer_metadata_bytes','max_read_metadata_bytes','max_stage_bytes','max_workflow_metadata_bytes')}|({'read_controls':archive['read_controls']} if 'read_controls' in archive else {}),
+         'transport':{k:tr[k] for k in ('max_commands','max_payload_bytes','max_diagnostic_bytes','max_control_bytes')},
+         'residual_domains':r['residual_domains'],'filesystem':p['filesystem'],
+         'baseline':{k:base[k] for k in ('logical_bytes','allocated_bytes','entries')}|{'evidence_sha256':base['evidence']['sha256']},'storage_budget':budget}

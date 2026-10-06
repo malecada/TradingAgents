@@ -1,0 +1,56 @@
+{
+  "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final-control-inventory01-2026-10-06/archive-control-footprint02/candidate",
+  "fatal_subcases": 3,
+  "regression_groups": 3,
+  "results": {
+    "fatal_primary_plus_two_close_errors": {
+      "KeyboardInterrupt": {
+        "actual_error_type": "OSError",
+        "all_real_descriptors_reaped": true,
+        "cleanup_failure_count": 0,
+        "closed_once_count": 2,
+        "no_close_retry": true,
+        "opened_descriptor_count": 2,
+        "original_fatal_preserved": false,
+        "passed": false
+      },
+      "MemoryError": {
+        "actual_error_type": "OSError",
+        "all_real_descriptors_reaped": true,
+        "cleanup_failure_count": 0,
+        "closed_once_count": 2,
+        "no_close_retry": true,
+        "opened_descriptor_count": 2,
+        "original_fatal_preserved": false,
+        "passed": false
+      },
+      "SystemExit": {
+        "actual_error_type": "OSError",
+        "all_real_descriptors_reaped": true,
+        "cleanup_failure_count": 0,
+        "closed_once_count": 2,
+        "no_close_retry": true,
+        "opened_descriptor_count": 2,
+        "original_fatal_preserved": false,
+        "passed": false
+      }
+    },
+    "float_policy_refused_before_writer_birth": {
+      "controls_root_absent": true,
+      "direct_error_type": "NoneType",
+      "passed": false,
+      "writer_error_type": "ValueError"
+    },
+    "ordinary_mutation_plus_two_close_errors": {
+      "actual_error_type": "OSError",
+      "all_real_descriptors_reaped": true,
+      "cleanup_failure_count": 0,
+      "closed_once_count": 2,
+      "no_close_retry": true,
+      "opened_descriptor_count": 2,
+      "original_fatal_preserved": null,
+      "passed": false
+    }
+  },
+  "status": "FAIL_EXPECTED_ON_PREDECESSOR"
+}

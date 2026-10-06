@@ -1,0 +1,145 @@
+{
+  "apply_requires": "Root regenerated reference hashes/descriptors; missing residuals and baseline remain refusal conditions.",
+  "archive_policy": {
+    "backend": "compact-archive-events-v1",
+    "local_free_floor_bytes": 10737418240,
+    "max_decoded_transfer_bytes": 3702488745984,
+    "max_read_metadata_bytes": 72564736,
+    "max_remote_payload_bytes": 194867828736,
+    "max_stage_bytes": 72636672,
+    "max_stage_verifications": 16,
+    "max_workflow_metadata_bytes": 10655301632,
+    "max_writer_metadata_bytes": 169230336,
+    "remote_namespace": "ethpilot-20261006",
+    "schema_version": 1,
+    "transport_identity": null
+  },
+  "base_input": {
+    "bytes": 25502,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts05-2026-10-06/INPUT_DRAFT01.json",
+    "sha256": "6023954b1e21b0f86a0155ead15ef588e57c59be65f4ef9f04b71d6d37d7c237"
+  },
+  "compact_policy": {
+    "backend": "resident-native-compact-current-owner-v1",
+    "max_workflow_retained_logical_bytes": 246635835392,
+    "schema_version": 1,
+    "stage_policy": {
+      "backend": "resident-native-compact-current-owner-v1",
+      "log": {
+        "chunk_events": 49152,
+        "max_events": 144990944,
+        "max_logical_bytes": 24358494976,
+        "max_pairs": 72495392
+      },
+      "max_retained_logical_bytes": 30829446656,
+      "pair": {
+        "chunk_edges": 65536,
+        "hardening_buffer_bytes": 1048576,
+        "hardening_chunk_entries": 65536,
+        "max_checkpoint_bytes": 262144,
+        "max_publications": 1,
+        "max_score_buffer_bytes": 1048576,
+        "max_state_bytes": 1048576,
+        "normalization_chunk_entries": 65536,
+        "total_checkpoint_bytes": 1048576
+      },
+      "restart_retention": {
+        "format": "archived-restart-retention-v1",
+        "max_control_bytes": 33554432,
+        "max_cumulative_bytes": 134217728,
+        "max_generations": 160,
+        "max_input_bytes": 16777216,
+        "max_live_bytes": 55050240,
+        "max_replay_bytes": 4194304,
+        "max_replays": 2,
+        "max_stores": 160,
+        "schema_version": 1
+      },
+      "schedule": {
+        "calls_per_checkpoint": 10000,
+        "max_checkpoints": 1,
+        "max_total_checkpoint_bytes": 62914560,
+        "max_total_checkpoints": 160,
+        "operations_per_call": 1000000
+      },
+      "schema_version": 1,
+      "score_chunk_cells": 65536
+    }
+  },
+  "physical_baseline": {
+    "allocated_bytes": null,
+    "entries": null,
+    "evidence": null,
+    "logical_bytes": null
+  },
+  "residual_domains": {
+    "checkpoint_retention": {
+      "additional_scratch_bytes": 524288,
+      "bound_basis": "Seven actual MCM retention stages only: reserved controls+inputs+replays retained; two live generation bodies overlap globally under serial execution. File slots include three metadata manifests per retired generation and failed/partial states. Imported dictionary has no new matching stage. Selected policy reservations are not measured bytes.",
+      "directories": 5677,
+      "evidence_sha256": "519d29508ad8cc9fd61663c1b270339f83d9e6a798ed202488e6acf2ab2285a4",
+      "logical_bytes": 381911040,
+      "max_file_bytes": 16777216,
+      "regular_files": 21637,
+      "scratch_files": 8,
+      "scratch_max_file_bytes": 262144
+    },
+    "import_owner_stage_journal": {
+      "additional_scratch_bytes": 0,
+      "bound_basis": "23 bounded current metadata slots: journal5 + compact owner2 + import2 + seven MCM stage pairs14. Preparation/materialization and original512/32 evidence are read-only. Directory allowance42 includes sixteen journal-parent slots and finite fixed-path ancestor margin; not another copy of original samples or motifs.",
+      "directories": 42,
+      "evidence_sha256": "519d29508ad8cc9fd61663c1b270339f83d9e6a798ed202488e6acf2ab2285a4",
+      "logical_bytes": 1507328,
+      "max_file_bytes": 65536,
+      "regular_files": 23,
+      "scratch_files": 0,
+      "scratch_max_file_bytes": 0
+    },
+    "runtime_temp_cache": {
+      "additional_scratch_bytes": null,
+      "bound_basis": "real_pilot_storage.environment forwards twelve paths; prepare_environment creates ancestors. Numerical/native library writers can create unknown file counts/sizes/subdirectories and temporary overlap. 256MiB/4096files/256dirs/64MiB proposal is not enforced per-domain. Require exact selected backend writer proof or separately reviewed enforceable bound under unchanged physical limits. Do not infer zero cache from offline metadata.",
+      "directories": null,
+      "evidence_sha256": "519d29508ad8cc9fd61663c1b270339f83d9e6a798ed202488e6acf2ab2285a4",
+      "logical_bytes": null,
+      "max_file_bytes": null,
+      "regular_files": null,
+      "scratch_files": null,
+      "scratch_max_file_bytes": null
+    },
+    "training_and_lifecycle": {
+      "additional_scratch_bytes": null,
+      "bound_basis": "Training subset bounded: checkpoint <=4194304, complete and failed each <=65536; 20 fixed phase records conservatively <=4096. Full domain not bounded by these: lifecycle._immutable serializes unbounded claim/output dictionaries absent an active metadata scope; resources._native_write serializes parent state without length gate, native .tmp duplicates state, child/outer logs may be appended outside worker RLIMIT. Final concrete launcher and encoded-state/path bounds required; 68 slots/32MiB proposal is not a source maximum.",
+      "directories": null,
+      "evidence_sha256": "519d29508ad8cc9fd61663c1b270339f83d9e6a798ed202488e6acf2ab2285a4",
+      "logical_bytes": null,
+      "max_file_bytes": null,
+      "regular_files": null,
+      "scratch_files": null,
+      "scratch_max_file_bytes": null
+    }
+  },
+  "status": "DRAFT_NOT_ADMITTED",
+  "transport_limits": {
+    "control_history": {
+      "assumption": "closed-history sampled; no writer exclusion; mandatory boundary full-byte audits",
+      "format": "bounded-archive-control-history-v1",
+      "full_interval_ms": 1000,
+      "max_callbacks_between_full": 4096,
+      "max_stale_ms": 60000,
+      "schema_version": 1,
+      "shard_bytes": 4194304,
+      "success_control_bytes": 1024,
+      "success_diagnostic_bytes": 2048
+    },
+    "max_commands": 625996,
+    "max_control_bytes": 3306307456,
+    "max_diagnostic_bytes": 1475854304,
+    "max_payload_bytes": 3848509542407,
+    "max_seconds": 28800,
+    "namespace": "ethpilot-20261006",
+    "rate_kbit": 262144,
+    "receipt_output": "archive-receipt.json",
+    "terminal_output": "archive-terminal.json"
+  },
+  "typed_max_control_bytes": 627941376
+}

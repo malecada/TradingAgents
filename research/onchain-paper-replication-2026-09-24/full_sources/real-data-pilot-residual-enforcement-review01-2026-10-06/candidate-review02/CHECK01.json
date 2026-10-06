@@ -1,0 +1,30 @@
+{
+  "actual_totals": {
+    "directories": 2,
+    "logical_bytes": 68,
+    "max_file_bytes": 1,
+    "regular_files": 68
+  },
+  "candidate_sha256": "0593536e54b519b5b22b2dcb9c5382353a61ac01e518c3eb3c59893ca97cc150",
+  "cause": "remaining regular_files=0 is rejected before scanning an existing empty second root; empty roots need zero remaining regular files",
+  "error": {
+    "observation": {
+      "allocated_bytes": 282624,
+      "directories": 1,
+      "domain": "training_and_lifecycle",
+      "entries": 68,
+      "logical_file_bytes": 68,
+      "regular_files": 68
+    },
+    "observed_error": "storage residual reserved slots limit exceeded"
+  },
+  "numerical_imports": false,
+  "source_pairs": 4,
+  "status": "REPRODUCED_FALSE_REFUSAL_AT_EXACT_FILE_THRESHOLD",
+  "unchanged_policy": {
+    "directories": 16,
+    "logical_bytes": 33554432,
+    "max_file_bytes": 4194304,
+    "regular_files": 68
+  }
+}

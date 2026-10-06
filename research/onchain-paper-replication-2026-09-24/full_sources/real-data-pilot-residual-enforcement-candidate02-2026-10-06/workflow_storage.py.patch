@@ -1,0 +1,30 @@
+--- tradingagents/research/onchain_replication/workflow_storage.py
++++ candidate/workflow_storage.py
+@@ -59,11 +59,14 @@
+         error.add_note('storage diagnostic attachment unavailable: '+repr(secondary))
+ 
+ class StorageWatch:
+-    def __init__(self,root,limits):
++    def __init__(self,root,limits,*,entry_limits=None):
+         if type(limits) is not dict or set(limits)!=FIELDS or any(type(n) is not int or n<=0 for n in limits.values()):
+             raise ValueError('positive integer storage limits required')
+         if limits['max_depth']>64 or limits['max_scan_seconds']>5:
+             raise ValueError('storage traversal depth/time limits too large')
++        if entry_limits is not None and (type(entry_limits) is not dict or set(entry_limits)!={'regular_files','directories','max_file_bytes'} or any(type(n) is not int or n<=0 for n in entry_limits.values())):
++            raise ValueError('positive sampled entry limits required')
++        self.entry_limits=None if entry_limits is None else MappingProxyType(dict(entry_limits))
+         self.limits=MappingProxyType(dict(limits));self.root=Path(root)
+         if not self.root.is_absolute() or self.root.resolve(strict=True)!=self.root:
+             raise ValueError('canonical owned storage root required')
+@@ -126,6 +129,11 @@
+             elif stat.S_ISDIR(info.st_mode):observed['directories']+=1
+             else:raise ValueError('storage special file or symbolic link refused')
+             observed['allocated_bytes']+=info.st_blocks*512
++            if self.entry_limits is not None:
++                for key in ('regular_files','directories'):
++                    if observed[key]>self.entry_limits[key]:raise StorageLimit('domain '+key,observed)
++                if stat.S_ISREG(info.st_mode) and info.st_size>self.entry_limits['max_file_bytes']:
++                    raise StorageLimit('domain file bytes',observed)
+             enforce()
+         def descendant(action,relative):
+             try:return action()

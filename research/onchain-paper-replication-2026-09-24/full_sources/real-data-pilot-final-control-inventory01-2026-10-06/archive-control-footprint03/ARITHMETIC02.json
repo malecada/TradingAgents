@@ -1,0 +1,125 @@
+{
+  "candidate_source_sha256": "153a46e596229189f25af9ef231d0b6e368cba78931ee2b95ecc5b4ea9c0a983",
+  "conditional_example_NOT_CAPACITY": {
+    "allocated_model_plus_array_bytes_and_proposals": 17236982595,
+    "basis": "Unchanged earlier lifecycle/cache proposals; genuine seven array-byte metadata3496602912 alone, NOT full writable baseline. No admission.",
+    "entries_before_actual_baseline": 563181,
+    "logical_plus_array_bytes_and_proposals": 14680665216
+  },
+  "delta": {
+    "new_archive_directory_slots": 48145,
+    "new_archive_file_slots": 168052,
+    "new_archive_logical_bytes": 1871270400,
+    "old_archive_directory_slots": 425617,
+    "old_archive_file_slots": 1300724,
+    "old_archive_logical_bytes": 10655301632,
+    "saved_logical_bytes": 8784031232
+  },
+  "known_new_reservations_without_two_unknown_residuals": {
+    "allocated_model_bytes": 13418092135,
+    "directories": 105120,
+    "entries_with_extra": 558745,
+    "logical_bytes": 10882072416,
+    "regular_files": 453369
+  },
+  "new_archive_policy": {
+    "backend": "compact-archive-events-v1",
+    "local_free_floor_bytes": 10737418240,
+    "max_decoded_transfer_bytes": 3702488745984,
+    "max_read_metadata_bytes": 3939492,
+    "max_remote_payload_bytes": 194867828736,
+    "max_stage_bytes": 4011428,
+    "max_stage_verifications": 16,
+    "max_workflow_metadata_bytes": 1871270400,
+    "max_writer_metadata_bytes": 169230336,
+    "read_controls": {
+      "format": "packed-archive-read-controls-v1",
+      "schema_version": 1,
+      "shard_bytes": 4194304
+    },
+    "remote_namespace": "ethpilot-20261006",
+    "schema_version": 1,
+    "transport_identity": null
+  },
+  "policy": {
+    "format": "packed-archive-read-controls-v1",
+    "schema_version": 1,
+    "shard_bytes": 4194304
+  },
+  "read_capacity": {
+    "directories": 1,
+    "files": 9,
+    "journal_bytes": 3873956,
+    "logical_bytes": 3939492
+  },
+  "remaining": [
+    "Actual fresh complete writable baseline (array-byte metadata is not baseline).",
+    "Source-proven/enforced lifecycle and native cache bounds, failure controls and scratch.",
+    "Independent source/ABI/packed inverse review and final current closure/admission.",
+    "Actual5-second scan-time adequacy remains unproven; fewer entries does not prove timing."
+  ],
+  "status": "DRAFT_CANDIDATE_NOT_ADMITTED",
+  "unchanged": {
+    "G": 160,
+    "Q": 2950,
+    "R": 16,
+    "resources": {
+      "disk_floor_bytes": 10737418240,
+      "disk_paths": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+      ],
+      "memory_high_bytes": 5368709120,
+      "memory_max_bytes": 6442450944,
+      "native_unit_limits": {
+        "file_size_bytes": 1073741824
+      },
+      "reserve_bytes": 3221225472,
+      "start_reserve_bytes": 9663676416,
+      "storage_budget": {
+        "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+        "experiment": "eth-paper-real-data-end-to-end-resource-20261005-01",
+        "kind": "real-pilot-writable-union",
+        "limits": {
+          "max_allocated_bytes": 21474836480,
+          "max_depth": 64,
+          "max_entries": 1000000,
+          "max_logical_bytes": 17179869184,
+          "max_scan_seconds": 5
+        },
+        "roots": [
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261005-01"
+        ],
+        "schema_version": 2,
+        "shared_files": [
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+        ]
+      },
+      "wall_seconds": 28800
+    },
+    "stages": 8,
+    "transport": {
+      "control_history": {
+        "assumption": "closed-history sampled; no writer exclusion; mandatory boundary full-byte audits",
+        "format": "bounded-archive-control-history-v1",
+        "full_interval_ms": 1000,
+        "max_callbacks_between_full": 4096,
+        "max_stale_ms": 60000,
+        "schema_version": 1,
+        "shard_bytes": 4194304,
+        "success_control_bytes": 1024,
+        "success_diagnostic_bytes": 2048
+      },
+      "max_commands": 625996,
+      "max_control_bytes": 3306307456,
+      "max_diagnostic_bytes": 1475854304,
+      "max_payload_bytes": 3848509542407,
+      "max_seconds": 28800,
+      "namespace": "ethpilot-20261006",
+      "rate_kbit": 262144,
+      "receipt_output": "archive-receipt.json",
+      "terminal_output": "archive-terminal.json"
+    },
+    "typed": 627941376
+  }
+}

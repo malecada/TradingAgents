@@ -1,0 +1,32 @@
+{
+  "author_checks_reused": "1cfb7b exit0,13 tests",
+  "directory_boundary": {
+    "accepted_directories": 16,
+    "extra_directory_refusal": "storage residual aggregate directories limit exceeded"
+  },
+  "file_boundary": {
+    "accepted_directories": 3,
+    "accepted_files": 68,
+    "accepted_logical_bytes": 68,
+    "extra_file_refusal": "storage residual aggregate regular_files limit exceeded"
+  },
+  "fixed_policy": {
+    "runtime_temp_cache": {
+      "directories": 256,
+      "logical_bytes": 268435456,
+      "max_file_bytes": 67108864,
+      "regular_files": 4096
+    },
+    "training_and_lifecycle": {
+      "directories": 16,
+      "logical_bytes": 33554432,
+      "max_file_bytes": 4194304,
+      "regular_files": 68
+    }
+  },
+  "only_changed_function": "residual_check",
+  "prior_native_fatal_evidence_reused": "5b1c45",
+  "scientific_or_native_execution": false,
+  "status": "PASS_EXACT_BOUNDARY_SUCCESSOR",
+  "unchanged_runtime_files": 3
+}

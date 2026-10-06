@@ -1,0 +1,107 @@
+--- tradingagents/research/onchain_replication/resources.py
++++ candidate/resources.py
+@@ -348,10 +348,26 @@
+     return primary,failed
+ 
+ 
+-def _native_write(path,state,io):
++def _native_write(path, state, io, *, max_bytes=None):
++    if max_bytes is None:
++        with io._opened(path,'xb') as stream:
++            raw=json.dumps(state,indent=2,sort_keys=True).encode()+b'\n'
++            stream.write(raw);stream.flush();os.fsync(stream.fileno())
++        return
++    if type(max_bytes) is not int or not 0 < max_bytes < 2**63:
++        raise ValueError('explicit admitted native receipt byte limit required')
++    raw=bytearray()
++    for part in json.JSONEncoder(indent=2,sort_keys=True).iterencode(state):
++        encoded=part.encode()
++        if len(encoded)>max_bytes-len(raw)-1:
++            raise ValueError('native receipt encoded byte limit exceeded; state not published')
++        raw.extend(encoded)
++    raw.extend(b'\n')
+     with io._opened(path,'xb') as stream:
+-        raw=json.dumps(state,indent=2,sort_keys=True).encode()+b'\n'
+-        stream.write(raw);stream.flush();os.fsync(stream.fileno())
++        count=stream.write(raw)
++        if count!=len(raw):
++            raise OSError('native receipt short write; partial retained')
++        stream.flush();os.fsync(stream.fileno())
+ 
+ 
+ def _native_sync(path,io):
+@@ -360,9 +376,9 @@
+     finally:io._cleanup((lambda:os.close(fd),))
+ 
+ 
+-def _native_atomic(path,state,io):
++def _native_atomic(path,state,io,*,max_bytes=None):
+     temporary=path.with_suffix('.tmp')
+-    _native_write(temporary,state,io)
++    _native_write(temporary,state,io,max_bytes=max_bytes)
+     temporary.replace(path)
+     _native_sync(path.parent,io)
+ 
+@@ -416,6 +432,7 @@
+             if type(storage_budget) is not dict or set(storage_budget)!={'root','limits'}:
+                 raise ValueError('storage budget schema differs')
+             storage_watch=StorageWatch(storage_budget['root'],storage_budget['limits'])
++    native_metadata_bytes=getattr(storage_watch,'native_metadata_bytes',None)
+     disk_paths=tuple(Path(p).resolve(strict=True) for p in disk_paths)
+     cwd = Path(cwd).resolve(strict=True)
+     receipt = Path(receipt_dir).absolute()
+@@ -440,6 +457,7 @@
+              'disk_minimum_qualification': 'Sampled whole-volume free-space minimum per guarded path; includes unnamed temporary files and unrelated activity. Not a kernel quota, continuous minimum or per-job attribution.'}
+     if physical_policy is not None:state['physical_policy']=physical_policy
+     if native_unit_limits is not None:state['native_unit_limits']=native_unit_limits
++    if native_metadata_bytes is not None:state['native_metadata_limit_bytes']=native_metadata_bytes
+     launched = False
+     cgroup = None
+     selected_primary = None
+@@ -480,6 +498,12 @@
+         for key in ('allocated_bytes','logical_file_bytes','entries'):
+             peak='storage_peak_'+key
+             state[peak]=max(state.get(peak,0),observation[key])
++        if 'residual_domains' in observation:
++            peaks=state.setdefault('residual_domain_peaks',{})
++            for domain,current in observation['residual_domains'].items():
++                previous=peaks.setdefault(domain,{})
++                for key in ('allocated_bytes','logical_file_bytes','entries','regular_files','directories'):
++                    previous[key]=max(previous.get(key,0),current[key])
+ 
+     def boundaries():
+         if physical_policy is not None:
+@@ -503,7 +527,7 @@
+     def publish():
+         state['monotonic_seconds'] = time.monotonic()
+         state['elapsed_seconds'] = time.monotonic() - begin
+-        if native_unit_limits is not None:_native_atomic(receipt/'live.json',state,native_io)
++        if native_unit_limits is not None:_native_atomic(receipt/'live.json',state,native_io,max_bytes=native_metadata_bytes)
+         else:_atomic(receipt / 'live.json', state)
+ 
+     try:
+@@ -584,7 +608,7 @@
+         boundaries()
+         state['phase'] = 'running'
+         publish()
+-        if native_unit_limits is not None:_native_atomic(receipt/'release.json',{'kernel_controls_verified':True},native_io)
++        if native_unit_limits is not None:_native_atomic(receipt/'release.json',{'kernel_controls_verified':True},native_io,max_bytes=native_metadata_bytes)
+         else:_atomic(receipt / 'release.json', {'kernel_controls_verified': True})
+         while True:
+             boundaries()
+@@ -704,13 +728,13 @@
+             # already known at that boundary are represented as failed.
+             for sig,previous in prior_signals.items():
+                 actions.append(('restore-signal-'+str(sig),lambda sig=sig,previous=previous:signal.signal(sig,previous)))
+-            actions.extend((('final-receipt',lambda:_native_write(receipt/'final.json',state,native_io)),
++            actions.extend((('final-receipt',lambda:_native_write(receipt/'final.json',state,native_io,max_bytes=native_metadata_bytes)),
+                 ('directory-sync',lambda:_native_sync(receipt,native_io))))
+             selected_primary,selected_finalization_failed=_native_finalize(state,selected_primary,actions,native_io)
+             if selected_finalization_failed:
+                 # An immutable final body may precede a late close/fsync error.
+                 # It never overrides this failed invocation and additive marker.
+-                tail=(('failed-live',publish),('failed-marker',lambda:_native_write(receipt/'native-finalization-failed.json',state,native_io)),
++                tail=(('failed-live',publish),('failed-marker',lambda:_native_write(receipt/'native-finalization-failed.json',state,native_io,max_bytes=native_metadata_bytes)),
+                     ('failed-directory-sync',lambda:_native_sync(receipt,native_io)))
+                 selected_primary,_=_native_finalize(state,selected_primary,tail,native_io)
+         else:

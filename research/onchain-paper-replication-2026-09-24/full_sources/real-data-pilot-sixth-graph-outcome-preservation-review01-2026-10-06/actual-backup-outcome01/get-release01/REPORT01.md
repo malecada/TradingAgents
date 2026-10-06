@@ -1,0 +1,7 @@
+The actual June6 ledger retirement is accepted: Root session15215/chunk447a9d exited0, both selected paths are absent, and the retained restore sidecar equals the verified historical kept record. The original five arrays remain present.
+
+The five-GET release is accepted only for SELECTION02 d1b6cb9d and unchanged caller202efc83: indices21,22,23,25,26, total429403880 bytes. Full byte/AST inverse to the accepted fourth utility, ten original/recovered stat-mode-link joins, historical full36 recovery, inactive consumer/native checks and unused identity passed. No payload bodies were read and no deletion was executed.
+
+The original selection/draft remains withheld. Two live source references had drifted; source checks would have refused before an attempt. The successor preserves those historical559/a632 bodies from commit a55823c in explicitly historical copies. Exact selection/release differences were independently reconstructed; no backup source attribution was changed.
+
+The actual checks were adbfe0 (expected real stale-pin refusal),3c4bfc (bounded remaining checks),2f0848 (correction accepted). Original HIGH19369, cleanup-stop5 and unknown whole-lifetime PID history remain unchanged. No new remote availability, writer exclusion, POSIX reconstruction, runtime-body coverage, scientific/numerical capacity or financial claim was tested. Root must retain ordinary one-use execution checks and perform the operation separately.

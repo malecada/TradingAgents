@@ -1,0 +1,18 @@
+{
+  "decision": "withheld",
+  "source_location": "retire01.py:118-119",
+  "impact": "Both exact evidence loops reject changed live resources/workflow_storage bodies before any attempt. Historical recovery remains accepted. No GET release written.",
+  "mismatches": [
+    {
+      "actual_sha256": "672ff3ed96c7d5ba1ccbdc2355558b10aa823cbda0c3b07d1d2f44923c8b0185",
+      "expected_sha256": "559fc3e8d5718932aa311f90f8263f111d1976b4386b8ac08383178267da767b",
+      "path": "tradingagents/research/onchain_replication/resources.py"
+    },
+    {
+      "actual_sha256": "deff02766685c1e7fb8628766acf0e0c36dc324da4672f3adc094bfac3e24a74",
+      "expected_sha256": "a6323c64c903931d7f2c7d18c5d81d8479d377c82e9eaeacc8580a5c4e99d67f",
+      "path": "tradingagents/research/onchain_replication/workflow_storage.py"
+    }
+  ],
+  "smallest_correction": "Preserve original selection/draft; bind historical source evidence to authenticated immutable copies or a separately reviewed truthful current evidence update in a successor frozen selection and release draft. Preserve the actual backup source attribution."
+}

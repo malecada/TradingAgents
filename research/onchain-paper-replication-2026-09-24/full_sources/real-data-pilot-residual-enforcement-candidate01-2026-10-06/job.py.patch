@@ -1,0 +1,51 @@
+--- tradingagents/research/onchain_replication/job.py
++++ candidate/job.py
+@@ -204,6 +204,14 @@
+     return scope
+ 
+ 
++
++def _pilot_residual_tail(args,job):
++    budget=job['resources'].get('storage_budget')
++    if type(budget) is dict and budget.get('schema_version')==2:
++        from .real_pilot_storage import validate,residual_check
++        validate(budget,Path(args.root));return residual_check(Path(args.root))
++    return None
++
+ def launch(args):
+     _,job=_admitted(args)
+     base = _base(args)
+@@ -216,6 +224,7 @@
+     primary=None
+     try:
+         with metadata_scope(scope):
++            _pilot_residual_tail(args,job)
+             _immutable(base/'launch.json', {'experiment': args.experiment, 'source_commit': args.source,
+                                           'supervisor_pid': os.getpid(), 'nonce': nonce})
+             budget=job['resources'].get('storage_budget')
+@@ -235,7 +244,9 @@
+             if scope is not None and monitor_exit!=0:
+                 result={'status':'monitor_failed','monitor_exit_code':monitor_exit,'reconciled_disposition':result}
+                 with scope.terminal_tail():_immutable(base/'monitor-failed.json',result)
++            _pilot_residual_tail(args,job)
+             print(json.dumps(result, sort_keys=True), flush=True)
++            _pilot_residual_tail(args,job)
+             return 0 if result['status'] == 'complete' else 1
+     except BaseException as error:primary=error;raise
+     finally:
+@@ -279,6 +290,7 @@
+         if launch_record != {'experiment': args.experiment, 'source_commit': args.source,
+                              'supervisor_pid': args.owner_pid, 'nonce': args.nonce}:
+             raise ValueError('execution supervisor identity differs')
++        _pilot_residual_tail(args,job)
+         owner = {**launch_record, 'monitor_pid': os.getpid(),
+                  'monitor_start_ticks': Path('/proc/self/stat').read_text().rsplit(')', 1)[1].split()[19]}
+         _immutable(base/'owner.json', owner)
+@@ -296,6 +308,7 @@
+         if scope is not None:
+             physical=scope.finish()
+             print(json.dumps({'physical_final_accounting':physical},sort_keys=True),flush=True)
++        _pilot_residual_tail(args,job)
+         return 0 if result['phase'] == 'complete' and observed['status'] == 'complete' else 1
+ 
+ 
