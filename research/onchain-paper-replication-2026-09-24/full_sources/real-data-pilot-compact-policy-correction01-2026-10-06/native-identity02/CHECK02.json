@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "actual_storage_old_RED_new_GREEN": true,
+  "source_exact_inverse": true,
+  "three_exact_import_guard_joins": [
+    {
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "sha256": "0d564c07dc35b3f6d56455189d99a179a21896577b5b309a1d3ee07ab87df836",
+      "import_line": 75,
+      "guard_line": 76
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/resources.py",
+      "sha256": "672ff3ed96c7d5ba1ccbdc2355558b10aa823cbda0c3b07d1d2f44923c8b0185",
+      "import_line": 428,
+      "guard_line": 429
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "sha256": "908bcc3adf98ecbec0b45f7b44a6e5e99382c500fce69ed8c9a01d8e408218a0",
+      "import_line": 258,
+      "guard_line": 259
+    }
+  ],
+  "refusals": [
+    "old identity",
+    "foreign identity",
+    "missing native guard",
+    "authority root mismatch",
+    "writer root mismatch",
+    "missing shared lock declaration",
+    "invalid finite limits",
+    "missing lock body"
+  ],
+  "residual_and_union_target": "eth-paper-real-data-end-to-end-resource-20261006-02",
+  "old_sibling_excluded": true,
+  "caps_and_all_other_code_unchanged": true,
+  "runtime_or_native_or_claim_or_network": false,
+  "qualification": "AST guard checks cover exact identity conditions, not full runtime admission."
+}

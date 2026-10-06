@@ -1,0 +1,11 @@
+# Fixed native identity candidate
+
+The current source `real_pilot_storage.py:7` fixes the spent 20261005-01 identity. The already reviewed fresh pilot gate uses `eth-paper-real-data-end-to-end-resource-20261006-02`. The unchanged `job.py:75`, `resources.py:428` and `real_pilot_import_caller.py:258` import that single constant and consequently reject the fresh identity.
+
+The candidate changes exactly one literal, from the spent identity to the existing fresh identity. The strict single-ID contract remains; no allowlist, fallback, new identity or allowance is introduced. All methods, residual limits, common limits and other bytes remain identical. Exact inverse verification is in `check02.py`; the source digests and target are in `SOURCE_CHANGE02.json`. Historical source/release and actual pre-entry failure remain unchanged.
+
+Using checkout-local Python 3.13.13 with the reviewed offline environment flags, the focused check imports only the real stdlib storage implementation and its stdlib workflow scanner into an isolated test namespace. A tiny temporary filesystem exercises actual validate, residual paths, WritableUnion before and after target birth, and exclusion of the retained old lifecycle sibling. The actual old implementation rejects the fresh metadata and the candidate accepts it. No actual research tree is scanned.
+
+The three exact unchanged identity import/guard AST statements are extracted from current source and executed against each module, proving old RED/new GREEN and old/foreign identity refusals without importing the runtime packages. Missing native guards, authority-root mismatch, writer-root mismatch, missing shared-lock declaration, invalid finite scan limit and missing lock file all refuse. The AST proof is explicitly narrower than running full admission or native entry.
+
+All focused checks pass. An initial extractor AttributeError on an unrelated relative import with module=None is preserved in HARNESS_FAILURE01.txt; the corrected filter changed only the harness. No numerical imports, native starts, claims, registration/Git/STATE changes or network actions occurred. This candidate is not installed. Independent review and Root numerical-source reanchor/integration remain pending; no full-runtime admission or empirical success follows from this proof.

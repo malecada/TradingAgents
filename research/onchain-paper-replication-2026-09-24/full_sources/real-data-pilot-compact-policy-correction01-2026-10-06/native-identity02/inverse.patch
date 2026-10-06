@@ -1,0 +1,11 @@
+--- tradingagents/research/onchain_replication/real_pilot_storage.py
++++ tradingagents/research/onchain_replication/real_pilot_storage.py
+@@ -4,7 +4,7 @@
+ from types import MappingProxyType
+ from .workflow_storage import StorageWatch,StorageLimit,FIELDS,_close
+ KIND='real-pilot-writable-union'
+-EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261006-02'
++EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261005-01'
+ COUNTS={'allocated_bytes':'max_allocated_bytes','logical_file_bytes':'max_logical_bytes','entries':'max_entries'}
+ 
+ def selected(budget):return type(budget) is dict and budget.get('schema_version')==2

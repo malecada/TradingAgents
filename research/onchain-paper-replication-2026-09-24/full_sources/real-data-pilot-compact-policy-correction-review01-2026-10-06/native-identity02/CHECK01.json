@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "candidate_checks_reproduced": {
+    "status": "PASS",
+    "actual_storage_old_RED_new_GREEN": true,
+    "source_exact_inverse": true,
+    "three_exact_import_guard_joins": [
+      {
+        "path": "tradingagents/research/onchain_replication/job.py",
+        "sha256": "0d564c07dc35b3f6d56455189d99a179a21896577b5b309a1d3ee07ab87df836",
+        "import_line": 75,
+        "guard_line": 76
+      },
+      {
+        "path": "tradingagents/research/onchain_replication/resources.py",
+        "sha256": "672ff3ed96c7d5ba1ccbdc2355558b10aa823cbda0c3b07d1d2f44923c8b0185",
+        "import_line": 428,
+        "guard_line": 429
+      },
+      {
+        "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+        "sha256": "908bcc3adf98ecbec0b45f7b44a6e5e99382c500fce69ed8c9a01d8e408218a0",
+        "import_line": 258,
+        "guard_line": 259
+      }
+    ],
+    "refusals": [
+      "old identity",
+      "foreign identity",
+      "missing native guard",
+      "authority root mismatch",
+      "writer root mismatch",
+      "missing shared lock declaration",
+      "invalid finite limits",
+      "missing lock body"
+    ],
+    "residual_and_union_target": "eth-paper-real-data-end-to-end-resource-20261006-02",
+    "old_sibling_excluded": true,
+    "caps_and_all_other_code_unchanged": true,
+    "runtime_or_native_or_claim_or_network": false,
+    "qualification": "AST guard checks cover exact identity conditions, not full runtime admission."
+  },
+  "source_exact_literal_and_AST_inverse": true,
+  "only_fixture_directory_redirected": true,
+  "actual_readonly_failure_retained": true,
+  "candidate_manifest_sha256": "2eebc5b0f5adaf6470889245d55f9b1a4db92fec18f73432e66d3c4ee3e6fbb3",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/native-identity02/MANIFEST02.json": "2eebc5b0f5adaf6470889245d55f9b1a4db92fec18f73432e66d3c4ee3e6fbb3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/native-identity02/CHECK02.json": "4280304c78aa5d4b5760b33322fa1b5ca4a2b055f811c12bdccfc9b965d16c16",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/native-identity02/HARNESS_FAILURE01.txt": "67cc66174a51102bd522caa3dd98b966a2329287416790d50d4260ea1427e8e3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/native-identity02/REPORT02.md": "f3343e48f99f3d248047b5916774958c819a8649511215de604f2d772e7d2c06",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/native-identity02/SOURCE_CHANGE02.json": "52e6345d10cfe8c6bd64c666e94a3fa48813dee2ab2621be902346ddf554c851",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/native-identity02/candidate.patch": "7edc166bf4bb41f4c0492b0b277b98c185498fe2209e24efbbed9ee64656cc90",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/native-identity02/check02.py": "cf0833b2d5d2748804770b1cf66e20fecae8403cb3f95b817d2209c34c21601e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/native-identity02/inverse.patch": "625f046ce11666bd19440cd3e487b94b3269a37c5d2e347e445f8bdf82401e71",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-compact-policy-correction01-2026-10-06/native-identity02/real_pilot_storage.py": "90e30e54399a6621954cbf9b27a8836b53513ea65965b6c431ce4300634bd41f",
+    "tradingagents/research/onchain_replication/real_pilot_storage.py": "f10fb4cf751750a22174bd854e6c2336f813bf0b66c8bcb836f4df3e566cbf5b",
+    "tradingagents/research/onchain_replication/job.py": "0d564c07dc35b3f6d56455189d99a179a21896577b5b309a1d3ee07ab87df836",
+    "tradingagents/research/onchain_replication/resources.py": "672ff3ed96c7d5ba1ccbdc2355558b10aa823cbda0c3b07d1d2f44923c8b0185",
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": "908bcc3adf98ecbec0b45f7b44a6e5e99382c500fce69ed8c9a01d8e408218a0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/ACTUAL_READONLY_ADMISSION_FAILED01.json": "f9233203d3aa4202e866352b8404cccdb9d3fa9078a90e13bad5ebeaf53f369b"
+  }
+}
