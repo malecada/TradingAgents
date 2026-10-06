@@ -1,5 +1,27 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T16:52:45.698282+00:00:10 permanently FAILED/spent81; no native job active. Source/Git freeze ENDED after actual Root closure/cleanup.**
+
+Root40455/93804f exit1 CLOSED; actualParent1/nativechild1/667.426414831s/cleanupverified/cgroupgone/all7recordedPIDsabsent. [Actual terminal](full_sources/real-data-pilot-final10-2026-10-06/ROOT_TERMINAL01.json). Target ENTRY checkpoint37 refused the same30s freshness class;09 had refused post-graph-hash checkpoint53. New genuine diagnostic: prior age23.631386558s +fullcallback6.903510514s=30.534897072s, exceeding30s by0.534897072s. This identifies timing accumulation; callback alone is below30s. NoOOM/MAX, sampledchargedpeak5368717312B/lastkernelpeak5370740736B includescache. Original import event182.259s; sevengraphs loaded, zeroMCMgraphs/jointupdates/financialfits, no feature/training throughput or wholecapacity established. All attempted/unavailable cells and secondary archive stale/poisoned cleanup failures retained.
+
+Accounting51closed33COMPLETE18FAILED/highestclaimed81;03reserve74/08reserve79 remain separately permanentlyclosed. No refund/transfer/capladder/identityreuse. Focused duplicatecheck reduction preserved checks but did not resolve all timing boundaries. Exact original method/motifs/samples/graphs/model/training/caps unchanged. All bounded agents completed. Root owns live/accounting/STATE/Git/preservation/ONElauncher. Next retain independent10outcome review and incrementally externalpreserve/freshrecover; diagnose the observed23.63s gap and safe originalphase checkpoints before any successor source/admission. No successor/82/newlaunch authorized by this status check. Broadwork/heartbeat/appgoal remain PAUSED; directpilot remains objective.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T16:39:00.990774+00:00: ONE fresh10 native pilot genuinely claimed/running; source/Git freeze ACTIVE.**
+
+Follow ONLY Root session40455; never relaunch10. Launch source and actual remote16edd7ea1b133365a73572f270218fe0ffb4a967; supervisor105853/monitor106221/nativeonchain-replication-22ee789a715f470c9b093aaf832ec549.service. [Actual active receipt](full_sources/real-data-pilot-final10-2026-10-06/ROOT_ACTIVE01.json) joins genuine claim at reviewed81, original preflight and live guard. Guard no limit reason at66.3s; seven-graph load in progress, zero completed MCM/update/financial fit. No callback-saving or whole-capacity claim.
+
+Focused redundant-fullcheck removal and existing-clock diagnostic independently accepted; exact sourceanchor e2c7e872/179package176unchanged; final673ref release482f3065/actual committed readonly81/232sources59inputs accepted. Scientific model/training/original32motifs512samples/sevenfullgraphs/MCM/GATattentionLSTM/30s freshness/native limits unchanged. Fresh launch RAM10709925888B/disk26442768384B passed; original guard enforces limits. Actual paper50closed33COMPLETE17FAILED plusONE10 active/highest81; permanentpreclaim03reserve74/08reserve79 retained. No refunds/transfers/reruns.
+
+Pilot09 permanently FAILED/Root90306exit1, cleanupverified; exact44files57names actualincrement externally fresh-Git recovered and independentlyaccepted09317d51; original failure/correction retained. All bounded agents completed. Root solelive/STATE/accounting/Git/preservation/ONElauncher. No Main/Git/source changes until actualterminal/RootIOclosure/nativecleanup. Next monitor40455 actual phase/resource progress, retain/review/incrementallyrecover every attempted outcome before dependent continuation. Broaderwork/heartbeat/appgoal remain PAUSED; direct representative pilot continues.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T16:37:03.305719+00:00: focused fix integrated; fresh10 committed read-only admission PASSED81; no native job active. Source/Git freeze ENDED.**
 
 Pilot09 permanently FAILED/spent80, Root90306 exit1 and original cleanup verified. All seven graphs loaded, zero MCM/updates/fits. Correct boundary is Target53 after successful graph hash52; full callback duration alone remains unknown. Actual09 public increment44files/13dirs57names was externally fresh-Git recovered from1517e13e and independently accepted09317d51. Raw failure, original incomplete wording and immutable correction remain retained.
