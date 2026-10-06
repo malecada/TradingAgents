@@ -1,5 +1,15 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T21:20:20.305437+00:00: fresh pilot14 exactly released; no native numerical job or14claim/attempt active.**
+
+Selected entry full_sources/real-data-pilot-final14-2026-10-06/root_io.py withgate01/preflight01/binding01. Source initialization SOURCE4b06005e and metadata cfa6643a accepted;179package/177unchanged sourceanchorba6be4fa. Genuine committed readonly atc91365f4 ready85/281sources59inputs; concretebinding1505810f/finalinverseaccepted/exact856ref release31fb64a6 copiedverbatim. No weakened Lease equality/authentication/60s, scientific model/data or native limits. Fresh14 remains UNUSED; rootonlylaunchafteractualpush/remote andfreshoriginaleligibility.
+
+Pilot13 permanentlyFAILED/spent84/all7unavailable/0MCMupdates preserved; exact43file448191B+13directory increment actuallyexternallyrecovered/accepted e3df35aa.54closed33C21F/highestclaimed84;85=54+28unchangedpending+2closedpreclaims+ONEunused14, no refund/transfer/capladder/rerun. LastlightRAM10.32GB/disk26.16GB isinstantaneous, notwholecapacity. Allboundedagentsfinished; RootsoleMain/Git/accounting/preservation/ONElauncher. Source/GitfreezeENDED untilactuallaunch. Nextfinalcommit/push/actualremote/freshlightchecks,thenatmostONE14RootIO; retain/review/recovereveryattemptedoutcomebeforecontinuation. Broadwork/goal/heartbeat remainPAUSED; directrepresentativepilot incomplete.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T21:17:50.085272+00:00: loaded-roster fix implemented/reviewed/committed; fresh pilot14 metadata prepared, no numerical job active.**
 
 Candidate04 initializes sixteen selected dependencies before the immutable Lease snapshot. Actual-source RED/GREEN preserves118 loaded entries and function/code/source mutation refusals;3.97s/<0.74GB imports-only probe. Independent source review4b06005e accepted; exact historical13 changed entry remainsUNKNOWN. Actual live adoption/sourceanchorba6be4fa updates caller and strict14 identity only;179packagepins/177unchanged, original scientific method/nativecaps/user-authorized60s unchanged.

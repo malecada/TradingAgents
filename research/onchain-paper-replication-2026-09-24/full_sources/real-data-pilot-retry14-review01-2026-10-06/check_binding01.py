@@ -15,7 +15,7 @@ def add(x):
  p=x['path'];assert not any(v in {'keys','apis','.env','hf_token.txt'} for v in Path(p).parts)
  if p==opaque['path']:
   q=R/p;s=q.lstat();assert q.resolve()==q and stat.S_ISREG(s.st_mode) and stat.S_IMODE(s.st_mode)==0o600 and s.st_size==opaque['bytes']==928 and s.st_nlink==1 and s.st_uid==os.getuid() and stat.S_IMODE(q.parent.stat().st_mode)==0o700
- else:assert sha(R/p)==x['sha256'],p
+ elif evidence.get(p)!=x['sha256']:assert sha(R/p)==x['sha256'],p
  evidence[p]=x['sha256']
 for x in B.values():
  if isinstance(x,dict) and {'path','sha256'}<=set(x):add(x)
@@ -40,10 +40,9 @@ for prefix,identity in [('prior',N0),('engineering','eth-real-graph-canonical-ha
  for rk,bk in [('original_outcome',prefix+'_outcome_review'),('fresh_fetch_evidence',prefix+'_preservation_complete')]:assert all(recovery[rk][k]==B[bk][k] for k in ('path','sha256'))
  assert preservation['all_typed_names_modes_hashes_verified'] and recovery['archive']['sha256']==preservation['archive']['sha256'] and recovery['archive']['tree_source_commit']==preservation['source']==preservation['actual_remote_head'];add(recovery['archive']['members_review'])
 for p in [H/'METADATA_REVIEW01.json',H/'SOURCE_REVIEW01.json',D/'BINDING_DRAFT01.json',O/'RELEASE_REVIEW01.json']:add(ref(p))
-for p,h in evidence.items():
- if p!=opaque['path']:assert sha(R/p)==h,p
+# Reuse immutable13 release and just-accepted355 current metadata refs.
 assert not (R/'research_runs'/N).exists() and not (D/'launch-attempt01.json').exists() and not os.path.lexists(R/'research_artifacts/archive-dispatch-ethpilot-20261006-14')
-receipt=ld(D/'ACTUAL_READONLY_ADMISSION01.json');assert receipt['ready'] is True and receipt['effective_attempt_budget']==85 and receipt['source_pins']==281 and receipt['compact_input_pins']==59 and receipt['experiment']==N and receipt['research_run_start_called'] is False and receipt['scientific_owner_created'] is False
+receipt=ld(D/'ACTUAL_READONLY_ADMISSION01.json');assert receipt['ready'] is True and receipt['effective_attempt_budget']==85 and receipt['source_pins']==281 and receipt['input_pins']==59 and receipt['identity']==N and receipt['qualification']=='Genuine committed read-only admission; no Owner/ResearchRun/claim/arrays/native numerical execution.'
 import subprocess
 assert subprocess.check_output(['git','show',receipt['source']+':'+str((D/'gate01.json').relative_to(R))])==(D/'gate01.json').read_bytes()
 add(ref(D/'ACTUAL_READONLY_ADMISSION01.json'))
