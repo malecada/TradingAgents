@@ -1,5 +1,47 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T16:23:23.917568+00:00: authorized focused09 fix and fresh rerun preparation; no native active. Source/Git freeze ENDED.**
+
+09 permanentFAILED/spent80/Root90306exit1/native644.782s/child1/Parent1/cleanupverified. Actual Target53 follows successful fullgraphhash52, not just manifest parse; [immutable terminal correction](full_sources/real-data-pilot-final09-2026-10-06/ROOT_TERMINAL_CORRECTION01.json) preserves the incomplete originalwording. Exact callback/gap/priorage durations unknown.0MCM/updates/fits/noOOM.50closed33C17F/highest80;03reserve74/08reserve79 preserved.
+
+Actual failed09 increment44files441693B/13dirs57names captured542720B/1a0542fe; independentoutcome4035221a accepted, externalfreshrecovery pending. Candidate worker pilot09_metadata owns authority-fullcheck-fix01: measured publicsourcehash0.178s/compile0.327s, nested execution.check4fullPrepared checks; proposedremoveonlyredundantmiddle while retainingentry/final/publicstage checks. Independent pilot09_review owns retry10-review01 and exactreview; pilot08_outcome owns ninth-failed-review01/returnedacceptance. Rootowns Main/STATE/Git/accounting/backup/ONElauncher. No81/newclaim/native released. Next finishfocused source/diagnostic review and actual09incrementfreshrecovery, integrate acceptedsource, prepare fixed10samecaps/81=50+28pending+2reserves+oneunused10, genuine committed admission/exactrelease/fresheligibility thenONE10. Broaderwork/heartbeat/appgoal PAUSED; directpilot authorized.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T16:17:31.409293+00:00:09 permanently FAILED/spent; no native job active, source/Git freeze ENDED after verified closure.**
+
+Root90306/4c0a60exit1 CLOSED; guard644.782113s/child1/actualParent1/cleanuptrue/cgroupabsent/allrecordedPIDsabsent. [Actual terminal](full_sources/real-data-pilot-final09-2026-10-06/ROOT_TERMINAL01.json). Genuine failed claim at80 retained. Seven original fullgraphs loaded and original dictionary import complete receipt exists. Target constructor passed entry and manifest read/parse but line53 full-authority checkpoint refused at Interval.validate freshness(full_done). Same30s freshness class as07, different reached boundary. Exact full-callback/old-age/gap durations UNKNOWN; cannot conclude callback alone took30s. No MCM/update/fit completed; noOOM/MAX, high1439, sampledchargedpeak5369364480B includescache. No wholecapacity/featurethroughput/trainingtime established.
+
+Accounting50genuineclosed33COMPLETE17FAILED/highestclaimed80,17correlatedprior+33actualcurrent; closedpreclaim03reserve74/08reserve79 retained separately. No refunds/transfers/capladder/oldidentityreuse. Original32motifs512samples/sevenfullgraphs/model/training/fullMCM/GATattentionLSTM/nativecaps remainunchanged. Root owns live/accounting/STATE/Git/externalpreservation/ONElauncher. All bounded agents complete. Next independentlyretain/review and incrementallypreserve/freshrecover09actualoutcome; investigate exact full-authority validation path with focused engineering timing before choosing any changed seam. No successor/81/admission/native launch created. Broadwork/heartbeat/appgoal remainPAUSED; directpilot authorized.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T16:10:39.380452+00:00: ONE09 native pilot remains ACTIVE; seven resident graphs loaded, original motif import underway. Source/Git freeze ACTIVE.**
+
+Follow ONLY Root90306; never relaunch09. Genuineclaim a06dd660 at80/source c8854e531/actualremote matched, supervisor29089/monitor29375/nativeonchain-replication-6c12102d5a2140eb95cdf5d3ddbba48b.service. [Current progress receipt](full_sources/real-data-pilot-final09-2026-10-06/ROOT_PROGRESS01.json) joins actual featurejournal/start/compactOwner after original controlflow loads all seven fullgraphs. Currentguardelapsed433.9s/memorycurrent5115383808B/kernelpeakobserved5371019264B/cacheinclusive/OOM0/MAX0/no limitreason. Targets/MCM not completed,0jointupdates/financialfits. No feature-throughput/trainingtime/wholecapacity established.
+
+49closed33C16F+ONE09active/highest80; bothclosedpreclaim03reserve74/08reserve79 retained. All accepted registrations/reviews/incrementalrecoveries preserved; no budgetrefund/transfer/capladder/oldidentityreuse. Original32motifs512samples/sevenfullgraphs/architecture/science/caps unchanged. All bounded agents complete. Rootsolelive/STATE/accounting/Git/preservation/ONElauncher; no Main/Git/source mutation until actualterminal/RootIOclosure/nativecleanup. Next monitor90306 actualphase/resource progress, retain all outcomes and independentlyreview/freshrecover on closure before any dependent continuation. Broaderwork/heartbeat/appgoal remainPAUSED; directpilot continues.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T16:04:38.118708+00:00: ONE native09 pilot genuinely claimed/running; source/Git freeze ACTIVE.**
+
+Rootsession90306 ACTIVE; follow only90306, never duplicate/relaunch. Launchsource/actualremote c8854e5315bb2a8b8d1cfde8121ead4e49e78808. Genuineclaim a06dd660 at reviewed80, supervisor29089/monitor29375/nativeonchain-replication-6c12102d5a2140eb95cdf5d3ddbba48b.service. [Active receipt](full_sources/real-data-pilot-final09-2026-10-06/ROOT_ACTIVE01.json). Fresh RootIO originalpreflight passed at11134394368B available/26462773248B disk; currentguard has no limit reason. No completed MCM/update/financialfit and no wholecapacity estimate.
+
+Exactgate4501e298/finalbinding5bf081d0/independentreleasee7d04946 accepted; selectednamespace09 joined; old namespace08 drafts and two actualread-onlyschema refusals retained before any claim. Actual49closed33COMPLETE16FAILED +ONE09active/highestadopted80; permanentpreclaim03reserve74/08reserve79 retained. Actual08 publicincrement16files19names fresh-Git recovery independentlyaccepted8197fac2; prior07 and separateengineeringprofile outcomes/recoveries unchanged. No refund/transfer/capladder/resampling/testtuning/historyreuse. Original32motifs512samples/sevenfullgraphs/fullMCM/GATattentionLSTM/seed11batch16oneupdate/method/caps unchanged.
+
+All bounded assignments complete. Rootsolelive/STATE/registration/Git/preservation/ONElauncher; no Main/Git/source mutations until actualterminal/RootIOclosure/nativecleanup. Next observe90306 actualphases/resources, retain all attempted/unavailable outputs and terminalcleanup; independentlyreview and incrementallypreserve/freshrecover actualoutcome before dependent continuation. Broadwork/heartbeat/appgoal remainPAUSED; directpilot continues.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T16:02:38.683344+00:00: fresh09 final exact release accepted; genuine committed admission PASSED80. No native active yet. Direct pilot authorized; broader work/heartbeat/app goal PAUSED.**
 
 Actual readonly74400/17f732exit0 fromac5d6c563:ready80/221sourcepins59inputs; selected archive namespace09/private opaque dispatch joined. Gate4501e298/finalbinding5bf081d0/independentbinding1baffe5e/exactreleasee7d04946 (628refs) accepted and adopted verbatim. Two read-only schema refusals and withheld namespace08 metadata/private09 body are retained; no scientific claim/native attempt followed them. Selected02 namespace and exact original charter/input/budget metadata schemas corrected before execution. Sourceanchor b348b7ae4 changes only strictstorage08→09, all178otherpackage bodies/science/caps unchanged; original hash batching and genuinephasechecks retained.

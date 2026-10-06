@@ -1,0 +1,71 @@
+{
+  "actual_parent_exit_code": 1,
+  "actual_root_exit_code": 1,
+  "at": "2026-10-06T16:17:31.409293+00:00",
+  "cgroup_absent": true,
+  "claim": {
+    "bytes": 69150,
+    "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261006-09/claim.json",
+    "sha256": "a06dd660e4c138fbfdafec0b85e73eb747854e4aac4ca83f5f7e313c46f8da8b"
+  },
+  "cleanup_verified": true,
+  "completed_mcm_graphs": 0,
+  "disposition": "FAILED_SPENT_NEVER_RELAUNCH",
+  "effective_attempt_budget": 80,
+  "exact_callback_or_interval_duration_seconds": null,
+  "failed": {
+    "bytes": 1112,
+    "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261006-09/failed.json",
+    "sha256": "3fa37b9c947cca1c28dd2556c958c153aaf2d9529e95cd48c91333fc193190d3"
+  },
+  "failure_location": "Target.__init__ line53 checkpoint after manifest read/parse; Interval.validate full_check returned then freshness(full_done) refused",
+  "final_storage": {
+    "bytes": 9617,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final09-2026-10-06/FINAL_STORAGE01.json",
+    "sha256": "6525442255f9542a3ce9a486204679307b0057bf834eb5f22f83ee6e85a817cb"
+  },
+  "financial_fits": 0,
+  "guard": {
+    "bytes": 19462,
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-09/guard/final.json",
+    "sha256": "9ed9d5d6224131534b3a429b18d0b00d1cdd5912fa52f62fef93284f0a1fa62e"
+  },
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-09",
+  "joint_updates": 0,
+  "memory_events": {
+    "high": 1439,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "native_elapsed_seconds": 644.7821131579999,
+  "original_guard_child_exit_code": 1,
+  "original_import_complete": {
+    "bytes": 5019,
+    "path": "research_artifacts/onchain_representations/885258df6934f62af3d655c37d8a00cb8092973819232dc17e4b03735c5ace6f/eth-paper-real-data-end-to-end-resource-20261006-09/compact/dictionary-import/import-complete.json",
+    "sha256": "c507d1adca263c3449fdfce8afa4dc33ff88a8fe5abdce9bcf653d77f907f058"
+  },
+  "peak_sampled_memory_current_bytes": 5369364480,
+  "qualification": "Original spent failure and cleanup retained. Full callback exact duration unmeasured; stale age includes prior time and callback work. All seven MCM stages unavailable/not completed; no capacity/throughput/training-time or financial confirmation follows. Independent outcome and incremental external recovery pending.",
+  "reason": "ValueError: import lease: stale interval cannot refresh",
+  "recorded_pids_absent": {
+    "29089": true,
+    "29375": true,
+    "29653": true,
+    "29657": true,
+    "29943": true,
+    "29944": true,
+    "31166": true
+  },
+  "root_exec_session": 90306,
+  "root_io_closed": {
+    "bytes": 171,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final09-2026-10-06/ROOT_IO_CLOSED01.json",
+    "sha256": "9e006a71b8f50a7c3afbba89f03ffdde95b0d35ff7c565e03cfb5d1d0be31426"
+  },
+  "root_output_chunk": "4c0a60",
+  "source": "c8854e5315bb2a8b8d1cfde8121ead4e49e78808",
+  "source_git_freeze": "ENDED"
+}
