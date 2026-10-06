@@ -1,0 +1,107 @@
+{
+  "actual_external_recovery_accepted": true,
+  "archive": {
+    "bytes": 204800,
+    "git_blob_oid": "984f697bf5607c0a6e7ec53b16468e4a28d590a5",
+    "members_review": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json",
+      "sha256": "acbaaa97f48a4b78f8c14cc1682bd4a3817775fbb7204616cfbf68908fb3e4b0"
+    },
+    "original_archive_streams": 0,
+    "returned_archive_streams": 1,
+    "returned_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-increment01-2026-10-06/fresh-git-recovered-increment01.tar",
+    "sha256": "e836983bd3e8432cce448e87c8c8b2e32c3ccb25f2fc600f7c99792426a406d9",
+    "tree_source_commit": "137bb3110862e04653cd17fccf2c6913b878fcb5"
+  },
+  "bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-sixth-resource-failed-20261006-01.git",
+  "current_alternates_absent": true,
+  "decision": "accepted",
+  "deletion_authorized": false,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-increment01-2026-10-06/CAPTURE01.json": "09d060b53c326dd16eda6f3490a1720d435797f00bba67207059234163041439",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json": "3cf499f914772a558d9be03a34a25cc9b171702cd0427988cd8cf10462a2ebd0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-increment01-2026-10-06/fresh-git-recovered-increment01.tar": "e836983bd3e8432cce448e87c8c8b2e32c3ccb25f2fc600f7c99792426a406d9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-review01-2026-10-06/INCREMENT_SELECTION01.json": "cc6773445c65f2d243687313c701c53a3e35e6182fc3231785e86cc59973718e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-review01-2026-10-06/OUTCOME_REVIEW01.json": "756f4761d1d8e053088abd085b805083dab9defe8aa2a42c77d9e6c372a9b6c7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json": "acbaaa97f48a4b78f8c14cc1682bd4a3817775fbb7204616cfbf68908fb3e4b0"
+  },
+  "external_provenance_basis": "Recorded successful fresh bare init/external SSH Git fetch/blob recovery and remote HEAD equality; independently confirmed present bare object/tree identity without network or lazy fetch. Returned archive Git object SHA1 and SHA256 computed from its sole body read.",
+  "fresh_fetch_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json",
+    "sha256": "3cf499f914772a558d9be03a34a25cc9b171702cd0427988cd8cf10462a2ebd0"
+  },
+  "git_lazy_fetch_disabled": true,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-06",
+  "not_tested": [
+    "No transport/native/network replay, fresh fetch, historical body stream, original tar read, extraction or deletion.",
+    "No numerical/scientific/raw/runtime/private body read or financial correctness/capacity claim.",
+    "External origin history relies on preserved actual fetch record; current offline bare state does not reconstruct historical process lifetime."
+  ],
+  "offline_git_checks": [
+    {
+      "args": [
+        "rev-parse",
+        "--is-bare-repository"
+      ],
+      "returncode": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "137bb3110862e04653cd17fccf2c6913b878fcb5"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.url"
+      ],
+      "returncode": 0,
+      "stdout": "git@github.com:malecada/TradingAgents.git"
+    },
+    {
+      "args": [
+        "ls-tree",
+        "-z",
+        "137bb3110862e04653cd17fccf2c6913b878fcb5",
+        "--",
+        "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-increment01-2026-10-06/failed-increment01.tar"
+      ],
+      "returncode": 0,
+      "stdout": "100644 blob 984f697bf5607c0a6e7ec53b16468e4a28d590a5\tresearch/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-increment01-2026-10-06/failed-increment01.tar\u0000"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-t",
+        "984f697bf5607c0a6e7ec53b16468e4a28d590a5"
+      ],
+      "returncode": 0,
+      "stdout": "blob"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-s",
+        "984f697bf5607c0a6e7ec53b16468e4a28d590a5"
+      ],
+      "returncode": 0,
+      "stdout": "204800"
+    }
+  ],
+  "original_outcome": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-review01-2026-10-06/OUTCOME_REVIEW01.json",
+    "sha256": "756f4761d1d8e053088abd085b805083dab9defe8aa2a42c77d9e6c372a9b6c7"
+  },
+  "original_selected_stat_identities_currently_unchanged": true,
+  "originals_retained": true,
+  "qualification": "BYTE/member/name/mode acceptance covers only this exact public failed-resource increment. No POSIX ownership/timestamps/xattrs reconstruction, installed runtime/raw/graph/private/unrelated-store recovery, future remote availability or scientific credit. Original06 genuine claim77 remains permanently FAILED/spent; all original nulls and unavailable cells retained. Existing02 namespace remains untouched.",
+  "recovered_archive_retained": true,
+  "recovery_source_commit": "137bb3110862e04653cd17fccf2c6913b878fcb5",
+  "schema_version": 1,
+  "scope": "Complete public06 failed-resource increment BYTE recovery via fresh external Git fetch and recovered archive;23 regular files totaling 149774 bytes plus 5 typed directories, 28 names in204800-byte tar."
+}
