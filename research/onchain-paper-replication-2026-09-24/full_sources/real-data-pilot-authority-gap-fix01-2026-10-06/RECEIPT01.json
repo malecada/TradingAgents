@@ -1,0 +1,27 @@
+{
+  "status": "candidate-ready",
+  "runtime": "checkout-local Python3.13.13",
+  "candidate_sha256": {
+    "imported_mcm_identity.py": "9d89376185fb9632ed165a8da2f26e8fb07e2bc567611bc7fa5a83e2463e7e4d",
+    "neighborhoods.py": "4f41912aa5d91e449eea4a30d813e5b57b65cbd7445e5ba153725e7bbe7ee00a"
+  },
+  "hash_checks": "HASH_CHECK01.json",
+  "timing_checks": "TIMING_RED_GREEN01.json",
+  "reviewed_offline": {
+    "module": "tests/research/onchain_replication/test_bounded_graph_hash.py",
+    "passed": 14,
+    "seconds": 0.61,
+    "qualification": "baseline imported implementation; separate candidate check exercises exact candidate"
+  },
+  "development_test_failures": [
+    "Test import helper omitted sys.modules entry needed by dataclass; corrected harness only.",
+    "AST test omitted relative package globals; corrected harness only.",
+    "Nonfinite fixture attempted writing a frozen array; corrected to replace with corrupted copy."
+  ],
+  "remaining_uncertainty": [
+    "Exact individual operation costs within actual07 gap unknown.",
+    "Real single hash/fullcallback may still exceed30seconds; this remains a hard refusal.",
+    "Any further producer/prepare uninstrumented gap remains subject to original scheduler."
+  ],
+  "changed_live_files": false
+}

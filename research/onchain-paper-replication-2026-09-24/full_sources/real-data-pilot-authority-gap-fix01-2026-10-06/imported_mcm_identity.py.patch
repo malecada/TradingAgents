@@ -1,0 +1,37 @@
+--- baseline/imported_mcm_identity.py
++++ candidate/imported_mcm_identity.py
+@@ -22,10 +22,19 @@
+       'import_execution_identity':execution_identity,'dtype':'float32'}
+ 
+ 
++def _checkpoint(execution):
++    # Preparation has no target capability yet. Check only the existing genuine
++    # execution lease between completed phases; never callback inside a hash.
++    if getattr(execution,'_sampled_authority_lease',None) is not None:
++        from .imported_authority_lease import check
++        check(execution,boundary=True)
++
++
+ class Target:
+     def __init__(self,execution,graph,key):
+         require(type(execution) is original_import_stage.ImportedExecution,'genuine imported execution required')
+         require(type(graph) is GraphSnapshot,'actual registered weekly graph required')
++        _checkpoint(execution)
+         execution.check();self.execution=execution;self.graph=graph;self.key=key
+         self.owner=execution._owner;self.dictionary=execution._materialized._dictionary
+         self.receipt_sha256=execution._stage.reference
+@@ -39,11 +48,14 @@
+         self._manifest_sha=run.admission.inputs[self._input]['sha256']
+         self._manifest=original_dictionary._read_registered(run,self._input)
+         manifest=original_dictionary.parse(self._manifest)
++        _checkpoint(execution)
+         require(manifest['graph_hash']==key and graph_hash(graph)==key,'target graph content differs')
++        _checkpoint(execution)
+         self._execution=execution.check();self._execution_pin=canonical_bytes(self._execution)
+         self._node_order=node_order_hash(graph.node_ids)
+         self._motifs=[graph_identity(m) for m in self.dictionary.representatives]
+         self.scope=self.derive_scope();self._scope_pin=canonical_bytes(self.scope)
++        _checkpoint(execution)
+         self.check()
+ 
+     def _arrays(self):

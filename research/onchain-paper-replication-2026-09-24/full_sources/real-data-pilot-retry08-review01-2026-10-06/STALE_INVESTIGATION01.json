@@ -1,0 +1,36 @@
+{
+  "all_unavailable": true,
+  "difference_seconds": 56.389715293000336,
+  "evidence": [
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-07/guard/child.log",
+      "sha256": "e24d3b014095fd37605bb948037a7ec6651b8063525095be529bbd12d394b77a"
+    },
+    {
+      "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261006-07/failed.json",
+      "sha256": "d9c5f02c5c13e766c79395e344bae16087a3baf27a99c966f3d3fe6e63cf75c3"
+    },
+    {
+      "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261006-07/outputs/pilot-summary.json",
+      "sha256": "86901e3636ab01d1cf7065071de6e1460931dd12f246314112f236a94053d8f9"
+    }
+  ],
+  "facts": [
+    "Actual primary stack is caller Target list comprehension -> Target.__init__.check -> target_lease(boundary=True) -> contract.check -> Interval.validate freshness(start).",
+    "Failing validation rejected at entry before its live/full/fingerprint callbacks. More than max_stale_ms elapsed since the scheduler last full completion; this is not the callback-overrun branch.",
+    "original_import mark follows activate; activation succeeded. All-seven compact_mcm._prepare loop is after Target construction and had not been reached.",
+    "Target construction does repeated execution checks, graph_hash, node_order_hash, motif identities and derive_scope before self.check. target_lease performs target.final(full_graph=False) for newly registered target before scheduler.check.",
+    "produce_imported independently constructs a fresh Target; simply moving initial activate later does not prove the production route has no stale gap."
+  ],
+  "full_graph_denominator": 7,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-07",
+  "mcm_completed": 0,
+  "not_tested": [
+    "No real graph/array/model reads, performance benchmark, lifecycle claim or authority instance created.",
+    "No financial accounting/timing/fees/funding or economic correctness assertion."
+  ],
+  "original_import_seconds": 181.91224415099987,
+  "qualification": "The difference includes later preparation/failure/cleanup time. No retained per-target index or callback/individual hash timings proves distribution of the gap. It cannot establish that one hash exceeds30s, idle time, or throughput.",
+  "schema_version": 1,
+  "scope_elapsed_seconds": 238.3019594440002
+}

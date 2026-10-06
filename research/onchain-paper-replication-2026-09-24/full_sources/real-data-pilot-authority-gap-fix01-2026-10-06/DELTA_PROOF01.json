@@ -1,0 +1,46 @@
+{
+  "imported_mcm_identity.py": {
+    "baseline_sha256": "f54e70c3374f5641dc69f2def29b507fc8ed845d6dc6c97958e0e7759d89497b",
+    "candidate_sha256": "9d89376185fb9632ed165a8da2f26e8fb07e2bc567611bc7fa5a83e2463e7e4d",
+    "exact_inverse": true,
+    "edits": [
+      {
+        "old": "",
+        "new": "def _checkpoint(execution):\n    # Preparation has no target capability yet. Check only the existing genuine\n    # execution lease between completed phases; never callback inside a hash.\n    if getattr(execution,'_sampled_authority_lease',None) is not None:\n        from .imported_authority_lease import check\n        check(execution,boundary=True)\n\n\n",
+        "candidate_offset": 1293
+      },
+      {
+        "old": "",
+        "new": ")\n        _checkpoint(execution",
+        "candidate_offset": 1901
+      },
+      {
+        "old": "",
+        "new": "_checkpoint(execution)\n        ",
+        "candidate_offset": 3016
+      },
+      {
+        "old": "",
+        "new": ")\n        _checkpoint(execution",
+        "candidate_offset": 3140
+      },
+      {
+        "old": "",
+        "new": ")\n        _checkpoint(execution",
+        "candidate_offset": 3488
+      }
+    ]
+  },
+  "neighborhoods.py": {
+    "baseline_sha256": "b53901125dc20dbb8a38b6e0e539866fb04109053afbcba0d75b2a2a8dc38271",
+    "candidate_sha256": "4f41912aa5d91e449eea4a30d813e5b57b65cbd7445e5ba153725e7bbe7ee00a",
+    "exact_inverse": true,
+    "edits": [
+      {
+        "old": "",
+        "new": "if isinstance(value,np.ndarray) and value.ndim==2 and value.shape[1]<=1024:\n            # Exact same row JSON, with at most 1024 scalar cells per temporary\n            # list. Wide rows retain the existing bounded recursive route.\n            h.update(b'[')\n            rows=max(1,1024//max(1,value.shape[1]))\n            for start in range(0,len(value),rows):\n                if start:h.update(b',')\n                h.update(canonical_bytes(value[start:start+rows].tolist())[1:-1])\n            h.update(b']')\n        el",
+        "candidate_offset": 1132
+      }
+    ]
+  }
+}

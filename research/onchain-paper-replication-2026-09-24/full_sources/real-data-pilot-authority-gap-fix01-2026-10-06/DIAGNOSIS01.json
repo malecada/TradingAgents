@@ -1,0 +1,16 @@
+{
+  "actual_failure": "Target constructor final self.check -> target_lease -> Lease.check -> Interval.validate freshness(start)",
+  "phase": "Target list construction, before _prepare loop; exact target index unknown",
+  "original_import_seconds": 181.912,
+  "failed_scope_seconds": 238.302,
+  "gap_seconds": 56.39,
+  "max_stale_ms": 30000,
+  "observed": "Activation returned before original_import event. Failed invocation refuses before its validation callbacks.",
+  "cost_path": [
+    "Target.__init__: execution.check, registered manifest read, graph_hash, execution.check, node_order_hash, motif hashes/derive_scope, self.check",
+    "target_lease: initial target.final(full_graph=False) before contract.check",
+    "Target.final(full_graph=True): boundary target lease, callback-free integrity, graph_hash+node_order_hash",
+    "compact_mcm.produce_imported constructs a fresh Target before _prepare"
+  ],
+  "uncertainty": "No per-operation durations or exact target index; graph hash cost is a source-based hypothesis, not measured attribution."
+}

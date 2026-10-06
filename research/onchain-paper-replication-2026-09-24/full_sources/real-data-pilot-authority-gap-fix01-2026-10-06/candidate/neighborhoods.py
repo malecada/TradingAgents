@@ -1,0 +1,180 @@
+"""Deterministic overlap-weighted training-only local graph sampling."""
+from __future__ import annotations
+from dataclasses import dataclass
+import numpy as np
+from .contracts import AttributedGraph,graph_to_dict,validate_graph
+from .cache import cache_key
+from .provenance import utc,freeze
+
+
+def node_order_hash(node_ids):
+    """Exact legacy JSON-list hash without expanding an entire mapped ID array."""
+    import hashlib
+    from .provenance import canonical_bytes
+    h = hashlib.sha256(b'[')
+    for start in range(0, len(node_ids), 1024):
+        if start:
+            h.update(b',')
+        chunk = node_ids[start:start + 1024]
+        if isinstance(chunk, np.ndarray):
+            chunk = chunk.tolist()
+        h.update(canonical_bytes(chunk)[1:-1])
+    h.update(b']')
+    return h.hexdigest()
+
+
+def graph_hash(graph):
+    # Exact canonical JSON identity, streamed so weekly arrays need no giant list copy.
+    from dataclasses import fields
+    from collections.abc import Mapping
+    from .provenance import canonical_bytes
+    import hashlib
+    validate_graph(graph);h=hashlib.sha256()
+    def feed(value):
+        if isinstance(value,np.ndarray) and value.ndim==2 and value.shape[1]<=1024:
+            # Exact same row JSON, with at most 1024 scalar cells per temporary
+            # list. Wide rows retain the existing bounded recursive route.
+            h.update(b'[')
+            rows=max(1,1024//max(1,value.shape[1]))
+            for start in range(0,len(value),rows):
+                if start:h.update(b',')
+                h.update(canonical_bytes(value[start:start+rows].tolist())[1:-1])
+            h.update(b']')
+        elif isinstance(value,np.ndarray) and value.ndim>1:
+            h.update(b'[')
+            for i,row in enumerate(value):
+                if i:h.update(b',')
+                feed(row)
+            h.update(b']')
+        elif isinstance(value,(np.ndarray,tuple,list)):
+            # Preserve the legacy JSON bytes while limiting row/ID-list copies.
+            # Graph arrays are two-dimensional; their rows and ID tuples are flat.
+            h.update(b'[')
+            for start in range(0,len(value),1024):
+                if start:h.update(b',')
+                chunk=value[start:start+1024]
+                if isinstance(chunk,np.ndarray):chunk=chunk.tolist()
+                h.update(canonical_bytes(chunk)[1:-1])
+            h.update(b']')
+        elif isinstance(value,Mapping):
+            h.update(b'{')
+            for i,key in enumerate(sorted(value)):
+                if i:h.update(b',')
+                h.update(canonical_bytes(key));h.update(b':');feed(value[key])
+            h.update(b'}')
+        else:h.update(canonical_bytes(value))
+    feed({f.name:getattr(graph,f.name) for f in fields(graph)})
+    return h.hexdigest()
+
+
+class NeighborhoodIndex:
+    """Bounded sparse adjacency index, reused across all centers of one graph."""
+    def __init__(self,graph):
+        self.graph=graph;self.identity=graph_hash(graph)
+        n=len(graph.node_ids);self.orders=[];self.offsets=[]
+        for endpoints in graph.edge_index:
+            order=np.argsort(endpoints,kind='stable');self.orders.append(order)
+            self.offsets.append(np.concatenate(([0],np.cumsum(np.bincount(endpoints,minlength=n)))))
+
+    def selected(self,center,config):
+        if not 0<=center<len(self.graph.node_ids):raise ValueError('invalid center')
+        selected={center};front={center}
+        for _ in range(config['hop_depth']):
+            new=set()
+            for node in front:
+                for direction in (0,1):
+                    edges=self.orders[direction][self.offsets[direction][node]:self.offsets[direction][node+1]]
+                    new.update(map(int,self.graph.edge_index[1-direction,edges]))
+            front=new-selected;selected|=new
+            if len(selected)>config['maximum_neighborhood_nodes']:raise ValueError('neighborhood capacity exceeded, no truncation')
+        return sorted(selected)
+
+    def neighborhood(self,center,config):
+        g=self.graph;indices=self.selected(center,config);mapping={old:new for new,old in enumerate(indices)}
+        candidates=np.concatenate([self.orders[0][self.offsets[0][i]:self.offsets[0][i+1]] for i in indices])
+        keep=np.array(sorted(int(e) for e in candidates if int(g.edge_index[1,e]) in mapping),dtype=np.int64)
+        edges=np.array([(mapping[int(a)],mapping[int(b)]) for a,b in g.edge_index[:,keep].T],dtype=np.int64).reshape(-1,2).T
+        return AttributedGraph(tuple(g.node_ids[i] for i in indices),g.node_features[indices],edges,g.edge_features[keep],self.identity,g.node_ids[center])
+
+
+def neighborhood(graph,center,config):
+    if not 0<=center<len(graph.node_ids):raise ValueError('invalid center')
+    selected={center};front={center}
+    # Weak reachability but retain direction/attributes in the induced graph.
+    for _ in range(config['hop_depth']):
+        new=set()
+        for a,b in graph.edge_index.T:
+            if int(a) in front:new.add(int(b))
+            if int(b) in front:new.add(int(a))
+        front=new-selected;selected|=new
+        if len(selected)>config['maximum_neighborhood_nodes']:raise ValueError('neighborhood capacity exceeded, no truncation')
+    indices=sorted(selected);mapping={old:new for new,old in enumerate(indices)}
+    mask=np.array([int(a) in selected and int(b) in selected for a,b in graph.edge_index.T],dtype=bool)
+    edges=np.array([(mapping[int(a)],mapping[int(b)]) for a,b in graph.edge_index[:,mask].T],dtype=np.int64).reshape(-1,2).T
+    return AttributedGraph(tuple(graph.node_ids[i] for i in indices),graph.node_features[indices],edges,graph.edge_features[mask],graph_hash(graph),graph.node_ids[center])
+
+
+@dataclass(frozen=True)
+class SampleManifest:
+    graphs: tuple[AttributedGraph, ...]
+    records: tuple[dict, ...]
+    source_hashes: tuple[str, ...]
+    rng_state: dict
+    seed: int
+    identity: str
+
+    def __post_init__(self):
+        object.__setattr__(self,'records',freeze(self.records))
+        object.__setattr__(self,'rng_state',freeze(self.rng_state))
+
+
+def sample_neighborhoods(graphs,config,seed,*,weight_workspace=None,max_weight_bytes=None,neighborhood_policy=None):
+    from .neighborhood_policy import validate_neighborhood_policy,open_array_index,sample_array_bytes
+    neighborhood_policy=validate_neighborhood_policy(neighborhood_policy)
+    if weight_workspace is None and max_weight_bytes is not None:
+        raise ValueError("weight budget requires a workspace")
+    start,end=utc(config['train_start']),utc(config['train_end'])
+    training=[]
+    for g in graphs:
+        if utc(g.start_utc)>=start and utc(g.available_at)<end:
+            validate_graph(g);training.append(g)
+    training.sort(key=lambda g:(g.start_utc,g.asset,graph_hash(g)))
+    hashes=tuple(graph_hash(g) for g in training)
+    if len(set(hashes))!=len(hashes):raise ValueError('duplicate training graph')
+    offsets=np.cumsum([0]+[len(g.node_ids) for g in training])
+    total=int(offsets[-1])
+    if total<config['sample_count']:raise ValueError('insufficient unique centers')
+    from contextlib import ExitStack
+    from .sampling_weights import MappedWeights
+    with ExitStack() as stack:
+        storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+                   {"training_graphs":hashes,"config":config,"seed":seed}))
+                   if weight_workspace is not None else None)
+        weights = storage.weights if storage is not None else np.ones(total,dtype=np.float64)
+        rng=np.random.Generator(np.random.PCG64(seed));records=[];samples=[]
+        active_gi=None;index=None;retained_bytes=0
+        index_stack=stack.enter_context(ExitStack())
+        for _ in range(config['sample_count']):
+            if storage is None:
+                probability=weights/weights.sum()
+                chosen=int(rng.choice(total,p=probability));chosen_probability=float(probability[chosen])
+            else:
+                chosen,chosen_probability=storage.draw(rng)
+            gi=int(np.searchsorted(offsets,chosen,side='right')-1);center=chosen-int(offsets[gi])
+            g=training[gi]
+            if gi!=active_gi:
+                index_stack.close()
+                index=(index_stack.enter_context(open_array_index(g,neighborhood_policy))
+                       if neighborhood_policy is not None else NeighborhoodIndex(g))
+                active_gi=gi
+            sub=index.neighborhood(center,config)
+            if neighborhood_policy is not None:
+                retained_bytes+=sample_array_bytes(sub)
+                if retained_bytes>neighborhood_policy['max_sample_array_bytes']:raise ValueError('retained sample array allowance exceeded')
+            records.append({'graph_hash':hashes[gi],'center_id':g.node_ids[center],'center_index':center,'probability':chosen_probability,'node_count':len(sub.node_ids),'edge_count':sub.edge_index.shape[1]})
+            samples.append(sub);weights[chosen]=0
+            weights[int(offsets[gi])+np.asarray(index.selected(center,config),dtype=np.int64)]*=.5
+        state=rng.bit_generator.state
+        identity=cache_key({'training_graphs':hashes,'config':config,'seed':seed,'records':records,'rng_state':state})
+        if storage is not None:storage.sample_identity=identity
+        return SampleManifest(tuple(samples),tuple(records),hashes,state,seed,identity)

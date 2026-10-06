@@ -1,0 +1,91 @@
+{
+  "results": {
+    "baseline_gap": {
+      "accepted": false,
+      "reason": "import lease: stale interval cannot refresh",
+      "events": [
+        "execution",
+        "manifest",
+        "hash",
+        "execution",
+        "order",
+        "scope",
+        "target-check"
+      ],
+      "clock": 45,
+      "closed": true
+    },
+    "candidate_completed_phases": {
+      "accepted": true,
+      "events": [
+        "checkpoint",
+        "full",
+        "execution",
+        "manifest",
+        "checkpoint",
+        "full",
+        "hash",
+        "checkpoint",
+        "full",
+        "execution",
+        "order",
+        "scope",
+        "checkpoint",
+        "full",
+        "target-check"
+      ],
+      "clock": 49,
+      "closed": false
+    },
+    "single_hash_too_slow": {
+      "accepted": false,
+      "reason": "import lease: stale interval cannot refresh",
+      "events": [
+        "checkpoint",
+        "full",
+        "execution",
+        "manifest",
+        "checkpoint",
+        "full",
+        "hash",
+        "checkpoint"
+      ],
+      "clock": 43,
+      "closed": true
+    },
+    "already_stale": {
+      "accepted": false,
+      "reason": "import lease: stale interval cannot refresh",
+      "events": [
+        "checkpoint"
+      ],
+      "clock": 31,
+      "closed": true
+    },
+    "full_check_too_slow": {
+      "accepted": false,
+      "reason": "import lease: stale interval cannot refresh",
+      "events": [
+        "checkpoint",
+        "full"
+      ],
+      "clock": 31,
+      "closed": true
+    },
+    "legacy_no_sampling": {
+      "accepted": true,
+      "events": [
+        "execution",
+        "manifest",
+        "hash",
+        "execution",
+        "order",
+        "scope",
+        "target-check"
+      ],
+      "clock": 45,
+      "closed": false
+    }
+  },
+  "qualification": "simulated durations prove control placement, not real graph throughput or genuine activation"
+}
