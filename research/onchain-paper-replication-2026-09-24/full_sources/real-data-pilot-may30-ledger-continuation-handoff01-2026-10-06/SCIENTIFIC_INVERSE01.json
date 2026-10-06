@@ -1,0 +1,11 @@
+{
+  "baseline": "tradingagents/research/onchain_replication/weekly.py",
+  "baseline_sha256": "079a427f212738759109b31da23933549a8b7751851e3033703cdd03dc5f054a",
+  "extracted_from": "observed=db.execute('SELECT DISTINCT asset,week FROM events ORDER BY asset,week').fetchall()",
+  "literal_edit": {
+    "before": "db.execute('DROP TABLE IF EXISTS pairs')",
+    "after": "db.execute('DROP TABLE IF EXISTS temp.pairs')"
+  },
+  "candidate_sha256": "0e2c3a12ba19668f9b66840c18720cf2b9418909e08b0853dd6ed7ec6c1616da",
+  "qualification": "Post-ingestion body exact after indentation and temp-table target qualification. Existing week_category index required by future read-only DB validator; no index creation or ingestion copied."
+}

@@ -1,0 +1,15 @@
+{
+  "baseline": "tradingagents/research/onchain_replication/graph_production.py",
+  "baseline_sha256": "7d7a7a3f45825905a63bac49f0edb5085320a9c222efef10e629a65b9f60dd4e",
+  "candidate_sha256": "ef3ba95b235725f7d969020b9129b96b342ec204d1e3a93ee9a9a57889839bbc",
+  "edits": [
+    {
+      "before": "    plan = json.loads(raw)\n",
+      "after": "    plan = json.loads(raw)\n    if isinstance(plan,dict) and plan.get('mode')=='retained-ledger':\n        from .graph_ledger_continuation import plan_check\n        return plan_check(plan),digest(raw)\n"
+    },
+    {
+      "before": "    plan, identity = _plan(run, plan_input)\n",
+      "after": "    plan, identity = _plan(run, plan_input)\n    if plan['mode']=='retained-ledger':\n        from .graph_ledger_continuation import produce\n        return produce(run,plan_input)\n"
+    }
+  ]
+}

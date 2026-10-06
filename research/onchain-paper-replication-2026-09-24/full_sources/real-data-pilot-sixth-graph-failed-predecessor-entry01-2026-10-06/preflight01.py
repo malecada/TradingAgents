@@ -1,0 +1,199 @@
+"""Read-only entry checks for the fixed sixth real-data pilot graph."""
+from pathlib import Path
+from types import SimpleNamespace
+import datetime
+import json
+import shutil
+import subprocess
+
+from tradingagents.research.onchain_replication.job import _admitted, PREFIX
+from tradingagents.research.onchain_replication.environment import inventory
+from tradingagents.research.onchain_replication.provenance import file_hash
+from tradingagents.research.onchain_replication.resources import mem_available
+from tradingagents.research.onchain_replication.workflow_storage import StorageWatch
+
+ROOT=Path(__file__).resolve().parents[4]
+HERE=Path(__file__).resolve().parent
+NAME='eth-paper-real-pilot-graph-20220606-20261005-01'
+GATE=str((HERE/'gate01.json').relative_to(ROOT))
+
+
+def preceding_storage(inputs):
+    """FAILED May30 remains failed; only its NEW preservation may be COMPLETE."""
+    graph='eth-paper-real-pilot-graph-20220530-20261005-01'
+    source='14414c1637256dd286eafbe92391129dee3d29bf'
+    backup='research/onchain-paper-replication-2026-09-24/storage/real-pilot-fifth-graph-failed-preservation-20261006-01'
+    identity=Path(backup).name
+    roots=('research_runs/'+graph,'research_artifacts/onchain-paper-replication-2026-09-24/runs/'+graph,
+           'research_artifacts/onchain-paper-replication-2026-09-24/sources/'+graph)
+    caller='research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph01-2026-10-06'
+    parent={'failed_parent_claim':roots[0]+'/claim.json','failed_parent_terminal':roots[0]+'/failed.json',
+            'failed_parent_cells':roots[1]+'/postmortem-cells.json','failed_parent_native':roots[1]+'/guard/final.json',
+            'failed_parent_root':caller+'/ROOT_TERMINAL01.json','failed_parent_outer':caller+'/outer-exit01.json'}
+    expected={**parent,**{role:backup+'/'+name for role,name in {
+        'storage_complete':'complete.json','storage_recovered_complete':'recovered-complete.json',
+        'storage_selection':'selection01.json','storage_native_final':'guard01/final.json',
+        'storage_outer_exit':'outer-exit01.json','storage_root_terminal':'ROOT_TERMINAL01.json'}.items()}}
+    def bounded(relative,pin):
+        if type(relative) is not str or type(pin) is not str or len(pin)!=64 or any(x not in '0123456789abcdef' for x in pin):
+            raise ValueError('actual failed-predecessor proof references required; null drafts refuse')
+        q=Path(relative);p=ROOT/q
+        if (q.is_absolute() or '..' in q.parts or p.resolve(strict=True)!=p or not p.is_file()
+                or p.stat().st_nlink!=1 or p.stat().st_size>4*1024**2 or file_hash(p)!=pin):
+            raise ValueError('exact bounded failed-predecessor evidence differs: '+relative)
+        return json.loads(p.read_bytes())
+    def read(role):
+        ref=inputs.get(role)
+        if type(ref) is not dict or 'path' not in ref or 'sha256' not in ref:
+            raise ValueError('actual failed-predecessor proof references required; null drafts refuse')
+        if role in expected and ref['path']!=expected[role]:raise ValueError('fixed failed-predecessor role differs')
+        return bounded(ref['path'],ref['sha256'])
+    review=read('storage_closure_review')
+    if review['decision']!='accepted' or review['identity']!=identity or review['full_scope_byte_recovery'] is not True:
+        raise ValueError('independent actual failed-scope full BYTE recovery required')
+    for role,relative in expected.items():
+        ref=inputs.get(role)
+        if type(ref) is not dict or ref.get('path')!=relative or review['evidence'].get(relative)!=ref.get('sha256'):
+            raise ValueError('independent failed-scope evidence join differs: '+role)
+    def reviewed(relative):
+        if relative not in review['evidence']:raise ValueError('original body/restoration receipt unreviewed: '+relative)
+        return bounded(relative,review['evidence'][relative])
+    claim=read('failed_parent_claim');failed=read('failed_parent_terminal');cells=read('failed_parent_cells')
+    guard=read('failed_parent_native');root=read('failed_parent_root');outer=read('failed_parent_outer')
+    if (claim['experiment_id']!=graph or claim['source']!=source or failed['experiment_id']!=graph
+            or failed['status']!='failed' or failed['output_sha256']!={}
+            or failed['claim_sha256']!=inputs['failed_parent_claim']['sha256']
+            or root['identity']!=graph or root['source_commit']!=source
+            or root['actual_root_tool_exit_code']!=1 or root['actual_parent_exit_code']!=1
+            or root['failed_marker_sha256']!=inputs['failed_parent_terminal']['sha256']
+            or root['guard_final_sha256']!=inputs['failed_parent_native']['sha256']
+            or outer['experiment']!=graph or outer['source']!=source or outer['exit_code']!=1
+            or guard['phase']!='failed' or guard['child_exit_code']!=125
+            or guard['cleanup_stop_returncode']!=0 or guard['cleanup_verified'] is not True):
+        raise ValueError('original FAILED/Root1/guard125/cleanup0 disposition differs')
+    if (len(cells)!=2 or cells[0]['id']!='source-000000' or cells[0]['status']!='complete'
+            or cells[0]['rows']!=7507236 or cells[1]['id']!='graph-2022-05-30' or cells[1]['status']!='unavailable'):
+        raise ValueError('original source-COMPLETE/graph-UNAVAILABLE denominator differs')
+    def absent_pids(record):
+        pids=record['actual_selected_recorded_pids']
+        if type(pids) is not list or not pids or any(type(pid) is not int or pid<=0 or Path('/proc',str(pid)).exists() for pid in pids):
+            raise ValueError('selected recorded PIDs must be absent; lifetime history remains unknown')
+    absent_pids(root)
+    if Path(guard['cgroup']).exists():raise ValueError('failed graph cgroup remains')
+    forbidden=(roots[0]+'/complete.json',roots[0]+'/outputs/artifact-index.json',roots[2]+'/aggregation/complete.json',roots[2]+'/graph-2022-05-30/manifest.json')
+    if any((ROOT/x).exists() or (ROOT/x).is_symlink() for x in forbidden):raise ValueError('failed graph was upgraded or gained completion metadata')
+    complete=read('storage_complete');selected=read('storage_selection')
+    count=selected['count']
+    if (type(count) is not int or not 1<=count<=4096 or complete!=read('storage_recovered_complete')
+            or complete['identity']!=identity or selected['identity']!=identity or complete['selection']!=selected
+            or complete['count']!=count or len(complete['files'])!=count or len(selected['files'])!=count
+            or selected['graph_terminal_status']!='failed' or selected['graph_terminal_cells']!=cells
+            or selected['graph_terminal']!={'path':parent['failed_parent_terminal'],'sha256':inputs['failed_parent_terminal']['sha256']}
+            or complete['bytes_preserved']!=selected['total_bytes'] or complete['originals_retained'] is not True
+            or complete['recoveries_retained'] is not True):raise ValueError('actual failed-scope full inventory recovery differs')
+    final=read('storage_native_final');out=read('storage_outer_exit');end=read('storage_root_terminal')
+    if ((ROOT/backup/'failed.json').exists() or (ROOT/backup/'failed.json').is_symlink()
+            or final['phase']!='complete' or final['child_exit_code']!=0 or final['cleanup_verified'] is not True
+            or out['entry_selected_exit_code']!=0 or out['guard_child_exit_code']!=0 or out['cleanup_verified'] is not True
+            or end['identity']!=identity or end['actual_root_tool_exit_code']!=0
+            or end['complete_sha256']!=inputs['storage_complete']['sha256']
+            or end['guard_final_sha256']!=inputs['storage_native_final']['sha256']
+            or Path(final['cgroup']).exists() or Path('/proc',str(final['monitor_pid'])).exists()):
+        raise ValueError('NEW ordinary preservation requires actual native/outer/Root zero and cleanup')
+    absent_pids(end)
+    opaque={roots[2]+'/aggregation/ledger.sqlite':3189231616,roots[2]+'/graph-2022-05-30/edge_index.npy':38817824,
+            roots[2]+'/graph-2022-05-30/node_features.npy':50606240}
+    paths=set();seen={};total=0
+    for i,(original,kept) in enumerate(zip(selected['files'],complete['files'])):
+        rel=original['path'];p=ROOT/rel
+        if rel in paths or not (any(Path(rel).is_relative_to(Path(r)) for r in roots) or rel in (parent['failed_parent_root'],parent['failed_parent_outer'])):
+            raise ValueError('failed-scope original membership differs')
+        paths.add(rel);total+=original['bytes']
+        if any(kept[k]!=v for k,v in original.items()) or kept!=reviewed(backup+f'/{i:02d}-kept.json'):
+            raise ValueError('original/full recovery row differs')
+        restore=reviewed(backup+f'/{i:02d}-restore.json');restored=reviewed(backup+f'/{i:02d}-recovered-restore.json')
+        get=reviewed(backup+f'/{i:02d}-recovered.bin.transport.json')
+        metadata_get=reviewed(backup+f'/{i:02d}-recovered-restore.json.transport.json')
+        if (restore!=restored or any(kept[k]!=v for k,v in restore.items())
+                or any(kept[k] is not True for k in ('body_roundtrip_verified','original_retained','recovered_body_retained'))
+                or get['status']!='complete' or get['returncode']!=0 or get['received_bytes']!=get['expected_bytes'] or get['expected_bytes']!=original['bytes']
+                or metadata_get['status']!='complete' or metadata_get['returncode']!=0
+                or metadata_get['received_bytes']!=metadata_get['expected_bytes']
+                or metadata_get['expected_bytes']!=(ROOT/backup/f'{i:02d}-restore.json').stat().st_size):
+            raise ValueError('full body/restoration get proof differs')
+        s=p.lstat()
+        if (p.resolve(strict=True)!=p or not p.is_file() or s.st_nlink!=1
+                or [s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns]!=original['stat_identity']
+                or (s.st_mode&0o7777)!=original['mode']):raise ValueError('failed original retired or changed')
+        recovery=ROOT/backup/f'{i:02d}-recovered.bin'
+        if recovery.resolve(strict=True)!=recovery or not recovery.is_file() or recovery.stat().st_nlink!=1 or recovery.stat().st_size!=original['bytes']:
+            raise ValueError('retained recovery absent or extent differs')
+        if rel in opaque:seen[rel]=original['bytes']
+        elif p.suffix not in ('.json','.jsonl','.log'):raise ValueError('unexpected opaque failed member')
+    if seen!=opaque or total!=selected['total_bytes'] or len(paths)!=count:raise ValueError('three partial-body/full-scope denominator differs')
+    for row in selected['directories']:
+        p=ROOT/row['path']
+        if p.resolve(strict=True)!=p or not p.is_dir() or (p.stat().st_mode&0o7777)!=row['mode']:raise ValueError('retained original directory differs')
+    return {'backup':identity,'failed_graph':graph,'original_status':'failed','opaque_original_bytes':sum(opaque.values()),
+            'selected_original_bytes':total,'retained_recovery_bytes':total,'retirement_assumed':False,'retired_bytes':0}
+
+
+
+def check():
+    source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    release_path=HERE/'RELEASE_REVIEW01.json'
+    release=json.loads(release_path.read_bytes())
+    if release.get('decision')!='accepted':raise ValueError('exact source/entry review missing')
+    for relative,expected in release['evidence'].items():
+        path=ROOT/relative
+        if file_hash(path)!=expected:raise ValueError('reviewed entry changed: '+relative)
+        committed=subprocess.check_output(['git','show',source+':'+relative],cwd=ROOT)
+        if committed!=path.read_bytes():raise ValueError('reviewed entry not committed: '+relative)
+    if subprocess.check_output(['git','show',source+':'+str(release_path.relative_to(ROOT))],cwd=ROOT)!=release_path.read_bytes():
+        raise ValueError('source/entry review itself not committed')
+    args=SimpleNamespace(root=ROOT,registration=GATE,experiment=NAME,source=source)
+    admission,job=_admitted(args)
+    if not admission.ready or admission.effective_attempt_budget!=71:raise ValueError('exact pilot admission/budget differs')
+    for relative,expected in admission.experiment['source_files'].items():
+        if file_hash(ROOT/relative)!=expected:raise ValueError('source pin changed: '+relative)
+    for info in admission.inputs.values():
+        path=ROOT/info['path']
+        if path.stat().st_size>4*1024**2 or file_hash(path)!=info['sha256']:
+            raise ValueError('compact input pin changed: '+info['path'])
+    if inventory(ROOT)!=json.loads((ROOT/admission.inputs['environment']['path']).read_bytes()):raise ValueError('installed runtime inventory differs')
+    for path in (ROOT/'research_runs'/NAME,ROOT/PREFIX/'runs'/NAME,ROOT/PREFIX/'sources'/NAME,HERE/'launch-attempt01.json',HERE/'outer-exit01.json'):
+        if path.exists() or path.is_symlink():raise ValueError('fixed namespace already reserved: '+str(path))
+    units=subprocess.check_output(['systemctl','--user','list-units','--state=active,activating','--no-legend','onchain-replication-*.service'],text=True)
+    if units.strip():raise ValueError('another native resource process is active')
+    for claim_path in (ROOT/'research_runs').glob('*/claim.json'):
+        claim=json.loads(claim_path.read_bytes())
+        if claim.get('program_id')==admission.spec['program_id'] and not any((claim_path.parent/name).exists() for name in ('complete.json','failed.json')):
+            raise ValueError('another program claim is active: '+str(claim_path.parent))
+    predecessor=preceding_storage(admission.inputs)
+    extent=json.loads((HERE/'RAW_EXTENT01.json').read_bytes()); count=0
+    for member in extent['daily_members']:
+        if file_hash(ROOT/member['mapping_path'])!=member['mapping_sha256']:raise ValueError('daily map changed')
+        for segment in member['segments']:
+            path=Path(segment['path']); info=path.lstat()
+            if path.is_symlink() or not path.is_file() or (info.st_dev,info.st_ino,info.st_size,info.st_mtime_ns,info.st_ctime_ns)!=(segment['device'],segment['inode'],segment['bytes'],segment['mtime_ns'],segment['ctime_ns']):
+                raise ValueError('original raw extent changed: '+str(path))
+            count+=1
+    policy=json.loads((HERE/'STORAGE_POLICY01.json').read_bytes())
+    if policy.get('failed_predecessor_retained')!=predecessor:
+        raise ValueError('fresh storage policy must explicitly retain failed originals and recoveries; no retirement credit')
+    for candidate in policy['scratch_scope']['sqlite_temp_candidates']:
+        path=Path(candidate)
+        if path.exists() and path.stat().st_dev!=ROOT.stat().st_dev:raise ValueError('SQLite temp candidate outside guarded volume')
+    storage=StorageWatch(**job['resources']['storage_budget']).check()
+    free=shutil.disk_usage(ROOT).free; available=mem_available()
+    if free<policy['startup_free_requirement_bytes']:raise ValueError('full projected source/scratch plus disk floor unavailable')
+    if available<job['resources']['start_reserve_bytes']:raise ValueError('frozen startup RAM reserve unavailable')
+    return args,{'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'experiment':NAME,
+        'registration_sha256':file_hash(HERE/'gate01.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':71,
+        'source_pins':len(admission.experiment['source_files']),'compact_input_pins':len(admission.inputs),
+        'original_raw_extents_stat_only':count,'host_mem_available_bytes':available,'free_disk_bytes':free,
+        'startup_free_requirement_bytes':policy['startup_free_requirement_bytes'],'storage_observation':storage,
+        'qualification':'Read-only source/metadata/namespace/resource check; original raw hashes are enforced inside the genuine source worker. Projection is an estimate. No empirical body, claim or result was opened.'}
+
+
+if __name__=='__main__':print(json.dumps(check()[1],sort_keys=True))

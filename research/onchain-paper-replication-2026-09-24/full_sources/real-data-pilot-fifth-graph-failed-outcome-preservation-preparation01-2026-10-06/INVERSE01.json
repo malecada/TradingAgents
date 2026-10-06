@@ -1,0 +1,259 @@
+{
+  "entry01.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph-preservation-preparation01-2026-10-06/entry01.py",
+    "baseline_sha256": "c8a609406dac5f51ef9ee4d60f827717cb4eb6ba01ca26ce240db09bd1734f34",
+    "candidate_sha256": "6608659f17a0ee4f8c6da90da6504c7ea28a3a9aef3c9544612098914d46452b",
+    "exact_inverse": true,
+    "hunks": [
+      {
+        "original_start": 18,
+        "original_end": 19,
+        "candidate_start": 18,
+        "candidate_end": 19,
+        "original": [
+          "ID = 'real-pilot-fifth-graph-preservation-20261006-01'\n"
+        ],
+        "candidate": [
+          "ID = 'real-pilot-fifth-graph-failed-preservation-20261006-01'\n"
+        ]
+      }
+    ]
+  },
+  "keep.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph-preservation-preparation01-2026-10-06/keep.py",
+    "baseline_sha256": "74686fe9e6e26c2757a78a6f32d68ea9247b734450759972b014234930489752",
+    "candidate_sha256": "e62b1d93bbb6503b73604520d1979a7a399af4a9862bbb533250bdf91b7d0dba",
+    "exact_inverse": true,
+    "hunks": [
+      {
+        "original_start": 3,
+        "original_end": 4,
+        "candidate_start": 3,
+        "candidate_end": 4,
+        "original": [
+          "ID='real-pilot-fifth-graph-preservation-20261006-01'\n"
+        ],
+        "candidate": [
+          "ID='real-pilot-fifth-graph-failed-preservation-20261006-01'\n"
+        ]
+      }
+    ]
+  },
+  "prepare01.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph-preservation-preparation01-2026-10-06/prepare01.py",
+    "baseline_sha256": "f67888517d40153c343ca4f50ec45288b204ca48251f0160a59959bf98872d48",
+    "candidate_sha256": "bc165decae5fb9e7fc7386e1493380607c98762280bfc6e6db224ace96425499",
+    "exact_inverse": true,
+    "hunks": [
+      {
+        "original_start": 0,
+        "original_end": 1,
+        "candidate_start": 0,
+        "candidate_end": 1,
+        "original": [
+          "\"\"\"Metadata-only, stdout-only May30 preservation selection. Never reads payload bodies.\"\"\"\n"
+        ],
+        "candidate": [
+          "\"\"\"Metadata-only, stdout-only FAILED May30 preservation selection. Never reads payload bodies.\"\"\"\n"
+        ]
+      },
+      {
+        "original_start": 7,
+        "original_end": 8,
+        "candidate_start": 7,
+        "candidate_end": 8,
+        "original": [
+          "ID = 'real-pilot-fifth-graph-preservation-20261006-01'\n"
+        ],
+        "candidate": [
+          "ID = 'real-pilot-fifth-graph-failed-preservation-20261006-01'\n"
+        ]
+      },
+      {
+        "original_start": 15,
+        "original_end": 15,
+        "candidate_start": 15,
+        "candidate_end": 24,
+        "original": [],
+        "candidate": [
+          "CALLER = 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph01-2026-10-06'\n",
+          "EXTRA_CONTROLS = (CALLER + '/ROOT_TERMINAL01.json', CALLER + '/outer-exit01.json')\n",
+          "FAILED_ROOT_SHA = '498bee3919eee4a79d3b983746cd5f0090963780b58e272128b5a70f3548cc1a'\n",
+          "OPAQUE_BYTES = {\n",
+          "    ROOTS[2] + '/aggregation/ledger.sqlite': 3189231616,\n",
+          "    ROOTS[2] + '/graph-2022-05-30/edge_index.npy': 38817824,\n",
+          "    ROOTS[2] + '/graph-2022-05-30/node_features.npy': 50606240,\n",
+          "}\n",
+          "\n"
+        ]
+      },
+      {
+        "original_start": 51,
+        "original_end": 53,
+        "candidate_start": 60,
+        "candidate_end": 66,
+        "original": [
+          "    require(len(terminals) == 1 and terminals[0].name == 'complete.json',\n",
+          "            'genuine COMPLETE original required; active/failed is unavailable')\n"
+        ],
+        "candidate": [
+          "    require(len(terminals) == 1 and terminals[0].name == 'failed.json',\n",
+          "            'genuine FAILED original required; active/complete is unavailable')\n",
+          "    require(all(type(ref) is dict and set(ref) == {'path', 'sha256'}\n",
+          "                and type(ref['path']) is str and type(ref['sha256']) is str\n",
+          "                and len(ref['sha256']) == 64 for ref in (review_ref, bodies_ref)),\n",
+          "            'actual independent outcome and body references required; draft nulls refuse')\n"
+        ]
+      },
+      {
+        "original_start": 55,
+        "original_end": 57,
+        "candidate_start": 68,
+        "candidate_end": 70,
+        "original": [
+          "            and review['source'] == SOURCE and review['root_actual_exit']['exit_code'] == 0,\n",
+          "            'independent exact completed outcome and actual Root zero required')\n"
+        ],
+        "candidate": [
+          "            and review['source'] == SOURCE and review['root_actual_exit']['exit_code'] == 1,\n",
+          "            'independent exact failed outcome and actual Root one required')\n"
+        ]
+      },
+      {
+        "original_start": 70,
+        "original_end": 72,
+        "candidate_start": 83,
+        "candidate_end": 85,
+        "original": [
+          "    require(terminal['experiment_id'] == GRAPH and terminal['source'] == SOURCE\n",
+          "            and terminal['claim_sha256'] == claim_sha and terminal['status'] == status,\n"
+        ],
+        "candidate": [
+          "    require(terminal['experiment_id'] == GRAPH and terminal['claim_sha256'] == claim_sha\n",
+          "            and terminal['status'] == status == 'failed' and terminal['output_sha256'] == {},\n"
+        ]
+      },
+      {
+        "original_start": 81,
+        "original_end": 92,
+        "candidate_start": 94,
+        "candidate_end": 126,
+        "original": [
+          "    if status == 'complete':\n",
+          "        require(guard['phase'] == 'complete' and guard['child_exit_code'] == 0,\n",
+          "                'complete parent requires successful child')\n",
+          "    index_path = ROOTS[0] + '/outputs/artifact-index.json'\n",
+          "    if (root/index_path).exists():\n",
+          "        require(index_path in evidence, 'artifact index not reviewed')\n",
+          "        _, index_sha = metadata(root, index_path, evidence[index_path])\n",
+          "        require(bodies['index_sha256'] == index_sha, 'body/index join differs')\n",
+          "    else:\n",
+          "        require(status == 'failed' and bodies.get('index_sha256') is None,\n",
+          "                'absent artifact index not honestly recorded')\n"
+        ],
+        "candidate": [
+          "    require(guard['phase'] == 'failed' and guard['child_exit_code'] == 125\n",
+          "            and guard['cleanup_stop_returncode'] == 0, 'original failed native fields differ')\n",
+          "    require(not Path(guard['cgroup']).exists(), 'failed original cgroup still present')\n",
+          "    root_ref = EXTRA_CONTROLS[0]\n",
+          "    require(evidence.get(root_ref) == FAILED_ROOT_SHA, 'actual failed Root observation not anchored')\n",
+          "    root_exit = json.loads(metadata(root, root_ref, FAILED_ROOT_SHA)[0])\n",
+          "    outer_ref = EXTRA_CONTROLS[1]\n",
+          "    require(outer_ref in evidence, 'original outer exit absent from review')\n",
+          "    outer = json.loads(metadata(root, outer_ref, evidence[outer_ref])[0])\n",
+          "    require(root_exit['identity'] == GRAPH and root_exit['source_commit'] == SOURCE\n",
+          "            and root_exit['actual_root_tool_exit_code'] == root_exit['actual_parent_exit_code'] == 1\n",
+          "            and root_exit['failed_marker_sha256'] == evidence[terminal_path]\n",
+          "            and root_exit['guard_final_sha256'] == evidence[guard_path]\n",
+          "            and root_exit['selected_recorded_pids_absent'] is True\n",
+          "            and root_exit['actual_current_cgroup_absent'] is True\n",
+          "            and outer['experiment'] == GRAPH and outer['source'] == SOURCE and outer['exit_code'] == 1,\n",
+          "            'original Root/outer/failed/guard joins differ')\n",
+          "    pids = root_exit['actual_selected_recorded_pids']\n",
+          "    require(type(pids) is list and len(pids) == 5 and len(set(pids)) == 5\n",
+          "            and all(type(pid) is int and pid > 0 and not Path('/proc', str(pid)).exists() for pid in pids),\n",
+          "            'five selected recorded PIDs not absent; lifetime remains unknown')\n",
+          "    cell_path = ROOTS[1] + '/postmortem-cells.json'\n",
+          "    require(cell_path in evidence, 'original failed postmortem denominator unreviewed')\n",
+          "    cells = json.loads(metadata(root, cell_path, evidence[cell_path])[0])\n",
+          "    require(type(cells) is list and len(cells) == 2\n",
+          "            and cells[0]['id'] == 'source-000000' and cells[0]['status'] == 'complete'\n",
+          "            and cells[0]['rows'] == 7507236 and cells[1]['id'] == 'graph-2022-05-30'\n",
+          "            and cells[1]['status'] == 'unavailable', 'failed original cell denominator differs')\n",
+          "    unavailable = (ROOTS[0] + '/outputs/artifact-index.json', ROOTS[2] + '/aggregation/complete.json',\n",
+          "                   ROOTS[2] + '/graph-2022-05-30/manifest.json', ROOTS[2] + '/graph-2022-05-30.json')\n",
+          "    require(not any(os.path.lexists(root / name) for name in unavailable)\n",
+          "            and bodies.get('index_sha256') is None, 'failed scope acquired fictional complete graph/index')\n"
+        ]
+      },
+      {
+        "original_start": 98,
+        "original_end": 98,
+        "candidate_start": 132,
+        "candidate_end": 135,
+        "original": [],
+        "candidate": [
+          "    require(set(payloads) == set(OPAQUE_BYTES)\n",
+          "            and all(payloads[path]['bytes'] == size for path, size in OPAQUE_BYTES.items()),\n",
+          "            'exact ledger and two partial-array body proof required')\n"
+        ]
+      },
+      {
+        "original_start": 125,
+        "original_end": 126,
+        "candidate_start": 162,
+        "candidate_end": 164,
+        "original": [
+          "                    _, digest = metadata(root, rel, evidence.get(rel))\n"
+        ],
+        "candidate": [
+          "                    require(rel in evidence, 'actual failed control not independently reviewed: ' + rel)\n",
+          "                    _, digest = metadata(root, rel, evidence[rel])\n"
+        ]
+      },
+      {
+        "original_start": 136,
+        "original_end": 136,
+        "candidate_start": 174,
+        "candidate_end": 184,
+        "original": [],
+        "candidate": [
+          "    # Explicit Root observation/outer controls are outside the original three payload roots.\n",
+          "    for rel in EXTRA_CONTROLS:\n",
+          "        path = canonical(root, rel); info = path.lstat()\n",
+          "        _, digest = metadata(root, rel, evidence[rel])\n",
+          "        files.append({'path': rel, 'bytes': info.st_size, 'sha256': digest,\n",
+          "                      'stat_identity': identity(info), 'nlink': 1,\n",
+          "                      'mode': stat.S_IMODE(info.st_mode), 'role': 'actual-failed-root-control-evidence'})\n",
+          "    parent = canonical(root, CALLER); info = parent.lstat()\n",
+          "    require(stat.S_ISDIR(info.st_mode), 'Root control directory type differs')\n",
+          "    directories.append({'path': CALLER, 'mode': stat.S_IMODE(info.st_mode)})\n"
+        ]
+      },
+      {
+        "original_start": 143,
+        "original_end": 144,
+        "candidate_start": 191,
+        "candidate_end": 192,
+        "original": [
+          "            'graph_terminal_cells': terminal.get('cells'), 'absent_original_roots': absent_roots,\n"
+        ],
+        "candidate": [
+          "            'graph_terminal_cells': cells, 'absent_original_roots': absent_roots,\n"
+        ]
+      },
+      {
+        "original_start": 149,
+        "original_end": 150,
+        "candidate_start": 197,
+        "candidate_end": 198,
+        "original": [
+          "            'qualification': 'Closed actual increment only. Failure and absent cells remain original. Payload hashes inherited from independent review with current stat joins; no payload read. All originals and successful fresh recoveries retained. Root must freeze exact envelope and independent release.'}\n"
+        ],
+        "candidate": [
+          "            'qualification': 'Actual FAILED May30 increment only: source cell COMPLETE, graph UNAVAILABLE; three opaque bodies are ledger/two partial arrays, never a complete graph. Root1/native125/cleanup_stop0 and unknown lifetime PID history remain. No relaunch or refund. Failure and absent cells remain original. Payload hashes inherited from independent review with current stat joins; no payload read. All originals and successful fresh recoveries retained. Root must freeze exact envelope and independent release.'}\n"
+        ]
+      }
+    ]
+  }
+}

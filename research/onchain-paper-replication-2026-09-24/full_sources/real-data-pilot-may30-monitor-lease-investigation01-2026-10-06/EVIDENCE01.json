@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "decision": "actual_lease_refusal_confirmed_underlying_cause_unresolved",
+  "experiment": "eth-paper-real-pilot-graph-20220530-20261005-01",
+  "source": "14414c1637256dd286eafbe92391129dee3d29bf",
+  "evidence": {
+    "tradingagents/research/onchain_replication/resources.py": {
+      "sha256": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543",
+      "bytes": 47219
+    },
+    "tradingagents/research/onchain_replication/job.py": {
+      "sha256": "05bd32fc4da1d68d8b356a939e11cef27f1e396474bec5e1ecb379f7c948fe3f",
+      "bytes": 35626
+    },
+    "tradingagents/research/onchain_replication/workflow_storage.py": {
+      "sha256": "a6323c64c903931d7f2c7d18c5d81d8479d377c82e9eaeacc8580a5c4e99d67f",
+      "bytes": 10169
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220530-20261005-01/guard/final.json": {
+      "sha256": "8cfef38cd9fc43484742fcb61b5440e1eac8909ff46389793d2a3c770d12f823",
+      "bytes": 8125
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220530-20261005-01/guard/live.json": {
+      "sha256": "8cfef38cd9fc43484742fcb61b5440e1eac8909ff46389793d2a3c770d12f823",
+      "bytes": 8125
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220530-20261005-01/guard/child_exit.json": {
+      "sha256": "e89be3967b279f478fc43ab2bca787000361d60d65f4c6b7a7551fe3c8ddb299",
+      "bytes": 1602
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220530-20261005-01/guard/child.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220530-20261005-01/guard/observer-death.json": {
+      "sha256": "6d1bb6ff5f6bf31073938e295540706be9b95d3ee93d685b507b3194b63aec42",
+      "bytes": 8303
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220530-20261005-01/observer.json": {
+      "sha256": "c18939cfe2b45dbee04a78d1e6c3dd0fc45a5fcb26ecfdde1ae1c2a9bc721d7e",
+      "bytes": 968
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220530-20261005-01/postmortem-cells.json": {
+      "sha256": "894d03b4c5980ded693343136fa4b62a030caee213f308009035d1c52ea03daf",
+      "bytes": 351
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220523-20261005-01/guard/final.json": {
+      "sha256": "90b82ef188d98c9a7970afacee0843b27e817b7e6630e605a03a33cb523b8e43",
+      "bytes": 7966
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-pilot-graph-20220523-20261005-01/guard/child_exit.json": {
+      "sha256": "2ea02a17f7849c10254b98c69a97b7f4c93bb581881040d120779ba236bf4932",
+      "bytes": 1581
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph01-2026-10-06/ROOT_TERMINAL01.json": {
+      "sha256": "498bee3919eee4a79d3b983746cd5f0090963780b58e272128b5a70f3548cc1a",
+      "bytes": 1096
+    },
+    "research_runs/eth-paper-real-pilot-graph-20220530-20261005-01/claim.json": {
+      "sha256": "63e94692f690373cc238bbb7d7c7e5147129f145c8df18b650a1040736b50a76",
+      "bytes": 47189
+    }
+  },
+  "known": {
+    "child_exit_code": 125,
+    "child_reason": "monitor lease lost during workload",
+    "root_exit_code": 1,
+    "native_elapsed_seconds": 1064.8335141849966,
+    "lease_seconds": 15.0,
+    "cleanup_verified": true,
+    "child_log_empty": true,
+    "last_live_overwritten_by_final": true,
+    "source_bytes_match_actual_claim": true,
+    "source_cell_complete_graph_unavailable": true,
+    "original_failed_spent_identity_preserved": true
+  },
+  "comparison": {
+    "May23_elapsed_seconds": 1079.431041688993,
+    "May23_lease_seconds": 15.0,
+    "May23_phase": "complete",
+    "same_monitor_child_logic": true
+  },
+  "unresolved": [
+    "actual rejected live timestamp and child observation monotonic time",
+    "whether refusal was timestamp age, future timestamp, read/JSON/key error",
+    "monitor last publication start/end and completed observation phase",
+    "per-phase duration immediately preceding child refusal"
+  ],
+  "patch": null,
+  "lease_or_cap_changes": false,
+  "next_narrow_instrumentation": [
+    "child fresh observation: last success, rejection category, observed monotonic, parsed lease timestamp/age, exception type/errno without arbitrary file contents",
+    "monitor phase begin/end plus previous completed publish timestamp and bounded maximum inter-publication gap in existing metadata receipts"
+  ],
+  "qualification": "Instrumentation would require separately reviewed source successor; no rerun or activation authorized here. No historical failure cause inferred from final sample."
+}

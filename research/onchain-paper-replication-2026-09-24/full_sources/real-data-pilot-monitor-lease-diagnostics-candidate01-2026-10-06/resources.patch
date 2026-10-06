@@ -1,0 +1,53 @@
+--- tradingagents/research/onchain_replication/resources.py
++++ resources.py
+@@ -233,14 +233,39 @@
+ def _child_legacy(receipt, cpus, lease_seconds, command, native_unit_limits=None):
+     """Main process writes its terminal before systemd kills surviving descendants."""
+     stopping=False;code=125;reason='not released';process=None
++    lease_rejection=None
+     def stop(signum,frame):
+         nonlocal stopping
+         stopping=True
+     def fresh():
++        nonlocal lease_rejection
++        sampled=timestamp=age=None
++        phase='read_or_decode'
+         try:
+             lease=json.loads((receipt/'live.json').read_text())
+-            return 0<=time.monotonic()-lease['monotonic_seconds']<=lease_seconds
+-        except (OSError,ValueError,KeyError):return False
++            phase='sample_clock';sampled=time.monotonic()
++            phase='timestamp_key';timestamp=lease['monotonic_seconds']
++            phase='age_predicate';age=sampled-timestamp
++            accepted=0<=age<=lease_seconds
++            if accepted:return True
++            category=('negative_age' if age<0 else
++                      'expired_age' if age>lease_seconds else 'unordered_age')
++            error=None
++        except (OSError,ValueError,KeyError) as caught:
++            category=('read_error' if isinstance(caught,OSError) else
++                      'missing_timestamp' if isinstance(caught,KeyError) else 'value_error')
++            error={'type':type(caught).__name__,
++                   'errno':caught.errno if isinstance(caught,OSError) else None}
++        # Only actual rejection adds evidence; no second clock/read or new retry.
++        # Nonfinite/unavailable values stay null, never fabricated timestamps.
++        def observed(value):
++            return value if type(value) in (int,float) and -float('inf')<value<float('inf') else None
++        lease_rejection={'schema_version':1,'category':category,'phase':phase,
++                         'sampled_monotonic_seconds':observed(sampled),
++                         'parsed_monotonic_seconds':observed(timestamp),
++                         'observed_age_seconds':observed(age),
++                         'lease_seconds':lease_seconds,'read_or_value_error':error}
++        return False
+     try:
+         os.sched_setaffinity(0,set(cpus))
+         ready={'pid':os.getpid(),'cpus':sorted(os.sched_getaffinity(0))}
+@@ -278,7 +303,7 @@
+     finally:
+         try:snapshot=_snapshot(_own_cgroup());snapshot_error=None
+         except Exception as error:snapshot=None;snapshot_error=repr(error)
+-        _atomic(receipt/'child_exit.json',{'exit_code':code,'reason':reason,'workload_pid':None if process is None else process.pid,'terminal_memory_snapshot':snapshot,'snapshot_error':snapshot_error})
++        _atomic(receipt/'child_exit.json',{'exit_code':code,'reason':reason,'workload_pid':None if process is None else process.pid,'terminal_memory_snapshot':snapshot,'snapshot_error':snapshot_error,**({'lease_rejection':lease_rejection} if lease_rejection is not None else {})})
+ 
+ 
+ def _native_select(primary,later,io):

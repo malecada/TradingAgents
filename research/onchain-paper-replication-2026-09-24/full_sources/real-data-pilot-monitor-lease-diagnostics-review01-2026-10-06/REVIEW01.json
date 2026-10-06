@@ -1,0 +1,38 @@
+{
+  "baseline_sha256": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543",
+  "candidate_manifest_sha256": "5cee83c7dd1627708e25a442ef82a601632c92e0490577ebfc0d12c9354884a4",
+  "candidate_source_sha256": "559fc3e8d5718932aa311f90f8263f111d1976b4386b8ac08383178267da767b",
+  "decision": "accepted",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-monitor-lease-diagnostics-candidate01-2026-10-06/CHECK01.json": "f24b5d99494b4b4062671d9dcec23b863789ee41eb74ae40d52a83fded15c654",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-monitor-lease-diagnostics-candidate01-2026-10-06/INVERSE01.json": "068635b2e8219a1d4b871f1e8f3e5f9d358785489cc3c147b7f0996f64af4220",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-monitor-lease-diagnostics-candidate01-2026-10-06/MANIFEST01.json": "5cee83c7dd1627708e25a442ef82a601632c92e0490577ebfc0d12c9354884a4",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-monitor-lease-diagnostics-candidate01-2026-10-06/check01.py": "f79d4771233dddc87d5d1df1703497d8f292ec549fcaca03529c82f17471fff1",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-monitor-lease-diagnostics-candidate01-2026-10-06/resources.patch": "35be2cf7dc4b49aa2cba19247488ffafccbfe7848c2986020351c3314c218968",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-monitor-lease-diagnostics-candidate01-2026-10-06/resources.py": "559fc3e8d5718932aa311f90f8263f111d1976b4386b8ac08383178267da767b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-monitor-lease-diagnostics-review01-2026-10-06/CHECK01.json": "12813136c6c30588161da731f00a7b1612403fbaa4137ce67de3021a7484e491",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-monitor-lease-diagnostics-review01-2026-10-06/check01.py": "ebba218d7b2e1d842f316497062135e2f13193e2d698a6885562d066fd54c5d9",
+    "tradingagents/research/onchain_replication/resources.py": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543"
+  },
+  "material_findings": [],
+  "qualifications": [
+    "Original single read, single monotonic sample, timestamp subtraction, inclusive0..lease predicate and caught exception classes retain ordering. Affinity, signals, waits, Popen, cleanup, resource caps and scientific calls are untouched by exact inverse.",
+    "Added evidence appears only after actual rejected lease; finite available values are observed, unavailable/nonfinite values null. Successful receipt remains byte-identical. No extra clock or live.json reread is used for diagnostics.",
+    "Retained author tests execute the actual child/finally path with mocked process primitives and tiny receipts; independent tests execute the actual nested predicate only. Neither establishes genuine native authority or process failure recovery.",
+    "Receipt publication can still fail; this change does not guarantee durable diagnostic evidence or prove whether actual May30 failure was monitor death, staleness or read failure. Original failed identity and unknown lifetime history remain.",
+    "Root may integrate exact559fc3e8 after baseline/currentness checks, update source bindings and later release a separately admitted operation. No retry or cap change is approved."
+  ],
+  "scope": "Exact observations-only resources.py integration approval against baseline33a9; no native/empirical release or diagnosis of the prior failure.",
+  "verification": {
+    "actual_tool_chunk": "b6aa6c",
+    "additional_independent_cases": [
+      "inclusive age0 accepted",
+      "inclusive age15 accepted",
+      "NaN timestamp rejected with nonfinite observations null"
+    ],
+    "exact_inverse_edits": 3,
+    "exit_code": 0,
+    "five_retained_refusals_and_valid_receipt_checked": true,
+    "read_clock_counts_unchanged": true
+  }
+}

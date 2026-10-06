@@ -1,0 +1,16 @@
+{
+  "baseline": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+  "before_sha256": "9559605b15ee6f2942d8e85bf47305ac97e32e79b51812ce239cf71d9f6bddcb",
+  "after_sha256": "908bcc3adf98ecbec0b45f7b44a6e5e99382c500fce69ed8c9a01d8e408218a0",
+  "edits": [
+    {
+      "before": "    if 'archive_inputs' in p:roles.update(p['archive_inputs'].values())\n",
+      "after": "    if 'archive_inputs' in p:roles.update(p['archive_inputs'].values())\n    if '0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba' in p['graph_inputs']:\n        from .real_pilot_legacy_graph import registered\n        roles.update(registered(ad.inputs,p['graph_inputs']))\n"
+    },
+    {
+      "before": "        require(graph.asset == 'ETH', 'real graph asset differs')\n",
+      "after": "        require(graph.asset == 'ETH', 'real graph asset differs')\n        if key == '0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba':\n            from .real_pilot_legacy_graph import verify\n            verify(run,graph,role)\n"
+    }
+  ],
+  "new_helper_sha256": "adab1e0784e510a36edf22e52765e2d196859cfe0f76988d58db1c9f2bba2c79"
+}

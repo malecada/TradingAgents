@@ -1,0 +1,88 @@
+{
+  "decision": "pass",
+  "cases": {
+    "valid": {
+      "code": 0,
+      "detail": null
+    },
+    "stale": {
+      "code": 125,
+      "detail": {
+        "category": "expired_age",
+        "lease_seconds": 15.0,
+        "observed_age_seconds": 16.0,
+        "parsed_monotonic_seconds": 84,
+        "phase": "age_predicate",
+        "read_or_value_error": null,
+        "sampled_monotonic_seconds": 100.0,
+        "schema_version": 1
+      }
+    },
+    "future": {
+      "code": 125,
+      "detail": {
+        "category": "negative_age",
+        "lease_seconds": 15.0,
+        "observed_age_seconds": -1.0,
+        "parsed_monotonic_seconds": 101,
+        "phase": "age_predicate",
+        "read_or_value_error": null,
+        "sampled_monotonic_seconds": 100.0,
+        "schema_version": 1
+      }
+    },
+    "missing_key": {
+      "code": 125,
+      "detail": {
+        "category": "missing_timestamp",
+        "lease_seconds": 15.0,
+        "observed_age_seconds": null,
+        "parsed_monotonic_seconds": null,
+        "phase": "timestamp_key",
+        "read_or_value_error": {
+          "errno": null,
+          "type": "KeyError"
+        },
+        "sampled_monotonic_seconds": 100.0,
+        "schema_version": 1
+      }
+    },
+    "malformed": {
+      "code": 125,
+      "detail": {
+        "category": "value_error",
+        "lease_seconds": 15.0,
+        "observed_age_seconds": null,
+        "parsed_monotonic_seconds": null,
+        "phase": "read_or_decode",
+        "read_or_value_error": {
+          "errno": null,
+          "type": "JSONDecodeError"
+        },
+        "sampled_monotonic_seconds": null,
+        "schema_version": 1
+      }
+    },
+    "absent": {
+      "code": 125,
+      "detail": {
+        "category": "read_error",
+        "lease_seconds": 15.0,
+        "observed_age_seconds": null,
+        "parsed_monotonic_seconds": null,
+        "phase": "read_or_decode",
+        "read_or_value_error": {
+          "errno": 2,
+          "type": "FileNotFoundError"
+        },
+        "sampled_monotonic_seconds": null,
+        "schema_version": 1
+      }
+    }
+  },
+  "actual_child_exit_receipt_path_tested": true,
+  "during_workload_rejection_retained": true,
+  "original_codes_reasons_clock_calls_equal": true,
+  "literal_inverse": true,
+  "native_processes_started": 0
+}

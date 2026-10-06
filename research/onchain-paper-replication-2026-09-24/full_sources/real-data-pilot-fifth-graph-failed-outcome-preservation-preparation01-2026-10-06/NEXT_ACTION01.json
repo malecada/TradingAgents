@@ -1,0 +1,30 @@
+{
+  "status": "DRAFT_NOT_RELEASED",
+  "identity": "real-pilot-fifth-graph-failed-preservation-20261006-01",
+  "actual_failed_graph": "eth-paper-real-pilot-graph-20220530-20261005-01",
+  "actual_failed_source": "14414c1637256dd286eafbe92391129dee3d29bf",
+  "independent_failed_outcome_ref": null,
+  "independent_three_body_ref": null,
+  "selection_ref": null,
+  "envelope_ref": null,
+  "independent_entry_release_ref": null,
+  "expected_review_contract": {
+    "decision": "accepted",
+    "experiment": "eth-paper-real-pilot-graph-20220530-20261005-01",
+    "source": "14414c1637256dd286eafbe92391129dee3d29bf",
+    "root_actual_exit": {
+      "exit_code": 1
+    },
+    "claim_sha256": "actual original claim pin supplied by reviewer",
+    "cleanup": "original_guard_cleanup_verified and recorded_cgroup_absent true; lifetime unknown",
+    "evidence": "bounded original controls including three scope roots plus actual ROOT_TERMINAL01 and outer-exit01; must anchor real body proof"
+  },
+  "expected_body_contract": {
+    "decision": "pass",
+    "index_sha256": null,
+    "files": "exact three original paths listed by OPAQUE_BYTES with actual one-pass SHA/stat identities",
+    "total_bytes": 3278655680
+  },
+  "root_command": "PYTHONPATH=. .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph-failed-outcome-preservation-preparation01-2026-10-06/prepare01.py --root \"$PWD\" --review ACTUAL_REVIEW_RELATIVE_PATH --review-sha256 ACTUAL_REVIEW_SHA --bodies ACTUAL_BODY_PROOF_RELATIVE_PATH --bodies-sha256 ACTUAL_BODY_PROOF_SHA",
+  "qualification": "Command placeholders are required real future evidence, not release. Selector prints DRAFT JSON to stdout. Root must bind current source/envelope, replace inherited selector pin, obtain different-author source+entry review, commit/external-readback/fresh guards, and launch ordinary preservation at most once."
+}

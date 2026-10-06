@@ -1,0 +1,83 @@
+{
+  "decision": "pass",
+  "elapsed_seconds": 2.033641172994976,
+  "files": [
+    {
+      "bytes": 3189231616,
+      "mode": 420,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220530-20261005-01/aggregation/ledger.sqlite",
+      "sha256": "e870a85f607afdfe44338f1e6f38a57c347a26a9c9385d8482ec92a2fd321bf3",
+      "sqlite_integrity": "not queried; magic bytes only",
+      "stat_identity": [
+        66310,
+        8443386,
+        1,
+        3189231616,
+        1791262633273062628,
+        1791262633273062628
+      ]
+    },
+    {
+      "bytes": 38817824,
+      "mode": 436,
+      "npy_header": {
+        "descr": "<i8",
+        "fortran_order": false,
+        "header_bytes": 128,
+        "shape": [
+          2,
+          2426106
+        ],
+        "version": [
+          1,
+          0
+        ]
+      },
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220530-20261005-01/graph-2022-05-30/edge_index.npy",
+      "sha256": "2ced523118223eecef41f2dc31166da9ca8b3bbe1a05893072337e9b05343fa7",
+      "stat_identity": [
+        66310,
+        8443397,
+        1,
+        38817824,
+        1791262699909816307,
+        1791262699909816307
+      ]
+    },
+    {
+      "bytes": 50606240,
+      "mode": 436,
+      "npy_header": {
+        "descr": "<f8",
+        "fortran_order": false,
+        "header_bytes": 128,
+        "shape": [
+          1581441,
+          4
+        ],
+        "version": [
+          1,
+          0
+        ]
+      },
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220530-20261005-01/graph-2022-05-30/node_features.npy",
+      "sha256": "7db2f4c43d40ca121e78f674ef892ebb00551386de1028103a5f5f7063df003e",
+      "stat_identity": [
+        66310,
+        8443396,
+        1,
+        50606240,
+        1791262687553045183,
+        1791262687553045183
+      ]
+    }
+  ],
+  "headers_captured_same_pass": 2,
+  "index_sha256": null,
+  "numerical_imports": false,
+  "one_streaming_pass_per_body": true,
+  "qualification": "Actual FAILED retained ledger and two partial arrays only. No prior expected content hash exists; these are fresh preservation hashes and structural header checks, not a complete graph or SQLite integrity proof.",
+  "raw_daily_body_reads": false,
+  "sqlite_queries": false,
+  "total_bytes": 3278655680
+}

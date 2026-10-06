@@ -1,0 +1,296 @@
+{
+  "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-graph-entry-preparation01-2026-10-06/preflight01.py",
+  "baseline_sha256": "fc3868dd6ad4b15908bed77490e122e3b891791c8398ff8470cd0c001d509890",
+  "candidate_sha256": "b2d1e1e45ca5a837e380ad23a2d48236dcb07130b24aefebcfcbbbcd7d56958c",
+  "exact_inverse": true,
+  "hunks": [
+    {
+      "original_start": 17,
+      "original_end": 18,
+      "candidate_start": 17,
+      "candidate_end": 17,
+      "original": [
+        "PREDECESSOR_LEDGER_BYTES=None  # Root must bind actual accepted May30 evidence; never a projection.\n"
+      ],
+      "candidate": []
+    },
+    {
+      "original_start": 22,
+      "original_end": 26,
+      "candidate_start": 21,
+      "candidate_end": 25,
+      "original": [
+        "    \"\"\"Require actual COMPLETE May30 BYTE backup and exact two-path retirement.\"\"\"\n",
+        "    if type(PREDECESSOR_LEDGER_BYTES) is not int or PREDECESSOR_LEDGER_BYTES<=0:\n",
+        "        raise ValueError('actual measured May30 predecessor ledger bytes are unbound')\n",
+        "    backup='research/onchain-paper-replication-2026-09-24/storage/real-pilot-fifth-graph-preservation-20261006-01'\n"
+      ],
+      "candidate": [
+        "    \"\"\"FAILED May30 remains failed; only its NEW preservation may be COMPLETE.\"\"\"\n",
+        "    graph='eth-paper-real-pilot-graph-20220530-20261005-01'\n",
+        "    source='14414c1637256dd286eafbe92391129dee3d29bf'\n",
+        "    backup='research/onchain-paper-replication-2026-09-24/storage/real-pilot-fifth-graph-failed-preservation-20261006-01'\n"
+      ]
+    },
+    {
+      "original_start": 27,
+      "original_end": 28,
+      "candidate_start": 26,
+      "candidate_end": 34,
+      "original": [
+        "    expected={'storage_complete':'complete.json','storage_recovered_complete':'recovered-complete.json',\n"
+      ],
+      "candidate": [
+        "    roots=('research_runs/'+graph,'research_artifacts/onchain-paper-replication-2026-09-24/runs/'+graph,\n",
+        "           'research_artifacts/onchain-paper-replication-2026-09-24/sources/'+graph)\n",
+        "    caller='research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifth-graph01-2026-10-06'\n",
+        "    parent={'failed_parent_claim':roots[0]+'/claim.json','failed_parent_terminal':roots[0]+'/failed.json',\n",
+        "            'failed_parent_cells':roots[1]+'/postmortem-cells.json','failed_parent_native':roots[1]+'/guard/final.json',\n",
+        "            'failed_parent_root':caller+'/ROOT_TERMINAL01.json','failed_parent_outer':caller+'/outer-exit01.json'}\n",
+        "    expected={**parent,**{role:backup+'/'+name for role,name in {\n",
+        "        'storage_complete':'complete.json','storage_recovered_complete':'recovered-complete.json',\n"
+      ]
+    },
+    {
+      "original_start": 29,
+      "original_end": 32,
+      "candidate_start": 35,
+      "candidate_end": 44,
+      "original": [
+        "        'storage_outer_exit':'outer-exit01.json','storage_root_terminal':'ROOT_TERMINAL01.json',\n",
+        "        'storage_restore':'11-restore.json','storage_recovered_restore':'11-recovered-restore.json',\n",
+        "        'storage_kept':'11-kept.json','storage_body_get_receipt':'11-recovered.bin.transport.json'}\n"
+      ],
+      "candidate": [
+        "        'storage_outer_exit':'outer-exit01.json','storage_root_terminal':'ROOT_TERMINAL01.json'}.items()}}\n",
+        "    def bounded(relative,pin):\n",
+        "        if type(relative) is not str or type(pin) is not str or len(pin)!=64 or any(x not in '0123456789abcdef' for x in pin):\n",
+        "            raise ValueError('actual failed-predecessor proof references required; null drafts refuse')\n",
+        "        q=Path(relative);p=ROOT/q\n",
+        "        if (q.is_absolute() or '..' in q.parts or p.resolve(strict=True)!=p or not p.is_file()\n",
+        "                or p.stat().st_nlink!=1 or p.stat().st_size>4*1024**2 or file_hash(p)!=pin):\n",
+        "            raise ValueError('exact bounded failed-predecessor evidence differs: '+relative)\n",
+        "        return json.loads(p.read_bytes())\n"
+      ]
+    },
+    {
+      "original_start": 33,
+      "original_end": 39,
+      "candidate_start": 45,
+      "candidate_end": 50,
+      "original": [
+        "        ref=inputs[role];q=Path(ref['path']);p=ROOT/q\n",
+        "        if (q.is_absolute() or '..' in q.parts or p.resolve(strict=True)!=p or not p.is_file()\n",
+        "                or p.stat().st_nlink!=1 or p.stat().st_size>4*1024**2 or file_hash(p)!=ref['sha256']):\n",
+        "            raise ValueError('exact bounded preceding proof differs: '+role)\n",
+        "        if role in expected and ref['path']!=backup+'/'+expected[role]:raise ValueError('fixed backup role differs')\n",
+        "        return json.loads(p.read_bytes())\n"
+      ],
+      "candidate": [
+        "        ref=inputs.get(role)\n",
+        "        if type(ref) is not dict or 'path' not in ref or 'sha256' not in ref:\n",
+        "            raise ValueError('actual failed-predecessor proof references required; null drafts refuse')\n",
+        "        if role in expected and ref['path']!=expected[role]:raise ValueError('fixed failed-predecessor role differs')\n",
+        "        return bounded(ref['path'],ref['sha256'])\n"
+      ]
+    },
+    {
+      "original_start": 41,
+      "original_end": 45,
+      "candidate_start": 52,
+      "candidate_end": 84,
+      "original": [
+        "        raise ValueError('independent actual full36 BYTE acceptance required')\n",
+        "    for role in expected:\n",
+        "        ref=inputs[role]\n",
+        "        if review['evidence'].get(ref['path'])!=ref['sha256']:raise ValueError('independent backup evidence join differs')\n"
+      ],
+      "candidate": [
+        "        raise ValueError('independent actual failed-scope full BYTE recovery required')\n",
+        "    for role,relative in expected.items():\n",
+        "        ref=inputs.get(role)\n",
+        "        if type(ref) is not dict or ref.get('path')!=relative or review['evidence'].get(relative)!=ref.get('sha256'):\n",
+        "            raise ValueError('independent failed-scope evidence join differs: '+role)\n",
+        "    def reviewed(relative):\n",
+        "        if relative not in review['evidence']:raise ValueError('original body/restoration receipt unreviewed: '+relative)\n",
+        "        return bounded(relative,review['evidence'][relative])\n",
+        "    claim=read('failed_parent_claim');failed=read('failed_parent_terminal');cells=read('failed_parent_cells')\n",
+        "    guard=read('failed_parent_native');root=read('failed_parent_root');outer=read('failed_parent_outer')\n",
+        "    if (claim['experiment_id']!=graph or claim['source']!=source or failed['experiment_id']!=graph\n",
+        "            or failed['status']!='failed' or failed['output_sha256']!={}\n",
+        "            or failed['claim_sha256']!=inputs['failed_parent_claim']['sha256']\n",
+        "            or root['identity']!=graph or root['source_commit']!=source\n",
+        "            or root['actual_root_tool_exit_code']!=1 or root['actual_parent_exit_code']!=1\n",
+        "            or root['failed_marker_sha256']!=inputs['failed_parent_terminal']['sha256']\n",
+        "            or root['guard_final_sha256']!=inputs['failed_parent_native']['sha256']\n",
+        "            or outer['experiment']!=graph or outer['source']!=source or outer['exit_code']!=1\n",
+        "            or guard['phase']!='failed' or guard['child_exit_code']!=125\n",
+        "            or guard['cleanup_stop_returncode']!=0 or guard['cleanup_verified'] is not True):\n",
+        "        raise ValueError('original FAILED/Root1/guard125/cleanup0 disposition differs')\n",
+        "    if (len(cells)!=2 or cells[0]['id']!='source-000000' or cells[0]['status']!='complete'\n",
+        "            or cells[0]['rows']!=7507236 or cells[1]['id']!='graph-2022-05-30' or cells[1]['status']!='unavailable'):\n",
+        "        raise ValueError('original source-COMPLETE/graph-UNAVAILABLE denominator differs')\n",
+        "    def absent_pids(record):\n",
+        "        pids=record['actual_selected_recorded_pids']\n",
+        "        if type(pids) is not list or not pids or any(type(pid) is not int or pid<=0 or Path('/proc',str(pid)).exists() for pid in pids):\n",
+        "            raise ValueError('selected recorded PIDs must be absent; lifetime history remains unknown')\n",
+        "    absent_pids(root)\n",
+        "    if Path(guard['cgroup']).exists():raise ValueError('failed graph cgroup remains')\n",
+        "    forbidden=(roots[0]+'/complete.json',roots[0]+'/outputs/artifact-index.json',roots[2]+'/aggregation/complete.json',roots[2]+'/graph-2022-05-30/manifest.json')\n",
+        "    if any((ROOT/x).exists() or (ROOT/x).is_symlink() for x in forbidden):raise ValueError('failed graph was upgraded or gained completion metadata')\n"
+      ]
+    },
+    {
+      "original_start": 46,
+      "original_end": 58,
+      "candidate_start": 85,
+      "candidate_end": 94,
+      "original": [
+        "    if (complete!=read('storage_recovered_complete') or complete['identity']!=identity\n",
+        "            or selected['identity']!=identity or complete['selection']!=selected\n",
+        "            or complete['count']!=36 or len(complete['files'])!=36 or selected['count']!=36\n",
+        "            or len(selected['files'])!=36 or len(selected['directories'])!=8\n",
+        "            or complete['bytes_preserved']!=selected['total_bytes']\n",
+        "            or complete['originals_retained'] is not True or complete['recoveries_retained'] is not True):\n",
+        "        raise ValueError('actual complete selected36 names/modes/bytes differ')\n",
+        "    if len({r['path'] for r in selected['files']})!=36:raise ValueError('duplicate original membership')\n",
+        "    for original,record in zip(selected['files'],complete['files']):\n",
+        "        if any(record[k]!=v for k,v in original.items()):raise ValueError('original/complete membership differs')\n",
+        "    if sum(r['bytes'] for r in selected['files'])!=selected['total_bytes']:raise ValueError('selected byte denominator differs')\n",
+        "    final=read('storage_native_final');outer=read('storage_outer_exit');root=read('storage_root_terminal')\n"
+      ],
+      "candidate": [
+        "    count=selected['count']\n",
+        "    if (type(count) is not int or not 1<=count<=4096 or complete!=read('storage_recovered_complete')\n",
+        "            or complete['identity']!=identity or selected['identity']!=identity or complete['selection']!=selected\n",
+        "            or complete['count']!=count or len(complete['files'])!=count or len(selected['files'])!=count\n",
+        "            or selected['graph_terminal_status']!='failed' or selected['graph_terminal_cells']!=cells\n",
+        "            or selected['graph_terminal']!={'path':parent['failed_parent_terminal'],'sha256':inputs['failed_parent_terminal']['sha256']}\n",
+        "            or complete['bytes_preserved']!=selected['total_bytes'] or complete['originals_retained'] is not True\n",
+        "            or complete['recoveries_retained'] is not True):raise ValueError('actual failed-scope full inventory recovery differs')\n",
+        "    final=read('storage_native_final');out=read('storage_outer_exit');end=read('storage_root_terminal')\n"
+      ]
+    },
+    {
+      "original_start": 60,
+      "original_end": 62,
+      "candidate_start": 96,
+      "candidate_end": 100,
+      "original": [
+        "            or outer['entry_selected_exit_code']!=0 or outer['guard_child_exit_code']!=0 or outer['cleanup_verified'] is not True\n",
+        "            or root['identity']!=identity or root['actual_root_tool_exit_code']!=0\n"
+      ],
+      "candidate": [
+        "            or out['entry_selected_exit_code']!=0 or out['guard_child_exit_code']!=0 or out['cleanup_verified'] is not True\n",
+        "            or end['identity']!=identity or end['actual_root_tool_exit_code']!=0\n",
+        "            or end['complete_sha256']!=inputs['storage_complete']['sha256']\n",
+        "            or end['guard_final_sha256']!=inputs['storage_native_final']['sha256']\n"
+      ]
+    },
+    {
+      "original_start": 63,
+      "original_end": 86,
+      "candidate_start": 101,
+      "candidate_end": 139,
+      "original": [
+        "        raise ValueError('actual native/outer/Root zero and cleanup required')\n",
+        "    pids=root['actual_selected_recorded_pids']\n",
+        "    if not isinstance(pids,list) or not pids or any(type(pid) is not int or pid<=0 or Path('/proc',str(pid)).exists() for pid in pids):\n",
+        "        raise ValueError('actual selected recorded PIDs must be absent')\n",
+        "    kept=read('storage_kept');restore=read('storage_restore');get=read('storage_body_get_receipt')\n",
+        "    paths=['research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220530-20261005-01/aggregation/ledger.sqlite',backup+'/11-recovered.bin']\n",
+        "    if (complete['files'][11]!=kept or kept['path']!=paths[0] or kept['bytes']!=PREDECESSOR_LEDGER_BYTES\n",
+        "            or restore!=read('storage_recovered_restore') or any(kept[k]!=v for k,v in restore.items())\n",
+        "            or kept['body_roundtrip_verified'] is not True or kept['original_retained'] is not True or kept['recovered_body_retained'] is not True\n",
+        "            or get['status']!='complete' or get['returncode']!=0\n",
+        "            or not (get['expected_bytes']==get['received_bytes']==kept['bytes'])):\n",
+        "        raise ValueError('exact ledger11 fullget/restoration join differs')\n",
+        "    retired=read('storage_retirement_complete');terminal=read('storage_retirement_root_exit')\n",
+        "    if (retired['identity']!='real-pilot-fifth-graph-ledger-retirement-20261006-01'\n",
+        "            or retired['payload_bytes_retired']!=(2*PREDECESSOR_LEDGER_BYTES) or retired['removed']!=paths\n",
+        "            or retired['preservation_backup']!=identity or retired['remote_restore']!=kept\n",
+        "            or retired['arrays_retained'] is not True or retired['all_other_originals_and_recoveries_retained'] is not True\n",
+        "            or terminal['actual_root_exit_code']!=0 or terminal['complete_sha256']!=inputs['storage_retirement_complete']['sha256']):\n",
+        "        raise ValueError('actual exact fifth-ledger retirement differs')\n",
+        "    for relative in paths:\n",
+        "        p=ROOT/relative\n",
+        "        if p.exists() or p.is_symlink():raise ValueError('retired payload reappeared: '+relative)\n",
+        "    return {'backup':identity,'retired_bytes':(2*PREDECESSOR_LEDGER_BYTES),'retired_paths':paths}\n"
+      ],
+      "candidate": [
+        "        raise ValueError('NEW ordinary preservation requires actual native/outer/Root zero and cleanup')\n",
+        "    absent_pids(end)\n",
+        "    opaque={roots[2]+'/aggregation/ledger.sqlite':3189231616,roots[2]+'/graph-2022-05-30/edge_index.npy':38817824,\n",
+        "            roots[2]+'/graph-2022-05-30/node_features.npy':50606240}\n",
+        "    paths=set();seen={};total=0\n",
+        "    for i,(original,kept) in enumerate(zip(selected['files'],complete['files'])):\n",
+        "        rel=original['path'];p=ROOT/rel\n",
+        "        if rel in paths or not (any(Path(rel).is_relative_to(Path(r)) for r in roots) or rel in (parent['failed_parent_root'],parent['failed_parent_outer'])):\n",
+        "            raise ValueError('failed-scope original membership differs')\n",
+        "        paths.add(rel);total+=original['bytes']\n",
+        "        if any(kept[k]!=v for k,v in original.items()) or kept!=reviewed(backup+f'/{i:02d}-kept.json'):\n",
+        "            raise ValueError('original/full recovery row differs')\n",
+        "        restore=reviewed(backup+f'/{i:02d}-restore.json');restored=reviewed(backup+f'/{i:02d}-recovered-restore.json')\n",
+        "        get=reviewed(backup+f'/{i:02d}-recovered.bin.transport.json')\n",
+        "        metadata_get=reviewed(backup+f'/{i:02d}-recovered-restore.json.transport.json')\n",
+        "        if (restore!=restored or any(kept[k]!=v for k,v in restore.items())\n",
+        "                or any(kept[k] is not True for k in ('body_roundtrip_verified','original_retained','recovered_body_retained'))\n",
+        "                or get['status']!='complete' or get['returncode']!=0 or get['received_bytes']!=get['expected_bytes'] or get['expected_bytes']!=original['bytes']\n",
+        "                or metadata_get['status']!='complete' or metadata_get['returncode']!=0\n",
+        "                or metadata_get['received_bytes']!=metadata_get['expected_bytes']\n",
+        "                or metadata_get['expected_bytes']!=(ROOT/backup/f'{i:02d}-restore.json').stat().st_size):\n",
+        "            raise ValueError('full body/restoration get proof differs')\n",
+        "        s=p.lstat()\n",
+        "        if (p.resolve(strict=True)!=p or not p.is_file() or s.st_nlink!=1\n",
+        "                or [s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns]!=original['stat_identity']\n",
+        "                or (s.st_mode&0o7777)!=original['mode']):raise ValueError('failed original retired or changed')\n",
+        "        recovery=ROOT/backup/f'{i:02d}-recovered.bin'\n",
+        "        if recovery.resolve(strict=True)!=recovery or not recovery.is_file() or recovery.stat().st_nlink!=1 or recovery.stat().st_size!=original['bytes']:\n",
+        "            raise ValueError('retained recovery absent or extent differs')\n",
+        "        if rel in opaque:seen[rel]=original['bytes']\n",
+        "        elif p.suffix not in ('.json','.jsonl','.log'):raise ValueError('unexpected opaque failed member')\n",
+        "    if seen!=opaque or total!=selected['total_bytes'] or len(paths)!=count:raise ValueError('three partial-body/full-scope denominator differs')\n",
+        "    for row in selected['directories']:\n",
+        "        p=ROOT/row['path']\n",
+        "        if p.resolve(strict=True)!=p or not p.is_dir() or (p.stat().st_mode&0o7777)!=row['mode']:raise ValueError('retained original directory differs')\n",
+        "    return {'backup':identity,'failed_graph':graph,'original_status':'failed','opaque_original_bytes':sum(opaque.values()),\n",
+        "            'selected_original_bytes':total,'retained_recovery_bytes':total,'retirement_assumed':False,'retired_bytes':0}\n",
+        "\n"
+      ]
+    },
+    {
+      "original_start": 89,
+      "original_end": 91,
+      "candidate_start": 142,
+      "candidate_end": 142,
+      "original": [
+        "    if type(PREDECESSOR_LEDGER_BYTES) is not int or PREDECESSOR_LEDGER_BYTES<=0:\n",
+        "        raise ValueError('actual measured May30 predecessor ledger bytes are unbound')\n"
+      ],
+      "candidate": []
+    },
+    {
+      "original_start": 120,
+      "original_end": 121,
+      "candidate_start": 171,
+      "candidate_end": 172,
+      "original": [
+        "    preceding_storage(admission.inputs)\n"
+      ],
+      "candidate": [
+        "    predecessor=preceding_storage(admission.inputs)\n"
+      ]
+    },
+    {
+      "original_start": 130,
+      "original_end": 130,
+      "candidate_start": 181,
+      "candidate_end": 183,
+      "original": [],
+      "candidate": [
+        "    if policy.get('failed_predecessor_retained')!=predecessor:\n",
+        "        raise ValueError('fresh storage policy must explicitly retain failed originals and recoveries; no retirement credit')\n"
+      ]
+    }
+  ]
+}

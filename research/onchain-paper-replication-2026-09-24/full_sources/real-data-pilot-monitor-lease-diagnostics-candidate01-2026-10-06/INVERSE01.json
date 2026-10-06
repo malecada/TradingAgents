@@ -1,0 +1,19 @@
+{
+  "baseline": "tradingagents/research/onchain_replication/resources.py",
+  "before_sha256": "33a9b6328f6898ce45c927349063e815c762177fd438fc90d87b4d1471a3f543",
+  "after_sha256": "559fc3e8d5718932aa311f90f8263f111d1976b4386b8ac08383178267da767b",
+  "edits": [
+    {
+      "before": "    stopping=False;code=125;reason='not released';process=None\n",
+      "after": "    stopping=False;code=125;reason='not released';process=None\n    lease_rejection=None\n"
+    },
+    {
+      "before": "    def fresh():\n        try:\n            lease=json.loads((receipt/'live.json').read_text())\n            return 0<=time.monotonic()-lease['monotonic_seconds']<=lease_seconds\n        except (OSError,ValueError,KeyError):return False\n",
+      "after": "    def fresh():\n        nonlocal lease_rejection\n        sampled=timestamp=age=None\n        phase='read_or_decode'\n        try:\n            lease=json.loads((receipt/'live.json').read_text())\n            phase='sample_clock';sampled=time.monotonic()\n            phase='timestamp_key';timestamp=lease['monotonic_seconds']\n            phase='age_predicate';age=sampled-timestamp\n            accepted=0<=age<=lease_seconds\n            if accepted:return True\n            category=('negative_age' if age<0 else\n                      'expired_age' if age>lease_seconds else 'unordered_age')\n            error=None\n        except (OSError,ValueError,KeyError) as caught:\n            category=('read_error' if isinstance(caught,OSError) else\n                      'missing_timestamp' if isinstance(caught,KeyError) else 'value_error')\n            error={'type':type(caught).__name__,\n                   'errno':caught.errno if isinstance(caught,OSError) else None}\n        # Only actual rejection adds evidence; no second clock/read or new retry.\n        # Nonfinite/unavailable values stay null, never fabricated timestamps.\n        def observed(value):\n            return value if type(value) in (int,float) and -float('inf')<value<float('inf') else None\n        lease_rejection={'schema_version':1,'category':category,'phase':phase,\n                         'sampled_monotonic_seconds':observed(sampled),\n                         'parsed_monotonic_seconds':observed(timestamp),\n                         'observed_age_seconds':observed(age),\n                         'lease_seconds':lease_seconds,'read_or_value_error':error}\n        return False\n"
+    },
+    {
+      "before": "'terminal_memory_snapshot':snapshot,'snapshot_error':snapshot_error})",
+      "after": "'terminal_memory_snapshot':snapshot,'snapshot_error':snapshot_error,**({'lease_rejection':lease_rejection} if lease_rejection is not None else {})})"
+    }
+  ]
+}

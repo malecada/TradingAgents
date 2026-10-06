@@ -1,0 +1,36 @@
+{
+  "candidate_manifest_sha256": "5cee83c7dd1627708e25a442ef82a601632c92e0490577ebfc0d12c9354884a4",
+  "decision": "pass-source-only",
+  "exact_three_edit_inverse": true,
+  "independent_predicate_cases": [
+    {
+      "accepted": true,
+      "case": "age_zero",
+      "diagnostic": null
+    },
+    {
+      "accepted": true,
+      "case": "age_limit",
+      "diagnostic": null
+    },
+    {
+      "accepted": false,
+      "case": "nan",
+      "diagnostic": {
+        "category": "unordered_age",
+        "lease_seconds": 15.0,
+        "observed_age_seconds": null,
+        "parsed_monotonic_seconds": null,
+        "phase": "age_predicate",
+        "read_or_value_error": null,
+        "sampled_monotonic_seconds": 100.0,
+        "schema_version": 1
+      }
+    }
+  ],
+  "no_native_processes_or_authority": true,
+  "resources_sha256": "559fc3e8d5718932aa311f90f8263f111d1976b4386b8ac08383178267da767b",
+  "retained_five_refusal_receipts_match_prior_decisions": true,
+  "retained_valid_receipt_byte_identical": true,
+  "single_read_and_single_clock_sample": true
+}
