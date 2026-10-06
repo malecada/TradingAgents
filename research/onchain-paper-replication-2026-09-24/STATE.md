@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T18:06:08.767928+00:00: pilot12 genuine committed read-only admission PASSED83; exact762ref release acceptedf0b9004d. No native job active.**
+
+Focused preclaim source-closure correction integrated atd4be4b76: both unchanged off-package helpers now explicit and the early caller checks exact Target.sources membership and hashes. Combined actual metadataad333f54 accepted179package/177otherunchanged/256sources59inputs; original scientific method/motifs32/samples512/sevenfullgraphs/model/training/native limits unchanged. Genuine committed readonly3200/53716b exit0 onf399d1f7 ready83, noOwner/claim/numerical. Actual transport12 bound once, exact publicnewline serialization retained.
+
+Binding28af4b1c and finalbinding6e464a22 exact status+reviewref inverse accepted;762ref conditional exact releasef0b9004d adopted verbatim. Prior11 permanentFAILED82 and43file56name actual externalreturned recovery8f7df394 retained with original failures/nulls/unknowns.52closed33COMPLETE19FAILED/highestclaimed82;83=52closed+28unchangedpending+two permanentpreclaim reserves+ONEfresh12; no refund/transfer/rerun/capladder. No12attempt/claim exists.
+
+All bounded agents completed. Root alone owns Main/accounting/STATE/Git/preservation/ONElauncher. Next finalcommit/push/actualremote readback and originalfresh resource/source/runtime/namespacechecks, thenONE12root_io. Source/Gitfreeze begins only upon actual active launch; preserve all attempted/absent outcomes and finalclosure before dependent work. Broadwork/heartbeat/appgoal remain PAUSED; direct representative pilot continues. No completed MCM/update/financialfit or wholepipelinecapacity yet.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T18:02:33.325180+00:00: pilot11 permanently FAILED/spent82 and its actual public increment independently recovered; focused source fix integrated for fresh12. No numerical job active.**
 
 Pilot11 completed all seven Target constructors but failed before MCM because two off-package numerical helpers were absent from registration. Both unchanged bodies are now explicitly registered, and the accepted caller checks the exact Target.sources closure and hashes before a claim. [Narrow source review](full_sources/real-data-pilot-retry12-review01-2026-10-06/SOURCE_REVIEW01.json) retains historical fixture WITHHELD limitations. Main source anchor d4be4b76b25466e379afdc4756362730b740bc0a;179package pins/177 other bodies unchanged. Scientific method, original32motifs/512spent samples, seven full graphs, model/training and native limits unchanged.
