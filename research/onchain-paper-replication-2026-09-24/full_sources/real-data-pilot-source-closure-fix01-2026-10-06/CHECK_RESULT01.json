@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "case": "missing helper",
+      "helper": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py",
+      "original": {
+        "status": "pass",
+        "value": "source_boundary_passed"
+      },
+      "candidate": {
+        "status": "refuse",
+        "reason": "complete imported MCM source closure required: research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py"
+      }
+    },
+    {
+      "case": "changed helper",
+      "helper": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py",
+      "original": {
+        "status": "pass",
+        "value": "source_boundary_passed"
+      },
+      "candidate": {
+        "status": "refuse",
+        "reason": "complete imported MCM source closure required: research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py"
+      }
+    },
+    {
+      "case": "missing helper",
+      "helper": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py",
+      "original": {
+        "status": "pass",
+        "value": "source_boundary_passed"
+      },
+      "candidate": {
+        "status": "refuse",
+        "reason": "complete imported MCM source closure required: research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py"
+      }
+    },
+    {
+      "case": "changed helper",
+      "helper": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py",
+      "original": {
+        "status": "pass",
+        "value": "source_boundary_passed"
+      },
+      "candidate": {
+        "status": "refuse",
+        "reason": "complete imported MCM source closure required: research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py"
+      }
+    },
+    {
+      "case": "complete exact closure",
+      "original": {
+        "status": "pass",
+        "value": "source_boundary_passed"
+      },
+      "candidate": {
+        "status": "pass",
+        "value": "source_boundary_passed"
+      }
+    },
+    {
+      "case": "changed required package source",
+      "candidate": "refuse"
+    }
+  ],
+  "helper_set_equals_actual_Target_constants": true,
+  "exact_inverse": true,
+  "qualification": "Actual admitted prefix through source boundary, earlier metadata functions and admission are explicit stubs. No full admission/claim/Owner/scientific arrays or numerical helpers imported. This proves missing/changed closure refusal before downstream work, not numerical capacity."
+}

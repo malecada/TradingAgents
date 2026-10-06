@@ -1,0 +1,10 @@
+    # Match Target.sources exactly without importing its numerical modules
+    # before the genuine worker/Owner boundary.
+    required=required_sources()|{
+        'research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py',
+        'research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py'}
+    from .provenance import file_hash
+    for source in sorted(required):
+        expected=ad.experiment['source_files'].get(source)
+        require(expected is not None and file_hash(ad.root/source)==expected,
+                'complete imported MCM source closure required: '+source)

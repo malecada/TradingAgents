@@ -1,0 +1,108 @@
+{
+  "head": "725fc739fa02a31e7f16bc7d9bdf4356d89ce582",
+  "helpers": [
+    {
+      "source": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py",
+        "sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287",
+        "bytes": 4219
+      },
+      "actual_HEAD_blob_equal": true,
+      "absent_from11_gate": true,
+      "latest_path_commit": "ef41d5d4e1df8e2c7778a4a8657d8599ab19043e",
+      "package_imports": [
+        {
+          "module": "tradingagents.research.onchain_replication.array_neighborhoods",
+          "source_path": "tradingagents/research/onchain_replication/array_neighborhoods.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.dictionary",
+          "source_path": "tradingagents/research/onchain_replication/dictionary.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.neighborhoods",
+          "source_path": "tradingagents/research/onchain_replication/neighborhoods.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.matching_identity",
+          "source_path": "tradingagents/research/onchain_replication/matching_identity.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.cache",
+          "source_path": "tradingagents/research/onchain_replication/cache.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.imported_mcm_identity",
+          "source_path": "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+          "registered": true
+        }
+      ]
+    },
+    {
+      "source": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py",
+        "sha256": "30a957ad48997a3236203e1af2ccf9e0874b172ffac73773c31efc6bece9fc67",
+        "bytes": 8977
+      },
+      "actual_HEAD_blob_equal": true,
+      "absent_from11_gate": true,
+      "latest_path_commit": "0c100035b96b6e50cf9231d8b018eb67d0bcb2c1",
+      "package_imports": [
+        {
+          "module": "tradingagents.research.onchain_replication.cache",
+          "source_path": "tradingagents/research/onchain_replication/cache.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.dictionary",
+          "source_path": "tradingagents/research/onchain_replication/dictionary.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.neighborhoods",
+          "source_path": "tradingagents/research/onchain_replication/neighborhoods.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.matching_identity",
+          "source_path": "tradingagents/research/onchain_replication/matching_identity.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.matching_pair",
+          "source_path": "tradingagents/research/onchain_replication/matching_pair.py",
+          "registered": true
+        },
+        {
+          "module": "tradingagents.research.onchain_replication.provenance",
+          "source_path": "tradingagents/research/onchain_replication/provenance.py",
+          "registered": true
+        }
+      ]
+    }
+  ],
+  "review_evidence": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/REVIEW_BRIDGE01.md",
+      "sha256": "a32b2ce074694a725635a8ea3e954990a76a665cb7de2f760c182c147a4866cd",
+      "bytes": 9924
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/REPORT01.md",
+      "sha256": "99fee5b49f492b2d22c1159ed4e278071651569d98f6b4f86dac4ca3937328a3",
+      "bytes": 7792
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/REVIEW_V2.md",
+      "sha256": "6a6a672b63946de0476cfa1892a7f3a87f70635ed34d5fc277fd16dd0e2731b1",
+      "bytes": 3594
+    }
+  ],
+  "scope": "Kernel originates in bridge candidate whose REVIEW_BRIDGE01 was WITHHELD for execution/whole fixture (overall failure propagation and downstream IO/native/proof gaps). This does not establish a kernel defect, nor imply complete acceptance. Workload REVIEW_V2 accepts isolated pure purpose derivation/scalar-oracle/in-memory replay only, explicitly not empirical admission. Current package corrections and fresh exact gate/release remain separately necessary.",
+  "near_step_audit": "compact_mcm._prepare authenticates Target.sources before loading KERNEL; _kernel selects imported KERNEL for Target. Kernel dynamically loads exactly HELPER via sibling fixed path. Both helpers package import paths are already current gate source-pinned. NumPy/scientific external dependencies remain existing runtime contract. Default non-imported KERNEL is not selected for Target. No third off-package helper appears in either selected AST."
+}

@@ -1,0 +1,11 @@
+# Source closure refusal after actual11
+
+Actual11 reached all seven Target constructors, then stopped in compact_mcm._prepare→Target.sources before any MCM cells. Target.sources requires job.required_sources() plus the imported kernel and its pair-workload helper. The11 gate omitted both off-package paths despite retaining243 other source entries. The existing caller admission checked package membership only, so the omission was discovered after expensive graph validation.
+
+The candidate replaces that package-membership-only predicate with exactly the Target source set and current file-hash comparisons. It remains inside real_pilot_import_caller.admitted, used by job._admitted before ResearchRun.start and worker array/Owner construction. The two fixed helper paths are literal metadata so admission does not import numerical modules. The focused test independently extracts Target's actual KERNEL/HELPER constants and asserts exact closure equality. Future source changes require normal source review and pin regeneration.
+
+The unchanged helpers are already committed and their real HEAD blobs were compared. PROVENANCE01 records exact scope: the original kernel bridge review withheld execution/whole-fixture correctness; the workload review accepted only isolated purpose/scalar tests. No blanket historical acceptance or scientific capacity is inferred. Current code/source corrections and fresh actual admission remain separate.
+
+The next selected loader imports KERNEL, which dynamically loads HELPER at its fixed sibling path. Every tradingagents import in both helper ASTs is already within the registered package closure. No additional off-package loader is selected in this immediate path. The unrelated compact_mcm default kernel is not selected for imported Target. This source audit cannot establish numerical policy capacity, MCM throughput, later publication success or whole study completion.
+
+Six bounded offline cases retain original RED missing/changed helper acceptance and candidate refusal, complete closure GREEN and changed package refusal. All run the actual admitted function prefix with explicit synthetic metadata stubs and inert source files; no numerical helpers, arrays, authority or empirical replay execute. A one-hunk literal inverse reproduces the complete original caller.
