@@ -1,0 +1,107 @@
+{
+  "actual_external_recovery_accepted": true,
+  "archive": {
+    "bytes": 81920,
+    "git_blob_oid": "3b023935ef0e51fb4efcdf3cc8dce3d1bc5e147f",
+    "members_review": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-outcome-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json",
+      "sha256": "6554a354096ba9c5751eb43672536b29dcfdfdd1d6390aab6bb06f858b037b42"
+    },
+    "original_archive_streams": 0,
+    "returned_archive_streams": 1,
+    "returned_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/fresh-git-recovered-increment01.tar",
+    "sha256": "f704a9836f204f3730f841ef4a792b28c9744481150643ca27d944ccb0d1e1d7",
+    "tree_source_commit": "b60f5ebb262b22ffdf4e46253c6bc527be02161b"
+  },
+  "bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-hash-timing-20261006-01.git",
+  "current_alternates_absent": true,
+  "decision": "accepted",
+  "deletion_authorized": false,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/CAPTURE01.json": "127ea4606f891124c2c4cda5111bbc3b10f5ba3b81abf91a82f791da9498d4a3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json": "099e0e219dceb4c720b941cea072b1e9a933f2aac139b353fe74292843d171ad",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/fresh-git-recovered-increment01.tar": "f704a9836f204f3730f841ef4a792b28c9744481150643ca27d944ccb0d1e1d7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-outcome-review01-2026-10-06/INCREMENT_SELECTION01.json": "18b26d2ffa09e38a7b491e45d7aecbb556742b277eb49a9b86f6cf625dbef7a2",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-outcome-review01-2026-10-06/OUTCOME_REVIEW01.json": "30887b07253d36bfd70f7fed4bcfc7bf7ffa27ae2634f2d59cd6c275f3acf537",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-outcome-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json": "6554a354096ba9c5751eb43672536b29dcfdfdd1d6390aab6bb06f858b037b42"
+  },
+  "external_provenance_basis": "Recorded successful fresh bare init/external SSH Git fetch/blob recovery and remote HEAD equality; independently confirmed present bare object/tree identity without network or lazy fetch. Returned archive Git object SHA1 and SHA256 computed from its sole body read.",
+  "fresh_fetch_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json",
+    "sha256": "099e0e219dceb4c720b941cea072b1e9a933f2aac139b353fe74292843d171ad"
+  },
+  "git_lazy_fetch_disabled": true,
+  "identity": "eth-real-graph-canonical-hash-timing-20261006-01",
+  "not_tested": [
+    "No transport/native/network replay, fresh fetch, historical body stream, original tar read, extraction or deletion.",
+    "No numerical/scientific/raw/runtime/private body read or financial correctness/capacity claim.",
+    "External origin history relies on preserved actual fetch record; current offline bare state does not reconstruct historical process lifetime."
+  ],
+  "offline_git_checks": [
+    {
+      "args": [
+        "rev-parse",
+        "--is-bare-repository"
+      ],
+      "returncode": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "b60f5ebb262b22ffdf4e46253c6bc527be02161b"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.url"
+      ],
+      "returncode": 0,
+      "stdout": "git@github.com:malecada/TradingAgents.git"
+    },
+    {
+      "args": [
+        "ls-tree",
+        "-z",
+        "b60f5ebb262b22ffdf4e46253c6bc527be02161b",
+        "--",
+        "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/engineering-increment01.tar"
+      ],
+      "returncode": 0,
+      "stdout": "100644 blob 3b023935ef0e51fb4efcdf3cc8dce3d1bc5e147f\tresearch/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/engineering-increment01.tar\u0000"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-t",
+        "3b023935ef0e51fb4efcdf3cc8dce3d1bc5e147f"
+      ],
+      "returncode": 0,
+      "stdout": "blob"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-s",
+        "3b023935ef0e51fb4efcdf3cc8dce3d1bc5e147f"
+      ],
+      "returncode": 0,
+      "stdout": "81920"
+    }
+  ],
+  "original_outcome": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-outcome-review01-2026-10-06/OUTCOME_REVIEW01.json",
+    "sha256": "30887b07253d36bfd70f7fed4bcfc7bf7ffa27ae2634f2d59cd6c275f3acf537"
+  },
+  "original_selected_stat_identities_currently_unchanged": true,
+  "originals_retained": true,
+  "qualification": "BYTE/member/name/mode acceptance covers only this exact public engineering hash-timing increment. No POSIX ownership/timestamps/xattrs reconstruction, installed runtime/raw/graph/private/unrelated-store recovery, future remote availability or scientific credit. The engineering identity remains permanently COMPLETE/closed with no scientific owner or paper credit. Execution source3da4749fc is distinct from later preservation sourceb60f5ebb; no claim that current Main equals the historical204-pin source closure. Original07 FAILED/spent history remains unchanged.",
+  "recovered_archive_retained": true,
+  "recovery_source_commit": "b60f5ebb262b22ffdf4e46253c6bc527be02161b",
+  "schema_version": 1,
+  "scope": "Complete public engineering hash-timing increment BYTE recovery via fresh external Git fetch and recovered archive;16 regular files totaling 42525 bytes plus 2 typed directories, 18 names in81920-byte tar."
+}

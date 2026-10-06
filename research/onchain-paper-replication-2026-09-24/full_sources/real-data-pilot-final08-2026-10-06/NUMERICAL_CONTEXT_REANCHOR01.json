@@ -1,0 +1,101 @@
+{
+  "changed_package_pins": [
+    "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+    "tradingagents/research/onchain_replication/neighborhoods.py",
+    "tradingagents/research/onchain_replication/real_pilot_storage.py"
+  ],
+  "checks": {
+    "all_template_semantic_inverse_exact": [
+      "archive_policy.json",
+      "job_template01.json",
+      "job_template02.json",
+      "pair_policy01.json",
+      "pilot.json"
+    ],
+    "current179bodies_equal_committed_anchor": true,
+    "graphs_unchanged": true,
+    "job_pair_descriptor_digest_matches_new_policy": true,
+    "preflight_inverse_identity_only": true,
+    "python_syntax": true,
+    "root_io_inverse_identity_only": true,
+    "unchanged_preflight_constants": [
+      "SUCCESSOR",
+      "BINDER",
+      "GRAPH_METADATA_SHA"
+    ]
+  },
+  "draft": {
+    "bytes": 25643,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/INPUT_DRAFT00.json",
+    "sha256": "1fa2cd14968073dd0d3f07cdb1ee83fc9f4bda8abc972e61e33d1996bf1fa53c"
+  },
+  "new_pair_policy": {
+    "bytes": 25540,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/templates/pair_policy01.json",
+    "sha256": "614478d8ada5b97100799f517d213e789ec1f44fe845b1eab5325f26117672e7"
+  },
+  "old_pair_policy": {
+    "bytes": 25540,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final07-2026-10-06/templates/pair_policy01.json",
+    "sha256": "73b8390ed440618636920150946a4f7648f0e23ae01deba8fe0e9d9e9b65a64e"
+  },
+  "package_pins": 179,
+  "physical_baseline_status": "Prior07 baseline reference deliberately retained; Root must replace with fresh08 baseline/reference before preparation/admission.",
+  "preflight": {
+    "bytes": 20062,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/preflight01.py",
+    "sha256": "085fd8f2a80ddf743c7ebba4cfb06572f6c072196062449047526d3e0ea74c75"
+  },
+  "pure_metadata_check": {
+    "command": [
+      ".venv/bin/python",
+      "-B",
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor08-2026-10-06/successor02.py",
+      "--prepare",
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/INPUT_DRAFT00.json"
+    ],
+    "exit_code": 1,
+    "qualification": "Pure metadata dry preparation using retained prior07 physical baseline only; not current admission/capacity.",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor08-2026-10-06/successor02.py\", line 43, in <module>\n    print(json.dumps(prepare(ROOT,json.loads(body)),sort_keys=True,allow_nan=False))\n                     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor08-2026-10-06/successor02.py\", line 35, in prepare\n    return m.prepare(root,draft)\n           ~~~~~~~~~^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor02-2026-10-06/candidate/prepare_builder03_input02.py\", line 55, in prepare\n    totals=c.calculate(inventory)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor08-2026-10-06/candidate/controls01.py\", line 140, in calculate\n    budget=s['storage_budget'];exact(budget,{'schema_version','kind','authority_root','experiment','roots','shared_files','limits'},'storage')\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor08-2026-10-06/candidate/controls01.py\", line 29, in need\n    if not ok:raise ValueError(message)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: exact original/shared writable scope required\n"
+  },
+  "qualification": "Only accepted exact-byte batched graph hashing, genuine Target constructor lease checkpoints and strict08 storage identity changed; other176 package bodies and original scientific model/training/data/matching/max-stale30seconds unchanged. No live source, registrations, gates or admission written.",
+  "root_io": {
+    "bytes": 7363,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/root_io.py",
+    "sha256": "33a2cd01b193bc10e83041cd0650e68b48ea5fb2943ff42ce2624b0142c10e5d"
+  },
+  "source_commit": "6125ff2843ff742c6987ddafa460f05267ca1c77",
+  "template_base": {
+    "bytes": 25643,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final07-2026-10-06/INPUT_DRAFT01.json",
+    "sha256": "ec7a82d208c3dba14b46efb052c7d0b368648c00c73e413d73cc7a7fed5d9d5d"
+  },
+  "template_references": {
+    "archive_policy.json": {
+      "bytes": 591,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/templates/archive_policy.json",
+      "sha256": "a4d7f50315f2cd67e26aeff6c4813f76aa25b29f1a8010d8ed06a6e4e251a953"
+    },
+    "job_template01.json": {
+      "bytes": 6730,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/templates/job_template01.json",
+      "sha256": "8abebc1600a76a3ffedf3fee7491e3366c448ae39e9a3e5a0796ce230e8f20af"
+    },
+    "job_template02.json": {
+      "bytes": 6730,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/templates/job_template02.json",
+      "sha256": "8abebc1600a76a3ffedf3fee7491e3366c448ae39e9a3e5a0796ce230e8f20af"
+    },
+    "pair_policy01.json": {
+      "bytes": 25540,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/templates/pair_policy01.json",
+      "sha256": "614478d8ada5b97100799f517d213e789ec1f44fe845b1eab5325f26117672e7"
+    },
+    "pilot.json": {
+      "bytes": 2740,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/templates/pilot.json",
+      "sha256": "df1574bab23ad88d4e4267fb3714821e93f419676f3cbf007e5db0ebbaad360b"
+    }
+  },
+  "unchanged_package_pins": 176
+}

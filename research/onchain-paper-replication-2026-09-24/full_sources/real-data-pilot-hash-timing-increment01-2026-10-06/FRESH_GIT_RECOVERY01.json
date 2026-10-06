@@ -1,0 +1,115 @@
+{
+  "actual_remote_head": "b60f5ebb262b22ffdf4e46253c6bc527be02161b",
+  "all_typed_names_modes_hashes_verified": true,
+  "archive": {
+    "bytes": 81920,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/engineering-increment01.tar",
+    "sha256": "f704a9836f204f3730f841ef4a792b28c9744481150643ca27d944ccb0d1e1d7"
+  },
+  "at": "2026-10-06T15:14:45.437775+00:00",
+  "directory_count": 2,
+  "external_source": "Fresh external Git fetch; no local object alternates",
+  "fresh_bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-hash-timing-20261006-01.git",
+  "operations": [
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "git@github.com:malecada/TradingAgents.git",
+        "refs/heads/research/onchain-paper-replication-2026-09-24"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 98
+    },
+    {
+      "command": [
+        "git",
+        "init",
+        "--bare",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-hash-timing-20261006-01.git"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 485,
+      "stdout_bytes": 128
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-hash-timing-20261006-01.git",
+        "remote",
+        "add",
+        "origin",
+        "git@github.com:malecada/TradingAgents.git"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-hash-timing-20261006-01.git",
+        "config",
+        "remote.origin.promisor",
+        "true"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-hash-timing-20261006-01.git",
+        "config",
+        "remote.origin.partialclonefilter",
+        "blob:none"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-hash-timing-20261006-01.git",
+        "fetch",
+        "--depth=1",
+        "--filter=blob:none",
+        "origin",
+        "b60f5ebb262b22ffdf4e46253c6bc527be02161b"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 115,
+      "stdout_bytes": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-hash-timing-20261006-01.git",
+        "cat-file",
+        "blob",
+        "b60f5ebb262b22ffdf4e46253c6bc527be02161b:research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/engineering-increment01.tar"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 81920
+    }
+  ],
+  "qualification": "PublicBYTE engineering increment only; no originalgraph/package/runtime/private body recovery/deletion. All actualduration/disposition/nulls retained; no scientificcredit.",
+  "regular_bytes": 42525,
+  "regular_file_count": 16,
+  "returned_archive": {
+    "bytes": 81920,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-hash-timing-increment01-2026-10-06/fresh-git-recovered-increment01.tar",
+    "sha256": "f704a9836f204f3730f841ef4a792b28c9744481150643ca27d944ccb0d1e1d7"
+  },
+  "source": "b60f5ebb262b22ffdf4e46253c6bc527be02161b",
+  "typed_member_count": 18
+}
