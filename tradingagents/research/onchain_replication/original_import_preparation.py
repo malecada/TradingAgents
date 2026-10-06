@@ -85,6 +85,12 @@ class PreparedImport:
 
     def stage_contract(self):
         self._check()
+        return self._stage_contract_metadata()
+
+    def _stage_contract_metadata(self):
+        # Callback-free construction only. Callers retain genuine full checks:
+        # stage_contract checks immediately before this helper; execution_contract
+        # checks before all construction and again before returning any value.
         # Contract to be consumed by future Owner constructor BEFORE root birth.
         value={'kind':'dictionary-import','required_stages':self._selection['required_stages'],
           'current_binding':cache_key(thaw(self._bound.record)),
@@ -107,7 +113,7 @@ class PreparedImport:
           'execution_matching':cache_key({'config':current,'backend':BACKEND}),
           'backend':BACKEND,'current_binding':cache_key(thaw(self._bound.record)),
           'current_source':self._run.admission.source,'runtime_hash':self._bound.context['runtime_hash'],'source_modules':self._source,
-          'stage_contract':self.stage_contract(),'mcm_execution_admitted':False}
+          'stage_contract':self._stage_contract_metadata(),'mcm_execution_admitted':False}
         self._check()
         require(original._read_registered(self._run,policy['refs']['matching_config']['input'])==raw,'original matching bytes changed after lease')
         return original.parse(canonical_bytes(value))

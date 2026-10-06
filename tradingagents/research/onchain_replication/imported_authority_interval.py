@@ -40,7 +40,17 @@ class Interval:
             full=full or old_full is None or (now-old_full)*1000>=self.policy['full_interval_ms']
             full_done=finger_done=None
             if full:
-                full_check();full_done=self.now();freshness(full_done)
+                full_check();full_done=self.now()
+                try:freshness(full_done)
+                except ValueError as error:
+                    # Diagnostic only: reuse actual already sampled times. No
+                    # extra clock read, refresh, threshold or exception change.
+                    origin=start if old_full is None else old_full
+                    error.add_note('import lease full boundary timing: '
+                        f'full_callback_seconds={full_done-now!r}; '
+                        f'pre_callback_age_seconds={now-origin!r}; '
+                        f'total_age_seconds={full_done-origin!r}')
+                    raise
                 fingerprint_check();finger_done=self.now();freshness(finger_done)
             elif (now-self.finger)*1000>=self.policy['fingerprint_interval_ms']:
                 fingerprint_check();finger_done=self.now();freshness(finger_done)
