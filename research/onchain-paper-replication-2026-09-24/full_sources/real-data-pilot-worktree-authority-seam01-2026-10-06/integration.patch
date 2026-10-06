@@ -1,0 +1,43 @@
+--- a/tradingagents/research/onchain_replication/real_pilot_import_caller.py
++++ b/tradingagents/research/onchain_replication/real_pilot_import_caller.py
+@@ -194,6 +194,28 @@
+     return json.loads(raw)
+ 
+ 
++def _source_authority_root(ad):
++    """Retain directory repositories; authenticate selected worktree topology.
++
++    This metadata join grants no source or run authority. Admission, installed
++    code, runtime, Binding and Owner currentness checks remain required.
++    """
++    marker = ad.root / '.git'
++    if marker.is_dir():
++        return True
++    require(marker.is_file() and not marker.is_symlink()
++            and ad.root.is_absolute() and ad.root.resolve(strict=True) == ad.root,
++            'canonical worktree source root required')
++    require('execution_workspace' in ad.inputs, 'registered worktree layout required')
++    from ..admission import _git
++    from .job import workspace_binding
++    require(Path(_git(ad.root, 'rev-parse', '--show-toplevel').decode().strip()) == ad.root,
++            'worktree Git top-level differs')
++    require(_read(ad, 'execution_workspace') == workspace_binding(ad.root),
++            'registered worktree root/common Git mapping differs')
++    return True
++
++
+ def admitted(ad, job):
+     schema(job)
+     name,s = next(iter(job['payload']['representation_jobs'].items()))
+@@ -207,9 +229,9 @@
+         from .real_pilot_storage import validate,EXPERIMENT
+         require(p['schema_version']==2 and ad.experiment_id==EXPERIMENT,'union requires fixed schema2 real pilot')
+         validate(budget,ad.root)
+-        require((ad.root/'.git').is_dir(),'original source authority root required')
++        require(_source_authority_root(ad),'original source authority root required')
+     else:
+-        require(Path(budget['root']) == ad.root and (ad.root/'.git').is_dir(), 'complete isolated workspace watch required')
++        require(Path(budget['root']) == ad.root and _source_authority_root(ad), 'complete isolated workspace watch required')
+     from .job import required_sources
+     require(required_sources() <= set(ad.experiment['source_files']), 'complete current package closure required')
+     own = 'tradingagents/research/onchain_replication/real_pilot_import_caller.py'

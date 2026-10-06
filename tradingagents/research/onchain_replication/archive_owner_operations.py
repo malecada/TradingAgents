@@ -87,6 +87,9 @@ class Ledger:
             'selection':thaw(self.selection.record),'owner':self.owner.identity}
 
     def _evidence(self):
+        if hasattr(self,'_typed_expected'):
+            from .typed_payload_operations import ledger_evidence
+            ledger_evidence(self)
         require(owners.cache_key(self._configuration()) == self._identity,
             'archive reservation identity changed')
         require(owners.cache_key(self._spent) == self._spent_sha,'archive reservation accounting changed')

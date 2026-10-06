@@ -51,8 +51,19 @@ def test_current_registered_owner_publishes_reads_and_closes_without_representat
     with api.open_verified(owner, stage, output_input='compact_output', expected_scope=scope,
                            receipt_sha256=ticket['receipt_sha256']) as matrix:
         assert matrix.shape == (7, 2) and not matrix.flags.writeable
-    with pytest.raises(ValueError): api.publish(owner, stage, output_input='compact_output', expected_scope=scope)
     owner.finish()
+    assert owner.closed
+    with pytest.raises(ValueError): api.publish(owner, stage, output_input='compact_output', expected_scope=scope)
+
+
+def test_duplicate_publication_poisons_owner_and_forbids_completion(ready):
+    from tradingagents.research.onchain_replication import compact_mcm_publication as api
+    owner, stage, scope, _ = ready
+    api.publish(owner, stage, output_input='compact_output', expected_scope=scope)
+    with pytest.raises(ValueError):
+        api.publish(owner, stage, output_input='compact_output', expected_scope=scope)
+    assert owner.poisoned and not owner.closed
+    with pytest.raises(ValueError, match='terminal or poisoned'): owner.finish()
 
 
 @pytest.mark.parametrize('ready', ['route', 'budget'], indirect=True)

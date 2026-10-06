@@ -1,0 +1,13 @@
+# Managed-worktree backlink correction review
+
+The narrow successor resolves the copied-marker defect under the clarified contract. Candidate01 remains withheld for genuine managed-worktree topology; sealed review01 remains a historical mapping-only conclusion with an explicit backlink exclusion. No genuine ledger or source-authority bypass was demonstrated.
+
+Successor source e77021cc adds only the administrator backlink check after the existing exact registered workspace mapping. Its literal inverse reproduces f765df7c; the earlier inverse then reproduces original caller6167b380. Legacy directory behavior and the full source/runtime/installed-caller/Binding/Owner boundaries therefore remain unchanged.
+
+At successor caller lines219–239, actual Git supplies the absolute administrator directory, which must be canonical. Existing owned_io._opened uses O_NOFOLLOW and owned cleanup. The backlink must be regular, single-link, nonempty and at most8192 bytes; fd and path identity/extent/mtime/ctime must agree before and after the bounded read. Exactly one newline-terminated path without NUL resolves against that administrator directory to the canonical selected root/.git. The new check supplies the backlink identity that Git --show-toplevel alone did not prove.
+
+Independent check fd1136 exited0: the unchanged original copied-marker witness accepted by candidate01 is refused by02; genuine linked fixture and actual Main backlink fragment pass; oversized, multiline and symlink backlinks refuse. A local admin-relative path resolves to the same exact marker. Main's actual observed backlink is absolute, regular and non-symlink (60 bytes, SHAee5cd2c098f9bfde7325fcc9c1fa8b6239c902345f6f72b51405aee143ba163d). Relative-path acceptance is a helper path-resolution check, not a claim that every Git administrative command on the installed version supports that spelling.
+
+No genuine Admission, execution_workspace registration, Run, Owner or Binding was invented. The Main check executes only the exact added backlink fragment read-only. All Git mutations were confined to new empty review fixtures. Original witness fixtures and sealed reviews remain unchanged. Numerical imports, network, credentials, live source edits and empirical/native execution were absent.
+
+This is source-only acceptance of current sampled managed-worktree topology plus the existing registered mapping. It does not prove atomic writer exclusion, actual pilot registration/admission, unchanged future Git topology, present resource eligibility or native capacity. Root must integrate and bind the exact source prospectively; genuine source/runtime/currentness and native/storage checks remain required.

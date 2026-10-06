@@ -125,6 +125,10 @@ def matching(root, *, owner, scope, terminal, policy, pairs):
 
 def stream(root, *, owner, scope, terminal, policy, pairs):
     complete, _ = read(root, 'complete.json', terminal)
+    if complete.get('schema_version')==2:
+        from . import typed_score_store
+        proof=typed_score_store.check(root,terminal=terminal,owner=owner,scope=scope,pairs=pairs,chunk_cells=policy['score_chunk_cells'])
+        return proof['matching_scores_sha256'],proof['stream_start_sha256']
     require(set(complete) == {'schema_version', 'start_sha256', 'head', 'cells', 'chunks',
         'batch_terminal_sha256'} and type(complete['schema_version']) is int
         and complete['schema_version'] == 1, 'stream terminal schema')

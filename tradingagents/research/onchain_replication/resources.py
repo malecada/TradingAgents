@@ -175,14 +175,18 @@ def _native_receipt(directory,name,value):
 
 def _native_policy(value):
     if value is None:return None
-    if type(value) is not dict or set(value)!={'file_size_bytes'} or type(value['file_size_bytes']) is not int or not 0<value['file_size_bytes']<=4*1024**2:
+    if type(value) is not dict or set(value)!={'file_size_bytes'} or type(value['file_size_bytes']) is not int or not 0<value['file_size_bytes']<2**63:
         raise ValueError('native unit file limit schema differs')
     return dict(value)
 
 
-def _native_owned_env(cwd):
+def _native_owned_env(cwd,storage_budget=None):
     root=Path(cwd);base=root/'fixture_runtime'
-    return {'PYTHONPATH':str(root),'TMPDIR':str(base/'tmp'),'XDG_CACHE_HOME':str(base/'cache'),'TORCH_HOME':str(base/'torch'),'MPLCONFIGDIR':str(base/'matplotlib'),'HF_HOME':str(base/'hf'),'TORCH_EXTENSIONS_DIR':str(base/'torch-extensions'),'PYTHONDONTWRITEBYTECODE':'1','PYTEST_DISABLE_PLUGIN_AUTOLOAD':'1','OPENBLAS_NUM_THREADS':'2','OMP_NUM_THREADS':'2','MKL_NUM_THREADS':'2','NUMEXPR_NUM_THREADS':'2'}
+    result={'PYTHONPATH':str(root),'TMPDIR':str(base/'tmp'),'XDG_CACHE_HOME':str(base/'cache'),'TORCH_HOME':str(base/'torch'),'MPLCONFIGDIR':str(base/'matplotlib'),'HF_HOME':str(base/'hf'),'TORCH_EXTENSIONS_DIR':str(base/'torch-extensions'),'PYTHONDONTWRITEBYTECODE':'1','PYTEST_DISABLE_PLUGIN_AUTOLOAD':'1','OPENBLAS_NUM_THREADS':'2','OMP_NUM_THREADS':'2','MKL_NUM_THREADS':'2','NUMEXPR_NUM_THREADS':'2'}
+    if storage_budget is not None and storage_budget.get('schema_version')==2:
+        from tradingagents.research.onchain_replication.real_pilot_storage import validate,environment
+        validate(storage_budget,root);return environment(root,result)
+    return result
 
 
 def _native_seconds(text):
@@ -196,9 +200,9 @@ def _native_seconds(text):
     return total
 
 
-def _native_ready(policy,ready,properties,wall_seconds,cwd):
+def _native_ready(policy,ready,properties,wall_seconds,cwd,storage_budget=None):
     policy=_native_policy(policy);expected=policy['file_size_bytes']
-    if ready.get('native_environment')!=_native_owned_env(cwd):raise ValueError('native child environment differs')
+    if ready.get('native_environment')!=_native_owned_env(cwd,storage_budget):raise ValueError('native child environment differs')
     limits=ready.get('file_size_limit')
     if ready.get('native_unit_limits')!=policy or type(limits) is not list or len(limits)!=2 or any(type(v) is not int or v!=expected for v in limits):
         raise ValueError('native child file limit readback differs')
@@ -249,8 +253,9 @@ def _child_legacy(receipt, cpus, lease_seconds, command, native_unit_limits=None
             expected=_native_policy(native_unit_limits)['file_size_bytes']
             if ready['file_size_limit']!=[expected,expected]:raise ValueError('inherited native file limit differs')
             ready['native_unit_limits']=dict(native_unit_limits)
-            ready['native_environment']={key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}
-            if ready['native_environment']!=_native_owned_env(Path.cwd()):raise ValueError('inherited native environment differs')
+            budget=json.loads((receipt/'live.json').read_text()).get('storage_budget')
+            ready['native_environment']={key:os.environ.get(key) for key in _native_owned_env(Path.cwd(),budget)}
+            if ready['native_environment']!=_native_owned_env(Path.cwd(),budget):raise ValueError('inherited native environment differs')
         _atomic(receipt/'cpu_ready.json',ready)
         signal.signal(signal.SIGTERM,stop);signal.signal(signal.SIGINT,stop)
         while not stopping:
@@ -378,9 +383,14 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
     storage_watch=None
     if storage_budget is not None:
         from .workflow_storage import StorageWatch
-        if type(storage_budget) is not dict or set(storage_budget)!={'root','limits'}:
-            raise ValueError('storage budget schema differs')
-        storage_watch=StorageWatch(storage_budget['root'],storage_budget['limits'])
+        if type(storage_budget) is dict and storage_budget.get('schema_version')==2:
+            from tradingagents.research.onchain_replication.real_pilot_storage import WritableUnion,EXPERIMENT
+            if native_unit_limits is None or not isinstance(owner_identity,dict) or owner_identity.get('experiment')!=EXPERIMENT:raise ValueError('union requires fixed real-pilot native owner')
+            storage_watch=WritableUnion(storage_budget,Path(cwd))
+        else:
+            if type(storage_budget) is not dict or set(storage_budget)!={'root','limits'}:
+                raise ValueError('storage budget schema differs')
+            storage_watch=StorageWatch(storage_budget['root'],storage_budget['limits'])
     disk_paths=tuple(Path(p).resolve(strict=True) for p in disk_paths)
     cwd = Path(cwd).resolve(strict=True)
     receipt = Path(receipt_dir).absolute()
@@ -414,8 +424,12 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
         from tradingagents.research.onchain_replication import owned_io as native_io
 
     if storage_watch is not None:
-        state['storage_budget']={'root':str(storage_watch.root),'limits':dict(storage_watch.limits)}
-        state['storage_root_identity']=list(storage_watch.identity)
+        if hasattr(storage_watch,'budget'):
+            state['storage_budget']=storage_watch.budget
+            state['storage_watched_root_identities']=storage_watch.identities
+        else:
+            state['storage_budget']={'root':str(storage_watch.root),'limits':dict(storage_watch.limits)}
+            state['storage_root_identity']=list(storage_watch.identity)
         state['storage_enforcement']='Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.'
 
     def observe_storage():
@@ -505,7 +519,7 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
             args[position:position]=['--physical','--physical-context',json.dumps(context,sort_keys=True)]
         if native_unit_limits is not None:
             position=args.index(sys.executable)
-            args[position:position]=['--property=LimitFSIZE='+str(native_unit_limits['file_size_bytes']),'--property=RuntimeMaxSec='+str(wall_seconds)]+['--setenv='+key+'='+value for key,value in _native_owned_env(cwd).items()]
+            args[position:position]=['--property=LimitFSIZE='+str(native_unit_limits['file_size_bytes']),'--property=RuntimeMaxSec='+str(wall_seconds)]+['--setenv='+key+'='+value for key,value in _native_owned_env(cwd,storage_budget).items()]
             position=args.index('--',args.index('--lease'))
             args[position:position]=['--native-file-limit',str(native_unit_limits['file_size_bytes'])]
         # Even an uncertain dispatch is cleaned up using this unique identity.
@@ -530,7 +544,7 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
         if native_unit_limits is not None:
             selected=_systemctl('show',unit,'--property=LimitFSIZE,LimitFSIZESoft,RuntimeMaxUSec')
             state['native_unit_properties']=dict(line.split('=',1) for line in selected.stdout.splitlines() if '=' in line)
-            _native_ready(native_unit_limits,ready,state['native_unit_properties'],wall_seconds,cwd)
+            _native_ready(native_unit_limits,ready,state['native_unit_properties'],wall_seconds,cwd,storage_budget)
             state['native_environment']=ready['native_environment']
         state['kernel_controls'] = _read_controls(cgroup)
         _verify_controls(state['kernel_controls'], memory_max_bytes, memory_high_bytes, memory_swap_max_bytes)
@@ -747,7 +761,7 @@ def assert_guarded_worker(receipt,command,*,required_paths,wall_seconds,
         import resource
         expected=_native_policy(live['native_unit_limits'])['file_size_bytes']
         if resource.getrlimit(resource.RLIMIT_FSIZE)!=(expected,expected):raise RuntimeError('native worker file limit differs')
-        if {key:os.environ.get(key) for key in _native_owned_env(Path.cwd())}!=_native_owned_env(Path.cwd()):raise RuntimeError('native worker environment differs')
+        if {key:os.environ.get(key) for key in _native_owned_env(Path.cwd(),live.get('storage_budget'))}!=_native_owned_env(Path.cwd(),live.get('storage_budget')):raise RuntimeError('native worker environment differs')
     return live
 
 

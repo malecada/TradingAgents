@@ -1,0 +1,22 @@
+{
+  "actual_full_target_session": 44316,
+  "actual_isolated_exit_code": 0,
+  "actual_isolated_tool_chunk": "01156d",
+  "cause_qualification": "Observed actual guard selection plus isolated pass supports suite-dependent parent/descendant RSS exposure. Exact allocating test and sampled breach amount were not recorded; no stronger cause claim. Product guard/test source unchanged. Full named result remains failed; neural group still active.",
+  "failure": "WorkerTests.test_supervisor_retains_failure_and_kill_reason kill=True: actual RSS guard fired before expected lease guard",
+  "isolated_command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONDONTWRITEBYTECODE=1 RUN_ONLINE_TESTS=0 .venv/bin/python -B -m pytest -q -p no:cacheprovider --import-mode=importlib tests/research/test_options_timing_worker.py::WorkerTests::test_supervisor_retains_failure_and_kill_reason",
+  "isolated_passed": 1,
+  "isolated_seconds": 0.53,
+  "isolated_subtests_passed": 2,
+  "no_empirical_claim": true,
+  "resource_priority_control": "RSS over512MiB takes precedence over expired lease; same pure dispatcher at128MiB returns lease expired",
+  "standard_completion_chunk": "884da3",
+  "standard_failed": 1,
+  "standard_passed": 2841,
+  "standard_seconds": 1022.33,
+  "standard_subtests_passed": 96,
+  "unchanged_paths": {
+    "tests/research/test_options_timing_worker.py": "01f8e90aa0a1faee3f8e42c9f161961e15b6bbe8e1bb56922111694df96e9bc1",
+    "tradingagents/research_options_timing/worker.py": "340dc23251f50b35a3c69bc91ce4644c15facea9c416fafa376a5edcadc0c19a"
+  }
+}

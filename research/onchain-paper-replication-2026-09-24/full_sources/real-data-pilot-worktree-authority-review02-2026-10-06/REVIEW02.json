@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "decision": "accepted-source-only-managed-worktree-backlink-correction",
+  "source_sha256": "0b5f11bdf09750f2c6d0d2fd7b330a74eb13c7b78a35cb50c6cf975ae4f97266",
+  "source_manifest_sha256": "87bfcc2b946d452fde11a94b076b951175edbf09426ad48939521a4b8e1cc808",
+  "predecessor_disposition": "candidate01 withheld for managed-worktree identity; review01 immutable mapping-only historical scope",
+  "checks": {
+    "intermediate": {
+      "tool": "fd1136",
+      "exit": 0,
+      "sha256": "7bd8ca9d30eb9ae13b5b2ca840b5f6bc17a61e542d626f2ef618f112d65a87c8"
+    },
+    "final": {
+      "tool": "d12e72",
+      "exit": 0,
+      "sha256": "da82e1b0ec1b02b1102496b071a536a92ef98dfa85e84a6ad9cf1b5312526fa2"
+    },
+    "main_readonly_topology": "5e7f2918ff0cd5acfd8d0f0ed6f0963aa24140994cf9428869a3cdc9d482f36f"
+  },
+  "exact_inverse_preserves_original_source_runtime_and_installed_caller_predicates": true,
+  "original_copied_marker_witness_now_refused": true,
+  "material_findings_remaining": [],
+  "execution_authority": false,
+  "limits": [
+    "No genuine Admission/Run/Binding/Owner constructed or tested",
+    "No actual ledger-bypass claim",
+    "No live source/Git/network/native/numerical mutation",
+    "Current topology sampled; no atomic exclusion of later writers",
+    "Integration, registration, genuine activation and RAM/storage/native eligibility remain separate"
+  ],
+  "report_sha256": "8a473a9e3dcc671c3c8a200dba0ffb49ce1c5122cd7736af1c97b028975d3005"
+}

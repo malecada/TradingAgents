@@ -26,15 +26,19 @@ from .cache import cache_key
 require = io._require
 
 
-def _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes):
+def _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes, storage_policy=None):
     root = Path(stage_root)
     require(root.is_absolute() and root.resolve() == root, 'canonical stage root required')
     io._identity(stage_sha256)
     require(isinstance(contract, dict) and contract.get('kind') == 'mcm', 'completed MCM contract required')
     require(type(max_output_bytes) is int and 0 < max_output_bytes < 2**63,
             'positive bounded output reservation required')
-    return dict(stage_root=root, stage_sha256=stage_sha256, contract=copy.deepcopy(contract),
+    args = dict(stage_root=root, stage_sha256=stage_sha256, contract=copy.deepcopy(contract),
         expected_scope=io._scope(expected_scope), max_output_bytes=max_output_bytes)
+    if storage_policy is not None:
+        from .mcm_raw_parts import storage_policy as validate_storage
+        args['storage_policy'] = validate_storage(storage_policy)
+    return args
 
 
 def _source(args):
@@ -95,6 +99,9 @@ def _file(fd, size):
 
 
 def _inspect(directory, expected_sha256, args):
+    if 'storage_policy' in args:
+        from .mcm_raw_parts import inspect_output
+        return inspect_output(directory, expected_sha256, args)
     start = _source(args)
     root, fd = io._open(directory)
     try:
@@ -134,9 +141,14 @@ def _verified(directory, expected_sha256, args, lease):
     return last
 
 
-def publish(directory, *, stage_root, stage_sha256, contract, expected_scope, max_output_bytes, lease):
+def publish(directory, *, stage_root, stage_sha256, contract, expected_scope, max_output_bytes, lease,
+            storage_policy=None, storage_owner=None, storage_stage=None):
     """Create once from completed saved scores; failed partial namespaces persist."""
-    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes)
+    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes, storage_policy)
+    if storage_policy is not None:
+        from .mcm_raw_parts import publish_output
+        return publish_output(directory, args=args, owner=storage_owner, stage=storage_stage, lease=lease)
+    require(storage_owner is None and storage_stage is None, 'unselected output storage authority')
     require(callable(lease), 'live MCM output lease required')
     lease(); start = _source(args)
     root = Path(directory)
@@ -170,20 +182,20 @@ def publish(directory, *, stage_root, stage_sha256, contract, expected_scope, ma
 
 
 def verify(directory, *, expected_sha256, stage_root, stage_sha256, contract,
-           expected_scope, max_output_bytes, lease):
-    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes)
+           expected_scope, max_output_bytes, lease, storage_policy=None):
+    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes, storage_policy)
     return _verified(directory, expected_sha256, args, lease)[0]
 
 
 @contextmanager
 def open_verified(directory, *, expected_sha256, stage_root, stage_sha256, contract,
-                  expected_scope, max_output_bytes, lease):
+                  expected_scope, max_output_bytes, lease, storage_policy=None):
     """Read-only mapping valid only inside the context; reverify before acceptance.
 
     Consumers must not retain array views or acknowledge downstream output until
     successful context exit. Mapping/page-cache RSS needs an outer process guard.
     """
-    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes)
+    args = _arguments(stage_root, stage_sha256, contract, expected_scope, max_output_bytes, storage_policy)
     value, signature = _verified(directory, expected_sha256, args, lease)
     root, fd = io._open(directory)
     try:
@@ -204,3 +216,20 @@ def open_verified(directory, *, expected_sha256, stage_root, stage_sha256, contr
                 io._root(root, fd)
             finally: mapped._mmap.close()
     finally: os.close(fd)
+
+
+def _archived_chunks(owner, stage, args, start, recovery_root):
+    """Selected genuine recovered f64 batches; original cast expression unchanged."""
+    from . import typed_score_store
+    count = start['rows'] * start['motifs']; chunk = start['chunk_cells']
+    with typed_score_store.batch_reader(owner, stage) as reader:
+        for index, offset in enumerate(range(0, count, chunk)):
+            size = min(chunk, count - offset)
+            raw = reader.read(index, recovery_root / f'batch-{index:012d}')
+            header, _ = stages.read(args['stage_root'] / 'stream/batches', f'chunk-{index:012d}.json')
+            require(type(raw) is bytes and len(raw) == size * 8 and io._hash(raw) == header['payload_sha256'],
+                'recovered original MCM score bytes differ')
+            with np.errstate(over='raise', invalid='raise'):
+                values = np.frombuffer(raw, dtype='<f8').astype('<f4')
+            require(np.isfinite(values).all(), 'nonfinite MCM output')
+            yield raw, values.tobytes()

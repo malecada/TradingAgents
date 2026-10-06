@@ -467,6 +467,16 @@ def verify_current(owner):
     journal = Path(owner.bound.record['journal_directory'])
     require(owner.bound._ancestry_arguments is None,'fresh compact owner required')
     entries(journal.parent,{journal.name},required={journal.name},_imported=owner.required[0]=='dictionary-import')
+    ledger=getattr(owner,'_archive_operations',None)
+    if ledger is not None:
+        from . import archive_owner_operations
+        require(type(ledger) is archive_owner_operations.Ledger and ledger.owner is owner
+            and ledger.selection._owner is owner and ledger._transition is owner._transition
+            and ledger.root==journal/'archive-operations' and not ledger._closed and not ledger._poisoned,
+            'current original attached archive ledger differs')
+        # Ledger lives INSIDE journal, beside compact. The parent inventory above
+        # is unchanged; only the genuine exact attached ledger is joined here.
+        ledger._evidence()
     require(not any(present(journal/name) for name in ('failed.json','complete.json')),
         'representation terminal marker exists')
     reader=matching_owner.metadata

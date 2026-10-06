@@ -1,0 +1,20 @@
+{
+  "source_path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+  "before_sha256": "6167b380b0e058af9843ddb5246f77121a3c5a2737a77bab5cc7b8c082af23c7",
+  "after_sha256": "f765df7caf8e0d95d55befa7f7bdfd5b3977f11362579796de04edb2c948b583",
+  "literal_edits": [
+    {
+      "before": "def admitted(ad, job):\n",
+      "after": "def _source_authority_root(ad):\n    \"\"\"Retain directory repositories; authenticate selected worktree topology.\n\n    This metadata join grants no source or run authority. Admission, installed\n    code, runtime, Binding and Owner currentness checks remain required.\n    \"\"\"\n    marker = ad.root / '.git'\n    if marker.is_dir():\n        return True\n    require(marker.is_file() and not marker.is_symlink()\n            and ad.root.is_absolute() and ad.root.resolve(strict=True) == ad.root,\n            'canonical worktree source root required')\n    require('execution_workspace' in ad.inputs, 'registered worktree layout required')\n    from ..admission import _git\n    from .job import workspace_binding\n    require(Path(_git(ad.root, 'rev-parse', '--show-toplevel').decode().strip()) == ad.root,\n            'worktree Git top-level differs')\n    require(_read(ad, 'execution_workspace') == workspace_binding(ad.root),\n            'registered worktree root/common Git mapping differs')\n    return True\n\n\ndef admitted(ad, job):\n"
+    },
+    {
+      "before": "require((ad.root/'.git').is_dir(),'original source authority root required')",
+      "after": "require(_source_authority_root(ad),'original source authority root required')"
+    },
+    {
+      "before": "require(Path(budget['root']) == ad.root and (ad.root/'.git').is_dir(), 'complete isolated workspace watch required')",
+      "after": "require(Path(budget['root']) == ad.root and _source_authority_root(ad), 'complete isolated workspace watch required')"
+    }
+  ],
+  "inverse_exact": true
+}

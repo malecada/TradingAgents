@@ -1,0 +1,29 @@
+{
+  "added_preceding_retirement_block": "    prior=json.loads((ROOT/admission.inputs['storage_closure_review']['path']).read_bytes())\n    if prior['decision']!='accepted':raise ValueError('actual preceding full BYTE recovery not accepted')\n    retired=json.loads((ROOT/admission.inputs['storage_retirement_complete']['path']).read_bytes())\n    terminal=json.loads((ROOT/admission.inputs['storage_retirement_root_exit']['path']).read_bytes())\n    if (retired['identity']!='real-pilot-first-graph-ledger-retirement-20261006-01'\n            or retired['payload_bytes_retired']!=6571245568 or len(retired['removed'])!=2\n            or terminal['actual_root_exit_code']!=0 or retired['arrays_retained'] is not True):\n        raise ValueError('actual preceding ledger retirement differs')\n    for relative in retired['removed']:\n        path=ROOT/relative\n        if path.exists() or path.is_symlink():raise ValueError('retired payload reappeared: '+relative)\n",
+  "launcher_single_import_substitution": true,
+  "literal_substitutions": [
+    [
+      "fixed first real-data pilot graph",
+      "fixed second real-data pilot graph"
+    ],
+    [
+      "eth-paper-real-pilot-graph-20220502-20261005-01",
+      "eth-paper-real-pilot-graph-20220509-20261005-01"
+    ],
+    [
+      "gate02.json",
+      "gate01.json"
+    ],
+    [
+      "RELEASE_REVIEW02.json",
+      "RELEASE_REVIEW01.json"
+    ],
+    [
+      "json.loads((HERE/'environment01.json').read_bytes())",
+      "json.loads((ROOT/admission.inputs['environment']['path']).read_bytes())"
+    ]
+  ],
+  "preflight_baseline_sha256": "2027e6699c8a55afe0de6147d4a3627eb35dd45b8d58cdb63d72c95d086e610f",
+  "preflight_exact_inverse": true,
+  "qualification": "Original guards/one-use execution unchanged; no check or claim executed."
+}

@@ -164,6 +164,10 @@ def _inspect(root,attempt,fd,ref_fd,ref_identity,intent,read_intent_raw,read_com
         'event_read_complete_sha256':io._hash(read_complete_raw),
         'matching_scores_sha256':record['matching_scores_sha256'],'checkpoints':count,
         'checkpoints_sha256':digest.hexdigest(),'execution_admitted':False}
+    if kind=='mcm':
+        complete,_=local.read(root/'stream','complete.json',stream_terminal_sha256)
+        if complete.get('schema_version')==2:
+            result['typed_score_recovery_sha256']=complete['typed_proof_sha256']
     result['checkpoint_reserved_logical_bytes' if retention_result is not None else 'checkpoint_logical_bytes']=logical
     if retention_result is not None:result['retention']=c['retention']|{'claim_sha256':retention_result['claim_sha256'],'spent':retention_result['spent']}
     return result

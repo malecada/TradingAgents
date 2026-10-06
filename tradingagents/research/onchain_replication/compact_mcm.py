@@ -274,7 +274,11 @@ def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held):
             retention_selection=selection)
         stage_inode = list(stage.inode)
         def lease():
-            stage.lease(); dictionary.lease(); io._root(root,fd)
+            if _imported(dictionary) and getattr(dictionary.execution,'_sampled_authority_lease',None) is not None:
+                from .imported_authority_lease import target_lease
+                require(owner.active is stage,'actual active producer stage differs');target_lease(dictionary)
+            else:stage.lease(); dictionary.lease()
+            io._root(root,fd)
             require(io._read(fd,'start.json',io.META_LIMIT) == io._json(start),'MCM producer start changed')
         p = thaw(owner.policy)
         def compute(event_log, live):
@@ -312,6 +316,9 @@ def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held):
         require(actual['workload_sha256'] == scope['workflow'] and actual['completed_rows'] == start['rows']
             and actual['completed_cells'] == stream.cells == log.state['completed_pairs'] == start['cells']
             and actual['output_bytes'] == 4*start['cells'],'MCM completed denominator differs')
+        if _imported(dictionary) and getattr(dictionary.execution,'_sampled_authority_lease',None) is not None:
+            from .imported_authority_lease import target_lease
+            target_lease(dictionary,boundary=True)
         if ledger is None:
             log_terminal = log.finish()
             stage_ref = owner._finish_stage(stage,log_terminal_sha256=log_terminal,stream_terminal_sha256=stream_terminal)

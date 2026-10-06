@@ -1,0 +1,9 @@
+# Cleanup expectation correction
+
+Candidate test_score_cleanup.py corrects five stale constructor/callback expectations. The current owned_io cleanup preserves the original RuntimeError and the actual uncertain-close OSError as ordered failure.failures and matching BaseExceptionGroup members. Requiring the direct cause itself to be RuntimeError discarded that valid retained-error structure.
+
+The corrected assertions require exact CleanupFailure type (fatal BaseException), the exact original primary RuntimeError message, a nonempty set of actual fault-injected OSError objects in order, the exact uncertain-close message, and identity equality between the failure tuple and cause-group members. The trap now records the actual errors it raises; production behavior is untouched. Existing descriptor closure, remaining-child cleanup and no-retry assertions remain unchanged. The original full test body is retained beside the candidate and the exact unified diff.
+
+Only this corrected module was executed. Initial CHECK01 exited4 before collection because the copied evidence-directory path is outside the default test inventory. That refusal is retained. run02.py adds only this authorized copy to the offline inventory within the test process, without editing it on disk; the original conftest network/store safeguards, disabled plugin autoload, importlib mode and bytecode/cache suppression remain. Final tool370cf0 exited0:12 passed in0.72seconds. One other encountered file was withheld by the original profile; it was not executed. No broad suite rerun occurred.
+
+Main test bytes and owned_io bytes match their initial pins after the run. No product, scientific, registration, claim, Owner or guard implementation was changed. These are small synthetic cleanup fixtures, not empirical execution or capacity evidence. Root integration and review of the exact test-only diff remain separate.

@@ -72,8 +72,9 @@ def run_one_update(*, model_factory, batch_factory, indices, graph_features,
     Owner evidence. graph_sequences is the registered 16x28 hash membership;
     indices names exactly16 consecutive eligible rows in the existing batch factory.
     model_factory runs after seed_all(11) and must return the original model.
-    model_execution defaults to eager (None); a known streamed policy must be
-    explicitly registered by the caller. Policy selection itself is not admission.
+    model_execution defaults to eager (None). Known streamed and explicit
+    checkpointed-streamed policies must be registered by the caller; neither
+    changes the frozen scientific config or grants execution admission.
     authority_check raises on lost Run/Binding/Owner/guard authority.
     """
     _require(callable(authority_check), 'current caller authority checker required')
@@ -135,6 +136,7 @@ def run_one_update(*, model_factory, batch_factory, indices, graph_features,
         _require(torch.get_num_threads() <= 2, 'caller must establish at most two torch threads')
         validated_execution = validate_execution(execution_input)
         selected_execution = None if validated_execution is None else dict(validated_execution)
+        selected_checkpointing = selected_execution is not None and selected_execution.get('graph_activation_checkpointing',False)
 
         def validate_graphs():
             for key, contract in contracts.items():
@@ -157,7 +159,7 @@ def run_one_update(*, model_factory, batch_factory, indices, graph_features,
         rng = seed_all(seed)
         model = phase('model', model_factory)
         _require(type(model) is ReplicationModel and model.config == model_config and model.graph.config == model_config
-                 and model.task == task and model.graph_activation_checkpointing is False, 'original trainable model/config required')
+                 and model.task == task and model.graph_activation_checkpointing is selected_checkpointing, 'original trainable model/config or selected checkpoint execution differs')
         _require(model.execution == selected_execution and model.graph.execution == selected_execution,
                  'model and graph execution differ from explicit selection')
         _require(all(p.requires_grad and p.device.type == 'cpu' and p.dtype == torch.float32 for p in model.parameters()), 'all original CPUfloat32 parameters must train')

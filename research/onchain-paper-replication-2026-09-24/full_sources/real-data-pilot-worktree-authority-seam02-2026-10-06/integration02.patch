@@ -1,0 +1,33 @@
+--- candidate01/real_pilot_import_caller.py
++++ candidate02/real_pilot_import_caller.py
+@@ -213,6 +213,30 @@
+             'worktree Git top-level differs')
+     require(_read(ad, 'execution_workspace') == workspace_binding(ad.root),
+             'registered worktree root/common Git mapping differs')
++    # The marker alone can be copied to a different root. The actual Git
++    # administration directory must independently point back to this marker.
++    import os, stat
++    from .owned_io import _opened
++    admin = Path(_git(ad.root, 'rev-parse', '--absolute-git-dir').decode().strip())
++    require(admin.is_absolute() and admin.resolve(strict=True) == admin,
++            'canonical worktree administration directory required')
++    backlink = admin / 'gitdir'
++    with _opened(backlink, 'rb') as stream:
++        original = os.fstat(stream.fileno())
++        def pin(info):
++            return tuple(getattr(info, key) for key in ('st_dev', 'st_ino', 'st_mode', 'st_nlink', 'st_size', 'st_mtime_ns', 'st_ctime_ns'))
++        require(stat.S_ISREG(original.st_mode) and original.st_nlink == 1
++                and 0 < original.st_size <= 8192, 'bounded original worktree backlink required')
++        raw = stream.read(8193)
++        require(len(raw) == original.st_size and len(raw) <= 8192
++                and pin(os.fstat(stream.fileno())) == pin(original) == pin(backlink.lstat()),
++                'worktree backlink changed')
++    require(raw.endswith(b'\n') and raw.count(b'\n') == 1 and b'\0' not in raw,
++            'one original worktree backlink path required')
++    target = Path(os.fsdecode(raw[:-1]))
++    require(target.is_absolute(), 'absolute worktree backlink required by pinned Git runtime')
++    require(target == marker and target.resolve(strict=True) == marker,
++            'Git administration backlink differs from admitted worktree')
+     return True
+ 
+ 

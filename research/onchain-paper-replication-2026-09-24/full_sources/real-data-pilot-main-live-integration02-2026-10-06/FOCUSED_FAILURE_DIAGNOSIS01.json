@@ -1,0 +1,55 @@
+{
+  "actual_focused_failure": {
+    "exit_code": 1,
+    "failed": 13,
+    "passed": 172,
+    "seconds": 135.41,
+    "session": 21744,
+    "subtests": 35,
+    "tool_chunk": "45e14d"
+  },
+  "at": "2026-10-06T00:11:14.059344+00:00",
+  "diagnosis": [
+    "Seven graph policy tests used a fake Run rejected by existing actual admitted-run guard; use genuine synthetic ResearchRun without relaxing graph refusal.",
+    "Five cleanup expectations omitted existing ordered body/cleanup ExceptionGroup; exact error identities now checked.",
+    "Successful publication completion must precede a duplicate refusal; separate test preserves poisoned Owner refusal."
+  ],
+  "files": {
+    "tests/research/onchain_replication/test_compact_mcm_publication.py": {
+      "after_sha256": "2eebdaf8cf7b7ed997ae912a8f29df83114272e304231e4be2954ac2ed627036",
+      "before_sha256": "1d8a0ab4150bf97a05a90ea77ad618746617a21b598f830557db542abf57a681",
+      "diff": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-live-integration02-2026-10-06/test_compact_mcm_publication.focused-correction.patch",
+      "preserved_body": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-live-integration02-2026-10-06/test_compact_mcm_publication.before-focused-correction.py"
+    },
+    "tests/research/onchain_replication/test_graph_residency.py": {
+      "after_sha256": "c5d23362d6c14d877b369a806f07972d0949ecc835c48e48555da821604c29e8",
+      "before_sha256": "9e73b6a227f0a36ac740b8cd73c4e96f813132fdae63448730057e350bab3077",
+      "diff": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-live-integration02-2026-10-06/test_graph_residency.focused-correction.patch",
+      "preserved_body": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-live-integration02-2026-10-06/test_graph_residency.before-focused-correction.py"
+    },
+    "tests/research/onchain_replication/test_score_cleanup.py": {
+      "after_sha256": "ef0f5ef6b56c71fae45c403805e6e7b1228aaca4a2329f7e29ed286c5ebd9ed4",
+      "before_sha256": "e23505209a4a19a5c6482792c6ad97b5923ac5141313f712787d5289ee767721",
+      "diff": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-live-integration02-2026-10-06/test_score_cleanup.focused-correction.patch",
+      "preserved_body": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-main-live-integration02-2026-10-06/test_score_cleanup.before-focused-correction.py"
+    }
+  },
+  "scope": "Test corrections only; product guards and frozen graph source pins unchanged. Cleanup candidate exact result12passed reused; graph and publication changed tests require focused execution.",
+  "unchanged_guards": {
+    "tradingagents/research/onchain_replication/job_payload.py": {
+      "c37261be6fcbee0eda8c4ba571da70ca1f9c722a": "byte-identical",
+      "fc1e8f1e0e45ad122660a1d62a8c7e95c9d4519e": "byte-identical",
+      "sha256": "0303ea2e516e57e1d4a850b3eadf13b3b23ee047b48df1417e8ae559ff171ab0"
+    },
+    "tradingagents/research/onchain_replication/native_reuse.py": {
+      "c37261be6fcbee0eda8c4ba571da70ca1f9c722a": "byte-identical",
+      "fc1e8f1e0e45ad122660a1d62a8c7e95c9d4519e": "byte-identical",
+      "sha256": "a84274b035278fb5d840f58420cdc4d70eb7c5d8ca2ee5247392cf6bb29b2bbb"
+    },
+    "tradingagents/research/onchain_replication/owned_io.py": {
+      "c37261be6fcbee0eda8c4ba571da70ca1f9c722a": "byte-identical",
+      "fc1e8f1e0e45ad122660a1d62a8c7e95c9d4519e": "byte-identical",
+      "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb"
+    }
+  }
+}

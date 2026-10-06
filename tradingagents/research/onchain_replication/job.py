@@ -41,7 +41,7 @@ def same_process_alive(pid, ticks):
         return False
 
 
-def resource_policy(value, root):
+def resource_policy(value, root, *, pilot_context=None):
     required = {'memory_max_bytes', 'memory_high_bytes', 'reserve_bytes', 'start_reserve_bytes',
                 'disk_floor_bytes', 'disk_paths', 'wall_seconds'}
     if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'},required|{'storage_budget','native_unit_limits'}):
@@ -63,11 +63,24 @@ def resource_policy(value, root):
     if 'storage_budget' in value:
         from .workflow_storage import StorageWatch
         budget=value['storage_budget']
-        if type(budget) is not dict or set(budget)!={'root','limits'} or type(budget['root']) is not str:
-            raise ValueError('registered storage budget schema differs')
-        watch=StorageWatch(budget['root'],budget['limits'])
-        if not watch.root.is_relative_to(Path(root).resolve()):
-            raise ValueError('registered storage root is outside the admitted workspace')
+        if type(budget) is dict and budget.get('schema_version')==2:
+            if pilot_context is None:raise ValueError('writable union requires explicit real-pilot selection')
+            from ..admission import Admission
+            from .real_pilot_import_caller import selected,_read,validate_plan
+            ad,execution=pilot_context
+            if not isinstance(ad,Admission) or ad.root!=Path(root) or not selected(execution) or execution['kind']!='compact_resource' or execution['resources']!=value:raise ValueError('original real-pilot admission context required')
+            selected_plan=next(iter(execution['payload']['representation_jobs'].values()))
+            plan=validate_plan(_read(ad,selected_plan['real_pilot_input']))
+            if plan['schema_version']!=2 or plan['resource_policy']!=value:raise ValueError('authenticated schema2 policy required')
+            from .real_pilot_storage import validate,EXPERIMENT
+            if ad.experiment_id!=EXPERIMENT:raise ValueError('fixed real-pilot identity required')
+            validate(budget,Path(root))
+        else:
+            if type(budget) is not dict or set(budget)!={'root','limits'} or type(budget['root']) is not str:
+                raise ValueError('registered storage budget schema differs')
+            watch=StorageWatch(budget['root'],budget['limits'])
+            if not watch.root.is_relative_to(Path(root).resolve()):
+                raise ValueError('registered storage root is outside the admitted workspace')
     if 'physical_policy' in value:
         from .neural_physical import validate
         validate(value['physical_policy'])
@@ -120,7 +133,7 @@ def _admitted(args):
         raise ValueError('execution job bytes differ')
     job = json.loads(raw)
     job_schema(job)
-    resource_policy(job['resources'], admitted.root)
+    resource_policy(job['resources'], admitted.root,pilot_context=(admitted,job))
     if job['kind']=='compact_resource':
         from . import resource_fixture, real_pilot_import_caller
         route = real_pilot_import_caller if real_pilot_import_caller.selected(job) else resource_fixture
@@ -205,7 +218,13 @@ def launch(args):
         with metadata_scope(scope):
             _immutable(base/'launch.json', {'experiment': args.experiment, 'source_commit': args.source,
                                           'supervisor_pid': os.getpid(), 'nonce': nonce})
-            monitor = subprocess.Popen(_command(args, 'monitor')+['--owner-pid', str(os.getpid()), '--nonce', nonce], cwd=args.root)
+            budget=job['resources'].get('storage_budget')
+            extra={}
+            if type(budget) is dict and budget.get('schema_version')==2:
+                from .real_pilot_storage import prepare_environment
+                env=resources._native_owned_env(Path(args.root),budget);prepare_environment(Path(args.root),budget,env)
+                extra['env']={**os.environ,**env}
+            monitor = subprocess.Popen(_command(args, 'monitor')+['--owner-pid', str(os.getpid()), '--nonce', nonce], cwd=args.root,**extra)
             def stop(signum, frame):
                 if monitor.poll() is None:
                     monitor.terminate()
@@ -229,16 +248,22 @@ def launch(args):
                 else:raise
 
 
+def _resource_worker_limits(job):
+    from . import resource_fixture, real_pilot_import_caller
+    if real_pilot_import_caller.selected(job):
+        return real_pilot_import_caller.worker_limits(job)
+    return resource_fixture.worker_limits()
+
+
 def _resource_limit_receipt(args,job,role,live=None):
     if job['kind']!='compact_resource':raise ValueError('native receipt requires selected compact resource job')
-    from . import resource_fixture
-    readback=resource_fixture.worker_limits()
+    readback=_resource_worker_limits(job)
     expected=job['resources']['native_unit_limits']
     if expected!={'file_size_bytes':readback['rlimit_fsize']}:raise ValueError('registered process file limit differs')
     if role=='worker' and (live is None or live.get('native_unit_limits')!=expected):raise ValueError('worker native authority missing')
     value={'schema_version':1,'experiment':args.experiment,'source_commit':args.source,'role':role,'pid':os.getpid(),'file_size_limit':[readback['rlimit_fsize']]*2,'before_claim':True,'native_unit':None if live is None else live['unit'],'native_cgroup':None if live is None else live['cgroup']}
-    value['native_environment']={key:os.environ.get(key) for key in resources._native_owned_env(Path(args.root))}
-    if value['native_environment']!=resources._native_owned_env(Path(args.root)):raise ValueError('actual process environment differs from owned routing')
+    value['native_environment']={key:os.environ.get(key) for key in resources._native_owned_env(Path(args.root),job['resources'].get('storage_budget'))}
+    if value['native_environment']!=resources._native_owned_env(Path(args.root),job['resources'].get('storage_budget')):raise ValueError('actual process environment differs from owned routing')
     resources._native_receipt(_base(args),role+'-file-limit.json',value)
 
 
@@ -311,8 +336,7 @@ def execute_source_job(run, kind, payload):
 def worker(args):
     admitted, job = _admitted(args)
     if job['kind']=='compact_resource':
-        from . import resource_fixture
-        resource_fixture.worker_limits()
+        _resource_worker_limits(job)
     scope=_physical_scope(args,job)
     if scope is not None:scope.verify_environment()
     with metadata_scope(scope):

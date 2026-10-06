@@ -180,9 +180,26 @@ def _journal_members(owner):
     if ledger._closed:
         expected['closed.json']=io._json({'schema_version':1,'reserved':thaw(ledger.reserved),
             'poisoned':False,'execution_admitted':False})
+    if hasattr(ledger,'_typed_expected'):
+        from .typed_payload_operations import ledger_evidence
+        expected.update(ledger_evidence(ledger,terminal=True))
     require(ledger._expected==expected,'archive terminal canonical ledger metadata differs')
     ledger._evidence()
-    require(set(ledger._writers)==set(owner.required),'archive required writers incomplete')
+    writer_stages=set(owner.required);import_pin=None
+    if owner.required[0]=='dictionary-import':
+        from . import original_import_stage
+        imported=owner.stages.get('dictionary-import')
+        require(type(imported) is original_import_stage.ImportStage and imported.owner is owner
+            and imported.prepared._bound is owner.bound and imported.closed
+            and owner.active is not imported,'original completed imported stage required')
+        imported_result=original_import_stage.content(imported)
+        require(imported_result['completed_pairs']==0 and imported_result['imported_original'] is True
+            and imported_result['receipt_sha256']==imported.reference,'import cannot supply numerical writer credit')
+        import_pin={'stage':'dictionary-import','receipt_sha256':imported.reference,'original_dictionary':imported_result['original_dictionary']}
+        writer_stages.remove('dictionary-import')
+        require(all(name.startswith('mcm-') and type(owner.stages.get(name)) is operations.owners.Stage
+            and owner.stages[name].kind=='mcm' for name in writer_stages),'imported archive requires exact MCM stages')
+    require(set(ledger._writers)==writer_stages,'archive required writers incomplete')
     names={ledger.root.name};claims={}
     for name,op in ledger._operations.items():
         require(op._ledger is ledger and owner.stages.get(op.record['stage']) is op._stage
@@ -195,6 +212,10 @@ def _journal_members(owner):
             'inode':list(ledger._pins[name])}
     pin=operations.owners.cache_key({'ledger':ledger._identity,'claims':claims,
         'reads':ledger._reads,'reserved':thaw(ledger.reserved)})
+    if hasattr(ledger,'_typed_expected'):
+        pin=operations.owners.cache_key({'original':pin,'typed_metadata':ledger._typed_expected,'typed_reserved':ledger._typed_payload_registry,'typed_control_bytes':ledger._typed_control_spent})
+    if import_pin is not None:
+        pin=operations.owners.cache_key({'original':pin,'nonnumerical_import':import_pin})
     return names,pin
 
 

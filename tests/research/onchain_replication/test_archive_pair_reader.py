@@ -111,7 +111,13 @@ def test_failed_source_close_retains_primary_transport_cause(tmp_path, monkeypat
     monkeypatch.setattr(module.os, 'close', close)
     monkeypatch.setattr(transport, 'get', get)
     with pytest.raises(module.io.CleanupFailure) as caught: module.verify(**contract)
-    assert caught.value.__cause__ is primary
+    # The existing cleanup helper preserves both actual body and close failures.
+    causes = caught.value.failures
+    assert len(causes) == 2 and causes[0] is primary
+    assert isinstance(causes[1], OSError) and str(causes[1]) == 'uncertain source close'
+    assert isinstance(caught.value.__cause__, BaseExceptionGroup)
+    assert caught.value.__cause__.exceptions == causes
+    assert not (contract['attempt']/'complete.json').exists()
     assert (contract['attempt']/'failed.json').is_file()
 
 

@@ -1,0 +1,50 @@
+{
+  "decision": "passed",
+  "checks": [
+    "legacy directory accepted",
+    "real linked worktree accepted",
+    "wrong root",
+    "wrong ledger",
+    "wrong artifacts",
+    "wrong git_common",
+    "changed authenticated body",
+    "missing registered role",
+    "symlink root alias",
+    "copied marker with original registered mapping",
+    "explicitly rebound copied marker accepted: backlink identity not claimed",
+    "symlink file marker",
+    "redirected common directory after binding"
+  ],
+  "candidate_sha256": "f765df7caf8e0d95d55befa7f7bdfd5b3977f11362579796de04edb2c948b583",
+  "baseline_sha256": "6167b380b0e058af9843ddb5246f77121a3c5a2737a77bab5cc7b8c082af23c7",
+  "manifest_members": 25,
+  "dependency_pins": {
+    "tradingagents/research/admission.py": {
+      "sha256": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd",
+      "bytes": 19911
+    },
+    "tradingagents/research/lifecycle.py": {
+      "sha256": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+      "bytes": 10509
+    },
+    "tradingagents/research/onchain_replication/job.py": {
+      "sha256": "05bd32fc4da1d68d8b356a939e11cef27f1e396474bec5e1ecb379f7c948fe3f",
+      "bytes": 35626
+    },
+    "tradingagents/research/onchain_replication/real_pilot_storage.py": {
+      "sha256": "7bef12cbd4b5b41280c382bfdf2b552d5ef80fdd5c899440290c2901f2250e95",
+      "bytes": 9998
+    },
+    "tradingagents/research/onchain_replication/resource_binding.py": {
+      "sha256": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d",
+      "bytes": 2280
+    },
+    "tradingagents/research/onchain_replication/imported_authority_interval.py": {
+      "sha256": "983818c337ed50ab57aed0d857d9ee9b62d0ac629c354f4512e57ddc50fd1276",
+      "bytes": 3973
+    }
+  },
+  "exact_inverse": true,
+  "empty_git_tree": true,
+  "scope": "Only extracted topology/read predicates and actual empty Git fixtures; no genuine Admission/Run/Binding/Owner or runtime activation."
+}

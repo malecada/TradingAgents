@@ -75,7 +75,20 @@ class MCMScoreStream:
             start = {'schema_version': 1, 'kind': 'mcm-score-stream', 'scope': self.scope,
                 'owner': owner, 'rows': self.n, 'motifs': self.k,
                 'batch_start_sha256': self.batches.start_sha, 'chunk_cells': chunk_cells}
+            typed=None
+            if _imported is not None:
+                ledger=getattr(_imported.owner,'_archive_operations',None)
+                context=getattr(getattr(getattr(ledger,'selection',None),'_transport',None),'_context',None)
+                if getattr(context,'_record',{}).get('typed_payloads') is not None:
+                    from . import typed_payload_operations
+                    typed=typed_payload_operations.selected(_imported.owner)
+            if typed is not None:
+                start.update(schema_version=2,typed_payload_input=typed['input'],typed_payload_sha256=typed['input_sha256'])
             self.start_sha = self.head = batch._write(self.fd, 'start.json', batch._json(start))
+            self._typed_store=self._typed_store_pin=None
+            if typed is not None:
+                from . import typed_score_store
+                self._typed_store=self._typed_store_pin=typed_score_store.selected(self)
             self._check()
         except BaseException as primary:
             batch._close_after_failure(self.close, primary)
@@ -84,10 +97,16 @@ class MCMScoreStream:
     def _check(self):
         require(not self.closed, 'score stream is closed')
         self.lease(); batch._root(self.root, self.fd)
+        require(self._typed_store is self._typed_store_pin,'typed score store replaced')
         require(self._imported is self._imported_pin,'imported stream authority replaced')
         if self._imported is not None:
-            self._imported.final(full_graph=False)
-            require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')
+            if getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
+                from .imported_authority_lease import target_lease
+                target_lease(self._imported)
+                require(self.scope==self._imported.scope and self.workload==self.scope['workflow'],'sampled stream scope changed')
+            else:
+                self._imported.final(full_graph=False)
+                require(self.scope==self._imported.derive_scope() and self.workload==self.scope['workflow'],'imported stream workload changed')
 
     def _seal_check(self, index, expected_sha):
         """Callback-free bounded verification of one tail/link/destination."""
@@ -123,6 +142,10 @@ class MCMScoreStream:
 
     def _history_check(self, terminal, complete_raw):
         """All external callbacks have finished; no numerical work is repeated."""
+        if self._typed_store is not None:
+            from . import typed_score_store
+            typed_score_store.check(self.root,terminal=batch._hash(complete_raw),owner=self.owner,scope=self.scope,pairs=self.cells,chunk_cells=self.batches.chunk_cells)
+            return
         result = batch.verify(self.batches.root, scope=self.scope, owner=self.owner,
             terminal_sha256=terminal, lease=lambda: None)
         require(result['status'] == 'complete' and result['cells'] == self.cells
@@ -185,6 +208,9 @@ class MCMScoreStream:
             saved = self.active.append(self.cells, key, result['score'])
             self.cells += 1
             if self.active.acknowledged == self.active.start['cells']:
+                if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
+                    from .imported_authority_lease import target_lease
+                    target_lease(self._imported,boundary=True)
                 index = self.batches.chunks; start_cell = self.active.start['start_cell']
                 root = self.active.root; terminal = self.active.finish()
                 head = tail.seal(root, terminal_sha256=terminal, batches=self.batches, lease=self.lease)
@@ -198,6 +224,7 @@ class MCMScoreStream:
                 require(batch._read(self.fd, name, batch.META_LIMIT) == raw, 'seal link publication changed')
                 self._seal_check(index, self.head)
                 self.active = None
+                if self._typed_store is not None:self._typed_store.seal(index)
             return saved
         except BaseException as primary:
             # Preserve evidence; cleanup uncertainty must stay worker-fatal.
@@ -205,6 +232,9 @@ class MCMScoreStream:
             raise
 
     def finish(self):
+        if self._imported is not None and getattr(self._imported.execution,'_sampled_authority_lease',None) is not None:
+            from .imported_authority_lease import target_lease
+            target_lease(self._imported,boundary=True)
         self._check()
         require(self.cells == self.n * self.k and self.active is None, 'MCM stream incomplete')
         try:
@@ -212,6 +242,8 @@ class MCMScoreStream:
             terminal = self.batches.finish()
             record = {'schema_version': 1, 'start_sha256': self.start_sha, 'head': self.head,
                 'cells': self.cells, 'chunks': self.batches.chunks, 'batch_terminal_sha256': terminal}
+            if self._typed_store is not None:
+                record.update(schema_version=2,typed_proof_sha256=self._typed_store.finish(terminal))
             raw = batch._json(record); result = batch._write(self.fd, 'complete.json', raw)
             self._check()
             require(batch._read(self.fd, 'complete.json', batch.META_LIMIT) == raw,
@@ -236,7 +268,7 @@ class MCMScoreStream:
 
 
 def _completion_identity(stream):
-    return (stream._imported,stream.batches,stream.root,stream.owner,stream.start_sha,stream.head,
+    return (stream._imported,stream._typed_store,stream.batches,stream.root,stream.owner,stream.start_sha,stream.head,
         stream.n,stream.k,stream.cells,stream.batches.chunks,stream.batches.chunk_cells,stream.batches.start_sha)
 
 

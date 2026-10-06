@@ -168,7 +168,11 @@ class FixturePublicationFailure(ValueError):pass
 
 def publication_boundary(owner,stage):
     if owner.bound.record.get('resource_only') is not True:return
-    run=owner.bound._run;job=json.loads(run.read_input(owner.bound.record['job_input']));schema(job)
+    run=owner.bound._run;job=json.loads(run.read_input(owner.bound.record['job_input']))
+    from . import real_pilot_import_caller
+    if real_pilot_import_caller.selected(job):
+        return real_pilot_import_caller.publication_boundary(owner,stage,job)
+    schema(job)
     _,s,f=selection(job)
     if f['case']=='second_target_publication_failure' and stage.name=='mcm-'+s['descriptor']['required_graphs'][1]:
         raise FixturePublicationFailure('registered second-target publication boundary; retain first output; no retry')

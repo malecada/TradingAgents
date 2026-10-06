@@ -1,0 +1,41 @@
+--- a/tests/research/onchain_replication/test_graph_residency.py
++++ b/tests/research/onchain_replication/test_graph_residency.py
+@@ -7,7 +7,7 @@
+ import numpy as np
+ import pytest
+ 
+-from tests.research.test_lifecycle import registered, start, commit
++from tests.research.test_lifecycle import registered, start, commit, git
+ from tests.research.onchain_replication.test_run import setup as run_setup, register_plan
+ from tests.research.onchain_replication.test_dataset import fixture
+ from tests.research.onchain_replication.test_feature_pipeline import configs
+@@ -92,7 +92,7 @@
+ 
+ 
+ @pytest.mark.parametrize('fault', ['schema', 'bool_limit', 'mode', 'extra', 'mismatch', 'reuse', 'later'])
+-def test_all_graph_policies_preflight_before_population(fault, monkeypatch):
++def test_all_graph_policies_preflight_before_population(registered, fault, monkeypatch):
+     import tradingagents.research.onchain_replication.population_assembly as assembly
+     policy = dict(POLICY)
+     if fault == 'schema': policy['schema_version'] = True
+@@ -108,10 +108,17 @@
+     values = {'execution_job': {'kind': 'fit', 'payload': payload}, 'graph': policy, 'valid': POLICY,
+               'plan': {'producers': {'p': {'graph_residency_input': 'other' if fault == 'mismatch' else 'graph'},
+                                      'earlier': {'graph_residency_input': 'valid'}}}}
+-    class Run:
+-        def read_input(self, name): return canonical_bytes(values[name])
++    root, spec, _ = registered
++    for name, value in values.items():
++        path = root / (name + '.json')
++        path.write_bytes(canonical_bytes(value))
++        spec['experiments']['example-a']['inputs'][name] = {
++            'path': path.name, 'sha256': file_hash(path), 'dataset': 'sample'}
++    git(root, 'add', *(name + '.json' for name in values))
++    source = commit(root, spec)
+     monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+-    with pytest.raises(ValueError, match='graph'): execute_fit_payload(Run(), payload)
++    with start((root, spec, source)) as run:
++        with pytest.raises(ValueError, match='graph'): execute_fit_payload(run, payload)
+ 
+ 
+ @pytest.mark.parametrize('fault', ['bytes', 'arrays', 'late_file', 'aggregate_bytes', 'aggregate_arrays', 'legacy_limit'])

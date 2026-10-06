@@ -171,7 +171,7 @@ def bind(run,*,representation,plan_input,producer,policy_input,journal_directory
         require(job_input=='execution_job','legacy matching job input differs');job.job_schema(execution)
     require(type(execution['schema_version']) is int,'execution schema version must be integer')
     require(execution['kind']==('compact_resource' if _resource else 'fit'),'matching producer job kind differs')
-    policy_resources=job.resource_policy(execution['resources'],ad.root)
+    policy_resources=job.resource_policy(execution['resources'],ad.root,pilot_context=(ad,execution) if _resource else None)
     jobs=execution['payload'].get('representation_jobs',{})
     require(representation in jobs,'representation absent from execution job')
     selected=jobs[representation]

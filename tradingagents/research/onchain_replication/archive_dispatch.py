@@ -56,7 +56,9 @@ def _connection(value):
 def policy(value):
     fields={'schema_version','format','connection','rate_kbit','max_seconds','max_payload_bytes',
         'max_commands','max_diagnostic_bytes','max_control_bytes','namespace','receipt_output','terminal_output'}
-    require(type(value) is dict and set(value)==fields and value['schema_version']==1 and value['format']==FORMAT,'archive dispatch policy schema')
+    typed=type(value) is dict and value.get('schema_version')==2
+    require(type(value) is dict and set(value)==fields|({'typed_payload_input'} if typed else set()) and value['schema_version']==(2 if typed else 1) and value['format']==FORMAT,'archive dispatch policy schema')
+    if typed:require(type(value['typed_payload_input']) is str and bool(value['typed_payload_input']),'registered typed payload input required')
     _connection(value['connection'])
     require(all(type(value[k]) is int and 0<value[k]<2**63 for k in
         ('rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes')),'positive transport limits required')
@@ -75,7 +77,15 @@ class Plan:
 def preflight(run,payload,compact_routes,*,job_input='execution_job'):
     """All selected representations before population work; creates no namespace."""
     execution=json.loads(run.read_input(job_input))
-    require(execution['kind']=='fit' and canonical_bytes(execution['payload'])==canonical_bytes(payload),'archive dispatch actual job differs')
+    if execution.get('kind')=='compact_resource':
+        require(type(run) is ResearchRun,'actual real-pilot archive Run required')
+        run._active();run._check_source()
+        from .real_pilot_import_caller import admitted
+        name,selected,pilot=admitted(run.admission,execution)
+        require(pilot['schema_version']==2 and 'archive_inputs' in pilot and compact_routes=={name:True},'explicit schema2 real-pilot archive dispatch required')
+        require(canonical_bytes(execution['payload'])==canonical_bytes(payload),'archive dispatch actual job differs')
+    else:
+        require(execution['kind']=='fit' and canonical_bytes(execution['payload'])==canonical_bytes(payload),'archive dispatch actual job differs')
     selected={};names=set();remote=set();total={'logical_bytes':0,'rounded_bytes':0,'commands':0,'chunks':0}
     from . import compact_training, archive_pair_writer, archive_owner_policy
     for representation,job in payload['representation_jobs'].items():
@@ -112,6 +122,21 @@ def preflight(run,payload,compact_routes,*,job_input='execution_job'):
     if not selected:return None
     require(len(names)==1,'all archive representations require one job-wide transport policy input')
     name=names.pop();config=policy(json.loads(run.read_input(name)))
+    typed_record=None
+    if config['schema_version']==2:
+        require(execution['kind']=='compact_resource' and len(selected)==1,'typed storage only selected single real resource representation')
+        # Load selected helpers before the imported authority lease captures its
+        # actual module/code baseline. Legacy policies do not import this path.
+        from . import typed_payload_policy, typed_payload_operations, typed_score_store, typed_tail_binding, mcm_raw_parts
+        role=config['typed_payload_input']
+        require(role in run.admission.inputs,'typed payload input unregistered')
+        raw=run.read_input(role);typed=typed_payload_policy.validate(json.loads(raw))
+        expected_graphs=set()
+        for item in payload['representation_jobs'].values():expected_graphs.update(item['descriptor']['required_graphs'])
+        require(set(typed['graphs'])==expected_graphs,'typed full graph roster differs')
+        extra=typed_payload_policy.capacity(typed)
+        for k in total:total[k]+=extra[k]
+        typed_record={'input':role,'input_sha256':digest(raw),'policy':typed,'capacity':extra}
     require(total['rounded_bytes']<=config['max_payload_bytes'] and total['commands']<=config['max_commands'],'insufficient whole-job rounded transport allowance')
     # Each diagnostic has a finite escaped stderr receipt, plus the finite payload.
     require(config['max_diagnostic_bytes']>=config['max_payload_bytes']+META*config['max_commands'],'insufficient cumulative diagnostic allowance')
@@ -122,6 +147,7 @@ def preflight(run,payload,compact_routes,*,job_input='execution_job'):
         'job_sha256':digest(canonical_bytes(execution)),'policy':config,'representations':selected,'capacity':total,
         'job_input':job_input,'job_input_sha256':run.admission.inputs[job_input]['sha256'],
         'units':'logical reservations and rounded payload reservations exclude SSH wire overhead','execution_admitted':False}
+    if typed_record is not None:record['typed_payloads']=typed_record
     return Plan(run,freeze(record))
 
 

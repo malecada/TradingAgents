@@ -98,7 +98,7 @@ def complete_import(owner,prepared,*,stage_policy):
             owner.poisoned=True;raise
 
 
-def attach(prepared,*,policy_input,stage_policy_input):
+def attach(prepared,*,policy_input,stage_policy_input,archive_transport=None):
     """Create genuine Owner once, after exact resource/job/input preflight."""
     require(type(prepared) is preparation.PreparedImport,'actual prepared import required');prepared._check()
     bound=prepared._bound;resource_binding.assert_selected(bound,prepared._job_input)
@@ -109,6 +109,18 @@ def attach(prepared,*,policy_input,stage_policy_input):
         require(value.get('original_dictionary_stage_input')==stage_policy_input,'explicit import stage policy differs')
     require(descriptor.get('original_dictionary_stage')=={'input':stage_policy_input,'sha256':run.admission.inputs[stage_policy_input]['sha256']},'import stage policy descriptor differs')
     require(descriptor.get('compact_execution')=={'backend':compact_policy.BACKEND,'policy_sha256':run.admission.inputs[policy_input]['sha256']},'compact owner policy descriptor differs')
+    archive_name=selected.get('compact_archive_input')
+    archive_selected=archive_name is not None or item.get('compact_archive_input') is not None
+    require(archive_selected==(archive_transport is not None),'registered archive requires genuine preimport transport; local route cannot accept one')
+    if archive_selected:
+        from . import archive_dispatch,archive_owner_policy,archive_owner_operations
+        from .real_pilot_import_caller import admitted
+        _,current,pilot=admitted(run.admission,original.parse(original._read_registered(run,prepared._job_input)))
+        require(pilot['schema_version']==2 and canonical_bytes(current)==canonical_bytes(selected),'exact schema2 real-pilot archive selection required')
+        require(type(archive_transport) is archive_dispatch.View and type(archive_transport._context) is archive_dispatch.Context,'genuine archive dispatch view required')
+        context=archive_transport._context
+        require(context._run is run and context.view(bound.record['representation']) is archive_transport and context._record['job_input']==prepared._job_input,'archive view belongs to another original Run/representation')
+        context._outer();prepared._check()
     policy=resource_binding.import_policy(original.parse(original._read_registered(run,stage_policy_input)))
     envelope=original.parse(original._read_registered(run,policy_input))
     require(set(envelope)=={'schema_version','backend','stage_policy','max_workflow_retained_logical_bytes'} and type(envelope['schema_version']) is int and envelope['schema_version']==1 and envelope['backend']==compact_policy.BACKEND,'compact envelope differs')
@@ -117,7 +129,19 @@ def attach(prepared,*,policy_input,stage_policy_input):
     compact_policy.validate(envelope['stage_policy'],kind='mcm',pairs=1)
     require(canonical_bytes(envelope['stage_policy']['pair'])==canonical_bytes(thaw(bound.limits)),'import current pair limits differ')
     owner=owners.Owner(bound,policy_input,envelope,descriptor,imported=prepared)
-    return owner,complete_import(owner,prepared,stage_policy=policy)
+    if archive_transport is None:return owner,complete_import(owner,prepared,stage_policy=policy)
+    try:
+        # Real selection and durable ledger birth occur while Owner is still empty.
+        archive_owner_operations.attach(archive_owner_policy.select(owner,input_name=archive_name,transport=archive_transport))
+        context._outer();prepared._check()
+        return owner,complete_import(owner,prepared,stage_policy=policy)
+    except BaseException as primary:
+        owner.poisoned=True
+        ledger=getattr(owner,'_archive_operations',None)
+        if ledger is not None:
+            ledger._poisoned=True
+            io._close_after_failure(ledger.close,primary)
+        raise
 
 
 class ImportedExecution:

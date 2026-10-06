@@ -1,0 +1,75 @@
+--- a/tests/research/onchain_replication/test_score_cleanup.py
++++ b/tests/research/onchain_replication/test_score_cleanup.py
+@@ -11,10 +11,13 @@
+ @pytest.fixture
+ def trap(monkeypatch):
+     class Trap:
+-        broken = set(); owned = set(); attempted = []; closed = set(); real = staticmethod(os.close)
++        broken = set(); owned = set(); attempted = []; closed = set(); failures = []; real = staticmethod(os.close)
+         def close(self,fd):
+             self.attempted.append(fd)
+-            if fd in self.broken: raise OSError('synthetic descriptor not released')
++            if fd in self.broken:
++                error = OSError('synthetic descriptor not released')
++                self.failures.append(error)
++                raise error
+             self.real(fd); self.closed.add(fd)
+         def owns(self,*fds):
+             values={x for x in fds if x is not None};self.owned.update(values)
+@@ -30,6 +33,21 @@
+         for fd in t.owned-t.closed:
+             try:t.real(fd)
+             except OSError:pass
++
++
++def assert_primary_and_close_failures(failure, message, trap):
++    from tradingagents.research.onchain_replication.owned_io import CleanupFailure
++    assert type(failure) is CleanupFailure
++    assert type(failure.failures) is tuple and len(failure.failures) == 1 + len(trap.failures)
++    primary, *closes = failure.failures
++    assert type(primary) is RuntimeError and primary.args == (message,)
++    assert closes and len(closes) == len(trap.failures)
++    assert all(actual is recorded for actual, recorded in zip(closes, trap.failures))
++    assert all(type(error) is OSError and error.args == ('synthetic descriptor not released',) for error in closes)
++    cause = failure.__cause__
++    assert isinstance(cause, BaseExceptionGroup) and cause.message == 'body/cleanup failures'
++    assert len(cause.exceptions) == len(failure.failures)
++    assert all(actual is recorded for actual, recorded in zip(cause.exceptions, failure.failures))
+ 
+ 
+ @pytest.mark.parametrize('when',['close','finish','constructor'])
+@@ -49,7 +67,7 @@
+     assert not isinstance(caught.value,Exception),'uncertain tail cleanup escaped as ordinary error'
+     obj=objects[0];assert obj.closed and obj.fd in trap.closed
+     assert trap.attempted.count(obj.record_fd)==1
+-    if when=='constructor':assert isinstance(caught.value.__cause__,RuntimeError)
++    if when=='constructor':assert_primary_and_close_failures(caught.value, 'synthetic primary tail construction', trap)
+     obj.close();assert trap.attempted.count(obj.record_fd)==1
+ 
+ 
+@@ -64,7 +82,7 @@
+         trap.owns(obj.fd);trap.broken.add(obj.fd);action=obj.finish
+     with pytest.raises(BaseException) as caught:action()
+     assert not isinstance(caught.value,Exception),'uncertain batch cleanup escaped as ordinary error'
+-    if when=='constructor':assert isinstance(caught.value.__cause__,RuntimeError)
++    if when=='constructor':assert_primary_and_close_failures(caught.value, 'synthetic primary batch construction', trap)
+     else:obj.close()
+     assert all(trap.attempted.count(fd)==1 for fd in trap.broken)
+ 
+@@ -93,7 +111,9 @@
+     assert not isinstance(caught.value,Exception),'uncertain stream cleanup escaped as ordinary error'
+     obj=objects[0];assert obj.closed
+     assert trap.owned-trap.broken <= trap.closed
+-    if when!='finish':assert isinstance(caught.value.__cause__,RuntimeError)
++    if when!='finish':
++        message = 'synthetic primary stream construction' if when=='constructor' else 'synthetic primary numerical failure'
++        assert_primary_and_close_failures(caught.value, message, trap)
+     obj.close();assert all(trap.attempted.count(fd)==1 for fd in trap.broken)
+ 
+ 
+@@ -121,4 +141,4 @@
+     else:obj.close()
+     assert all(trap.attempted.count(fd)==1 for fd in trap.broken)
+     assert trap.owned-trap.broken <= trap.closed
+-    if when=='constructor':assert isinstance(caught.value.__cause__,RuntimeError)
++    if when=='constructor':assert_primary_and_close_failures(caught.value, 'synthetic primary pair log construction', trap)
