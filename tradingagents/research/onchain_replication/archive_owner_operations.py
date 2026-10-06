@@ -79,6 +79,14 @@ class Ledger:
             io._write(fd,'start.json',self._expected['start.json'])
         finally:_close_descriptor(fd)
         self._identity = owners.cache_key(self._configuration())
+        self._history=None
+        from .archive_dispatch import View
+        transport=selection._transport
+        if type(transport) is View and transport._context._history is not None:
+            from .archive_control_history import Interval
+            self._history=Interval(transport._context._history_policy)
+            self._history_context=transport._context;self._history_pin=self._history
+            self._evidence()
 
     reserved = property(lambda self:freeze(self._spent))
 
@@ -86,7 +94,14 @@ class Ledger:
         return {'root':str(self.root),'inode':list(self._inode),'record':thaw(self.record),
             'selection':thaw(self.selection.record),'owner':self.owner.identity}
 
-    def _evidence(self):
+    def _evidence(self,*,sampled=False):
+        if self._history is not None:
+            require(self.selection._transport._context is self._history_context and self._history is self._history_pin and self._history.p==self._history_context._history_policy,'selected history context changed')
+            self._history.check(self._full_evidence,force=not sampled)
+            return
+        self._full_evidence()
+
+    def _full_evidence(self):
         if hasattr(self,'_typed_expected'):
             from .typed_payload_operations import ledger_evidence
             ledger_evidence(self)
@@ -124,7 +139,18 @@ class Ledger:
         require(policy.writer.archive._transport(self.selection._transport) ==
             self.selection.record['policy']['transport_identity'],'archive endpoint changed')
         owners.verify_current(self.owner)
-        self._evidence()
+        if self._history is not None:
+            require(owners.cache_key(self._configuration())==self._identity and owners.cache_key(self._spent)==self._spent_sha,'live archive identity/accounting changed')
+        self._evidence(sampled=not full)
+        if self._history is not None and self._active is not None:
+            operation=self._active
+            root,fd=io._open(operation.root)
+            try:
+                require(io._signature(os.fstat(fd))[:2]==self._pins[operation.root.name],'active archive operation directory changed')
+                require(io._read(fd,'intent.json',io.META_LIMIT)==io._json(thaw(operation.record)),'active archive operation intent changed')
+                for name,raw in (operation._terminal or {}).items():require(io._read(fd,name,io.META_LIMIT)==raw,'active archive terminal changed')
+                io._root(root,fd)
+            finally:_close_descriptor(fd)
         require(not self._closed and not self._poisoned
             and getattr(self.owner,'_archive_operations',None) is self
             and self.selection._owner is self.owner and self._transition is self.owner._transition,
@@ -239,6 +265,7 @@ class Ledger:
             'completion_semantics':'caller-reference-only'})
         try:
             self._live(operation)
+            if self._history is not None:self._evidence()
             self._write(operation.root,'complete.json',raw)
             object.__setattr__(operation,'_terminal',{'complete.json':raw})
             self._current(full=False);self._stage(operation._stage)
@@ -256,6 +283,7 @@ class Ledger:
 
     def _close(self):
         if self._closed:return
+        if self._history is not None:self._evidence()
         self._closed = True
         if self._active and not self._active._terminal:
             self._failure(self._active,RuntimeError('archive reservation abandoned'))

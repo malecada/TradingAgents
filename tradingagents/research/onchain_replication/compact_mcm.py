@@ -124,8 +124,18 @@ def _prepare(dictionary, key, input_name, output_input):
         and selected.get('compact_mcm_input') == item.get('compact_mcm_input') == input_name,
         'explicit compact MCM route differs')
     policy = json.loads(run.read_input(input_name))
-    require(set(policy) == {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'}
-        and type(policy['schema_version']) is int and policy['schema_version'] == 1
+    durability_selected = type(policy.get('schema_version')) is int and policy['schema_version']==2
+    if durability_selected:
+        from .chunk_durability import policy as durability_policy
+        require(_imported(dictionary) and 'real_pilot_input' in selected,
+                'durability requires genuine selected imported resource pilot')
+        resource=json.loads(run.read_input(selected['real_pilot_input']))
+        require(resource['schema_version']==2 and resource.get('population_scope')=='resource_pilot_subset',
+                'explicit registered resource-only pilot required')
+        durability_policy(policy['durability'])
+    require(set(policy) == ({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','durability'}
+            if durability_selected else {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'})
+        and type(policy['schema_version']) is int and policy['schema_version'] in (1,2)
         and type(policy['max_entries']) is int and 0 < pairs <= policy['max_entries'] < 2**63
         and type(policy['max_workflow_metadata_bytes']) is int
         and 3*io.META_LIMIT*(len(owner.required)-1) <= policy['max_workflow_metadata_bytes'] < 2**63,
@@ -289,12 +299,15 @@ def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held, p
         def compute(event_log, live):
             nonlocal log,stream
             log=event_log
+            if policy.get('schema_version')==2:log.enable_durability(policy['durability'])
             matcher = compact_matcher.CompactMatcher(log,config=thaw(owner.matching),context=thaw(owner.bound.context),
                 policy=p['pair'],workload_sha256=scope['workflow'],schedule=p['schedule'],lease=live,
-                retention=stage_retention.options(stage))
+                retention=stage_retention.options(stage),
+                **({'durability_barrier':lambda:stream.durability_barrier()} if policy.get('schema_version')==2 else {}))
             stream = MCMScoreStream(stage.root/'stream',graph=graph,dictionary=dictionary.dictionary,
                 matching_config=thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],backend=BACKEND,
                 owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live,
+                **({'durability':policy['durability']} if policy.get('schema_version')==2 else {}),
                 **({'_imported':dictionary} if _imported(dictionary) else {}))
             require(stream.scope == scope,'MCM stream scientific scope differs')
             live(); _original(dictionary,graph,graph_hash)
@@ -303,6 +316,7 @@ def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held, p
                 **({'imported':dictionary} if _imported(dictionary) else {}))
             numeric_pin=_matrix(actual['mcm'],start['rows'],start['motifs'])
             if matcher.retention is not None:stage_retention._bind(stage,matcher.retention,held)
+            log.durability_barrier()
             stream_terminal = stream.finish()['terminal_sha256']
             if held_consumer is not None:
                 held_score_consumer.consume(dictionary,stage,held,stream)

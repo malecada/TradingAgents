@@ -1,0 +1,165 @@
+{
+  "decision": "pass",
+  "identity": "eth-paper-real-pilot-graph-20220606-20261005-01",
+  "index_sha256": "5f42da78926f4e81937f0e67afce507bf4414b6fef9201de0d82c1bae725afde",
+  "files": [
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/aggregation/ledger.sqlite",
+      "sha256": "1657bef9eb060c1fbee28954068913d65eb7e29644d56faf7983621314f6505a",
+      "bytes": 3099119616,
+      "stat_identity": [
+        66310,
+        8443973,
+        1,
+        3099119616,
+        1791272783391215021,
+        1791272783391215021
+      ],
+      "mode": 420
+    },
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/edge_aggregates.npy",
+      "sha256": "5ba79ada32e8f4d34dbb352fa0e8e92c10d07f84053b0a9e8e90fd5c609f0c75",
+      "bytes": 37683808,
+      "stat_identity": [
+        66310,
+        8443987,
+        1,
+        37683808,
+        1791272818596033476,
+        1791272818596033476
+      ],
+      "mode": 436,
+      "header": {
+        "dtype": "float64",
+        "fortran_order": false,
+        "payload_offset": 128,
+        "shape": [
+          2355230,
+          2
+        ],
+        "version": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/edge_features.npy",
+      "sha256": "76fa5d82b60514e5b0624952b1e7a350bb9e0029b836dc627b41b9c43396b3d7",
+      "bytes": 37683808,
+      "stat_identity": [
+        66310,
+        8443985,
+        1,
+        37683808,
+        1791272818096036143,
+        1791272818096036143
+      ],
+      "mode": 436,
+      "header": {
+        "dtype": "float64",
+        "fortran_order": false,
+        "payload_offset": 128,
+        "shape": [
+          2355230,
+          2
+        ],
+        "version": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/edge_index.npy",
+      "sha256": "3366408e13a0b047108996c25aadf3f6d3d0481b3214ed7206566efacfee642b",
+      "bytes": 37683808,
+      "stat_identity": [
+        66310,
+        8443984,
+        1,
+        37683808,
+        1791272818047036404,
+        1791272818047036404
+      ],
+      "mode": 436,
+      "header": {
+        "dtype": "int64",
+        "fortran_order": false,
+        "payload_offset": 128,
+        "shape": [
+          2,
+          2355230
+        ],
+        "version": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/node_features.npy",
+      "sha256": "610e35b606df179edcb1c95a91ef3e8677b3c3a69784c88176a82f7963734608",
+      "bytes": 50616480,
+      "stat_identity": [
+        66310,
+        8443978,
+        1,
+        50616480,
+        1791272817873037331,
+        1791272817873037331
+      ],
+      "mode": 436,
+      "header": {
+        "dtype": "float64",
+        "fortran_order": false,
+        "payload_offset": 128,
+        "shape": [
+          1581761,
+          4
+        ],
+        "version": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/node_ids.npy",
+      "sha256": "85ad17475516249bcd940cd5007724f5b1fe883ebc8f3c52fcd7b0fdf371fc48",
+      "bytes": 265735976,
+      "stat_identity": [
+        66310,
+        8443986,
+        1,
+        265735976,
+        1791272818388034585,
+        1791272818388034585
+      ],
+      "mode": 436,
+      "header": {
+        "dtype": "<U42",
+        "fortran_order": false,
+        "payload_offset": 128,
+        "shape": [
+          1581761
+        ],
+        "version": [
+          1,
+          0
+        ]
+      }
+    }
+  ],
+  "total_bytes": 3528523496,
+  "body_proof": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-graph-bodyproof01-2026-10-06/BODY_HASH01.json",
+    "sha256": "ebab6695dfc9c33fe01537fbbf0b6a4fef7829238272e50eaedebaa8036fb88f"
+  },
+  "actual_pass_tool": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-graph-bodyproof01-2026-10-06/ACTUAL_PASS_TOOL01.json",
+    "sha256": "a5e0dece7dda2f442fd19da1342de7a87e8069ffb76e094325cabb47f4367113"
+  },
+  "qualification": "Authenticated actual Root30001/3cfe5c six-body single streaming hash pass and bounded public header evidence; independent current stat7/index/manifest/header arithmetic joins only. No reviewer payload/header/SQL read, no writer exclusion or database semantic consistency claim."
+}

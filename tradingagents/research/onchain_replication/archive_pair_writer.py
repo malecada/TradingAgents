@@ -102,7 +102,10 @@ class ArchivePairLog(events.PairLog):
             if fresh is not None: io._cleanup((lambda: os.close(fresh),))
 
     def _abort(self, error):
-        self.poisoned = True; self._failure(error)
+        self.poisoned = True
+        try:self.durability_barrier()
+        except BaseException as durability_error:error.add_note('Failure durability barrier refused: '+repr(durability_error))
+        self._failure(error)
         io._close_after_failure(self.close, error)
 
     def _append(self, *args, **kwargs):
@@ -137,6 +140,7 @@ class ArchivePairLog(events.PairLog):
         index = self.archived; extent = (self.events-index*self.start['limits']['chunk_events'])*events.RECORD_BYTES
         require(index < self.policy['max_chunks'] and 0 < extent <= io.MAX_CHUNK_BYTES,
             'sealed chunk extent/ordinal')
+        self.durability_barrier()
         descriptor = self.chunk_fd; self.chunk_fd = None
         try:
             self._seal_descriptor(index, extent, descriptor)
@@ -333,10 +337,14 @@ class ArchivePairLog(events.PairLog):
         identity = getattr(self, 'root_identity', None)
         if identity is None: identity = io._signature(os.fstat(self.fd))[:2]
         self.root_identity = identity
-        self.closed=True;descriptor=self.chunk_fd;self.chunk_fd=None
+        descriptor=self.chunk_fd
         primary=None
         try:
-            if descriptor is not None:io._cleanup((lambda:os.close(descriptor),))
+            actions=[]
+            if getattr(self,'_durability',None) is not None:actions.append(self.durability_barrier)
+            actions.extend((lambda:setattr(self,'closed',True),lambda:setattr(self,'chunk_fd',None)))
+            if descriptor is not None:actions.append(lambda:os.close(descriptor))
+            io._cleanup(actions)
         except BaseException as error:
             primary=error;self._failure(error);raise
         finally:consume._close_attempt(self.root,self.fd,self.root_identity,primary)

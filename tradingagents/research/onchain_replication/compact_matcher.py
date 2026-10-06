@@ -121,7 +121,7 @@ def _snapshot(directory, state_sha, identity, policy):
 
 
 class CompactMatcher:
-    def __init__(self, log, *, config, context, policy, workload_sha256, schedule, lease, retention=None):
+    def __init__(self, log, *, config, context, policy, workload_sha256, schedule, lease, retention=None, durability_barrier=None):
         require(isinstance(log, PairLog) and log.events == 0 and log.state['pending'] is None,
                 'fresh compact log required')
         require(callable(lease), 'live compact matcher lease required')
@@ -138,6 +138,8 @@ class CompactMatcher:
             <= policy['total_checkpoint_bytes'], 'per-pair cumulative checkpoint budget insufficient')
         require(log.start['scope'] == scope(config, context, policy, workload_sha256, schedule)
             and log.start['max_iterations'] == config['max_iterations'], 'compact log execution scope differs')
+        require(durability_barrier is None or callable(durability_barrier), "optional coupled durability barrier")
+        self._durability_barrier = durability_barrier
         self.log = log; self.config = copy.deepcopy(config); self.context = copy.deepcopy(context)
         self.policy = copy.deepcopy(policy); self.schedule = copy.deepcopy(schedule)
         self.components = _components(); self.workload = workload_sha256; self.lease = lease
@@ -180,7 +182,7 @@ class CompactMatcher:
         return self.log.events, head, frame + bytes.fromhex(head)
 
     def _ack_check(self, expected):
-        """Callback-free fixed-record readback after the combined owner leases."""
+        """Actual fixed-record byte acknowledgement; selected durability is separate."""
         event, head, raw = expected
         require(self.log.events == event + 1 and self.log.head == head, 'log acknowledged another event')
         io._root(self.log.root, self.log.fd)
@@ -201,6 +203,8 @@ class CompactMatcher:
 
     def _save(self, state, a, b, identity, purpose):
         self._check()
+        self.log.durability_barrier()
+        if self._durability_barrier is not None:self._durability_barrier()
         if self.retention is not None:
             result = self.retention.checkpoint(state,a,b,identity,purpose)
             self.checkpoints += 1
@@ -237,6 +241,7 @@ class CompactMatcher:
             io._root(root, fd)
             expected = self._expected_event(3, artifact=result)
             self.log.progress(result)
+            self.log.durability_barrier()
             self._check()
             require(io._hash(io._read(fd, 'intent.json', io.META_LIMIT)) == intent_sha
                 and io._hash(io._read(fd, 'manifest.json', io.META_LIMIT)) == result,
@@ -268,7 +273,9 @@ class CompactMatcher:
             self.log.begin(cache_key(purpose), pair.digest(identity))
             self._check()
             self._ack_check(expected)
-            if self.retention is not None:self.retention.begin(purpose,a,b,identity,expected)
+            if self.retention is not None:
+                self.log.durability_barrier()
+                self.retention.begin(purpose,a,b,identity,expected)
             state = engine.create(a, b, self.config, **{k: self.policy[k] for k in pair.ENGINE_FIELDS})
             for _ in range(self.schedule['max_checkpoints']):
                 for _ in range(self.schedule['calls_per_checkpoint']):
@@ -289,12 +296,17 @@ class CompactMatcher:
                     answer = self.log.complete(float(result.score), result.convergence, result.iterations)
                     self._check(); self._ack_check(expected)
                     if self.retention is not None:
+                        self.log.durability_barrier()
                         self.retention.complete(expected,float(result.score),result.iterations,result.convergence)
                     return answer
                 self._save(state, a, b, identity, purpose)
             raise CheckpointStop('bounded calls exhausted; checkpoint retained for separately admitted successor')
         except BaseException as error:
             primary = error; self.poisoned = True
+            for flush in [self.log.durability_barrier] + ([self._durability_barrier] if self._durability_barrier is not None else []):
+                try:flush()
+                except BaseException as durability_error:
+                    error.add_note('Failure durability barrier refused: '+repr(durability_error))
             retained=_RETENTION.get(self)
             if retained is not None:retained.fail(error)
             if any('cleanup also failed' in note.lower() for note in getattr(error, '__notes__', ())):

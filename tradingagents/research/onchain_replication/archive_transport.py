@@ -20,7 +20,7 @@ import signal
 import subprocess
 import time
 
-from tradingagents.research.lifecycle import _immutable
+from tradingagents.research.lifecycle import _immutable, _encode
 from . import archive_chunks as archive
 from .provenance import sync_directory
 
@@ -47,7 +47,7 @@ class Budget:
 
 
 def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
-                       bytes_per_second, lease_callback):
+                       bytes_per_second, lease_callback, receipt_sink=None):
     """Receive exact bytes, retaining a partial file and bounded diagnostic tail.
 
     Deadline covers child execution and throttling; forced cleanup gets a
@@ -138,7 +138,7 @@ def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
     failure = cleanup_error if cleanup_error is not None else primary
     # Completion is publishable only after every owned cleanup has succeeded.
     try:
-        _immutable(receipt, {'status': 'failed' if failure is not None else 'complete',
+        record = {'status': 'failed' if failure is not None else 'complete',
             'error_type': type(failure).__name__ if failure is not None else None,
             'primary_error_type': type(primary).__name__ if primary is not None else None,
             'pid': proc.pid if proc else None,
@@ -146,7 +146,9 @@ def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
             'received_bytes': received, 'expected_bytes': expected_bytes,
             'elapsed_seconds': time.monotonic() - began,
             'stderr_bytes_seen': seen, 'stderr_truncated': seen > len(tail),
-            'stderr_tail': tail.decode('utf-8', errors='replace')})
+            'stderr_tail': tail.decode('utf-8', errors='replace')}
+        if receipt_sink is None:_immutable(receipt, record)
+        else:receipt_sink(receipt, _encode(record), failure is None)
     except BaseException as error:
         if failure is None:
             raise
@@ -170,7 +172,7 @@ class Transport:
     """
 
     def __init__(self, connection, diagnostics, budget, *, lease_callback,
-                 rate_kbit=32768, max_seconds=30):
+                 rate_kbit=32768, max_seconds=30, receipt_sink=None):
         if (not isinstance(connection, dict) or set(connection) !=
                 {'host', 'user', 'port', 'identity_file', 'known_hosts_file'}):
             raise ValueError('explicit archive connection configuration required')
@@ -206,6 +208,9 @@ class Transport:
         self.diagnostics = Path(diagnostics)
         self.diagnostics.mkdir()
         self.counter = 0
+        if receipt_sink is not None:
+            if not callable(receipt_sink):raise ValueError("actual receipt sink required")
+            self._receipt_sink=receipt_sink
 
     def remote_path(self, path):
         if not isinstance(path, str) or not re.fullmatch(
@@ -225,7 +230,7 @@ class Transport:
         self.live()
         receive_diagnostic(args, self.next('command'), expected_bytes=0,
             max_seconds=self.max_seconds, bytes_per_second=self.rate_bytes,
-            lease_callback=self.live)
+            lease_callback=self.live, **({"receipt_sink":self._receipt_sink} if hasattr(self,"_receipt_sink") else {}))
 
     def mkdir(self, path):
         self.run([*self.ssh, 'mkdir', self.remote_path(path)])
@@ -272,7 +277,8 @@ class Transport:
         self.live()
         receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
             staging, expected_bytes=expected_bytes, max_seconds=self.max_seconds,
-            bytes_per_second=self.rate_bytes, lease_callback=self.live)
+            bytes_per_second=self.rate_bytes, lease_callback=self.live,
+            **({"receipt_sink":self._receipt_sink} if hasattr(self,"_receipt_sink") else {}))
         os.link(staging, destination)
         staging.unlink()
         for directory in (self.diagnostics, destination.parent):

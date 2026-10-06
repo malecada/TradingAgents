@@ -56,7 +56,7 @@ def _decode(raw, start_sha, start_cell, acknowledged):
 class ScoreTail:
     """Single-use append-only tail. A failed append poisons further appends."""
 
-    def __init__(self, root, *, scope, owner, start_cell, cells, destination, lease):
+    def __init__(self, root, *, scope, owner, start_cell, cells, destination, lease, durability=None):
         _shape(start_cell, cells); scope = batch._scope(scope)
         batch._identity(owner); batch._identity(destination)
         require(callable(lease), 'mandatory tail lease')
@@ -67,6 +67,10 @@ class ScoreTail:
             'destination': destination, 'record_format': '<Qd32s32s', 'record_bytes': RECORD_BYTES}
         self.lease = lease; self.closed = self.poisoned = False
         self.acknowledged = 0; self.record_fd = None
+        self._durability = None
+        if durability is not None:
+            from .chunk_durability import BatchSync
+            self._durability = BatchSync(durability, 'tail')
         lease(); root.mkdir()
         parent, parent_fd = batch._open(root.parent)
         try:
@@ -90,6 +94,7 @@ class ScoreTail:
     def _check(self, *, pending=False, expected_size=None):
         require(not self.closed and (pending or not self.poisoned), 'tail terminal or interrupted')
         self.lease(); batch._root(self.root, self.fd)
+        if self._durability is not None:self._durability.before(self.record_fd)
         live = os.fstat(self.record_fd)
         entry = os.stat('records.bin', dir_fd=self.fd, follow_symlinks=False)
         require(stat.S_ISREG(live.st_mode) and live.st_nlink == 1
@@ -102,8 +107,19 @@ class ScoreTail:
             high = min(self.start['cells'], self.acknowledged + (1 if pending else 0)) * RECORD_BYTES
             require(low <= live.st_size <= high, 'tail extent differs from acknowledged prefix')
 
+    @property
+    def durability_status(self):
+        return (self._durability.snapshot() if self._durability is not None else
+                {'acknowledged_records':self.acknowledged,'durable_records':self.acknowledged,'legacy_per_event':True})
+
+    def durability_barrier(self):
+        if self._durability is not None:
+            self._check(pending=True)
+            self._durability.barrier(self.record_fd)
+
     def append(self, ordinal, purpose_sha256, score):
         self._check(); batch._identity(purpose_sha256)
+        if self._durability is not None:self._durability.before(self.record_fd)
         require(type(ordinal) is int and ordinal == self.start['start_cell'] + self.acknowledged
                 and self.acknowledged < self.start['cells'], 'tail score order/capacity differs')
         require(type(score) in (int, float) and math.isfinite(score) and 0 <= score <= 1,
@@ -118,10 +134,11 @@ class ScoreTail:
             while sent < len(raw):
                 count = os.write(self.record_fd, raw[sent:])
                 require(count > 0, 'tail short write made no progress'); sent += count
-            os.fsync(self.record_fd)
+            if self._durability is None:os.fsync(self.record_fd)
             self._check(expected_size=offset + RECORD_BYTES)
             require(os.pread(self.record_fd, RECORD_BYTES, offset) == raw, 'tail record readback differs')
             self.head = head; self.acknowledged += 1
+            if self._durability is not None:self._durability.acknowledge(self.record_fd,self.acknowledged,self.head)
         except BaseException:
             self.poisoned = True
             raise
@@ -129,6 +146,7 @@ class ScoreTail:
 
     def _terminal(self, status, reason):
         self._check(pending=status == 'failed')
+        self.durability_barrier()
         require(status == 'failed' or self.acknowledged == self.start['cells'], 'incomplete tail')
         require(isinstance(reason, str) and len(reason.encode()) <= 1024, 'bounded failure reason')
         raw = batch._read(self.fd, 'records.bin', self.start['cells'] * RECORD_BYTES)
@@ -157,8 +175,9 @@ class ScoreTail:
 
     def close(self):
         if not self.closed:
-            self.closed = True
             actions = []
+            if self._durability is not None:actions.append(self.durability_barrier)
+            actions.append(lambda:setattr(self,'closed',True))
             if self.record_fd is not None: actions.append(lambda: os.close(self.record_fd))
             actions.append(lambda: os.close(self.fd))
             batch._cleanup(actions)

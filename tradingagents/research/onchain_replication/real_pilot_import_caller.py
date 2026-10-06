@@ -278,6 +278,9 @@ def admitted(ad, job):
         from .imported_authority_interval import policy
         policy(_read(ad,p['imported_authority_lease_input']));roles.add(p['imported_authority_lease_input'])
     if 'archive_inputs' in p:roles.update(p['archive_inputs'].values())
+    if '0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba' in p['graph_inputs']:
+        from .real_pilot_legacy_graph import registered
+        roles.update(registered(ad.inputs,p['graph_inputs']))
     require(roles <= set(ad.inputs), 'real population/config/graph inputs not registered')
     control = _read(ad, s['original_dictionary_input'])
     require(control['sample_count'] == 512 and control['motif_count'] == 32
@@ -367,6 +370,9 @@ def execute(run, payload):
         info = run.admission.inputs[role]
         graph = load_graph(local_path(run.admission.root,info['path']),info['sha256'],resident=True)
         require(graph.asset == 'ETH', 'real graph asset differs')
+        if key == '0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba':
+            from .real_pilot_legacy_graph import verify
+            verify(run,graph,role)
         graphs[key] = graph
     model_config = json.loads(run.read_input(p['model_input']))
     training_config = json.loads(run.read_input(p['training_input']))

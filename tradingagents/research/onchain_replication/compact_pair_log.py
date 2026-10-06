@@ -82,7 +82,7 @@ class PairLog:
         self.start = {'schema_version': 1, 'owner': owner, 'scope': scope, 'limits': limits,
             'max_iterations': max_iterations, 'record_bytes': RECORD_BYTES, 'format': '<QB7xQdQ32s32s32s32s'}
         self.state = _empty(); self.chunks = 0; self.chunk_fd = None
-        self.closed = self.poisoned = False; self.lease = lease
+        self.closed = self.poisoned = False; self.lease = lease; self._durability = None
         lease(); root.mkdir()
         parent, fd = io._open(root.parent)
         try: os.fsync(fd); io._root(parent, fd)
@@ -100,6 +100,23 @@ class PairLog:
             io._close_after_failure(self.close, primary)
             raise
 
+    def enable_durability(self, policy):
+        require(self._durability is None and self.events == 0 and self.chunk_fd is None,
+                'durability selection only before first event')
+        self._check()
+        from .chunk_durability import BatchSync
+        self._durability = BatchSync(policy, 'pair')
+
+    @property
+    def durability_status(self):
+        return (self._durability.snapshot() if self._durability is not None else
+                {'acknowledged_records':self.events,'durable_records':self.events,'legacy_per_event':True})
+
+    def durability_barrier(self):
+        if self._durability is not None:
+            self._check(failing=True)
+            self._durability.barrier(self.chunk_fd)
+
     @property
     def events(self): return self.state['events']
 
@@ -110,9 +127,11 @@ class PairLog:
     def _check(self, *, failing=False):
         require(not self.closed and (failing or not self.poisoned), 'compact log terminal or poisoned')
         self.lease(); io._root(self.root, self.fd)
+        if self._durability is not None:self._durability.before(self.chunk_fd)
 
     def _append(self, kind, score=0., iterations=0, artifact=ZERO, purpose=None, identity=None):
         self._check()
+        if self._durability is not None:self._durability.before(self.chunk_fd)
         pending = self.state['pending']
         if kind == 0:
             ordinal = self.state['started_pairs']
@@ -132,6 +151,7 @@ class PairLog:
             self._check()
             if slot == 0:
                 if self.chunk_fd is not None:
+                    self.durability_barrier()
                     previous = self.chunk_fd; self.chunk_fd = None
                     io._cleanup((lambda: os.close(previous),))
                 self.chunk_fd = os.open(_name(chunk), os.O_RDWR | os.O_CREAT | os.O_EXCL
@@ -149,13 +169,15 @@ class PairLog:
             while sent < len(raw):
                 count = os.write(self.chunk_fd, raw[sent:])
                 require(count > 0, 'compact log zero-byte write'); sent += count
-            os.fsync(self.chunk_fd); self._check()
+            if self._durability is None:os.fsync(self.chunk_fd)
+            self._check()
             after = os.fstat(self.chunk_fd); entry = os.stat(_name(chunk), dir_fd=self.fd, follow_symlinks=False)
             require(io._signature(after) == io._signature(entry)
                 and io._signature(after)[:2] == self.chunk_identity and after.st_nlink == 1
                 and after.st_size == offset + RECORD_BYTES
                 and os.pread(self.chunk_fd, RECORD_BYTES, offset) == raw, 'compact log publication differs')
             self.state = state; self.head = head
+            if self._durability is not None:self._durability.acknowledge(self.chunk_fd,self.events,self.head)
         except BaseException:
             self.poisoned = True; raise
 
@@ -164,6 +186,7 @@ class PairLog:
 
     def progress(self, checkpoint_sha256):
         self._append(3, artifact=checkpoint_sha256)
+        self.durability_barrier()
 
     def complete(self, score, convergence, iterations):
         require(convergence in ('temperature_complete', 'iteration_cap'), 'convergence value differs')
@@ -173,6 +196,7 @@ class PairLog:
 
     def _terminal(self, status, reason):
         self._check(failing=status == 'failed')
+        self.durability_barrier()
         require(status == 'failed' or self.state['pending'] is None, 'pending pair prevents completion')
         require(isinstance(reason, str) and len(reason.encode()) <= 1024, 'bounded log terminal reason')
         digest = hashlib.sha256(); total = 0
@@ -198,9 +222,12 @@ class PairLog:
 
     def close(self):
         if not self.closed:
-            self.closed = True
-            chunk = self.chunk_fd; self.chunk_fd = None
+            chunk = self.chunk_fd
             actions = []
+            if self._durability is not None:actions.append(self.durability_barrier)
+            # Mark closed only after the barrier; cleanup still closes every descriptor.
+            actions.append(lambda:setattr(self,'closed',True))
+            actions.append(lambda:setattr(self,'chunk_fd',None))
             if chunk is not None: actions.append(lambda: os.close(chunk))
             actions.append(lambda: os.close(self.fd))
             io._cleanup(actions)

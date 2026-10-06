@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-06T07:40:37.178310+00:00",
+  "method": "actual installed real_pilot_storage.WritableUnion.check; metadata/stat only",
+  "qualification": "June6 writer is active. This sampled observation cannot bind final pilot baseline, prove final graph/output capacity, reserve physical stores, or admit a claim. No source/limits changed and no active namespace was created.",
+  "result": {
+    "error": "storage time limit exceeded",
+    "error_type": "StorageLimit",
+    "partial_observation": {
+      "allocated_bytes": 11656929280,
+      "directories": 470,
+      "entries": 15174,
+      "failed_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+      "logical_file_bytes": 12086816888,
+      "partial_root": {
+        "allocated_bytes": 11656925184,
+        "directories": 469,
+        "entries": 15173,
+        "hardlink_observations": [],
+        "logical_file_bytes": 12086816888,
+        "regular_files": 14704
+      },
+      "regular_files": 14705,
+      "roots": [
+        {
+          "allocated_bytes": 0,
+          "device": 66310,
+          "inode": 7773187,
+          "logical_file_bytes": 0,
+          "shared_file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+        },
+        {
+          "counts": "no existing subtree observed; no baseline credit",
+          "device": null,
+          "inode": null,
+          "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261005-01",
+          "state": "observed-absent-before-birth"
+        }
+      ]
+    },
+    "status": "REFUSED_NOT_FINAL_BASELINE"
+  },
+  "template": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/execution_job.json",
+    "sha256": "ec67fdaeba56c7879997ab39dc9727cc5eaa22c7dc2d907b489b413f5b7f7927"
+  }
+}
