@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T21:17:50.085272+00:00: loaded-roster fix implemented/reviewed/committed; fresh pilot14 metadata prepared, no numerical job active.**
+
+Candidate04 initializes sixteen selected dependencies before the immutable Lease snapshot. Actual-source RED/GREEN preserves118 loaded entries and function/code/source mutation refusals;3.97s/<0.74GB imports-only probe. Independent source review4b06005e accepted; exact historical13 changed entry remainsUNKNOWN. Actual live adoption/sourceanchorba6be4fa updates caller and strict14 identity only;179packagepins/177unchanged, original scientific method/nativecaps/user-authorized60s unchanged.
+
+Pilot13 permanentFAILED/spent84 with0MCM/update/fits/sevenunavailablegraphs preserved. Exact43file448191B/13directory56name increment freshly recovered from actualexternalGit atba6be4fa; different-author recoverye3df35aa accepted, originalstats unchanged/nooriginalbodyrereads/deletion. No raw/private/runtime/POSIX recovery claim. Paper54closed33C21F/highestclaimed84; genuine85 amendmentc7885430 accepted forONEunused14 plus28unchangedpending/twoclosedpreclaims; no refund/transfer/capladder/rerun.
+
+D14gate01 has281sources59inputs; actualdraft01/prepare01/baseline02/boundtransport02 ready for combinedactualmetadata/entry review. First binder refused absentcanonicalparent beforepublication; originalEXIT01 retained, selected02 actual0700parent succeeded, no claim/attempt. RootsoleMain/accounting/STATE/Git/preservation/ONElauncher; reviewer owns changedmetadata/entry review, otherboundedagentsfinished. SourceGitfreezeENDED. LastinstantaneousRAM10.32GB/disk26.16GB eligible but not release/capacity. Next exactmetadataacceptance, concretebinding, committedreadonly85, different-author finalrelease, actualpush/readback/fresh eligibility andatmostONEunused14. Broadwork/goal/heartbeat remainPAUSED; representativepilot incomplete.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T21:08:47.616715+00:00: pilot13 permanently FAILED/spent84; no numerical job active. Source/Git freeze ENDED after actual RootIO closure and verified cleanup.**
 
 Root8472/b9d092exit1 CLOSED, actualParent1/nativechild1/1246.448245652s. [Actual terminal](full_sources/real-data-pilot-final13-2026-10-06/ROOT_TERMINAL01.json) verifies cgroupgone/all4knownPIDsabsent/currentunitfailed/MainPID0. Primary is a NEW loaded-module/function snapshot equality refusal during compact_mcm._prepare→dictionary.check→Target.check→sampledlease._finger. AllsevenTarget constructors returned before this preparation loop. Number of prior completed _prepare calls and exactchangedmodule/function are UNKNOWN/unrecorded. Current60s run reached later setup without the previous30s timeout; this does not prove all later60s boundaries/capacity. No completedMCM/retainedtargets/jointupdates/financialfits;7unavailablegraphs/415968128cells retained,partialprogressrecords0. Originalimportevent198.927s. Secondaryarchive stale/poisonederrors preserved. NoOOM/MAX; sampledchargedpeak5368631296B,lastkernelpeak5370920960B includecache,1736soft-high events.
