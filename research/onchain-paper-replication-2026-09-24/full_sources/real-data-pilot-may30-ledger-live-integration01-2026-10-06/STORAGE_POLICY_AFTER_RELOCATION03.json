@@ -1,0 +1,60 @@
+{
+  "baseline": {
+    "aggregate_entry_visit_bound": 60000,
+    "allocated_bytes": 3092606976,
+    "directories": 162,
+    "elapsed_seconds": 0.1220484430086799,
+    "entries": 14087,
+    "hardlink_observations": [],
+    "logical_file_bytes": 3037604453,
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+    "regular_files": 13926,
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources",
+    "root_device": 66310,
+    "root_inode": 7882946,
+    "scan_attempts": 1
+  },
+  "baseline_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-live-integration01-2026-10-06/BASELINE_AFTER_RELOCATION03.json",
+    "sha256": "93871113fc8ebf160849fa577e3c1a89470b6a21cef4dd38e479388059774a93"
+  },
+  "control_and_overhead_bytes": 67108864,
+  "data_store": {
+    "device": 66307,
+    "disk_floor_bytes": 10737418240,
+    "free_reserve_bytes": 67108864,
+    "storage_budget": {
+      "limits": {
+        "max_allocated_bytes": 3256340480,
+        "max_depth": 1,
+        "max_entries": 2,
+        "max_logical_bytes": 3256340480,
+        "max_scan_seconds": 5
+      },
+      "root": "/home/malecada/Data/onchain-pilot-retained-ledgers/eth-paper-real-pilot-graph-20220530-20261005-01"
+    }
+  },
+  "growth_estimate_bytes": 5403824128,
+  "identity": "eth-paper-real-pilot-may30-ledger-continuation-20261006-01",
+  "output_bytes": 2147483648,
+  "schema_version": 2,
+  "scratch_scope": {
+    "sqlite_temp_candidates": [
+      "/tmp",
+      "/var/tmp",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ]
+  },
+  "sqlite_scratch_bytes": 3189231616,
+  "startup_free_requirement_bytes": 16141242368,
+  "storage_budget": {
+    "limits": {
+      "max_allocated_bytes": 10572060447,
+      "max_depth": 16,
+      "max_entries": 20000,
+      "max_logical_bytes": 10517129107,
+      "max_scan_seconds": 5
+    },
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources"
+  }
+}
