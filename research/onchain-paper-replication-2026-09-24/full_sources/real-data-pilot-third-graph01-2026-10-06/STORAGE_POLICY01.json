@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-06T01:53:28.095513+00:00",
+  "baseline": {
+    "aggregate_entry_visit_bound": 60000,
+    "allocated_bytes": 1956278272,
+    "directories": 150,
+    "elapsed_seconds": 0.1522449179974501,
+    "entries": 14018,
+    "hardlink_observations": [],
+    "logical_file_bytes": 1901556696,
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+    "regular_files": 13869,
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources",
+    "root_device": 66310,
+    "root_inode": 7882946,
+    "scan_attempts": 1
+  },
+  "free_disk_observed_bytes": 19398299648,
+  "growth_estimate_bytes": 7602071390,
+  "qualification": "Sampled existing shared-source-parent accounting, with no concurrent mutation of other source stores. Includes all named new source files and historical baseline; unnamed temporary extents and external SQLite scratch are covered by the whole-volume free-disk floor and cumulative sampled minimum, not this tree scan. Density projection is an estimate, not a capacity bound or hard filesystem quota; retain any breached run permanently. No source body was read.",
+  "schema_version": 1,
+  "scratch_scope": {
+    "explicit_projected_parquet": "new source scratch directory; TemporaryFile may be unnamed",
+    "guarded_device": 66310,
+    "sqlite_rollback": "new aggregation directory",
+    "sqlite_temp_candidates": [
+      "/var/tmp",
+      "/usr/tmp",
+      "/tmp",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ]
+  },
+  "startup_free_requirement_bytes": 18339489630,
+  "storage_budget": {
+    "limits": {
+      "max_allocated_bytes": 9558349662,
+      "max_depth": 16,
+      "max_entries": 20000,
+      "max_logical_bytes": 9503628086,
+      "max_scan_seconds": 5
+    },
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources"
+  }
+}

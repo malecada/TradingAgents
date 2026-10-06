@@ -1,0 +1,129 @@
+{
+  "preflight01.py": {
+    "before_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph01-2026-10-06/preflight01.py",
+    "before_sha256": "2f735c89a2de39a44057f1b4bad446a408a7f6a77fda76f6e34ecefe6a659181",
+    "after_sha256": "6fe413e694488bc93c6e02bf22861657c75710610093a8fb0861d2961907a14a",
+    "literal_edits": [
+      {
+        "before": "fixed second real-data pilot graph",
+        "after": "fixed third real-data pilot graph"
+      },
+      {
+        "before": "NAME='eth-paper-real-pilot-graph-20220509-20261005-01'",
+        "after": "NAME='eth-paper-real-pilot-graph-20220516-20261005-01'"
+      },
+      {
+        "before": "def check():",
+        "after": "def preceding_storage(inputs):\n    \"\"\"Exact May9 FAILED backup + successful metadata union + actual retirement.\"\"\"\n    def read(role):\n        info=inputs[role];path=ROOT/info['path']\n        if path.resolve(strict=True)!=path or not path.is_relative_to(ROOT) or not path.is_file() or path.stat().st_size>4*1024**2 or file_hash(path)!=info['sha256']:\n            raise ValueError('preceding compact proof changed: '+role)\n        return json.loads(path.read_bytes())\n    prior=read('storage_closure_review')\n    union_id='real-pilot-second-graph-preservation-metadata-20261006-01'\n    old_id='real-pilot-second-graph-preservation-20261006-01'\n    if prior['decision']!='accepted' or prior['identity']!=union_id or prior['full_scope_byte_recovery'] is not True:\n        raise ValueError('actual preceding full union BYTE recovery not accepted')\n    for role in ('storage_complete','storage_recovered_complete','storage_native_final','storage_outer_exit'):\n        info=inputs[role]\n        if prior['evidence'].get(info['path'])!=info['sha256']:raise ValueError('independent union receipt join differs')\n    union=read('storage_complete');selected=read('storage_selection')\n    if (union!=read('storage_recovered_complete') or union['identity']!=union_id\n            or union['parent']!=old_id or union['parent_status']!='FAILED'\n            or union['count']!=36 or len(union['files'])!=36 or selected['count']!=36 or len(selected['files'])!=36\n            or union['fresh_body_transfers']!=0 or union['fresh_restoration_metadata_rows']!=[35]\n            or union['bytes_preserved']!=selected['total_bytes'] or union['directories']!=selected['directories']):\n        raise ValueError('actual full36 metadata-only composition differs')\n    for inherited,record in zip(selected['files'],union['files']):\n        if any(record[k]!=v for k,v in inherited.items()):raise ValueError('union original membership differs')\n    failed=read('storage_failed_closure_review');old_ref=inputs['storage_failed_closure_review']\n    if (union['parent_proof']['review']['path']!=old_ref['path'] or union['parent_proof']['review']['sha256']!=old_ref['sha256']\n            or failed['decision']!='accepted-failed-parent-partial-byte-evidence' or failed['identity']!=old_id\n            or failed['parent_status']!='failed' or failed['authenticated_body_get_count']!=36):\n        raise ValueError('old FAILED body proof differs')\n    for role in ('storage_selection','storage_failed_native_final','storage_failed_outer_exit','storage_failed_root_terminal','storage_restore','storage_recovered_restore','storage_kept','storage_body_get_receipt'):\n        info=inputs[role]\n        if failed['evidence'].get(info['path'])!=info['sha256']:raise ValueError('independent failed-parent receipt join differs')\n    old_final=read('storage_failed_native_final');old_outer=read('storage_failed_outer_exit');old_root=read('storage_failed_root_terminal')\n    if (old_final['phase']!='failed' or old_final['child_exit_code'] is not None or old_final['cleanup_verified'] is not True\n            or old_outer['entry_selected_exit_code']!=1 or old_outer['guard_child_exit_code'] is not None\n            or old_root['actual_root_tool_exit_code']!=1 or old_root['separate_actual_worker_exit_code']!=-15\n            or Path(old_final['cgroup']).exists() or Path('/proc',str(old_final['monitor_pid'])).exists()):\n        raise ValueError('permanent FAILED old parent/cleanup differs')\n    final=read('storage_native_final');outer=read('storage_outer_exit')\n    if (final['phase']!='complete' or final['child_exit_code']!=0 or final['cleanup_verified'] is not True\n            or outer['entry_selected_exit_code']!=0 or outer['guard_child_exit_code']!=0 or outer['cleanup_verified'] is not True\n            or Path(final['cgroup']).exists() or Path('/proc',str(final['monitor_pid'])).exists()):\n        raise ValueError('actual NEW preservation union/native cleanup differs')\n    restore=read('storage_restore');kept=read('storage_kept');get=read('storage_body_get_receipt')\n    if (restore!=read('storage_recovered_restore') or union['files'][11]!=kept\n            or any(kept[k]!=v for k,v in restore.items()) or kept['bytes']!=3599704064\n            or get['status']!='complete' or get['returncode']!=0 or not (get['expected_bytes']==get['received_bytes']==kept['bytes'])):\n        raise ValueError('old ledger11 restoration/get join differs')\n    retired=read('storage_retirement_complete');terminal=read('storage_retirement_root_exit')\n    expected_paths=['research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/aggregation/ledger.sqlite',\n                    'research/onchain-paper-replication-2026-09-24/storage/'+old_id+'/11-recovered.bin']\n    if (kept['path']!=expected_paths[0] or retired['identity']!='real-pilot-second-graph-ledger-retirement-20261006-01'\n            or retired['payload_bytes_retired']!=7199408128 or retired['removed']!=expected_paths\n            or retired['preservation_union']!=union_id or retired['old_preservation_parent_status']!='FAILED'\n            or retired['remote_restore']!=kept or retired['arrays_retained'] is not True\n            or retired['all_other_originals_and_recoveries_retained'] is not True or terminal['actual_root_exit_code']!=0):\n        raise ValueError('actual preceding second-ledger retirement differs')\n    for relative in expected_paths:\n        path=ROOT/relative\n        if path.exists() or path.is_symlink():raise ValueError('retired payload reappeared: '+relative)\n    return {'parent_status':'FAILED','union':union_id,'retired_bytes':7199408128,'retired_paths':expected_paths}\n\n\ndef check():"
+      },
+      {
+        "before": "    prior=json.loads((ROOT/admission.inputs['storage_closure_review']['path']).read_bytes())\n    if prior['decision']!='accepted':raise ValueError('actual preceding full BYTE recovery not accepted')\n    retired=json.loads((ROOT/admission.inputs['storage_retirement_complete']['path']).read_bytes())\n    terminal=json.loads((ROOT/admission.inputs['storage_retirement_root_exit']['path']).read_bytes())\n    if (retired['identity']!='real-pilot-first-graph-ledger-retirement-20261006-01'\n            or retired['payload_bytes_retired']!=6571245568 or len(retired['removed'])!=2\n            or terminal['actual_root_exit_code']!=0 or retired['arrays_retained'] is not True):\n        raise ValueError('actual preceding ledger retirement differs')\n    for relative in retired['removed']:\n        path=ROOT/relative\n        if path.exists() or path.is_symlink():raise ValueError('retired payload reappeared: '+relative)\n",
+        "after": "    preceding_storage(admission.inputs)\n"
+      }
+    ]
+  },
+  "prepare01.py": {
+    "before_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph01-2026-10-06/prepare01.py",
+    "before_sha256": "d45d61d2beb1be4b96aa2f55ed9a942a8c0d35e2fad7e76004a32f36f3f05217",
+    "after_sha256": "01c96a14f5752fcbfc6c6a707ff02e26ff5cb338f8cbda71b8a9cd52daaa8b3a",
+    "literal_edits": [
+      {
+        "before": "unused May 9 graph",
+        "after": "unused May 16 graph"
+      },
+      {
+        "before": "import datetime",
+        "after": "import argparse\nimport datetime"
+      },
+      {
+        "before": "from tradingagents.research.admission import runtime_hashes",
+        "after": "from preflight01 import preceding_storage\nfrom tradingagents.research.admission import runtime_hashes"
+      },
+      {
+        "before": "OLD = FULL / 'real-data-pilot-first-graph01-2026-10-05'",
+        "after": "OLD = FULL / 'real-data-pilot-second-graph01-2026-10-06'"
+      },
+      {
+        "before": "NAME = 'eth-paper-real-pilot-graph-20220509-20261005-01'",
+        "after": "NAME = 'eth-paper-real-pilot-graph-20220516-20261005-01'"
+      },
+      {
+        "before": "def main():\n",
+        "after": "def main():\n    parser=argparse.ArgumentParser(description=__doc__)\n    parser.add_argument('--union-review',required=True)\n    parser.add_argument('--union-review-sha256',required=True)\n    options=parser.parse_args()\n    union_review=ROOT/options.union_review\n    if union_review.resolve(strict=True)!=union_review or not union_review.is_relative_to(ROOT) or union_review.stat().st_size>4*1024**2 or digest(union_review)!=options.union_review_sha256:\n        raise ValueError('exact actual bounded union review required')\n"
+      },
+      {
+        "before": "OLD / 'STORAGE_PROJECTION_DRAFT01.json'",
+        "after": "OLD / 'STORAGE_PROJECTION01.json'"
+      },
+      {
+        "before": "Complete prospective May9 rows",
+        "after": "Complete prospective May16 rows"
+      },
+      {
+        "before": "    write('RAW_EXTENT01.json', extent)\n    write('STORAGE_PROJECTION01.json', projection)\n    write('STORAGE_POLICY01.json', policy)\n    write('execution-job01.json', job)\n    gate = json.loads((OLD / 'gate02.json').read_bytes())\n",
+        "after": "    gate = json.loads((OLD / 'gate02.json').read_bytes())\n"
+      },
+      {
+        "before": "OLD / 'gate02.json'",
+        "after": "OLD / 'gate01.json'"
+      },
+      {
+        "before": "if not key.startswith('daily_map_')",
+        "after": "if not key.startswith(('daily_map_','storage_'))"
+      },
+      {
+        "before": "    storage = STUDY / 'storage/real-pilot-first-graph-preservation-20261006-01'\n    retirement = FULL / 'real-data-pilot-first-graph-post-recovery-retirement01-2026-10-06'\n    paths = {'execution_job': HERE / 'execution-job01.json', 'raw_extent': HERE / 'RAW_EXTENT01.json',\n             'storage_policy': HERE / 'STORAGE_POLICY01.json', 'storage_projection': HERE / 'STORAGE_PROJECTION01.json',\n             'storage_closure_review': FULL / 'real-data-pilot-first-graph-preservation-outcome-review01-2026-10-06/REVIEW01.json',\n             'storage_complete': storage / 'complete.json', 'storage_native_final': storage / 'guard01/final.json',\n             'storage_restore': storage / '11-restore.json', 'storage_recovered_restore': storage / '11-recovered-restore.json',\n             'storage_recovered_complete': storage / 'recovered-complete.json',\n             'storage_retirement_complete': retirement / 'complete01.json',\n             'storage_retirement_root_exit': retirement / 'ROOT_TERMINAL01.json',\n             'source_integration': FULL / 'real-data-pilot-main-live-integration02-2026-10-06/INTEGRATION02.json'}\n",
+        "after": "    storage = STUDY / 'storage/real-pilot-second-graph-preservation-20261006-01'\n    union = STUDY / 'storage/real-pilot-second-graph-preservation-metadata-20261006-01'\n    retirement = FULL / 'real-data-pilot-second-graph-post-recovery-retirement02-2026-10-06'\n    paths = {'execution_job': HERE / 'execution-job01.json', 'raw_extent': HERE / 'RAW_EXTENT01.json',\n             'storage_policy': HERE / 'STORAGE_POLICY01.json', 'storage_projection': HERE / 'STORAGE_PROJECTION01.json',\n             'storage_closure_review': union_review,\n             'storage_complete': union / 'complete.json', 'storage_native_final': union / 'guard01/final.json',\n             'storage_outer_exit': union / 'outer-exit01.json', 'storage_recovered_complete': union / 'recovered-complete.json',\n             'storage_failed_closure_review': FULL / 'real-data-pilot-second-graph-storage-outcome-review01-2026-10-06/FAILED_REVIEW02.json',\n             'storage_failed_native_final': storage / 'guard01/final.json', 'storage_failed_outer_exit': storage / 'outer-exit01.json',\n             'storage_failed_root_terminal': storage / 'ROOT_TERMINAL01.json', 'storage_selection': storage / 'selection01.json',\n             'storage_restore': storage / '11-restore.json', 'storage_recovered_restore': storage / '11-recovered-restore.json',\n             'storage_kept': storage / '11-kept.json', 'storage_body_get_receipt': storage / '11-recovered.bin.transport.json',\n             'storage_retirement_complete': retirement / 'complete01.json',\n             'storage_retirement_root_exit': retirement / 'ROOT_TERMINAL01.json',\n             'source_integration': FULL / 'real-data-pilot-main-live-integration02-2026-10-06/INTEGRATION02.json'}\n"
+      },
+      {
+        "before": "    for key, path in paths.items():\n        inputs[key] = {**ref(path), 'dataset': 'eth'}",
+        "after": "    # Actual closure/retirement must pass before any new gate/control is written.\n    generated={'execution_job','raw_extent','storage_policy','storage_projection'}\n    closure={key:{**ref(path),'dataset':'eth'} for key,path in paths.items() if key not in generated}\n    preceding_storage(closure)\n    write('RAW_EXTENT01.json', extent)\n    write('STORAGE_PROJECTION01.json', projection)\n    write('STORAGE_POLICY01.json', policy)\n    write('execution-job01.json', job)\n    for key, path in paths.items():\n        inputs[key] = {**ref(path), 'dataset': 'eth'}"
+      },
+      {
+        "before": "    item = {**old_item, 'question': 'Build the complete preserved ETH May9\u201316,2022 graph",
+        "after": "    if len(pins)!=178 or not all('tradingagents/research/onchain_replication/'+name in pins for name in ('compact_mcm.py','real_pilot_import_caller.py','real_pilot_partial_progress.py')):\n        raise ValueError('current178-source closure with installed telemetry required')\n    item = {**old_item, 'question': 'Build the complete preserved ETH May16\u201323,2022 graph"
+      },
+      {
+        "before": "'end': '2022-05-16T00:00:00Z'",
+        "after": "'end': '2022-05-23T00:00:00Z'"
+      }
+    ]
+  },
+  "launch01.py": {
+    "before_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph01-2026-10-06/launch01.py",
+    "before_sha256": "a8d2f41d2c9c3f3289b465990c5cab3126ada975eaea673ec74bbee751b778b6",
+    "after_sha256": "a8d2f41d2c9c3f3289b465990c5cab3126ada975eaea673ec74bbee751b778b6",
+    "literal_edits": []
+  },
+  "CHARTER01.md": {
+    "before_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph01-2026-10-06/CHARTER01.md",
+    "before_sha256": "d48ec99de5028801093d3cd3b34034bcec92da4e3986bf532bffebfb5f5ece1c",
+    "after_sha256": "87daca8350f25472d412010b654c088a9245250971b2731f03a7bd1a4e00edf4",
+    "literal_edits": [
+      {
+        "before": "May9\u201316",
+        "after": "May16\u201323"
+      },
+      {
+        "before": "eth-paper-real-pilot-graph-20220509-20261005-01",
+        "after": "eth-paper-real-pilot-graph-20220516-20261005-01"
+      },
+      {
+        "before": "all8,471,368",
+        "after": "all7,794,344"
+      },
+      {
+        "before": "graph-2022-05-09",
+        "after": "graph-2022-05-16"
+      },
+      {
+        "before": "unchanged:37 closed paper claims,\n28COMPLETE/9FAILED; five unused full-week graphs",
+        "after": "unchanged:38 closed paper claims,\n29COMPLETE/9FAILED; four unused full-week graphs"
+      },
+      {
+        "before": "The previous graph's actual full36-body BYTE recovery was independently accepted\nbefore its ledger and verified duplicate get were retired. Keep the original\nhistorical kept flags and separate actual retirement disposition. Existing\narrays, raw stores, prior results, failures and spent identities remain intact.",
+        "after": "Admission requires the previous May9 graph's actual full36-body BYTE recovery\ncomposition to be independently accepted and its ledger plus verified duplicate\nget to be retired under the distinct retirement identity. The original ordinary\nbackup remains FAILED; all36 body gets were authenticated, while its35 complete\nmetadata rows join a NEW metadata-only successor's fresh final row and full\nunion recovery. No old marker is manufactured or parent reclassified. Exact\n7,199,408,128B/two-path retirement, actual Root0 and retained arrays are required.\nBYTE recovery with recorded names/modes does not establish executed POSIX or\nruntime restoration. Keep all original failures and separate dispositions."
+      }
+    ]
+  }
+}
