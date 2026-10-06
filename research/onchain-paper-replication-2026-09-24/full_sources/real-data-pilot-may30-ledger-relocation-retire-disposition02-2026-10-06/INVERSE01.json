@@ -1,0 +1,29 @@
+{
+  "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-relocation-preparation01-2026-10-06/relocate01.py",
+  "baseline_sha256": "b51c91c26e48cde9627f95334082c8d405ed525771bfd806e97be1bc41f687e2",
+  "candidate_sha256": "437332513140816249bc998fbc3fbc8f70a0d123acb0280934246120e1ffa3b1",
+  "edits": [
+    {
+      "before": "    try:\n        with os.fdopen(os.open(ROOT/row['path'],os.O_RDONLY|os.O_NOFOLLOW),'rb') as src, os.fdopen(os.open(TARGET,os.O_RDONLY|os.O_NOFOLLOW),'rb') as dst:",
+      "after": "    attempted=[];removed=[];stage='opening-held-descriptors'\n    try:\n        with os.fdopen(os.open(ROOT/row['path'],os.O_RDONLY|os.O_NOFOLLOW),'rb') as src, os.fdopen(os.open(TARGET,os.O_RDONLY|os.O_NOFOLLOW),'rb') as dst:"
+    },
+    {
+      "before": "            (ROOT/row['path']).unlink();syncdir((ROOT/row['path']).parent)",
+      "after": "            stage='unlink-original';attempted.append(row['path'])\n            (ROOT/row['path']).unlink();removed.append(row['path'])\n            stage='sync-original-parent';syncdir((ROOT/row['path']).parent)"
+    },
+    {
+      "before": "            need(not os.path.lexists(ROOT/row['path']) and sig(TARGET.lstat())==target['stat_identity'],'retirement disposition differs')\n        for item",
+      "after": "            stage='verify-post-unlink-disposition'\n            need(not os.path.lexists(ROOT/row['path']) and sig(TARGET.lstat())==target['stat_identity'],'retirement disposition differs')\n            stage='close-held-descriptors'\n        stage='verify-retained-partial-arrays'\n        for item"
+    },
+    {
+      "before": "        publish(here/'retire-complete01.json',evidence)",
+      "after": "        stage='publish-retirement-complete'\n        publish(here/'retire-complete01.json',evidence)"
+    },
+    {
+      "before": "        publish(here/'relocation-receipt01.json',final)\n    except BaseException as error:failure(here,'retire-failed01.json',error);raise",
+      "after": "        stage='publish-consumer-bridge'\n        publish(here/'relocation-receipt01.json',final)\n    except BaseException as error:\n        # Successful unlink return is evidence even if fsync/close/publication then fails.\n        # An attempted unlink without a successful return remains ambiguous, never coerced to success.\n        disposition={'identity':ID,'error_type':type(error).__name__,'message':str(error),\n            'stage':stage,'unlink_attempted':attempted,'removed':removed,\n            'ambiguous_attempts':[p for p in attempted if p not in removed],\n            'source_retired':True if row['path'] in removed else (None if attempted else False),\n            'original':row,'target':target,'copy_receipt':copy_ref,'copy_review':release['copy_review'],\n            'original_parent_status':'failed','no_retry':True,'partials_retained':True}\n        try:publish(here/'retire-failed01.json',disposition)\n        except BaseException as secondary:error.add_note('Retirement failure disposition unavailable: '+repr(secondary))\n        raise"
+    }
+  ],
+  "inverse_exact": true,
+  "entry_sha256_unchanged": "b68b070642e0e1dffa54bfaae94357ef0c83f4746ba7858928fd1506847afc15"
+}

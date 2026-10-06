@@ -1,0 +1,42 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-relocation-preparation01-2026-10-06/relocate01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-relocation-retire-disposition02-2026-10-06/relocate01.py
+@@ -122,18 +122,37 @@
+     need(TARGET.resolve(strict=True)==TARGET and set(p.name for p in TARGET.parent.iterdir())=={'ledger.sqlite'} and sig(TARGET.lstat())==target['stat_identity'],'copy currentness differs')
+     for name in ('retire-attempt01.json','retire-complete01.json','retire-failed01.json','relocation-receipt01.json'):need(not os.path.lexists(here/name),'retirement identity already spent')
+     publish(here/'retire-attempt01.json',{'identity':ID,'copy_receipt':copy_ref,'copy_review':release['copy_review'],'no_retry':True})
++    attempted=[];removed=[];stage='opening-held-descriptors'
+     try:
+         with os.fdopen(os.open(ROOT/row['path'],os.O_RDONLY|os.O_NOFOLLOW),'rb') as src, os.fdopen(os.open(TARGET,os.O_RDONLY|os.O_NOFOLLOW),'rb') as dst:
+             for handle in (src,dst):fcntl.flock(handle.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
+             need(m.identity(os.fstat(src.fileno()))==row['stat_identity'] and sig(os.fstat(dst.fileno()))==target['stat_identity'],'held source/destination differs')
+             m.inactive();m.current(ROOT,row);need(sig(TARGET.lstat())==target['stat_identity'],'destination drift before unlink')
+-            (ROOT/row['path']).unlink();syncdir((ROOT/row['path']).parent)
++            stage='unlink-original';attempted.append(row['path'])
++            (ROOT/row['path']).unlink();removed.append(row['path'])
++            stage='sync-original-parent';syncdir((ROOT/row['path']).parent)
++            stage='verify-post-unlink-disposition'
+             need(not os.path.lexists(ROOT/row['path']) and sig(TARGET.lstat())==target['stat_identity'],'retirement disposition differs')
++            stage='close-held-descriptors'
++        stage='verify-retained-partial-arrays'
+         for item in c['recovery_selection']['rows'][1:]:m.current(ROOT,item['original'])
+         evidence={'identity':ID,'original':row,'target':target,'source_retired':True,'original_retired':True,'copy_receipt':copy_ref,'copy_review':release['copy_review'],'two_partial_arrays_retained':True,'original_parent_status':'failed','no_retry':True}
++        stage='publish-retirement-complete'
+         publish(here/'retire-complete01.json',evidence)
+         ref={'path':str((here/'retire-complete01.json').relative_to(ROOT)),'sha256':hashlib.sha256((here/'retire-complete01.json').read_bytes()).hexdigest()}
+         final={'schema_version':1,'kind':'closed-ledger-cross-volume-relocation','identity':CONSUMER,'predecessor':GRAPH,'original_claim_sha256':record['original_claim_sha256'],'original_source':record['original_source'],'original':{k:row[k] for k in ('path','bytes','sha256')},'target':target,'copy_readback_verified':True,'external_byte_recovery_verified':True,'original_retired':True,'retirement_evidence':ref}
++        stage='publish-consumer-bridge'
+         publish(here/'relocation-receipt01.json',final)
+-    except BaseException as error:failure(here,'retire-failed01.json',error);raise
++    except BaseException as error:
++        # Successful unlink return is evidence even if fsync/close/publication then fails.
++        # An attempted unlink without a successful return remains ambiguous, never coerced to success.
++        disposition={'identity':ID,'error_type':type(error).__name__,'message':str(error),
++            'stage':stage,'unlink_attempted':attempted,'removed':removed,
++            'ambiguous_attempts':[p for p in attempted if p not in removed],
++            'source_retired':True if row['path'] in removed else (None if attempted else False),
++            'original':row,'target':target,'copy_receipt':copy_ref,'copy_review':release['copy_review'],
++            'original_parent_status':'failed','no_retry':True,'partials_retained':True}
++        try:publish(here/'retire-failed01.json',disposition)
++        except BaseException as secondary:error.add_note('Retirement failure disposition unavailable: '+repr(secondary))
++        raise
+     return final

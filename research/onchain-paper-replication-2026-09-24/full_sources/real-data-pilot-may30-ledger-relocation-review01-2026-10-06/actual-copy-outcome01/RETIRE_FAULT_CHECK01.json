@@ -1,0 +1,41 @@
+{
+  "decision": "pass",
+  "exact_literal_inverse": true,
+  "all_AST_outside_retire_unchanged": true,
+  "entry_byte_unchanged": true,
+  "synthetic_actual_retire_body_faults": [
+    {
+      "fault": "post-unlink-sync",
+      "stage": "sync-original-parent",
+      "source_retired": true,
+      "removed": [
+        "original.sqlite"
+      ],
+      "ambiguous_attempts": [],
+      "original_exception_preserved": true
+    },
+    {
+      "fault": "uncertain-unlink",
+      "stage": "unlink-original",
+      "source_retired": null,
+      "removed": [],
+      "ambiguous_attempts": [
+        "original.sqlite"
+      ],
+      "original_exception_preserved": true
+    },
+    {
+      "fault": "bridge-publication",
+      "stage": "publish-consumer-bridge",
+      "source_retired": true,
+      "removed": [
+        "original.sqlite"
+      ],
+      "ambiguous_attempts": [],
+      "original_exception_preserved": true
+    }
+  ],
+  "real_payload_reads_or_unlinks": 0,
+  "genuine_authority_constructed": false,
+  "close_fault_not_separately_injected": "Same catch preserves recorded lists; actual close path reviewed statically."
+}
