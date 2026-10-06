@@ -1,0 +1,47 @@
+{
+  "baseline_sha256": "5f80a0906bc71b3fec06c1fb3fb4a868a95f00bb89f6b5de9cbea754e80ff29d",
+  "candidate_sha256": "79c6ecf1bb406626bfe2a0acc86780d2edf3a2a9550124c818e0ee65b7418c16",
+  "exact_inverse": true,
+  "edits": [
+    {
+      "old": "b",
+      "new": "r",
+      "candidate_offset": 9124
+    },
+    {
+      "old": "gi",
+      "new": "tur",
+      "candidate_offset": 9126
+    },
+    {
+      "old": "=",
+      "new": " self._check(",
+      "candidate_offset": 9130
+    },
+    {
+      "old": ";",
+      "new": ",retry_birth=True)\n    def _check(self,begin,*,retry_birth):\n        ",
+      "candidate_offset": 9159
+    },
+    {
+      "old": "",
+      "new": "b",
+      "candidate_offset": 12657
+    },
+    {
+      "old": "f ",
+      "new": "rth_during_scan=",
+      "candidate_offset": 12659
+    },
+    {
+      "old": ":raise ValueError('experiment born during scan; complete new observation required')",
+      "new": "",
+      "candidate_offset": 12709
+    },
+    {
+      "old": "",
+      "new": ")\n        if birth_during_scan:\n            if not retry_birth:raise ValueError('experiment born during scan; complete new observation required')\n            # Discard all first-pass totals. The complete new observation retains\n            # the original deadline and every identity pinned during this pass.\n            return self._check(begin,retry_birth=False",
+      "candidate_offset": 13255
+    }
+  ]
+}

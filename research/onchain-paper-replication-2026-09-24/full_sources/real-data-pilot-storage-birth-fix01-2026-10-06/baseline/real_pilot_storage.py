@@ -4,7 +4,7 @@ from pathlib import Path
 from types import MappingProxyType
 from .workflow_storage import StorageWatch,StorageLimit,FIELDS,_close
 KIND='real-pilot-writable-union'
-EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261006-07'
+EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261006-06'
 COUNTS={'allocated_bytes':'max_allocated_bytes','logical_file_bytes':'max_logical_bytes','entries':'max_entries'}
 
 def selected(budget):return type(budget) is dict and budget.get('schema_version')==2
@@ -123,9 +123,7 @@ class WritableUnion:
         self.identities[1]={'root':str(self.target),'device':s.st_dev,'inode':s.st_ino,'state':'observed-born'}
         return s
     def check(self):
-        return self._check(time.monotonic(),retry_birth=True)
-    def _check(self,begin,*,retry_birth):
-        residuals=residual_check(self.root,begin=begin,identities=self.residual_identities)
+        begin=time.monotonic();residuals=residual_check(self.root,begin=begin,identities=self.residual_identities)
         total={k:0 for k in (*COUNTS,'regular_files','directories')};observations=[]
         def enforce():
             for key,limit in COUNTS.items():
@@ -171,7 +169,7 @@ class WritableUnion:
         total['allocated_bytes']+=max(0,(last_parent.st_blocks-parent.st_blocks)*512)
         # Birth during an absence observation is not silently credited as empty.
         after=self._birth()
-        birth_during_scan=born is None and after is not None
+        if born is None and after is not None:raise ValueError('experiment born during scan; complete new observation required')
         a=self.artifact.root.lstat()
         if (a.st_dev,a.st_ino)!=self.artifact.identity or self.artifact.root.resolve(strict=True)!=self.artifact.root:raise ValueError('artifact root changed')
         l=self.lock.lstat()
@@ -179,11 +177,6 @@ class WritableUnion:
         total['allocated_bytes']+=max(0,(l.st_blocks-lock_start.st_blocks)*512)
         total['logical_file_bytes']+=max(0,l.st_size-lock_start.st_size)
         enforce()
-        if birth_during_scan:
-            if not retry_birth:raise ValueError('experiment born during scan; complete new observation required')
-            # Discard all first-pass totals. The complete new observation retains
-            # the original deadline and every identity pinned during this pass.
-            return self._check(begin,retry_birth=False)
         return {**total,'residual_domains':residuals,'roots':observations,'root_identities':[dict(x) for x in self.identities],'shared_parent_identity':list(self.parent_identity),'authority_root':str(self.root),'elapsed_seconds':time.monotonic()-begin,'qualification':'Sampled exact writer closure including shared parent directory allocation and lock. Historical claim siblings/source/runtime outside writer scope; no kernel quota, atomic snapshot, or absent-tree allocation credit.'}
 
 def environment(root,original):

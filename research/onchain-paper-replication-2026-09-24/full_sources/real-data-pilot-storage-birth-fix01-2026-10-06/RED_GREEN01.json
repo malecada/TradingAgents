@@ -1,0 +1,76 @@
+{
+  "checks": [
+    {
+      "mode": "birth",
+      "accepted": false,
+      "reason": "experiment born during scan; complete new observation required",
+      "artifact_scans": 1,
+      "single_begin": true
+    },
+    {
+      "mode": "birth",
+      "accepted": true,
+      "logical_file_bytes": 13,
+      "artifact_scans": 2,
+      "single_begin": true
+    },
+    {
+      "mode": "rebirth",
+      "accepted": false,
+      "reason": "watched writer root replaced",
+      "artifact_scans": 2,
+      "single_begin": true
+    },
+    {
+      "mode": "deletion",
+      "accepted": false,
+      "reason": "[Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-birth-fix01-2026-10-06/tmpekeprdr7/research_runs/eth-paper-real-data-end-to-end-resource-20261006-06'",
+      "artifact_scans": 2,
+      "single_begin": true
+    },
+    {
+      "mode": "link",
+      "accepted": false,
+      "reason": "storage special file or symbolic link refused",
+      "artifact_scans": 1,
+      "single_begin": true
+    },
+    {
+      "mode": "size",
+      "accepted": false,
+      "reason": "storage logical limit exceeded",
+      "artifact_scans": 2,
+      "single_begin": true
+    },
+    {
+      "mode": "residual",
+      "accepted": false,
+      "reason": "storage logical limit exceeded",
+      "artifact_scans": 1,
+      "single_begin": true
+    },
+    {
+      "mode": "lock",
+      "accepted": false,
+      "reason": "shared lock changed during scan",
+      "artifact_scans": 2,
+      "single_begin": true
+    },
+    {
+      "mode": "parent",
+      "accepted": false,
+      "reason": "[Errno 2] No such file or directory: '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-birth-fix01-2026-10-06/tmp57pt1gdr/research_runs/eth-paper-real-data-end-to-end-resource-20261006-06'",
+      "artifact_scans": 2,
+      "single_begin": true
+    },
+    {
+      "mode": "time",
+      "accepted": false,
+      "reason": "storage aggregate time limit exceeded",
+      "artifact_scans": 2,
+      "single_begin": true
+    }
+  ],
+  "count": 10,
+  "scope": "tiny temporary trees only; no empirical reads or claims"
+}

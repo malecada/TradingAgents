@@ -1,0 +1,20 @@
+{
+  "status": "candidate-ready",
+  "candidate_sha256": "79c6ecf1bb406626bfe2a0acc86780d2edf3a2a9550124c818e0ee65b7418c16",
+  "focused_checks": 10,
+  "reviewed_offline": {
+    "module": "tests/research/onchain_replication/test_workflow_storage_guard.py",
+    "passed": 5,
+    "seconds": 0.17,
+    "exit_code": 0,
+    "scope": "unchanged underlying StorageWatch tests on live baseline; candidate race checks separate"
+  },
+  "runtime": "checkout-local .venv Python3.13.13",
+  "expected_failure": "baseline absent-to-born during scan reproduced and retained",
+  "unexpected_failures": [],
+  "remaining_uncertainty": [
+    "Sampled observation remains non-atomic; no hard quota or finite inter-sample growth bound.",
+    "No empirical execution or actual future claim tested.",
+    "Root must bind fixed fresh07 identity and registered source pins."
+  ]
+}
