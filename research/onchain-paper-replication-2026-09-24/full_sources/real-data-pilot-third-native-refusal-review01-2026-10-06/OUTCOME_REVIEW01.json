@@ -1,0 +1,93 @@
+{
+  "attempt_extent": {
+    "MCM_work_completed": 0,
+    "financial_fits": 0,
+    "guard_release_marker_exists": false,
+    "launch_reserved": true,
+    "monitor_owner_reserved": true,
+    "native_setup_attempted": true,
+    "observer_status": "not_admitted",
+    "researchrun_claim": null,
+    "researchrun_namespace_exists": false,
+    "source_namespace_exists": false,
+    "training_updates": 0
+  },
+  "current_cleanup": {
+    "lifetime_process_history": null,
+    "qualification": "Three selected recorded PIDs absent now; original actual unit/guard/storage closure evidence joined. No lifetime inventory or fresh native command.",
+    "recorded_cgroup_absent": true,
+    "recorded_pid_exists": {
+      "143840": false,
+      "144105": false,
+      "144425": false
+    }
+  },
+  "decision": "accepted",
+  "disposition": "TERMINAL_NATIVE_SETUP_REFUSAL_BEFORE_RESEARCHRUN_CLAIM; reserved launch and monitor-owner identity is closed and must never be reused.",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/FINAL_STORAGE01.json": "b10d3ef10a1385e2945e7ae9ec839316a1ae2a7858096696b51fbf924456ac2b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/REMOTE_CONFIRMATION02.json": "d6c1f3f1abf8dde9a5921cd765d432e38413c0aebbcc5e533d1793d4e57fc724",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/ROOT_IO_CLOSED01.json": "e388ef16a0193ff62da9f8732a17fafb1ddc34afb91835c3378cfd8af210889f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/ROOT_TERMINAL01.json": "2b3c1022c09585d5f3fb4ed9e7b58bf397e4c6f9f56c28ee738eb21ffdc03d47",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/launch-attempt01.json": "569ee1269bd83dbccb221023c06a64edc44b9ed7e9c8861ac1e24c645079ae00",
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261006-03/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261006-03/stdout.log": "50c930b513104b88855587af993ee918964ad532cc6e5cf8ccee47019dc1a5eb",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-03/guard/child.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-03/guard/child_exit.json": "fb132cbb4417b6201b9aff2f3609109fa6976adf9ec1d88d4c93bc498ff6da14",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-03/guard/cpu_ready.json": "d4266a852ce21abbfa7630a573017148fc17a66aa737b1a9be6998bc9a6a7871",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-03/guard/final.json": "3e7cc2dd933dd8d8286416d2814e7523f1079ba74eb241ed773d9c0760763306",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-03/guard/live.json": "3e7cc2dd933dd8d8286416d2814e7523f1079ba74eb241ed773d9c0760763306",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-03/launch.json": "259897c194fb6e6d4e1d298f3306cfab5ac32302e4b4352340a2850a683bd493",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-03/monitor-file-limit.json": "c280182206c3b9d07edf29d9bbd796d8594fff9e6b1080a1f733e5404c74bca2",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-03/observer.json": "079ce9c1c5a0a9468ceeb0d2b7bcce1529d5fa6899ec6e2b566e76e5aade05d0",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-03/owner.json": "f91ab62c5aa52d9b9f16e907a5f960a53500b05f718d7d95c11754f3cd21ed54"
+  },
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-03",
+  "increment_selection": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-third-native-refusal-review01-2026-10-06/INCREMENT_SELECTION01.json",
+    "sha256": "f811e0db9d6c61391cf3e8300deb5a4a5dc2e8e45a58418aba89c03fbf55d42a"
+  },
+  "native": {
+    "cleanup_stop_returncode": 0,
+    "cleanup_verified": true,
+    "elapsed_seconds": 4.44281520200002,
+    "limit_reason": "RuntimeError: host reserve fell during cgroup setup",
+    "observed_host_mem_available_bytes": 9658896384,
+    "original_child_exit_code": null,
+    "phase": "failed",
+    "separate_launcher_child_receipt": {
+      "exit_code": 125,
+      "reason": "signal before release",
+      "workload_pid": null
+    },
+    "separate_original_unit_properties": {
+      "ActiveState": "failed",
+      "ControlGroup": "",
+      "ExecMainStatus": "125",
+      "Result": "exit-code",
+      "SubState": "failed"
+    },
+    "shortfall_bytes": 4780032,
+    "unchanged_start_reserve_bytes": 9663676416
+  },
+  "not_tested": [
+    "No scientific timing/leakage/return/cashflow/fees/funding or capacity claim tested.",
+    "No private/runtime/scientific/raw/array bodies read; no numerical imports, network/native calls or experiment rerun.",
+    "No archive or external recovered-byte proof yet; later exact returned archive/member acceptance required."
+  ],
+  "parent": {
+    "actual_parent_exit_code": 1,
+    "at": "2026-10-06T12:43:56.367778+00:00",
+    "outer_log_handles_closed": true,
+    "supervisor_pid": 143840,
+    "supervisor_reaped": true
+  },
+  "qualification": "Original guard child-exit null and workload-pid null remain unknown. Root/parent1 and launcher/systemd125 are separate fields, never substituted. No scientific claim, financial-ledger row, budget count, refund or trial outcome fabricated. This closed reserved identity must not be reused.",
+  "root_actual_exit": {
+    "exit_code": 1,
+    "session": 62222,
+    "terminal_chunk": "36e8c2"
+  },
+  "schema_version": 1,
+  "source": "2f5f855b26b75dea541dfa26ee9dd03917b8a58a"
+}

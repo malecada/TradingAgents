@@ -1,6 +1,12 @@
 # Current replication checkpoint
 
-**Authorized task: one representative Ethereum real-data pilot.** Broader13tasks/1420fits/heartbeat PAUSED; appgoalPAUSED/directworkcontinues. No native active, source/GitfreezeENDED.
+**Authorized task: one representative Ethereum real-data pilot.** Broader13tasks/1420fits/heartbeat PAUSED; appgoalPAUSED/directworkcontinues. No native active; source/GitfreezeENDED.
+
+**TOP 2026-10-06T12:45:29.753057+00:00: inventory-memory fix accepted;03 terminal native setup refusal before any scientific claim.** Committed source and actualremoteHEAD2f5f855b26b75dea541dfa26ee9dd03917b8a58a matched. Exact one-call inventory isolation passed registered equality and narrow independent ce16/release11a692; numerical179sourcepins/59inputs/caps/method unchanged. Root62222/36e8c2 exited1. Preflight passed available9677357056B, but native setup4.442815202s refused at9658896384B against frozen9663676416B startup threshold. [Actual terminal](full_sources/real-data-pilot-final03-2026-10-06/ROOT_TERMINAL01.json) retains original child_exit=null, separate actualRoot/parent1/systemd125, genuine monitorOwner and verifiedcleanup. Cgroup and recorded PIDs absent. No ResearchRun namespace/claim exists; no MCM/update/fits.03 launch/Owner namespaces are RESERVED/CLOSED: never relaunch03, despite no paper claim.
+
+Physical capacity is not established. Available RAM is too close to9GiB for stable native entry; limits will not be lowered. Next safe action: authenticate/preserve/recover this tiny actual refusal increment; then use a separately fixed unused reviewed identity only with fresh sufficient headroom. No accounting refund/transfer or invented empirical claim. Actual paper45closed33COMPLETE12FAILED/highestclaimed73 remains unchanged; amendment74 fixes03 and cannot silently authorize another identity.02permanentlyFAILED438s/0MCM and38fileBYTErecovery84c571 accepted. Original32motifs512samples/sevenfullgraphs/model20f451/trainingd527/6GiBnative/16-20GiBwritable/10GiBfloor unchanged. Root owns integration/accounting/STATE/Git/preservation/ONElauncher; focused outcome review pending. No xsectchange or broad work resumed.
+
+Earlier dated TOPs below superseded; originals retained.
 
 **TOP 2026-10-06T12:41:38.626298+00:00: fresh03 full entry refused RAM before any attempt/claim; bounded inventory isolation and final delta release accepted.** Actual source/remote505da2a7bf0e8e0feb88107c9bb0f8573cd37157 matched. Root96338/883fdb exited1 at the unchanged9GiB startup guard; [refusal](full_sources/real-data-pilot-final03-2026-10-06/PREFLIGHT_RAM_REFUSAL01.json) preserves during-preflight memory as unknown and after-exit memory separately. All03 namespaces/claim/launch-attempt remain absent; no allowance spent.
 
