@@ -1,0 +1,3 @@
+Accepted exact unchanged87cbe caller and cb2eb request binding to actual a6e76 full36 BYTE recovery. Nine requested compact evidence hashes matched. Original ledger and recovered get11 match the independently reviewed stat identities; no payload was reread. Fixed two-path retirement totals6,621,847,552B; original arrays remain. Caller execution retains source/evidence, active-consumer/native-unit, recovered SHA and one-use checks. No retirement performed or capacity/POSIX/current-remote claim.
+
+Focused check815010 exited0. Earlier inline check41eeac failed on a reviewer-guessed source path; the actual selection path was used in the retained checker. No release or payload read occurred during that failure.

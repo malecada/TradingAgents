@@ -1,0 +1,25 @@
+--- check_outcome01.py
++++ check_outcome02.py
+@@ -20,17 +20,18 @@
+ basis=read(M/c['independent_body_hash']['path']);assert evidence[c['independent_body_hash']['path']]==c['independent_body_hash']['sha256']=='2bf6627ac13cd5d91bc42515809af5efdcd9e626b373776e9c68385e7ca995f7'; payloads={r['path']:r for r in basis['files']};assert len(payloads)==6
+ read(M/c['graph_outcome_review']['path']);assert evidence[c['graph_outcome_review']['path']]==c['graph_outcome_review']['sha256']=='3de45221f0d1cd8571c0b4e92a71a9f9295271c87a69b8cd820af2f1fe777347'
+ final=read(S/'guard01/final.json');outer=read(S/'outer-exit01.json');terminal=read(S/'ROOT_TERMINAL01.json');child=read(S/'guard01/child_exit.json');ready=read(S/'guard01/cpu_ready.json');running=read(S/'ROOT_RUNNING01.json')
+-assert terminal['actual_root_tool_session']==EXPECTED['root_session'] and terminal['actual_root_tool_completion_chunk']==EXPECTED['root_completion_chunk'] and terminal['actual_root_tool_exit_code']==0
+-assert terminal['actual_outer']==outer and final['phase']=='complete' and final['child_exit_code']==child['exit_code']==outer['entry_selected_exit_code']==0 and final['cleanup_verified'] is True and outer['fatal_type'] is None and final['limit_reason'] is None
++assert terminal['actual_root_tool_session']==EXPECTED['root_session'] and terminal['actual_root_tool_chunk']==EXPECTED['root_completion_chunk'] and terminal['actual_root_tool_exit_code']==0
++assert terminal['identity']==outer['identity']==EXPECTED['identity'] and terminal['complete_sha256']==EXPECTED['complete_sha256'] and terminal['guard_final_sha256']==evidence[str((S/'guard01/final.json').relative_to(M))] and outer['guard_child_exit_code']==0 and outer['cleanup_verified'] is True and final['phase']=='complete' and final['child_exit_code']==child['exit_code']==outer['entry_selected_exit_code']==0 and final['cleanup_verified'] is True and outer['fatal_type'] is None and final['limit_reason'] is None
+ assert final['cleanup_unit_properties']['ActiveState']=='inactive' and final['cleanup_unit_properties']['SubState']=='dead'
+ assert not Path(final['cgroup']).exists()
+ assert final['memory_max_bytes']==256*1024**2 and final['memory_high_bytes']==192*1024**2 and final['memory_swap_max_bytes']==0 and final['wall_seconds']==14400 and final['disk_floor_bytes']==10*1024**3 and final['storage_budget']['limits']['max_allocated_bytes']==5*1024**3
+ assert final['elapsed_seconds']<final['wall_seconds'] and all(final['memory_events'][k]==0 for k in ('max','oom','oom_kill'))
+ assert final['owner_identity'] is None
+ pids={int(p) for p in final['cpu_thread_readback']}|{final['monitor_pid'],child['workload_pid'],ready['pid']}
+-recorded=set(map(int,terminal.get('selected_recorded_pids_absent',terminal.get('selected_recorded_pids',[]))))
++assert terminal['selected_recorded_pids_absent'] is True and terminal['actual_current_cgroup_absent'] is True
++recorded=set(map(int,terminal['actual_selected_recorded_pids']))
+ assert pids<=recorded and recorded and all(not Path('/proc',str(pid)).exists() for pid in recorded);pids|=recorded
+-assert final['command'][-2:]==[str(S/'entry01.py'),'--worker'] and running['source']==terminal['source']==EXPECTED['source']
++assert final['command'][-2:]==[str(S/'entry01.py'),'--worker'] and running['source_commit']==terminal['source_commit']==EXPECTED['source']
+ for name in ['preflight01.json','launch-attempt01.json','ROOT_REMOTE_CONFIRMATION01.json','guard01/release.json','guard01/child.log','entry01.py','envelope01.json','RELEASE_REVIEW01.json']:
+  raw(S/name)
+ assert evidence[str((S/'entry01.py').relative_to(M))]=='87d4fa670613485a518f7a6399ee5f2455723a068bdb60d2ed085256f2936fc6'

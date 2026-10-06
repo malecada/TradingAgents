@@ -1,0 +1,27 @@
+{
+  "decision": "pass",
+  "literal_inverses": 2,
+  "syntax": 2,
+  "launch_byte_identical": true,
+  "actual_metadata_refusals": [
+    {
+      "case": "missing",
+      "refused": "KeyError",
+      "message": "'storage_closure_review'"
+    },
+    {
+      "case": "corrupt_actual_hash",
+      "refused": "ValueError",
+      "message": "exact bounded preceding proof differs: storage_closure_review"
+    },
+    {
+      "case": "wrong_genuine_backup",
+      "refused": "ValueError",
+      "message": "independent actual full36 BYTE acceptance required"
+    }
+  ],
+  "future_success_path_unexecuted": true,
+  "payload_reads": 0,
+  "native_calls": 0,
+  "numerical_imports": false
+}

@@ -1,0 +1,82 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-first-graph-get-duplicates-retirement01-2026-10-06/retire01.py
++++ retire01.py
+@@ -1,14 +1,14 @@
+-"""One-use retirement of exactly five verified May2 array get duplicates; never originals."""
++"""One-use retirement of exactly five verified May16 array get duplicates; never originals."""
+ from pathlib import Path
+ import fcntl, hashlib, importlib.util, json, os, stat, subprocess, sys
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+-ID='real-pilot-first-graph-get-duplicates-retirement-20261006-01'
+-BACKUP='research/onchain-paper-replication-2026-09-24/storage/real-pilot-first-graph-preservation-20261006-01'
++ID='real-pilot-third-graph-get-duplicates-retirement-20261006-01'
++BACKUP='research/onchain-paper-replication-2026-09-24/storage/real-pilot-third-graph-preservation-20261006-01'
+ COLD='research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-03/offload.py'
+ COLD_SHA='0d507711644d962e494e659987ba0a6d479304af7092ba15315630d0b68e1a84'
+ INDICES=(21,22,23,25,26)
+-ORIGINAL_PARENT='research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02'
++ORIGINAL_PARENT='research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16'
+ 
+ 
+ def require(ok,message):
+@@ -37,7 +37,7 @@
+ 
+ def selected(root,c):
+     require(c['identity']==ID and c['schema_version']==1 and c['count']==5
+-        and c['retire_bytes']==509060512 and len(c['rows'])==5,'fixed selection differs')
++        and c['retire_bytes']==544741248 and len(c['rows'])==5,'fixed selection differs')
+     require(tuple(r['index'] for r in c['rows'])==INDICES,'fixed five indices differ')
+     originals=[];gets=[]
+     for row in c['rows']:
+@@ -66,6 +66,43 @@
+             require(not path.is_relative_to(ROOT/BACKUP) and not path.is_relative_to(ROOT/ORIGINAL_PARENT),'active registered consumer references selected scope')
+ 
+ 
++def recovery(root,c):
++    basis=c['recovery_basis']
++    require(type(basis) is dict and set(basis)=={'outcome_review','ledger_complete','ledger_root','ledger_entry'},'actual recovery/retirement refs required')
++    def bound(ref):
++        require(type(ref) is dict and set(ref)=={'path','sha256'} and c['evidence'].get(ref['path'])==ref['sha256'],'actual exact recovery ref required')
++        return json.loads(metadata(root,ref['path'],ref['sha256']))
++    def receipt(name):
++        path=BACKUP+'/'+name
++        require(path in c['evidence'],'actual backup receipt missing')
++        return json.loads(metadata(root,path,c['evidence'][path]))
++    outcome=bound(basis['outcome_review'])
++    require(outcome['decision']=='accepted' and outcome['identity']==Path(BACKUP).name
++        and outcome['full_scope_byte_recovery'] is True,'actual full36 BYTE acceptance required')
++    for name in ('complete.json','recovered-complete.json','guard01/final.json','outer-exit01.json','ROOT_TERMINAL01.json'):
++        path=BACKUP+'/'+name
++        require(path in c['evidence'] and outcome['evidence'].get(path)==c['evidence'][path],'independent backup evidence join differs')
++    complete=receipt('complete.json')
++    require(complete==receipt('recovered-complete.json') and complete['identity']==Path(BACKUP).name
++        and complete['count']==len(complete['files'])==36 and complete['originals_retained'] is True
++        and complete['recoveries_retained'] is True,'complete36 backup differs')
++    require(receipt('ROOT_TERMINAL01.json')['actual_root_tool_exit_code']==0,'actual backup Root zero required')
++    for row in c['rows']:
++        kept=json.loads(metadata(root,row['kept'],c['evidence'][row['kept']]))
++        require(complete['files'][row['index']]==kept,'selected get/full36 join differs')
++    entry=basis['ledger_entry']
++    require(type(entry) is dict and set(entry)=={'path','sha256'}
++        and entry['sha256']=='87cbe18ecb421b5850e3cbed8a4f5d3f9516b2129d3d0cc034197c9f5f6ff035'
++        and c['evidence'].get(entry['path'])==entry['sha256'],'exact reviewed ledger entry required')
++    metadata(root,entry['path'],entry['sha256'])
++    retired=bound(basis['ledger_complete']);root_exit=bound(basis['ledger_root'])
++    require(retired['identity']=='real-pilot-third-graph-ledger-retirement-20261006-01'
++        and retired['preservation_backup']==Path(BACKUP).name and retired['payload_bytes_retired']==6621847552
++        and retired['arrays_retained'] is True and retired['removed']==c['removed_ledger_paths']
++        and root_exit['actual_root_exit_code']==0 and root_exit['complete_sha256']==basis['ledger_complete']['sha256'],
++        'actual exact ledger-pair retirement and Root zero required')
++
++
+ def execute(review_path,review_sha):
+     review_path=Path(review_path).resolve(strict=True)
+     review=json.loads(metadata(ROOT,str(review_path.relative_to(ROOT)),review_sha))
+@@ -76,6 +113,7 @@
+     require(c['status']=='FROZEN_FOR_REVIEW','draft selection cannot execute')
+     for relative,pin in c['evidence'].items():metadata(ROOT,relative,pin)
+     for relative,pin in review['evidence'].items():metadata(ROOT,relative,pin)
++    recovery(ROOT,c)
+     for relative in c['removed_ledger_paths']:require(not os.path.lexists(ROOT/relative),'retired ledger reappeared')
+     final=json.loads(metadata(ROOT,BACKUP+'/guard01/final.json'))
+     outer=json.loads(metadata(ROOT,BACKUP+'/outer-exit01.json'))

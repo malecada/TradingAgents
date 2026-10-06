@@ -1,0 +1,89 @@
+{
+  "candidate_sha256": "e6d4102e8e5ebcf366ae7c96f8a04af0d3ce811be1a30f88df439d5cb9dfaed7",
+  "edits": [
+    {
+      "after": "storage/real-pilot-third-graph-preservation-20261006-01",
+      "before": "storage/real-pilot-first-graph-preservation-20261006-01",
+      "occurrences": 1
+    },
+    {
+      "after": "evidence={}\n# This file must be created only after Root reports the actual terminal.\nEXPECTED=json.loads((D/'ACTUAL_TERMINAL_BINDING01.json').read_bytes())\nassert EXPECTED['identity']=='real-pilot-third-graph-preservation-20261006-01' and EXPECTED['root_session']==61305 and EXPECTED['root_exit_code']==0\nassert EXPECTED['source'].startswith('40b8d643') and len(EXPECTED['source'])==40\n",
+      "before": "evidence={}\n",
+      "occurrences": 1
+    },
+    {
+      "after": "==EXPECTED['complete_sha256']",
+      "before": "=='c7c95a2c8e7dac4c10d367324c7540cfdbe1996f2b9399627931c25a3f1b34b3'",
+      "occurrences": 1
+    },
+    {
+      "after": "3855758671",
+      "before": "3794768609",
+      "occurrences": 3
+    },
+    {
+      "after": "c=read(S/'selection01.json');assert evidence[str((S/'selection01.json').relative_to(M))]=='414c7cc42118d1f1fabd352dce7d3dba14cfe140ad40aa32aa8f8a20b1736151';complete_raw",
+      "before": "c=read(S/'selection01.json');complete_raw",
+      "occurrences": 1
+    },
+    {
+      "after": "assert evidence[c['independent_body_hash']['path']]==c['independent_body_hash']['sha256']=='2bf6627ac13cd5d91bc42515809af5efdcd9e626b373776e9c68385e7ca995f7';",
+      "before": "assert evidence[c['independent_body_hash']['path']]==c['independent_body_hash']['sha256'];",
+      "occurrences": 1
+    },
+    {
+      "after": "assert evidence[c['graph_outcome_review']['path']]==c['graph_outcome_review']['sha256']=='3de45221f0d1cd8571c0b4e92a71a9f9295271c87a69b8cd820af2f1fe777347'",
+      "before": "assert evidence[c['graph_outcome_review']['path']]==c['graph_outcome_review']['sha256']",
+      "occurrences": 1
+    },
+    {
+      "after": "terminal['actual_root_tool_session']==EXPECTED['root_session'] and terminal['actual_root_tool_completion_chunk']==EXPECTED['root_completion_chunk']",
+      "before": "terminal['actual_root_tool_session']==12884 and terminal['actual_root_tool_completion_chunk']=='785e19'",
+      "occurrences": 1
+    },
+    {
+      "after": "recorded=set(map(int,terminal.get('selected_recorded_pids_absent',terminal.get('selected_recorded_pids',[]))))\nassert pids<=recorded and recorded and all(not Path('/proc',str(pid)).exists() for pid in recorded);pids|=recorded",
+      "before": "assert set(map(int,terminal['selected_recorded_pids_absent']))==pids",
+      "occurrences": 1
+    },
+    {
+      "after": "entry01.py",
+      "before": "entry03.py",
+      "occurrences": 2
+    },
+    {
+      "after": "running['source']==terminal['source']==EXPECTED['source']",
+      "before": "running['source']==terminal['source']=='1a25eaec1192c9427966647bd2840286a79a8376'",
+      "occurrences": 1
+    },
+    {
+      "after": "'envelope01.json','RELEASE_REVIEW01.json'",
+      "before": "'envelope03.json','RELEASE_REVIEW03.json','READ_ONLY_REFUSAL01.json'",
+      "occurrences": 1
+    },
+    {
+      "after": "retire=F/'real-data-pilot-third-graph-post-recovery-retirement-preparation01-2026-10-06/retire01.py';assert hashlib.sha256(raw(retire)).hexdigest()=='87cbe18ecb421b5850e3cbed8a4f5d3f9516b2129d3d0cc034197c9f5f6ff035'",
+      "before": "retire=F/'real-data-pilot-first-graph-post-recovery-retirement01-2026-10-06/retire02.py';assert hashlib.sha256(raw(retire)).hexdigest()=='93b938adbd7f5ef25b4946c8bb2f23973c14a4e73fdb8761c1dd5ce20756dc9d'",
+      "occurrences": 1
+    },
+    {
+      "after": "F/'real-data-pilot-third-graph-preservation-preparation01-2026-10-06/keep.py'",
+      "before": "F/'real-data-pilot-first-graph-preservation-worker01-2026-10-06/keep.py'",
+      "occurrences": 1
+    },
+    {
+      "after": "assert evidence[str((S/'entry01.py').relative_to(M))]=='87d4fa670613485a518f7a6399ee5f2455723a068bdb60d2ed085256f2936fc6'\nassert evidence[str((S/'envelope01.json').relative_to(M))]=='b29b74270b4fbe44bcd03721cdf82ae9a12d072b2732ef436174ab944819ed6e'\nassert evidence[str((S/'RELEASE_REVIEW01.json').relative_to(M))]==EXPECTED['release_sha256']\nassert not (S/'failed.json').exists()",
+      "before": "assert not (S/'failed.json').exists()",
+      "occurrences": 1
+    },
+    {
+      "after": "assert hashlib.sha256(raw(F/'real-data-pilot-third-graph-preservation-preparation01-2026-10-06/keep.py')).hexdigest()=='fd310528a42f16e1c4590e282622340faaefc99d9e30645f5082a85969b79bfa'\n# Exactly one independent streamed pass over only the six recovered scientific bodies.",
+      "before": "# Exactly one independent streamed pass over only the six recovered scientific bodies.",
+      "occurrences": 1
+    }
+  ],
+  "exact_inverse": true,
+  "executed": false,
+  "original_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-first-graph-preservation-outcome-review01-2026-10-06/check_outcome01.py",
+  "original_sha256": "f6827a6f511edc8c805531d786dbae99e085857be9070dd851016461e1abf20b"
+}

@@ -1,0 +1,28 @@
+{
+  "original_preserved": true,
+  "original_sha256": "e6d4102e8e5ebcf366ae7c96f8a04af0d3ce811be1a30f88df439d5cb9dfaed7",
+  "corrected_sha256": "9c2750bbc89a97a6706367f099b94b57888d775af3f03a501e5a2091943b9966",
+  "exact_inverse": true,
+  "edits": [
+    [
+      "terminal['actual_root_tool_completion_chunk']",
+      "terminal['actual_root_tool_chunk']"
+    ],
+    [
+      "terminal['actual_outer']==outer",
+      "terminal['identity']==outer['identity']==EXPECTED['identity'] and terminal['complete_sha256']==EXPECTED['complete_sha256'] and terminal['guard_final_sha256']==evidence[str((S/'guard01/final.json').relative_to(M))] and outer['guard_child_exit_code']==0 and outer['cleanup_verified'] is True"
+    ],
+    [
+      "recorded=set(map(int,terminal.get('selected_recorded_pids_absent',terminal.get('selected_recorded_pids',[]))))",
+      "assert terminal['selected_recorded_pids_absent'] is True and terminal['actual_current_cgroup_absent'] is True\nrecorded=set(map(int,terminal['actual_selected_recorded_pids']))"
+    ],
+    [
+      "running['source']==terminal['source']",
+      "running['source_commit']==terminal['source_commit']"
+    ]
+  ],
+  "failed_tool": "682f4f",
+  "failed_exit": 1,
+  "error": "KeyError actual_root_tool_completion_chunk at line23 before any recovered payload pass",
+  "reason": "Bind actual Root terminal schema without modifying its fields; original complete has no directories key."
+}

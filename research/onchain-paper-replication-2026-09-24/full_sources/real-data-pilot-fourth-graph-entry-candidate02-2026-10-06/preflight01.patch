@@ -1,0 +1,11 @@
+--- candidate01/preflight01.py
++++ candidate02/preflight01.py
+@@ -59,7 +59,7 @@
+             or root['identity']!=identity or root['actual_root_tool_exit_code']!=0
+             or Path(final['cgroup']).exists() or Path('/proc',str(final['monitor_pid'])).exists()):
+         raise ValueError('actual native/outer/Root zero and cleanup required')
+-    pids=root['selected_recorded_pids']
++    pids=root['actual_selected_recorded_pids']
+     if not isinstance(pids,list) or not pids or any(type(pid) is not int or pid<=0 or Path('/proc',str(pid)).exists() for pid in pids):
+         raise ValueError('actual selected recorded PIDs must be absent')
+     kept=read('storage_kept');restore=read('storage_restore');get=read('storage_body_get_receipt')

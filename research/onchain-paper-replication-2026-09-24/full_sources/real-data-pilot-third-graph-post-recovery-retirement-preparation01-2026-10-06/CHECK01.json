@@ -1,0 +1,38 @@
+{
+  "decision": "pass-source-only",
+  "literal_inverse_edits": 10,
+  "null_release_template_refused_before_attempt": true,
+  "synthetic_valid_gate": true,
+  "refusals": [
+    {
+      "path": "ROOT_TERMINAL01.json",
+      "field": "actual_root_tool_exit_code",
+      "value": 1,
+      "refusal": "actual backup native/Root zero and cleanup required"
+    },
+    {
+      "path": "guard01/final.json",
+      "field": "child_exit_code",
+      "value": null,
+      "refusal": "actual backup native/Root zero and cleanup required"
+    },
+    {
+      "path": "guard01/final.json",
+      "field": "cleanup_verified",
+      "value": false,
+      "refusal": "actual backup native/Root zero and cleanup required"
+    },
+    {
+      "path": "complete.json",
+      "field": "count",
+      "value": 35,
+      "refusal": "actual full36 retained backup differs"
+    }
+  ],
+  "exact_ledger_byte_predicate": 3310923776,
+  "pair_bytes": 6621847552,
+  "actual_backup_outcome_read": false,
+  "payload_reads": 0,
+  "native_network_deletion_calls": 0,
+  "qualification": "Synthetic metadata only; no actual recovery/retirement authority and no active-backup files inspected."
+}

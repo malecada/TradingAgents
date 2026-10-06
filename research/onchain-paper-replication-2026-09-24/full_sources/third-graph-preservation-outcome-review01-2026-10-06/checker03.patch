@@ -1,0 +1,11 @@
+--- check_outcome02.py
++++ check_outcome03.py
+@@ -32,7 +32,7 @@
+ recorded=set(map(int,terminal['actual_selected_recorded_pids']))
+ assert pids<=recorded and recorded and all(not Path('/proc',str(pid)).exists() for pid in recorded);pids|=recorded
+ assert final['command'][-2:]==[str(S/'entry01.py'),'--worker'] and running['source_commit']==terminal['source_commit']==EXPECTED['source']
+-for name in ['preflight01.json','launch-attempt01.json','ROOT_REMOTE_CONFIRMATION01.json','guard01/release.json','guard01/child.log','entry01.py','envelope01.json','RELEASE_REVIEW01.json']:
++for name in ['preflight01.json','launch-attempt01.json','ROOT_PREPARATION01.json','guard01/release.json','guard01/child.log','entry01.py','envelope01.json','RELEASE_REVIEW01.json']:
+  raw(S/name)
+ assert evidence[str((S/'entry01.py').relative_to(M))]=='87d4fa670613485a518f7a6399ee5f2455723a068bdb60d2ed085256f2936fc6'
+ assert evidence[str((S/'envelope01.json').relative_to(M))]=='b29b74270b4fbe44bcd03721cdf82ae9a12d072b2732ef436174ab944819ed6e'

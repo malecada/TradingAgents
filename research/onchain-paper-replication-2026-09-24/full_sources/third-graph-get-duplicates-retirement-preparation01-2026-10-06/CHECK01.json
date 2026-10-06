@@ -1,0 +1,23 @@
+{
+  "decision": "pass-source-only",
+  "exact_inverse": true,
+  "null_selection_and_release_refused": true,
+  "synthetic_valid_recovery_gate": true,
+  "refusals": [
+    {
+      "case": "root1",
+      "refusal": "actual backup Root zero required"
+    },
+    {
+      "case": "ledger-root1",
+      "refusal": "actual exact ledger-pair retirement and Root zero required"
+    },
+    {
+      "case": "no-full-scope",
+      "refusal": "actual full36 BYTE acceptance required"
+    }
+  ],
+  "future_actual_scope_observed": false,
+  "native_network_deletion_claim_payload_reads": 0,
+  "note": "Inherited native/descriptor/lock/stat/active-consumer/error logic is unchanged by exact inverse. In-memory predicate fixtures are not release evidence."
+}

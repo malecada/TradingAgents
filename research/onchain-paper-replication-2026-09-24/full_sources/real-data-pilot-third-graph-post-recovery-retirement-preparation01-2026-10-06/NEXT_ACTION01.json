@@ -1,0 +1,32 @@
+{
+  "status": "CONDITIONAL_SOURCE_ONLY_NOT_RELEASED",
+  "retirement_identity": "real-pilot-third-graph-ledger-retirement-20261006-01",
+  "backup_identity": "real-pilot-third-graph-preservation-20261006-01",
+  "source": "retire01.py",
+  "release_template": "RELEASE_TEMPLATE01.json",
+  "ledger_bytes": 3310923776,
+  "pair_bytes": 6621847552,
+  "all_five_original_arrays_retained": true,
+  "independent_actual_recovery_review": null,
+  "entry_release": null,
+  "required_receipts": [
+    "complete.json",
+    "recovered-complete.json",
+    "selection01.json",
+    "11-kept.json",
+    "guard01/final.json",
+    "outer-exit01.json",
+    "ROOT_TERMINAL01.json"
+  ],
+  "required_independent_outcome_fields": {
+    "decision": "accepted",
+    "identity": "real-pilot-third-graph-preservation-20261006-01",
+    "full_scope_byte_recovery": true,
+    "evidence": "exact repository-relative control paths to actual SHA256, including Root terminal"
+  },
+  "root_execution_only_after_actual_complete_and_review": true,
+  "test": {
+    "tool_chunk": "a04c54",
+    "exit_code": 0
+  }
+}

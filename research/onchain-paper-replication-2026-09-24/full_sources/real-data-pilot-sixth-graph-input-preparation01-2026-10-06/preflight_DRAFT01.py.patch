@@ -1,0 +1,26 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fourth-graph-input-preparation01-2026-10-06/preflight_DRAFT01.py
++++ preflight_DRAFT01.py
+@@ -1,4 +1,4 @@
+-"""Read-only entry checks for the DRAFT fixed fourth real-data pilot graph."""
++"""Read-only entry checks for the DRAFT fixed sixth real-data pilot graph."""
+ from pathlib import Path
+ from types import SimpleNamespace
+ import datetime
+@@ -14,7 +14,7 @@
+ 
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+-NAME='eth-paper-real-pilot-graph-20220523-20261005-01'
++NAME='eth-paper-real-pilot-graph-20220606-20261005-01'
+ GATE=str((HERE/'gate01.json').relative_to(ROOT))
+ 
+ 
+@@ -82,7 +82,7 @@
+ 
+ 
+ def check():
+-    raise ValueError('DRAFT_NOT_RELEASED: actual May16 BYTE recovery, retirement and fresh storage/gate binding required')
++    raise ValueError('DRAFT_NOT_RELEASED: actual May30 BYTE recovery, retirement and fresh storage/gate binding required')
+     source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+     release_path=HERE/'RELEASE_REVIEW01.json'
+     release=json.loads(release_path.read_bytes())

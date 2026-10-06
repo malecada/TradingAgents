@@ -1,0 +1,118 @@
+{
+  "prepare_draft01.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-third-graph-input-preparation01-2026-10-06/prepare_draft01.py",
+    "before_sha256": "f80e23d16301b3d3212312c0482befe209f536ba250b4e6592435da6fa405a85",
+    "after_sha256": "59c3d13c40e44ef98527807ed726ef8cda2438fca7fd828e40db34b2952081f5",
+    "literal_edits": [
+      {
+        "before": "May16",
+        "after": "May23"
+      },
+      {
+        "before": "MAY16",
+        "after": "MAY23"
+      },
+      {
+        "before": "May9",
+        "after": "May16"
+      },
+      {
+        "before": "real-data-pilot-second-graph01-2026-10-06",
+        "after": "real-data-pilot-third-graph01-2026-10-06"
+      },
+      {
+        "before": "20220516",
+        "after": "20220523"
+      },
+      {
+        "before": "2022-05-23T00:00:00Z",
+        "after": "2022-05-30T00:00:00Z"
+      },
+      {
+        "before": "2022-05-16T00:00:00Z",
+        "after": "2022-05-23T00:00:00Z"
+      },
+      {
+        "before": "2022-05-09T00:00:00Z",
+        "after": "2022-05-16T00:00:00Z"
+      },
+      {
+        "before": "7794344",
+        "after": "7581075"
+      },
+      {
+        "before": "if set(changed)!={'tradingagents/research/onchain_replication/compact_mcm.py','tradingagents/research/onchain_replication/real_pilot_import_caller.py'} or added!=['tradingagents/research/onchain_replication/real_pilot_partial_progress.py']:raise ValueError('expected three installed telemetry bodies differ')",
+        "after": "if changed or added:raise ValueError('current package differs from frozen May16 source')"
+      },
+      {
+        "before": "def main():",
+        "after": "def validate_week(weekly, case):\n    start=datetime.datetime.fromisoformat(case['week'].replace('Z','+00:00'))\n    end=start+datetime.timedelta(days=7)\n    stamp=lambda d:d.isoformat().replace('+00:00','Z')\n    if (weekly['start_utc']!=stamp(start) or weekly['end_utc']!=stamp(end)\n            or weekly['expected_members']!=7 or len(weekly['members'])!=7\n            or weekly['expected_rows']!=case['expected_rows']):raise ValueError('complete fixed week required')\n    for i,(member,day) in enumerate(zip(weekly['members'],case['daily_members'])):\n        if (member['start_utc']!=stamp(start+datetime.timedelta(days=i))\n                or member['end_utc']!=stamp(start+datetime.timedelta(days=i+1))\n                or member['path']!=str(ROOT/day['mapping_path']) or member['sha256']!=day['mapping_sha256']\n                or member['expected_rows']!=day['expected_rows']):raise ValueError('missing/late/reordered original daily member')\n\ndef main():"
+      },
+      {
+        "before": "    plan=json.loads((ROOT/case['inputs']['graph_plan']['path']).read_bytes())",
+        "after": "    validate_week(json.loads((ROOT/case['inputs']['weekly_source']['path']).read_bytes()),case)\n    plan=json.loads((ROOT/case['inputs']['graph_plan']['path']).read_bytes())"
+      }
+    ]
+  },
+  "preflight_DRAFT01.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-third-graph01-2026-10-06/preflight01.py",
+    "before_sha256": "6fe413e694488bc93c6e02bf22861657c75710610093a8fb0861d2961907a14a",
+    "after_sha256": "d3616335658053a4f5c1075eccf2b287bad98c6b8dfb0439462d20400ede0685",
+    "literal_edits": [
+      {
+        "before": "fixed third real-data pilot graph",
+        "after": "DRAFT fixed fourth real-data pilot graph"
+      },
+      {
+        "before": "20220516",
+        "after": "20220523"
+      },
+      {
+        "before": "def check():",
+        "after": "def check():\n    raise ValueError('DRAFT_NOT_RELEASED: actual May16 BYTE recovery, retirement and fresh storage/gate binding required')"
+      }
+    ]
+  },
+  "launch_DRAFT01.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-third-graph01-2026-10-06/launch01.py",
+    "before_sha256": "a8d2f41d2c9c3f3289b465990c5cab3126ada975eaea673ec74bbee751b778b6",
+    "after_sha256": "4a193e55dd289223baaa746c192536a9f6987b98a5b0b2e016c02b9a30962bf5",
+    "literal_edits": [
+      {
+        "before": "from preflight01 import",
+        "after": "from preflight_DRAFT01 import"
+      }
+    ]
+  },
+  "CHARTER_DRAFT01.md": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-third-graph01-2026-10-06/CHARTER01.md",
+    "before_sha256": "87daca8350f25472d412010b654c088a9245250971b2731f03a7bd1a4e00edf4",
+    "after_sha256": "09f8012ade8b4b142551b621b9ca6b21e38f8163d792783b58cbaee312f306db",
+    "literal_edits": [
+      {
+        "before": "May16\u201323",
+        "after": "May23\u201330"
+      },
+      {
+        "before": "20220516",
+        "after": "20220523"
+      },
+      {
+        "before": "7,794,344",
+        "after": "7,581,075"
+      },
+      {
+        "before": "graph-2022-05-16",
+        "after": "graph-2022-05-23"
+      },
+      {
+        "before": "38 closed paper claims,\n29COMPLETE/9FAILED; four unused full-week graphs",
+        "after": "39 closed paper claims,\n30COMPLETE/9FAILED; three unused full-week graphs"
+      },
+      {
+        "before": "Admission requires the previous May9",
+        "after": "DRAFT_NOT_RELEASED: previous May9 history below is retained only as inherited context.\nActual May16 full BYTE recovery and exact ledger/get retirement remain required\nbefore new gate creation, review and release. No future receipt is supplied.\n\nHistorical predecessor admission required the previous May9"
+      }
+    ]
+  }
+}

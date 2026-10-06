@@ -1,0 +1,70 @@
+{
+  "decision": "accepted-source-arithmetic-only",
+  "authenticated_manifest_members": 26,
+  "source_pins": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-control-inventory01-2026-10-06/MANIFEST01.json": "792a348cb3224effafd29791686be3e162762175f6943c0652adee1fbdcaad00",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-residual-controls01-2026-10-06/MANIFEST01.json": "1136595ded9bf7ac1f489de59e2370f4ec90978e39947260ae51ad2448f3458d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-control-residual-review01-2026-10-06/MANIFEST01.json": "a9b9979922fd63f2251ad72643f6a89cc75a8592085ba7ed2ef64e20cc4ca049",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-control-inventory01-2026-10-06/controls01.py": "d6b3bac4b71fc7cd6d2dfaf63d8aa395fb87e47eef5dbc2b7bd501fd385e59f3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-residual-controls01-2026-10-06/residuals01.py": "54e83b083b8ff83c288c17d6be8b4ebeb1528cf79fc96775c7085f22bbaa5c4c",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-input-builder03-2026-10-06/build_inputs03.py": "e100a1fa2f8caaa6baf6cde85d5f50aa667ed6e04b6470d9c8368d5424748a2d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-control-residual-review01-2026-10-06/prepare_builder03_input01.py": "37447ae7126049ffe1de5bf94baf41b1606504618d8935cdfd88704bbd3d35f4",
+    "tradingagents/research/onchain_replication/job.py": "05bd32fc4da1d68d8b356a939e11cef27f1e396474bec5e1ecb379f7c948fe3f",
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": "9559605b15ee6f2942d8e85bf47305ac97e32e79b51812ce239cf71d9f6bddcb",
+    "tradingagents/research/onchain_replication/real_pilot_storage.py": "7bef12cbd4b5b41280c382bfdf2b552d5ef80fdd5c899440290c2901f2250e95",
+    "tradingagents/research/onchain_replication/stage_retention.py": "2f608ba1735fd07fdf18eab8969854f61e9769603b84b16869a008cde108b478",
+    "tradingagents/research/onchain_replication/restart_retention.py": "15e7b2090ce87081b0cd6e2338b4d62d348d779082947729cacf0210d3c6dc7d",
+    "tradingagents/research/onchain_replication/archive_owner_policy.py": "81b0e2fa4220c45461ffad850209e92819b65a56a7037887d1d7ba92c97956c9"
+  },
+  "four_current_count_refs_authenticated": 4,
+  "missing_weeks": [
+    "2022-05-23T00:00:00Z",
+    "2022-05-30T00:00:00Z",
+    "2022-06-06T00:00:00Z"
+  ],
+  "refusals": [
+    {
+      "case": "four-real-countrefs-cannot-complete-handoff",
+      "exception": "ValueError",
+      "message": "missing genuine graph/count metadata: 2022-05-23T00:00:00Z, 2022-05-30T00:00:00Z, 2022-06-06T00:00:00Z"
+    },
+    {
+      "case": "real-builder-four-week-map",
+      "exception": "ValueError",
+      "message": "exact seven fixed weekly graph references required"
+    },
+    {
+      "case": "one-byte-physical-shortfall",
+      "exception": "ValueError",
+      "message": "aggregate writable scope underfunded: allocated_bytes"
+    },
+    {
+      "case": "inventory-four-count-map",
+      "exception": "ValueError",
+      "message": "exact seven original weekly counts required"
+    }
+  ],
+  "synthetic_new_logical_bytes": 2322949888,
+  "synthetic_allocation_overhead_bytes": 39007802,
+  "physical_fragment_exactly_reconciled": true,
+  "native_monitor_worker_selected_RLIMIT_chain": true,
+  "runtime_paths_exact": [
+    "cache",
+    "config",
+    "cuda",
+    "data",
+    "hf",
+    "matplotlib",
+    "numba",
+    "tmp",
+    "torch",
+    "torch-extensions",
+    "torchinductor",
+    "triton"
+  ],
+  "source_matching_stages": 7,
+  "archive_reservation_stages": 8,
+  "capacity_admission_or_grants": false,
+  "scientific_or_numerical_imports": false,
+  "payload_reads": 0
+}

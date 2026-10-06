@@ -1,0 +1,39 @@
+{
+  "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-first-graph-get-duplicates-retirement01-2026-10-06/retire01.py",
+  "before_sha256": "0ea52ac0db5f8f6fe726cd4298b6c4d79651380ccd98d673bacfc7a3c3cd32a6",
+  "after_sha256": "daedd1dc01518dd87f5709b10b9acc3c91549e1a3d8233f64a321685e31129c5",
+  "literal_edits": [
+    {
+      "before": "May2 array get",
+      "after": "May16 array get"
+    },
+    {
+      "before": "real-pilot-first-graph-get-duplicates-retirement-20261006-01",
+      "after": "real-pilot-third-graph-get-duplicates-retirement-20261006-01"
+    },
+    {
+      "before": "real-pilot-first-graph-preservation-20261006-01",
+      "after": "real-pilot-third-graph-preservation-20261006-01"
+    },
+    {
+      "before": "20220502",
+      "after": "20220516"
+    },
+    {
+      "before": "graph-2022-05-02",
+      "after": "graph-2022-05-16"
+    },
+    {
+      "before": "509060512",
+      "after": "544741248"
+    },
+    {
+      "before": "def execute(review_path,review_sha):",
+      "after": "def recovery(root,c):\n    basis=c['recovery_basis']\n    require(type(basis) is dict and set(basis)=={'outcome_review','ledger_complete','ledger_root','ledger_entry'},'actual recovery/retirement refs required')\n    def bound(ref):\n        require(type(ref) is dict and set(ref)=={'path','sha256'} and c['evidence'].get(ref['path'])==ref['sha256'],'actual exact recovery ref required')\n        return json.loads(metadata(root,ref['path'],ref['sha256']))\n    def receipt(name):\n        path=BACKUP+'/'+name\n        require(path in c['evidence'],'actual backup receipt missing')\n        return json.loads(metadata(root,path,c['evidence'][path]))\n    outcome=bound(basis['outcome_review'])\n    require(outcome['decision']=='accepted' and outcome['identity']==Path(BACKUP).name\n        and outcome['full_scope_byte_recovery'] is True,'actual full36 BYTE acceptance required')\n    for name in ('complete.json','recovered-complete.json','guard01/final.json','outer-exit01.json','ROOT_TERMINAL01.json'):\n        path=BACKUP+'/'+name\n        require(path in c['evidence'] and outcome['evidence'].get(path)==c['evidence'][path],'independent backup evidence join differs')\n    complete=receipt('complete.json')\n    require(complete==receipt('recovered-complete.json') and complete['identity']==Path(BACKUP).name\n        and complete['count']==len(complete['files'])==36 and complete['originals_retained'] is True\n        and complete['recoveries_retained'] is True,'complete36 backup differs')\n    require(receipt('ROOT_TERMINAL01.json')['actual_root_tool_exit_code']==0,'actual backup Root zero required')\n    for row in c['rows']:\n        kept=json.loads(metadata(root,row['kept'],c['evidence'][row['kept']]))\n        require(complete['files'][row['index']]==kept,'selected get/full36 join differs')\n    entry=basis['ledger_entry']\n    require(type(entry) is dict and set(entry)=={'path','sha256'}\n        and entry['sha256']=='87cbe18ecb421b5850e3cbed8a4f5d3f9516b2129d3d0cc034197c9f5f6ff035'\n        and c['evidence'].get(entry['path'])==entry['sha256'],'exact reviewed ledger entry required')\n    metadata(root,entry['path'],entry['sha256'])\n    retired=bound(basis['ledger_complete']);root_exit=bound(basis['ledger_root'])\n    require(retired['identity']=='real-pilot-third-graph-ledger-retirement-20261006-01'\n        and retired['preservation_backup']==Path(BACKUP).name and retired['payload_bytes_retired']==6621847552\n        and retired['arrays_retained'] is True and retired['removed']==c['removed_ledger_paths']\n        and root_exit['actual_root_exit_code']==0 and root_exit['complete_sha256']==basis['ledger_complete']['sha256'],\n        'actual exact ledger-pair retirement and Root zero required')\n\n\ndef execute(review_path,review_sha):"
+    },
+    {
+      "before": "    for relative in c['removed_ledger_paths']:require(not os.path.lexists(ROOT/relative),'retired ledger reappeared')",
+      "after": "    recovery(ROOT,c)\n    for relative in c['removed_ledger_paths']:require(not os.path.lexists(ROOT/relative),'retired ledger reappeared')"
+    }
+  ]
+}

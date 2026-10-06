@@ -1,0 +1,48 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fourth-graph-input-preparation01-2026-10-06/prepare_draft01.py
++++ prepare_draft01.py
+@@ -1,11 +1,11 @@
+-"""Concrete May23 metadata draft only: no gate write, admission or launch."""
++"""Concrete May30 metadata draft only: no gate write, admission or launch."""
+ from pathlib import Path
+ import argparse,copy,datetime,hashlib,importlib.metadata,json,os,platform,stat
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+ FULL=HERE.parent
+ OLD=FULL/'real-data-pilot-third-graph01-2026-10-06'
+-NAME='eth-paper-real-pilot-graph-20220523-20261005-01'
++NAME='eth-paper-real-pilot-graph-20220530-20261005-01'
+ PREFIX='research_artifacts/onchain-paper-replication-2026-09-24'
+ def digest(path):
+     if path.stat().st_size>4*1024**2:raise ValueError('compact metadata/source limit: '+str(path))
+@@ -31,7 +31,7 @@
+     if any(x.exists() or x.is_symlink() for x in namespace):raise ValueError('fixed namespace already used')
+     census=FULL/'real-data-pilot-remaining-graph-inputs01-2026-10-06/RAW_EXTENTS01.json'
+     case=next(x for x in json.loads(census.read_bytes())['cases'] if x['identity']==NAME)
+-    if case['parent'] is not None or case['run_started'] is not False or case['week']!='2022-05-23T00:00:00Z' or case['expected_rows']!=7581075:raise ValueError('fixed independent May23 case differs')
++    if case['parent'] is not None or case['run_started'] is not False or case['week']!='2022-05-30T00:00:00Z' or case['expected_rows']!=7507236:raise ValueError('fixed independent May30 case differs')
+     if len(case['daily_members'])!=7 or sum(d['expected_rows'] for d in case['daily_members'])!=case['expected_rows']:raise ValueError('complete original daily denominator differs')
+     for d in case['daily_members']:
+         if digest(ROOT/d['mapping_path'])!=d['mapping_sha256']:raise ValueError('original daily map changed')
+@@ -42,7 +42,7 @@
+         if digest(ROOT/r['path'])!=r['sha256']:raise ValueError('original graph input changed')
+     validate_week(json.loads((ROOT/case['inputs']['weekly_source']['path']).read_bytes()),case)
+     plan=json.loads((ROOT/case['inputs']['graph_plan']['path']).read_bytes())
+-    if plan['coverage']!=[[case['week'],'2022-05-30T00:00:00Z']] or plan['expected_weeks']!=[case['week']] or plan['source_inputs']!=['weekly_source']:raise ValueError('full original coverage differs')
++    if plan['coverage']!=[[case['week'],'2022-06-06T00:00:00Z']] or plan['expected_weeks']!=[case['week']] or plan['source_inputs']!=['weekly_source']:raise ValueError('full original coverage differs')
+     gate=json.loads((OLD/'gate01.json').read_bytes());prior=next(iter(gate['experiments'].values()));job=json.loads((OLD/'execution-job01.json').read_bytes())
+     required={str(f.relative_to(ROOT)) for folder in (ROOT/'tradingagents/research/onchain_replication',ROOT/'tradingagents/research') for f in folder.glob('*.py')}|{'tradingagents/__init__.py'}
+     pins={name:digest(ROOT/name) for name in sorted(required)}
+@@ -63,11 +63,11 @@
+     projection=json.loads((OLD/'STORAGE_PROJECTION01.json').read_bytes());rows=case['expected_rows'];reference_rows=projection['retained_graph_reference']['declared_raw_rows'];ledger=(rows*projection['closed_ledger_reference']['bytes']+reference_rows-1)//reference_rows;arrays=(rows*projection['retained_graph_reference']['saved_array_bytes']+reference_rows-1)//reference_rows;growth=2*ledger+arrays+case['largest_projected_parquet_bytes']+projection['scratch_margin_bytes']
+     at=datetime.datetime.now(datetime.timezone.utc).isoformat()
+     extent={'at':at,'week':case['week'],'days':7,'declared_rows':rows,'daily_members':case['daily_members'],'segments':sum(len(d['segments']) for d in case['daily_members']),'stored_bytes':sum(s['bytes'] for d in case['daily_members'] for s in d['segments']),'largest_projected_object_logical_bytes':case['largest_projected_parquet_bytes'],'raw_bodies_read':False,'census':ref(census),'status':'DRAFT_NOT_RELEASED'}
+-    draft={'status':'DRAFT_NOT_RELEASED','identity':NAME,'parent':None,'effective_budget_unchanged':71,'cells':case['cells'],'outputs':case['outputs'],'windows':[{'dataset':'eth','start':case['week'],'end':'2022-05-30T00:00:00Z','availability':'existing'}],'raw_input_refs':inputs,'inherited_actual_inputs_required':inherited,'execution_job_exact_May16':job,'prospective_source_files':dict(sorted(pins.items())),'runtime_hashes':runtime,'environment':environment,'fresh_root_inputs_required':['actual May16 outcome/preservation/recovery acceptance and any retirement receipts','fresh storage policy/baseline and startup/free-space admission','current source-integration receipt, committed gate and independent source/entry release review'],'no_registration_or_claim_created':True}
++    draft={'status':'DRAFT_NOT_RELEASED','identity':NAME,'parent':None,'effective_budget_unchanged':71,'cells':case['cells'],'outputs':case['outputs'],'windows':[{'dataset':'eth','start':case['week'],'end':'2022-06-06T00:00:00Z','availability':'existing'}],'raw_input_refs':inputs,'inherited_actual_inputs_required':inherited,'execution_job_exact_May16':job,'prospective_source_files':dict(sorted(pins.items())),'runtime_hashes':runtime,'environment':environment,'fresh_root_inputs_required':['actual May23 outcome/preservation/recovery acceptance and any retirement receipts','fresh storage policy/baseline and startup/free-space admission','current source-integration receipt, committed gate and independent source/entry release review'],'no_registration_or_claim_created':True}
+     delta={'status':'DRAFT_NOT_RELEASED','old_gate':ref(OLD/'gate01.json'),'old_source_count':len(old_sources),'prospective_source_count':len(pins),'added_package_source':added,'changed_package_sources':changed,'unchanged_package_bodies':len(required)-len(added)-len(changed),'same_method':True,'execution_job_byte_semantics_unchanged':True,'old_week':'2022-05-16T00:00:00Z','new_week':case['week'],'old_graph_inputs':{k:v for k,v in prior['inputs'].items() if k.startswith('daily_map_') or k in case['inputs']},'new_graph_inputs':inputs,'raw_extent_stat_joins':extent['segments'],'namespace_absent':[str(x.relative_to(ROOT)) for x in namespace]}
+     estimate={'status':'DRAFT_NOT_RELEASED_ESTIMATE_NOT_CAPACITY','basis':ref(OLD/'STORAGE_PROJECTION01.json'),'declared_rows':rows,'density_projected_ledger_bytes':ledger,'density_projected_arrays_bytes':arrays,'largest_projected_parquet_logical_bytes':case['largest_projected_parquet_bytes'],'scratch_margin_bytes':projection['scratch_margin_bytes'],'prospective_growth_estimate_bytes':growth,'prospective_startup_free_bytes':job['resources']['disk_floor_bytes']+growth,'fresh_baseline_not_observed':True}
+     out.mkdir()
+-    for name,value in [('MAY23_DRAFT01.json',draft),('RAW_EXTENT_DRAFT01.json',extent),('STORAGE_PROJECTION_DRAFT01.json',estimate),('SOURCE_INPUT_DELTA01.json',delta)]:
++    for name,value in [('MAY30_DRAFT01.json',draft),('RAW_EXTENT_DRAFT01.json',extent),('STORAGE_PROJECTION_DRAFT01.json',estimate),('SOURCE_INPUT_DELTA01.json',delta)]:
+         with (out/name).open('x') as f:json.dump(value,f,sort_keys=True,indent=2);f.write('\n')
+     print(json.dumps({'identity':NAME,'rows':rows,'segments':extent['segments'],'source_pins':len(pins),'raw_input_pins':len(inputs),'status':'DRAFT_NOT_RELEASED','output':str(out)},sort_keys=True))
+ if __name__=='__main__':main()

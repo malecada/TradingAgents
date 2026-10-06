@@ -1,0 +1,102 @@
+--- May9/preflight01.py
++++ May23/preflight01.py
+@@ -1,4 +1,4 @@
+-"""Read-only entry checks for the fixed second real-data pilot graph."""
++"""Read-only entry checks for the fixed fourth real-data pilot graph."""
+ from pathlib import Path
+ from types import SimpleNamespace
+ import datetime
+@@ -14,8 +14,73 @@
+ 
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+-NAME='eth-paper-real-pilot-graph-20220509-20261005-01'
++NAME='eth-paper-real-pilot-graph-20220523-20261005-01'
+ GATE=str((HERE/'gate01.json').relative_to(ROOT))
++
++
++def preceding_storage(inputs):
++    """Require actual COMPLETE May16 BYTE backup and exact two-path retirement."""
++    backup='research/onchain-paper-replication-2026-09-24/storage/real-pilot-third-graph-preservation-20261006-01'
++    identity=Path(backup).name
++    expected={'storage_complete':'complete.json','storage_recovered_complete':'recovered-complete.json',
++        'storage_selection':'selection01.json','storage_native_final':'guard01/final.json',
++        'storage_outer_exit':'outer-exit01.json','storage_root_terminal':'ROOT_TERMINAL01.json',
++        'storage_restore':'11-restore.json','storage_recovered_restore':'11-recovered-restore.json',
++        'storage_kept':'11-kept.json','storage_body_get_receipt':'11-recovered.bin.transport.json'}
++    def read(role):
++        ref=inputs[role];q=Path(ref['path']);p=ROOT/q
++        if (q.is_absolute() or '..' in q.parts or p.resolve(strict=True)!=p or not p.is_file()
++                or p.stat().st_nlink!=1 or p.stat().st_size>4*1024**2 or file_hash(p)!=ref['sha256']):
++            raise ValueError('exact bounded preceding proof differs: '+role)
++        if role in expected and ref['path']!=backup+'/'+expected[role]:raise ValueError('fixed backup role differs')
++        return json.loads(p.read_bytes())
++    review=read('storage_closure_review')
++    if review['decision']!='accepted' or review['identity']!=identity or review['full_scope_byte_recovery'] is not True:
++        raise ValueError('independent actual full36 BYTE acceptance required')
++    for role in expected:
++        ref=inputs[role]
++        if review['evidence'].get(ref['path'])!=ref['sha256']:raise ValueError('independent backup evidence join differs')
++    complete=read('storage_complete');selected=read('storage_selection')
++    if (complete!=read('storage_recovered_complete') or complete['identity']!=identity
++            or selected['identity']!=identity or complete['selection']!=selected
++            or complete['count']!=36 or len(complete['files'])!=36 or selected['count']!=36
++            or len(selected['files'])!=36 or len(selected['directories'])!=8
++            or complete['bytes_preserved']!=selected['total_bytes']
++            or complete['originals_retained'] is not True or complete['recoveries_retained'] is not True):
++        raise ValueError('actual complete selected36 names/modes/bytes differ')
++    if len({r['path'] for r in selected['files']})!=36:raise ValueError('duplicate original membership')
++    for original,record in zip(selected['files'],complete['files']):
++        if any(record[k]!=v for k,v in original.items()):raise ValueError('original/complete membership differs')
++    if sum(r['bytes'] for r in selected['files'])!=selected['total_bytes']:raise ValueError('selected byte denominator differs')
++    final=read('storage_native_final');outer=read('storage_outer_exit');root=read('storage_root_terminal')
++    if ((ROOT/backup/'failed.json').exists() or (ROOT/backup/'failed.json').is_symlink()
++            or final['phase']!='complete' or final['child_exit_code']!=0 or final['cleanup_verified'] is not True
++            or outer['entry_selected_exit_code']!=0 or outer['guard_child_exit_code']!=0 or outer['cleanup_verified'] is not True
++            or root['identity']!=identity or root['actual_root_tool_exit_code']!=0
++            or Path(final['cgroup']).exists() or Path('/proc',str(final['monitor_pid'])).exists()):
++        raise ValueError('actual native/outer/Root zero and cleanup required')
++    pids=root['selected_recorded_pids']
++    if not isinstance(pids,list) or not pids or any(type(pid) is not int or pid<=0 or Path('/proc',str(pid)).exists() for pid in pids):
++        raise ValueError('actual selected recorded PIDs must be absent')
++    kept=read('storage_kept');restore=read('storage_restore');get=read('storage_body_get_receipt')
++    paths=['research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/aggregation/ledger.sqlite',backup+'/11-recovered.bin']
++    if (complete['files'][11]!=kept or kept['path']!=paths[0] or kept['bytes']!=3310923776
++            or restore!=read('storage_recovered_restore') or any(kept[k]!=v for k,v in restore.items())
++            or kept['body_roundtrip_verified'] is not True or kept['original_retained'] is not True or kept['recovered_body_retained'] is not True
++            or get['status']!='complete' or get['returncode']!=0
++            or not (get['expected_bytes']==get['received_bytes']==kept['bytes'])):
++        raise ValueError('exact ledger11 fullget/restoration join differs')
++    retired=read('storage_retirement_complete');terminal=read('storage_retirement_root_exit')
++    if (retired['identity']!='real-pilot-third-graph-ledger-retirement-20261006-01'
++            or retired['payload_bytes_retired']!=6621847552 or retired['removed']!=paths
++            or retired['preservation_backup']!=identity or retired['remote_restore']!=kept
++            or retired['arrays_retained'] is not True or retired['all_other_originals_and_recoveries_retained'] is not True
++            or terminal['actual_root_exit_code']!=0 or terminal['complete_sha256']!=inputs['storage_retirement_complete']['sha256']):
++        raise ValueError('actual exact third-ledger retirement differs')
++    for relative in paths:
++        p=ROOT/relative
++        if p.exists() or p.is_symlink():raise ValueError('retired payload reappeared: '+relative)
++    return {'backup':identity,'retired_bytes':6621847552,'retired_paths':paths}
+ 
+ 
+ def check():
+@@ -48,17 +113,7 @@
+         claim=json.loads(claim_path.read_bytes())
+         if claim.get('program_id')==admission.spec['program_id'] and not any((claim_path.parent/name).exists() for name in ('complete.json','failed.json')):
+             raise ValueError('another program claim is active: '+str(claim_path.parent))
+-    prior=json.loads((ROOT/admission.inputs['storage_closure_review']['path']).read_bytes())
+-    if prior['decision']!='accepted':raise ValueError('actual preceding full BYTE recovery not accepted')
+-    retired=json.loads((ROOT/admission.inputs['storage_retirement_complete']['path']).read_bytes())
+-    terminal=json.loads((ROOT/admission.inputs['storage_retirement_root_exit']['path']).read_bytes())
+-    if (retired['identity']!='real-pilot-first-graph-ledger-retirement-20261006-01'
+-            or retired['payload_bytes_retired']!=6571245568 or len(retired['removed'])!=2
+-            or terminal['actual_root_exit_code']!=0 or retired['arrays_retained'] is not True):
+-        raise ValueError('actual preceding ledger retirement differs')
+-    for relative in retired['removed']:
+-        path=ROOT/relative
+-        if path.exists() or path.is_symlink():raise ValueError('retired payload reappeared: '+relative)
++    preceding_storage(admission.inputs)
+     extent=json.loads((HERE/'RAW_EXTENT01.json').read_bytes()); count=0
+     for member in extent['daily_members']:
+         if file_hash(ROOT/member['mapping_path'])!=member['mapping_sha256']:raise ValueError('daily map changed')
