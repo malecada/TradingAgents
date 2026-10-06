@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T16:02:38.683344+00:00: fresh09 final exact release accepted; genuine committed admission PASSED80. No native active yet. Direct pilot authorized; broader work/heartbeat/app goal PAUSED.**
+
+Actual readonly74400/17f732exit0 fromac5d6c563:ready80/221sourcepins59inputs; selected archive namespace09/private opaque dispatch joined. Gate4501e298/finalbinding5bf081d0/independentbinding1baffe5e/exactreleasee7d04946 (628refs) accepted and adopted verbatim. Two read-only schema refusals and withheld namespace08 metadata/private09 body are retained; no scientific claim/native attempt followed them. Selected02 namespace and exact original charter/input/budget metadata schemas corrected before execution. Sourceanchor b348b7ae4 changes only strictstorage08→09, all178otherpackage bodies/science/caps unchanged; original hash batching and genuinephasechecks retained.
+
+Actual49closed33COMPLETE16FAILED/highestclaimed78 plus permanent preclaim03reserve74 and08reserve79. Reviewed80=49+28unchangedpending+2closedreserves+ONEfreshunused09. Actual08public16file57792B/3dir19name increment92160B8bc37d5b freshlyexternalGit recovered6e07ac497 and independently accepted8197fac2. Original07 failure/recovery98809 and separate COMPLETE engineering warm hash result/recoveryc512 remain unchanged; no refund/transfer/capladder or financialfit credit.
+
+All bounded assignments complete. Rootsolelive/accounting/STATE/Git/externalrecovery/ONElauncher. Next commit/push exactrelease and actualremoteHEAD readback; original fresh RootIO preflight runtime/source/process/namespace/storage projectedgrowth/disk10GiB/RAM9GiB thenONE09 ifeligible. Native6GiBmax5high/swap0/3GiBreserve9startup/twoCPU8h/file1GiB/writable16logical20allocated unchanged. No wholepipelinecapacity/throughput/trainingtime established.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T15:53:28.218385+00:00: fresh09 preparation in progress; no native job active. Direct pilot authorized; broader work/heartbeat/app goal PAUSED.**
 
 08 permanently closed preclaim refusal at reserved79; originalguardchildnull, separate125 and Rootparent1 retained. Exact public increment16files57792B/3dirs19names captured92160B/8bc37d5b, actually fresh-Git recovered from matched6e07ac497; independent returned-byte acceptance pending. Actual49paperclosed33COMPLETE16FAILED/highestclaimed78 unchanged; 03reserve74+08reserve79 retained separately. Fresh09 proposed80=49+28pending+2reserves+oneunused09; no fake08claim/refund/transfer.
