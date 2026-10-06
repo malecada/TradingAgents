@@ -1,0 +1,63 @@
+{
+  "entry01.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-20261006-01/entry01.py",
+    "before_sha256": "fa49b89896d781b90716991174a230507e23ad46e6181a578507a09e3773059b",
+    "after_sha256": "87d4fa670613485a518f7a6399ee5f2455723a068bdb60d2ed085256f2936fc6",
+    "literal_edits": [
+      {
+        "before": "real-pilot-second-graph-preservation-20261006-01",
+        "after": "real-pilot-third-graph-preservation-20261006-01"
+      }
+    ]
+  },
+  "keep.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph-preservation-preparation01-2026-10-06/keep.py",
+    "before_sha256": "06c045e9fdd6289d4537d8156eed2d67e5879cc151861de8560a735f3678d0dc",
+    "after_sha256": "fd310528a42f16e1c4590e282622340faaefc99d9e30645f5082a85969b79bfa",
+    "literal_edits": [
+      {
+        "before": "real-pilot-second-graph-preservation-20261006-01",
+        "after": "real-pilot-third-graph-preservation-20261006-01"
+      },
+      {
+        "before": "        primitives.publish(here/'failed.json',{'identity':ID,'error':type(error).__name__+': '+str(error),'attempted':attempts,'verified':[i for i in range(len(records))],'failed_row':number if number is not None and number>=len(records) else None,'skipped':[i for i in range(len(rows)) if i not in attempts],'no_automatic_retry':True,'originals_never_unlinked':True,'reconcile_all_receipts_and_partial_recoveries':True})\n",
+        "after": "        try:\n            primitives.publish(here/'failed.json',{'identity':ID,'error':type(error).__name__+': '+str(error),'attempted':attempts,'verified':[i for i in range(len(records))],'failed_row':number if number is not None and number>=len(records) else None,'skipped':[i for i in range(len(rows)) if i not in attempts],'no_automatic_retry':True,'originals_never_unlinked':True,'reconcile_all_receipts_and_partial_recoveries':True})\n        except BaseException as evidence_error:\n            try:error.add_note('Preservation failure evidence unavailable: '+repr(evidence_error))\n            except BaseException:pass\n"
+      }
+    ]
+  },
+  "prepare01.py": {
+    "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph-preservation-root01-2026-10-06/prepare02.py",
+    "before_sha256": "cb5d3817797980fe6d01861a2821a0b6d2a9f488eb9a6b38f939f0dcb1f65850",
+    "after_sha256": "85b6e30c707d37f07c2dd98b7d384543e89035ad3d63cc55545d24632f381bbf",
+    "literal_edits": [
+      {
+        "before": "May9 preservation",
+        "after": "May16 preservation"
+      },
+      {
+        "before": "real-pilot-second-graph-preservation-20261006-01",
+        "after": "real-pilot-third-graph-preservation-20261006-01"
+      },
+      {
+        "before": "eth-paper-real-pilot-graph-20220509-20261005-01",
+        "after": "eth-paper-real-pilot-graph-20220516-20261005-01"
+      },
+      {
+        "before": "b794d60df4e898d0832fee485ed4e6630b30f4df",
+        "after": "72b25ad173d8a3ee30d39750df0d7a322ed50880"
+      },
+      {
+        "before": "require(len(terminals) == 1, 'closed unambiguous original terminal required; active is unavailable')",
+        "after": "require(len(terminals) == 1 and terminals[0].name == 'complete.json',\n            'genuine COMPLETE original required; active/failed is unavailable')"
+      },
+      {
+        "before": "and review['source'] == SOURCE, 'independent exact outcome review required')",
+        "after": "and review['source'] == SOURCE and review['root_actual_exit']['exit_code'] == 0,\n            'independent exact completed outcome and actual Root zero required')"
+      },
+      {
+        "before": "p.endswith('/entry03.py')",
+        "after": "p == 'research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-20261006-01/entry01.py'"
+      }
+    ]
+  }
+}

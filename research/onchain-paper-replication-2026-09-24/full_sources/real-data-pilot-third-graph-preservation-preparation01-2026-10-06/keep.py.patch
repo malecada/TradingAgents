@@ -1,0 +1,22 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph-preservation-preparation01-2026-10-06/keep.py
++++ keep.py
+@@ -1,7 +1,7 @@
+ """One-use preservation primitives. Entry supplies genuine release/native guard; no launcher."""
+ from pathlib import Path
+ import fcntl,hashlib,importlib.util,json,os,shutil
+-ID='real-pilot-second-graph-preservation-20261006-01'
++ID='real-pilot-third-graph-preservation-20261006-01'
+ BASE='research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-03/offload.py'
+ BASE_SHA='0d507711644d962e494e659987ba0a6d479304af7092ba15315630d0b68e1a84'
+ def bind_primitives(root):
+@@ -95,5 +95,9 @@
+         primitives.finish(here,result,c['remote'],transport)
+         return result
+     except BaseException as error:
+-        primitives.publish(here/'failed.json',{'identity':ID,'error':type(error).__name__+': '+str(error),'attempted':attempts,'verified':[i for i in range(len(records))],'failed_row':number if number is not None and number>=len(records) else None,'skipped':[i for i in range(len(rows)) if i not in attempts],'no_automatic_retry':True,'originals_never_unlinked':True,'reconcile_all_receipts_and_partial_recoveries':True})
++        try:
++            primitives.publish(here/'failed.json',{'identity':ID,'error':type(error).__name__+': '+str(error),'attempted':attempts,'verified':[i for i in range(len(records))],'failed_row':number if number is not None and number>=len(records) else None,'skipped':[i for i in range(len(rows)) if i not in attempts],'no_automatic_retry':True,'originals_never_unlinked':True,'reconcile_all_receipts_and_partial_recoveries':True})
++        except BaseException as evidence_error:
++            try:error.add_note('Preservation failure evidence unavailable: '+repr(evidence_error))
++            except BaseException:pass
+         raise

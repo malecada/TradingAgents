@@ -1,0 +1,30 @@
+{
+  "native_file_bytes": 8388608,
+  "runtime_reservation": {
+    "directories": 13,
+    "logical_bytes": 16777216,
+    "max_file_bytes": 1048576,
+    "regular_files": 128
+  },
+  "stage": {
+    "pair": {
+      "max_checkpoint_bytes": 1048576
+    },
+    "restart_retention": {
+      "format": "archived-restart-retention-v1",
+      "max_control_bytes": 4194304,
+      "max_cumulative_bytes": 33554432,
+      "max_generations": 3,
+      "max_input_bytes": 2097152,
+      "max_live_bytes": 10485760,
+      "max_replay_bytes": 2097152,
+      "max_replays": 2,
+      "max_stores": 20,
+      "schema_version": 1
+    },
+    "schedule": {
+      "max_total_checkpoints": 3
+    }
+  },
+  "training_checkpoint_bytes": 4194304
+}

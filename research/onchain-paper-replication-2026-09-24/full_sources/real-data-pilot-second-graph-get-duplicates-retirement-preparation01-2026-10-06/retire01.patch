@@ -1,0 +1,90 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-first-graph-get-duplicates-retirement01-2026-10-06/retire01.py
++++ retire01.py
+@@ -1,14 +1,15 @@
+-"""One-use retirement of exactly five verified May2 array get duplicates; never originals."""
++"""One-use retirement of exactly five verified May9 array get duplicates; never originals."""
+ from pathlib import Path
+ import fcntl, hashlib, importlib.util, json, os, stat, subprocess, sys
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+-ID='real-pilot-first-graph-get-duplicates-retirement-20261006-01'
+-BACKUP='research/onchain-paper-replication-2026-09-24/storage/real-pilot-first-graph-preservation-20261006-01'
++ID='real-pilot-second-graph-get-duplicates-retirement-20261006-01'
++BACKUP='research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-20261006-01'
++UNION='research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-metadata-20261006-01'
+ COLD='research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-03/offload.py'
+ COLD_SHA='0d507711644d962e494e659987ba0a6d479304af7092ba15315630d0b68e1a84'
+ INDICES=(21,22,23,25,26)
+-ORIGINAL_PARENT='research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02'
++ORIGINAL_PARENT='research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09'
+ 
+ 
+ def require(ok,message):
+@@ -37,7 +38,7 @@
+ 
+ def selected(root,c):
+     require(c['identity']==ID and c['schema_version']==1 and c['count']==5
+-        and c['retire_bytes']==509060512 and len(c['rows'])==5,'fixed selection differs')
++        and c['retire_bytes']==604276056 and len(c['rows'])==5,'fixed selection differs')
+     require(tuple(r['index'] for r in c['rows'])==INDICES,'fixed five indices differ')
+     originals=[];gets=[]
+     for row in c['rows']:
+@@ -66,6 +67,45 @@
+             require(not path.is_relative_to(ROOT/BACKUP) and not path.is_relative_to(ROOT/ORIGINAL_PARENT),'active registered consumer references selected scope')
+ 
+ 
++def recovery(root,c):
++    basis=c['recovery_basis']
++    def reviewed(ref):
++        require(c['evidence'].get(ref['path'])==ref['sha256'],'recovery basis not selection-bound')
++        return json.loads(metadata(root,ref['path'],ref['sha256']))
++    def receipt(path):
++        require(path in c['evidence'],'required historical/union receipt not selection-bound')
++        return json.loads(metadata(root,path,c['evidence'][path]))
++    old=receipt(BACKUP+'/guard01/final.json');outer=receipt(BACKUP+'/outer-exit01.json');oldroot=receipt(BACKUP+'/ROOT_TERMINAL01.json')
++    failed=reviewed(basis['failed_review'])
++    require(failed['decision']=='accepted-failed-parent-partial-byte-evidence' and failed['parent_status']=='failed'
++        and failed['authenticated_body_get_count']==36 and old['phase']=='failed' and old['child_exit_code'] is None
++        and old['cleanup_verified'] is True and outer['entry_selected_exit_code']==1 and outer['guard_child_exit_code'] is None
++        and oldroot['actual_root_tool_exit_code']==1 and oldroot['separate_actual_worker_exit_code']==-15
++        and not os.path.lexists(root/BACKUP/'complete.json'),'permanent old FAILED/null/-15 disposition differs')
++    union_review=reviewed(basis['union_review']);union=receipt(UNION+'/complete.json')
++    require(union_review['decision']=='accepted' and union_review['identity']==Path(UNION).name
++        and union_review['full_scope_byte_recovery'] is True,'actual accepted full BYTE union required')
++    for name in ('complete.json','recovered-complete.json','guard01/final.json','outer-exit01.json'):
++        path=UNION+'/'+name
++        require(union_review['evidence'].get(path)==c['evidence'].get(path) and path in c['evidence'],'union review receipt join differs')
++    require(union==receipt(UNION+'/recovered-complete.json') and union['identity']==Path(UNION).name
++        and union['parent']==Path(BACKUP).name and union['parent_status']=='FAILED'
++        and union['count']==len(union['files'])==36,'actual36 union differs')
++    for row in c['rows']:
++        require(union['files'][row['index']]==receipt(row['kept']),'selected get/union membership differs')
++    final=receipt(UNION+'/guard01/final.json');uouter=receipt(UNION+'/outer-exit01.json');uroot=receipt(UNION+'/ROOT_TERMINAL01.json')
++    require(final['phase']=='complete' and final['child_exit_code']==0 and final['cleanup_verified'] is True
++        and uouter['entry_selected_exit_code']==0 and uouter['guard_child_exit_code']==0 and uouter['cleanup_verified'] is True
++        and uroot['actual_root_tool_exit_code']==0 and not os.path.lexists(root/UNION/'failed.json'),'new union native/Root completion differs')
++    for guard in (old,final):
++        require(not Path(guard['cgroup']).exists() and not Path('/proc',str(guard['monitor_pid'])).exists(),'recorded preservation process remains')
++    retired=reviewed(basis['ledger_complete']);root_exit=reviewed(basis['ledger_root'])
++    require(retired['identity']=='real-pilot-second-graph-ledger-retirement-20261006-01'
++        and retired['old_preservation_parent_status']=='FAILED' and retired['arrays_retained'] is True
++        and retired['removed']==c['removed_ledger_paths'] and root_exit['actual_root_exit_code']==0
++        and root_exit['complete_sha256']==basis['ledger_complete']['sha256'],'actual ledger retirement differs')
++
++
+ def execute(review_path,review_sha):
+     review_path=Path(review_path).resolve(strict=True)
+     review=json.loads(metadata(ROOT,str(review_path.relative_to(ROOT)),review_sha))
+@@ -77,11 +117,7 @@
+     for relative,pin in c['evidence'].items():metadata(ROOT,relative,pin)
+     for relative,pin in review['evidence'].items():metadata(ROOT,relative,pin)
+     for relative in c['removed_ledger_paths']:require(not os.path.lexists(ROOT/relative),'retired ledger reappeared')
+-    final=json.loads(metadata(ROOT,BACKUP+'/guard01/final.json'))
+-    outer=json.loads(metadata(ROOT,BACKUP+'/outer-exit01.json'))
+-    require(final['phase']=='complete' and final['child_exit_code']==0 and final['cleanup_verified'] is True
+-        and not Path(final['cgroup']).exists() and not Path('/proc',str(final['monitor_pid'])).exists()
+-        and outer['entry_selected_exit_code']==0 and not (ROOT/BACKUP/'failed.json').exists(),'original preservation cleanup differs')
++    recovery(ROOT,c)
+     for name in ('attempt01.json','complete01.json','failed01.json'):require(not os.path.lexists(HERE/name),'one-use identity already reserved')
+     inactive();originals,gets=selected(ROOT,c)
+     raw=metadata(ROOT,COLD,COLD_SHA);spec=importlib.util.spec_from_file_location('retirement_cold03',ROOT/COLD)

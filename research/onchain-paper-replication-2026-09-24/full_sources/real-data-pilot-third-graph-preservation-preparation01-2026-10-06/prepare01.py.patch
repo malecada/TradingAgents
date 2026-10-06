@@ -1,0 +1,44 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-second-graph-preservation-root01-2026-10-06/prepare02.py
++++ prepare01.py
+@@ -1,13 +1,13 @@
+-"""Metadata-only, stdout-only May9 preservation selection. Never reads payload bodies."""
++"""Metadata-only, stdout-only May16 preservation selection. Never reads payload bodies."""
+ import hashlib
+ import json
+ import os
+ from pathlib import Path
+ import stat
+ 
+-ID = 'real-pilot-second-graph-preservation-20261006-01'
+-GRAPH = 'eth-paper-real-pilot-graph-20220509-20261005-01'
+-SOURCE = 'b794d60df4e898d0832fee485ed4e6630b30f4df'
++ID = 'real-pilot-third-graph-preservation-20261006-01'
++GRAPH = 'eth-paper-real-pilot-graph-20220516-20261005-01'
++SOURCE = '72b25ad173d8a3ee30d39750df0d7a322ed50880'
+ PROGRAM = 'onchain-paper-replication-2026-09-24'
+ PREFIX = 'research_artifacts/' + PROGRAM
+ ROOTS = ('research_runs/' + GRAPH, PREFIX + '/runs/' + GRAPH, PREFIX + '/sources/' + GRAPH)
+@@ -49,10 +49,12 @@
+     # Refuse active runs before enumerating any output body.
+     run = root / ROOTS[0]
+     terminals = [p for p in (run/'complete.json', run/'failed.json') if os.path.lexists(p)]
+-    require(len(terminals) == 1, 'closed unambiguous original terminal required; active is unavailable')
++    require(len(terminals) == 1 and terminals[0].name == 'complete.json',
++            'genuine COMPLETE original required; active/failed is unavailable')
+     review = json.loads(metadata(root, review_ref['path'], review_ref['sha256'])[0])
+     require(review['decision'] == 'accepted' and review['experiment'] == GRAPH
+-            and review['source'] == SOURCE, 'independent exact outcome review required')
++            and review['source'] == SOURCE and review['root_actual_exit']['exit_code'] == 0,
++            'independent exact completed outcome and actual Root zero required')
+     evidence = review['evidence']
+     require(evidence.get(bodies_ref['path']) == bodies_ref['sha256'], 'body review not anchored by outcome review')
+     bodies = json.loads(metadata(root, bodies_ref['path'], bodies_ref['sha256'])[0])
+@@ -158,7 +160,7 @@
+     result['source_files'][helper_ref['path']] = helper_ref['sha256']
+     result['selection'] = selection_ref
+     result['evidence'] = [review_ref, bodies_ref]
+-    old = [p for p in result['source_files'] if p.endswith('/entry03.py')]
++    old = [p for p in result['source_files'] if p == 'research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-20261006-01/entry01.py']
+     require(len(old) == 1, 'exact old entry binding required')
+     del result['source_files'][old[0]]
+     result['source_files'][entry_ref['path']] = entry_ref['sha256']

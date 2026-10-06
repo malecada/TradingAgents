@@ -1,0 +1,39 @@
+{
+  "baseline": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-first-graph-get-duplicates-retirement01-2026-10-06/retire01.py",
+  "before_sha256": "0ea52ac0db5f8f6fe726cd4298b6c4d79651380ccd98d673bacfc7a3c3cd32a6",
+  "after_sha256": "9c25157260387513d82cae14a7ad08c6cd128e5070c8f35e860cabcc290d379b",
+  "literal_edits": [
+    {
+      "before": "May2 array get",
+      "after": "May9 array get"
+    },
+    {
+      "before": "real-pilot-first-graph-get-duplicates-retirement-20261006-01",
+      "after": "real-pilot-second-graph-get-duplicates-retirement-20261006-01"
+    },
+    {
+      "before": "BACKUP='research/onchain-paper-replication-2026-09-24/storage/real-pilot-first-graph-preservation-20261006-01'",
+      "after": "BACKUP='research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-20261006-01'\nUNION='research/onchain-paper-replication-2026-09-24/storage/real-pilot-second-graph-preservation-metadata-20261006-01'"
+    },
+    {
+      "before": "20220502",
+      "after": "20220509"
+    },
+    {
+      "before": "graph-2022-05-02",
+      "after": "graph-2022-05-09"
+    },
+    {
+      "before": "509060512",
+      "after": "604276056"
+    },
+    {
+      "before": "def execute(review_path,review_sha):",
+      "after": "def recovery(root,c):\n    basis=c['recovery_basis']\n    def reviewed(ref):\n        require(c['evidence'].get(ref['path'])==ref['sha256'],'recovery basis not selection-bound')\n        return json.loads(metadata(root,ref['path'],ref['sha256']))\n    def receipt(path):\n        require(path in c['evidence'],'required historical/union receipt not selection-bound')\n        return json.loads(metadata(root,path,c['evidence'][path]))\n    old=receipt(BACKUP+'/guard01/final.json');outer=receipt(BACKUP+'/outer-exit01.json');oldroot=receipt(BACKUP+'/ROOT_TERMINAL01.json')\n    failed=reviewed(basis['failed_review'])\n    require(failed['decision']=='accepted-failed-parent-partial-byte-evidence' and failed['parent_status']=='failed'\n        and failed['authenticated_body_get_count']==36 and old['phase']=='failed' and old['child_exit_code'] is None\n        and old['cleanup_verified'] is True and outer['entry_selected_exit_code']==1 and outer['guard_child_exit_code'] is None\n        and oldroot['actual_root_tool_exit_code']==1 and oldroot['separate_actual_worker_exit_code']==-15\n        and not os.path.lexists(root/BACKUP/'complete.json'),'permanent old FAILED/null/-15 disposition differs')\n    union_review=reviewed(basis['union_review']);union=receipt(UNION+'/complete.json')\n    require(union_review['decision']=='accepted' and union_review['identity']==Path(UNION).name\n        and union_review['full_scope_byte_recovery'] is True,'actual accepted full BYTE union required')\n    for name in ('complete.json','recovered-complete.json','guard01/final.json','outer-exit01.json'):\n        path=UNION+'/'+name\n        require(union_review['evidence'].get(path)==c['evidence'].get(path) and path in c['evidence'],'union review receipt join differs')\n    require(union==receipt(UNION+'/recovered-complete.json') and union['identity']==Path(UNION).name\n        and union['parent']==Path(BACKUP).name and union['parent_status']=='FAILED'\n        and union['count']==len(union['files'])==36,'actual36 union differs')\n    for row in c['rows']:\n        require(union['files'][row['index']]==receipt(row['kept']),'selected get/union membership differs')\n    final=receipt(UNION+'/guard01/final.json');uouter=receipt(UNION+'/outer-exit01.json');uroot=receipt(UNION+'/ROOT_TERMINAL01.json')\n    require(final['phase']=='complete' and final['child_exit_code']==0 and final['cleanup_verified'] is True\n        and uouter['entry_selected_exit_code']==0 and uouter['guard_child_exit_code']==0 and uouter['cleanup_verified'] is True\n        and uroot['actual_root_tool_exit_code']==0 and not os.path.lexists(root/UNION/'failed.json'),'new union native/Root completion differs')\n    for guard in (old,final):\n        require(not Path(guard['cgroup']).exists() and not Path('/proc',str(guard['monitor_pid'])).exists(),'recorded preservation process remains')\n    retired=reviewed(basis['ledger_complete']);root_exit=reviewed(basis['ledger_root'])\n    require(retired['identity']=='real-pilot-second-graph-ledger-retirement-20261006-01'\n        and retired['old_preservation_parent_status']=='FAILED' and retired['arrays_retained'] is True\n        and retired['removed']==c['removed_ledger_paths'] and root_exit['actual_root_exit_code']==0\n        and root_exit['complete_sha256']==basis['ledger_complete']['sha256'],'actual ledger retirement differs')\n\n\ndef execute(review_path,review_sha):"
+    },
+    {
+      "before": "    final=json.loads(metadata(ROOT,BACKUP+'/guard01/final.json'))\n    outer=json.loads(metadata(ROOT,BACKUP+'/outer-exit01.json'))\n    require(final['phase']=='complete' and final['child_exit_code']==0 and final['cleanup_verified'] is True\n        and not Path(final['cgroup']).exists() and not Path('/proc',str(final['monitor_pid'])).exists()\n        and outer['entry_selected_exit_code']==0 and not (ROOT/BACKUP/'failed.json').exists(),'original preservation cleanup differs')\n",
+      "after": "    recovery(ROOT,c)\n"
+    }
+  ]
+}
