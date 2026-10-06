@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T17:05:19.403800+00:00: focused import validation fix integrated; fresh pilot11 metadata prepared; no native job active.**
+
+Pilot10 remains permanently FAILED/spent81. Actual43file/13directory56name public increment was recovered from external Git and independently accepted10804338, preserving the initial lazy-retrieval refusal and separately recorded successful continuation. No original store was deleted or copied beyond the selected increment.
+
+Source review3451c081 accepted a genuine transaction consolidation: ImportStage.lease supplies the existing full Prepared entry; ImportedExecution retains final full Prepared validation, matching-byte reread and all original callback-free joins. Three full Prepared checks become two. No scheduler/30-second threshold/graph hash/model/training changes. Exact adopted source anchor a7100986d088bbfcd758e7b3798769167a3303e8,179package pins/176unchanged; strict storage identity alone changes10→11. Independent synthetic RED→GREEN and over30-second refusal passed; actual speed and capacity remain unmeasured.
+
+Pilot11 has fresh actual baseline, exact metadata preparation and opaquely bound archive namespace11. Gate243sourcepins/59inputs is prepared. Independent same-family82 review5195512f preserves51closed33COMPLETE18FAILED,28unchangedpending,two permanent preclaim reserves and one fresh11. No claim/admission/attempt yet. Root owns integration/accounting/STATE/Git/preservation/ONElauncher; pilot09_review owns one combined adoption/metadata/entry review, other two bounded agents completed. Next complete combined review, bind genuine10 recovery, commit admission and exact release, then ONE fresh11 if original resource checks pass. Broader work/heartbeat/app goal remain PAUSED; direct pilot authorized.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T16:52:45.698282+00:00:10 permanently FAILED/spent81; no native job active. Source/Git freeze ENDED after actual Root closure/cleanup.**
 
 Root40455/93804f exit1 CLOSED; actualParent1/nativechild1/667.426414831s/cleanupverified/cgroupgone/all7recordedPIDsabsent. [Actual terminal](full_sources/real-data-pilot-final10-2026-10-06/ROOT_TERMINAL01.json). Target ENTRY checkpoint37 refused the same30s freshness class;09 had refused post-graph-hash checkpoint53. New genuine diagnostic: prior age23.631386558s +fullcallback6.903510514s=30.534897072s, exceeding30s by0.534897072s. This identifies timing accumulation; callback alone is below30s. NoOOM/MAX, sampledchargedpeak5368717312B/lastkernelpeak5370740736B includescache. Original import event182.259s; sevengraphs loaded, zeroMCMgraphs/jointupdates/financialfits, no feature/training throughput or wholecapacity established. All attempted/unavailable cells and secondary archive stale/poisoned cleanup failures retained.
