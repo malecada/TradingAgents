@@ -1,0 +1,156 @@
+{
+  "status": "PASS",
+  "qualification": "Extracted-method synthetic fixture only; no genuine Owner/Binding/admission/arrays or callback capacity proof. Original extra full-call count is the performance RED; candidate removes exactly one middle invocation while original surrounding checks remain.",
+  "checks": [
+    {
+      "case": "intact canonical identity unchanged; redundant middle full check removed",
+      "original": {
+        "disposition": "pass",
+        "value": {
+          "backend": {
+            "fixture": "metadata-only"
+          },
+          "current_binding": "1ea8a97204f0d2afb51195922b0e76e214b191642666408c4431be6eeb0343d1",
+          "current_source": "fixed",
+          "execution_matching": "3c3c4f4ec5de0a3c131c471fe6565d53c3cee711dcc310c860ce7d31a9363aae",
+          "mcm_execution_admitted": false,
+          "original_dictionary": "fixed",
+          "original_matching": "aa2c2c4f06f30aad68230de36f5f37ac04bb3795c349ea02ffd79bb7ae600405",
+          "runtime_hash": "fixed",
+          "source_modules": {
+            "fixture.py": "fixed"
+          },
+          "stage_contract": {
+            "control_input": "original",
+            "control_sha256": "fixed",
+            "current_binding": "1ea8a97204f0d2afb51195922b0e76e214b191642666408c4431be6eeb0343d1",
+            "descriptor_sha256": "fixed",
+            "job_input": "job",
+            "job_sha256": "fixed",
+            "kind": "dictionary-import",
+            "required_stages": [
+              "dictionary-import",
+              "mcm-fixture"
+            ]
+          }
+        },
+        "checks": 3,
+        "reads": 2
+      },
+      "candidate": {
+        "disposition": "pass",
+        "value": {
+          "backend": {
+            "fixture": "metadata-only"
+          },
+          "current_binding": "1ea8a97204f0d2afb51195922b0e76e214b191642666408c4431be6eeb0343d1",
+          "current_source": "fixed",
+          "execution_matching": "3c3c4f4ec5de0a3c131c471fe6565d53c3cee711dcc310c860ce7d31a9363aae",
+          "mcm_execution_admitted": false,
+          "original_dictionary": "fixed",
+          "original_matching": "aa2c2c4f06f30aad68230de36f5f37ac04bb3795c349ea02ffd79bb7ae600405",
+          "runtime_hash": "fixed",
+          "source_modules": {
+            "fixture.py": "fixed"
+          },
+          "stage_contract": {
+            "control_input": "original",
+            "control_sha256": "fixed",
+            "current_binding": "1ea8a97204f0d2afb51195922b0e76e214b191642666408c4431be6eeb0343d1",
+            "descriptor_sha256": "fixed",
+            "job_input": "job",
+            "job_sha256": "fixed",
+            "kind": "dictionary-import",
+            "required_stages": [
+              "dictionary-import",
+              "mcm-fixture"
+            ]
+          }
+        },
+        "checks": 2,
+        "reads": 2
+      }
+    },
+    {
+      "case": "entry_failure",
+      "original": {
+        "disposition": "refuse",
+        "error": "entry failure",
+        "checks": 1,
+        "reads": 0
+      },
+      "candidate": {
+        "disposition": "refuse",
+        "error": "entry failure",
+        "checks": 1,
+        "reads": 0
+      }
+    },
+    {
+      "case": "final_failure",
+      "original": {
+        "disposition": "refuse",
+        "error": "final failure",
+        "checks": 2,
+        "reads": 1
+      },
+      "candidate": {
+        "disposition": "refuse",
+        "error": "final failure",
+        "checks": 2,
+        "reads": 1
+      }
+    },
+    {
+      "case": "source_mutation",
+      "original": {
+        "disposition": "refuse",
+        "error": "boundary mutation",
+        "checks": 2,
+        "reads": 1
+      },
+      "candidate": {
+        "disposition": "refuse",
+        "error": "boundary mutation",
+        "checks": 2,
+        "reads": 1
+      }
+    },
+    {
+      "case": "descriptor_mutation",
+      "original": {
+        "disposition": "refuse",
+        "error": "current numerical matching settings differ from original",
+        "checks": 1,
+        "reads": 1
+      },
+      "candidate": {
+        "disposition": "refuse",
+        "error": "current numerical matching settings differ from original",
+        "checks": 1,
+        "reads": 1
+      }
+    },
+    {
+      "case": "final_read_mutation",
+      "original": {
+        "disposition": "refuse",
+        "error": "original matching bytes changed after lease",
+        "checks": 3,
+        "reads": 2
+      },
+      "candidate": {
+        "disposition": "refuse",
+        "error": "original matching bytes changed after lease",
+        "checks": 2,
+        "reads": 2
+      }
+    },
+    {
+      "case": "public stage_contract preserves mandatory full-check refusal",
+      "original": "refuse",
+      "candidate": "refuse"
+    }
+  ],
+  "exact_inverse": true
+}

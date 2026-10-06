@@ -1,0 +1,50 @@
+{
+  "decision": "investigation_only_not_release",
+  "evidence": [
+    {
+      "path": "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "sha256": "9d89376185fb9632ed165a8da2f26e8fb07e2bc567611bc7fa5a83e2463e7e4d"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_authority_interval.py",
+      "sha256": "983818c337ed50ab57aed0d857d9ee9b62d0ac629c354f4512e57ddc50fd1276"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "sha256": "12d11a7a3f8b5cc07117f622978ce43ef537eab20ab80335b95eeb35cf4391bd"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/original_import_stage.py",
+      "sha256": "8ee6994070e52953773de5e6615211eacefcb7ecedc8081a8a72e528b810bc8b"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/original_import_preparation.py",
+      "sha256": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_owner.py",
+      "sha256": "a60d33006ebcb2d9ef2816072f975e2ae1ba5556f363e7de3ef757c3a9dd8c63"
+    },
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-09/guard/child.log",
+      "sha256": "1d172c9681d921538d5cb139fd5f00d14d143325446907cc753d0e1eb1bbf733"
+    }
+  ],
+  "not_tested": [
+    "No empirical or synthetic numerical timing, arrays/model/claim/ledger/private body access.",
+    "No complete performance or scientific correctness acceptance; candidate review follows when concrete."
+  ],
+  "observations": [
+    "Actual source at failed09 commit line53 checkpoint follows successful line51 manifest checkpoint and line52 graph_hash equality. Original Root wording only mentions manifest and needs a separate correction.",
+    "Interval.validate freshness(full_done) measures from old full completion, including elapsed graph hashing and callback work; failed trace alone cannot distinguish callback duration from old age.",
+    "ImportedExecution.check nests four PreparedImport._check calls: stage.lease once, execution_contract direct entry once, nested stage_contract once, final once. Each prepared check includes full Binding source/input/Git/runtime and original evidence checking."
+  ],
+  "reviewer": "pilot09_review independent fresh10 path reviewer",
+  "risks": [
+    "Dropping before/after arbitrary callback checks, memoizing mutable evidence across callbacks, or replacing full bodies with stat fingerprints would alter integrity guarantees.",
+    "A semantically safe speedup must preserve genuine authority and post-callback checks plus unchanged30s refusal, and demonstrate narrowed duplicated work on exact changed source.",
+    "Warm single-graph22s timing is not measured09 graph timing or remaining callback budget."
+  ],
+  "schema_version": 1,
+  "source": "c8854e5315bb2a8b8d1cfde8121ead4e49e78808"
+}

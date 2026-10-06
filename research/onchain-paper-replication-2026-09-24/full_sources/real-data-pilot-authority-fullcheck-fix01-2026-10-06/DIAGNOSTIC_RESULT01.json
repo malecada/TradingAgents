@@ -1,0 +1,135 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "args": [
+        22.0,
+        9.0,
+        false,
+        false
+      ],
+      "original": {
+        "pass": false,
+        "clock_reads": 10,
+        "closed": true,
+        "full": 0.0,
+        "reason": "import lease: stale interval cannot refresh",
+        "notes": [],
+        "same_fatal": false
+      },
+      "candidate": {
+        "pass": false,
+        "clock_reads": 10,
+        "closed": true,
+        "full": 0.0,
+        "reason": "import lease: stale interval cannot refresh",
+        "notes": [
+          "import lease full boundary timing: full_callback_seconds=9.0; pre_callback_age_seconds=22.0; total_age_seconds=31.0"
+        ],
+        "same_fatal": false
+      }
+    },
+    {
+      "args": [
+        22.0,
+        7.0,
+        false,
+        false
+      ],
+      "original": {
+        "pass": true,
+        "clock_reads": 13,
+        "closed": false,
+        "full": 29.0
+      },
+      "candidate": {
+        "pass": true,
+        "clock_reads": 13,
+        "closed": false,
+        "full": 29.0
+      }
+    },
+    {
+      "args": [
+        0.0,
+        31.0,
+        true,
+        false
+      ],
+      "original": {
+        "pass": false,
+        "clock_reads": 4,
+        "closed": true,
+        "full": null,
+        "reason": "import lease: stale interval cannot refresh",
+        "notes": [],
+        "same_fatal": false
+      },
+      "candidate": {
+        "pass": false,
+        "clock_reads": 4,
+        "closed": true,
+        "full": null,
+        "reason": "import lease: stale interval cannot refresh",
+        "notes": [
+          "import lease full boundary timing: full_callback_seconds=31.0; pre_callback_age_seconds=0.0; total_age_seconds=31.0"
+        ],
+        "same_fatal": false
+      }
+    },
+    {
+      "args": [
+        22.0,
+        1.0,
+        false,
+        true
+      ],
+      "original": {
+        "pass": false,
+        "clock_reads": 9,
+        "closed": true,
+        "full": 0.0,
+        "reason": "original callback fatal",
+        "notes": [],
+        "same_fatal": true
+      },
+      "candidate": {
+        "pass": false,
+        "clock_reads": 9,
+        "closed": true,
+        "full": 0.0,
+        "reason": "original callback fatal",
+        "notes": [],
+        "same_fatal": true
+      }
+    },
+    {
+      "args": [
+        31.0,
+        0.0,
+        false,
+        false
+      ],
+      "original": {
+        "pass": false,
+        "clock_reads": 7,
+        "closed": true,
+        "full": 0.0,
+        "reason": "import lease: stale interval cannot refresh",
+        "notes": [],
+        "same_fatal": false
+      },
+      "candidate": {
+        "pass": false,
+        "clock_reads": 7,
+        "closed": true,
+        "full": 0.0,
+        "reason": "import lease: stale interval cannot refresh",
+        "notes": [],
+        "same_fatal": false
+      }
+    }
+  ],
+  "exact_inverse": true,
+  "qualification": "Synthetic scheduler clock only. Original exception reason, poison state, full timestamp and clock-read count unchanged; only stale full_done exception receives diagnostic note. Actual next-run timings remain unknown."
+}

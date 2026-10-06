@@ -1,0 +1,47 @@
+{
+  "accepted_author_checks": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-authority-fullcheck-fix01-2026-10-06/CHECK_RESULT01.json",
+    "sha256": "02c6ec7a274b41aca3de2a479c7ace60fc183082f369398bac4c7fa8793034bc"
+  },
+  "baseline": {
+    "path": "tradingagents/research/onchain_replication/original_import_preparation.py",
+    "sha256": "cfae656ca4684271e5f9bc36f4ec4f09ff0da77436a5133b5f2a743c80ffe9e5"
+  },
+  "candidate": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-authority-fullcheck-fix01-2026-10-06/candidate/original_import_preparation.py",
+    "sha256": "56c25a54b69c48136cb891bf66dff1f6f81c779f61d62ca3adb0ae4457730d2c"
+  },
+  "checks": [
+    "Full module AST inverse accounts for every executable change: exact stage metadata body extracted; public stage_contract retains its original full check; only execution_contract uses private metadata helper.",
+    "Embedded helper calls only original canonical metadata/hash functions; no live/user/owner callback introduced. Execution contract retains original entry and final actual _check plus final original matching byte reread.",
+    "Genuine source/input/runtime/capability checks remain in retained full boundaries; no interval, source currentness, owner grant, model, dictionary, graph or numerical settings edited.",
+    "Loaded-source authenticator already includes authored PreparedImport methods, so new helper remains within authenticated class/source closure."
+  ],
+  "decision": "accepted",
+  "findings": [],
+  "independent_evidence": {
+    "complete_AST_inverse": true,
+    "execution_contract_entry_and_final_checks": 2,
+    "helper_body_exact_original_stage_metadata": true,
+    "helper_call_targets": [
+      "original.parse",
+      "cache_key",
+      "canonical_bytes",
+      "thaw"
+    ],
+    "other_module_AST_unchanged": true,
+    "public_stage_full_check_preserved": true
+  },
+  "manifest": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-authority-fullcheck-fix01-2026-10-06/MANIFEST01.json",
+    "sha256": "2d272571f2a952da8ce2a2c237320c9431dc1a14f13a859dcce46ace9c12de58"
+  },
+  "not_tested": [
+    "No real arrays, original data values, empirical rerun, claim/ledger or privatebody access.",
+    "No repeated timing or unchanged source tests; author seven focused extracted-method checks reviewed, independent complete AST reconstruction performed.",
+    "No complete real authority/callback latency, fullMCM/training capacity, timing-leakage or economic/fee/funding/PnL verification."
+  ],
+  "qualification": "Narrow source-only integrity-preserving duplicate-validation reduction. Four nested Prepared checks become three. No demonstrated genuine callback speedup or assurance that graph hash plus full check finishes within30seconds. Largestgraph engineering timing and isolated public-source compile/read timings cannot establish this.",
+  "reviewer": "pilot09_review independent fresh10 source reviewer",
+  "schema_version": 1
+}

@@ -1,0 +1,72 @@
+{
+  "baseline": {
+    "path": "tradingagents/research/onchain_replication/imported_authority_interval.py",
+    "sha256": "983818c337ed50ab57aed0d857d9ee9b62d0ac629c354f4512e57ddc50fd1276"
+  },
+  "candidate": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-authority-fullcheck-fix01-2026-10-06/candidate/imported_authority_interval.py",
+    "sha256": "e61ef97f883ed9d27107f6316b774697b8949d83c313928150a0ae717b283f6f"
+  },
+  "checks": [
+    "Complete module AST inverse removes only diagnostic try/except; all existing clock reads, predicates, thresholds and poisoning logic match original.",
+    "Independent boundary tests preserve acceptance at exactly30s and refusal immediately above30s, including clock-read count/full timestamp/closed state.",
+    "Original callback exceptions are outside the diagnostic catch; no delayed refresh or callback retry introduced."
+  ],
+  "decision": "accepted",
+  "findings": [],
+  "independent_boundary_tests": [
+    {
+      "candidate": {
+        "clock_reads": 13,
+        "closed": false,
+        "duration": 10.0,
+        "full": 30.0,
+        "notes": [],
+        "reason": null,
+        "status": "passed"
+      },
+      "original": {
+        "clock_reads": 13,
+        "closed": false,
+        "duration": 10.0,
+        "full": 30.0,
+        "notes": [],
+        "reason": null,
+        "status": "passed"
+      }
+    },
+    {
+      "candidate": {
+        "clock_reads": 10,
+        "closed": true,
+        "duration": 10.000001,
+        "full": 0.0,
+        "notes": [
+          "import lease full boundary timing: full_callback_seconds=10.000000999999997; pre_callback_age_seconds=20.0; total_age_seconds=30.000000999999997"
+        ],
+        "reason": "import lease: stale interval cannot refresh",
+        "status": "refused"
+      },
+      "original": {
+        "clock_reads": 10,
+        "closed": true,
+        "duration": 10.000001,
+        "full": 0.0,
+        "notes": [],
+        "reason": "import lease: stale interval cannot refresh",
+        "status": "refused"
+      }
+    }
+  ],
+  "manifest": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-authority-fullcheck-fix01-2026-10-06/MANIFEST02.json",
+    "sha256": "e4b93ebcfcc88fd2526d74c29a65074807a9ed7245e09976b3de034d88a75e45"
+  },
+  "not_tested": [
+    "No genuine Owner/Binding/arrays/private inputs/native or empirical work.",
+    "No real latency saving or full pilot capacity proof."
+  ],
+  "qualification": "Notes report existing sampled timestamp intervals, not independently timed callback internals. Allocation failure while constructing diagnostic notes is not tested. No original09 callback duration is inferred.",
+  "reviewer": "pilot09_review independent fresh10 diagnostic reviewer",
+  "schema_version": 1
+}
