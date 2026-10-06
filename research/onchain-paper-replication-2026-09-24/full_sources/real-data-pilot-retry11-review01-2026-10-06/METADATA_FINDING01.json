@@ -1,0 +1,12 @@
+{
+  "decision": "withheld_pending_correction",
+  "finding": "D11 generated public inputs omit canonical final newline required by unchanged builder/binder policy digests. Exact original_import body digest e53ce0316159bfdb61547885d506ad1a44e2f951599e8a1ad602a03e4e9b35e5 differs from bound descriptor635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee; JSON values are equal but identity is not.",
+  "finding_id": "P11-INPUT-BYTES01",
+  "impact": "Exact source/input admission or Prepared._selection_now refuses. No empirical run authorized from these mismatched bytes.",
+  "not_tested": [
+    "No private body or numerical/current admission executed by reviewer."
+  ],
+  "required_fix": "Preserve original emitted bodies and refusal; use existing binder.raw compact sortedJSON plus newline for eight public documents, update only actual inputrefs/gate public hashes and final bindings. Rejoin all draft protocol references rather than stale copied pair policy.",
+  "reviewer": "pilot09_review independent fresh11 metadata reviewer",
+  "schema_version": 1
+}
