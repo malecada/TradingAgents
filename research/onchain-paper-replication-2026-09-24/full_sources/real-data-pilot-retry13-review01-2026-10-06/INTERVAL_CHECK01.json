@@ -1,0 +1,99 @@
+{
+  "interval_source": {
+    "path": "tradingagents/research/onchain_replication/imported_authority_interval.py",
+    "sha256": "e61ef97f883ed9d27107f6316b774697b8949d83c313928150a0ae717b283f6f"
+  },
+  "original_policy": {
+    "dataset": "eth",
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/imported_authority_lease.json",
+    "sha256": "6ad2193fb487d35f128fc293ced43526bc2efc292db0bf6681a0ceac77fef81f"
+  },
+  "qualification": "Real unchanged stdlib Interval class, explicit synthetic clock/callbacks only. No actual authority or measured full60s callback; replayed total12 interval age as one synthetic callback does not decompose or reconstruct actual12 trace. All ordinary callback/final freshness and poisoned-refusal checks remain.",
+  "rows": [
+    {
+      "callbacks": [
+        "live",
+        "full"
+      ],
+      "closed": true,
+      "error": [
+        "ValueError",
+        "import lease: stale interval cannot refresh"
+      ],
+      "fatal": false,
+      "full_timestamp": null,
+      "max_stale_ms": 30000,
+      "synthetic_callback_seconds": 30.05162506600027
+    },
+    {
+      "callbacks": [
+        "live",
+        "full",
+        "finger",
+        "live"
+      ],
+      "closed": false,
+      "error": null,
+      "fatal": false,
+      "full_timestamp": 30.05162506600027,
+      "max_stale_ms": 60000,
+      "synthetic_callback_seconds": 30.05162506600027
+    },
+    {
+      "callbacks": [
+        "live",
+        "full",
+        "finger",
+        "live"
+      ],
+      "closed": false,
+      "error": null,
+      "fatal": false,
+      "full_timestamp": 60.0,
+      "max_stale_ms": 60000,
+      "synthetic_callback_seconds": 60.0
+    },
+    {
+      "callbacks": [
+        "live",
+        "full"
+      ],
+      "closed": true,
+      "error": [
+        "ValueError",
+        "import lease: stale interval cannot refresh"
+      ],
+      "fatal": false,
+      "full_timestamp": null,
+      "max_stale_ms": 60000,
+      "synthetic_callback_seconds": 60.001
+    },
+    {
+      "callbacks": [
+        "live",
+        "full"
+      ],
+      "closed": true,
+      "error": [
+        "RuntimeError",
+        "independent-sentinel"
+      ],
+      "fatal": true,
+      "full_timestamp": null,
+      "max_stale_ms": 60000,
+      "synthetic_callback_seconds": 0.0
+    }
+  ],
+  "schema_version": 1,
+  "selected_policy": {
+    "assumption": "Source/input/runtime and live claim/Owner/native revocation detection are sampled within registered intervals; full validation precedes successful boundaries. Independent native enforcement remains. No atomic writer exclusion.",
+    "fingerprint_interval_ms": 1000,
+    "full_interval_ms": 10000,
+    "kind": "imported-authority-sampled-stage-interval",
+    "live_interval_ms": 100,
+    "max_calls_between_full": 65536,
+    "max_stale_ms": 60000,
+    "schema_version": 1
+  },
+  "status": "PASS"
+}

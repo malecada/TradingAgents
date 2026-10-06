@@ -1,0 +1,18 @@
+import hashlib,json
+from pathlib import Path
+R=Path.cwd();F=R/'research/onchain-paper-replication-2026-09-24/full_sources';H=F/'real-data-pilot-retry13-review01-2026-10-06';D=F/'real-data-pilot-fixed13-metadata-successor01-2026-10-06';O=F/'real-data-pilot-fixed12-metadata-successor01-2026-10-06'
+def ld(p):return json.loads(p.read_bytes())
+def ref(p):return {'path':str(p.relative_to(R)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+manifest=ld(D/'MANIFEST01.json')
+for x in manifest['files']:
+ p=R/x['path'];assert ref(p)['sha256']==x['sha256'] and p.stat().st_size==x['bytes']
+a='eth-paper-real-data-end-to-end-resource-20261006-12';b=a[:-2]+'13';storage=R/'tradingagents/research/onchain_replication/real_pilot_storage.py';assert storage.read_text().count(a)==1 and storage.read_text().replace(a,b)==(D/'candidate/real_pilot_storage.py').read_text()
+for name in ['build_inputs03.py','controls01.py']:
+ old=(O/'candidate'/name).read_text();assert old.count(a)==1 and old.replace(a,b)==(D/'candidate'/name).read_text()
+assert (D/'successor02.py').read_bytes()==(O/'successor02.py').read_bytes()
+newdeps=ld(D/'DEPENDENCIES02.json');olddeps=ld(O/'DEPENDENCIES02.json');assert set(newdeps)==set(olddeps)
+for key,reference in newdeps.items():
+ assert ref(R/reference['path'])['sha256']==reference['sha256']
+ if key not in {'builder','controls'}:assert reference==olddeps[key]
+check=ld(H/'INTERVAL_CHECK01.json');old=ld(R/check['original_policy']['path']);policy=ld(D/'candidate/imported_authority_lease.json');assert policy==dict(old,max_stale_ms=60000) and check['selected_policy']==policy and ref(R/check['interval_source']['path'])==check['interval_source']
+o={'schema_version':1,'decision':'accepted','reviewer':'pilot09_review independent fresh13 source/policy reviewer','manifest':ref(D/'MANIFEST01.json'),'candidates':[ref(D/'candidate/real_pilot_storage.py'),ref(D/'candidate/imported_authority_lease.json')],'independent_boundary_checks':ref(H/'INTERVAL_CHECK01.json'),'findings':[],'checks':['Only selected policy max_stale_ms changes30000 to60000; every other policy field and exact Interval source unchanged.','Storage changes one fixed12 to13 literal; builder/controls each change one identity; six remaining dependency refs and successor bytes unchanged.','Actual unchanged Interval accepts exactly60s and refuses/poisons60.001s; callback exception and permanently closed refusal remain.','Actual12 aggregate30.051625066 is replayed only as explicit synthetic callback duration, not reconstruction of its measured callback/previous interval.'], 'authority_tradeoff':'The user-authorized change increases permitted elapsed freshness age from30 to60seconds, including full callback duration;100ms live,1000ms fingerprint,10000ms full scheduled intervals and65536 call limit remain. This expands tolerated revocation/source-change detection age. Full boundary validation, callback errors and hard native limits remain; no atomic writer exclusion is claimed.', 'qualification':'Narrow policy/source acceptance only. Same model, graph inputs, original32 motifs/512samples, scoring, tolerances and resource caps must be retained in final registration. Actual12 remains permanently FAILED/spent; no automatic resume or elapsed-time/capacity claim.', 'not_tested':['No genuine admission, Owner, arrays, model, private body, native launch or financial experiment.','No empirical throughput, whole-fit capacity, numerical results, financial return/cashflow, fees/funding/exposure or leakage claim.']};p=H/'SOURCE_REVIEW01.json';p.write_text(json.dumps(o,indent=2,sort_keys=True)+'\n');print(ref(p))

@@ -1,0 +1,107 @@
+{
+  "actual_external_recovery_accepted": true,
+  "archive": {
+    "bytes": 542720,
+    "git_blob_oid": "3dc96007f3bc0c954d03371d7edb95e1e39d6b88",
+    "members_review": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json",
+      "sha256": "14b8e6b8cb3b5e3efc2d415ea10301ea8177973cd9bf33db38e62948921f63bc"
+    },
+    "original_archive_streams": 0,
+    "returned_archive_streams": 1,
+    "returned_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-increment01-2026-10-06/fresh-git-recovered-increment01.tar",
+    "sha256": "46e470bed00940a5152c32f668e259b39f35f48bf8389669b6438d5d3a56a6a0",
+    "tree_source_commit": "b37f258932d86f6da1d503d5185b0bfce7cc2c59"
+  },
+  "bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-twelfth-resource-failed-20261006-01.git",
+  "current_alternates_absent": true,
+  "decision": "accepted",
+  "deletion_authorized": false,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-increment01-2026-10-06/CAPTURE01.json": "b485144c85f4becedc82b3224f9cf2a2bdebfc66232124a66214d4d7f41679b0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json": "0b502243a3d861261e22751efae2a6a5036b5ccec5756db05160c4cbcb273598",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-increment01-2026-10-06/fresh-git-recovered-increment01.tar": "46e470bed00940a5152c32f668e259b39f35f48bf8389669b6438d5d3a56a6a0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-review01-2026-10-06/INCREMENT_SELECTION01.json": "8cb698f1ec972c989ad22345767c8cc350ae85fea6be2c1aa6fec38595c97057",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-review01-2026-10-06/OUTCOME_REVIEW01.json": "76d719decd0760aea9cceac06e17e67368553861821092370a0a21af084127a8",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json": "14b8e6b8cb3b5e3efc2d415ea10301ea8177973cd9bf33db38e62948921f63bc"
+  },
+  "external_provenance_basis": "Nine recorded successful operations include fresh bare initialization, persistent promisor configuration, external fetch, FETCH_HEAD check and actual lazy blob retrieval with remote HEAD equality. Independently confirmed present bare object/tree identity offline without lazy fetch. Returned archive Git object SHA1 and SHA256 computed from its sole body read.",
+  "fresh_fetch_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json",
+    "sha256": "0b502243a3d861261e22751efae2a6a5036b5ccec5756db05160c4cbcb273598"
+  },
+  "git_lazy_fetch_disabled": true,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-12",
+  "not_tested": [
+    "No transport/native/network replay, fresh fetch, historical body stream, original tar read, extraction or deletion.",
+    "No numerical/scientific/raw/runtime/private body read or financial correctness/capacity claim.",
+    "External origin history relies on preserved actual fetch record; current offline bare state does not reconstruct historical process lifetime."
+  ],
+  "offline_git_checks": [
+    {
+      "args": [
+        "rev-parse",
+        "--is-bare-repository"
+      ],
+      "returncode": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "b37f258932d86f6da1d503d5185b0bfce7cc2c59"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.url"
+      ],
+      "returncode": 0,
+      "stdout": "git@github.com:malecada/TradingAgents.git"
+    },
+    {
+      "args": [
+        "ls-tree",
+        "-z",
+        "b37f258932d86f6da1d503d5185b0bfce7cc2c59",
+        "--",
+        "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-increment01-2026-10-06/failed-increment01.tar"
+      ],
+      "returncode": 0,
+      "stdout": "100644 blob 3dc96007f3bc0c954d03371d7edb95e1e39d6b88\tresearch/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-increment01-2026-10-06/failed-increment01.tar\u0000"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-t",
+        "3dc96007f3bc0c954d03371d7edb95e1e39d6b88"
+      ],
+      "returncode": 0,
+      "stdout": "blob"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-s",
+        "3dc96007f3bc0c954d03371d7edb95e1e39d6b88"
+      ],
+      "returncode": 0,
+      "stdout": "542720"
+    }
+  ],
+  "original_outcome": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twelfth-resource-failed-review01-2026-10-06/OUTCOME_REVIEW01.json",
+    "sha256": "76d719decd0760aea9cceac06e17e67368553861821092370a0a21af084127a8"
+  },
+  "original_selected_stat_identities_currently_unchanged": true,
+  "originals_retained": true,
+  "qualification": "BYTE/member/name/mode acceptance covers only this exact public failed-resource increment. No POSIX ownership/timestamps/xattrs reconstruction, installed runtime/raw/graph/private/unrelated-store recovery, future remote availability or scientific credit. Original12 is permanently FAILED/spent83 under original30s freshness; original nulls, Root/Parent/child1 and all7 unavailable MCM graphs retained. Returned-constructor cardinality remains unknown. No refund, transfer, reuse or scientific credit follows. Target ENTRY37/full_done refusal is retained with original24.771937047s prior plus5.279688019s callback=30.051625066s. Prospective authorized60s does not reinterpret this failure. Secondary archive cleanup stale/poisoned diagnostics retained; no global freshness, savings or capacity inferred. Earlier namespaces remain untouched.",
+  "recovered_archive_retained": true,
+  "recovery_source_commit": "b37f258932d86f6da1d503d5185b0bfce7cc2c59",
+  "schema_version": 1,
+  "scope": "Complete public12 failed-resource increment BYTE recovery via external Git lazy blob retrieval into the fresh bare and recovered archive;43 regular files totaling444732 bytes plus13 typed directories,56 names in542720-byte tar."
+}
