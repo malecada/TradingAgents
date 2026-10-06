@@ -1,0 +1,7 @@
+# Torch-inclusive preflight inventory
+
+Candidate preflight01.py changes one expression at the existing runtime comparison: inventory(ROOT) becomes inventory(ROOT,include_torch=True). Every other byte of accepted preparation02 is unchanged. The original compact_resource worker selects include_torch=True at job.py:374; matching_owner.py:213 and its live check also require it. environment.py adds cuda_available, cuda_build and torch_version only in that selected mode. The candidate now compares the same runtime schema as those genuine boundaries.
+
+Focused check837caf exited0. The actual inventory function ran with invented injected platform/package/hash/Torch objects, not installed numerical imports. The old predicate refused the inclusive schema; the corrected predicate accepted it and still refused a changed Torch version. Full byte and module-AST inverses pass. Initial harnessc80e83 omitted bool/dict annotation builtins and failed before the predicate; its source/error remain preserved. No real admission or pilot was executed.
+
+Budget72, scientific method, source/Owner authority, private/public binding, floor and resource limits are unchanged. Preparation02 remains immutable. This is a candidate requiring independent changed-seam review and Root integration; it is not a launch or capacity claim. Existing binding/release templates and every unchanged dependency remain those of preparation02; this package supersedes only its preflight source body.

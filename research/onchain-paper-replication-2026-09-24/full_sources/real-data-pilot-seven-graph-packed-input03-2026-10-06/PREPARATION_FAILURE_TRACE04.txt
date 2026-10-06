@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor02-2026-10-06/successor02.py", line 35, in prepare
+    return m.prepare(root,draft)
+           ~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor02-2026-10-06/candidate/prepare_builder03_input02.py", line 58, in prepare
+    built=b.build(root,spec)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/build_inputs03.py", line 154, in build
+    max_matrix=max(v['rows']*32*4 for v in g.values());need(output['max_artifact_bytes']>=max_matrix+2*8192 and output['max_workflow_output_bytes']>=7*(output['max_artifact_bytes']+8192),'full original output reservation insufficient')
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '>=' not supported between instances of 'NoneType' and 'int'

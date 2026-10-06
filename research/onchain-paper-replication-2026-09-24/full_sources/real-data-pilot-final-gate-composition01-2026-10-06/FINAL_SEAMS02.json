@@ -1,0 +1,43 @@
+{
+  "anchor_object_bytes_independently_tested_here": false,
+  "execution_workspace": {
+    "actual_body": null,
+    "body_fields": [
+      "root",
+      "ledger",
+      "artifacts",
+      "git_common"
+    ],
+    "constructor": "tradingagents.research.onchain_replication.job.workspace_binding(ROOT)",
+    "formula": {
+      "artifacts": "str((Path(ROOT).resolve()/'research_artifacts').resolve())",
+      "git_common": "str((Path(ROOT).resolve()/actual_git_rev_parse_git_common_dir).resolve())",
+      "ledger": "str((Path(ROOT).resolve()/'research_runs').resolve())",
+      "root": "str(Path(ROOT).resolve())"
+    },
+    "gate_and_release_reference_required": true,
+    "input_role": "execution_workspace",
+    "job_or_producer_descriptor_embedded_hash": false,
+    "proposed_output_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final01-2026-10-06/inputs/execution_workspace.json",
+    "schema_version_field": false
+  },
+  "final_base_input_roles": 58,
+  "imported_authority_lease_change_required": false,
+  "imported_authority_lease_sha256": "6ad2193fb487d35f128fc293ced43526bc2efc292db0bf6681a0ceac77fef81f",
+  "output_count": 8,
+  "pair_rebind_required_fields": [
+    "pair_policy.numerical_source.commit",
+    "pair_policy.numerical_source.files",
+    "execution_job.payload.representation_jobs.original32.descriptor.pair_execution.policy_sha256",
+    "producer_plan.producers.original32.descriptor.pair_execution.policy_sha256"
+  ],
+  "root_proposed_current_anchor": "9bacbbeebe39095916f8a85ac4ee0b2623085560",
+  "schema_version": 1,
+  "scope": "exact final metadata seams; no actual bindings made",
+  "source_roster_ref": {
+    "path": "CURRENT_SOURCE_ROSTER01.json",
+    "sha256": "3780246c9250891464bc39f3d2b25e906c667e4f9b0fc54ef1c36360202f0c62"
+  },
+  "unchanged_limits_and_science": true,
+  "with_execution_workspace_roles": 59
+}

@@ -1,0 +1,43 @@
+{
+  "decision": "WITHHELD_SOURCE_CORRECTION_REQUIRED",
+  "candidate": {
+    "MANIFEST01.json": "3ea1cd14e2bd46d348cf5c1245e40763e0d746ed0094912c6a44a7247a7c150d",
+    "retire01.py": "353597e4e6d754714affd9ffdb9bcc039fd8fa7a14e81fa171126f0582d9743d",
+    "recovery01.py": "88a67bd592b06742cdc42d53bc53ad4fe391344c5d10014f19139ecd1a8dcee8",
+    "SOURCE_PINS01.json": "cb252020d1b642828aa9678cf49eee55f42b09cd646328c6697f7cdf6b89492d"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "medium",
+      "function": "validate",
+      "issue": "Ordinary retire_outer cleanup_verified is not required to be null; synthetic True is accepted.",
+      "required_change": "Require cleanup_verified is None alongside the existing null guard_phase and guard_child_exit_code."
+    },
+    {
+      "id": "R2",
+      "severity": "medium",
+      "function": "validate",
+      "issue": "relocation_receipt identity is not joined to fixed RELOCATION; unrelated identity is accepted.",
+      "required_change": "Require bridge identity equals RELOCATION while retaining existing predecessor/original/source/claim/target/retirement joins."
+    }
+  ],
+  "checks": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-july25-get-retirement-review01-2026-10-06/CHECK01.json",
+    "sha256": "53cdb025936d0dd77d10012721b15b74999994d3887d2b853b7ec25a73247897"
+  },
+  "positive_findings": [
+    "Exact one backup02 GET path, count, bytes and SHA enforced by recovery gate.",
+    "Recovery sole replacement requires absent original while preserving historical FAILED hashes, full-byte proof, current GET and backup cleanup checks.",
+    "Data currentness and held descriptor locks protect the retained copy before GET unlink; active native/registered Data consumers are refused.",
+    "Three fatal primaries at post-unlink fsync preserved despite both late close OSErrors; descriptors reaped and exact removed/ambiguity status retained.",
+    "Null actual templates refuse without fictional release or deletion authority."
+  ],
+  "limitations": [
+    "Independent review inspected source and synthetic metadata only; no actual recovery or relocation outcome acceptance.",
+    "Recorded backup PID absence and relocation native monitor/cgroup checks are inherited sampled evidence, not global writer exclusion.",
+    "Current Data and GET bytes are reused through accepted hashes and sampled stat/descriptor identity; no new real payload read."
+  ],
+  "actual_retirement_authorized": false,
+  "actual_payload_reads": false
+}

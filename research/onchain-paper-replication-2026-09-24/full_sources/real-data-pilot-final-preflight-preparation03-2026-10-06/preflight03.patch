@@ -1,0 +1,11 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final-preflight-preparation02-2026-10-06/preflight01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final-preflight-preparation03-2026-10-06/preflight01.py
+@@ -205,7 +205,7 @@
+         path=ROOT/info['path']
+         if path.stat().st_size>4*1024**2 or file_hash(path)!=info['sha256']:
+             raise ValueError('compact input pin changed: '+info['path'])
+-    if inventory(ROOT)!=json.loads((ROOT/admission.inputs['environment']['path']).read_bytes()):raise ValueError('installed runtime inventory differs')
++    if inventory(ROOT,include_torch=True)!=json.loads((ROOT/admission.inputs['environment']['path']).read_bytes()):raise ValueError('installed runtime inventory differs')
+     for path in (ROOT/'research_runs'/NAME,ROOT/PREFIX/'runs'/NAME,ROOT/PREFIX/'sources'/NAME,ROOT/PREFIX/'pilot-parent'/NAME,HERE/'launch-attempt01.json',HERE/'outer-exit01.json'):
+         if path.exists() or path.is_symlink():raise ValueError('fixed namespace already reserved: '+str(path))
+     units=subprocess.check_output(['systemctl','--user','list-units','--state=active,activating','--no-legend','onchain-replication-*.service'],text=True)

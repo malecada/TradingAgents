@@ -1,0 +1,37 @@
+{
+  "decision": "PASS",
+  "at": "2026-10-06T10:24:24.606521+00:00",
+  "identity": "real-pilot-july25-recovered-duplicate-retirement-20261006-01",
+  "exact_single_attempt": true,
+  "complete_sha256": "4a917f95ff5a5539ce53be7210a383d1b24aa417865ec9de03478382ae303586",
+  "root_terminal_sha256": "e1c1519b9dd5f6f6b0a7b04f66c33a87305e3009be85bf693417c5dfd48586ba",
+  "release_sha256": "9c76329462b1f63ae966ba2b96f3f1c9b156bee178281b30c863868e501d806a",
+  "source_sha256": "05512665226937ca46ab9bdaf5578de9de53e46b5778e859b885854d48ea5f8e",
+  "get_absent": true,
+  "original_absent": true,
+  "retained_data_current_stat": [
+    66307,
+    8519686,
+    1,
+    3755212800,
+    1791281098320288167,
+    1791281098321288167,
+    420
+  ],
+  "no_failed_receipt": true,
+  "native_and_registered_consumers_inactive": true,
+  "root_exit_code": 0,
+  "native_child_exit_code": null,
+  "native_cleanup_verified": null,
+  "logical_payload_bytes_retired": 3755212800,
+  "pre_entry_sampled_get_allocated_bytes": 3755257856,
+  "root_free_bytes_before": 22853664768,
+  "root_terminal_free_bytes": 26606723072,
+  "root_terminal_free_delta_bytes": 3753058304,
+  "current_disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 26606985216,
+    "/home/malecada/Data": 14596304896
+  },
+  "payload_reads": false,
+  "qualification": "Exact accepted-source complete publication follows returned sole unlink, parent fsync, current retained Data checks and held descriptor closes. No new global descriptor or writer exclusion audit. Pre-entry st_blocks*512 is allocation associated with this file, not an isolated statvfs reclamation measurement; intervening writes/shared allocator behavior can change free space. Ordinary retirement has no native child."
+}

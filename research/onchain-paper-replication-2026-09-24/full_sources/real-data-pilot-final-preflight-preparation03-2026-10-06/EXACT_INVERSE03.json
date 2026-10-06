@@ -1,0 +1,9 @@
+{
+  "after": "if inventory(ROOT,include_torch=True)!=json.loads((ROOT/admission.inputs['environment']['path']).read_bytes()):",
+  "after_sha256": "dd345e997b2414021805a87a58313653d89d511d6a9582a40ca20e6c77823785",
+  "before": "if inventory(ROOT)!=json.loads((ROOT/admission.inputs['environment']['path']).read_bytes()):",
+  "before_sha256": "8febc22864c83ead98fee30af2e8a9e28f7d12ed9012e3302bcad5737edb293c",
+  "inverse_matches": true,
+  "replacements": 1,
+  "unchanged_scope": "Every other byte, eligibility, limits, method, private/public binding, admission budget and Owner semantics unchanged."
+}

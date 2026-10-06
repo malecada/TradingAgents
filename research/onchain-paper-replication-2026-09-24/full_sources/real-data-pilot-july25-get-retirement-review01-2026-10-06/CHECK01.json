@@ -1,0 +1,20 @@
+{
+  "tests_passed": true,
+  "groups": 3,
+  "fatal_primary_cases": 3,
+  "witnesses": {
+    "ordinary_retire_fabricated_native_cleanup": {
+      "candidate_accepts": true,
+      "expected": "refusal",
+      "field": "retire_outer.cleanup_verified",
+      "invented_value": true
+    },
+    "wrong_relocation_identity": {
+      "candidate_accepts": true,
+      "expected": "refusal",
+      "field": "relocation_receipt.identity",
+      "invented_value": "unrelated-maintenance"
+    }
+  },
+  "qualification": "Source review checks; RED acceptance witnesses are findings, not release."
+}
