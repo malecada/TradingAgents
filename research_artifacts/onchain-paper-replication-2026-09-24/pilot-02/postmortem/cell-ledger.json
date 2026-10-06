@@ -1,0 +1,733 @@
+[
+  {
+    "details": {
+      "admitted_count": 4415050,
+      "aggregate_seconds": 1890.6767122049423,
+      "decode_seconds": 234.18503428406257,
+      "edges": 3182055,
+      "exclusion_counts": {
+        "failed": 246648,
+        "null_recipient": 3752,
+        "zero_value": 3707847
+      },
+      "graph_bytes": 562559884,
+      "graph_manifest": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+      "graph_manifest_sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98",
+      "nodes": 2049095,
+      "raw_count": 8373297,
+      "rows": 8373297
+    },
+    "elapsed_seconds": 2205.6086120830005,
+    "id": "decode_graph-2022-01-03",
+    "peak_sampled_cgroup_bytes": 2684575744,
+    "peak_worker_rss_bytes": 2529021952,
+    "phase": "decode_graph",
+    "status": "complete",
+    "week": "2022-01-03",
+    "worker_exit_code": 0
+  },
+  {
+    "details": {
+      "identity": "2240a7db2d2e443f5bff2ec998f90928c8dfd5654be3f4ddbdcaaf4f2739f726",
+      "max_nodes": 24,
+      "samples": 512
+    },
+    "elapsed_seconds": 214.7634335410039,
+    "id": "neighborhoods-2022-01-03",
+    "peak_sampled_cgroup_bytes": 2262511616,
+    "peak_worker_rss_bytes": 1884553216,
+    "phase": "neighborhoods",
+    "status": "complete",
+    "week": "2022-01-03",
+    "worker_exit_code": 0
+  },
+  {
+    "details": {
+      "pairs": 32,
+      "scores": [
+        0.6640500426292419,
+        1.963143040484283e-05,
+        0.054236430674791336,
+        0.27162423729896545,
+        0.21897201240062714,
+        0.45274239778518677,
+        0.36420950293540955,
+        0.19658438861370087,
+        0.45111367106437683,
+        0.2962226867675781,
+        0.3389154076576233,
+        0.5980721116065979,
+        0.09785746037960052,
+        0.2977176308631897,
+        0.05431855469942093,
+        0.16421806812286377,
+        0.1802973747253418,
+        0.2121284306049347,
+        0.4133167564868927,
+        0.19655615091323853,
+        0.44369783997535706,
+        0.17320968210697174,
+        0.48011329770088196,
+        0.27406665682792664,
+        0.21707947552204132,
+        0.42561185359954834,
+        0.2842511832714081,
+        0.2591397166252136,
+        0.15658356249332428,
+        0.20870225131511688,
+        0.5000035166740417,
+        0.47214561700820923
+      ]
+    },
+    "elapsed_seconds": 0.44871578399761347,
+    "id": "matching-2022-01-03",
+    "peak_sampled_cgroup_bytes": 1226108928,
+    "peak_worker_rss_bytes": 606375936,
+    "phase": "matching",
+    "status": "complete",
+    "week": "2022-01-03",
+    "worker_exit_code": 0
+  },
+  {
+    "elapsed_seconds": 56.179419406995294,
+    "id": "neural_checkpoint-2022-01-03",
+    "peak_sampled_cgroup_bytes": 2232254464,
+    "peak_worker_rss_bytes": 1885659136,
+    "phase": "neural_checkpoint",
+    "reason": "ValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 10713395200",
+    "status": "unavailable",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot_successor_02/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 93, in perform\n    if estimate>limits['neural_intermediate_allowance_bytes']:raise ValueError('capacity: neural intermediate estimate exceeds registered working allowance '+str(limits['neural_intermediate_allowance_bytes'])+' under cap '+str(limits['memory_max_bytes'])+': '+str(estimate))\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 10713395200\n",
+    "week": "2022-01-03",
+    "worker_exit_code": 0
+  },
+  {
+    "details": {
+      "identity": "48832eeb9774ef6ca13915364c17d1ac89f5c67165636de5811ebf82ad6ad726",
+      "motifs": 32,
+      "resource_only": true
+    },
+    "elapsed_seconds": 2667.8123809030003,
+    "id": "dictionary-2022-01-03",
+    "peak_sampled_cgroup_bytes": 1286926336,
+    "peak_worker_rss_bytes": 625795072,
+    "phase": "dictionary",
+    "status": "complete",
+    "week": "2022-01-03",
+    "worker_exit_code": 0
+  },
+  {
+    "elapsed_seconds": 544.0508828520033,
+    "id": "mcm-2022-01-03",
+    "peak_sampled_cgroup_bytes": 2279645184,
+    "peak_worker_rss_bytes": 1885708288,
+    "phase": "mcm",
+    "reason": "ValueError: neighborhood capacity exceeded, no truncation",
+    "status": "unavailable",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot_successor_02/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 86, in perform\n    mcm_features(graph,dictionary,matching,output=output,checkpoint=checkpoint);output.flush()\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/mcm.py\", line 22, in mcm_features\n    local=index.neighborhood(center,dictionary.config)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py\", line 58, in neighborhood\n    g=self.graph;indices=self.selected(center,config);mapping={old:new for new,old in enumerate(indices)}\n                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py\", line 54, in selected\n    if len(selected)>config['maximum_neighborhood_nodes']:raise ValueError('neighborhood capacity exceeded, no truncation')\n                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: neighborhood capacity exceeded, no truncation\n",
+    "week": "2022-01-03",
+    "worker_exit_code": 0
+  },
+  {
+    "details": {
+      "admitted_count": 3601893,
+      "aggregate_seconds": 1494.3442883998796,
+      "decode_seconds": 223.09182052712276,
+      "edges": 2518332,
+      "exclusion_counts": {
+        "failed": 256785,
+        "null_recipient": 5074,
+        "zero_value": 3717341
+      },
+      "graph_bytes": 474535780,
+      "graph_manifest": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+      "graph_manifest_sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59",
+      "nodes": 1768268,
+      "raw_count": 7581093,
+      "rows": 7581093
+    },
+    "elapsed_seconds": 1757.2415494590023,
+    "id": "decode_graph-2022-06-13",
+    "peak_sampled_cgroup_bytes": 2684608512,
+    "peak_worker_rss_bytes": 2266521600,
+    "phase": "decode_graph",
+    "status": "complete",
+    "week": "2022-06-13",
+    "worker_exit_code": 0
+  },
+  {
+    "details": {
+      "identity": "d10934bbe0326d61db5740410c33692cb9cf9536f6ca05daec0e37809a9cb858",
+      "max_nodes": 562,
+      "samples": 512
+    },
+    "elapsed_seconds": 176.9109936110035,
+    "id": "neighborhoods-2022-06-13",
+    "peak_sampled_cgroup_bytes": 2014298112,
+    "peak_worker_rss_bytes": 1689960448,
+    "phase": "neighborhoods",
+    "status": "complete",
+    "week": "2022-06-13",
+    "worker_exit_code": 0
+  },
+  {
+    "details": {
+      "pairs": 32,
+      "scores": [
+        0.4623790681362152,
+        0.1110934317111969,
+        0.4068323075771332,
+        0.29373812675476074,
+        0.03568250313401222,
+        0.27755579352378845,
+        0.2922036945819855,
+        0.1115160807967186,
+        0.10722754150629044,
+        0.3540668487548828,
+        0.2035173624753952,
+        0.10372668504714966,
+        0.12461716681718826,
+        0.11586025357246399,
+        0.21446257829666138,
+        0.4666696786880493,
+        0.40471234917640686,
+        0.14579573273658752,
+        0.27701902389526367,
+        0.2357054501771927,
+        0.5617942810058594,
+        0.15390123426914215,
+        0.41570648550987244,
+        0.10127422213554382,
+        0.20283466577529907,
+        0.3511057496070862,
+        0.3409954607486725,
+        0.49877917766571045,
+        0.35397374629974365,
+        0.4996040165424347,
+        0.07021210342645645,
+        0.44018200039863586
+      ]
+    },
+    "elapsed_seconds": 0.5806635549961356,
+    "id": "matching-2022-06-13",
+    "peak_sampled_cgroup_bytes": 1137725440,
+    "peak_worker_rss_bytes": 606482432,
+    "phase": "matching",
+    "status": "complete",
+    "week": "2022-06-13",
+    "worker_exit_code": 0
+  },
+  {
+    "elapsed_seconds": 70.01248203599971,
+    "id": "neural_checkpoint-2022-06-13",
+    "peak_sampled_cgroup_bytes": 1987907584,
+    "peak_worker_rss_bytes": 1689862144,
+    "phase": "neural_checkpoint",
+    "reason": "ValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 8778956800",
+    "status": "unavailable",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot_successor_02/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 93, in perform\n    if estimate>limits['neural_intermediate_allowance_bytes']:raise ValueError('capacity: neural intermediate estimate exceeds registered working allowance '+str(limits['neural_intermediate_allowance_bytes'])+' under cap '+str(limits['memory_max_bytes'])+': '+str(estimate))\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 8778956800\n",
+    "week": "2022-06-13",
+    "worker_exit_code": 0
+  },
+  {
+    "elapsed_seconds": 119.97494050300156,
+    "id": "mcm-2022-06-13",
+    "peak_sampled_cgroup_bytes": 2035609600,
+    "peak_worker_rss_bytes": 1690046464,
+    "phase": "mcm",
+    "reason": "ValueError: neighborhood capacity exceeded, no truncation",
+    "status": "unavailable",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot_successor_02/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 86, in perform\n    mcm_features(graph,dictionary,matching,output=output,checkpoint=checkpoint);output.flush()\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/mcm.py\", line 22, in mcm_features\n    local=index.neighborhood(center,dictionary.config)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py\", line 58, in neighborhood\n    g=self.graph;indices=self.selected(center,config);mapping={old:new for new,old in enumerate(indices)}\n                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py\", line 54, in selected\n    if len(selected)>config['maximum_neighborhood_nodes']:raise ValueError('neighborhood capacity exceeded, no truncation')\n                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: neighborhood capacity exceeded, no truncation\n",
+    "week": "2022-06-13",
+    "worker_exit_code": 0
+  },
+  {
+    "id": "decode_graph-2022-07-25",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neighborhoods-2022-07-25",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "matching-2022-07-25",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neural_checkpoint-2022-07-25",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "mcm-2022-07-25",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "decode_graph-2022-11-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neighborhoods-2022-11-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "matching-2022-11-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neural_checkpoint-2022-11-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "mcm-2022-11-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "decode_graph-2023-06-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neighborhoods-2023-06-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "matching-2023-06-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neural_checkpoint-2023-06-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "mcm-2023-06-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "decode_graph-2024-01-01",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neighborhoods-2024-01-01",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "matching-2024-01-01",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neural_checkpoint-2024-01-01",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "mcm-2024-01-01",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "decode_graph-2024-03-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neighborhoods-2024-03-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "matching-2024-03-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neural_checkpoint-2024-03-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "mcm-2024-03-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "decode_graph-2024-08-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neighborhoods-2024-08-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "matching-2024-08-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neural_checkpoint-2024-08-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "mcm-2024-08-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "decode_graph-2024-12-23",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neighborhoods-2024-12-23",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "matching-2024-12-23",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "neural_checkpoint-2024-12-23",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "mcm-2024-12-23",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-03",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-04",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-06",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-08",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-09",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-13",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-14",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-15",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-16",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-17",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-18",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-19",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-25",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-26",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-27",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-28",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-29",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-30",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-31",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-08",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-09",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-10",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-12",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-13",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-06",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-08",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-09",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-10",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-01",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-02",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-03",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-04",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-06",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-12",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-13",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-14",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-15",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-16",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-17",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-06",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-08",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-09",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-10",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-23",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-24",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-25",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-26",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-27",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-28",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-29",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  }
+]
