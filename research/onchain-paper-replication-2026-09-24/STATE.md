@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T18:02:33.325180+00:00: pilot11 permanently FAILED/spent82 and its actual public increment independently recovered; focused source fix integrated for fresh12. No numerical job active.**
+
+Pilot11 completed all seven Target constructors but failed before MCM because two off-package numerical helpers were absent from registration. Both unchanged bodies are now explicitly registered, and the accepted caller checks the exact Target.sources closure and hashes before a claim. [Narrow source review](full_sources/real-data-pilot-retry12-review01-2026-10-06/SOURCE_REVIEW01.json) retains historical fixture WITHHELD limitations. Main source anchor d4be4b76b25466e379afdc4756362730b740bc0a;179package pins/177 other bodies unchanged. Scientific method, original32motifs/512spent samples, seven full graphs, model/training and native limits unchanged.
+
+Actual11 increment43regular bodies442369B/13directories56names was freshly returned from external Git at725fc739 and independently accepted8f7df394; no originals deleted. Original failures/nulls/unknowns remain. Fresh12 has actual pure preparation, one opaque transport binding, exact8public/oneprivate references, and gate807ff1fb with256sources59inputs. No12claim/attempt/admission. Genuine independent83 allowance779c8c95 preserves52closed33COMPLETE19FAILED,28unchangedpending,two permanentlyclosed preclaim reserves and ONEunused12. No refund/transfer/rerun/cap ladder.
+
+Root owns Main/accounting/STATE/Git/preservation/ONElauncher; pilot09_review owns combined actual adoption/metadata review, other agents completed. Next finish combined review, commit and genuine read-only12 admission, bind11 recovery into final caller, obtain exact release, push/read actual remote and run ONE fresh12 only if original eligibility passes. Broadwork/heartbeat/appgoal remain PAUSED; representative real-data pilot alone is active. No completed MCM, joint update or financial fit yet.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T17:45:35.979866+00:00: pilot11 permanently FAILED/spent82; no numerical job active. Source/Git freeze ENDED after verified closure.**
 
 Root92163/fea8c2 exit1 CLOSED; actualParent1/nativechild1/1106.334945160s,cleanupverified/cgroupgone/all recorded PIDs absent. [Actual terminal](full_sources/real-data-pilot-final11-2026-10-06/ROOT_TERMINAL01.json). All seven Target constructors returned, clearing the earlier primary freshness failure. New primary failure at compact_mcm._prepare→Target.sources: two required helper sources are absent from source_files registration: original-import-fixture-bridge-candidate/imported_kernel.py (8d810af1) and pair-workload/workload.py (30a957ad). Bodies exist; no observed hash modification, registered hashes are null. No completed MCM/update/financial fit; seven unavailable graphs retained. Secondary archive stale/poisoned cleanup errors preserved. NoOOM/MAX; sampledchargedpeak5302272000B, lastkernelpeak5370703872B includescache and is not assured final lifetime peak.
