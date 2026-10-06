@@ -1,0 +1,172 @@
+{
+  "absence": {
+    "ROOT_ACTIVE01": true,
+    "archive_namespace": true,
+    "scientific_outputs": true,
+    "source_namespace": true,
+    "workflow_journal": true
+  },
+  "binding_distinction": {
+    "claim_bindings": null,
+    "claim_bindings_sha256": null
+  },
+  "claim_sha256": "b358943fbcd2e24fe10b4c10875516dca14f1d0da6babd88c58482869a89b3f6",
+  "current_cleanup": {
+    "lifetime_process_history": null,
+    "native_unit_properties": "Original final-storage/guard readbacks reused; no native/systemctl call.",
+    "recorded_cgroup_absent": true,
+    "selected_pid_exists": {
+      "124575": false,
+      "124866": false,
+      "125135": false,
+      "125138": false
+    }
+  },
+  "decision": "accepted",
+  "denominator": {
+    "MCM_completed": 0,
+    "declared_outputs": [
+      "pilot-summary.json",
+      "cell-ledger.json",
+      "resource-binding.json",
+      "resource-journal.json",
+      "resource-population.json",
+      "resource-population-binding.json",
+      "archive-receipt.json",
+      "archive-terminal.json"
+    ],
+    "financial_fits": 0,
+    "graph_completion_records": null,
+    "qualification": "All eight scientific outputs absent; no per-graph counts or timing are fabricated. One registered cell is retained as unavailable in supervisor postmortem.",
+    "registered_cells": 1,
+    "registered_graph_inputs": [
+      "graph_20220502",
+      "graph_20220509",
+      "graph_20220516",
+      "graph_20220523",
+      "graph_20220530",
+      "graph_20220606",
+      "graph_20220613"
+    ],
+    "retained_outputs": [],
+    "supervisor_postmortem_cells": [
+      {
+        "id": "real-eth-one-update",
+        "reason": "owned worker ended before durable cell disposition; no retry",
+        "status": "unavailable"
+      }
+    ],
+    "training_updates": 0
+  },
+  "disposition": "Permanent FAILED/spent06; no refund, transfer, relaunch or scientific credit.",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final06-2026-10-06/FINAL_STORAGE01.json": "23ae32e1e2bb77dbefc1fb41fca64e7bc7382b55f55b78b3f82f1d764b8c7b87",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final06-2026-10-06/REMOTE_CONFIRMATION01.json": "264fd231a32c54cd71ab019715a4791799d34013e46dcd3de204ee713350ff5d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final06-2026-10-06/ROOT_IO_CLOSED01.json": "57f0b2234133e6e226e8fde2bf2949ea233585aa711ce025dbd2df32706e6dc7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final06-2026-10-06/ROOT_TERMINAL01.json": "1fde674e349bfbd23d16e8ff1b68eb9f46957038b58b0f9aefb35d5b364248d5",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final06-2026-10-06/launch-attempt01.json": "bd49092772d91c31732646e70e542bc5b03d286f29ffbbcfca152c0f9b09ea9f",
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261006-06/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261006-06/stdout.log": "c1ed03a34eb064a5b993af9e1f5a4ab5267959d812787d3939c6a8ee0b59d9d6",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/guard/child.log": "eb2cfd3a2138a91e302e08fbd65ecf4c0ceee2915b21548e5f131dea3455cb92",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/guard/child_exit.json": "b85874034146306fafc7af82522c83875f2ec6b74fadb42cc30d001ac728c277",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/guard/cpu_ready.json": "d93b11dce6e4aac6d6653df750f1112b0693d4e6e6ffb3bee2382212d2439e38",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/guard/final.json": "6883b5756f33cb8f3c4e8e36564d95c8a81d2ac3d51918b764e730906fcb6058",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/guard/live.json": "6883b5756f33cb8f3c4e8e36564d95c8a81d2ac3d51918b764e730906fcb6058",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/guard/observer-death.json": "9e7e379483ed1001e1cebe2548c5f4d633f8c1197ca837db8b96f5973eb51fa9",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/guard/release.json": "82560e2694628ad002f9cc4b76fe2cd7b1b545cc825269f01057f04c6fe268b5",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/launch.json": "0b898e7ad4695108957760f6a1e3443b0b010afc56e411b43c8ee24155fccbb5",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/monitor-file-limit.json": "801f473bf20b144688e3b6a772d5dd8749e6320417a18b66857e2d492e9794ec",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/observer.json": "11e66e35207b40a78ced3ae8a090d96e46d0c1e66d280ffda5362b3a12251e37",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/owner.json": "baff64cd6d3decb0bd92abf92a3e11ccfb61f65e6f8a87070a22fbfd6dec54f1",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/postmortem-cells.json": "482e6a9e05b8f7e88ae4e2c95a6a5e536925ff1ab313d3b7ac7d6cda583c332e",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/unsealed-journals.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-06/worker-file-limit.json": "193e22586f0c34d73e70a15a7845f5b06a3a2ec0937595edb4d61676d42f71af",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261006-06/claim.json": "b358943fbcd2e24fe10b4c10875516dca14f1d0da6babd88c58482869a89b3f6",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261006-06/failed.json": "96602302c4ea21b2f1531580730abd355ea8780305beba0625f97bb5b7a1c041"
+  },
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261006-06",
+  "failure": {
+    "action": "A separately registered successor needs a bounded complete re-observation for this exact birth transition while retaining original aggregate budgets and rejecting replacement or repeated instability. Preserve06; no relaunch or cap change.",
+    "guard_reason": "ValueError: experiment born during scan; complete new observation required",
+    "impact": "Experiment namespace birth between the pre-scan and post-scan checks raises a fatal ValueError; guard interrupts genuine claimed77 before any durable scientific output.",
+    "source_location": "tradingagents/research/onchain_replication/real_pilot_storage.py:172",
+    "worker_reason": "SystemExit: owned execution interrupted; never relaunch this identity"
+  },
+  "increment_selection": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixth-resource-failed-review01-2026-10-06/INCREMENT_SELECTION01.json",
+    "sha256": "cc6773445c65f2d243687313c701c53a3e35e6182fc3231785e86cc59973718e"
+  },
+  "native": {
+    "cleanup_stop_returncode": 0,
+    "cleanup_verified": true,
+    "elapsed_seconds": 6.66460862599979,
+    "last_guard_unit_kernel_peak_bytes": 85639168,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "original_guard_child_exit_code": null,
+    "separate_child_exit_record": {
+      "exit_code": 125,
+      "reason": "signal",
+      "snapshot_error": null,
+      "terminal_memory_snapshot": {
+        "memory_current_bytes": 151654400,
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "optional_memory_telemetry": {
+          "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+          "unit": {
+            "anon_bytes": 149979136,
+            "file_bytes": 90112,
+            "kernel_peak_bytes": 175345664,
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-bd0267b200f342779ffc73f67cf5aaa6.service",
+            "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "swap_current_bytes": 0,
+            "unavailable": {}
+          },
+          "user_ancestor": {
+            "anon_bytes": 4674977792,
+            "file_bytes": 5855825920,
+            "kernel_peak_bytes": 14203195392,
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+            "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1618975\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1618172",
+            "swap_current_bytes": 0,
+            "unavailable": {}
+          }
+        }
+      },
+      "workload_pid": 125138
+    }
+  },
+  "not_tested": [
+    "No numerical/raw/graph/runtime/private bodies inspected.",
+    "No experiment, transport, network, native or claim invocation.",
+    "Return/cashflow, leakage, fees/funding, predictive performance, numerical graph-loading completeness and full-pilot capacity.",
+    "Actual external recovery and POSIX reconstruction not yet accepted."
+  ],
+  "null_preservation": "Original guard child exit remains null; separate child signal125 and actual parent/Root1 preserved without substitution. No missing scientific output fabricated.",
+  "reviewed_source": [
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_storage.py",
+      "sha256": "5f80a0906bc71b3fec06c1fb3fb4a868a95f00bb89f6b5de9cbea754e80ff29d"
+    }
+  ],
+  "root_actual_exit": {
+    "exit_code": 1,
+    "session": 62519,
+    "terminal_chunk": "2b8b45"
+  },
+  "schema_version": 1,
+  "source": "375dc8bc6745b2718fbdcebbeb22ed2e29560c30"
+}

@@ -1,5 +1,13 @@
 # Current replication checkpoint
 
+**Authorized task: fix and launch representative Ethereum real-data pilot; broaderwork/heartbeat/appgoal PAUSED. No numerical job active;06 permanentlyFAILED/spent. Source/Git freeze ENDED after verified closure.**
+
+**TOP 2026-10-06T14:24:16.691712+00:00:06 native startup stopped on legitimate run-directory birth during complete storage scan.** ActualRoot62519/2b8b45exit1 CLOSED; guard6.664608626s originalchildnull preserved separately from childexit125/signal/actualparent1. Cleanup/cgroupabsence/recordedPIDs accepted. Genuineclaimb35894/budget77/failedSystemExit; all8scientificoutputs absent/noMCM/update/fit. Wrapper correction remains offlineaccepted, actualactivation untested. [Terminal](full_sources/real-data-pilot-final06-2026-10-06/ROOT_TERMINAL01.json); increment23files149774B5dirs28names captured/review756f4761, externalfreshrecovery pending.
+
+Root prepares fresh07/samecaps and reviewed78=48closed33COMPLETE15FAILED+28unchangedpending+closed03reserved74+fresh07; no refundtransfer/capladder/fakeclaim. namespace_fix05 owns NEWstorage-birth-fix01 fullrescan exactfirstbirth atmostonce with originalshared5s time budget/allrootlockinode/residualcaps retained. namespace_review05 owns NEWretry07-review01 source/accounting/finalentry; outcome04_review owns NEWsixth-failed-review01 selection/returnedrecovery. Rootsoleintegration/STATE/Git/registration/backup/ONElauncher. Next capturepushfreshrecover06, integrate exact reviewed storage rescan, rebind fixed07inputs and exactrelease/fresheligibility/ONE07. Original32motifs512samples/sevengraphs/model/training/native6GiB and10GiBfloor unchanged; no capacity/ETA/scientificcompletion.
+
+Earlier dated TOPs below superseded; originals retained.
+
 **Authorized task: fix and launch one fresh representative Ethereum real-data pilot. Broaderwork/heartbeat/appgoal remain PAUSED. No native job active;06 unused/unclaimed. Source/Git freeze ENDED.**
 
 **TOP 2026-10-06T14:17:15.191803+00:00: exact wrapper classification correction installed and genuine committed06 admission PASSED77.** Main16a5e7ef5a4dae28dbc87f16c784a5431c5b67cb; packageanchor e025b60ab8c4f76977e4f85f9d9ebfec7e6ff679. Only imported_authority_lease metadata Binding generated-method boundary and strict storage05→06 changed; other177 package bodies/science/matching/model/training unchanged. Source review1bfa1f37 accepted RED→GREEN10checks and full source/import86modules649functions. Seven generated metadata methods retain function/code snapshots but are not authenticated as source-compiled capability methods before capture; authored metadata property and real capability/contextmanager checks preserved. Explicit assumption in06charter.
