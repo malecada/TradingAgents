@@ -1,0 +1,60 @@
+{
+  "Data_SQLite_NPY_payload_access": false,
+  "decision": "pass-source-only",
+  "inverse_edits": {
+    "graph_ledger_continuation.py": 8,
+    "preflight01.py": 5,
+    "prepare01.py": 10
+  },
+  "legacy_plan_and_original_path_parity": true,
+  "native_network_Git_calls": false,
+  "negative_controls": [
+    {
+      "case": "unbound plan",
+      "reason": "May30 retained ledger: distinct registered relocation roles required"
+    },
+    {
+      "case": "wrong-path",
+      "reason": "May30 retained ledger: fixed external body differs"
+    },
+    {
+      "case": "wrong-device",
+      "reason": "May30 retained ledger: fixed external body differs"
+    },
+    {
+      "case": "wrong-source",
+      "reason": "May30 retained ledger: original relocation ancestry differs"
+    },
+    {
+      "case": "not-retired",
+      "reason": "May30 retained ledger: verified copy/recovery/retirement required"
+    },
+    {
+      "case": "unverified-copy",
+      "reason": "May30 retained ledger: verified copy/recovery/retirement required"
+    },
+    {
+      "case": "no-external-recovery",
+      "reason": "May30 retained ledger: verified copy/recovery/retirement required"
+    },
+    {
+      "case": "outside-retirement",
+      "reason": "May30 retained ledger: retirement evidence reference required"
+    },
+    {
+      "case": "multilink",
+      "reason": "May30 retained ledger: exact relocated inode/extent required"
+    },
+    {
+      "case": "wrong-review",
+      "reason": "May30 retained ledger: independent complete relocation acceptance required"
+    },
+    {
+      "case": "unbound preparation",
+      "reason": "actual recovery/source/storage bindings unavailable"
+    }
+  ],
+  "source_manifest": "f43ed46f79fb90cd3c9576ca46dba374712176f30d5f407e229382a4b4bf6005",
+  "synthetic_positive_scope": "In-memory pure schema only; no actual receipt stored or genuine authority constructed",
+  "unchanged_launcher": true
+}

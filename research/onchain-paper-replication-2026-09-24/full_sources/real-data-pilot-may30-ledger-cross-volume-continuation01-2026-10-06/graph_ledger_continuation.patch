@@ -1,0 +1,78 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-handoff01-2026-10-06/candidate/graph_ledger_continuation.py
++++ graph_ledger_continuation.py
+@@ -13,6 +13,14 @@
+     if not v:raise ValueError('May30 retained ledger: '+m)
+ def sha(b):return hashlib.sha256(b).hexdigest()
+ def plan_check(p):
++    if type(p) is dict and p.get('schema_version')==2:
++        need(set(p)=={'schema_version','mode','asset','week','end_utc','predecessor','graph_config_input','ledger','recovery_review_input','original_inputs','new_experiment_id','relocation_receipt_input','relocation_review_input'},'exact cross-volume fields')
++        need(p['new_experiment_id']=='eth-paper-real-pilot-may30-ledger-continuation-20261006-01','fixed cross-volume identity required')
++        roles=[p[k] for k in ('recovery_review_input','relocation_receipt_input','relocation_review_input')]
++        need(all(type(r) is str and r and r not in FIXED for r in roles) and len(set(roles))==3,'distinct registered relocation roles required')
++        legacy={k:v for k,v in p.items() if k not in ('relocation_receipt_input','relocation_review_input')};legacy['schema_version']=1
++        plan_check(legacy)
++        return p
+     need(type(p) is dict and set(p)=={'schema_version','mode','asset','week','end_utc','predecessor','graph_config_input','ledger','recovery_review_input','original_inputs','new_experiment_id'},'exact plan fields')
+     need(p['schema_version']==1 and p['mode']=='retained-ledger' and p['asset']=='ETH' and p['week']==WEEK and p['end_utc']==END and p['predecessor']==OLD,'fixed continuation scope')
+     need(type(p['new_experiment_id']) is str and p['new_experiment_id'] and p['new_experiment_id']!=OLD,'fresh independently registered identity unbound')
+@@ -46,6 +54,40 @@
+ 
+ def _sig(s):return (s.st_dev,s.st_ino,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns,stat.S_IMODE(s.st_mode))
+ 
++DATA_ROOT=Path('/home/malecada/Data')
++EXTERNAL=DATA_ROOT/'onchain-pilot-retained-ledgers'/OLD/'ledger.sqlite'
++DATA_DEVICE=66307
++DATA_RESERVE=64*1024**2
++
++def relocation_metadata(p,receipt_raw,review_raw):
++    """Registered independent copy/recovery/retirement proof, never a grant."""
++    r=json.loads(receipt_raw);review=json.loads(review_raw)
++    need(type(r) is dict and set(r)=={'schema_version','kind','identity','predecessor','original_claim_sha256','original_source','original','target','copy_readback_verified','external_byte_recovery_verified','original_retired','retirement_evidence'},'exact relocation receipt fields')
++    need(r['schema_version']==1 and r['kind']=='closed-ledger-cross-volume-relocation' and r['identity']==p['new_experiment_id'] and r['predecessor']==OLD and r['original_claim_sha256']==FIXED['old_claim']['sha256'] and r['original_source']=='14414c1637256dd286eafbe92391129dee3d29bf' and r['original']==p['ledger'],'original relocation ancestry differs')
++    t=r['target'];need(type(t) is dict and set(t)=={'path','device','bytes','sha256','stat_identity'},'exact relocated body descriptor')
++    need(t['path']==str(EXTERNAL) and t['device']==DATA_DEVICE and t['bytes']==p['ledger']['bytes'] and t['sha256']==p['ledger']['sha256'],'fixed external body differs')
++    need(type(t['stat_identity']) is list and len(t['stat_identity'])==7 and all(type(n) is int for n in t['stat_identity']) and t['stat_identity'][0]==DATA_DEVICE and t['stat_identity'][2]==1 and t['stat_identity'][3]==p['ledger']['bytes'],'exact relocated inode/extent required')
++    need(r['copy_readback_verified'] is True and r['external_byte_recovery_verified'] is True and r['original_retired'] is True,'verified copy/recovery/retirement required')
++    proof=r['retirement_evidence'];need(type(proof) is dict and set(proof)=={'path','sha256'} and type(proof['path']) is str and not Path(proof['path']).is_absolute() and '..' not in Path(proof['path']).parts and type(proof['sha256']) is str and len(proof['sha256'])==64,'retirement evidence reference required')
++    need(review.get('decision')=='accepted' and review.get('identity')==p['new_experiment_id'] and review.get('predecessor')==OLD and review.get('relocation_receipt_sha256')==sha(receipt_raw) and review.get('complete_copy_recovery_and_retirement') is True and review.get('evidence',{}).get(proof['path'])==proof['sha256'],'independent complete relocation acceptance required')
++    return r
++
++def relocated_path(root,p,read):
++    if p['schema_version']==1:return root/LEDGER
++    r=relocation_metadata(p,read(p['relocation_receipt_input']),read(p['relocation_review_input']))
++    # Consume the independently reviewed retirement body, not just its hash text.
++    proof=r['retirement_evidence'];q=root/proof['path']
++    need(q.resolve(strict=True)==q and q.is_file() and q.stat().st_nlink==1 and q.stat().st_size<=2*1024**2,'bounded original retirement evidence required')
++    need(sha(q.read_bytes())==proof['sha256'],'original retirement evidence bytes differ')
++    need(not os.path.lexists(root/LEDGER),'historical original path must be genuinely retired, never linked')
++    need(DATA_ROOT.resolve(strict=True)==DATA_ROOT and DATA_ROOT.stat().st_dev==DATA_DEVICE and root.stat().st_dev!=DATA_DEVICE,'fixed distinct Data volume required')
++    need(EXTERNAL.resolve(strict=True)==EXTERNAL and set(x.name for x in EXTERNAL.parent.iterdir())=={'ledger.sqlite'},'exact sole external retained body namespace required')
++    before=EXTERNAL.lstat();need(stat.S_ISREG(before.st_mode) and list(_sig(before))==r['target']['stat_identity'],'relocated body identity differs')
++    from .workflow_storage import StorageWatch
++    observation=StorageWatch(root=EXTERNAL.parent,limits={'max_logical_bytes':p['ledger']['bytes']+DATA_RESERVE,'max_allocated_bytes':p['ledger']['bytes']+DATA_RESERVE,'max_entries':2,'max_depth':1,'max_scan_seconds':5}).check()
++    need(observation['root_device']==DATA_DEVICE,'retained store census device differs')
++    return EXTERNAL
++
+ def produce(run,plan_input):
+     from tradingagents.research.lifecycle import ResearchRun,_immutable
+     need(type(run) is ResearchRun,'genuine fresh ResearchRun required')
+@@ -61,9 +103,9 @@
+     import sys
+     job=json.loads(run.read_input('execution_job'));limits=job['resources']
+     need(job['kind']=='graphs' and job['payload']=={'plan_input':plan_input},'genuine graph job differs')
+-    assert_guarded_worker(root/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/run.admission.experiment_id/'guard',sys.orig_argv,required_paths=[root],wall_seconds=limits['wall_seconds'],memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'],disk_floor_bytes=limits['disk_floor_bytes'])
++    assert_guarded_worker(root/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/run.admission.experiment_id/'guard',sys.orig_argv,required_paths=[root]+([DATA_ROOT] if p['schema_version']==2 else []),wall_seconds=limits['wall_seconds'],memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'],disk_floor_bytes=limits['disk_floor_bytes'])
+     from .provenance import file_hash,durable_mkdir,sync_directory
+-    path=root/LEDGER;before=path.lstat()
++    path=relocated_path(root,p,run.read_input);before=path.lstat()
+     need(path.resolve(strict=True)==path and stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_size==p['ledger']['bytes'],'original ledger path/extent differs')
+     need(all(not Path(str(path)+s).exists() and not Path(str(path)+s).is_symlink() for s in ('-journal','-wal','-shm')),'unsealed SQLite sidecar present')
+     need(file_hash(path)==p['ledger']['sha256'],'recovered ledger body differs')
+@@ -95,6 +137,7 @@
+         else:raise ValueError('extra graph from retained ledger')
+         # Rejoin the exact original bytes before acknowledging new graph completion.
+         need(file_hash(path)==p['ledger']['sha256'] and _sig(path.lstat())==_sig(before),'original ledger changed during continuation')
++        need(relocated_path(root,p,run.read_input)==path,'retained location changed during continuation')
+         run._active();run._check_source()
+         proof={'schema_version':1,'asset':'ETH','week':WEEK,'end_utc':END,'graph_config_hash':cache_key(v['graph_config']),'graph_manifest_sha256':file_hash(dest),'claim_sha256':run._claim_sha256,'plan_sha256':run.admission.inputs[plan_input]['sha256'],'members':v['old_source_coverage']['members']}
+         _verify_graph_coverage(proof,graph,proof['graph_manifest_sha256'])

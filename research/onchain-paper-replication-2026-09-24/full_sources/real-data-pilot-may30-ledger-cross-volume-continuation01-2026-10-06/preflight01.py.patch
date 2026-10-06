@@ -1,0 +1,48 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-entry-preparation01-2026-10-06/preflight01.py
++++ preflight01.py
+@@ -23,7 +23,7 @@
+ 
+ def check():
+     binding=json.loads((HERE/'BINDINGS01.json').read_bytes())
+-    plan,policy,_=validate_binding(binding)
++    plan,policy,control=validate_binding(binding)
+     source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+     release_path=HERE/'RELEASE_REVIEW01.json'
+     release=json.loads(release_path.read_bytes())
+@@ -38,7 +38,8 @@
+     args=SimpleNamespace(root=ROOT,registration=GATE,experiment=NAME,source=source)
+     admission,job=_admitted(args)
+     if not admission.ready or admission.effective_attempt_budget!=72:raise ValueError('exact pilot admission/budget differs')
+-    if job['resources']!=baseline('execution-job01.json')['resources']:raise ValueError('unchanged native/storage controls differ')
++    expected_resources=baseline('execution-job01.json')['resources'];expected_resources['disk_paths']=[str(ROOT),str(control.DATA_ROOT)]
++    if job['resources']!=expected_resources:raise ValueError('unchanged native/storage controls or exact two-volume floors differ')
+     for relative,expected in admission.experiment['source_files'].items():
+         if file_hash(ROOT/relative)!=expected:raise ValueError('source pin changed: '+relative)
+     for info in admission.inputs.values():
+@@ -56,7 +57,7 @@
+             raise ValueError('another program claim is active: '+str(claim_path.parent))
+     if admission.experiment['cells']!=['graph-2022-05-30'] or job['kind']!='graphs' or job['payload']!={'plan_input':'continuation_plan'}:
+         raise ValueError('fresh graph-only continuation differs')
+-    for role,key in [('continuation_plan','plan'),(plan['recovery_review_input'],'recovery'),('storage_policy','storage_policy')]:
++    for role,key in [('continuation_plan','plan'),(plan['recovery_review_input'],'recovery'),('storage_policy','storage_policy'),(plan['relocation_receipt_input'],'relocation_receipt'),(plan['relocation_review_input'],'relocation_review')]:
+         if any(admission.inputs[role][k]!=v for k,v in binding[key].items()):raise ValueError('registered continuation proof differs')
+     if admission.inputs['continuation_entry_bindings']['sha256']!=file_hash(HERE/'BINDINGS01.json'):
+         raise ValueError('registered exact entry binding differs')
+@@ -67,6 +68,9 @@
+     growth=policy['growth_estimate_bytes'];limits=job['resources']['storage_budget']['limits']
+     if storage['logical_file_bytes']+growth>limits['max_logical_bytes'] or storage['allocated_bytes']+growth>limits['max_allocated_bytes']:
+         raise ValueError('current baseline plus declared continuation exceeds unchanged storage ceiling')
++    data_storage=StorageWatch(**control.data_budget(plan)).check()
++    data_free=shutil.disk_usage(control.DATA_ROOT).free
++    if data_free<10*1024**3+control.DATA_RESERVE:raise ValueError('Data floor plus retained-store reserve unavailable')
+     free=shutil.disk_usage(ROOT).free; available=mem_available()
+     if free<policy['startup_free_requirement_bytes']:raise ValueError('full projected source/scratch plus disk floor unavailable')
+     if available<job['resources']['start_reserve_bytes']:raise ValueError('frozen startup RAM reserve unavailable')
+@@ -75,6 +79,7 @@
+         'source_pins':len(admission.experiment['source_files']),'compact_input_pins':len(admission.inputs),
+         'source_reingestion':False,'retained_ledger_bytes':plan['ledger']['bytes'],'host_mem_available_bytes':available,'free_disk_bytes':free,
+         'startup_free_requirement_bytes':policy['startup_free_requirement_bytes'],'storage_observation':storage,
++        'Data_storage_observation':data_storage,'Data_free_disk_bytes':data_free,'retained_ledger_path':str(control.EXTERNAL),
+         'qualification':'Read-only continuation proof/source/namespace check; actual retained ledger hash and database consistency are checked only inside the genuine guarded worker. Growth is a reservation estimate, not certified graph extent or capacity. No payload was opened here.'}
+ 
+ 

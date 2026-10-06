@@ -1,0 +1,37 @@
+{
+  "actual_original_stat_joins": 3,
+  "actual_payload_reads": 0,
+  "copy_source_has_no_unlink": true,
+  "current_runtime_metadata_equal": true,
+  "decision": "accepted-copy-only",
+  "envelope_evidence": 17,
+  "exclusive_destination_absent": true,
+  "installed_sources_selection_exact": true,
+  "native_network_or_git_calls": 0,
+  "retire_phase": "WITHHELD: post-unlink failure accounting requires correction",
+  "source_manifest": "c14d4fb16e3ec0801d7506baa4f74cf665c83f9b82ce9afc1662750327393195",
+  "source_pins": 12,
+  "synthetic_bytes": 65537,
+  "synthetic_refusals": [
+    {
+      "case": "exclusive-existing",
+      "error": "ValueError",
+      "message": "exclusive target required"
+    },
+    {
+      "case": "symlink-target",
+      "error": "ValueError",
+      "message": "exclusive target required"
+    },
+    {
+      "case": "wrong-content",
+      "error": "ValueError",
+      "message": "source length/hash differs"
+    },
+    {
+      "case": "interruption",
+      "error": "RuntimeError",
+      "message": "synthetic interruption"
+    }
+  ]
+}

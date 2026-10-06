@@ -1,0 +1,115 @@
+{
+  "graph_ledger_continuation.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-handoff01-2026-10-06/candidate/graph_ledger_continuation.py",
+    "before_sha256": "b576dc363ce047c10c9fa3dbb45ccb87f0724a68c5bd60121d4685da67213e69",
+    "after_sha256": "c204412df8e0733e932feef171431ec50487181bb012c771a783ac63b807c2d8",
+    "edits": [
+      {
+        "before": "def plan_check(p):\n",
+        "after": "def plan_check(p):\n    if type(p) is dict and p.get('schema_version')==2:\n        need(set(p)=={'schema_version','mode','asset','week','end_utc','predecessor','graph_config_input','ledger','recovery_review_input','original_inputs','new_experiment_id','relocation_receipt_input','relocation_review_input'},'exact cross-volume fields')\n        need(p['new_experiment_id']=='eth-paper-real-pilot-may30-ledger-continuation-20261006-01','fixed cross-volume identity required')\n        roles=[p[k] for k in ('recovery_review_input','relocation_receipt_input','relocation_review_input')]\n        need(all(type(r) is str and r and r not in FIXED for r in roles) and len(set(roles))==3,'distinct registered relocation roles required')\n        legacy={k:v for k,v in p.items() if k not in ('relocation_receipt_input','relocation_review_input')};legacy['schema_version']=1\n        plan_check(legacy)\n        return p\n"
+      },
+      {
+        "before": "def produce(run,plan_input):\n",
+        "after": "DATA_ROOT=Path('/home/malecada/Data')\nEXTERNAL=DATA_ROOT/'onchain-pilot-retained-ledgers'/OLD/'ledger.sqlite'\nDATA_DEVICE=66307\nDATA_RESERVE=64*1024**2\n\ndef relocation_metadata(p,receipt_raw,review_raw):\n    \"\"\"Registered independent copy/recovery/retirement proof, never a grant.\"\"\"\n    r=json.loads(receipt_raw);review=json.loads(review_raw)\n    need(type(r) is dict and set(r)=={'schema_version','kind','identity','predecessor','original_claim_sha256','original_source','original','target','copy_readback_verified','external_byte_recovery_verified','original_retired','retirement_evidence'},'exact relocation receipt fields')\n    need(r['schema_version']==1 and r['kind']=='closed-ledger-cross-volume-relocation' and r['identity']==p['new_experiment_id'] and r['predecessor']==OLD and r['original_claim_sha256']==FIXED['old_claim']['sha256'] and r['original_source']=='14414c1637256dd286eafbe92391129dee3d29bf' and r['original']==p['ledger'],'original relocation ancestry differs')\n    t=r['target'];need(type(t) is dict and set(t)=={'path','device','bytes','sha256','stat_identity'},'exact relocated body descriptor')\n    need(t['path']==str(EXTERNAL) and t['device']==DATA_DEVICE and t['bytes']==p['ledger']['bytes'] and t['sha256']==p['ledger']['sha256'],'fixed external body differs')\n    need(type(t['stat_identity']) is list and len(t['stat_identity'])==7 and all(type(n) is int for n in t['stat_identity']) and t['stat_identity'][0]==DATA_DEVICE and t['stat_identity'][2]==1 and t['stat_identity'][3]==p['ledger']['bytes'],'exact relocated inode/extent required')\n    need(r['copy_readback_verified'] is True and r['external_byte_recovery_verified'] is True and r['original_retired'] is True,'verified copy/recovery/retirement required')\n    proof=r['retirement_evidence'];need(type(proof) is dict and set(proof)=={'path','sha256'} and type(proof['path']) is str and not Path(proof['path']).is_absolute() and '..' not in Path(proof['path']).parts and type(proof['sha256']) is str and len(proof['sha256'])==64,'retirement evidence reference required')\n    need(review.get('decision')=='accepted' and review.get('identity')==p['new_experiment_id'] and review.get('predecessor')==OLD and review.get('relocation_receipt_sha256')==sha(receipt_raw) and review.get('complete_copy_recovery_and_retirement') is True and review.get('evidence',{}).get(proof['path'])==proof['sha256'],'independent complete relocation acceptance required')\n    return r\n\ndef relocated_path(root,p,read):\n    if p['schema_version']==1:return root/LEDGER\n    r=relocation_metadata(p,read(p['relocation_receipt_input']),read(p['relocation_review_input']))\n    # Consume the independently reviewed retirement body, not just its hash text.\n    proof=r['retirement_evidence'];q=root/proof['path']\n    need(q.resolve(strict=True)==q and q.is_file() and q.stat().st_nlink==1 and q.stat().st_size<=2*1024**2,'bounded original retirement evidence required')\n    need(sha(q.read_bytes())==proof['sha256'],'original retirement evidence bytes differ')\n    need(not os.path.lexists(root/LEDGER),'historical original path must be genuinely retired, never linked')\n    need(DATA_ROOT.resolve(strict=True)==DATA_ROOT and DATA_ROOT.stat().st_dev==DATA_DEVICE and root.stat().st_dev!=DATA_DEVICE,'fixed distinct Data volume required')\n    need(EXTERNAL.resolve(strict=True)==EXTERNAL and set(x.name for x in EXTERNAL.parent.iterdir())=={'ledger.sqlite'},'exact sole external retained body namespace required')\n    before=EXTERNAL.lstat();need(stat.S_ISREG(before.st_mode) and list(_sig(before))==r['target']['stat_identity'],'relocated body identity differs')\n    from .workflow_storage import StorageWatch\n    observation=StorageWatch(root=EXTERNAL.parent,limits={'max_logical_bytes':p['ledger']['bytes']+DATA_RESERVE,'max_allocated_bytes':p['ledger']['bytes']+DATA_RESERVE,'max_entries':2,'max_depth':1,'max_scan_seconds':5}).check()\n    need(observation['root_device']==DATA_DEVICE,'retained store census device differs')\n    return EXTERNAL\n\ndef produce(run,plan_input):\n"
+      },
+      {
+        "before": "required_paths=[root],wall_seconds=",
+        "after": "required_paths=[root]+([DATA_ROOT] if p['schema_version']==2 else []),wall_seconds="
+      },
+      {
+        "before": "    path=root/LEDGER;before=path.lstat()",
+        "after": "    path=relocated_path(root,p,run.read_input);before=path.lstat()"
+      },
+      {
+        "before": "        need(file_hash(path)==p['ledger']['sha256'] and _sig(path.lstat())==_sig(before),'original ledger changed during continuation')",
+        "after": "        need(file_hash(path)==p['ledger']['sha256'] and _sig(path.lstat())==_sig(before),'original ledger changed during continuation')\n        need(relocated_path(root,p,run.read_input)==path,'retained location changed during continuation')"
+      },
+      {
+        "before": "and '..' not in Path(proof['path']).parts and type(proof['sha256'])",
+        "after": "and '..' not in Path(proof['path']).parts and proof['path'].startswith('research/onchain-paper-replication-2026-09-24/') and proof['path'].endswith('.json') and type(proof['sha256'])"
+      },
+      {
+        "before": "def relocated_path(root,p,read):",
+        "after": "def data_budget(p):\n    return {'root':str(EXTERNAL.parent),'limits':{'max_logical_bytes':p['ledger']['bytes']+DATA_RESERVE,'max_allocated_bytes':p['ledger']['bytes']+DATA_RESERVE,'max_entries':2,'max_depth':1,'max_scan_seconds':5}}\n\ndef relocated_path(root,p,read):"
+      },
+      {
+        "before": "StorageWatch(root=EXTERNAL.parent,limits={'max_logical_bytes':p['ledger']['bytes']+DATA_RESERVE,'max_allocated_bytes':p['ledger']['bytes']+DATA_RESERVE,'max_entries':2,'max_depth':1,'max_scan_seconds':5}).check()",
+        "after": "StorageWatch(**data_budget(p)).check()"
+      }
+    ]
+  },
+  "prepare01.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-entry-preparation01-2026-10-06/prepare01.py",
+    "before_sha256": "8872b3f7e8606b0811abdc188a98c2e1c4df5d36f1979cf182553544fb00d6e2",
+    "after_sha256": "d686f4bda2ee0caa8802ed3b103c9bf328b8ee10bdd67f055f1a371c80fa2f12",
+    "edits": [
+      {
+        "before": "p=HANDOFF/'candidate/graph_ledger_continuation.py'",
+        "after": "p=ROOT/'tradingagents/research/onchain_replication/graph_ledger_continuation.py'"
+      },
+      {
+        "before": "b576dc363ce047c10c9fa3dbb45ccb87f0724a68c5bd60121d4685da67213e69",
+        "after": "c204412df8e0733e932feef171431ec50487181bb012c771a783ac63b807c2d8"
+      },
+      {
+        "before": "m=importlib.util.module_from_spec(sp);sp.loader.exec_module(m);return m",
+        "after": "m=importlib.util.module_from_spec(sp);m.__package__='tradingagents.research.onchain_replication';sp.loader.exec_module(m);return m"
+      },
+      {
+        "before": "'source_files','runtime_hashes'}",
+        "after": "'source_files','runtime_hashes','relocation_receipt','relocation_review'}"
+      },
+      {
+        "before": "    r=read(b['recovery']);",
+        "after": "    need(p['schema_version']==2,'explicit fixed cross-volume plan required')\n    def relocation_read(role):\n        key={p['relocation_receipt_input']:'relocation_receipt',p['relocation_review_input']:'relocation_review'}[role]\n        read(b[key]);return (ROOT/b[key]['path']).read_bytes()\n    m.relocated_path(ROOT,p,relocation_read)\n    r=read(b['recovery']);"
+      },
+      {
+        "before": "'scratch_scope','storage_budget'},",
+        "after": "'scratch_scope','storage_budget','data_store'},"
+      },
+      {
+        "before": "s['schema_version']==1",
+        "after": "s['schema_version']==2"
+      },
+      {
+        "before": "    e=read(b['extension']);",
+        "after": "    need(s['data_store']=={'storage_budget':m.data_budget(p),'device':m.DATA_DEVICE,'disk_floor_bytes':10*GIB,'free_reserve_bytes':m.DATA_RESERVE},'exact separately retained Data accounting required')\n    import shutil\n    need(shutil.disk_usage(m.DATA_ROOT).free>=10*GIB+m.DATA_RESERVE,'Data floor plus retained-store headroom unavailable')\n    e=read(b['extension']);"
+      },
+      {
+        "before": "job['resources']['storage_budget']=s['storage_budget']",
+        "after": "job['resources']['storage_budget']=s['storage_budget'];job['resources']['disk_paths']=[str(ROOT),str(m.DATA_ROOT)]"
+      },
+      {
+        "before": "('storage_policy',binding['storage_policy'])]",
+        "after": "('storage_policy',binding['storage_policy']),(p['relocation_receipt_input'],binding['relocation_receipt']),(p['relocation_review_input'],binding['relocation_review'])]"
+      }
+    ]
+  },
+  "preflight01.py": {
+    "baseline": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-entry-preparation01-2026-10-06/preflight01.py",
+    "before_sha256": "4be20f49088871fe4768083a949e64243f5a442110fb727e5604b9a0e9ba2cc9",
+    "after_sha256": "f9acbe20a176dbf23edd815ef2bc92c3ee379b544dbfe34b87e364ca5ccbc245",
+    "edits": [
+      {
+        "before": "    plan,policy,_=validate_binding(binding)",
+        "after": "    plan,policy,control=validate_binding(binding)"
+      },
+      {
+        "before": "    if job['resources']!=baseline('execution-job01.json')['resources']:raise ValueError('unchanged native/storage controls differ')",
+        "after": "    expected_resources=baseline('execution-job01.json')['resources'];expected_resources['disk_paths']=[str(ROOT),str(control.DATA_ROOT)]\n    if job['resources']!=expected_resources:raise ValueError('unchanged native/storage controls or exact two-volume floors differ')"
+      },
+      {
+        "before": "('storage_policy','storage_policy')]",
+        "after": "('storage_policy','storage_policy'),(plan['relocation_receipt_input'],'relocation_receipt'),(plan['relocation_review_input'],'relocation_review')]"
+      },
+      {
+        "before": "    free=shutil.disk_usage(ROOT).free; available=mem_available()",
+        "after": "    data_storage=StorageWatch(**control.data_budget(plan)).check()\n    data_free=shutil.disk_usage(control.DATA_ROOT).free\n    if data_free<10*1024**3+control.DATA_RESERVE:raise ValueError('Data floor plus retained-store reserve unavailable')\n    free=shutil.disk_usage(ROOT).free; available=mem_available()"
+      },
+      {
+        "before": "'startup_free_requirement_bytes':policy['startup_free_requirement_bytes'],'storage_observation':storage,",
+        "after": "'startup_free_requirement_bytes':policy['startup_free_requirement_bytes'],'storage_observation':storage,\n        'Data_storage_observation':data_storage,'Data_free_disk_bytes':data_free,'retained_ledger_path':str(control.EXTERNAL),"
+      }
+    ]
+  }
+}

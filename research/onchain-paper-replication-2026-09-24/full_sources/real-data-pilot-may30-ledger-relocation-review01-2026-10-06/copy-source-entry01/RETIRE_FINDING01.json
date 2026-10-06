@@ -1,0 +1,10 @@
+{
+  "decision": "retire-withheld-copy-unaffected",
+  "source_sha256": "b51c91c26e48cde9627f95334082c8d405ed525771bfd806e97be1bc41f687e2",
+  "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-relocation-preparation01-2026-10-06/relocate01.py",
+  "line": 130,
+  "failure_handler_line": 138,
+  "finding": "Successful unlink is followed by directory fsync with no recorded attempted/removed state. Later fsync, descriptor close or publication failure invokes generic failure() which records neither unlink success nor ambiguity. Precise source retirement disposition is lost in the failed receipt.",
+  "fix": "Preserve sealed01. In a RETIRE successor, record unlink_attempted before unlink and source_unlinked immediately after successful unlink, before fsync; persist attempted/removed/ambiguous fields through every failure. Preserve primary error and note secondary failure. Require no automatic retry after reservation.",
+  "verification_scope": "Source control-flow inspection; no actual unlink or fsync failure injected by this review. Candidate successor should demonstrate narrow post-unlink failure witness."
+}
