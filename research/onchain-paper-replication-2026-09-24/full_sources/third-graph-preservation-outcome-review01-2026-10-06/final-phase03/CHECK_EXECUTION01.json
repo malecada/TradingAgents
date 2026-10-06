@@ -1,0 +1,30 @@
+{
+  "actual_preceding_storage_executed_read_only": true,
+  "admission_owner_binding_or_start_created": false,
+  "checker": "check_entry02.py",
+  "exit_code": 0,
+  "input_delta_check": "Identical nonstorage role set; all nonweekly/nonstorage inputs unchanged. Original failed-parent evidence retained in historical May16 gate.",
+  "network_native_launch_or_deletion": false,
+  "no_numerical_imports": true,
+  "original_checker_failure": {
+    "exit_code": 1,
+    "preserved": "CHECKER_CORRECTION02.json",
+    "tool": "5d4bdc"
+  },
+  "raw_payload_body_reads": 0,
+  "seal_preparation_failure": {
+    "exit_code": 1,
+    "reason": "Reviewer mistakenly required identical storage role sets; prior May16 used failed-parent union. May23 replaces four storage_failed_* roles with actual complete backup storage_root_terminal. No release written on failure.",
+    "tool": "facac8"
+  },
+  "storage_roles_new_only": [
+    "storage_root_terminal"
+  ],
+  "storage_roles_old_only": [
+    "storage_failed_closure_review",
+    "storage_failed_native_final",
+    "storage_failed_outer_exit",
+    "storage_failed_root_terminal"
+  ],
+  "successful_tool": "072b32"
+}

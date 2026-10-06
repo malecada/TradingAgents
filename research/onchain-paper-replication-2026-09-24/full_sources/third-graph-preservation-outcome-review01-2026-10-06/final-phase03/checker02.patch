@@ -1,0 +1,11 @@
+--- check_entry01.py
++++ check_entry02.py
+@@ -4,7 +4,7 @@
+ D=Path(__file__).resolve().parent;F=D.parent.parent;M=F.parents[2];B=F.parent;C=F/'real-data-pilot-fourth-graph01-2026-10-06';OLD=F/'real-data-pilot-third-graph01-2026-10-06';PKG=M/'tradingagents/research/onchain_replication';NAME='eth-paper-real-pilot-graph-20220523-20261005-01';evidence={}
+ def raw(p):
+  p=Path(p);s=p.lstat();assert p.resolve()==p and stat.S_ISREG(s.st_mode) and s.st_nlink==1 and s.st_size<=4*1024**2
+- b=p.read_bytes();assert p.lstat()==s;evidence[str(p.relative_to(M))]=hashlib.sha256(b).hexdigest();return b
++ b=p.read_bytes();assert all(getattr(p.lstat(),k)==getattr(s,k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns'));evidence[str(p.relative_to(M))]=hashlib.sha256(b).hexdigest();return b
+ def h(p):return hashlib.sha256(raw(p)).hexdigest()
+ def read(p):return json.loads(raw(p))
+ gate=read(C/'gate01.json');assert h(C/'gate01.json')=='9cb4e2d10cdfd3c12c0b4ff2bd9173084da86bef06dd5f2dd0d447f2a5a2e585';e=gate['experiments'][NAME];oldgate=read(OLD/'gate01.json');old=next(iter(oldgate['experiments'].values()))

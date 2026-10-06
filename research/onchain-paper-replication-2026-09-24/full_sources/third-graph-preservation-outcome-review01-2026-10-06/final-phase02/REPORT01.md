@@ -1,0 +1,3 @@
+Accepted exact unchanged daedd caller, b848 selection and579be request. Eighteen compact pins matched. Actual ledger retirement8a2f and Root7849/14765d exit0 join accepted full36 recoverya6e76. Source recovery/selected predicates passed against actual metadata and current five-original/five-get stats; historical recovered-six hashes were reused. No payload reread, network/native call or deletion.
+
+Release covers only five recovered duplicates,544,741,248B. Originals remain. Actual execution must repeat current metadata/inactivity/one-use/held-descriptor predicates; no remote availability, POSIX reconstruction, scientific or capacity authority follows. Check25792e exited0.

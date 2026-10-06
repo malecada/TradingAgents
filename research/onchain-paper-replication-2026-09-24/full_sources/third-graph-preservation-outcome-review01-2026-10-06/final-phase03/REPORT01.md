@@ -1,0 +1,5 @@
+Accepted exact May23 gate9cb4e2d1, corrected preflightbbd067 and unchanged launcher. All178 source pins,171 required package sources,32 compact inputs and241 raw extent stat identities matched. The174 core pins, original graph method/config, native policy and71 allocation are unchanged. May23 binds actual COMPLETE May16 backup instead of earlier failed-parent union; old evidence remains.
+
+Actual preceding_storage passed. Five-get completion13b85/Rootf57eed and five retained original array stats joined without payload reread. Preflight roster-key defect resolves through one literal correction. Check072b32 exited0. At03:17:22Z, RAM11,050,475,520B/disk19,428,675,584B met snapshot thresholds. Root must commit/push/read back and repeat genuine admission/fresh preflight before one launch. No capacity or scientific completion claim.
+
+Reviewer failures are preserved: checker01 included mutable access time; first seal check wrongly required prior failed-union storage roles unchanged. Both occurred before any release; corrected bounded checks passed. No payload, numerical import, authority or execution was performed.
