@@ -1,0 +1,69 @@
+{
+  "decision": "pass-source-only",
+  "manifest_sha256": "51d3b47f05087c87127b76206001f8fad8afd3739f1b053c7af1ce3f67fb867e",
+  "content_manifest_members_verified": 16,
+  "scope": {
+    "schema_version": 1,
+    "physical_root_growth_bytes": 7155620336,
+    "named_sources_growth_bytes": 6744020747,
+    "unnamed_projected_parquet_bytes": 411599589,
+    "named_rollback_journal_allowance_bytes": 3099885508,
+    "physical_startup_free_bytes": 17893038576,
+    "qualification": "Density estimates, not hard bounds. Named rollback reserve retained. Projected Parquet is materialized on Root as an unnamed file, not treated as read-only Data capacity. SQLite external/unnamed scratch remains covered by original whole-volume reservation/floor; no source ceiling increased."
+  },
+  "stdlib": {
+    "path": "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/tempfile.py",
+    "sha256": "f5f65fbf68d675c49018b79f1e3cd4b1401ad0f0edeb6225e570912a376ad6fb",
+    "allocation": "O_TMPFILE or unlink-before-return; projected writes begin only after return",
+    "watch": "unnamed extents excluded from sources pathname scan; physical Root floor still covers them"
+  },
+  "refusals": [
+    {
+      "case": "density_projected_ledger_bytes",
+      "error": "finite source projection required"
+    },
+    {
+      "case": "largest_projected_parquet_logical_bytes",
+      "error": "finite source projection required"
+    },
+    {
+      "case": "prospective_growth_estimate_bytes",
+      "error": "original full physical projection changed"
+    },
+    {
+      "case": "prospective_startup_free_bytes",
+      "error": "original full physical projection changed"
+    },
+    {
+      "case": "missing independent proof before dependency IO",
+      "error": "actual continuation_outcome_review absent; preparation not released"
+    },
+    {
+      "case": "wrong identity",
+      "error": "fixed unused June6 identity required"
+    },
+    {
+      "case": "parent transfer",
+      "error": "fixed unused June6 identity required"
+    },
+    {
+      "case": "failed terminal",
+      "error": "continuation is incomplete/failed/unavailable; no next release"
+    }
+  ],
+  "preflight_check_AST_inverse": true,
+  "launcher_byte_identical": true,
+  "actual_terminal_draft_nonnull_pins_verified": true,
+  "source_pins": {
+    "tradingagents/research/onchain_replication/graph_production.py": "ef3ba95b235725f7d969020b9129b96b342ec204d1e3a93ee9a9a57889839bbc",
+    "tradingagents/research/onchain_replication/aggregation.py": "768c2ca743b2146fcc6bf606e4fa0bf41273ac15d06344d3a25a6aac78e8038f",
+    "tradingagents/research/onchain_replication/weekly.py": "079a427f212738759109b31da23933549a8b7751851e3033703cdd03dc5f054a",
+    "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+    "tradingagents/research/onchain_replication/graph_store.py": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da",
+    "tradingagents/research/onchain_replication/workflow_storage.py": "a6323c64c903931d7f2c7d18c5d81d8479d377c82e9eaeacc8580a5c4e99d67f"
+  },
+  "no_preparer_preflight_admission_launch": true,
+  "payload_reads": 0,
+  "live_baseline_sampled": false,
+  "capacity_proved": false
+}

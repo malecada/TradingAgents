@@ -1,0 +1,58 @@
+{
+  "capacity_or_claim": false,
+  "declared_rows": 7293215,
+  "effective_attempt_budget": 72,
+  "identity": "eth-paper-real-pilot-graph-20220606-20261005-01",
+  "original_allowance_retained": true,
+  "parent": null,
+  "predecessor": {
+    "continuation": "eth-paper-real-pilot-may30-ledger-continuation-20261006-01",
+    "continuation_source": "4eb9752bbb812a029480d83bcaf9ed7c4d7e3ef8",
+    "data_floor_bytes": 10737418240,
+    "data_reserve_bytes": 67108864,
+    "effective_attempt_budget": 72,
+    "historical_failed_parent": "eth-paper-real-pilot-graph-20220530-20261005-01",
+    "historical_status": "failed",
+    "old_root_ledger_absent": true,
+    "original_allowance_retained": true,
+    "projected_parquet_temporary_file": {
+      "allocation": "O_TMPFILE or unlink-before-return; projected writes begin only after return",
+      "path": "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/tempfile.py",
+      "sha256": "f5f65fbf68d675c49018b79f1e3cd4b1401ad0f0edeb6225e570912a376ad6fb",
+      "watch": "unnamed extents excluded from sources pathname scan; physical Root floor still covers them"
+    },
+    "recovery_is_historical_not_current_remote_availability": true,
+    "retained_data": {
+      "bytes": 3189231616,
+      "device": 66307,
+      "path": "/home/malecada/Data/onchain-pilot-retained-ledgers/eth-paper-real-pilot-graph-20220530-20261005-01/ledger.sqlite",
+      "sha256": "e870a85f607afdfe44338f1e6f38a57c347a26a9c9385d8482ec92a2fd321bf3",
+      "stat_identity": [
+        66307,
+        8519683,
+        1,
+        3189231616,
+        1791268328020180307,
+        1791268328020180307,
+        420
+      ]
+    },
+    "terminal_status": "complete",
+    "transfer_or_refund": false,
+    "two_failed_partial_arrays_retained": true
+  },
+  "raw_stat_extents": 223,
+  "scope_reservations": {
+    "named_rollback_journal_allowance_bytes": 3099885508,
+    "named_sources_growth_bytes": 6744020747,
+    "physical_root_growth_bytes": 7155620336,
+    "physical_startup_free_bytes": 17893038576,
+    "qualification": "Density estimates, not hard bounds. Named rollback reserve retained. Projected Parquet is materialized on Root as an unnamed file, not treated as read-only Data capacity. SQLite external/unnamed scratch remains covered by original whole-volume reservation/floor; no source ceiling increased.",
+    "schema_version": 1,
+    "unnamed_projected_parquet_bytes": 411599589
+  },
+  "source_pins": 192,
+  "startup_free_requirement_bytes": 17893038576,
+  "status": "FROZEN_REQUIRES_ENTRY_REVIEW_COMMIT_AND_FRESH_ADMISSION",
+  "transfer_or_refund": false
+}

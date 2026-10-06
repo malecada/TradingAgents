@@ -1,0 +1,56 @@
+{
+  "actual_cli_refusal": {
+    "exit_code": 1,
+    "last_stderr_line": "ValueError: missing genuine graph/count metadata: 2022-05-30T00:00:00Z, 2022-06-06T00:00:00Z"
+  },
+  "author_actual_check": {
+    "exit_code": 0,
+    "initial_preparation_failure_exit": 1,
+    "initial_preparation_failure_tool": "4e94e9",
+    "numerical_imports": false,
+    "report_sha256": "f1ad015da5722cd4bcf763a64f683e25e5bbf594eff4a07369f9f6bcfa414c1f",
+    "source_only_not_self_approval": true,
+    "source_sha256": "8165d832411caa306e105a4d8f330873fb7fc5d052831abce9f6d9a92345eb98",
+    "tool_chunk": "34ebea"
+  },
+  "author_focused_check_sha256": "f1ad015da5722cd4bcf763a64f683e25e5bbf594eff4a07369f9f6bcfa414c1f",
+  "candidate_manifest_sha256": "ae1f353e25a63780b41292d1c5b6faaf96fcf5874d0266153b28e67a9b4a02c0",
+  "dependency_path_only_rebinds": [
+    "builder",
+    "controls",
+    "durability",
+    "history"
+  ],
+  "destination_overlaps": 0,
+  "exact_bodies": 17,
+  "exact_patch_reconstructed": true,
+  "install_map_sha256": "3931ea50a094d0ac9403e43e038961877b2910f9242afa4a34f1cbb4e2a86f3b",
+  "metadata_bodies": 3,
+  "reused_parent_reviews": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-policy-progress-review01-2026-10-06/REVIEW02.json": {
+      "decision": "accepted-source-only",
+      "sha256": "2d55200cd7d5bb3588de6a8042a770357270de4d674fef62cfe13632e6f67011"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-june13-protected-reuse-review01-2026-10-06/REVIEW01.json": {
+      "decision": "accepted",
+      "sha256": "271935b2967050767bb677a7cf4f36b6284d62d7e957267e2091b34a99295202"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-overhead-combined-review01-2026-10-06/REVIEW01.json": {
+      "decision": "accepted",
+      "sha256": "51ae44e444fd25ab6c38bf40b3fa21f7e99d142bd189eebb82fc9d1999533433"
+    }
+  },
+  "runtime_additions": 3,
+  "runtime_replacements": 11,
+  "schema_version": 1,
+  "source_only_no_numerical_imports": true,
+  "startup_marker_order": [
+    "verify(run,graph,role)",
+    "from .real_pilot_partial_progress import MCMProgress",
+    "archive_dispatch.preflight(",
+    "resource_binding.open_first(",
+    "original_import_stage.attach(",
+    "activate(execution,"
+  ],
+  "status": "PASS_BOUNDED_SOURCE_COMPOSITION"
+}

@@ -1,0 +1,5 @@
+# June6 inherited allowance
+
+Accepted metadata accounting only. The actual25 closed current claims plus17 inherited attempts consume42 of the genuinely adopted72 ceiling. The existing pure effective_budget validator returned72 with June6 as the prospective identity and the unchanged reviewed extension. Actual continuation is the sole first adopter at72; its COMPLETE terminal joins its claim. Old May30 remains FAILED/spent. Original unused June6 namespace is absent.
+
+The accepted allocation retains30 pending slots:12 missing-body,15 financial batch,1 other resource,1 June6 graph and1 representative resource pilot. No refund, transfer, new amendment or empirical attempt is introduced. Exact continuation terminal and basis gate hashes are in ACCOUNTING_REVIEW01.evidence. The accepted original fa8e extension review and17 prior exposure are inherited, not reopened. Actual checker0e3388 exited0. No native/admission/Owner/ResearchRun, scientific import, raw/SQL/array read, source/Git/ledger edit or capacity claim occurred. Concrete June6 gate, source/input binding and fresh physical eligibility remain separate prerequisites.

@@ -1,0 +1,89 @@
+{
+  "at": "2026-10-06T07:26:14.303634+00:00",
+  "baseline": {
+    "aggregate_entry_visit_bound": 60000,
+    "allocated_bytes": 3525427200,
+    "directories": 164,
+    "elapsed_seconds": 0.12121451400162186,
+    "entries": 14099,
+    "hardlink_observations": [],
+    "logical_file_bytes": 3470354982,
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+    "regular_files": 13936,
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources",
+    "root_device": 66310,
+    "root_inode": 7882946,
+    "scan_attempts": 1
+  },
+  "free_disk_observed_bytes": 18590019584,
+  "growth_estimate_bytes": 7155620336,
+  "preceding_continuation_boundary": {
+    "continuation": "eth-paper-real-pilot-may30-ledger-continuation-20261006-01",
+    "continuation_source": "4eb9752bbb812a029480d83bcaf9ed7c4d7e3ef8",
+    "data_floor_bytes": 10737418240,
+    "data_reserve_bytes": 67108864,
+    "effective_attempt_budget": 72,
+    "historical_failed_parent": "eth-paper-real-pilot-graph-20220530-20261005-01",
+    "historical_status": "failed",
+    "old_root_ledger_absent": true,
+    "original_allowance_retained": true,
+    "projected_parquet_temporary_file": {
+      "allocation": "O_TMPFILE or unlink-before-return; projected writes begin only after return",
+      "path": "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/tempfile.py",
+      "sha256": "f5f65fbf68d675c49018b79f1e3cd4b1401ad0f0edeb6225e570912a376ad6fb",
+      "watch": "unnamed extents excluded from sources pathname scan; physical Root floor still covers them"
+    },
+    "recovery_is_historical_not_current_remote_availability": true,
+    "retained_data": {
+      "bytes": 3189231616,
+      "device": 66307,
+      "path": "/home/malecada/Data/onchain-pilot-retained-ledgers/eth-paper-real-pilot-graph-20220530-20261005-01/ledger.sqlite",
+      "sha256": "e870a85f607afdfe44338f1e6f38a57c347a26a9c9385d8482ec92a2fd321bf3",
+      "stat_identity": [
+        66307,
+        8519683,
+        1,
+        3189231616,
+        1791268328020180307,
+        1791268328020180307,
+        420
+      ]
+    },
+    "terminal_status": "complete",
+    "transfer_or_refund": false,
+    "two_failed_partial_arrays_retained": true
+  },
+  "qualification": "Sampled existing shared-source-parent accounting, with no concurrent mutation of other source stores. Includes all named new source files and historical baseline; unnamed temporary extents and external SQLite scratch are covered by the whole-volume free-disk floor and cumulative sampled minimum, not this tree scan. Density projection is an estimate, not a capacity bound or hard filesystem quota; retain any breached run permanently. No source body was read.",
+  "schema_version": 1,
+  "scope_reservations": {
+    "named_rollback_journal_allowance_bytes": 3099885508,
+    "named_sources_growth_bytes": 6744020747,
+    "physical_root_growth_bytes": 7155620336,
+    "physical_startup_free_bytes": 17893038576,
+    "qualification": "Density estimates, not hard bounds. Named rollback reserve retained. Projected Parquet is materialized on Root as an unnamed file, not treated as read-only Data capacity. SQLite external/unnamed scratch remains covered by original whole-volume reservation/floor; no source ceiling increased.",
+    "schema_version": 1,
+    "unnamed_projected_parquet_bytes": 411599589
+  },
+  "scratch_scope": {
+    "explicit_projected_parquet": "new source scratch directory; TemporaryFile may be unnamed",
+    "guarded_device": 66310,
+    "sqlite_rollback": "new aggregation directory",
+    "sqlite_temp_candidates": [
+      "/var/tmp",
+      "/usr/tmp",
+      "/tmp",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ]
+  },
+  "startup_free_requirement_bytes": 17893038576,
+  "storage_budget": {
+    "limits": {
+      "max_allocated_bytes": 10572060447,
+      "max_depth": 16,
+      "max_entries": 20000,
+      "max_logical_bytes": 10517129107,
+      "max_scan_seconds": 5
+    },
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/sources"
+  }
+}

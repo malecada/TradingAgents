@@ -1,0 +1,130 @@
+{
+  "buffered_cross_seam": [
+    "ack2/durable0",
+    "barrier durable2",
+    "closed overlap without double count",
+    "poisoned overlap refused"
+  ],
+  "eager_selected_helpers": [
+    "admitted",
+    "archive_control_history",
+    "archive_owner_policy",
+    "archive_pair_writer",
+    "capacity",
+    "chunk_durability",
+    "compact_training",
+    "mcm_raw_parts",
+    "typed_payload_operations",
+    "typed_payload_policy",
+    "typed_score_store",
+    "typed_tail_binding"
+  ],
+  "historical_incomplete_draft_refusal": "missing genuine graph/count metadata: 2022-05-30T00:00:00Z, 2022-06-06T00:00:00Z",
+  "inverse_edges": [
+    {
+      "after_sha256": "70691d78c0f34184db43aa93234685eb3e6100c89573af6c1bc520bafac7e756",
+      "before_sha256": "4c65ca7f8caf46760eeef23e2bd44e9bc87a64a54bb18a862662be2b15da0089",
+      "exact_inverse": true,
+      "name": "compact_pair_log.py",
+      "parent": "durability"
+    },
+    {
+      "after_sha256": "91e1c9ba69b2922e2f77ad07ae9de4efc84f94d420ff55316e120b1df19398ca",
+      "before_sha256": "b5e807e022349ca7e0d18c02512812932103865ba0779d641be6877995694870",
+      "exact_inverse": true,
+      "name": "score_tail.py",
+      "parent": "durability"
+    },
+    {
+      "after_sha256": "913eab1adc2b0782cf786e9ac22ee8c684851ea793a0151072c1c3932466fbdb",
+      "before_sha256": "75e4b8bad423ed198bef5017fd4c22670ff3c552bcacd2cc967901efa95bed73",
+      "exact_inverse": true,
+      "name": "compact_matcher.py",
+      "parent": "durability"
+    },
+    {
+      "after_sha256": "94fd45fe16c5d833e5918f461563d9f4b63e7111c8790b0d32dc0000e2604a27",
+      "before_sha256": "7ea894ae381cedae04096de7ed696eda1ef67208f35a15495f0012756e9561a6",
+      "exact_inverse": true,
+      "name": "mcm_score_stream.py",
+      "parent": "durability"
+    },
+    {
+      "after_sha256": "2719ab99b588736b229fb660b2142f1b50786a7335ca5b966bc234797f9d9fe9",
+      "before_sha256": "c714c350f372be1b4e3c7840b5187deb7f72ee80549edfed4e48450e2d0ca052",
+      "exact_inverse": true,
+      "name": "archive_pair_writer.py",
+      "parent": "durability"
+    },
+    {
+      "after_sha256": "b9b4c853b899b4ec7d053886b3ab5146d6ce081dfa045a408a2e5c34b73154bb",
+      "before_sha256": "be956793d5ebb6111b109fa106aaa485da06b53d9bd410ecd2b14101ed34e0ba",
+      "exact_inverse": true,
+      "name": "compact_mcm.py",
+      "parent": "durability"
+    },
+    {
+      "after_sha256": "b724aa003839513753ed2ed38da81ea5d724258d6a9708b1ff19f3f476195ddd",
+      "before_sha256": "ff3bf9f128ed520222871bbfbc15b66c11e38bb89d92d6d9bac1cbdd89fb9840",
+      "exact_inverse": true,
+      "name": "archive_dispatch.py",
+      "parent": "history"
+    },
+    {
+      "after_sha256": "e45fd25c19f2a8f42f270cbb5c5437a823ba71a5e2e75333e928674ad1bec7bf",
+      "before_sha256": "2a92f5d6ac569ffa922871e92e981e328708c10294d95f2c30178d747dbdc76f",
+      "exact_inverse": true,
+      "name": "archive_owner_operations.py",
+      "parent": "history"
+    },
+    {
+      "after_sha256": "d1825c718b48d4267653405d9b637074b4a6d4bf1677842044418a2e8111aa13",
+      "before_sha256": "ef0fdc052a354af5b83e487cbc2d2cf92170149d64f90117adcb5ee37e3b572d",
+      "exact_inverse": true,
+      "name": "archive_transport.py",
+      "parent": "history"
+    },
+    {
+      "after_sha256": "7564f86165e92cd4c24d4d5845c3dbe96859a1ba9a71c5aba987004a1910b271",
+      "before_sha256": "e100a1fa2f8caaa6baf6cde85d5f50aa667ed6e04b6470d9c8368d5424748a2d",
+      "exact_inverse": true,
+      "name": "build_inputs03.py",
+      "parent": "history"
+    },
+    {
+      "after_sha256": "dc5918b1f15bb53a127067cda51cc95a54a5e7c9e1c4ccc2931f20566f2d5056",
+      "before_sha256": "d6b3bac4b71fc7cd6d2dfaf63d8aa395fb87e47eef5dbc2b7bd501fd385e59f3",
+      "exact_inverse": true,
+      "name": "controls01.py",
+      "parent": "history"
+    },
+    {
+      "exact_inverse": true,
+      "name": "real_pilot_import_caller.py",
+      "parent": "legacy"
+    },
+    {
+      "exact_inverse": true,
+      "name": "real_pilot_partial_progress.py",
+      "parent": "progress02"
+    },
+    {
+      "exact_inverse": true,
+      "name": "real_pilot_partial_progress.py",
+      "parent": "progress01-withheld-intermediate-only"
+    }
+  ],
+  "metadata_bodies": 3,
+  "no_genuine_authority_or_numerical_execution": true,
+  "runtime_bodies": 14,
+  "same_file_merges": 0,
+  "startup_order": [
+    956,
+    3340,
+    4951,
+    5187,
+    5602,
+    6157
+  ],
+  "status": "PASS_SOURCE_COMPOSITION_ONLY"
+}
