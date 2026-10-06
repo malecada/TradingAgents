@@ -1,0 +1,256 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "case": "intact",
+      "original": {
+        "status": "pass",
+        "value": {
+          "execution_identity": "6b5161f14c8d92b9fa5d52cebbcb0d3a8c5ae9318727e454a15f2c74fd0e2a51",
+          "import_receipt_sha256": "fixed",
+          "current": {
+            "backend": {
+              "fixture": "no-numerical-import"
+            },
+            "current_binding": "1ea8a97204f0d2afb51195922b0e76e214b191642666408c4431be6eeb0343d1",
+            "current_source": "fixed",
+            "execution_matching": "ab3c2414116caa17bd0f8650cb65cc2e96163f465ae905fdfec23a99769b9294",
+            "mcm_execution_admitted": false,
+            "original_dictionary": "fixed",
+            "original_matching": "aa2c2c4f06f30aad68230de36f5f37ac04bb3795c349ea02ffd79bb7ae600405",
+            "runtime_hash": "fixed",
+            "source_modules": {
+              "fixture.py": "fixed"
+            },
+            "stage_contract": {
+              "control_input": "original",
+              "control_sha256": "fixed",
+              "current_binding": "1ea8a97204f0d2afb51195922b0e76e214b191642666408c4431be6eeb0343d1",
+              "descriptor_sha256": "fixed",
+              "job_input": "job",
+              "job_sha256": "fixed",
+              "kind": "dictionary-import",
+              "required_stages": [
+                "dictionary-import",
+                "mcm-fixture"
+              ]
+            }
+          },
+          "original": {
+            "original_dictionary": "fixed",
+            "original_matching": "aa2c2c4f06f30aad68230de36f5f37ac04bb3795c349ea02ffd79bb7ae600405"
+          },
+          "financial_representation_admitted": false
+        },
+        "events": [
+          "stage.lease",
+          "prepared.full",
+          "stage.integrity",
+          "content",
+          "stage.integrity",
+          "prepared.full",
+          "matching.read",
+          "prepared.full",
+          "matching.read",
+          "owner.final",
+          "stage.integrity"
+        ]
+      },
+      "candidate": {
+        "status": "pass",
+        "value": {
+          "execution_identity": "6b5161f14c8d92b9fa5d52cebbcb0d3a8c5ae9318727e454a15f2c74fd0e2a51",
+          "import_receipt_sha256": "fixed",
+          "current": {
+            "backend": {
+              "fixture": "no-numerical-import"
+            },
+            "current_binding": "1ea8a97204f0d2afb51195922b0e76e214b191642666408c4431be6eeb0343d1",
+            "current_source": "fixed",
+            "execution_matching": "ab3c2414116caa17bd0f8650cb65cc2e96163f465ae905fdfec23a99769b9294",
+            "mcm_execution_admitted": false,
+            "original_dictionary": "fixed",
+            "original_matching": "aa2c2c4f06f30aad68230de36f5f37ac04bb3795c349ea02ffd79bb7ae600405",
+            "runtime_hash": "fixed",
+            "source_modules": {
+              "fixture.py": "fixed"
+            },
+            "stage_contract": {
+              "control_input": "original",
+              "control_sha256": "fixed",
+              "current_binding": "1ea8a97204f0d2afb51195922b0e76e214b191642666408c4431be6eeb0343d1",
+              "descriptor_sha256": "fixed",
+              "job_input": "job",
+              "job_sha256": "fixed",
+              "kind": "dictionary-import",
+              "required_stages": [
+                "dictionary-import",
+                "mcm-fixture"
+              ]
+            }
+          },
+          "original": {
+            "original_dictionary": "fixed",
+            "original_matching": "aa2c2c4f06f30aad68230de36f5f37ac04bb3795c349ea02ffd79bb7ae600405"
+          },
+          "financial_representation_admitted": false
+        },
+        "events": [
+          "stage.lease",
+          "prepared.full",
+          "stage.integrity",
+          "content",
+          "stage.integrity",
+          "matching.read",
+          "prepared.full",
+          "matching.read",
+          "owner.final",
+          "stage.integrity"
+        ]
+      }
+    },
+    {
+      "case": "entry_refusal",
+      "original": {
+        "status": "refuse",
+        "reason": "entry refusal",
+        "events": [
+          "stage.lease",
+          "prepared.full"
+        ]
+      },
+      "candidate": {
+        "status": "refuse",
+        "reason": "entry refusal",
+        "events": [
+          "stage.lease",
+          "prepared.full"
+        ]
+      }
+    },
+    {
+      "case": "construction_mutation",
+      "original": {
+        "status": "refuse",
+        "reason": "state changed",
+        "events": [
+          "stage.lease",
+          "prepared.full",
+          "stage.integrity",
+          "content",
+          "stage.integrity",
+          "prepared.full",
+          "matching.read",
+          "prepared.full"
+        ]
+      },
+      "candidate": {
+        "status": "refuse",
+        "reason": "state changed",
+        "events": [
+          "stage.lease",
+          "prepared.full",
+          "stage.integrity",
+          "content",
+          "stage.integrity",
+          "matching.read",
+          "prepared.full"
+        ]
+      }
+    },
+    {
+      "case": "final_callback_mutation",
+      "original": {
+        "status": "refuse",
+        "reason": "owner changed during callback",
+        "events": [
+          "stage.lease",
+          "prepared.full",
+          "stage.integrity",
+          "content",
+          "stage.integrity",
+          "prepared.full",
+          "matching.read",
+          "prepared.full",
+          "matching.read",
+          "owner.final"
+        ]
+      },
+      "candidate": {
+        "status": "refuse",
+        "reason": "owner changed during callback",
+        "events": [
+          "stage.lease",
+          "prepared.full",
+          "stage.integrity",
+          "content",
+          "stage.integrity",
+          "matching.read",
+          "prepared.full",
+          "matching.read",
+          "owner.final"
+        ]
+      }
+    },
+    {
+      "case": "reread_mutation",
+      "original": {
+        "status": "refuse",
+        "reason": "original matching bytes changed after lease",
+        "events": [
+          "stage.lease",
+          "prepared.full",
+          "stage.integrity",
+          "content",
+          "stage.integrity",
+          "prepared.full",
+          "matching.read",
+          "prepared.full",
+          "matching.read"
+        ]
+      },
+      "candidate": {
+        "status": "refuse",
+        "reason": "original matching bytes changed after lease",
+        "events": [
+          "stage.lease",
+          "prepared.full",
+          "stage.integrity",
+          "content",
+          "stage.integrity",
+          "matching.read",
+          "prepared.full",
+          "matching.read"
+        ]
+      }
+    },
+    {
+      "case": "real-call-path fake-clock RED to GREEN",
+      "original": {
+        "status": "refuse",
+        "reason": "import lease: stale interval cannot refresh",
+        "notes": [
+          "import lease full boundary timing: full_callback_seconds=6.900000000000002; pre_callback_age_seconds=23.631386558; total_age_seconds=30.531386558"
+        ],
+        "closed": true,
+        "full": 0.0,
+        "end_clock": 30.531386558,
+        "full_check_count": 3
+      },
+      "candidate": {
+        "status": "pass",
+        "closed": false,
+        "full": 28.231386558,
+        "end_clock": 28.231386558,
+        "full_check_count": 2
+      },
+      "qualification": "Uniform2.3second Prepared-check costs are synthetic, not inferred from actual10 callback internals. The23.631386558 age is retained actual10 aggregate prior age. No measured saving follows."
+    },
+    {
+      "case": "standalone public execution_contract exact surrounding full checks and rereads",
+      "status": "pass"
+    }
+  ],
+  "exact_two_file_inverse": true,
+  "qualification": "No arrays, genuine scientific authority, claim, native execution or empirical replay. No elapsed capacity proof. Interval predicates/timestamps/caps unchanged; observations from test clock are explicitly synthetic."
+}

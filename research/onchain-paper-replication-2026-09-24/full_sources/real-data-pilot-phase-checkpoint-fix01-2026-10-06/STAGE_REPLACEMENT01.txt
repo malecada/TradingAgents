@@ -1,0 +1,9 @@
+        stage.lease();content(stage)
+        # stage.lease has already performed the genuine full Prepared entry
+        # check. Construct metadata without another identical entry check, then
+        # retain the original full final check and exact post-callback reread.
+        prepared=stage.prepared
+        value,matching_input,raw=prepared._execution_contract_metadata()
+        prepared._check()
+        require(original._read_registered(prepared._run,matching_input)==raw,'original matching bytes changed after lease')
+        current=original.parse(canonical_bytes(value))

@@ -1,0 +1,48 @@
+{
+  "actual_boundary": "Target.__init__ entry checkpoint37 inside seven-target list comprehension caller448; graph identity/ordinal not retained in failure trace.",
+  "decision": "investigation_only",
+  "evidence": [
+    {
+      "path": "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "sha256": "9d89376185fb9632ed165a8da2f26e8fb07e2bc567611bc7fa5a83e2463e7e4d"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "sha256": "12d11a7a3f8b5cc07117f622978ce43ef537eab20ab80335b95eeb35cf4391bd"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_authority_interval.py",
+      "sha256": "e61ef97f883ed9d27107f6316b774697b8949d83c313928150a0ae717b283f6f"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "sha256": "d6242c38dbe6247a40771087e5db44bf67878a668efa59f28ad5d3cc3b269704"
+    },
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-10/guard/child.log",
+      "sha256": "8857fea9ee55666362ead28ac31415654b2cd2ad4b862bcd12e4c0e1d8691c76"
+    }
+  ],
+  "measured": {
+    "limit_seconds": 30,
+    "prior_age_seconds": 23.631386558000486,
+    "sampled_full_callback_seconds": 6.903510514000118,
+    "total_age_seconds": 30.534897072000604
+  },
+  "not_tested": [
+    "No real array/data/private inputs, numerical/financial reruns, claim/ledger mutation or genuine admission.",
+    "No additional actual timing/capacity estimate."
+  ],
+  "path_analysis": [
+    "A previous constructor ends through self.check\u2192self.final\u2192target_lease boundary then metadata/receipt/motif/workload checks followed by final graph hash and node-order hash. No lease refresh follows final numerical comparisons.",
+    "The next constructor entry forces a full callback. Thus previous terminal metadata+graph/node-order hashing can accumulate age that combines with entry callback and exceeds30s. This is a source-supported hypothesis; actual graph ordinal and individual preceding durations are unrecorded.",
+    "Constructor also has forced boundaries after manifest and after first graph hash, and before self.check; latter check/final repeats execution/manifest validation. All are future timing seams to preserve and measure."
+  ],
+  "review_requirements": [
+    "Keep original30s scheduler semantics and source/input/runtime/live/capability checks.",
+    "Authority callbacks inserted after or between final graph/node-order comparisons can mutate previously checked arrays. Preserve callback-free final numerical rejoin or prove an equally complete post-callback rejoin.",
+    "A narrowly placed genuine checkpoint before final hash after completed metadata phase can be evaluated; it is not proof of enough runtime margin."
+  ],
+  "reviewer": "pilot09_review independent fresh11 path reviewer",
+  "schema_version": 1
+}

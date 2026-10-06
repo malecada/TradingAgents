@@ -1,0 +1,73 @@
+{
+  "candidates": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-phase-checkpoint-fix01-2026-10-06/candidate/original_import_preparation.py",
+      "sha256": "553d88117d5c39fa8f8755bb702640ca619eaf4097c2183948587d7ef95b5941"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-phase-checkpoint-fix01-2026-10-06/candidate/original_import_stage.py",
+      "sha256": "fada5f7c0f09a911009ced367f29b41b28839c4c24777bdba9b58fdd50a8557c"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final11-2026-10-06/candidate/real_pilot_storage.py",
+      "sha256": "a236ed2e0c0d0164ac945977f912a17cfdb1c81ae642e197cd488315d810577f"
+    }
+  ],
+  "checks": [
+    "Exact two-file inverse limits source changes to callback-free metadata extraction and nested duplicate entry-check removal.",
+    "Independent AST reconstruction confirms helper metadata is the original body, with original policy input-name expression captured locally; no authority callback or cache introduced.",
+    "Genuine ImportedExecution.check still executes stage.lease and content before helper; preserves final Prepared._check, original matching reread, execution pin comparison and callback-free Owner/stage/numeric joins.",
+    "Standalone public execution_contract retains original entry/final checks and matching reread.",
+    "Strict storage inverse changes sole fixed10\u219211 identity literal.",
+    "Independent varied-cost synthetic actual-callpath scheduler regression refuses original3checks and accepts candidate2checks, then still poisons candidate above30s."
+  ],
+  "decision": "accepted",
+  "findings": [],
+  "independent_synthetic_rows": [
+    {
+      "candidate": false,
+      "closed": true,
+      "end_clock": 32.631386558,
+      "full": 0.0,
+      "prepared_checks": 3,
+      "reason": "import lease: stale interval cannot refresh",
+      "status": "refuse",
+      "synthetic_prepared_cost_seconds": 3.0
+    },
+    {
+      "candidate": true,
+      "closed": false,
+      "end_clock": 29.631386558,
+      "full": 29.631386558,
+      "prepared_checks": 2,
+      "reason": null,
+      "status": "pass",
+      "synthetic_prepared_cost_seconds": 3.0
+    },
+    {
+      "candidate": true,
+      "closed": true,
+      "end_clock": 31.631386558,
+      "full": 0.0,
+      "prepared_checks": 2,
+      "reason": "import lease: stale interval cannot refresh",
+      "status": "refuse",
+      "synthetic_prepared_cost_seconds": 4.0
+    }
+  ],
+  "manifest": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-phase-checkpoint-fix01-2026-10-06/MANIFEST01.json",
+    "sha256": "915bfc5c16929c3127c457b1080fe4a688c1ed153a9606ae37cfbc846ae2c8dc"
+  },
+  "not_tested": [
+    "No arrays/private inputs/current admission/real authority/native/financial experiment or ledger changes.",
+    "No real callback latency, MCM/training capacity, timing-leakage or economic performance proof."
+  ],
+  "qualification": "Synthetic cost assignments are not actual callback measurements. No extra checkpoint after/between final scientific hashes, no changed30s scheduler/caps. Expected callback work count3\u21922 does not prove real saving or whole-pilot feasibility.",
+  "reviewed_author_checks": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-phase-checkpoint-fix01-2026-10-06/CHECK_RESULT01.json",
+    "sha256": "5aad947d60d8a8888b6745e8387f11c6a93efb61070b675202af8561b00fc8e1"
+  },
+  "reviewer": "pilot09_review independent fresh11 source reviewer",
+  "schema_version": 1
+}

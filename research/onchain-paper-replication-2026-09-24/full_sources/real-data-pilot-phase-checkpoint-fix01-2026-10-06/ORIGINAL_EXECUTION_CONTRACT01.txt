@@ -1,0 +1,18 @@
+    def execution_contract(self):
+        """Identity ingredients only: no Owner receipt or execution grant."""
+        self._check()
+        from .matching_pair import BACKEND
+        policy=original.parse(self._cap._policy)
+        raw=original._read_registered(self._run,policy['refs']['matching_config']['input'])
+        scientific=original.parse(raw)
+        current=self._selection['selected']['descriptor']['configs']['matching']
+        require(canonical_bytes(current)==canonical_bytes(scientific),'current numerical matching settings differ from original')
+        value={'original_dictionary':policy['dictionary_identity'],
+          'original_matching':cache_key(scientific),
+          'execution_matching':cache_key({'config':current,'backend':BACKEND}),
+          'backend':BACKEND,'current_binding':cache_key(thaw(self._bound.record)),
+          'current_source':self._run.admission.source,'runtime_hash':self._bound.context['runtime_hash'],'source_modules':self._source,
+          'stage_contract':self._stage_contract_metadata(),'mcm_execution_admitted':False}
+        self._check()
+        require(original._read_registered(self._run,policy['refs']['matching_config']['input'])==raw,'original matching bytes changed after lease')
+        return original.parse(canonical_bytes(value))
