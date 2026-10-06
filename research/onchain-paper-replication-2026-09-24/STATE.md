@@ -1,5 +1,27 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T15:14:00.596452+00:00: actual real-graph timing COMPLETE, source/Git freeze ENDED; fresh08 preparation underway, unclaimed/unreleased. Broad work/heartbeat/appgoal PAUSED.**
+
+Hash-only engineering identity closed once/root56486/c5a498exit0/native121.270s/child0/cleanuptrue/cgroupabsent. Largest originalMay9graph604276056B: legacy46.867963s→candidate22.086421s (2.122×), nodeorder1.032731s, exact same originaldigest. Authenticated load50.704519s includes one implicitlegacyhash. Warmserialonly; no seven-graph/fullcallback/MCM/training capacity. Sampledchargedpeak1100058624B is not kernel peak. Actual fourphase outcome independentlyaccepted30887b07; exact16files42525B2dirs18names increment81920B/f704a983 captured once, externalfreshrecovery pending.
+
+Actual07 failed49closed33COMPLETE16FAILED/highest78; original activationwording separatelycorrected to Targetentryfreshness. Actual public43file56name failedincrementfreshrecoveredfromGit3da4749fc and independentlyaccepted98809a38. No refund/transfer/capladder; closedpreclaim03reserve74 retained. Proposed79 allocation75671637/extension34d9b5a9 adds exactlyonefixedunused08 plus unchanged28pending/reserve; notyetadopted.
+
+Root installed accepted e997 exact-bytebatching+genuinebetween-constructorphase checkpoints and strictstorage07→08 only, packageanchor6125ff284; other176packagebodies/scientificmodel/training/32motifs512samples/sevengraphs/nativepilot6GiBcaps unchanged. Worker namespace_fix05 owns only NEW08templates/draft/preflight/reanchor; namespace_review05 owns08source/79registration/onecombinedentryreview; outcome04_review ownsengineeringincrementfreshreturned acceptance. Root soleliveintegration/accounting/STATE/Git/preservation/ONElauncher. Next actualengineeringGitfreshrecovery, originalmetadata08prepare/binder/committedexactrelease/fresheligibility then ONE08 ifallconditions pass. No immediatefinancialfit/ETA claim.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T15:06:45.473361+00:00: ONE real-graph hash-only engineering job ACTIVE; source/Git freeze ACTIVE.**
+
+Root session56486, fixed identityeth-real-graph-canonical-hash-timing-20261006-01, source3da4749fc/actualremote matched. Registration9416dd15/exact different-author review0228f73c63 committed; separately fixed3GiBhigh=max/3GiBreserve6startup/twoCPU900s/4MiBfile/64MiBwholeoutputtree/10GiBfloor. May9 original604276056B graph chosen deterministically before values/timings. Four cells: authenticated resident load including legacyhash, explicitlegacyhash, exact-bytecandidatehash,nodeorderhash. No scientificOwner/MCM/training/paperbudget credit; never relaunch identity. [Active receipt](full_sources/real-data-pilot-hash-timing01-2026-10-06/ROOT_ACTIVE01.json). Observe ONLY session56486; retain all outcome/cleanup before changes.
+
+Pilot07 remains permanentlyFAILED637.674s/zeroMCMupdatesfits/noOOM. Activation returned; Target entry freshness failed, not activation. Immutable originalterminal and correction retained. Actual49paperclosed33COMPLETE16FAILED/highest78/preclaim03separatereserve unchanged; no79/08admitted. Sourcegapfix accepted e997 exact-bytehash+betweenphaselease, not installed. Actual07increment43files433839B13dirs56names522240B/d1468dde has been externallyfresh-Git recovered source3da4749fc, independent returnedBYTE review underway. Root soleintegration/accounting/STATE/Git/preservation/ONElauncher; namespace_review05 profileentrycomplete, namespace_fix05 sourcecomplete, outcome04_review07returnedverification. Broadwork/heartbeat/appgoal remainPAUSED; directauthorizedpilot work continues. Next finish profile and independently verify measured timings/failed or passed cells, then decide actual fixed successor prerequisites. Original32motifs512samples/scientificmethod/pilot6GiBcaps unchanged.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T14:59:40.026490+00:00: authorized representative Ethereum pilot; no numerical process active. Broader work/heartbeat/app goal stay PAUSED.**
 
 Pilot07 is permanently FAILED/spent: native637.674s/child1/Rootparent1, cleanup verified, zeroMCM/updates/fits. Exact traceback corrects the retained original terminal wording: activation returned successfully; Target construction failed at entry freshness(start) after original_import event. Exact single hash/callback/stale duration remains unknown. [Separate correction](full_sources/real-data-pilot-final07-2026-10-06/ROOT_TERMINAL_CORRECTION01.json); original terminal preserved. Actual49closed33COMPLETE16FAILED/highest78, separate preclaim03reserve retained. No79 or fresh08 is admitted.

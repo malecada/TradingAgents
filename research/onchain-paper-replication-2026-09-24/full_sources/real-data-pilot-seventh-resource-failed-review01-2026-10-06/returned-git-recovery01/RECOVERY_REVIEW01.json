@@ -1,0 +1,107 @@
+{
+  "actual_external_recovery_accepted": true,
+  "archive": {
+    "bytes": 522240,
+    "git_blob_oid": "d66b5efd1aaa9cd02e94b3fc059f16e93678f6ba",
+    "members_review": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json",
+      "sha256": "33bddd00fd731003d4818de2b62b259acf081cca2c90838a7b7a37375408496f"
+    },
+    "original_archive_streams": 0,
+    "returned_archive_streams": 1,
+    "returned_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-increment01-2026-10-06/fresh-git-recovered-increment01.tar",
+    "sha256": "d1468dde636716d99083a26d6f458f1cc36a7beb7c8894f495ecd868d4122e13",
+    "tree_source_commit": "3da4749fc5b4a131f5cc740e423a6cefddfc0966"
+  },
+  "bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-seventh-resource-failed-20261006-01.git",
+  "current_alternates_absent": true,
+  "decision": "accepted",
+  "deletion_authorized": false,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-increment01-2026-10-06/CAPTURE01.json": "c70249eeb89ee29ebc9b557d3f9cd425265a1e7e0779ed8aef5329d45b76cc37",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json": "46ba7731addd77d0c6e259d80be72ced08d8306a2ae97c2d451215abe7381e2a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-increment01-2026-10-06/fresh-git-recovered-increment01.tar": "d1468dde636716d99083a26d6f458f1cc36a7beb7c8894f495ecd868d4122e13",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-review01-2026-10-06/INCREMENT_SELECTION01.json": "7dbe8d7e465bc7eef8cda5d3616ae19f7975bd878afdc160907767a8e28e5a47",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-review01-2026-10-06/OUTCOME_REVIEW01.json": "b94560491447de58dc4081803b9cd814a1e6e1d8a9ca688a36b31ac8a1c81a9a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json": "33bddd00fd731003d4818de2b62b259acf081cca2c90838a7b7a37375408496f"
+  },
+  "external_provenance_basis": "Recorded successful fresh bare init/external SSH Git fetch/blob recovery and remote HEAD equality; independently confirmed present bare object/tree identity without network or lazy fetch. Returned archive Git object SHA1 and SHA256 computed from its sole body read.",
+  "fresh_fetch_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json",
+    "sha256": "46ba7731addd77d0c6e259d80be72ced08d8306a2ae97c2d451215abe7381e2a"
+  },
+  "git_lazy_fetch_disabled": true,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-07",
+  "not_tested": [
+    "No transport/native/network replay, fresh fetch, historical body stream, original tar read, extraction or deletion.",
+    "No numerical/scientific/raw/runtime/private body read or financial correctness/capacity claim.",
+    "External origin history relies on preserved actual fetch record; current offline bare state does not reconstruct historical process lifetime."
+  ],
+  "offline_git_checks": [
+    {
+      "args": [
+        "rev-parse",
+        "--is-bare-repository"
+      ],
+      "returncode": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "3da4749fc5b4a131f5cc740e423a6cefddfc0966"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.url"
+      ],
+      "returncode": 0,
+      "stdout": "git@github.com:malecada/TradingAgents.git"
+    },
+    {
+      "args": [
+        "ls-tree",
+        "-z",
+        "3da4749fc5b4a131f5cc740e423a6cefddfc0966",
+        "--",
+        "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-increment01-2026-10-06/failed-increment01.tar"
+      ],
+      "returncode": 0,
+      "stdout": "100644 blob d66b5efd1aaa9cd02e94b3fc059f16e93678f6ba\tresearch/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-increment01-2026-10-06/failed-increment01.tar\u0000"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-t",
+        "d66b5efd1aaa9cd02e94b3fc059f16e93678f6ba"
+      ],
+      "returncode": 0,
+      "stdout": "blob"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-s",
+        "d66b5efd1aaa9cd02e94b3fc059f16e93678f6ba"
+      ],
+      "returncode": 0,
+      "stdout": "522240"
+    }
+  ],
+  "original_outcome": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seventh-resource-failed-review01-2026-10-06/OUTCOME_REVIEW01.json",
+    "sha256": "b94560491447de58dc4081803b9cd814a1e6e1d8a9ca688a36b31ac8a1c81a9a"
+  },
+  "original_selected_stat_identities_currently_unchanged": true,
+  "originals_retained": true,
+  "qualification": "BYTE/member/name/mode acceptance covers only this exact public failed-resource increment. No POSIX ownership/timestamps/xattrs reconstruction, installed runtime/raw/graph/private/unrelated-store recovery, future remote availability or scientific credit. Original07 genuine claim78 remains permanently FAILED/spent; all original nulls and unavailable cells retained. Earlier namespaces remain untouched. Original inaccurate activation wording remains immutable; the accepted outcome independently identifies the post-activation Target-boundary failure. The later separate correction file is outside this exact archive selection.",
+  "recovered_archive_retained": true,
+  "recovery_source_commit": "3da4749fc5b4a131f5cc740e423a6cefddfc0966",
+  "schema_version": 1,
+  "scope": "Complete public07 failed-resource increment BYTE recovery via fresh external Git fetch and recovered archive;43 regular files totaling 433839 bytes plus 13 typed directories, 56 names in522240-byte tar."
+}
