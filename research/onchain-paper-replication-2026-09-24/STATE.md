@@ -1,5 +1,39 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T21:08:47.616715+00:00: pilot13 permanently FAILED/spent84; no numerical job active. Source/Git freeze ENDED after actual RootIO closure and verified cleanup.**
+
+Root8472/b9d092exit1 CLOSED, actualParent1/nativechild1/1246.448245652s. [Actual terminal](full_sources/real-data-pilot-final13-2026-10-06/ROOT_TERMINAL01.json) verifies cgroupgone/all4knownPIDsabsent/currentunitfailed/MainPID0. Primary is a NEW loaded-module/function snapshot equality refusal during compact_mcm._prepare→dictionary.check→Target.check→sampledlease._finger. AllsevenTarget constructors returned before this preparation loop. Number of prior completed _prepare calls and exactchangedmodule/function are UNKNOWN/unrecorded. Current60s run reached later setup without the previous30s timeout; this does not prove all later60s boundaries/capacity. No completedMCM/retainedtargets/jointupdates/financialfits;7unavailablegraphs/415968128cells retained,partialprogressrecords0. Originalimportevent198.927s. Secondaryarchive stale/poisonederrors preserved. NoOOM/MAX; sampledchargedpeak5368631296B,lastkernelpeak5370920960B includecache,1736soft-high events.
+
+Paper54closed33COMPLETE21FAILED/highest84; alloldpreclaimreserves/spentidentities preserved,no85allowance/refund/transfer/capladder/rerun. User-authorized60s policy, exactsource269/input59/scientificmethod/data/nativecaps remain. Allagentsfinished;Rootsolelive/accounting/STATE/Git/preservation/ONElauncher. Next independent13outcome/exactincrementalexternalfreshrecovery, then identify actual loaded-roster change and preserve integrity before any newlyregistered successor. Legitimate lazy-import timing is a hypothesis, not established cause; do not disable equality checks or silently adopt a changed baseline. No newlaunch active. Broadwork/heartbeat/appgoal remain PAUSED; representative pilot remains incomplete.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T20:46:08.023537+00:00: ONE fresh pilot13 genuinely claimed/running with user-authorized60s freshness. Source/Git freeze ACTIVE.**
+
+Follow ONLY Root session8472; never relaunch13. Source and actual remote d65591f32af6fc3353702499c803cc30fb82de2e, freshlyread88333/b6f647exit0. Supervisor10679/monitor11012/nativeonchain-replication-63a4df24db044847afae75f4e2e5c27d.service. [Actual active receipt](full_sources/real-data-pilot-final13-2026-10-06/ROOT_ACTIVE01.json) joins genuine84 claim, originalfullpreflight and sampledguard. StartupMemAvailable10796875776B/disk26183634944B passed. No limitreason at71.2s; realdataworker running, zero completedMCM/jointupdates/financialfits observed. Earlier lightweight RAM deferrals did not invoke RootIO or spend an identity; observations retained.
+
+Explicitfreshness30000→60000ms is the user-authorized engineering timing amendment; allother intervals/monotonicchecks/source-input-runtime-Owner checks, original32motifs/512samples/fullsevenETHgraphs/MCM/GATattentionLSTM/model/training/nativephysical limits unchanged. Selected ONLYroot_io02/preflight02/gate02 with269sources59inputs; genuine committed readonly84/812ref exactreleasefae85fdb/binding2a5dd7bd/metadata4056d88b accepted. Originalwrongnamespace01 and post-binder controlassertion retained; actual selected13-r2 dispatch remains opaque. No source/helper/runtime/registration mutation while active.
+
+Paper53closed33COMPLETE20FAILED plusONE13active/highest84; alloldpreclaimreserves/failures remain, no refund/transfer/capladder/rerun. Pilot12permanentFAILED83 and43file56name actualincrementexternallyrecovered/accepted85109abba. OnlyRootactive; boundedreviewsfinished, Rootsolelive/accounting/STATE/Git/preservation/ONElauncher. Next monitor8472 actualphase/resources, retainactualterminal/RootIOclosure/nativecleanup then independentlyreview/incrementallyrecover allattempted/unavailableoutcomes before dependentcontinuation. Broadwork/heartbeat/appgoal remain PAUSED; directrepresentativepilot continues.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T18:46:29.390717+00:00: user-authorized60s freshness is committed/pushed/exactly reviewed; fresh13 remains UNUSED, awaiting9GiB startup RAM. No numerical job active.**
+
+Actual Main and remote d65591f32af6fc3353702499c803cc30fb82de2e; push45441/13a26f and actualremote76232/ed5e81 exit0 match.812ref releasefae85fdb/finalbindingb7f347ab/binding2a5dd7bd/metadata02 4056d88b and genuinecommittedreadonly84/269source59inputs accepted. Original30→60s policy is explicit; allother source/input/Owner/runtime checks, scientificmethod/data andphysicalcaps unchanged. Selectedlaunch ONLY full_sources/real-data-pilot-final13-2026-10-06/root_io02.py withpreflight02/gate02; originalwrongnamespace01 andpost-bindercontrolassertion retained.
+
+Freshlight read-only observation [eligibility](full_sources/real-data-pilot-final13-2026-10-06/ELIGIBILITY_DEFERRED02.json):MemAvailable8041218048B, required9663676416B; disk26344976384B exceeds24477797923B startupmodel. Allfresh13namespaces/attempt/claim absent, no active nativeunit. RootIO has NOT been invoked; no RAM-ineligible identity spent. Userasked tofree about2GiB byclosingotherapps. Next freshlightresource/namespacecheck; onceeligible invoke ONE `PYTHONPATH=. .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final13-2026-10-06/root_io02.py` fromMain. Originalpreflight remains mandatory insideRootIO; do notinvokeolderdraftentry/rebind dispatch/repeat source reviews.
+
+Pilot12 permanentFAILED83, exact43file56name publicincrement freshlyexternallyrecovered/independentlyaccepted85109abba.53closed33COMPLETE20FAILED/highestclaimed83;84=53+28pending+2permanentpreclaim reserves+ONEunused13. No refund/transfer/rerun/capladder ornumericalagreement/capacity claim. Allagentscomplete; Rootsolelive/Main/Git/accounting/STATE/preservation/ONElauncher. Source/Gitfreeze remainsENDED until actuallaunch; preserve all outcomes. Broadwork/heartbeat/appgoal remain PAUSED; representativepilot still0completedMCM/updates/financialfits.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T18:45:15.851262+00:00: fresh pilot13 with user-authorized60s freshness is exactly released subject to original startup eligibility. No numerical job or13attempt/claim active.**
 
 The user explicitly authorized engineering max_stale_ms30000→60000 and ONE fresh pilot. Source/policy8adf7cc7 and synthetic recorded12timing/excess60refusal accepted; live100ms/fingerprint1s/full10s/max65536calls/monotonic timestamps/source-input-runtime-Owner checks remain. Longer sampled detection age is explicit; no scientific matching/model/training/motif/data/native-cap change. Strict successor identity is the only package-source change,179pins/178otherbodies unchanged atb37f2589; both originalhelpers remain preclaimchecked.

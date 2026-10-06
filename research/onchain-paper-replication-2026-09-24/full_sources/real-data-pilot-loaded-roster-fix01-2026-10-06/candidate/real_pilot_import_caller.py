@@ -370,10 +370,10 @@ def _prepare_lease_modules():
     retains its exact module/function/code equality checks throughout execution.
     """
     from . import chunk_durability, array_neighborhoods
-    from . import held_score_consumer, stage_retention, stage_retention_reader, archive_owner_writer
+    from . import held_score_consumer, stage_retention, archive_owner_writer
     from . import mcm_raw_parts, typed_score_store, typed_tail_binding
     from . import typed_payload_operations, archive_consume, archive_owner_seal
-    from . import evaluation, checkpoints, streamed_gat, feature_residency
+    from . import evaluation, checkpoints, streamed_gat
 
 
 def execute(run, payload):

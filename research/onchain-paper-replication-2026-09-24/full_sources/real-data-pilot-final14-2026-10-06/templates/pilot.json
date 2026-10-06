@@ -1,0 +1,91 @@
+{
+  "archive_inputs": {
+    "policy_input": "archive_policy",
+    "transport_input": "archive_transport"
+  },
+  "asset": "ETH",
+  "batch_size": 16,
+  "cell_id": "real-eth-one-update",
+  "decisions": [
+    "2022-06-07T00:00:00Z",
+    "2022-06-08T00:00:00Z",
+    "2022-06-09T00:00:00Z",
+    "2022-06-10T00:00:00Z",
+    "2022-06-11T00:00:00Z",
+    "2022-06-12T00:00:00Z",
+    "2022-06-13T00:00:00Z",
+    "2022-06-14T00:00:00Z",
+    "2022-06-15T00:00:00Z",
+    "2022-06-16T00:00:00Z",
+    "2022-06-17T00:00:00Z",
+    "2022-06-18T00:00:00Z",
+    "2022-06-19T00:00:00Z",
+    "2022-06-20T00:00:00Z",
+    "2022-06-21T00:00:00Z",
+    "2022-06-22T00:00:00Z"
+  ],
+  "graph_inputs": {},
+  "graph_sequences": [],
+  "imported_authority_lease_input": "imported_authority_lease",
+  "indices": null,
+  "kind": "real-data-import-training-pilot-v1",
+  "lookback_days": 28,
+  "max_checkpoint_bytes": 4194304,
+  "model_execution": {
+    "backend": "streamed-gat-mulsum-v1",
+    "block_edges": 65536,
+    "graph_activation_checkpointing": true,
+    "schema_version": 2
+  },
+  "model_input": "model",
+  "outputs": {
+    "binding": "resource-binding.json",
+    "journal": "resource-journal.json",
+    "ledger": "cell-ledger.json",
+    "summary": "pilot-summary.json"
+  },
+  "partial_progress": {
+    "interval_seconds": 60,
+    "max_records": 1024,
+    "schema_version": 1
+  },
+  "population_plan_input": "resource_population_plan",
+  "population_scope": "resource_pilot_subset",
+  "resource_policy": {
+    "disk_floor_bytes": 10737418240,
+    "disk_paths": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ],
+    "memory_high_bytes": 5368709120,
+    "memory_max_bytes": 6442450944,
+    "native_unit_limits": {
+      "file_size_bytes": 1073741824
+    },
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 9663676416,
+    "storage_budget": {
+      "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "experiment": "eth-paper-real-data-end-to-end-resource-20261006-14",
+      "kind": "real-pilot-writable-union",
+      "limits": {
+        "max_allocated_bytes": 21474836480,
+        "max_depth": 64,
+        "max_entries": 1000000,
+        "max_logical_bytes": 17179869184,
+        "max_scan_seconds": 5
+      },
+      "roots": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261006-14"
+      ],
+      "schema_version": 2,
+      "shared_files": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+      ]
+    },
+    "wall_seconds": 28800
+  },
+  "schema_version": 2,
+  "seed": 11,
+  "training_input": "training"
+}

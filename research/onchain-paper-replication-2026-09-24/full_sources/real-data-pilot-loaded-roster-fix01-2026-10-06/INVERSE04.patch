@@ -1,0 +1,31 @@
+--- candidate04
++++ original
+@@ -360,20 +360,6 @@
+     require([resource_fixture.verify_retained(t,owner) for t in targets] == records, 'target changed during closure')
+     run._active(); bound._guard(); object.__setattr__(journal,'sealed',True)
+     return value
+-
+-
+-def _prepare_lease_modules():
+-    """Load the selected pilot's deferred modules before its immutable roster.
+-
+-    Imports only: no model/graph construction, claims or authority refresh.
+-    The genuine Lease subsequently authenticates all admitted loaded bodies and
+-    retains its exact module/function/code equality checks throughout execution.
+-    """
+-    from . import chunk_durability, array_neighborhoods
+-    from . import held_score_consumer, stage_retention, stage_retention_reader, archive_owner_writer
+-    from . import mcm_raw_parts, typed_score_store, typed_tail_binding
+-    from . import typed_payload_operations, archive_consume, archive_owner_seal
+-    from . import evaluation, checkpoints, streamed_gat, feature_residency
+ 
+ 
+ def execute(run, payload):
+@@ -465,7 +451,6 @@
+         execution = original_import_stage.ImportedExecution(stage)
+         if p.get('imported_authority_lease_input') is not None:
+             from .imported_authority_lease import activate
+-            _prepare_lease_modules()
+             activate(execution,p['imported_authority_lease_input'])
+         require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
+         mark('original_import')
