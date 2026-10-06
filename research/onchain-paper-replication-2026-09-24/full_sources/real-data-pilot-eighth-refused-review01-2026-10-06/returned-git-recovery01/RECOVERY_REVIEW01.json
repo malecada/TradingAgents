@@ -1,0 +1,107 @@
+{
+  "actual_external_recovery_accepted": true,
+  "archive": {
+    "bytes": 92160,
+    "git_blob_oid": "ffd778dc4bf3e91d92986321b71b0d34153ae546",
+    "members_review": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json",
+      "sha256": "a5128f8c5eea5e4e06effa5d749cdf8452ee9ec72b7adf5eb96ab70e85f3355d"
+    },
+    "original_archive_streams": 0,
+    "returned_archive_streams": 1,
+    "returned_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/fresh-git-recovered-increment01.tar",
+    "sha256": "8bc37d5bf28e1645e5cef4250de02fd5a51f4410175edbd715d5ed266581202e",
+    "tree_source_commit": "6e07ac497ddc5641459e3760dd9223119a2e37e4"
+  },
+  "bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighth-native-refused-20261006-01.git",
+  "current_alternates_absent": true,
+  "decision": "accepted",
+  "deletion_authorized": false,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/CAPTURE01.json": "12fbf49c45f1c60126d476cae15848e7e21d43e856d567497a1e15bfd70cf107",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json": "606ae941424a90ab986116287903c7be878b8fe7e6b026ada1b61d4c70fadd46",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/fresh-git-recovered-increment01.tar": "8bc37d5bf28e1645e5cef4250de02fd5a51f4410175edbd715d5ed266581202e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-review01-2026-10-06/INCREMENT_SELECTION01.json": "d15abf7b620a67eb4ecb9790c4e8dbd039a0fc88e49209cc93b50eda628d92ac",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-review01-2026-10-06/OUTCOME_REVIEW01.json": "e3eb203a98515df3806cf720b08338febaa614f158fbac21f8c55594e9c4949c",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-review01-2026-10-06/returned-git-recovery01/RECOVERED_MEMBERS01.json": "a5128f8c5eea5e4e06effa5d749cdf8452ee9ec72b7adf5eb96ab70e85f3355d"
+  },
+  "external_provenance_basis": "Recorded successful fresh bare init/external SSH Git fetch/blob recovery and remote HEAD equality; independently confirmed present bare object/tree identity without network or lazy fetch. Returned archive Git object SHA1 and SHA256 computed from its sole body read.",
+  "fresh_fetch_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/FRESH_GIT_RECOVERY01.json",
+    "sha256": "606ae941424a90ab986116287903c7be878b8fe7e6b026ada1b61d4c70fadd46"
+  },
+  "git_lazy_fetch_disabled": true,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-08",
+  "not_tested": [
+    "No transport/native/network replay, fresh fetch, historical body stream, original tar read, extraction or deletion.",
+    "No numerical/scientific/raw/runtime/private body read or financial correctness/capacity claim.",
+    "External origin history relies on preserved actual fetch record; current offline bare state does not reconstruct historical process lifetime."
+  ],
+  "offline_git_checks": [
+    {
+      "args": [
+        "rev-parse",
+        "--is-bare-repository"
+      ],
+      "returncode": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "6e07ac497ddc5641459e3760dd9223119a2e37e4"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.url"
+      ],
+      "returncode": 0,
+      "stdout": "git@github.com:malecada/TradingAgents.git"
+    },
+    {
+      "args": [
+        "ls-tree",
+        "-z",
+        "6e07ac497ddc5641459e3760dd9223119a2e37e4",
+        "--",
+        "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/refused-increment01.tar"
+      ],
+      "returncode": 0,
+      "stdout": "100644 blob ffd778dc4bf3e91d92986321b71b0d34153ae546\tresearch/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/refused-increment01.tar\u0000"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-t",
+        "ffd778dc4bf3e91d92986321b71b0d34153ae546"
+      ],
+      "returncode": 0,
+      "stdout": "blob"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-s",
+        "ffd778dc4bf3e91d92986321b71b0d34153ae546"
+      ],
+      "returncode": 0,
+      "stdout": "92160"
+    }
+  ],
+  "original_outcome": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-review01-2026-10-06/OUTCOME_REVIEW01.json",
+    "sha256": "e3eb203a98515df3806cf720b08338febaa614f158fbac21f8c55594e9c4949c"
+  },
+  "original_selected_stat_identities_currently_unchanged": true,
+  "originals_retained": true,
+  "qualification": "BYTE/member/name/mode acceptance covers only this exact public native-refusal increment. No POSIX ownership/timestamps/xattrs reconstruction, installed runtime/raw/graph/private/unrelated-store recovery, future remote availability or scientific credit. Original08 is permanently CLOSED_PRECLAIM/reserved79; original guard child null, separate125, Root/Parent1 and unavailable science retained. No08 scientific claim exists and no refund, transfer, reuse or scientific credit follows. Earlier namespaces remain untouched.",
+  "recovered_archive_retained": true,
+  "recovery_source_commit": "6e07ac497ddc5641459e3760dd9223119a2e37e4",
+  "schema_version": 1,
+  "scope": "Complete public08 native-refusal increment BYTE recovery via fresh external Git fetch and recovered archive;16 regular files totaling57792 bytes plus3 typed directories,19 names in92160-byte tar."
+}

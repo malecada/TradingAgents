@@ -1,5 +1,15 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T15:53:28.218385+00:00: fresh09 preparation in progress; no native job active. Direct pilot authorized; broader work/heartbeat/app goal PAUSED.**
+
+08 permanently closed preclaim refusal at reserved79; originalguardchildnull, separate125 and Rootparent1 retained. Exact public increment16files57792B/3dirs19names captured92160B/8bc37d5b, actually fresh-Git recovered from matched6e07ac497; independent returned-byte acceptance pending. Actual49paperclosed33COMPLETE16FAILED/highestclaimed78 unchanged; 03reserve74+08reserve79 retained separately. Fresh09 proposed80=49+28pending+2reserves+oneunused09; no fake08claim/refund/transfer.
+
+Fresh RAM11259772928B (10.49GiB) exceeds unchanged9GiB startup by1.49GiB. Sourceanchor b348b7ae4 changes only strictstorage08→09, all178otherpackage bodies/science/caps unchanged; independent source reviewe12d672e accepted. Fixed09metadata helpers change onlytwo identityliterals/dependencyrefs. Actualstatbaseline5038170112Ballocated, fullpurepreparec880ccfd and opaque binder/publicrefs are ready. Root owns live/accounting/Git/STATE/preservation/ONElauncher; pilot09_metadata complete, pilot08_outcome verifies returned increment, pilot09_review reviews changed metadata/accounting/finalentry. Next accept08recovery, freeze80/gate/binding, genuine committed readonly admission and exactrelease, push/readback/fresh checks thenONE09. No MCM/update/fit completed and no whole-pilot time/capacity estimate established.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T15:45:04.512090+00:00:08 permanently closed native setup refusal before scientific claim; no native job active/sourcefreeze ENDED. RAM now freshly adequate; prepare one reviewed fresh09.**
 
 Root53034/91d189exit1/actualparent1, originalguardchildnull preserved. Guard27.419141s stopped at9649569792B versus9663676416B startup requirement before numericalcommand release. Cleanup/cgroupabsence/allrecordedPIDsabsence verified; no research_runs08 namespace/claim/scientificoutputs/MCM/update/fit. [Actual08terminal](full_sources/real-data-pilot-final08-2026-10-06/ROOT_TERMINAL01.json).08 reservation at79 is permanentlyspent alongside03reserve74, no refund/reuse.49genuinepaperclosed33COMPLETE16FAILED/highestclaimed78 remains; proposed80 must retain49+28pending+two closed preclaimreserves+one fresh09.

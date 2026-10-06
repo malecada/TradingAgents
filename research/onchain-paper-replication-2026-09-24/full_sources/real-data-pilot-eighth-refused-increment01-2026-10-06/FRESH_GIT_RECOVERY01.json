@@ -1,0 +1,115 @@
+{
+  "actual_remote_head": "6e07ac497ddc5641459e3760dd9223119a2e37e4",
+  "all_typed_names_modes_hashes_verified": true,
+  "archive": {
+    "bytes": 92160,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/refused-increment01.tar",
+    "sha256": "8bc37d5bf28e1645e5cef4250de02fd5a51f4410175edbd715d5ed266581202e"
+  },
+  "at": "2026-10-06T15:52:04.807485+00:00",
+  "directory_count": 3,
+  "external_source": "Fresh external Git fetch; no local object alternates",
+  "fresh_bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighth-native-refused-20261006-01.git",
+  "operations": [
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "git@github.com:malecada/TradingAgents.git",
+        "refs/heads/research/onchain-paper-replication-2026-09-24"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 98
+    },
+    {
+      "command": [
+        "git",
+        "init",
+        "--bare",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighth-native-refused-20261006-01.git"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 485,
+      "stdout_bytes": 138
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighth-native-refused-20261006-01.git",
+        "remote",
+        "add",
+        "origin",
+        "git@github.com:malecada/TradingAgents.git"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighth-native-refused-20261006-01.git",
+        "config",
+        "remote.origin.promisor",
+        "true"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighth-native-refused-20261006-01.git",
+        "config",
+        "remote.origin.partialclonefilter",
+        "blob:none"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighth-native-refused-20261006-01.git",
+        "fetch",
+        "--depth=1",
+        "--filter=blob:none",
+        "origin",
+        "6e07ac497ddc5641459e3760dd9223119a2e37e4"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 115,
+      "stdout_bytes": 0
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighth-native-refused-20261006-01.git",
+        "cat-file",
+        "blob",
+        "6e07ac497ddc5641459e3760dd9223119a2e37e4:research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/refused-increment01.tar"
+      ],
+      "returncode": 0,
+      "stderr_bytes": 0,
+      "stdout_bytes": 92160
+    }
+  ],
+  "qualification": "Public BYTE increment only; no POSIX reconstruction, installedruntime/rawgraphs/private transport recovery. Original refusal/nulls/125 retained; no deletion.",
+  "regular_bytes": 57792,
+  "regular_file_count": 16,
+  "returned_archive": {
+    "bytes": 92160,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighth-refused-increment01-2026-10-06/fresh-git-recovered-increment01.tar",
+    "sha256": "8bc37d5bf28e1645e5cef4250de02fd5a51f4410175edbd715d5ed266581202e"
+  },
+  "source": "6e07ac497ddc5641459e3760dd9223119a2e37e4",
+  "typed_member_count": 19
+}
