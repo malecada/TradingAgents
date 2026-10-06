@@ -1,0 +1,22 @@
+--- tradingagents/research/onchain_replication/real_pilot_import_caller.py
++++ tradingagents/research/onchain_replication/real_pilot_import_caller.py
+@@ -285,19 +285,6 @@
+     control = _read(ad, s['original_dictionary_input'])
+     require(control['sample_count'] == 512 and control['motif_count'] == 32
+             and control['required_graphs'] == sorted(p['graph_inputs']), 'exact original512/32 import required')
+-    if p['schema_version']==2 and 'archive_inputs' in p:
+-        from .real_pilot_reservations import validate as reservations
+-        output=_read(ad,s['compact_mcm_output_input'])
+-        require(output.get('payload_archive_input') in ad.inputs,'registered typed payload reservation required')
+-        for field,key,hash_key in (('compact_policy_input','compact_execution','policy_sha256'),
+-                ('compact_archive_input','compact_archive_execution','policy_sha256'),
+-                ('pair_checkpoint_input','pair_execution','policy_sha256'),
+-                ('original_dictionary_input','original_dictionary_import','sha256'),
+-                ('original_dictionary_stage_input','original_dictionary_stage','sha256')):
+-            require(d.get(key,{}).get(hash_key)==ad.inputs[s[field]]['sha256'],'reservation descriptor hash differs: '+key)
+-        reservations(_read(ad,s['compact_policy_input']),_read(ad,s['original_dictionary_stage_input']),
+-            _read(ad,s['compact_mcm_input']),output,_read(ad,s['compact_archive_input']),
+-            _read(ad,output['payload_archive_input']),_read(ad,s['pair_checkpoint_input']),p['graph_inputs'])
+     return name,s,p
+ 
+ 
