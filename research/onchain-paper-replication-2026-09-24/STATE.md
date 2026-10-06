@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T15:31:09.226957+00:00: fixed08 exact release accepted, genuine committed admission PASSED79; no numerical job active,08 unused/unclaimed. Broaderwork/heartbeat/appgoal PAUSED.**
+
+Actual read-only job._admitted91220/f1ca70exit0 from66a26ffa0b8ca90e1af132ff71ba00614c3dfecb: ready79/210sourcepins59inputs/selectedopaque namespace08 authenticated without printing or inspecting secrets, noOwner/ResearchRun.start/arrays. Gate44613bc6/finalbinding9595e92f/independentbinding4900fcce/exactrelease03eaeb0f accepted and adopted verbatim,584refs/soleopaque08exception. Sourceanchor6125ff284 adopted exact-byte batching+genuine Target constructor phase checkpoints with30s rule unchanged; strictstorage07→08 only, other176packagebodies/scientificmodel/training/32motifs512samples/sevenfullgraphs/caps unchanged. Fixed08metadata utilities clone only two identityliterals; originalhelpers/refusals/baseline raw+wrapper retained. Actualpureprepare exit0dabc19.
+
+Actual49paperclosed33COMPLETE16FAILED/highestclaimed78; reviewed committed79=49+28pending+closedpreclaim03reserve+ONEunused08, no refund/transfer/capladder/newfinancialfit. Actual07FAILED637.674s/0MCM0updatesfits and exact publicincrement43files56names actualfreshGit recovery accepted98809a remain immutable. Separate engineering hashprofile COMPLETE121.270s/child0 observed46.868→22.086s same digest+nodeorder1.033s, all4phases/16files18names freshBYTE recovery acceptedc512ec6f. This is only warmserial hash evidence, no wholepilot/MCM/training capacity or ETA.
+
+All three bounded assignments complete. Rootsoleliveintegration/accounting/STATE/Git/preservation/ONElauncher. Next commit/push exactrelease+actualremote readback, execute originalfresh runtime/source/process/namespace/storageprojectedgrowth/disk10GiB/RAM9GiB eligibility checks, and invoke ONE08 onlyifallpass. Latest standalone MemAvailable9675001856B was merely~11MiB above9663676416B startupfloor before importing launchercode, so headroom is marginal; do not weakenlimits or spend a nativeattempt knowinglybelowthreshold. Originalnative6GiBmax5highswap0/3GiBreserve9startup/twoCPU8h/file1GiB/writable16logical20allocated unchanged. No source/claim/namespace reuse or broadwork resumption.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T15:14:00.596452+00:00: actual real-graph timing COMPLETE, source/Git freeze ENDED; fresh08 preparation underway, unclaimed/unreleased. Broad work/heartbeat/appgoal PAUSED.**
 
 Hash-only engineering identity closed once/root56486/c5a498exit0/native121.270s/child0/cleanuptrue/cgroupabsent. Largest originalMay9graph604276056B: legacy46.867963s→candidate22.086421s (2.122×), nodeorder1.032731s, exact same originaldigest. Authenticated load50.704519s includes one implicitlegacyhash. Warmserialonly; no seven-graph/fullcallback/MCM/training capacity. Sampledchargedpeak1100058624B is not kernel peak. Actual fourphase outcome independentlyaccepted30887b07; exact16files42525B2dirs18names increment81920B/f704a983 captured once, externalfreshrecovery pending.
