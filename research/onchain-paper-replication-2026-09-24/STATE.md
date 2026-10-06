@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-06T16:37:03.305719+00:00: focused fix integrated; fresh10 committed read-only admission PASSED81; no native job active. Source/Git freeze ENDED.**
+
+Pilot09 permanently FAILED/spent80, Root90306 exit1 and original cleanup verified. All seven graphs loaded, zero MCM/updates/fits. Correct boundary is Target53 after successful graph hash52; full callback duration alone remains unknown. Actual09 public increment44files/13dirs57names was externally fresh-Git recovered from1517e13e and independently accepted09317d51. Raw failure, original incomplete wording and immutable correction remain retained.
+
+Focused accepted fix removes one redundant nested full PreparedImport check while retaining entry/final/public-stage validation; separate failure notes use existing timestamps without changing clocks or30s rules. Seven equivalence/refusal and five diagnostic checks plus independent inverse reviews passed. Real callback saving remains unmeasured. Exact three-file source adoption anchor e2c7e872,179package bodies/176 unchanged; original32motifs512samples/seven fullgraphs/MCM/GAT/attentionLSTM/scientific model/training/native limits unchanged.
+
+Fresh fixed10 metadata, namespace and reviewed cumulative81 are committed at575d99ef. Genuine read-only admission10864/09c125 exit0:ready81/232sourcepins59inputs; no claim/Owner/numerical execution. Accounting50closed33COMPLETE17FAILED/highestclaimed80 plus permanent preclaim03reserve74 and08reserve79;81=50+28unchangedpending+2reserves+ONEunused10. Binding670refs independently accepted09d7e72e; final binding8eb82a78 and673ref exact conditional release482f3065 accepted. Root owns Main/accounting/STATE/Git/external preservation/ONElauncher; all three bounded assignments completed. Next adopt exact release, commit/push/read actual remoteHEAD, fresh original eligibility then ONE10. Latest available RAM~10.65GB/disk26.44GB is instantaneous only; no whole capacity/throughput/training time established. Broadwork/heartbeat/appgoal remain PAUSED; direct representative pilot authorized.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T16:23:23.917568+00:00: authorized focused09 fix and fresh rerun preparation; no native active. Source/Git freeze ENDED.**
 
 09 permanentFAILED/spent80/Root90306exit1/native644.782s/child1/Parent1/cleanupverified. Actual Target53 follows successful fullgraphhash52, not just manifest parse; [immutable terminal correction](full_sources/real-data-pilot-final09-2026-10-06/ROOT_TERMINAL_CORRECTION01.json) preserves the incomplete originalwording. Exact callback/gap/priorage durations unknown.0MCM/updates/fits/noOOM.50closed33C17F/highest80;03reserve74/08reserve79 preserved.
