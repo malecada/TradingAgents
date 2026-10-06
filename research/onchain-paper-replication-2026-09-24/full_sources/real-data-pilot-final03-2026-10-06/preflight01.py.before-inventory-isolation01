@@ -207,8 +207,7 @@ def check():
         path=ROOT/info['path']
         if path.stat().st_size>4*1024**2 or file_hash(path)!=info['sha256']:
             raise ValueError('compact input pin changed: '+info['path'])
-    runtime_inventory=subprocess.check_output([sys.executable,'-B','-c',"import json; from pathlib import Path; from tradingagents.research.onchain_replication.environment import inventory; print(json.dumps(inventory(Path.cwd(),include_torch=True),sort_keys=True))"],cwd=ROOT,timeout=30)
-    if json.loads(runtime_inventory)!=json.loads((ROOT/admission.inputs['environment']['path']).read_bytes()):raise ValueError('installed runtime inventory differs')
+    if inventory(ROOT,include_torch=True)!=json.loads((ROOT/admission.inputs['environment']['path']).read_bytes()):raise ValueError('installed runtime inventory differs')
     for path in (ROOT/'research_runs'/NAME,ROOT/PREFIX/'runs'/NAME,ROOT/PREFIX/'sources'/NAME,ROOT/PREFIX/'pilot-parent'/NAME,HERE/'launch-attempt01.json',HERE/'outer-exit01.json'):
         if path.exists() or path.is_symlink():raise ValueError('fixed namespace already reserved: '+str(path))
     units=subprocess.check_output(['systemctl','--user','list-units','--state=active,activating','--no-legend','onchain-replication-*.service'],text=True)

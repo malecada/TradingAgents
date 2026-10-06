@@ -1,29 +1,51 @@
 {
-  "actual_readonly_admission": {
-    "at": "2026-10-06T12:28:08.635605+00:00",
-    "effective_attempt_budget": 74,
+  "actual_inventory_proof": {
+    "actual_child_exit": 0,
+    "actual_inventory": {
+      "cpu_count": 12,
+      "cuda_available": false,
+      "cuda_build": "12.8",
+      "lock_sha256": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a",
+      "packages": {
+        "numpy": "2.3.0",
+        "pyarrow": "23.0.1",
+        "scikit-learn": "1.7.2",
+        "scipy": "1.17.1",
+        "torch": "2.10.0"
+      },
+      "python": "3.13.13",
+      "torch_version": "2.10.0+cu128"
+    },
+    "actual_output_sha256": "2c6ce08de59df5061e4b2419595ea368b75f22f28e8ffff236edaa3431aa4e08",
+    "at": "2026-10-06T12:40:32.083575+00:00",
+    "child_maxrss_kib": 659936,
+    "child_pid": 140711,
+    "child_reaped": true,
+    "child_stderr_bytes": 0,
+    "command": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "-c",
+      "import json; from pathlib import Path; from tradingagents.research.onchain_replication.environment import inventory; print(json.dumps(inventory(Path.cwd(),include_torch=True),sort_keys=True))"
+    ],
+    "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "elapsed_seconds": 1.4241550039996582,
+    "environment": "inherited unchanged; no environment bodies inspected or printed",
+    "expected_reference": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/environment.json",
+      "sha256": "3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc"
+    },
+    "gate_sha256": "401713f605ddfaaebe51288a0fb5c1b8d2075d0dfc19019c3513f0c49c8be8e8",
     "identity": "eth-paper-real-data-end-to-end-resource-20261006-03",
-    "input_roles": 59,
-    "qualification": "This genuine admission predates solely the reviewed entry-source gate repin. Final current committed _admitted and full entry remain mandatory.",
-    "ready": true,
-    "scope": "Actual committed read-only _admitted includes genuine new full-reservation validator; no Owner/start/claim/native.",
-    "source": "7f54d8f90f368ac94fe62f8f99ef1b6ae765ab79",
-    "source_pins": 202
+    "parent_after_maxrss_kib": 17628,
+    "parent_before_maxrss_kib": 17628,
+    "preflight_sha256": "c6201c7fac7b0efdcbd30f2ce8c6f3f8ff263db6905496872ba1dce09b3f4637",
+    "qualification": "Actual metadata inventory in a reaped child; no graph reads, matching, fit, claim or native launch. Child maxrss is process RSS, not whole-job or kernel cgroup peak. Does not prove pilot RAM eligibility.",
+    "status": "PASSED_READONLY_RUNTIME_INVENTORY_EQUALITY",
+    "torch_present_in_parent_sys_modules": false
   },
-  "binding_review_sha256": "ce16cffecd439c4365e225a425ee2b4d537182a344b2f5fdc3f8ec1248214b7f",
-  "binding_sha256": "0dc18db5d2bd985315cc56284a74a5f26e4e600154f613b251d3e6198066fe24",
-  "cardinality": {
-    "changed_package_pins": 2,
-    "gate_input_roles": 59,
-    "gate_source_pins": 202,
-    "new_package_pins": 1,
-    "outputs": 8,
-    "package_pins": 179,
-    "released_unique_references": 376,
-    "sole_opaque_private_exceptions": 1
-  },
-  "conditionality": "Final full entry must authenticate exact release and public closure at current committed HEAD; genuine admission74; runtime and unused03 namespaces; absent competing native/claims; fresh writable union and projected growth, 10GiB disk floor and 9GiB startup RAM; unchanged native limits. Genuine runtime Owner/Binding and all archive/typed validators remain mandatory. This does not grant outcome success or bypass any refusal.",
-  "decision": "accepted",
+  "binding_only_gate_repin": true,
   "evidence": {
     "research/onchain-paper-replication-2026-09-24/config/calendar-coinmetrics-v5.json": "21bb348b9c779238b212d0e4074cf806f6a54d0ce3b7713d97bc3ad65d57ef22",
     "research/onchain-paper-replication-2026-09-24/config/dictionary.json": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff",
@@ -109,7 +131,7 @@
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/templates/archive_policy.json": "c4c5f2ec58845cf51808678bb93416f293ee3fde8acc9f6df3accf30b71e55a3",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final02-2026-10-06/templates/pair_policy07.json": "f5b8f9f123f167f1dc55562d8c2bf13c4de6e2299fe600e30dbc5d2bf6c59e74",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/ACTUAL_READONLY_ADMISSION01.json": "8ac0cedaf3e00e4b3205099f730770ed8c4210a5f3d5a2ec5159019965b16b11",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/BINDING01.json": "0dc18db5d2bd985315cc56284a74a5f26e4e600154f613b251d3e6198066fe24",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/BINDING01.json": "2df18b08b43a5ee22ba4d298b7da9820d7b53a2caeff0311f7c299935dd70890",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/BINDING01.json.before-inventory-isolation01": "2df18b08b43a5ee22ba4d298b7da9820d7b53a2caeff0311f7c299935dd70890",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/BINDING_DRAFT01.json": "187adb55d196dc3a003cc2f8c136f06dba14c55149036926eed0d2135dd1bdaa",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/BINDING_DRAFT02.json": "ec53bfa685c573208c42a82998378a99dbf5e93fa6d4f12528f90f9b3866a1ea",
@@ -151,9 +173,6 @@
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-finite-reservation-review01-2026-10-06/final-binding01/CHECK01.json": "26e679be356cc6b0a1a635c95d02b6f8274f3f7602cde8921e7e2cccea9dc17d",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-finite-reservation-review01-2026-10-06/final-binding01/RELEASE_REVIEW01.json": "b5d9e564f2f72dac5243a4b46edc205d6d24e8f8f0f85095dd496c4f7625ee46",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-finite-reservation-review01-2026-10-06/final-binding01/check01.py": "4e39542187d31e725654cbb085bd81190d8122fc06ddf48157ed23f9e6505ca3",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-finite-reservation-review01-2026-10-06/final-binding02/BINDING_REVIEW02.json": "ce16cffecd439c4365e225a425ee2b4d537182a344b2f5fdc3f8ec1248214b7f",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-finite-reservation-review01-2026-10-06/final-binding02/CHECK01.json": "21c74f2c930b478a65e4ab3eda7bd0b00277fd913ac2135020a95ae278a69400",
-    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-finite-reservation-review01-2026-10-06/final-binding02/check01.py": "b7b2051214e544eb8306142b585d09200f9fd1c155a30b59dd1a1df8c994dd80",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED72_01.json": "989506a99d8adaec7d8161c66a5f39a681cb3c4b020e87987f72828ce8722585",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-registration01-2026-10-06/EXTENSION_PROPOSED72_01.json": "9f8e443d2b64a2033bb4d67543cda9e027c260579f68fcc2227d6715631edae9",
     "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-review01-2026-10-06/allocation-addendum01/EXTENSION_REVIEW01.json": "fa8e0889d9df00bf3918244e4eb748b3d6852774b21a5bf5948b276c7393107b",
@@ -402,31 +421,18 @@
     "tradingagents/research/onchain_replication/workflow_storage.py": "deff02766685c1e7fb8628766acf0e0c36dc324da4672f3adc094bfac3e24a74",
     "tradingagents/research/verify.py": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce"
   },
+  "exact_source_inverse": true,
+  "gate_single_preflight_pin_delta": true,
   "identity": "eth-paper-real-data-end-to-end-resource-20261006-03",
-  "inventory_isolation_proof": {
-    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/RUNTIME_INVENTORY_ISOLATION01.json",
-    "sha256": "67dd459eecc956b673f145c33396dcbe5243183addc597ae34be6c14acffa074"
-  },
-  "not_tested": [
-    "No numerical work, native launch, network, ResearchRun.start or genuine Owner/Binding invoked by reviewer.",
-    "No new timing-leakage, return/cashflow, fee/funding, financial performance or predictive results evaluated.",
-    "No full-pilot throughput, storage fit or training completion claim.",
-    "Final entry still must freshly authenticate committed public closure, runtime, namespaces, processes, RAM/disk/writable union/native limits and sole private dispatch.",
-    "Child peak RSS and equality do not establish fresh pilot RAM eligibility; unchanged startup guard may still refuse. No present host-memory fit assertion."
-  ],
-  "preflight_sha256": "c6201c7fac7b0efdcbd30f2ce8c6f3f8ff263db6905496872ba1dce09b3f4637",
-  "prior_preflight_refusal": {
-    "disposition": "Before attempt/claim/native; fixed03 unused, no budget refund or new amendment.",
-    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final03-2026-10-06/PREFLIGHT_RAM_REFUSAL01.json",
-    "sha256": "bf1c549efc018f825267b81172cd5076cc67e11ecd3fc2c4fca04d8b3deae276"
-  },
-  "protected_input": "Exactly one new03 archive_transport01 opaque exception. All predecessor private paths removed from public evidence. Only stat and public binder digest checked; body never opened. Entry authenticates opaque bytes.",
-  "resolved_findings": [],
-  "review_basis": "Reuse immutable prior final-binding01 b5d9 release and accepted finite source/allocation/recovery closure. New delta: exact preflight inventory call replaced by same inventory in pinned short-lived child; gate changes only that preflight pin. Actual child inventory equals registered environment, exit0/reaped, Torch absent in parent. Exact source inverse and actual-statement success/nonzero/timeout/invalidJSON/mismatch checks pass. Final binding0dc18 and reviewce16 authenticated. No package179/input59/budget74/scientific/native/physical cap changes.",
-  "reviewer": "independent pilot_correction_review",
-  "root_io_sha256": "d8b6cca8a37047646e88066d1a608c8dd0e8ce4a7e2941aaa83d8b540c284323",
-  "runtime_outcomes": null,
+  "qualification": "Parent proof used exact existing inventory in pinned child; reviewer executed only two actual statements with synthetic outputs. No runtime/scientific work repeated. No RAM fit or successful launch claim.",
   "schema_version": 1,
-  "scientific_or_capacity_claim": false,
-  "scope": "EXACT_CONDITIONAL_SOURCE_AND_METADATA_ENTRY_RELEASE"
+  "scope": "Exact inventory child isolation delta only",
+  "source_inputs_budget_caps_unchanged": true,
+  "status": "PASS",
+  "synthetic_actual_statement_refusals": [
+    "nonzero",
+    "timeout",
+    "invalid-json",
+    "different-inventory"
+  ]
 }
