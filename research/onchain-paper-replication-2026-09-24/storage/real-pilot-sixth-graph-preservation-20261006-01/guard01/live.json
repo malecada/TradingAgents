@@ -1,0 +1,184 @@
+{
+  "boot_id": "c3984758-d2a4-4ccc-9916-cc9831982bc6",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-561be7b1bf7844a9bc9c0ee8c0a5b358.service",
+  "child_exit_code": 0,
+  "cleanup_stop_returncode": 5,
+  "cleanup_unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/real-pilot-sixth-graph-preservation-20261006-01/entry01.py",
+    "--worker"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "1439001": [
+      0,
+      1
+    ],
+    "1439016": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 11498287104
+  },
+  "disk_minimum_qualification": "Sampled whole-volume free-space minimum per guarded path; includes unnamed temporary files and unrelated activity. Not a kernel quota, continuous minimum or per-job attribution.",
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+  ],
+  "elapsed_seconds": 1801.5749117680098,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 10618068992,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "201326592",
+    "memory.max": "268435456",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": null,
+  "memory_current_bytes": 181170176,
+  "memory_events": {
+    "high": 19369,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 201326592,
+  "memory_max_bytes": 268435456,
+  "memory_swap_max_bytes": 0,
+  "minimum_sampled_disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 11498287104
+  },
+  "monitor_pid": 1438915,
+  "monotonic_seconds": 86820.836552139,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 10604544,
+      "file_bytes": 165330944,
+      "kernel_peak_bytes": 203280384,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-561be7b1bf7844a9bc9c0ee8c0a5b358.service",
+      "pressure": "some avg10=0.05 avg60=0.05 avg300=0.05 total=1012731\nfull avg10=0.05 avg60=0.05 avg300=0.05 total=999480",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 3620589568,
+      "file_bytes": 6992793600,
+      "kernel_peak_bytes": 13962379264,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.03 avg60=0.03 avg300=0.03 total=35405079\nfull avg10=0.03 avg60=0.03 avg300=0.03 total=34685701",
+      "swap_current_bytes": 1134440448,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": null,
+  "peak_sampled_memory_current_bytes": 202653696,
+  "phase": "complete",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/real-pilot-sixth-graph-preservation-20261006-01/guard01",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 3758096384,
+  "storage_budget": {
+    "limits": {
+      "max_allocated_bytes": 5368709120,
+      "max_depth": 16,
+      "max_entries": 4096,
+      "max_logical_bytes": 5368709120,
+      "max_scan_seconds": 5
+    },
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/real-pilot-sixth-graph-preservation-20261006-01"
+  },
+  "storage_enforcement": "Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.",
+  "storage_observation": {
+    "aggregate_entry_visit_bound": 12288,
+    "allocated_bytes": 3530162176,
+    "directories": 2,
+    "elapsed_seconds": 0.002812108999933116,
+    "entries": 308,
+    "hardlink_observations": [],
+    "logical_file_bytes": 3529047236,
+    "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+    "regular_files": 307,
+    "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/real-pilot-sixth-graph-preservation-20261006-01",
+    "root_device": 66310,
+    "root_inode": 8686008,
+    "scan_attempts": 1
+  },
+  "storage_peak_allocated_bytes": 3530162176,
+  "storage_peak_entries": 308,
+  "storage_peak_logical_file_bytes": 3529047355,
+  "storage_root_identity": [
+    66310,
+    8686008
+  ],
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 181170176,
+    "memory_events": {
+      "high": 19369,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 10604544,
+        "file_bytes": 165330944,
+        "kernel_peak_bytes": 203280384,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-561be7b1bf7844a9bc9c0ee8c0a5b358.service",
+        "pressure": "some avg10=0.05 avg60=0.05 avg300=0.05 total=1012731\nfull avg10=0.05 avg60=0.05 avg300=0.05 total=999480",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 3620589568,
+        "file_bytes": 6992793600,
+        "kernel_peak_bytes": 13962379264,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.03 avg60=0.03 avg300=0.03 total=35405079\nfull avg10=0.03 avg60=0.03 avg300=0.03 total=34685701",
+        "swap_current_bytes": 1134440448,
+        "unavailable": {}
+      }
+    }
+  },
+  "unit": "onchain-replication-561be7b1bf7844a9bc9c0ee8c0a5b358.service",
+  "unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 14400
+}
