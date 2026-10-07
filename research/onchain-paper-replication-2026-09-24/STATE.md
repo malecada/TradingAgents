@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-07T13:09:58.138707+00:00: archive-history idle-boundary fix implemented/accepted; fresh15 unused, no numerical job active.**
+
+Sourcecandidate3ccfdedd/SOURCEb1af2659 narrowlyaccepted andadopted03152484. Explicitsemanticamendment: forcedboundary startscompleteoriginalhistoryauditafteridle; successrequiresauditduration<60s. Sampledstale/poisoned/policyclockidentity/backward/nonfinite/content/namespace/claim/owner/counterchecks staystrict. No writerexclusion/continuous historicalimmutability inferred. Both originalconsumers unchanged.179package177unchanged (archive_history+strict15only); existing16moduleinitialization/scientificmethod/nativecaps/importauthority60s unchanged. Actual-source21checks+12independentreviewcases passed, no numericalexecution.
+
+Pilot14 permanentFAILED85/55closed33C22F preserved. Exact47file473568B+15directory62name increment freshlyexternallyrecoveredat03152484/accepted8fc97aad; nooriginalbodyreread/deletion/rawprivate/runtime/POSIXclaim. Genuine86amendment88a86b62=55closed+28pending+2closedpreclaims+ONEunused15, norefund/transfer/capladder. Metadataed093531 accepted293sources59inputs,179package; actualprepare/binder01/namespace20261007-15 andbaselinewholeobsjoined. ConcretebindingDRAFT_NOT_RELEASED nowboundtoactualrecovery; no claim/attempt/release yet.
+
+RootsoleMain/accounting/STATE/Git/preservation/ONElauncher; boundedreviewerownsfinalbinding/entryreview, otheragentsfinished. Source/GitfreezeENDED. LastRAM9.17GB belowfrozen9.66GBstartup; disk26.13GBeligible. Nextcommitexactconfiguration/genuinereadonly86/finalreviewrelease/actualpushreadback/freshchecks, thenatmostONEunused15ifeligible. NoRootIOonRAMdeferral. Broadwork/goal/heartbeat remainPAUSED; representativepilot incomplete/all1420paperfitspending.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-07T12:55:28.896379+00:00: pilot14 permanently FAILED/spent85; no native numerical job active. Source/Git freeze ENDED after actual RootIO closure and current cleanup verification.**
 
 Root55652/df283e actualexit1, Parent1/nativechild1/2338.770724987s (~39min), ended2026-10-06T22:00:02Z (Oct7 midnight Europe/Prague). [Actual terminal](full_sources/real-data-pilot-final14-2026-10-06/ROOT_TERMINAL01.json) joins originalRootIOclosure/FINAL_STORAGE and currentall4recordedPIDsabsent/cgroupgone/unitfailed/MainPID0. Previous loaded-module equality refusal didnotrecur; execution reached firstMCM production attempt. Primary ValueError: history audit stale in archive_dispatch.binding→_outer→archive_control_history.check, before archive-owner compute starts; original stale/poisonedcleanuperrors retained. Actual stale age is unrecorded/UNKNOWN. User-authorized60s imported-authority policy remainsdistinct from this archive-history policy; neither silently amended.

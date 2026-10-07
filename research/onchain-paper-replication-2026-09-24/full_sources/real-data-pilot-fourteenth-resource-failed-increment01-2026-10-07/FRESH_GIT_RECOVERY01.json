@@ -1,0 +1,114 @@
+{
+  "actual_remote_head": "03152484de2bcfbdfeb31a33c838819653cc73f7",
+  "all_typed_names_modes_hashes_verified": true,
+  "archive": {
+    "bytes": 583680,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fourteenth-resource-failed-increment01-2026-10-07/failed-increment01.tar",
+    "sha256": "e4a27219ecd54c2110d44d8db90857899cb2af55037f928cbd1c320982a1c015"
+  },
+  "at": "2026-10-07T13:07:09.507498+00:00",
+  "directory_count": 15,
+  "external_source": "Fresh external Git fetch and actual lazy blob retrieval; no local alternates",
+  "fresh_bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-fourteenth-resource-failed-20261007-01.git",
+  "operation_receipts": [
+    {
+      "argv": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "ls-remote",
+        "git@github.com:malecada/TradingAgents.git",
+        "refs/heads/research/onchain-paper-replication-2026-09-24"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "init",
+        "--bare",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-fourteenth-resource-failed-20261007-01.git"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-fourteenth-resource-failed-20261007-01.git",
+        "config",
+        "remote.origin.url",
+        "git@github.com:malecada/TradingAgents.git"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-fourteenth-resource-failed-20261007-01.git",
+        "config",
+        "remote.origin.promisor",
+        "true"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-fourteenth-resource-failed-20261007-01.git",
+        "config",
+        "remote.origin.partialclonefilter",
+        "blob:none"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-fourteenth-resource-failed-20261007-01.git",
+        "fetch",
+        "--depth=1",
+        "--filter=blob:none",
+        "origin",
+        "refs/heads/research/onchain-paper-replication-2026-09-24"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-fourteenth-resource-failed-20261007-01.git",
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-fourteenth-resource-failed-20261007-01.git",
+        "cat-file",
+        "blob",
+        "03152484de2bcfbdfeb31a33c838819653cc73f7:research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fourteenth-resource-failed-increment01-2026-10-07/failed-increment01.tar"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "operations": 9,
+  "qualification": "Public BYTE failed14 increment only; no POSIX/raw/private/runtime recovery or deletion.",
+  "regular_bytes": 473568,
+  "regular_file_count": 47,
+  "returned_archive": {
+    "bytes": 583680,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fourteenth-resource-failed-increment01-2026-10-07/fresh-git-recovered-increment01.tar",
+    "sha256": "e4a27219ecd54c2110d44d8db90857899cb2af55037f928cbd1c320982a1c015"
+  },
+  "source": "03152484de2bcfbdfeb31a33c838819653cc73f7",
+  "typed_member_count": 62
+}
