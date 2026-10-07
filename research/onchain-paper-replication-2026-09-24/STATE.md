@@ -1,5 +1,29 @@
 # Current replication checkpoint
 
+**TOP 2026-10-07T12:55:28.896379+00:00: pilot14 permanently FAILED/spent85; no native numerical job active. Source/Git freeze ENDED after actual RootIO closure and current cleanup verification.**
+
+Root55652/df283e actualexit1, Parent1/nativechild1/2338.770724987s (~39min), ended2026-10-06T22:00:02Z (Oct7 midnight Europe/Prague). [Actual terminal](full_sources/real-data-pilot-final14-2026-10-06/ROOT_TERMINAL01.json) joins originalRootIOclosure/FINAL_STORAGE and currentall4recordedPIDsabsent/cgroupgone/unitfailed/MainPID0. Previous loaded-module equality refusal didnotrecur; execution reached firstMCM production attempt. Primary ValueError: history audit stale in archive_dispatch.binding→_outer→archive_control_history.check, before archive-owner compute starts; original stale/poisonedcleanuperrors retained. Actual stale age is unrecorded/UNKNOWN. User-authorized60s imported-authority policy remainsdistinct from this archive-history policy; neither silently amended.
+
+Originalimport206.716s; firstgraphattempt317.269s failed, remaining6graphs unavailable,0completedMCM/partialprogressrecords/retainedtargets/jointupdates/financialfits. Sampledchargedpeak5368578048B (~5GiB), lastoptionalkernelpeak5371060224B includecache/notassuredfinal-lifetimepeak. HIGH612/MAX0/OOM0/noelapsedkill; minimumsampleddiskfree26146631680B. No fullthroughput/trainingtime/capacity/numericalagreement yet.
+
+Paper55closed33COMPLETE22FAILED/highestclaimed85; pending28/twopermanentpreclaimreserves retained, no refund/transfer/capladder/rerun/new86allowance. Main sourcee3a942373/registered281source59inputs/scientificmethod/32motifs512spent samples/nativecaps unchanged. Allboundedagentsfinished; RootsoleMain/accounting/STATE/Git/preservation/ONElauncher. Next retainindependent14outcome/incrementalexternalfreshrecovery and diagnose archive-history aging acrossprecompute preparation; offlineimplementation canproceed, no spent14relaunch orsilent freshnessrenewal. Broadwork/goal/heartbeat remainPAUSED; representativepilot incomplete.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-06T21:21:58.903508+00:00: ONE fresh pilot14 genuinely claimed/running. Source/Git freeze ACTIVE.**
+
+Follow ONLY Rootsession55652/a95e37; neverrelaunch14. Source andactualremote e3a9423733115aef3cc8355f3e6fe41cee17475e, actualpush31170/87174aexit0 andremoteread75616/8a568dexit0 match. Supervisor123978/monitor124298/nativeonchain-replication-edcccb9cd8cc4af59c35ba13ca1751b3.service. [Actual active receipt](full_sources/real-data-pilot-final14-2026-10-06/ROOT_ACTIVE01.json) joins genuine85claim andfullpreflight; startupRAM10125938688B/disk26157301760B passed. Guardelapsed53.9s/memorycurrent425435136B/limitreasonNone. Workerinitialsetuprunning;0completedMCM/jointupdates/financialfits observed. No fullcapacity/numericalagreement claim.
+
+Focused sixteen-module preactivation initialization SOURCE4b06005e and exact179package177unchanged/281source59input metadatacfa6643a accepted; committedreadonly85/binding1505810f/exact856refrelease31fb64a6 accepted. Leaseidentity/sourceauthentication anduser-authorized60s/scientificmethod/data/nativephysicalcaps unchanged. Earlier13 permanentFAILED84 and exact43file56name publicincrementfreshrecoverye3df35aa retained; actual historicalchangedentry/preparationprefix UNKNOWN.54closed33COMPLETE21FAILED plusONE14active/highest85; pending28/twopreclaimreserves intact, no refund/transfer/capladder/rerun.
+
+Allboundedagentsfinished; Rootsolelive/Main/accounting/STATE/Git/preservation/ONElauncher. No Main/source/Git mutation until actualRootIOclosure/nativecleanup. Nextmonitor55652 actualphase/resources, retainactualterminal/IOclosure/nativecleanup thenindependentlyreview/incrementallyfreshrecovereveryattempted/unavailableoutcomebeforecontinuation. Broadwork/goal/heartbeat remainPAUSED; directrepresentativepilot continues.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-06T21:20:20.305437+00:00: fresh pilot14 exactly released; no native numerical job or14claim/attempt active.**
 
 Selected entry full_sources/real-data-pilot-final14-2026-10-06/root_io.py withgate01/preflight01/binding01. Source initialization SOURCE4b06005e and metadata cfa6643a accepted;179package/177unchanged sourceanchorba6be4fa. Genuine committed readonly atc91365f4 ready85/281sources59inputs; concretebinding1505810f/finalinverseaccepted/exact856ref release31fb64a6 copiedverbatim. No weakened Lease equality/authentication/60s, scientific model/data or native limits. Fresh14 remains UNUSED; rootonlylaunchafteractualpush/remote andfreshoriginaleligibility.

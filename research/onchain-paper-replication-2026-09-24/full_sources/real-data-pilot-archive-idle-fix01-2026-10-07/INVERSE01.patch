@@ -1,0 +1,31 @@
+--- candidate
++++ original
+@@ -57,12 +57,7 @@
+ 
+ 
+ class Interval:
+-    """Sampled stale use poisons; forced boundaries must fully re-audit.
+-
+-    A forced boundary may follow idle time, but earns a fresh observation only
+-    after its entire authenticated audit succeeds within the existing stale
+-    duration. Ordinary sampled checks retain the previous observation deadline.
+-    """
++    """Failures/backward/stale clocks poison; expensive work cannot refresh old age."""
+     def __init__(self, p, clock=time.monotonic):
+         self.p=validate(p);self.clock=clock;self.last=None;self.observed=None
+         self.calls=0;self.failed=False;self._policy_pin=tuple(sorted(self.p.items()));self._clock_pin=clock
+@@ -72,12 +67,12 @@
+             need(tuple(sorted(self.p.items()))==self._policy_pin and self.clock is self._clock_pin,'history policy/clock replaced')
+             now=self.clock();need(type(now) in (int,float) and math.isfinite(now),'finite clock')
+             need(self.observed is None or now>=self.observed,'history clock moved backward')
+-            if self.last is not None and not force:need((now-self.last)*1000 < self.p['max_stale_ms'],'history audit stale')
++            if self.last is not None:need((now-self.last)*1000 < self.p['max_stale_ms'],'history audit stale')
+             self.observed=now;self.calls+=1
+             if force or self.last is None or (now-self.last)*1000>=self.p['full_interval_ms'] or self.calls>=self.p['max_callbacks_between_full']:
+                 previous=self.last; audit();end=self.clock()
+                 need(math.isfinite(end) and end>=now,'history audit clock moved backward')
+-                need((end-(now if force or previous is None else previous))*1000 < self.p['max_stale_ms'],'history audit expired during check')
++                need((end-(now if previous is None else previous))*1000 < self.p['max_stale_ms'],'history audit expired during check')
+                 self.last=end;self.observed=end;self.calls=0
+         except BaseException:
+             self.failed=True;raise

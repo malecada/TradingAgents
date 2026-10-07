@@ -1,0 +1,107 @@
+{
+  "candidate": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-archive-idle-fix01-2026-10-07/candidate/archive_control_history.py",
+    "sha256": "3ccfdeddd678a40e06192aa853fc3fbb53bb8825c86fd8b974ae31cbc591df67"
+  },
+  "cases": [
+    {
+      "audit_called": false,
+      "case": "old forced idle refuses before audit",
+      "final_last": 0.0,
+      "old_last": 0.0,
+      "result": "history audit stale"
+    },
+    {
+      "audit_called": true,
+      "case": "new forced idle completes full audit",
+      "final_last": 301,
+      "old_last": 0.0,
+      "result": "passed"
+    },
+    {
+      "audit_called": false,
+      "case": "new sampled idle still refuses before audit",
+      "final_last": 0.0,
+      "old_last": 0.0,
+      "result": "history audit stale"
+    },
+    {
+      "audit_called": true,
+      "case": "new forced exact60 duration refuses",
+      "final_last": 0.0,
+      "old_last": 0.0,
+      "result": "history audit expired during check"
+    },
+    {
+      "audit_called": true,
+      "case": "new forced just below60 completes",
+      "final_last": 359.999,
+      "old_last": 0.0,
+      "result": "passed"
+    },
+    {
+      "audit_called": true,
+      "case": "sampled due audit includes previous age",
+      "final_last": 0.0,
+      "old_last": 0.0,
+      "result": "history audit expired during check"
+    },
+    {
+      "audit_called": true,
+      "case": "forced due audit uses current audit duration",
+      "final_last": 61,
+      "old_last": 0.0,
+      "result": "passed"
+    },
+    {
+      "audit_called": false,
+      "case": "backward entry refuses before audit",
+      "final_last": 0.0,
+      "old_last": 0.0,
+      "result": "history clock moved backward"
+    },
+    {
+      "audit_called": true,
+      "case": "backward audit completion refuses",
+      "final_last": 0.0,
+      "old_last": 0.0,
+      "result": "history audit clock moved backward"
+    },
+    {
+      "audit_called": false,
+      "case": "policy mutation refuses before audit",
+      "final_last": 0.0,
+      "old_last": 0.0,
+      "result": "history policy/clock replaced"
+    },
+    {
+      "audit_called": false,
+      "case": "clock replacement refuses before audit",
+      "final_last": 0.0,
+      "old_last": 0.0,
+      "result": "history policy/clock replaced"
+    },
+    {
+      "case": "failed full audit cannot renew",
+      "result": "corruption raised, last unchanged, poisoned"
+    }
+  ],
+  "decision": "passed",
+  "original": {
+    "path": "tradingagents/research/onchain_replication/archive_control_history.py",
+    "sha256": "c11835de055bc02cc5c60c8f9866879cae3a3ae696ddb62bff6bfdc998cd4e72"
+  },
+  "policy": {
+    "assumption": "closed-history sampled; no writer exclusion; mandatory boundary full-byte audits",
+    "format": "bounded-archive-control-history-v1",
+    "full_interval_ms": 10000,
+    "max_callbacks_between_full": 100,
+    "max_stale_ms": 60000,
+    "schema_version": 1,
+    "shard_bytes": 4096,
+    "success_control_bytes": 512,
+    "success_diagnostic_bytes": 512
+  },
+  "schema_version": 1,
+  "scope": "Synthetic Interval timing and callback rejection only; no real clock latency, archive writer, network, scientific arrays or run authority."
+}

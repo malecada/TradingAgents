@@ -1,0 +1,441 @@
+{
+  "at": "2026-10-06T21:21:58.903508+00:00",
+  "claim": {
+    "bytes": 81447,
+    "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261006-14/claim.json",
+    "sha256": "cab7c8ba535d4da5974c7991a31dc22ebc93dd8512705b59c2ac2792669510de"
+  },
+  "identity": "eth-paper-real-data-end-to-end-resource-20261006-14",
+  "launch": {
+    "bytes": 212,
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-14/launch.json",
+    "sha256": "ca2e2c9cd36c20510b3fb08a587d397b43f1bbe05f1216755ade9214047bde5a"
+  },
+  "monitor_pid": 124298,
+  "owner": {
+    "bytes": 272,
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-14/owner.json",
+    "sha256": "c932abbe43cf844fff4c32bbec25fbe2b8e9c86133e69323c574fd97259216b2"
+  },
+  "preflight": {
+    "bytes": 7233,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final14-2026-10-06/launch-attempt01.json",
+    "sha256": "2cf0c82ad7f296b20dcf89ef10cfe28a531746bc27aa17f4d8837b2a584ba559"
+  },
+  "qualification": "Actual one-use RootIO/session and genuine claim/native observation; no completed MCM/update/financial fit or whole capacity follows.",
+  "root_launch_chunk": "a95e37",
+  "root_session": 55652,
+  "sampled_guard": {
+    "bytes": 17757,
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-14/guard/live.json",
+    "sha256": "2a39e25e8a5a73184a7614bf0e1d8c1b76b3b60774ddb754350c1e5c01b85bb0"
+  },
+  "sampled_guard_value": {
+    "boot_id": "a2146964-b849-447b-88ff-495e5650592d",
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-edcccb9cd8cc4af59c35ba13ca1751b3.service",
+    "child_exit_code": null,
+    "command": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "-m",
+      "tradingagents.research.onchain_replication.job",
+      "--mode",
+      "worker",
+      "--root",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "--registration",
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final14-2026-10-06/gate01.json",
+      "--experiment",
+      "eth-paper-real-data-end-to-end-resource-20261006-14",
+      "--source",
+      "e3a9423733115aef3cc8355f3e6fe41cee17475e"
+    ],
+    "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+    "cpu_quota_controller_available": false,
+    "cpu_thread_readback": {
+      "124615": [
+        0,
+        1
+      ],
+      "124619": [
+        0,
+        1
+      ],
+      "124960": [
+        0,
+        1
+      ],
+      "124961": [
+        0,
+        1
+      ],
+      "126270": [
+        0,
+        1
+      ],
+      "130836": [
+        0,
+        1
+      ]
+    },
+    "cpus": [
+      0,
+      1
+    ],
+    "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "disk_floor_bytes": 10737418240,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 26156785664
+    },
+    "disk_minimum_qualification": "Sampled whole-volume free-space minimum per guarded path; includes unnamed temporary files and unrelated activity. Not a kernel quota, continuous minimum or per-job attribution.",
+    "disk_paths": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ],
+    "elapsed_seconds": 53.85458342499987,
+    "elapsed_time_kill": false,
+    "host_mem_available_bytes": 9813061632,
+    "initial_memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "kernel_controls": {
+      "memory.high": "5368709120",
+      "memory.max": "6442450944",
+      "memory.swap.max": "0"
+    },
+    "lease_seconds": 15.0,
+    "limit_reason": null,
+    "memory_current_bytes": 425435136,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_high_bytes": 5368709120,
+    "memory_max_bytes": 6442450944,
+    "memory_swap_max_bytes": 0,
+    "minimum_sampled_disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 26156785664
+    },
+    "monitor_pid": 124298,
+    "monotonic_seconds": 2381.874403485,
+    "native_environment": {
+      "CUDA_CACHE_PATH": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/cuda",
+      "HF_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/hf",
+      "MKL_NUM_THREADS": "2",
+      "MPLCONFIGDIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/matplotlib",
+      "NUMBA_CACHE_DIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/numba",
+      "NUMEXPR_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": "2",
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "TEMP": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/tmp",
+      "TMP": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/tmp",
+      "TMPDIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/tmp",
+      "TORCHINDUCTOR_CACHE_DIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/torchinductor",
+      "TORCH_EXTENSIONS_DIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/torch-extensions",
+      "TORCH_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/torch",
+      "TRITON_CACHE_DIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/triton",
+      "XDG_CACHE_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/cache",
+      "XDG_CONFIG_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/config",
+      "XDG_DATA_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/data"
+    },
+    "native_metadata_limit_bytes": 4194304,
+    "native_unit_limits": {
+      "file_size_bytes": 1073741824
+    },
+    "native_unit_properties": {
+      "LimitFSIZE": "1073741824",
+      "LimitFSIZESoft": "1073741824",
+      "RuntimeMaxUSec": "8h"
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 421007360,
+        "file_bytes": 315392,
+        "kernel_peak_bytes": 431669248,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-edcccb9cd8cc4af59c35ba13ca1751b3.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 4838289408,
+        "file_bytes": 6183952384,
+        "kernel_peak_bytes": 14310211584,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=678066\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=676318",
+        "swap_current_bytes": 8564736,
+        "unavailable": {}
+      }
+    },
+    "owner_identity": {
+      "experiment": "eth-paper-real-data-end-to-end-resource-20261006-14",
+      "monitor_pid": 124298,
+      "monitor_start_ticks": "232520",
+      "nonce": "6b83d4e020c74cc19a3d05ea04cacf33",
+      "source_commit": "e3a9423733115aef3cc8355f3e6fe41cee17475e",
+      "supervisor_pid": 123978
+    },
+    "peak_sampled_memory_current_bytes": 429301760,
+    "phase": "running",
+    "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-14/guard",
+    "reserve_bytes": 3221225472,
+    "residual_domain_peaks": {
+      "runtime_temp_cache": {
+        "allocated_bytes": 192512,
+        "directories": 29,
+        "entries": 46,
+        "logical_file_bytes": 16698,
+        "regular_files": 18
+      },
+      "training_and_lifecycle": {
+        "allocated_bytes": 364544,
+        "directories": 5,
+        "entries": 14,
+        "logical_file_bytes": 321820,
+        "regular_files": 12
+      }
+    },
+    "retry": false,
+    "sample_seconds": 0.25,
+    "start_reserve_bytes": 9663676416,
+    "storage_budget": {
+      "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "experiment": "eth-paper-real-data-end-to-end-resource-20261006-14",
+      "kind": "real-pilot-writable-union",
+      "limits": {
+        "max_allocated_bytes": 21474836480,
+        "max_depth": 64,
+        "max_entries": 1000000,
+        "max_logical_bytes": 17179869184,
+        "max_scan_seconds": 5
+      },
+      "roots": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261006-14"
+      ],
+      "schema_version": 2,
+      "shared_files": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+      ]
+    },
+    "storage_enforcement": "Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.",
+    "storage_observation": {
+      "allocated_bytes": 5039808512,
+      "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "directories": 959,
+      "elapsed_seconds": 0.17092321199970684,
+      "entries": 16695,
+      "logical_file_bytes": 5465013460,
+      "qualification": "Sampled exact writer closure including shared parent directory allocation and lock. Historical claim siblings/source/runtime outside writer scope; no kernel quota, atomic snapshot, or absent-tree allocation credit.",
+      "regular_files": 15738,
+      "residual_domains": {
+        "runtime_temp_cache": {
+          "allocated_bytes": 192512,
+          "allocated_threshold_bytes": 288354304,
+          "directories": 29,
+          "entries": 46,
+          "logical_file_bytes": 16698,
+          "observed_monotonic_seconds": 2381.69914851,
+          "policy": {
+            "directories": 256,
+            "logical_bytes": 268435456,
+            "max_file_bytes": 67108864,
+            "regular_files": 4096
+          },
+          "qualification": "Sampled subset totals already included in the writable union, never charged twice. Includes all scratch/partial files in the selected paths. No hard quota, atomic snapshot, backend-cache maximum or finite inter-sample overshoot bound.",
+          "regular_files": 18,
+          "roots": [
+            {
+              "aggregate_entry_visit_bound": 13056,
+              "allocated_bytes": 192512,
+              "directories": 29,
+              "elapsed_seconds": 0.0014169860000947665,
+              "entries": 46,
+              "hardlink_observations": [],
+              "logical_file_bytes": 16698,
+              "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+              "regular_files": 18,
+              "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime",
+              "root_device": 66310,
+              "root_inode": 8431074,
+              "scan_attempts": 1
+            }
+          ]
+        },
+        "training_and_lifecycle": {
+          "allocated_bytes": 364544,
+          "allocated_threshold_bytes": 33933244,
+          "directories": 5,
+          "entries": 14,
+          "logical_file_bytes": 321820,
+          "observed_monotonic_seconds": 2381.699910466,
+          "policy": {
+            "directories": 16,
+            "logical_bytes": 33554432,
+            "max_file_bytes": 4194304,
+            "regular_files": 68
+          },
+          "qualification": "Sampled subset totals already included in the writable union, never charged twice. Includes all scratch/partial files in the selected paths. No hard quota, atomic snapshot, backend-cache maximum or finite inter-sample overshoot bound.",
+          "regular_files": 12,
+          "roots": [
+            {
+              "aggregate_entry_visit_bound": 252,
+              "allocated_bytes": 307200,
+              "directories": 2,
+              "elapsed_seconds": 0.0016397760000472772,
+              "entries": 3,
+              "hardlink_observations": [],
+              "logical_file_bytes": 296669,
+              "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+              "regular_files": 2,
+              "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261006-14",
+              "root_device": 66310,
+              "root_inode": 10913166,
+              "scan_attempts": 1
+            },
+            {
+              "aggregate_entry_visit_bound": 252,
+              "allocated_bytes": 53248,
+              "directories": 2,
+              "elapsed_seconds": 0.001943441000094026,
+              "entries": 9,
+              "hardlink_observations": [],
+              "logical_file_bytes": 25151,
+              "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+              "regular_files": 8,
+              "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261006-14",
+              "root_device": 66310,
+              "root_inode": 10913156,
+              "scan_attempts": 1
+            },
+            {
+              "aggregate_entry_visit_bound": 252,
+              "allocated_bytes": 4096,
+              "directories": 1,
+              "elapsed_seconds": 0.002181246999953146,
+              "entries": 2,
+              "hardlink_observations": [],
+              "logical_file_bytes": 0,
+              "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+              "regular_files": 2,
+              "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261006-14",
+              "root_device": 66310,
+              "root_inode": 10913153,
+              "scan_attempts": 1
+            }
+          ]
+        }
+      },
+      "root_identities": [
+        {
+          "device": 66310,
+          "inode": 7882933,
+          "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts"
+        },
+        {
+          "device": 66310,
+          "inode": 10913166,
+          "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261006-14",
+          "state": "observed-born"
+        },
+        {
+          "device": 66310,
+          "inode": 7773186,
+          "shared_parent": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs"
+        }
+      ],
+      "roots": [
+        {
+          "allocated_bytes": 0,
+          "device": 66310,
+          "inode": 7773187,
+          "logical_file_bytes": 0,
+          "shared_file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+        },
+        {
+          "aggregate_entry_visit_bound": 2999994,
+          "allocated_bytes": 5039497216,
+          "directories": 956,
+          "elapsed_seconds": 0.16824135099977866,
+          "entries": 16690,
+          "hardlink_observations": [],
+          "logical_file_bytes": 5464716791,
+          "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+          "regular_files": 15735,
+          "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+          "root_device": 66310,
+          "root_inode": 7882933,
+          "scan_attempts": 1,
+          "shared_scan_elapsed_seconds": 0.17060690600010275
+        },
+        {
+          "aggregate_entry_visit_bound": 2949924,
+          "allocated_bytes": 307200,
+          "directories": 2,
+          "elapsed_seconds": 0.0001385630002914695,
+          "entries": 3,
+          "hardlink_observations": [],
+          "logical_file_bytes": 296669,
+          "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+          "regular_files": 2,
+          "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261006-14",
+          "root_device": 66310,
+          "root_inode": 10913166,
+          "scan_attempts": 1,
+          "shared_scan_elapsed_seconds": 0.17081635599970468
+        }
+      ],
+      "shared_parent_identity": [
+        66310,
+        7773186
+      ]
+    },
+    "storage_peak_allocated_bytes": 5039808512,
+    "storage_peak_entries": 16695,
+    "storage_peak_logical_file_bytes": 5465013460,
+    "storage_watched_root_identities": [
+      {
+        "device": 66310,
+        "inode": 7882933,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts"
+      },
+      {
+        "device": 66310,
+        "inode": 10913166,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261006-14",
+        "state": "observed-born"
+      },
+      {
+        "device": 66310,
+        "inode": 7773186,
+        "shared_parent": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs"
+      }
+    ],
+    "unit": "onchain-replication-edcccb9cd8cc4af59c35ba13ca1751b3.service",
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-edcccb9cd8cc4af59c35ba13ca1751b3.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    },
+    "wait_seconds": 30.0,
+    "wall_seconds": 28800
+  },
+  "source": "e3a9423733115aef3cc8355f3e6fe41cee17475e",
+  "source_git_freeze": "ACTIVE",
+  "supervisor_pid": 123978,
+  "unit": "onchain-replication-edcccb9cd8cc4af59c35ba13ca1751b3.service"
+}

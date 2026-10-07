@@ -1,0 +1,10 @@
+{
+  "exit": 0,
+  "elapsed_seconds": 0.10068576800040319,
+  "sampled_rss_peak_bytes": 21557248,
+  "memory_limit_bytes": 1073741824,
+  "seconds_limit": 120,
+  "killed_reason": null,
+  "stdout": "{\"cases\": [{\"audit_calls\": 1, \"case\": \"RED original forced boundary after idle\", \"passed\": true, \"reason\": \"history audit stale\"}, {\"case\": \"GREEN dispatch._outer forced audit then sampled\", \"passed\": true}, {\"case\": \"GREEN reservation._evidence forced audit then sampled\", \"passed\": true}, {\"case\": \"sampled exact 60 seconds stale never audits and forced retry stays poisoned\", \"passed\": true}, {\"case\": \"forced duration rejected\", \"duration\": 60.0, \"passed\": true}, {\"case\": \"forced duration rejected\", \"duration\": 60.001, \"passed\": true}, {\"case\": \"forced duration below 60 accepted\", \"passed\": true}, {\"case\": \"nonforced audit cannot renew old observation past 60\", \"passed\": true}, {\"case\": \"sticky refusal backward-entry\", \"passed\": true}, {\"case\": \"sticky refusal backward-audit\", \"passed\": true}, {\"case\": \"sticky refusal nonfinite-entry\", \"passed\": true}, {\"case\": \"sticky refusal nonfinite-audit\", \"passed\": true}, {\"case\": \"sticky refusal policy\", \"passed\": true}, {\"case\": \"sticky refusal clock\", \"passed\": true}, {\"case\": \"sticky refusal audit-exception\", \"passed\": true}, {\"case\": \"real journal intact\", \"passed\": true}, {\"case\": \"real journal closed-bytes\", \"passed\": true}, {\"case\": \"real journal foreign-name\", \"passed\": true}, {\"case\": \"real journal counter\", \"passed\": true}, {\"case\": \"actual consumer callsite routing archive_dispatch.py\", \"passed\": true}, {\"case\": \"actual consumer callsite routing archive_owner_operations.py\", \"passed\": true}], \"count\": 21, \"scope\": \"synthetic original-source scheduler, real tiny control journal audits and extracted actual consumer invocation; no Run/Owner/claim/data/numerical execution\", \"status\": \"passed\"}\n",
+  "stderr": ""
+}
