@@ -1,0 +1,45 @@
+{
+  "budget_review_unchanged": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry16-review01-2026-10-07/EXTENSION_REVIEW01.json",
+    "sha256": "e8f420731da8835bb807f7994183f9c507dbbbd7c6dbeb2883c6a314c0e596ac"
+  },
+  "decision": "rejected_metadata01_not_released",
+  "evidence": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/INPUT_DRAFT01.json",
+      "sha256": "aef3932907b28947f7cf55eab3b2c80c66867fcf46baa181a271f311be808b8f"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/PREPARATION_RESULT01.json",
+      "sha256": "4ff9ddb21582c42f05ae65fd11d6369ad8e83162bb72ac34f66ce821d2f22c77"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/TRANSPORT_REQUEST01.json",
+      "sha256": "7665d29f2f111a36a4f96855f3147afe35b2ef2734e9150e28d3b49a5cc32ba1"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/TRANSPORT_BINDING01.json",
+      "sha256": "0dd382fcecd6ede1aa40512712057fbd8e2a2c8c092ab8c5e4a27a3b8bed1403"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/templates/archive_policy.json",
+      "sha256": "b1016aa0e460a234aa0c1b68008b44bb3139b2f6c9828fc6d9b4005707edf5d7"
+    }
+  ],
+  "findings": [
+    {
+      "action": "Preserve draft/preparation/binding01 and private01 body. Prepare additive corrected02 with namespace16, rerun pure metadata preparation, create a fresh unique private binding destination, and gate only corrected02. Rebind exact source/entry evidence before admission.",
+      "impact": "Transport context would collide with spent15 dispatch namespace or fail namespace admission. Actual binding01 cannot support fresh16 release even though cumulative87 proposal is valid.",
+      "location": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/INPUT_DRAFT01.json:406",
+      "priority": "P1",
+      "problem": "protocol.transport_limits.namespace retains spent ethpilot-20261007-15; actual PREPARATION_RESULT01.json:1 builder03_result.inputs.archive_transport.namespace also15, while archive_policy remote_namespace and actual bound public policy use16."
+    }
+  ],
+  "identity": "eth-paper-real-data-end-to-end-resource-20261007-16",
+  "not_tested": [
+    "Private transport body not read or printed.",
+    "No Admission/Owner/claim/native launch, numerical data or empirical work.",
+    "No final16 source/metadata release accepted."
+  ],
+  "schema_version": 1
+}

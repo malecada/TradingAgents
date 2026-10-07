@@ -1,0 +1,37 @@
+{
+  "actual_policy_sha256": "14c683b35dc39ea37a9e871d18ef80a873ae81b2497b235f4c2ab1d0613fb716",
+  "decision": "additional_blocking_finding_metadata01",
+  "declared_policy_sha256": "d6e6825b79cb5fc4d3243900b7895d36d59f2206640f631a7762a867ff16ed0f",
+  "evidence": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/templates/job_template02.json",
+      "sha256": "ef6f15d65a29a4b6403ffe96977b122f14c4418188c5ef5d10b56a2b91ea626c"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/templates/pair_policy01.json",
+      "sha256": "14c683b35dc39ea37a9e871d18ef80a873ae81b2497b235f4c2ab1d0613fb716"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/PREPARATION_RESULT01.json",
+      "sha256": "4ff9ddb21582c42f05ae65fd11d6369ad8e83162bb72ac34f66ce821d2f22c77"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/TRANSPORT_BINDING01.json",
+      "sha256": "0dd382fcecd6ede1aa40512712057fbd8e2a2c8c092ab8c5e4a27a3b8bed1403"
+    }
+  ],
+  "findings": [
+    {
+      "action": "Before additive corrected preparation, create job_template03 with descriptor.pair_execution.policy_sha256 equal the actual reanchored policy SHA, update draft execution_job reference, and verify both selected job and producer descriptors against the new pin. Preserve all01 objects.",
+      "impact": "Current numerical owner identity cannot join its admitted pair policy, so original worker validation would refuse; prepared01 is not a valid prospective16 representation.",
+      "location": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final16-2026-10-07/templates/job_template02.json:93",
+      "priority": "P1",
+      "problem": "descriptor.pair_execution.policy_sha256 retains old15 d6e6825b pin after pair_policy source context was reanchored to f35e983a; actual new policy SHA is14c683b3. The actual saved preparation and bound execution_job propagate the stale descriptor digest."
+    }
+  ],
+  "identity": "eth-paper-real-data-end-to-end-resource-20261007-16",
+  "not_tested": [
+    "No private transport contents, claim, native launch or numerical work."
+  ],
+  "schema_version": 1
+}

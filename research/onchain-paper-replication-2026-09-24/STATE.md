@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-07T15:15:31.588487+00:00: fresh16 corrected metadata accepted; no numerical job/16claim.**
+
+Sourceanchor andactualremote f35e983a25dc777574b653e6644f0e2badf350f5 (push55428/33f7ac0; actualfreshrecover46071/b95912). Actual15increment54files487144B+26dirs80names freshlyexternalGitreturned614400B ba6e2d6c, independentlyaccepted5e05f464.15permanentFAILED86/56closed33C23F. No refunds/transfers/reruns/deletion.
+
+All7 metadata buffer439582708B+largestMCM289981568B=729564276B; old1MiB corrected once, originalindex/matching unchanged; early fail-fast helper beforeTorchinventory. ExplicituserRAM8.5GiBstartup6GiBcap5GiBhigh2.5GiBreserve/zeroSwap/10GiBfloor implemented across4authenticated guard seams, legacydefaults preserved.179package5changed174same; independent sourcee9af09d9/entry1bc99add/adoption3c88d646 accepted. Source/math tests29+RAM71/independent34 passed, no wholecapacity/numerical credit.
+
+D16corrected02actualmetadata preparec5f314/binderbb82d1 exit0, namespace16/pairpin14c683b3/outputinputstyped; original01preparation/privatebinding/publicdocs permanentlyWITHHELD afterstale15namespace/pairhash. Rootinitialgate setupmissingcopiedstoragecandidate stoppedbeforegate/claim; strictIDcopy preserved. Four87budgetmetadata sourcepins added aftergenuineadmissionclosurefinding. Allthree independentfindings retained/resolved. Corrected298sources59inputs/374refMETADATAbb2cf631 accepted; original15definition preserved. Genuinebudget87e8f42073/machine93735f17 =56closed+28pending+2closedpreclaimreserves+ONEunused16 reviewed, not yetcommitted/adopted byclaim. ConcreteBINDING_DRAFT01 pointsactual15recoveryandcorrected02; no finalbinding/release/read-onlyadmissionyet.
+
+Rootsoleintegration/accounting/STATE/Git/externalpreservation/one launcher; boundedworkerscomplete/reviewerawaitingcommittedreadonly87 andfinalbinding. Nextcommitcorrectedconfiguration/actualreadonly87, exactbinding/finalrelease, push/readback/freshsource/runtime/process/namespace/RAM/disk/nativeeligibility thenatmostONEunused16. Neverrelaunch15. BroadworkheartbeatPAUSED; representativeappgoalACTIVE/incomplete/all1420fitspending.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-07T14:55:18.451309+00:00: all-seven index capacity correction implemented and independently accepted; modest RAM amendment adopted in live source, no numerical job or16claim.**
 
 Actual metadata/header calculation: June13index additive187338120B vsold1048576B; maximum complete-neighborhood output-inclusive allowance439582708B and one-MCM numeric reservation729564276B (largestMCM289981568B). Exact two-field mcm numeric policy amendment preserves chunk4096/output ceiling/original extraction/matching. Candidate executable index_capacity validates all7authenticated manifests/21boundedheaders before arrays.29focused offline checks; actual7metadata pass inD16/ACTUAL_EARLY_CAPACITY01. Narrow independent source reviewe9af09d9 and entry seam1bc99add accepted. No wholeRSS/capacity/throughput/numerical completion inferred.

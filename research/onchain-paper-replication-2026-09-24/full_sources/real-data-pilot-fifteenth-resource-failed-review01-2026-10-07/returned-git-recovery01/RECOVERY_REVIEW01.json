@@ -1,0 +1,107 @@
+{
+  "actual_external_recovery_accepted": true,
+  "archive": {
+    "bytes": 614400,
+    "git_blob_oid": "3a9526016a4c7e3cd47dcec545ae5ac6c336d58e",
+    "members_review": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-review01-2026-10-07/returned-git-recovery01/RECOVERED_MEMBERS01.json",
+      "sha256": "4e6b31559b08f866ef70089a18265952f59b2f2056e81edd71b38ba4c3b22f2b"
+    },
+    "original_archive_streams": 0,
+    "returned_archive_streams": 1,
+    "returned_path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-increment01-2026-10-07/fresh-git-recovered-increment01.tar",
+    "sha256": "ba6e2d6cf8683ecef874a926702598827b0ef7309c224cc74b6a6f7b2f0ed637",
+    "tree_source_commit": "f35e983a25dc777574b653e6644f0e2badf350f5"
+  },
+  "bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-fifteenth-resource-failed-20261007-01.git",
+  "current_alternates_absent": true,
+  "decision": "accepted",
+  "deletion_authorized": false,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-increment01-2026-10-07/CAPTURE01.json": "293d45b4ea96a78cedc466790e6a075e04152f5e6c0d1266c56b6d48861bd910",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-increment01-2026-10-07/FRESH_GIT_RECOVERY01.json": "df22e23ae8e129acf774c46062ba7520bd729d282a01f5db16638fb1073b369b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-increment01-2026-10-07/fresh-git-recovered-increment01.tar": "ba6e2d6cf8683ecef874a926702598827b0ef7309c224cc74b6a6f7b2f0ed637",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-review01-2026-10-07/INCREMENT_SELECTION01.json": "c94b3a72b06261b5e02d05e488468ae3625c60ada4c3f350fb11874c46cadb83",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-review01-2026-10-07/OUTCOME_REVIEW01.json": "1c9358bc026c44eabdffed98f29e5e8e0af4d33760f82085983a2fe738686f5e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-review01-2026-10-07/returned-git-recovery01/RECOVERED_MEMBERS01.json": "4e6b31559b08f866ef70089a18265952f59b2f2056e81edd71b38ba4c3b22f2b"
+  },
+  "external_provenance_basis": "Nine recorded successful operations include fresh bare initialization, persistent promisor configuration, external fetch, FETCH_HEAD check and actual lazy blob retrieval with remote HEAD equality. Independently confirmed present bare object/tree identity offline without lazy fetch. Returned archive Git object SHA1 and SHA256 computed from its sole body read.",
+  "fresh_fetch_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-increment01-2026-10-07/FRESH_GIT_RECOVERY01.json",
+    "sha256": "df22e23ae8e129acf774c46062ba7520bd729d282a01f5db16638fb1073b369b"
+  },
+  "git_lazy_fetch_disabled": true,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261007-15",
+  "not_tested": [
+    "No transport/native/network replay, fresh fetch, historical body stream, original tar read, extraction or deletion.",
+    "No numerical/scientific/raw/runtime/private body read or financial correctness/capacity claim.",
+    "External origin history relies on preserved actual fetch record; current offline bare state does not reconstruct historical process lifetime."
+  ],
+  "offline_git_checks": [
+    {
+      "args": [
+        "rev-parse",
+        "--is-bare-repository"
+      ],
+      "returncode": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "f35e983a25dc777574b653e6644f0e2badf350f5"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.url"
+      ],
+      "returncode": 0,
+      "stdout": "git@github.com:malecada/TradingAgents.git"
+    },
+    {
+      "args": [
+        "ls-tree",
+        "-z",
+        "f35e983a25dc777574b653e6644f0e2badf350f5",
+        "--",
+        "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-increment01-2026-10-07/failed-increment01.tar"
+      ],
+      "returncode": 0,
+      "stdout": "100644 blob 3a9526016a4c7e3cd47dcec545ae5ac6c336d58e\tresearch/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-increment01-2026-10-07/failed-increment01.tar\u0000"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-t",
+        "3a9526016a4c7e3cd47dcec545ae5ac6c336d58e"
+      ],
+      "returncode": 0,
+      "stdout": "blob"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-s",
+        "3a9526016a4c7e3cd47dcec545ae5ac6c336d58e"
+      ],
+      "returncode": 0,
+      "stdout": "614400"
+    }
+  ],
+  "original_outcome": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-review01-2026-10-07/OUTCOME_REVIEW01.json",
+    "sha256": "1c9358bc026c44eabdffed98f29e5e8e0af4d33760f82085983a2fe738686f5e"
+  },
+  "original_selected_stat_identities_currently_unchanged": true,
+  "originals_retained": true,
+  "qualification": "BYTE/member/name/mode acceptance covers only this exact public failed-resource increment. No POSIX ownership/timestamps/xattrs reconstruction, installed runtime/raw/graph/private/unrelated-store recovery, future remote availability or scientific credit. Original15 is permanently FAILED/spent86; original nulls, Root/Parent/child1, first failed MCM attempt and six unavailable graphs retained. Index additive buffer allowance refusal occurs after writer entry but before the first matcher call. Exact old allowance1MiB is inadequate; separate header-only diagnosis establishes187338120B constructor demand on the first graph. Three retained partial-progress records report zero started/acknowledged matching pairs. Zero completed MCM, training updates or fits. No changed-scientific-method or useful throughput claim follows. No refund, transfer, reuse or scientific credit follows. Original archive control shard and73075435776B decoded-transfer reservation retained; reservation is not measured wire transfer. No archive stale/poisoned failure in original15 trace. No global freshness, savings or capacity inferred. Earlier namespaces remain untouched.",
+  "recovered_archive_retained": true,
+  "recovery_source_commit": "f35e983a25dc777574b653e6644f0e2badf350f5",
+  "schema_version": 1,
+  "scope": "Complete public15 failed-resource increment BYTE recovery via external Git lazy blob retrieval into the fresh bare and recovered archive;54 regular files totaling487144 bytes plus26 typed directories,80 names in614400-byte tar."
+}
