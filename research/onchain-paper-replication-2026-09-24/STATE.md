@@ -1,5 +1,15 @@
 # Current replication checkpoint
 
+**TOP 2026-10-07T13:28:36.014987+00:00: fresh15 exactly released after interrupted final review; no15attempt/claim or native numerical job active.**
+
+Archiveidle-boundarycandidate3ccfdedd/SOURCEb1af2659 adopted03152484; explicitforcedfullhistoryauditafteridle, duration<60s/sampledstaleandpoisonedchecks preserved. Originalscientificmethod/16moduleinit/nativephysicalcaps/importauthority60s unchanged. Metadataed093531/179package177unchanged/293source59inputs and genuinecommittedreadonly86 atf25c1063 accepted. Concretebindingf8546603/finalba169938 exactstatus+reviewref inverse accepted. Interruptedremainingrelease independentlycompleted inNEWremaining-release-review01;900ref conditionalrelease010c01c4 copiedverbatimD15/RELEASE_REVIEW01. No unchanged testmatrix or new numericalexecution repeated.
+
+Pilot14 permanentFAILED85/55closed33C22F/47file473568B+15dirs62names actualfreshrecovery8fc97aad preserved.86=55closed+28pending+2closedpreclaims+ONEunused15; no refund/transfer/capladder/rerun. Fresh15stillUNUSED. CurrentRAM10.40GB exceeds9.66GBstartup/disk26.02GB exceeds24.48GBmodel, instantaneous only; allnativeunits/activeprogramclaims/fresh15namespaces absent. RootsoleMain/Git/accounting/STATE/preservation/ONElauncher; independentagentscomplete. Nextfinalcommit/push/actualremote/freshoriginalchecks thenatmostONEunused15root_io.py. Source/GitfreezeENDED untilactuallaunch. Broadwork/goal/heartbeat remainPAUSED; representativepilot incomplete/all1420paperfitspending.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-07T13:09:58.138707+00:00: archive-history idle-boundary fix implemented/accepted; fresh15 unused, no numerical job active.**
 
 Sourcecandidate3ccfdedd/SOURCEb1af2659 narrowlyaccepted andadopted03152484. Explicitsemanticamendment: forcedboundary startscompleteoriginalhistoryauditafteridle; successrequiresauditduration<60s. Sampledstale/poisoned/policyclockidentity/backward/nonfinite/content/namespace/claim/owner/counterchecks staystrict. No writerexclusion/continuous historicalimmutability inferred. Both originalconsumers unchanged.179package177unchanged (archive_history+strict15only); existing16moduleinitialization/scientificmethod/nativecaps/importauthority60s unchanged. Actual-source21checks+12independentreviewcases passed, no numericalexecution.
