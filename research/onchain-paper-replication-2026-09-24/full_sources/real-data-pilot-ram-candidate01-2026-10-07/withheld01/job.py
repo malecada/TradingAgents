@@ -51,10 +51,8 @@ def resource_policy(value, root, *, pilot_context=None):
             raise ValueError('positive integer resource limits required')
     if not value['memory_high_bytes'] <= value['memory_max_bytes'] <= 6*resources.GIB:
         raise ValueError('execution memory ceiling differs')
-    amended = False
-    if value['reserve_bytes'] < 3*resources.GIB:
-        from .real_pilot_import_caller import _amended_host_reserve
-        amended = _amended_host_reserve(value) and pilot_context is not None
+    from .real_pilot_import_caller import _amended_host_reserve
+    amended = _amended_host_reserve(value) and pilot_context is not None
     if (value['reserve_bytes'] < 3*resources.GIB and not amended) or value['start_reserve_bytes'] < value['memory_max_bytes']+value['reserve_bytes']:
         raise ValueError('execution host reserves below contract')
     if value['disk_floor_bytes'] < 10*resources.GIB or value['wall_seconds'] > 28800:

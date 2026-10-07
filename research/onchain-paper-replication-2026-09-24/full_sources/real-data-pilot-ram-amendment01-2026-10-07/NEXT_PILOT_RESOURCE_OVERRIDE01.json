@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "USER_AUTHORIZED_FUTURE_PILOT_AMENDMENT_NOT_RELEASED",
+  "at": "2026-10-07T14:39:08.102949+00:00",
+  "scope": "Next fresh representative real-data pilot only; no historical identity or source/configuration modified.",
+  "original_template": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final15-2026-10-07/templates/job_template02.json",
+    "sha256": "7bb7b3a84de444e74b2c7eabfd72225cc72e36f2980239560f86ed79ed56f3af"
+  },
+  "previous": {
+    "memory_max_bytes": 6442450944,
+    "memory_high_bytes": 5368709120,
+    "reserve_bytes": 3221225472,
+    "start_reserve_bytes": 9663676416
+  },
+  "next_resource_overrides": {
+    "memory_max_bytes": 6442450944,
+    "memory_high_bytes": 5368709120,
+    "reserve_bytes": 2684354560,
+    "start_reserve_bytes": 9126805504
+  },
+  "unchanged": "6GiB hard job cap,5GiB high,zero job swap,10GiB disk floor,scientific method and selected population.",
+  "rationale": "User requested modestly lower startup available-RAM requirement. Preserve the full6GiB job capacity; reserve2.5GiB for the host instead of3GiB. Runtime host pressure monitoring/termination remains mandatory.",
+  "integration_requirement": "Bind this exact policy into the next fresh templates, plan, preflight, committed registration and native guard. Update both job.resource_policy and resources worker guard validation narrowly for the authenticated pilot; preserve3GiB defaults and unrelated job policies. Review/test changed seams with the index correction before release. Do not merely lower preflight while keeping contradictory worker contracts.",
+  "does_not_prove": "Index buffer feasibility,whole-job capacity,numerical completion or release; no fresh attempt or cumulative allowance created."
+}

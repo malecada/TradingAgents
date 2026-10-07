@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________________________ test_authenticated_amendment _________________________
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-4/test_authenticated_amendment0'), registration='registratio...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+
+    def test_authenticated_amendment(context):
+     ad,e=context
+>    assert job.resource_policy(e['resources'],ad.root,pilot_context=context)==e['resources']
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}
+root = PosixPath('/tmp/pytest-of-malecada/pytest-4/test_authenticated_amendment0')
+pilot_context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-4/test_authenticated_amendment0'), registration='registratio...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+
+    def resource_policy(value, root, *, pilot_context=None):
+        required = {'memory_max_bytes', 'memory_high_bytes', 'reserve_bytes', 'start_reserve_bytes',
+                    'disk_floor_bytes', 'disk_paths', 'wall_seconds'}
+        if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'},required|{'storage_budget','native_unit_limits'}):
+            raise ValueError('execution resource policy fields differ')
+        for name in required-{'disk_paths'}:
+            if type(value[name]) is not int or value[name] <= 0:
+                raise ValueError('positive integer resource limits required')
+        if not value['memory_high_bytes'] <= value['memory_max_bytes'] <= 6*resources.GIB:
+            raise ValueError('execution memory ceiling differs')
+        if value['reserve_bytes'] < 3*resources.GIB or value['start_reserve_bytes'] < value['memory_max_bytes']+value['reserve_bytes']:
+>           raise ValueError('execution host reserves below contract')
+E           ValueError: execution host reserves below contract
+
+research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/baseline/job.py:55: ValueError
+- reviewed profile: 1 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_authenticated_amendment
+1 failed, 23 deselected in 0.37s

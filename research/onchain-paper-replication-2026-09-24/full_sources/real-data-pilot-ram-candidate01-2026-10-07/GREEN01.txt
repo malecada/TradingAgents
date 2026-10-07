@@ -1,0 +1,19 @@
+....................F                                                    [100%]
+=================================== FAILURES ===================================
+_____________________________ test_consumer_wiring _____________________________
+
+    def test_consumer_wiring():
+     for module,function in [('job','worker'),('real_pilot_import_caller','produce'),('matching_owner','_guard')]:
+      path=Path(__file__).parent/(module+'.py')
+      if os.environ.get('RAM_BASELINE')=='1':path=path.parent/'baseline'/path.name
+      tree=ast.parse(path.read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==function]
+      calls=[n for f in nodes for n in ast.walk(f) if isinstance(n,ast.Call) and (getattr(n.func,'attr',None)=='assert_guarded_worker' or getattr(n.func,'id',None)=='assert_guarded_worker')]
+>     assert calls and all('pilot_context' in {k.arg for k in call.keywords} for call in calls),(module,function)
+E     AssertionError: ('real_pilot_import_caller', 'produce')
+E     assert ([])
+
+research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:91: AssertionError
+- reviewed profile: 0 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_consumer_wiring
+1 failed, 20 passed in 0.98s

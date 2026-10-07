@@ -1,0 +1,378 @@
+{
+  "accounting": {
+    "basis": "Accepted prior55 plus independently joined genuine15 failed claim, without rereading historical bodies. Prior17 base-family claims and current38 remain correlated spent history.",
+    "category_transfers": 0,
+    "closed": 56,
+    "closed_preclaim_reserves": 2,
+    "complete": 33,
+    "equation": "86 = 56 closed + 28 unchanged pending + 2 closed preclaim reserves",
+    "failed": 23,
+    "highest_actually_claimed": 86,
+    "new_allowance": false,
+    "prior_accepted_review": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry15-review01-2026-10-07/EXTENSION_REVIEW01.json",
+      "sha256": "88a86b625f178b04b2ce9ec3ea3911623d8fa0dbfbada5e519d61a38e6e48a90"
+    },
+    "prior_allocation": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry15-registration01-2026-10-07/CUMULATIVE_ALLOCATION_PROPOSED86_01.json",
+      "sha256": "85b18f8a6740a438577f25acae4971f9a3a97f692c988fa92c793d4edeb05509"
+    },
+    "refunds": 0,
+    "status_split_qualification": "33COMPLETE/22FAILED prior55 split is carried from accepted current checkpoint; inspected allocation explicitly lists current38 as20COMPLETE/18FAILED plus17base, whose13COMPLETE/4FAILED split was not reread in this bounded review.",
+    "unchanged_pending": 28
+  },
+  "archive_context": {
+    "close_failed_retained": true,
+    "control_history": {
+      "controls": {
+        "acknowledged_encoded_bytes": 728,
+        "acknowledged_records": 1,
+        "head_sha256": "29b89299604c98ae9d7d723a47349336928b8a61500d0b62efa60719ed1b4198",
+        "journal_failed": false,
+        "shards": 1
+      },
+      "diagnostic-controls": {
+        "acknowledged_encoded_bytes": 0,
+        "acknowledged_records": 0,
+        "head_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "journal_failed": false,
+        "shards": 0
+      }
+    },
+    "independently_decoded_control": {
+      "hash_chain_verified": true,
+      "name": "operation-22c208f9cb71737ba1313bb95f5a1c724963b5a96715c34accbf25ed2e535018.json",
+      "record": {
+        "claim": {
+          "execution_admitted": false,
+          "kind": "writer",
+          "ordinal": 0,
+          "owner": "03590971330409bec789bf11a2f876ad066e41bcd438be7758389826e366812f",
+          "reserved_decoded_transfer_bytes": 73075435776,
+          "reserved_metadata_bytes": 169254912,
+          "reserved_remote_payload_bytes": 24358478592,
+          "schema_version": 1,
+          "selection_sha256": "d81738cdf1808c30a9e8cc7c3f6f87a3f9b555dd4966b3b6ab3e2eac250b773a",
+          "stage": "mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+          "stage_intent_sha256": "f6fd9d2d808414a4904b272a947eedc5ac8074cc11037271e062b00317fc9846"
+        },
+        "spent": {
+          "commands": 0,
+          "logical_bytes": 73075435776,
+          "rounded_bytes": 0
+        }
+      }
+    },
+    "logical_bytes_qualification": "73,075,435,776 is the retained decoded-transfer reservation from archive_dispatch.binding, not bytes transferred or allocated. Zero command/rounded counters do not erase that reservation.",
+    "secondary_cleanup_diagnostics": [],
+    "spent": {
+      "commands": 0,
+      "logical_bytes": 73075435776,
+      "rounded_bytes": 0
+    },
+    "wire_bytes_measured": false,
+    "writer_failed_reservations_retained": true
+  },
+  "binding_distinction": {
+    "actual15_journal_matches": [
+      "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15"
+    ],
+    "claim_bindings": null,
+    "claim_bindings_sha256": null,
+    "output_resource_journal": "Failure placeholder distinct from retained genuine workflow journal.",
+    "unsealed_journals": []
+  },
+  "claim_sha256": "ae9bdf0533defc72bef7ca2ab37395573b695b2782e5cbc212a2709adcc24aca",
+  "current_cleanup": {
+    "lifetime_process_history": null,
+    "native_unit_properties": {
+      "ActiveState": "failed",
+      "ControlGroup": "",
+      "MainPID": "0",
+      "SubState": "failed"
+    },
+    "read_only_systemctl_exit_code": 0,
+    "recorded_cgroup_absent": true,
+    "selected_pid_exists": {
+      "18169": false,
+      "18501": false,
+      "18826": false,
+      "18830": false
+    }
+  },
+  "decision": "accepted",
+  "denominator": {
+    "MCM_completed": 0,
+    "MCM_failed": 1,
+    "MCM_unavailable_not_attempted": 6,
+    "declared_outputs": 8,
+    "expected_motif_cells": 415968128,
+    "financial_fits": 0,
+    "graphs": 7,
+    "partial_progress_records": 3,
+    "registered_cells": 1,
+    "retained_outputs": 8,
+    "supervisor_postmortem_cells": [
+      {
+        "id": "real-eth-one-update",
+        "reason": "owned worker ended before durable cell disposition; no retry",
+        "status": "unavailable"
+      }
+    ],
+    "training": null,
+    "unavailable_outputs": [],
+    "verified_completed_motif_cells": 0,
+    "worker_failed_cell_ledger": [
+      {
+        "financial_fit_complete": false,
+        "id": "real-eth-one-update",
+        "paper_financial_fits": 0,
+        "reason": "ValueError: neighborhood index buffer allowance exceeded",
+        "resource_only": true,
+        "status": "failed"
+      }
+    ]
+  },
+  "dictionary_import": {
+    "current_matching_pairs": 0,
+    "historical_work_recomputed": false,
+    "mcm_execution_admitted": false,
+    "owner_stage_completed": false
+  },
+  "disposition": "Permanent FAILED/spent15; no refund, transfer, relaunch or scientific credit.",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final15-2026-10-07/ELIGIBILITY_READY01.json": "12d72c105b02e73d622b98c921ae0e3f546e2e1ae1d719c3c5d2b5854992d2b8",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final15-2026-10-07/FINAL_STORAGE01.json": "0139e1dd37f766bac69c6ccff56b9451749a0870b75264b0063ea04599bbe7b1",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final15-2026-10-07/REMOTE_CONFIRMATION01.json": "1ee1362903049296d1d1119b60d24b348debae9659d3ee0990aa31ea876e78e9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final15-2026-10-07/ROOT_ACTIVE01.json": "fa3e23081f03db674af19de16e3290f17e63e673d62873a2c3756d434d74a43f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final15-2026-10-07/ROOT_IO_CLOSED01.json": "fd168f9eeb87c0232c770800d1b316ae8a1630660435076c636646c080141468",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final15-2026-10-07/ROOT_TERMINAL01.json": "199e933d1881171a7b05b1def595d7f07ceb20ccd4cad7644865bc302e3293c9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final15-2026-10-07/launch-attempt01.json": "41aec64ac84a9d1f2fe0cb821da4ccf758f7183afe0f06e71c27610d98a14fd1",
+    "research_artifacts/archive-dispatch-ethpilot-20261007-15/close-failed.json": "a1cda7c002a4b3bbbf675a070b49d93d2796c45623c1c760dab671e61bb245cd",
+    "research_artifacts/archive-dispatch-ethpilot-20261007-15/controls/control-00000000.bin": "d7994df7046752903766ed501106d2cf87ee51a55cf02588a76b5f750d8d8071",
+    "research_artifacts/archive-dispatch-ethpilot-20261007-15/intent.json": "48fa86589bd5f328bf1879f4c8d12b1f2abe1f2e9ce37c4421601a3bc4387e2f",
+    "research_artifacts/archive-dispatch-ethpilot-20261007-15/terminal.json": "7f4dee1d6a2493dc895a162916fa289e6850a120f16953a58bbd5d9b9c78a2d6",
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261007-15/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261007-15/stdout.log": "ff19f32739407a55e2ece79520ac327f3f63069c5521d89630ecc9986d780b89",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/guard/child.log": "49dad64ba45a2ede5d0cc908b122027fef5616a462452601881aacb0a45c0dfa",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/guard/child_exit.json": "e6444a97cf2b23b3c91d1abc39e8932b91228ba85ad03252996bc006cb021322",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/guard/cpu_ready.json": "38290e48661a3f62ed17035410640bf2e82349b60566b382ca1f73ebda459a32",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/guard/final.json": "7a3d229410dadc12437b7e498ee1898d83d28721da1945471838fa4cade835de",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/guard/live.json": "7a3d229410dadc12437b7e498ee1898d83d28721da1945471838fa4cade835de",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/guard/observer-death.json": "b9cb07bc64010f0da028c046c26ae9f22a7a3b9d09f1f8418d2148c96a420758",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/guard/release.json": "82560e2694628ad002f9cc4b76fe2cd7b1b545cc825269f01057f04c6fe268b5",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/launch.json": "c0fd220e377c17ec24fc838bae22132301bc1baabb520ba5fc28886172587d9e",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/monitor-file-limit.json": "3f14d49b13466328b5ee7464d43ddffb2ed34f3a6409fa834c9114d0671a3386",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/observer.json": "179b6ee63d3273de144eb4596472ee5220273abddb0099283c5ede6dad170365",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/owner.json": "a09cfe5d886dd10f3d1f670cea966e28975983ca27ddce6d69b853c065040416",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/postmortem-cells.json": "482e6a9e05b8f7e88ae4e2c95a6a5e536925ff1ab313d3b7ac7d6cda583c332e",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/unsealed-journals.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261007-15/worker-file-limit.json": "8635359e5f45d1de25a521f5884e73288d951ede499df683949df119e6fe1d64",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/archive-operations/start.json": "6cb4da27ddc1b456b6042031f12a60a801ec8cc5d4a3c308e833dd1f99bcc8a6",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/archive-operations/writer-mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba-0000/failed.json": "949652c94e80cf07ce1298615eb7f17da84282e64fdf02756aaeae00e662570f",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/archive-operations/writer-mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba-0000/intent.json": "611309457709a0005bb06e8969ac9d69085197c1edf8c816867550f6e95616b3",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/claim.json": "cf527866a5dcf66f5c7dc2c79d529252ded5bbbc0fc061f7e9d37475b684863a",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/dictionary-import/import-complete.json": "cf967bfe6d02758cdbbb85abe58eb1ffe3e9f6c04ed3a5b2737001c3d15ca636",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/dictionary-import/intent.json": "2c59feae32dbf94793318e9b1695ac01c034d6dd1b2b0de6d0251cfa1911e63a",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/claim.json": "b5bb25859e35c9a256d36a576289286becb1452a2ba4625ec20215ae69b1d3dd",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/intent.json": "f6fd9d2d808414a4904b272a947eedc5ac8074cc11037271e062b00317fc9846",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/archive-start.json": "141a40f267633591125c503972a7fc6148eb7483522195f8e792e58ec9d54c5e",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/failed.json": "a49bcc3edae5de7096902cfb79b7d1bb76ba4f9a7d7537879f66c2e5e86a80a1",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/start.json": "ec6eeccee2c1459bfe77765a35d67ef6fb9507f0151572d6905675f984af7e65",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/batches/start.json": "29d6bae3b87b19ec2d9f93b2ebbb22b08fa47884235da05c51285735c8599722",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/start.json": "0120c5ac5485de9d64196094fa8321a86f6ea8113ea3edf5f60c00604f53a10d",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/compact/owner.json": "03590971330409bec789bf11a2f876ad066e41bcd438be7758389826e366812f",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/failed.json": "3fc3d833648b39f7891cb61794cf6f550353667df54ffe9cb5a13a1d2af9df28",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/owner.json": "ce0aa1c718d226f41aef134cbb71d834e0b103a13e58096fc28c60c2212bafb2",
+    "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15/start.json": "80a1cf05243c5032b505e766e3593fbf81fc2397fcbde550f571a81a14070ed0",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/claim.json": "ae9bdf0533defc72bef7ca2ab37395573b695b2782e5cbc212a2709adcc24aca",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/failed.json": "6e7c38d906b40d71fec55aeeff472fed2c0b12c5cc1c2be8e7626a7f5173eef3",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/outputs/archive-receipt.json": "05ebeff2301ea24684e1e1f755d9cd498567f028701e1ea113926e15066fbe67",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/outputs/archive-terminal.json": "116efc5353a5e8b02c7732dda1d23c2c8e4bd3d88f514bd2054a52b0d50e1ff5",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/outputs/cell-ledger.json": "3d5a4182c0175dc503c95c2c4c65865dbaa0b61e708cdd83b434ce5db29f7a6d",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/outputs/pilot-summary.json": "0c2fb375fddee0fa1cf04f8611c8b5d16dc07b9116df55db99efe0f938be6290",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/outputs/resource-binding.json": "31288f23c48985393481943c60ed04fa8cef81e635afab5bf4a18e983dff726a",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/outputs/resource-journal.json": "31288f23c48985393481943c60ed04fa8cef81e635afab5bf4a18e983dff726a",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/outputs/resource-population-binding.json": "363b51245af7a38217ccba9b6c8d0cf9283e38cd4fc0b03e1e4498a82555aa5e",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261007-15/outputs/resource-population.json": "2bba5228869300fe51c40ce62ae482a23afd65d5a49b69d605e1f0e6b99101b0"
+  },
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261007-15",
+  "failure": {
+    "action": "Preserve failed15. Diagnose registered allowance versus exact seven-graph dimensions from existing metadata and add early capacity checks before any separately registered successor. No truncation, subsampling, silent cap increase or spent identity restart.",
+    "allowed_bytes": null,
+    "byte_diagnostic_qualification": "Original exception does not record values; exact demand reconstruction delegated separately and not claimed by this outcome review.",
+    "caller_location": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py:48",
+    "impact": "Additive whole-graph index/scratch admission refused before index arrays, MCM result allocation and first matcher call. Genuine15 attempt86 is spent.",
+    "raise_location": "tradingagents/research/onchain_replication/array_neighborhoods.py:30",
+    "reason": "ValueError: neighborhood index buffer allowance exceeded",
+    "required_bytes": null,
+    "source_location": "tradingagents/research/onchain_replication/array_neighborhoods.py:28"
+  },
+  "increment_selection": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fifteenth-resource-failed-review01-2026-10-07/INCREMENT_SELECTION01.json",
+    "sha256": "c94b3a72b06261b5e02d05e488468ae3625c60ada4c3f350fb11874c46cadb83"
+  },
+  "native": {
+    "child_exit_code": 1,
+    "cleanup_stop_returncode": 0,
+    "cleanup_verified": true,
+    "elapsed_seconds": 2592.604633627,
+    "elapsed_time_kill": false,
+    "last_unit_kernel_peak_bytes": 5370953728,
+    "memory_events": {
+      "high": 1697,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "minimum_sampled_disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 25999548416
+    },
+    "peak_qualification": "Includes charged file cache. Optional last kernel readback need not equal final lifetime peak.",
+    "peak_sampled_memory_current_bytes": 5368913920
+  },
+  "not_tested": [
+    "No financial/empirical experiment, claim, transport or numerical imports invoked.",
+    "Return/cashflow convention, leakage, fees/funding, predictive performance and full-pilot capacity.",
+    "Population output hashed only; numerical arrays, raw/price/labels/runtime/private connection bodies not interpreted.",
+    "Global historical accounting bodies reused through accepted prior allocation; no unchanged historical matrix repeated.",
+    "Exact required/allowed index bytes, full runtime attribution, continuous resource/process history.",
+    "External recovery and POSIX reconstruction not yet accepted."
+  ],
+  "null_preservation": "Original claim/training/graph nulls, retained_target_count0 and separate unavailable supervisor postmortem retained.",
+  "partial_progress": {
+    "records": [
+      {
+        "acknowledged_computed_matching_pairs": 0,
+        "acknowledged_pairs_per_second": 0.0,
+        "claim_sha256": "ae9bdf0533defc72bef7ca2ab37395573b695b2782e5cbc212a2709adcc24aca",
+        "durable_batch_cells_per_second": 0.0,
+        "durable_score_batch_cells": 0,
+        "durable_score_batches": 0,
+        "durable_tail_cells": 0,
+        "expected_matching_pairs": 56584576,
+        "expected_nodes": 1768268,
+        "full_mcm_completion_verified_here": false,
+        "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "joint_update_verified_here": false,
+        "kind": "real_pilot_partial_mcm_progress",
+        "last_budget_slot": false,
+        "motifs": 32,
+        "observed_elapsed_seconds": 61.192904623999766,
+        "paper_financial_fits": 0,
+        "pending_pair": false,
+        "qualification": "Last acknowledged diagnostic observation; not final counts, current local/remote availability, stage completion or authority. Full MCM and update require outer verified summary.",
+        "representation_credit": 0,
+        "schema_version": 1,
+        "scope_elapsed_seconds": 2138.5956234200003,
+        "sequence": 0,
+        "source": "1f0894a2c15a1d544ba3ac6c35893dfe53068b6a",
+        "started_matching_pairs": 0
+      },
+      {
+        "acknowledged_computed_matching_pairs": 0,
+        "acknowledged_pairs_per_second": 0.0,
+        "claim_sha256": "ae9bdf0533defc72bef7ca2ab37395573b695b2782e5cbc212a2709adcc24aca",
+        "durable_batch_cells_per_second": 0.0,
+        "durable_score_batch_cells": 0,
+        "durable_score_batches": 0,
+        "durable_tail_cells": 0,
+        "expected_matching_pairs": 56584576,
+        "expected_nodes": 1768268,
+        "full_mcm_completion_verified_here": false,
+        "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "joint_update_verified_here": false,
+        "kind": "real_pilot_partial_mcm_progress",
+        "last_budget_slot": false,
+        "motifs": 32,
+        "observed_elapsed_seconds": 121.90031171999999,
+        "paper_financial_fits": 0,
+        "pending_pair": false,
+        "qualification": "Last acknowledged diagnostic observation; not final counts, current local/remote availability, stage completion or authority. Full MCM and update require outer verified summary.",
+        "representation_credit": 0,
+        "schema_version": 1,
+        "scope_elapsed_seconds": 2199.303030516,
+        "sequence": 1,
+        "source": "1f0894a2c15a1d544ba3ac6c35893dfe53068b6a",
+        "started_matching_pairs": 0
+      },
+      {
+        "acknowledged_computed_matching_pairs": 0,
+        "acknowledged_pairs_per_second": 0.0,
+        "acknowledged_tail_cells": 0,
+        "claim_sha256": "ae9bdf0533defc72bef7ca2ab37395573b695b2782e5cbc212a2709adcc24aca",
+        "durability_poisoned": null,
+        "durability_watermark": "volatile sampled prefix; not restart authority",
+        "durable_batch_cells_per_second": 0.0,
+        "durable_score_batch_cells": 0,
+        "durable_score_batches": 0,
+        "durable_tail_cells": 0,
+        "expected_matching_pairs": 56584576,
+        "expected_nodes": 1768268,
+        "first_completed_batch_sample": null,
+        "full_mcm_completion_verified_here": false,
+        "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "joint_update_verified_here": false,
+        "kind": "real_pilot_partial_mcm_progress",
+        "last_budget_slot": false,
+        "motifs": 32,
+        "observed_elapsed_seconds": 212.08520610699998,
+        "observed_process_cpu_seconds": 131.96773361400005,
+        "paper_financial_fits": 0,
+        "pending_pair": false,
+        "process_cpu_scope": "whole caller since graph begin; not isolated matcher",
+        "qualification": "Last acknowledged diagnostic observation; not final counts, current local/remote availability, stage completion or authority. Full MCM and update require outer verified summary.",
+        "representation_credit": 0,
+        "schema_version": 2,
+        "scope_elapsed_seconds": 2289.487924903,
+        "sequence": 2,
+        "source": "1f0894a2c15a1d544ba3ac6c35893dfe53068b6a",
+        "started_matching_pairs": 0
+      }
+    ],
+    "scope": "Actual retained stdout records; not final lifetime counts or restart authority. Source ordering independently supports pre-matcher failure. No useful matching throughput inferred."
+  },
+  "reviewed_source": [
+    {
+      "path": "tradingagents/research/onchain_replication/array_neighborhoods.py",
+      "sha256": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+      "source_commit": "1f0894a2c15a1d544ba3ac6c35893dfe53068b6a"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_dispatch.py",
+      "sha256": "cdfa2fbc71b9d7c9919493652b3032710371df001e75b3fa07d8df86c83658c2",
+      "source_commit": "1f0894a2c15a1d544ba3ac6c35893dfe53068b6a"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "sha256": "3478a1762f183753fbad79875c86deba9b3114df384454f0d3bf40cb4d3f51a1",
+      "source_commit": "1f0894a2c15a1d544ba3ac6c35893dfe53068b6a"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py",
+      "sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287",
+      "source_commit": "1f0894a2c15a1d544ba3ac6c35893dfe53068b6a"
+    }
+  ],
+  "root_actual_exit": {
+    "exit_code": 1,
+    "session": 39936,
+    "terminal_chunk": "cc0a30"
+  },
+  "schema_version": 1,
+  "source": "1f0894a2c15a1d544ba3ac6c35893dfe53068b6a",
+  "timing": {
+    "first_MCM_attempt_seconds": 505.13878678599986,
+    "native_seconds": 2592.604633627,
+    "original_import_events": [
+      {
+        "elapsed_seconds": 216.81333152000002,
+        "phase": "original_import"
+      }
+    ],
+    "scope_seconds": 2294.975626961,
+    "whole_future_boundary_or_capacity_proof": false
+  }
+}

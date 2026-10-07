@@ -51,11 +51,7 @@ def resource_policy(value, root, *, pilot_context=None):
             raise ValueError('positive integer resource limits required')
     if not value['memory_high_bytes'] <= value['memory_max_bytes'] <= 6*resources.GIB:
         raise ValueError('execution memory ceiling differs')
-    amended = False
-    if value['reserve_bytes'] < 3*resources.GIB:
-        from .real_pilot_import_caller import _amended_host_reserve
-        amended = _amended_host_reserve(value) and pilot_context is not None
-    if (value['reserve_bytes'] < 3*resources.GIB and not amended) or value['start_reserve_bytes'] < value['memory_max_bytes']+value['reserve_bytes']:
+    if value['reserve_bytes'] < 3*resources.GIB or value['start_reserve_bytes'] < value['memory_max_bytes']+value['reserve_bytes']:
         raise ValueError('execution host reserves below contract')
     if value['disk_floor_bytes'] < 10*resources.GIB or value['wall_seconds'] > 28800:
         raise ValueError('execution disk/wall limits differ')
@@ -73,7 +69,6 @@ def resource_policy(value, root, *, pilot_context=None):
             from .real_pilot_import_caller import selected,_read,validate_plan
             ad,execution=pilot_context
             if not isinstance(ad,Admission) or ad.root!=Path(root) or not selected(execution) or execution['kind']!='compact_resource' or execution['resources']!=value:raise ValueError('original real-pilot admission context required')
-            if amended and (not ad.ready or _read(ad,'execution_job')!=execution):raise ValueError('authenticated execution job required for reserve amendment')
             selected_plan=next(iter(execution['payload']['representation_jobs'].values()))
             plan=validate_plan(_read(ad,selected_plan['real_pilot_input']))
             if plan['schema_version']!=2 or plan['resource_policy']!=value:raise ValueError('authenticated schema2 policy required')
@@ -366,7 +361,7 @@ def worker(args):
         live = resources.assert_guarded_worker(base/'guard', _command(args, 'worker'),
             required_paths=[Path(p) for p in policy['disk_paths']], wall_seconds=policy['wall_seconds'],
             memory_max_bytes=policy['memory_max_bytes'], memory_high_bytes=policy['memory_high_bytes'],
-            disk_floor_bytes=policy['disk_floor_bytes'],pilot_context=(admitted,job))
+            disk_floor_bytes=policy['disk_floor_bytes'])
         owner = json.loads((base/'owner.json').read_bytes())
         if live['owner_identity'] != owner or owner['experiment'] != args.experiment or owner['source_commit'] != args.source:
             raise ValueError('execution worker ownership differs')

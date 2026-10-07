@@ -1,0 +1,211 @@
+F............F.FFFFFF                                                    [100%]
+=================================== FAILURES ===================================
+_________________________ test_authenticated_amendment _________________________
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_authenticated_amendment0'), registration='registratio...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+
+    def test_authenticated_amendment(context):
+     ad,e=context
+>    assert job.resource_policy(e['resources'],ad.root,pilot_context=context)==e['resources']
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_authenticated_amendment0')
+pilot_context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_authenticated_amendment0'), registration='registratio...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+
+    def resource_policy(value, root, *, pilot_context=None):
+        required = {'memory_max_bytes', 'memory_high_bytes', 'reserve_bytes', 'start_reserve_bytes',
+                    'disk_floor_bytes', 'disk_paths', 'wall_seconds'}
+        if set(value) not in (required,required|{'storage_budget'},required|{'physical_policy'},required|{'storage_budget','native_unit_limits'}):
+            raise ValueError('execution resource policy fields differ')
+        for name in required-{'disk_paths'}:
+            if type(value[name]) is not int or value[name] <= 0:
+                raise ValueError('positive integer resource limits required')
+        if not value['memory_high_bytes'] <= value['memory_max_bytes'] <= 6*resources.GIB:
+            raise ValueError('execution memory ceiling differs')
+        if value['reserve_bytes'] < 3*resources.GIB or value['start_reserve_bytes'] < value['memory_max_bytes']+value['reserve_bytes']:
+>           raise ValueError('execution host reserves below contract')
+E           ValueError: execution host reserves below contract
+
+research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/baseline/job.py:55: ValueError
+____________________________ test_worker_amendment _____________________________
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_amendment0'), registration='registration.json'...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_amendment0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...})
+
+>   def test_worker_amendment(context,live):assert check_live(context,live)==live[1]
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_amendment0'), registration='registration.json'...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_amendment0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...})
+with_context = True
+
+    def check_live(context,live,with_context=True):
+     ad,e=context;r,value=live;(r/'live.json').write_text(json.dumps(value))
+>    return guard.assert_guarded_worker(r,['true'],required_paths=[ad.root],wall_seconds=100,disk_floor_bytes=10*G,**({'pilot_context':context} if with_context else {}))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E    TypeError: assert_guarded_worker() got an unexpected keyword argument 'pilot_context'
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:73: TypeError
+________________ test_worker_mismatch[memory_swap_max_bytes-1] _________________
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_memory_sw0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_memory_sw0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...})
+field = 'memory_swap_max_bytes', value = 1
+
+    @pytest.mark.parametrize('field,value',[('memory_swap_max_bytes',1),('start_reserve_bytes',17*G//2-1),('reserve_bytes',2*G),('disk_floor_bytes',9*G),('owner_identity',{'experiment':'other','source_commit':'0'*40})])
+    def test_worker_mismatch(context,live,field,value):
+     live[1][field]=value
+>    with pytest.raises((RuntimeError,ValueError)):check_live(context,live)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_memory_sw0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_memory_sw0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...})
+with_context = True
+
+    def check_live(context,live,with_context=True):
+     ad,e=context;r,value=live;(r/'live.json').write_text(json.dumps(value))
+>    return guard.assert_guarded_worker(r,['true'],required_paths=[ad.root],wall_seconds=100,disk_floor_bytes=10*G,**({'pilot_context':context} if with_context else {}))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E    TypeError: assert_guarded_worker() got an unexpected keyword argument 'pilot_context'
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:73: TypeError
+_____________ test_worker_mismatch[start_reserve_bytes-9126805503] _____________
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_start_res0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_start_res0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805503, ...})
+field = 'start_reserve_bytes', value = 9126805503
+
+    @pytest.mark.parametrize('field,value',[('memory_swap_max_bytes',1),('start_reserve_bytes',17*G//2-1),('reserve_bytes',2*G),('disk_floor_bytes',9*G),('owner_identity',{'experiment':'other','source_commit':'0'*40})])
+    def test_worker_mismatch(context,live,field,value):
+     live[1][field]=value
+>    with pytest.raises((RuntimeError,ValueError)):check_live(context,live)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_start_res0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_start_res0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805503, ...})
+with_context = True
+
+    def check_live(context,live,with_context=True):
+     ad,e=context;r,value=live;(r/'live.json').write_text(json.dumps(value))
+>    return guard.assert_guarded_worker(r,['true'],required_paths=[ad.root],wall_seconds=100,disk_floor_bytes=10*G,**({'pilot_context':context} if with_context else {}))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E    TypeError: assert_guarded_worker() got an unexpected keyword argument 'pilot_context'
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:73: TypeError
+________________ test_worker_mismatch[reserve_bytes-2147483648] ________________
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_reserve_b0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_reserve_b0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2147483648, 'start_reserve_bytes': 9126805504, ...})
+field = 'reserve_bytes', value = 2147483648
+
+    @pytest.mark.parametrize('field,value',[('memory_swap_max_bytes',1),('start_reserve_bytes',17*G//2-1),('reserve_bytes',2*G),('disk_floor_bytes',9*G),('owner_identity',{'experiment':'other','source_commit':'0'*40})])
+    def test_worker_mismatch(context,live,field,value):
+     live[1][field]=value
+>    with pytest.raises((RuntimeError,ValueError)):check_live(context,live)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_reserve_b0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_reserve_b0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2147483648, 'start_reserve_bytes': 9126805504, ...})
+with_context = True
+
+    def check_live(context,live,with_context=True):
+     ad,e=context;r,value=live;(r/'live.json').write_text(json.dumps(value))
+>    return guard.assert_guarded_worker(r,['true'],required_paths=[ad.root],wall_seconds=100,disk_floor_bytes=10*G,**({'pilot_context':context} if with_context else {}))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E    TypeError: assert_guarded_worker() got an unexpected keyword argument 'pilot_context'
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:73: TypeError
+______________ test_worker_mismatch[disk_floor_bytes-9663676416] _______________
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_disk_floo0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_disk_floo0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...})
+field = 'disk_floor_bytes', value = 9663676416
+
+    @pytest.mark.parametrize('field,value',[('memory_swap_max_bytes',1),('start_reserve_bytes',17*G//2-1),('reserve_bytes',2*G),('disk_floor_bytes',9*G),('owner_identity',{'experiment':'other','source_commit':'0'*40})])
+    def test_worker_mismatch(context,live,field,value):
+     live[1][field]=value
+>    with pytest.raises((RuntimeError,ValueError)):check_live(context,live)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_disk_floo0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_disk_floo0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...})
+with_context = True
+
+    def check_live(context,live,with_context=True):
+     ad,e=context;r,value=live;(r/'live.json').write_text(json.dumps(value))
+>    return guard.assert_guarded_worker(r,['true'],required_paths=[ad.root],wall_seconds=100,disk_floor_bytes=10*G,**({'pilot_context':context} if with_context else {}))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E    TypeError: assert_guarded_worker() got an unexpected keyword argument 'pilot_context'
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:73: TypeError
+_________________ test_worker_mismatch[owner_identity-value4] __________________
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_owner_ide0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_owner_ide0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...})
+field = 'owner_identity'
+value = {'experiment': 'other', 'source_commit': '0000000000000000000000000000000000000000'}
+
+    @pytest.mark.parametrize('field,value',[('memory_swap_max_bytes',1),('start_reserve_bytes',17*G//2-1),('reserve_bytes',2*G),('disk_floor_bytes',9*G),('owner_identity',{'experiment':'other','source_commit':'0'*40})])
+    def test_worker_mismatch(context,live,field,value):
+     live[1][field]=value
+>    with pytest.raises((RuntimeError,ValueError)):check_live(context,live)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_owner_ide0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_worker_mismatch_owner_ide0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...})
+with_context = True
+
+    def check_live(context,live,with_context=True):
+     ad,e=context;r,value=live;(r/'live.json').write_text(json.dumps(value))
+>    return guard.assert_guarded_worker(r,['true'],required_paths=[ad.root],wall_seconds=100,disk_floor_bytes=10*G,**({'pilot_context':context} if with_context else {}))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E    TypeError: assert_guarded_worker() got an unexpected keyword argument 'pilot_context'
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:73: TypeError
+_____________________________ test_consumer_wiring _____________________________
+
+    def test_consumer_wiring():
+     for module,function in [('job','worker'),('real_pilot_import_caller','produce'),('matching_owner','_guard')]:
+      path=Path(__file__).parent/(module+'.py')
+      if os.environ.get('RAM_BASELINE')=='1':path=path.parent/'baseline'/path.name
+      tree=ast.parse(path.read_text());nodes=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==function]
+      calls=[n for f in nodes for n in ast.walk(f) if isinstance(n,ast.Call) and (getattr(n.func,'attr',None)=='assert_guarded_worker' or getattr(n.func,'id',None)=='assert_guarded_worker')]
+>     assert calls and all('pilot_context' in {k.arg for k in call.keywords} for call in calls),(module,function)
+E     AssertionError: ('job', 'worker')
+E     assert ([<ast.Call object at 0x763787b96b90>] and False)
+E      +  where False = all(<generator object test_consumer_wiring.<locals>.<genexpr> at 0x763787e20c70>)
+
+research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py:91: AssertionError
+- reviewed profile: 0 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_authenticated_amendment
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_worker_amendment
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_worker_mismatch[memory_swap_max_bytes-1]
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_worker_mismatch[start_reserve_bytes-9126805503]
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_worker_mismatch[reserve_bytes-2147483648]
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_worker_mismatch[disk_floor_bytes-9663676416]
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_worker_mismatch[owner_identity-value4]
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-ram-candidate01-2026-10-07/test_ram01.py::test_consumer_wiring
+8 failed, 13 passed in 1.06s

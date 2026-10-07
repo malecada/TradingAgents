@@ -1,0 +1,562 @@
+{
+  "status": "METADATA_ONLY_NOT_ADMITTED",
+  "helper": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity01-2026-10-07/candidate/index_capacity.py",
+    "sha256": "977e5a6c37041caef7064f83dd6c3a749141451ef7bd42166a7aaca0c67bdaa5"
+  },
+  "candidate_policy": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity01-2026-10-07/mcm_policy01.json",
+    "sha256": "7a77c3818104a085e713333ce5d428ec696ff0be574cd3a8cc7d6e137ae06ed3"
+  },
+  "original_gate": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final15-2026-10-07/gate01.json",
+    "sha256": "c7c2899eafa31b5cf32076d95d2d2efde4a1699b934edd0e0fb037bf0ca84cb8"
+  },
+  "result": {
+    "graphs": [
+      {
+        "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "role": "graph_20220613",
+        "manifest": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        "headers": {
+          "node_features": {
+            "shape": [
+              1768268,
+              4
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "24cd994311dd5967ac029ebe3c28a2fcc969a57d7dc08e98854480e47c268024",
+            "member_sha256": "c77356834b6fcb14e5a289e0fd0f2ff708dd8f118475dbf598565699412948f0",
+            "member_bytes": 56584704,
+            "stat_identity": [
+              66310,
+              7999585,
+              1,
+              56584704,
+              1790260956180573822,
+              1790260956180573822
+            ]
+          },
+          "edge_index": {
+            "shape": [
+              2,
+              2518332
+            ],
+            "dtype": "<i8",
+            "header_bytes": 128,
+            "header_sha256": "b45ce4bc8d872d21bcf120820a3053ef932f374f58c759cd387a12615052aee9",
+            "member_sha256": "6c4bd0c87fe1bd4f6863dcbd7a1c792df677752a025c9af092fd97c40d7dbd4d",
+            "member_bytes": 40293440,
+            "stat_identity": [
+              66310,
+              7999977,
+              1,
+              40293440,
+              1790260956264572546,
+              1790260956264572546
+            ]
+          },
+          "edge_features": {
+            "shape": [
+              2518332,
+              2
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "a42d3a38861e365031f9d8142d78f8cc82b34e2ad76ad33d619b4190cb6aa6a0",
+            "member_sha256": "5ba9079bf2c985a826089a949a72e39a3a8791eb18af907930acc8971fdcd7fe",
+            "member_bytes": 40293440,
+            "stat_identity": [
+              66310,
+              7999978,
+              1,
+              40293440,
+              1790260956321571681,
+              1790260956321571681
+            ]
+          }
+        },
+        "nodes": 1768268,
+        "edges": 2518332,
+        "node_width_bytes": 32,
+        "edge_width_bytes": 16,
+        "retained_index_bytes": 68585616,
+        "index_additive_bytes": 187338120,
+        "maximum_single_neighborhood_array_bytes": 80906624,
+        "output_inclusive_buffer_bytes": 349151368,
+        "mcm_output_bytes": 226338304
+      },
+      {
+        "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+        "role": "graph_20220509",
+        "manifest": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/manifest.json",
+          "sha256": "a05d237ea6803c323e13e8294d8dad9c89a1221a42b7df4a2e6550c054374aec"
+        },
+        "headers": {
+          "node_features": {
+            "shape": [
+              2265481,
+              4
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "710213100d85033bbe8bf7e9a283682a347b8a94982749f00756f7b07598d974",
+            "member_sha256": "0bca29fd2c158a801eb06b6b9a782803c429a0a11e965508c85ca848b2996cb2",
+            "member_bytes": 72495520,
+            "stat_identity": [
+              66310,
+              8300376,
+              1,
+              72495520,
+              1791246845198324792,
+              1791246845198324792
+            ]
+          },
+          "edge_index": {
+            "shape": [
+              2,
+              3149567
+            ],
+            "dtype": "<i8",
+            "header_bytes": 128,
+            "header_sha256": "46eb15fc574f562b83c8396b03de828d00af8064ad29dcc860c2ac091c1ae1ce",
+            "member_sha256": "0d0cd56326b5d456c2d3d018530499a0c21d5a63d76f099f3ec4abc5cca9c543",
+            "member_bytes": 50393200,
+            "stat_identity": [
+              66310,
+              8300384,
+              1,
+              50393200,
+              1791246845294323656,
+              1791246845294323656
+            ]
+          },
+          "edge_features": {
+            "shape": [
+              3149567,
+              2
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "51aed082a6bbb6d3c81b6de837ce8ef2cc640ef47e3c9fc6012997f9af67ca70",
+            "member_sha256": "c6b4fad60dcc0c04cfae85dfe5b91969d869fce69e7a841e3c803f916321330b",
+            "member_bytes": 50393200,
+            "stat_identity": [
+              66310,
+              8300385,
+              1,
+              50393200,
+              1791246845369322767,
+              1791246845369322767
+            ]
+          }
+        },
+        "nodes": 2265481,
+        "edges": 3149567,
+        "node_width_bytes": 32,
+        "edge_width_bytes": 16,
+        "retained_index_bytes": 86640784,
+        "index_additive_bytes": 237370420,
+        "maximum_single_neighborhood_array_bytes": 101106144,
+        "output_inclusive_buffer_bytes": 439582708,
+        "mcm_output_bytes": 289981568
+      },
+      {
+        "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+        "role": "graph_20220502",
+        "manifest": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/manifest.json",
+          "sha256": "4aa5b107702b464ec2c34a5db8d420506e599a613c079a3ce7d2cfa89c3fb442"
+        },
+        "headers": {
+          "node_features": {
+            "shape": [
+              1878300,
+              4
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "a84ba348d3ea94c41112278e7ca329c7cb369671beb6529295dc2e03bf9e2ab5",
+            "member_sha256": "51dd5e0a9301749969a9acce989f668542c56559f2af98d7258e3d2e51b8150f",
+            "member_bytes": 60105728,
+            "stat_identity": [
+              66310,
+              8442203,
+              1,
+              60105728,
+              1791238884205662364,
+              1791238884205662364
+            ]
+          },
+          "edge_index": {
+            "shape": [
+              2,
+              2779164
+            ],
+            "dtype": "<i8",
+            "header_bytes": 128,
+            "header_sha256": "489b7e87f6d557be1a2621ae9317fc84c2d2ef8c60e1be867ce426ccd3dbb69d",
+            "member_sha256": "0d49c30575d6cd5f6237bb429fd1305a408c1c877e2b707e90accd76cbf0389a",
+            "member_bytes": 44466752,
+            "stat_identity": [
+              66310,
+              8442204,
+              1,
+              44466752,
+              1791238884302660800,
+              1791238884302660800
+            ]
+          },
+          "edge_features": {
+            "shape": [
+              2779164,
+              2
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "36f322de7dedbaa646aaa02185cc7e9c38d984af3357917e3b166af7f63f1d1c",
+            "member_sha256": "fe7e3bf7135b68a00473ae4f5d172c70698f06b277e7c52e2bb82375b637665e",
+            "member_bytes": 44466752,
+            "stat_identity": [
+              66310,
+              8442205,
+              1,
+              44466752,
+              1791238884362659833,
+              1791238884362659833
+            ]
+          }
+        },
+        "nodes": 1878300,
+        "edges": 2779164,
+        "node_width_bytes": 32,
+        "edge_width_bytes": 16,
+        "retained_index_bytes": 74519440,
+        "index_additive_bytes": 202286664,
+        "maximum_single_neighborhood_array_bytes": 89253248,
+        "output_inclusive_buffer_bytes": 380793160,
+        "mcm_output_bytes": 240422400
+      },
+      {
+        "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+        "role": "graph_20220530",
+        "manifest": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/manifest.json",
+          "sha256": "a856a6134263a0b04e3365a2a35f9c7a96792b4739274ad80b2155545eba5830"
+        },
+        "headers": {
+          "node_features": {
+            "shape": [
+              1581441,
+              4
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "04f16f69898a1bd467829b3c97a2fb581e65aec414baf2f7cbd02dee1704a4cc",
+            "member_sha256": "7db2f4c43d40ca121e78f674ef892ebb00551386de1028103a5f5f7063df003e",
+            "member_bytes": 50606240,
+            "stat_identity": [
+              66310,
+              8443702,
+              1,
+              50606240,
+              1791269875879163545,
+              1791269875879163545
+            ]
+          },
+          "edge_index": {
+            "shape": [
+              2,
+              2426106
+            ],
+            "dtype": "<i8",
+            "header_bytes": 128,
+            "header_sha256": "d44f5ceea094543dabf99cbd77b54332891c26773a82ddee655e6f601ee69820",
+            "member_sha256": "2ced523118223eecef41f2dc31166da9ca8b3bbe1a05893072337e9b05343fa7",
+            "member_bytes": 38817824,
+            "stat_identity": [
+              66310,
+              8443699,
+              1,
+              38817824,
+              1791269875941162479,
+              1791269875941162479
+            ]
+          },
+          "edge_features": {
+            "shape": [
+              2426106,
+              2
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "16bf81a0416ee713450ae1f3144ac81704af7c87d7f5a609d5fb7fe56e49472c",
+            "member_sha256": "2804f51bf19f3bf2ebb3c57b4b214e29d3ce55ccdac7d4920ca857d3d80e2a01",
+            "member_bytes": 38817824,
+            "stat_identity": [
+              66310,
+              8443704,
+              1,
+              38817824,
+              1791269876049160622,
+              1791269876049160622
+            ]
+          }
+        },
+        "nodes": 1581441,
+        "edges": 2426106,
+        "node_width_bytes": 32,
+        "edge_width_bytes": 16,
+        "retained_index_bytes": 64120768,
+        "index_additive_bytes": 173177268,
+        "maximum_single_neighborhood_array_bytes": 77955392,
+        "output_inclusive_buffer_bytes": 329088052,
+        "mcm_output_bytes": 202424448
+      },
+      {
+        "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+        "role": "graph_20220523",
+        "manifest": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/manifest.json",
+          "sha256": "7a1187af8ff01ebdc17779ebc172025088f78c23c546457c5fddfaa2ba69d59d"
+        },
+        "headers": {
+          "node_features": {
+            "shape": [
+              1875043,
+              4
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "503ec1f46c2a52b6f72250730fc57a38c864af4157b900a14bdfb1a92b8d323e",
+            "member_sha256": "bf33ebca15fb4352ff585acdeb5896ff0c91e70ac0c8cf613afb1a75f6bfb676",
+            "member_bytes": 60001504,
+            "stat_identity": [
+              66310,
+              8300286,
+              1,
+              60001504,
+              1791257977244170287,
+              1791257977244170287
+            ]
+          },
+          "edge_index": {
+            "shape": [
+              2,
+              2642414
+            ],
+            "dtype": "<i8",
+            "header_bytes": 128,
+            "header_sha256": "3db10e8b68dd422de4399bd11bcc868d43b39192560d66d0cecbd0da8a42fc68",
+            "member_sha256": "7256c482ff85ddaa6fb24c0a8d6347d1485ec0b7d18c341c41727eb808c456ae",
+            "member_bytes": 42278752,
+            "stat_identity": [
+              66310,
+              8300284,
+              1,
+              42278752,
+              1791257986790208802,
+              1791257986790208802
+            ]
+          },
+          "edge_features": {
+            "shape": [
+              2642414,
+              2
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "bf79d17a63cee7780dff32f7bbf3170501d8969d2d9cecbd9c00e504c95e2f2c",
+            "member_sha256": "9153890a9a1c0051095035499787d17333e078843b1900870cf3f84d76ca2088",
+            "member_bytes": 42278752,
+            "stat_identity": [
+              66310,
+              8300288,
+              1,
+              42278752,
+              1791257990152221718,
+              1791257990152221718
+            ]
+          }
+        },
+        "nodes": 1875043,
+        "edges": 2642414,
+        "node_width_bytes": 32,
+        "edge_width_bytes": 16,
+        "retained_index_bytes": 72279328,
+        "index_additive_bytes": 197715244,
+        "maximum_single_neighborhood_array_bytes": 84877248,
+        "output_inclusive_buffer_bytes": 367469740,
+        "mcm_output_bytes": 240005504
+      },
+      {
+        "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+        "role": "graph_20220516",
+        "manifest": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/manifest.json",
+          "sha256": "ee16ce45ea27ef1feea1a4b09438d7ef67f1ee4c5cbbcc4f60bab1246a558b04"
+        },
+        "headers": {
+          "node_features": {
+            "shape": [
+              2048710,
+              4
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "f501aec2ab4b5756d0520fb619beff5276c9a9fa21fe097d50ce6f010f031121",
+            "member_sha256": "8daf460acd142a6ef5b5a690d789bb336f456ff94e6de57a85b91dd5e1013c09",
+            "member_bytes": 65558848,
+            "stat_identity": [
+              66310,
+              8300439,
+              1,
+              65558848,
+              1791252813068997968,
+              1791252813068997968
+            ]
+          },
+          "edge_index": {
+            "shape": [
+              2,
+              2812471
+            ],
+            "dtype": "<i8",
+            "header_bytes": 128,
+            "header_sha256": "35fe00225c465f072ea0f215531e134fcb4b3c2aca2608d804234e6a41cb5bf4",
+            "member_sha256": "ad6674d06da19ed82b3edb17375840d49678bafab22cd65008761857400b016c",
+            "member_bytes": 44999664,
+            "stat_identity": [
+              66310,
+              8300437,
+              1,
+              44999664,
+              1791252817255917803,
+              1791252817255917803
+            ]
+          },
+          "edge_features": {
+            "shape": [
+              2812471,
+              2
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "da85799ea64096dbbd0ceecde17d7329905546fb0c9eab89519129398252b32a",
+            "member_sha256": "f36d977845d9f62012ac16042995e78323f77623ac249421865dd2dd58167428",
+            "member_bytes": 44999664,
+            "stat_identity": [
+              66310,
+              8300441,
+              1,
+              44999664,
+              1791252819471875448,
+              1791252819471875448
+            ]
+          }
+        },
+        "nodes": 2048710,
+        "edges": 2812471,
+        "node_width_bytes": 32,
+        "edge_width_bytes": 16,
+        "retained_index_bytes": 77778912,
+        "index_additive_bytes": 213577088,
+        "maximum_single_neighborhood_array_bytes": 90319072,
+        "output_inclusive_buffer_bytes": 394215232,
+        "mcm_output_bytes": 262234880
+      },
+      {
+        "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+        "role": "graph_20220606",
+        "manifest": {
+          "dataset": "eth",
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/manifest.json",
+          "sha256": "dfca930e8f7daf3f4a17096360b20925f0473a8cd297c00943d06f627ec8487f"
+        },
+        "headers": {
+          "node_features": {
+            "shape": [
+              1581761,
+              4
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "2b7cce2f9eb133687a817503f43e860e2650aa2d31534370f253267ed8b52d7c",
+            "member_sha256": "610e35b606df179edcb1c95a91ef3e8677b3c3a69784c88176a82f7963734608",
+            "member_bytes": 50616480,
+            "stat_identity": [
+              66310,
+              8443978,
+              1,
+              50616480,
+              1791272817873037331,
+              1791272817873037331
+            ]
+          },
+          "edge_index": {
+            "shape": [
+              2,
+              2355230
+            ],
+            "dtype": "<i8",
+            "header_bytes": 128,
+            "header_sha256": "083d94dfb11b9d69889842ac211016675354131b6c52b57ba1edfc08ee7437fd",
+            "member_sha256": "3366408e13a0b047108996c25aadf3f6d3d0481b3214ed7206566efacfee642b",
+            "member_bytes": 37683808,
+            "stat_identity": [
+              66310,
+              8443984,
+              1,
+              37683808,
+              1791272818047036404,
+              1791272818047036404
+            ]
+          },
+          "edge_features": {
+            "shape": [
+              2355230,
+              2
+            ],
+            "dtype": "<f8",
+            "header_bytes": 128,
+            "header_sha256": "d79186ff7a6ed1a5aac2d5ac3d318713c9cc2749f915fd629b507a29cc9073d5",
+            "member_sha256": "76fa5d82b60514e5b0624952b1e7a350bb9e0029b836dc627b41b9c43396b3d7",
+            "member_bytes": 37683808,
+            "stat_identity": [
+              66310,
+              8443985,
+              1,
+              37683808,
+              1791272818096036143,
+              1791272818096036143
+            ]
+          }
+        },
+        "nodes": 1581761,
+        "edges": 2355230,
+        "node_width_bytes": 32,
+        "edge_width_bytes": 16,
+        "retained_index_bytes": 62991872,
+        "index_additive_bytes": 170928436,
+        "maximum_single_neighborhood_array_bytes": 75687360,
+        "output_inclusive_buffer_bytes": 322303156,
+        "mcm_output_bytes": 202465408
+      }
+    ],
+    "max_buffer_required": 439582708,
+    "max_output_required": 289981568,
+    "qualification": "Metadata reservation only; header observations are not fresh body authentication, peak RSS or capacity proof."
+  },
+  "no_empirical_execution": true
+}

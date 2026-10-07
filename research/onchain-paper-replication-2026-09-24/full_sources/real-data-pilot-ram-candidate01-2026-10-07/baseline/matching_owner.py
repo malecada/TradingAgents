@@ -67,10 +67,9 @@ def metadata(path,root):
 def _guard(run,p,guard_owner,base):
     ad=run.admission
     args=SimpleNamespace(root=ad.root,registration=ad.registration,experiment=ad.experiment_id,source=ad.source)
-    pilot_context=(ad,json.loads(run.read_input('execution_job'))) if p['reserve_bytes']<3*resources.GIB else None
     live=resources.assert_guarded_worker(base/'guard',job._command(args,'worker'),
         required_paths=[Path(x) for x in p['disk_paths']],wall_seconds=p['wall_seconds'],
-        memory_max_bytes=p['memory_max_bytes'],memory_high_bytes=p['memory_high_bytes'],disk_floor_bytes=p['disk_floor_bytes'],pilot_context=pilot_context)
+        memory_max_bytes=p['memory_max_bytes'],memory_high_bytes=p['memory_high_bytes'],disk_floor_bytes=p['disk_floor_bytes'])
     require(equal(live.get('owner_identity'),guard_owner),'guard owner differs from admitted claim')
     require(all(k in live and equal(live[k],v) for k,v in p.items()),'guard policy differs from registration')
     require(type(live.get('monitor_pid')) is int and live['monitor_pid']==guard_owner['monitor_pid'],'live monitor differs from retained owner')

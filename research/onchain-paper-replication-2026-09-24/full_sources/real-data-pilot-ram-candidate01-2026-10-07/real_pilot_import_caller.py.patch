@@ -1,0 +1,37 @@
+--- tradingagents/research/onchain_replication/real_pilot_import_caller.py
++++ tradingagents/research/onchain_replication/real_pilot_import_caller.py
+@@ -114,6 +114,16 @@
+ 
+ 
+ 
++def _amended_host_reserve(p):
++    # Exact prospective amendment only; admission remains the caller's duty.
++    expected={'memory_max_bytes':6*GIB,'memory_high_bytes':5*GIB,
++              'reserve_bytes':5*GIB//2,'start_reserve_bytes':17*GIB//2,
++              'disk_floor_bytes':10*GIB}
++    return (all(type(p.get(k)) is int and p[k]==v for k,v in expected.items())
++            and type(p.get('storage_budget')) is dict
++            and p['storage_budget'].get('schema_version')==2)
++
++
+ def _finite_resources(p):
+     """Registered finite envelope, bounded by the existing job authority.
+ 
+@@ -125,7 +135,7 @@
+     require(type(p) is dict and set(p)==fields, 'explicit real pilot resource fields required')
+     numeric=fields-{'disk_paths','storage_budget','native_unit_limits'}
+     require(all(type(p[k]) is int and 0<p[k]<2**63 for k in numeric), 'finite integer resource limits required')
+-    require(p['memory_high_bytes']<=p['memory_max_bytes']<=6*GIB and p['reserve_bytes']>=3*GIB
++    require(p['memory_high_bytes']<=p['memory_max_bytes']<=6*GIB and (p['reserve_bytes']>=3*GIB or _amended_host_reserve(p))
+             and p['start_reserve_bytes']>=p['memory_max_bytes']+p['reserve_bytes'], 'existing job memory/reserve authority exceeded')
+     require(p['wall_seconds']<=28800 and p['disk_floor_bytes']>=10*GIB, 'existing job disk/wall authority exceeded')
+     paths=p['disk_paths']
+@@ -399,7 +409,7 @@
+         watch=WritableUnion(budget,run.admission.root)
+         from .resources import assert_guarded_worker
+         limits=job['resources']
+-        live=assert_guarded_worker(run.admission.root/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/run.admission.experiment_id/'guard',__import__('sys').orig_argv,required_paths=[run.admission.root],wall_seconds=limits['wall_seconds'],memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'],disk_floor_bytes=limits['disk_floor_bytes'])
++        live=assert_guarded_worker(run.admission.root/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/run.admission.experiment_id/'guard',__import__('sys').orig_argv,required_paths=[run.admission.root],wall_seconds=limits['wall_seconds'],memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'],disk_floor_bytes=limits['disk_floor_bytes'],pilot_context=(run.admission,job))
+         require(live.get('storage_budget')==budget,'worker/monitor writable scopes differ')
+     else:watch=StorageWatch(run.admission.root,budget['limits'])
+     watch.check()

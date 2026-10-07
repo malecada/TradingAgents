@@ -1,5 +1,67 @@
 # Current replication checkpoint
 
+**TOP 2026-10-07T14:55:18.451309+00:00: all-seven index capacity correction implemented and independently accepted; modest RAM amendment adopted in live source, no numerical job or16claim.**
+
+Actual metadata/header calculation: June13index additive187338120B vsold1048576B; maximum complete-neighborhood output-inclusive allowance439582708B and one-MCM numeric reservation729564276B (largestMCM289981568B). Exact two-field mcm numeric policy amendment preserves chunk4096/output ceiling/original extraction/matching. Candidate executable index_capacity validates all7authenticated manifests/21boundedheaders before arrays.29focused offline checks; actual7metadata pass inD16/ACTUAL_EARLY_CAPACITY01. Narrow independent source reviewe9af09d9 and entry seam1bc99add accepted. No wholeRSS/capacity/throughput/numerical completion inferred.
+
+User8.5GiBstartup=6GiBcap+2.5GiBhostreserve/5GiBhigh/zeroSwap/10GiBfloor implemented across4exact authenticated-pilot guard consumers; legacy3GiBdefaults/import behavior retained.71focused checks; source4hashes adopted, strictstorage15→16 identityonce. Source adoption setup mistakenlyexpectedgenericreviewdecision refusedbeforemutation; original075264 andcorrection retained. D16templates/rootIO/preflight/successor drafted; originalscientificmethod32motifs512samples/sevenfullgraphs/16decisions unchanged. No87allowance/release/attempt.
+
+Pilot15permanentFAILED/spent86/RootParentnative1/cleanupverified/0pairsMCMupdatesfits; independentoutcome1c9358bc accepted. Exact54regular487144B+26directories80names localcaptureverified614400B tarba6e2d6c; actualexternalfreshrecoverypending.56closed33C23F/highest86/28pending/twoclosedpreclaimreserves preserved. Archive73GBlogicalreservation is not measuredphysicalwire. Rootaloneintegration/accounting/STATE/Git/externalpreservation/one launcher. Two workerscomplete; reviewer completedsource+changedentryseams, awaitingactualreturned15archive. Nextcommit/pushexactacceptedsource/outcomeincrement,freshrecover15thenbindsource/context/baseline/transport/cumulative87 andonefresh16exactrelease/eligibility. BroadworkheartbeatPAUSED; representativeappgoalACTIVE/incomplete/all1420fitspending.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-07T14:42:50.894750+00:00: representative pilot goal ACTIVE again; pilot15 remains permanently FAILED, no native numerical job active.**
+
+Root sole integration/registration/accounting/preservation/one native launcher. Three bounded NEW-directory owners active: index_capacity16 diagnoses all7 graph buffer requirements and implements fail-fast capacity candidate; ram_policy16 implements exact authenticated8.5GiBstartup/2.5GiBreserve branch preserving6GiBcap/5GiBhigh and legacy defaults; outcome15_review verifies actual failed15 and its incremental public retention scope. Existing source1f0894a2 unchanged. No87 allowance or fresh claim.56closed33C23F/highest86. Pilot15 Root/Parent/native1,cleanup verified,0MCM/pairs/updates.
+
+Next integrate the bounded exact-method index correction and modest user RAM amendment after focused review, retain/recover actual15 increment, freeze one fresh eligible registration before execution. No source/Git freeze active while no native job runs. Original32motifs512samples/sevenfullgraphs/16decisions remain. Separate broad13-task/1420-fit work and heartbeat remainPAUSED; existing representative pilot app goal is ACTIVE peractualget_goal.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-07T14:33:16.611373+00:00: pilot15 permanently FAILED; no native numerical job active. Source/Git freeze ENDED after actual Root exit and verified cleanup.**
+
+Pilot15 stopped after 2592.6046s (43m12.6s), ended at 2026-10-07T14:12:48Z (16:12 Europe/Prague). Root39936/cc0a30 actualexit1, originalParent1/nativechild1. [Actual terminal](full_sources/real-data-pilot-final15-2026-10-07/ROOT_TERMINAL01.json) joins original receipts and current all4 recorded PIDs absent/cgroup gone/unitfailed/MainPID0. Never relaunch spent15. Source1f0894a2 remains unchanged.
+
+Archive idle-boundary fix passed into compute. NEW primary ValueError: neighborhood index buffer allowance exceeded in ArrayNeighborhoodIndex.__init__, before the first numerical motif comparison. The additive index/scratch admission exceeds its registered allowance; required/allowed exact byte values have not yet been diagnosed. Original dictionary import completed (216.8133s). First graph attempt FAILED (505.1388s); remaining6 unavailable. 0 completed MCM graphs, 0 started/acknowledged matching pairs, 0 joint updates, 0 paper financial fits. Three original partial-progress records retained. Actual representation root25448ca4/eth-paper-real-data-end-to-end-resource-20261007-15 remains preserved.
+
+Sampled charged peak5368913920B (~5GiB, includes file cache); HIGH1697/MAX0/OOM0/no elapsed-time kill. Minimum sampled diskfree25999548416B; no reported disk-floor breach. Whole capacity, useful feature throughput and training time remain unestablished. Genuine FAILED claimae9bdf05 retained; accounting56closed33COMPLETE23FAILED/highestactuallyclaimed86,28pending/twoclosedpreclaimreserves unchanged. No87 allowance/refund/transfer/cap ladder.
+
+Root sole Main/Git/accounting/STATE/preservation; all bounded assignments finished. Next preserve/review/freshly recover only actual15 outcome increment, diagnose whole-graph index demand from existing metadata and registered policy, then implement a bounded exact-method correction before any fresh reviewed attempt. No deletion or spent15 restart. Broadwork/goal/heartbeat remainPAUSED; representative end-to-end pilot incomplete/all1420paperfitspending.
+
+Goal continuation updated 2026-10-07T14:37:04.728540+00:00: [pilot goal resumption instructions](PILOT_GOAL_RESUME.md) prioritize exact seven-graph index-demand diagnosis and fail-fast capacity checks, bounded faithful correction, focused review and one fresh admitted attempt. Existing app goal remains PAUSED for the user to resume; broader work/heartbeat not reactivated.
+
+User RAM amendment 2026-10-07T14:39:08.102949+00:00: next fresh pilot target8.5GiBavailable/6GiBhardcap/5GiBhigh/2.5GiBhostreserve, exact [override](full_sources/real-data-pilot-ram-amendment01-2026-10-07/NEXT_PILOT_RESOURCE_OVERRIDE01.json). Prepared, not released: integrate narrowly into both startup/native worker validators and next reviewed registration alongside index correction. Historical15 unchanged; no launch/claim/87allowance.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-07T13:46:21.437424+00:00: pilot15 still running; original dictionary import complete, no MCM producer start observed yet. Source/Git freeze ACTIVE.**
+
+Follow ONLYRootsession39936/affbd7/source1f0894a2; no duplicate/relaunch. Actual nativeunit active/MainPID18826, guardphaserunning/elapsed1004.4s/limitreasonNone; chargedmemory5136134144B/peak5368913920B, HIGH1697/MAX0/OOM0, disk~26.02GB. Soft-high reclaim events observed; no reported limitviolation. No terminal/failed/complete/pilotsummary or trainingupdate. Actual representationrootis25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261007-15, not the older997fd8db namespace. Originalimport-complete andarchive-operations/start markers exist; noMCMproducerstart markersobserved inactualcompacttree. Longtarget/graphchecks andpreparation remainbefore numericalmatching.0completedMCM/jointupdates/financialfits observed; no fullcapacity/throughput claim.
+
+55closed33C22F plusONE15active/highest86; original14failedincrement/recovery and900refexactrelease remainaccepted. RootsoleMain/Git/accounting/STATE/preservation/ONElauncher, allagentscomplete. NoMain/source/GitmutationuntilactualRootIOclosure/nativecleanup. Nextmonitoractual25448ca4root/39936 phaseprogress/resources,retainterminalclosurecleanup thenoutcome/incrementfreshrecovery. Broadwork/goal/heartbeat remainPAUSED; directrepresentativepilot active.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-07T13:31:14.388034+00:00: ONE fresh pilot15 genuinely claimed/running. Source/Git freeze ACTIVE.**
+
+Follow ONLYRootsession39936/affbd7; neverrelaunch15. Source andactualremote1f0894a2c15a1d544ba3ac6c35893dfe53068b6a matched actualpush88953/86114eexit0 andremoteread63341/6e2679exit0. Supervisor18169/monitor18501/nativeonchain-replication-83a4897f7f244c0ebb19910b03181d4a.service. [Actual active receipt](full_sources/real-data-pilot-final15-2026-10-07/ROOT_ACTIVE01.json) joins genuine86claim/fullpreflight; startupRAM11149832192B/disk26011308032B passed. Guardelapsed97.0s/memorycurrent1389506560B/limitreasonNone; realdataworkerinitialsetup active.0completedMCM/jointupdates/financialfits observed. No wholecapacity/throughput/numericalagreement yet.
+
+Explicitarchiveidle-boundaryfix3ccfdedd/SOURCEb1af2659: forcedboundary performsoriginalfullhistoryauditafteridle withduration<60s, sampledoldage/poisoned/policyclock/content/namespace/claim/owner/counterchecks preserved. Originalscientificmethod/32motifs512samples/sevenfullETHgraphs/16decisions/16moduleinit/importauthority60s/nativecaps unchanged.179package177unchanged sourceanchor03152484/metadataed093531/293source59input/genuinecommittedreadonly86/bindingf8546603 accepted. Interruptedremainingrelease completedindependently/900ref exactrelease010c01c4 accepted/copiedverbatim/committed; no unchangedmatrix repeated.
+
+Pilot14 permanentlyFAILED85/47file62name actualincrementfreshrecovery8fc97aad accepted, exacthistoricalstaleageunknown preserved.55closed33COMPLETE22FAILED plusONE15active/highest86; pending28/twopreclaimreserves retained, no refund/transfer/capladder/rerun. Allboundedagentscomplete; RootsoleMain/accounting/STATE/Git/preservation/ONElauncher. No Main/source/Git mutation untilactualRootIOclosure/nativecleanup. NextmonitorONLY39936 actualphase/resources; retainactualterminal/IOclosure/cleanup thenindependentlyreview/incrementallyfreshrecovereveryattempted/unavailableoutcomebeforecontinuation. Broadwork/goal/heartbeat remainPAUSED; directrepresentativepilot continues.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-07T13:28:36.014987+00:00: fresh15 exactly released after interrupted final review; no15attempt/claim or native numerical job active.**
 
 Archiveidle-boundarycandidate3ccfdedd/SOURCEb1af2659 adopted03152484; explicitforcedfullhistoryauditafteridle, duration<60s/sampledstaleandpoisonedchecks preserved. Originalscientificmethod/16moduleinit/nativephysicalcaps/importauthority60s unchanged. Metadataed093531/179package177unchanged/293source59inputs and genuinecommittedreadonly86 atf25c1063 accepted. Concretebindingf8546603/finalba169938 exactstatus+reviewref inverse accepted. Interruptedremainingrelease independentlycompleted inNEWremaining-release-review01;900ref conditionalrelease010c01c4 copiedverbatimD15/RELEASE_REVIEW01. No unchanged testmatrix or new numericalexecution repeated.
