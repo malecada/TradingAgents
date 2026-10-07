@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-07T15:28:07.119353+00:00: modest RAM reduction implemented; released unused16 deferred on instantaneous startup RAM. No16 claim or numerical job.**
+
+Startup8.5GiB (9126805504B), nativehard6GiB/high5GiB/swap0/hostreserve2.5GiB/diskfloor10GiB; exact authenticated guard changes and seven-graph index correction independently accepted. No method/data/cap ladder change. Final release947refs aa6070c7 and bindingbff84688 remain accepted. Actual final commit/remote df77e809f8649ff4a7dbbc62535881fa5514ee40; push60485/83d228 exit0, actual readback72689/4673b0 matched. [Remote receipt](full_sources/real-data-pilot-final16-2026-10-07/REMOTE_CONFIRMATION01.json) proves Git availability only.
+
+[Current RAM deferral](full_sources/real-data-pilot-final16-2026-10-07/RAM_DEFERRAL01.json): available8732876800B, shortfall393928704B, diskfree26005991424B vs modeled24477797923B requirement. No active selected process/unit, fresh16 namespaces and launch/claim absent; historical FAILED15 preserved.56closed33C23F/highestclaimed86; reviewed87 unused,28pending/two closed preclaim reserves unchanged. Useful MCM throughput/joint training/whole capacity still unmeasured.
+
+Next safe action: once fresh MemAvailable>=9126805504B, check current processes/claims/namespaces and actual committed remote, then invoke D16/root_io.py ONCE. Original exact preflight validates all7 index requirements/source/runtime/whole storage/native eligibility before launch. Do not relaunch15 or lower the threshold further automatically. Source/GitfreezeENDED until launch; Rootsole integration/accounting/preservation/ONElauncher, allboundedagentscomplete. RepresentativegoalACTIVE/incomplete; broadheartbeat/1420-fit workPAUSED. Retain/review/freshlyrecover actual outcomes before dependent continuation.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-07T15:23:13.697399+00:00: unused16 exactly conditionally released; no numerical job/16claim.**
 
 Corrected02METADATAbb2cf631/committede5785017/actualreadonly59485→2adf7b exit0 ready87/298sources59inputs; concretebindingc31b6371/finalbff84688 accepted. Exact947ref releaseaa6070c7 copiedverbatimD16/RELEASE_REVIEW01. All3metadatafindings+Root/review setup failures preserved; selected02 resolvesnamespace16/pair14c683b3/budgetsourceclosure. Original01 and private01 remainWITHHELD, no historicalrerun.
