@@ -1,5 +1,15 @@
 # Current replication checkpoint
 
+**TOP 2026-10-07T15:30:03.660924+00:00: representative pilot goal BLOCKED on startup RAM after three consecutive turns; no pilot16 attempt/claim/native job.**
+
+Latest actual check ac977d: MemAvailable8599482368B (8.009GiB), short527323136B (~503MiB) of reviewed9126805504B (8.5GiB); disk26002747392B sufficient. Same RAM admission blocker persisted across reduced-threshold user turn and two goal continuations. No active native unit/16claim/launch-attempt. Exact release/configuration remains ready;6GiBcap/5GiBhigh/2.5GiBreserve/10GiBdiskfloor/method/data unchanged. No further automatic threshold reduction or spent rerun. Final configuration/checkpoint commit839282f4d5e96b7bf5682ffc0a4108f14db456b7 was actually pushed55041/f1171b and remote readback40255/57bfac matched; Git availability only.
+
+Resume when fresh available RAM>=9126805504B. Next check current agents/claims/processes/namespaces/actual remote and launch ONE unused16 RootIO after its original full eligibility checks. All implementation/release and actual15 recovery evidence remains accepted; no independent functional work can remove this instantaneous host-resource dependency.56closed33C23F/highest86/reviewed87unused. Rootsoleintegration/accounting/preservation/ONElauncher;allboundedagentscomplete. Representative goal incomplete/BLOCKED; broadheartbeat/1420-fit workPAUSED. No source/Git freeze active.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-07T15:28:07.119353+00:00: modest RAM reduction implemented; released unused16 deferred on instantaneous startup RAM. No16 claim or numerical job.**
 
 Startup8.5GiB (9126805504B), nativehard6GiB/high5GiB/swap0/hostreserve2.5GiB/diskfloor10GiB; exact authenticated guard changes and seven-graph index correction independently accepted. No method/data/cap ladder change. Final release947refs aa6070c7 and bindingbff84688 remain accepted. Actual final commit/remote df77e809f8649ff4a7dbbc62535881fa5514ee40; push60485/83d228 exit0, actual readback72689/4673b0 matched. [Remote receipt](full_sources/real-data-pilot-final16-2026-10-07/REMOTE_CONFIRMATION01.json) proves Git availability only.

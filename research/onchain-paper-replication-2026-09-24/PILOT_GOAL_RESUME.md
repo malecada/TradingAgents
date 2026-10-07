@@ -1,5 +1,7 @@
 # Representative real-data pilot — goal resumption instructions
 
+Latest status: BLOCKED on 8.5GiB startup RAM after three consecutive verified deferrals. The pilot is incomplete and unused16 remains ready. Resume after host resource change; current TOP supersedes older ACTIVE statements below.
+
 Updated 2026-10-07T14:37:04.728540+00:00. The existing app goal is ACTIVE again, verified on resumption. Its objective already matches this milestone. This checkpoint supplies the concrete continuation, without creating a new goal, restarting broader research or reactivating the separate heartbeat.
 
 ## Current evidence and next executable action
