@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-07T15:23:13.697399+00:00: unused16 exactly conditionally released; no numerical job/16claim.**
+
+Corrected02METADATAbb2cf631/committede5785017/actualreadonly59485→2adf7b exit0 ready87/298sources59inputs; concretebindingc31b6371/finalbff84688 accepted. Exact947ref releaseaa6070c7 copiedverbatimD16/RELEASE_REVIEW01. All3metadatafindings+Root/review setup failures preserved; selected02 resolvesnamespace16/pair14c683b3/budgetsourceclosure. Original01 and private01 remainWITHHELD, no historicalrerun.
+
+Independent source/index/RAMentry/adoption andactual15incrementfreshrecovery5e05f464 accepted. Sourceanchor f35/179package5changed174same. All7buffer439582708B+MCM289981568B=729564276B, originalalgorithm/method32motifs512samples/7fullETHgraphs/16decisions unchanged. Userstartup8.5GiB=6GiBcap+2.5reserve/5high/zeroSwap/10GiBfloor; no capladder.56closed33C23F/highestactuallyclaimed86; genuine87reviewe8f42073=56+28pending+2closedpreclaims+ONEunused16, notclaimed. Wholecapacity/throughput/trainingtime unproven.
+
+RootsoleMain/accounting/STATE/Git/externalpreservation/one launcher; all3boundedworkers/reviewercomplete. Nextfinalcommit/push/actualremote/currenteligibility then atmostONEunused16RootIO (originalfullpreflight includesall7earlyindexcheck); retain actualterminal/cleanup, independentlyverify/recover everyattempted/unavailableoutcome beforedependentcontinuation. SourceGitfreezeENDED untillaunch. BroadworkheartbeatPAUSED; representativegoalACTIVE/incomplete/all1420financialfitspending.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-07T15:15:31.588487+00:00: fresh16 corrected metadata accepted; no numerical job/16claim.**
 
 Sourceanchor andactualremote f35e983a25dc777574b653e6644f0e2badf350f5 (push55428/33f7ac0; actualfreshrecover46071/b95912). Actual15increment54files487144B+26dirs80names freshlyexternalGitreturned614400B ba6e2d6c, independentlyaccepted5e05f464.15permanentFAILED86/56closed33C23F. No refunds/transfers/reruns/deletion.
