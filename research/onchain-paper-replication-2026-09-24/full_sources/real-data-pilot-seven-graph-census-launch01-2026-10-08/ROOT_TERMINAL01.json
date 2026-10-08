@@ -1,0 +1,79 @@
+{
+  "actual_pids_present": {
+    "572736": false,
+    "572742": false,
+    "572746": false
+  },
+  "actual_unit_readback": "MainPID=0\nResult=success\nExecMainStatus=0\nControlGroup=\nActiveState=inactive\nSubState=dead\n",
+  "at": "2026-10-08T12:57:14.354108+00:00",
+  "center_count": 12999004,
+  "centers_over_10000": 241,
+  "cgroup_absent": true,
+  "disk_free_after": 25873874944,
+  "elapsed_native_seconds": 6.718131616999017,
+  "graph_count": 7,
+  "guard": {
+    "bytes": 10068,
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/engineering/eth-seven-graph-weak-one-hop-census-20261008-01/guard/final.json",
+    "sha256": "dd2019665ae41b3e1a1d2b99c249f75fa86f2170d9f8011c151b7ec5bcc3fffa"
+  },
+  "largest_weak_one_hop": 350110,
+  "qualifications": [
+    "Topology census only; no original samples recomputed, MCM, graph-matching, training, checkpoint or financial-fit credit.",
+    "Memory includes cgroup charged cache; vector payload/storage excludes shared empirical inputs and unrelated stores.",
+    "No complete-neighborhood edge/pair-state bounds or scientific whole-capacity claim.",
+    "Before/after observed stability does not establish writer exclusion."
+  ],
+  "request": {
+    "bytes": 3492,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seven-graph-census-launch01-2026-10-08/REQUEST01.json",
+    "sha256": "7c80faed623a172fe48600d9647d5b5610e2202d0ef45ff49274d8b2e02d99a7"
+  },
+  "root_io": {
+    "actual_exit_code": 0,
+    "session": 87630,
+    "stdout": "{\"identity\": \"eth-seven-graph-weak-one-hop-census-20261008-01\", \"phase\": \"complete\", \"child_exit_code\": 0}\n",
+    "terminal_chunk": "2bce77"
+  },
+  "sampled_memory_current_peak_bytes": 288305152,
+  "source_commit": "c7fb21a5e4c32b4de4a65b7a6d7be031077845ea",
+  "source_freeze": "ENDED after actual terminal/cgroup cleanup",
+  "storage_peak_allocated_bytes": 104415232,
+  "summary": {
+    "bytes": 52728,
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/engineering/eth-seven-graph-weak-one-hop-census-20261008-01/results/SUMMARY01.json",
+    "sha256": "db189e23d44799ef5656fd8b89b243d262127d73707640a1057e27452de019e7"
+  },
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 221511680,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 10092544,
+        "file_bytes": 207740928,
+        "kernel_peak_bytes": 292237312,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-bcc473f1c2be4889a58968fbb72b4466.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=16348\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=16348",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 5575245824,
+        "file_bytes": 4432429056,
+        "kernel_peak_bytes": 14248632320,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=3044341\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3023500",
+        "swap_current_bytes": 300613632,
+        "unavailable": {}
+      }
+    }
+  }
+}

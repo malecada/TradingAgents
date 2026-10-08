@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T13:04:45.682076+00:00: actual seven-graph topology census COMPLETE and independently verified. No numerical job; goal ACTIVE/incomplete. Pilot19 remains permanently FAILED/spent90.**
+
+One-use topology-only engineering identity eth-seven-graph-weak-one-hop-census-20261008-01 ran once from committed/remote c7fb21a5e4c32b4de4a65b7a6d7be031077845ea: original87630/2bce77 Rootexit0/nativechild0/6.718s, all7graphs COMPLETE. [Actual terminal](full_sources/real-data-pilot-seven-graph-census-launch01-2026-10-08/ROOT_TERMINAL01.json)224b0398 retains all3PIDsabsent/gonecgroup/cleanup, zeroOOM+jobswap, kernelchargedpeak292237312B/sample288305152B and sampledownedallocated104415232B. Wholecaller6.321s/3.002CPU/ru_maxrss139204KiB are qualified separately; no scientific whole-capacity claim.
+
+[Independent outcome](full_sources/real-data-pilot-census-input-review01-2026-10-08/outcome-review01/CHECKS01.json) verifies all54chunks/all12,999,004counts plus selected0/max independent-set checks. Maximum complete weak-one-hop cardinalities byweek May2/9/16/23/30/June6/13 are146828/297818/350110/261197/117926/105863/140562. Exactly241centers exceed10000 (33/34/40/35/33/32/34). No truncation/IDs/features/labels/matching/fitting occurred; original32motifs/512spent and originalconfig10000 unchanged. Observed stable input bytes are not writer exclusion.
+
+[Actual incremental capture](full_sources/real-data-pilot-seven-graph-census-increment01-2026-10-08/CAPTURE01.json) retains87names/77files/10dirs/104125047B as deterministic5657046BgzipPAX57f51aec, localreadback verified; actual external return pending. Root sole source/Git/preservation/launcher. [Hot-path adoption](full_sources/real-data-pilot-archive-hotpath-adoption01-2026-10-08/SOURCE_ADOPTION01.json)c6901f97 installs source-only accepted720c4b24/e20cf08e;26focusedchecks and literalinverse accepted7c1509fc. Synthetic full-audits100→1 per100hotleases preservesnative/transport/claim guards and1s/4096/60s schedule; no actual performance estimate or empirical release.
+
+Paper accounting59closed33COMPLETE26FAILED/highest90/28pending/3closedpreclaimreserves unchanged; topology engineering is separate and gives no paper fit credit/allowance91. No MCM/onejointupdate/checkpoint/financialfit completion. BroadheartbeatPAUSED. Worker pilot16_lock_trace owns only NEW complete-neighborhood-capacity-preparation01: deterministic all-target extraction/pair-state/normalization/checkpoint/file requirements and explicit optional target-extraction resource ceiling, preserving originaldictionary/sample identity. Root next actualpush/fresh external recovery ofcensusincrement, independent returned verification, then concrete capacity preflight and actual scoring-overhead measurement under reviewed future scope. Never blindraise10000, truncate hubs, skipcenters or reopen19.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T12:52:31.721538+00:00: no numerical job; pilot19 remains FAILED/spent90. Goal ACTIVE. New all-seven topology census is implemented; combined entry review pending.**
 
 Actual push70317/09bb28 and remote81196/70c55e both exit0 matched af7632b95780e6094062a46bdd3700eeb7fb1d74. Existing failed19 byte recovery2198b839 remains accepted; originals retained. Accounting59closed33COMPLETE26FAILED/highest90 unchanged; no prospective91 or new scientific claim.

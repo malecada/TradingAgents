@@ -128,7 +128,7 @@ class Ledger:
                 io._root(root,fd)
             finally:_close_descriptor(fd)
 
-    def _current(self, *, full):
+    def _current(self, *, full, sampled_evidence=False):
         require(not self._closed and not self._poisoned,'archive reservations are terminal')
         require(getattr(self.owner,'_archive_operations',None) is self,
             'archive reservation owner binding changed')
@@ -138,7 +138,9 @@ class Ledger:
         else:self.owner.lease()
         require(policy.writer.archive._transport(self.selection._transport) ==
             self.selection.record['policy']['transport_identity'],'archive endpoint changed')
-        owners.verify_current(self.owner)
+        if sampled_evidence is True and not full and self._history is not None and not hasattr(self,'_typed_expected'):
+            owners.verify_current(self.owner, sampled_archive_evidence=True)
+        else:owners.verify_current(self.owner)
         if self._history is not None:
             require(owners.cache_key(self._configuration())==self._identity and owners.cache_key(self._spent)==self._spent_sha,'live archive identity/accounting changed')
         self._evidence(sampled=not full)
@@ -166,7 +168,7 @@ class Ledger:
     def _live(self, operation):
         require(not operation._terminal and self._active is operation
             and self._operations.get(operation.root.name) is operation,'archive operation is terminal or replaced')
-        self._current(full=False);self._stage(operation._stage)
+        self._current(full=False, sampled_evidence=True);self._stage(operation._stage)
         require(not operation._terminal and self._active is operation
             and self._operations.get(operation.root.name) is operation,
             'archive operation revoked during callback')

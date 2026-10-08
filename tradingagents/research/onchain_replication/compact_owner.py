@@ -448,7 +448,7 @@ class Owner:
             self.poisoned = True; raise
 
 
-def verify_current(owner):
+def verify_current(owner, *, sampled_archive_evidence=False):
     """Callback-free final rejoin after an already successful live guard lease.
 
     Checks current claim, binding metadata and exact compact owner state. Does
@@ -476,7 +476,17 @@ def verify_current(owner):
             'current original attached archive ledger differs')
         # Ledger lives INSIDE journal, beside compact. The parent inventory above
         # is unchanged; only the genuine exact attached ledger is joined here.
-        ledger._evidence()
+        if sampled_archive_evidence is True and ledger._history is not None and not hasattr(ledger,'_typed_expected'):
+            # Only the explicit hot lease may sample registered closed history.
+            # Keep the ledger directory's canonical identity current on every call.
+            root,fd = io._open(ledger.root)
+            try:
+                require(io._signature(os.fstat(fd))[:2] == ledger._inode,
+                    'archive reservation directory changed')
+                io._root(root,fd)
+            finally:archive_owner_operations._close_descriptor(fd)
+            ledger._evidence(sampled=True)
+        else:ledger._evidence()
     require(not any(present(journal/name) for name in ('failed.json','complete.json')),
         'representation terminal marker exists')
     reader=matching_owner.metadata
