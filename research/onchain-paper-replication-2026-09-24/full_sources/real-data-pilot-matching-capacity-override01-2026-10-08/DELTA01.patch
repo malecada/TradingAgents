@@ -1,0 +1,127 @@
+--- compact_policy.py
++++ compact_policy.py
+@@ -5,6 +5,7 @@
+ here cover retained logical evidence only, excluding filesystem allocation,
+ graphs, numerical matrices, scratch, guard logs and preceding attempts.
+ """
++import copy
+ from .cache import cache_key
+ from . import matching_pair as pair, score_batches as io, compact_pair_log as log
+ 
+@@ -17,6 +18,28 @@
+ 
+ def positive(values):
+     require(all(type(v) is int and 0 < v < 2**63 for v in values), 'positive bounded integer required')
++
++
++PAIR_CAPACITY_FIELD = 'max_pair_entries_override'
++
++
++def pair_policy(value):
++    require(type(value) is dict and set(value) in (pair.POLICY_FIELDS,
++        pair.POLICY_FIELDS | {PAIR_CAPACITY_FIELD}), 'compact pair policy schema')
++    positive(value.values())
++    return {k: v for k, v in value.items() if k != PAIR_CAPACITY_FIELD}
++
++
++def effective_matching(config, policy):
++    """Copy original scientific settings; only an explicit capacity may increase."""
++    pair_policy(policy)
++    result = copy.deepcopy(config)
++    if PAIR_CAPACITY_FIELD in policy:
++        original = config.get('max_pair_entries')
++        require(type(original) is int and 0 < original < 2**63
++            and policy[PAIR_CAPACITY_FIELD] >= original, 'pair capacity cannot decrease original')
++        result['max_pair_entries'] = policy[PAIR_CAPACITY_FIELD]
++    return result
+ 
+ 
+ def dictionary_capacity(*, sample_count, size, partition_threshold, partition_size):
+@@ -59,7 +82,7 @@
+     require(type(pairs) is int and 0 <= pairs < 2**63 and (kind == 'dictionary' or pairs > 0),
+             'bounded pair occurrence count')
+     p = value['pair']; s = value['schedule']
+-    require(type(p) is dict and set(p) == pair.POLICY_FIELDS, 'compact pair policy schema')
++    pair_policy(p)
+     require(type(s) is dict and set(s) == SCHEDULE_FIELDS, 'compact schedule schema')
+     positive(p.values()); positive(s.values())
+     positive((value['score_chunk_cells'], value['max_retained_logical_bytes']))
+--- compact_matcher.py
++++ compact_matcher.py
+@@ -20,7 +20,7 @@
+ from .matching_identity import graph_identity
+ 
+ require = io._require
+-from . import matching_checkpoint as engine
++from . import matching_checkpoint as engine, compact_policy
+ _RETENTION = WeakKeyDictionary()
+ 
+ 
+@@ -32,16 +32,20 @@
+     """Fatal to the worker; cannot become an ordinary unavailable cell."""
+ 
+ 
+-def _components():
++def _components(policy=None):
++    modules = (engine, engine.ann, engine.hard, engine.sparse, engine.ann.typed_identity)
++    if policy is not None and compact_policy.PAIR_CAPACITY_FIELD in policy:
++        modules += (compact_policy,)
+     return {Path(m.__file__).name + ':' + Path(m.__file__).parent.name:
+         hashlib.sha256(Path(m.__file__).read_bytes()).hexdigest()
+-        for m in (engine, engine.ann, engine.hard, engine.sparse, engine.ann.typed_identity)}
++        for m in modules}
+ 
+ 
+ def scope(config, context, policy, workload_sha256, schedule):
++    compact_policy.effective_matching(config, policy)
+     return {'workflow': workload_sha256, 'config': cache_key(config),
+         'context': cache_key(context), 'policy': cache_key({'pair': policy, 'schedule': schedule}),
+-        'numerical_source': cache_key(_components())}
++        'numerical_source': cache_key(_components(policy))}
+ 
+ 
+ def _file(path, size, expected):
+@@ -131,8 +135,8 @@
+         require(set(schedule) == {'operations_per_call', 'calls_per_checkpoint', 'max_checkpoints',
+             'max_total_checkpoints', 'max_total_checkpoint_bytes'}
+             and all(type(v) is int and 0 < v < 2**63 for v in schedule.values()), 'compact execution schedule')
+-        require(set(policy) == pair.POLICY_FIELDS and all(type(v) is int and v > 0 for v in policy.values()),
+-                'compact pair policy schema')
++        compact_policy.pair_policy(policy)
++        effective = compact_policy.effective_matching(config, policy)
+         require(schedule['max_checkpoints'] <= policy['max_publications'], 'checkpoint count exceeds pair policy')
+         require(pair.LIMIT + schedule['max_checkpoints'] * (policy['max_checkpoint_bytes'] + pair.LIMIT)
+             <= policy['total_checkpoint_bytes'], 'per-pair cumulative checkpoint budget insufficient')
+@@ -140,9 +144,10 @@
+             and log.start['max_iterations'] == config['max_iterations'], 'compact log execution scope differs')
+         require(durability_barrier is None or callable(durability_barrier), "optional coupled durability barrier")
+         self._durability_barrier = durability_barrier
+-        self.log = log; self.config = copy.deepcopy(config); self.context = copy.deepcopy(context)
++        self.log = log; self.original_config = copy.deepcopy(config)
++        self.config = effective; self.context = copy.deepcopy(context)
+         self.policy = copy.deepcopy(policy); self.schedule = copy.deepcopy(schedule)
+-        self.components = _components(); self.workload = workload_sha256; self.lease = lease
++        self.components = _components(policy); self.workload = workload_sha256; self.lease = lease
+         self.busy = self.poisoned = False
+         self.checkpoints = self.reserved_bytes = 0
+         self.root = log.root.parent / 'checkpoints'
+@@ -163,6 +168,10 @@
+ 
+     def _check(self):
+         self.lease(); self.log._check()
++        require(cache_key(self.original_config) == self.log.start['scope']['config']
++            and cache_key({'pair': self.policy, 'schedule': self.schedule}) == self.log.start['scope']['policy']
++            and self.config == compact_policy.effective_matching(self.original_config, self.policy),
++            'original/effective matching resource policy changed')
+         if self in _RETENTION:
+             require(self.retention is _RETENTION[self] and self.retention.matcher is self,
+                 'original matcher retention route changed')
+@@ -259,7 +268,7 @@
+             require(purpose.get('schema_version') == 1 and purpose.get('kind') in ('mcm', 'dictionary')
+                 and purpose.get('workload_sha256') == self.workload
+                 and purpose.get('typed_graphs') == [graph_identity(a), graph_identity(b)], 'compact matcher purpose differs')
+-            pair.policy_check(a, b, self.config, self.policy)
++            pair.policy_check(a, b, self.config, compact_policy.pair_policy(self.policy))
+             require(self.log.events + 2 + self.schedule['max_checkpoints'] <= self.log.start['limits']['max_events'],
+                     'insufficient completion/progress event capacity')
+             reserved = self.policy['max_checkpoint_bytes'] + 2 * io.META_LIMIT

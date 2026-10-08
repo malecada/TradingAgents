@@ -1,5 +1,21 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T14:10:41.346178+00:00: concrete checkpoint and throughput source corrections completed; exact combined review active. No native numerical job. Goal ACTIVE/incomplete; pilot19 permanently FAILED/spent90.**
+
+Census and actual fresh external BYTE recovery remain complete (e40ec45a; all7/all12,999,004;241oversized/max350110). Actual push68375/1ee77c and remote92824/3f3c15 both exit0 matched0592bc0acb5c8e0d361dbb3be7692ca80fde2642. This is committed Git availability, not fresh new-capsule/runtime recovery. Actual selected1GiB native file limit is distinct from4MiB capacity-calculator context; correction independently accepted8dc09f78.
+
+Functional implementation: [sharding](full_sources/real-data-pilot-sharded-checkpoint-candidate01-2026-10-08/REPORT02.md)90170c39 completed nine source files/43focused checks, independently accepteddbe9ceeb; maxchunk2097280B,132shard proof24623B under explicit64KiB controls,6357376B bounded I/O scratch checked. Actual synthetic Store checkpoint/replay/retirement/terminal route passed; no genuine scientific Owner or whole capacity claim. [Duplicate validation](full_sources/real-data-pilot-advance-validation-correction01-2026-10-08/REPORT01.md) removes one immediately repeated ann.check (public/full composite boundaries preserved;15trajectories178bitwise states+19existing checks independently accepted). [Explicit matching capacity](full_sources/real-data-pilot-matching-capacity-override01-2026-10-08/REPORT02.md) preserves original config/dictionary and all solver fields while binding nondecreasing resource override into existing scope/effective config/retention;14focused synthetic checks, independently unreviewed until combination.
+
+[Imported hot lease](full_sources/real-data-pilot-imported-live-history-adoption01-2026-10-08/SOURCE_ADOPTION01.json) source397537cb adopted after independent8dc09f78 acceptance: existing bounded archive-history sampling selected on live callback, full execution boundary/currentOwner/native/source checks retained. This changes observation timing only, needs prospective registered source disclosure; real speedup unmeasured.
+
+Root prepared [exact combined nine-source draft](full_sources/real-data-pilot-checkpoint-throughput-composition01-2026-10-08/COMPOSITION01.json), combining sharding+duplicatevalidation+capacityoverride with explicit both-field schema and existing genuine routes. Main numerical files unchanged. scoring_cost exclusively owns NEW composition-review01 with focused joint override+layout→actual synthetic archived retention path; other two bounded assignments complete. Root alone integration/registration/accounting/STATE/Git/preservation/ONElauncher.
+
+Accounting59closed33COMPLETE26FAILED/highest90/28pending/threeclosedpreclaimreserves unchanged; no91/admission/new claim. No completeMCM/jointupdate/checkpoint/fit or real corrected throughput yet. Full7graphs/original32motifs512spent/model/training/tolerances unchanged; broadheartbeatPAUSED. Next exact combined changed-seam acceptance then Root integrate/commit/push; select new complete-neighborhood kernel path without overwriting original import source, derive actual aggregate/extraction/matching/retention/storage limits, freeze finite genuine real-scoring throughput experiment and cumulative allowance before execution. Never blindly retry19, truncate hubs or alter historical dispositions.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T13:47:29.978256+00:00: topology census and its fresh external BYTE recovery COMPLETE; full pilot remains incomplete. No native numerical job. Pilot19 permanently FAILED/spent90.**
 
 The census covered all seven original graphs/all12,999,004 centers in6.718s. Independent returned-recovery acceptance [e40ec45a](full_sources/real-data-pilot-census-input-review01-2026-10-08/outcome-review01/returned-recovery01/MANIFEST01.json) verifies87 typed names/77 regular bodies104125047B from actual fresh external78e8527 Git recovery [3ce562af](full_sources/real-data-pilot-seven-graph-census-increment01-2026-10-08/FRESH_GIT_RECOVERY01.json). Original/bare/returned bodies retained; no runtime/input/POSIX/scientific recovery or deletion claim. Exactly241 complete neighborhoods exceed10000; max350110.

@@ -1,0 +1,5 @@
+# Imported live archive-history correction
+
+Candidate only. The existing imported sampled authority `_live` route invokes default `compact_owner.verify_current`, forcing archive evidence on each selected live check even after the separately accepted ledger hot-path correction. This one-keyword candidate selects the existing bounded sampled branch only at that hot route. The branch itself still requires a genuine registered history interval, refuses typed expected ledgers and checks the actual ledger directory on every call; legacy/no-history and typed routes retain default full validation.
+
+Identity, original Owner/Stage lease, scheduler/fingerprint/source/claim/native checks are unchanged. `_full` still invokes the original `ImportedExecution.check`, whose final default `verify_current` forces full archive evidence. Boundary validation and registration of changed observation timing remain required before empirical use. Synthetic call-routing checks are source proof only, not a genuine authority or measured speedup.

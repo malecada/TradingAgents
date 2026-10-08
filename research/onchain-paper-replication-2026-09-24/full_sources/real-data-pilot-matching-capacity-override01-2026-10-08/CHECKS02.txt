@@ -1,0 +1,26 @@
+.........F...                                                            [100%]
+=================================== FAILURES ===================================
+______________ test_effective_pair_checkpoint_retention_identity _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_effective_pair_checkpoint0')
+
+    def test_effective_pair_checkpoint_retention_identity(tmp_path):
+     (m,log,a,b,c,purpose,transport),original_c,p=setup_retained(tmp_path)
+     try:
+      assert original_c['max_pair_entries']==1 and c['max_pair_entries']==1
+      assert m.config['max_pair_entries']==4 and m.original_config==c
+      assert {k:v for k,v in m.config.items() if k!='max_pair_entries'}=={k:v for k,v in c.items() if k!='max_pair_entries'}
+      assert log.start['scope']['config']==cache_key(c)
+      assert log.start['scope']['policy']==cache_key({'pair':p,'schedule':m.schedule})
+      assert m.pair_identity(a,b)['ordered_pair']==matcher.engine.ann.identity(a,b,m.config)
+      assert m.retention.claim['config']==m.config and m.retention.claim['pair_policy']==p
+>     with pytest.raises(ValueError,match='matching capacity'):matcher.engine.create(a,b,c,**{k:p[k] for k in matcher.pair.ENGINE_FIELDS})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     AssertionError: Regex pattern did not match.
+E       Expected regex: 'matching capacity'
+E       Actual message: 'rank numeric capacity exceeded'
+
+research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-matching-capacity-override01-2026-10-08/test_capacity.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED ../../../../dev::test_effective_pair_checkpoint_retention_identity - A...
+1 failed, 12 passed in 0.73s

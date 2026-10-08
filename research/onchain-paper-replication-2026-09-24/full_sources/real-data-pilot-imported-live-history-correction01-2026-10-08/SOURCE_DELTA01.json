@@ -1,0 +1,13 @@
+{
+  "baseline": {
+    "path": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+    "sha256": "12d11a7a3f8b5cc07117f622978ce43ef537eab20ab80335b95eeb35cf4391bd"
+  },
+  "candidate_sha256": "397537cb1649bcff8e43824d4e1046cba61533e719b1e52160bfc33511e0ffeb",
+  "exact_inverse": {
+    "from": "        compact_owner.verify_current(self.owner, sampled_archive_evidence=True)\n",
+    "to": "        compact_owner.verify_current(self.owner)\n"
+  },
+  "execution_admitted": false,
+  "assumption": "The explicit imported hot live callback may use existing registered closed-history1s/4096/60s sampling; full imported boundary continues execution.check and its default full owner evidence. No change to native/current-owner/loaded-source or fingerprint checks."
+}
