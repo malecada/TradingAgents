@@ -1,0 +1,9 @@
+{
+  "baseline_path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+  "baseline_sha256": "fee6c3dfbcd5349493753f351a914b076d4bb835e8676f87e9d2b03e4f74fe97",
+  "candidate_sha256": "c7520b84b2f37cdb2676a26b281bcc3e7488bcbbad118f2f5225035749f117b2",
+  "inverse_exact": true,
+  "literal_after": "        from .real_pilot_storage import validate,experiment_name\n        require(p['schema_version']==2 and experiment_name(ad.experiment_id)==ad.experiment_id,'union requires named schema2 real pilot')\n        validate(budget,ad.root,experiment=ad.experiment_id)\n",
+  "literal_before": "        from .real_pilot_storage import validate,EXPERIMENT\n        require(p['schema_version']==2 and ad.experiment_id==EXPERIMENT,'union requires fixed schema2 real pilot')\n        validate(budget,ad.root)\n",
+  "scope": "Three-line leftover admission storage identity correction only. Genuine upstream resource binding and all subsequent source/Owner checks remain unchanged. No new identity authority or empirical launch."
+}

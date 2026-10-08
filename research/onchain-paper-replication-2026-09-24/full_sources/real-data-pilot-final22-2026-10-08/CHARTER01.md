@@ -1,0 +1,9 @@
+# Consolidated original-order real-data scoring diagnostic22
+
+One fixed fresh resource-only diagnostic measures the first1,024 original-order matching comparisons after reviewed retry consolidation and exact ordered-edge acceleration. Parent is null. Original32motifs/512spent samples and all seven whole original Ethereum weekly graphs remain preserved. Literal Algorithm1, scalar agreement, ordered float64 arithmetic, normalization, matching checkpoints, GAT, attentionLSTM, model/training configuration and tolerances remain fixed. No test-result tuning, resampling or clustering occurs.
+
+The original diagnostic planned stop remains permanent FAILED/spent with zero completeMCM/model update/financial credit. Pair-log acknowledgements and the1023-cell final tail are distinct because stop precedes the last tail append. No bounded prefix is substituted for the full end-to-end goal.
+
+Changes comprise same-boundary constructor/preparation reuse, bounded startup/retention/event/heartbeat measurement, genuine explicit identity forwarding, and the independently reviewed corrected1024-edge float64 accumulation chunk. Unsupported NumPy signaling/types/domains preserve the original scalar path. Candidate01 remains withheld with its actual exception regressions. Additional explicit scratch is262,144bytes; the exact registered scratch reservation is joined before admission. Native6GiBmax/5GiBhigh/2.5GiBstartup=reserve/swap0/twoCPUs/8hours/1GiBFSIZE/10GiBdiskfloor remain unchanged.
+
+The one-use claim requires exact committed source/configuration, genuine cumulative93review and full fresh entry/recovery release before execution. Previous claim21 remains FAILED and its actual declared public outcome has been independently externally recovered. All attempted/unavailable outcomes and original nulls are retained. Fullpilot storage/watch capacity, all seven complete MCMs, joint update/checkpoint and representative training/resource measurement remain required.

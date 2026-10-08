@@ -290,9 +290,9 @@ def admitted(ad, job, *, fresh_archive=False):
     require(ad.family['mechanism_id'] == 'celik-sefer-transaction-graph-full-neural-replication' and ad.experiment['cells'] == [p['cell_id']], 'separate one-cell resource pilot admission required')
     budget=job['resources']['storage_budget']
     if budget.get('schema_version')==2:
-        from .real_pilot_storage import validate,experiment_name
-        require(p['schema_version']==2 and experiment_name(ad.experiment_id)==ad.experiment_id,'union requires named schema2 real pilot')
-        validate(budget,ad.root,experiment=ad.experiment_id)
+        from .real_pilot_storage import validate,EXPERIMENT
+        require(p['schema_version']==2 and ad.experiment_id==EXPERIMENT,'union requires fixed schema2 real pilot')
+        validate(budget,ad.root)
         require(_source_authority_root(ad),'original source authority root required')
     else:
         require(Path(budget['root']) == ad.root and _source_authority_root(ad), 'complete isolated workspace watch required')
