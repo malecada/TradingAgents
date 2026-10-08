@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/root_io02.py", line 142, in <module>
+    args, preflight = check()
+                      ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/preflight02.py", line 223, in check
+    index_capacity=capacity_module.validate(ROOT,admission.inputs,
+        capacity_descriptor['resource_graph_inputs'],capacity_numeric,
+        capacity_descriptor['configs']['dictionary'])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity01-2026-10-07/candidate/index_capacity.py", line 108, in validate
+    report = inspect(root, inputs, graph_inputs, numeric, dictionary)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity01-2026-10-07/candidate/index_capacity.py", line 73, in inspect
+    require(type(numeric) is dict and set(numeric) == {'schema_version', 'max_buffer_bytes', 'edge_chunk', 'max_output_bytes', 'max_numeric_bytes'}
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and type(numeric['schema_version']) is int and numeric['schema_version'] == 1
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and all(type(numeric[k]) is int and 0 < numeric[k] < 2**63 for k in numeric if k != 'schema_version'), 'capacity numeric schema')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity01-2026-10-07/candidate/index_capacity.py", line 19, in require
+    raise ValueError(message)
+ValueError: capacity numeric schema

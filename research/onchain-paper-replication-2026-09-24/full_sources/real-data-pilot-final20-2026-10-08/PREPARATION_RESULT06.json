@@ -1,0 +1,3356 @@
+{
+  "builder03_result": {
+    "capacity_lower_bounds": {
+      "admitted_typed_attempt_count_bound": 38499,
+      "declared_allocated_growth_bytes": 13513030747,
+      "declared_logical_growth_bytes": 11058575392,
+      "largest_matrix_file_bytes": 289981568,
+      "mandatory_typed_attempt_directory_count": 38499,
+      "pair_archive": {
+        "chunks": 23600,
+        "commands": 472000,
+        "logical_bytes": 3702488745984,
+        "rounded_bytes": 3730320070656
+      },
+      "per_graph": {
+        "2022-05-02T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunks": 58,
+            "operations": 1,
+            "preserved_bytes": 240422400,
+            "recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "chunks": 1836,
+            "operations": 919,
+            "preserved_bytes": 480844800,
+            "recovered_bytes": 480844800
+          },
+          "score-tail-f64": {
+            "chunks": 3670,
+            "operations": 918,
+            "preserved_bytes": 4808448000,
+            "recovered_bytes": 4808448000
+          }
+        },
+        "2022-05-09T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunks": 70,
+            "operations": 1,
+            "preserved_bytes": 289981568,
+            "recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "chunks": 2214,
+            "operations": 1108,
+            "preserved_bytes": 579963136,
+            "recovered_bytes": 579963136
+          },
+          "score-tail-f64": {
+            "chunks": 4426,
+            "operations": 1107,
+            "preserved_bytes": 5799631360,
+            "recovered_bytes": 5799631360
+          }
+        },
+        "2022-05-16T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunks": 63,
+            "operations": 1,
+            "preserved_bytes": 262234880,
+            "recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "chunks": 2002,
+            "operations": 1002,
+            "preserved_bytes": 524469760,
+            "recovered_bytes": 524469760
+          },
+          "score-tail-f64": {
+            "chunks": 4002,
+            "operations": 1001,
+            "preserved_bytes": 5244697600,
+            "recovered_bytes": 5244697600
+          }
+        },
+        "2022-05-23T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunks": 58,
+            "operations": 1,
+            "preserved_bytes": 240005504,
+            "recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "chunks": 1832,
+            "operations": 917,
+            "preserved_bytes": 480011008,
+            "recovered_bytes": 480011008
+          },
+          "score-tail-f64": {
+            "chunks": 3662,
+            "operations": 916,
+            "preserved_bytes": 4800110080,
+            "recovered_bytes": 4800110080
+          }
+        },
+        "2022-05-30T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunks": 49,
+            "operations": 1,
+            "preserved_bytes": 202424448,
+            "recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "chunks": 1546,
+            "operations": 774,
+            "preserved_bytes": 404848896,
+            "recovered_bytes": 404848896
+          },
+          "score-tail-f64": {
+            "chunks": 3090,
+            "operations": 773,
+            "preserved_bytes": 4048488960,
+            "recovered_bytes": 4048488960
+          }
+        },
+        "2022-06-06T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunks": 49,
+            "operations": 1,
+            "preserved_bytes": 202465408,
+            "recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "chunks": 1546,
+            "operations": 774,
+            "preserved_bytes": 404930816,
+            "recovered_bytes": 404930816
+          },
+          "score-tail-f64": {
+            "chunks": 3090,
+            "operations": 773,
+            "preserved_bytes": 4049308160,
+            "recovered_bytes": 4049308160
+          }
+        },
+        "2022-06-13T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunks": 54,
+            "operations": 1,
+            "preserved_bytes": 226338304,
+            "recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "chunks": 1728,
+            "operations": 865,
+            "preserved_bytes": 452676608,
+            "recovered_bytes": 452676608
+          },
+          "score-tail-f64": {
+            "chunks": 3454,
+            "operations": 864,
+            "preserved_bytes": 4526766080,
+            "recovered_bytes": 4526766080
+          }
+        }
+      },
+      "remaining_control_declared_bytes": 1656949312,
+      "retained_local_lower_bounds": {
+        "caller_scratch_bytes": 568735744,
+        "reserved_control_bytes": 5805519232,
+        "retained_diagnostic_bytes": 1475854304,
+        "typed_attempt_metadata_bytes": 1261535232
+      },
+      "selected_buffer_calculations": {
+        "2022-05-02T00:00:00Z": {
+          "batch_count": 918,
+          "cells": 60105600,
+          "phase_logical_payload_bounds": {
+            "batch_preserve_before_tail_disposal": 15073280,
+            "closed_batch_recovery_for_cast": 524288,
+            "output_part_preserve": 12582912,
+            "pair_preserve_with_unsealed_tail": 30539776,
+            "tail_part_preserve": 26607424,
+            "tail_semantic_recovery": 18218944
+          },
+          "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+          "ram_lexical_payload_extents": {
+            "live_batch_bytes": 524288,
+            "output_part_bytes": 4194304,
+            "pair_parse_bytes": 8257536,
+            "tail_part_bytes": 4194240,
+            "tail_records_file_bytes": 5242880
+          },
+          "required_typed_allowances": {
+            "mcm-output-f32": {
+              "max_chunks": 58,
+              "max_operations": 1,
+              "max_preserved_bytes": 240422400,
+              "max_recovered_bytes": 0
+            },
+            "score-batch-f64": {
+              "max_chunks": 1836,
+              "max_operations": 919,
+              "max_preserved_bytes": 480844800,
+              "max_recovered_bytes": 480844800
+            },
+            "score-tail-f64": {
+              "max_chunks": 3670,
+              "max_operations": 918,
+              "max_preserved_bytes": 4808448000,
+              "max_recovered_bytes": 4808448000
+            }
+          },
+          "retained_matrix_logical_bytes": 240422400,
+          "rows": 1878300,
+          "selected_payload_overlap_upper_bytes": 30539776,
+          "tail_preserve_parts": 1835,
+          "typed_attempt_directory_count": 5564,
+          "typed_attempt_metadata_allowance_bytes": 182321152
+        },
+        "2022-05-09T00:00:00Z": {
+          "batch_count": 1107,
+          "cells": 72495392,
+          "phase_logical_payload_bounds": {
+            "batch_preserve_before_tail_disposal": 15073280,
+            "closed_batch_recovery_for_cast": 524288,
+            "output_part_preserve": 12582912,
+            "pair_preserve_with_unsealed_tail": 30539776,
+            "tail_part_preserve": 26607424,
+            "tail_semantic_recovery": 18218944
+          },
+          "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+          "ram_lexical_payload_extents": {
+            "live_batch_bytes": 524288,
+            "output_part_bytes": 4194304,
+            "pair_parse_bytes": 8257536,
+            "tail_part_bytes": 4194240,
+            "tail_records_file_bytes": 5242880
+          },
+          "required_typed_allowances": {
+            "mcm-output-f32": {
+              "max_chunks": 70,
+              "max_operations": 1,
+              "max_preserved_bytes": 289981568,
+              "max_recovered_bytes": 0
+            },
+            "score-batch-f64": {
+              "max_chunks": 2214,
+              "max_operations": 1108,
+              "max_preserved_bytes": 579963136,
+              "max_recovered_bytes": 579963136
+            },
+            "score-tail-f64": {
+              "max_chunks": 4426,
+              "max_operations": 1107,
+              "max_preserved_bytes": 5799631360,
+              "max_recovered_bytes": 5799631360
+            }
+          },
+          "retained_matrix_logical_bytes": 289981568,
+          "rows": 2265481,
+          "selected_payload_overlap_upper_bytes": 30539776,
+          "tail_preserve_parts": 2213,
+          "typed_attempt_directory_count": 6710,
+          "typed_attempt_metadata_allowance_bytes": 219873280
+        },
+        "2022-05-16T00:00:00Z": {
+          "batch_count": 1001,
+          "cells": 65558720,
+          "phase_logical_payload_bounds": {
+            "batch_preserve_before_tail_disposal": 15073280,
+            "closed_batch_recovery_for_cast": 524288,
+            "output_part_preserve": 12582912,
+            "pair_preserve_with_unsealed_tail": 30539776,
+            "tail_part_preserve": 26607424,
+            "tail_semantic_recovery": 18218944
+          },
+          "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+          "ram_lexical_payload_extents": {
+            "live_batch_bytes": 524288,
+            "output_part_bytes": 4194304,
+            "pair_parse_bytes": 8257536,
+            "tail_part_bytes": 4194240,
+            "tail_records_file_bytes": 5242880
+          },
+          "required_typed_allowances": {
+            "mcm-output-f32": {
+              "max_chunks": 63,
+              "max_operations": 1,
+              "max_preserved_bytes": 262234880,
+              "max_recovered_bytes": 0
+            },
+            "score-batch-f64": {
+              "max_chunks": 2002,
+              "max_operations": 1002,
+              "max_preserved_bytes": 524469760,
+              "max_recovered_bytes": 524469760
+            },
+            "score-tail-f64": {
+              "max_chunks": 4002,
+              "max_operations": 1001,
+              "max_preserved_bytes": 5244697600,
+              "max_recovered_bytes": 5244697600
+            }
+          },
+          "retained_matrix_logical_bytes": 262234880,
+          "rows": 2048710,
+          "selected_payload_overlap_upper_bytes": 30539776,
+          "tail_preserve_parts": 2001,
+          "typed_attempt_directory_count": 6067,
+          "typed_attempt_metadata_allowance_bytes": 198803456
+        },
+        "2022-05-23T00:00:00Z": {
+          "batch_count": 916,
+          "cells": 60001376,
+          "phase_logical_payload_bounds": {
+            "batch_preserve_before_tail_disposal": 15073280,
+            "closed_batch_recovery_for_cast": 524288,
+            "output_part_preserve": 12582912,
+            "pair_preserve_with_unsealed_tail": 30539776,
+            "tail_part_preserve": 26607424,
+            "tail_semantic_recovery": 18218944
+          },
+          "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+          "ram_lexical_payload_extents": {
+            "live_batch_bytes": 524288,
+            "output_part_bytes": 4194304,
+            "pair_parse_bytes": 8257536,
+            "tail_part_bytes": 4194240,
+            "tail_records_file_bytes": 5242880
+          },
+          "required_typed_allowances": {
+            "mcm-output-f32": {
+              "max_chunks": 58,
+              "max_operations": 1,
+              "max_preserved_bytes": 240005504,
+              "max_recovered_bytes": 0
+            },
+            "score-batch-f64": {
+              "max_chunks": 1832,
+              "max_operations": 917,
+              "max_preserved_bytes": 480011008,
+              "max_recovered_bytes": 480011008
+            },
+            "score-tail-f64": {
+              "max_chunks": 3662,
+              "max_operations": 916,
+              "max_preserved_bytes": 4800110080,
+              "max_recovered_bytes": 4800110080
+            }
+          },
+          "retained_matrix_logical_bytes": 240005504,
+          "rows": 1875043,
+          "selected_payload_overlap_upper_bytes": 30539776,
+          "tail_preserve_parts": 1831,
+          "typed_attempt_directory_count": 5552,
+          "typed_attempt_metadata_allowance_bytes": 181927936
+        },
+        "2022-05-30T00:00:00Z": {
+          "batch_count": 773,
+          "cells": 50606112,
+          "phase_logical_payload_bounds": {
+            "batch_preserve_before_tail_disposal": 15073280,
+            "closed_batch_recovery_for_cast": 524288,
+            "output_part_preserve": 12582912,
+            "pair_preserve_with_unsealed_tail": 30539776,
+            "tail_part_preserve": 26607424,
+            "tail_semantic_recovery": 18218944
+          },
+          "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+          "ram_lexical_payload_extents": {
+            "live_batch_bytes": 524288,
+            "output_part_bytes": 4194304,
+            "pair_parse_bytes": 8257536,
+            "tail_part_bytes": 4194240,
+            "tail_records_file_bytes": 5242880
+          },
+          "required_typed_allowances": {
+            "mcm-output-f32": {
+              "max_chunks": 49,
+              "max_operations": 1,
+              "max_preserved_bytes": 202424448,
+              "max_recovered_bytes": 0
+            },
+            "score-batch-f64": {
+              "max_chunks": 1546,
+              "max_operations": 774,
+              "max_preserved_bytes": 404848896,
+              "max_recovered_bytes": 404848896
+            },
+            "score-tail-f64": {
+              "max_chunks": 3090,
+              "max_operations": 773,
+              "max_preserved_bytes": 4048488960,
+              "max_recovered_bytes": 4048488960
+            }
+          },
+          "retained_matrix_logical_bytes": 202424448,
+          "rows": 1581441,
+          "selected_payload_overlap_upper_bytes": 30539776,
+          "tail_preserve_parts": 1545,
+          "typed_attempt_directory_count": 4685,
+          "typed_attempt_metadata_allowance_bytes": 153518080
+        },
+        "2022-06-06T00:00:00Z": {
+          "batch_count": 773,
+          "cells": 50616352,
+          "phase_logical_payload_bounds": {
+            "batch_preserve_before_tail_disposal": 15073280,
+            "closed_batch_recovery_for_cast": 524288,
+            "output_part_preserve": 12582912,
+            "pair_preserve_with_unsealed_tail": 30539776,
+            "tail_part_preserve": 26607424,
+            "tail_semantic_recovery": 18218944
+          },
+          "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+          "ram_lexical_payload_extents": {
+            "live_batch_bytes": 524288,
+            "output_part_bytes": 4194304,
+            "pair_parse_bytes": 8257536,
+            "tail_part_bytes": 4194240,
+            "tail_records_file_bytes": 5242880
+          },
+          "required_typed_allowances": {
+            "mcm-output-f32": {
+              "max_chunks": 49,
+              "max_operations": 1,
+              "max_preserved_bytes": 202465408,
+              "max_recovered_bytes": 0
+            },
+            "score-batch-f64": {
+              "max_chunks": 1546,
+              "max_operations": 774,
+              "max_preserved_bytes": 404930816,
+              "max_recovered_bytes": 404930816
+            },
+            "score-tail-f64": {
+              "max_chunks": 3090,
+              "max_operations": 773,
+              "max_preserved_bytes": 4049308160,
+              "max_recovered_bytes": 4049308160
+            }
+          },
+          "retained_matrix_logical_bytes": 202465408,
+          "rows": 1581761,
+          "selected_payload_overlap_upper_bytes": 30539776,
+          "tail_preserve_parts": 1545,
+          "typed_attempt_directory_count": 4685,
+          "typed_attempt_metadata_allowance_bytes": 153518080
+        },
+        "2022-06-13T00:00:00Z": {
+          "batch_count": 864,
+          "cells": 56584576,
+          "phase_logical_payload_bounds": {
+            "batch_preserve_before_tail_disposal": 15073280,
+            "closed_batch_recovery_for_cast": 524288,
+            "output_part_preserve": 12582912,
+            "pair_preserve_with_unsealed_tail": 30539776,
+            "tail_part_preserve": 26607424,
+            "tail_semantic_recovery": 18218944
+          },
+          "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+          "ram_lexical_payload_extents": {
+            "live_batch_bytes": 524288,
+            "output_part_bytes": 4194304,
+            "pair_parse_bytes": 8257536,
+            "tail_part_bytes": 4194240,
+            "tail_records_file_bytes": 5242880
+          },
+          "required_typed_allowances": {
+            "mcm-output-f32": {
+              "max_chunks": 54,
+              "max_operations": 1,
+              "max_preserved_bytes": 226338304,
+              "max_recovered_bytes": 0
+            },
+            "score-batch-f64": {
+              "max_chunks": 1728,
+              "max_operations": 865,
+              "max_preserved_bytes": 452676608,
+              "max_recovered_bytes": 452676608
+            },
+            "score-tail-f64": {
+              "max_chunks": 3454,
+              "max_operations": 864,
+              "max_preserved_bytes": 4526766080,
+              "max_recovered_bytes": 4526766080
+            }
+          },
+          "retained_matrix_logical_bytes": 226338304,
+          "rows": 1768268,
+          "selected_payload_overlap_upper_bytes": 30539776,
+          "tail_preserve_parts": 1727,
+          "typed_attempt_directory_count": 5236,
+          "typed_attempt_metadata_allowance_bytes": 171573248
+        }
+      },
+      "shared": {
+        "chunks": 62099,
+        "commands": 625996,
+        "logical_bytes": 3815632076807,
+        "rounded_bytes": 3848509542407
+      },
+      "typed": {
+        "chunks": 38499,
+        "commands": 153996,
+        "logical_bytes": 113143330823,
+        "rounded_bytes": 118189471751
+      }
+    },
+    "graphs": {
+      "2022-05-02T00:00:00Z": {
+        "available_at": "2022-05-10T00:00:00Z",
+        "hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/manifest.json",
+          "sha256": "4aa5b107702b464ec2c34a5db8d420506e599a613c079a3ce7d2cfa89c3fb442"
+        },
+        "node_count": {
+          "bytes": 548,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-graph-count-header-preparation01-2026-10-06/MAY2_COUNT_DRAFT01.json",
+          "sha256": "ff509f614367915ec8031b6ae2024c9a3bf6ecc92e75c568e5c503988496a806"
+        },
+        "role": "graph_20220502",
+        "rows": 1878300
+      },
+      "2022-05-09T00:00:00Z": {
+        "available_at": "2022-05-17T00:00:00Z",
+        "hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/manifest.json",
+          "sha256": "a05d237ea6803c323e13e8294d8dad9c89a1221a42b7df4a2e6550c054374aec"
+        },
+        "node_count": {
+          "bytes": 584,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts01-2026-10-06/MAY9_COUNT_DRAFT01.json",
+          "sha256": "821bcba11306ca1b2072175d6c180e3215e47adbb32630f8bc2c84e356adf595"
+        },
+        "role": "graph_20220509",
+        "rows": 2265481
+      },
+      "2022-05-16T00:00:00Z": {
+        "available_at": "2022-05-24T00:00:00Z",
+        "hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/manifest.json",
+          "sha256": "ee16ce45ea27ef1feea1a4b09438d7ef67f1ee4c5cbbcc4f60bab1246a558b04"
+        },
+        "node_count": {
+          "bytes": 593,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts02-2026-10-06/MAY16_COUNT_DRAFT01.json",
+          "sha256": "cebd956e70ec264e57c3550158e54a9b6db3d55e8f0e62acaf23aed035742658"
+        },
+        "role": "graph_20220516",
+        "rows": 2048710
+      },
+      "2022-05-23T00:00:00Z": {
+        "available_at": "2022-05-31T00:00:00Z",
+        "hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/manifest.json",
+          "sha256": "7a1187af8ff01ebdc17779ebc172025088f78c23c546457c5fddfaa2ba69d59d"
+        },
+        "node_count": {
+          "bytes": 594,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts03-2026-10-06/MAY23_COUNT_DRAFT01.json",
+          "sha256": "d857c2759732a2430483d3ffaa6cca742638d4410201b9db8c067583d7660ee6"
+        },
+        "role": "graph_20220523",
+        "rows": 1875043
+      },
+      "2022-05-30T00:00:00Z": {
+        "available_at": "2022-06-07T00:00:00Z",
+        "hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/manifest.json",
+          "sha256": "a856a6134263a0b04e3365a2a35f9c7a96792b4739274ad80b2155545eba5830"
+        },
+        "node_count": {
+          "bytes": 589,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts04-2026-10-06/MAY30_COUNT_DRAFT01.json",
+          "sha256": "acfd07c6ebd25c1476197c125bb4336e7fe8fea9a695e5a9dc6c3f0426de796e"
+        },
+        "role": "graph_20220530",
+        "rows": 1581441
+      },
+      "2022-06-06T00:00:00Z": {
+        "available_at": "2022-06-14T00:00:00Z",
+        "hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/manifest.json",
+          "sha256": "dfca930e8f7daf3f4a17096360b20925f0473a8cd297c00943d06f627ec8487f"
+        },
+        "node_count": {
+          "bytes": 576,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts05-2026-10-06/JUNE6_COUNT_DRAFT01.json",
+          "sha256": "ed3ff2e085ee1c1458bd76704c68c1ca1c94b64024fad269941f2e13f95032ed"
+        },
+        "role": "graph_20220606",
+        "rows": 1581761
+      },
+      "2022-06-13T00:00:00Z": {
+        "available_at": "2022-06-21T00:00:00Z",
+        "hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        "node_count": {
+          "bytes": 581,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-june13-reuse-count01-2026-10-06/COUNT_DRAFT02.json",
+          "sha256": "2a13f0ac87dcf5efd1cad1a6d7b1532bbba2038dc23c2c307e4ffd9288659ae3"
+        },
+        "role": "graph_20220613",
+        "rows": 1768268
+      }
+    },
+    "inputs": {
+      "archive_transport": {
+        "connection": null,
+        "control_history": {
+          "assumption": "closed-history sampled; no writer exclusion; mandatory boundary full-byte audits",
+          "format": "bounded-archive-control-history-v1",
+          "full_interval_ms": 1000,
+          "max_callbacks_between_full": 4096,
+          "max_stale_ms": 60000,
+          "schema_version": 1,
+          "shard_bytes": 4194304,
+          "success_control_bytes": 1024,
+          "success_diagnostic_bytes": 2048
+        },
+        "format": "archive-dispatch-v1",
+        "max_commands": 625996,
+        "max_control_bytes": 3306307456,
+        "max_diagnostic_bytes": 1475854304,
+        "max_payload_bytes": 3848509542407,
+        "max_seconds": 28800,
+        "namespace": "ethpilot-20261008-20",
+        "rate_kbit": 262144,
+        "receipt_output": "archive-receipt.json",
+        "schema_version": 2,
+        "terminal_output": "archive-terminal.json",
+        "typed_payload_input": "typed_payload"
+      },
+      "execution_job": {
+        "environment_input": "environment",
+        "kind": "compact_resource",
+        "payload": {
+          "representation_jobs": {
+            "original32": {
+              "compact_archive_input": "archive_policy",
+              "compact_archive_transport_input": "archive_transport",
+              "compact_mcm_input": "mcm_policy",
+              "compact_mcm_output_input": "mcm_output_policy",
+              "compact_policy_input": "compact_policy",
+              "descriptor": {
+                "arm": "proposed",
+                "compact_archive_execution": {
+                  "backend": "compact-archive-events-v1",
+                  "policy_sha256": "08c3bfecbcf73e9bf8c2ef529618b18e92ca3f4be84f67c63cb99a17af3b0c1b"
+                },
+                "compact_execution": {
+                  "backend": "resident-native-compact-current-owner-v1",
+                  "policy_sha256": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786"
+                },
+                "configs": {
+                  "dictionary": {
+                    "capacity_action": "raise explicit capacity error, no truncation",
+                    "hop_depth": 1,
+                    "insufficient_samples": "explicit unavailable if fewer than dictionary size",
+                    "linkage": "average pairwise distance",
+                    "maximum_neighborhood_nodes": 10000,
+                    "neighborhood": "weak one-hop induced subgraph retaining directed edges and center",
+                    "partition": "seeded permutation chunks; min(32,chunk size) medoids each; recursively cluster medoids to 32",
+                    "partition_size": 512,
+                    "partition_threshold": 2048,
+                    "representative": "medoid minimizing within-cluster sum distance; ties sample index",
+                    "rng": "numpy PCG64",
+                    "sample_count": 512,
+                    "sampling": "without replacement over (training week,center); equal initial mass per candidate; after selection halve weights of remaining centers inside sampled neighborhood in that week",
+                    "schema_version": 1,
+                    "seed_scope": "one dictionary per asset/fold/seed/variant",
+                    "size": 32,
+                    "training_scope": "only graph snapshots fully available inside training interval"
+                  },
+                  "matching": {
+                    "alpha": 1.0,
+                    "amendment": "matching-precision-v2.md",
+                    "beta0": 1.0,
+                    "beta_final": 30.0,
+                    "beta_rate": 0.075,
+                    "beta_update": "beta *= (1+beta_rate)",
+                    "convergence": "temperature termination; no additional fixed-point stopping",
+                    "edge_agreement_chunk_pairs": 65536,
+                    "empty_nodes": "reject",
+                    "hardening": "greedy global maximum; ties row-major; remove row and column; stop after min(n,m) matches",
+                    "initialization": "node agreement s2 (Algorithm1 s1 symbol corrected by argument type)",
+                    "internal_precision": "float64",
+                    "max_iterations": 50,
+                    "max_pair_entries": 4000000,
+                    "normalization": "row then column, log-domain stable",
+                    "normalization_iterations": 1,
+                    "objective": "paper Eq1 literal including factor 2 in edge denominator",
+                    "precision_accelerated": "float32 output with float64 affinity and annealing",
+                    "precision_reference": "float64",
+                    "rectangular": "un-padded rectangular one-pass normalization; soft row/column sums need not both equal 1; hard assignment must be injective",
+                    "s1": "edge RBF exp(-mean squared feature difference); zero if either edge absent",
+                    "s2": "node RBF exp(-mean squared feature difference)",
+                    "schema_version": 1,
+                    "solver": "algorithm1_literal",
+                    "symmetric_dictionary_distance": "1 - (S(A,B)+S(B,A))/2",
+                    "update": "Q_ui=0.5*sum_vj(edge_agreement_uvij*M_vj)+alpha*node_agreement_ui; literal Algorithm1, not claimed Eq2 derivative",
+                    "zero_edges": "edge contribution zero if either graph has zero edges; retain node contribution divided by (1+alpha)"
+                  }
+                },
+                "dictionary_origin": "imported-original-v1",
+                "original_dictionary_import": {
+                  "input": "original_import",
+                  "sha256": "635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee"
+                },
+                "original_dictionary_stage": {
+                  "input": "original_import_stage",
+                  "sha256": "a00d61c743c6f2a9a5534ab772dc5ef383bde94bfcd5b1ed7c5003f89b5cde9b"
+                },
+                "pair_execution": {
+                  "backend": {
+                    "affinity": "scalar_float64",
+                    "checkpoint_schema": 3,
+                    "device": "cpu",
+                    "hardening": "stable_descending_row_major",
+                    "name": "scalar_ranked_typed_graph",
+                    "normalization": "scipy_float64",
+                    "objective": "sparse_scalar_float64",
+                    "output": "float64_score",
+                    "version": 2
+                  },
+                  "policy_sha256": "9b7553c36718ff7ee40e8be8cd5b3d8dafb5feff86b528c48c84548a344405b8"
+                },
+                "required_graphs": [
+                  "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+                  "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+                  "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+                  "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+                  "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+                  "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+                  "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+                ],
+                "resource_graph_inputs": {
+                  "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba": "graph_20220613",
+                  "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459": "graph_20220509",
+                  "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531": "graph_20220502",
+                  "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c": "graph_20220530",
+                  "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb": "graph_20220523",
+                  "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75": "graph_20220516",
+                  "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805": "graph_20220606"
+                }
+              },
+              "native_backend": "resident-native-compact-current-owner-v1",
+              "operation": "produce",
+              "original_dictionary_input": "original_import",
+              "original_dictionary_stage_input": "original_import_stage",
+              "pair_checkpoint_input": "pair_policy",
+              "plan_input": "producer_plan",
+              "producer": "original32",
+              "real_pilot_input": "pilot"
+            }
+          }
+        },
+        "resources": {
+          "disk_floor_bytes": 10737418240,
+          "disk_paths": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+          ],
+          "memory_high_bytes": 5368709120,
+          "memory_max_bytes": 6442450944,
+          "native_unit_limits": {
+            "file_size_bytes": 1073741824
+          },
+          "reserve_bytes": 2684354560,
+          "start_reserve_bytes": 2684354560,
+          "storage_budget": {
+            "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+            "experiment": "eth-paper-real-data-end-to-end-resource-20261008-20",
+            "kind": "real-pilot-writable-union",
+            "limits": {
+              "max_allocated_bytes": 21474836480,
+              "max_depth": 64,
+              "max_entries": 1000000,
+              "max_logical_bytes": 17179869184,
+              "max_scan_seconds": 5
+            },
+            "roots": [
+              "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+              "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261008-20"
+            ],
+            "schema_version": 2,
+            "shared_files": [
+              "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+            ]
+          },
+          "wall_seconds": 28800
+        },
+        "schema_version": 1
+      },
+      "mcm_output_policy": {
+        "backend": "resident-native-compact-current-owner-v1",
+        "max_artifact_bytes": 289997952,
+        "max_workflow_output_bytes": 2030043008,
+        "payload_archive_input": "typed_payload",
+        "schema_version": 2
+      },
+      "original_import": {
+        "dictionary_identity": "48832eeb9774ef6ca13915364c17d1ac89f5c67165636de5811ebf82ad6ad726",
+        "kind": "original-dictionary-import-v1",
+        "max_json_bytes": 2097152,
+        "max_total_edges": 200000,
+        "max_total_json_bytes": 16777216,
+        "max_total_nodes": 100000,
+        "motif_count": 32,
+        "original_claim": "eth-paper-resource-pilot-20260924-02",
+        "original_source": "c6b568d4b1c177ab94ac37fbad462c2decc721c0",
+        "refs": {
+          "claim": {
+            "input": "original_claim",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-resource-pilot-20260924-02/claim.json",
+            "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+          },
+          "dictionary": {
+            "input": "original_dictionary",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/dictionary.json",
+            "sha256": "7347dbd764144d3f9b2c934f802a6e9520224efd34ae8febc486803faf0cf1ad"
+          },
+          "dictionary_config": {
+            "input": "original_dictionary_config",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/dictionary.json",
+            "sha256": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff"
+          },
+          "dictionary_intent": {
+            "input": "original_dictionary_intent",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/intent.json",
+            "sha256": "801bc9396344b1414a0dcd2df1c7932ee04b3baa2ebd483db5477d455370ea73"
+          },
+          "dictionary_result": {
+            "input": "original_dictionary_result",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/result.json",
+            "sha256": "a228201bc8b01c652f4b46788692fcf8110f205f8392f8773f7c30faf23c279b"
+          },
+          "gate": {
+            "input": "original_gate",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/gate-v3.json",
+            "sha256": "33ca7e3a000eaa5d2586967c5c1379c17962935c9b5082258f3c64377391f66d"
+          },
+          "graph_manifest": {
+            "input": "original_graph_manifest",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+            "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+          },
+          "matching_config": {
+            "input": "original_matching_config",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/config/matching-stable.json",
+            "sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e"
+          },
+          "sample_intent": {
+            "input": "original_sample_intent",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/intent.json",
+            "sha256": "82e50f913f0907c3d630d5cfbb3f4257462ca3fbe33e71bb60fdf9e468a817ba"
+          },
+          "samples": {
+            "input": "original_samples",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/samples.json",
+            "sha256": "3b6285b26cbfa1945b18ad021700d85019fd7bd6e65b727395985f6adbbd39a4"
+          },
+          "terminal": {
+            "input": "original_terminal",
+            "original_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-resource-pilot-20260924-02/failed.json",
+            "sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+          }
+        },
+        "required_graphs": [
+          "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+          "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+          "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+          "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+          "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+          "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+          "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+        ],
+        "sample_config": {
+          "capacity_action": "raise explicit capacity error, no truncation",
+          "hop_depth": 1,
+          "insufficient_samples": "explicit unavailable if fewer than dictionary size",
+          "linkage": "average pairwise distance",
+          "maximum_neighborhood_nodes": 10000,
+          "neighborhood": "weak one-hop induced subgraph retaining directed edges and center",
+          "partition": "seeded permutation chunks; min(32,chunk size) medoids each; recursively cluster medoids to 32",
+          "partition_size": 512,
+          "partition_threshold": 2048,
+          "representative": "medoid minimizing within-cluster sum distance; ties sample index",
+          "rng": "numpy PCG64",
+          "sample_count": 512,
+          "sampling": "without replacement over (training week,center); equal initial mass per candidate; after selection halve weights of remaining centers inside sampled neighborhood in that week",
+          "schema_version": 1,
+          "seed_scope": "one dictionary per asset/fold/seed/variant",
+          "size": 32,
+          "train_end": "2026-01-01T00:00:00Z",
+          "train_start": "2022-01-03T00:00:00Z",
+          "training_scope": "only graph snapshots fully available inside training interval"
+        },
+        "sample_count": 512,
+        "sample_identity": "2240a7db2d2e443f5bff2ec998f90928c8dfd5654be3f4ddbdcaaf4f2739f726",
+        "schema_version": 1,
+        "seed": 11,
+        "week": "2022-01-03"
+      },
+      "pilot": {
+        "archive_inputs": {
+          "policy_input": "archive_policy",
+          "transport_input": "archive_transport"
+        },
+        "asset": "ETH",
+        "batch_size": 16,
+        "cell_id": "real-eth-original-order-scoring-1024",
+        "decisions": [
+          "2022-06-07T00:00:00Z",
+          "2022-06-08T00:00:00Z",
+          "2022-06-09T00:00:00Z",
+          "2022-06-10T00:00:00Z",
+          "2022-06-11T00:00:00Z",
+          "2022-06-12T00:00:00Z",
+          "2022-06-13T00:00:00Z",
+          "2022-06-14T00:00:00Z",
+          "2022-06-15T00:00:00Z",
+          "2022-06-16T00:00:00Z",
+          "2022-06-17T00:00:00Z",
+          "2022-06-18T00:00:00Z",
+          "2022-06-19T00:00:00Z",
+          "2022-06-20T00:00:00Z",
+          "2022-06-21T00:00:00Z",
+          "2022-06-22T00:00:00Z"
+        ],
+        "graph_inputs": {
+          "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba": "graph_20220613",
+          "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459": "graph_20220509",
+          "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531": "graph_20220502",
+          "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c": "graph_20220530",
+          "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb": "graph_20220523",
+          "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75": "graph_20220516",
+          "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805": "graph_20220606"
+        },
+        "graph_sequences": [
+          [
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c"
+          ],
+          [
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c"
+          ],
+          [
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c"
+          ],
+          [
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c"
+          ],
+          [
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c"
+          ],
+          [
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c"
+          ],
+          [
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c"
+          ],
+          [
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+          ],
+          [
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+          ],
+          [
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+          ],
+          [
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+          ],
+          [
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+          ],
+          [
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+          ],
+          [
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+          ],
+          [
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba"
+          ],
+          [
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+            "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+            "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba"
+          ]
+        ],
+        "imported_authority_lease_input": "imported_authority_lease",
+        "indices": null,
+        "kind": "real-data-import-training-pilot-v1",
+        "lookback_days": 28,
+        "max_checkpoint_bytes": 4194304,
+        "model_execution": {
+          "backend": "streamed-gat-mulsum-v1",
+          "block_edges": 65536,
+          "graph_activation_checkpointing": true,
+          "schema_version": 2
+        },
+        "model_input": "model",
+        "outputs": {
+          "binding": "resource-binding.json",
+          "diagnostic": "real-pilot-scoring-diagnostic.json",
+          "journal": "resource-journal.json",
+          "ledger": "cell-ledger.json",
+          "summary": "pilot-summary.json"
+        },
+        "partial_progress": {
+          "interval_seconds": 60,
+          "max_records": 1024,
+          "schema_version": 1
+        },
+        "population_plan_input": "resource_population_plan",
+        "population_scope": "resource_pilot_subset",
+        "resource_policy": {
+          "disk_floor_bytes": 10737418240,
+          "disk_paths": [
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+          ],
+          "memory_high_bytes": 5368709120,
+          "memory_max_bytes": 6442450944,
+          "native_unit_limits": {
+            "file_size_bytes": 1073741824
+          },
+          "reserve_bytes": 2684354560,
+          "start_reserve_bytes": 2684354560,
+          "storage_budget": {
+            "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+            "experiment": "eth-paper-real-data-end-to-end-resource-20261008-20",
+            "kind": "real-pilot-writable-union",
+            "limits": {
+              "max_allocated_bytes": 21474836480,
+              "max_depth": 64,
+              "max_entries": 1000000,
+              "max_logical_bytes": 17179869184,
+              "max_scan_seconds": 5
+            },
+            "roots": [
+              "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+              "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261008-20"
+            ],
+            "schema_version": 2,
+            "shared_files": [
+              "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+            ]
+          },
+          "wall_seconds": 28800
+        },
+        "schema_version": 2,
+        "scoring_diagnostic": {
+          "checkpoint_every_pairs": 64,
+          "checkpoint_relative": "scoring-diagnostic/progress.json",
+          "max_completed_pairs": 1024,
+          "schema_version": 1
+        },
+        "seed": 11,
+        "training_input": "training"
+      },
+      "producer_plan": {
+        "producers": {
+          "original32": {
+            "binding_output": "resource-binding.json",
+            "compact_archive_input": "archive_policy",
+            "compact_archive_transport_input": "archive_transport",
+            "compact_mcm_input": "mcm_policy",
+            "compact_mcm_output_input": "mcm_output_policy",
+            "compact_policy_input": "compact_policy",
+            "descriptor": {
+              "arm": "proposed",
+              "compact_archive_execution": {
+                "backend": "compact-archive-events-v1",
+                "policy_sha256": "08c3bfecbcf73e9bf8c2ef529618b18e92ca3f4be84f67c63cb99a17af3b0c1b"
+              },
+              "compact_execution": {
+                "backend": "resident-native-compact-current-owner-v1",
+                "policy_sha256": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786"
+              },
+              "configs": {
+                "dictionary": {
+                  "capacity_action": "raise explicit capacity error, no truncation",
+                  "hop_depth": 1,
+                  "insufficient_samples": "explicit unavailable if fewer than dictionary size",
+                  "linkage": "average pairwise distance",
+                  "maximum_neighborhood_nodes": 10000,
+                  "neighborhood": "weak one-hop induced subgraph retaining directed edges and center",
+                  "partition": "seeded permutation chunks; min(32,chunk size) medoids each; recursively cluster medoids to 32",
+                  "partition_size": 512,
+                  "partition_threshold": 2048,
+                  "representative": "medoid minimizing within-cluster sum distance; ties sample index",
+                  "rng": "numpy PCG64",
+                  "sample_count": 512,
+                  "sampling": "without replacement over (training week,center); equal initial mass per candidate; after selection halve weights of remaining centers inside sampled neighborhood in that week",
+                  "schema_version": 1,
+                  "seed_scope": "one dictionary per asset/fold/seed/variant",
+                  "size": 32,
+                  "training_scope": "only graph snapshots fully available inside training interval"
+                },
+                "matching": {
+                  "alpha": 1.0,
+                  "amendment": "matching-precision-v2.md",
+                  "beta0": 1.0,
+                  "beta_final": 30.0,
+                  "beta_rate": 0.075,
+                  "beta_update": "beta *= (1+beta_rate)",
+                  "convergence": "temperature termination; no additional fixed-point stopping",
+                  "edge_agreement_chunk_pairs": 65536,
+                  "empty_nodes": "reject",
+                  "hardening": "greedy global maximum; ties row-major; remove row and column; stop after min(n,m) matches",
+                  "initialization": "node agreement s2 (Algorithm1 s1 symbol corrected by argument type)",
+                  "internal_precision": "float64",
+                  "max_iterations": 50,
+                  "max_pair_entries": 4000000,
+                  "normalization": "row then column, log-domain stable",
+                  "normalization_iterations": 1,
+                  "objective": "paper Eq1 literal including factor 2 in edge denominator",
+                  "precision_accelerated": "float32 output with float64 affinity and annealing",
+                  "precision_reference": "float64",
+                  "rectangular": "un-padded rectangular one-pass normalization; soft row/column sums need not both equal 1; hard assignment must be injective",
+                  "s1": "edge RBF exp(-mean squared feature difference); zero if either edge absent",
+                  "s2": "node RBF exp(-mean squared feature difference)",
+                  "schema_version": 1,
+                  "solver": "algorithm1_literal",
+                  "symmetric_dictionary_distance": "1 - (S(A,B)+S(B,A))/2",
+                  "update": "Q_ui=0.5*sum_vj(edge_agreement_uvij*M_vj)+alpha*node_agreement_ui; literal Algorithm1, not claimed Eq2 derivative",
+                  "zero_edges": "edge contribution zero if either graph has zero edges; retain node contribution divided by (1+alpha)"
+                }
+              },
+              "dictionary_origin": "imported-original-v1",
+              "original_dictionary_import": {
+                "input": "original_import",
+                "sha256": "635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee"
+              },
+              "original_dictionary_stage": {
+                "input": "original_import_stage",
+                "sha256": "a00d61c743c6f2a9a5534ab772dc5ef383bde94bfcd5b1ed7c5003f89b5cde9b"
+              },
+              "pair_execution": {
+                "backend": {
+                  "affinity": "scalar_float64",
+                  "checkpoint_schema": 3,
+                  "device": "cpu",
+                  "hardening": "stable_descending_row_major",
+                  "name": "scalar_ranked_typed_graph",
+                  "normalization": "scipy_float64",
+                  "objective": "sparse_scalar_float64",
+                  "output": "float64_score",
+                  "version": 2
+                },
+                "policy_sha256": "9b7553c36718ff7ee40e8be8cd5b3d8dafb5feff86b528c48c84548a344405b8"
+              },
+              "required_graphs": [
+                "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+                "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+                "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+                "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+                "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+                "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+                "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+              ],
+              "resource_graph_inputs": {
+                "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba": "graph_20220613",
+                "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459": "graph_20220509",
+                "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531": "graph_20220502",
+                "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c": "graph_20220530",
+                "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb": "graph_20220523",
+                "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75": "graph_20220516",
+                "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805": "graph_20220606"
+              }
+            },
+            "journal_output": "resource-journal.json",
+            "native_backend": "resident-native-compact-current-owner-v1",
+            "operation": "produce",
+            "original_dictionary_input": "original_import",
+            "original_dictionary_stage_input": "original_import_stage",
+            "pair_checkpoint_input": "pair_policy",
+            "plan_input": "producer_plan",
+            "producer": "original32",
+            "real_pilot_input": "pilot"
+          }
+        },
+        "schema_version": 2
+      },
+      "resource_population_plan": {
+        "calendar_input": "calendar",
+        "financial_fit_complete": false,
+        "fold": "2024",
+        "graphs": {
+          "2022-05-02T00:00:00Z": "graph_20220502",
+          "2022-05-09T00:00:00Z": "graph_20220509",
+          "2022-05-16T00:00:00Z": "graph_20220516",
+          "2022-05-23T00:00:00Z": "graph_20220523",
+          "2022-05-30T00:00:00Z": "graph_20220530",
+          "2022-06-06T00:00:00Z": "graph_20220606",
+          "2022-06-13T00:00:00Z": "graph_20220613"
+        },
+        "outputs": {
+          "binding": "resource-population-binding.json",
+          "resource_population": "resource-population.json"
+        },
+        "population_scope": "resource_pilot_subset",
+        "price_panel_input": "price_panel",
+        "schema_version": 1,
+        "scope_input": "resource_population_scope"
+      },
+      "typed_payload": {
+        "assumption": "Historical proof authenticates prior full byte and semantic recovery against the original roster. It does not establish current remote byte availability; every future restore/use must freshly retrieve and authenticate its bytes.",
+        "format": "typed-payload-budget-v1",
+        "graphs": {
+          "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba": {
+            "chunk_cells": 65536,
+            "kinds": {
+              "mcm-output-f32": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 54,
+                "max_operations": 1,
+                "max_preserved_bytes": 226338304,
+                "max_recovered_bytes": 1
+              },
+              "score-batch-f64": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 1728,
+                "max_operations": 865,
+                "max_preserved_bytes": 452676608,
+                "max_recovered_bytes": 452676608
+              },
+              "score-tail-f64": {
+                "chunk_bytes": 4194240,
+                "max_chunks": 3454,
+                "max_operations": 864,
+                "max_preserved_bytes": 4526766080,
+                "max_recovered_bytes": 4526766080
+              }
+            },
+            "rows": 1768268
+          },
+          "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459": {
+            "chunk_cells": 65536,
+            "kinds": {
+              "mcm-output-f32": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 70,
+                "max_operations": 1,
+                "max_preserved_bytes": 289981568,
+                "max_recovered_bytes": 1
+              },
+              "score-batch-f64": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 2214,
+                "max_operations": 1108,
+                "max_preserved_bytes": 579963136,
+                "max_recovered_bytes": 579963136
+              },
+              "score-tail-f64": {
+                "chunk_bytes": 4194240,
+                "max_chunks": 4426,
+                "max_operations": 1107,
+                "max_preserved_bytes": 5799631360,
+                "max_recovered_bytes": 5799631360
+              }
+            },
+            "rows": 2265481
+          },
+          "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531": {
+            "chunk_cells": 65536,
+            "kinds": {
+              "mcm-output-f32": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 58,
+                "max_operations": 1,
+                "max_preserved_bytes": 240422400,
+                "max_recovered_bytes": 1
+              },
+              "score-batch-f64": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 1836,
+                "max_operations": 919,
+                "max_preserved_bytes": 480844800,
+                "max_recovered_bytes": 480844800
+              },
+              "score-tail-f64": {
+                "chunk_bytes": 4194240,
+                "max_chunks": 3670,
+                "max_operations": 918,
+                "max_preserved_bytes": 4808448000,
+                "max_recovered_bytes": 4808448000
+              }
+            },
+            "rows": 1878300
+          },
+          "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c": {
+            "chunk_cells": 65536,
+            "kinds": {
+              "mcm-output-f32": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 49,
+                "max_operations": 1,
+                "max_preserved_bytes": 202424448,
+                "max_recovered_bytes": 1
+              },
+              "score-batch-f64": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 1546,
+                "max_operations": 774,
+                "max_preserved_bytes": 404848896,
+                "max_recovered_bytes": 404848896
+              },
+              "score-tail-f64": {
+                "chunk_bytes": 4194240,
+                "max_chunks": 3090,
+                "max_operations": 773,
+                "max_preserved_bytes": 4048488960,
+                "max_recovered_bytes": 4048488960
+              }
+            },
+            "rows": 1581441
+          },
+          "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb": {
+            "chunk_cells": 65536,
+            "kinds": {
+              "mcm-output-f32": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 58,
+                "max_operations": 1,
+                "max_preserved_bytes": 240005504,
+                "max_recovered_bytes": 1
+              },
+              "score-batch-f64": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 1832,
+                "max_operations": 917,
+                "max_preserved_bytes": 480011008,
+                "max_recovered_bytes": 480011008
+              },
+              "score-tail-f64": {
+                "chunk_bytes": 4194240,
+                "max_chunks": 3662,
+                "max_operations": 916,
+                "max_preserved_bytes": 4800110080,
+                "max_recovered_bytes": 4800110080
+              }
+            },
+            "rows": 1875043
+          },
+          "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75": {
+            "chunk_cells": 65536,
+            "kinds": {
+              "mcm-output-f32": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 63,
+                "max_operations": 1,
+                "max_preserved_bytes": 262234880,
+                "max_recovered_bytes": 1
+              },
+              "score-batch-f64": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 2002,
+                "max_operations": 1002,
+                "max_preserved_bytes": 524469760,
+                "max_recovered_bytes": 524469760
+              },
+              "score-tail-f64": {
+                "chunk_bytes": 4194240,
+                "max_chunks": 4002,
+                "max_operations": 1001,
+                "max_preserved_bytes": 5244697600,
+                "max_recovered_bytes": 5244697600
+              }
+            },
+            "rows": 2048710
+          },
+          "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805": {
+            "chunk_cells": 65536,
+            "kinds": {
+              "mcm-output-f32": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 49,
+                "max_operations": 1,
+                "max_preserved_bytes": 202465408,
+                "max_recovered_bytes": 1
+              },
+              "score-batch-f64": {
+                "chunk_bytes": 4194304,
+                "max_chunks": 1546,
+                "max_operations": 774,
+                "max_preserved_bytes": 404930816,
+                "max_recovered_bytes": 404930816
+              },
+              "score-tail-f64": {
+                "chunk_bytes": 4194240,
+                "max_chunks": 3090,
+                "max_operations": 773,
+                "max_preserved_bytes": 4049308160,
+                "max_recovered_bytes": 4049308160
+              }
+            },
+            "rows": 1581761
+          }
+        },
+        "local_free_floor_bytes": 10737418240,
+        "max_control_bytes": 627941376,
+        "schema_version": 1
+      }
+    },
+    "no_authority_or_capacity_claim": true,
+    "opaque_references": {
+      "archive_policy": {
+        "bytes": 591,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/archive_policy.json",
+        "sha256": "653c777446d71339f9b18efd0df071ecc5eb45c7bd1ed560342cdcb27b2dfd5e"
+      },
+      "calendar": {
+        "bytes": 3694,
+        "path": "research/onchain-paper-replication-2026-09-24/config/calendar-coinmetrics-v5.json",
+        "sha256": "21bb348b9c779238b212d0e4074cf806f6a54d0ce3b7713d97bc3ad65d57ef22"
+      },
+      "compact_policy": {
+        "bytes": 1628,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/compact_policy.json",
+        "sha256": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786"
+      },
+      "environment": {
+        "bytes": 358,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/environment.json",
+        "sha256": "3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc"
+      },
+      "graph_20220502": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/manifest.json",
+        "sha256": "4aa5b107702b464ec2c34a5db8d420506e599a613c079a3ce7d2cfa89c3fb442"
+      },
+      "graph_20220509": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/manifest.json",
+        "sha256": "a05d237ea6803c323e13e8294d8dad9c89a1221a42b7df4a2e6550c054374aec"
+      },
+      "graph_20220516": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/manifest.json",
+        "sha256": "ee16ce45ea27ef1feea1a4b09438d7ef67f1ee4c5cbbcc4f60bab1246a558b04"
+      },
+      "graph_20220523": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/manifest.json",
+        "sha256": "7a1187af8ff01ebdc17779ebc172025088f78c23c546457c5fddfaa2ba69d59d"
+      },
+      "graph_20220530": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/manifest.json",
+        "sha256": "a856a6134263a0b04e3365a2a35f9c7a96792b4739274ad80b2155545eba5830"
+      },
+      "graph_20220606": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/manifest.json",
+        "sha256": "dfca930e8f7daf3f4a17096360b20925f0473a8cd297c00943d06f627ec8487f"
+      },
+      "graph_20220613": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+        "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+      },
+      "imported_authority_lease": {
+        "bytes": 478,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/candidate/imported_authority_lease.json",
+        "sha256": "dc9aed524375cae84f1d86196cd9145ec076956dcc3ede470816f5b990abb2d6"
+      },
+      "legacy_artifact_index": {
+        "bytes": 18389,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/artifact-index.json",
+        "sha256": "208d00df2c42441ee512ca31011bed336de75282a3c492fd88f4994c3c3d3f59"
+      },
+      "legacy_cell": {
+        "bytes": 920,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-007.json",
+        "sha256": "7922b9cb48fc4f72c0ba008e3de4161e67934c655853f21001baa37873a27a27"
+      },
+      "legacy_cell_ledger": {
+        "bytes": 28400,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/cell-ledger.json",
+        "sha256": "09750888389e7bba366818aa4134ae07e72f6fdeeb4af59594e7f0f627cc3e5c"
+      },
+      "legacy_claim": {
+        "bytes": 50765,
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/claim.json",
+        "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+      },
+      "legacy_day_20220613": {
+        "bytes": 16022,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-13.json",
+        "sha256": "89a337e96f886bcf0cc076562d4bbe7ee9f58ee55ce0034e792577911bcf04b3"
+      },
+      "legacy_day_20220614": {
+        "bytes": 16021,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-14.json",
+        "sha256": "d20442fbcb8b455fed90d1390ec56bc24e5d3b2bd369e96b785c79c789b80ad7"
+      },
+      "legacy_day_20220615": {
+        "bytes": 16021,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-15.json",
+        "sha256": "238fb121b282dce970ca7cbdaff102769a11817ebe42cfac16b85e5584dfc6f7"
+      },
+      "legacy_day_20220616": {
+        "bytes": 16020,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-16.json",
+        "sha256": "3c221307faaa331561d8251630874befc885872e1f06e9fed2821141999edc5d"
+      },
+      "legacy_day_20220617": {
+        "bytes": 12249,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-17.json",
+        "sha256": "42afe182bbf8e9a3689008a01f65ea43e986602c03ad058e89a37c72d3de4151"
+      },
+      "legacy_day_20220618": {
+        "bytes": 12246,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-18.json",
+        "sha256": "a9eaea951a39f052cfc75dc87b80427ef60688653fb1cdef18fcbbf3426cafe2"
+      },
+      "legacy_day_20220619": {
+        "bytes": 12247,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-19.json",
+        "sha256": "6f97d58f35f84c7e302b22b9076819a5ed14f94175037d6ec57d9d7bf72119a2"
+      },
+      "legacy_graph_config": {
+        "bytes": 1756,
+        "path": "research/onchain-paper-replication-2026-09-24/config/graph.json",
+        "sha256": "c91f8eeb1d317a310ef0f90f40a78ccf60bdd2437532f5e909f7dfd079d7fc20"
+      },
+      "legacy_graph_evidence": {
+        "bytes": 844,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-end-to-end-pilot-preparation01-2026-10-05/LEGACY_GRAPH_EVIDENCE_DRAFT01.json",
+        "sha256": "3153c0bb910cef6a47caa5e00cd52ea0efed25ce970981cdd0090ccbd6cd7dfa"
+      },
+      "legacy_graph_manifest": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+        "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+      },
+      "legacy_intent": {
+        "bytes": 19664,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+        "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+      },
+      "legacy_phase_source": {
+        "bytes": 10125,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py",
+        "sha256": "0bc95f7e33d97485cd9e2fba6802dde168c26aa162b987ef762f9e28ee3a1522"
+      },
+      "legacy_result": {
+        "bytes": 817,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+        "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+      },
+      "legacy_run_source": {
+        "bytes": 8577,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/run.py",
+        "sha256": "90dc7fc1fb6780174502e395db073d27c511a30aea8762ea968f256e4820c5e6"
+      },
+      "legacy_source_index": {
+        "bytes": 29870,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/source-index.json",
+        "sha256": "18f2548bdec2602995935d951075162537b6369b8bf18647cdc7a96962cffc1a"
+      },
+      "legacy_terminal": {
+        "bytes": 490,
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/failed.json",
+        "sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+      },
+      "mcm_policy": {
+        "bytes": 464,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection04-2026-10-08/mcm_policy.json",
+        "sha256": "38678c8dd66db616f470ddbd36d5d0121c056a31a83ec997113945480b9a09e5"
+      },
+      "model": {
+        "bytes": 1628,
+        "path": "research/onchain-paper-replication-2026-09-24/config/model.json",
+        "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+      },
+      "original_claim": {
+        "bytes": 50765,
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/claim.json",
+        "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+      },
+      "original_dictionary": {
+        "bytes": 67827,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/dictionary.json",
+        "sha256": "7347dbd764144d3f9b2c934f802a6e9520224efd34ae8febc486803faf0cf1ad"
+      },
+      "original_dictionary_config": {
+        "bytes": 1017,
+        "path": "research/onchain-paper-replication-2026-09-24/config/dictionary.json",
+        "sha256": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff"
+      },
+      "original_dictionary_intent": {
+        "bytes": 20588,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/intent.json",
+        "sha256": "801bc9396344b1414a0dcd2df1c7932ee04b3baa2ebd483db5477d455370ea73"
+      },
+      "original_dictionary_result": {
+        "bytes": 303,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/result.json",
+        "sha256": "a228201bc8b01c652f4b46788692fcf8110f205f8392f8773f7c30faf23c279b"
+      },
+      "original_gate": {
+        "bytes": 60866,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/gate-v3.json",
+        "sha256": "33ca7e3a000eaa5d2586967c5c1379c17962935c9b5082258f3c64377391f66d"
+      },
+      "original_graph_manifest": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+        "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+      },
+      "original_import_stage": {
+        "bytes": 88,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/original_import_stage.json",
+        "sha256": "a00d61c743c6f2a9a5534ab772dc5ef383bde94bfcd5b1ed7c5003f89b5cde9b"
+      },
+      "original_matching_config": {
+        "bytes": 1535,
+        "path": "research/onchain-paper-replication-2026-09-24/config/matching-stable.json",
+        "sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e"
+      },
+      "original_sample_intent": {
+        "bytes": 21806,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/intent.json",
+        "sha256": "82e50f913f0907c3d630d5cfbb3f4257462ca3fbe33e71bb60fdf9e468a817ba"
+      },
+      "original_samples": {
+        "bytes": 731010,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/samples.json",
+        "sha256": "3b6285b26cbfa1945b18ad021700d85019fd7bd6e65b727395985f6adbbd39a4"
+      },
+      "original_terminal": {
+        "bytes": 490,
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/failed.json",
+        "sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+      },
+      "pair_policy": {
+        "bytes": 25974,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/pair_policy01.json",
+        "sha256": "9b7553c36718ff7ee40e8be8cd5b3d8dafb5feff86b528c48c84548a344405b8"
+      },
+      "price_panel": {
+        "bytes": 131283,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/paper-prices-coinmetrics-eth-20260924/price-panel.json",
+        "sha256": "f7a4d89ff66d37ec00d8d4d834a1a771ac55f36bc9b210cfbecb6768ecc3bbbe"
+      },
+      "resource_population_scope": {
+        "bytes": 2607,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-scope01-2026-10-05/POPULATION_SCOPE_DRAFT01.json",
+        "sha256": "57a97518d2b12e0c787b49f91d9bf509888f9c63fb8f644d1ace90b5bd05e2a8"
+      },
+      "training": {
+        "bytes": 3934,
+        "path": "research/onchain-paper-replication-2026-09-24/config/training.json",
+        "sha256": "d5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0"
+      }
+    },
+    "physical_store_declaration": {
+      "additional_scratch_bytes": 538195968,
+      "allocation_overhead_bytes": 2454455355,
+      "baseline_allocated_bytes": 5145812992,
+      "baseline_evidence": {
+        "bytes": 6403,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/BASELINE02.json",
+        "sha256": "11be572489fc44594e1e5f7df9fea9298a5c2011b484d291d3313bce0e5e6352"
+      },
+      "baseline_logical_bytes": 5569800773,
+      "caller_scratch_bytes": 568735744,
+      "remaining_control_inventory": {
+        "other_selected_controls_bytes": 1396140608,
+        "producer_output_controls_bytes": 344064,
+        "stream_tail_batch_headers_bytes": 260464640
+      },
+      "reserved_control_bytes": 5805519232,
+      "reserved_growth_bytes": 289981568,
+      "retained_diagnostic_bytes": 1475854304,
+      "typed_attempt_metadata_bytes": 1261535232
+    },
+    "remaining": [
+      "Root verifies complete retained-control/scratch inventory, block/directory/inode overhead and current baseline; declared lower bounds are not capacity proof",
+      "Root private connection and transport_identity match",
+      "genuine complete graph admission and node-count proof review",
+      "current source/runtime/Owner/Binding, resource/storage/network admission",
+      "worker derives price eligibility, consecutive indices and resource-only scaler; no numeric data read here"
+    ],
+    "source_template_references": {
+      "archive_policy": {
+        "bytes": 591,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/archive_policy.json",
+        "sha256": "653c777446d71339f9b18efd0df071ecc5eb45c7bd1ed560342cdcb27b2dfd5e"
+      },
+      "compact_policy": {
+        "bytes": 1628,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/compact_policy.json",
+        "sha256": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786"
+      },
+      "execution_job": {
+        "bytes": 6730,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/job_template01.json",
+        "sha256": "c74dd57c51938f99a7e0dce32506f2eb5d2da6ae65a7e37882f34ee2dd77f5dd"
+      },
+      "mcm_output_policy": {
+        "bytes": 205,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seven-graph-packed-input03-2026-10-06/output_policy05.json",
+        "sha256": "04462cb304502e67771ca5f4318a9b98ec215fa9b31fefa4beddd05c031e3b10"
+      },
+      "original_import": {
+        "bytes": 5293,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/original_import.json",
+        "sha256": "2f8859667ec4a0c6a9007cbcdcdd47fe5943a99a5e425f0951d604c27ca36d47"
+      },
+      "pilot": {
+        "bytes": 36976,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/pilot.json",
+        "sha256": "d49ed1b60fc07582cdbf8110c1d0487f101953d791df47adc3c9cb992e8b847e"
+      },
+      "producer_plan": {
+        "bytes": 5319,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/producer_plan.json",
+        "sha256": "2f203f3f9bab853f1d621b8768bc54702fe758554648733666a3d79c99d13f3f"
+      },
+      "resource_population_plan": {
+        "bytes": 383,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/resource_population_plan.json",
+        "sha256": "af733fcdafb3676b346bd070db311ee43f2433104c998877d9b1c727c5485f03"
+      }
+    },
+    "status": "DRAFT_NOT_REGISTERED_NOT_ADMITTED"
+  },
+  "builder03_spec": {
+    "graphs": {
+      "2022-05-02T00:00:00Z": {
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/manifest.json",
+          "sha256": "4aa5b107702b464ec2c34a5db8d420506e599a613c079a3ce7d2cfa89c3fb442"
+        },
+        "node_count": {
+          "bytes": 548,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-graph-count-header-preparation01-2026-10-06/MAY2_COUNT_DRAFT01.json",
+          "sha256": "ff509f614367915ec8031b6ae2024c9a3bf6ecc92e75c568e5c503988496a806"
+        },
+        "role": "graph_20220502"
+      },
+      "2022-05-09T00:00:00Z": {
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/manifest.json",
+          "sha256": "a05d237ea6803c323e13e8294d8dad9c89a1221a42b7df4a2e6550c054374aec"
+        },
+        "node_count": {
+          "bytes": 584,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts01-2026-10-06/MAY9_COUNT_DRAFT01.json",
+          "sha256": "821bcba11306ca1b2072175d6c180e3215e47adbb32630f8bc2c84e356adf595"
+        },
+        "role": "graph_20220509"
+      },
+      "2022-05-16T00:00:00Z": {
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/manifest.json",
+          "sha256": "ee16ce45ea27ef1feea1a4b09438d7ef67f1ee4c5cbbcc4f60bab1246a558b04"
+        },
+        "node_count": {
+          "bytes": 593,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts02-2026-10-06/MAY16_COUNT_DRAFT01.json",
+          "sha256": "cebd956e70ec264e57c3550158e54a9b6db3d55e8f0e62acaf23aed035742658"
+        },
+        "role": "graph_20220516"
+      },
+      "2022-05-23T00:00:00Z": {
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/manifest.json",
+          "sha256": "7a1187af8ff01ebdc17779ebc172025088f78c23c546457c5fddfaa2ba69d59d"
+        },
+        "node_count": {
+          "bytes": 594,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts03-2026-10-06/MAY23_COUNT_DRAFT01.json",
+          "sha256": "d857c2759732a2430483d3ffaa6cca742638d4410201b9db8c067583d7660ee6"
+        },
+        "role": "graph_20220523"
+      },
+      "2022-05-30T00:00:00Z": {
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/manifest.json",
+          "sha256": "a856a6134263a0b04e3365a2a35f9c7a96792b4739274ad80b2155545eba5830"
+        },
+        "node_count": {
+          "bytes": 589,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts04-2026-10-06/MAY30_COUNT_DRAFT01.json",
+          "sha256": "acfd07c6ebd25c1476197c125bb4336e7fe8fea9a695e5a9dc6c3f0426de796e"
+        },
+        "role": "graph_20220530"
+      },
+      "2022-06-06T00:00:00Z": {
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/manifest.json",
+          "sha256": "dfca930e8f7daf3f4a17096360b20925f0473a8cd297c00943d06f627ec8487f"
+        },
+        "node_count": {
+          "bytes": 576,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-current-graph-counts05-2026-10-06/JUNE6_COUNT_DRAFT01.json",
+          "sha256": "ed3ff2e085ee1c1458bd76704c68c1ca1c94b64024fad269941f2e13f95032ed"
+        },
+        "role": "graph_20220606"
+      },
+      "2022-06-13T00:00:00Z": {
+        "manifest": {
+          "bytes": 1604,
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        "node_count": {
+          "bytes": 581,
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-june13-reuse-count01-2026-10-06/COUNT_DRAFT02.json",
+          "sha256": "2a13f0ac87dcf5efd1cad1a6d7b1532bbba2038dc23c2c307e4ffd9288659ae3"
+        },
+        "role": "graph_20220613"
+      }
+    },
+    "physical_store": {
+      "additional_scratch_bytes": 538195968,
+      "allocation_overhead_bytes": 2454455355,
+      "baseline_allocated_bytes": 5145812992,
+      "baseline_evidence": {
+        "bytes": 6403,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/BASELINE02.json",
+        "sha256": "11be572489fc44594e1e5f7df9fea9298a5c2011b484d291d3313bce0e5e6352"
+      },
+      "baseline_logical_bytes": 5569800773,
+      "caller_scratch_bytes": 568735744,
+      "remaining_control_inventory": {
+        "other_selected_controls_bytes": 1396140608,
+        "producer_output_controls_bytes": 344064,
+        "stream_tail_batch_headers_bytes": 260464640
+      },
+      "reserved_control_bytes": 5805519232,
+      "reserved_growth_bytes": 289981568,
+      "retained_diagnostic_bytes": 1475854304,
+      "typed_attempt_metadata_bytes": 1261535232
+    },
+    "references": {
+      "archive_policy": {
+        "bytes": 591,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/archive_policy.json",
+        "sha256": "653c777446d71339f9b18efd0df071ecc5eb45c7bd1ed560342cdcb27b2dfd5e"
+      },
+      "calendar": {
+        "bytes": 3694,
+        "path": "research/onchain-paper-replication-2026-09-24/config/calendar-coinmetrics-v5.json",
+        "sha256": "21bb348b9c779238b212d0e4074cf806f6a54d0ce3b7713d97bc3ad65d57ef22"
+      },
+      "compact_policy": {
+        "bytes": 1628,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/compact_policy.json",
+        "sha256": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786"
+      },
+      "environment": {
+        "bytes": 358,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/environment.json",
+        "sha256": "3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc"
+      },
+      "execution_job": {
+        "bytes": 6730,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/job_template01.json",
+        "sha256": "c74dd57c51938f99a7e0dce32506f2eb5d2da6ae65a7e37882f34ee2dd77f5dd"
+      },
+      "graph_20220613": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+        "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+      },
+      "imported_authority_lease": {
+        "bytes": 478,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/candidate/imported_authority_lease.json",
+        "sha256": "dc9aed524375cae84f1d86196cd9145ec076956dcc3ede470816f5b990abb2d6"
+      },
+      "legacy_artifact_index": {
+        "bytes": 18389,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/artifact-index.json",
+        "sha256": "208d00df2c42441ee512ca31011bed336de75282a3c492fd88f4994c3c3d3f59"
+      },
+      "legacy_cell": {
+        "bytes": 920,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-007.json",
+        "sha256": "7922b9cb48fc4f72c0ba008e3de4161e67934c655853f21001baa37873a27a27"
+      },
+      "legacy_cell_ledger": {
+        "bytes": 28400,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/cell-ledger.json",
+        "sha256": "09750888389e7bba366818aa4134ae07e72f6fdeeb4af59594e7f0f627cc3e5c"
+      },
+      "legacy_claim": {
+        "bytes": 50765,
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/claim.json",
+        "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+      },
+      "legacy_day_20220613": {
+        "bytes": 16022,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-13.json",
+        "sha256": "89a337e96f886bcf0cc076562d4bbe7ee9f58ee55ce0034e792577911bcf04b3"
+      },
+      "legacy_day_20220614": {
+        "bytes": 16021,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-14.json",
+        "sha256": "d20442fbcb8b455fed90d1390ec56bc24e5d3b2bd369e96b785c79c789b80ad7"
+      },
+      "legacy_day_20220615": {
+        "bytes": 16021,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-15.json",
+        "sha256": "238fb121b282dce970ca7cbdaff102769a11817ebe42cfac16b85e5584dfc6f7"
+      },
+      "legacy_day_20220616": {
+        "bytes": 16020,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-16.json",
+        "sha256": "3c221307faaa331561d8251630874befc885872e1f06e9fed2821141999edc5d"
+      },
+      "legacy_day_20220617": {
+        "bytes": 12249,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-17.json",
+        "sha256": "42afe182bbf8e9a3689008a01f65ea43e986602c03ad058e89a37c72d3de4151"
+      },
+      "legacy_day_20220618": {
+        "bytes": 12246,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-18.json",
+        "sha256": "a9eaea951a39f052cfc75dc87b80427ef60688653fb1cdef18fcbbf3426cafe2"
+      },
+      "legacy_day_20220619": {
+        "bytes": 12247,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-19.json",
+        "sha256": "6f97d58f35f84c7e302b22b9076819a5ed14f94175037d6ec57d9d7bf72119a2"
+      },
+      "legacy_graph_config": {
+        "bytes": 1756,
+        "path": "research/onchain-paper-replication-2026-09-24/config/graph.json",
+        "sha256": "c91f8eeb1d317a310ef0f90f40a78ccf60bdd2437532f5e909f7dfd079d7fc20"
+      },
+      "legacy_graph_evidence": {
+        "bytes": 844,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-end-to-end-pilot-preparation01-2026-10-05/LEGACY_GRAPH_EVIDENCE_DRAFT01.json",
+        "sha256": "3153c0bb910cef6a47caa5e00cd52ea0efed25ce970981cdd0090ccbd6cd7dfa"
+      },
+      "legacy_graph_manifest": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+        "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+      },
+      "legacy_intent": {
+        "bytes": 19664,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+        "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+      },
+      "legacy_phase_source": {
+        "bytes": 10125,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py",
+        "sha256": "0bc95f7e33d97485cd9e2fba6802dde168c26aa162b987ef762f9e28ee3a1522"
+      },
+      "legacy_result": {
+        "bytes": 817,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+        "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+      },
+      "legacy_run_source": {
+        "bytes": 8577,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/run.py",
+        "sha256": "90dc7fc1fb6780174502e395db073d27c511a30aea8762ea968f256e4820c5e6"
+      },
+      "legacy_source_index": {
+        "bytes": 29870,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/source-index.json",
+        "sha256": "18f2548bdec2602995935d951075162537b6369b8bf18647cdc7a96962cffc1a"
+      },
+      "legacy_terminal": {
+        "bytes": 490,
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/failed.json",
+        "sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+      },
+      "mcm_output_policy": {
+        "bytes": 205,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seven-graph-packed-input03-2026-10-06/output_policy05.json",
+        "sha256": "04462cb304502e67771ca5f4318a9b98ec215fa9b31fefa4beddd05c031e3b10"
+      },
+      "mcm_policy": {
+        "bytes": 464,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection04-2026-10-08/mcm_policy.json",
+        "sha256": "38678c8dd66db616f470ddbd36d5d0121c056a31a83ec997113945480b9a09e5"
+      },
+      "model": {
+        "bytes": 1628,
+        "path": "research/onchain-paper-replication-2026-09-24/config/model.json",
+        "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+      },
+      "original_claim": {
+        "bytes": 50765,
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/claim.json",
+        "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+      },
+      "original_dictionary": {
+        "bytes": 67827,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/dictionary.json",
+        "sha256": "7347dbd764144d3f9b2c934f802a6e9520224efd34ae8febc486803faf0cf1ad"
+      },
+      "original_dictionary_config": {
+        "bytes": 1017,
+        "path": "research/onchain-paper-replication-2026-09-24/config/dictionary.json",
+        "sha256": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff"
+      },
+      "original_dictionary_intent": {
+        "bytes": 20588,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/intent.json",
+        "sha256": "801bc9396344b1414a0dcd2df1c7932ee04b3baa2ebd483db5477d455370ea73"
+      },
+      "original_dictionary_result": {
+        "bytes": 303,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/result.json",
+        "sha256": "a228201bc8b01c652f4b46788692fcf8110f205f8392f8773f7c30faf23c279b"
+      },
+      "original_gate": {
+        "bytes": 60866,
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/gate-v3.json",
+        "sha256": "33ca7e3a000eaa5d2586967c5c1379c17962935c9b5082258f3c64377391f66d"
+      },
+      "original_graph_manifest": {
+        "bytes": 1604,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+        "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+      },
+      "original_import": {
+        "bytes": 5293,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/original_import.json",
+        "sha256": "2f8859667ec4a0c6a9007cbcdcdd47fe5943a99a5e425f0951d604c27ca36d47"
+      },
+      "original_import_stage": {
+        "bytes": 88,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/original_import_stage.json",
+        "sha256": "a00d61c743c6f2a9a5534ab772dc5ef383bde94bfcd5b1ed7c5003f89b5cde9b"
+      },
+      "original_matching_config": {
+        "bytes": 1535,
+        "path": "research/onchain-paper-replication-2026-09-24/config/matching-stable.json",
+        "sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e"
+      },
+      "original_sample_intent": {
+        "bytes": 21806,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/intent.json",
+        "sha256": "82e50f913f0907c3d630d5cfbb3f4257462ca3fbe33e71bb60fdf9e468a817ba"
+      },
+      "original_samples": {
+        "bytes": 731010,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/samples.json",
+        "sha256": "3b6285b26cbfa1945b18ad021700d85019fd7bd6e65b727395985f6adbbd39a4"
+      },
+      "original_terminal": {
+        "bytes": 490,
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/failed.json",
+        "sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+      },
+      "pair_policy": {
+        "bytes": 25974,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/pair_policy01.json",
+        "sha256": "9b7553c36718ff7ee40e8be8cd5b3d8dafb5feff86b528c48c84548a344405b8"
+      },
+      "pilot": {
+        "bytes": 36976,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/pilot.json",
+        "sha256": "d49ed1b60fc07582cdbf8110c1d0487f101953d791df47adc3c9cb992e8b847e"
+      },
+      "price_panel": {
+        "bytes": 131283,
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/paper-prices-coinmetrics-eth-20260924/price-panel.json",
+        "sha256": "f7a4d89ff66d37ec00d8d4d834a1a771ac55f36bc9b210cfbecb6768ecc3bbbe"
+      },
+      "producer_plan": {
+        "bytes": 5319,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/producer_plan.json",
+        "sha256": "2f203f3f9bab853f1d621b8768bc54702fe758554648733666a3d79c99d13f3f"
+      },
+      "resource_population_plan": {
+        "bytes": 383,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/resource_population_plan.json",
+        "sha256": "af733fcdafb3676b346bd070db311ee43f2433104c998877d9b1c727c5485f03"
+      },
+      "resource_population_scope": {
+        "bytes": 2607,
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-scope01-2026-10-05/POPULATION_SCOPE_DRAFT01.json",
+        "sha256": "57a97518d2b12e0c787b49f91d9bf509888f9c63fb8f644d1ace90b5bd05e2a8"
+      },
+      "training": {
+        "bytes": 3934,
+        "path": "research/onchain-paper-replication-2026-09-24/config/training.json",
+        "sha256": "d5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0"
+      }
+    },
+    "template_roles": {
+      "archive": "archive_policy",
+      "compact": "compact_policy",
+      "dictionary": "original_import",
+      "job": "execution_job",
+      "output": "mcm_output_policy",
+      "pilot": "pilot",
+      "population": "resource_population_plan",
+      "producer_plan": "producer_plan"
+    },
+    "transport_limits": {
+      "control_history": {
+        "assumption": "closed-history sampled; no writer exclusion; mandatory boundary full-byte audits",
+        "format": "bounded-archive-control-history-v1",
+        "full_interval_ms": 1000,
+        "max_callbacks_between_full": 4096,
+        "max_stale_ms": 60000,
+        "schema_version": 1,
+        "shard_bytes": 4194304,
+        "success_control_bytes": 1024,
+        "success_diagnostic_bytes": 2048
+      },
+      "max_commands": 625996,
+      "max_control_bytes": 3306307456,
+      "max_diagnostic_bytes": 1475854304,
+      "max_payload_bytes": 3848509542407,
+      "max_seconds": 28800,
+      "namespace": "ethpilot-20261008-20",
+      "rate_kbit": 262144,
+      "receipt_output": "archive-receipt.json",
+      "terminal_output": "archive-terminal.json"
+    },
+    "typed_allocations": {
+      "by_week": {
+        "2022-05-02T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 58,
+            "max_operations": 1,
+            "max_preserved_bytes": 240422400,
+            "max_recovered_bytes": 1
+          },
+          "score-batch-f64": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 1836,
+            "max_operations": 919,
+            "max_preserved_bytes": 480844800,
+            "max_recovered_bytes": 480844800
+          },
+          "score-tail-f64": {
+            "chunk_bytes": 4194240,
+            "max_chunks": 3670,
+            "max_operations": 918,
+            "max_preserved_bytes": 4808448000,
+            "max_recovered_bytes": 4808448000
+          }
+        },
+        "2022-05-09T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 70,
+            "max_operations": 1,
+            "max_preserved_bytes": 289981568,
+            "max_recovered_bytes": 1
+          },
+          "score-batch-f64": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 2214,
+            "max_operations": 1108,
+            "max_preserved_bytes": 579963136,
+            "max_recovered_bytes": 579963136
+          },
+          "score-tail-f64": {
+            "chunk_bytes": 4194240,
+            "max_chunks": 4426,
+            "max_operations": 1107,
+            "max_preserved_bytes": 5799631360,
+            "max_recovered_bytes": 5799631360
+          }
+        },
+        "2022-05-16T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 63,
+            "max_operations": 1,
+            "max_preserved_bytes": 262234880,
+            "max_recovered_bytes": 1
+          },
+          "score-batch-f64": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 2002,
+            "max_operations": 1002,
+            "max_preserved_bytes": 524469760,
+            "max_recovered_bytes": 524469760
+          },
+          "score-tail-f64": {
+            "chunk_bytes": 4194240,
+            "max_chunks": 4002,
+            "max_operations": 1001,
+            "max_preserved_bytes": 5244697600,
+            "max_recovered_bytes": 5244697600
+          }
+        },
+        "2022-05-23T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 58,
+            "max_operations": 1,
+            "max_preserved_bytes": 240005504,
+            "max_recovered_bytes": 1
+          },
+          "score-batch-f64": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 1832,
+            "max_operations": 917,
+            "max_preserved_bytes": 480011008,
+            "max_recovered_bytes": 480011008
+          },
+          "score-tail-f64": {
+            "chunk_bytes": 4194240,
+            "max_chunks": 3662,
+            "max_operations": 916,
+            "max_preserved_bytes": 4800110080,
+            "max_recovered_bytes": 4800110080
+          }
+        },
+        "2022-05-30T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 49,
+            "max_operations": 1,
+            "max_preserved_bytes": 202424448,
+            "max_recovered_bytes": 1
+          },
+          "score-batch-f64": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 1546,
+            "max_operations": 774,
+            "max_preserved_bytes": 404848896,
+            "max_recovered_bytes": 404848896
+          },
+          "score-tail-f64": {
+            "chunk_bytes": 4194240,
+            "max_chunks": 3090,
+            "max_operations": 773,
+            "max_preserved_bytes": 4048488960,
+            "max_recovered_bytes": 4048488960
+          }
+        },
+        "2022-06-06T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 49,
+            "max_operations": 1,
+            "max_preserved_bytes": 202465408,
+            "max_recovered_bytes": 1
+          },
+          "score-batch-f64": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 1546,
+            "max_operations": 774,
+            "max_preserved_bytes": 404930816,
+            "max_recovered_bytes": 404930816
+          },
+          "score-tail-f64": {
+            "chunk_bytes": 4194240,
+            "max_chunks": 3090,
+            "max_operations": 773,
+            "max_preserved_bytes": 4049308160,
+            "max_recovered_bytes": 4049308160
+          }
+        },
+        "2022-06-13T00:00:00Z": {
+          "mcm-output-f32": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 54,
+            "max_operations": 1,
+            "max_preserved_bytes": 226338304,
+            "max_recovered_bytes": 1
+          },
+          "score-batch-f64": {
+            "chunk_bytes": 4194304,
+            "max_chunks": 1728,
+            "max_operations": 865,
+            "max_preserved_bytes": 452676608,
+            "max_recovered_bytes": 452676608
+          },
+          "score-tail-f64": {
+            "chunk_bytes": 4194240,
+            "max_chunks": 3454,
+            "max_operations": 864,
+            "max_preserved_bytes": 4526766080,
+            "max_recovered_bytes": 4526766080
+          }
+        }
+      },
+      "chunk_cells": 65536,
+      "max_control_bytes": 627941376
+    },
+    "typed_input_role": "typed_payload"
+  },
+  "independent_approval": false,
+  "inventory": {
+    "allocation_overhead_bytes": 2454455355,
+    "builder03_physical_fragment": {
+      "additional_scratch_bytes": 538195968,
+      "allocation_overhead_bytes": 2454455355,
+      "caller_scratch_bytes": 568735744,
+      "remaining_control_inventory": {
+        "other_selected_controls_bytes": 1396140608,
+        "producer_output_controls_bytes": 344064,
+        "stream_tail_batch_headers_bytes": 260464640
+      },
+      "reserved_control_bytes": 5805519232,
+      "reserved_growth_bytes": 289981568,
+      "retained_diagnostic_bytes": 1475854304,
+      "typed_attempt_metadata_bytes": 1261535232
+    },
+    "by_week": {
+      "2022-05-02T00:00:00Z": {
+        "batch_count": 918,
+        "cells": 60105600,
+        "phase_logical_payload_bounds": {
+          "batch_preserve_before_tail_disposal": 15073280,
+          "closed_batch_recovery_for_cast": 524288,
+          "output_part_preserve": 12582912,
+          "pair_preserve_with_unsealed_tail": 30539776,
+          "tail_part_preserve": 26607424,
+          "tail_semantic_recovery": 18218944
+        },
+        "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+        "ram_lexical_payload_extents": {
+          "live_batch_bytes": 524288,
+          "output_part_bytes": 4194304,
+          "pair_parse_bytes": 8257536,
+          "tail_part_bytes": 4194240,
+          "tail_records_file_bytes": 5242880
+        },
+        "required_typed_allowances": {
+          "mcm-output-f32": {
+            "max_chunks": 58,
+            "max_operations": 1,
+            "max_preserved_bytes": 240422400,
+            "max_recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "max_chunks": 1836,
+            "max_operations": 919,
+            "max_preserved_bytes": 480844800,
+            "max_recovered_bytes": 480844800
+          },
+          "score-tail-f64": {
+            "max_chunks": 3670,
+            "max_operations": 918,
+            "max_preserved_bytes": 4808448000,
+            "max_recovered_bytes": 4808448000
+          }
+        },
+        "retained_matrix_logical_bytes": 240422400,
+        "rows": 1878300,
+        "selected_payload_overlap_upper_bytes": 30539776,
+        "tail_preserve_parts": 1835,
+        "typed_attempt_directory_count": 5564,
+        "typed_attempt_metadata_allowance_bytes": 182321152
+      },
+      "2022-05-09T00:00:00Z": {
+        "batch_count": 1107,
+        "cells": 72495392,
+        "phase_logical_payload_bounds": {
+          "batch_preserve_before_tail_disposal": 15073280,
+          "closed_batch_recovery_for_cast": 524288,
+          "output_part_preserve": 12582912,
+          "pair_preserve_with_unsealed_tail": 30539776,
+          "tail_part_preserve": 26607424,
+          "tail_semantic_recovery": 18218944
+        },
+        "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+        "ram_lexical_payload_extents": {
+          "live_batch_bytes": 524288,
+          "output_part_bytes": 4194304,
+          "pair_parse_bytes": 8257536,
+          "tail_part_bytes": 4194240,
+          "tail_records_file_bytes": 5242880
+        },
+        "required_typed_allowances": {
+          "mcm-output-f32": {
+            "max_chunks": 70,
+            "max_operations": 1,
+            "max_preserved_bytes": 289981568,
+            "max_recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "max_chunks": 2214,
+            "max_operations": 1108,
+            "max_preserved_bytes": 579963136,
+            "max_recovered_bytes": 579963136
+          },
+          "score-tail-f64": {
+            "max_chunks": 4426,
+            "max_operations": 1107,
+            "max_preserved_bytes": 5799631360,
+            "max_recovered_bytes": 5799631360
+          }
+        },
+        "retained_matrix_logical_bytes": 289981568,
+        "rows": 2265481,
+        "selected_payload_overlap_upper_bytes": 30539776,
+        "tail_preserve_parts": 2213,
+        "typed_attempt_directory_count": 6710,
+        "typed_attempt_metadata_allowance_bytes": 219873280
+      },
+      "2022-05-16T00:00:00Z": {
+        "batch_count": 1001,
+        "cells": 65558720,
+        "phase_logical_payload_bounds": {
+          "batch_preserve_before_tail_disposal": 15073280,
+          "closed_batch_recovery_for_cast": 524288,
+          "output_part_preserve": 12582912,
+          "pair_preserve_with_unsealed_tail": 30539776,
+          "tail_part_preserve": 26607424,
+          "tail_semantic_recovery": 18218944
+        },
+        "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+        "ram_lexical_payload_extents": {
+          "live_batch_bytes": 524288,
+          "output_part_bytes": 4194304,
+          "pair_parse_bytes": 8257536,
+          "tail_part_bytes": 4194240,
+          "tail_records_file_bytes": 5242880
+        },
+        "required_typed_allowances": {
+          "mcm-output-f32": {
+            "max_chunks": 63,
+            "max_operations": 1,
+            "max_preserved_bytes": 262234880,
+            "max_recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "max_chunks": 2002,
+            "max_operations": 1002,
+            "max_preserved_bytes": 524469760,
+            "max_recovered_bytes": 524469760
+          },
+          "score-tail-f64": {
+            "max_chunks": 4002,
+            "max_operations": 1001,
+            "max_preserved_bytes": 5244697600,
+            "max_recovered_bytes": 5244697600
+          }
+        },
+        "retained_matrix_logical_bytes": 262234880,
+        "rows": 2048710,
+        "selected_payload_overlap_upper_bytes": 30539776,
+        "tail_preserve_parts": 2001,
+        "typed_attempt_directory_count": 6067,
+        "typed_attempt_metadata_allowance_bytes": 198803456
+      },
+      "2022-05-23T00:00:00Z": {
+        "batch_count": 916,
+        "cells": 60001376,
+        "phase_logical_payload_bounds": {
+          "batch_preserve_before_tail_disposal": 15073280,
+          "closed_batch_recovery_for_cast": 524288,
+          "output_part_preserve": 12582912,
+          "pair_preserve_with_unsealed_tail": 30539776,
+          "tail_part_preserve": 26607424,
+          "tail_semantic_recovery": 18218944
+        },
+        "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+        "ram_lexical_payload_extents": {
+          "live_batch_bytes": 524288,
+          "output_part_bytes": 4194304,
+          "pair_parse_bytes": 8257536,
+          "tail_part_bytes": 4194240,
+          "tail_records_file_bytes": 5242880
+        },
+        "required_typed_allowances": {
+          "mcm-output-f32": {
+            "max_chunks": 58,
+            "max_operations": 1,
+            "max_preserved_bytes": 240005504,
+            "max_recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "max_chunks": 1832,
+            "max_operations": 917,
+            "max_preserved_bytes": 480011008,
+            "max_recovered_bytes": 480011008
+          },
+          "score-tail-f64": {
+            "max_chunks": 3662,
+            "max_operations": 916,
+            "max_preserved_bytes": 4800110080,
+            "max_recovered_bytes": 4800110080
+          }
+        },
+        "retained_matrix_logical_bytes": 240005504,
+        "rows": 1875043,
+        "selected_payload_overlap_upper_bytes": 30539776,
+        "tail_preserve_parts": 1831,
+        "typed_attempt_directory_count": 5552,
+        "typed_attempt_metadata_allowance_bytes": 181927936
+      },
+      "2022-05-30T00:00:00Z": {
+        "batch_count": 773,
+        "cells": 50606112,
+        "phase_logical_payload_bounds": {
+          "batch_preserve_before_tail_disposal": 15073280,
+          "closed_batch_recovery_for_cast": 524288,
+          "output_part_preserve": 12582912,
+          "pair_preserve_with_unsealed_tail": 30539776,
+          "tail_part_preserve": 26607424,
+          "tail_semantic_recovery": 18218944
+        },
+        "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+        "ram_lexical_payload_extents": {
+          "live_batch_bytes": 524288,
+          "output_part_bytes": 4194304,
+          "pair_parse_bytes": 8257536,
+          "tail_part_bytes": 4194240,
+          "tail_records_file_bytes": 5242880
+        },
+        "required_typed_allowances": {
+          "mcm-output-f32": {
+            "max_chunks": 49,
+            "max_operations": 1,
+            "max_preserved_bytes": 202424448,
+            "max_recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "max_chunks": 1546,
+            "max_operations": 774,
+            "max_preserved_bytes": 404848896,
+            "max_recovered_bytes": 404848896
+          },
+          "score-tail-f64": {
+            "max_chunks": 3090,
+            "max_operations": 773,
+            "max_preserved_bytes": 4048488960,
+            "max_recovered_bytes": 4048488960
+          }
+        },
+        "retained_matrix_logical_bytes": 202424448,
+        "rows": 1581441,
+        "selected_payload_overlap_upper_bytes": 30539776,
+        "tail_preserve_parts": 1545,
+        "typed_attempt_directory_count": 4685,
+        "typed_attempt_metadata_allowance_bytes": 153518080
+      },
+      "2022-06-06T00:00:00Z": {
+        "batch_count": 773,
+        "cells": 50616352,
+        "phase_logical_payload_bounds": {
+          "batch_preserve_before_tail_disposal": 15073280,
+          "closed_batch_recovery_for_cast": 524288,
+          "output_part_preserve": 12582912,
+          "pair_preserve_with_unsealed_tail": 30539776,
+          "tail_part_preserve": 26607424,
+          "tail_semantic_recovery": 18218944
+        },
+        "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+        "ram_lexical_payload_extents": {
+          "live_batch_bytes": 524288,
+          "output_part_bytes": 4194304,
+          "pair_parse_bytes": 8257536,
+          "tail_part_bytes": 4194240,
+          "tail_records_file_bytes": 5242880
+        },
+        "required_typed_allowances": {
+          "mcm-output-f32": {
+            "max_chunks": 49,
+            "max_operations": 1,
+            "max_preserved_bytes": 202465408,
+            "max_recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "max_chunks": 1546,
+            "max_operations": 774,
+            "max_preserved_bytes": 404930816,
+            "max_recovered_bytes": 404930816
+          },
+          "score-tail-f64": {
+            "max_chunks": 3090,
+            "max_operations": 773,
+            "max_preserved_bytes": 4049308160,
+            "max_recovered_bytes": 4049308160
+          }
+        },
+        "retained_matrix_logical_bytes": 202465408,
+        "rows": 1581761,
+        "selected_payload_overlap_upper_bytes": 30539776,
+        "tail_preserve_parts": 1545,
+        "typed_attempt_directory_count": 4685,
+        "typed_attempt_metadata_allowance_bytes": 153518080
+      },
+      "2022-06-13T00:00:00Z": {
+        "batch_count": 864,
+        "cells": 56584576,
+        "phase_logical_payload_bounds": {
+          "batch_preserve_before_tail_disposal": 15073280,
+          "closed_batch_recovery_for_cast": 524288,
+          "output_part_preserve": 12582912,
+          "pair_preserve_with_unsealed_tail": 30539776,
+          "tail_part_preserve": 26607424,
+          "tail_semantic_recovery": 18218944
+        },
+        "qualification": "Conservative selected payload overlap, not total store/RAM. Parsing copies, numerical resident objects, retained control bodies, allocation rounding and directory metadata require separate accounting.",
+        "ram_lexical_payload_extents": {
+          "live_batch_bytes": 524288,
+          "output_part_bytes": 4194304,
+          "pair_parse_bytes": 8257536,
+          "tail_part_bytes": 4194240,
+          "tail_records_file_bytes": 5242880
+        },
+        "required_typed_allowances": {
+          "mcm-output-f32": {
+            "max_chunks": 54,
+            "max_operations": 1,
+            "max_preserved_bytes": 226338304,
+            "max_recovered_bytes": 0
+          },
+          "score-batch-f64": {
+            "max_chunks": 1728,
+            "max_operations": 865,
+            "max_preserved_bytes": 452676608,
+            "max_recovered_bytes": 452676608
+          },
+          "score-tail-f64": {
+            "max_chunks": 3454,
+            "max_operations": 864,
+            "max_preserved_bytes": 4526766080,
+            "max_recovered_bytes": 4526766080
+          }
+        },
+        "retained_matrix_logical_bytes": 226338304,
+        "rows": 1768268,
+        "selected_payload_overlap_upper_bytes": 30539776,
+        "tail_preserve_parts": 1727,
+        "typed_attempt_directory_count": 5236,
+        "typed_attempt_metadata_allowance_bytes": 171573248
+      }
+    },
+    "categories": {
+      "archive_ledger_writer_reads": {
+        "basis": "eight reserved original stages; writer/read metadata and 40-byte checkpoint references",
+        "directories": 48145,
+        "logical_bytes": 1871270400,
+        "max_file_bytes": 4194304,
+        "regular_files": 168052
+      },
+      "checkpoint_retention": {
+        "basis": "stage_retention/restart_retention: all retained states, input copies, generations, bridges, replay evidence and failure controls for eight stages",
+        "directories": 811,
+        "logical_bytes": 1630839360,
+        "max_file_bytes": 354857536,
+        "regular_files": 3867
+      },
+      "dispatch": {
+        "basis": "Context controls; lease checks create no per-call disk file",
+        "directories": 2,
+        "logical_bytes": 3306307456,
+        "max_file_bytes": 4194304,
+        "regular_files": 797
+      },
+      "import_owner_stage_journal": {
+        "basis": "original import, compact_owner stage intent/complete, feature_journal metadata, imported sample/dictionary reference controls; opaque numeric sources stay inputs",
+        "directories": 42,
+        "logical_bytes": 1507328,
+        "max_file_bytes": 65536,
+        "regular_files": 23
+      },
+      "producer_output_controls": {
+        "basis": "per graph producer start/complete/failure; output manifest/storage/receipt; producer + attempt/artifact/transport",
+        "directories": 28,
+        "logical_bytes": 344064,
+        "max_file_bytes": 8192,
+        "regular_files": 42
+      },
+      "retained_original_matrices": {
+        "basis": "one first-graph f32 matrix allowance; planned diagnostic fails before later graphs",
+        "directories": 0,
+        "logical_bytes": 289981568,
+        "max_file_bytes": 289981568,
+        "regular_files": 1
+      },
+      "runtime_temp_cache": {
+        "basis": "real_pilot_storage forwarded native temp/cache and all additional selected writer paths not in the other named domains",
+        "directories": 256,
+        "logical_bytes": 268435456,
+        "max_file_bytes": 67108864,
+        "regular_files": 4096
+      },
+      "selected_payload_scratch": {
+        "basis": "accepted serial pair/tail/batch/output overlap; six simultaneous regular bodies upper bound; diagnostics counted separately",
+        "directories": 0,
+        "logical_bytes": 30539776,
+        "max_file_bytes": 8388608,
+        "regular_files": 6
+      },
+      "stream_tail_batch_headers": {
+        "basis": "per graph 5B+5 JSON; stream/batches/tails plus 2B tail/typed directories",
+        "directories": 12725,
+        "logical_bytes": 260464640,
+        "max_file_bytes": 8192,
+        "regular_files": 31795
+      },
+      "training_and_lifecycle": {
+        "basis": "real_pilot_training checkpoint/phases/complete/failed plus ResearchRun outputs, progress, guard/sampler/stdout and run/shared-lock writers",
+        "directories": 16,
+        "logical_bytes": 33554432,
+        "max_file_bytes": 4194304,
+        "regular_files": 68
+      },
+      "transport_diagnostics": {
+        "basis": "one JSON and at most one bin per call; one failed/inflight bin body; successful get staging moves into caller",
+        "directories": 2,
+        "logical_bytes": 1475854304,
+        "max_file_bytes": 8388608,
+        "regular_files": 353
+      },
+      "typed_attempts": {
+        "basis": "four metadata slots per selected chunk credit; includes failure headroom",
+        "directories": 38499,
+        "logical_bytes": 1261535232,
+        "max_file_bytes": 8192,
+        "regular_files": 153996
+      },
+      "typed_ledger": {
+        "basis": "typed claims/complete/failure and part/read records; directory counted by archive",
+        "directories": 0,
+        "logical_bytes": 627941376,
+        "max_file_bytes": 8192,
+        "regular_files": 76653
+      }
+    },
+    "directory_slots": 100526,
+    "filesystem_assumption": {
+      "allocation_unit_bytes": 4096,
+      "evidence_sha256": "e48d939a50292c6ca5f2c8a6b192f1c328c196507f21e1f92922cec53b18300b",
+      "extra_allocated_bytes": 16777216,
+      "extra_entries": 256,
+      "max_native_file_bytes": 1073741824,
+      "per_directory_allocated_bytes": 4096,
+      "per_regular_inode_overhead_bytes": 512
+    },
+    "local_free_floor_bytes": 10737418240,
+    "new_logical_bytes": 11058575392,
+    "qualification": "Finite reservation arithmetic conditional on reviewed declarations. Not an authenticated inventory, hard filesystem quota, scan-time/depth proof, available-capacity observation, RAM bound, current remote availability or permission to run. Builder03 must still validate exact metadata, 512/32/16x28 membership, transport and caller policy joins; Root must admit actual budgets and sources.",
+    "regular_file_slots": 439749,
+    "residual_declarations": {
+      "checkpoint_retention": {
+        "additional_scratch_bytes": 538195968,
+        "bound_basis": "One partial first-stage diagnostic retention only: reserved controls+inputs+replays retained; two live generation bodies overlap globally under serial execution. File slots include three metadata manifests per retired generation and failed/partial states. Imported dictionary has no new matching stage. Selected policy reservations are not measured bytes.",
+        "directories": 811,
+        "evidence_sha256": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+        "logical_bytes": 1092643392,
+        "max_file_bytes": 354857536,
+        "regular_files": 3603,
+        "scratch_files": 264,
+        "scratch_max_file_bytes": 269097984
+      },
+      "import_owner_stage_journal": {
+        "additional_scratch_bytes": 0,
+        "bound_basis": "23 bounded current metadata slots: journal5 + compact owner2 + import2 + seven MCM stage pairs14. Preparation/materialization and original512/32 evidence are read-only. Directory allowance42 includes sixteen journal-parent slots and finite fixed-path ancestor margin; not another copy of original samples or motifs.",
+        "directories": 42,
+        "evidence_sha256": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+        "logical_bytes": 1507328,
+        "max_file_bytes": 65536,
+        "regular_files": 23,
+        "scratch_files": 0,
+        "scratch_max_file_bytes": 0
+      },
+      "runtime_temp_cache": {
+        "additional_scratch_bytes": 0,
+        "bound_basis": "Prospective explicit domain ceiling, not source writer maximum or measured cache demand. Twelve actual forwarded paths are under research_artifacts/real_pilot_runtime. Existing sampled common writable-union limits and10GiB floor remain enforced; inter-sample overshoot is unbounded by this declaration. No separate quota or per-domain runtime enforcement is claimed.",
+        "directories": 256,
+        "evidence_sha256": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+        "logical_bytes": 268435456,
+        "max_file_bytes": 67108864,
+        "regular_files": 4096,
+        "scratch_files": 0,
+        "scratch_max_file_bytes": 0
+      },
+      "training_and_lifecycle": {
+        "additional_scratch_bytes": 0,
+        "bound_basis": "Explicit prospective sampled lifecycle reservation, not a source-proven maximum encoded-body bound, per-domain quota or overshoot guarantee. Original68 file slots/16 directories retained. Includes checkpoint, bounded partial telemetry and fixed receipts. Parent exception text/log output and native receipt encodings have no newly installed smaller cap. Unexpected growth remains governed by unchanged whole-union watches, native RLIMIT and floor; no automatic retry or grant increase.",
+        "directories": 16,
+        "evidence_sha256": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+        "logical_bytes": 33554432,
+        "max_file_bytes": 4194304,
+        "regular_files": 68,
+        "scratch_files": 0,
+        "scratch_max_file_bytes": 0
+      }
+    },
+    "schema_version": 1,
+    "status": "DRAFT_DECLARATIONS_NOT_ADMITTED",
+    "storage_budget_unchanged": {
+      "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "experiment": "eth-paper-real-data-end-to-end-resource-20261008-20",
+      "kind": "real-pilot-writable-union",
+      "limits": {
+        "max_allocated_bytes": 21474836480,
+        "max_depth": 64,
+        "max_entries": 1000000,
+        "max_logical_bytes": 17179869184,
+        "max_scan_seconds": 5
+      },
+      "roots": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261008-20"
+      ],
+      "schema_version": 2,
+      "shared_files": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+      ]
+    },
+    "total_with_declared_baseline": {
+      "allocated_bytes": 18658843739,
+      "entries": 557587,
+      "logical_bytes": 16628376165
+    },
+    "transport_caps_unchanged": {
+      "control_history": {
+        "assumption": "closed-history sampled; no writer exclusion; mandatory boundary full-byte audits",
+        "format": "bounded-archive-control-history-v1",
+        "full_interval_ms": 1000,
+        "max_callbacks_between_full": 4096,
+        "max_stale_ms": 60000,
+        "schema_version": 1,
+        "shard_bytes": 4194304,
+        "success_control_bytes": 1024,
+        "success_diagnostic_bytes": 2048
+      },
+      "max_commands": 625996,
+      "max_control_bytes": 3306307456,
+      "max_diagnostic_bytes": 1475854304,
+      "max_payload_bytes": 3848509542407
+    }
+  },
+  "residuals": {
+    "enforcement": "Current full writable-union sampling/floor, worker and monitor RLIMIT_FSIZE. This is a finite reservation draft, not a guarantee against theoretical inter-sample overshoot.",
+    "integration": "Explicit selected lifecycle reservation replaces only64L; it remains prospective sampled headroom, not a smaller installed per-file bound. Insert residual_domains into inventory01; original root budget/floor/native checks unchanged.",
+    "prospective_ceilings": [
+      "training_and_lifecycle parent/outer receipt headroom",
+      "runtime_temp_cache"
+    ],
+    "residual_domains": {
+      "checkpoint_retention": {
+        "additional_scratch_bytes": 538195968,
+        "bound_basis": "One partial first-stage diagnostic retention only: reserved controls+inputs+replays retained; two live generation bodies overlap globally under serial execution. File slots include three metadata manifests per retired generation and failed/partial states. Imported dictionary has no new matching stage. Selected policy reservations are not measured bytes.",
+        "directories": 811,
+        "evidence_sha256": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+        "logical_bytes": 1092643392,
+        "max_file_bytes": 354857536,
+        "regular_files": 3603,
+        "scratch_files": 264,
+        "scratch_max_file_bytes": 269097984
+      },
+      "import_owner_stage_journal": {
+        "additional_scratch_bytes": 0,
+        "bound_basis": "23 bounded current metadata slots: journal5 + compact owner2 + import2 + seven MCM stage pairs14. Preparation/materialization and original512/32 evidence are read-only. Directory allowance42 includes sixteen journal-parent slots and finite fixed-path ancestor margin; not another copy of original samples or motifs.",
+        "directories": 42,
+        "evidence_sha256": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+        "logical_bytes": 1507328,
+        "max_file_bytes": 65536,
+        "regular_files": 23,
+        "scratch_files": 0,
+        "scratch_max_file_bytes": 0
+      },
+      "runtime_temp_cache": {
+        "additional_scratch_bytes": 0,
+        "bound_basis": "Prospective explicit domain ceiling, not source writer maximum or measured cache demand. Twelve actual forwarded paths are under research_artifacts/real_pilot_runtime. Existing sampled common writable-union limits and10GiB floor remain enforced; inter-sample overshoot is unbounded by this declaration. No separate quota or per-domain runtime enforcement is claimed.",
+        "directories": 256,
+        "evidence_sha256": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+        "logical_bytes": 268435456,
+        "max_file_bytes": 67108864,
+        "regular_files": 4096,
+        "scratch_files": 0,
+        "scratch_max_file_bytes": 0
+      },
+      "training_and_lifecycle": {
+        "additional_scratch_bytes": 0,
+        "bound_basis": "Explicit prospective sampled lifecycle reservation, not a source-proven maximum encoded-body bound, per-domain quota or overshoot guarantee. Original68 file slots/16 directories retained. Includes checkpoint, bounded partial telemetry and fixed receipts. Parent exception text/log output and native receipt encodings have no newly installed smaller cap. Unexpected growth remains governed by unchanged whole-union watches, native RLIMIT and floor; no automatic retry or grant increase.",
+        "directories": 16,
+        "evidence_sha256": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+        "logical_bytes": 33554432,
+        "max_file_bytes": 4194304,
+        "regular_files": 68,
+        "scratch_files": 0,
+        "scratch_max_file_bytes": 0
+      }
+    },
+    "runtime_relative_paths": [
+      "research_artifacts/real_pilot_runtime/tmp",
+      "research_artifacts/real_pilot_runtime/cache",
+      "research_artifacts/real_pilot_runtime/torch",
+      "research_artifacts/real_pilot_runtime/matplotlib",
+      "research_artifacts/real_pilot_runtime/hf",
+      "research_artifacts/real_pilot_runtime/torch-extensions",
+      "research_artifacts/real_pilot_runtime/torchinductor",
+      "research_artifacts/real_pilot_runtime/triton",
+      "research_artifacts/real_pilot_runtime/numba",
+      "research_artifacts/real_pilot_runtime/cuda",
+      "research_artifacts/real_pilot_runtime/config",
+      "research_artifacts/real_pilot_runtime/data"
+    ],
+    "source_bounds": {
+      "current_import_metadata_bytes": 1507328,
+      "current_import_metadata_files": 23,
+      "generations_per_stage": 160,
+      "global_live_checkpoint_scratch_bytes": 538195968,
+      "matching_stages": 1,
+      "original_import_recomputation": false,
+      "selected_endpoints_per_stage": 2,
+      "stores_per_stage": 160
+    },
+    "status": "DRAFT_RESIDUAL_DECLARATIONS_NOT_ADMITTED"
+  },
+  "status": "DRAFT_NOT_REGISTERED_NOT_ADMITTED"
+}
