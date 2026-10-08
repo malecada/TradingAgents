@@ -1,0 +1,38 @@
+{
+  "decision": "accepted-source-only",
+  "candidate_sha256": "1d1377bd1faab3b563ff6d07c2e55908c556b71fb5add4126d5860d481a099fe",
+  "baseline_sha256": "1c9e48fa537839ce54236d24e82b35108aaff3c7f36995236e819d5e877f24b4",
+  "checks": [
+    "candidate_exact",
+    "baseline_exact",
+    "full_text_inverse",
+    "eligible",
+    "operations_and_bits_75",
+    "operations_and_bits_75",
+    "operations_and_bits_75",
+    "operations_and_bits_75",
+    "operations_and_bits_75",
+    "operations_and_bits_100000",
+    "lazy_late_error_prefix",
+    "other_functions_including_checkpoints_exact",
+    "prior_review_exact",
+    "slice_headers_fit_existing_scratch"
+  ],
+  "check_count": 14,
+  "scratch_bytes": {
+    "inherited_conservative_scratch": 200536,
+    "conservative_chunk_overlap_guard_and_fixed_allowance": 200785,
+    "reservation": 262144
+  },
+  "resources": {
+    "affinity": [
+      3,
+      4
+    ],
+    "nice": 10,
+    "AS": 268435456,
+    "FSIZE": 4194304,
+    "seconds": 60
+  },
+  "qualification": "Synthetic exact-state/order/operation/error checks only. Local per-advance cache has no persistent checkpoint state. Frozen original callable/runtime, immutable bytes-backed exact graphs, exclusive state ownership, no concurrent mutation/callback or fenv changes required. Allocation failures can differ. Bound covers edge scratch plus cache, excludes retained state and existing normalization/validation/library allocations; not process RSS or universal hostile-runtime safety. No performance, empirical, source installation or launch admission claim."
+}

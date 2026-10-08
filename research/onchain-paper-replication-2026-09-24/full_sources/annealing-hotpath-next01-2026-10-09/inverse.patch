@@ -1,0 +1,51 @@
+--- matching_annealing.py
++++ baseline.py
+@@ -161,29 +161,25 @@
+                     # Outside this domain retain the literal scalar operation.
+                     if np.all(np.abs(old_values)<=1.) and np.all(np.abs(state['Q'][u,i])<=1e100):
+                         weights=np.empty(count,dtype=np.float64)
+-                        if reuse and cached is not None and valid[start:start+count].all():
+-                            # Exact copy only: lazy population and ordered arithmetic remain below.
+-                            weights[:]=cached[start:start+count]
+-                        else:
+-                            try:
+-                                for offset in range(count):
+-                                    position=start+offset
+-                                    if reuse and cached is not None and valid[position]:
+-                                        weights[offset]=cached[position]
+-                                    else:
+-                                        weights[offset]=.5*agreement(a.edge_features[left[offset]],b.edge_features[right[offset]])
+-                                        if reuse:
+-                                            if cached is None:
+-                                                cached=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
+-                                            cached[position]=weights[offset];valid[position]=True
+-                            except BaseException:
+-                                # Reproduce the scalar prefix and cursor on agreement failure.
+-                                for offset2 in range(offset):
+-                                    k,l=left[offset2],right[offset2]
+-                                    u,v=a.edge_index[:,k];i,j=b.edge_index[:,l]
+-                                    state['Q'][u,i]+=weights[offset2]*state['M'][v,j]
+-                                    state['cursor']+=1;used+=1
+-                                raise
++                        try:
++                            for offset in range(count):
++                                position=start+offset
++                                if reuse and cached is not None and valid[position]:
++                                    weights[offset]=cached[position]
++                                else:
++                                    weights[offset]=.5*agreement(a.edge_features[left[offset]],b.edge_features[right[offset]])
++                                    if reuse:
++                                        if cached is None:
++                                            cached=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
++                                        cached[position]=weights[offset];valid[position]=True
++                        except BaseException:
++                            # Reproduce the scalar prefix and cursor on agreement failure.
++                            for offset2 in range(offset):
++                                k,l=left[offset2],right[offset2]
++                                u,v=a.edge_index[:,k];i,j=b.edge_index[:,l]
++                                state['Q'][u,i]+=weights[offset2]*state['M'][v,j]
++                                state['cursor']+=1;used+=1
++                            raise
+                         np.multiply(weights,old_values,out=weights)
+                         np.add.at(state['Q'],(u,i),weights)
+                         state['cursor']+=count;used+=count
