@@ -1,0 +1,376 @@
+{
+  "accounting": "59closed=33COMPLETE26FAILED/highestclaimed90;28pending/3closedpreclaimreserves; no refund or transfer",
+  "actual_failed_reason": "CleanupFailure: score storage cleanup unresolved; worker must stop",
+  "actual_native_child_exit": 1,
+  "actual_primary_trace_error": "ValueError: neighborhood capacity exceeded, no truncation",
+  "actual_root_exit_code": 1,
+  "actual_unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "MainPID": "0",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "actual_unit_show_exit_code": 0,
+  "at": "2026-10-08T12:12:29.312123+00:00",
+  "cgroup_exists": false,
+  "cleanup_verified": true,
+  "disposition": "PERMANENT_FAILED_SPENT90_NEVER_REUSE",
+  "final_storage": {
+    "allocated_bytes": 5041729536,
+    "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "directories": 1059,
+    "elapsed_seconds": 0.16839247600000817,
+    "entries": 16980,
+    "logical_file_bytes": 5465987519,
+    "qualification": "Sampled exact writer closure including shared parent directory allocation and lock. Historical claim siblings/source/runtime outside writer scope; no kernel quota, atomic snapshot, or absent-tree allocation credit.",
+    "regular_files": 15923,
+    "residual_domains": {
+      "runtime_temp_cache": {
+        "allocated_bytes": 241664,
+        "allocated_threshold_bytes": 288354304,
+        "directories": 35,
+        "entries": 58,
+        "logical_file_bytes": 22266,
+        "observed_monotonic_seconds": 15721.964042425,
+        "policy": {
+          "directories": 256,
+          "logical_bytes": 268435456,
+          "max_file_bytes": 67108864,
+          "regular_files": 4096
+        },
+        "qualification": "Sampled subset totals already included in the writable union, never charged twice. Includes all scratch/partial files in the selected paths. No hard quota, atomic snapshot, backend-cache maximum or finite inter-sample overshoot bound.",
+        "regular_files": 24,
+        "roots": [
+          {
+            "aggregate_entry_visit_bound": 13056,
+            "allocated_bytes": 241664,
+            "directories": 35,
+            "elapsed_seconds": 0.0012797689996659756,
+            "entries": 58,
+            "hardlink_observations": [],
+            "logical_file_bytes": 22266,
+            "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+            "regular_files": 24,
+            "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime",
+            "root_device": 66310,
+            "root_inode": 8431074,
+            "scan_attempts": 1
+          }
+        ]
+      },
+      "training_and_lifecycle": {
+        "allocated_bytes": 503808,
+        "allocated_threshold_bytes": 33933244,
+        "directories": 5,
+        "entries": 28,
+        "logical_file_bytes": 414107,
+        "observed_monotonic_seconds": 15721.96484455,
+        "policy": {
+          "directories": 16,
+          "logical_bytes": 33554432,
+          "max_file_bytes": 4194304,
+          "regular_files": 68
+        },
+        "qualification": "Sampled subset totals already included in the writable union, never charged twice. Includes all scratch/partial files in the selected paths. No hard quota, atomic snapshot, backend-cache maximum or finite inter-sample overshoot bound.",
+        "regular_files": 26,
+        "roots": [
+          {
+            "aggregate_entry_visit_bound": 252,
+            "allocated_bytes": 348160,
+            "directories": 2,
+            "elapsed_seconds": 0.001569748999827425,
+            "entries": 11,
+            "hardlink_observations": [],
+            "logical_file_bytes": 311793,
+            "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+            "regular_files": 10,
+            "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261008-19",
+            "root_device": 66310,
+            "root_inode": 10918707,
+            "scan_attempts": 1
+          },
+          {
+            "aggregate_entry_visit_bound": 252,
+            "allocated_bytes": 147456,
+            "directories": 2,
+            "elapsed_seconds": 0.0018998180003109155,
+            "entries": 15,
+            "hardlink_observations": [],
+            "logical_file_bytes": 101392,
+            "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+            "regular_files": 14,
+            "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-19",
+            "root_device": 66310,
+            "root_inode": 10918699,
+            "scan_attempts": 1
+          },
+          {
+            "aggregate_entry_visit_bound": 252,
+            "allocated_bytes": 8192,
+            "directories": 1,
+            "elapsed_seconds": 0.002086153999698581,
+            "entries": 2,
+            "hardlink_observations": [],
+            "logical_file_bytes": 922,
+            "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+            "regular_files": 2,
+            "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261008-19",
+            "root_device": 66310,
+            "root_inode": 10918696,
+            "scan_attempts": 1
+          }
+        ]
+      }
+    },
+    "root_identities": [
+      {
+        "device": 66310,
+        "inode": 7882933,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts"
+      },
+      {
+        "device": 66310,
+        "inode": 10918707,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261008-19",
+        "state": "observed-born"
+      },
+      {
+        "device": 66310,
+        "inode": 7773186,
+        "shared_parent": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs"
+      }
+    ],
+    "roots": [
+      {
+        "allocated_bytes": 0,
+        "device": 66310,
+        "inode": 7773187,
+        "logical_file_bytes": 0,
+        "shared_file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+      },
+      {
+        "aggregate_entry_visit_bound": 2999994,
+        "allocated_bytes": 5041369088,
+        "directories": 1056,
+        "elapsed_seconds": 0.16575290100081475,
+        "entries": 16967,
+        "hardlink_observations": [],
+        "logical_file_bytes": 5465675726,
+        "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+        "regular_files": 15912,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+        "root_device": 66310,
+        "root_inode": 7882933,
+        "scan_attempts": 1,
+        "shared_scan_elapsed_seconds": 0.1679812509992189
+      },
+      {
+        "aggregate_entry_visit_bound": 2949093,
+        "allocated_bytes": 348160,
+        "directories": 2,
+        "elapsed_seconds": 0.00021406299856607802,
+        "entries": 11,
+        "hardlink_observations": [],
+        "logical_file_bytes": 311793,
+        "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+        "regular_files": 10,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261008-19",
+        "root_device": 66310,
+        "root_inode": 10918707,
+        "scan_attempts": 1,
+        "shared_scan_elapsed_seconds": 0.16826599299929512
+      }
+    ],
+    "shared_parent_identity": [
+      66310,
+      7773186
+    ]
+  },
+  "identity": "eth-paper-real-data-end-to-end-resource-20261008-19",
+  "last_partial_mcm_observation": {
+    "acknowledged_computed_matching_pairs": 735,
+    "acknowledged_pairs_per_second": 0.6011046899023739,
+    "acknowledged_tail_cells": 735,
+    "claim_sha256": "8361b0b41c0026eea1a52182ce77324319ea53330fb50c82bb761f1fd9adece6",
+    "durability_poisoned": false,
+    "durability_watermark": "volatile sampled prefix; not restart authority",
+    "durable_batch_cells_per_second": 0.0,
+    "durable_score_batch_cells": 0,
+    "durable_score_batches": 0,
+    "durable_tail_cells": 734,
+    "expected_matching_pairs": 56584576,
+    "expected_nodes": 1768268,
+    "first_completed_batch_sample": null,
+    "full_mcm_completion_verified_here": false,
+    "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+    "joint_update_verified_here": false,
+    "kind": "real_pilot_partial_mcm_progress",
+    "last_budget_slot": false,
+    "motifs": 32,
+    "observed_elapsed_seconds": 1222.748736362999,
+    "observed_process_cpu_seconds": 853.9964709359999,
+    "paper_financial_fits": 0,
+    "pending_pair": true,
+    "process_cpu_scope": "whole caller since graph begin; not isolated matcher",
+    "qualification": "Last acknowledged diagnostic observation; not final counts, current local/remote availability, stage completion or authority. Full MCM and update require outer verified summary.",
+    "representation_credit": 0,
+    "schema_version": 2,
+    "scope_elapsed_seconds": 3590.2603509739984,
+    "sequence": 18,
+    "source": "123e259a998a4aac4817b661434b1ef16c94c999",
+    "started_matching_pairs": 736
+  },
+  "memory_events": {
+    "high": 778,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "native_elapsed_seconds": 3926.5467374029995,
+  "original_guard_child_exit": 1,
+  "original_parent_closure": {
+    "actual_parent_exit_code": 1,
+    "at": "2026-10-08T12:03:29.958728+00:00",
+    "outer_log_handles_closed": true,
+    "supervisor_pid": 297174,
+    "supervisor_reaped": true
+  },
+  "original_root_io_session": 94052,
+  "original_root_tool_chunk": "9dd4b9",
+  "peak_sampled_memory_current_bytes": 5368954880,
+  "processes_exist": {
+    "297174": false,
+    "297513": false,
+    "297831": false,
+    "297836": false
+  },
+  "qualification": "Original failed outcome; partial acknowledgement is not graph completion or final matched count. Kernel peak includes charged file cache; sampled writable union includes shared domains. No full-fit capacity, training time, isolated matcher rate or full scope recovery inferred.",
+  "raw_sha256": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final19-2026-10-08/FINAL_STORAGE01.json": "3724d3570c9fb157879434d46eaab573c0c764d574ed51bf28e0be889f621bf9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final19-2026-10-08/ROOT_IO_CLOSED01.json": "738640d25e97d04eaa605bf0a582340dc6bb27388c3e9ca9c7cc799cbb5f03ce",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-19/guard/child.log": "64a0a74b21d4aac716e478912c61315a4b19b12174f955ea033684b6e8379ca8",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-19/guard/child_exit.json": "2a1812a24e9b03db2430900f76cc50c363a785d841a3a97fcd4b3f6fb732c733",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-19/guard/final.json": "dc374a28a7be76f33d50be12aed56f5350c90d0c2d04badfc4d969bc804e0913",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-19/launch.json": "c351cd5d09898ea6e6556668b8bcf8368d9a7ff01ea09d9c0771edac94d248d4",
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-19/owner.json": "23000eb45e07d77fd2399fca323b27dcae0fada369a504d6fdd83dc200cc004c",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-19/claim.json": "8361b0b41c0026eea1a52182ce77324319ea53330fb50c82bb761f1fd9adece6",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-19/failed.json": "87c49b30dd257a9e8463d70815626a06427f8ead0f0db4550330de5bc749b7f6",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-19/outputs/cell-ledger.json": "a7091efb1c54292f908401c4b19dbfdf575b040c256f76b8c39c4f7d7ae2393a",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-19/outputs/pilot-summary.json": "4269e331c1e23c8ecd9958f62d7a5329c95ed359726b5396132958be44c0d056"
+  },
+  "secondary_cleanup_trace": "ScoreTail.durability_barrier refused already-poisoned imported Owner; original CleanupFailure retained",
+  "source": "123e259a998a4aac4817b661434b1ef16c94c999",
+  "source_freeze_ended_at": "2026-10-08T12:12:29.312123+00:00",
+  "storage_peak_allocated_bytes": 5041672192,
+  "storage_peak_logical_file_bytes": 5465944488,
+  "terminal_optional_kernel_peak_bytes": 5370933248,
+  "throughput": {
+    "attempted_mcm_seconds": 1555.4012176020005,
+    "complete_graphs": 0,
+    "completed_mcm_seconds": 0,
+    "completed_motif_cells_per_second": null,
+    "decisions": 16,
+    "failed_graphs": 1,
+    "financial_fit_complete": false,
+    "full_fold_fit": false,
+    "graph_denominator": 7,
+    "graphs": [
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": 1555.4012176020005,
+        "expected_motif_cells": 56584576,
+        "expected_nodes": 1768268,
+        "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "motifs": 32,
+        "reason": "CleanupFailure: score storage cleanup unresolved; worker must stop",
+        "status": "failed"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 72495392,
+        "expected_nodes": 2265481,
+        "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 60105600,
+        "expected_nodes": 1878300,
+        "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 50606112,
+        "expected_nodes": 1581441,
+        "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 60001376,
+        "expected_nodes": 1875043,
+        "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 65558720,
+        "expected_nodes": 2048710,
+        "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 50616352,
+        "expected_nodes": 1581761,
+        "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      }
+    ],
+    "guard_resource_evidence": null,
+    "lookback_days": 28,
+    "one_update_phase_seconds": null,
+    "original_samples": 512,
+    "paper_financial_fits": 0,
+    "population_scope": "resource_pilot_subset",
+    "qualification": "Intervals start after population and graph loading; MCM intervals include production plus retained verification. Partial failed work is unknown and receives no completed count. Guard/kernel peaks, storage and actual outer exits require separately joined closure evidence.",
+    "schema_version": 1,
+    "scope": "seven full graphs/original32 motifs and one resource update only",
+    "scope_elapsed_seconds": 3597.3280419799994,
+    "unavailable_graphs": 6,
+    "verified_completed_motif_cells": 0,
+    "verified_completed_nodes": 0,
+    "verified_motif_cells_per_attempted_second": null
+  },
+  "training": null
+}

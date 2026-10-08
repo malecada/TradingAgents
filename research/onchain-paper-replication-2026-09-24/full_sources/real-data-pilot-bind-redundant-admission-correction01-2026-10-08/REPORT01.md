@@ -1,0 +1,15 @@
+# Bind entry duplicate-admission correction
+
+Candidate matching_owner.py removes only bind's initial run._check_source() expression. run._active() and the immediate genuine run.read_input(job_input) remain. Actual lifecycle.read_input acquires its lock, checks active/source and authenticates registered input bytes before returning them for parsing. No validation result is cached. All other source bytes and normalized AST remain unchanged; recursive bind receives the same one-call reduction. Live19 source was not edited.
+
+RED01.log records the exact baseline entry doing two real _check_source/admit calls before one job parse; the duplicate-count assertion fails while three refusal controls pass. GREEN01.log records four passing checks and exactly one source validation before one parse. Changed-source refusal still precedes parsing and publication, genuine inactive-state refusal still precedes source checks/parsing, and malformed job schema yields the same ValueError text. No elapsed-time or live-worker speedup was measured.
+
+The harness compiles the actual complete bind and require function ASTs from baseline/candidate without importing matching_owner's numerical dependencies. It stops at malformed-job refusal, so it does not exercise full bind/Owner construction. Actual ResearchRun._active, read_input, _check_source and admission validation execute against invented, committed synthetic metadata. A counted wrapper delegates to the real _check_source; a parse counter delegates to json.loads. Minimal synthetic active-receipt bytes live outside the lifecycle ledger; ResearchRun.start is never called, no budget is claimed, and no actual Owner/journal/empirical run is created. Source-refusal read_input may create the ordinary temporary ledger lock before refusing, but no job/journal/output publication occurs. Numeric imports are denied. Checks use the checkout-local interpreter and explicitly extended reviewed offline profile; no original inputs, arrays, Torch, network, native jobs or broad historical matrices run.
+
+Full candidate compilation, sole-expression AST removal and exact forward/inverse byte reconstruction passed. All other guards, full source/input/runtime checks and creation-lock behavior remain untouched. Only expected RED failed; no unexpected fixtures or check failures occurred. SOURCE_DELTA01.json pins the inspected owner, lifecycle and admission sources. Root owns independent review and possible integration only after original94052 is genuinely terminal.
+
+Invocation from checkout root:
+
+    OWNER_SOURCE="$PWD/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-bind-redundant-admission-correction01-2026-10-08/matching_owner.py" .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-bind-redundant-admission-correction01-2026-10-08/check01.py
+
+For the retained expected RED, use baseline_matching_owner.py as OWNER_SOURCE. No source/Git/gate/STATE edits or empirical registration were performed.

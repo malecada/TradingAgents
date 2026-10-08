@@ -1,0 +1,98 @@
+{
+  "classification": "correct declared-resource node-capacity refusal; no proved selector/method implementation bug",
+  "registered_inputs_authenticated": {
+    "original_dictionary_config": {
+      "path": "research/onchain-paper-replication-2026-09-24/config/dictionary.json",
+      "sha256": "1ff53e21bee55d6eacb0ea4273411f12e2b4987c15a9a5b493aa1f6db1c102ff"
+    },
+    "execution_job": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final19-2026-10-08/inputs01/execution_job.json",
+      "sha256": "49cdd4b69d4aba34eae5815516ce4078e731abd104bba07104be5ca23eb5855f"
+    },
+    "original_import": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final19-2026-10-08/inputs01/original_import.json",
+      "sha256": "635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee"
+    },
+    "mcm_policy": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity01-2026-10-07/mcm_policy01.json",
+      "sha256": "7a77c3818104a085e713333ce5d428ec696ff0be574cd3a8cc7d6e137ae06ed3"
+    },
+    "pair_policy": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final19-2026-10-08/templates/pair_policy01.json",
+      "sha256": "861ff3b50c13d58caf67947a8494a073bf202165703271ee767dcae228feb73b"
+    }
+  },
+  "frozen_dictionary": {
+    "capacity_action": "raise explicit capacity error, no truncation",
+    "hop_depth": 1,
+    "insufficient_samples": "explicit unavailable if fewer than dictionary size",
+    "linkage": "average pairwise distance",
+    "maximum_neighborhood_nodes": 10000,
+    "neighborhood": "weak one-hop induced subgraph retaining directed edges and center",
+    "partition": "seeded permutation chunks; min(32,chunk size) medoids each; recursively cluster medoids to 32",
+    "partition_size": 512,
+    "partition_threshold": 2048,
+    "representative": "medoid minimizing within-cluster sum distance; ties sample index",
+    "rng": "numpy PCG64",
+    "sample_count": 512,
+    "sampling": "without replacement over (training week,center); equal initial mass per candidate; after selection halve weights of remaining centers inside sampled neighborhood in that week",
+    "schema_version": 1,
+    "seed_scope": "one dictionary per asset/fold/seed/variant",
+    "size": 32,
+    "training_scope": "only graph snapshots fully available inside training interval"
+  },
+  "descriptor_and_original_sample_config_join": true,
+  "primary_condition": "np.count_nonzero(selected) > limit",
+  "inferred_minimum_failed_neighborhood_nodes": 10001,
+  "failed_center_index": null,
+  "failed_center_node_id": null,
+  "actual_failed_neighborhood_node_count": null,
+  "mcm_numeric_allowance": {
+    "edge_chunk": 4096,
+    "max_buffer_bytes": 439582708,
+    "max_numeric_bytes": 729564276,
+    "max_output_bytes": 289981568,
+    "schema_version": 1
+  },
+  "pair_limits": {
+    "chunk_edges": 65536,
+    "hardening_buffer_bytes": 1048576,
+    "hardening_chunk_entries": 65536,
+    "max_checkpoint_bytes": 262144,
+    "max_publications": 1,
+    "max_score_buffer_bytes": 1048576,
+    "max_state_bytes": 1048576,
+    "normalization_chunk_entries": 65536,
+    "total_checkpoint_bytes": 1048576
+  },
+  "source_sha256": {
+    "tradingagents/research/onchain_replication/array_neighborhoods.py": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+    "tradingagents/research/onchain_replication/neighborhoods.py": "4f41912aa5d91e449eea4a30d813e5b57b65cbd7445e5ba153725e7bbe7ee00a",
+    "tradingagents/research/onchain_replication/matching_checkpoint.py": "de8f7077e513105719fffcf6ea13e96bfb0199056acf0227ecf744df189ee35c",
+    "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity01-2026-10-07/candidate/index_capacity.py": "977e5a6c37041caef7064f83dd6c3a749141451ef7bd42166a7aaca0c67bdaa5",
+    "research/onchain-paper-replication-2026-09-24/PROTOCOL.md": "7a9fc2d68d197ea827a3e65b440bfd83ead7e03885816343f23fd684f1776e28",
+    "research/onchain-paper-replication-2026-09-24/sources/paper.txt": "263629a711a58daddeb241b8d1a3b1ce3d3a06e6530b3ce3a8615153bd4148cc",
+    "tests/research/onchain_replication/test_array_neighborhoods.py": "c8b26f347af8c9f00dc475c8ff0234565c8f467ba5dd43e33ccf3ae2508a82a7"
+  },
+  "primary_trace_source": {
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-19/guard/child.log",
+    "sha256": "64a0a74b21d4aac716e478912c61315a4b19b12174f955ea033684b6e8379ca8"
+  },
+  "checks": [
+    "all five selected public input bytes match registered hashes",
+    "frozen dictionary hop/node/action matches execution descriptor and original-import sample config",
+    "actual AST raises strictly count_nonzero(selected)>limit",
+    "paper text sections2.1/2.3 and frozen protocol reviewed; no raw arrays or labels read"
+  ],
+  "not_performed": [
+    "numerical imports",
+    "arrays",
+    "source changes",
+    "cap increase",
+    "labels",
+    "resampling",
+    "reclustering",
+    "empirical execution"
+  ]
+}

@@ -1,0 +1,24 @@
+FIRST_BOUNDARY_COUNTS {'source': 2, 'job_parse': 1}
+F...
+=================================== FAILURES ===================================
+__________________ test_first_boundary_validates_source_once ___________________
+
+boundary = (PosixPath('/tmp/pytest-of-malecada/pytest-11/test_first_boundary_validates_0'), <tradingagents.research.lifecycle.ResearchRun object at 0x7b30950eaba0>, {'source': 2, 'job_parse': 1}, <function boundary.<locals>.invoke at 0x7b3094c1eca0>)
+
+    def test_first_boundary_validates_source_once(boundary):
+     root,run,counts,invoke=boundary
+     with pytest.raises(ValueError,match='execution job schema/kind differs'):invoke()
+     print('FIRST_BOUNDARY_COUNTS',counts)
+>    assert counts=={'source':1,'job_parse':1}
+E    AssertionError: assert {'source': 2, 'job_parse': 1} == {'source': 1, 'job_parse': 1}
+E      
+E      Omitting 1 identical items, use -vv to show
+E      Differing items:
+E      {'source': 2} != {'source': 1}
+E      Use -v to get more diff
+
+research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-bind-redundant-admission-correction01-2026-10-08/test_bind01.py:49: AssertionError
+- reviewed profile: 0 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-bind-redundant-admission-correction01-2026-10-08/test_bind01.py::test_first_boundary_validates_source_once
+1 failed, 3 passed in 0.50s

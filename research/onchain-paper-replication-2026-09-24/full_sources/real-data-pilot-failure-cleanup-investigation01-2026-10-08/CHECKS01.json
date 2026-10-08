@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "profile": "stdlib-only extracted actual compute/stream/tail/owned-IO methods plus synthetic callbacks and temporary scalar bytes; no numerical module imports or empirical claims",
+  "checks": [
+    "baseline reproduces capacity primary plus late poisoned-authority CleanupFailure",
+    "candidate flushes/closes while authority live; same primary survives; later owner poison retained",
+    "actual cleanup refusal/uncertainty/fatal remains fatal and preserves primary evidence",
+    "authority already poisoned still refuses durability; no authority bypass",
+    "actual BatchSync fsync and ScoreTail descriptor-close error seams retain fatal cleanup uncertainty",
+    "already-closed stream and repeated outer cleanup are idempotent; descriptors close once",
+    "synthetic success path unchanged; retained bytes preserved in every case",
+    "AST inverse: only compute error-cleanup wrapper added; all original body and other source unchanged"
+  ],
+  "qualification": "Synthetic authority and OS-error injection does not replay actual19 files or certify their durability; current19 uncertainty remains retained."
+}
