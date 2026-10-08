@@ -1,0 +1,25 @@
+  | ExceptionGroup: body/cleanup failures (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 331, in _produce_locked
+    |     (actual,stream_terminal,numeric_pin),writer_receipt=archive_owner_writer._run_locked(ledger,stage,compute,
+    |                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+    |         held=held,science_lease=lease)
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_owner_writer.py", line 82, in _run_locked
+    |     value = produce(log,lease)
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 314, in compute
+    |     actual = kernel.mcm(graph,dictionary.dictionary,thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],
+    |         backend=BACKEND,max_entries=policy['max_entries'],score_pair=stream,policy=policy['numeric'],lease=live,
+    |         **({'imported':dictionary} if _imported(dictionary) else {}))
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py", line 53, in mcm
+    |     local=index.neighborhood(center,dictionary.config)
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/array_neighborhoods.py", line 112, in neighborhood
+    |     return self._neighborhood(center,config)
+    |            ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/array_neighborhoods.py", line 117, in _neighborhood
+    |     indices,selected=self._select(center,config); g=self.graph
+    |                      ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/array_neighborhoods.py", line 88, in _select
+    |     raise ValueError('neighborhood capacity exceeded, no truncation')
+    | ValueError: neighborhood capacity exceeded, no truncation
