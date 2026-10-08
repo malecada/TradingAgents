@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T12:52:31.721538+00:00: no numerical job; pilot19 remains FAILED/spent90. Goal ACTIVE. New all-seven topology census is implemented; combined entry review pending.**
+
+Actual push70317/09bb28 and remote81196/70c55e both exit0 matched af7632b95780e6094062a46bdd3700eeb7fb1d74. Existing failed19 byte recovery2198b839 remains accepted; originals retained. Accounting59closed33COMPLETE26FAILED/highest90 unchanged; no prospective91 or new scientific claim.
+
+[Topology caller](full_sources/real-data-pilot-seven-graph-census-caller01-2026-10-08/README01.md) ab3aace3 and exact seven [inputs02](full_sources/real-data-pilot-census-input-review01-2026-10-08/CALLER_INPUTS02.json)255f70 use adopted census4ee889, existing count receipts and edge endpoints only. Nine tiny synthetic caller checks pass; no actual census yet. [One-use engineering request](full_sources/real-data-pilot-seven-graph-census-launch01-2026-10-08/REQUEST01.json)7c80faed binds native1GiBhigh=max/zeroSwap/2.5GiBhoststartup+reserve/twoCPU/600s/4MiBwrites/256MiBwholeownedwatch/10GiBfloor, separate from unchanged scientific pilot. Node-ID bodies/features/labels remain unread; stable observations do not exclude writers. Root sole launcher; pilot17_lock_fix owns combined caller+entry review.
+
+[Hot-path source candidate](full_sources/real-data-pilot-archive-hotpath-correction01-2026-10-08/REPORT01.md)720c4b24/e20cf08e accepted source-only by Root7c1509fc after full literal inverse and focused26fixtures. Synthetic100hotleases reduced full audits100→1, retaining100guard/transport/claim checks and both sampled callbacks under existing1s/4096/60s limits; default/full/typed/publication paths unchanged. Candidate is not installed; no actual speedup or genuine integration claim.
+
+Next immediate executable action: combined census entry acceptance, commit/push exact preparation, fresh namespace/process/resource checks and ONE topology-only census. Retain/review/recover actual increments; use all-seven neighborhood maxima to derive complete extraction/pair capacity, then integrate and measure scoring overhead before another full pilot. Broad heartbeat remains PAUSED; no MCM/update/checkpoint/fit completion.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T12:32:49.206194+00:00: pilot19 permanently FAILED/spent90 and its actual105-name increment independently externally recovered2198b839. No numerical job. Goal ACTIVE/incomplete.**
 
 Original19 source123e259a/Root94052 exit1/native1/3926.547s/MAXOOM0/kernelchargedpeak5370933248B and cleanup950190 remain immutable. Correct10000-node complete-neighborhood refusal preceded secondarypoisoned-owner CleanupFailure. One graphFAILED/sixUNAVAILABLE; last diagnostic735acknowledged/734sampleddurabletailcells/zero completedbatches, raw736slots are opaque without finalcountcredit. No completeMCM/update/checkpoint/fit or wholecapacity.

@@ -1,0 +1,16 @@
+{
+  "decision": "ACCEPT exact topology-only engineering entry, conditional on Root commit/remote confirmation/fresh resources/no active unit",
+  "request_sha256": "7c80faed623a172fe48600d9647d5b5610e2202d0ef45ff49274d8b2e02d99a7",
+  "caller_sha256": "ab3aace38ce2713b92f42f7e731bc63c7da2da9d6adb32c121ccf424a47ad8bb",
+  "settings_sha256": "c256a5812f9164dec41486397a8d99f6ca45bb719d77909ba0742d664372e869",
+  "input_list_sha256": "255f70a8998f7c7217f467d1f0fab6cec39c3e78acb2bf4f9bcbf7ad7133adb1",
+  "count_chunks": 54,
+  "count_payload_bytes": 103992032,
+  "checks": [
+    "all10 source pins and syntax match",
+    "settings/helper/caller/input pins joined",
+    "seven graph manifests/count JSON hashes and companion declarations joined without payload reads",
+    "NPY chunk file envelope and total declared vector payload fit requested limits"
+  ],
+  "test_evidence": "nine retained synthetic caller checks independently inspected and reused; no NumPy/native/graph execution in this review"
+}
