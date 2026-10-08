@@ -1,0 +1,42 @@
+test_capacity_handoff_and_legacy_refusal (__main__.PolicyTests.test_capacity_handoff_and_legacy_refusal) ... ok
+test_defaults_and_each_optional (__main__.PolicyTests.test_defaults_and_each_optional) ... ERROR
+test_frozen_pair_and_compact_both_fields (__main__.PolicyTests.test_frozen_pair_and_compact_both_fields) ... ERROR
+test_malformed (__main__.PolicyTests.test_malformed) ... ok
+test_no_neural_import (__main__.PolicyTests.test_no_neural_import) ... ok
+
+======================================================================
+ERROR: test_defaults_and_each_optional (__main__.PolicyTests.test_defaults_and_each_optional)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-correction01-2026-10-08/test_owner_policy.py", line 82, in test_defaults_and_each_optional
+    VALIDATE(p,resource=True)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-correction01-2026-10-08/test_owner_policy.py", line 43, in validate
+    exec(code, namespace, {'limits':limits})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<original bind policy statements>", line 200, in <module>
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_owner.py", line 42, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: pair limits differ
+
+======================================================================
+ERROR: test_frozen_pair_and_compact_both_fields (__main__.PolicyTests.test_frozen_pair_and_compact_both_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-correction01-2026-10-08/test_owner_policy.py", line 75, in test_frozen_pair_and_compact_both_fields
+    VALIDATE(p,resource=True)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-correction01-2026-10-08/test_owner_policy.py", line 43, in validate
+    exec(code, namespace, {'limits':limits})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<original bind policy statements>", line 200, in <module>
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_owner.py", line 42, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: pair limits differ
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.011s
+
+FAILED (errors=2)

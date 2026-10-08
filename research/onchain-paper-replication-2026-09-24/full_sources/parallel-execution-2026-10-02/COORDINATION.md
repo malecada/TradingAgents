@@ -1,7 +1,7 @@
 # Coordination — representative real-data pilot
 
-TOP 2026-10-08T16:14:18.922191+00:00: corrected gate03/binding02/release02ba072cfc and actual50-file returned recovery77da33c5 accepted; prior171-file recovery reused. All agents complete; no native/claim/reservation20. PreviousCLI3279 read-only preflight refusal did not reach launch_checked.
+TOP 2026-10-08T16:37:09.791489+00:00: native20 permanentlyFAILED/spent91, RootCLI/native exit1,398.7508s,zero comparisons/MCM/training. All original PIDs absent/native cleanup verified; source2ee1b9aa no longer held by a live job. No numerical job active.
 
-Root immediate commit/push receipts then ONE root_io03 native20 if exact preflight passes. Root sole launcher/source/Git/accounting/STATE/preservation. Freeze source/GitHEAD during active job; retain same returned exec handle.6GiBmax/5high/2.5startup=reserve/0swap/2CPU/8h/1GiBFSIZE/10GiBfloor.
+Root owns Main/Git/STATE/accounting/preservation/ONElauncher. Owner-policy correction01 candidate ready; independent changed-seam review and terminal-selection join next. Failed20 selected38public files436606B not yet externally recovered.
 
-59closed33COMPLETE26FAILED/highest90;91proposedreviewednotclaimed.1024plannedFAILED diagnostic intermediate; full7MCM/jointupdate/checkpoint/fit goal remains ACTIVE/incomplete; full7.04GB+aggregatewatch requirement unchanged. Broad heartbeat PAUSED.
+60closed33COMPLETE27FAILED/highest91, no92 amendment or claim. Full goal ACTIVE/incomplete; broad heartbeat PAUSED. Reuse accepted evidence; next executable source step is resource-only owner validator correction, followed by incremental recovery and fresh21 exact registration/release. Preserve20 forever; no rerun or success credit.

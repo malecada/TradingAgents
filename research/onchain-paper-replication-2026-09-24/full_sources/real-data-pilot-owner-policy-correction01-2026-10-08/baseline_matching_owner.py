@@ -163,16 +163,6 @@ def _source(run,numerical):
         require(digest(raw)==numerical['files'][name],'numerical anchor committed source differs')
 
 
-def _pair_limits(limits, *, resource=False):
-    """Resource bindings retain the explicit compact persistence/capacity policy."""
-    if resource:
-        from .compact_policy import pair_policy
-        pair_policy(limits)
-    else:
-        require(isinstance(limits,dict) and set(limits)==matching_pair.POLICY_FIELDS and all(type(v) is int and v>0 for v in limits.values()),'pair limits differ')
-    require(limits['chunk_edges']<=65536,'pair edge chunk exceeds bound')
-
-
 def bind(run,*,representation,plan_input,producer,policy_input,journal_directory=None,
          continuation_input=None,death_input=None,_create=False,_first=False,job_input='execution_job',_resource=False):
     require(isinstance(run,ResearchRun),'actual admitted ResearchRun required')
@@ -207,7 +197,8 @@ def bind(run,*,representation,plan_input,producer,policy_input,journal_directory
     require(isinstance(policy,dict) and set(policy)=={'schema_version','backend','limits','numerical_source'} and type(policy['schema_version']) is int and policy['schema_version']==1,'pair execution policy schema differs')
     require(equal(policy['backend'],matching_pair.BACKEND),'pair numerical backend differs')
     limits=policy['limits']
-    _pair_limits(limits, resource=_resource)
+    require(isinstance(limits,dict) and set(limits)==matching_pair.POLICY_FIELDS and all(type(v) is int and v>0 for v in limits.values()),'pair limits differ')
+    require(limits['chunk_edges']<=65536,'pair edge chunk exceeds bound')
     descriptor=item['descriptor']
     require(descriptor.get('arm')=='proposed','checkpoint backend requires motif representation')
     require(equal(descriptor.get('pair_execution'),{'backend':policy['backend'],'policy_sha256':ad.inputs[policy_input]['sha256']}),'explicit backend/policy workflow identity differs')

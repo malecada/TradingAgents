@@ -1,5 +1,31 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T16:37:09.791489+00:00: native20 permanently FAILED/spent91; actual RootCLI/native exit1 and cleanup verified. No numerical job active. Goal ACTIVE/incomplete.**
+
+Latest attempt ran398.7508s and failed at matching_owner's legacy exact pair-limits schema before any motif comparison. Original compact policy admits checkpoint_layout and max_pair_entries_override; the resource owner did not. No OOM, zero completed comparisons/MCMs/joint updates/training/financial fits. Original failed receipts and all seven unavailable graphs are retained; inner failed cell and outer unavailable postmortem dispositions remain distinct. Original source2ee1b9aa and outputs are unchanged. ROOT_TERMINAL01 records actual session29639/chunk39003a/exit1; all four original PIDs are absent, native cleanup verified. No live-process source freeze obligation remains.
+
+Accounting60closed33COMPLETE27FAILED/highest claimed91; no refund/transfer or amendment92 yet. Original32motifs512spent/sevenwholegraphs/scientific model/training remain fixed. Full-pilot7.04GB storage gap plus aggregate watch remains unresolved; diagnostic1024 is intermediate only. Broad heartbeat stays PAUSED.
+
+Owner-policy candidate b7cb394c reuses strict compact validation solely in resource owner branch; legacy checks unchanged. Focused source tests pass6cases/153invalid variants; candidate uninstalled pending independent changed-seam review. Failed20 independent outcome feb8c224 accepted; selected38public files436606B await additive Root terminal join and actual incremental external recovery. Root owns integration/accounting/STATE/preservation/ONElauncher; next action is exact changed validation review, failed20 recovery, then fresh21 registration/allowance92 and one eligible launch. Never rerun20.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-08T16:20:36.933082+00:00: fixed native20 diagnostic ACTIVE; genuine claim adopts91. Source/GitHEAD FROZEN at2ee1b9aa88e28401f6ae73db2188ab16910692c1. Goal ACTIVE/incomplete.**
+
+Root correctedCLI exec handle **29639** (initial081930; last628496 running) owns ONE registered native20. Exact preflight passed; immutable launch-attempt01, genuine claim/source/Owner/native launch exist. [Actual live observation](full_sources/real-data-pilot-final20-2026-10-08/ACTIVE_OBSERVATION01.json) confirms workerPID61327, cgroup present, elapsed218.064s, no limit reason, current memory3545423872B. Native memory.max6442450944/high5368709120/swap.max0; source remains2ee1b9aa. This is startup, no completed feature or training measurement. Record actual terminal metadata later; do not infer success from live limits.
+
+Accounting remains59closed33COMPLETE26FAILED plusONEactive20; highest claimed91, no refund/transfer. Original19/closed reserves unchanged. Fixed1024 original-order diagnostic will intentionally retain incomplete FAILED outcome; it does not complete full7MCM→GAT→attentionLSTM jointupdate/checkpoint goal. All original32motifs512spent/rawgraphs/model/training/tolerances fixed.
+
+Exact gate03/binding02/release02ba072cfc/headerhelper02/selection04 and correctedbuffer validated; actual public50-file fresh recovery77da33c5+prior171-file55a6ee7c accepted. PreviousRootCLI3279 was read-only refusal before reservation; its logs/failedguard remain unchanged. No raw relocation/deletion; fullpilot7.04GB+aggregatewatch requirement unresolved.
+
+Root sole launcher/accounting/STATE/preservation. All agents complete. **Next safe action: poll SAME exec29639 and actual native live/progress/claim receipts; never relaunch or change source/GitHEAD while active.** An observation timeout is not job termination. Source/body corrections wait for actual terminal/cleanup and retain/review/recover every attempted outcome first. This post-launch STATE/handle observation is local/uncommitted to preserve source freeze. Broad heartbeat PAUSED; fullpilot goal ACTIVE, no completeMCM/jointupdate/checkpoint/fit.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T16:14:18.922191+00:00: complete-neighborhood capacity correction propagated, independently sealed and public delta actually recovered. Native20 still unused; ONE root_io03 launch is next. Goal ACTIVE/incomplete.**
 
 [gate03](full_sources/real-data-pilot-final20-2026-10-08/gate03.json)/[binding02](full_sources/real-data-pilot-final20-2026-10-08/BINDING02.json)/[release02](full_sources/real-data-pilot-final20-2026-10-08/RELEASE_REVIEW02.json)ba072cfc join source320/input59, actual optional extraction350110 and header-derived MCMbuffer461349748/numeric751331316; compact/native/storage/transport envelopes unchanged. Actual header validator passes and genuine committed admissionONLY02 atd4d9e804 exit0/ready=true/noempiricalinputs/start. Prior read-only schema refusal3279 preceded immutable launch reservation; no native/claim/Owner or budget consumption.20 remains unused by actual reservation API.

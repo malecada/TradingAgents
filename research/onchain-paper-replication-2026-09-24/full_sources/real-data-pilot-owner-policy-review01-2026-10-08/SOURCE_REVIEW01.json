@@ -1,0 +1,52 @@
+{
+  "candidate": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-correction01-2026-10-08/matching_owner.py",
+    "sha256": "b7cb394c8c65a2d9688a9557c991a2e694b48fc0b3d2317f71a51c857680dfaa"
+  },
+  "checks": [
+    "exact_candidate_sha",
+    "baseline_exact_main",
+    "exact_source_inverse",
+    "exact_ast_inverse",
+    "real_frozen_pair_compact_equal",
+    "actual_optional_policy_preserved",
+    "legacy_outcome_identical_0",
+    "legacy_outcome_identical_1",
+    "legacy_outcome_identical_2",
+    "legacy_outcome_identical_3",
+    "legacy_outcome_identical_4",
+    "legacy_outcome_identical_5",
+    "legacy_outcome_identical_6",
+    "actual_legacy_optional_refusal",
+    "single_optional_accepted_checkpoint_layout",
+    "single_optional_accepted_max_pair_entries_override",
+    "resource_refusal_unknown",
+    "resource_refusal_missing",
+    "resource_refusal_bool_override",
+    "resource_refusal_zero_override",
+    "resource_refusal_overflow_override",
+    "resource_refusal_negative_limit",
+    "resource_refusal_edge_bound",
+    "resource_refusal_layout_extra",
+    "resource_refusal_layout_bool",
+    "resource_refusal_layout_overflow",
+    "effective_capacity_preserved",
+    "downstream_decrease_still_refused",
+    "single_exact_bind_call",
+    "resource_selector_true"
+  ],
+  "decision": "accepted-source-only",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/compact_policy.json": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/templates02/pair_policy01.json": "9b7553c36718ff7ee40e8be8cd5b3d8dafb5feff86b528c48c84548a344405b8",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-correction01-2026-10-08/baseline_matching_owner.py": "b6c1e2b312eb7132a781835aeb037ffac93d378699fa07852692664235ae47c9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-correction01-2026-10-08/matching_owner.py": "b7cb394c8c65a2d9688a9557c991a2e694b48fc0b3d2317f71a51c857680dfaa",
+    "tradingagents/research/onchain_replication/checkpoint_chunks.py": "c3699ef76ad5932cf58f8cf0c6be6b36f0e4c01b0d18c6d88e85ad02fa7cd8d0",
+    "tradingagents/research/onchain_replication/compact_policy.py": "37918e01e3de476970493afa9e78e40bcfa2f841cd7ee59fbc211c7d579730dc",
+    "tradingagents/research/onchain_replication/matching_owner.py": "b6c1e2b312eb7132a781835aeb037ffac93d378699fa07852692664235ae47c9",
+    "tradingagents/research/onchain_replication/matching_pair.py": "4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e",
+    "tradingagents/research/onchain_replication/resource_binding.py": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d"
+  },
+  "schema_version": 1,
+  "scope": "One resource-only schema adapter plus bind forwarding call. Exact frozen pair/compact policy accepted without mutation. Legacy guard behavior exactly preserved. Existing compact pair validator supplies optional schema/type/layout checks; downstream effective_matching still rejects decreasing capacity. No Binding, run, owner, graph, numerical package or job constructed. Not empirical admission, complete capacity proof or permission to retry failed20."
+}
