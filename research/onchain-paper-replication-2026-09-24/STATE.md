@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T23:23:42.211283+00:00: corrected entry23 passed committed admission and resource preflight; exact correction recovery accepted. No numerical launch yet. Goal ACTIVE/incomplete.**
+
+- Current source/actual remotely returned HEAD `ba4b19dbab5d1ca8fa4bd1a30dadae12a6e8eb5b`. [Correction recovery](full_sources/pilot-throughput23-and-xsect-recovery-increment01-2026-10-09/FRESH_GIT_RECOVERY02.json): Root1265 exited0/9762de,34selected bodies/1051373B and13actual operations. [Independent return acceptance](full_sources/xsect-posix-recovery-outcome-review01-2026-10-09/returned-increment02/RECOVERY_REVIEW01.json)93c30b29; prior292-body return7e4593 reused. This covers corrected public entry, not private runtime or unrelated stores.
+- Original xsect remains intact and its29-batch remote backup and full opaque POSIX recovery remain accepted. Only the generated verified duplicate was retired: [actual terminal](full_sources/xsect-generated-copy-retirement01-2026-10-09/ROOT_TERMINAL01.json), Root28690 exit0/8195d4,3783generated files/14dirs removed;6924242944B reclaimed. No original store, consumer mapping or raw historical result changed.
+- Use [gate03](full_sources/real-data-pilot-final23-2026-10-09/gate03.json),BINDING02,preflight02/root_io02 and exact releasef7796e32:354source pins/64inputs/439evidence joins. Original gate02 metadata admission refusal is preserved. Corrected actual admission18120 exited0/2544c9 ready=true/no run started. [Actual resource preflight](full_sources/real-data-pilot-final23-2026-10-09/PREFLIGHT_ONLY_EXIT01.json)46913 exited0/4b1d77,free25013506048B versus24250448987B declared reserve,MemAvailable11182379008B. Fresh checks remain mandatory immediately before launch.
+- Accounting unchanged:62closed=33COMPLETE29FAILED/highest93. Reviewed94 is prospective, not claimed. Fresh fixed identity `eth-paper-real-data-end-to-end-resource-20261009-23` remains unused; native namespace/launch-attempt absent and selected numerical processes absent. All agents complete. Root alone owns ONE launcher and integration/accounting/preservation.
+- Four functional throughput/phase changes are installed and reviewed; original science/32motifs/512spent samples/native6GiBmax5GiBhigh/swap0/2.5GiBhostreserve/twoCPU/8h/10GiBdiskfloor remain fixed. Measurement23 is the declared original-order1024 prefix with planned failed closure, zero complete MCM/update/financial credit. Full seven-graph MCM→GAT→attentionLSTM joint update/checkpoint, whole-storage capacity and reliable throughput/training estimate remain required. Broad1420-fit heartbeat PAUSED; full pilot goal ACTIVE.
+
+**Next executable action:** run root_io02 ONCE for the unused23 after its genuine fresh checks; freeze source/Git during actual native execution and poll the same handle. Retain all attempted/unavailable cells and actual terminal/cleanup, then review/recover only the new outcome increment. Previous turn PROGRESS: genuine preflight terminal0 and returned correction review accepted; prior source/input matrices reused.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T23:07:31.402704+00:00: xsect reconstruction COMPLETE and independently verified; next changed-source measurement23 sealed but NOT launched. Goal ACTIVE/incomplete.**
 
 Full objective remains seven whole Ethereum graphs → original32motifs/512spent samples → MCM → originalGAT → attentionLSTM jointupdate/checkpoint and measured feature/resource/training feasibility. Zero complete representativeMCM/update/financialfit; broad1420-fit heartbeat PAUSED.

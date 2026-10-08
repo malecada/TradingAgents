@@ -1,0 +1,9 @@
+# Correction increment02: accepted
+
+Actual returned correction verifies34 selected regular bodies totaling1051373 bytes in1116160-byte tar, no directory members. Names, regular types, modes, extents, SHA256 and current selected local bodies match exactly. All13 successful operation logs join the recovery receipt; remote/head/FETCH_HEAD agree at ba4b19dbab5d1ca8fa4bd1a30dadae12a6e8eb5b. Returned commit bytes hash to that commit; returned archive bytes hash to blobfc071b9fb9ef34cdff959eada6d41b4bce0f11e0 and the exact capture/returned archive SHA256. Fresh bare02 has no alternates. Literal namespace/output-name inverse recovers the previously reviewed13-operation implementation.
+
+Selection includes corrected gate03, preflight02, root_io02, BINDING02 and RELEASE_REVIEW02 f7796e32aa4ac3c775a39cece40e1d64434d045df6b7f376a10cac15336d4dc8. It also retains the earlier ADMISSION_ONLY_EXIT01 body with actual exit1/sourcebd886b5c. The separately reported newer admission18120exit0 is not misrepresented as that archived record. This review verifies exact selected preservation, not current admission, capacity or launch permission.
+
+Selected retirement Root terminal28690/chunk8195d4 exit0 joins COMPLETE and states only3783 generated files removed, original_retirement=false. Current generated target is absent and original xsect directory remains present. Prior fullbyte/currentness verification and accepted increment01 proof remain preserved and were not rerun. StorageBox/original raw contents were not read or changed here; no new network, deletion or7GB scan occurred.
+
+RESULT01/TEST01 retain the exact focused checks/evidence. Root alone performs fresh preflight and any sole launch. No scientific outcome, preservation of unselected later files, or resource authority follows from this returned correction review.
