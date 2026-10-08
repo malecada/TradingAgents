@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T16:14:18.922191+00:00: complete-neighborhood capacity correction propagated, independently sealed and public delta actually recovered. Native20 still unused; ONE root_io03 launch is next. Goal ACTIVE/incomplete.**
+
+[gate03](full_sources/real-data-pilot-final20-2026-10-08/gate03.json)/[binding02](full_sources/real-data-pilot-final20-2026-10-08/BINDING02.json)/[release02](full_sources/real-data-pilot-final20-2026-10-08/RELEASE_REVIEW02.json)ba072cfc join source320/input59, actual optional extraction350110 and header-derived MCMbuffer461349748/numeric751331316; compact/native/storage/transport envelopes unchanged. Actual header validator passes and genuine committed admissionONLY02 atd4d9e804 exit0/ready=true/noempiricalinputs/start. Prior read-only schema refusal3279 preceded immutable launch reservation; no native/claim/Owner or budget consumption.20 remains unused by actual reservation API.
+
+[Fresh external delta03](full_sources/real-data-pilot-diagnostic-entry-increment01-2026-10-08/FRESH_GIT_RECOVERY03.json) actual source+remote d4d9e80455997987ca824373e80b20e558567a9a and13exit0operations; [independent returned acceptance](full_sources/index-capacity02-review01-2026-10-08/returned-recovery03/RECOVERY_REVIEW03.json)77da33c5 verifies50 selected publicfiles1108352B/archive1157120B including exact corrected source/entry. Prior171-public-file recovery55a6ee7c reused. No whole-tree/private/runtime/raw/POSIX/deletion proof; original timeout bare, wrongpath helper, stalegate/schema/header refusals all preserved.
+
+All bounded agents complete. Root sole Main/Git/accounting/STATE/preservation/ONElauncher.59closed33COMPLETE26FAILED/highest90/proposed91notclaimed, all old experiments/families preserved. Original32motifs512spent/sevenwholegraphs/matching/model/training/tolerances remain fixed. Zero completed representativeMCM/jointupdate/checkpoint/fit;1024plannedstop intermediate only. Fullrun7.04GB+aggregatewatch requirement unchanged; no raw relocation/deletion.
+
+Next immediate Root: commit/push final receipt/checkpoint increment then root_io03 once; exact current source/runtime/claims/namespaces/resource eligibility remains mandatory before reservation. Preserve actual exec handle; freeze source/GitHEAD during native job and never duplicate it. Retain/review/recover attempted outcome before next dependent action. Broad heartbeat PAUSED; full7MCM→GAT→attentionLSTM goal ACTIVE. This goal turn PROGRESS despite read-only refusal: two concrete policy/schema faults corrected, actualheader checks and committed admission pass, precise public delta externally recovered.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T16:06:38.923622+00:00: exact native launcher preflight refused before any reservation/claim/native process. Header-only correction implemented and validated; changed entry review active. Goal ACTIVE/incomplete.**
 
 Root CLI session3279 actually exited1 at legacy index_capacity numeric schema; [original refusal](full_sources/real-data-pilot-final20-2026-10-08/PRECLAIM_REFUSAL01.json) and stdout/stderr preserved. launch_checked and its immutable launch-attempt01 were never reached; no Owner/ResearchRun.start/claim/native namespace exists. Identity20 remains unused by the actual reservation API, no scientificFAILED or allowance91 consumption is invented. No active numerical job; Git source freeze was not entered.

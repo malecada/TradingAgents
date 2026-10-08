@@ -1,7 +1,7 @@
 # Coordination — representative real-data pilot
 
-TOP 2026-10-08T16:06:38.923622+00:00: RootCLI3279 read-only preflight refused legacy capacity schema before any launch reservation/Owner/claim/native. Original logs preserved;20 still genuinely unused by reservation API. No active numericaljob/sourcefreeze.
+TOP 2026-10-08T16:14:18.922191+00:00: corrected gate03/binding02/release02ba072cfc and actual50-file returned recovery77da33c5 accepted; prior171-file recovery reused. All agents complete; no native/claim/reservation20. PreviousCLI3279 read-only preflight refusal did not reach launch_checked.
 
-NEW headerhelper02 independently accepted50checks a4619e1c; actualheader-derived MCMbuffer/numeric+3346688B selection04 passes realmetadata validator. Native/compact/storage/transport caps unchanged; regenerated storage inventory identical. gate03/preflight03/root_io03 additive drafts; Root alone integration/Git/accounting/STATE/preservation/ONElauncher.
+Root immediate commit/push receipts then ONE root_io03 native20 if exact preflight passes. Root sole launcher/source/Git/accounting/STATE/preservation. Freeze source/GitHEAD during active job; retain same returned exec handle.6GiBmax/5high/2.5startup=reserve/0swap/2CPU/8h/1GiBFSIZE/10GiBfloor.
 
-Residual_metadata_review20 owns only index-capacity02-review01 changed entry/binding joins. Reuse prior tests/recovery; no suites reopened. Root next finalseal/commit/directblob-small-increment recovery/freshpreflight/ONE native20.59closed33COMPLETE26FAILED/highest90; proposed91 unused. Fullpilot incomplete,7.04GB+aggregatewatch blocker remains; broadheartbeatPAUSED.
+59closed33COMPLETE26FAILED/highest90;91proposedreviewednotclaimed.1024plannedFAILED diagnostic intermediate; full7MCM/jointupdate/checkpoint/fit goal remains ACTIVE/incomplete; full7.04GB+aggregatewatch requirement unchanged. Broad heartbeat PAUSED.
