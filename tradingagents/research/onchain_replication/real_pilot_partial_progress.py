@@ -142,7 +142,8 @@ class MCMProgress:
 
 
 DIAGNOSTIC_PHASES = ('lease', 'pair_validation', 'state_create',
-    'advance_annealing_including_rank_transition', 'advance_hardening', 'score_only', 'retention_live', 'event_publication')
+    'advance_annealing_including_rank_transition', 'advance_hardening', 'score_only', 'retention_live', 'event_publication',
+    'lease_authority', 'lease_start_metadata', 'lease_progress')
 DIAGNOSTIC_MAX_BYTES = 8192
 STARTUP_ONCE = ('archive_preflight','archive_context','bind','import_preparation',
                 'import_attach','import_execution','lease_activation')
@@ -230,6 +231,25 @@ class ScoringDiagnostic:
             except BaseException as later:original.add_note('Diagnostic timing failed: '+repr(later))
             raise
         self._record(phase,began);return result
+
+    def _measure_lease_subphase(self,phase,function,*args):
+        """Private lease-only aggregate; outer measure retains refresh ownership."""
+        self._check()
+        require(phase in ('lease_authority','lease_start_metadata','lease_progress')
+                and phase in self.timings,'unregistered lease subphase')
+        began=_time(self.clock())
+        try:result=function(*args)
+        except BaseException as original:
+            try:self._record_lease_subphase(phase,began)
+            except BaseException as later:original.add_note('Diagnostic lease timing failed: '+repr(later))
+            raise
+        self._record_lease_subphase(phase,began);return result
+
+    def _record_lease_subphase(self,phase,began):
+        now=_time(self.clock());elapsed=now-began;require(elapsed>=0,'diagnostic clock reversed')
+        item=self.timings[phase];item['seconds']+=elapsed;item['calls']+=1
+        require(math.isfinite(item['seconds']) and item['calls']<2**63,'diagnostic aggregate overflow')
+        # Never write here: no new checkpoint/failure between original body calls.
 
     def _record(self,phase,began):
         now=_time(self.clock());elapsed=now-began;require(elapsed>=0,'diagnostic clock reversed')

@@ -1,0 +1,2473 @@
+{
+  "decision": "accepted",
+  "candidate_sha256": "bf3c3669a6907305b351adb43867822f9500d84d2c5d3b66b16a5650a0291b0a",
+  "baseline_sha256": "f94f181dfa02d92eb58f96d99bfc70f8353d0945564013733ac5b2d2432cf8b4",
+  "checks": [
+    {
+      "case": "authored_duplicate_names_properties_repeated_wrappers",
+      "outcome": [
+        null,
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "equal_name_distinct_nested_members",
+      "outcome": [
+        null,
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "equal_name_distinct_nested_members",
+      "outcome": [
+        null,
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "equal_name_distinct_nested_members",
+      "outcome": [
+        null,
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "wrong_name",
+      "outcome": [
+        [
+          "ValueError",
+          "loaded code not bound to authenticated source: bad"
+        ],
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "wrong_filename",
+      "outcome": [
+        [
+          "ValueError",
+          "loaded code not bound to authenticated source: bad"
+        ],
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "wrong_constants",
+      "outcome": [
+        [
+          "ValueError",
+          "loaded code not bound to authenticated source: bad"
+        ],
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "source_hash_precedes_code_refusal",
+      "outcome": [
+        [
+          "ValueError",
+          "loaded source body differs"
+        ],
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "wrapper_refusal_order",
+      "outcome": [
+        [
+          "ValueError",
+          "contextmanager changed"
+        ],
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    },
+    {
+      "case": "next_call_source_change_refused",
+      "outcome": [
+        [
+          "ValueError",
+          "loaded source body differs"
+        ],
+        [
+          [
+            "read",
+            "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath-review01-2026-10-08/fixture.py"
+          ]
+        ]
+      ]
+    }
+  ],
+  "literal_inverse": true,
+  "actual_source_census": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py",
+      "source_bytes": 4219,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py",
+      "source_bytes": 8977,
+      "codes": 12,
+      "names": 9,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1064,
+      "extra_container_bytes": 880
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection02-2026-10-08/imported_kernel.py",
+      "source_bytes": 4784,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/archive_control_history.py",
+      "source_bytes": 9350,
+      "codes": 15,
+      "names": 14,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1696,
+      "extra_container_bytes": 1512
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/chunk_durability.py",
+      "source_bytes": 3488,
+      "codes": 10,
+      "names": 10,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1152,
+      "extra_container_bytes": 968
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/preflight01.py",
+      "source_bytes": 20064,
+      "codes": 20,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/root_io.py",
+      "source_bytes": 7363,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final09-2026-10-06/preflight01.py",
+      "source_bytes": 20064,
+      "codes": 20,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final09-2026-10-06/root_io.py",
+      "source_bytes": 7363,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final10-2026-10-06/preflight01.py",
+      "source_bytes": 20064,
+      "codes": 20,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final10-2026-10-06/root_io.py",
+      "source_bytes": 7363,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final11-2026-10-06/preflight01.py",
+      "source_bytes": 20064,
+      "codes": 20,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final11-2026-10-06/root_io.py",
+      "source_bytes": 7363,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final12-2026-10-06/preflight01.py",
+      "source_bytes": 20064,
+      "codes": 20,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final12-2026-10-06/root_io.py",
+      "source_bytes": 7363,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final13-2026-10-06/preflight01.py",
+      "source_bytes": 20064,
+      "codes": 20,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final13-2026-10-06/preflight02.py",
+      "source_bytes": 20064,
+      "codes": 20,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final13-2026-10-06/root_io.py",
+      "source_bytes": 7363,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final13-2026-10-06/root_io02.py",
+      "source_bytes": 7363,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final14-2026-10-06/preflight01.py",
+      "source_bytes": 20064,
+      "codes": 20,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final14-2026-10-06/root_io.py",
+      "source_bytes": 7363,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/bind20.py",
+      "source_bytes": 2833,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/correct_input_refs20.py",
+      "source_bytes": 3461,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/register20.py",
+      "source_bytes": 7275,
+      "codes": 13,
+      "names": 6,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 832,
+      "extra_container_bytes": 648
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final22-2026-10-08/preflight01.py",
+      "source_bytes": 23010,
+      "codes": 20,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final22-2026-10-08/prepare22_02.py",
+      "source_bytes": 5321,
+      "codes": 8,
+      "names": 8,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 976,
+      "extra_container_bytes": 856
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final22-2026-10-08/root_io.py",
+      "source_bytes": 7336,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed08-metadata-successor01-2026-10-06/candidate/build_inputs03.py",
+      "source_bytes": 24796,
+      "codes": 27,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed08-metadata-successor01-2026-10-06/candidate/controls01.py",
+      "source_bytes": 15776,
+      "codes": 19,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed08-metadata-successor01-2026-10-06/successor02.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed09-metadata-successor01-2026-10-06/candidate/build_inputs03.py",
+      "source_bytes": 24796,
+      "codes": 27,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed09-metadata-successor01-2026-10-06/candidate/controls01.py",
+      "source_bytes": 15776,
+      "codes": 19,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed09-metadata-successor01-2026-10-06/successor02.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed10-metadata-successor01-2026-10-06/candidate/build_inputs03.py",
+      "source_bytes": 24796,
+      "codes": 27,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed10-metadata-successor01-2026-10-06/candidate/controls01.py",
+      "source_bytes": 15776,
+      "codes": 19,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed10-metadata-successor01-2026-10-06/successor02.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed11-metadata-successor01-2026-10-06/candidate/build_inputs03.py",
+      "source_bytes": 24796,
+      "codes": 27,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed11-metadata-successor01-2026-10-06/candidate/controls01.py",
+      "source_bytes": 15776,
+      "codes": 19,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed11-metadata-successor01-2026-10-06/successor02.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed12-metadata-successor01-2026-10-06/candidate/build_inputs03.py",
+      "source_bytes": 24796,
+      "codes": 27,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed12-metadata-successor01-2026-10-06/candidate/controls01.py",
+      "source_bytes": 15776,
+      "codes": 19,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed12-metadata-successor01-2026-10-06/successor02.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/candidate/build_inputs03.py",
+      "source_bytes": 24796,
+      "codes": 27,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/candidate/controls01.py",
+      "source_bytes": 15776,
+      "codes": 19,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/successor02.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed14-metadata-successor01-2026-10-06/candidate/build_inputs03.py",
+      "source_bytes": 24796,
+      "codes": 27,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed14-metadata-successor01-2026-10-06/candidate/controls01.py",
+      "source_bytes": 15776,
+      "codes": 19,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed14-metadata-successor01-2026-10-06/candidate/real_pilot_storage.py",
+      "source_bytes": 15333,
+      "codes": 15,
+      "names": 15,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1784,
+      "extra_container_bytes": 1600
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed14-metadata-successor01-2026-10-06/successor02.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/candidate/build_inputs03.py",
+      "source_bytes": 24796,
+      "codes": 27,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/candidate/controls01.py",
+      "source_bytes": 15776,
+      "codes": 19,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/candidate/real_pilot_storage.py",
+      "source_bytes": 15333,
+      "codes": 15,
+      "names": 15,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1784,
+      "extra_container_bytes": 1600
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/successor02.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/build_inputs04.py",
+      "source_bytes": 25351,
+      "codes": 30,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/controls02.py",
+      "source_bytes": 16332,
+      "codes": 21,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/prepare_builder04.py",
+      "source_bytes": 6343,
+      "codes": 8,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/residuals04.py",
+      "source_bytes": 11149,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/successor04.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/build_inputs04.py",
+      "source_bytes": 25351,
+      "codes": 30,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/controls02.py",
+      "source_bytes": 16332,
+      "codes": 21,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/real_pilot_storage.py",
+      "source_bytes": 15333,
+      "codes": 15,
+      "names": 15,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1784,
+      "extra_container_bytes": 1600
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/successor04.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity02-2026-10-08/candidate/index_capacity.py",
+      "source_bytes": 7344,
+      "codes": 13,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 920,
+      "extra_container_bytes": 736
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor02-2026-10-06/candidate/archive_read_control_capacity.py",
+      "source_bytes": 1253,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor02-2026-10-06/candidate/prepare_builder03_input02.py",
+      "source_bytes": 5710,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor04-2026-10-06/candidate/build_inputs03.py",
+      "source_bytes": 24796,
+      "codes": 27,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor04-2026-10-06/candidate/controls01.py",
+      "source_bytes": 15776,
+      "codes": 19,
+      "names": 9,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1160,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor04-2026-10-06/successor02.py",
+      "source_bytes": 3001,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-buffer-allocation01-2026-10-06/allocation01.py",
+      "source_bytes": 3935,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/prepare_selected01.py",
+      "source_bytes": 14304,
+      "codes": 15,
+      "names": 11,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1464,
+      "extra_container_bytes": 1280
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/residuals02.py",
+      "source_bytes": 10051,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/candidate/build_inputs04.py",
+      "source_bytes": 25663,
+      "codes": 31,
+      "names": 19,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2232,
+      "extra_container_bytes": 1920
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/candidate/controls02.py",
+      "source_bytes": 16666,
+      "codes": 22,
+      "names": 10,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1248,
+      "extra_container_bytes": 1000
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/candidate/prepare_builder04.py",
+      "source_bytes": 6693,
+      "codes": 9,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 704
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/successor04.py",
+      "source_bytes": 3400,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-transport-binding-preparation01-2026-10-06/bind01.py",
+      "source_bytes": 10598,
+      "codes": 12,
+      "names": 11,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1432,
+      "extra_container_bytes": 1248
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-28-09/transfer.py",
+      "source_bytes": 18897,
+      "codes": 30,
+      "names": 19,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2232,
+      "extra_container_bytes": 1920
+    },
+    {
+      "path": "tradingagents/__init__.py",
+      "source_bytes": 51,
+      "codes": 1,
+      "names": 1,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 272,
+      "extra_container_bytes": 184
+    },
+    {
+      "path": "tradingagents/research/__init__.py",
+      "source_bytes": 220,
+      "codes": 1,
+      "names": 1,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 272,
+      "extra_container_bytes": 184
+    },
+    {
+      "path": "tradingagents/research/__main__.py",
+      "source_bytes": 1697,
+      "codes": 2,
+      "names": 2,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 360,
+      "extra_container_bytes": 272
+    },
+    {
+      "path": "tradingagents/research/admission.py",
+      "source_bytes": 19911,
+      "codes": 32,
+      "names": 21,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2408,
+      "extra_container_bytes": 2096
+    },
+    {
+      "path": "tradingagents/research/budget_extensions.py",
+      "source_bytes": 5359,
+      "codes": 5,
+      "names": 4,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 416
+    },
+    {
+      "path": "tradingagents/research/examples.py",
+      "source_bytes": 3678,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "tradingagents/research/lifecycle.py",
+      "source_bytes": 10509,
+      "codes": 27,
+      "names": 23,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2888,
+      "extra_container_bytes": 2576
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/__init__.py",
+      "source_bytes": 83,
+      "codes": 1,
+      "names": 1,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 272,
+      "extra_container_bytes": 184
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/aggregation.py",
+      "source_bytes": 4534,
+      "codes": 9,
+      "names": 9,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1064,
+      "extra_container_bytes": 880
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_chunks.py",
+      "source_bytes": 8614,
+      "codes": 17,
+      "names": 16,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1872,
+      "extra_container_bytes": 1624
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_consume.py",
+      "source_bytes": 5925,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_control_history.py",
+      "source_bytes": 9602,
+      "codes": 15,
+      "names": 14,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1696,
+      "extra_container_bytes": 1512
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_dispatch.py",
+      "source_bytes": 39437,
+      "codes": 55,
+      "names": 38,
+      "old_list_bytes": 568,
+      "bucket_container_bytes": 4304,
+      "extra_container_bytes": 3736
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_owner_operations.py",
+      "source_bytes": 17065,
+      "codes": 37,
+      "names": 32,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 3680,
+      "extra_container_bytes": 3304
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_owner_policy.py",
+      "source_bytes": 7301,
+      "codes": 12,
+      "names": 12,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1520,
+      "extra_container_bytes": 1336
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_owner_seal.py",
+      "source_bytes": 20237,
+      "codes": 18,
+      "names": 17,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1960,
+      "extra_container_bytes": 1712
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_owner_stage.py",
+      "source_bytes": 9354,
+      "codes": 9,
+      "names": 9,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1064,
+      "extra_container_bytes": 880
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_owner_writer.py",
+      "source_bytes": 6709,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_pair_reader.py",
+      "source_bytes": 14565,
+      "codes": 23,
+      "names": 17,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1960,
+      "extra_container_bytes": 1712
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_pair_writer.py",
+      "source_bytes": 22317,
+      "codes": 29,
+      "names": 20,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2320,
+      "extra_container_bytes": 2008
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_read_control_capacity.py",
+      "source_bytes": 1253,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_read_controls.py",
+      "source_bytes": 8503,
+      "codes": 12,
+      "names": 11,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1432,
+      "extra_container_bytes": 1248
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archive_transport.py",
+      "source_bytes": 13472,
+      "codes": 21,
+      "names": 17,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1960,
+      "extra_container_bytes": 1712
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archived_pair_log.py",
+      "source_bytes": 5206,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/archived_stage.py",
+      "source_bytes": 20757,
+      "codes": 14,
+      "names": 12,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1520,
+      "extra_container_bytes": 1336
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/array_neighborhoods.py",
+      "source_bytes": 6909,
+      "codes": 15,
+      "names": 14,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1696,
+      "extra_container_bytes": 1512
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/baselines.py",
+      "source_bytes": 3956,
+      "codes": 15,
+      "names": 11,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1432,
+      "extra_container_bytes": 1248
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/btc.py",
+      "source_bytes": 4060,
+      "codes": 10,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 704
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/btc_source.py",
+      "source_bytes": 5181,
+      "codes": 8,
+      "names": 8,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 976,
+      "extra_container_bytes": 856
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/btc_store.py",
+      "source_bytes": 5059,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/btc_subsets.py",
+      "source_bytes": 2147,
+      "codes": 5,
+      "names": 4,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 416
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/btc_weekly.py",
+      "source_bytes": 10251,
+      "codes": 14,
+      "names": 6,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 896,
+      "extra_container_bytes": 712
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/cache.py",
+      "source_bytes": 4654,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/calendar.py",
+      "source_bytes": 1403,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/cells.py",
+      "source_bytes": 3137,
+      "codes": 11,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 920,
+      "extra_container_bytes": 736
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/census_production.py",
+      "source_bytes": 7832,
+      "codes": 12,
+      "names": 6,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 832,
+      "extra_container_bytes": 648
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/checkpoint_chunks.py",
+      "source_bytes": 10611,
+      "codes": 29,
+      "names": 24,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2976,
+      "extra_container_bytes": 2664
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/checkpoints.py",
+      "source_bytes": 5016,
+      "codes": 9,
+      "names": 8,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 976,
+      "extra_container_bytes": 792
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/chunk_durability.py",
+      "source_bytes": 3488,
+      "codes": 10,
+      "names": 10,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1152,
+      "extra_container_bytes": 968
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/coinmetrics_prices.py",
+      "source_bytes": 8072,
+      "codes": 12,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 920,
+      "extra_container_bytes": 736
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/cold_files.py",
+      "source_bytes": 9486,
+      "codes": 22,
+      "names": 16,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1904,
+      "extra_container_bytes": 1656
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_closure.py",
+      "source_bytes": 9538,
+      "codes": 18,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_cold_features.py",
+      "source_bytes": 18275,
+      "codes": 26,
+      "names": 20,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2256,
+      "extra_container_bytes": 1944
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_cold_proof.py",
+      "source_bytes": 21453,
+      "codes": 33,
+      "names": 19,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 2232,
+      "extra_container_bytes": 1856
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_cold_proof_inputs.py",
+      "source_bytes": 11598,
+      "codes": 7,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_cold_proof_native.py",
+      "source_bytes": 2628,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_denominator.py",
+      "source_bytes": 7486,
+      "codes": 19,
+      "names": 17,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1960,
+      "extra_container_bytes": 1712
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_detached_handoff.py",
+      "source_bytes": 11749,
+      "codes": 22,
+      "names": 15,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1816,
+      "extra_container_bytes": 1568
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_dictionary.py",
+      "source_bytes": 18780,
+      "codes": 32,
+      "names": 21,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2376,
+      "extra_container_bytes": 2064
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_features.py",
+      "source_bytes": 7001,
+      "codes": 16,
+      "names": 13,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1424
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_graph_artifacts.py",
+      "source_bytes": 15615,
+      "codes": 39,
+      "names": 25,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 3128,
+      "extra_container_bytes": 2752
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_matcher.py",
+      "source_bytes": 25242,
+      "codes": 24,
+      "names": 20,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 2224,
+      "extra_container_bytes": 1976
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_mcm.py",
+      "source_bytes": 26932,
+      "codes": 46,
+      "names": 31,
+      "old_list_bytes": 472,
+      "bucket_container_bytes": 3688,
+      "extra_container_bytes": 3216
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_mcm_output.py",
+      "source_bytes": 12116,
+      "codes": 13,
+      "names": 13,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1424
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_mcm_publication.py",
+      "source_bytes": 11390,
+      "codes": 16,
+      "names": 13,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1424
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_native_features.py",
+      "source_bytes": 10689,
+      "codes": 27,
+      "names": 20,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2224,
+      "extra_container_bytes": 1912
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_native_producer.py",
+      "source_bytes": 13143,
+      "codes": 11,
+      "names": 9,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1064,
+      "extra_container_bytes": 880
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_owner.py",
+      "source_bytes": 29983,
+      "codes": 55,
+      "names": 38,
+      "old_list_bytes": 568,
+      "bucket_container_bytes": 4304,
+      "extra_container_bytes": 3736
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_pair_log.py",
+      "source_bytes": 17032,
+      "codes": 33,
+      "names": 25,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 3064,
+      "extra_container_bytes": 2688
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_policy.py",
+      "source_bytes": 6894,
+      "codes": 9,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 704
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_publication.py",
+      "source_bytes": 7802,
+      "codes": 21,
+      "names": 15,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1816,
+      "extra_container_bytes": 1568
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_sample_proof.py",
+      "source_bytes": 10307,
+      "codes": 17,
+      "names": 13,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1360
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_sampler.py",
+      "source_bytes": 13974,
+      "codes": 26,
+      "names": 21,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2312,
+      "extra_container_bytes": 2000
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_samples.py",
+      "source_bytes": 14680,
+      "codes": 25,
+      "names": 20,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2224,
+      "extra_container_bytes": 1912
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_stage.py",
+      "source_bytes": 14368,
+      "codes": 15,
+      "names": 10,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1184,
+      "extra_container_bytes": 1000
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_terminal.py",
+      "source_bytes": 17348,
+      "codes": 32,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2176,
+      "extra_container_bytes": 1864
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_training.py",
+      "source_bytes": 14874,
+      "codes": 29,
+      "names": 15,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 1912,
+      "extra_container_bytes": 1600
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/comparison.py",
+      "source_bytes": 4382,
+      "codes": 11,
+      "names": 4,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 568,
+      "extra_container_bytes": 384
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/component_store.py",
+      "source_bytes": 8448,
+      "codes": 15,
+      "names": 13,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1424
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/contracts.py",
+      "source_bytes": 8253,
+      "codes": 18,
+      "names": 15,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1784,
+      "extra_container_bytes": 1536
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/dataset.py",
+      "source_bytes": 5586,
+      "codes": 19,
+      "names": 13,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1640,
+      "extra_container_bytes": 1392
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/dictionary.py",
+      "source_bytes": 6213,
+      "codes": 16,
+      "names": 11,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1464,
+      "extra_container_bytes": 1280
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/environment.py",
+      "source_bytes": 804,
+      "codes": 2,
+      "names": 2,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 360,
+      "extra_container_bytes": 272
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/eth_source.py",
+      "source_bytes": 7627,
+      "codes": 16,
+      "names": 15,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1784,
+      "extra_container_bytes": 1600
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/evaluation.py",
+      "source_bytes": 16891,
+      "codes": 14,
+      "names": 14,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1696,
+      "extra_container_bytes": 1512
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/feature_journal.py",
+      "source_bytes": 16549,
+      "codes": 16,
+      "names": 14,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1696,
+      "extra_container_bytes": 1512
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/feature_pipeline.py",
+      "source_bytes": 13599,
+      "codes": 13,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 920,
+      "extra_container_bytes": 736
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/feature_residency.py",
+      "source_bytes": 2649,
+      "codes": 9,
+      "names": 9,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1064,
+      "extra_container_bytes": 880
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/financial_execution.py",
+      "source_bytes": 9594,
+      "codes": 18,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/gat.py",
+      "source_bytes": 2882,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/graph_baselines.py",
+      "source_bytes": 11938,
+      "codes": 15,
+      "names": 14,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1696,
+      "extra_container_bytes": 1512
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/graph_ledger_continuation.py",
+      "source_bytes": 23365,
+      "codes": 19,
+      "names": 11,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1528,
+      "extra_container_bytes": 1280
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/graph_legacy_coverage.py",
+      "source_bytes": 10434,
+      "codes": 7,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/graph_production.py",
+      "source_bytes": 18207,
+      "codes": 14,
+      "names": 8,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1008,
+      "extra_container_bytes": 824
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/graph_residency.py",
+      "source_bytes": 7240,
+      "codes": 13,
+      "names": 9,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1096,
+      "extra_container_bytes": 912
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/graph_store.py",
+      "source_bytes": 5296,
+      "codes": 6,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/held_score_consumer.py",
+      "source_bytes": 10736,
+      "codes": 17,
+      "names": 13,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1360
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/hub_census_production.py",
+      "source_bytes": 11496,
+      "codes": 10,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 704
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/hub_edges.py",
+      "source_bytes": 2468,
+      "codes": 3,
+      "names": 3,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 448,
+      "extra_container_bytes": 360
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/import_metadata.py",
+      "source_bytes": 4929,
+      "codes": 17,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1696,
+      "extra_container_bytes": 1448
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_authority_interval.py",
+      "source_bytes": 4566,
+      "codes": 10,
+      "names": 10,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1152,
+      "extra_container_bytes": 968
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "source_bytes": 13639,
+      "codes": 22,
+      "names": 17,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1992,
+      "extra_container_bytes": 1744
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "source_bytes": 8230,
+      "codes": 16,
+      "names": 16,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1872,
+      "extra_container_bytes": 1688
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "source_bytes": 36922,
+      "codes": 35,
+      "names": 26,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 3216,
+      "extra_container_bytes": 2840
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/job_payload.py",
+      "source_bytes": 16938,
+      "codes": 12,
+      "names": 10,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1152,
+      "extra_container_bytes": 968
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/journal_recovery.py",
+      "source_bytes": 6764,
+      "codes": 7,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/mapped_graph.py",
+      "source_bytes": 6250,
+      "codes": 7,
+      "names": 7,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 768
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching.py",
+      "source_bytes": 4437,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_ancestry.py",
+      "source_bytes": 17823,
+      "codes": 15,
+      "names": 10,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1184,
+      "extra_container_bytes": 1000
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_annealing.py",
+      "source_bytes": 14159,
+      "codes": 18,
+      "names": 16,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1872,
+      "extra_container_bytes": 1624
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_checkpoint.py",
+      "source_bytes": 13535,
+      "codes": 13,
+      "names": 13,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1424
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_death.py",
+      "source_bytes": 8975,
+      "codes": 18,
+      "names": 14,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1728,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_hardening.py",
+      "source_bytes": 8081,
+      "codes": 19,
+      "names": 16,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1872,
+      "extra_container_bytes": 1624
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_identity.py",
+      "source_bytes": 2063,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_owner.py",
+      "source_bytes": 21859,
+      "codes": 31,
+      "names": 22,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2864,
+      "extra_container_bytes": 2552
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_pair.py",
+      "source_bytes": 12746,
+      "codes": 19,
+      "names": 19,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 2136,
+      "extra_container_bytes": 1888
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_policy.py",
+      "source_bytes": 868,
+      "codes": 3,
+      "names": 3,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 448,
+      "extra_container_bytes": 360
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_reference.py",
+      "source_bytes": 4226,
+      "codes": 10,
+      "names": 8,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 976,
+      "extra_container_bytes": 792
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_sparse.py",
+      "source_bytes": 4230,
+      "codes": 7,
+      "names": 7,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 768
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/mcm.py",
+      "source_bytes": 2492,
+      "codes": 2,
+      "names": 2,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 360,
+      "extra_container_bytes": 272
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/mcm_raw_parts.py",
+      "source_bytes": 15345,
+      "codes": 28,
+      "names": 17,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2024,
+      "extra_container_bytes": 1712
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/mcm_score_stream.py",
+      "source_bytes": 18332,
+      "codes": 24,
+      "names": 16,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1904,
+      "extra_container_bytes": 1656
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/metrics.py",
+      "source_bytes": 3441,
+      "codes": 8,
+      "names": 7,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 768
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/model.py",
+      "source_bytes": 6537,
+      "codes": 11,
+      "names": 9,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1064,
+      "extra_container_bytes": 880
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/model_registry.py",
+      "source_bytes": 2723,
+      "codes": 7,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/native_producer.py",
+      "source_bytes": 9398,
+      "codes": 9,
+      "names": 8,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 976,
+      "extra_container_bytes": 792
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/native_reuse.py",
+      "source_bytes": 11609,
+      "codes": 15,
+      "names": 13,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1424
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/neighborhood_census.py",
+      "source_bytes": 7497,
+      "codes": 13,
+      "names": 12,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1520,
+      "extra_container_bytes": 1336
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/neighborhood_policy.py",
+      "source_bytes": 3212,
+      "codes": 11,
+      "names": 9,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1064,
+      "extra_container_bytes": 880
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/neighborhoods.py",
+      "source_bytes": 9380,
+      "codes": 17,
+      "names": 13,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1360
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/neural_authority.py",
+      "source_bytes": 7060,
+      "codes": 13,
+      "names": 13,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1424
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/neural_phases.py",
+      "source_bytes": 8072,
+      "codes": 14,
+      "names": 11,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1432,
+      "extra_container_bytes": 1248
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/neural_physical.py",
+      "source_bytes": 23746,
+      "codes": 42,
+      "names": 36,
+      "old_list_bytes": 472,
+      "bucket_container_bytes": 4032,
+      "extra_container_bytes": 3560
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/neural_resource.py",
+      "source_bytes": 23666,
+      "codes": 31,
+      "names": 24,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2976,
+      "extra_container_bytes": 2664
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/original_dictionary.py",
+      "source_bytes": 22148,
+      "codes": 53,
+      "names": 34,
+      "old_list_bytes": 568,
+      "bucket_container_bytes": 3984,
+      "extra_container_bytes": 3416
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/original_import_preparation.py",
+      "source_bytes": 14843,
+      "codes": 38,
+      "names": 23,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 2952,
+      "extra_container_bytes": 2576
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/original_import_stage.py",
+      "source_bytes": 12984,
+      "codes": 13,
+      "names": 12,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1520,
+      "extra_container_bytes": 1336
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/owned_io.py",
+      "source_bytes": 3099,
+      "codes": 14,
+      "names": 13,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1608,
+      "extra_container_bytes": 1424
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/parquet_ranges.py",
+      "source_bytes": 6226,
+      "codes": 7,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/pooling.py",
+      "source_bytes": 838,
+      "codes": 3,
+      "names": 3,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 448,
+      "extra_container_bytes": 360
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/population_assembly.py",
+      "source_bytes": 12569,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/population_batch_projection.py",
+      "source_bytes": 22321,
+      "codes": 31,
+      "names": 26,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 3152,
+      "extra_container_bytes": 2840
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/preservation.py",
+      "source_bytes": 10273,
+      "codes": 12,
+      "names": 11,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1432,
+      "extra_container_bytes": 1248
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/price_source.py",
+      "source_bytes": 3824,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/prices.py",
+      "source_bytes": 5295,
+      "codes": 9,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 704
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/provenance.py",
+      "source_bytes": 2398,
+      "codes": 12,
+      "names": 12,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1520,
+      "extra_container_bytes": 1336
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/range_source.py",
+      "source_bytes": 14373,
+      "codes": 14,
+      "names": 11,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1432,
+      "extra_container_bytes": 1248
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "source_bytes": 40424,
+      "codes": 50,
+      "names": 23,
+      "old_list_bytes": 472,
+      "bucket_container_bytes": 3048,
+      "extra_container_bytes": 2576
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_legacy_graph.py",
+      "source_bytes": 2760,
+      "codes": 6,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_partial_progress.py",
+      "source_bytes": 18493,
+      "codes": 34,
+      "names": 28,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 3296,
+      "extra_container_bytes": 2920
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_population.py",
+      "source_bytes": 7624,
+      "codes": 9,
+      "names": 6,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 616
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_reservations.py",
+      "source_bytes": 6875,
+      "codes": 6,
+      "names": 4,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 416
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_storage.py",
+      "source_bytes": 15891,
+      "codes": 16,
+      "names": 16,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1872,
+      "extra_container_bytes": 1688
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_throughput.py",
+      "source_bytes": 5987,
+      "codes": 18,
+      "names": 10,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1248,
+      "extra_container_bytes": 1000
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_training.py",
+      "source_bytes": 15170,
+      "codes": 31,
+      "names": 18,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2144,
+      "extra_container_bytes": 1832
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/registered_features.py",
+      "source_bytes": 13975,
+      "codes": 8,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/replay.py",
+      "source_bytes": 5550,
+      "codes": 4,
+      "names": 4,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 536,
+      "extra_container_bytes": 448
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/resource_binding.py",
+      "source_bytes": 2280,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/resource_fixture.py",
+      "source_bytes": 26791,
+      "codes": 54,
+      "names": 32,
+      "old_list_bytes": 568,
+      "bucket_container_bytes": 3776,
+      "extra_container_bytes": 3208
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/resources.py",
+      "source_bytes": 52034,
+      "codes": 67,
+      "names": 44,
+      "old_list_bytes": 664,
+      "bucket_container_bytes": 5648,
+      "extra_container_bytes": 4984
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/restart_retention.py",
+      "source_bytes": 32053,
+      "codes": 50,
+      "names": 41,
+      "old_list_bytes": 472,
+      "bucket_container_bytes": 4504,
+      "extra_container_bytes": 4032
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/run.py",
+      "source_bytes": 14432,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/sampling_policy.py",
+      "source_bytes": 952,
+      "codes": 3,
+      "names": 3,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 448,
+      "extra_container_bytes": 360
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/sampling_weights.py",
+      "source_bytes": 5747,
+      "codes": 7,
+      "names": 7,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 768
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/score_batches.py",
+      "source_bytes": 15150,
+      "codes": 30,
+      "names": 25,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 3064,
+      "extra_container_bytes": 2752
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/score_tail.py",
+      "source_bytes": 15297,
+      "codes": 21,
+      "names": 17,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 1992,
+      "extra_container_bytes": 1744
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/score_tail_archive.py",
+      "source_bytes": 15453,
+      "codes": 37,
+      "names": 26,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 3184,
+      "extra_container_bytes": 2808
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/score_tail_semantics.py",
+      "source_bytes": 6393,
+      "codes": 8,
+      "names": 8,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 976,
+      "extra_container_bytes": 856
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/serialization.py",
+      "source_bytes": 2078,
+      "codes": 10,
+      "names": 8,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 976,
+      "extra_container_bytes": 792
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/source_footers.py",
+      "source_bytes": 5245,
+      "codes": 8,
+      "names": 7,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 768
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/source_inventory.py",
+      "source_bytes": 7643,
+      "codes": 12,
+      "names": 10,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1152,
+      "extra_container_bytes": 968
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/stage_retention.py",
+      "source_bytes": 27909,
+      "codes": 52,
+      "names": 41,
+      "old_list_bytes": 472,
+      "bucket_container_bytes": 4536,
+      "extra_container_bytes": 4064
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/stage_retention_reader.py",
+      "source_bytes": 12475,
+      "codes": 10,
+      "names": 8,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 976,
+      "extra_container_bytes": 792
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/streamed_gat.py",
+      "source_bytes": 8065,
+      "codes": 12,
+      "names": 10,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1152,
+      "extra_container_bytes": 968
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/subsets.py",
+      "source_bytes": 3418,
+      "codes": 4,
+      "names": 3,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 448,
+      "extra_container_bytes": 360
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/temporal.py",
+      "source_bytes": 2397,
+      "codes": 5,
+      "names": 5,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 624,
+      "extra_container_bytes": 504
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/training.py",
+      "source_bytes": 8123,
+      "codes": 6,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/training_batch_observer.py",
+      "source_bytes": 20392,
+      "codes": 27,
+      "names": 23,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2888,
+      "extra_container_bytes": 2576
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/treatment_admission.py",
+      "source_bytes": 40425,
+      "codes": 31,
+      "names": 20,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2288,
+      "extra_container_bytes": 1976
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/treatment_contract.py",
+      "source_bytes": 5662,
+      "codes": 10,
+      "names": 9,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 1064,
+      "extra_container_bytes": 880
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/treatment_production.py",
+      "source_bytes": 17458,
+      "codes": 26,
+      "names": 17,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2024,
+      "extra_container_bytes": 1712
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/typed_payload_operations.py",
+      "source_bytes": 20601,
+      "codes": 25,
+      "names": 20,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 2224,
+      "extra_container_bytes": 1912
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/typed_payload_policy.py",
+      "source_bytes": 3440,
+      "codes": 9,
+      "names": 7,
+      "old_list_bytes": 184,
+      "bucket_container_bytes": 888,
+      "extra_container_bytes": 704
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/typed_score_store.py",
+      "source_bytes": 18002,
+      "codes": 25,
+      "names": 17,
+      "old_list_bytes": 312,
+      "bucket_container_bytes": 1992,
+      "extra_container_bytes": 1680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/typed_tail_binding.py",
+      "source_bytes": 20961,
+      "codes": 38,
+      "names": 27,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 3272,
+      "extra_container_bytes": 2896
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/verification.py",
+      "source_bytes": 14535,
+      "codes": 33,
+      "names": 14,
+      "old_list_bytes": 376,
+      "bucket_container_bytes": 1856,
+      "extra_container_bytes": 1480
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/weak_one_hop_census.py",
+      "source_bytes": 4553,
+      "codes": 2,
+      "names": 2,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 360,
+      "extra_container_bytes": 272
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/weekly.py",
+      "source_bytes": 5711,
+      "codes": 7,
+      "names": 6,
+      "old_list_bytes": 120,
+      "bucket_container_bytes": 800,
+      "extra_container_bytes": 680
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/weekly_retained_ledger.py",
+      "source_bytes": 3064,
+      "codes": 3,
+      "names": 3,
+      "old_list_bytes": 88,
+      "bucket_container_bytes": 448,
+      "extra_container_bytes": 360
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/workflow_storage.py",
+      "source_bytes": 10946,
+      "codes": 24,
+      "names": 18,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 2048,
+      "extra_container_bytes": 1800
+    },
+    {
+      "path": "tradingagents/research/verify.py",
+      "source_bytes": 19938,
+      "codes": 22,
+      "names": 18,
+      "old_list_bytes": 248,
+      "bucket_container_bytes": 2048,
+      "extra_container_bytes": 1800
+    }
+  ],
+  "max_extra_container_bytes": 4984,
+  "max_bucket_container_bytes": 5648,
+  "qualification": "CPython getsizeof container census on authenticated registered Python sources, compile only. References reuse existing code names/code objects; no code-body import. Per-module transient containers, not RSS/allocator bound or performance measurement. No Lease/Owner/Admission instance."
+}

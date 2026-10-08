@@ -329,9 +329,22 @@ def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held, p
             io._root(root,fd)
             require(io._read(fd,'start.json',io.META_LIMIT) == io._json(start),'MCM producer start changed')
             if progress is not None:progress.poll(log,stream)
+        def _lease_authority():
+            if _imported(dictionary) and getattr(dictionary.execution,'_sampled_authority_lease',None) is not None:
+                from .imported_authority_lease import target_lease
+                require(owner.active is stage,'actual active producer stage differs');target_lease(dictionary)
+            else:stage.lease(); dictionary.lease()
+        def _lease_start_metadata():
+            io._root(root,fd)
+            require(io._read(fd,'start.json',io.META_LIMIT) == io._json(start),'MCM producer start changed')
+        def _measured_lease_body():
+            diagnostic._measure_lease_subphase('lease_authority',_lease_authority)
+            diagnostic._measure_lease_subphase('lease_start_metadata',_lease_start_metadata)
+            if progress is not None:
+                diagnostic._measure_lease_subphase('lease_progress',progress.poll,log,stream)
         def lease():
             if diagnostic is None:return _lease_body()
-            return diagnostic.measure('lease',_lease_body)
+            return diagnostic.measure('lease',_measured_lease_body)
         p = thaw(owner.policy)
         def compute(event_log, live):
             nonlocal log,stream
