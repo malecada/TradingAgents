@@ -1,0 +1,23 @@
+--- a/tradingagents/research/onchain_replication/imported_authority_lease.py
++++ b/tradingagents/research/onchain_replication/imported_authority_lease.py
+@@ -51,9 +51,9 @@
+ def _authenticate_loaded(loaded,sources,root):
+     for module,p,functions in loaded.values():
+         raw=p.read_bytes();require(hashlib.sha256(raw).hexdigest()==sources[str(p.relative_to(root))],'loaded source body differs')
+-        compiled=compile(raw,str(p),'exec',dont_inherit=True,optimize=sys.flags.optimize);codes=[]
++        compiled=compile(raw,str(p),'exec',dont_inherit=True,optimize=sys.flags.optimize);codes={}
+         def walk(code):
+-            codes.append(code)
++            codes.setdefault(code.co_name,[]).append(code)
+             for value in code.co_consts:
+                 if type(value) is types.CodeType:walk(value)
+         walk(compiled)
+@@ -70,7 +70,7 @@
+             if label.endswith('.contextmanager'):
+                 wrapped=getattr(fn,'__wrapped__',None)
+                 require(type(wrapped) is types.FunctionType and fn.__code__ is contextlib.contextmanager(wrapped).__code__ and fn.__globals__ is vars(contextlib) and len(fn.__closure__ or ())==1 and fn.__closure__[0].cell_contents is wrapped,'contextmanager changed')
+-            else:require(code.co_filename==str(p) and any(code==candidate for candidate in codes),'loaded code not bound to authenticated source: '+label)
++            else:require(code.co_filename==str(p) and any(code==candidate for candidate in codes.get(code.co_name,())),'loaded code not bound to authenticated source: '+label)
+ 
+ def _checked_value(raw,baseline,current,current_pin,original):
+     """Callback-free metadata rejoin; grants no authority by itself."""

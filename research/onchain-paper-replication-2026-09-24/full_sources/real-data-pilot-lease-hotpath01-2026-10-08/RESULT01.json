@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "authored-method-property-contextmanager",
+      "result": "accepted"
+    },
+    {
+      "case": "source-hash-mismatch",
+      "result": [
+        "ValueError",
+        "loaded source body differs"
+      ]
+    },
+    {
+      "case": "wrong-co-name",
+      "result": [
+        "ValueError",
+        "loaded code not bound to authenticated source: f0"
+      ]
+    },
+    {
+      "case": "wrong-filename",
+      "result": [
+        "ValueError",
+        "loaded code not bound to authenticated source: f0"
+      ]
+    },
+    {
+      "case": "wrong-constant",
+      "result": [
+        "ValueError",
+        "loaded code not bound to authenticated source: f0"
+      ]
+    },
+    {
+      "case": "nested-code-same-name",
+      "result": "accepted"
+    },
+    {
+      "case": "nested-code-same-name",
+      "result": "accepted"
+    }
+  ],
+  "source_reads": {
+    "baseline": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath01-2026-10-08/synthetic/fixture.py"
+    ],
+    "candidate": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lease-hotpath01-2026-10-08/synthetic/fixture.py"
+    ]
+  },
+  "synthetic_functions": 404,
+  "seconds": {
+    "baseline": [
+      0.0063283900017268024,
+      0.0066264090019103605,
+      0.00885006099997554,
+      0.006855128001916455,
+      0.006357313999615144,
+      0.007586569998238701,
+      0.007139411998650758
+    ],
+    "candidate": [
+      0.0044607169984374195,
+      0.005838831999426475,
+      0.005631202999211382,
+      0.006139174998679664,
+      0.004621708998456597,
+      0.004487616999540478,
+      0.003973142000177177
+    ]
+  },
+  "median_synthetic_authentication_speedup": 1.483245267974617,
+  "imports_numerical_packages": false
+}
