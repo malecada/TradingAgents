@@ -1,5 +1,7 @@
 # Representative real-data pilot — active goal
 
+**Pilot17 is permanentlyFAILED/spent88; original90347/6e1eaf exit1, allownedprocesses/cgroupclosed/sourcefreezeENDED. ROOT_TERMINAL01 andcurrentTOP areauthoritative. Imported32motifs11136B complete/noMCMupdate; activationInterval59secondlive exceeded60s. Preserve/review/freshlyrecoveractual17increment andfinishnarrowliveguardfallbackcorrection beforeunused18registration/proposal89/release. Neverrelaunch17 orusehistorical launchstepsbelow. GoalACTIVE/incomplete.**
+
 Read current TOP in STATE.md and the short coordination file. The app goal is ACTIVE again; broad13-task/1420-fit heartbeat remains PAUSED. Root owns live integration, registrations/accounting, STATE/Git, actual incremental external preservation/recovery and ONE native launcher. Do not reopen historical jobs or copy unchanged stores.
 
 Pilot16 is permanently FAILED/spent87 after verified self-deadlock before representation birth. Original Root1/guard child null/separate125/unit125 and complete cleanup remain. Actual failed16increment32files+9directories/41names has fresh external recovery independently accepted5fb9a123; do not repeat it. Matching_owner correctiona033 passed originalRED/live7/independent17 and narrow source reviewbbc7593a. Strict17 source32e9e09a/source adoption4179fe76 changes only experiment identity.

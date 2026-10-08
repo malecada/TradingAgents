@@ -1,5 +1,33 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T09:24:27.333166+00:00: pilot17 permanentlyFAILED/spent88 after32-motif import; allownedprocesses/cgroupclosed. GoalACTIVE/incomplete; source/GitfreezeENDED.**
+
+OriginalRoot90347 actualterminal6e1eaf exit1; actualRootIOclosed09:16:29Z/supervisorreaped/logsclosed, native1372.352440297s (~22m52s), guardchild1/separatechild1/unitstatus1/cleanupverified. Allsupervisor86501/monitor86856/wrapper87212/worker87218 absent,cgroupgone, actualunitMainPID0/ControlGroupempty/failed/b07689. Source=dfc0eefdb unchanged, exact88claim retained. [ROOT_TERMINAL01](full_sources/real-data-pilot-final17-2026-10-08/ROOT_TERMINAL01.json) authenticatesactualrawjoins. Originalfailedreason ValueError:importlease:staleintervalcannotrefresh at Lease.__init__→Interval.validate59 post-full/fingerprint secondlivecallback. Full-callback freshness passed; precisephase/age timingsareunrecorded, donotfabricate.
+
+Actualoriginaldictionary-import/import-complete authenticates32motifs/11136numericB/currentmatchingpairs0/historicalworkrecomputedFalse. Old16lockfailureboundarypassed; noMCMstarted/completed orjointupdate/financialfit/usefulfeaturethroughput/trainingtime. All7graphoutcomesunavailable; originalcallerfinancial-resourcecellFAILED. Observerfallbackreportsunavailable/no-durable-disposition despiteactualfailedreceipt hash-pinned cellledger; preserveboth anduseauthenticatedfailedcell, notfallbacktooverwriteit. Nativepeak sampled5368872960B/lastkernel5371043840B/HIGH492/MAXOOM0; noRAMcapfailure or wholecapacityproof. Finalunion5040873472allocatedB/5465465778logicalB/16879entries. Setupcounters1152s: rchar85156238911/wchar63842204091/read_bytes2720821248 and1264506503nativeCPUusec includegraphload/source/pipes/descendants, notphysicalwire orfunction-attributedcost.
+
+58closed33COMPLETE25FAILED/highestactuallyclaimed88/28pending/twoclosedpreclaimreserves; no89/refund/transfer/capladder/newclaim/relaunch17. Prior16FAILED/recovery5fb9a123 andalloldclaimsremain. Fullmethod/data/resources unchanged7graphs/32motifs512spent/16consecutive28lookback/model20f451/trainingd527/onejointupdate/6cap5high8.5startup2.5reserve10floor8h2CPU. Broad13-task/1420fitheartbeatPAUSED.
+
+RootsoleMain/accounting/STATEGit/preservation/ONElauncher. NEWowners: pilot16_outcome_review onlyseventeenth-resource-failed-review01 actualoutcome/completepublicincrement selection/recovery; pilot17_lock_fix onlyNEWlive-guard-correction01 candidate+focusedsyntheticchecks. Readonlytracecompleted: _live→Owner.lease→Binding.lease→TWO_guardcalls lowreservefallback run.read_input→_check_source→admit/fullruntimehashes+committed/local sourcevalidation; four extrafulladmissionsacrossactivation'stwolivecallbacks. verify_currentis callbackfree/currentmetadata; wholeTorchinventory/allinputchecks remaingenuineBinding.check/fullcallback. Narrowcandidateusesexistingboundedhashauthenticated _read(ad,execution_job) forfreshfallback; explicitcreationcontext/allliveguards/resource_policy/fullBinding/_source/input/runtime/scheduler/timestamps/60srefusalsstay. This isamechanismconsistentwithfailure, notmeasuredpercallbacktimeorproofremainingcallbacksfit60s.
+
+Next preserve/review/freshlyrecoveractual17increment usingexistingtar/Gittools; concurrentlyfinish/review faithfulsourcefallbackcorrection. Onlyafteractualpreservation andchangedseamacceptance integrateexactsource andprepareunusedsuccessor18/sourcecontext/gate/cumulativeproposal89/independentrelease beforeONEfresheligibleattempt. Keepobjectiveintact; nogenericframeworks,unchangedmatrixretests,rawhistoricalcopies,thresholdraises orfakeauthority.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-08T08:55:24.259244+00:00: ONE fresh17 genuinely claimed/running at88; source/Git freeze ACTIVE. Representative goal ACTIVE/incomplete.**
+
+Follow ONLY originalRootIO90347/cb5985/source dfc0eefdbcd0b38277c12878b1326932b9dab41b. Actualpush58331/0c5639 andremote35870/751204 exit0matched. Finalexactrelease40a49cf7/405refs andreadonly88/298source/59roles accepted. RootIOperformed originalfullpreflightonce immediatelybeforelaunch at08:53:27Z: RAM9419714560B/disk26062614528B, allsource/runtime/index/writablegrowth/namespace/native checks passed. Actualsupervisor86501/monitor86856, unitonchain-replication-b6a6554bb2a54aa3b800037829ed3f7b.service; actualclaim exists/effective88. Actualinitialobservation7b208a at~486s andretainedROOT_PROGRESS01 at~540s confirm genuinejournal owner+claim: old16selfdeadlockboundary passed. LatestROOT_PROGRESS02 at843.6s confirmscompactownerexists/worker87218 CPUticks35806/stateS; nativewrapper87212; current5117505536B/sampledpeak5368872960B/lastkernelpeak5371043840B/HIGH492/MAXOOM0/limitNone; childlog0B/noMCM/update yet. Current resource readings are not fullcapacity/usefulthroughput.
+
+57closed33COMPLETE24FAILED plusONEactive17/highestactuallyclaimed88;28pending/two permanentlyclosedpreclaimreserves unchanged. No89/refund/transfer/capladder/rerun16. Original16 permanentFAILED plusactualfreshrecovery5fb9a123 remains. Reviewedfaithfulmatching_owner lockfixa033 and strict17storage32e9e09a/package179anchorf66bddd71 are committed; originalscience/data/resources remain7fullgraphs/32motifs512spent/16consecutive28lookback/model20f451/trainingd527/onejointupdate/6cap5high8.5startup2.5reserve10floor8h2CPU. No methodsubstitution orfinancialfitcredit.
+
+Rootowns integration/accounting/STATE/externalrecovery/ONElauncher; allboundedagentscompleted. Broad13-task/1420fitheartbeat remainsPAUSED. Next followONLY90347/actualguard/claim/journal/partialtelemetry, diagnoseactualCPU/kernelwait ifprogressstalls, preservecheckpoints/noactiveprocessduplication. On genuine terminalreap retain exits/cleanup/dispositions andactualincrementindependentreview/freshrecoverybeforecontinuation. No source/config/Gitmutationwhileactive; checkpoint docs do not alter admittedsource. Goal not achieved; throughput/storage/training/end-to-endverification remainunproven.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T08:41:25.680039+00:00: representative goal ACTIVE; fresh17 conditional exact release40a49cf7 accepted; committed read-only admission88 passed. No numerical job.**
 
 User goal continuation reactivated the representative Ethereum pilot only; broad13-task/1420-fit heartbeat remains PAUSED. Prior checks turn made concrete progress (live faithful lock correction, independent checks, actual failed16 recovery), not a status-only turn. Actual get_goal verified ACTIVE. No selected numerical processes/active claims observed at entry; RAM9611911168B and disk26080157696B were eligible instantaneous observations, not capacity/release.

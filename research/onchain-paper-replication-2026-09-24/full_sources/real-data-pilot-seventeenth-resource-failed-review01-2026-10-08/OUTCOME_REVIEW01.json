@@ -1,0 +1,118 @@
+{
+  "actual_cell_disposition": [
+    {
+      "financial_fit_complete": false,
+      "id": "real-eth-one-update",
+      "paper_financial_fits": 0,
+      "reason": "ValueError: import lease: stale interval cannot refresh",
+      "resource_only": true,
+      "status": "failed"
+    }
+  ],
+  "actual_source_hash_checks": {
+    "tradingagents/research/onchain_replication/imported_authority_interval.py": true,
+    "tradingagents/research/onchain_replication/imported_authority_lease.py": true,
+    "tradingagents/research/onchain_replication/job.py": true,
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": true
+  },
+  "at": "2026-10-08T09:24:07.047354+00:00",
+  "callback_durations_seconds": null,
+  "current_cgroup_absent": true,
+  "current_pids_absent": {
+    "86501": true,
+    "86856": true,
+    "87212": true,
+    "87218": true
+  },
+  "current_unit": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "MainPID": "0",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "decision": "accepted-failed-outcome-and-exact-increment-with-reporting-finding",
+  "directory_count": 13,
+  "exact_interval_age_seconds": null,
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261008-17",
+  "failure_location": "imported_authority_interval.py:59 second POST-full/fingerprint live_done freshness check during Lease.__init__ activation",
+  "freshness_policy_max_stale_ms": 60000,
+  "graph_dispositions": {
+    "complete": 0,
+    "failed": 0,
+    "unavailable": 7
+  },
+  "guard_child_exit": 1,
+  "import_record": {
+    "current_matching_pairs": 0,
+    "historical_work_recomputed": false,
+    "motifs": 32,
+    "numeric_bytes": 11136,
+    "path": "research_artifacts/onchain_representations/1b83ea65bd24404d601ff4644b5df138aff0cbb68c13d2e994521ca0b562ce88/eth-paper-real-data-end-to-end-resource-20261008-17/compact/dictionary-import/import-complete.json",
+    "qualification": "Original current import receipt is authenticated; scientific arrays were not recomputed or independently numerically revalidated. Lease activation failed before original_import event publication and before MCM.",
+    "sha256": "a3622d35d547dca2307c837bb9473095bcd5f8f6650f93b80a78aef4ea98d346"
+  },
+  "memory_events": {
+    "high": 492,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "minimum_sampled_disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 26057302016
+  },
+  "native_elapsed_seconds": 1372.3524402970006,
+  "not_tested": [
+    "Exact full/fingerprint/live callback durations and initial activation age; failure implies overall age above60s only.",
+    "No scientific numerical validation, throughput/capacity/performance, broader historical recount or private/runtime bodies.",
+    "No external recovery, future budget89/source correction/release, claim or relaunch."
+  ],
+  "observer_fallback_disposition": [
+    {
+      "id": "real-eth-one-update",
+      "reason": "owned worker ended before durable cell disposition; no retry",
+      "status": "unavailable"
+    }
+  ],
+  "observer_reporting_finding": {
+    "file": "tradingagents/research/onchain_replication/job.py",
+    "impact": "Consumers relying on observer.cell_ledger_sha256 misclassify an attempted failed resource cell as unavailable; seven graph denominator remains retained.",
+    "line": 544,
+    "problem": "Observer fallback emits unavailable/no durable disposition although failed.json authenticates original outputs/cell-ledger.json with the cell FAILED.",
+    "requested_change": "A future reviewed source change should recover and authenticate resource-pilot cell-ledger output before unavailable fallback. Retain both original17 records unchanged; report original authenticated cell failure.",
+    "severity": "P2"
+  },
+  "original_regular_bytes": 476888,
+  "output_hash_checks": {
+    "archive-receipt.json": true,
+    "archive-terminal.json": true,
+    "cell-ledger.json": true,
+    "pilot-summary.json": true,
+    "resource-binding.json": true,
+    "resource-journal.json": true,
+    "resource-population-binding.json": true,
+    "resource-population.json": true
+  },
+  "parent_exit": 1,
+  "permanent_spent_attempt": 88,
+  "primary_failure": "ValueError: import lease: stale interval cannot refresh",
+  "regular_count": 46,
+  "root_exit": 1,
+  "sampled_peak_charged_memory_bytes": 5368872960,
+  "schema_version": 1,
+  "selection_sha256": "bd3692620c470b81ce993c1a022721f0b6253caa1c5793216ee9ec63ca0649ff",
+  "separate_child_exit": 1,
+  "source": "dfc0eefdbcd0b38277c12878b1326932b9dab41b",
+  "terminal_reference_hash_checks": {
+    "final_storage": true,
+    "original_child_exit": true,
+    "original_claim": true,
+    "original_failed": true,
+    "original_guard": true,
+    "original_import_complete": true,
+    "outer_closed": true
+  }
+}

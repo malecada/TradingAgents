@@ -1,0 +1,16 @@
+--- a/tradingagents/research/onchain_replication/matching_owner.py
++++ b/tradingagents/research/onchain_replication/matching_owner.py
+@@ -68,11 +68,8 @@
+     ad=run.admission
+     args=SimpleNamespace(root=ad.root,registration=ad.registration,experiment=ad.experiment_id,source=ad.source)
+     # bind already authenticated execution before acquiring the lifecycle lock.
+-    # Live callbacks need fresh bounded input authentication, not full admission.
+-    if p['reserve_bytes']<3*resources.GIB and execution is None:
+-        from .real_pilot_import_caller import _read
+-        execution=_read(ad,'execution_job')
+-    pilot_context=(ad,execution) if p['reserve_bytes']<3*resources.GIB else None
++    # Other callers retain their fresh registered-input read.
++    pilot_context=(ad,execution if execution is not None else json.loads(run.read_input('execution_job'))) if p['reserve_bytes']<3*resources.GIB else None
+     live=resources.assert_guarded_worker(base/'guard',job._command(args,'worker'),
+         required_paths=[Path(x) for x in p['disk_paths']],wall_seconds=p['wall_seconds'],
+         memory_max_bytes=p['memory_max_bytes'],memory_high_bytes=p['memory_high_bytes'],disk_floor_bytes=p['disk_floor_bytes'],pilot_context=pilot_context)
