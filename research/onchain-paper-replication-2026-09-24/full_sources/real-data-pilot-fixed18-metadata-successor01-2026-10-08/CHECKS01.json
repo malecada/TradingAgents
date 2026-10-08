@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "profile": "checkout-local Python stdlib-only source metadata; no imported/executed helpers",
+  "checks": [
+    "successor02.py: compile and AST equality after reverting only exact experiment literal",
+    "candidate/build_inputs03.py: compile and AST equality after reverting only exact experiment literal",
+    "candidate/controls01.py: compile and AST equality after reverting only exact experiment literal",
+    "candidate/real_pilot_storage.py: compile and AST equality after reverting only exact experiment literal",
+    "all eight old/new dependency hashes verify; six non-self entries identical",
+    "successor02 byte-identical; exactly three strict identity literal changes; only builder/control dependency paths and hashes change",
+    "full forward/inverse patch byte roundtrip passed",
+    "old helper bytes preserved; no missed17 strict literal in candidates"
+  ],
+  "failures": []
+}

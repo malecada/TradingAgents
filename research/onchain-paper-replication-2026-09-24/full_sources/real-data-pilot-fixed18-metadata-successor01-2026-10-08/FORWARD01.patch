@@ -1,0 +1,51 @@
+--- a/DEPENDENCIES02.json
++++ b/DEPENDENCIES02.json
+@@ -1,11 +1,11 @@
+ {
+   "builder": {
+-    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed17-metadata-successor01-2026-10-08/candidate/build_inputs03.py",
+-    "sha256": "38239cf31919bcf7c1adc4b58c622ab4ceb99b943566bdcd573b7bb654e7cdc0"
++    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed18-metadata-successor01-2026-10-08/candidate/build_inputs03.py",
++    "sha256": "0eb71e5863f6f6a27a8886481133f4993a5e83925c8325b15eb5faeb56495979"
+   },
+   "controls": {
+-    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed17-metadata-successor01-2026-10-08/candidate/controls01.py",
+-    "sha256": "ed6cfe75db2c472a08b73ffb28ffafaa4f4b4588bbf6fd9ddc9381eedb015cea"
++    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed18-metadata-successor01-2026-10-08/candidate/controls01.py",
++    "sha256": "9083f018ef9c436d8bf03ad81ddae2b7864f8eeaea9c7312fb852d8f3a211a39"
+   },
+   "durability": {
+     "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/chunk_durability.py",
+--- a/candidate/build_inputs03.py
++++ b/candidate/build_inputs03.py
+@@ -153,7 +153,7 @@
+     output.update(schema_version=2,payload_archive_input=typed_role);need(output['backend']==BACKEND,'original output backend differs')
+     max_matrix=max(v['rows']*32*4 for v in g.values());need(output['max_artifact_bytes']>=max_matrix+2*8192 and output['max_workflow_output_bytes']>=7*(output['max_artifact_bytes']+8192),'full original output reservation insufficient')
+     resource=job['resources'];need(resource['native_unit_limits']['file_size_bytes']>=max(max_matrix,LIMIT),'finite native cap must cover original matrix and chunks')
+-    budget=resource['storage_budget'];limits=budget['limits'];experiment='eth-paper-real-data-end-to-end-resource-20261008-17'
++    budget=resource['storage_budget'];limits=budget['limits'];experiment='eth-paper-real-data-end-to-end-resource-20261008-18'
+     need(budget['authority_root']==str(root) and budget['schema_version']==2 and budget['kind']=='real-pilot-writable-union' and budget['experiment']==experiment and budget['roots']==[str(root/'research_artifacts'),str(root/'research_runs'/experiment)] and budget['shared_files']==[str(root/'research_runs/.lock')],'exact common writable union required')
+     need(resource['disk_floor_bytes']==typed['local_free_floor_bytes']==archive['local_free_floor_bytes'],'one physical-store floor required')
+     store=spec['physical_store'];need(set(store)=={'baseline_evidence','baseline_allocated_bytes','baseline_logical_bytes','reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes','allocation_overhead_bytes','typed_attempt_metadata_bytes','remaining_control_inventory','additional_scratch_bytes'},'explicit retained local store components required');ref_path(root,store['baseline_evidence'])
+--- a/candidate/controls01.py
++++ b/candidate/controls01.py
+@@ -13,7 +13,7 @@
+ DMETA=131072
+ ARCHIVE=8*1024**2
+ WEEKS=tuple('2022-'+x+'T00:00:00Z' for x in ('05-02','05-09','05-16','05-23','05-30','06-06','06-13'))
+-EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261008-17'
++EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261008-18'
+ ALLOCATION='../../real-data-pilot-resource-buffer-allocation01-2026-10-06/allocation01.py'
+ ALLOCATION_SHA='3912e68c232553f1fab5e39a92c0741c2c0ddab49316321c1189781d19611dfd'
+ # These are disjoint from the derived domains below. None may be omitted/zeroed
+--- a/candidate/real_pilot_storage.py
++++ b/candidate/real_pilot_storage.py
+@@ -4,7 +4,7 @@
+ from types import MappingProxyType
+ from .workflow_storage import StorageWatch,StorageLimit,FIELDS,_close
+ KIND='real-pilot-writable-union'
+-EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261008-17'
++EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261008-18'
+ COUNTS={'allocated_bytes':'max_allocated_bytes','logical_file_bytes':'max_logical_bytes','entries':'max_entries'}
+ 
+ def selected(budget):return type(budget) is dict and budget.get('schema_version')==2

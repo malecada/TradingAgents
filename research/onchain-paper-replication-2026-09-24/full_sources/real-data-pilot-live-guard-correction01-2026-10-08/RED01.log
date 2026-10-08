@@ -1,0 +1,30 @@
+F
+=================================== FAILURES ===================================
+__________________ test_fallback_uses_bounded_fresh_hash_read __________________
+
+guard_call = <function guard_call.<locals>.call at 0x7eaf67c271a0>
+
+    def test_fallback_uses_bounded_fresh_hash_read(guard_call):
+>    guard_call()
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-live-guard-correction01-2026-10-08/test_live_guard01.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-live-guard-correction01-2026-10-08/test_live_guard01.py:64: in call
+    def call(**kwargs):return extract_guard()(run,e['resources'],owner,ad.root,**kwargs)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_owner.py:72: in _guard
+    pilot_context=(ad,execution if execution is not None else json.loads(run.read_input('execution_job'))) if p['reserve_bytes']<3*resources.GIB else None
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'execution_job'
+
+    def forbidden_read(name):
+>    raise AssertionError('live guard invoked ResearchRun.read_input/full admission validation')
+E    AssertionError: live guard invoked ResearchRun.read_input/full admission validation
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-live-guard-correction01-2026-10-08/test_live_guard01.py:58: AssertionError
+- reviewed profile: 0 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-live-guard-correction01-2026-10-08/test_live_guard01.py::test_fallback_uses_bounded_fresh_hash_read
+1 failed, 7 deselected in 0.30s
