@@ -1,0 +1,15 @@
+# Authenticated owner lock correction — synthetic engineering only
+
+The original low-reserve owner guard reacquired the non-reentrant lifecycle flock through ResearchRun.read_input while bind held it. Both creation checks now pass the execution object already authenticated by bind before locking. The guard uses this object only for the existing low-reserve pilot context; other callers retain the original registered-input read. resources.assert_guarded_worker and job.resource_policy still authenticate admission, execution bytes/hash, plan bytes/hash, exact policy and live owner. No lifecycle locking, resource limits, scientific method or historical evidence changed.
+
+RED01.log retains the original-source expected failure: the bounded child entered locks_lock_inode_wait while holding a FLOCK on the temporary lifecycle inode. It was terminated and reaped after two seconds. GREEN01.log records seven passing cases: both actual in-lock guard calls return, default low-reserve authentication works, missing context refuses, mismatched execution refuses, changed registered bytes refuse, not-ready admission refuses, and legacy 3 GiB guard returns under the lock without an execution read.
+
+The regression compiles the exact _guard function and both actual bind call expressions from each source into a small lock wrapper. This isolates the failing boundary without importing numerical matching modules. Real synthetic Git admission, ResearchRun.start/read_input, lifecycle flock, actual resources.assert_guarded_worker, resource_policy, authenticated plan reads, and live process identity checks execute. Only kernel containment/control/file-limit boundaries are replaced by the retained synthetic RAM fixture. Python audit checks prohibit numerical imports; the explicitly extended reviewed offline profile retains normal network/write admission guards. This does not execute full bind, create a representation journal, or establish numerical throughput/capacity.
+
+Checks: checkout-local locked Python runtime check passed; focused candidate offline profile 7 passed; full candidate compiles; forward/inverse patches reconstruct exact original/candidate bytes; live source still equals retained baseline. The broad numerical offline suite was not run under this assignment's numerical-import prohibition. No engineering fixture failures occurred besides the expected preserved RED deadlock. Historical pilot16 remains permanently FAILED; this candidate does not authorize a claim or launch. Root alone owns integration, fresh registration and preservation.
+
+Invocation from checkout root:
+
+    OWNER_SOURCE="$PWD/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lock-correction01-2026-10-08/matching_owner.py" .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lock-correction01-2026-10-08/check01.py
+
+Original RED reproduction uses OWNER_SOURCE pointing at baseline_matching_owner.py and adds -k both_locked. All outputs here are synthetic engineering evidence; the temporary fixture claim is not an empirical registration or budget consumption.

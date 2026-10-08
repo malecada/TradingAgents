@@ -1,0 +1,35 @@
+--- a/tradingagents/research/onchain_replication/matching_owner.py
++++ b/tradingagents/research/onchain_replication/matching_owner.py
+@@ -64,12 +64,10 @@
+     return json.loads(raw),digest(raw)
+ 
+ 
+-def _guard(run,p,guard_owner,base,*,execution=None):
++def _guard(run,p,guard_owner,base):
+     ad=run.admission
+     args=SimpleNamespace(root=ad.root,registration=ad.registration,experiment=ad.experiment_id,source=ad.source)
+-    # bind already authenticated execution before acquiring the lifecycle lock.
+-    # Other callers retain their fresh registered-input read.
+-    pilot_context=(ad,execution if execution is not None else json.loads(run.read_input('execution_job'))) if p['reserve_bytes']<3*resources.GIB else None
++    pilot_context=(ad,json.loads(run.read_input('execution_job'))) if p['reserve_bytes']<3*resources.GIB else None
+     live=resources.assert_guarded_worker(base/'guard',job._command(args,'worker'),
+         required_paths=[Path(x) for x in p['disk_paths']],wall_seconds=p['wall_seconds'],
+         memory_max_bytes=p['memory_max_bytes'],memory_high_bytes=p['memory_high_bytes'],disk_floor_bytes=p['disk_floor_bytes'],pilot_context=pilot_context)
+@@ -229,7 +227,7 @@
+         require(journal_directory is None and ((_first and ancestry_arguments is None) or (not _first and ancestry_arguments is not None)),
+                 'constructor requires exact first-owner or successor mode')
+         with _lock(ad.root):
+-            run._active();_guard(run,policy_resources,guard_owner,base,execution=execution)
++            run._active();_guard(run,policy_resources,guard_owner,base)
+             _creation_path(expected,ad.root,descriptor['required_graphs'])
+             if _first:
+                 require(not expected.parent.exists() and not expected.parent.is_symlink(),
+@@ -242,7 +240,7 @@
+                 require(file_hash(path)==info['sha256'],'parent changed before successor creation')
+                 parent={'path':str(path),'sha256':info['sha256'],'owner':manifest['owner']}
+             owner={'experiment':ad.experiment_id,'source_commit':ad.source,'producer':producer,'workflow_identity':identity}
+-            run._active();_guard(run,policy_resources,guard_owner,base,execution=execution)
++            run._active();_guard(run,policy_resources,guard_owner,base)
+             try:
+                 from .feature_journal import _RESOURCE_METADATA
+                 journal=FeatureJournal(expected,owner,required_graphs=descriptor['required_graphs'],parent=parent,

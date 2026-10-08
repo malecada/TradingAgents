@@ -1,5 +1,53 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T08:20:49.765729+00:00: deadlock correction adopted after focused checks and independent review; no numerical job active. App goal PAUSED, direct resumed checks authorized.**
+
+Live matching_owner.py nowa0330db1 (prior6cca17b9 retained). Exact authenticated execution is reused at both creation checks inside lifecycle lock, while default calls and current execution/plan/source/owner/resource authentication remain. Actual original-source RED reproduced ledger self-deadlock and reaped synthetic child; candidate/live7 checks and independent17 refusals/controls passed. [Changed source/entry review](full_sources/real-data-pilot-sixteenth-resource-failed-review01-2026-10-08/CHANGED_SOURCE_REVIEW01.json) bbc7593a accepts source adoption only. [Adoption](full_sources/real-data-pilot-lock-adoption01-2026-10-08/SOURCE_ADOPTION01.json) records exact bytes; Root2c692a actual live7checks exit0. No full bind/journal/numerical/throughput/capacity or17release follows.
+
+Pilot16 permanentlyFAILED87/Root24576→1a5045 exit1/18m10s, guardchildnull/separatechild125/currentunit125/cleanupverified/all4PIDs+cgroupgone. No representation/MCM/update/fit; lowerRAMguard self-deadlock, noRAMcap failure. Independent actualoutcome accepted; exact32regular419085B+9dirs41names selected9fdc7aec and locallycaptured481280B tar4f93b610 actualreadbackverified (de1c6c). Original stop-preparation failures, actualonePOSIXsignal, nulls, absent source/representation and empty logs/controls retained. Fresh external recovery stillpending; no deletion.
+
+57closed33C24F/highestclaimed87;28pending/two closed preclaimreserves unchanged. Same native6GiBcap5high8.5startup2.5reserve/zeroSwap10floor/8h2CPU and fullscientificmethod32motifs512samples/sevenfullETHgraphs/16decisions remain. PROPOSED88 forONEunused20261008-17 exists with40typed currentclaims+17carried; not reviewed/adopted/claimed. Initial unreleased allocation scalar-shape error preserved00/corrected before review. Strict runtime identity still16; future17 needs exactsource/context/template/pair reanchor, namespace+transport+source closure/registration/release. Neverrelaunch16 or transfer/refund/capladder.
+
+RootsoleMainsource/accounting/STATE/Git/externalrecovery/ONElauncher; workercomplete, reviewer owns narrow88 review and returnedactual16 verification. Nextcommit/push accepted source+actual16archive, perform fresh bare externalGit return and verify all41names/modes/hashes; finish currentchecks. Later, after user resumes goal, prepare/freeze/review fresh17 exactly beforeONEeligible launch; broadheartbeat/1420-fit workPAUSED. SourceGitfreezeENDED. Goal incomplete.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-08T08:07:06.765047+00:00: pilot16 permanently FAILED/spent87 after confirmed self-deadlock; original RootIO exited and cleanup verified. Source/Git freeze ENDED.**
+
+Original24576/1a5045 actualexit1, supervisor12052/monitor12394/native12732/worker12750 absent; nativecgroupgone/unitfailed/MainPID0/ExecMainStatus125. [Actual terminal](full_sources/real-data-pilot-final16-2026-10-07/ROOT_TERMINAL01.json) joins originalRootIOclosed/finalstorage/guard/failedreceipts. Guard child_exit_code staysnull; separate child_exit exit125/reason signal remains. Native1089.9886s (~18m10s), sampledchargedpeak5368684544B/HIGH835/MAXOOM0. No representation namespace, MCM, jointupdate or useful feature throughput. No RAM-cap failure or completed model fit.
+
+[Kernel diagnosis](full_sources/real-data-pilot-final16-2026-10-07/LOCK_DEADLOCK01.json): worker12750 holds lifecycleledger flock viafd4 andwaits sameinode viafd5. Independent source trace confirms matching_owner.bind holds_lock229→_guard230/243→newlowreserve read_input70→lifecycle.read_input158 reacquires non-reentrantlock. User2.5GiBreserve activates it; old3GiB15bypassed. Preserve original diagnostic intendedPIDfd wording: actual preparation failuresac598b(osmissing)/0c3020(libcsymbolmissing) sentno signals, retained in two preparation-failure receipts. ActualsinglePOSIXSIGTERM supervisor12052 d75f2e used existing shutdown/guard/reconciliation route; RootIO untouched. Actual disposition/reasons nevercoerced.
+
+57closed33COMPLETE24FAILED/highestclaimed87;28pending/two closed preclaimreserves unchanged. No88/refund/transfer/capladder/relaunch16. All accepted scientificmethod/data32motifs512/sevenfullgraphs/16decisions and6cap5high8.5startup2.5reserve10floor remain. RepresentativegoalACTIVE/incomplete/broadheartbeat1420fitsPAUSED.
+
+RootsoleMain/source/accounting/STATE/Git/externalrecovery/ONElauncher. New boundedowners: pilot17_lock_fix owns only NEW lock-correction01 candidate/focused RED→GREEN; pilot16_outcome_review owns NEW failed-review01 actualoutcome/publicincrement andlatercombined changed-source/entryreview. Read-only pilot16_lock_trace completed; no other active numerical process. Next integrate exact authenticated execution context beforecreationlock withoutweakening in-lockguards, independentlyaccept changed seam, retain/freshlyrecover actual16 increment using existing tools, then freeze/review/commit onefresh eligible successor registration/allowance before launch. Continue executable work in parallel; no generic frameworks/unchangedmatrix/historicalcopies.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-08T07:52:54.226380+00:00: representative app goal ACTIVE again; original pilot16 remains running. Source/Git freeze ACTIVE.**
+
+Actual get_goal on continuation verified ACTIVE. Original24576 handle confirmed live through bounded120s wait (cell12), no new launcher. Nativeguard running/elapsed394.6s/chargedmemory5116051456B/sampledpeak5368684544B/limitreasonNone/events{'high': 835, 'low': 0, 'max': 0, 'oom': 0, 'oom_group_kill': 0, 'oom_kill': 0}. Originalsource16fd7dffa/87claim/unit5cb54c6b unchanged. No completedMCM/jointupdate/financialfit observed. All accepted release/method/resource/data and preservation facts in previous checkpoint remain. Rootalone; no source/config/Git mutation. Next follow ONLY24576/actualguard, then retain terminal/cleanup, independent outcome verification and incremental fresh recovery. Broadheartbeat/1420-fit workPAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-08T07:48:21.200816+00:00: ONE fresh pilot16 genuinely claimed/running; Source/Git freeze ACTIVE.**
+
+Follow ONLYRootsession24576/7b3a97/source16fd7dffa7a0c94c704ac7043d24e99ae460398b; do not duplicate or relaunch16. Actualremote45766/9a129f matched. Original fullpreflight at2026-10-08T07:46:10.138670+00:00 passed startupRAM10140434432B/disk26129858560B, all7 index metadata, committed298source/59input/runtime and exact release. [Active receipt](full_sources/real-data-pilot-final16-2026-10-07/ROOT_ACTIVE01.json) joins original87claim/supervisor12052/monitor12394/nativechild12732/unitonchain-replication-5cb54c6b35fe43bb8790d1e68234b6a6.service. Guardrunning elapsed121.5s/currentmemory1363124224B/limitreasonNone. Real-data worker initial setup; no completeMCM/jointupdate/financialfit observed. No wholecapacity/usefulthroughput claim.
+
+Exact accepted all7 index buffer439582708B + largestMCM289981568B and user8.5GiBstartup/6GiBcap/5high/2.5reserve/zeroSwap/10GiBfloor remain. Original scientific method/32motifs512spent samples/sevenfullETHgraphs/16decisions unchanged.15permanentFAILED/freshincrementrecovery5e05f464 retained.56closed33C23F plusONE16active/highestactuallyclaimed87; pending28/twopreclaimreserves unchanged. No refund/transfer/capladder/rerun.
+
+RootsoleMain/accounting/STATE/Git/preservation/ONElauncher; no live subordinate agents. No source/config/Git mutation until originalRootIO terminal and nativecleanup; STATE/activeobservation records only. Next monitor ONLY24576 actualphase/resources, retain actualterminal/cleanup then independentlyverify/incrementallyfreshrecover allattempted/unavailableoutcomes. User directtry-now authorization resumed execution; appgoal stillBLOCKED atlastget_goal and needs UI resumption for automaticgoal follow-ups. Broaderheartbeat/1420-fit workPAUSED. Pilot incomplete.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-07T15:30:03.660924+00:00: representative pilot goal BLOCKED on startup RAM after three consecutive turns; no pilot16 attempt/claim/native job.**
 
 Latest actual check ac977d: MemAvailable8599482368B (8.009GiB), short527323136B (~503MiB) of reviewed9126805504B (8.5GiB); disk26002747392B sufficient. Same RAM admission blocker persisted across reduced-threshold user turn and two goal continuations. No active native unit/16claim/launch-attempt. Exact release/configuration remains ready;6GiBcap/5GiBhigh/2.5GiBreserve/10GiBdiskfloor/method/data unchanged. No further automatic threshold reduction or spent rerun. Final configuration/checkpoint commit839282f4d5e96b7bf5682ffc0a4108f14db456b7 was actually pushed55041/f1171b and remote readback40255/57bfac matched; Git availability only.

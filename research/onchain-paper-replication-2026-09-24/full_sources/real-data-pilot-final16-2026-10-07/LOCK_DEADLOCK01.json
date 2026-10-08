@@ -1,0 +1,24 @@
+{
+  "actual_cgroup_cpu_stat": "usage_usec 385356549\nuser_usec 287804920\nsystem_usec 97551628\ncore_sched.force_idle_usec 0\n",
+  "actual_kernel_lock_rows": [
+    "1: FLOCK  ADVISORY  WRITE 12750 103:06:7773187 0 EOF",
+    "1: -> FLOCK  ADVISORY  WRITE 12750 103:06:7773187 0 EOF"
+  ],
+  "actual_native_elapsed_seconds": 982.9849491970001,
+  "actual_supervisor_pid": 12052,
+  "actual_supervisor_start_ticks": "28517",
+  "actual_worker_pid": 12750,
+  "actual_worker_wait_channel": "locks_lock_inode_wait",
+  "at": "2026-10-08T08:02:42.570166+00:00",
+  "diagnosis": "matching_owner.bind holds lifecycle._lock at line229, calls _guard line230; low reserve _guard line70 calls ResearchRun.read_input which reacquires the same non-reentrant flock through a fresh file descriptor. Second in-lock guard line243 has the same defect. Kernel holds-and-waits rows match worker and ledger inode. No numerical feature production has started.",
+  "identity": "eth-paper-real-data-end-to-end-resource-20261007-16",
+  "interruption": "One identity-verified SIGTERM to original supervisor through pidfd; existing supervisor forwards monitor termination, registered native guard stops its unit/reconciles. RootIO remains untouched. This is an actual failed/spent attempt, never a refundable or restartable namespace.",
+  "lock_path": "research_runs/.lock",
+  "original_root_session": 24576,
+  "source": "16fd7dffa7a0c94c704ac7043d24e99ae460398b",
+  "source_sha256": {
+    "tradingagents/research/lifecycle.py": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+    "tradingagents/research/onchain_replication/job.py": "4610cb4a5a8cfa8397f55502e15ec48e23f12b585d121adf6f24ad19466a9e75",
+    "tradingagents/research/onchain_replication/matching_owner.py": "6cca17b90b106c6017d4af2976f100ff33d566179f356139f6648a3bb481c855"
+  }
+}
