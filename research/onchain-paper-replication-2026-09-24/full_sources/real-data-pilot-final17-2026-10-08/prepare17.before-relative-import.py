@@ -28,15 +28,12 @@ def ref(p):
     return dict(path=str(p.relative_to(ROOT)),sha256=digest(p),bytes=p.stat().st_size)
 
 def save(p,v):
-    body=(json.dumps(v,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
-    if p.exists():
-        assert p.read_bytes()==body, 'Existing metadata differs; refuse overwrite'
-        return
-    with p.open('xb') as stream:stream.write(body)
+    with p.open('x') as s:
+        json.dump(v,s,sort_keys=True,indent=2,allow_nan=False)
+        s.write('\n')
 
 def module(p):
     m=types.ModuleType(p.stem);m.__file__=str(p)
-    if p.name=='real_pilot_storage.py':m.__package__='tradingagents.research.onchain_replication'
     exec(compile(p.read_bytes(),str(p),'exec'),vars(m))
     return m
 
@@ -61,7 +58,7 @@ def prepare():
         assert hashlib.sha256(body).hexdigest()==pins[p] and body==(ROOT/p).read_bytes()
     assert pos==len(returned)
     pair=copy.deepcopy(oldpair);pair['numerical_source']=dict(commit=anchor,files=pins)
-    (HERE/'templates').mkdir(exist_ok=True)
+    (HERE/'templates').mkdir()
     save(HERE/'templates/pair_policy01.json',pair)
     for source,target in [('templates/job_template03.json','job_template01.json'),('templates/pilot.json','pilot.json'),('templates/archive_policy.json','archive_policy.json')]:
         value=renamed(load(OLD/source))

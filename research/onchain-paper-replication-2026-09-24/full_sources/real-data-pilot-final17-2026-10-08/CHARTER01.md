@@ -1,0 +1,11 @@
+# Representative Ethereum real-data pilot17
+
+The original32 motifs and512 spent samples, seven full Ethereum weekly graphs, sixteen consecutive decisions,28-day lookback, seed11/batch16, model20f451/trainingd527 and frozen tolerances remain unchanged. The pipeline performs original dictionary import, full MCM generation, GAT and attention LSTM, then one joint update and checkpoint. This resource pilot is not a100-epoch financial fit or an accuracy confirmation.
+
+Pilot16 is permanently FAILED/spent87 following independently diagnosed lifecycle-lock self-deadlock before representation creation. Its original exits, null guard field, failure records and actual incremental external recovery remain preserved. The reviewed correction reuses authenticated execution at both creation-lock guards while retaining live/source/input/resource authentication. Strict identity17 and exact179-package source/context joins are the only further source changes.
+
+Cumulative88 retains57closed claims(33COMPLETE24FAILED),28unchanged pending and two permanently closed preclaim reservations, plus this ONE unused fixed identity. No refund, transfer, historical reopening, fresh-sample assertion or test-outcome tuning. Independent cumulative88 review and actual failed16 recovery are prerequisites. Every historical experiment definition remains unchanged.
+
+Startup8.5GiB available,6GiB hard job cap,5GiB high,2.5GiB host reserve,zero job swap,10GiB disk floor,two CPUs,8-hour native limit,1GiB native hard/soft file limit and whole writable-union controls remain frozen. All-seven buffer439582708B plus largest MCM289981568B is the existing numeric reservation, not proven total memory capacity. Ordinary graph metadata checks do not provide writer exclusion; generated Binding method snapshots retain the existing declared control boundary.
+
+Useful feature-generation throughput, qualified sampled/kernel memory, actual storage and training duration must be recorded. Retain all attempted/absent stages, independent verification and actual incremental external recovery. At mostONE invocation after exact committed metadata/release, remote authentication and fresh process/source/runtime/namespace/RAM/disk/native checks. No automatic restart or cap increase. Completion, coverage and numerical agreement remain separate.
