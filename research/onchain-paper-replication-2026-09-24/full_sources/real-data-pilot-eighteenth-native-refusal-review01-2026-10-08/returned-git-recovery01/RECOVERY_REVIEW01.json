@@ -1,0 +1,126 @@
+{
+  "actual_external_recovery_accepted": true,
+  "archive": {
+    "bytes": 122880,
+    "directory_count": 3,
+    "git_blob_oid": "cccbe20a0ac7ec517ca4bae0499cbaa2e9da5f14",
+    "original_archive_streams": 0,
+    "regular_bytes": 82737,
+    "regular_count": 19,
+    "returned_archive": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-increment01-2026-10-08/fresh-git-recovered-increment01.tar",
+      "sha256": "7d68ac29c80d07d04cb025d651a854fad4de2c37550f3f83241cc13542256154"
+    },
+    "returned_archive_streams": 1,
+    "typed_names": 22
+  },
+  "at": "2026-10-08T10:21:40.201913+00:00",
+  "bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighteenth-native-refused-20261008-01.git",
+  "capture": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-increment01-2026-10-08/CAPTURE01.json",
+    "sha256": "4a90bf1adf2c2b1f999cda863df183837ef15ddfd53844d38537fe1f2943eeae"
+  },
+  "current_alternates_absent": true,
+  "decision": "accepted",
+  "deletion_authorized": false,
+  "fresh_fetch_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-increment01-2026-10-08/FRESH_GIT_RECOVERY01.json",
+    "sha256": "e7da3d7a7cd506d8d9ed34f8eac2b52259a161bbd752cbedf3bfc2a91ac45f81"
+  },
+  "git_lazy_fetch_disabled": true,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261008-18",
+  "members_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-review01-2026-10-08/returned-git-recovery01/RECOVERED_MEMBERS01.json",
+    "sha256": "9766f89012d5ef2645aa7f93cc18cfcb29470f3ac489ceee78236d14008d0179"
+  },
+  "not_tested": [
+    "No new external fetch or replay; historical external provenance depends on actual recorded operations, not offline state alone.",
+    "No original archive/evidence body reread, extraction, deletion or original scientific stores.",
+    "No performance/capacity/financial correctness, future remote availability or future pilot admission."
+  ],
+  "offline_git_checks": [
+    {
+      "args": [
+        "rev-parse",
+        "--is-bare-repository"
+      ],
+      "exit_code": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "fb51b934bb31ce47339367a64e610e78d8f2f829"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.url"
+      ],
+      "exit_code": 0,
+      "stdout": "git@github.com:malecada/TradingAgents.git"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.promisor"
+      ],
+      "exit_code": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.partialclonefilter"
+      ],
+      "exit_code": 0,
+      "stdout": "blob:none"
+    },
+    {
+      "args": [
+        "ls-tree",
+        "-z",
+        "fb51b934bb31ce47339367a64e610e78d8f2f829",
+        "--",
+        "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-increment01-2026-10-08/refused-increment01.tar"
+      ],
+      "exit_code": 0,
+      "stdout": "100644 blob cccbe20a0ac7ec517ca4bae0499cbaa2e9da5f14\tresearch/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-increment01-2026-10-08/refused-increment01.tar\u0000"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-t",
+        "cccbe20a0ac7ec517ca4bae0499cbaa2e9da5f14"
+      ],
+      "exit_code": 0,
+      "stdout": "blob"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-s",
+        "cccbe20a0ac7ec517ca4bae0499cbaa2e9da5f14"
+      ],
+      "exit_code": 0,
+      "stdout": "122880"
+    }
+  ],
+  "original_selected_stat_identities_currently_unchanged": true,
+  "originals_retained": true,
+  "provenance_basis": "Nine preserved successful Root operations show fresh bare initialization, promisor configuration, external fetch and actual lazy blob retrieval. Independent offline bare FETCH_HEAD/remote/promisor/tree/blob checks and returned body Git-object SHA1/SHA256 agree.",
+  "qualification": "Both original14369 outer-preflight refusal and separate60718 native setup refusal are retained byte-exact. Only exact public reserved/refused18 BYTE recovery: names/types/modes/hashes, zero-byte logs and actual owned directories. Pilot18 remains permanently closed preclaim/reserved89; highest actual claim88 and58closed claims remain unchanged. No worker or research claim is invented. No POSIX owner/timestamp/xattr reconstruction, private transport/runtime/raw-store recovery, numerical execution or successor release.",
+  "recovery_source_commit": "fb51b934bb31ce47339367a64e610e78d8f2f829",
+  "returned_archive_retained": true,
+  "schema_version": 1,
+  "selection": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-review01-2026-10-08/INCREMENT_SELECTION01.json",
+    "sha256": "4ebed7aef44f7d5b3ff2db66d5e3b2b58fb7b914cc4ebb12a1030c2dfde05e2b"
+  }
+}

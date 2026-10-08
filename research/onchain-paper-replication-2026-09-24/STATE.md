@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T10:31:00.876999+00:00: goal PAUSED/incomplete; user-authorized lower-RAM startup attempts are saved for next resume. No numerical job.**
+
+[Current goal resume instructions](PILOT_GOAL_RESUME.md) supersede the historical 8.5GiB startup gate. On user reactivation, amend startup available-memory minimum to the retained runtime host reserve2.5GiB, consistently in exact configs/validators/native setup, with focused review/committed fresh registration before execution. Do not pre-reserve the full6GiB cap as an entry condition. Keep hard6/high5/zero job swap/runtime hostreserve2.5/diskfloor10/twoCPU8h/storage/checkpoint/cleanup controls unchanged. Launch one fresh registered attempt to expose setup defects when actual guards pass; record real capacity failures rather than wait repeatedly for restart-level RAM. No source/limit change or launch occurred in this goal-update turn.
+
+18 is permanently closed nativepreclaim refusal/reserved89, not reusable/refundable. Actual incremental external recoveryd571da31 independently accepted all22names/19regular82737B/3dirs from122880B7d68ac29 archive/sourcefb51b934; originals/bare/returned retained.58closed33C25F/highest actualclaim88+28pending+3closedpreclaim reserves remain. Proposed90 forONEunused19 has narrow accounting acceptance634b00af; no90claim/adoption or19gate/release/attempt.
+
+Import-placement candidate changes only matching_pair/compact_matcher import boundaries and two corresponding test copies: four focused checks+42 synthetic checks, measured median cold-import PSS saving18693120B. It is unadopted; independent import review interrupted/pending. Strict19 helper/storage candidate accepted02bba9b8, unadopted. Existing19 entry/prepare/charter drafts are unreleased and still use the old startup threshold; amend them before use. Main/source anchorfb51b934 unchanged before this documentation update. All bounded agents are complete/interrupted; no active native process. No completeMCM/jointupdate/checkpoint/fit yet; full original method and success criteria unchanged.
+
+Next on explicit goal resume: finish the actual changed-source/startup-policy checks, integrate accepted source, prepare/review/commit exact fresh19 and allowance90, then one lower-RAM guarded attempt. Root sole live integration/accounting/Git/STATE/preservation/launcher. Broad heartbeat remains paused. Reuse accepted evidence and preserve all closed history.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T10:15:39.535567+00:00: pilot18 permanently CLOSED_NATIVE_SETUP_REFUSAL_PRECLAIM/reserved89. No job/claim/worker; goalACTIVE/incomplete.**
 
 Previous goal turn made source/recovery/admission progress. Fresh metadata17d1fd found no activeclaims/processes/namespaces18, RAM9230630912B/disk26046177280B; remote77316/ba3ec5 matched131bee378970e06cce0a225157e73f9b755af95e. OriginalRoot60718/fcc384 ran once to native setup after actual09:58:29 fullpreflight RAM9323139072B. Native guard refused host reserve fell during cgroup setup at9102376960B below9126805504B. OriginalRootb14669 exit1; IOclosed09:58:39/supervisor257933reaped/logsclosed. Native0.531863251s, guardchildnull, separate125/signalbefore-release/workloadPIDnull; sampledcharged14045184B/MAXOOM0. No numericalworker/MCM/update/checkpoint/fit. The preflight→setup host sample drop220762112B is not per-job attribution.

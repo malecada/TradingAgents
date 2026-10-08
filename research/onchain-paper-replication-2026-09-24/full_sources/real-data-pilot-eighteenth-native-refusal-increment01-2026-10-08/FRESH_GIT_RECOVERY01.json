@@ -1,0 +1,114 @@
+{
+  "at": "2026-10-08T10:20:31.171621+00:00",
+  "source": "fb51b934bb31ce47339367a64e610e78d8f2f829",
+  "actual_remote_head": "fb51b934bb31ce47339367a64e610e78d8f2f829",
+  "external_source": "Fresh external Git fetch and actual lazy blob retrieval; no local alternates",
+  "fresh_bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighteenth-native-refused-20261008-01.git",
+  "archive": {
+    "bytes": 122880,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-increment01-2026-10-08/refused-increment01.tar",
+    "sha256": "7d68ac29c80d07d04cb025d651a854fad4de2c37550f3f83241cc13542256154"
+  },
+  "returned_archive": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-increment01-2026-10-08/fresh-git-recovered-increment01.tar",
+    "bytes": 122880,
+    "sha256": "7d68ac29c80d07d04cb025d651a854fad4de2c37550f3f83241cc13542256154"
+  },
+  "operations": 9,
+  "operation_receipts": [
+    {
+      "argv": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "ls-remote",
+        "git@github.com:malecada/TradingAgents.git",
+        "refs/heads/research/onchain-paper-replication-2026-09-24"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "init",
+        "--bare",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighteenth-native-refused-20261008-01.git"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighteenth-native-refused-20261008-01.git",
+        "config",
+        "remote.origin.url",
+        "git@github.com:malecada/TradingAgents.git"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighteenth-native-refused-20261008-01.git",
+        "config",
+        "remote.origin.promisor",
+        "true"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighteenth-native-refused-20261008-01.git",
+        "config",
+        "remote.origin.partialclonefilter",
+        "blob:none"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighteenth-native-refused-20261008-01.git",
+        "fetch",
+        "--depth=1",
+        "--filter=blob:none",
+        "origin",
+        "refs/heads/research/onchain-paper-replication-2026-09-24"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighteenth-native-refused-20261008-01.git",
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "git",
+        "--git-dir=/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-eighteenth-native-refused-20261008-01.git",
+        "cat-file",
+        "blob",
+        "fb51b934bb31ce47339367a64e610e78d8f2f829:research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-eighteenth-native-refusal-increment01-2026-10-08/refused-increment01.tar"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "all_typed_names_modes_hashes_verified": true,
+  "regular_file_count": 19,
+  "regular_bytes": 82737,
+  "directory_count": 3,
+  "typed_member_count": 22,
+  "qualification": "Exact public reserved/refused18 BYTE increment only. Originals/bare/returned retained; no POSIX reconstruction, private/runtime/scientific raw recovery or deletion."
+}
