@@ -1,3 +1,5 @@
+Latest checks checkpoint: 2026-10-08T09:40:47.187647+00:00, bounded live-guard995fe76 andliteralstrict18f4cbe9 independentlyaccepted/adopted; actual17failedincrement recovered29cf984e. GoalACTIVE/incomplete/nojob; unused18 exactmetadata draft298source59roles/proposed89reviewaccepted, combinedentryreview pending. Next committedreadonlyadmission/finalexactrelease/remote/fresheligibility beforeONE18. Never17rerun; noMCM/update/throughput yet.
+
 # Representative real-data pilot — active goal
 
 **Pilot17 is permanentlyFAILED/spent88; original90347/6e1eaf exit1, allownedprocesses/cgroupclosed/sourcefreezeENDED. ROOT_TERMINAL01 andcurrentTOP areauthoritative. Imported32motifs11136B complete/noMCMupdate; activationInterval59secondlive exceeded60s. Preserve/review/freshlyrecoveractual17increment andfinishnarrowliveguardfallbackcorrection beforeunused18registration/proposal89/release. Neverrelaunch17 orusehistorical launchstepsbelow. GoalACTIVE/incomplete.**

@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T09:40:47.187647+00:00: resumed checks passed; bounded live-guard correction adopted. Pilot17 failure increment independently externally recovered. No numerical job. Goal ACTIVE/incomplete; broad heartbeat PAUSED.**
+
+Live matching_owner995fe76c switches only the amended reserve fallback to a fresh bounded hash-authenticated execution read. Eight worker checks and six independent changed-seam checks passed; original full Binding/source/input/runtime validation, current owner/native resource checks and lease60s remain. Strict18 storagef4cbe9b0 has an independent literal-only acceptance2e6093f3. Numerical package179 is anchored at8bf085d83836fd1f1afb7fa8e17cc31c86a98d2e; original model20f451/trainingd527/motifs32/512spent/sevenfullgraphs/onejointupdate unchanged. Successful activation/throughput/capacity remain unproved.
+
+Actual failed17 public increment46regular476888B+13directories/59typednames was captured563200B/bbb2c20e, pushed and freshly returned through9 actual externalGit operations73333/ef17c1 exit0, remote/source167efcdee6b7e57e10df607c03a428bc1abbc8a3/noalternates. Independent recovery29cf984e accepts all selected names/modes/hashes including originalFAILED cell and discrepant observer-unavailable record. Original/bare/returned stores retained; no private/runtime/raw/POSIX recovery or deletion claim. Pilot17 remains permanentFAILED/spent88; noMCM/update/financialfit. All owned processes/cgroup were absent.
+
+58closed33COMPLETE25FAILED/highestactuallyclaimed88;28pending/two permanently closed preclaim reserves unchanged. Exact proposed89=58+28+2+ONEunused18 accepted f8a7d0d9 and genuine validator returned89 for41currenttyped+17carried; accounting review alone creates no claim/refund/transfer/capladder. New final18 concrete DRAFT uses298sourcepins/59roles incl execution_workspace, current179pin pairpolicy joined to BOTH descriptors, both namespacesethpilot-20261008-18, original limits8.5GiBstartup/2.5GiBhostreserve/6hard5high/zeroSwap10floor/twoCPU8h. Ordinary prerelease58-role setup assertion and pair-role correction retained before admission; no18 attempt/claim/release.
+
+Root alone owns Main/accounting/STATE/Git/external recovery/ONElauncher. pilot16_outcome_review owns ONLY NEW retry18-review01 combined source/binding/entry check. Other bounded assignments complete. Next commit exact18 registration, genuine read-only admission, integrate accepted combined review and final exact release, push/actualremote readback and fresh eligibility before ONE unused18 attempt. Checks do not redefine goal success; fullMCM→GAT→attentionLSTM jointupdate/checkpoint and measurements remain necessary.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T09:24:27.333166+00:00: pilot17 permanentlyFAILED/spent88 after32-motif import; allownedprocesses/cgroupclosed. GoalACTIVE/incomplete; source/GitfreezeENDED.**
 
 OriginalRoot90347 actualterminal6e1eaf exit1; actualRootIOclosed09:16:29Z/supervisorreaped/logsclosed, native1372.352440297s (~22m52s), guardchild1/separatechild1/unitstatus1/cleanupverified. Allsupervisor86501/monitor86856/wrapper87212/worker87218 absent,cgroupgone, actualunitMainPID0/ControlGroupempty/failed/b07689. Source=dfc0eefdb unchanged, exact88claim retained. [ROOT_TERMINAL01](full_sources/real-data-pilot-final17-2026-10-08/ROOT_TERMINAL01.json) authenticatesactualrawjoins. Originalfailedreason ValueError:importlease:staleintervalcannotrefresh at Lease.__init__→Interval.validate59 post-full/fingerprint secondlivecallback. Full-callback freshness passed; precisephase/age timingsareunrecorded, donotfabricate.
