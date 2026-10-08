@@ -1,0 +1,64 @@
+--- baseline_job.py
++++ job.py
+@@ -77,9 +77,8 @@
+             selected_plan=next(iter(execution['payload']['representation_jobs'].values()))
+             plan=validate_plan(_read(ad,selected_plan['real_pilot_input']))
+             if plan['schema_version']!=2 or plan['resource_policy']!=value:raise ValueError('authenticated schema2 policy required')
+-            from .real_pilot_storage import validate,EXPERIMENT
+-            if ad.experiment_id!=EXPERIMENT:raise ValueError('fixed real-pilot identity required')
+-            validate(budget,Path(root))
++            from .real_pilot_storage import validate
++            validate(budget,Path(root),experiment=ad.experiment_id)
+         else:
+             if type(budget) is not dict or set(budget)!={'root','limits'} or type(budget['root']) is not str:
+                 raise ValueError('registered storage budget schema differs')
+@@ -217,11 +216,11 @@
+     budget=job['resources'].get('storage_budget')
+     if type(budget) is dict and budget.get('schema_version')==2:
+         from .real_pilot_storage import validate,residual_check
+-        validate(budget,Path(args.root));return residual_check(Path(args.root))
++        validate(budget,Path(args.root),experiment=args.experiment);return residual_check(Path(args.root),experiment=args.experiment)
+     return None
+ 
+ def launch(args):
+-    _,job=_admitted(args)
++    ad,job=_admitted(args)
+     base = _base(args)
+     durable_mkdir(base.parent)
+     base.mkdir(exist_ok=False)
+@@ -239,7 +238,7 @@
+             extra={}
+             if type(budget) is dict and budget.get('schema_version')==2:
+                 from .real_pilot_storage import prepare_environment
+-                env=resources._native_owned_env(Path(args.root),budget);prepare_environment(Path(args.root),budget,env)
++                env=resources._native_owned_env(Path(args.root),budget);prepare_environment(Path(args.root),budget,env,experiment=ad.experiment_id)
+                 extra['env']={**os.environ,**env}
+             monitor = subprocess.Popen(_command(args, 'monitor')+['--owner-pid', str(os.getpid()), '--nonce', nonce], cwd=args.root,**extra)
+             def stop(signum, frame):
+@@ -289,7 +288,7 @@
+ 
+ def monitor(args):
+     resources.bind_parent_death(args.owner_pid)
+-    _, job = _admitted(args)
++    ad, job = _admitted(args)
+     if job['kind']=='compact_resource':_resource_limit_receipt(args,job,'monitor')
+     scope=_physical_scope(args,job)
+     with metadata_scope(scope):
+@@ -302,13 +301,15 @@
+         owner = {**launch_record, 'monitor_pid': os.getpid(),
+                  'monitor_start_ticks': Path('/proc/self/stat').read_text().rsplit(')', 1)[1].split()[19]}
+         _immutable(base/'owner.json', owner)
++        budget=job['resources'].get('storage_budget')
++        identity_join={'experiment':ad.experiment_id} if type(budget) is dict and budget.get('schema_version')==2 else {}
+         if 'native_unit_limits' in job['resources']:
+             guard_policy={k:v for k,v in job['resources'].items() if k!='native_unit_limits'}
+             result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',
+-                memory_swap_max_bytes=0, owner_identity=owner, native_unit_limits=job['resources']['native_unit_limits'], **guard_policy)
++                memory_swap_max_bytes=0, owner_identity=owner, native_unit_limits=job['resources']['native_unit_limits'], **identity_join, **guard_policy)
+         else:
+             result = resources.guarded_run(_command(args, 'worker'), cwd=args.root, receipt_dir=base/'guard',
+-                memory_swap_max_bytes=0, owner_identity=owner, **job['resources'])
++                memory_swap_max_bytes=0, owner_identity=owner, **identity_join, **job['resources'])
+         signal.signal(signal.SIGTERM, signal.SIG_IGN)
+         signal.signal(signal.SIGINT, signal.SIG_IGN)
+         if scope is not None:scope.tail=True

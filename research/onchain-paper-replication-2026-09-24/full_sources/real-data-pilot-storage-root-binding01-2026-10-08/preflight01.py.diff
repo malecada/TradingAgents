@@ -1,0 +1,11 @@
+--- accepted21/preflight01.py
++++ source-only/preflight01.py
+@@ -246,7 +246,7 @@
+     budget=job['resources']['storage_budget']
+     need(budget['schema_version']==2 and job['resources']==EXPECTED_RESOURCES,'fixed original resource envelope differs')
+     prepared=prepared_inputs(binding,release,admission,job)
+-    storage=WritableUnion(budget,ROOT).check()
++    storage=WritableUnion(budget,ROOT,experiment=admission.experiment_id).check()
+     scopes=projected(prepared['inventory'],storage,budget['limits'])
+     startup=scopes['new_allocated_growth_bytes']+job['resources']['disk_floor_bytes']
+     free=shutil.disk_usage(ROOT).free; available=mem_available()

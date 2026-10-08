@@ -1,0 +1,75 @@
+{
+  "status": "WITHHELD",
+  "source_hashes": {
+    "baseline.py": "8cc3e4a0935ae7d8897e8af0c418973e25d396259e4f1db1183ac236395da4e5",
+    "matching_annealing.py": "8d037aeca5be5537d707c28084accc3e9b4af07a507c08e59c4ab1570f7ee29c"
+  },
+  "numpy": "2.3.0",
+  "results": {
+    "warning_error": [
+      {
+        "implementation": "baseline",
+        "error": "RuntimeWarning: underflow encountered in scalar multiply",
+        "cursor": 3,
+        "safe": false,
+        "Q_bytes": "0000000000000040000000000000f83f01000000000000000100000000000000"
+      },
+      {
+        "implementation": "candidate",
+        "error": "RuntimeWarning: underflow encountered in multiply",
+        "cursor": 0,
+        "safe": false,
+        "Q_bytes": "000000000000f03f000000000000f03f01000000000000000100000000000000"
+      }
+    ],
+    "call_error": [
+      {
+        "implementation": "baseline",
+        "error": "RuntimeError: errstate callback",
+        "cursor": 3,
+        "safe": false,
+        "Q_bytes": "0000000000000040000000000000f83f01000000000000000100000000000000"
+      },
+      {
+        "implementation": "candidate",
+        "error": "RuntimeError: errstate callback",
+        "cursor": 0,
+        "safe": false,
+        "Q_bytes": "000000000000f03f000000000000f03f01000000000000000100000000000000"
+      }
+    ],
+    "log_error": [
+      {
+        "implementation": "baseline",
+        "error": "RuntimeError: errstate logger",
+        "cursor": 3,
+        "safe": false,
+        "Q_bytes": "0000000000000040000000000000f83f01000000000000000100000000000000"
+      },
+      {
+        "implementation": "candidate",
+        "error": "RuntimeError: errstate logger",
+        "cursor": 0,
+        "safe": false,
+        "Q_bytes": "000000000000f03f000000000000f03f01000000000000000100000000000000"
+      }
+    ],
+    "raise_fallback": [
+      {
+        "implementation": "baseline",
+        "error": "FloatingPointError: underflow encountered in scalar multiply",
+        "cursor": 3,
+        "safe": false,
+        "Q_bytes": "0000000000000040000000000000f83f01000000000000000100000000000000"
+      },
+      {
+        "implementation": "candidate",
+        "error": "FloatingPointError: underflow encountered in scalar multiply",
+        "cursor": 3,
+        "safe": false,
+        "Q_bytes": "0000000000000040000000000000f83f01000000000000000100000000000000"
+      }
+    ]
+  },
+  "scope": "finite synthetic valid AttributedGraph states reached through actual create/advance; no empirical data"
+}

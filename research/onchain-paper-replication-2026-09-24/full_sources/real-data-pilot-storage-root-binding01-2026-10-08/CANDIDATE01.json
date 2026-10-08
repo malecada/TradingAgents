@@ -1,0 +1,35 @@
+{
+  "files": {
+    "preflight01.py": {
+      "baseline": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final21-2026-10-08/preflight01.py",
+        "sha256": "b3e729fa71d22e61b5eec39067e642dcacb748ad83dab46ae1d3f0c1f14be5e9"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-root-binding01-2026-10-08/preflight01.py",
+        "sha256": "6316eeccaf254e4fbec24e848f33c7403a745babcd4dfe7c330d4eb97b373f9f"
+      },
+      "edit_count": 1,
+      "literal_inverse_exact": true
+    },
+    "root_io.py": {
+      "baseline": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final21-2026-10-08/root_io.py",
+        "sha256": "d8155b6e900c492114c63c09ae8965f58f94794d4876442cbbb9318ea8338853"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-root-binding01-2026-10-08/root_io.py",
+        "sha256": "e9a7009d5b6b9dc366c11f2227a8c76e0a080adccb2fc364a14427b9c31f4daf"
+      },
+      "edit_count": 8,
+      "literal_inverse_exact": true
+    }
+  },
+  "limitations": [
+    "Independent changed-seam review pending.",
+    "Fixed preflight name, gate, resources and allowance remain entry-specific and unchanged.",
+    "Source acceptance alone never grants execution."
+  ],
+  "scope": "Reuse original capture, cleanup, guards and fixed per-entry preflight. Root launch uses genuine admitted identity; storage scans receive the same explicit identity. No empirical read, registration, budget, source integration or launch.",
+  "status": "SOURCE_ONLY_NOT_INSTALLED_NOT_ENTRY_RELEASED"
+}

@@ -1,0 +1,59 @@
+--- accepted21/root_io.py
++++ source-only/root_io.py
+@@ -10,7 +10,6 @@
+ import os
+ import subprocess
+ 
+-EXPERIMENT = 'eth-paper-real-data-end-to-end-resource-20261008-21'
+ PREFIX = 'research_artifacts/onchain-paper-replication-2026-09-24'
+ 
+ 
+@@ -75,9 +74,9 @@
+     from tradingagents.research.onchain_replication.real_pilot_storage import WritableUnion
+     from tradingagents.research.onchain_replication.provenance import file_hash
+     root = Path(args.root)
+-    if args.experiment != EXPERIMENT or not io['outer_log_handles_closed'] or not io['supervisor_reaped']:
++    if not io['outer_log_handles_closed'] or not io['supervisor_reaped']:
+         raise ValueError('Fixed pilot actual process/log closure is missing')
+-    base = root/PREFIX/'runs'/EXPERIMENT
++    base = root/PREFIX/'runs'/args.experiment
+     paths = {key:base/name for key,name in (
+         ('launch','launch.json'),('owner','owner.json'),('guard','guard/final.json'))}
+     bodies = {}
+@@ -86,7 +85,7 @@
+             raise ValueError('Final bounded native metadata differs')
+         bodies[key] = json.loads(path.read_bytes())
+     launch, owner, guard = (bodies[key] for key in ('launch','owner','guard'))
+-    if launch['supervisor_pid'] != io['supervisor_pid'] or launch['source_commit'] != args.source or launch['experiment'] != EXPERIMENT:
++    if launch['supervisor_pid'] != io['supervisor_pid'] or launch['source_commit'] != args.source or launch['experiment'] != args.experiment:
+         raise ValueError('Actual reaped supervisor does not match original launch')
+     if owner['supervisor_pid'] != launch['supervisor_pid'] or owner['nonce'] != launch['nonce']:
+         raise ValueError('Original monitor owner differs')
+@@ -102,9 +101,9 @@
+     current_unit = dict(line.split('=',1) for line in current.stdout.splitlines() if '=' in line)
+     if current_unit.get('ActiveState') not in ('inactive','failed') or current_unit.get('MainPID') != '0' or current_unit.get('ControlGroup') != '':
+         raise ValueError('Native unit is still active or closure is unavailable')
+-    observation = WritableUnion(job['resources']['storage_budget'],root).check()
++    observation = WritableUnion(job['resources']['storage_budget'],root,experiment=args.experiment).check()
+     return {'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+-        'experiment':EXPERIMENT,'source':args.source,
++        'experiment':args.experiment,'source':args.source,
+         'original_metadata_sha256':{key:file_hash(path) for key,path in paths.items()},
+         'actual_current_unit_properties':current_unit,'actual_current_cgroup_absent':True,
+         'outer_log_handles_closed':True,'supervisor_reaped':True,
+@@ -115,11 +114,11 @@
+ def launch_checked(args, preflight, here):
+     from tradingagents.research.onchain_replication.job import _admitted, _command
+     from tradingagents.research.lifecycle import _immutable
+-    if args.experiment != EXPERIMENT:
+-        raise ValueError('This Root IO seam admits only the fixed unused pilot')
+-    _, job = _admitted(args)
++    admission, job = _admitted(args)
++    if args.experiment != admission.experiment_id:
++        raise ValueError('Root IO experiment differs from genuine admission')
+     root = Path(args.root)
+-    logs = root/PREFIX/'pilot-parent'/EXPERIMENT
++    logs = root/PREFIX/'pilot-parent'/admission.experiment_id
+     if logs.parent.resolve(strict=True) != logs.parent:
+         raise ValueError('Existing pilot-parent domain must be canonical')
+     _immutable(here/'launch-attempt01.json',preflight)

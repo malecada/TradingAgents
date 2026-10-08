@@ -1,0 +1,41 @@
+test_actual_interval_late_source_revocation_and_fatal (__main__.BoundaryTests.test_actual_interval_late_source_revocation_and_fatal) ... ok
+test_actual_value_accepts_and_is_independent (__main__.BoundaryTests.test_actual_value_accepts_and_is_independent) ... FAIL
+test_call_sites_and_unchanged_guards (__main__.BoundaryTests.test_call_sites_and_unchanged_guards) ... FAIL
+test_late_value_execution_and_original_mutations (__main__.BoundaryTests.test_late_value_execution_and_original_mutations) ... FAIL
+test_no_neural (__main__.BoundaryTests.test_no_neural) ... ok
+
+======================================================================
+FAIL: test_actual_value_accepts_and_is_independent (__main__.BoundaryTests.test_actual_value_accepts_and_is_independent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-same-boundary-reuse01-2026-10-08/test_boundary.py", line 22, in test_actual_value_accepts_and_is_independent
+    fn=actual_value_validator();current={'identity':'current'};original={'motifs':['a','b']}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-same-boundary-reuse01-2026-10-08/test_boundary.py", line 16, in actual_value_validator
+    assert len(nodes)==1,'same-boundary returned value validator absent'
+           ^^^^^^^^^^^^^
+AssertionError: same-boundary returned value validator absent
+
+======================================================================
+FAIL: test_call_sites_and_unchanged_guards (__main__.BoundaryTests.test_call_sites_and_unchanged_guards)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-same-boundary-reuse01-2026-10-08/test_boundary.py", line 60, in test_call_sites_and_unchanged_guards
+    self.assertIn('_return_value',[a.arg for a in method.args.kwonlyargs])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '_return_value' not found in ['boundary']
+
+======================================================================
+FAIL: test_late_value_execution_and_original_mutations (__main__.BoundaryTests.test_late_value_execution_and_original_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-same-boundary-reuse01-2026-10-08/test_boundary.py", line 29, in test_late_value_execution_and_original_mutations
+    fn=actual_value_validator();current={'identity':'current'};original={'motifs':['a','b']}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-same-boundary-reuse01-2026-10-08/test_boundary.py", line 16, in actual_value_validator
+    assert len(nodes)==1,'same-boundary returned value validator absent'
+           ^^^^^^^^^^^^^
+AssertionError: same-boundary returned value validator absent
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.023s
+
+FAILED (failures=3)

@@ -1,0 +1,48 @@
+{
+  "status": "uninstalled_synthetic_candidate",
+  "target": "tradingagents/research/onchain_replication/matching_annealing.py",
+  "baseline_sha256": "8cc3e4a0935ae7d8897e8af0c418973e25d396259e4f1db1183ac236395da4e5",
+  "candidate_sha256": "8d037aeca5be5537d707c28084accc3e9b4af07a507c08e59c4ab1570f7ee29c",
+  "inverse_target_sha256": "8cc3e4a0935ae7d8897e8af0c418973e25d396259e4f1db1183ac236395da4e5",
+  "chunk_edges": 1024,
+  "incremental_scratch_reservation_bytes": 262144,
+  "scratch_scope": "bounded numeric arrays and small Python/ufunc overhead; excludes existing validation/normalization and interpreter baseline; outer measured resource admission still required",
+  "files": {
+    "baseline.py": {
+      "sha256": "8cc3e4a0935ae7d8897e8af0c418973e25d396259e4f1db1183ac236395da4e5",
+      "bytes": 11855
+    },
+    "matching_annealing.py": {
+      "sha256": "8d037aeca5be5537d707c28084accc3e9b4af07a507c08e59c4ab1570f7ee29c",
+      "bytes": 13571
+    },
+    "candidate.patch": {
+      "sha256": "aae781e671cc2280d0c487911cf8234545b293e403e6b411d8c4c76f32cc6e16",
+      "bytes": 2381
+    },
+    "inverse.patch": {
+      "sha256": "02c2188c930dcd86ad89828a9b923451c531aa2ce0c89668d576f067292fa6f4",
+      "bytes": 2381
+    },
+    "verify.py": {
+      "sha256": "d62aec4b62af58d04d11737a2a784dea68d9310075669513410409ae739e4a58",
+      "bytes": 4725
+    },
+    "verify02.py": {
+      "sha256": "b9d32b5d3a99c0098ca29506c286f8760edd0eb97961cc71cd4c70c1205e6843",
+      "bytes": 1575
+    },
+    "TEST01.log": {
+      "sha256": "8268c6fdebf4b6b2b0aa839ae50f757d1fb0e0d8cd38ef6ccbc1599b66f7e359",
+      "bytes": 725
+    },
+    "TEST02.log": {
+      "sha256": "700fba391252d873eb35b2944dce1d1453abbabdd1a5ccdb64ea79aa69c66c8d",
+      "bytes": 156
+    },
+    "RESULT01.json": {
+      "sha256": "8268c6fdebf4b6b2b0aa839ae50f757d1fb0e0d8cd38ef6ccbc1599b66f7e359",
+      "bytes": 725
+    }
+  }
+}

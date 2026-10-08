@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "boundary_checks": 31,
+  "cases": [
+    {
+      "case": "under-raise",
+      "exception": "FloatingPointError",
+      "cursor": 3,
+      "safe": false
+    },
+    {
+      "case": "under-call",
+      "exception": "PolicyFailure",
+      "cursor": 3,
+      "safe": false
+    },
+    {
+      "case": "under-log",
+      "exception": "PolicyFailure",
+      "cursor": 3,
+      "safe": false
+    },
+    {
+      "case": "under-warn",
+      "exception": "RuntimeWarning",
+      "cursor": 3,
+      "safe": false
+    },
+    {
+      "case": "under-print",
+      "exception": null,
+      "cursor": 0,
+      "safe": true
+    },
+    {
+      "case": "under-ignore",
+      "exception": null,
+      "cursor": 0,
+      "safe": true
+    },
+    {
+      "case": "overflow-warning-error",
+      "exception": "RuntimeWarning",
+      "cursor": 0,
+      "safe": false
+    },
+    {
+      "case": "overflow-raise",
+      "exception": "FloatingPointError",
+      "cursor": 0,
+      "safe": false
+    },
+    {
+      "case": "bounded-warning-error",
+      "exception": null,
+      "cursor": 0,
+      "safe": true
+    },
+    {
+      "case": "large-finite-fallback",
+      "exception": null,
+      "cursor": 0,
+      "safe": true
+    },
+    {
+      "case": "agreement-overflow-prefix",
+      "exception": "OverflowError",
+      "cursor": 3,
+      "safe": false
+    }
+  ],
+  "timing_seconds": {
+    "baseline": [
+      0.032777904998511076,
+      0.03341917999932775,
+      0.03237043899935088,
+      0.03247642799760797,
+      0.030812613000307465
+    ],
+    "candidate": [
+      0.016838080999150407,
+      0.016982782999548363,
+      0.017235377003089525,
+      0.017278037001233315,
+      0.01699729100073455
+    ]
+  },
+  "median_synthetic_edge_speedup": 1.9106825903142142
+}

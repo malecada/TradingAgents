@@ -1,0 +1,39 @@
+{
+  "checks": [
+    "exact_retention",
+    "exact_diagnostic",
+    "frozen_main_baseline",
+    "accepted_startup_baseline",
+    "one_private_body_only",
+    "unchanged___init__",
+    "unchanged__state",
+    "unchanged__refresh",
+    "unchanged__authority",
+    "unchanged__write",
+    "unchanged__integrity",
+    "unchanged__reserve",
+    "unchanged__member",
+    "unchanged_begin",
+    "unchanged__inputs",
+    "unchanged__inputs_bounded",
+    "unchanged__count",
+    "unchanged_before_pair",
+    "unchanged_checkpoint",
+    "unchanged_complete",
+    "unchanged_finish_stage",
+    "unchanged__finish_stage",
+    "unchanged_fail",
+    "original_body_exact_ast",
+    "whole_retention_inverse",
+    "diagnostic_one_constant_inverse",
+    "unchanged_original_check_order",
+    "original_failure_identity__authority",
+    "original_failure_identity__integrity"
+  ],
+  "decision": "accepted-source-only",
+  "scope": "Different-author exact module inverse and actual isolated live-method trace/error identity checks. No real Controller/Matcher/Owner/Run, data arrays or model execution. Existing matcher assigns _diagnostic before Controller construction; existing diagnostic measure semantics and startup cap proof reused. Inclusive retention timing overlaps lease and does not measure pure I/O. No optimization, runtime attribution, current integration or entry release.",
+  "sources": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retention-timing01-2026-10-08/real_pilot_partial_progress.py": "f6e922082c4ab22196a1be118174bdf03f10ae8ee3ae2b58e18842ef7f163e7f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retention-timing01-2026-10-08/stage_retention.py": "7312829458f7495638cf07f56b1464ca08b6ce28357d7557372821eddef2dac8"
+  }
+}

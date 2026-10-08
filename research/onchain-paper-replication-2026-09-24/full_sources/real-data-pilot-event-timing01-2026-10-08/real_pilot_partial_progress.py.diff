@@ -1,0 +1,11 @@
+--- accepted/real_pilot_partial_progress.py
++++ timed/real_pilot_partial_progress.py
+@@ -142,7 +142,7 @@
+ 
+ 
+ DIAGNOSTIC_PHASES = ('lease', 'pair_validation', 'state_create',
+-    'advance_annealing_including_rank_transition', 'advance_hardening', 'score_only', 'retention_live')
++    'advance_annealing_including_rank_transition', 'advance_hardening', 'score_only', 'retention_live', 'event_publication')
+ DIAGNOSTIC_MAX_BYTES = 8192
+ STARTUP_ONCE = ('archive_preflight','archive_context','bind','import_preparation',
+                 'import_attach','import_execution','lease_activation')

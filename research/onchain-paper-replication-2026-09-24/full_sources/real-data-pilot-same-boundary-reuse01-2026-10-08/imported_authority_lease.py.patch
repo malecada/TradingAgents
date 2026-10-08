@@ -1,0 +1,86 @@
+--- a/tradingagents/research/onchain_replication/imported_authority_lease.py
++++ b/tradingagents/research/onchain_replication/imported_authority_lease.py
+@@ -72,6 +72,18 @@
+                 require(type(wrapped) is types.FunctionType and fn.__code__ is contextlib.contextmanager(wrapped).__code__ and fn.__globals__ is vars(contextlib) and len(fn.__closure__ or ())==1 and fn.__closure__[0].cell_contents is wrapped,'contextmanager changed')
+             else:require(code.co_filename==str(p) and any(code==candidate for candidate in codes),'loaded code not bound to authenticated source: '+label)
+ 
++def _checked_value(raw,baseline,current,current_pin,original):
++    """Callback-free metadata rejoin; grants no authority by itself."""
++    from .provenance import canonical_bytes
++    require(type(raw) is bytes and raw==baseline,'same-boundary value changed')
++    value=json.loads(raw)
++    require(type(value) is dict and {'current','original'}<=set(value),'same-boundary result schema differs')
++    require(canonical_bytes(current)==current_pin==canonical_bytes(value['current']),
++            'same-boundary execution metadata changed')
++    require(canonical_bytes(original)==canonical_bytes(value['original']),
++            'same-boundary original metadata changed')
++    return value
++
+ _TOKEN=object()
+ class Lease:
+     def __init__(self,token,execution,selected):
+@@ -105,9 +117,11 @@
+         require(current==self.loaded,'loaded module/function identity changed')
+     def _full(self):
+         from .provenance import canonical_bytes
+-        self._identity();require(canonical_bytes(self.execution.check())==self.value,'full imported baseline differs')
++        self._identity();value=canonical_bytes(self.execution.check())
++        require(value==self.value,'full imported baseline differs')
+         _authenticate_loaded(self.loaded,self.sources,self.run.admission.root)
+         if self.target is not None:self.target.final(full_graph=False)
++        return value
+     def _live(self):
+         from . import compact_owner
+         self._identity();active=self.owner.active
+@@ -115,13 +129,35 @@
+         else:
+             require(type(active) is compact_owner.Stage,'actual active MCM stage required');active.lease()
+         compact_owner.verify_current(self.owner, sampled_archive_evidence=True)
+-    def check(self,*,boundary=False):
++    def check(self,*,boundary=False,_return_value=False):
+         from . import compact_owner
+         try:
++            require(type(_return_value) is bool and (not _return_value or boundary is True),
++                    'checked value requires explicit full boundary')
+             self._identity()
+             if self.target is not None:self.target._pins()
+-            self.scheduler.validate(self._full,self._finger,self._live,boundary=boundary)
++            # Capture only this invocation's actual full-check result. Never
++            # expose a previous interval's value on a sampled inner callback.
++            baseline=self.value;checked=[]
++            def full():checked.append(self._full())
++            self.scheduler.validate(full if _return_value else self._full,self._finger,self._live,boundary=boundary)
+             self._identity()
++            if _return_value:
++                require(len(checked)==1 and self.value==baseline,'same-boundary result missing or baseline changed')
++                # Scheduler callbacks may follow _full. Rejoin genuine authority,
++                # original metadata and source fingerprints after those callbacks.
++                now=self.scheduler.now()
++                require(self.scheduler.full is not None and
++                        (now-self.scheduler.full)*1000<=self.scheduler.policy['max_stale_ms'],
++                        'same-boundary value became stale')
++                # No clock/live callback after the final evidence rejoin.
++                compact_owner.verify_current(self.owner)
++                self.stage.integrity()
++                original=self.execution._materialized._integrity()
++                self._finger();self._identity()
++                require(self.value==baseline,'same-boundary baseline changed after callbacks')
++                return _checked_value(checked[0],baseline,self.execution._execution,
++                                      self.execution._execution_pin,original)
+         except BaseException:self.closed=True;self.scheduler.closed=True;raise
+ 
+ def activate(execution,input_name):
+@@ -135,11 +171,11 @@
+     contract=Lease(_TOKEN,execution,selected);execution._sampled_authority_lease=contract
+     return contract
+ 
+-def check(execution,*,boundary=False):
++def check(execution,*,boundary=False,_return_value=False):
+     contract=getattr(execution,'_sampled_authority_lease',None)
+     if contract is None:return execution.check()
+     require(type(contract) is Lease and contract.execution is execution,'typed original interval required')
+-    return contract.check(boundary=boundary)
++    return contract.check(boundary=boundary,_return_value=_return_value)
+ 
+ 
+ def target_lease(target,*,boundary=False):

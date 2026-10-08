@@ -1,0 +1,39 @@
+--- baseline/build_inputs04.py
++++ candidate/build_inputs04.py
+@@ -1,4 +1,5 @@
+ """Metadata-only DRAFT preparation. Never creates authority or reads numeric bodies."""
++import re
+ import argparse,copy,hashlib,json,os,stat,struct
+ from datetime import datetime,timedelta,timezone
+ from pathlib import Path
+@@ -15,6 +16,11 @@
+ def stamp(d):return d.isoformat().replace('+00:00','Z')
+ DECISIONS=[stamp(datetime(2022,6,7,tzinfo=timezone.utc)+timedelta(days=i)) for i in range(16)]
+ WEEKS=[stamp(datetime(2022,5,2,tzinfo=timezone.utc)+timedelta(days=7*i)) for i in range(7)]
++def experiment_name(value):
++    if type(value) is not str or re.fullmatch(r'eth-paper-real-data-end-to-end-resource-[0-9]{8}-[1-9][0-9]{0,5}',value) is None:
++        raise ValueError('canonical bounded real ETH pilot experiment required')
++    return value
++
+ def need(ok,message):
+     if not ok:raise ValueError(message)
+ def sha(raw):return hashlib.sha256(raw).hexdigest()
+@@ -122,7 +128,8 @@
+         functions['check_typed_allowances'](value,kinds);result[week]=value
+     return result
+ 
+-def build(root,spec):
++def build(root,spec,*,experiment='eth-paper-real-data-end-to-end-resource-20261008-21'):
++    experiment=experiment_name(experiment)
+     need(set(spec)=={'graphs','references','template_roles','typed_input_role','typed_allocations','physical_store','transport_limits'},'exact builder metadata specification required')
+     root=Path(root).resolve();g=graphs(root,spec['graphs']) # missing genuine graph fails before template/numeric access
+     refs=copy.deepcopy(spec['references'])
+@@ -153,7 +160,7 @@
+     output.update(schema_version=2,payload_archive_input=typed_role);need(output['backend']==BACKEND,'original output backend differs')
+     max_matrix=max(v['rows']*32*4 for v in g.values());need(output['max_artifact_bytes']>=max_matrix+2*8192 and output['max_workflow_output_bytes']>=7*(output['max_artifact_bytes']+8192),'full original output reservation insufficient')
+     resource=job['resources'];need(resource['native_unit_limits']['file_size_bytes']>=max(max_matrix,LIMIT),'finite native cap must cover original matrix and chunks')
+-    budget=resource['storage_budget'];limits=budget['limits'];experiment='eth-paper-real-data-end-to-end-resource-20261008-21'
++    budget=resource['storage_budget'];limits=budget['limits']
+     need(budget['authority_root']==str(root) and budget['schema_version']==2 and budget['kind']=='real-pilot-writable-union' and budget['experiment']==experiment and budget['roots']==[str(root/'research_artifacts'),str(root/'research_runs'/experiment)] and budget['shared_files']==[str(root/'research_runs/.lock')],'exact common writable union required')
+     need(resource['disk_floor_bytes']==typed['local_free_floor_bytes']==archive['local_free_floor_bytes'],'one physical-store floor required')
+     store=spec['physical_store'];need(set(store)=={'baseline_evidence','baseline_allocated_bytes','baseline_logical_bytes','reserved_growth_bytes','reserved_control_bytes','retained_diagnostic_bytes','caller_scratch_bytes','allocation_overhead_bytes','typed_attempt_metadata_bytes','remaining_control_inventory','additional_scratch_bytes'},'explicit retained local store components required');ref_path(root,store['baseline_evidence'])

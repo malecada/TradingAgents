@@ -1,0 +1,11 @@
+--- accepted/stage_retention.py
++++ timed/stage_retention.py
+@@ -337,7 +337,7 @@
+                 'store':obj.root.name,'json_event':eventname,'json_sha256':sha,'expected':thaw(value)}
+             artifact=self._write(f'bridges/progress-{event:012d}.json',bridge)
+             expected=self.matcher._expected_event(3,artifact=artifact)
+-            self.matcher.log.progress(artifact);self.current_frame=expected;self._refresh();self.live()
++            self.matcher._timed('event_publication',self.matcher.log.progress,artifact);self.current_frame=expected;self._refresh();self.live()
+             return store.EventRef(self.root/eventname,sha)
+         result=obj.checkpoint(state,a,b,self.matcher.config,publish_progress=publish)
+         self.live();return result

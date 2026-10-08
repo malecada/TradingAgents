@@ -1,0 +1,56 @@
+{
+  "decision": "accepted-source-only-not-fresh-entry-release",
+  "files": {
+    "preflight01.py": {
+      "baseline": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final21-2026-10-08/preflight01.py",
+        "sha256": "b3e729fa71d22e61b5eec39067e642dcacb748ad83dab46ae1d3f0c1f14be5e9"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-root-binding01-2026-10-08/preflight01.py",
+        "sha256": "6316eeccaf254e4fbec24e848f33c7403a745babcd4dfe7c330d4eb97b373f9f"
+      },
+      "edit_count": 1,
+      "literal_inverse_exact": true
+    },
+    "root_io.py": {
+      "baseline": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final21-2026-10-08/root_io.py",
+        "sha256": "d8155b6e900c492114c63c09ae8965f58f94794d4876442cbbb9318ea8338853"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-root-binding01-2026-10-08/root_io.py",
+        "sha256": "e9a7009d5b6b9dc366c11f2227a8c76e0a080adccb2fc364a14427b9c31f4daf"
+      },
+      "edit_count": 8,
+      "literal_inverse_exact": true
+    }
+  },
+  "checks": [
+    "preflight01.py_candidate_hash",
+    "preflight01.py_baseline_hash",
+    "root_io.py_candidate_hash",
+    "root_io.py_baseline_hash",
+    "root_eight_edit_full_inverse",
+    "preflight_single_edit_inverse",
+    "capture_AST_unchanged",
+    "mismatch_refuses",
+    "mismatch_before_immutable_and_capture",
+    "capture_return",
+    "attempt_then_capture",
+    "capture_command_and_log_placement",
+    "all_final_paths_selected",
+    "explicit_scan_identity",
+    "final_launch_identity_mismatch_refuses"
+  ],
+  "reused_reviews": [
+    "storage identity3cb5b6f578f5d9467e8c6397bc5d5b726f3344deb1422562d76d9ed05f9ba696",
+    "job bindingcfd679f6c4a52193810c24b6a8e8cff008fbc513b692e63ca034d5f3c625586c"
+  ],
+  "limitations": [
+    "Metadata-only AST doubles; no actual admission, Owner, launch, guard/unit query, subprocess or empirical input read.",
+    "Full inverse preserves existing capture/cleanup/unit/currentness logic; unchanged tests not rerun.",
+    "Fixed21 preflight gate/source/budget/allowance remains unchanged. Fresh metadata controls, source integration, registration/binding/release remain pending.",
+    "Generic RootIO assumes _admitted provides genuine validated identity. final_storage is terminal observation, not standalone authorization."
+  ]
+}

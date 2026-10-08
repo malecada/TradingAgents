@@ -1,0 +1,47 @@
+{
+  "files": {
+    "compact_matcher.py": {
+      "baseline": {
+        "path": "tradingagents/research/onchain_replication/compact_matcher.py",
+        "sha256": "8830ecf729ffb24af27d21e5578b6f57eb14e81f9d5dd860f15fcf1b8222a678"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-event-timing01-2026-10-08/compact_matcher.py",
+        "sha256": "f479a737b6a841c2948a4df7e1af6492fe308af6a4ece50ce4b0e3e3e8b9e42b"
+      },
+      "edit_count": 3,
+      "literal_inverse_exact": true
+    },
+    "real_pilot_partial_progress.py": {
+      "baseline": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retention-timing01-2026-10-08/real_pilot_partial_progress.py",
+        "sha256": "f6e922082c4ab22196a1be118174bdf03f10ae8ee3ae2b58e18842ef7f163e7f"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-event-timing01-2026-10-08/real_pilot_partial_progress.py",
+        "sha256": "488b713a6bee7aff1a44089ad61a25f582af357641020969a0914aabd42d4b33"
+      },
+      "edit_count": 1,
+      "literal_inverse_exact": true
+    },
+    "stage_retention.py": {
+      "baseline": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retention-timing01-2026-10-08/stage_retention.py",
+        "sha256": "7312829458f7495638cf07f56b1464ca08b6ce28357d7557372821eddef2dac8"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-event-timing01-2026-10-08/stage_retention.py",
+        "sha256": "f42dbcae040e7fda5f8250b827408cc459d0632273d2db497fde9afdeb55d5c0"
+      },
+      "edit_count": 1,
+      "literal_inverse_exact": true
+    }
+  },
+  "limitations": [
+    "No live or numerical performance measurement.",
+    "Timings overlap lease/retention measurements and cannot be added or interpreted as pure disk IO.",
+    "Independent changed-seam review and finite checkpoint capacity check pending."
+  ],
+  "scope": "One inclusive public-event timer for begin, both progress routes and complete, using the unchanged existing CompactMatcher._timed/ScoringDiagnostic.measure. Captures validation, append/readback and conditional archive sealing; separately called durability barriers and argument construction remain outside. Original arguments, ordering, output, counters, policies and 1024 stop are unchanged.",
+  "status": "SOURCE_ONLY_NOT_INSTALLED_NOT_ENTRY_RELEASED"
+}

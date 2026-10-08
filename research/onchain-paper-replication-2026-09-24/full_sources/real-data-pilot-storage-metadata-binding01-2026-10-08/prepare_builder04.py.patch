@@ -1,0 +1,44 @@
+--- baseline/prepare_builder04.py
++++ candidate/prepare_builder04.py
+@@ -1,11 +1,14 @@
+ """One concrete metadata preparation handoff; never independent self-approval."""
++import re
+ import argparse,hashlib,importlib.util,json
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent
+-PINS={
+- 'builder':('real-data-pilot-resource-input-builder03-2026-10-06/build_inputs03.py','e100a1fa2f8caaa6baf6cde85d5f50aa667ed6e04b6470d9c8368d5424748a2d'),
+- 'controls':('real-data-pilot-feature-control-inventory01-2026-10-06/controls01.py','d6b3bac4b71fc7cd6d2dfaf63d8aa395fb87e47eef5dbc2b7bd501fd385e59f3'),
+- 'residuals':('real-data-pilot-selected-feature-protocol01-2026-10-06/residuals02.py','34aeb5b492680bb804d3777e15ec4c640fe2a25517faf309563e58d265a751ac')}
++PINS={'builder': ('candidate/build_inputs04.py', 'e38aa1e9e6e98a06beff25a3c9a02eaf54788716d99812b39c65f3a7f6f47f8e'), 'controls': ('candidate/controls02.py', '5428477789aee20620f1838b5bfcc16515b2ad6b9cd0dc26b957b678de602dfc'), 'residuals': ('../real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/residuals04.py', '47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970')}
++
++def experiment_name(value):
++    if type(value) is not str or re.fullmatch(r'eth-paper-real-data-end-to-end-resource-[0-9]{8}-[1-9][0-9]{0,5}',value) is None:
++        raise ValueError('canonical bounded real ETH pilot experiment required')
++    return value
+ 
+ def need(ok,msg):
+     if not ok:raise ValueError(msg)
+@@ -21,7 +24,8 @@
+     need(all(v[k] is not None for k in keys),'absent selected protocol field')
+     return v
+ 
+-def prepare(root,draft):
++def prepare(root,draft,*,experiment='eth-paper-real-data-end-to-end-resource-20261008-21'):
++    experiment=experiment_name(experiment)
+     b=load('builder');root=Path(root).resolve()
+     need(type(draft) is dict and set(draft)=={'status','graphs','protocol'},'concrete draft fields differ')
+     need(draft['status']=='DRAFT_NOT_RELEASED','draft status differs')
+@@ -59,10 +63,10 @@
+         'baseline':{k:base[k] for k in ('logical_bytes','allocated_bytes','entries')}|{'evidence_sha256':base['evidence']['sha256']},'storage_budget':budget}
+     need(p['filesystem']['max_native_file_bytes']==native,'same registered native limit required')
+     if prefix:inventory['diagnostic']={'max_completed_pairs':1024,'active_matching_stages':1,'retained_matrix_files':1}
+-    totals=c.calculate(inventory)
++    totals=c.calculate(inventory,experiment=experiment)
+     store=totals['builder03_physical_fragment']|{'baseline_evidence':base['evidence'],'baseline_logical_bytes':base['logical_bytes'],'baseline_allocated_bytes':base['allocated_bytes']}
+     spec={k:p[k] for k in ('references','template_roles','typed_input_role','typed_allocations','transport_limits')}|{'graphs':draft['graphs'],'physical_store':store}
+-    built=b.build(root,spec)
++    built=b.build(root,spec,experiment=experiment)
+     return {'status':'DRAFT_NOT_REGISTERED_NOT_ADMITTED','builder03_spec':spec,'builder03_result':built,'inventory':totals,'residuals':r,'independent_approval':False}
+ 
+ if __name__=='__main__':

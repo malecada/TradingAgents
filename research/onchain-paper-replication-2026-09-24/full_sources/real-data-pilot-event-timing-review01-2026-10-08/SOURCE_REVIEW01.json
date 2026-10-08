@@ -1,0 +1,71 @@
+{
+  "decision": "accepted-source-only",
+  "files": {
+    "compact_matcher.py": {
+      "baseline": {
+        "path": "tradingagents/research/onchain_replication/compact_matcher.py",
+        "sha256": "8830ecf729ffb24af27d21e5578b6f57eb14e81f9d5dd860f15fcf1b8222a678"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-event-timing01-2026-10-08/compact_matcher.py",
+        "sha256": "f479a737b6a841c2948a4df7e1af6492fe308af6a4ece50ce4b0e3e3e8b9e42b"
+      },
+      "edit_count": 3,
+      "literal_inverse_exact": true
+    },
+    "real_pilot_partial_progress.py": {
+      "baseline": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retention-timing01-2026-10-08/real_pilot_partial_progress.py",
+        "sha256": "f6e922082c4ab22196a1be118174bdf03f10ae8ee3ae2b58e18842ef7f163e7f"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-event-timing01-2026-10-08/real_pilot_partial_progress.py",
+        "sha256": "488b713a6bee7aff1a44089ad61a25f582af357641020969a0914aabd42d4b33"
+      },
+      "edit_count": 1,
+      "literal_inverse_exact": true
+    },
+    "stage_retention.py": {
+      "baseline": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retention-timing01-2026-10-08/stage_retention.py",
+        "sha256": "7312829458f7495638cf07f56b1464ca08b6ce28357d7557372821eddef2dac8"
+      },
+      "candidate": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-event-timing01-2026-10-08/stage_retention.py",
+        "sha256": "f42dbcae040e7fda5f8250b827408cc459d0632273d2db497fde9afdeb55d5c0"
+      },
+      "edit_count": 1,
+      "literal_inverse_exact": true
+    }
+  },
+  "checks": [
+    "pin_compact_matcher.py",
+    "unique_self._timed('event_publication',self.log.progress,result)",
+    "unique_self._timed('event_publication',self.log.begin,cache_key(purpose),pair.digest(identity))",
+    "unique_self._timed('event_publication',self.log.complete,float(result.score),result.convergence,result.iterations)",
+    "inverse_compact_matcher.py",
+    "pin_stage_retention.py",
+    "unique_self.matcher._timed('event_publication',self.matcher.log.progress,artifact)",
+    "inverse_stage_retention.py",
+    "pin_real_pilot_partial_progress.py",
+    "unique_'retention_live', 'event_publication')",
+    "inverse_real_pilot_partial_progress.py",
+    "return_True",
+    "arguments_True",
+    "exception_identity_True",
+    "return_False",
+    "arguments_False",
+    "exception_identity_False",
+    "both_success_failure_counted",
+    "all28_startup",
+    "checkpoint_fits8192",
+    "bound_method_1",
+    "bound_method_2",
+    "bound_method_3",
+    "bound_method_4",
+    "exactly_four_sites"
+  ],
+  "checkpoint_stress_bytes": 5881,
+  "scope": "Exact full inverses preserve numeric/counter/stop logic and unchanged _timed/measure. Actual stdlib diagnostic exercised successful and failed callbacks,28startup records,long float formatting and signed63bit counters. Synthetic hashes/counters only; no authority, empirical data, scientific imports or subprocess.",
+  "qualification": "Inclusive public event validation/append/readback/conditional chunk transport; separate barriers and argument construction excluded. Overlapping timing phases cannot be added or called pure IO. No measured speedup or fresh entry release."
+}

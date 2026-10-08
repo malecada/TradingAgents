@@ -1,0 +1,17 @@
+{
+  "command": [
+    "timeout",
+    "--kill-after=5s",
+    "120s",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/research/onchain_replication/test_compact_mcm.py::test_actual_required_graph_mcm_matches_scalar_and_saved_scores"
+  ],
+  "exit_code": 0,
+  "scope": "One isolated existing synthetic complete MCM/scalar/saved matrix comparison on integrated source. Prior four-test wrapper timed out; other matrices not repeated. No actual scientific inputs or empirical launch."
+}

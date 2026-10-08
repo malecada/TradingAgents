@@ -1,0 +1,56 @@
+{
+  "status": "uninstalled_candidate_independent_review_pending",
+  "supersedes_candidate01_withheld_policy_seam": true,
+  "target": "tradingagents/research/onchain_replication/matching_annealing.py",
+  "baseline_sha256": "8cc3e4a0935ae7d8897e8af0c418973e25d396259e4f1db1183ac236395da4e5",
+  "candidate_sha256": "63555980e79fc10fc1a5093b75c21ec3015c79f3cf6d39c4bc90c1f27125ce2a",
+  "inverse_target_sha256": "8cc3e4a0935ae7d8897e8af0c418973e25d396259e4f1db1183ac236395da4e5",
+  "chunk_edges": 1024,
+  "incremental_scratch_reservation_bytes": 262144,
+  "files": {
+    "TEST01.log": {
+      "sha256": "48e69ec2e8da53c623839933fa8e26daf27ae9e978c9d4c50d5ce6f262910456",
+      "bytes": 1867
+    },
+    "matching_annealing.py": {
+      "sha256": "63555980e79fc10fc1a5093b75c21ec3015c79f3cf6d39c4bc90c1f27125ce2a",
+      "bytes": 14159
+    },
+    "verify.py": {
+      "sha256": "e6ba6751e4fcb66926070c8021f406401b28215c2e4d12c673cfc13a833b5011",
+      "bytes": 4166
+    },
+    "verify02.py": {
+      "sha256": "2f091a98b16e0627419835e848c4af603512d59b0444c7377f56183673cb292e",
+      "bytes": 744
+    },
+    "inverse.patch": {
+      "sha256": "7ff8ba13f5410f1d0c0a31f29c090b33369b758b7775625e7f82accb7963de68",
+      "bytes": 2976
+    },
+    "RESULT01.json": {
+      "sha256": "748ba8fbb6266588579c7880926c39c6c13caff00d21b4cdb319bf34047c398f",
+      "bytes": 1767
+    },
+    "TEST02.log": {
+      "sha256": "d3e9db9b02884159ddad133a5f8624e575eb51135c8a16e2b0a57e74d802ce6e",
+      "bytes": 610
+    },
+    "candidate.patch": {
+      "sha256": "8b448484b92ee0daa806caa54ef37d61934021595806e9bd9974bc21a585e543",
+      "bytes": 2976
+    },
+    "REPORT.md": {
+      "sha256": "237a648897824cfdeab1d3502863ceacc400635615aebd1d6c4cfb377f02a01c",
+      "bytes": 3559
+    },
+    "baseline.py": {
+      "sha256": "8cc3e4a0935ae7d8897e8af0c418973e25d396259e4f1db1183ac236395da4e5",
+      "bytes": 11855
+    }
+  },
+  "test_helper_dependency": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-exact-annealing-acceleration01-2026-10-08/verify.py",
+    "sha256": "d62aec4b62af58d04d11737a2a784dea68d9310075669513410409ae739e4a58"
+  }
+}

@@ -1,0 +1,51 @@
+--- baseline/resources.py
++++ candidate/resources.py
+@@ -185,7 +185,7 @@
+     result={'PYTHONPATH':str(root),'TMPDIR':str(base/'tmp'),'XDG_CACHE_HOME':str(base/'cache'),'TORCH_HOME':str(base/'torch'),'MPLCONFIGDIR':str(base/'matplotlib'),'HF_HOME':str(base/'hf'),'TORCH_EXTENSIONS_DIR':str(base/'torch-extensions'),'PYTHONDONTWRITEBYTECODE':'1','PYTEST_DISABLE_PLUGIN_AUTOLOAD':'1','OPENBLAS_NUM_THREADS':'2','OMP_NUM_THREADS':'2','MKL_NUM_THREADS':'2','NUMEXPR_NUM_THREADS':'2'}
+     if storage_budget is not None and storage_budget.get('schema_version')==2:
+         from tradingagents.research.onchain_replication.real_pilot_storage import validate,environment
+-        validate(storage_budget,root);return environment(root,result)
++        validate(storage_budget,root,experiment=storage_budget.get('experiment'));return environment(root,result)
+     return result
+ 
+ 
+@@ -386,7 +386,7 @@
+ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
+                 memory_high_bytes=5 * GIB, memory_swap_max_bytes=0, reserve_bytes=3 * GIB,
+                 start_reserve_bytes=None, sample_seconds=.25,
+-                lease_seconds=15., wait_seconds=30., disk_paths=(), disk_floor_bytes=20*GIB, wall_seconds=28800., owner_identity=None, storage_budget=None, physical_policy=None, native_unit_limits=None):
++                lease_seconds=15., wait_seconds=30., disk_paths=(), disk_floor_bytes=20*GIB, wall_seconds=28800., owner_identity=None, storage_budget=None, physical_policy=None, native_unit_limits=None, experiment=None):
+     """Run one command, or fail closed; return a durable resource receipt.
+ 
+     No retry occurs. Startup waits at most wait_seconds for MemAvailable >=
+@@ -425,9 +425,10 @@
+     if storage_budget is not None:
+         from .workflow_storage import StorageWatch
+         if type(storage_budget) is dict and storage_budget.get('schema_version')==2:
+-            from tradingagents.research.onchain_replication.real_pilot_storage import WritableUnion,EXPERIMENT
+-            if native_unit_limits is None or not isinstance(owner_identity,dict) or owner_identity.get('experiment')!=EXPERIMENT:raise ValueError('union requires fixed real-pilot native owner')
+-            storage_watch=WritableUnion(storage_budget,Path(cwd))
++            from tradingagents.research.onchain_replication.real_pilot_storage import WritableUnion,EXPERIMENT,experiment_name
++            selected_experiment=experiment_name(EXPERIMENT if experiment is None else experiment)
++            if native_unit_limits is None or not isinstance(owner_identity,dict) or owner_identity.get('experiment')!=selected_experiment:raise ValueError('union requires matching real-pilot native owner')
++            storage_watch=WritableUnion(storage_budget,Path(cwd),experiment=selected_experiment)
+         else:
+             if type(storage_budget) is not dict or set(storage_budget)!={'root','limits'}:
+                 raise ValueError('storage budget schema differs')
+@@ -821,6 +822,16 @@
+         from tradingagents.research.onchain_replication.neural_physical import verify_file_limit
+         verify_file_limit(live['physical_policy']['max_file_bytes'],resource.getrlimit(resource.RLIMIT_FSIZE))
+     if 'native_unit_limits' in live:
++        budget=live.get('storage_budget')
++        if type(budget) is dict and budget.get('schema_version')==2:
++            from .real_pilot_storage import EXPERIMENT,experiment_name
++            selected_experiment=experiment_name(budget.get('experiment'))
++            if pilot_context is None:
++                if selected_experiment!=EXPERIMENT:raise RuntimeError('fresh pilot storage requires admission context')
++            else:
++                ad,_=pilot_context
++                if selected_experiment!=ad.experiment_id or live.get('owner_identity',{}).get('experiment')!=ad.experiment_id:
++                    raise RuntimeError('guard storage experiment differs from admission')
+         import resource
+         expected=_native_policy(live['native_unit_limits'])['file_size_bytes']
+         if resource.getrlimit(resource.RLIMIT_FSIZE)!=(expected,expected):raise RuntimeError('native worker file limit differs')

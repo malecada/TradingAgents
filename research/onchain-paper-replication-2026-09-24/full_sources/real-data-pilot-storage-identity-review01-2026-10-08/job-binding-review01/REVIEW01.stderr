@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-identity-review01-2026-10-08/job-binding-review01/review01.py", line 48, in <module>
+    seen=[];execute([ast.Expr(call)],dict(validate=lambda *a,**kw:seen.append((a,kw)),budget={'experiment':'fresh'},Path=Path,root='/metadata',ad=N(experiment_id='fresh')))
+            ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-identity-review01-2026-10-08/job-binding-review01/review01.py", line 23, in execute
+    def execute(nodes,ns):exec(compile(ast.fix_missing_locations(Strip().visit(ast.Module(nodes,type_ignores=[]))),'isolated_actual_seam','exec'),ns)
+                          ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "isolated_actual_seam", line 90, in <module>
+NameError: name 'value' is not defined. Did you mean: 'False'?

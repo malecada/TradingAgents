@@ -1,0 +1,29 @@
+--- accepted/compact_matcher.py
++++ timed/compact_matcher.py
+@@ -269,7 +269,7 @@
+             _snapshot(directory / 'state', state_sha, identity, self.policy,checkpoint_layout=self.checkpoint_layout)
+             io._root(root, fd)
+             expected = self._expected_event(3, artifact=result)
+-            self.log.progress(result)
++            self._timed('event_publication',self.log.progress,result)
+             self.log.durability_barrier()
+             self._check()
+             require(io._hash(io._read(fd, 'intent.json', io.META_LIMIT)) == intent_sha
+@@ -299,7 +299,7 @@
+             if self.retention is not None:self.retention.before_pair()
+             identity = self.pair_identity(a, b)
+             expected = self._expected_event(0, purpose=cache_key(purpose), identity=pair.digest(identity))
+-            self.log.begin(cache_key(purpose), pair.digest(identity))
++            self._timed('event_publication',self.log.begin,cache_key(purpose),pair.digest(identity))
+             self._check()
+             self._ack_check(expected)
+             if self.retention is not None:
+@@ -322,7 +322,7 @@
+                     self._check()
+                     expected = self._expected_event(1 if result.convergence == 'temperature_complete' else 2,
+                         score=float(result.score), iterations=result.iterations)
+-                    answer = self.log.complete(float(result.score), result.convergence, result.iterations)
++                    answer = self._timed('event_publication',self.log.complete,float(result.score),result.convergence,result.iterations)
+                     self._check(); self._ack_check(expected)
+                     if self.retention is not None:
+                         self.log.durability_barrier()

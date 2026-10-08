@@ -1,0 +1,11 @@
+{
+  "decision": "source acceptance does not release fresh entry",
+  "additional_exact_blockers": [
+    "job.py resource_policy lines80-82 still imports EXPERIMENT and refuses ad.experiment_id != legacy21. Future correction must preserve preceding genuine Admission/root/selection/schema2 policy joins, then validate with experiment=ad.experiment_id.",
+    "job.py _pilot_residual_tail lines219-220 still validates and scans default21; both calls need the admitted fresh identity joined with budget.",
+    "job.py line242 prepare_environment needs explicit admitted experiment.",
+    "job.py line307 native guarded_run needs explicit admitted experiment.",
+    "Fresh preflight, RootIO and metadata preparation WritableUnion and residual calls need the same explicit identity. Historical frozen callers are not to be edited."
+  ],
+  "harness_history": "REVIEW01 failed because independent harness compared two separately constructed StorageWatch objects by identity. Original failure preserved. REVIEW02 compares their inode identity tuple and passes39 checks. No candidate fix was needed."
+}

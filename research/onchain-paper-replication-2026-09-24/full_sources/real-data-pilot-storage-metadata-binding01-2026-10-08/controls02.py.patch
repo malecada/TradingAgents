@@ -1,0 +1,41 @@
+--- baseline/controls02.py
++++ candidate/controls02.py
+@@ -4,6 +4,7 @@
+ remain subject to independent review and Root's genuine admission. Never selects
+ or increases an execution cap. Unknown residual writer domains are errors.
+ """
++import re
+ import argparse
+ import hashlib
+ import json
+@@ -25,6 +26,11 @@
+  'runtime_temp_cache': 'real_pilot_storage forwarded native temp/cache and all additional selected writer paths not in the other named domains',
+ }
+ 
++def experiment_name(value):
++    if type(value) is not str or re.fullmatch(r'eth-paper-real-data-end-to-end-resource-[0-9]{8}-[1-9][0-9]{0,5}',value) is None:
++        raise ValueError('canonical bounded real ETH pilot experiment required')
++    return value
++
+ def need(ok,message):
+     if not ok:raise ValueError(message)
+ def integer(n,zero=False):
+@@ -38,7 +44,8 @@
+     need(hashlib.sha256(raw).hexdigest()==ALLOCATION_SHA,'accepted allocation source changed')
+     ns={};exec(compile(raw,ALLOCATION,'exec'),ns);return ns
+ 
+-def calculate(s):
++def calculate(s,*,experiment=EXPERIMENT):
++    experiment=experiment_name(experiment)
+     fields={'schema_version','graphs','chunk_cells','typed_control_bytes','archive','stage','transport','residual_domains','filesystem','baseline','storage_budget'}
+     need(type(s) is dict and set(s) in (fields,fields|{'diagnostic'}),'input fields differ')
+     prefix='diagnostic' in s
+@@ -144,7 +151,7 @@
+     for k in ('logical_bytes','allocated_bytes','entries'):integer(baseline[k],True)
+     budget=s['storage_budget'];exact(budget,{'schema_version','kind','authority_root','experiment','roots','shared_files','limits'},'storage')
+     root=budget['authority_root'];need(type(root) is str and root.startswith('/') and str(Path(root))==root and '..' not in Path(root).parts,'canonical root spelling required')
+-    need(type(budget['schema_version']) is int and budget['schema_version']==2 and budget['kind']=='real-pilot-writable-union' and budget['experiment']==EXPERIMENT and budget['roots']==[root+'/research_artifacts',root+'/research_runs/'+EXPERIMENT] and budget['shared_files']==[root+'/research_runs/.lock'],'exact original/shared writable scope required')
++    need(type(budget['schema_version']) is int and budget['schema_version']==2 and budget['kind']=='real-pilot-writable-union' and budget['experiment']==experiment and budget['roots']==[root+'/research_artifacts',root+'/research_runs/'+experiment] and budget['shared_files']==[root+'/research_runs/.lock'],'exact original/shared writable scope required')
+     lim=budget['limits'];exact(lim,{'max_logical_bytes','max_allocated_bytes','max_entries','max_depth','max_scan_seconds'},'storage limits')
+     for v in lim.values():integer(v)
+     need(lim['max_depth']<=64 and lim['max_scan_seconds']<=5,'original watcher limits differ')

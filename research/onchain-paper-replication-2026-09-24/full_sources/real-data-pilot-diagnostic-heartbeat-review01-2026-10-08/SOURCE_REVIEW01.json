@@ -1,0 +1,37 @@
+{
+  "decision": "accepted-source-only",
+  "candidate_sha256": "1161ebde4d2ec281c29065fbd0c10bac39a9f0e2dbe3796d11acfb5b428c190a",
+  "baseline_sha256": "488b713a6bee7aff1a44089ad61a25f582af357641020969a0914aabd42d4b33",
+  "manifest_sha256": "39577047f0777ae2f52598fb60486d4b3bb86d6374421c83055092bfbcf1ad2f",
+  "checks": [
+    "source_hash",
+    "manifest_hash",
+    "full_inverse",
+    "baseline_pin",
+    "return_unchanged",
+    "no_early_refresh",
+    "nested_return",
+    "nested_single_refresh",
+    "same_sample_no_refresh",
+    "write_failure_propagates",
+    "failed_write_does_not_advance",
+    "callback_primary_retained",
+    "retry_success_updates_after_write",
+    "exact480_automatic_cap",
+    "mandatory_begin_after_cap",
+    "original1024_stop",
+    "original_pair_counter",
+    "backward_elapsed_refuses",
+    "negative_elapsed_no_counter",
+    "28phase_longfloat_size"
+  ],
+  "stress_checkpoint_bytes": 6454,
+  "reused_event_review": "855d52c5ee905b31c95cefe9440eaadcba189e789e8f1bc1faf7d205d30b349a",
+  "limitations": [
+    "Automatic refresh sampled after timing callback completion; blocking calls have no refresh guarantee. No runtime savings claim.",
+    "Uses existing monotonic clock contract; elapsed negative within a call refuses. This change does not add cross-call global clock monotonicity enforcement.",
+    "Counter/last sample advance only after successful _write. Existing phase timing aggregates advance before publication and failed publication does not roll those back.",
+    "Synthetic hashes/metadata only. No scientific imports, data, claim, Owner, process, Main/Git/live changes.",
+    "Finite480 automatic-write cap does not limit unchanged mandatory writes. Source acceptance is not fresh entry release."
+  ]
+}

@@ -1,0 +1,41 @@
+--- baseline/real_pilot_partial_progress.py
++++ candidate/real_pilot_partial_progress.py
+@@ -175,12 +175,14 @@
+         self.matching_began=None;self.completed=0;self.graph=None;self.graph_base=0;self.graph_completed=0;self.tail=None
+         self.timings={key:{'seconds':0.,'calls':0} for key in DIAGNOSTIC_PHASES}
+         self.stopped=False;self.writes=0
++        self._refresh_at=None;self._refresh_count=0
+         self.startup=[];self._startup_active=None;self._startup_started=None
+         self._startup_seen=set();self._startup_last=self.began
+         parent=Path(directory);require(parent.is_dir() and parent.resolve()==parent,'diagnostic parent differs')
+         self.directory=parent/'scoring-diagnostic';self.directory.mkdir(exist_ok=False)
+         self.fd=os.open(self.directory,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+-        try:self._write()
++        try:
++            self._write();self._refresh_at=self.began
+         except BaseException:
+             os.close(self.fd);self.fd=None;raise
+ 
+@@ -230,9 +232,12 @@
+         self._record(phase,began);return result
+ 
+     def _record(self,phase,began):
+-        elapsed=_time(self.clock())-began;require(elapsed>=0,'diagnostic clock reversed')
++        now=_time(self.clock());elapsed=now-began;require(elapsed>=0,'diagnostic clock reversed')
+         item=self.timings[phase];item['seconds']+=elapsed;item['calls']+=1
+         require(math.isfinite(item['seconds']) and item['calls']<2**63,'diagnostic aggregate overflow')
++        if self._refresh_count<480 and now-self._refresh_at>=60:
++            self._write()
++            self._refresh_at=now;self._refresh_count+=1
+ 
+     def begin(self, graph_hash, log):
+         self._check();require(not self.stopped and _hash(graph_hash,(64,))
+@@ -276,7 +281,7 @@
+             'startup_progress':{'active':self._startup_active,'phases':[dict(v) for v in self.startup]},
+             'planned_stop_reached':self.stopped,'checkpoint_writes_before_this_snapshot':self.writes,
+             'full_mcm_complete':False,'representation_credit':0,'model_update_complete':False,'paper_financial_fits':0,
+-            'qualification':'Completed pair-log acknowledgements only; final capped pair may not enter score tail. Timings are selected inclusive seams, not a disjoint profile; annealing advance includes atomic rank transition. Extraction is not isolated. Remaining startup is measured after population/input/graph/model loading; phases include entry checkpoint publication and exclude exit publication. Matching entry precedes matcher/index preparation. Tail durability is a sampled watermark. Outer exit/recovery remain separate.'}
++            'qualification':'Completed pair-log acknowledgements only; final capped pair may not enter score tail. Timings are selected inclusive seams, not a disjoint profile; annealing advance includes atomic rank transition. Extraction is not isolated. Automatic refresh is sampled after timing callbacks, at most once per60seconds and480times; blocked calls have no guaranteed refresh. Remaining startup is measured after population/input/graph/model loading; phases include entry checkpoint publication and exclude exit publication. Matching entry precedes matcher/index preparation. Tail durability is a sampled watermark. Outer exit/recovery remain separate.'}
+ 
+     def _write(self):
+         import os

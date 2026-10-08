@@ -1,0 +1,23 @@
+test_all_name_refusals_before_metadata (__main__.Tests.test_all_name_refusals_before_metadata) ... ok
+test_builder_actual_storage_join (__main__.Tests.test_builder_actual_storage_join) ... ok
+test_controls_full_toy (__main__.Tests.test_controls_full_toy) ... ERROR
+test_literal_inverse (__main__.Tests.test_literal_inverse) ... ok
+test_threading_and_no_numerical_import (__main__.Tests.test_threading_and_no_numerical_import) ... ok
+
+======================================================================
+ERROR: test_controls_full_toy (__main__.Tests.test_controls_full_toy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/test_metadata.py", line 16, in test_controls_full_toy
+    self.assertEqual(c.calculate(inventory(OLD)),c.calculate(inventory(OLD),experiment=OLD))
+                                 ~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/test_metadata.py", line 10, in inventory
+    alloc=c.allocation()['graph'](2,64,512,512,168*2)
+  File "../../real-data-pilot-resource-buffer-allocation01-2026-10-06/allocation01.py", line 16, in graph
+  File "../../real-data-pilot-resource-buffer-allocation01-2026-10-06/allocation01.py", line 8, in need
+ValueError: selected original chunk bounds differ
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.012s
+
+FAILED (errors=1)

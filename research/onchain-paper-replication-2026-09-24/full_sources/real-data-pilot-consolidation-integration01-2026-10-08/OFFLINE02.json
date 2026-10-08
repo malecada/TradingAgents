@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/research/onchain_replication/test_job.py::test_explicit_limits_refuse_missing_or_inadequate_contract"
+  ],
+  "exit_code": 0,
+  "scope": "Existing single offline legacy job resource refusal test, no expensive compact fixture chain or empirical data."
+}

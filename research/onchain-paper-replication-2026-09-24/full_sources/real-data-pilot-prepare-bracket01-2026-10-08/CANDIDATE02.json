@@ -1,0 +1,42 @@
+{
+  "status": "candidate-for-independent-review-not-admitted",
+  "baseline": {
+    "compact_mcm": "frozen Main copy",
+    "imported_mcm_identity": "accepted same-boundary candidate 39304277c2a0c6278a7524102f15bcfb0f8f9d73f691b51e0cd7a554a65bd7eb"
+  },
+  "changes": [
+    "Private Target._prepare_sources retains exact original source-body hash loop; public sources still calls check first.",
+    "Private Target._prepare_graph performs pins/key access; compact_mcm._graph public checked behavior unchanged.",
+    "Only imported _prepare uses private accesses after genuine entry check; complete original preparation calculations, policy/kernel/output/reservation/path checks retained verbatim.",
+    "After preparation callbacks and JSON validation, final genuine dictionary.check precedes callback-free target object/dimension/scope, result, kernel member/code identity, stage/reservation and output-path rejoins. Local pins are transient metadata, not authority or caches."
+  ],
+  "verification": {
+    "command": ".venv/bin/python -B /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-prepare-bracket01-2026-10-08/test02.py",
+    "exit_code": 0,
+    "tests": 5,
+    "mutation_subcases": 9,
+    "method": "AST-extracted actual functions with explicit non-authority metadata fixtures; source scans exercised with hash stub, no graph arrays or neural/runtime/owner capability construction. Legacy output inverse and numeric body exact textual equality; other compact_mcm functions/classes exact AST."
+  },
+  "limitations": [
+    "Requires independent source review before integration.",
+    "No empirical run, performance measurement, or admission.",
+    "Sampled callback boundaries; not atomic filesystem/concurrent-writer proof.",
+    "Kernel member identity rejoin does not constitute general transitive module-global object immutability."
+  ],
+  "files": {
+    "TEST02.stderr": "0e1d178b3358238828ddf0a095453199d3130c1e3691c38b9c6ea3b54ca87f71",
+    "HASHES.json": "4879f009572e4d4cf391ae436fbdc49759318a5143ef83b27c650e7b6ad3e31b",
+    "test02.py": "1369645ea68e949184dd953efacf2a734a3b69946d50040a990267057aa5a5a5",
+    "TEST02.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "imported_mcm_identity.py": "75d4e269ad4e87a34061e8331381af417b3c850346d71711902fcd5bbf322c82",
+    "baseline_compact_mcm.py": "3d3b74ea30823972d522417b8401033f3dfcd6ce985b31cb3d21a6e4800b5a86",
+    "report02.py": "aaf6dce9f159c8c552dc81b235db2c70e0e43ca64128d8fd3acca7f0d16916ac",
+    "TEST01.stderr": "6467dbc9e0ecd13927a0bf8a3e4d8e21ac7fc274728bbc193287b5005e10fd6f",
+    "amend02.py": "03c3ee1465948515ba245c3c8f7cbdaad21e35467cb2a1ed79bf6437ff96d333",
+    "compact_mcm.py": "d8435b5bc2e2067065969ad73629914d45bed5d30272a176579b4d9024c35294",
+    "build01.py": "7ac127bc06c6384e993b9a5c3bf2a2bbccffab68badc215cf7f3702c94ee72ae",
+    "baseline_imported_mcm_identity.py": "39304277c2a0c6278a7524102f15bcfb0f8f9d73f691b51e0cd7a554a65bd7eb",
+    "TEST01.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test01.py": "73175eb76ed64196ca8a1ab2e15f4298212e62d5c0f6b4284a18ac3dd13b081a"
+  }
+}

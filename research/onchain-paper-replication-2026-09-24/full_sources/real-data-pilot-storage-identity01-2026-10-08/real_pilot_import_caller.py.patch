@@ -1,0 +1,11 @@
+--- baseline/real_pilot_import_caller.py
++++ candidate/real_pilot_import_caller.py
+@@ -414,7 +414,7 @@
+     budget=job['resources']['storage_budget']
+     if budget.get('schema_version')==2:
+         from .real_pilot_storage import WritableUnion
+-        watch=WritableUnion(budget,run.admission.root)
++        watch=WritableUnion(budget,run.admission.root,experiment=run.admission.experiment_id)
+         from .resources import assert_guarded_worker
+         limits=job['resources']
+         live=assert_guarded_worker(run.admission.root/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/run.admission.experiment_id/'guard',__import__('sys').orig_argv,required_paths=[run.admission.root],wall_seconds=limits['wall_seconds'],memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'],disk_floor_bytes=limits['disk_floor_bytes'],pilot_context=(run.admission,job))
