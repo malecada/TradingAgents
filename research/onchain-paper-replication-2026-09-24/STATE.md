@@ -1,5 +1,21 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T09:55:51.530364+00:00: resumed checks complete; reviewed fix live, actual17 failure recovered, unused18 prepared/released. Full entry refused startup RAM before any attempt/claim. No numerical job; goalACTIVE/incomplete.**
+
+Focused live-guard correction995fe76 passed8worker+6independent checks/e3a272f5 and was adopted; strict18storagef4cbe9 accepted2e6093f3. Full method/source/input/runtime/currentowner/nativecontrols and60s lease limit remain. Actual failed17 public increment46files476888B+13dirs/59names recovered via fresh externalGit9ops73333/ef17c1; independent29cf984e accepts all names/modes/hashes, original/bare/returned retained.17permanentFAILED/spent88; originalFAILEDcell/observerUNAVAILABLE discrepancy retained. NoMCM/update/financialfit.
+
+Unused18 committed exact298source59roles/current179numericalcontext/BOTHdescriptor+gaterolejoins, bothnamespace18; read-only89 original2001/07ce1d exit0 at9c54. Combinedreviewd34bc52b and finalrelease39cd6dd6/417refs accepted; finalBINDINGcff553fa. Actualpush17958/7d6916 andremote34349/ddec6b exit0 matched1773ca2897de86ba358e076537c8d814a788d103 before entry. That is Git availability, not additional empirical-store/runtime recovery.
+
+OriginalRootentry14369/71156e→4e0e97 exited1 atpreflight248 frozen startupRAM unavailable. It never called launch_checked/capture/native/ResearchRun.start: launch-attempt/claim/run/parent/source/representation18 absent; active nativeunits empty. Failed-check RAM value was not recorded and remainsnull; later09:52 observation9138245632B is separate. Native/guard exit and duration areunknown/nonexistent, notRootentry1. Independent refusalcheck77795399 accepts11absentpaths/zero representation18matches and unspent18. [Refusal](full_sources/real-data-pilot-final18-2026-10-08/PREFLIGHT_REFUSAL01.json) preserves actual entry separately. Source/GitfreezeENDED.
+
+58closed33COMPLETE25FAILED/highestactuallyclaimed88/28pending/twoclosedpreclaimreserves unchanged. Reviewed89 prospective only; no18claim/refund/transfer/capladder. Frozen8.5GiB available startup requires headroom during full preflight, not just a borderline shell snapshot;6GiBcap5high/2.5hostreserve/zerojobswap/10GiBdiskfloor/2CPU8h unchanged. Original7fullgraphs/32motifs512spent/16decisions28lookback/onejointupdate/model20f451trainingd527 remain. FullMCM→GAT→attentionLSTM update/checkpoint and useful throughput/training/wholecapacity measurement still pending.
+
+Allboundedagentscomplete. RootsoleMain/accounting/STATE/Git/externalpreservation/ONElauncher; broadheartbeatPAUSED. Next safeaction: fresh metadata-only process/claim/namespace/resources check when available memory has startup headroom; reuse accepted immutable evidence and exact release. Only a later eligible original full preflight may lead toONEunused18nativeattempt. No automatic immediate replay/threshold change/extra generic review. Keep goalACTIVE; this turn completed source/recovery/registration checks and encountered a fresh resource refusal, not three consecutive blocked goal turns.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T09:48:26.805957+00:00: resumed checks complete; unused18 final conditional release39cd6dd6 accepted. No numerical job. GoalACTIVE/incomplete.**
 
 Liveguard995fe76 andstrict18storagef4cbe9 adopted/committed;8author+6independent focused guard checks passed. Full Binding/source/input/runtime/currentowner/nativeguards and60s freshness unchanged. Actual failed17 incremental external recovery29cf984e accepted all59typednames/46regular476888B/13dirs from563200Btarbbb2c20e; originals/bare/returned retained.17remainsFAILED/spent88, noMCM/update/financialfit.

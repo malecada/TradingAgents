@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final18-2026-10-08/root_io.py", line 142, in <module>
+    args, preflight = check()
+                      ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final18-2026-10-08/preflight01.py", line 248, in check
+    if available<job['resources']['start_reserve_bytes']:raise ValueError('frozen startup RAM reserve unavailable')
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: frozen startup RAM reserve unavailable
