@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-08T17:37:43.905086+00:00",
+  "cpu_window": [
+    {
+      "cpu_seconds": 0.0,
+      "percent_one_cpu": 0.0,
+      "pid": 113531,
+      "rss_bytes": 65339392,
+      "state": "S"
+    },
+    {
+      "cpu_seconds": 3.24,
+      "percent_one_cpu": 32.39810159435474,
+      "pid": 113894,
+      "rss_bytes": 66904064,
+      "state": "R"
+    },
+    {
+      "cpu_seconds": 0.04,
+      "percent_one_cpu": 0.39997656289326844,
+      "pid": 114255,
+      "rss_bytes": 26439680,
+      "state": "S"
+    },
+    {
+      "cpu_seconds": 5.2,
+      "percent_one_cpu": 51.9969531761249,
+      "pid": 114259,
+      "rss_bytes": 3442159616,
+      "state": "R"
+    }
+  ],
+  "cpu_window_seconds": 10.000585962001423,
+  "diagnostic_checkpoint_sha256": "bef3a147b8016d63d5a947b1da1b7d4a64f59f4d061fd1969f391da74ae8c9a7",
+  "guard_sample": {
+    "child_exit_code": null,
+    "elapsed_seconds": 2605.7737315249997,
+    "limit_reason": null,
+    "memory_current_bytes": 5139083264,
+    "memory_events": {
+      "high": 787,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "peak_sampled_memory_current_bytes": 5368209408,
+    "phase": "running",
+    "storage_peak_allocated_bytes": 5146497024
+  },
+  "latest_persisted_comparisons": 0,
+  "native_pids_observed": [
+    114255,
+    114259
+  ],
+  "qualification": "Read-only /proc CPU deltas measure process CPU over one sampled interval, not startup-phase attribution. Sparse checkpoint does not exclude uncheckpointed matching. No scientific completion/capacity or speedup claim.",
+  "sampled_git_children": [],
+  "source": "a4ae14412bffef123e1b2602bab023dcb1a4f616",
+  "tool_session_id": 84467
+}

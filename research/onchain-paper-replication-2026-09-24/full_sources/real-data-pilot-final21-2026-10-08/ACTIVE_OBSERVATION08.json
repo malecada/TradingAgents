@@ -1,0 +1,77 @@
+{
+  "at": "2026-10-08T18:53:26.029104+00:00",
+  "completed_scalar_pairs": 704,
+  "diagnostic_sha256": "e49178baad2b593c85e4293780b8c9070d5b3e6ae398bdbc5944629aaba9e717",
+  "guard_sample": {
+    "child_exit_code": null,
+    "elapsed_seconds": 7147.92941264,
+    "limit_reason": null,
+    "memory_current_bytes": 5223772160,
+    "memory_events": {
+      "high": 787,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "phase": "running"
+  },
+  "last_live_handle_chunk": "1e8676",
+  "matching_elapsed_seconds": 1116.1886558080005,
+  "phase_timings": {
+    "advance_annealing_including_rank_transition": {
+      "calls": 704,
+      "seconds": 11.051911822991315
+    },
+    "advance_hardening": {
+      "calls": 704,
+      "seconds": 0.1811792729949957
+    },
+    "lease": {
+      "calls": 59266,
+      "seconds": 559.7798002210711
+    },
+    "pair_validation": {
+      "calls": 704,
+      "seconds": 0.025697032013340504
+    },
+    "score_only": {
+      "calls": 704,
+      "seconds": 0.34231785496740486
+    },
+    "state_create": {
+      "calls": 704,
+      "seconds": 0.1429272069945
+    }
+  },
+  "processes": {
+    "113531": {
+      "start_ticks": "670776",
+      "state": "S",
+      "stime_ticks": "28",
+      "utime_ticks": "311"
+    },
+    "113894": {
+      "start_ticks": "671154",
+      "state": "S",
+      "stime_ticks": "92010",
+      "utime_ticks": "140831"
+    },
+    "114255": {
+      "start_ticks": "671546",
+      "state": "S",
+      "stime_ticks": "268",
+      "utime_ticks": "2387"
+    },
+    "114259": {
+      "start_ticks": "671573",
+      "state": "R",
+      "stime_ticks": "31484",
+      "utime_ticks": "427331"
+    }
+  },
+  "qualification": "Actual live guard and sparse diagnostic observation, not a complete MCM or update. No Main/source/Git integration occurred.",
+  "source": "a4ae14412bffef123e1b2602bab023dcb1a4f616",
+  "tool_session_id": 84467
+}

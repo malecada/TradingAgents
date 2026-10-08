@@ -1,0 +1,74 @@
+{
+  "at": "2026-10-08T19:30:43.278722+00:00",
+  "completed_scalar_pairs": 960,
+  "diagnostic": {
+    "checkpoint_writes_before_this_snapshot": 15,
+    "claim_sha256": "44dedda78d4209bd20099e6d45d99f9ab1b363b556f046531a4fac0db9d2cd5c",
+    "completed_scalar_pairs": 960,
+    "full_mcm_complete": false,
+    "graph_completed_scalar_pairs": 960,
+    "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+    "kind": "partial_scalar_scoring_diagnostic",
+    "matching_elapsed_seconds": 6489.746315782,
+    "model_update_complete": false,
+    "pairs_per_second": 0.14792565892220427,
+    "paper_financial_fits": 0,
+    "phase_timings": {
+      "advance_annealing_including_rank_transition": {
+        "calls": 1543,
+        "seconds": 2870.7735575020597
+      },
+      "advance_hardening": {
+        "calls": 961,
+        "seconds": 6.466144173011344
+      },
+      "lease": {
+        "calls": 83138,
+        "seconds": 2876.7156312901825
+      },
+      "pair_validation": {
+        "calls": 960,
+        "seconds": 0.035809560020425124
+      },
+      "score_only": {
+        "calls": 960,
+        "seconds": 15.458047929971144
+      },
+      "state_create": {
+        "calls": 960,
+        "seconds": 6.10920339198492
+      }
+    },
+    "planned_stop_reached": false,
+    "policy": {
+      "checkpoint_every_pairs": 64,
+      "checkpoint_relative": "scoring-diagnostic/progress.json",
+      "max_completed_pairs": 1024,
+      "schema_version": 1
+    },
+    "qualification": "Completed pair-log acknowledgements only; final capped pair may not enter score tail. Timings are selected inclusive seams, not a disjoint profile; annealing advance includes atomic rank transition. Extraction and startup are not isolated. Tail durability is a sampled watermark. Outer exit/recovery remain separate.",
+    "representation_credit": 0,
+    "schema_version": 1,
+    "scope_elapsed_seconds": 9028.062085826,
+    "source": "a4ae14412bffef123e1b2602bab023dcb1a4f616",
+    "tail_observation": null
+  },
+  "guard_sample": {
+    "child_exit_code": null,
+    "elapsed_seconds": 9385.348487781,
+    "limit_reason": null,
+    "memory_current_bytes": 5187698688,
+    "memory_events": {
+      "high": 787,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "phase": "running"
+  },
+  "qualification": "Selected inclusive timings, not a disjoint CPU profile or completed MCM/model update.",
+  "source": "a4ae14412bffef123e1b2602bab023dcb1a4f616",
+  "tool_session_id": 84467
+}

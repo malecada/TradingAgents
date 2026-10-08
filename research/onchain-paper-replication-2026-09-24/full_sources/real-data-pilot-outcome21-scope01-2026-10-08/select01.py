@@ -1,0 +1,36 @@
+import datetime,hashlib,json,os,stat
+from pathlib import Path
+R=Path.cwd();NAME='eth-paper-real-data-end-to-end-resource-20261008-21';F=R/'research/onchain-paper-replication-2026-09-24/full_sources';N=F/'real-data-pilot-final21-2026-10-08';H=Path(__file__).resolve().parent
+roots=[R/'research_runs'/NAME,R/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/NAME,R/'research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent'/NAME,R/'research_artifacts/archive-dispatch-ethpilot-20261008-21']
+roots += [R/'research_artifacts/onchain_representations'/'db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15'/NAME,R/'research_artifacts/onchain_compact_mcm'/'db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15'/NAME]
+fixed=['ROOT_LAUNCH01.stdout','ROOT_LAUNCH01.stderr','ROOT_IO_CLOSED01.json','FINAL_STORAGE01.json','ACTIVE_OBSERVATION01.json','EXEC_HANDLE01.json','launch-attempt01.json']
+# Terminal-only prerequisite reads; no outcome body hashes precede these refusals.
+assert not (H/'SELECTION01.json').exists(),'exclusive outcome selection already exists'
+assert R.resolve()==Path('/home/malecada/master_thesis/TradingAgents-audit-fixes')
+def control(p):
+ assert p.is_file() and not p.is_symlink() and p.stat().st_size<=4*1024**2,p
+ return json.loads(p.read_text())
+terminal=control(roots[0]/'failed.json')
+assert terminal['experiment_id']==NAME and terminal['status']=='failed'
+assert terminal['reason']=='PlannedScoringStop: registered completed scalar comparison limit reached'
+closed=control(N/'ROOT_IO_CLOSED01.json');assert closed['outer_log_handles_closed'] is True and closed['supervisor_reaped'] is True and closed['actual_parent_exit_code']==1
+storage=control(N/'FINAL_STORAGE01.json');assert storage['experiment']==NAME and storage['actual_current_cgroup_absent'] is True and storage['original_monitor_process_absent'] is True and storage['outer_log_handles_closed'] is True
+guard=control(roots[1]/'guard/final.json');assert guard['cleanup_verified'] is True and guard['phase']=='failed'
+assert not (roots[0]/'complete.json').exists()
+# Root still owns fresh cleanup/currentness confirmation before invocation.
+fixed += ['ROOT_TERMINAL01.json'] + [f'ACTIVE_OBSERVATION{i:02d}.json' for i in range(2,11)] + [f'DIAGNOSTIC_SAMPLE{i:02d}.json' for i in range(1,4)]
+paths=set();dirs=set()
+for root in roots:
+ assert root.is_dir() and not root.is_symlink();dirs.add(root)
+ for parent,children,files in os.walk(root,followlinks=False):
+  for name in children:
+   p=Path(parent)/name;assert not p.is_symlink();dirs.add(p)
+  paths.update(Path(parent)/name for name in files)
+for name in fixed:
+ p=N/name;assert p.is_file(),p;paths.add(p)
+rows=[]
+for p in sorted(paths):
+ before=p.lstat();assert stat.S_ISREG(before.st_mode) and before.st_nlink==1 and not p.is_symlink();data=p.read_bytes();after=p.lstat();fields=('st_dev','st_ino','st_size','st_mtime_ns','st_ctime_ns','st_mode','st_nlink');assert all(getattr(before,k)==getattr(after,k) for k in fields)
+ rows.append({'path':str(p.relative_to(R)),'type':'regular','mode':format(stat.S_IMODE(before.st_mode),'04o'),'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+result={'schema_version':1,'identity':NAME,'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'roots':[str(p.relative_to(R)) for p in roots],'files':len(rows),'body_bytes':sum(r['bytes'] for r in rows),'rows':rows,'directories':[{'path':str(p.relative_to(R)),'type':'directory','mode':format(stat.S_IMODE(p.stat().st_mode),'04o')} for p in sorted(dirs)],'qualification':'Original failed21 public increment roots including representation/compact producer/retention/tails/arrays/checkpoints/archive-owned descendants plus explicit RootCLI/handle/closure/postlaunch controls. Original regular bodies read only as opaque hashes; metadata reviewed separately. Private transport/runtime/temp, unchanged source and original scientific stores excluded. Original modes are inventory facts, not a Gitarchive POSIX reconstruction promise. No deletion or external recovery established by selection.'}
+(H/'SELECTION01.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n');print(json.dumps({'files':len(rows),'body_bytes':result['body_bytes'],'selection_sha256':hashlib.sha256((H/'SELECTION01.json').read_bytes()).hexdigest()}))

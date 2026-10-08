@@ -1,0 +1,74 @@
+{
+  "decision": "accepted-terminal-metadata-supplement",
+  "identity": "eth-paper-real-data-end-to-end-resource-20261008-21",
+  "evidence": {
+    "research_artifacts/onchain_representations/db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15/eth-paper-real-data-end-to-end-resource-20261008-21/failed.json": "0442f0691f947027fd9ec2b1cd031e031fdff17217484b4776f0a611c621cba2",
+    "research_artifacts/onchain_representations/db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15/eth-paper-real-data-end-to-end-resource-20261008-21/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/failed.json": "c12789d907cbe355f276783a228bb089d22b19efe9dbc21c80a978a68271ee19",
+    "research_artifacts/onchain_representations/db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15/eth-paper-real-data-end-to-end-resource-20261008-21/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/failed.json": "4981d4468586e827be8349d898714e7aa51329f96d62c8cec88e186e62da8592",
+    "research_artifacts/onchain_compact_mcm/db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15/eth-paper-real-data-end-to-end-resource-20261008-21/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/failed.json": "56635298ef50f6e18fac39807be29bab27ec6f30a663326e82c9cb6a1cad9486",
+    "research_artifacts/onchain_representations/db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15/eth-paper-real-data-end-to-end-resource-20261008-21/archive-operations/writer-mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba-0000/failed.json": "78f2fe375d44e81d67696f59e472517fe0b08e62389af40a6c38ca2a9d314717",
+    "research_artifacts/onchain_representations/db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15/eth-paper-real-data-end-to-end-resource-20261008-21/compact/dictionary-import/import-complete.json": "d03dd8f9b584da2599000c2084c3beb1450f2f9158d93b4d64dc5a17d94cdd73"
+  },
+  "representation_failure": {
+    "events": [],
+    "owner": {
+      "experiment": "eth-paper-real-data-end-to-end-resource-20261008-21",
+      "producer": "original32",
+      "source_commit": "a4ae14412bffef123e1b2602bab023dcb1a4f616",
+      "workflow_identity": "db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15"
+    },
+    "parent": null,
+    "reason": "PlannedScoringStop: registered completed scalar comparison limit reached",
+    "required_graphs": [
+      "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+      "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+      "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+      "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+      "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+      "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+    ],
+    "schema_version": 1,
+    "status": "failed",
+    "workflow_identity": null
+  },
+  "retention_failure": {
+    "error_type": "PlannedScoringStop",
+    "execution_admitted": false,
+    "restart_permitted": false,
+    "schema_version": 1,
+    "spent": {
+      "control_bytes": 229376,
+      "cumulative_bytes": 234530,
+      "generations": 0,
+      "input_bytes": 5154,
+      "replay_bytes": 0,
+      "replays": 0,
+      "stores": 0
+    }
+  },
+  "matching_failure": {
+    "archived_chunks": 0,
+    "error_type": "RuntimeError",
+    "events": 2048,
+    "schema_version": 1,
+    "status": "failed"
+  },
+  "producer_failure": {
+    "owner": "d7ea687c24a721483f6df5042cad9e4ea134b52c57aab8bcdfdad629778922bb",
+    "schema_version": 1,
+    "status": "failed"
+  },
+  "archive_writer_failure": {
+    "error_type": "PlannedScoringStop",
+    "reservations_retained": true,
+    "schema_version": 1,
+    "status": "failed"
+  },
+  "import_complete_metadata_present": true,
+  "qualifications": [
+    "Matching failed marker original RuntimeError remains unchanged; primary outer reason is PlannedScoringStop.2048 events is retained metadata, not independently parsed binary-chain proof.",
+    "Dictionary import complete does not imply MCM/model completion. No full representation/stage/producer completion marker observed.",
+    "No numeric bodies opened or evaluated; retained binary artifacts require opaque preservation and separate recovery only."
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "at": "2026-10-08T18:37:18.611160+00:00",
+  "completed_scalar_pairs": 704,
+  "confirmed_live_handle_chunk": "2f04e4",
+  "diagnostic_sha256": "e49178baad2b593c85e4293780b8c9070d5b3e6ae398bdbc5944629aaba9e717",
+  "earlier_io_sample": {
+    "at": "2026-10-08T18:32:10.625770+00:00",
+    "completed_tool_chunk": "653424",
+    "duration_seconds": 10.00040222899952,
+    "monitor": {
+      "rchar": 501483,
+      "read_bytes": 0,
+      "syscr": 1378,
+      "syscw": 52,
+      "wchar": 467137,
+      "write_bytes": 532480
+    },
+    "qualification": "Actual /proc counter differences, including cached reads and pipes; no function attribution, physical wire measurement or pure disk bottleneck follows.",
+    "tool_session_id": 69505,
+    "worker": {
+      "rchar": 516808216,
+      "read_bytes": 0,
+      "syscr": 85947,
+      "syscw": 78245,
+      "wchar": 429829273,
+      "write_bytes": 0
+    }
+  },
+  "guard_sample": {
+    "child_exit_code": null,
+    "elapsed_seconds": 6180.598775058001,
+    "limit_reason": null,
+    "memory_current_bytes": 5223657472,
+    "memory_events": {
+      "high": 787,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "phase": "running"
+  },
+  "kernel_peak_bytes": 5371068416,
+  "last_raw_frame_peek": {
+    "event_number": 1490,
+    "extent_bytes": 250488,
+    "iterations": 0,
+    "kind": 0,
+    "mtime_utc": "2026-10-08T18:37:15.151088+00:00",
+    "pair_ordinal": 745,
+    "qualification": "Unverified mutable binary tail; no chain replay or scientific completion credit."
+  },
+  "qualification": "Actual live handle and processes. Sparse checkpoint remains704; later binary records are progress observations only. No complete MCM, update, fit or speedup claim. Correct FRAME semantics distinguish event number from pair ordinal.",
+  "selected_process_stat": {
+    "113531": {
+      "start_ticks": "670776",
+      "state": "S",
+      "stime_ticks": "28",
+      "utime_ticks": "311"
+    },
+    "113894": {
+      "start_ticks": "671154",
+      "state": "S",
+      "stime_ticks": "79532",
+      "utime_ticks": "121780"
+    },
+    "114255": {
+      "start_ticks": "671546",
+      "state": "S",
+      "stime_ticks": "229",
+      "utime_ticks": "2061"
+    },
+    "114259": {
+      "start_ticks": "671573",
+      "state": "R",
+      "stime_ticks": "28879",
+      "utime_ticks": "360211"
+    }
+  },
+  "source": "a4ae14412bffef123e1b2602bab023dcb1a4f616",
+  "tool_session_id": 84467
+}
