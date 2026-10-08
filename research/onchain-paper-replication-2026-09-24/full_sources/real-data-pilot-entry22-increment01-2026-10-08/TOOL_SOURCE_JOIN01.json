@@ -1,0 +1,43 @@
+{
+  "capture_baseline": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twentyfirst-failed-increment01-2026-10-08/capture01.py",
+    "sha256": "906727b1b39261d12d339a0d91291bba584ff0a51c8fc509a781a2aab1abd776"
+  },
+  "capture_current": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-entry22-increment01-2026-10-08/capture01.py",
+    "sha256": "9582fe0a5f86acfaae9b1c44e25f091493c2ce83d9ab564297fa3c778e25be43"
+  },
+  "capture_literal_changes": {
+    "archive": {
+      "after": "entry-increment01.tar",
+      "before": "failed-increment01.tar"
+    },
+    "scope_label": {
+      "after": "public changed22 entry increment",
+      "before": "public failed21 increment"
+    },
+    "selector": {
+      "after": "S=D/'SELECTION01.json'",
+      "before": "S=R/'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-outcome21-scope01-2026-10-08/SELECTION01.json'"
+    }
+  },
+  "qualification": "Existing bounded reviewed capture and recovery operations unchanged; exact finite destination/label substitutions only. No capture or network execution yet.",
+  "recovery_baseline": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-entry21-increment01-2026-10-08/recover01.py",
+    "sha256": "2c7a1c92a3425d56f53dbe9e2b39eb3fcc2794f6d9f22b6391f4cf9d0cc68752"
+  },
+  "recovery_current": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-entry22-increment01-2026-10-08/recover01.py",
+    "sha256": "c8b1f7bab919dae927ae68be170ee61509eda61a2d2d99aaa4db972e200121f7"
+  },
+  "recovery_literal_changes": {
+    "identity": {
+      "after": "real-pilot-entry-20261008-22-01.git",
+      "before": "real-pilot-entry-20261008-21-01.git"
+    },
+    "scope_label": {
+      "after": "fresh22 changed public entry",
+      "before": "fresh21 changed public entry"
+    }
+  }
+}
