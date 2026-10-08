@@ -1,0 +1,17 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/build_inputs03.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/build_inputs04.py
+@@ -162,7 +162,13 @@
+     need(type(inventory) is dict and set(inventory)=={'stream_tail_batch_headers_bytes','producer_output_controls_bytes','other_selected_controls_bytes'},'complete remaining control declarations required')
+     for value in inventory.values():positive(value)
+     extra=store['additional_scratch_bytes'];need(type(extra) is int and 0<=extra<2**63,'explicit finite additional scratch declaration required')
+-    need(store['reserved_growth_bytes']>=sum(v['rows']*128 for v in g.values()),'all retained original f32 outputs require common store reservation')
++    prefix='scoring_diagnostic' in p
++    if prefix:
++        need(p['scoring_diagnostic']=={'schema_version':1,'max_completed_pairs':1024,'checkpoint_every_pairs':64,'checkpoint_relative':'scoring-diagnostic/progress.json'}
++            and all(type(p['scoring_diagnostic'][k]) is int for k in ('schema_version','max_completed_pairs','checkpoint_every_pairs'))
++            and min(v['rows']*32 for v in g.values())>1024,'exact first-graph diagnostic stop required')
++    matrix_growth=max(v['rows']*128 for v in g.values()) if prefix else sum(v['rows']*128 for v in g.values())
++    need(store['reserved_growth_bytes']>=matrix_growth,'retained original f32 outputs require selected common store reservation')
+     transport=copy.deepcopy(spec['transport_limits']);need('connection' not in transport,'builder must not consume connection credentials')
+     need(set(transport)-{'control_history'}=={'rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes','namespace','receipt_output','terminal_output'},'exact transport limit template required')
+     for key in ('rate_kbit','max_seconds','max_payload_bytes','max_commands','max_diagnostic_bytes','max_control_bytes'):positive(transport[key])

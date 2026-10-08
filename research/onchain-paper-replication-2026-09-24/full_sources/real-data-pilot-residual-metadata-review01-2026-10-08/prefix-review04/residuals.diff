@@ -1,0 +1,38 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/residuals03.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/residuals04.py
+@@ -22,7 +22,8 @@
+         'additional_scratch_bytes':scratch,'scratch_files':scratch_files,'scratch_max_file_bytes':scratch_max,
+         'evidence_sha256':digest(),'bound_basis':basis}
+ 
+-def resolve(stage,*,native_file_bytes,training_checkpoint_bytes,runtime_reservation,lifecycle_reservation=None):
++def resolve(stage,*,native_file_bytes,training_checkpoint_bytes,runtime_reservation,lifecycle_reservation=None,matching_stages=7):
++    need(type(matching_stages) is int and matching_stages in (1,7),'explicit full or first-stage diagnostic reservation')
+     positive(native_file_bytes);positive(training_checkpoint_bytes)
+     need(training_checkpoint_bytes<=4*1024**2<=native_file_bytes,'original training/native file limits differ')
+     need(type(stage) is dict and 'restart_retention' in stage,'this concrete route requires explicit original restart retention')
+@@ -54,12 +55,12 @@
+         numeric_files=4*((entries+chunk-1)//chunk)
+         extra_files=15+2+2*(numeric_files+3)+12+2*numeric_files
+         scratch_files=2*numeric_files
+-    checkpoint_files=7*(10*G+9*S+extra_files)
+-    checkpoint_dirs=7*(11+S+4*G)
+-    checkpoint_logical=7*(p['max_control_bytes']+p['max_input_bytes']+p['max_replay_bytes']+2*C)
++    checkpoint_files=matching_stages*(10*G+9*S+extra_files)
++    checkpoint_dirs=matching_stages*(11+S+4*G)
++    checkpoint_logical=matching_stages*(p['max_control_bytes']+p['max_input_bytes']+p['max_replay_bytes']+2*C)
+     checkpoint=declaration(checkpoint_logical,checkpoint_files,checkpoint_dirs,
+         max(M,K,p['max_input_bytes']),2*K,scratch_files,K,basis=
+-        'Seven actual MCM retention stages only: reserved controls+inputs+replays retained; two live generation bodies overlap globally under serial execution. File slots include three metadata manifests per retired generation and failed/partial states. Imported dictionary has no new matching stage. Selected policy reservations are not measured bytes.')
++        ('Seven actual MCM retention stages only:' if matching_stages==7 else 'One partial first-stage diagnostic retention only:')+' reserved controls+inputs+replays retained; two live generation bodies overlap globally under serial execution. File slots include three metadata manifests per retired generation and failed/partial states. Imported dictionary has no new matching stage. Selected policy reservations are not measured bytes.')
+     # Journal owner/start/claim/complete/failed=5; compact owner owner/complete=2;
+     # import intent/complete=2; seven MCM intent/stage-complete=14:23.
+     # Journal namespace parents <=16. Forty-two dirs includes journal/owner/
+@@ -103,7 +104,7 @@
+             if k not in ('evidence_sha256','bound_basis'):need(type(x) is int and 0<=x<2**63,'finite residual arithmetic overflow')
+     return {'status':'DRAFT_RESIDUAL_DECLARATIONS_NOT_ADMITTED','residual_domains':result,
+         'runtime_relative_paths':['research_artifacts/real_pilot_runtime/'+x for x in RUNTIME_PATHS],
+-        'source_bounds':{'matching_stages':7,'original_import_recomputation':False,'generations_per_stage':G,'stores_per_stage':S,'selected_endpoints_per_stage':2,'global_live_checkpoint_scratch_bytes':2*K,'current_import_metadata_files':23,'current_import_metadata_bytes':23*M},
++        'source_bounds':{'matching_stages':matching_stages,'original_import_recomputation':False,'generations_per_stage':G,'stores_per_stage':S,'selected_endpoints_per_stage':2,'global_live_checkpoint_scratch_bytes':2*K,'current_import_metadata_files':23,'current_import_metadata_bytes':23*M},
+         'prospective_ceilings':['training_and_lifecycle parent/outer receipt headroom','runtime_temp_cache'],
+         'integration':('Explicit selected lifecycle reservation replaces only64L; it remains prospective sampled headroom, not a smaller installed per-file bound. Insert residual_domains into inventory01; original root budget/floor/native checks unchanged.' if lifecycle_reservation is not None else 'Insert residual_domains into inventory01 input. Parent/outer receipt reservations use the same finite L as an explicit prospective ceiling, without claiming the parent has RLIMIT enforcement. Exact root budget, directory/block model and baseline remain required. No seven graph counts are invented.'),
+         'enforcement':'Current full writable-union sampling/floor, worker and monitor RLIMIT_FSIZE. This is a finite reservation draft, not a guarantee against theoretical inter-sample overshoot.'}

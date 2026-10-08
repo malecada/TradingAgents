@@ -1,0 +1,133 @@
+{
+  "at": "2026-10-08T15:17:27.433717+00:00",
+  "categories": {
+    "archive_ledger_writer_reads": {
+      "basis": "eight reserved original stages; writer/read metadata and 40-byte checkpoint references",
+      "directories": 48145,
+      "logical_bytes": 1871270400,
+      "max_file_bytes": 4194304,
+      "regular_files": 168052
+    },
+    "checkpoint_retention": {
+      "basis": "stage_retention/restart_retention: all retained states, input copies, generations, bridges, replay evidence and failure controls for eight stages",
+      "directories": 5677,
+      "logical_bytes": 8186699712,
+      "max_file_bytes": 354857536,
+      "regular_files": 25485
+    },
+    "dispatch": {
+      "basis": "Context controls; lease checks create no per-call disk file",
+      "directories": 2,
+      "logical_bytes": 3306307456,
+      "max_file_bytes": 4194304,
+      "regular_files": 797
+    },
+    "import_owner_stage_journal": {
+      "basis": "original import, compact_owner stage intent/complete, feature_journal metadata, imported sample/dictionary reference controls; opaque numeric sources stay inputs",
+      "directories": 42,
+      "logical_bytes": 1507328,
+      "max_file_bytes": 65536,
+      "regular_files": 23
+    },
+    "producer_output_controls": {
+      "basis": "per graph producer start/complete/failure; output manifest/storage/receipt; producer + attempt/artifact/transport",
+      "directories": 28,
+      "logical_bytes": 344064,
+      "max_file_bytes": 8192,
+      "regular_files": 42
+    },
+    "retained_original_matrices": {
+      "basis": "all seven original row-major f32 matrices; no RAM replacement",
+      "directories": 0,
+      "logical_bytes": 1663872512,
+      "max_file_bytes": 289981568,
+      "regular_files": 7
+    },
+    "runtime_temp_cache": {
+      "basis": "real_pilot_storage forwarded native temp/cache and all additional selected writer paths not in the other named domains",
+      "directories": 256,
+      "logical_bytes": 268435456,
+      "max_file_bytes": 67108864,
+      "regular_files": 4096
+    },
+    "selected_payload_scratch": {
+      "basis": "accepted serial pair/tail/batch/output overlap; six simultaneous regular bodies upper bound; diagnostics counted separately",
+      "directories": 0,
+      "logical_bytes": 30539776,
+      "max_file_bytes": 8388608,
+      "regular_files": 6
+    },
+    "stream_tail_batch_headers": {
+      "basis": "per graph 5B+5 JSON; stream/batches/tails plus 2B tail/typed directories",
+      "directories": 12725,
+      "logical_bytes": 260464640,
+      "max_file_bytes": 8192,
+      "regular_files": 31795
+    },
+    "training_and_lifecycle": {
+      "basis": "real_pilot_training checkpoint/phases/complete/failed plus ResearchRun outputs, progress, guard/sampler/stdout and run/shared-lock writers",
+      "directories": 16,
+      "logical_bytes": 33554432,
+      "max_file_bytes": 4194304,
+      "regular_files": 68
+    },
+    "transport_diagnostics": {
+      "basis": "one JSON and at most one bin per call; one failed/inflight bin body; successful get staging moves into caller",
+      "directories": 2,
+      "logical_bytes": 1475854304,
+      "max_file_bytes": 8388608,
+      "regular_files": 353
+    },
+    "typed_attempts": {
+      "basis": "four metadata slots per selected chunk credit; includes failure headroom",
+      "directories": 38499,
+      "logical_bytes": 1261535232,
+      "max_file_bytes": 8192,
+      "regular_files": 153996
+    },
+    "typed_ledger": {
+      "basis": "typed claims/complete/failure and part/read records; directory counted by archive",
+      "directories": 0,
+      "logical_bytes": 627941376,
+      "max_file_bytes": 8192,
+      "regular_files": 76653
+    }
+  },
+  "conditional_allocated_growth_bytes": 21562334947,
+  "conditional_allocation_overhead_bytes": 2574008259,
+  "conditional_minimum_free_bytes": 32299753187,
+  "conditional_new_logical_bytes": 18988326688,
+  "conditional_required_totals": {
+    "allocated_bytes": 26708147939,
+    "entries": 584077,
+    "logical_bytes": 24558127461
+  },
+  "conditional_space_gap_bytes": 7036002019,
+  "current_budget": {
+    "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "experiment": "eth-paper-real-data-end-to-end-resource-20261008-20",
+    "kind": "real-pilot-writable-union",
+    "limits": {
+      "max_allocated_bytes": 21474836480,
+      "max_depth": 64,
+      "max_entries": 1000000,
+      "max_logical_bytes": 17179869184,
+      "max_scan_seconds": 5
+    },
+    "roots": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261008-20"
+    ],
+    "schema_version": 2,
+    "shared_files": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+    ]
+  },
+  "disk_floor_bytes": 10737418240,
+  "failure": "aggregate writable scope underfunded: logical_bytes",
+  "helper_sha256": "78c9b0a9087f50734a9f65373f92c5dad1c25052bc4ec50e9f5047b1e9566c6b",
+  "inputs_sha256": "9d270c7ab972ff71214f9f3ad4a1bbf59aa50c7c3f19f23e9e757ab449fa434c",
+  "observed_disk_free_bytes": 25263751168,
+  "qualification": "Original pure metadata refusal retained. Trace locals expose computed conditional bounds without weakening/patching predicates or publishing successful preparation. Snapshot disk free, modeled slots/blocks and declarations are not hard quotas or measured future capacity. No metadata success, transport binding, native launch, claim or allowance adoption.",
+  "status": "ACTUAL_METADATA_STORAGE_REFUSAL"
+}

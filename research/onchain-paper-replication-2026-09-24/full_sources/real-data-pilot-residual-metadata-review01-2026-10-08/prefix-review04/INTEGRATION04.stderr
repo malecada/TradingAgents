@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-residual-metadata-review01-2026-10-08/prefix-review04/integration04.py", line 25, in <module>
+    check('actual_controls_default_output_equal_on_identical_metadata',controls4.calculate(synthetic)==controls3.calculate(synthetic))
+                                                                       ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/controls02.py", line 150, in calculate
+    need(lim['max_depth']<=64 and lim['max_scan_seconds']<=5,'original watcher limits differ')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/controls02.py", line 29, in need
+    if not ok:raise ValueError(message)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: aggregate writable scope underfunded: logical_bytes

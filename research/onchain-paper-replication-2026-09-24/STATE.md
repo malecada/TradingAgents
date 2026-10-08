@@ -1,5 +1,21 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T15:40:25.983157+00:00: explicit 1024-comparison diagnostic reservation accepted and inputs/registration materialized. No numerical job or fresh20 claim; goal ACTIVE/incomplete.**
+
+Main050767f68bfcf4a34948be07b245ef4c2a614525 contains nine independently accepted functional corrections. Prefix metadata review [f401b3e0](full_sources/real-data-pilot-residual-metadata-review01-2026-10-08/prefix-review04/MANIFEST04.json) accepted45 focused checks: all seven source graphs retained, exact diagnostic reaches only first matching stage; all remaining archive/transport/lifecycle domains and native/watch/floor limits unchanged. Existing full/default paths retain actual capacity refusal. No whole-capacity or launch claim follows.
+
+[Concrete preparation05](full_sources/real-data-pilot-final20-2026-10-08/PREPARATION_RESULT05.json) conditional allocated growth13,513,030,747B; baseline+growth18,658,843,739B allocated/16,628,376,165B logical within unchanged20/16GiB watch. Full seven-stage run remains [7,036,002,019B short](full_sources/real-data-pilot-final20-2026-10-08/ACTUAL_STORAGE_REFUSAL01.json) at its sampled baseline and exceeds existing aggregate watch; diagnostic acceptance does not admit the full pilot. No raw relocation/deletion.
+
+Accepted existing binder produced fresh private-path metadata and eight public inputs05; [gate20](full_sources/real-data-pilot-final20-2026-10-08/gate01.json) has exact cell real-eth-original-order-scoring-1024, nine registered outputs, original old experiments/family unchanged, and genuine proposed91 review. Registration/source/entry are draft, not committed or released. No Owner/start/claim. Actual42 local closed+17 historical=59closed33COMPLETE26FAILED/highest90; no allowance91 adoption/refund/transfer. Original19 permanentlyFAILED. Current observation has 11262361600B MemAvailable/25253625856B diskfree and 0 active claims.
+
+Root sole Main/Git/STATE/accounting/preservation/ONElauncher. Residual_metadata_review20 owns only NEW retry20-entry-review01 combined changed entry review; no worker numerical launcher. Previous status-only goal turn: NO PROGRESS, revalidated by concrete next preparation/binding/registration work this turn. Broad heartbeat PAUSED; all seven complete MCMs, joint GAT/attention-LSTM update/checkpoint and qualified training/resource measurement remain required. Zero completed end-to-end pilot or financial fit.
+
+Next safe action: finish combined exact binding/entry review; bind actual review, commit/push exact changed increment and recover it with existing preservation route; obtain final release seal, fresh namespace/process/runtime/resource check and ONE unused20 timing diagnostic. Preserve/review/recover actual attempted outcome before dependent full execution. Original32 motifs/512 spent samples, matching/model/training/tolerances unchanged.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T15:06:47.614485+00:00: finite real-scoring diagnostic and selected-input/recovery fixes independently reviewed and installed. No native numerical job; goal ACTIVE/incomplete.**
 
 [Source adoption](full_sources/real-data-pilot-diagnostic-source-adoption01-2026-10-08/SOURCE_ADOPTION01.json)8356898f installs nine exact source bodies. Separate independent reviews: diagnostic eaf4f10f (33checks/8refusals), selected-input reader/Visitor04c24086 (172focused assertions), capacity/budget240aaf18. Default numerical operations remain fixed. Optional diagnostic stops intentionally after1024 completed pair-log comparisons, preserving possibly1023 returned tail cells and zero complete-MCM/update/fit credit; checkpoints every64 and bounded8192B. Optional selected-input JSON controls use exact escaped extent before reservation/serialization and finite read/write/recovery limits. Actual installed filled7graph/16example/5output plan and compact/retention schemas pass. Original unfilled template refusal and wrong Root harness API remain preserved.

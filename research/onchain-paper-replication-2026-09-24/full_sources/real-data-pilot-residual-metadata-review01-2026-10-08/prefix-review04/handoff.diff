@@ -1,0 +1,26 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor02-2026-10-06/candidate/prepare_builder03_input02.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/prepare_builder04.py
+@@ -34,8 +34,14 @@
+     templates={key:b.metadata(root,p['references'][role]) for key,role in roles.items()}
+     stage=templates['compact']['stage_policy'];job=templates['job'];pilot=templates['pilot'];archive=templates['archive']
+     resource=job['resources'];budget=resource['storage_budget'];native=resource['native_unit_limits']['file_size_bytes']
++    prefix='scoring_diagnostic' in pilot
++    if prefix:
++        diag=pilot['scoring_diagnostic']
++        need(diag=={'schema_version':1,'max_completed_pairs':1024,'checkpoint_every_pairs':64,'checkpoint_relative':'scoring-diagnostic/progress.json'}
++            and all(type(diag[k]) is int for k in ('schema_version','max_completed_pairs','checkpoint_every_pairs'))
++            and min(g['rows']*32 for g in graphs.values())>1024,'exact1024 first-graph diagnostic reservation')
+     typed=p['typed_allocations'];need(stage['score_chunk_cells']==typed['chunk_cells'],'same original batch chunk selection required')
+-    r=load('residuals').resolve(stage,native_file_bytes=native,training_checkpoint_bytes=pilot['max_checkpoint_bytes'],runtime_reservation=p['runtime_reservation'],lifecycle_reservation=p.get('lifecycle_reservation'))
++    r=load('residuals').resolve(stage,native_file_bytes=native,training_checkpoint_bytes=pilot['max_checkpoint_bytes'],runtime_reservation=p['runtime_reservation'],lifecycle_reservation=p.get('lifecycle_reservation'),matching_stages=1 if prefix else 7)
+     base=p['physical_baseline'];need(set(base)=={'evidence','logical_bytes','allocated_bytes','entries'},'exact current baseline declaration required')
+     b.ref_path(root,base['evidence']) # stat/reference only, no scan or credential read
+     tr=p['transport_limits'];c=load('controls')
+@@ -52,6 +58,7 @@
+         'residual_domains':r['residual_domains'],'filesystem':p['filesystem'],
+         'baseline':{k:base[k] for k in ('logical_bytes','allocated_bytes','entries')}|{'evidence_sha256':base['evidence']['sha256']},'storage_budget':budget}
+     need(p['filesystem']['max_native_file_bytes']==native,'same registered native limit required')
++    if prefix:inventory['diagnostic']={'max_completed_pairs':1024,'active_matching_stages':1,'retained_matrix_files':1}
+     totals=c.calculate(inventory)
+     store=totals['builder03_physical_fragment']|{'baseline_evidence':base['evidence'],'baseline_logical_bytes':base['logical_bytes'],'baseline_allocated_bytes':base['allocated_bytes']}
+     spec={k:p[k] for k in ('references','template_roles','typed_input_role','typed_allocations','transport_limits')}|{'graphs':draft['graphs'],'physical_store':store}

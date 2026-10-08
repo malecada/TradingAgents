@@ -1,0 +1,25 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/controls01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/controls02.py
+@@ -39,7 +39,12 @@
+     ns={};exec(compile(raw,ALLOCATION,'exec'),ns);return ns
+ 
+ def calculate(s):
+-    exact(s,{'schema_version','graphs','chunk_cells','typed_control_bytes','archive','stage','transport','residual_domains','filesystem','baseline','storage_budget'},'input')
++    fields={'schema_version','graphs','chunk_cells','typed_control_bytes','archive','stage','transport','residual_domains','filesystem','baseline','storage_budget'}
++    need(type(s) is dict and set(s) in (fields,fields|{'diagnostic'}),'input fields differ')
++    prefix='diagnostic' in s
++    if prefix:
++        need(s['diagnostic']=={'max_completed_pairs':1024,'active_matching_stages':1,'retained_matrix_files':1}
++            and all(type(v) is int for v in s['diagnostic'].values()),'exact separately registered diagnostic reservation')
+     need(type(s['schema_version']) is int and s['schema_version']==1,'schema version')
+     need(type(s['graphs']) is dict and set(s['graphs'])==set(WEEKS),'exact seven original weekly counts required')
+     calc=allocation();integer(s['chunk_cells']);integer(s['typed_control_bytes'])
+@@ -109,7 +114,7 @@
+       'archive_ledger_writer_reads':item(a['max_workflow_metadata_bytes'],archive_files,archive_dirs,archive_max_file,'eight reserved original stages; writer/read metadata and 40-byte checkpoint references'),
+       'dispatch':item(tr['max_control_bytes'],dispatch_files,1 if history_bounds is None else 2,DMETA if history_bounds is None else tr['control_history']['shard_bytes'],'Context controls; lease checks create no per-call disk file'),
+       'transport_diagnostics':item(DMETA*N+ARCHIVE if history_bounds is None else history_bounds['diagnostic_bytes'],2*N if history_bounds is None else history_bounds['diagnostic_files'],1 if history_bounds is None else 2,ARCHIVE,'one JSON and at most one bin per call; one failed/inflight bin body; successful get staging moves into caller'),
+-      'retained_original_matrices':item(sum(x['retained_matrix_logical_bytes'] for x in by.values()),7,0,max(x['retained_matrix_logical_bytes'] for x in by.values()),'all seven original row-major f32 matrices; no RAM replacement'),
++      'retained_original_matrices':item(max(x['retained_matrix_logical_bytes'] for x in by.values()) if prefix else sum(x['retained_matrix_logical_bytes'] for x in by.values()),1 if prefix else 7,0,max(x['retained_matrix_logical_bytes'] for x in by.values()),'one first-graph f32 matrix allowance; planned diagnostic fails before later graphs' if prefix else 'all seven original row-major f32 matrices; no RAM replacement'),
+       'selected_payload_scratch':item(max(3*ARCHIVE,max(x['selected_payload_overlap_upper_bytes'] for x in by.values())),6,0,ARCHIVE,'accepted serial pair/tail/batch/output overlap; six simultaneous regular bodies upper bound; diagnostics counted separately'),
+     }
+     declarations=s['residual_domains'];need(type(declarations) is dict and set(declarations)==set(REQUIRED),'complete residual writer domain declarations required')
