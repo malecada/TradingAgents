@@ -1,5 +1,21 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T10:15:39.535567+00:00: pilot18 permanently CLOSED_NATIVE_SETUP_REFUSAL_PRECLAIM/reserved89. No job/claim/worker; goalACTIVE/incomplete.**
+
+Previous goal turn made source/recovery/admission progress. Fresh metadata17d1fd found no activeclaims/processes/namespaces18, RAM9230630912B/disk26046177280B; remote77316/ba3ec5 matched131bee378970e06cce0a225157e73f9b755af95e. OriginalRoot60718/fcc384 ran once to native setup after actual09:58:29 fullpreflight RAM9323139072B. Native guard refused host reserve fell during cgroup setup at9102376960B below9126805504B. OriginalRootb14669 exit1; IOclosed09:58:39/supervisor257933reaped/logsclosed. Native0.531863251s, guardchildnull, separate125/signalbefore-release/workloadPIDnull; sampledcharged14045184B/MAXOOM0. No numericalworker/MCM/update/checkpoint/fit. The preflight→setup host sample drop220762112B is not per-job attribution.
+
+[ROOT_TERMINAL01](full_sources/real-data-pilot-final18-2026-10-08/ROOT_TERMINAL01.json) authenticates originalrawjoins/currentcleanup: supervisor257933/monitor258301/wrapper258636 absent, cgroupgone/unitfailed125/MainPID0/ControlGroupempty. Observernot_admitted, ResearchRunclaim/source/representation/archive roots absent. Original outerpreflight refusal14369 remains separate; its then-unused18 conclusion is superseded by this permanent native reservation. Never reopen18/refund89. Independentoutcomeb7b6a512 accepts exact19regular82737B+3directories/22names selection4ebed7ae; localcapture122880B7d68ac29 complete, actual external return stillpending.
+
+58closed33COMPLETE25FAILED/highestactuallyclaimed88 unchanged;28pending/THREEclosedpreclaimreserves03/08/18 now.89 was reserved by this attemptednative setup, never an actualclaim. No90proposal/adoption/refund/transfer/capladder. Original32motifs512spent/sevenfullgraphs/16decisions28lookback/model20f451trainingd527/fullMCM→GAT→attentionLSTM/onejointupdate and resources6cap5high8.5startup2.5reservezeroSwap10floor2CPU8h/60slease unchanged. Correctedguard995fe76 has not been exercised by a numericalworker yet.
+
+RootsoleMain/accounting/STATE/Git/actualpreservation/ONElauncher; freezeENDED. ReviewerownsNEW eighteenth-native-refusal-review01 actualoutcome/selection/returnedverification. WorkerownsNEW startup-lazy-engine-correction01 import-only engineeringinvestigation: metadatareservations→compact_policy→matching_pair eager numericalengine→numpy/scipy; deferengine imports onlyifbounded actualengineeringmeasurement supports it, with fullalgorithm/sourcechecks unchanged. Existing read-onlystartupreport found unusedAdmission holds but no supported memoryfix. RootHOST_PROCESS_MEMORY01 records currentuserPSS6580357120B/topPythonPIDs8243/10895 total1463997440B; no commandline/credentials reads, no processkill or pastjob attribution. These observations do not prove runtimecapacity or startupcause.
+
+Next actualpush/freshlyrecover/verify18increment using existingtar/Gitrecipe; concurrently prove orrefuse minimal lazy-import candidate. Onlyaccepted functionalchange and actual18preservation maylead to prospective unused19/sourcecontext/registration/accounting90=58+28+3+ONE19/review before one fresh eligible nativeattempt. Do not launch near-threshold retries merely to create new terminal identities; no unsupportedcap/reserve change or genericframework/repeatedoldmatrix. BroadheartbeatPAUSED. Goal requires fullMCM/update/checkpoint and measurements; no smaller success claim.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T09:55:51.530364+00:00: resumed checks complete; reviewed fix live, actual17 failure recovered, unused18 prepared/released. Full entry refused startup RAM before any attempt/claim. No numerical job; goalACTIVE/incomplete.**
 
 Focused live-guard correction995fe76 passed8worker+6independent checks/e3a272f5 and was adopted; strict18storagef4cbe9 accepted2e6093f3. Full method/source/input/runtime/currentowner/nativecontrols and60s lease limit remain. Actual failed17 public increment46files476888B+13dirs/59names recovered via fresh externalGit9ops73333/ef17c1; independent29cf984e accepts all names/modes/hashes, original/bare/returned retained.17permanentFAILED/spent88; originalFAILEDcell/observerUNAVAILABLE discrepancy retained. NoMCM/update/financialfit.

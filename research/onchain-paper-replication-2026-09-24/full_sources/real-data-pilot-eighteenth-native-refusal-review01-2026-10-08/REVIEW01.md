@@ -1,0 +1,9 @@
+# Pilot18 native setup refusal
+
+Actual60718 native attempt is permanently `CLOSED_NATIVE_SETUP_REFUSAL_PRECLAIM_NEVER_REUSE_NO_REFUND`, reserved allowance89. This supersedes the earlier14369 outer-preflight conclusion that unused18 could qualify later; the earlier event remains unchanged.
+
+All original public hash joins and current cleanup checks pass. Root/supervisor exit1, guard child exit null and separate wrapper exit125 with “signal before release” are distinct. No workload PID or ResearchRun claim exists. Supervisor257933, monitor258301 and wrapper258636 are absent; the native cgroup is gone; unit MainPID0/ControlGroup empty/ExecMainStatus125 agree. Host available RAM9102376960 was24428544 bytes below the9126805504 startup requirement during setup, before release publication (`resources.py:605–612`) and worker creation (`resources.py:288–292`). No kernel HIGH/MAX/OOM events occurred. Earlier headroom is not a measurement of attributed workload overhead.
+
+The one registered cell and all seven registered graphs remain unavailable because the worker was never released. No original resource journal, pilot summary or cell ledger was emitted; the review’s denominator is derived explicitly from registration metadata. No scientific result or artificial failed ResearchRun is created. Accounting remains58 closed claims (33 complete/25 failed), highest actual claim88,28 pending, and now three closed preclaim reserves03/08/18. Identity18 cannot be reused or refunded.
+
+Selection contains19 original regular files82737 bytes and3 directories: the complete actual run/guard and parent-log roots, plus eight dynamic entry/refusal/eligibility/remote/terminal records. Claim/source/representation/archive-dispatch namespaces are absent. Private transport, shared runtime, historical stores and unchanged source/preparation are excluded. All selected originals must remain retained after capture and returned recovery verification.

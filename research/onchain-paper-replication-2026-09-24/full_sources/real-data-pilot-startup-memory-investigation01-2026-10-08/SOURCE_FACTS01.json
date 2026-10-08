@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-08T10:04:57.313130+00:00",
+  "source_sha256": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final18-2026-10-08/root_io.py": "617ed72065d6d6eb8a6418cafb5e9172f600382eed10c1d2c9cce07c871cb0dc",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final18-2026-10-08/preflight01.py": "257020eb79b3f19f7368a63bf4c0803b3665fea4ba8a5c3811b55637944fceb9",
+    "tradingagents/research/onchain_replication/job.py": "4610cb4a5a8cfa8397f55502e15ec48e23f12b585d121adf6f24ad19466a9e75",
+    "tradingagents/research/onchain_replication/resources.py": "d068d947e96b20f99b542e4de08eca1ced0e4d6717b462400ed66cf8a893ea8a",
+    "tradingagents/research/admission.py": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd",
+    "tradingagents/research/lifecycle.py": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": "639fda40ba96b8cc12673f0ed75301f46e46ad83d4edb629ec101f528d054ee2",
+    "tradingagents/research/onchain_replication/resource_fixture.py": "31cc0329e7246b260f64d6b608df9d9eb4d812cacbb90b9202d9d6f5f8886bc5",
+    "tradingagents/research/onchain_replication/real_pilot_storage.py": "f4cbe9b01e16a6fe12abf09881f3cd4be3d45852714d9ddfac49e55db9c54a21",
+    "tradingagents/research/onchain_replication/environment.py": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+    "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471"
+  },
+  "ast_checks": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final18-2026-10-08/root_io.py",
+      "function": "launch_checked",
+      "admission_assignment_line": 120,
+      "unused_admission_retained_until_return": true
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "function": "launch",
+      "admission_assignment_line": 224,
+      "unused_admission_retained_until_return": true
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "function": "monitor",
+      "admission_assignment_line": 292,
+      "unused_admission_retained_until_return": true
+    }
+  ],
+  "public_gate": {
+    "sha256": "6cbee9c02245ef6c4c7a14b9fafcb6293abeaad461266fbad232cbf77b55ae3b",
+    "file_bytes": 277497,
+    "experiments": 4,
+    "source_files": 298,
+    "input_roles": 59
+  },
+  "coordinator_observations": {
+    "provenance": "Provided coordinator observations; no historical process-memory attribution inferred",
+    "threshold_bytes": 9126805504,
+    "post_setup_mem_available_bytes": 9102376960,
+    "later_prelaunch_sample_bytes": 9230630912,
+    "post_setup_shortfall_bytes": 24428544,
+    "difference_between_supplied_host_samples_bytes": 128253952,
+    "wrapper_charged_memory": "approximately14MB; supplied observation, includes cgroup charges rather than process RSS",
+    "worker_released": false,
+    "empirical_claim_created": false
+  },
+  "qualification": "Serialized bytes are not retained heap size, RSS, PSS, or host memory consumption."
+}
