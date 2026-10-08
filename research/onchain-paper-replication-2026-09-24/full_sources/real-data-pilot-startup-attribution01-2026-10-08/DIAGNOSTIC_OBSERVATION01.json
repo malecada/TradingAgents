@@ -1,0 +1,219 @@
+{
+  "checkpoint_writes_before_this_snapshot": 59,
+  "claim_sha256": "03e46135def01a13cef89b236f41e861a121a67b3e8fb0bec844d4f12aaf0a46",
+  "completed_scalar_pairs": 351,
+  "full_mcm_complete": false,
+  "graph_completed_scalar_pairs": 351,
+  "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+  "kind": "partial_scalar_scoring_diagnostic",
+  "matching_elapsed_seconds": 610.0707086099974,
+  "model_update_complete": false,
+  "pairs_per_second": 0.5753431447310894,
+  "paper_financial_fits": 0,
+  "phase_timings": {
+    "advance_annealing_including_rank_transition": {
+      "calls": 352,
+      "seconds": 5.107389338998473
+    },
+    "advance_hardening": {
+      "calls": 352,
+      "seconds": 0.09001589996842085
+    },
+    "event_publication": {
+      "calls": 704,
+      "seconds": 89.97950918805145
+    },
+    "lease": {
+      "calls": 29650,
+      "seconds": 258.08869262878943
+    },
+    "pair_validation": {
+      "calls": 352,
+      "seconds": 0.01320175500222831
+    },
+    "retention_live": {
+      "calls": 1410,
+      "seconds": 85.14088249907945
+    },
+    "score_only": {
+      "calls": 352,
+      "seconds": 0.17116213794361101
+    },
+    "state_create": {
+      "calls": 352,
+      "seconds": 0.07282377796946093
+    }
+  },
+  "planned_stop_reached": false,
+  "policy": {
+    "checkpoint_every_pairs": 64,
+    "checkpoint_relative": "scoring-diagnostic/progress.json",
+    "max_completed_pairs": 1024,
+    "schema_version": 1
+  },
+  "qualification": "Completed pair-log acknowledgements only; final capped pair may not enter score tail. Timings are selected inclusive seams, not a disjoint profile; annealing advance includes atomic rank transition. Extraction is not isolated. Automatic refresh is sampled after timing callbacks, at most once per60seconds and480times; blocked calls have no guaranteed refresh. Remaining startup is measured after population/input/graph/model loading; phases include entry checkpoint publication and exclude exit publication. Matching entry precedes matcher/index preparation. Tail durability is a sampled watermark. Outer exit/recovery remain separate.",
+  "representation_credit": 0,
+  "schema_version": 1,
+  "scope_elapsed_seconds": 2459.988509114999,
+  "source": "d00d8dfb34acce77f965dfcc87c79f264d132a69",
+  "startup_progress": {
+    "active": 21,
+    "phases": [
+      {
+        "elapsed_seconds": 29.287081604998093,
+        "entered_seconds": 0.0122326000018802,
+        "graph_index": null,
+        "phase": "archive_preflight",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 11.81980314500106,
+        "entered_seconds": 29.30075348399987,
+        "graph_index": null,
+        "phase": "archive_context",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 24.088420850999682,
+        "entered_seconds": 41.12270075000197,
+        "graph_index": null,
+        "phase": "bind",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 12.216033772998344,
+        "entered_seconds": 65.2135007120014,
+        "graph_index": null,
+        "phase": "import_preparation",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 114.53083839799729,
+        "entered_seconds": 77.43615058200157,
+        "graph_index": null,
+        "phase": "import_attach",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 15.444128487000853,
+        "entered_seconds": 191.96841578599924,
+        "graph_index": null,
+        "phase": "import_execution",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 26.253519878999214,
+        "entered_seconds": 207.42188168400025,
+        "graph_index": null,
+        "phase": "lease_activation",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 83.52711374499995,
+        "entered_seconds": 233.67951873399943,
+        "graph_index": 0,
+        "phase": "target",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 92.94683137999891,
+        "entered_seconds": 317.2102682670011,
+        "graph_index": 1,
+        "phase": "target",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 85.8249104159986,
+        "entered_seconds": 410.1638334039999,
+        "graph_index": 2,
+        "phase": "target",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 80.28043721599897,
+        "entered_seconds": 495.9954292069997,
+        "graph_index": 3,
+        "phase": "target",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 84.5490577519995,
+        "entered_seconds": 576.2829064350008,
+        "graph_index": 4,
+        "phase": "target",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 87.51689203999922,
+        "entered_seconds": 660.8344534040007,
+        "graph_index": 5,
+        "phase": "target",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 80.36612930699994,
+        "entered_seconds": 748.3529117569997,
+        "graph_index": 6,
+        "phase": "target",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 97.40325141699941,
+        "entered_seconds": 828.7265523909991,
+        "graph_index": 0,
+        "phase": "prepare",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 107.6265179669972,
+        "entered_seconds": 926.1366938550018,
+        "graph_index": 1,
+        "phase": "prepare",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 100.86433879999822,
+        "entered_seconds": 1033.770319825002,
+        "graph_index": 2,
+        "phase": "prepare",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 94.82439207000061,
+        "entered_seconds": 1134.6365864139989,
+        "graph_index": 3,
+        "phase": "prepare",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 99.66634718400019,
+        "entered_seconds": 1229.4678054370015,
+        "graph_index": 4,
+        "phase": "prepare",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 102.08840374099964,
+        "entered_seconds": 1329.1361749870011,
+        "graph_index": 5,
+        "phase": "prepare",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 94.03033666099873,
+        "entered_seconds": 1431.231340997001,
+        "graph_index": 6,
+        "phase": "prepare",
+        "state": "completed"
+      },
+      {
+        "elapsed_seconds": 0.0,
+        "entered_seconds": 1525.3874246179985,
+        "graph_index": 0,
+        "phase": "production",
+        "state": "entered"
+      }
+    ]
+  },
+  "tail_observation": null
+}

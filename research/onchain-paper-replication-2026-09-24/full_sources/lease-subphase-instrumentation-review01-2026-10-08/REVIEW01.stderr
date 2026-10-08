@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/lease-subphase-instrumentation-review01-2026-10-08/review01.py", line 27, in <module>
+    body=next(n for n in ast.walk(tree) if isinstance(n,ast.FunctionDef) and any(isinstance(x,ast.FunctionDef) and x.name=='_lease_body' for x in n.body))
+StopIteration

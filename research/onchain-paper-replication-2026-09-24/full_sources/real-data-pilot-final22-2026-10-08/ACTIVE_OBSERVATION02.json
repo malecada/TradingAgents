@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-08T20:41:29.144212+00:00",
+  "elapsed_seconds": 749.3117701449992,
+  "host_mem_available_bytes": 6699810816,
+  "kernel_readback": {
+    "cpu.pressure": "some avg10=0.16 avg60=0.15 avg300=0.16 total=4925752\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3320002",
+    "io.pressure": "some avg10=0.00 avg60=0.00 avg300=0.11 total=2963161\nfull avg10=0.00 avg60=0.00 avg300=0.11 total=2960937",
+    "memory.current": "5127909376",
+    "memory.events": "low 0\nhigh 926\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.peak": "5370662912",
+    "memory.pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=393690\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=393690"
+  },
+  "limit_reason": null,
+  "qualification": "Actual same live worker/proc/cgroup sample. CPU and I/O counters cumulative; pressure counters are kernel observations, not causal attribution or pure loading/feature timings.",
+  "session": 83120,
+  "source": "d00d8dfb34acce77f965dfcc87c79f264d132a69",
+  "worker_cpu_system_seconds": 0.28,
+  "worker_cpu_user_seconds": 2.53,
+  "worker_io_counters": {
+    "cancelled_write_bytes": 0,
+    "rchar": 134598555,
+    "read_bytes": 0,
+    "syscr": 15131,
+    "syscw": 3,
+    "wchar": 2216,
+    "write_bytes": 4096
+  },
+  "worker_pid": 684774,
+  "worker_start_ticks": "1959729",
+  "worker_status_memory": {
+    "RssAnon": "14132 kB",
+    "RssFile": "11476 kB",
+    "RssShmem": "0 kB",
+    "Threads": "1",
+    "VmHWM": "26308 kB",
+    "VmRSS": "25608 kB",
+    "VmSwap": "0 kB"
+  }
+}

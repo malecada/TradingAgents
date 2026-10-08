@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "verified_files": 3,
+  "directories_including_root": 2,
+  "refusals": [
+    {
+      "name": "overwrite-recovery",
+      "type": "FileExistsError"
+    },
+    {
+      "name": "existing-root",
+      "type": "FileExistsError"
+    },
+    {
+      "name": "path-'../escape'",
+      "type": "ValueError"
+    },
+    {
+      "name": "path-'/absolute'",
+      "type": "ValueError"
+    },
+    {
+      "name": "path-'nested/../escape'",
+      "type": "ValueError"
+    },
+    {
+      "name": "path-'nested//bad'",
+      "type": "ValueError"
+    },
+    {
+      "name": "path-'nested/./bad'",
+      "type": "ValueError"
+    },
+    {
+      "name": "path-'bad\\\\name'",
+      "type": "ValueError"
+    },
+    {
+      "name": "path-''",
+      "type": "ValueError"
+    },
+    {
+      "name": "original-overlap",
+      "type": "ValueError"
+    },
+    {
+      "name": "symlink-root",
+      "type": "FileExistsError"
+    },
+    {
+      "name": "symlink-file",
+      "type": "FileExistsError"
+    },
+    {
+      "name": "symlink-file-final",
+      "type": "ValueError"
+    },
+    {
+      "name": "typed-metadata-mismatch",
+      "type": "ValueError"
+    },
+    {
+      "name": "member-order",
+      "type": "ValueError"
+    },
+    {
+      "name": "missing-member",
+      "type": "ValueError"
+    },
+    {
+      "name": "short-member-bytes",
+      "type": "ReadError"
+    },
+    {
+      "name": "bound-file",
+      "type": "ValueError"
+    },
+    {
+      "name": "wrong-pin",
+      "type": "ValueError"
+    },
+    {
+      "name": "extra-directory",
+      "type": "ValueError"
+    },
+    {
+      "name": "hardlink-final",
+      "type": "ValueError"
+    }
+  ],
+  "multibatch_original_indices": true,
+  "real_preservation_verifier_calls": 6,
+  "affinity": [
+    0,
+    1
+  ],
+  "nice": 10,
+  "rlimit_as": [
+    268435456,
+    268435456
+  ],
+  "rlimit_fsize": [
+    4194304,
+    4194304
+  ],
+  "numerical_imports": false,
+  "actual_originals_read": false
+}

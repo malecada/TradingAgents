@@ -1,0 +1,69 @@
+{
+  "status": "completed_metadata_only",
+  "metadata_pins": {
+    "receipt": {
+      "path": "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/compact/dictionary-import/import-complete.json",
+      "bytes": 5019,
+      "sha256": "447fa5e45adc4aa41ea75cc1907b455203b57a4a59773f1907d45d9d7409766a"
+    },
+    "start": {
+      "path": "research_artifacts/onchain_compact_mcm/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/start.json",
+      "bytes": 1445,
+      "sha256": "51a046b4f0fc942098ba60607e3305a93e855ae6d3c2bb289286183e6dece694"
+    },
+    "job": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final22-2026-10-08/inputs02/execution_job.json",
+      "bytes": 6143,
+      "sha256": "f55f8e6259b965ef26bc87f38c30c0372cf864e568f8b0fe09d67cd7649bdedc"
+    }
+  },
+  "target_canonical_bytes": {
+    "mapping": 589,
+    "execution": 4964,
+    "scope": 476
+  },
+  "source_summary": {
+    "kind": "registered-source-map-v1",
+    "source_count": 183,
+    "source_sha256": "da67941c90fe5047b5ea5695de8d482d8028bb88983022cf7d1b8604a0bec450"
+  },
+  "timings": {
+    "three_target_serializations": {
+      "seconds_per_call": [
+        0.00015142371999900207,
+        0.0001503703560010763,
+        0.0001505891260021599,
+        0.0001517972709989408,
+        0.00015029389199844445
+      ],
+      "median_seconds": 0.0001505891260021599
+    },
+    "producer_root_read_serialize": {
+      "seconds_per_call": [
+        9.546503299861797e-05,
+        9.799751999889849e-05,
+        0.00010131998900033068,
+        0.00010035580100156949,
+        9.806113000013283e-05
+      ],
+      "median_seconds": 9.806113000013283e-05
+    },
+    "producer_serialize_only": {
+      "seconds_per_call": [
+        1.5507879998040152e-05,
+        1.633696399949258e-05,
+        1.641232600013609e-05,
+        1.6640442998323124e-05,
+        1.696644399999059e-05
+      ],
+      "median_seconds": 1.641232600013609e-05
+    }
+  },
+  "qualification": "Offline exact-shaped metadata fixture. Execution identity placeholder same width; original current/numeric shapes copied from receipt. Producer path is local synthetic path, not real hotpath I/O. Does not measure authority or scheduler; no actual22 throughput attribution.",
+  "numerical_imports": false,
+  "affinity": [
+    0,
+    1
+  ],
+  "nice": 10
+}

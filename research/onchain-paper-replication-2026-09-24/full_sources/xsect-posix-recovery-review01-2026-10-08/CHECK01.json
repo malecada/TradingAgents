@@ -1,0 +1,64 @@
+{
+  "decision": "accepted_source_only",
+  "checks": [
+    {
+      "case": "fresh_target_exclusive",
+      "refused": "FileExistsError"
+    },
+    {
+      "case": "wrong_root_identity",
+      "refused": "ValueError"
+    },
+    {
+      "case": "member_order_refused",
+      "refused": "ValueError"
+    },
+    {
+      "case": "two_file_exact_recovery",
+      "accepted": true
+    },
+    {
+      "case": "overwrite_refused",
+      "refused": "FileExistsError"
+    },
+    {
+      "case": "unexpected_symlink",
+      "refused": "ValueError"
+    },
+    {
+      "case": "hardlink",
+      "refused": "ValueError"
+    },
+    {
+      "case": "same_extent_wrong_content",
+      "refused": "ValueError"
+    },
+    {
+      "case": "final_hash_and_directory_modes_mtimes_including_root",
+      "result": {
+        "files": 2,
+        "directories_including_root": 2,
+        "raw_bytes": 1028,
+        "directory_metadata_restored": false,
+        "originals_opened": false,
+        "writer_exclusion_proved": false
+      }
+    },
+    {
+      "case": "traversal",
+      "refused": "ValueError"
+    },
+    {
+      "case": "root_symlink",
+      "refused": "NotADirectoryError"
+    }
+  ],
+  "actual_affinity": [
+    0,
+    1
+  ],
+  "nice": 10,
+  "candidate_sha256": "dcd7e1ca1e7017541ad3635bc229d7bd9d6326ad819bb6762958f9e6df008d3a",
+  "unchanged_verifier_sha256": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+  "qualification": "Two synthetic files only; no real-store access, transport, authority or execution admission."
+}

@@ -1,9 +1,10 @@
 # Coordination — representative real-data pilot
 
-No native job active.61closed33COMPLETE28FAILED/highest92; prospective93 reviewed, no fresh22claim.21permanentFAILED/spent/externallyrecovered.
+Root owns live Main/Git/registration/accounting/STATE/external preservation and ONE numerical launcher. Native22 CLOSED/FAILED planned1024; all4PIDs+cgroup absent, source freeze ended. Root actual83120/b1503c/exit1 and original logs/cleanup retained.62closed33COMPLETE29FAILED/highest93; no94proposal/claim.
 
-Fresh22 source/entry committed and genuine job._admitted plus complete read-only preflight passed.345source/60inputs, original32motifs512samples/seven graphs, original model/training and nativecaps unchanged. Extra262144B matching scratch registered separately. Entry combined review accepted once. Exact incremental52body1574907B external return from actual remote2dd66342 complete;469inherited identical refs reused, private/runtime/raw/POSIX/deletion excluded.
+- Ordinary xsectbackup SAME37092/PID910867 remains active; never restart. Latest counts in current TOP. No deletion or realPOSIXrestore yet.
+- Root owns failed22 commit/push/fresh13-operation recovery and precise STATE. Outcome reviewer owns new twentysecond-outcome-review01 returned acceptance only; prior43terminal/source-scope checks accepted and reused.
+- Annealing agent owns NEW edge-agreement-reuse-candidate01-2026-10-09, exact lazy immutable-domain/scratch-bounded source+tiny synthetic checks only. No Main or empirical/native job. Other agents idle.
+- Accepted reconstruction entryf3b1f132/bind48ab44cd/sourceb342915b awaits genuine29backup completion/Rootexit before actual final refs/release. Native22 terminal now exists. Root alone binds/releases/runs restore once; accepted POSIXhelper/transport reused.
 
-Root sole Main/registration/STATE/Git/preservation/ONElauncher. Owner_policy complete; residual_metadata actual recovery review8047031c accepted/completed in exclusive entry22-recovery-review01. Solverworker source diagnosis complete, tiny authentication candidate remains uninstalled outside22release.
-
-Next: commit accepted return receipts, ONE fresh22 root_io/preflight launch and retain exact session/claim/native handles. Freeze Main/Git while active. Diagnostic1024 planned incomplete does not complete full7MCM→GAT→attentionLSTM goal; full storage/watch unresolved. GoalACTIVE/broad heartbeatPAUSED, no financial fits. Never reopen spent/reserved history or delete unrecovered data.
+Full7graph→MCM→GAT→attentionLSTM/update goal ACTIVE/incomplete; broad heartbeat PAUSED.56584576expected first-graph pairs versus1024 completed diagnostic; no whole ETA/training measurement. Preserve32motifs512samples/model/training/failed histories. No repeated source matrices/frameworks/history copies, no budgets/refunds/reopened identities or narrower goal.

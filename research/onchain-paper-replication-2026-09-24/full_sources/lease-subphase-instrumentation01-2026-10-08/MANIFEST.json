@@ -1,0 +1,80 @@
+{
+  "status": "uninstalled_paired_candidate_independent_review_pending",
+  "expected_frozen_root_source": "d00d8dfb34acce77f965dfcc87c79f264d132a69",
+  "targets": {
+    "tradingagents/research/onchain_replication/compact_mcm.py": {
+      "baseline_sha256": "d8435b5bc2e2067065969ad73629914d45bed5d30272a176579b4d9024c35294",
+      "candidate_sha256": "64ea0371c65b097cbebc56ac666e7bc3bb6600651799f3cc6bc4491b8644c530",
+      "inverse_target_sha256": "d8435b5bc2e2067065969ad73629914d45bed5d30272a176579b4d9024c35294"
+    },
+    "tradingagents/research/onchain_replication/real_pilot_partial_progress.py": {
+      "baseline_sha256": "1161ebde4d2ec281c29065fbd0c10bac39a9f0e2dbe3796d11acfb5b428c190a",
+      "candidate_sha256": "d424e92edba6e0d7ae3537649f3ebda228b3d9c1498fbe878530d31b519d64f7",
+      "inverse_target_sha256": "1161ebde4d2ec281c29065fbd0c10bac39a9f0e2dbe3796d11acfb5b428c190a"
+    }
+  },
+  "controlling_verification": "TEST02.log and RESULT02.json",
+  "earlier_verification": "TEST01 passed functional checks but file limit8MiB; retained and superseded by exact4MiB TEST02",
+  "files": {
+    "real_pilot_partial_progress.py.candidate.patch": {
+      "sha256": "7005cbdd184a70d4d13fb30f47ea9714d256325913dfa9912c4a568b48df4493",
+      "bytes": 2168
+    },
+    "compact_mcm.py.candidate.patch": {
+      "sha256": "df78dca8e5b6a8655dc95370615c68c32cb666b0a01d15bc487acd9dcff4b4e7",
+      "bytes": 1573
+    },
+    "TEST01.log": {
+      "sha256": "bb43e1d04ea2223af64311967cb3618895f43933024aa55318054bbd3b7c4c18",
+      "bytes": 475
+    },
+    "verify.py": {
+      "sha256": "7f9749995bb493b7523c97da309095fd19c74272d2d8eb6546e34d7ca70b1960",
+      "bytes": 7061
+    },
+    "real_pilot_partial_progress.py.inverse.patch": {
+      "sha256": "6e94a333c1d75862fca6aebdb4be31838616f44bb52855d10d68514edabc5d3c",
+      "bytes": 2168
+    },
+    "baseline_compact_mcm.py": {
+      "sha256": "d8435b5bc2e2067065969ad73629914d45bed5d30272a176579b4d9024c35294",
+      "bytes": 26932
+    },
+    "compact_mcm.py": {
+      "sha256": "64ea0371c65b097cbebc56ac666e7bc3bb6600651799f3cc6bc4491b8644c530",
+      "bytes": 27837
+    },
+    "real_pilot_partial_progress.py": {
+      "sha256": "d424e92edba6e0d7ae3537649f3ebda228b3d9c1498fbe878530d31b519d64f7",
+      "bytes": 19652
+    },
+    "verify02.py": {
+      "sha256": "70f96219ed6723573eda5f4a6f33aa180fea6dd8f5d501b069ceb200828019d4",
+      "bytes": 7317
+    },
+    "RESULT01.json": {
+      "sha256": "bb43e1d04ea2223af64311967cb3618895f43933024aa55318054bbd3b7c4c18",
+      "bytes": 475
+    },
+    "RESULT02.json": {
+      "sha256": "1466cd5e26b0db001c291559937f80f62787a1b4a39da7812fb7e6886e6d01ce",
+      "bytes": 576
+    },
+    "TEST02.log": {
+      "sha256": "1466cd5e26b0db001c291559937f80f62787a1b4a39da7812fb7e6886e6d01ce",
+      "bytes": 576
+    },
+    "compact_mcm.py.inverse.patch": {
+      "sha256": "d00d251037a21075958d0d5da6962df9efde5dc1e7863c295a10541234f02001",
+      "bytes": 1573
+    },
+    "baseline_real_pilot_partial_progress.py": {
+      "sha256": "1161ebde4d2ec281c29065fbd0c10bac39a9f0e2dbe3796d11acfb5b428c190a",
+      "bytes": 18493
+    },
+    "REPORT.md": {
+      "sha256": "0cafcfa14f37b5cb2d751d19d5bdf1ac62924f014c3659868aa34f89f3bb9742",
+      "bytes": 4259
+    }
+  }
+}
