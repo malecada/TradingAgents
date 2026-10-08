@@ -1,0 +1,340 @@
+--- real_pilot_import_caller.py
++++ real_pilot_import_caller.py
+@@ -52,9 +52,14 @@
+         from .real_pilot_partial_progress import policy
+         require(full, 'partial progress requires explicit schema2 plan')
+         policy(p['partial_progress'])
++    diagnostic = 'scoring_diagnostic' in p
++    if diagnostic:
++        from .real_pilot_partial_progress import diagnostic_policy
++        require(full,'diagnostic requires schema2 plan')
++        diagnostic_policy(p['scoring_diagnostic'])
+     resource_subset = 'population_scope' in p
+     require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
+-    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()), 'pilot plan fields differ')
++    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()), 'pilot plan fields differ')
+     require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+@@ -80,9 +85,9 @@
+     require(p['model_execution'] is None or type(p['model_execution']) is dict, 'explicit model execution policy required')
+     require(type(p['max_checkpoint_bytes']) is int and 0 < p['max_checkpoint_bytes'] <= FILE_MAX, 'checkpoint cap differs')
+     outputs = p['outputs']
+-    require(type(outputs) is dict and set(outputs) == {'summary','ledger','binding','journal'}
++    require(type(outputs) is dict and set(outputs) == {'summary','ledger','binding','journal'} | ({'diagnostic'} if diagnostic else set())
+             and all(type(n) is str and n and not Path(n).is_absolute() and '..' not in Path(n).parts for n in outputs.values())
+-            and len(set(outputs.values())) == 4, 'four distinct registered output names required')
++            and len(set(outputs.values())) == (5 if diagnostic else 4), 'four distinct registered output names required')
+     if full:_finite_resources(p['resource_policy'])
+     return p
+ 
+@@ -386,6 +391,7 @@
+     from . import mcm_raw_parts, typed_score_store, typed_tail_binding
+     from . import typed_payload_operations, archive_consume, archive_owner_seal
+     from . import evaluation, checkpoints, streamed_gat, feature_residency
++    from . import real_pilot_partial_progress
+ 
+ 
+ def execute(run, payload):
+@@ -458,10 +464,16 @@
+         from .real_pilot_partial_progress import MCMProgress
+         progress = MCMProgress(p['partial_progress'],{key:len(g.node_ids) for key,g in graphs.items()},
+             claim_sha256=run._claim_sha256,source=run.admission.source)
++    diagnostic = None
+     terminal = training = None; primary = None
+     def mark(phase):
+         events.append({'phase':phase,'elapsed_seconds':time.monotonic()-began})
+     try:
++        if 'scoring_diagnostic' in p:
++            from .real_pilot_partial_progress import ScoringDiagnostic
++            require(min(len(g.node_ids)*32 for g in graphs.values())>p['scoring_diagnostic']['max_completed_pairs'], 'diagnostic must stop inside first full graph')
++            artifact = run.directory/'artifacts';durable_mkdir(artifact)
++            diagnostic = ScoringDiagnostic(p['scoring_diagnostic'],artifact,claim_sha256=run._claim_sha256,source=run.admission.source)
+         if 'archive_inputs' in p:
+             from . import archive_dispatch
+             archive_plan=archive_dispatch.preflight(run,payload,{name:True})
+@@ -488,7 +500,8 @@
+             watch.check()
+             measurements.begin(key)
+             result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
+-                **({'progress':progress} if progress is not None else {}))
++                **({'progress':progress} if progress is not None else {}),
++                **({'diagnostic':diagnostic} if diagnostic is not None else {}))
+             targets.append(result); result.check()
+             retained = resource_fixture.verify_retained(result,owner)
+             measurements.completed(key,retained)
+@@ -546,10 +559,18 @@
+                'throughput':throughput,
+                'financial_fit_complete':False,'full_size_capacity':False,'final_outer_inventory_required':True}
+     if progress is not None:summary['partial_mcm_progress'] = progress.summary()
++    diagnostic_summary = None
++    if diagnostic is not None:
++        try:
++            diagnostic_summary = diagnostic.summary();summary['scoring_diagnostic'] = diagnostic_summary
++        except BaseException as later:primary = resource_fixture._preserve_terminal(primary,later)
+     terminal = terminal or {'schema_version':1,'kind':KIND,'status':'failed','resource_only':True,'reason':row['reason']}
+     actions = [lambda:watch.check(),lambda:run.write_json(p['outputs']['binding'],terminal),
+                lambda:run.write_json(p['outputs']['journal'],terminal),
+                lambda:run.write_json(p['outputs']['ledger'],[row]),lambda:run.write_json(p['outputs']['summary'],summary)]
++    if diagnostic is not None:
++        if diagnostic_summary is not None:actions.append(lambda:run.write_json(p['outputs']['diagnostic'],diagnostic_summary))
++        actions.append(diagnostic.close)
+     for action in actions:
+         try: action()
+         except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
+--- real_pilot_partial_progress.py
++++ real_pilot_partial_progress.py
+@@ -139,3 +139,116 @@
+                 'telemetry_error':self.error,'last_observation':None if self.last is None else dict(self.last),
+                 'representation_credit':0,'paper_financial_fits':0,
+                 'qualification':'Partial progress never changes outer graph dispositions, training completion or financial credit. Hard kill may leave only prior captured stdout; no final observation or fixed sampling-latency guarantee.'}
++
++
++DIAGNOSTIC_PHASES = ('lease', 'pair_validation', 'state_create',
++    'advance_annealing_including_rank_transition', 'advance_hardening', 'score_only')
++DIAGNOSTIC_MAX_BYTES = 8192
++
++
++class PlannedScoringStop(RuntimeError):
++    """Registered partial resource measurement ended; no MCM completion."""
++
++
++def diagnostic_policy(value):
++    require(type(value) is dict and set(value)=={'schema_version','max_completed_pairs',
++        'checkpoint_every_pairs','checkpoint_relative'},'exact diagnostic policy required')
++    require(type(value['schema_version']) is int and value['schema_version']==1,'diagnostic schema differs')
++    maximum=value['max_completed_pairs'];every=value['checkpoint_every_pairs']
++    require(type(maximum) is int and 1<=maximum<=1024 and type(every) is int
++        and 1<=every<=maximum,'finite diagnostic comparison/checkpoint bounds required')
++    require(value['checkpoint_relative']=='scoring-diagnostic/progress.json','fixed diagnostic checkpoint required')
++    return dict(value)
++
++
++class ScoringDiagnostic:
++    def __init__(self, selection, directory, *, claim_sha256, source, clock=time.monotonic):
++        import os
++        from pathlib import Path
++        self.policy=diagnostic_policy(selection);self._policy=json.dumps(self.policy,sort_keys=True)
++        require(_hash(claim_sha256,(64,)) and _hash(source,(40,64)),'diagnostic provenance required')
++        self.claim=claim_sha256;self.source=source;self.clock=clock;self.began=_time(clock())
++        self.matching_began=None;self.completed=0;self.graph=None;self.graph_base=0;self.graph_completed=0;self.tail=None
++        self.timings={key:{'seconds':0.,'calls':0} for key in DIAGNOSTIC_PHASES}
++        self.stopped=False;self.writes=0
++        parent=Path(directory);require(parent.is_dir() and parent.resolve()==parent,'diagnostic parent differs')
++        self.directory=parent/'scoring-diagnostic';self.directory.mkdir(exist_ok=False)
++        self.fd=os.open(self.directory,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
++        try:self._write()
++        except BaseException:
++            os.close(self.fd);self.fd=None;raise
++
++    def _check(self):
++        require(json.dumps(self.policy,sort_keys=True)==self._policy,'diagnostic policy changed')
++
++    def measure(self, phase, function, *args, **kwargs):
++        self._check();require(phase in self.timings,'unregistered timing phase')
++        began=_time(self.clock())
++        try:result=function(*args,**kwargs)
++        except BaseException as original:
++            try:self._record(phase,began)
++            except BaseException as later:original.add_note('Diagnostic timing failed: '+repr(later))
++            raise
++        self._record(phase,began);return result
++
++    def _record(self,phase,began):
++        elapsed=_time(self.clock())-began;require(elapsed>=0,'diagnostic clock reversed')
++        item=self.timings[phase];item['seconds']+=elapsed;item['calls']+=1
++        require(math.isfinite(item['seconds']) and item['calls']<2**63,'diagnostic aggregate overflow')
++
++    def begin(self, graph_hash, log):
++        self._check();require(not self.stopped and _hash(graph_hash,(64,))
++            and log.state['completed_pairs']==0,'fresh diagnostic graph log required')
++        if self.matching_began is None:self.matching_began=_time(self.clock())
++        self.graph=graph_hash;self.graph_base=self.completed;self.graph_completed=0;self.tail=None
++
++    def completed_pair(self,log):
++        self._check();require(not self.stopped and self.graph is not None
++            and log.state['pending'] is None and log.state['completed_pairs']==self.graph_completed+1,
++            'actual next completed pair required')
++        self.graph_completed+=1;self.completed+=1
++        require(self.completed<=self.policy['max_completed_pairs'],'diagnostic comparison cap exceeded')
++        if self.completed==self.policy['max_completed_pairs']:
++            self.stopped=True;self._write()
++            raise PlannedScoringStop('registered completed scalar comparison limit reached')
++        if self.completed%self.policy['checkpoint_every_pairs']==0:self._write()
++
++    def observe_tail(self,log,stream):
++        self._check()
++        if log is None or stream is None:return
++        require(log.state['completed_pairs']==self.graph_completed,'diagnostic log count changed')
++        batches=stream.batches;batch_cells=0 if batches is None else batches.cells
++        require(type(stream.cells) is int and 0<=batch_cells<=stream.cells<=self.graph_completed,'diagnostic tail order differs')
++        durable,poisoned=_buffered_prefix(stream,batch_cells)
++        self.tail={'acknowledged_tail_cells':stream.cells,'durable_tail_cells':durable,
++            'completed_batch_cells':batch_cells,'durability_poisoned':poisoned}
++        self._write()
++
++    def summary(self):
++        self._check();now=_time(self.clock());elapsed=now-self.began;require(elapsed>=0,'diagnostic elapsed differs')
++        matching=None if self.matching_began is None else now-self.matching_began
++        require(matching is None or matching>=0,'matching clock reversed')
++        return {'schema_version':1,'kind':'partial_scalar_scoring_diagnostic','policy':dict(self.policy),
++            'claim_sha256':self.claim,'source':self.source,'graph_hash':self.graph,
++            'completed_scalar_pairs':self.completed,'graph_completed_scalar_pairs':self.graph_completed,
++            'scope_elapsed_seconds':elapsed,'matching_elapsed_seconds':matching,
++            'pairs_per_second':self.completed/matching if matching else None,
++            'phase_timings':{k:dict(v) for k,v in self.timings.items()},'tail_observation':self.tail,
++            'planned_stop_reached':self.stopped,'checkpoint_writes_before_this_snapshot':self.writes,
++            'full_mcm_complete':False,'representation_credit':0,'model_update_complete':False,'paper_financial_fits':0,
++            'qualification':'Completed pair-log acknowledgements only; final capped pair may not enter score tail. Timings are selected inclusive seams, not a disjoint profile; annealing advance includes atomic rank transition. Extraction and startup are not isolated. Tail durability is a sampled watermark. Outer exit/recovery remain separate.'}
++
++    def _write(self):
++        import os
++        raw=(json.dumps(self.summary(),sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
++        require(len(raw)<=DIAGNOSTIC_MAX_BYTES,'diagnostic checkpoint exceeds bound')
++        fd=os.open('progress.tmp',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.fd)
++        try:
++            with os.fdopen(fd,'wb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
++            os.replace('progress.tmp','progress.json',src_dir_fd=self.fd,dst_dir_fd=self.fd);os.fsync(self.fd)
++            self.writes+=1
++        except BaseException:raise
++
++    def close(self):
++        import os
++        if self.fd is not None:os.close(self.fd);self.fd=None
+--- compact_matcher.py
++++ compact_matcher.py
+@@ -129,7 +129,7 @@
+ 
+ 
+ class CompactMatcher:
+-    def __init__(self, log, *, config, context, policy, workload_sha256, schedule, lease, retention=None, durability_barrier=None, checkpoint_layout=None):
++    def __init__(self, log, *, config, context, policy, workload_sha256, schedule, lease, retention=None, durability_barrier=None, checkpoint_layout=None, diagnostic=None):
+         require(isinstance(log, PairLog) and log.events == 0 and log.state['pending'] is None,
+                 'fresh compact log required')
+         require(callable(lease), 'live compact matcher lease required')
+@@ -150,6 +150,10 @@
+         require(log.start['scope'] == scope(config, context, policy, workload_sha256, schedule,checkpoint_layout=checkpoint_layout)
+             and log.start['max_iterations'] == config['max_iterations'], 'compact log execution scope differs')
+         require(durability_barrier is None or callable(durability_barrier), "optional coupled durability barrier")
++        if diagnostic is not None:
++            from .real_pilot_partial_progress import ScoringDiagnostic
++            require(type(diagnostic) is ScoringDiagnostic,'exact registered scoring diagnostic required')
++        self._diagnostic = diagnostic
+         self._durability_barrier = durability_barrier
+         self.log = log; self.config = effective; self.context = copy.deepcopy(context)
+         if compact_policy.PAIR_CAPACITY_FIELD in policy:
+@@ -172,6 +176,10 @@
+             from .stage_retention import Controller
+             self.retention = Controller(self, **retention)
+             _RETENTION[self] = self.retention
++
++    def _timed(self, phase, function, *args, **kwargs):
++        if self._diagnostic is None:return function(*args, **kwargs)
++        return self._diagnostic.measure(phase,function,*args,**kwargs)
+ 
+     def pair_identity(self, a, b):
+         return {'ordered_pair': engine.ann.identity(a, b, self.config), 'context': self.context,
+@@ -280,7 +288,7 @@
+             require(purpose.get('schema_version') == 1 and purpose.get('kind') in ('mcm', 'dictionary')
+                 and purpose.get('workload_sha256') == self.workload
+                 and purpose.get('typed_graphs') == [graph_identity(a), graph_identity(b)], 'compact matcher purpose differs')
+-            pair.policy_check(a, b, self.config, compact_policy.pair_policy(self.policy), allow_checkpoint_layout=True)
++            self._timed('pair_validation',pair.policy_check,a, b, self.config, compact_policy.pair_policy(self.policy), allow_checkpoint_layout=True)
+             require(self.log.events + 2 + self.schedule['max_checkpoints'] <= self.log.start['limits']['max_events'],
+                     'insufficient completion/progress event capacity')
+             reserved = self.policy['max_checkpoint_bytes'] + 2 * io.META_LIMIT
+@@ -297,15 +305,15 @@
+             if self.retention is not None:
+                 self.log.durability_barrier()
+                 self.retention.begin(purpose,a,b,identity,expected)
+-            state = engine.create(a, b, self.config, **{k: self.policy[k] for k in pair.ENGINE_FIELDS})
++            state = self._timed('state_create',engine.create,a, b, self.config, **{k: self.policy[k] for k in pair.ENGINE_FIELDS})
+             for _ in range(self.schedule['max_checkpoints']):
+                 for _ in range(self.schedule['calls_per_checkpoint']):
+                     self._check()
+-                    engine.advance(state, a, b, self.config, max_operations=self.schedule['operations_per_call'])
++                    self._timed('advance_hardening' if state['phase']=='hardening' else 'advance_annealing_including_rank_transition',engine.advance,state, a, b, self.config, max_operations=self.schedule['operations_per_call'])
+                     if state['phase'] == 'done': break
+                 if state['phase'] == 'done':
+                     self._check()
+-                    result = engine.score_only(state, a, b, self.config,
++                    result = self._timed('score_only',engine.score_only,state, a, b, self.config,
+                         max_buffer_bytes=self.policy['max_score_buffer_bytes'], chunk_edges=self.policy['chunk_edges'])
+                     try: engine.close(state)
+                     except BaseException as failure:
+@@ -319,6 +327,7 @@
+                     if self.retention is not None:
+                         self.log.durability_barrier()
+                         self.retention.complete(expected,float(result.score),result.iterations,result.convergence)
++                    if self._diagnostic is not None:self._diagnostic.completed_pair(self.log)
+                     return answer
+                 self._save(state, a, b, identity, purpose)
+             raise CheckpointStop('bounded calls exhausted; checkpoint retained for separately admitted successor')
+--- compact_mcm.py
++++ compact_mcm.py
+@@ -250,17 +250,20 @@
+         return _produce_locked(dictionary,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+ 
+ 
+-def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None):
++def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None):
+     if progress is not None:
+         from .real_pilot_partial_progress import MCMProgress
+         require(type(progress) is MCMProgress,'exact optional pilot telemetry required')
++    if diagnostic is not None:
++        from .real_pilot_partial_progress import ScoringDiagnostic
++        require(type(diagnostic) is ScoringDiagnostic,'exact optional scoring diagnostic required')
+     from .imported_mcm_identity import Target
+     target=Target(execution,graph,graph_hash)
+     with compact_owner._held(target.owner) as held:
+-        return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held,progress=progress)
+-
+-
+-def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held, progress=None):
++        return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held,progress=progress,diagnostic=diagnostic)
++
++
++def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held, progress=None, diagnostic=None):
+     owner = _owner(dictionary); held.check(owner)
+     fd = None; stream = log = None; claimed = False; inode = None
+     try:
+@@ -287,7 +290,7 @@
+             retention_selection=selection)
+         stage_inode = list(stage.inode)
+         if progress is not None:progress.begin(graph_hash,start['rows'],start['motifs'])
+-        def lease():
++        def _lease_body():
+             if _imported(dictionary) and getattr(dictionary.execution,'_sampled_authority_lease',None) is not None:
+                 from .imported_authority_lease import target_lease
+                 require(owner.active is stage,'actual active producer stage differs');target_lease(dictionary)
+@@ -295,15 +298,20 @@
+             io._root(root,fd)
+             require(io._read(fd,'start.json',io.META_LIMIT) == io._json(start),'MCM producer start changed')
+             if progress is not None:progress.poll(log,stream)
++        def lease():
++            if diagnostic is None:return _lease_body()
++            return diagnostic.measure('lease',_lease_body)
+         p = thaw(owner.policy)
+         def compute(event_log, live):
+             nonlocal log,stream
+             try:
+                 log=event_log
++                if diagnostic is not None:diagnostic.begin(graph_hash,log)
+                 if policy.get('schema_version')==2:log.enable_durability(policy['durability'])
+                 matcher = compact_matcher.CompactMatcher(log,config=thaw(owner.matching),context=thaw(owner.bound.context),
+                     policy=p['pair'],workload_sha256=scope['workflow'],schedule=p['schedule'],lease=live,
+                     retention=stage_retention.options(stage),
++                    **({'diagnostic':diagnostic} if diagnostic is not None else {}),
+                     **({'durability_barrier':lambda:stream.durability_barrier()} if policy.get('schema_version')==2 else {}))
+                 stream = MCMScoreStream(stage.root/'stream',graph=graph,dictionary=dictionary.dictionary,
+                     matching_config=thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],backend=BACKEND,
+@@ -323,6 +331,9 @@
+                     held_score_consumer.consume(dictionary,stage,held,stream)
+                 return actual,stream_terminal,numeric_pin
+             except BaseException as primary:
++                if diagnostic is not None:
++                    try:diagnostic.observe_tail(log,stream)
++                    except BaseException as later:primary.add_note('Diagnostic tail checkpoint failed: '+repr(later))
+                 # The callback owns the stream. Close it while the archive
+                 # writer claim/lease still exists, before its abort poisons Owner.
+                 if stream is not None and not stream.closed:

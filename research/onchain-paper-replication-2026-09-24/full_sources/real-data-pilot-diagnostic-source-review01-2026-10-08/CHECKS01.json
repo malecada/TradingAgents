@@ -1,0 +1,81 @@
+{
+  "status": "SOURCE_ACCEPTED_PLAN03_SCHEMA_ACCEPTED_NOT_RELEASED",
+  "checks": [
+    "COMPOSITION02.json exact",
+    "COMPOSITION03.json exact",
+    "source roster unchanged02to03",
+    "compact_matcher.py current candidate",
+    "compact_matcher.py current Main baseline",
+    "compact_mcm.py current candidate",
+    "compact_mcm.py current Main baseline",
+    "real_pilot_import_caller.py current candidate",
+    "real_pilot_import_caller.py current Main baseline",
+    "real_pilot_partial_progress.py current candidate",
+    "real_pilot_partial_progress.py current Main baseline",
+    "actual filled02 schema",
+    "original population membership unchanged",
+    "exact1024with64checkpoints",
+    "charter exact",
+    "charter dispositions disclosed",
+    "original numerical call expressions unchanged",
+    "caller kernel literal join",
+    "selected kernel reference",
+    "roster before actual activate",
+    "diagnostic module preloaded",
+    "all five outputs admitted",
+    "selected writer reader policy join",
+    "tiny scalar exact False",
+    "default no diagnostic artifacts",
+    "tiny scalar exact True",
+    "log acknowledged before tail return",
+    "tail/log distinction",
+    "finite diagnostics no credits",
+    "actual scoring timing count",
+    "later timing preserved as note"
+  ],
+  "check_count": 31,
+  "refusals": [
+    {
+      "case": "actual unfilled01 plan",
+      "exception": "ValueError",
+      "message": "seven distinct full graph inputs required"
+    },
+    {
+      "case": "missing fifth output",
+      "exception": "ValueError",
+      "message": "four distinct registered output names required"
+    },
+    {
+      "case": "duplicated fifth output",
+      "exception": "ValueError",
+      "message": "four distinct registered output names required"
+    },
+    {
+      "case": "1025 cap",
+      "exception": "ValueError",
+      "message": "partial MCM telemetry: finite diagnostic comparison/checkpoint bounds required"
+    },
+    {
+      "case": "second acknowledgement planned failure",
+      "exception": "PlannedScoringStop",
+      "message": "registered completed scalar comparison limit reached"
+    },
+    {
+      "case": "original failure survives timing error",
+      "exception": "RuntimeError",
+      "message": "original scalar failure"
+    }
+  ],
+  "reviewed_sources": [
+    "compact_matcher.py",
+    "compact_mcm.py",
+    "real_pilot_import_caller.py",
+    "real_pilot_partial_progress.py"
+  ],
+  "excluded_self_authored": [
+    "real_pilot_reservations.py",
+    "capacity_selection"
+  ],
+  "genuine_Owner_or_entry_admission": false,
+  "numerical_scope": "one tiny synthetic matching pair, default anddiagnostic; no real data or native job"
+}

@@ -1,0 +1,215 @@
+{
+  "candidate_retention_global_reservation_bytes": 7247175616,
+  "checkpoint": {
+    "array_npy_headers_bytes": 4224,
+    "array_payload_bytes": 67221120,
+    "chunks_per_array": 33,
+    "four_arrays_plus_three_64KiB_manifests_bytes": 269097984,
+    "generation_control_reservation_bytes": 720896,
+    "max_chunk_file_bytes": 2097280,
+    "selected_control_record_cap": 65536
+  },
+  "checkpoint_io_scratch_bytes": 6357376,
+  "complete_resource_envelope_proven": false,
+  "execution_admitted": false,
+  "frozen_disk_floor_bytes": 10737418240,
+  "frozen_native_file_max_bytes": 1073741824,
+  "frozen_native_memory_max_bytes": 6442450944,
+  "graphs": [
+    {
+      "complete_neighborhood_max": 146828,
+      "edges_global_upper": 2779164,
+      "graph_sha256": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+      "index_and_extraction_bytes": 389550152,
+      "induced_edge_bound_is_global": true,
+      "mcm_cells": 60105600,
+      "mcm_output_bytes": 240422400,
+      "nodes": 1878300,
+      "stage_logical_reservation_bytes": 31174523200
+    },
+    {
+      "complete_neighborhood_max": 297818,
+      "edges_global_upper": 3149567,
+      "graph_sha256": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+      "index_and_extraction_bytes": 458003060,
+      "induced_edge_bound_is_global": true,
+      "mcm_cells": 72495392,
+      "mcm_output_bytes": 289981568,
+      "nodes": 2265481,
+      "stage_logical_reservation_bytes": 32271018048
+    },
+    {
+      "complete_neighborhood_max": 350110,
+      "edges_global_upper": 2812471,
+      "graph_sha256": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+      "index_and_extraction_bytes": 415982272,
+      "induced_edge_bound_is_global": true,
+      "mcm_cells": 65558720,
+      "mcm_output_bytes": 262234880,
+      "nodes": 2048710,
+      "stage_logical_reservation_bytes": 31657117504
+    },
+    {
+      "complete_neighborhood_max": 261197,
+      "edges_global_upper": 2642414,
+      "graph_sha256": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+      "index_and_extraction_bytes": 383546348,
+      "induced_edge_bound_is_global": true,
+      "mcm_cells": 60001376,
+      "mcm_output_bytes": 240005504,
+      "nodes": 1875043,
+      "stage_logical_reservation_bytes": 31165285952
+    },
+    {
+      "complete_neighborhood_max": 117926,
+      "edges_global_upper": 2426106,
+      "graph_sha256": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+      "index_and_extraction_bytes": 335995316,
+      "induced_edge_bound_is_global": true,
+      "mcm_cells": 50606112,
+      "mcm_output_bytes": 202424448,
+      "nodes": 1581441,
+      "stage_logical_reservation_bytes": 30333816896
+    },
+    {
+      "complete_neighborhood_max": 105863,
+      "edges_global_upper": 2355230,
+      "graph_sha256": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+      "index_and_extraction_bytes": 328438388,
+      "induced_edge_bound_is_global": true,
+      "mcm_cells": 50616352,
+      "mcm_output_bytes": 202465408,
+      "nodes": 1581761,
+      "stage_logical_reservation_bytes": 30334718016
+    },
+    {
+      "complete_neighborhood_max": 140562,
+      "edges_global_upper": 2518332,
+      "graph_sha256": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "index_and_extraction_bytes": 357507336,
+      "induced_edge_bound_is_global": true,
+      "mcm_cells": 56584576,
+      "mcm_output_bytes": 226338304,
+      "nodes": 1768268,
+      "stage_logical_reservation_bytes": 30862903616
+    }
+  ],
+  "historical_declared_domains": {
+    "checkpoint_retention": {
+      "additional_scratch_bytes": 524288,
+      "bound_basis": "Seven actual MCM retention stages only: reserved controls+inputs+replays retained; two live generation bodies overlap globally under serial execution. File slots include three metadata manifests per retired generation and failed/partial states. Imported dictionary has no new matching stage. Selected policy reservations are not measured bytes.",
+      "directories": 5677,
+      "evidence_sha256": "34aeb5b492680bb804d3777e15ec4c640fe2a25517faf309563e58d265a751ac",
+      "logical_bytes": 381911040,
+      "max_file_bytes": 16777216,
+      "regular_files": 21637,
+      "scratch_files": 8,
+      "scratch_max_file_bytes": 262144
+    },
+    "import_owner_stage_journal": {
+      "additional_scratch_bytes": 0,
+      "bound_basis": "23 bounded current metadata slots: journal5 + compact owner2 + import2 + seven MCM stage pairs14. Preparation/materialization and original512/32 evidence are read-only. Directory allowance42 includes sixteen journal-parent slots and finite fixed-path ancestor margin; not another copy of original samples or motifs.",
+      "directories": 42,
+      "evidence_sha256": "34aeb5b492680bb804d3777e15ec4c640fe2a25517faf309563e58d265a751ac",
+      "logical_bytes": 1507328,
+      "max_file_bytes": 65536,
+      "regular_files": 23,
+      "scratch_files": 0,
+      "scratch_max_file_bytes": 0
+    },
+    "runtime_temp_cache": {
+      "additional_scratch_bytes": 0,
+      "bound_basis": "Prospective explicit domain ceiling, not source writer maximum or measured cache demand. Twelve actual forwarded paths are under research_artifacts/real_pilot_runtime. Existing sampled common writable-union limits and10GiB floor remain enforced; inter-sample overshoot is unbounded by this declaration. No separate quota or per-domain runtime enforcement is claimed.",
+      "directories": 256,
+      "evidence_sha256": "34aeb5b492680bb804d3777e15ec4c640fe2a25517faf309563e58d265a751ac",
+      "logical_bytes": 268435456,
+      "max_file_bytes": 67108864,
+      "regular_files": 4096,
+      "scratch_files": 0,
+      "scratch_max_file_bytes": 0
+    },
+    "training_and_lifecycle": {
+      "additional_scratch_bytes": 0,
+      "bound_basis": "Explicit prospective sampled lifecycle reservation, not a source-proven maximum encoded-body bound, per-domain quota or overshoot guarantee. Original68 file slots/16 directories retained. Includes checkpoint, bounded partial telemetry and fixed receipts. Parent exception text/log output and native receipt encodings have no newly installed smaller cap. Unexpected growth remains governed by unchanged whole-union watches, native RLIMIT and floor; no automatic retry or grant increase.",
+      "directories": 16,
+      "evidence_sha256": "34aeb5b492680bb804d3777e15ec4c640fe2a25517faf309563e58d265a751ac",
+      "logical_bytes": 33554432,
+      "max_file_bytes": 4194304,
+      "regular_files": 68,
+      "scratch_files": 0,
+      "scratch_max_file_bytes": 0
+    }
+  },
+  "pair_entries": 8402640,
+  "retained_numeric_bytes": 268884480,
+  "retention_derivation": {
+    "generations": 160,
+    "selected_pair_input_conditional_upper": 110336288,
+    "selected_pairs": 2,
+    "stage_control_bytes": 199557120,
+    "stage_cumulative_bytes": 44014103104,
+    "stage_live_bytes": 1496621632,
+    "stores": 160
+  },
+  "schema_version": 1,
+  "source_inputs": {
+    "actual_job": {
+      "path": "real-data-pilot-final19-2026-10-08/ACTUAL_JOB_READONLY_ADMISSION01.json",
+      "sha256": "77521f2a1313626a05dec9b9d98a2efdbb52bdb28bc0b2d649810d252b0b84a8"
+    },
+    "capacity": {
+      "path": "real-data-pilot-capacity-application01-2026-10-08/CAPACITY01.json",
+      "sha256": "86ff2ac343b6c6dab82b3e886f525fbb04e4ec3030faf9035386653ad6eeacd9"
+    },
+    "compact": {
+      "path": "real-data-pilot-finite-reservation-correction01-2026-10-06/metadata01/compact_policy.json",
+      "sha256": "c2843df0f6ce1c67b01b525f0c971caadc634b6f39afdb61f9467c77d9c48c3a"
+    },
+    "import_stage": {
+      "path": "real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/original_import_stage.json",
+      "sha256": "a00d61c743c6f2a9a5534ab772dc5ef383bde94bfcd5b1ed7c5003f89b5cde9b"
+    },
+    "inputs": {
+      "path": "real-data-pilot-capacity-application01-2026-10-08/INPUTS01.json",
+      "sha256": "cd0d0122596c13e35c20a2dcf862a26fa11bf02d9b1baaa9884fcf9a6a6274a6"
+    },
+    "kernel": {
+      "path": "real-data-pilot-complete-neighborhood-capacity-preparation01-2026-10-08/imported_kernel.py",
+      "sha256": "dc0a244b7cce4261093a95ce686a01bae0f26c8797a8616463c7d5078a2b2604"
+    },
+    "mcm": {
+      "path": "real-data-pilot-index-capacity01-2026-10-07/mcm_policy01.json",
+      "sha256": "7a77c3818104a085e713333ce5d428ec696ff0be574cd3a8cc7d6e137ae06ed3"
+    },
+    "preparation": {
+      "path": "real-data-pilot-final19-2026-10-08/PREPARATION_RESULT01.json",
+      "sha256": "5fae455feef385b5248f0f0556ac1519b00ffab42d2418db3ab6b1f8e9cb79b0"
+    }
+  },
+  "unresolved": [
+    "Selected-input bound includes16KiB metadata but original serializer enforces8KiB; complete node-ID JSON cardinality/encoded widths remain unproved.",
+    "Selected inputs still serialize six full NPY bodies concurrently; ID Python objects and all encoded copies need whole-memory accounting.",
+    "Largest conservative selected-input NPY exceeds historical16MiB checkpoint-domain declaration; actual native file cap1GiB is distinct.",
+    "Sharded chunks2MiB+128 exceed historical256KiB checkpoint scratch-file declaration; exact physical-domain selection must be reconciled.",
+    "GlobalE is conservative for local induced edges; no node/edge truncation admitted.",
+    "Python/runtime/allocator, stable sort/SciPy scratch, source graph populations, retained outputs and filesystem cache remain outside component totals.",
+    "Logical event/tail/output reservations require actual common physical-store reservation, bounded transport and verified offload/recovery.",
+    "Existing160-checkpoint schedule is retained; capacity selection is not a completion or convergence guarantee.",
+    "Root must join original/effective matching identities, source closure, current inputs and committed registration before any new trial."
+  ],
+  "validator_source_sha256": {
+    "tradingagents/research/onchain_replication/array_neighborhoods.py": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+    "tradingagents/research/onchain_replication/checkpoint_chunks.py": "c3699ef76ad5932cf58f8cf0c6be6b36f0e4c01b0d18c6d88e85ad02fa7cd8d0",
+    "tradingagents/research/onchain_replication/compact_matcher.py": "b99c8f15719745de32248427ffa0e026a81a873615a91dae0b5198eba9c175b8",
+    "tradingagents/research/onchain_replication/compact_pair_log.py": "70691d78c0f34184db43aa93234685eb3e6100c89573af6c1bc520bafac7e756",
+    "tradingagents/research/onchain_replication/compact_policy.py": "37918e01e3de476970493afa9e78e40bcfa2f841cd7ee59fbc211c7d579730dc",
+    "tradingagents/research/onchain_replication/matching_annealing.py": "8cc3e4a0935ae7d8897e8af0c418973e25d396259e4f1db1183ac236395da4e5",
+    "tradingagents/research/onchain_replication/matching_checkpoint.py": "4287d59c0ca92cdefce10af5bb2181d720eadc937b2b93912d098fac93232126",
+    "tradingagents/research/onchain_replication/matching_hardening.py": "3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c",
+    "tradingagents/research/onchain_replication/matching_pair.py": "4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e",
+    "tradingagents/research/onchain_replication/real_pilot_reservations.py": "c5635cd3b7646b1919a2b004deb4bccb74bb5637bb48093ca2e4c15a95115a69",
+    "tradingagents/research/onchain_replication/restart_retention.py": "69a2708f43c4869dbebb764839d1dcc55e9bcd6e1de797b01d1dbf747eaae71f",
+    "tradingagents/research/onchain_replication/score_batches.py": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+    "tradingagents/research/onchain_replication/stage_retention.py": "7c49127dbe21b4866fb133e1aa9d284e13224391365be453e896611c86abffc1"
+  }
+}
