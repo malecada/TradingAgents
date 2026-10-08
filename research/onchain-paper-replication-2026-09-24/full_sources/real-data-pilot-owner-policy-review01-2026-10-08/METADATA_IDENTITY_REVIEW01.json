@@ -1,0 +1,53 @@
+{
+  "candidate_storage": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/real_pilot_storage.py",
+    "sha256": "37730532c0089acd179408e8815d4f76e699d5d7cf3bb481122a9019ea973fc3"
+  },
+  "checks": [
+    "single_identity_occurrence_real_pilot_storage.py",
+    "literal_inverse_real_pilot_storage.py",
+    "ast_inverse_real_pilot_storage.py",
+    "single_identity_occurrence_controls02.py",
+    "literal_inverse_controls02.py",
+    "ast_inverse_controls02.py",
+    "single_identity_occurrence_build_inputs04.py",
+    "literal_inverse_build_inputs04.py",
+    "ast_inverse_build_inputs04.py",
+    "main_storage_original_exact",
+    "loader_identical",
+    "only_builder_controls_refs_changed",
+    "pin_builder",
+    "pin_controls",
+    "pin_durability",
+    "pin_handoff",
+    "pin_history",
+    "pin_read_capacity",
+    "pin_residuals",
+    "pin_selected",
+    "new_path_builder",
+    "new_path_controls"
+  ],
+  "decision": "accepted-source-only",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/archive_control_history.py": "c11835de055bc02cc5c60c8f9866879cae3a3ae696ddb62bff6bfdc998cd4e72",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/chunk_durability.py": "da1fa8d8304a5241cdc44054901ecdf75231b8979569bcb373dec1471fb82f1e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/DEPENDENCIES04.json": "8996e1faa3498848102a9217c2ad8c137e530184be800c4b07d1e268d1d26e75",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/build_inputs04.py": "5b25b38ae28a100a299efa2a152044f3322ee682feb37df168badd197e270ce6",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/controls02.py": "3c73e2d335fc044362d3efd8ef532600a9ba1b006b46f8b012b90dcef4289e5d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/prepare_builder04.py": "551a7731b3b438baceb34eb21d050326d31a96265c860fb3db0c44e596b19746",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/real_pilot_storage.py": "e55fc463dbe50dca9860cf7b55ef4d78ad3ccda443dfccfe049b1879202699ae",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/residuals04.py": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/successor04.py": "65f34aecd8f7b4e2505fb28586c10196c731e3ed51a95f3edca7b8761997e267",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/DEPENDENCIES04.json": "c1c36f1ac0bb47e899fb839bb75058189f8f7cbf5fa515789d8c41dbf235421c",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/build_inputs04.py": "918e9ac1824c26dfffba98f7647ff7336927107f51b33551b720e01196420533",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/controls02.py": "9961dae6685e4cf7a6040ba86f6651f0846abbb07a3d42bdfb447c63416f1bc3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/real_pilot_storage.py": "37730532c0089acd179408e8815d4f76e699d5d7cf3bb481122a9019ea973fc3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/successor04.py": "65f34aecd8f7b4e2505fb28586c10196c731e3ed51a95f3edca7b8761997e267",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor02-2026-10-06/candidate/archive_read_control_capacity.py": "29d4c2dad463a977c99740b09d46199814dfdc3360c559bfdb12aacdd07d26b1",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/prepare_selected01.py": "0bdcbeb2e6a85a89b3d11791fe2dd5c28d17977f333914391a2830b7f92e57d3",
+    "tradingagents/research/onchain_replication/real_pilot_storage.py": "e55fc463dbe50dca9860cf7b55ef4d78ad3ccda443dfccfe049b1879202699ae"
+  },
+  "identity": "eth-paper-real-data-end-to-end-resource-20261008-21",
+  "schema_version": 1,
+  "scope": "Exactly three20-to21 identity literals; source and AST inverse restore accepted immutable20 bodies. Loader byte-identical; dependency delta only builder/controls references and hashes; all pins verified. Resource limits, numerical calculations, diagnostic behavior and strict writable scopes unchanged except fixed identity. No Main mutation, authority, registration/admission, empirical execution or old suite repeated. Fresh21 preclaim metadata refusal remains preserved."
+}
