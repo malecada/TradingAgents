@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T12:32:49.206194+00:00: pilot19 permanently FAILED/spent90 and its actual105-name increment independently externally recovered2198b839. No numerical job. Goal ACTIVE/incomplete.**
+
+Original19 source123e259a/Root94052 exit1/native1/3926.547s/MAXOOM0/kernelchargedpeak5370933248B and cleanup950190 remain immutable. Correct10000-node complete-neighborhood refusal preceded secondarypoisoned-owner CleanupFailure. One graphFAILED/sixUNAVAILABLE; last diagnostic735acknowledged/734sampleddurabletailcells/zero completedbatches, raw736slots are opaque without finalcountcredit. No completeMCM/update/checkpoint/fit or wholecapacity.
+
+Actual external9operations10763/7851ef recovered1075200B19a29fba fromsource/remote9ba7bfa05ef5523f1307472b5bf458fd93f5c70e/freshbare/noalternates; independent2198b839 accepts all105names/modes/76opaque906426B+29dirs. Original/bare/returned retained; no installedruntime/input/historical/POSIX/scientificrecovery or deletion claim. Accounting59closed33COMPLETE26FAILED/highest90/28pending/3closedpreclaimreserves unchanged. No prospective91/newclaim/capladder.
+
+[Source adoption](full_sources/real-data-pilot-post19-source-corrections01-2026-10-08/SOURCE_ADOPTION01.json)30ba5e7c installs accepted matching_owner b6c1e2b (one redundant full entry check removed; actualread_input validation retained), compact_mcm40e571 (authenticated failure stream cleanup before writerpoison/revocation), and weak_one_hop_census4ee889 helper. Reviews b9470e0c/0d52c16f/25c72421 are narrow/source-only;4focused entry checks and retained error-path tests/512synthetic3-nodegraphs+10002hub are unrelated to512originalspent samples. Compilationwithoutimports passed. Originalscience/model20f451/trainingd527/32motifs512spent/7fullgraphs/matchingmath/config10000/limits6hard5high2.5startup2.5reserve0swap10floor2CPU8h unchanged; actual new policy2 cleanup/census/full capacity remains unproved.
+
+All bounded assignments complete. Root soleMain/accounting/Git/STATE/preservation/ONElauncher; broadheartbeatPAUSED. Next executable work is a tightly scoped read-only all7graph weak1hop census with exact existinginput provenance and finite engineering controls, then full-neighborhood/pair-state capacity and per-pair overhead correction. Do not blindly increase10000 or truncate hubs; complete topology/pair bounds before a fresh reviewed registered pilot. Pair-cost source3ddc34ba identifies archive-wrapper full checks outside sampledimportedauthority; any observation-timing change needs an explicit narrow reviewed prospective contract. No new numerical pilot yet.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T12:12:29.312123+00:00: pilot19 permanently FAILED/spent90; original94052 exit1, native1. All selected processes and cgroup absent; source/Git freeze ENDED. Goal ACTIVE/incomplete.**
 
 Primary refusal was the frozen10000-node complete-neighborhood limit (actual>=10001; exact center/count unknown), not OOM. Cleanup then refused the already-poisoned imported Owner; original CleanupFailure remains the genuine failed reason. Native3926.547s, kernel charged peak5370933248B/sample peak5368954880B/MAXOOM0/zerojobswap. Last diagnostic sample735 acknowledged pairs/734 sampled durabletailcells/zero completed batches; final count unknown. One graphFAILED/sixUNAVAILABLE; no completeMCM/update/checkpoint/financialfit. Original32motifs/512spent unchanged. [Root terminal](full_sources/real-data-pilot-final19-2026-10-08/ROOT_TERMINAL01.json) joins original raw receipts/exits/cleanup; original outputs remain immutable.

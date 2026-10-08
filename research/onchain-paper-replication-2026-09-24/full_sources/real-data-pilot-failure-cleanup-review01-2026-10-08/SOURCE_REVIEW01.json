@@ -1,0 +1,14 @@
+{
+  "decision": "ACCEPT narrow source correction",
+  "source_sha256": "b9b4c853b899b4ec7d053886b3ab5146d6ce081dfa045a408a2e5c34b73154bb",
+  "candidate_sha256": "40e571df0ee512bf875be5097c49b5e6301b588fdc2646575467dde592eaf84e",
+  "author_manifest_sha256": "4d5802af4a341141aa251d8aed75ba4b618705846df29c70e4bb22736de70c12",
+  "checks": [
+    "all retained manifest bytes/hashes match",
+    "forward and inverse patches exactly regenerated from full source bytes",
+    "AST normalization removes only the precisely asserted exception wrapper; entire original module identical",
+    "candidate compiles without executing imports"
+  ],
+  "retained_functional_results": "CHECKS01.json independently inspected against check01.py; reused, not rerun",
+  "scope": "stdlib-only source/hash/AST verification; no native process, numerical import, data or authority execution"
+}

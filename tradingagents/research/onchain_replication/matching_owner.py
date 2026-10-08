@@ -166,7 +166,7 @@ def _source(run,numerical):
 def bind(run,*,representation,plan_input,producer,policy_input,journal_directory=None,
          continuation_input=None,death_input=None,_create=False,_first=False,job_input='execution_job',_resource=False):
     require(isinstance(run,ResearchRun),'actual admitted ResearchRun required')
-    run._active();run._check_source()
+    run._active()
     ad=run.admission
     execution=json.loads(run.read_input(job_input))
     if _resource:

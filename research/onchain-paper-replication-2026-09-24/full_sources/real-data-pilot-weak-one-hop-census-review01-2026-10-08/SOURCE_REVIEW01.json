@@ -1,0 +1,15 @@
+{
+  "decision": "ACCEPT source-only preparation helper",
+  "candidate_sha256": "4ee889efc0c70645f28f4188796718e93f588f98c98ae421eb222c7f54206b42",
+  "author_manifest_sha256": "f199470d6344b70949e9b3663cd3743dcf977bed11f8fda74858ad2435c59c0a",
+  "checks": [
+    "retained manifest hashes match",
+    "source parses and compiles without execution",
+    "uint64 packing upper bound and int64 counts proved with Python integers",
+    "33B simultaneous explicit chunk arrays fit 48B envelope",
+    "hub envelope independently recalculated",
+    "actual budget predicate rejects below bound and permits equality"
+  ],
+  "functional_evidence": "retained 512-pattern, duplicate/reciprocal/loop/stride/chunk and 10002-node hub tests inspected, not rerun",
+  "scope": "No NumPy/Torch imports, arrays, real graph census, authority, claims or native process execution"
+}

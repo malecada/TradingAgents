@@ -298,29 +298,36 @@ def _produce_locked(dictionary, *, graph_hash, input_name, output_input, held, p
         p = thaw(owner.policy)
         def compute(event_log, live):
             nonlocal log,stream
-            log=event_log
-            if policy.get('schema_version')==2:log.enable_durability(policy['durability'])
-            matcher = compact_matcher.CompactMatcher(log,config=thaw(owner.matching),context=thaw(owner.bound.context),
-                policy=p['pair'],workload_sha256=scope['workflow'],schedule=p['schedule'],lease=live,
-                retention=stage_retention.options(stage),
-                **({'durability_barrier':lambda:stream.durability_barrier()} if policy.get('schema_version')==2 else {}))
-            stream = MCMScoreStream(stage.root/'stream',graph=graph,dictionary=dictionary.dictionary,
-                matching_config=thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],backend=BACKEND,
-                owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live,
-                **({'durability':policy['durability']} if policy.get('schema_version')==2 else {}),
-                **({'_imported':dictionary} if _imported(dictionary) else {}))
-            require(stream.scope == scope,'MCM stream scientific scope differs')
-            live(); _original(dictionary,graph,graph_hash)
-            actual = kernel.mcm(graph,dictionary.dictionary,thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],
-                backend=BACKEND,max_entries=policy['max_entries'],score_pair=stream,policy=policy['numeric'],lease=live,
-                **({'imported':dictionary} if _imported(dictionary) else {}))
-            numeric_pin=_matrix(actual['mcm'],start['rows'],start['motifs'])
-            if matcher.retention is not None:stage_retention._bind(stage,matcher.retention,held)
-            log.durability_barrier()
-            stream_terminal = stream.finish()['terminal_sha256']
-            if held_consumer is not None:
-                held_score_consumer.consume(dictionary,stage,held,stream)
-            return actual,stream_terminal,numeric_pin
+            try:
+                log=event_log
+                if policy.get('schema_version')==2:log.enable_durability(policy['durability'])
+                matcher = compact_matcher.CompactMatcher(log,config=thaw(owner.matching),context=thaw(owner.bound.context),
+                    policy=p['pair'],workload_sha256=scope['workflow'],schedule=p['schedule'],lease=live,
+                    retention=stage_retention.options(stage),
+                    **({'durability_barrier':lambda:stream.durability_barrier()} if policy.get('schema_version')==2 else {}))
+                stream = MCMScoreStream(stage.root/'stream',graph=graph,dictionary=dictionary.dictionary,
+                    matching_config=thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],backend=BACKEND,
+                    owner=owner.identity,chunk_cells=p['score_chunk_cells'],compute=matcher,lease=live,
+                    **({'durability':policy['durability']} if policy.get('schema_version')==2 else {}),
+                    **({'_imported':dictionary} if _imported(dictionary) else {}))
+                require(stream.scope == scope,'MCM stream scientific scope differs')
+                live(); _original(dictionary,graph,graph_hash)
+                actual = kernel.mcm(graph,dictionary.dictionary,thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],
+                    backend=BACKEND,max_entries=policy['max_entries'],score_pair=stream,policy=policy['numeric'],lease=live,
+                    **({'imported':dictionary} if _imported(dictionary) else {}))
+                numeric_pin=_matrix(actual['mcm'],start['rows'],start['motifs'])
+                if matcher.retention is not None:stage_retention._bind(stage,matcher.retention,held)
+                log.durability_barrier()
+                stream_terminal = stream.finish()['terminal_sha256']
+                if held_consumer is not None:
+                    held_score_consumer.consume(dictionary,stage,held,stream)
+                return actual,stream_terminal,numeric_pin
+            except BaseException as primary:
+                # The callback owns the stream. Close it while the archive
+                # writer claim/lease still exists, before its abort poisons Owner.
+                if stream is not None and not stream.closed:
+                    io._close_after_failure(stream.close,primary)
+                raise
         ledger=getattr(owner,'_archive_operations',None)
         if ledger is None:
             log = compact_pair_log.PairLog(stage.root/'matching',owner=owner.identity,scope=thaw(stage.scope),

@@ -1,0 +1,126 @@
+{
+  "actual_external_recovery_accepted": true,
+  "archive": {
+    "bytes": 1075200,
+    "directory_count": 29,
+    "git_blob_oid": "c76a0dfded9938bef08f70c3ba6f65f1c6f26134",
+    "original_archive_streams": 0,
+    "regular_bytes": 906426,
+    "regular_count": 76,
+    "returned_archive": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-nineteenth-failed-increment01-2026-10-08/fresh-git-recovered-increment01.tar",
+      "sha256": "19a29fbab121b524cbb75c21485c6aed7f7702c9b2038313ef374f8db703f790"
+    },
+    "returned_archive_streams": 1,
+    "typed_names": 105
+  },
+  "at": "2026-10-08T12:26:19.287318+00:00",
+  "bare_repository": "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-nineteenth-failed-20261008-01.git",
+  "capture": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-nineteenth-failed-increment01-2026-10-08/CAPTURE01.json",
+    "sha256": "2ac2f270d627a5bf424594b9e17ac35f43a278f384d5d47b21ab61223f28d98f"
+  },
+  "current_alternates_absent": true,
+  "decision": "accepted",
+  "deletion_authorized": false,
+  "fresh_fetch_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-nineteenth-failed-increment01-2026-10-08/FRESH_GIT_RECOVERY01.json",
+    "sha256": "7c68d6995e20e7f13f976b9a9842f6cd7441d0d45e9abe057bb3fab252e4b4af"
+  },
+  "git_lazy_fetch_disabled": true,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261008-19",
+  "members_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-nineteenth-outcome-review01-2026-10-08/returned-git-recovery01/RECOVERED_MEMBERS01.json",
+    "sha256": "cb78f8bafd0a26bb558790e667f30c95f4b4b03e750e4a2beb7e3222432cf0df"
+  },
+  "not_tested": [
+    "No new external fetch or replay; historical external provenance depends on actual recorded operations, not offline state alone.",
+    "No original archive/evidence body reread, extraction, deletion or original scientific stores.",
+    "No performance/capacity/financial correctness, future remote availability or future pilot admission."
+  ],
+  "offline_git_checks": [
+    {
+      "args": [
+        "rev-parse",
+        "--is-bare-repository"
+      ],
+      "exit_code": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "9ba7bfa05ef5523f1307472b5bf458fd93f5c70e"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.url"
+      ],
+      "exit_code": 0,
+      "stdout": "git@github.com:malecada/TradingAgents.git"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.promisor"
+      ],
+      "exit_code": 0,
+      "stdout": "true"
+    },
+    {
+      "args": [
+        "config",
+        "--get",
+        "remote.origin.partialclonefilter"
+      ],
+      "exit_code": 0,
+      "stdout": "blob:none"
+    },
+    {
+      "args": [
+        "ls-tree",
+        "-z",
+        "9ba7bfa05ef5523f1307472b5bf458fd93f5c70e",
+        "--",
+        "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-nineteenth-failed-increment01-2026-10-08/failed-increment01.tar"
+      ],
+      "exit_code": 0,
+      "stdout": "100644 blob c76a0dfded9938bef08f70c3ba6f65f1c6f26134\tresearch/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-nineteenth-failed-increment01-2026-10-08/failed-increment01.tar\u0000"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-t",
+        "c76a0dfded9938bef08f70c3ba6f65f1c6f26134"
+      ],
+      "exit_code": 0,
+      "stdout": "blob"
+    },
+    {
+      "args": [
+        "cat-file",
+        "-s",
+        "c76a0dfded9938bef08f70c3ba6f65f1c6f26134"
+      ],
+      "exit_code": 0,
+      "stdout": "1075200"
+    }
+  ],
+  "original_selected_files_not_reread": true,
+  "originals_retained": true,
+  "provenance_basis": "Nine preserved successful Root operations show fresh bare initialization, promisor configuration, external fetch and actual lazy blob retrieval (recorded exits, not independently observed historical process lifetimes). Independent offline bare FETCH_HEAD/remote/promisor/tree/blob checks and returned body Git-object SHA1/SHA256 agree.",
+  "qualification": "Pilot19 remains permanently FAILED/spent90. Original capacity refusal, outer CleanupFailure, native/Root exits1 and actual cleanup are preserved as exact bytes. Last735 acknowledged/734 durable sampled counts remain distinct from736 opaque tail-sized slots; no final semantic or durability count inferred. Public increment BYTE recovery only: all105 names/types/modes,76regular bodies906426B and29directories. No array/event/tail values decoded; no POSIX owner/timestamp/xattr reconstruction, installed runtime/private or historical store recovery, scientific completion or successor release.",
+  "recovery_source_commit": "9ba7bfa05ef5523f1307472b5bf458fd93f5c70e",
+  "returned_archive_retained": true,
+  "schema_version": 1,
+  "selection": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-nineteenth-outcome-review01-2026-10-08/INCREMENT_SELECTION01.json",
+    "sha256": "a9953c3031a580a2983d116c1ac7fe507387a65063c334d074155bf1cd028d26"
+  }
+}
