@@ -1,0 +1,25 @@
+{
+  "failures": [
+    {
+      "log": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry17-review01-2026-10-08/BINDING_CHECK01.log",
+        "sha256": "84a55a7594cedbf15b281ed8de21dde6bf33b070f44b6241908731722a7f363e"
+      },
+      "reason": "Harness initially compared entire public connection reference against path/hash only, omitting valid bytes metadata; corrected to exact path/hash projection used by preflight."
+    },
+    {
+      "log": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry17-review01-2026-10-08/BINDING_CHECK02.log",
+        "sha256": "829e389b4b83eebba36f4932e95202ea0c870645476371aa2a04c373653c42bb"
+      },
+      "reason": "Harness recorded helper-opened lexical relative paths with parent components as canonical paths; corrected evidence collection to resolved actual path."
+    }
+  ],
+  "outcome": "resolved-review-harness-only",
+  "passing_log": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry17-review01-2026-10-08/BINDING_CHECK03.log",
+    "sha256": "4df88cceb2059489b2152c352e4a012aca4167fe357361467e070b6339eb5d04"
+  },
+  "qualification": "Both refused before any accepted binding review was written; no source/gate/registration/private body/claim/numerical mutation.",
+  "schema_version": 1
+}

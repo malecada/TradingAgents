@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T08:41:25.680039+00:00: representative goal ACTIVE; fresh17 conditional exact release40a49cf7 accepted; committed read-only admission88 passed. No numerical job.**
+
+User goal continuation reactivated the representative Ethereum pilot only; broad13-task/1420-fit heartbeat remains PAUSED. Prior checks turn made concrete progress (live faithful lock correction, independent checks, actual failed16 recovery), not a status-only turn. Actual get_goal verified ACTIVE. No selected numerical processes/active claims observed at entry; RAM9611911168B and disk26080157696B were eligible instantaneous observations, not capacity/release.
+
+Reviewed strict17 source4179fe76 adopted32e9e09a; matching_owner a033 and originalRED/live7/independent17 acceptancebbc7593a reused without retesting. Sourceanchor f66bddd71 authenticates179package files/two changed177unchanged versus16. Concrete final17 metadata uses original seven fullETHgraphs/32motifs512spent/16decisions/28lookback/model20f451/trainingd527/onejointupdate, original resources6cap5high8.5startup2.5reserve10floor8h2CPU. Botharchive/transport namespacesethpilot-20261008-17; actualpairpolicy joins bothdescriptors. Genuine sampled currentbaseline/complete modeledgrowth11184062304B plusoverhead2556317379B; no futurecapacityproof. Original metadata preparation import-context failure6c6fff and58vs59-role mistake1a04dc retained as ordinary unclaimed errors, corrected; no numerical attempts.
+
+Exact gate committed89416b139/298source/59inputroles preserves ALL original experiment definitions and family. Genuine readonly914334/original77912/e08b4d exit0 at08:39:56Z accepted effective88; noOwner/ResearchRun.start/claim. BINDING01 nowbound exactaccepted2ed4review; RELEASE_REVIEW01 exact40a49cf7/405refs is conditional on commit/push/actualremote/fullfreshpreflight. No17attempt/claim yet.57closed33COMPLETE24FAILED/highestclaimed87/28pending/two closedpreclaimreserves unchanged. Proposed88 independentreview438ed590 reused, no88claim/refund/transfer/capladder. Actualfailed16freshreturned recovery5fb9a123 is complete; never16rerun. Still no completeMCM/jointupdate/financialfit or usefulthroughput.
+
+Root owns live integration/registration/accounting/STATE/Git/externalpreservation/ONElauncher. Allboundedassignmentscompleted; independentcombinedreview2ed4andfinal40a49cf7 accepted unchangedsource179/298pins/59roles/88readiness and actual16recovery. Next commit/push/readback and freshestresources/source/runtime/process/namespaces/native eligibility, thenONEunused17 launch via originalRootIO. Reuse accepted evidence and preserve actualincrements only. No genericframeworks/repeatedmatrices/historicalcopies.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T08:27:26.126260+00:00: resumed checks complete; faithful lock fix live and actual failed16 increment freshly recovered/independently accepted. No numerical job.**
 
 matching_owner.py a0330db1 adopted: both creation-lock guards reuse authenticated execution, current source/job/plan/live owner/resource checks remain. Original self-deadlock RED retained; candidate/live7 plus independent17 checks passed; changed-seam reviewbbc7593a accepted. No model/data/resource cap or scientific simplification. [Actual16 recovery](full_sources/real-data-pilot-sixteenth-resource-failed-review01-2026-10-08/returned-git-recovery01/RECOVERY_REVIEW01.json)5fb9a123 independently accepts returned481280B tar4f93b610/all32regular419085B+9directories/41typednames/modes/hashes/emptycontrols. Original Root22092/efa021 exit0 executed9fresh externalGitoperations; actualsource/remote f791519f65619eee0b879dbf8fd0e43992a91965, freshbare outsidecheckout/noalternates. Original/returned/bare stores retained; no POSIX/private/runtime/raw recovery or deletion claim.
