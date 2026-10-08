@@ -1,7 +1,7 @@
 # Coordination — representative real-data pilot
 
-TOP 2026-10-08T16:37:09.791489+00:00: native20 permanentlyFAILED/spent91, RootCLI/native exit1,398.7508s,zero comparisons/MCM/training. All original PIDs absent/native cleanup verified; source2ee1b9aa no longer held by a live job. No numerical job active.
+TOP 2026-10-08T16:49:19.133753+00:00: native20 terminalFAILED/spent91 and complete declared publicincrement recovered/independentlyaccepted6cf5bc00. No numerical job active. Fresh21 finalrelease83b3ad9c/source331input59 ready; not committed/admitted/launched. Actual installed resource-owner validator passed1.08s before graphs.
 
-Root owns Main/Git/STATE/accounting/preservation/ONElauncher. Owner-policy correction01 candidate ready; independent changed-seam review and terminal-selection join next. Failed20 selected38public files436606B not yet externally recovered.
+Root sole Main/Git/STATE/accounting/preservation/ONElauncher. owner_policy_fix21 owns NEW downstream-policy-precheck01 only; residual_metadata_review20 finalentry assignment complete, returnedentry recovery review next.60closed33COMPLETE27FAILED/highest91/prospective92 accepted, fresh21 unused.
 
-60closed33COMPLETE27FAILED/highest91, no92 amendment or claim. Full goal ACTIVE/incomplete; broad heartbeat PAUSED. Reuse accepted evidence; next executable source step is resource-only owner validator correction, followed by incremental recovery and fresh21 exact registration/release. Preserve20 forever; no rerun or success credit.
+Next commit/admit/recover exact changed publicentry then ONE21 under frozenlowerRAM envelope; no reopening20/reserves. Goal remains full7MCM→GAT→attentionLSTM update/checkpoint/measurements, incomplete.1024 diagnostic intermediate; full7.04GB+watch requirementpending. Broad heartbeatPAUSED.
