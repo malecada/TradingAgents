@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T10:51:06.285923+00:00: goal ACTIVE/incomplete; explicit2.5GiB startup source/config adopted and genuine unused19 read-only admission90 passed. No numerical job yet.**
+
+User-authorized lower-RAM policy is implemented, not just saved: startup2.5GiB, retained runtimehostreserve2.5/hard6/high5/zerojobswap/diskfloor10/twoCPU8h and storage/checkpoint/cleanup guards. Import-placement914c and startup8c1d independent source acceptances adopted; four import boundaries+42synthetic,24startup+18independent checks reused/focused, livechecks pass. Original method/motifs32/512spent/sevenfullgraphs/16decisions28lookback/model20f451trainingd527/onejointupdate unchanged. Sourceanchorc109060ca80638a88b75baf53d9bad7df85264f7 has179package/sixchanged173same versus18.
+
+Exact19 metadata prepared899d7c/register01e5e7: both namespaces19,298sources59roles,179pin pairpolicy joined to bothdescriptors+gaterole, allfourprior experiment definitions unchanged. Gate committed5f2d4faaa; genuine job._admitted19438/d9609a exit0 ready90/298/59/start2.5/runtime2.5. SeparateCLI21091/d88396 metadata admission retained accurately. Combinedbinding reviewd02a4f08 accepts420refs/fivechanged-metadata refusals; BINDING01 materialized, final exactcomposition release pending. No19Owner/start/claim/attempt/native.
+
+18 permanentclosedpreclaim/reserved89 and returned recoveryd571 remain;58closed33C25F/highestclaimed88/28pending/threeclosedreserves03/08/18. Same proposed90_02 delta91435de4 accepted, no90claim/refund/transfer/capladder. Original/synthetic failures and source candidates retained. Root removed18 mistakenly staged reviewer-only synthetic Gitlinks from index without deletinglocalrepos; originalcommit and correction12b3a6 retained, no externalfixture-recovery claim.
+
+Root sole live integration/accounting/STATE/Git/actualpreservation/ONElauncher. Reviewer owns only final exact19 composition; otherboundedagents complete. Goal active; broadheartbeat paused. Next finalconditionalrelease, commit/push/actualremote authentication, freshprocess/namespace/disk/native checks and originalRootIO ONE unused19 attempt under newstartup2.5. No waiting for8.5. Once live freeze source/Git and follow originalhandle; retain terminal/cleanup/dispositions and actualincremental recovery. No completeMCM/jointupdate/checkpoint/fit or useful wholecapacity/throughput/trainingmeasurement yet.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T10:31:00.876999+00:00: goal PAUSED/incomplete; user-authorized lower-RAM startup attempts are saved for next resume. No numerical job.**
 
 [Current goal resume instructions](PILOT_GOAL_RESUME.md) supersede the historical 8.5GiB startup gate. On user reactivation, amend startup available-memory minimum to the retained runtime host reserve2.5GiB, consistently in exact configs/validators/native setup, with focused review/committed fresh registration before execution. Do not pre-reserve the full6GiB cap as an entry condition. Keep hard6/high5/zero job swap/runtime hostreserve2.5/diskfloor10/twoCPU8h/storage/checkpoint/cleanup controls unchanged. Launch one fresh registered attempt to expose setup defects when actual guards pass; record real capacity failures rather than wait repeatedly for restart-level RAM. No source/limit change or launch occurred in this goal-update turn.

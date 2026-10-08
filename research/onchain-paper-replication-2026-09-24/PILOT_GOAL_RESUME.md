@@ -1,3 +1,5 @@
+Latest 2026-10-08T10:51:06.285923+00:00: goalACTIVE/incomplete. Lowerstartup2.5 is adopted/configured; runtime2.5/cap6/high5/swap0/floor10 unchanged. Actualunused19 metadata+gate5f2d4/read-only jobready90/298/59 passed, combinedbindingd02a4f accepted; BINDING01 exists/finalexactreleasepending. Next commit/push/fresheligibility→originalRootIOONE19, no8.5wait.18closed/reserved89/recoveryd571 unchanged; noMCM/update yet. Current STATE overrides earlier paused summaries.
+
 # Latest goal resume instructions — 2026-10-08T10:31:00.876999+00:00
 
 **Goal PAUSED/incomplete. Resume only when the user reactivates it. The following startup policy supersedes every older instruction requiring 8.5GiB available before entry.**
