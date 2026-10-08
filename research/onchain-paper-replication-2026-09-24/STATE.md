@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T08:27:26.126260+00:00: resumed checks complete; faithful lock fix live and actual failed16 increment freshly recovered/independently accepted. No numerical job.**
+
+matching_owner.py a0330db1 adopted: both creation-lock guards reuse authenticated execution, current source/job/plan/live owner/resource checks remain. Original self-deadlock RED retained; candidate/live7 plus independent17 checks passed; changed-seam reviewbbc7593a accepted. No model/data/resource cap or scientific simplification. [Actual16 recovery](full_sources/real-data-pilot-sixteenth-resource-failed-review01-2026-10-08/returned-git-recovery01/RECOVERY_REVIEW01.json)5fb9a123 independently accepts returned481280B tar4f93b610/all32regular419085B+9directories/41typednames/modes/hashes/emptycontrols. Original Root22092/efa021 exit0 executed9fresh externalGitoperations; actualsource/remote f791519f65619eee0b879dbf8fd0e43992a91965, freshbare outsidecheckout/noalternates. Original/returned/bare stores retained; no POSIX/private/runtime/raw recovery or deletion claim.
+
+Pilot16 remainspermanentFAILED/spent87: original Root1, guardchildnull/separatechild125/unit125, verifiedcleanup/all4PIDs+cgroupabsent, no representation/MCM/jointupdate/financialfit or useful throughput.57closed33C24F/highestclaimed87/28pending/two closed preclaimreserves unchanged. Proposed88 review438ed590/machine genuine88 accepted arithmetic and all40 typed currentclaims+17carried, ONEunused20261008-17; not adopted/claimed/released. Native6cap5high8.5startup2.5reserve/zeroSwap10floor/8h2CPU/fullmethod32motifs512samples/sevengraphs16decisions unchanged. Strict runtimeIDstill16; do not reuseclosed16.
+
+AppgoalPAUSED/directcheckscomplete/broadheartbeat1420fitsPAUSED; allboundedassignmentscomplete, RootsoleMain/accounting/STATE/Git/externalpreservation/ONElauncher. SourceGitfreezeENDED. Next usergoalresume→prepare exactfresh17source/strictidentity/context/pair/template/transportnamespace/gate+allbudgetsourcejoins; reuse accepted seams and actual16 recovery, genuine readonlyadmission+final exactrelease/commit/remote/fresh resourcechecks beforeONElaunch. No fresh17namespace/claim/attempt exists. Goal incomplete; no further unchangedchecks/framework/historicalstorecopies.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T08:22:27.231627+00:00: live lock correction checks complete; proposed88 independently reviewed, not adopted; actual16 fresh external recovery next.**
 
 Livea0330db1/actual7checks2c692a and17 independentchangedseamchecks/bbc7593a accepted; original RED/fixtures/logs retained. Native16 permanentlyFAILED87/Root1/guardchildnull/separate125/cleanupverified, noMCMupdatefit. Actual32file+9dir increment locallycaptured481280B4f93b610. Commit8e9692db source+capture pushed77535/9884e4 exit0; no fresh return claim yet. Narrow proposed88 review438ed590 and genuine machine effective_budget88 accept57closed+28pending+2closedreserves+ONEunused20261008-17; all old39typedrows preserved+actual16failed, no allowance claim/refund/transfer/capladder. Scope fullscientificmethod/resource envelope unchanged.
