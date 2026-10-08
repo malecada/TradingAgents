@@ -1,12 +1,12 @@
 # Current replication checkpoint
 
-**TOP 2026-10-08T16:49:19.133753+00:00: owner schema correction installed; failed20 public outcome externally recovered and accepted. Fresh21 source/entry released, not launched. Goal ACTIVE/incomplete.**
+**TOP 2026-10-08T16:49:19.133753+00:00: owner schema correction installed; failed20 public outcome externally recovered and accepted. Fresh21 source/entry released and actual public increment recovery accepted; not launched. Goal ACTIVE/incomplete.**
 
 Main scientific source anchor d37829a0b44d54ba17baea6dea91a6629605231a includes resource-only owner validator adapter and constant-only fresh21 storage identity. Actual installed owner metadata validation passed in1.08s before graphs/Owner/start; source-only checks and independent final21 release83b3ad9c join331source/59inputs. Original scientific model/training/motifs32/samples512/full7graphs and finite1024 diagnostic unchanged. All legacy behavior retained. Preclaim metadata refusals and partial templates remain additive; no reservation consumed.
 
 Native20 permanentlyFAILED/spent91:398.7508s,zero comparisons/MCMs/training, noOOM, actualRoot/nativeexit1/cleanup/PIDabsence. Declared39publicfiles11dirs437725B recovered from actualremote7a5af7914, independent acceptance6cf5bc00. Private/runtime/unchangedraw/wholePOSIX/deletion excluded. Fresh21 prospective92 independently accepted72c0a6df:60spent33COMPLETE27FAILED+28pending+3closedreserves+onefresh21; highest actual91, no refund/transfer.
 
-Root sole Main/Git/accounting/STATE/preservation/ONElauncher. Independent downstream-policy metadata precheck remains active; no numerical process active. Next: commit exact fresh21 gate/release, admission-only check, preserve/freshlyrecover only changed public entry with existing directblob method, then one unused21 launch under frozen6GiBmax/5high/2.5startup/swap0/twoCPU/8h/10GiBfloor. Full end-to-end pilot incomplete; fullrun7.04GB+aggregatewatch requirements remain. Broad heartbeat PAUSED.
+Root sole Main/Git/accounting/STATE/preservation/ONElauncher. Independent downstream-policy metadata precheck remains active; no numerical process active. Admission-only ready/exit0 and actual changed142public-file return6f1e0be6 accepted; next commit final receipt/precheck evidence, push/readback, then one unused21 launch under frozen6GiBmax/5high/2.5startup/swap0/twoCPU/8h/10GiBfloor. Full end-to-end pilot incomplete; fullrun7.04GB+aggregatewatch requirements remain. Broad heartbeat PAUSED.
 
 Earlier checkpoints retained below.
 
