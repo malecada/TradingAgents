@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "profile": "stdlib-only metadata source/hash/compile/exact patch checks",
+  "python": "Python 3.13.13",
+  "checks": [
+    "all eight original dependency hashes verified",
+    "successor02.py: exact permitted substitutions; compile passed",
+    "candidate/build_inputs03.py: exact permitted substitutions; compile passed",
+    "candidate/controls01.py: exact permitted substitutions; compile passed",
+    "candidate/real_pilot_storage.py: exact permitted substitutions; compile passed",
+    "new dependency map verifies; six external entries byte-equivalent; only builder/controls self paths and hashes change",
+    "forward and inverse patch roundtrip reproduces all five exact files",
+    "no missed old strict experiment identity in the five candidate files (inverse evidence intentionally retains it)",
+    "all original files unchanged; no modules imported/executed; no numeric imports or preparation/claim"
+  ]
+}
