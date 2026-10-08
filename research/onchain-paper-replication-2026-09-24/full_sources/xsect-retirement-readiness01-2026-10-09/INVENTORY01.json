@@ -1,0 +1,55 @@
+{
+  "at_utc": "2026-10-08T23:03:42.304337+00:00",
+  "trees": [
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents/data/xsect",
+      "files": 3783,
+      "directories": 14,
+      "logical_bytes": 6915716585,
+      "allocated_bytes": 6924103680,
+      "nonregular": [],
+      "multiply_linked_files": 0,
+      "device": 66310
+    },
+    {
+      "path": "/home/malecada/master_thesis/onchain-pilot-recovery/xsect-posix-recovery-20261009-01",
+      "files": 3783,
+      "directories": 14,
+      "logical_bytes": 6915716585,
+      "allocated_bytes": 6924247040,
+      "nonregular": [],
+      "multiply_linked_files": 0,
+      "device": 66310
+    }
+  ],
+  "disk_free_bytes": 18120257536,
+  "draft23": {
+    "growth_bytes": 13513030747,
+    "floor_bytes": 10737418240,
+    "required_free_bytes": 24250448987,
+    "keep_both": {
+      "conditional_reclaimed_bytes": 0,
+      "conditional_free_bytes": 18120257536,
+      "margin_bytes": -6130191451
+    },
+    "retire_original_keep_recovered": {
+      "conditional_reclaimed_bytes": 6924103680,
+      "conditional_free_bytes": 25044361216,
+      "margin_bytes": 793912229
+    },
+    "retire_both": {
+      "conditional_reclaimed_bytes": 13848350720,
+      "conditional_free_bytes": 31968608256,
+      "margin_bytes": 7718159269
+    }
+  },
+  "process_observation": {
+    "processes_seen": 413,
+    "fd_links_read": 4335,
+    "denied": 263,
+    "races": 1,
+    "matches": [],
+    "limit_reached": false
+  },
+  "qualification": "Metadata only, no writer exclusion; st_blocks potential reclaim is conditional on final-link removal, no open references/shared extents and concurrent filesystem changes. No retirement performed or authorized by this observation."
+}
