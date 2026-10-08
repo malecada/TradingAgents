@@ -1,0 +1,35 @@
+# Complete-neighborhood capacity preparation
+
+Concrete candidates: `capacity.py` is a pure-standard-library deterministic integer checker; `imported_kernel.py` adds only an optional extraction resource ceiling. Main, dictionary artifacts/configuration, matching algorithm, gates and resource policies are unchanged. No actual graph, motif, label or other empirical input was read; no numerical module, Owner, ResearchRun, native job or network was used. The parent reports an observed maximum350110 and241 centers above10000, but no real motif dimensions are inferred from that observation.
+
+## Callable checker
+
+`prepare(topology, motifs, expected_topology_sha256=..., expected_motifs_sha256=..., limits=...)` verifies canonical-JSON SHA256 against explicit caller-authenticated references and fails closed on missing motif metadata, missing pins, mismatches, malformed dimensions, incomplete ordered motif indices, duplicate targets, unsupported topology semantics, feature incompatibility or bounded-integer overflow. Authenticating the references and complete all-seven target/original representative coverage remains the caller's obligation. Metadata hash equality is not an Owner or empirical admission.
+
+The executable synthetic fixture in check01.py specifies the complete small schemas. Each topology row supplies graph hash, total N/E, feature counts/item widths, exact maximum weak-one-hop cardinality and its center index. Each representative supplies its original graph hash, ordered motif index and exact N/E/feature dimensions. The motif envelope includes original dictionary and configuration hashes. All limits are explicit; none is increased or filled with a guessed representative size.
+
+For every target maximum crossed with every motif, the helper returns requirements and every supplied-limit refusal, with witnesses. It reports a universal component envelope across all pairs, extraction/index+output bytes, pair state, normalization axis entries, hardening/score buffers, logical checkpoint, single-file bounds, per-generation files/directories, retained-input upper bounds and aggregate score/tail/event/checkpoint components. Exact node counts do not reveal exact induced-edge counts: global E conservatively bounds complete directed edge columns, preserving duplicates and original ordering. Resource upper-bound refusals are not claims that actual induced-edge bodies attain that size.
+
+## Source formulas and refusal seams
+
+- imported_kernel.py:49-54 passes the dictionary config to ArrayNeighborhoodIndex; array_neighborhoods.py:70-95 performs complete weak expansion and refuses excess nodes without truncation. Its index formula at21-29 and complete output formula at120-124 are reproduced: index + twice(node bytes + directed edge-index/features bytes).
+- matching_reference.py:25-32 rejects n*m above scientific max_pair_entries (current supplied ceiling4000000); this checker reports the needed value without changing that configuration.
+- matching_checkpoint.py:20-24 requires32*n*m retained numeric bytes (current1MiB); matching_annealing.py:37-39 requires normalization entries >=max(m,n if m==1 else2*n). For n350110 and m>=2 with m<=700220, the required full axis is700220. This is an axis requirement, not an operation count or measured memory.
+- matching_hardening.py:16-20 requires17*n*m+n+m+16*min(n,m) explicit bytes; native stable-sort workspace is excluded by the source contract. matching_checkpoint.py:91-97 requires80*min(n,m)+32*min(score_chunk_edges,motif_edges) score bytes.
+- matching_checkpoint.py:108-120 and matching_pair.py:106-117 require32*n*m+512+3*65536 logical checkpoint bytes (current256KiB); each dense/rank NPY is8*n*m+128. The checkpoint contains at most7 regular files and3 directories including its root (compact_matcher.py:87-117). The hardening manifest has a separate65536-byte ceiling; a conservative maximum decimal-index encoding bound is also checked.
+- workflow_storage.py:131-136 enforces supplied per-domain max_file_bytes (current stated4MiB), so dense checkpoint arrays or selected retained input NPYs can exceed it independently of aggregate checkpoint allowance. This check uses an explicit file limit; it does not assert every unrelated storage domain has4MiB.
+- stage_retention.py:179-205 reserves six selected-pair arrays with256-byte header bounds plus16384 control bytes; its node-ID JSON body can independently exhaust that control allowance. compact_policy.py:74-88 supplies score/tail and event accounting; the checker uses META8192 and compact event record168 bytes. A global checkpoint generation budget bounds checkpoint components, not successful algorithm completion.
+
+## Optional extraction ceiling candidate
+
+`validate_policy` accepts the original exact field set or that set plus a positive finite `extraction_limit`. The absent branch uses the exact original dictionary.config object, preserving legacy10000 for this study. The opted-in branch refuses a lower ceiling, makes a local config copy and changes only maximum_neighborhood_nodes. The dictionary object/config/hash, hop_depth, selected sample provenance, motif identity and true induced-edge semantics remain unchanged. Every center remains scheduled. No truncation, skipped graph, resampling, reclustering or adaptive cap is introduced. The scalar matcher and its scientific4M limit remain untouched.
+
+This candidate needs prospective registration of the new kernel bytes/optional policy, pinned source closure and any applicable policy joins. It is not integrated or admitted. Raising extraction_limit alone cannot satisfy the remaining state/normalization/checkpoint/file refusals.
+
+## Verification and limits
+
+Focused pure-stdlib tests pass: hand-computed extraction/pair/checkpoint formulas, all7 synthetic targets×2 synthetic motifs, missing/changed metadata, malformed/overflow dimensions, exact threshold and one-unit deficits, synthetic350110-node metadata paired with a deliberately invented32-node test motif, hardening manifest overflow, source-extracted scalar normalization/hardening formulas, and candidate validator/default/local-copy identity behavior. No invented motif dimensions are presented as original observations. Full candidate source compiles; NumPy/Torch are absent from the test process.
+
+`execution_admitted` and `complete_resource_envelope_proven` are always false. These are finite named component requirements, not a total RAM/filesystem bound. Python node IDs/control JSON, runtime/native/SciPy/sort scratch, full retention replay/control storage, archive transfer/control and remaining writable domains need authenticated dimensions and explicit accounting. The checker lists these gaps rather than manufacturing a universal admission. It also cannot predict convergence or whether the supplied checkpoint schedule completes all pairs.
+
+Run `.venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-complete-neighborhood-capacity-preparation01-2026-10-08/check01.py`.

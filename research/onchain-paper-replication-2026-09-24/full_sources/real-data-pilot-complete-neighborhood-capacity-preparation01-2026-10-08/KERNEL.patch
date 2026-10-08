@@ -1,0 +1,36 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py
++++ candidate/imported_kernel.py
+@@ -19,9 +19,11 @@
+ 
+ def validate_policy(policy,entries):
+     fields={'schema_version','max_buffer_bytes','edge_chunk','max_output_bytes','max_numeric_bytes'}
+-    require(isinstance(policy,dict) and set(policy)==fields
++    require(isinstance(policy,dict) and set(policy) in (fields,fields|{'extraction_limit'})
+         and type(policy['schema_version']) is int and policy['schema_version']==1
+         and all(type(policy[k]) is int and policy[k]>0 for k in fields-{'schema_version'}),'MCM numeric policy differs')
++    if 'extraction_limit' in policy:
++        require(type(policy['extraction_limit']) is int and 0<policy['extraction_limit']<2**63,'explicit finite extraction limit required')
+     require(type(entries) is int and entries>0,'positive MCM entry count required')
+     output_bytes=4*entries
+     require(output_bytes<=policy['max_output_bytes'],'MCM output byte allowance exceeded')
+@@ -42,6 +44,11 @@
+     n=len(graph.node_ids);motifs=dictionary.representatives;k=len(motifs)
+     require(n>0 and k>0 and n*k<=max_entries,'MCM matrix capacity exceeded')
+     policy=validate_policy(policy,n*k)
++    extraction_config=dictionary.config
++    if 'extraction_limit' in policy:
++        require(policy['extraction_limit']>=dictionary.config['maximum_neighborhood_nodes'],'extraction ceiling cannot reduce original capacity')
++        extraction_config=dict(dictionary.config)
++        extraction_config['maximum_neighborhood_nodes']=policy['extraction_limit']
+     typed=[graph_identity(m) for m in motifs];parent=graph_hash(graph)
+     scope=expected['workflow']
+     lease();rows=0;cells=0
+@@ -50,7 +57,7 @@
+         result=np.empty((n,k),dtype=np.float32)
+         for center in range(n):
+             lease()
+-            local=index.neighborhood(center,dictionary.config)
++            local=index.neighborhood(center,extraction_config)
+             try:
+                 lease();local_id=graph_identity(local)
+                 for motif,m in enumerate(motifs):

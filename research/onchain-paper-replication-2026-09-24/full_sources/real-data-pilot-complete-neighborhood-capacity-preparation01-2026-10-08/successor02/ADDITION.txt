@@ -1,0 +1,7 @@
+        # Binary chunks contain records only; JSON headers are separate files.
+        largest_score_chunk=min(cells,limits['score_chunk_cells'])
+        largest_event_chunk=min(2*cells+limits['max_total_checkpoints'],limits['log_chunk_events'])
+        requirement('score_tail_records_single_file_bytes',80*largest_score_chunk,'max_file_bytes',ident)
+        requirement('float64_score_data_single_file_bytes',8*largest_score_chunk,'max_file_bytes',ident)
+        requirement('pair_event_chunk_single_file_bytes',168*largest_event_chunk,'max_file_bytes',ident)
+        requirement('persistence_json_single_file_allowance_bytes',META,'max_file_bytes',ident)

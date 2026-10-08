@@ -1,0 +1,16 @@
+--- 01/capacity.py
++++ successor02/capacity.py
+@@ -110,6 +110,13 @@
+         requirement('extraction_nodes',n,'extraction_limit',ident)
+         requirement('index_and_complete_output_upper_bytes',extraction,'max_buffer_bytes',ident)
+         cells=bounded(N*len(representatives));output=bounded(4*cells)
++        # Binary chunks contain records only; JSON headers are separate files.
++        largest_score_chunk=min(cells,limits['score_chunk_cells'])
++        largest_event_chunk=min(2*cells+limits['max_total_checkpoints'],limits['log_chunk_events'])
++        requirement('score_tail_records_single_file_bytes',80*largest_score_chunk,'max_file_bytes',ident)
++        requirement('float64_score_data_single_file_bytes',8*largest_score_chunk,'max_file_bytes',ident)
++        requirement('pair_event_chunk_single_file_bytes',168*largest_event_chunk,'max_file_bytes',ident)
++        requirement('persistence_json_single_file_allowance_bytes',META,'max_file_bytes',ident)
+         requirement('mcm_entries',cells,'max_entries',ident)
+         requirement('resident_mcm_output_bytes',output,'max_output_bytes',ident)
+         requirement('kernel_declared_numeric_bytes',output+limits['max_buffer_bytes'],'max_numeric_bytes',ident)

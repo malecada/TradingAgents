@@ -1,0 +1,27 @@
+{
+  "decision": "ACCEPT narrow source/metadata capacity diagnosis only",
+  "source_sha256": "2d2f4f3e7b3804ce0721aefbdd822e8766d45da61afa30d8fce0b76788415315",
+  "kernel_candidate_sha256": "dc0a244b7cce4261093a95ce686a01bae0f26c8797a8616463c7d5078a2b2604",
+  "application_inputs_sha256": "cd0d0122596c13e35c20a2dcf862a26fa11bf02d9b1baaa9884fcf9a6a6274a6",
+  "application_result_sha256": "86ff2ac343b6c6dab82b3e886f525fbb04e4ec3030faf9035386653ad6eeacd9",
+  "pairs": 224,
+  "component_refusals": 1287,
+  "execution_admitted": false,
+  "complete_resource_envelope_proven": false,
+  "checked_maxima": {
+    "pair_entries": 8402640,
+    "retained_pair_state_bytes": 268884480,
+    "normalization_axis_entries": 700220,
+    "checkpoint_single_array_file_bytes": 67221248,
+    "score_tail_records_single_file_bytes": 5242880,
+    "pair_event_chunk_single_file_bytes": 8257536
+  },
+  "checks": [
+    "successor insertion exact inverse",
+    "optional kernel patch exact baseline diff",
+    "pinned motif/census metadata joined all7x32",
+    "retained14header observations internally consistent; no header/body reread",
+    "exact integer-only application replay matches full report"
+  ],
+  "scope": "no numerical imports, original bodies, native jobs or scientific admission"
+}

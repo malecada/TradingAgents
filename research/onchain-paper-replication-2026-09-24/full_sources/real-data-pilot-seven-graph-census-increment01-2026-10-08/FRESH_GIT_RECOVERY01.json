@@ -1,0 +1,118 @@
+{
+  "actual_fetched_head": "78e8527d99bfc855216dfada0cc5f5c52ba1f50b",
+  "actual_remote_head": "78e8527d99bfc855216dfada0cc5f5c52ba1f50b",
+  "at": "2026-10-08T13:08:20.574317+00:00",
+  "fresh_bare": "/home/malecada/master_thesis/onchain-pilot-recovery/real-seven-graph-census-20261008-01.git",
+  "git_operations": [
+    {
+      "args": [
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "39b3a0eeee0aa7053231460860ada491d784fcf0a6222a934d1d971fa8d476f5"
+    },
+    {
+      "args": [
+        "ls-remote",
+        "git@github.com:malecada/TradingAgents.git",
+        "refs/heads/research/onchain-paper-replication-2026-09-24"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "0138aa776fdfed4aa0c5d29d5252603f403415c5543c84deacc57f1ee125ca52"
+    },
+    {
+      "args": [
+        "init",
+        "--bare",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-seven-graph-census-20261008-01.git"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "7cc74f74cc8a8f9938bd00571e2c171ce3c59d048f2242a836ccca722182d430",
+      "stdout_sha256": "d3e4c89239ea32b39201866fb87afd290075004098e8f249c63716f3500d33ae"
+    },
+    {
+      "args": [
+        "--git-dir",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-seven-graph-census-20261008-01.git",
+        "remote",
+        "add",
+        "origin",
+        "git@github.com:malecada/TradingAgents.git"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "args": [
+        "--git-dir",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-seven-graph-census-20261008-01.git",
+        "config",
+        "remote.origin.promisor",
+        "true"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "args": [
+        "--git-dir",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-seven-graph-census-20261008-01.git",
+        "config",
+        "remote.origin.partialclonefilter",
+        "blob:none"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "args": [
+        "--git-dir",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-seven-graph-census-20261008-01.git",
+        "fetch",
+        "--depth=1",
+        "--filter=blob:none",
+        "origin",
+        "refs/heads/research/onchain-paper-replication-2026-09-24"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "694ecb82deb5853825db60d8cdbda7783ebb04eac1e9df7a250bb2d56ddfa3c8",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "args": [
+        "--git-dir",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-seven-graph-census-20261008-01.git",
+        "rev-parse",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5faa4520cc96d7e9b86142f2d6336581373739db97bdbfab9abf83214e82f153"
+    },
+    {
+      "args": [
+        "--git-dir",
+        "/home/malecada/master_thesis/onchain-pilot-recovery/real-seven-graph-census-20261008-01.git",
+        "cat-file",
+        "blob",
+        "78e8527d99bfc855216dfada0cc5f5c52ba1f50b:research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seven-graph-census-increment01-2026-10-08/census-increment01.tar.gz"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "57f51aecf096ea42319d730012613e58434a1b55ccc5d6c2eb38b8eee42d9a6c"
+    }
+  ],
+  "no_alternates": true,
+  "returned_archive": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-seven-graph-census-increment01-2026-10-08/fresh-git-recovered-census-increment01.tar.gz",
+  "returned_bytes": 5657046,
+  "returned_sha256": "57f51aecf096ea42319d730012613e58434a1b55ccc5d6c2eb38b8eee42d9a6c",
+  "scope": "Fresh external selected archive BYTE recovery; separate independent names/modes/body verification pending; no extraction/runtime/input or unrelated store proof.",
+  "source_commit": "78e8527d99bfc855216dfada0cc5f5c52ba1f50b"
+}

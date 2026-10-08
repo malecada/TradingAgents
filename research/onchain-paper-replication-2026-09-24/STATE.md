@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T13:47:29.978256+00:00: topology census and its fresh external BYTE recovery COMPLETE; full pilot remains incomplete. No native numerical job. Pilot19 permanently FAILED/spent90.**
+
+The census covered all seven original graphs/all12,999,004 centers in6.718s. Independent returned-recovery acceptance [e40ec45a](full_sources/real-data-pilot-census-input-review01-2026-10-08/outcome-review01/returned-recovery01/MANIFEST01.json) verifies87 typed names/77 regular bodies104125047B from actual fresh external78e8527 Git recovery [3ce562af](full_sources/real-data-pilot-seven-graph-census-increment01-2026-10-08/FRESH_GIT_RECOVERY01.json). Original/bare/returned bodies retained; no runtime/input/POSIX/scientific recovery or deletion claim. Exactly241 complete neighborhoods exceed10000; max350110.
+
+Authenticated original32 motif dimensions [05a3d781](full_sources/real-data-pilot-original-motif-dimensions01-2026-10-08/MOTIF_DIMENSIONS01.json) and independently accepted [capacity application](full_sources/real-data-pilot-capacity-application-review01-2026-10-08/REPORT01.md) establish largest pair8402640 entries/268884480B retained state/700220 normalization axis/269081600B legacy checkpoint. These are source/component bounds; whole memory, scratch, convergence and writable capacity remain unproved. [Actual limit-context correction](full_sources/real-data-pilot-capacity-domain-correction01-2026-10-08/REPORT01.md) distinguishes selected4MiB calculation from pilot19 native1GiB FSIZE and separate declared domains. No automatic limit change follows.
+
+Functional work in parallel: checkpoint_finish exclusively owns NEW sharded-checkpoint-candidate01 (candidate checkpoint/retention/schema files+focused synthetic tests); advance_check_fix exclusively owns NEW advance-validation-correction01 (two candidate numerical files+focused equivalence checks); scoring_cost completed read-only source investigation. No worker owns Main/STATE/Git/registration or real inputs. Root alone integrates and launches. Smallest throughput correction removes one immediately duplicated same-call ann.check while retaining each public/composite validation boundary and exact arithmetic; no real speed measurement yet. Sharding changes persistence only and must join actual entry policy, identity, retention inventory and control-byte limits before adoption.
+
+Accounting59closed33COMPLETE26FAILED/highest90/28pending/three closedpreclaim reserves unchanged. Original32motifs/512spent samples, all7 full graphs, scalar matching/model/training/tolerances and one joint update remain required; no completed MCM/update/checkpoint/fit. Broad heartbeat PAUSED, pilot goal ACTIVE. No successor91 registration or execution admitted. Next safe action: finish focused lossless sharding/entry-retention and duplicate-validation candidates; combine changed-seam review/integration once, derive exact actual-domain capacity, then fresh committed finite real scoring-throughput registration before another full pilot. Preserve every closed identity.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T13:04:45.682076+00:00: actual seven-graph topology census COMPLETE and independently verified. No numerical job; goal ACTIVE/incomplete. Pilot19 remains permanently FAILED/spent90.**
 
 One-use topology-only engineering identity eth-seven-graph-weak-one-hop-census-20261008-01 ran once from committed/remote c7fb21a5e4c32b4de4a65b7a6d7be031077845ea: original87630/2bce77 Rootexit0/nativechild0/6.718s, all7graphs COMPLETE. [Actual terminal](full_sources/real-data-pilot-seven-graph-census-launch01-2026-10-08/ROOT_TERMINAL01.json)224b0398 retains all3PIDsabsent/gonecgroup/cleanup, zeroOOM+jobswap, kernelchargedpeak292237312B/sample288305152B and sampledownedallocated104415232B. Wholecaller6.321s/3.002CPU/ru_maxrss139204KiB are qualified separately; no scientific whole-capacity claim.
