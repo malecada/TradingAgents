@@ -1,0 +1,67 @@
+--- a/tradingagents/research/onchain_replication/resources.py
++++ b/tradingagents/research/onchain_replication/resources.py
+@@ -408,8 +408,8 @@
+         raise ValueError('invalid reserve, sampling, lease or waiting bound')
+     if start_reserve_bytes is None:
+         start_reserve_bytes = memory_max_bytes + reserve_bytes
+-    if start_reserve_bytes < memory_max_bytes + reserve_bytes:
+-        raise ValueError('startup reserve must cover memory.max plus host reserve')
++    if start_reserve_bytes < reserve_bytes:
++        raise ValueError('explicit startup reserve must cover host runtime reserve')
+     if wall_seconds<=0 or disk_floor_bytes<0:raise ValueError('invalid wall/disk limits')
+     from tradingagents.research.lifecycle import current_metadata_scope
+     physical_scope=current_metadata_scope()
+@@ -801,6 +801,7 @@
+     if not {Path(p).stat().st_dev for p in required_paths}<=covered:raise RuntimeError('guard misses required volume')
+     if not 0<live['wall_seconds']<=wall_seconds<=28800:raise RuntimeError('guard wall limit differs')
+     minimum_reserve=3*GIB
++    minimum_start=memory_max_bytes+live['reserve_bytes']
+     if live['reserve_bytes']<minimum_reserve and pilot_context is not None:
+         from .job import resource_policy
+         from .real_pilot_import_caller import _amended_host_reserve
+@@ -812,8 +813,9 @@
+                 or live.get('owner_identity',{}).get('source_commit')!=ad.source):
+             raise RuntimeError('guard authenticated pilot reserve differs')
+         minimum_reserve=policy['reserve_bytes']
++        minimum_start=policy['start_reserve_bytes']
+     if live['reserve_bytes']<minimum_reserve or live['disk_floor_bytes']<disk_floor_bytes:raise RuntimeError('guard reserve below protocol')
+-    if live['start_reserve_bytes']<memory_max_bytes+live['reserve_bytes']:raise RuntimeError('guard startup reserve below contract')
++    if live['start_reserve_bytes']<minimum_start:raise RuntimeError('guard startup reserve below contract')
+     if 'physical_policy' in live:
+         import resource
+         from tradingagents.research.onchain_replication.neural_physical import verify_file_limit
+--- a/tradingagents/research/onchain_replication/job.py
++++ b/tradingagents/research/onchain_replication/job.py
+@@ -55,7 +55,7 @@
+     if value['reserve_bytes'] < 3*resources.GIB:
+         from .real_pilot_import_caller import _amended_host_reserve
+         amended = _amended_host_reserve(value) and pilot_context is not None
+-    if (value['reserve_bytes'] < 3*resources.GIB and not amended) or value['start_reserve_bytes'] < value['memory_max_bytes']+value['reserve_bytes']:
++    if (value['reserve_bytes'] < 3*resources.GIB and not amended) or (not amended and value['start_reserve_bytes'] < value['memory_max_bytes']+value['reserve_bytes']):
+         raise ValueError('execution host reserves below contract')
+     if value['disk_floor_bytes'] < 10*resources.GIB or value['wall_seconds'] > 28800:
+         raise ValueError('execution disk/wall limits differ')
+--- a/tradingagents/research/onchain_replication/real_pilot_import_caller.py
++++ b/tradingagents/research/onchain_replication/real_pilot_import_caller.py
+@@ -117,9 +117,11 @@
+ def _amended_host_reserve(p):
+     # Exact prospective amendment only; admission remains the caller's duty.
+     expected={'memory_max_bytes':6*GIB,'memory_high_bytes':5*GIB,
+-              'reserve_bytes':5*GIB//2,'start_reserve_bytes':17*GIB//2,
++              'reserve_bytes':5*GIB//2,
+               'disk_floor_bytes':10*GIB}
+     return (all(type(p.get(k)) is int and p[k]==v for k,v in expected.items())
++            and type(p.get('start_reserve_bytes')) is int
++            and p['start_reserve_bytes'] in (5*GIB//2,17*GIB//2)
+             and type(p.get('storage_budget')) is dict
+             and p['storage_budget'].get('schema_version')==2)
+ 
+@@ -136,7 +138,7 @@
+     numeric=fields-{'disk_paths','storage_budget','native_unit_limits'}
+     require(all(type(p[k]) is int and 0<p[k]<2**63 for k in numeric), 'finite integer resource limits required')
+     require(p['memory_high_bytes']<=p['memory_max_bytes']<=6*GIB and (p['reserve_bytes']>=3*GIB or _amended_host_reserve(p))
+-            and p['start_reserve_bytes']>=p['memory_max_bytes']+p['reserve_bytes'], 'existing job memory/reserve authority exceeded')
++            and (p['start_reserve_bytes']>=p['memory_max_bytes']+p['reserve_bytes'] or _amended_host_reserve(p)), 'existing job memory/reserve authority exceeded')
+     require(p['wall_seconds']<=28800 and p['disk_floor_bytes']>=10*GIB, 'existing job disk/wall authority exceeded')
+     paths=p['disk_paths']
+     require(type(paths) is list and bool(paths) and all(type(v) is str and Path(v).is_absolute() for v in paths)

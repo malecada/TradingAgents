@@ -1,0 +1,29 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final19-2026-10-08/entry-draft-before-startup01/prepare19.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final19-2026-10-08/prepare19.py
+@@ -50,7 +50,7 @@
+     pins={p:digest(ROOT/p) for p in oldpair['numerical_source']['files']}
+     assert len(pins)==179
+     changed={p:dict(before=h,after=pins[p]) for p,h in oldpair['numerical_source']['files'].items() if pins[p]!=h}
+-    assert set(changed)=={'tradingagents/research/onchain_replication/'+n for n in ('matching_pair.py','compact_matcher.py','real_pilot_storage.py')}
++    assert set(changed)=={'tradingagents/research/onchain_replication/'+n for n in ('matching_pair.py','compact_matcher.py','real_pilot_storage.py','job.py','resources.py','real_pilot_import_caller.py')}
+     queries=[anchor+':'+p for p in pins]
+     returned=subprocess.check_output(['git','cat-file','--batch'],cwd=ROOT,input=('\n'.join(queries)+'\n').encode())
+     pos=0
+@@ -65,6 +65,8 @@
+     save(HERE/'templates/pair_policy01.json',pair)
+     for source,target in [('templates/job_template01.json','job_template01.json'),('templates/pilot.json','pilot.json'),('templates/archive_policy.json','archive_policy.json')]:
+         value=renamed(load(OLD/source))
++        if target=='job_template01.json':value['resources']['start_reserve_bytes']=2684354560
++        if target=='pilot.json':value['resource_policy']['start_reserve_bytes']=2684354560
+         if target=='job_template01.json':
+             next(iter(value['payload']['representation_jobs'].values()))['descriptor']['pair_execution']['policy_sha256']=digest(HERE/'templates/pair_policy01.json')
+         save(HERE/'templates'/target,value)
+@@ -101,7 +103,7 @@
+         inputrefs[role]=ref(path)
+     inputrefs.update(bound['private_input'])
+     save(HERE/'INPUT_REFS01.json',inputrefs)
+-    save(HERE/'NUMERICAL_CONTEXT_REANCHOR01.json',dict(source=anchor,previous=oldpair['numerical_source']['commit'],files=179,changed=changed,unchanged=176,qualification='Reviewed matching-engine import placement and literal strict19 identity only; matching, motifs, graphs, model, training and caps unchanged.'))
++    save(HERE/'NUMERICAL_CONTEXT_REANCHOR01.json',dict(source=anchor,previous=oldpair['numerical_source']['commit'],files=179,changed=changed,unchanged=173,qualification='Reviewed matching-engine import placement, user-authorized startup-only policy and literal strict19 identity only; matching, motifs, graphs, model, training and caps unchanged.'))
+     save(HERE/'PREPARATION_EXIT01.json',dict(status='DRAFT_NOT_RELEASED',experiment=NAME,numerical_source_anchor=anchor,public_documents=len(bound['inputs']),private_references=len(bound['private_input']),scientific_execution=False,claim=False))
+     print(json.dumps(dict(status='prepared',identity=NAME,source_anchor=anchor,inputs=len(inputrefs),growth=prepared['inventory']['new_logical_bytes'])))
+ 

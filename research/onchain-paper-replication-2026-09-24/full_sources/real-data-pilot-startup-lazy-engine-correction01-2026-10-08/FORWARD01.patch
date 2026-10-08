@@ -1,0 +1,297 @@
+--- a/tradingagents/research/onchain_replication/matching_pair.py
++++ b/tradingagents/research/onchain_replication/matching_pair.py
+@@ -12,7 +12,6 @@
+ from pathlib import Path
+ import re
+ 
+-from . import matching_checkpoint as engine
+ LIMIT = 65536
+ ENGINE_FIELDS = {'max_state_bytes', 'normalization_chunk_entries',
+                  'hardening_chunk_entries', 'hardening_buffer_bytes'}
+@@ -44,6 +43,7 @@
+ 
+ 
+ def write(path, value):
++    from . import matching_checkpoint as engine
+     raw = body(value)
+     require(len(raw) <= LIMIT, 'compact manifest allowance exceeded')
+     with path.open('xb') as file:
+@@ -71,6 +71,7 @@
+ 
+ 
+ def identity(a, b, config, context):
++    from . import matching_checkpoint as engine
+     require(isinstance(context, dict) and set(context) == {'namespace', 'source_commit', 'runtime_hash'},
+             'explicit workflow/source/runtime context required')
+     for field, value in context.items():
+@@ -85,6 +86,7 @@
+ 
+ 
+ def policy_check(a, b, config, policy):
++    from . import matching_checkpoint as engine
+     require(isinstance(policy, dict) and set(policy) == POLICY_FIELDS, 'pair policy schema')
+     require(all(type(v) is int and v > 0 for v in policy.values()), 'positive integer policy required')
+     engine.policy(len(a.node_ids), len(b.node_ids), config,
+@@ -102,6 +104,7 @@
+ class PairSession:
+     @classmethod
+     def _reserve(cls, root, name, a, b, config, owner, ident, policy, parent=None):
++        from . import matching_checkpoint as engine
+         root = safe_root(root)
+         require(isinstance(name, str) and re.fullmatch('[A-Za-z0-9_-]{1,100}', name), 'exclusive local name required')
+         hash_string(owner)
+@@ -119,6 +122,7 @@
+ 
+     @classmethod
+     def create(cls, root, name, a, b, config, *, owner, context, policy):
++        from . import matching_checkpoint as engine
+         policy = policy_check(a, b, config, policy)
+         ident = identity(a, b, config, context)
+         self = cls._reserve(root, name, a, b, config, owner, ident, policy)
+@@ -131,6 +135,7 @@
+ 
+     @classmethod
+     def resume(cls, root, name, a, b, config, reference, *, owner, expected_owner, context, policy):
++        from . import matching_checkpoint as engine
+         root = safe_root(root); policy = policy_check(a, b, config, policy)
+         ident = identity(a, b, config, context); hash_string(expected_owner)
+         path, meta = safe_reference(root, reference)
+@@ -175,6 +180,7 @@
+             raise
+ 
+     def step(self, *, max_operations):
++        from . import matching_checkpoint as engine
+         require(self.safe, 'closed or poisoned pair session')
+         require(type(max_operations) is int and max_operations > 0, 'positive operation bound required')
+         if self.result is not None:
+@@ -192,6 +198,7 @@
+             raise
+ 
+     def save(self):
++        from . import matching_checkpoint as engine
+         require(self.safe and not self.complete_published, 'closed/poisoned/already published pair')
+         reserve = self.policy['max_checkpoint_bytes']+LIMIT
+         require(self.publications < self.policy['max_publications']
+@@ -225,6 +232,7 @@
+             error.add_note('Pair cleanup also failed: '+type(cleanup_error).__name__)
+ 
+     def close(self):
++        from . import matching_checkpoint as engine
+         self.safe = False
+         if self.state is not None:
+             try:
+--- a/tradingagents/research/onchain_replication/compact_matcher.py
++++ b/tradingagents/research/onchain_replication/compact_matcher.py
+@@ -20,7 +20,7 @@
+ from .matching_identity import graph_identity
+ 
+ require = io._require
+-engine = pair.engine
++from . import matching_checkpoint as engine
+ _RETENTION = WeakKeyDictionary()
+ 
+ 
+--- a/tests/research/onchain_replication/test_matching_pair_checkpoints.py
++++ b/tests/research/onchain_replication/test_matching_pair_checkpoints.py
+@@ -1,3 +1,4 @@
++from tradingagents.research.onchain_replication import matching_checkpoint as engine
+ import importlib.util
+ import json
+ import tempfile
+@@ -66,10 +67,10 @@
+             expected = self.finish(pair)
+             ref = pair.save()
+             pair.close()
+-            with patch.object(m.engine, 'create', side_effect=AssertionError('create repeated')), \
+-                 patch.object(m.engine, 'load', side_effect=AssertionError('array load repeated')), \
+-                 patch.object(m.engine, 'advance', side_effect=AssertionError('advance repeated')), \
+-                 patch.object(m.engine, 'score_only', side_effect=AssertionError('score repeated')):
++            with patch.object(engine, 'create', side_effect=AssertionError('create repeated')), \
++                 patch.object(engine, 'load', side_effect=AssertionError('array load repeated')), \
++                 patch.object(engine, 'advance', side_effect=AssertionError('advance repeated')), \
++                 patch.object(engine, 'score_only', side_effect=AssertionError('score repeated')):
+                 resumed = self.resume(root, 'reuse', ref)
+                 try:
+                     self.assertEqual(resumed.step(max_operations=2), expected)
+@@ -89,7 +90,7 @@
+                      dict(context=CONTEXT | {'namespace': 'f'*64}),
+                      dict(expected_owner='f'*64), dict(policy=POLICY | {'chunk_edges': 1}),
+                      dict(c=c | {'alpha': 2})]
+-            with patch.object(m.engine, 'load', side_effect=AssertionError('loaded before rejection')):
++            with patch.object(engine, 'load', side_effect=AssertionError('loaded before rejection')):
+                 for i, changes in enumerate(cases):
+                     with self.assertRaises(ValueError):
+                         self.resume(root, 'bad'+str(i), ref, **changes)
+@@ -102,7 +103,7 @@
+             root = Path(tmp)
+             pair = self.create(root)
+             prior = pair.save()
+-            with patch.object(m.engine, 'save', side_effect=KeyboardInterrupt):
++            with patch.object(engine, 'save', side_effect=KeyboardInterrupt):
+                 with self.assertRaises(KeyboardInterrupt):
+                     pair.save()
+             self.assertTrue((root / 'one' / 'artifact-000001').is_dir())
+@@ -152,8 +153,8 @@
+         with tempfile.TemporaryDirectory() as tmp:
+             pair = self.create(Path(tmp))
+             original = KeyboardInterrupt('primary interruption')
+-            with patch.object(m.engine, 'advance', side_effect=original), \
+-                 patch.object(m.engine, 'close', side_effect=RuntimeError('secondary cleanup')):
++            with patch.object(engine, 'advance', side_effect=original), \
++                 patch.object(engine, 'close', side_effect=RuntimeError('secondary cleanup')):
+                 with self.assertRaises(KeyboardInterrupt) as caught:
+                     pair.step(max_operations=2)
+             self.assertIs(caught.exception, original)
+@@ -180,7 +181,7 @@
+                         replace(a, node_ids=tuple(reversed(a.node_ids))),
+                         replace(a, node_features=a.node_features+.01),
+                         replace(a, edge_index=a.edge_index[:, ::-1], edge_features=a.edge_features[::-1])]
+-            with patch.object(m.engine, 'load', side_effect=AssertionError('body opened')):
++            with patch.object(engine, 'load', side_effect=AssertionError('body opened')):
+                 for i, changed in enumerate(variants):
+                     with self.assertRaises(ValueError):
+                         self.resume(root, 'changed'+str(i), ref, a=changed)
+@@ -189,20 +190,20 @@
+         import numpy as np
+         a, b, c = self.fixture()
+         expected = match_reference(a, b, c)
+-        state = m.engine.create(a, b, c, **{k: POLICY[k] for k in m.ENGINE_FIELDS})
++        state = engine.create(a, b, c, **{k: POLICY[k] for k in m.ENGINE_FIELDS})
+         try:
+             for _ in range(1000):
+                 if state['phase'] == 'done':
+                     break
+-                m.engine.advance(state, a, b, c, max_operations=2)
++                engine.advance(state, a, b, c, max_operations=2)
+             else:
+                 self.fail('local engine did not finish')
+-            actual = m.engine.result(state, a, b, c)
++            actual = engine.result(state, a, b, c)
+             self.assertEqual(actual.soft_assignment.tobytes(), expected.soft_assignment.tobytes())
+             np.testing.assert_array_equal(actual.assignment, expected.assignment)
+             self.assertEqual(actual.score, expected.score)
+         finally:
+-            m.engine.close(state)
++            engine.close(state)
+ 
+     def test_restored_rank_mapping_closed_on_score_completion(self):
+         with tempfile.TemporaryDirectory() as tmp:
+@@ -229,24 +230,24 @@
+         import hashlib
+         a, b, c = self.fixture()
+         policy = {k: POLICY[k] for k in m.ENGINE_FIELDS}
+-        state = m.engine.create(a, b, c, **policy)
++        state = engine.create(a, b, c, **policy)
+         try:
+             with tempfile.TemporaryDirectory() as tmp:
+                 directory = Path(tmp)/'state'
+-                m.engine.save(state, directory, a, b, c, max_checkpoint_bytes=POLICY['max_checkpoint_bytes'])
++                engine.save(state, directory, a, b, c, max_checkpoint_bytes=POLICY['max_checkpoint_bytes'])
+                 outer = directory/'manifest.json'; saved = json.loads(outer.read_bytes())
+                 outer.write_bytes(m.body(saved | {'version': 2}))
+-                with patch.object(m.engine.ann, 'load', side_effect=AssertionError('nested load')):
+-                    with self.assertRaises(ValueError):
+-                        m.engine.load(directory, a, b, c, expected_sha256=hashlib.sha256(outer.read_bytes()).hexdigest(), **policy)
++                with patch.object(engine.ann, 'load', side_effect=AssertionError('nested load')):
++                    with self.assertRaises(ValueError):
++                        engine.load(directory, a, b, c, expected_sha256=hashlib.sha256(outer.read_bytes()).hexdigest(), **policy)
+                 inner = directory/'annealing'/'manifest.json'
+                 inner.write_bytes(m.body(json.loads(inner.read_bytes()) | {'schema_version': 2}))
+                 outer.write_bytes(m.body(saved | {'annealing_sha256': hashlib.sha256(inner.read_bytes()).hexdigest()}))
+-                with patch.object(m.engine.ann.np, 'load', side_effect=AssertionError('array load')):
+-                    with self.assertRaises(ValueError):
+-                        m.engine.load(directory, a, b, c, expected_sha256=hashlib.sha256(outer.read_bytes()).hexdigest(), **policy)
++                with patch.object(engine.ann.np, 'load', side_effect=AssertionError('array load')):
++                    with self.assertRaises(ValueError):
++                        engine.load(directory, a, b, c, expected_sha256=hashlib.sha256(outer.read_bytes()).hexdigest(), **policy)
+         finally:
+-            m.engine.close(state)
++            engine.close(state)
+ 
+ 
+ from tradingagents.research.onchain_replication.neighborhoods import NeighborhoodIndex
+--- a/tests/research/onchain_replication/test_compact_matcher.py
++++ b/tests/research/onchain_replication/test_compact_matcher.py
+@@ -1,3 +1,4 @@
++from tradingagents.research.onchain_replication import matching_checkpoint as engine
+ """Fresh tiny real checkpoint-engine checks; no empirical admission."""
+ import json
+ import pytest
+@@ -36,10 +37,10 @@
+ 
+ def test_real_engine_exact_score_and_cleanup_without_per_pair_files(tmp_path, monkeypatch):
+     module, matcher, log, a, b, c, purpose = fixture(tmp_path)
+-    original = pair.engine.close; closed = []
++    original = engine.close; closed = []
+     def close(state):
+         original(state); closed.append(state)
+-    monkeypatch.setattr(pair.engine, 'close', close)
++    monkeypatch.setattr(engine, 'close', close)
+     got = matcher(purpose, a, b); expected = match_reference(a, b, c)
+     assert got == {'purpose_sha256': cache_key(purpose), 'score': expected.score}
+     assert len(closed) == 1 and closed[0]['safe'] is False and closed[0]['annealing'] is None
+@@ -58,19 +59,19 @@
+     assert log.events == 2 and log.state['pending'] is not None and log.state['progress_events'] == 1
+     saved = tmp_path / 'checkpoints/event-000000000001'
+     manifest = json.loads((saved / 'manifest.json').read_text())
+-    state = pair.engine.load(saved / 'state', a, b, c, expected_sha256=manifest['state_sha256'],
++    state = engine.load(saved / 'state', a, b, c, expected_sha256=manifest['state_sha256'],
+         **{k: POLICY[k] for k in pair.ENGINE_FIELDS})
+-    pair.engine.close(state)  # Read-only checkpoint validation, no advance/restart.
++    engine.close(state)  # Read-only checkpoint validation, no advance/restart.
+     with pytest.raises(ValueError): matcher(purpose, a, b)
+     log.fail('synthetic checkpoint stop')
+ 
+ 
+ def test_cleanup_failure_is_fatal_and_no_completion_is_published(tmp_path, monkeypatch):
+     module, matcher, log, a, b, c, purpose = fixture(tmp_path)
+-    original = pair.engine.close
++    original = engine.close
+     def close(state):
+         original(state); raise OSError('synthetic cleanup failure after real release')
+-    monkeypatch.setattr(pair.engine, 'close', close)
++    monkeypatch.setattr(engine, 'close', close)
+     with pytest.raises(module.CleanupFailure): matcher(purpose, a, b)
+     assert log.events == 1 and log.state['pending'] is not None
+     with pytest.raises(ValueError): matcher(purpose, a, b)
+@@ -80,7 +81,7 @@
+ def test_insufficient_publication_capacity_refuses_before_engine_create(tmp_path, monkeypatch):
+     module, matcher, log, a, b, c, purpose = fixture(tmp_path, log_limits={
+         'chunk_events': 1, 'max_events': 1, 'max_pairs': 1, 'max_logical_bytes': 40000})
+-    monkeypatch.setattr(pair.engine, 'create', lambda *a, **k: pytest.fail('allocated before capacity'))
++    monkeypatch.setattr(engine, 'create', lambda *a, **k: pytest.fail('allocated before capacity'))
+     with pytest.raises(ValueError): matcher(purpose, a, b)
+     assert log.events == 0
+     log.close()
+@@ -89,12 +90,12 @@
+ def test_checkpoint_corruption_before_publication_keeps_begin_pending(tmp_path, monkeypatch):
+     schedule = SCHEDULE | {'operations_per_call': 1, 'calls_per_checkpoint': 1, 'max_checkpoints': 1}
+     module, matcher, log, a, b, c, purpose = fixture(tmp_path, schedule)
+-    original = pair.engine.save
++    original = engine.save
+     def corrupt(state, path, *args, **kwargs):
+         sha = original(state, path, *args, **kwargs)
+         p = path / 'annealing/M.npy'; p.write_bytes(b'x' * p.stat().st_size)
+         return sha
+-    monkeypatch.setattr(pair.engine, 'save', corrupt)
++    monkeypatch.setattr(engine, 'save', corrupt)
+     with pytest.raises(ValueError): matcher(purpose, a, b)
+     assert log.events == 1 and log.state['progress_events'] == 0
+     assert list((tmp_path / 'checkpoints').iterdir())
+@@ -111,7 +112,7 @@
+ def test_global_checkpoint_budget_is_reserved_before_numerical_allocation(tmp_path, monkeypatch):
+     schedule = SCHEDULE | {'max_total_checkpoint_bytes': 1}
+     module, matcher, log, a, b, c, purpose = fixture(tmp_path, schedule)
+-    monkeypatch.setattr(pair.engine, 'create', lambda *a, **k: pytest.fail('uncheckpointable allocation'))
++    monkeypatch.setattr(engine, 'create', lambda *a, **k: pytest.fail('uncheckpointable allocation'))
+     with pytest.raises(ValueError, match='checkpoint'):
+         matcher(purpose, a, b)
+     assert log.events == 0
+@@ -163,6 +164,6 @@
+             path = tmp_path / 'log/events-000000000000.bin'
+             path.write_bytes(b'x' * path.stat().st_size)
+     matcher.lease = lease
+-    monkeypatch.setattr(pair.engine, 'create', lambda *a, **k: pytest.fail('allocated with corrupt begin'))
++    monkeypatch.setattr(engine, 'create', lambda *a, **k: pytest.fail('allocated with corrupt begin'))
+     with pytest.raises(ValueError): matcher(purpose, a, b)
+     log.close()

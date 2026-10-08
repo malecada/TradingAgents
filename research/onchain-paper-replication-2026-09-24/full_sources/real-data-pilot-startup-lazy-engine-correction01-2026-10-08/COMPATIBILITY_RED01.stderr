@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import runpy,sys; sys.argv=[sys.argv[1],'hypothesis']; runpy.run_path(sys.argv[0],run_name='__main__'); from tradingagents.research.onchain_replication import compact_matcher
+                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_matcher.py", line 23, in <module>
+    engine = pair.engine
+             ^^^^^^^^^^^
+AttributeError: module 'tradingagents.research.onchain_replication.matching_pair' has no attribute 'engine'

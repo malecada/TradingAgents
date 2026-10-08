@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "source_delta": {
+    "files": [
+      {
+        "file": "resources.py",
+        "before_sha256": "d068d947e96b20f99b542e4de08eca1ced0e4d6717b462400ed66cf8a893ea8a",
+        "after_sha256": "b557c05efdefe8d3cada7fd918467a687a08ec1cbe5798f4735c6c5b49132513",
+        "changed_functions": [
+          "guarded_run",
+          "assert_guarded_worker"
+        ],
+        "all_signatures_defaults_unchanged": true,
+        "outside_changed_functions_ast_equal": true,
+        "live_unchanged": true
+      },
+      {
+        "file": "job.py",
+        "before_sha256": "4610cb4a5a8cfa8397f55502e15ec48e23f12b585d121adf6f24ad19466a9e75",
+        "after_sha256": "86905fda543b93514f99deb8574b070f3cb92ba1a0499a6327c32610789cc826",
+        "changed_functions": [
+          "resource_policy"
+        ],
+        "all_signatures_defaults_unchanged": true,
+        "outside_changed_functions_ast_equal": true,
+        "live_unchanged": true
+      },
+      {
+        "file": "real_pilot_import_caller.py",
+        "before_sha256": "639fda40ba96b8cc12673f0ed75301f46e46ad83d4edb629ec101f528d054ee2",
+        "after_sha256": "0448be05bec3789fb10a7c41c10f62a211c546b5ef0acd8b0da8fc9413dc789a",
+        "changed_functions": [
+          "_amended_host_reserve",
+          "_finite_resources"
+        ],
+        "all_signatures_defaults_unchanged": true,
+        "outside_changed_functions_ast_equal": true,
+        "live_unchanged": true
+      }
+    ],
+    "runtime_kill_predicate_ast_unchanged": true,
+    "forward_inverse_byte_exact": true
+  },
+  "files": {
+    "AST_DELTA01.json": {
+      "bytes": 499554,
+      "sha256": "63d61e4f0e67d9793035e9fa9408f98aee8dd449ff4ee6c808270aa5751f0405"
+    },
+    "FORWARD01.patch": {
+      "bytes": 4744,
+      "sha256": "3b8d2e8c88ba60c9d50fe6455343089d95a4753796630a7a8ea778cad7f20205"
+    },
+    "GREEN01.log": {
+      "bytes": 2057,
+      "sha256": "9b74c915cc9673ec536d57ec5eeb54294d23e0def0769a3fcc4fbca088009b34"
+    },
+    "GREEN02.log": {
+      "bytes": 185,
+      "sha256": "8cc7472667f295dec539bc0499a13b89515603963c0bcad02ce526086c3c1975"
+    },
+    "INVERSE01.patch": {
+      "bytes": 4744,
+      "sha256": "94056ddf802076902457ad972a58c6c58170d8e9c2a3d19fe6711a3193915248"
+    },
+    "RED01.log": {
+      "bytes": 11745,
+      "sha256": "4f95abd5b4ef4b46d5e07cb465643cea1040cc8be91f99a3582962d3f97af703"
+    },
+    "REPORT01.md": {
+      "bytes": 4922,
+      "sha256": "e5c7dfb985eead8a773a0799fcd0d5f5d5f16c3a6ba60041cb1c32c50763ecef"
+    },
+    "SOURCE_DELTA01.json": {
+      "bytes": 1430,
+      "sha256": "18c5cd958383508bc5fdee5208cca74966106ff64434595597f91703bc253050"
+    },
+    "baseline/job.py": {
+      "bytes": 36692,
+      "sha256": "4610cb4a5a8cfa8397f55502e15ec48e23f12b585d121adf6f24ad19466a9e75"
+    },
+    "baseline/real_pilot_import_caller.py": {
+      "bytes": 36890,
+      "sha256": "639fda40ba96b8cc12673f0ed75301f46e46ad83d4edb629ec101f528d054ee2"
+    },
+    "baseline/resources.py": {
+      "bytes": 51066,
+      "sha256": "d068d947e96b20f99b542e4de08eca1ced0e4d6717b462400ed66cf8a893ea8a"
+    },
+    "check01.py": {
+      "bytes": 1184,
+      "sha256": "7bc76648170075811856819fc4ccaedcb05bb19bbd47a030795d7a971bff6386"
+    },
+    "job.py": {
+      "bytes": 36710,
+      "sha256": "86905fda543b93514f99deb8574b070f3cb92ba1a0499a6327c32610789cc826"
+    },
+    "real_pilot_import_caller.py": {
+      "bytes": 37011,
+      "sha256": "0448be05bec3789fb10a7c41c10f62a211c546b5ef0acd8b0da8fc9413dc789a"
+    },
+    "resources.py": {
+      "bytes": 51132,
+      "sha256": "b557c05efdefe8d3cada7fd918467a687a08ec1cbe5798f4735c6c5b49132513"
+    },
+    "source_check01.py": {
+      "bytes": 2554,
+      "sha256": "250c69bcf27ef0628938110ebcc39595dcbfe631b523ace447ddafcbcc56dd0a"
+    },
+    "test_startup01.before-stop-fixture.py": {
+      "bytes": 7526,
+      "sha256": "484e9eff97faeef0c6c6ca586b298cd0989e9ee2514139616c771d0fcbcb456b"
+    },
+    "test_startup01.py": {
+      "bytes": 7960,
+      "sha256": "4d843036084f9a06e7104aef0caf0c56c6403233c317affff2b6717e0c0ffc28"
+    }
+  }
+}

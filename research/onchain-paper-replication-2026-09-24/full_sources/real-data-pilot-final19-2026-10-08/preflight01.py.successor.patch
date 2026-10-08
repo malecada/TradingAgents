@@ -1,0 +1,43 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final18-2026-10-08/preflight01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final19-2026-10-08/preflight01.py
+@@ -20,10 +20,10 @@
+ 
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+-NAME='eth-paper-real-data-end-to-end-resource-20261008-18'
++NAME='eth-paper-real-data-end-to-end-resource-20261008-19'
+ GATE=str((HERE/'gate01.json').relative_to(ROOT))
+-SUCCESSOR={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed18-metadata-successor01-2026-10-08/successor02.py', 'sha256': '4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927'}
+-EXPECTED_RESOURCES={'disk_floor_bytes': 10737418240, 'disk_paths': ['/home/malecada/master_thesis/TradingAgents-audit-fixes'], 'memory_high_bytes': 5368709120, 'memory_max_bytes': 6442450944, 'native_unit_limits': {'file_size_bytes': 1073741824}, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, 'storage_budget': {'authority_root': '/home/malecada/master_thesis/TradingAgents-audit-fixes', 'experiment': 'eth-paper-real-data-end-to-end-resource-20261008-18', 'kind': 'real-pilot-writable-union', 'limits': {'max_allocated_bytes': 21474836480, 'max_depth': 64, 'max_entries': 1000000, 'max_logical_bytes': 17179869184, 'max_scan_seconds': 5}, 'roots': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261008-18'], 'schema_version': 2, 'shared_files': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock']}, 'wall_seconds': 28800}
++SUCCESSOR={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/successor02.py', 'sha256': '4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927'}
++EXPECTED_RESOURCES={'disk_floor_bytes': 10737418240, 'disk_paths': ['/home/malecada/master_thesis/TradingAgents-audit-fixes'], 'memory_high_bytes': 5368709120, 'memory_max_bytes': 6442450944, 'native_unit_limits': {'file_size_bytes': 1073741824}, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, 'storage_budget': {'authority_root': '/home/malecada/master_thesis/TradingAgents-audit-fixes', 'experiment': 'eth-paper-real-data-end-to-end-resource-20261008-19', 'kind': 'real-pilot-writable-union', 'limits': {'max_allocated_bytes': 21474836480, 'max_depth': 64, 'max_entries': 1000000, 'max_logical_bytes': 17179869184, 'max_scan_seconds': 5}, 'roots': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261008-19'], 'schema_version': 2, 'shared_files': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock']}, 'wall_seconds': 28800}
+ BINDER={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-transport-binding-preparation01-2026-10-06/bind01.py', 'sha256': 'bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb'}
+ INDEX_CAPACITY={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity01-2026-10-07/candidate/index_capacity.py', 'sha256': '977e5a6c37041caef7064f83dd6c3a749141451ef7bd42166a7aaca0c67bdaa5'}
+ OPAQUE_ROLE='archive_transport'
+@@ -194,7 +194,7 @@
+     authenticate_committed(source,committed_refs(refs,binding))
+     args=SimpleNamespace(root=ROOT,registration=GATE,experiment=NAME,source=source)
+     admission,job=_admitted(args)
+-    if not admission.ready or admission.effective_attempt_budget!=89:raise ValueError('exact pilot admission/budget differs')
++    if not admission.ready or admission.effective_attempt_budget!=90:raise ValueError('exact pilot admission/budget differs')
+     for relative,expected in admission.experiment['source_files'].items():
+         need(relative!=binding['transport']['path'],'source cannot use opaque exception')
+         need(refs.get(relative)==expected,'admitted source absent from authenticated release')
+@@ -214,7 +214,7 @@
+     need(hashlib.sha256(capacity_body).hexdigest()==INDEX_CAPACITY['sha256']
+         and refs.get(INDEX_CAPACITY['path'])==INDEX_CAPACITY['sha256'],
+         'exact released index capacity helper differs')
+-    capacity_module=types.ModuleType('pilot18_index_capacity')
++    capacity_module=types.ModuleType('pilot19_index_capacity')
+     capacity_module.__file__=str(capacity_path)
+     exec(compile(capacity_body,str(capacity_path),'exec'),capacity_module.__dict__)
+     capacity_plan=next(iter(job['payload']['representation_jobs'].values()))
+@@ -247,7 +247,7 @@
+     if free<startup:raise ValueError('full projected source/scratch plus disk floor unavailable')
+     if available<job['resources']['start_reserve_bytes']:raise ValueError('frozen startup RAM reserve unavailable')
+     return args,{'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'experiment':NAME,
+-        'registration_sha256':file_hash(HERE/'gate01.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':89,
++        'registration_sha256':file_hash(HERE/'gate01.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':90,
+         'source_pins':len(admission.experiment['source_files']),'compact_input_pins':len(admission.inputs),
+         'index_capacity':index_capacity,'projected_reservations':scopes,'host_mem_available_bytes':available,'free_disk_bytes':free,
+         'startup_free_requirement_bytes':startup,'storage_observation':storage,

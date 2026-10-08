@@ -1,0 +1,15 @@
+{
+  "checks": [
+    "three exact strict18-to19 literals, one per candidate; inverse bytes and normalized AST equal",
+    "successor02 byte-identical and compiles",
+    "all eight baseline dependency hashes verify; only builder/control self paths and hashes change",
+    "six external dependency pins byte-value-identical; not altered to include matching_owner",
+    "actual matching_owner995 recorded separately and unchanged",
+    "prior accepted18 review hashes reused; original source bytes unchanged",
+    "four new source files compile; source does not import/execute during compile",
+    "point-in-time fresh19 namespace absence"
+  ],
+  "failures": [],
+  "profile": "Checkout-local Python stdlib compile/AST/bytes/hash/namespace metadata only; no candidate import or execution.",
+  "status": "passed"
+}
