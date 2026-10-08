@@ -28,8 +28,20 @@ LIMIT_KEYS={'max_generations','max_generation_bytes','max_control_bytes',
 require=io._require
 
 
-def _raw(value):
-    raw=io._json(thaw(value));require(len(raw)<=CONTROL,'retention metadata capacity');return raw
+def _raw(value, *, limit=CONTROL):
+    require(limit in (CONTROL,65536),'bounded retention control limit')
+    raw=(io._json(thaw(value)) if limit==CONTROL else (json.dumps(thaw(value),sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode())
+    require(len(raw)<=limit,'retention metadata capacity');return raw
+
+
+def control_limit(policy):
+    selected=policy.get('checkpoint_layout')
+    if selected is None:return CONTROL
+    snapshots.engine.chunks.layout(thaw(selected))
+    return 65536
+
+
+def generation_control(policy):return 8*control_limit(policy)+3*snapshots.engine.LIMIT
 
 
 def _pin(path):
@@ -93,8 +105,10 @@ def _names(root,maximum):
     return names
 
 
-def _tree(root,cap):
+def _tree(root,cap,*,checkpoint_layout=None):
     """Original inode inventory plus every body hash; bounded real descriptor reads."""
+    maximum=16 if checkpoint_layout is None else 4*snapshots.engine.chunks.MAX_CHUNKS+16
+    if checkpoint_layout is not None:snapshots.engine.chunks.layout(thaw(checkpoint_layout))
     device=_pin(root)[0];dirs={};files={};total=0
     def walk(path):
         nonlocal total
@@ -104,7 +118,7 @@ def _tree(root,cap):
             with os.scandir(fd) as entries:
                 members=[]
                 for entry in entries:
-                    require(len(files)+len(dirs)+len(members)<16,'retention body inventory bound')
+                    require(len(files)+len(dirs)+len(members)<maximum,'retention body inventory bound')
                     members.append(entry)
             for entry in sorted(members,key=lambda x:x.name):
                 child=path/entry.name;info=entry.stat(follow_symlinks=False)
@@ -121,19 +135,19 @@ def _tree(root,cap):
 
 
 def _snapshot(root,sha,pair,policy,tree=None):
-    snapshots._snapshot(root,sha,{'ordered_pair':thaw(pair)['numeric_identity']},thaw(policy))
-    actual=_tree(root,policy['max_checkpoint_bytes'])
+    snapshots._snapshot(root,sha,{'ordered_pair':thaw(pair)['numeric_identity']},thaw(policy),checkpoint_layout=thaw(policy.get('checkpoint_layout')))
+    actual=_tree(root,policy['max_checkpoint_bytes'],checkpoint_layout=policy.get('checkpoint_layout'))
     if tree is not None:require(actual==tree,'retention original snapshot changed')
     return actual
 
 
-def _retired_snapshot(root,tree,cap):
+def _retired_snapshot(root,tree,cap,*,checkpoint_layout=None):
     """Retirement removes numeric bodies only; original engine metadata stays."""
     original=thaw(tree)
     metadata={name:item for name,item in original['files'].items() if name.endswith('.json')}
     expected={'directories':original['directories'],'files':metadata,
         'logical_bytes':sum(item['bytes'] for item in metadata.values())}
-    require(_tree(root,cap)==expected,'retired metadata or heavy-body disposition differs')
+    require(_tree(root,cap,checkpoint_layout=checkpoint_layout)==expected,'retired metadata or heavy-body disposition differs')
 
 
 @dataclass(frozen=True)
@@ -161,18 +175,20 @@ class Store:
         io._identity(pair['purpose_sha256'])
         require(set(pair['numeric_identity'])=={'left','right','configuration'},'retention numerical identity')
         for value in pair['numeric_identity'].values():io._identity(value)
-        require(set(policy)==snapshots.engine.POLICY_FIELDS|{'max_checkpoint_bytes'}
-            and all(type(v) is int and v>0 for v in policy.values()),'retention engine policy')
+        fields=snapshots.engine.POLICY_FIELDS|{'max_checkpoint_bytes'}
+        require(set(policy) in (fields,fields|{'checkpoint_layout'})
+            and all(type(policy[k]) is int and policy[k]>0 for k in fields),'retention engine policy')
+        if 'checkpoint_layout' in policy:snapshots.engine.chunks.layout(policy['checkpoint_layout'])
         require(set(limits)==LIMIT_KEYS and all(type(v) is int and 0<v<2**63 for v in limits.values()),'positive retention limits')
         require(type(replay_first) is bool and callable(lease),'explicit replay selector and lease')
-        require(limits['max_control_bytes']>=2*CONTROL and limits['max_cumulative_bytes']>=2*CONTROL,'retention claim capacity')
+        require(limits['max_control_bytes']>=2*control_limit(policy) and limits['max_cumulative_bytes']>=2*control_limit(policy),'retention claim capacity')
         bindings,pair,policy,limits=(thaw(freeze(v)) for v in (bindings,pair,policy,limits))
         root=Path(root);require(root.is_absolute() and root.resolve()==root,'fresh canonical retention root')
         self.root=root;self.lease=lease;self.lock=Lock();self._original_lock=self.lock
         self.poisoned=False;self.closed=False
         self.pair=freeze(pair);self.policy=freeze(policy);self.limits=freeze(limits)
         self.generations=0;self.current=None;self.proofs=[];self.retired=[];self.replays={};self.expected={}
-        self.spent={'generations':0,'control_bytes':2*CONTROL,'cumulative_bytes':2*CONTROL,'replay_bytes':0,'replays':0}
+        self.spent={'generations':0,'control_bytes':2*self.control,'cumulative_bytes':2*self.control,'replay_bytes':0,'replays':0}
         lease();parent_pin=_pin(root.parent);root.mkdir();self.inode=_pin(root)
         require(self.inode[0]==parent_pin[0],'retention same-device root required');_sync(root.parent)
         self.claim=freeze({'schema_version':1,'version':VERSION,'root':str(root),'inode':self.inode,
@@ -184,12 +200,17 @@ class Store:
         self._refresh()
         self._guard()
 
+    @property
+    def control(self):return control_limit(self.policy)
+
+    def _raw(self,value):return _raw(value,limit=self.control)
+
     def _runtime(self):
         value={'root':str(self.root),'inode':self.inode,'claim':thaw(self.claim),
             'claim_sha256':self.claim_sha256,'pair':thaw(self.pair),'policy':thaw(self.policy),
             'limits':thaw(self.limits),'spent':thaw(self.spent),'generations':self.generations,
-            'current':self.current,'proofs':[io._hash(_raw(p)) for p in self.proofs],
-            'retired':self.retired,'replays':{k:io._hash(_raw(v)) for k,v in self.replays.items()},
+            'current':self.current,'proofs':[io._hash(self._raw(p)) for p in self.proofs],
+            'retired':self.retired,'replays':{k:io._hash(self._raw(v)) for k,v in self.replays.items()},
             'expected':{k:io._hash(v) for k,v in self.expected.items()},
             'poisoned':self.poisoned,'closed':self.closed}
         return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
@@ -221,20 +242,20 @@ class Store:
         for reference,expected in _AUTHORITIES[self]['events']:_event(reference,expected)
 
     def _publish(self,name,value):
-        raw=_raw(value);result=_write_bytes(self.root/name,raw);self.expected[name]=raw
+        raw=self._raw(value);result=_write_bytes(self.root/name,raw);self.expected[name]=raw
         self._refresh();return result
 
     def _local(self):
-        require(_pin(self.root)==self.inode and io._hash(_raw(self.claim))==self.claim_sha256,'retention root/claim authority changed')
+        require(_pin(self.root)==self.inode and io._hash(self._raw(self.claim))==self.claim_sha256,'retention root/claim authority changed')
         allowed=set(self.expected)|{f'generation-{i:020d}' for i in range(self.generations)}|set(self.replays)
         require(_names(self.root,len(allowed)+1)==allowed,'retention root inventory differs')
-        for name,raw in self.expected.items():require(_read(self.root/name,CONTROL)==raw,'retention immutable metadata changed')
+        for name,raw in self.expected.items():require(_read(self.root/name,self.control)==raw,'retention immutable metadata changed')
         for proof in self.proofs:
             proof=thaw(proof)
             i=proof['generation'];path=self.root/f'generation-{i:020d}'
             require(_pin(path)==proof['generation_inode'] and _names(path,2)=={'state'},
                 'retention generation replaced or wrapper inventory differs')
-            if i in self.retired:_retired_snapshot(path/'state',proof['tree'],self.policy['max_checkpoint_bytes'])
+            if i in self.retired:_retired_snapshot(path/'state',proof['tree'],self.policy['max_checkpoint_bytes'],checkpoint_layout=self.policy.get('checkpoint_layout'))
             else:_snapshot(path/'state',proof['state_sha256'],self.pair,self.policy,thaw(proof['tree']))
         for name,proof in self.replays.items():
             _snapshot(self.root/name,proof['state_sha256'],self.pair,self.policy,proof['tree'])
@@ -271,7 +292,7 @@ class Store:
             _cleanup((lock.release,),sys.exception())
 
     def _reserve(self,replay):
-        size=self.policy['max_checkpoint_bytes'];control=GENERATION_CONTROL
+        size=self.policy['max_checkpoint_bytes'];control=generation_control(self.policy)
         next_spent=dict(self.spent)
         for key,value in {'generations':1,'control_bytes':control,
             'cumulative_bytes':size+control+(size if replay else 0),
@@ -280,7 +301,7 @@ class Store:
         for key in next_spent:require(next_spent[key]<=self.limits['max_'+key],'retention cumulative capacity: '+key)
         self.spent=next_spent
         self._publish(f'reservation-{self.generations:020d}.json',{'schema_version':1,'generation':self.generations,'claim_sha256':self.claim_sha256,
-            'predecessor':None if not self.proofs else io._hash(_raw(self.proofs[-1])),'spent':self.spent})
+            'predecessor':None if not self.proofs else io._hash(self._raw(self.proofs[-1])),'spent':self.spent})
 
     def checkpoint(self,state,a,b,config,*,publish_progress):
         with self._operation():
@@ -290,7 +311,7 @@ class Store:
             replay=self.generations==0 and self.claim['replay_first']
             self._reserve(replay);i=self.generations;self.generations+=1;self._refresh()
             path=self.root/f'generation-{i:020d}';path.mkdir();_sync(self.root)
-            sha=snapshots.engine.save(state,path/'state',a,b,config,max_checkpoint_bytes=self.policy['max_checkpoint_bytes'])
+            sha=snapshots.engine.save(state,path/'state',a,b,config,max_checkpoint_bytes=self.policy['max_checkpoint_bytes'],**({'checkpoint_layout':thaw(self.policy['checkpoint_layout'])} if 'checkpoint_layout' in self.policy else {}))
             tree=_snapshot(path/'state',sha,self.pair,self.policy)
             require(tree['logical_bytes']<=self.limits['max_generation_bytes'],'retention generation byte capacity')
             summary={'phase':state['phase'],'annealing_phase':state['annealing']['phase'],
@@ -303,13 +324,13 @@ class Store:
             require(_pin(self.root)==self.inode,'retention root replaced at callback')
             _snapshot(path/'state',sha,self.pair,self.policy,tree)
             proof={'schema_version':1,'claim_sha256':self.claim_sha256,'generation':i,'generation_inode':_pin(path),'state_sha256':sha,
-                'tree':tree,'event':event,'predecessor':None if not self.proofs else io._hash(_raw(self.proofs[-1])),
+                'tree':tree,'event':event,'predecessor':None if not self.proofs else io._hash(self._raw(self.proofs[-1])),
                 'body_available':True,'restart_eligible':True,'execution_admitted':False}
             self._publish(f'progress-{i:020d}.json',proof);self.proofs.append(freeze(proof))
             if replay:self._copy_replay(proof)
             previous=self.current;self.current=i;self._refresh()
             self._guard()
-            if previous is not None:self._retire(previous,{'successor_proof':io._hash(_raw(proof))})
+            if previous is not None:self._retire(previous,{'successor_proof':io._hash(self._raw(proof))})
             self._guard()
             return freeze(proof)
 
@@ -324,7 +345,7 @@ class Store:
             _write_bytes(target/relative,raw)
         tree=_snapshot(target,proof['state_sha256'],self.pair,self.policy)
         copied={'schema_version':1,'generation':proof['generation'],'state_sha256':proof['state_sha256'],
-            'tree':tree,'source_proof_sha256':io._hash(_raw(proof)),'body_available':True,'restart_eligible':True}
+            'tree':tree,'source_proof_sha256':io._hash(self._raw(proof)),'body_available':True,'restart_eligible':True}
         self._publish(name+'.json',copied);self.replays[name]=copied;self._refresh()
 
     def _retire(self,i,reason):
@@ -332,7 +353,7 @@ class Store:
         self._guard()
         require(i not in self.retired and (i!=0 or not self.claim['replay_first'] or self.replays),
             'selected first checkpoint must be retained before retirement')
-        intent={'schema_version':1,'generation':i,'proof_sha256':io._hash(_raw(proof)),
+        intent={'schema_version':1,'generation':i,'proof_sha256':io._hash(self._raw(proof)),
             'reason':reason,'tree':tree,'body_available':False,'restart_eligible':False}
         intent_sha=self._publish(f'retire-{i:020d}-intent.json',intent)
         self._guard()
@@ -345,7 +366,7 @@ class Store:
                 require(io._hash(raw)==item['sha256'] and list(io._signature(file.lstat())[:2])==item['inode'],
                     'retirement original member changed')
                 os.unlink(file.name,dir_fd=fd);os.fsync(fd)
-        _retired_snapshot(path,tree,self.policy['max_checkpoint_bytes'])
+        _retired_snapshot(path,tree,self.policy['max_checkpoint_bytes'],checkpoint_layout=self.policy.get('checkpoint_layout'))
         self._publish(f'retire-{i:020d}-complete.json',{'schema_version':1,'generation':i,
             'intent_sha256':intent_sha,'body_available':False,'restart_eligible':False})
         self.retired.append(i);self._refresh()
@@ -361,9 +382,9 @@ class Store:
             require(type(expected['score']) in (int,float) and math.isfinite(expected['score']) and 0<=expected['score']<=1
                 and type(expected['iterations']) is int and expected['iterations']>=0
                 and expected['convergence'] in ('temperature_complete','iteration_cap'),'completion numeric fields')
-            require(self.spent['control_bytes']+3*CONTROL<=self.limits['max_control_bytes']
-                and self.spent['cumulative_bytes']+3*CONTROL<=self.limits['max_cumulative_bytes'],'retention terminal capacity')
-            self.spent['control_bytes']+=3*CONTROL;self.spent['cumulative_bytes']+=3*CONTROL
+            require(self.spent['control_bytes']+3*self.control<=self.limits['max_control_bytes']
+                and self.spent['cumulative_bytes']+3*self.control<=self.limits['max_cumulative_bytes'],'retention terminal capacity')
+            self.spent['control_bytes']+=3*self.control;self.spent['cumulative_bytes']+=3*self.control
             event=_event(reference,expected);_AUTHORITIES[self]['events']=((reference,freeze(expected)),)
             self._publish('completion.json',event)
             self._guard();_event(reference,expected)
@@ -405,7 +426,8 @@ def _claim(root,expected):
 
 def verify(root,*,expected_claim,expected_terminal):
     """Callback-free terminal check; caller must anchor both original references."""
-    root=Path(root);claim=_claim(root,expected_claim);raw=_read(root/'terminal.json',CONTROL)
+    root=Path(root);claim=_claim(root,expected_claim);control=control_limit(claim['policy']);raw=_read(root/'terminal.json',control)
+    encode=lambda value:_raw(value,limit=control)
     require(io._hash(raw)==expected_terminal,'original terminal reference differs');terminal=json.loads(raw)
     require(terminal['claim_sha256']==expected_claim and terminal['version']==VERSION
         and terminal['execution_admitted'] is False,'terminal claim differs')
@@ -421,32 +443,32 @@ def verify(root,*,expected_claim,expected_terminal):
     require(set(terminal['records'])==record_names,'terminal exact admitted record set differs')
     records={}
     for name,digest in terminal['records'].items():
-        data=_read(root/name,CONTROL);require(io._hash(data)==digest,'terminal record changed');records[name]=json.loads(data)
+        data=_read(root/name,control);require(io._hash(data)==digest,'terminal record changed');records[name]=json.loads(data)
     require(terminal['records']['claim.json']==expected_claim,'terminal original claim differs')
-    spent={'generations':0,'control_bytes':2*CONTROL,'cumulative_bytes':2*CONTROL,'replay_bytes':0,'replays':0}
+    spent={'generations':0,'control_bytes':2*control,'cumulative_bytes':2*control,'replay_bytes':0,'replays':0}
     allowed=set(records)|{'terminal.json'};previous=None;size=claim['policy']['max_checkpoint_bytes']
     for i in range(n):
         name=f'generation-{i:020d}';allowed.add(name);proof=records[f'progress-{i:020d}.json']
         require(proof['generation']==i and proof['claim_sha256']==expected_claim and proof['predecessor']==previous
             and proof['generation_inode']==_pin(root/name) and _names(root/name,2)=={'state'},
             'terminal generation chain/retirement differs')
-        _retired_snapshot(root/name/'state',proof['tree'],claim['policy']['max_checkpoint_bytes'])
+        _retired_snapshot(root/name/'state',proof['tree'],claim['policy']['max_checkpoint_bytes'],checkpoint_layout=claim['policy'].get('checkpoint_layout'))
         selected=bool(replay and i==0)
-        for key,value in {'generations':1,'control_bytes':GENERATION_CONTROL,
-            'cumulative_bytes':size+GENERATION_CONTROL+(size if selected else 0),
+        for key,value in {'generations':1,'control_bytes':generation_control(claim['policy']),
+            'cumulative_bytes':size+generation_control(claim['policy'])+(size if selected else 0),
             'replay_bytes':size if selected else 0,'replays':int(selected)}.items():spent[key]+=value
         require(records[f'reservation-{i:020d}.json']=={'schema_version':1,'generation':i,
             'claim_sha256':expected_claim,'predecessor':previous,'spent':spent},'original monotone reservation differs')
         event=proof['event']['event']
         require(event['schema_version']==1 and event['kind']=='progress' and event['pair']==claim['pair']
             and event['generation']==i and event['event_ordinal']==i+1 and event['state_sha256']==proof['state_sha256']
-            and proof['event']['sha256']==io._hash(_raw(event)),'progress durable event differs')
-        previous=io._hash(_raw(proof));intent=records[f'retire-{i:020d}-intent.json'];done=records[f'retire-{i:020d}-complete.json']
-        reason=({'successor_proof':io._hash(_raw(records[f'progress-{i+1:020d}.json']))} if i+1<n
+            and proof['event']['sha256']==io._hash(encode(event)),'progress durable event differs')
+        previous=io._hash(encode(proof));intent=records[f'retire-{i:020d}-intent.json'];done=records[f'retire-{i:020d}-complete.json']
+        reason=({'successor_proof':io._hash(encode(records[f'progress-{i+1:020d}.json']))} if i+1<n
             else {'completion_sha256':terminal['completion']['sha256']})
         require(intent['generation']==i and intent['proof_sha256']==previous and intent['tree']==proof['tree']
             and intent['reason']==reason and intent['body_available'] is False and intent['restart_eligible'] is False
-            and done=={'schema_version':1,'generation':i,'intent_sha256':io._hash(_raw(intent)),
+            and done=={'schema_version':1,'generation':i,'intent_sha256':io._hash(encode(intent)),
                 'body_available':False,'restart_eligible':False},'retirement exact proof differs')
         if selected:
             name=f'replay-{i:020d}';allowed.add(name);r=records[name+'.json']
@@ -454,13 +476,13 @@ def verify(root,*,expected_claim,expected_terminal):
                 and r['generation']==i and r['body_available'] is True and r['restart_eligible'] is True,
                 'replay original proof differs')
             _snapshot(root/name,r['state_sha256'],claim['pair'],claim['policy'],r['tree'])
-    spent['control_bytes']+=3*CONTROL;spent['cumulative_bytes']+=3*CONTROL
+    spent['control_bytes']+=3*control;spent['cumulative_bytes']+=3*control
     require(terminal['spent']==spent and all(value<=claim['limits']['max_'+key] for key,value in spent.items()),
         'terminal bounded monotone spending differs')
     require(_names(root,len(allowed)+1)==allowed,'terminal exact namespace differs')
     event=terminal['completion']['event']
     require(terminal['completion']==records['completion.json']
-        and terminal['completion']['sha256']==io._hash(_raw(event))
+        and terminal['completion']['sha256']==io._hash(encode(event))
         and event['schema_version']==1 and event['kind']=='complete' and event['pair']==claim['pair']
         and event['event_ordinal']==n+1,'terminal completion differs')
     disposition='retained' if replay else ('completed_before_first_scheduled_checkpoint'
@@ -485,7 +507,7 @@ def reconcile(root,*,expected_claim,expected_progress=None):
             i=int(path.name[11:]);body=path/'state';item['body_present']=body.exists()
             item['body_verified']=False
             if i in pins:
-                raw=_read(root/f'progress-{i:020d}.json',CONTROL)
+                raw=_read(root/f'progress-{i:020d}.json',control_limit(claim['policy']))
                 require(io._hash(raw)==pins[i],'reconciliation original progress differs');proof=json.loads(raw)
                 require(proof['claim_sha256']==expected_claim and proof['generation']==i
                     and proof['generation_inode']==_pin(path),'reconciliation original generation differs')

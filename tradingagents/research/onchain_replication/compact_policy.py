@@ -5,6 +5,7 @@ reader and terminal seal must bind this policy before empirical execution. Bound
 here cover retained logical evidence only, excluding filesystem allocation,
 graphs, numerical matrices, scratch, guard logs and preceding attempts.
 """
+import copy
 from .cache import cache_key
 from . import matching_pair as pair, score_batches as io, compact_pair_log as log
 
@@ -17,6 +18,32 @@ SCHEDULE_FIELDS = {'operations_per_call', 'calls_per_checkpoint', 'max_checkpoin
 
 def positive(values):
     require(all(type(v) is int and 0 < v < 2**63 for v in values), 'positive bounded integer required')
+
+
+PAIR_CAPACITY_FIELD = 'max_pair_entries_override'
+
+
+def pair_policy(value):
+    extras = {PAIR_CAPACITY_FIELD, 'checkpoint_layout'}
+    require(type(value) is dict and pair.POLICY_FIELDS <= set(value)
+        and set(value) <= pair.POLICY_FIELDS | extras, 'compact pair policy schema')
+    positive(value[k] for k in value if k != 'checkpoint_layout')
+    if 'checkpoint_layout' in value:
+        from .checkpoint_chunks import layout
+        layout(value['checkpoint_layout'])
+    return {k: v for k, v in value.items() if k != PAIR_CAPACITY_FIELD}
+
+
+def effective_matching(config, policy):
+    """Copy original scientific settings; only an explicit capacity may increase."""
+    pair_policy(policy)
+    result = copy.deepcopy(config)
+    if PAIR_CAPACITY_FIELD in policy:
+        original = config.get('max_pair_entries')
+        require(type(original) is int and 0 < original < 2**63
+            and policy[PAIR_CAPACITY_FIELD] >= original, 'pair capacity cannot decrease original')
+        result['max_pair_entries'] = policy[PAIR_CAPACITY_FIELD]
+    return result
 
 
 def dictionary_capacity(*, sample_count, size, partition_threshold, partition_size):
@@ -59,9 +86,12 @@ def validate(value, *, kind, pairs):
     require(type(pairs) is int and 0 <= pairs < 2**63 and (kind == 'dictionary' or pairs > 0),
             'bounded pair occurrence count')
     p = value['pair']; s = value['schedule']
-    require(type(p) is dict and set(p) == pair.POLICY_FIELDS, 'compact pair policy schema')
+    pair_policy(p)
     require(type(s) is dict and set(s) == SCHEDULE_FIELDS, 'compact schedule schema')
-    positive(p.values()); positive(s.values())
+    positive(p[k] for k in pair.POLICY_FIELDS); positive(s.values())
+    if 'checkpoint_layout' in p:
+        from .checkpoint_chunks import layout
+        layout(p['checkpoint_layout'])
     positive((value['score_chunk_cells'], value['max_retained_logical_bytes']))
     limits = log._limits(value['log'])
     require(p['chunk_edges'] <= 65536, 'bounded scoring edge chunk required')

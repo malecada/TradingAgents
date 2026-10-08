@@ -85,15 +85,20 @@ def identity(a, b, config, context):
                 backend=BACKEND.copy(), numerical_components=components)
 
 
-def policy_check(a, b, config, policy):
+def policy_check(a, b, config, policy, *, allow_checkpoint_layout=False):
     from . import matching_checkpoint as engine
-    require(isinstance(policy, dict) and set(policy) == POLICY_FIELDS, 'pair policy schema')
-    require(all(type(v) is int and v > 0 for v in policy.values()), 'positive integer policy required')
+    require(isinstance(policy, dict) and set(policy) in ((POLICY_FIELDS, POLICY_FIELDS|{'checkpoint_layout'}) if allow_checkpoint_layout else (POLICY_FIELDS,)), 'pair policy schema')
+    if 'checkpoint_layout' in policy:engine.chunks.layout(policy['checkpoint_layout'])
+    require(all(type(policy[k]) is int and policy[k] > 0 for k in POLICY_FIELDS), 'positive integer policy required')
     engine.policy(len(a.node_ids), len(b.node_ids), config,
                   **{k: policy[k] for k in ENGINE_FIELDS})
     require(policy['chunk_edges'] <= 65536, 'bounded edge chunk required')
     n, m = len(a.node_ids), len(b.node_ids)
-    require(policy['max_checkpoint_bytes'] >= 32*n*m+512+3*LIMIT, 'checkpoint state allowance')
+    needed_checkpoint=32*n*m+512+3*LIMIT
+    if 'checkpoint_layout' in policy:
+        needed_checkpoint=4*engine.chunks.describe([n,m],'<f8',policy['checkpoint_layout'],'M')['bytes']+3*LIMIT
+        require(policy['max_state_bytes']>=32*n*m+engine.chunks.io_scratch_bytes(policy['checkpoint_layout']),'sharded retained state plus I/O scratch allowance')
+    require(policy['max_checkpoint_bytes'] >= needed_checkpoint, 'checkpoint state allowance')
     needed = 80*min(n, m)+32*min(policy['chunk_edges'], b.edge_index.shape[1])
     require(policy['max_score_buffer_bytes'] >= needed, 'score buffer allowance')
     require(policy['total_checkpoint_bytes'] >= LIMIT+policy['max_checkpoint_bytes']+LIMIT,

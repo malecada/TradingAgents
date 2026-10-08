@@ -8,6 +8,8 @@ is not a replay of the greedy prefix. No production integration is implied.
 from pathlib import Path
 import hashlib,json,os
 import numpy as np
+import sys
+from . import checkpoint_chunks as chunks
 FIELDS={'version','safe','phase','shape','input_sha256','max_pair_entries','max_explicit_bytes','cursor','pairs','order'}
 META_FIELDS=FIELDS-{'order'}|{'order_sha256','order_bytes'}
 LIMIT=65536
@@ -97,7 +99,8 @@ def advance(s,*,input_sha256,max_entries):
     except BaseException:s['safe']=False;raise
 
 
-def save(s,directory,*,max_checkpoint_bytes):
+def save(s,directory,*,max_checkpoint_bytes,checkpoint_layout=None):
+    if checkpoint_layout is not None:return chunks.hard_save(sys.modules[__name__],s,directory,max_checkpoint_bytes,checkpoint_layout)
     check(s)
     # 128-byte NPY header is asserted after writing; reserve a full manifest cap.
     if type(max_checkpoint_bytes) is not int or max_checkpoint_bytes<s['order'].nbytes+128+LIMIT:raise ValueError('checkpoint allowance exceeded')
@@ -112,7 +115,8 @@ def save(s,directory,*,max_checkpoint_bytes):
     sync(directory);return hashlib.sha256(raw).hexdigest()
 
 
-def load(directory,*,expected_sha256,input_sha256,max_pair_entries,max_explicit_bytes):
+def load(directory,*,expected_sha256,input_sha256,max_pair_entries,max_explicit_bytes,checkpoint_layout=None):
+    if checkpoint_layout is not None:return chunks.hard_load(sys.modules[__name__],directory,expected_sha256,input_sha256,max_pair_entries,max_explicit_bytes,checkpoint_layout)
     directory=Path(directory);manifest=directory/'manifest.json';path=directory/'order.npy'
     if directory.is_symlink() or manifest.is_symlink() or not manifest.is_file() or manifest.stat().st_size>LIMIT or sha(manifest)!=expected_sha256:raise ValueError('manifest identity differs')
     d=json.loads(manifest.read_bytes())

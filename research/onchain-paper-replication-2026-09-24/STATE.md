@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T14:16:06.813646+00:00: nine-file checkpoint/capacity/throughput composition independently accepted and adopted. No native numerical job. Goal ACTIVE/incomplete;19permanentFAILED/spent90.**
+
+[Root adoption](full_sources/real-data-pilot-checkpoint-throughput-adoption01-2026-10-08/SOURCE_ADOPTION01.json) installs exact nine-source composition after [independent acceptance](full_sources/real-data-pilot-checkpoint-throughput-composition-review01-2026-10-08/MANIFEST01.json)02b3192c and31focused joint checks. Actual synthetic ArchivePairLog→CompactMatcher→Controller→Store exercised BOTH explicit capacity override and chunk layout, three generations/first replay/retirement/completed score/stage sealing/archive terminal/Store verification; default route and four late mutations checked. No genuine scientific Owner/Binding/admission/full-resource claim. Source has lossless~2MiB chunks, selected64KiB controls/6357376B I/O scratch accounting, nondecreasing capacity-only effective config while original dictionary/config stay unchanged, and one immediately duplicated annealing validation removed. All old numeric statements/default checkpoint bytes preserved.
+
+Imported live-history source397537cb was already independently adopted (existing1s/4096/60s closed-history sampling on live route; full boundaries unchanged). Both throughput changes are source-only; no measured real speedup. Census/full returned BYTE recoverye40ec45a remains accepted (all7/all12,999,004;241oversized/max350110). Actual latest push83527/cfba35 and remote59895/c2119c exit0 matched8fff338163a587843a130e3249f04b7c917ffd33 before this adoption. Git availability does not prove fresh final capsule/runtime recovery. Actual native1GiB FSIZE versus selected4MiB calculation/domain declarations remain explicitly distinguished.
+
+All three bounded agents completed; no native launcher active. Root sole integration/registration/accounting/STATE/Git/preservation/ONElauncher. Accounting59closed33COMPLETE26FAILED/highest90/28pending/threeclosedpreclaimreserves unchanged; no91/new claim or refund/capladder. Original32motifs512spent/sevenwholegraphs/model/training/tolerances and fullMCM→GAT→attentionLSTM→onejointupdate remain. Zero complete representativeMCM/update/checkpoint/financialfits. BroadheartbeatPAUSED.
+
+Next executable action: commit/push/adoption remote readback; prepare exact capacity selections using admitted source schemas (extraction350110, pair8402640, normalization700220, retained state268884480 plus checked I/O scratch, hardening143195398, full checkpoint269081600 plus chunk/header/control overhead). Keep native6hard5high/2.5startup=reserve/zeroSwap/twoCPU/10GiBfloor/8h. Optional complete-neighborhood kernel remains uninstalled; use NEW source path and preserve original bridge. Derive actual aggregate/retention/selected-input/storage-domain reservations rather than equate4MiB context to nativecap. Then prepare/review/commit fresh finite genuine real-scoring-throughput registration+allowance and measurement before another full pilot; do not infer feasible completion from source tests.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T14:10:41.346178+00:00: concrete checkpoint and throughput source corrections completed; exact combined review active. No native numerical job. Goal ACTIVE/incomplete; pilot19 permanently FAILED/spent90.**
 
 Census and actual fresh external BYTE recovery remain complete (e40ec45a; all7/all12,999,004;241oversized/max350110). Actual push68375/1ee77c and remote92824/3f3c15 both exit0 matched0592bc0acb5c8e0d361dbb3be7692ca80fde2642. This is committed Git availability, not fresh new-capsule/runtime recovery. Actual selected1GiB native file limit is distinct from4MiB capacity-calculator context; correction independently accepted8dc09f78.

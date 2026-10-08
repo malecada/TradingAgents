@@ -11,6 +11,8 @@ import json
 import math
 import os
 import numpy as np
+import sys
+from . import checkpoint_chunks as chunks
 from scipy.special import logsumexp
 from tradingagents.research.onchain_replication.matching_reference import validate_pair,agreement,harden,score_assignment,MatchResult
 from . import matching_identity as typed_identity
@@ -70,7 +72,15 @@ def check(state,a,b,c):
 
 def advance(state,a,b,c,*,max_operations):
     if type(max_operations) is not int or max_operations<=0:raise ValueError('positive operation budget required')
-    check(state,a,b,c);n,m=state['shape'];right_edges=b.edge_index.shape[1];total=a.edge_index.shape[1]*right_edges
+    check(state,a,b,c)
+    return _advance_checked(state,a,b,c,max_operations=max_operations)
+def _advance_checked(state,a,b,c,*,max_operations):
+    """Private body for an exclusively owned state checked in this same call.
+
+    The caller must validate state, inputs and positive operation budget before
+    entry, with no intervening mutation of them or external callback.
+    """
+    n,m=state['shape'];right_edges=b.edge_index.shape[1];total=a.edge_index.shape[1]*right_edges
     state['safe']=False
     try:
         used=0
@@ -143,7 +153,8 @@ def sync(directory):
     try:os.fsync(fd)
     finally:os.close(fd)
 
-def save(state,directory,a,b,c,*,max_checkpoint_bytes):
+def save(state,directory,a,b,c,*,max_checkpoint_bytes,checkpoint_layout=None):
+    if checkpoint_layout is not None:return chunks.anneal_save(sys.modules[__name__],state,directory,a,b,c,max_checkpoint_bytes,checkpoint_layout)
     check(state,a,b,c)
     if type(max_checkpoint_bytes) is not int or max_checkpoint_bytes<=0:raise ValueError('positive checkpoint allowance required')
     # Logical bytes only; physical allocation/RSS require the outer owner policy.
@@ -163,7 +174,8 @@ def save(state,directory,a,b,c,*,max_checkpoint_bytes):
     return hashlib.sha256(raw).hexdigest()
 
 
-def load(directory,a,b,c,*,expected_sha256,max_state_bytes,max_chunk_entries=65536):
+def load(directory,a,b,c,*,expected_sha256,max_state_bytes,max_chunk_entries=65536,checkpoint_layout=None):
+    if checkpoint_layout is not None:return chunks.anneal_load(sys.modules[__name__],directory,a,b,c,expected_sha256,max_state_bytes,max_chunk_entries,checkpoint_layout)
     directory=Path(directory);manifest_path=directory/'manifest.json'
     if manifest_path.stat().st_size>65536 or sha(manifest_path)!=expected_sha256:raise ValueError('checkpoint manifest differs')
     meta=json.loads(manifest_path.read_bytes());n,m=len(a.node_ids),len(b.node_ids);validate_pair(a,b,c);bound(n,m,max_state_bytes)

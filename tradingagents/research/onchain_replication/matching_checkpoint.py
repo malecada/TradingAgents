@@ -11,6 +11,7 @@ from tradingagents.research.onchain_replication.matching import MatchScore
 from . import matching_annealing as ann
 from . import matching_hardening as hard
 from . import matching_sparse as sparse
+from . import checkpoint_chunks as chunks
 FIELDS={'version','safe','phase','policy','annealing','hardening','matrix_sha256'}
 POLICY_FIELDS={'max_state_bytes','normalization_chunk_entries','hardening_chunk_entries','hardening_buffer_bytes'}
 MANIFEST_FIELDS={'version','phase','policy','matrix_sha256','annealing_sha256','hardening_sha256'}
@@ -66,7 +67,7 @@ def advance(s,a,b,c,*,max_operations):
     try:
         used=0
         if s['phase']=='annealing':
-            used=ann.advance(s['annealing'],a,b,c,max_operations=max_operations)
+            used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations)
             if s['annealing']['phase']=='done':
                 matrix=s['annealing']['M'];digest=matrix_identity(matrix)
                 h=hard.create(matrix,max_pair_entries=c['max_pair_entries'],max_explicit_bytes=s['policy']['hardening_buffer_bytes'])
@@ -99,7 +100,8 @@ def score_only(s,a,b,c,*,max_buffer_bytes,chunk_edges=65536):
     inner=s['annealing'];return MatchScore(score,'temperature_complete' if inner['beta']>c['beta_final'] else 'iteration_cap',inner['iterations'])
 
 
-def save(s,directory,a,b,c,*,max_checkpoint_bytes):
+def save(s,directory,a,b,c,*,max_checkpoint_bytes,checkpoint_layout=None):
+    if checkpoint_layout is not None:return _save_sharded(s,directory,a,b,c,max_checkpoint_bytes,checkpoint_layout)
     check(s,a,b,c);n,m=len(a.node_ids),len(b.node_ids)
     hard_allowance=8*n*m+128+LIMIT
     # Three dense headers, one rank header and three bounded manifests.
@@ -118,7 +120,8 @@ def save(s,directory,a,b,c,*,max_checkpoint_bytes):
     ann.sync(directory);return hashlib.sha256(raw).hexdigest()
 
 
-def load(directory,a,b,c,*,expected_sha256,max_state_bytes,normalization_chunk_entries=65536,hardening_chunk_entries=65536,hardening_buffer_bytes=80*1024**2):
+def load(directory,a,b,c,*,expected_sha256,max_state_bytes,normalization_chunk_entries=65536,hardening_chunk_entries=65536,hardening_buffer_bytes=80*1024**2,checkpoint_layout=None):
+    if checkpoint_layout is not None:return _load_sharded(directory,a,b,c,expected_sha256,max_state_bytes,normalization_chunk_entries,hardening_chunk_entries,hardening_buffer_bytes,checkpoint_layout)
     directory=Path(directory);manifest=directory/'manifest.json'
     if directory.is_symlink() or manifest.is_symlink() or not manifest.is_file() or manifest.stat().st_size>LIMIT or ann.sha(manifest)!=expected_sha256:raise ValueError('outer manifest identity differs')
     meta=json.loads(manifest.read_bytes());n,m=len(a.node_ids),len(b.node_ids)
@@ -137,4 +140,46 @@ def load(directory,a,b,c,*,expected_sha256,max_state_bytes,normalization_chunk_e
         if h is not None:
             try:hard.close(h)
             except BaseException as cleanup_error:error.add_note('Ranked-state cleanup also failed: '+type(cleanup_error).__name__)
+        raise
+
+
+def _save_sharded(s,directory,a,b,c,maximum,selected):
+    selected=chunks.layout(selected);check(s,a,b,c);n,m=len(a.node_ids),len(b.node_ids)
+    array_bytes=chunks.describe([n,m],'<f8',selected,'M')['bytes']
+    hard_allowance=array_bytes+LIMIT
+    needed=4*array_bytes+3*LIMIT
+    chunks.need(type(maximum) is int and maximum>=needed,'sharded composite checkpoint allowance exceeded')
+    directory=Path(directory);directory.mkdir(exist_ok=False);ann.sync(directory.parent)
+    inner_sha=ann.save(s['annealing'],directory/'annealing',a,b,c,max_checkpoint_bytes=maximum-hard_allowance-LIMIT,checkpoint_layout=selected)
+    hard_sha=None
+    if s['hardening'] is not None:
+        hard_sha=hard.save(s['hardening'],directory/'hardening',max_checkpoint_bytes=hard_allowance,checkpoint_layout=selected)
+    meta={k:s[k] for k in ('version','phase','policy','matrix_sha256')}
+    meta.update(annealing_sha256=inner_sha,hardening_sha256=hard_sha,checkpoint_layout=selected)
+    return chunks.manifest(directory,meta)
+
+
+def _load_sharded(directory,a,b,c,expected,maximum,normalization,hard_chunk,hard_buffer,selected):
+    selected=chunks.layout(selected);directory=Path(directory);meta=chunks.metadata(directory,expected)
+    n,m=len(a.node_ids),len(b.node_ids)
+    p=policy(n,m,c,max_state_bytes=maximum,normalization_chunk_entries=normalization,hardening_chunk_entries=hard_chunk,hardening_buffer_bytes=hard_buffer)
+    chunks.need(set(meta)==MANIFEST_FIELDS|{'checkpoint_layout'} and type(meta['version']) is int and meta['version']==3
+        and meta['checkpoint_layout']==selected and meta['policy']==p and meta['phase'] in ('annealing','hardening','done'),'sharded composite identity differs')
+    if meta['phase']=='annealing':chunks.need(meta['hardening_sha256'] is None and meta['matrix_sha256'] is None,'sharded pre-ranking identity differs')
+    names={'manifest.json','annealing'}|({'hardening'} if meta['phase']!='annealing' else set())
+    chunks.need(directory.resolve()==directory and {p.name for p in directory.iterdir()}==names,'sharded composite inventory differs')
+    h=None
+    try:
+        if meta['phase']!='annealing':
+            h=hard.load(directory/'hardening',expected_sha256=meta['hardening_sha256'],input_sha256=meta['matrix_sha256'],max_pair_entries=c['max_pair_entries'],max_explicit_bytes=hard_buffer,checkpoint_layout=selected)
+        inner=ann.load(directory/'annealing',a,b,c,expected_sha256=meta['annealing_sha256'],max_state_bytes=maximum-8*n*m,max_chunk_entries=normalization,checkpoint_layout=selected)
+        if h is not None:
+            chunks.need(matrix_identity(inner['M'])==meta['matrix_sha256'],'sharded restored matrix differs')
+            inner['M'].flags.writeable=False
+        state=dict(version=3,safe=True,phase=meta['phase'],policy=p,annealing=inner,hardening=h,matrix_sha256=meta['matrix_sha256'])
+        check(state,a,b,c);return state
+    except BaseException as error:
+        if h is not None:
+            try:hard.close(h)
+            except BaseException as failure:error.add_note('Sharded rank cleanup also failed: '+type(failure).__name__)
         raise

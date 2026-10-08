@@ -20,8 +20,9 @@ from .cache import cache_key
 from .matching_identity import graph_identity
 
 require = io._require
-from . import matching_checkpoint as engine
+from . import matching_checkpoint as engine, compact_policy
 _RETENTION = WeakKeyDictionary()
+_CAPACITY_PINS = WeakKeyDictionary()
 
 
 class CheckpointStop(RuntimeError):
@@ -32,16 +33,21 @@ class CleanupFailure(BaseException):
     """Fatal to the worker; cannot become an ordinary unavailable cell."""
 
 
-def _components():
+def _components(checkpoint_layout=None, policy=None):
+    modules = (engine, engine.ann, engine.hard, engine.sparse, engine.ann.typed_identity, engine.chunks)
+    if policy is not None and compact_policy.PAIR_CAPACITY_FIELD in policy:
+        modules += (compact_policy,)
     return {Path(m.__file__).name + ':' + Path(m.__file__).parent.name:
-        hashlib.sha256(Path(m.__file__).read_bytes()).hexdigest()
-        for m in (engine, engine.ann, engine.hard, engine.sparse, engine.ann.typed_identity)}
+        hashlib.sha256(Path(m.__file__).read_bytes()).hexdigest() for m in modules}
 
 
-def scope(config, context, policy, workload_sha256, schedule):
+def scope(config, context, policy, workload_sha256, schedule, *, checkpoint_layout=None):
+    compact_policy.effective_matching(config, policy)
+    checkpoint_layout=policy.get('checkpoint_layout',checkpoint_layout)
+    if checkpoint_layout is not None:checkpoint_layout=engine.chunks.layout(checkpoint_layout)
     return {'workflow': workload_sha256, 'config': cache_key(config),
         'context': cache_key(context), 'policy': cache_key({'pair': policy, 'schedule': schedule}),
-        'numerical_source': cache_key(_components())}
+        'numerical_source': cache_key(_components(checkpoint_layout, policy))}
 
 
 def _file(path, size, expected):
@@ -62,7 +68,9 @@ def _file(path, size, expected):
     finally: io._release(lambda: os.close(fd))
 
 
-def _snapshot(directory, state_sha, identity, policy):
+def _snapshot(directory, state_sha, identity, policy, *, checkpoint_layout=None):
+    checkpoint_layout=policy.get('checkpoint_layout',checkpoint_layout)
+    if checkpoint_layout is not None:return _sharded_snapshot(directory,state_sha,identity,policy,checkpoint_layout)
     """Validate engine-generated hash tree and fixed inventory without loading arrays."""
     root, fd = io._open(directory)
     try:
@@ -121,7 +129,7 @@ def _snapshot(directory, state_sha, identity, policy):
 
 
 class CompactMatcher:
-    def __init__(self, log, *, config, context, policy, workload_sha256, schedule, lease, retention=None, durability_barrier=None):
+    def __init__(self, log, *, config, context, policy, workload_sha256, schedule, lease, retention=None, durability_barrier=None, checkpoint_layout=None):
         require(isinstance(log, PairLog) and log.events == 0 and log.state['pending'] is None,
                 'fresh compact log required')
         require(callable(lease), 'live compact matcher lease required')
@@ -131,18 +139,26 @@ class CompactMatcher:
         require(set(schedule) == {'operations_per_call', 'calls_per_checkpoint', 'max_checkpoints',
             'max_total_checkpoints', 'max_total_checkpoint_bytes'}
             and all(type(v) is int and 0 < v < 2**63 for v in schedule.values()), 'compact execution schedule')
-        require(set(policy) == pair.POLICY_FIELDS and all(type(v) is int and v > 0 for v in policy.values()),
-                'compact pair policy schema')
+        compact_policy.pair_policy(policy)
+        effective = compact_policy.effective_matching(config, policy)
         require(schedule['max_checkpoints'] <= policy['max_publications'], 'checkpoint count exceeds pair policy')
         require(pair.LIMIT + schedule['max_checkpoints'] * (policy['max_checkpoint_bytes'] + pair.LIMIT)
             <= policy['total_checkpoint_bytes'], 'per-pair cumulative checkpoint budget insufficient')
-        require(log.start['scope'] == scope(config, context, policy, workload_sha256, schedule)
+        require(checkpoint_layout is None or checkpoint_layout==policy.get('checkpoint_layout'),'layout must be bound into pair policy')
+        checkpoint_layout=policy.get('checkpoint_layout')
+        if checkpoint_layout is not None:checkpoint_layout=engine.chunks.layout(checkpoint_layout)
+        require(log.start['scope'] == scope(config, context, policy, workload_sha256, schedule,checkpoint_layout=checkpoint_layout)
             and log.start['max_iterations'] == config['max_iterations'], 'compact log execution scope differs')
         require(durability_barrier is None or callable(durability_barrier), "optional coupled durability barrier")
         self._durability_barrier = durability_barrier
-        self.log = log; self.config = copy.deepcopy(config); self.context = copy.deepcopy(context)
+        self.log = log; self.config = effective; self.context = copy.deepcopy(context)
+        if compact_policy.PAIR_CAPACITY_FIELD in policy:
+            self.original_config = copy.deepcopy(config)
+            _CAPACITY_PINS[self] = (cache_key(config), cache_key(effective),
+                cache_key({'pair': policy, 'schedule': schedule}))
         self.policy = copy.deepcopy(policy); self.schedule = copy.deepcopy(schedule)
-        self.components = _components(); self.workload = workload_sha256; self.lease = lease
+        self.checkpoint_layout=copy.deepcopy(checkpoint_layout);self._checkpoint_layout_pin=cache_key(checkpoint_layout)
+        self.components = _components(checkpoint_layout, policy); self.workload = workload_sha256; self.lease = lease
         self.busy = self.poisoned = False
         self.checkpoints = self.reserved_bytes = 0
         self.root = log.root.parent / 'checkpoints'
@@ -162,7 +178,12 @@ class CompactMatcher:
                 'backend': pair.BACKEND.copy(), 'numerical_components': self.components}
 
     def _check(self):
+        require(cache_key(self.checkpoint_layout)==self._checkpoint_layout_pin,'checkpoint layout changed')
         self.lease(); self.log._check()
+        if self in _CAPACITY_PINS:
+            require((cache_key(self.original_config), cache_key(self.config),
+                cache_key({'pair': self.policy, 'schedule': self.schedule})) == _CAPACITY_PINS[self],
+                'original/effective matching resource policy changed')
         if self in _RETENTION:
             require(self.retention is _RETENTION[self] and self.retention.matcher is self,
                 'original matcher retention route changed')
@@ -228,8 +249,8 @@ class CompactMatcher:
             intent_sha = io._write(fd, 'intent.json', io._json(intent))
             self._check()
             state_sha = engine.save(state, directory / 'state', a, b, self.config,
-                                    max_checkpoint_bytes=self.policy['max_checkpoint_bytes'])
-            self._check(); total = _snapshot(directory / 'state', state_sha, identity, self.policy)
+                                    max_checkpoint_bytes=self.policy['max_checkpoint_bytes'],**({'checkpoint_layout':self.checkpoint_layout} if self.checkpoint_layout is not None else {}))
+            self._check(); total = _snapshot(directory / 'state', state_sha, identity, self.policy,checkpoint_layout=self.checkpoint_layout)
             meta = {'schema_version': 1, 'intent_sha256': intent_sha, 'state_sha256': state_sha,
                     'state_logical_bytes': total, 'reserved_bytes': reserved}
             result = io._write(fd, 'manifest.json', io._json(meta))
@@ -237,7 +258,7 @@ class CompactMatcher:
             require(io._hash(io._read(fd, 'intent.json', io.META_LIMIT)) == intent_sha
                 and io._hash(io._read(fd, 'manifest.json', io.META_LIMIT)) == result,
                 'checkpoint publication metadata changed')
-            _snapshot(directory / 'state', state_sha, identity, self.policy)
+            _snapshot(directory / 'state', state_sha, identity, self.policy,checkpoint_layout=self.checkpoint_layout)
             io._root(root, fd)
             expected = self._expected_event(3, artifact=result)
             self.log.progress(result)
@@ -246,7 +267,7 @@ class CompactMatcher:
             require(io._hash(io._read(fd, 'intent.json', io.META_LIMIT)) == intent_sha
                 and io._hash(io._read(fd, 'manifest.json', io.META_LIMIT)) == result,
                 'checkpoint changed during progress event publication')
-            _snapshot(directory / 'state', state_sha, identity, self.policy)
+            _snapshot(directory / 'state', state_sha, identity, self.policy,checkpoint_layout=self.checkpoint_layout)
             io._root(root, fd)
             self._ack_check(expected)
         finally: os.close(fd)
@@ -259,7 +280,7 @@ class CompactMatcher:
             require(purpose.get('schema_version') == 1 and purpose.get('kind') in ('mcm', 'dictionary')
                 and purpose.get('workload_sha256') == self.workload
                 and purpose.get('typed_graphs') == [graph_identity(a), graph_identity(b)], 'compact matcher purpose differs')
-            pair.policy_check(a, b, self.config, self.policy)
+            pair.policy_check(a, b, self.config, compact_policy.pair_policy(self.policy), allow_checkpoint_layout=True)
             require(self.log.events + 2 + self.schedule['max_checkpoints'] <= self.log.start['limits']['max_events'],
                     'insufficient completion/progress event capacity')
             reserved = self.policy['max_checkpoint_bytes'] + 2 * io.META_LIMIT
@@ -321,3 +342,36 @@ class CompactMatcher:
                     fatal = CleanupFailure('ranked matcher cleanup unresolved; worker must stop')
                     if primary is not None: fatal.add_note('Primary failure: ' + repr(primary))
                     raise fatal from error
+
+
+def _sharded_snapshot(directory,state_sha,identity,policy,selected):
+    """Full saved-tree authentication; no dense array construction."""
+    chunks=engine.chunks;selected=chunks.layout(selected);directory=Path(directory)
+    root,fd=io._open(directory)
+    try:
+        meta=chunks.metadata(directory,state_sha)
+        require(set(meta)==engine.MANIFEST_FIELDS|{'checkpoint_layout'} and type(meta['version']) is int and meta['version']==3
+            and meta['checkpoint_layout']==selected and meta['policy']=={k:policy[k] for k in pair.ENGINE_FIELDS}
+            and meta['phase'] in ('annealing','hardening','done'),'sharded checkpoint policy/schema')
+        anneal=chunks.metadata(directory/'annealing',meta['annealing_sha256'])
+        require(set(anneal)==engine.ann.META|{'files','checkpoint_layout'} and anneal['checkpoint_layout']==selected
+            and anneal['identity']==identity['ordered_pair'] and anneal['safe'] is True
+            and anneal['max_chunk_entries']==policy['normalization_chunk_entries'] and set(anneal['files'])=={'M','Q','V'},'sharded checkpoint annealing differs')
+        n,m=anneal['shape'];require(type(n) is int and type(m) is int and n>0 and m>0 and 32*n*m<=policy['max_state_bytes'],'sharded checkpoint state capacity')
+        total=len(chunks.read(directory/'manifest.json',chunks.LIMIT))+len(chunks.read(directory/'annealing/manifest.json',chunks.LIMIT))
+        for name,descriptor in anneal['files'].items():total+=chunks.audit_array(directory/'annealing',descriptor,[n,m],'<f8',selected,name)
+        chunks.inventory(directory/'annealing',{'manifest.json'}|chunks.array_names(anneal['files'].values()))
+        expected={'manifest.json','annealing'}
+        if meta['phase']=='annealing':require(meta['hardening_sha256'] is None and meta['matrix_sha256'] is None,'sharded premature hardening')
+        else:
+            hard=chunks.metadata(directory/'hardening',meta['hardening_sha256'])
+            require(set(hard)==engine.hard.FIELDS-{'order'}|{'order_chunks','checkpoint_layout'} and hard['checkpoint_layout']==selected
+                and hard['shape']==[n,m] and hard['safe'] is True and hard['input_sha256']==meta['matrix_sha256']
+                and hard['max_explicit_bytes']==policy['hardening_buffer_bytes'],'sharded checkpoint hardening differs')
+            total+=len(chunks.read(directory/'hardening/manifest.json',chunks.LIMIT))
+            total+=chunks.audit_array(directory/'hardening',hard['order_chunks'],[n*m],'<i8',selected,'order')
+            chunks.inventory(directory/'hardening',{'manifest.json'}|chunks.array_names([hard['order_chunks']]))
+            expected.add('hardening')
+        require({p.name for p in directory.iterdir()}==expected and total<=policy['max_checkpoint_bytes'],'sharded checkpoint inventory/logical bound')
+        io._root(root,fd);return total
+    finally:io._release(lambda:os.close(fd))

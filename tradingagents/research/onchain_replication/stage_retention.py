@@ -216,13 +216,14 @@ class Controller:
         require(self.active is not None,'retention matching pair absent')
         selected=self.active['selected'];obj=self.active['store']
         replay=obj is None and selected is not None
-        control=store.GENERATION_CONTROL+3*store.CONTROL
+        control=store.generation_control(self.matcher.policy)+3*store.CONTROL
         self._reserve('generation',generations=1,control_bytes=control,cumulative_bytes=control+self.matcher.policy['max_checkpoint_bytes']*(1+int(replay)),
             replay_bytes=self.matcher.policy['max_checkpoint_bytes']*int(replay),replays=int(replay))
         if obj is None:
-            self._reserve('store',stores=1,control_bytes=6*store.CONTROL,cumulative_bytes=6*store.CONTROL)
+            self._reserve('store',stores=1,control_bytes=6*store.control_limit(self.matcher.policy),cumulative_bytes=6*store.control_limit(self.matcher.policy))
             self.active['store_name']=f'pair-{self.active["ordinal"]:012d}';self._refresh()
             policy={k:self.matcher.policy[k] for k in store.snapshots.engine.POLICY_FIELDS|{'max_checkpoint_bytes'}}
+            if self.matcher.checkpoint_layout is not None:policy['checkpoint_layout']=dict(self.matcher.checkpoint_layout)
             limits={'max_generations':self.matcher.schedule['max_checkpoints'],'max_generation_bytes':policy['max_checkpoint_bytes'],
                 'max_control_bytes':self.policy['max_control_bytes'],'max_cumulative_bytes':self.policy['max_cumulative_bytes'],
                 'max_replay_bytes':self.policy['max_replay_bytes'],'max_replays':1}
