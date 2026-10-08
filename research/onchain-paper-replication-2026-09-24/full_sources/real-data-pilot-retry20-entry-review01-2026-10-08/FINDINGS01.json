@@ -1,0 +1,31 @@
+{
+  "findings": [
+    {
+      "actual_gate_input": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-finite-reservation-correction01-2026-10-06/metadata01/compact_policy.json",
+        "sha256": "c2843df0f6ce1c67b01b525f0c971caadc634b6f39afdb61f9467c77d9c48c3a"
+      },
+      "impact": "Registered runtime policy differs from independently reviewed prepared physical/capacity policy; entry refused until exact join is corrected.",
+      "required_selected_metadata": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/compact_policy.json",
+        "sha256": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786"
+      },
+      "role": "compact_policy"
+    },
+    {
+      "actual_gate_input": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity01-2026-10-07/mcm_policy01.json",
+        "sha256": "7a77c3818104a085e713333ce5d428ec696ff0be574cd3a8cc7d6e137ae06ed3"
+      },
+      "impact": "Registered runtime policy differs from independently reviewed prepared physical/capacity policy; entry refused until exact join is corrected.",
+      "required_selected_metadata": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/mcm_policy.json",
+        "sha256": "90a3d24f72df0349f522b3256b6460272186f9f3aec6c714d182c0f1761b2261"
+      },
+      "role": "mcm_policy"
+    }
+  ],
+  "status": "BLOCKING_REGISTERED_POLICY_JOIN_MISMATCH"
+}
