@@ -1,5 +1,15 @@
 # Current replication checkpoint
 
+**TOP 2026-10-08T08:22:27.231627+00:00: live lock correction checks complete; proposed88 independently reviewed, not adopted; actual16 fresh external recovery next.**
+
+Livea0330db1/actual7checks2c692a and17 independentchangedseamchecks/bbc7593a accepted; original RED/fixtures/logs retained. Native16 permanentlyFAILED87/Root1/guardchildnull/separate125/cleanupverified, noMCMupdatefit. Actual32file+9dir increment locallycaptured481280B4f93b610. Commit8e9692db source+capture pushed77535/9884e4 exit0; no fresh return claim yet. Narrow proposed88 review438ed590 and genuine machine effective_budget88 accept57closed+28pending+2closedreserves+ONEunused20261008-17; all old39typedrows preserved+actual16failed, no allowance claim/refund/transfer/capladder. Scope fullscientificmethod/resource envelope unchanged.
+
+AppgoalPAUSED/direct checks resumed; broadheartbeat/1420fitsPAUSED/no job/freezeENDED. Rootsoleintegration/accounting/STATE/Git/preservation/launcher; boundedassignmentscomplete awaiting returnedverification. Next push final reviewed increments/logs, actualfreshbareGitreturn and independent41names/modes/hashverification; then update safehandoff. Strict runtimeIDstill16; fresh17 concrete source/context/templates/transport/gate/release remain required before empiricalexecution. No16restart.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-08T08:20:49.765729+00:00: deadlock correction adopted after focused checks and independent review; no numerical job active. App goal PAUSED, direct resumed checks authorized.**
 
 Live matching_owner.py nowa0330db1 (prior6cca17b9 retained). Exact authenticated execution is reused at both creation checks inside lifecycle lock, while default calls and current execution/plan/source/owner/resource authentication remain. Actual original-source RED reproduced ledger self-deadlock and reaped synthetic child; candidate/live7 checks and independent17 refusals/controls passed. [Changed source/entry review](full_sources/real-data-pilot-sixteenth-resource-failed-review01-2026-10-08/CHANGED_SOURCE_REVIEW01.json) bbc7593a accepts source adoption only. [Adoption](full_sources/real-data-pilot-lock-adoption01-2026-10-08/SOURCE_ADOPTION01.json) records exact bytes; Root2c692a actual live7checks exit0. No full bind/journal/numerical/throughput/capacity or17release follows.

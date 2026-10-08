@@ -1,0 +1,38 @@
+enter exact two guard calls under real lifecycle flock
+DEADLOCK wchan=locks_lock_inode_wait
+pos:	0
+flags:	02102001
+mnt_id:	30
+ino:	11413837
+lock:	1: FLOCK  ADVISORY  WRITE 52385 103:06:11413837 0 EOF
+
+F
+=================================== FAILURES ===================================
+________________________ test_both_locked_checks_finish ________________________
+
+context = (Admission(root=PosixPath('/tmp/pytest-of-malecada/pytest-0/test_both_locked_checks_finish0'), registration='registrat...709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...}, 'environment_input': 'environment', ...})
+live = (PosixPath('/tmp/pytest-of-malecada/pytest-0/test_both_locked_checks_finish0/guard'), {'memory_max_bytes': 6442450944, 'memory_high_bytes': 5368709120, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 9126805504, ...})
+
+    def test_both_locked_checks_finish(context,live):
+     run,e,owner=setup_run(context,live);ns=extracted()
+     def child():
+      print('enter exact two guard calls under real lifecycle flock',flush=True)
+      ns['locked_checks'](run,e['resources'],owner,run.admission.root,e)
+      print('both authenticated guard checks returned',flush=True)
+     process=multiprocessing.get_context('fork').Process(target=child);process.start();process.join(2)
+     if process.is_alive():
+      proc=Path('/proc')/str(process.pid)
+      print('DEADLOCK wchan='+ (proc/'wchan').read_text(),flush=True)
+      for p in (proc/'fdinfo').iterdir():
+       text=p.read_text()
+       if 'lock:' in text:print(text,flush=True)
+      process.terminate();process.join(2)
+      assert not process.is_alive()
+>     pytest.fail('bounded synthetic subprocess did not return: lifecycle self-deadlock')
+E     Failed: bounded synthetic subprocess did not return: lifecycle self-deadlock
+
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lock-correction01-2026-10-08/test_lock01.py:91: Failed
+- reviewed profile: 0 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-lock-correction01-2026-10-08/test_lock01.py::test_both_locked_checks_finish
+1 failed, 6 deselected in 2.30s
