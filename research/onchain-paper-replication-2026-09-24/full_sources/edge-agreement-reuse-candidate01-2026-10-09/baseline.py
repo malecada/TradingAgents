@@ -18,47 +18,6 @@ from tradingagents.research.onchain_replication.matching_reference import valida
 from . import matching_identity as typed_identity
 graph_hash=typed_identity.graph_identity
 
-# Local-call reuse only under the frozen scientific runtime and round-to-nearest.
-from .contracts import AttributedGraph
-import builtins
-try:
-    import ctypes
-    _nearest_rounding = ctypes.CDLL(None).fegetround
-    _nearest_rounding.argtypes = []
-    _nearest_rounding.restype = ctypes.c_int
-except (AttributeError, OSError):
-    _nearest_rounding = None
-_AGREEMENT_ORIGINAL = agreement
-_AGREEMENT_CODE = agreement.__code__
-_AGREEMENT_MATH = (math.exp, math.fsum)
-_BUILTINS_ORIGINAL = (float,zip,len)
-_NUMPY_ORIGINAL = (np.exp,np.multiply,np.add,np.empty,np.zeros,np.repeat,np.any)
-_NORMALIZATION_ORIGINAL = logsumexp
-_NORMALIZATION_CODE = logsumexp.__code__
-
-
-def _immutable_edges(graph):
-    if type(graph) is not AttributedGraph:return False
-    array=graph.edge_features
-    if type(array) is not np.ndarray or array.dtype!=np.float64 or not array.flags.c_contiguous:return False
-    for _ in range(4):
-        if type(array) is bytes:return True
-        if type(array) is not np.ndarray or array.flags.writeable:return False
-        array=array.base
-    return False
-
-
-def _reuse_runtime():
-    return (agreement is _AGREEMENT_ORIGINAL and agreement.__code__ is _AGREEMENT_CODE
-            and (math.exp,math.fsum)==_AGREEMENT_MATH
-            and (builtins.float,builtins.zip,builtins.len)==_BUILTINS_ORIGINAL
-            and (np.exp,np.multiply,np.add,np.empty,np.zeros,np.repeat,np.any)==_NUMPY_ORIGINAL
-            and agreement.__globals__.get('math') is math
-            and not any(name in agreement.__globals__ for name in ('float','zip','len'))
-            and logsumexp is _NORMALIZATION_ORIGINAL and logsumexp.__code__ is _NORMALIZATION_CODE
-            and _nearest_rounding is not None and _nearest_rounding()==0
-            and sys.gettrace() is None and sys.getprofile() is None)
-
 NAMES=('V','M','Q')
 META={'schema_version','identity','phase','cursor','iterations','beta','shape','safe','max_chunk_entries'}
 NORMALIZATION=('normalize_scale','normalize_rows','normalize_columns','normalize_exp')
@@ -122,10 +81,6 @@ def _advance_checked(state,a,b,c,*,max_operations):
     entry, with no intervening mutation of them or external callback.
     """
     n,m=state['shape'];right_edges=b.edge_index.shape[1];total=a.edge_index.shape[1]*right_edges
-    # At most4096float64 weights+4096validity bytes =36864B; no state fields.
-    reuse=(0<total<=4096 and max_operations>total and _immutable_edges(a) and _immutable_edges(b)
-           and all(type(state[name]) is np.ndarray for name in NAMES) and _reuse_runtime())
-    feature_pins=(a.edge_features,b.edge_features);cached=valid=None
     state['safe']=False
     try:
         used=0
@@ -137,8 +92,6 @@ def _advance_checked(state,a,b,c,*,max_operations):
                 if state['cursor']==n*m:
                     state['M'][:]=state['V'];state.update(phase='outer',cursor=0)
             elif phase=='outer':
-                if reuse and (a.edge_features is not feature_pins[0] or b.edge_features is not feature_pins[1] or not _reuse_runtime()):
-                    reuse=False;cached=valid=None
                 if state['beta']>c['beta_final'] or state['iterations']>=c['max_iterations']:
                     state['phase']='done';continue
                 state['Q'][:]=c['alpha']*state['V'];state.update(phase='edges',cursor=0);used+=1
@@ -163,15 +116,7 @@ def _advance_checked(state,a,b,c,*,max_operations):
                         weights=np.empty(count,dtype=np.float64)
                         try:
                             for offset in range(count):
-                                position=start+offset
-                                if reuse and cached is not None and valid[position]:
-                                    weights[offset]=cached[position]
-                                else:
-                                    weights[offset]=.5*agreement(a.edge_features[left[offset]],b.edge_features[right[offset]])
-                                    if reuse:
-                                        if cached is None:
-                                            cached=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
-                                        cached[position]=weights[offset];valid[position]=True
+                                weights[offset]=.5*agreement(a.edge_features[left[offset]],b.edge_features[right[offset]])
                         except BaseException:
                             # Reproduce the scalar prefix and cursor on agreement failure.
                             for offset2 in range(offset):

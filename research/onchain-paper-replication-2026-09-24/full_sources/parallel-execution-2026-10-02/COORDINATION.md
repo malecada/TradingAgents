@@ -1,10 +1,10 @@
 # Coordination — representative real-data pilot
 
-Root owns live Main/Git/registration/accounting/STATE/external preservation and ONE numerical launcher. Native22 CLOSED/FAILED planned1024; all4PIDs+cgroup absent, source freeze ended. Root actual83120/b1503c/exit1 and original logs/cleanup retained.62closed33COMPLETE29FAILED/highest93; no94proposal/claim.
+Root owns live Main/Git/registration/accounting/STATE/actual external preservation and ONE numerical launcher. No numerical job; native22 permanentlyFAILED planned1024, public returned recovery3a852cf4 accepted.62closed33COMPLETE29FAILED/highest93; no94proposal/claim.
 
-- Ordinary xsectbackup SAME37092/PID910867 remains active; never restart. Latest counts in current TOP. No deletion or realPOSIXrestore yet.
-- Root owns failed22 commit/push/fresh13-operation recovery and precise STATE. Outcome reviewer owns new twentysecond-outcome-review01 returned acceptance only; prior43terminal/source-scope checks accepted and reused.
-- Annealing agent owns NEW edge-agreement-reuse-candidate01-2026-10-09, exact lazy immutable-domain/scratch-bounded source+tiny synthetic checks only. No Main or empirical/native job. Other agents idle.
-- Accepted reconstruction entryf3b1f132/bind48ab44cd/sourceb342915b awaits genuine29backup completion/Rootexit before actual final refs/release. Native22 terminal now exists. Root alone binds/releases/runs restore once; accepted POSIXhelper/transport reused.
+- Ordinarybackup37092 CLOSED0/all29/3783files/6.916GB/221cleanupreceipts verified. No original deletion.
+- ONE ordinary realPOSIXrestore SAME94965/PID1081924 ACTIVE, identityxsect-posix-recovery-20261009-01, literalrelease74a915d9/finalcontract0a27e720/restoref3b1f132. Sources/finalinputs30c1ad050 committed,pushed,actualremote matched. FinalCOMPLETE/FAILED absent; never restart occupiedidentity. Root alone monitors/closes/reviews/preserves actual result.
+- Exactsmallcase cache Mainmatching1c9e48fa adopted after independentad2ac47c/370assertions. Existing262144Bedge scratch preserved(200536Bmodeled); no actualfullcapacity/performance/empiricallaunch claim. Ordinaryrestore closure excludes thismodule and remainsunchanged. Pairedlease instrumentation096b6098 stillsourceonly.
+- Allbounded assignments complete/idle. Next independent actualrestore outcome review after actual29whole verification, then exactcurrentness/retirement scope. No framework/history/testmatrix repeats.
 
-Full7graph→MCM→GAT→attentionLSTM/update goal ACTIVE/incomplete; broad heartbeat PAUSED.56584576expected first-graph pairs versus1024 completed diagnostic; no whole ETA/training measurement. Preserve32motifs512samples/model/training/failed histories. No repeated source matrices/frameworks/history copies, no budgets/refunds/reopened identities or narrower goal.
+Full7graphs→MCM→GAT→attentionLSTM jointupdate/resource goal ACTIVE/incomplete; zero completeMCM/update/financialfit. Broadheartbeat PAUSED. Original32motifs512samples/model/training and spent histories remainfixed. Nextempirical protocol/allowance not yetreleased. Read currentTOP for precise receipts/remainingcapacityrequirements.
