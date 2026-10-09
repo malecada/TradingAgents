@@ -1,0 +1,40 @@
+{
+  "decision": "accepted_source_only",
+  "manifest_sha256": "3b33c0a70e86f4429750d8cc4e53de5dfd0a76adb516754258a234792f52bfdd",
+  "sources": {
+    "batched_pilot_reservations.py": "fcaf1487a48865577805618232e1dd42abcab6dc37e91600dd322aeaa7285c93",
+    "real_pilot_import_caller.py": "8441fce9f8ea3c93bbc1ee15fef8f3d3a880ab2664bef01d00a64615c6552ec7",
+    "real_pilot_reservations.py": "6f7b934aefa8871707279f393ecad69f61190a7f9c3665224a63d293d0471d98"
+  },
+  "baseline_sources": {
+    "real_pilot_import_caller.py": "c7520b84b2f37cdb2676a26b281bcc3e7488bcbbad118f2f5225035749f117b2",
+    "real_pilot_reservations.py": "fc8df324900e29f2c50332ab0992f46508e0917372cd798ec85ab982121010f3"
+  },
+  "checks": [
+    "exact_per_graph_tar_upper_and_minimum_2B_3B_2A_pass",
+    "max_operations_one_below_minimum_refused",
+    "max_chunks_one_below_minimum_refused",
+    "max_preserved_bytes_one_below_minimum_refused",
+    "max_recovered_bytes_one_below_minimum_refused",
+    "chunk_bytes_one_below_minimum_refused",
+    "actual_legacy_added_kind_red_green"
+  ],
+  "total_graph_reset_batches": 101559,
+  "conservative_archive_bytes": 24958187520,
+  "source_preload_roles": [
+    "batched_driver",
+    "batched_journal",
+    "batched_numeric_execution",
+    "batched_numeric_reuse",
+    "batched_offload_semantics",
+    "batched_pair_executor",
+    "batched_pilot_reservations",
+    "compact_mcm_batched",
+    "matching_immutable_session",
+    "registered_offload"
+  ],
+  "legacy_inverse": true,
+  "genuine_authority": false,
+  "physical_capacity_admitted": false,
+  "claim": false
+}

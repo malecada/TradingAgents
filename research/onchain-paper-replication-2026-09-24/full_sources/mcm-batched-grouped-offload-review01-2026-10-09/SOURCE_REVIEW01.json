@@ -1,0 +1,46 @@
+{
+  "decision": "accepted_source_only",
+  "manifest_sha256": "303b2273a55f6e801b6055be647f86bcbfaf088aef1c27435d14a9fb29c5d5cf",
+  "sources": {
+    "grouped_offload.py": "39498828cf221a05b9e4458bb54db12ec5129a5504efe671ca47230d7d55a0a2",
+    "grouped_offload_semantics.py": "45e261dc36a24f6c805fcba18ffc4f4c90d1bd2f0f04955944aeea6e49b1f6e1",
+    "typed_payload_operations.py": "275661a497b1759748342a88e132652570923cad9feafa40bc115d6df755e42f"
+  },
+  "baseline_pins": {
+    "tradingagents/research/onchain_replication/typed_payload_operations.py": "ff7ef86d1605776e05a772a44428f77563e2f698098fbfb094f17d35627b836c",
+    "tradingagents/research/onchain_replication/typed_payload_policy.py": "77e4c951e13e8ffdad0487b19e3b28a8a271dbe04b0b4f3ab19d047b42ae7cc1",
+    "tradingagents/research/onchain_replication/registered_offload.py": "0066bf2479211dc5bb8b96dc2dea621cdb8f3f77c60879b66a3a34db0954e7ee",
+    "tradingagents/research/onchain_replication/batched_offload_semantics.py": "fdf22e8b709f257f6805ded70944485f47402f975cddfa011264e09374de3661",
+    "tradingagents/research/onchain_replication/preservation.py": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+    "tradingagents/research/onchain_replication/batched_journal.py": "0d96f0f3fbe7a320161d8bd16ee7d0d0b0de0384cfbce22459dcf9a8aa9e92a4",
+    "tradingagents/research/onchain_replication/archive_chunks.py": "f26f1cb62334497494f9b02579f53be9e2238889a81f56c04fd4e781542b38fe",
+    "tradingagents/research/onchain_replication/archive_consume.py": "9cfa242b77e42c2385e3c4cb8e51086965cc7d42768f2c52364fa3fd4ec77dc5"
+  },
+  "checks": [
+    "actual16batch_48members_exact_f64_signedzero_purpose_status_closure",
+    "binding8192_and_archive4MiB_caps",
+    "last_callback_earlier_pending_changed",
+    "consumer_primary_preserved",
+    "actual_cast_spool_comparison",
+    "mutated_spool_refused"
+  ],
+  "exact_default_typed_inverse": true,
+  "genuine_recovery_before_retirement_source_order": {
+    "self.recover": 226,
+    "semantic.recover": 227,
+    "semantic.current": 233,
+    "os.unlink": 235
+  },
+  "archive_bytes": 51200,
+  "binding_bytes": 5760,
+  "original_fixture_files_retired": false,
+  "genuine_owner_view_transport_executed": false,
+  "full_capacity_admitted": false,
+  "qualification": "Functional grouped source only; genuine Owner/View/transport and retirement unexecuted; schema6 integration/capacity/admission separate.",
+  "evidence": {
+    "review01.py": "efb79e96a05dede3a2012b718d53071af819abe52c5e36b4f4df087e141e8611",
+    "TEST01.log": "bce35cc4664adf6be8ad94c335abcc368eefb2388a59e15b7a936a1b8b4547a9",
+    "RESULT01.json": "cb1601a98533c81949f57567901892bf6c9390377f4c5b4c71cc65f3ad7ddfd0",
+    "REPORT.md": "29708cea8b740cfa1861187a1f74e5cc11777ef8b56f4522a754a42d740d73f0"
+  }
+}

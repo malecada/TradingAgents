@@ -1,0 +1,119 @@
+{
+  "status": "BLOCKING_CONDITIONAL_ALLOCATION_NOT_ADMITTED",
+  "graphs": 7,
+  "cells": 415968128,
+  "batches": 101559,
+  "original_payload_evidence": {
+    "schema_version": 1,
+    "observed_at": "2026-10-09T02:30:35.378740+00:00",
+    "scope": "read-only host sample and conditional full-workload payload accounting",
+    "payloads": {
+      "original_node_motif_cells": 415968128,
+      "per_graph_batches_total": 101559,
+      "original_score_journal_record_payload_bytes": 22046310784,
+      "numeric_origin_payload_bytes": 3743713152,
+      "numeric_summary_body_upper_bytes": 831971328,
+      "float32_spool_bytes": 1663872512,
+      "float32_published_output_bytes": 1663872512,
+      "closure_token_bytes": 17061912,
+      "offload_record_anchor_bytes": 3249888
+    },
+    "retained_selected_payload_upper_bytes": 7923741304,
+    "current_filesystem_available_bytes": 24828579840,
+    "required_remaining_disk_floor_bytes": 10737418240,
+    "unallocated_room_after_floor_and_selected_payloads_bytes": 6167420296,
+    "memory": {
+      "MemTotal": 16135794688,
+      "MemAvailable": 11345395712
+    },
+    "physical_capacity_admitted": false,
+    "remote_reservation_proved": false,
+    "logical_budget_reduced": false,
+    "exclusions": [
+      "external offload operation/command receipts and logs",
+      "checkpoints",
+      "archive/recovery/transient scratch",
+      "filesystem allocation and inode overhead",
+      "existing other writer reservations",
+      "runtime staging and whole neural memory"
+    ],
+    "next_requirement": "Freeze bounds for every excluded retained/transient store, join shared physical-store reservations and original logical IO/command allowances, measure actual whole job. A positive payload-only remainder is not capacity admission."
+  },
+  "successful_counts": {
+    "typed_operations": 203118,
+    "typed_chunk_credits": 304677,
+    "actual_transport_commands": 507795,
+    "policy_min_command_reservation": 1218708,
+    "work_retained_files": 1421833,
+    "work_retained_directories": 710934,
+    "typed_ledger_retained_files": 914031,
+    "excluded_control_files_total": 2335864,
+    "numeric_summary_files": 101559,
+    "origin_files": 7,
+    "remote_payload_files": 101559,
+    "remote_object_directories": 101559
+  },
+  "required_bounds": {
+    "per_graph_max_offload_entries_formula": "21*graph_batches+4 (includes root)",
+    "aggregate_work_inventory_entries": 2132767,
+    "typed_max_control_bytes_safe_success_upper": 7487741952,
+    "typed_failure_headroom_extra_min_bytes": 8192,
+    "per_graph_typed_max_operations": "2*graph_batches",
+    "per_graph_typed_max_chunks": "3*graph_batches",
+    "per_graph_max_preserved_bytes": "sum(actual USTAR batch archive sizes)",
+    "per_graph_max_recovered_bytes": "2*sum(actual USTAR batch archive sizes)"
+  },
+  "conditional_allocation": {
+    "assumption": "each nonempty retained control file allocates at least4096B; no compression/tail packing; directory allocation separately illustrative",
+    "control_file_floor_bytes": 9567698944,
+    "directory_4096_each_illustration_bytes": 2911985664,
+    "previous_payload_only_room_bytes": 6167420296,
+    "file_floor_excess_over_previous_room_bytes": 3400278648,
+    "required_available_with_previous_payloads_floor_and_control_file_floor": 28228858488
+  },
+  "conditional_archive_prior_model": {
+    "tar_payload_bytes": 22878269440,
+    "remote_filesystem_metadata_extra_unknown": true,
+    "typed_logical_transfer_bytes": 91513077760,
+    "typed_rounded_allowance_formula_bytes": 131447701504,
+    "archive_metadata_inside_tar": "Original pending+complete JSON and records header, already in tar model; transport/typed/offload receipts are local only"
+  },
+  "local_success_scratch_upper_under_source_maxima": {
+    "max_body_bytes": 1048576,
+    "journal_three_file_bytes": 2314332,
+    "ustar_archive_bytes": 2324480,
+    "concurrent_payload_bytes_upper": 9287772,
+    "scope": "one sequential batch; excludes retained controls, filesystem rounding, transport failure headroom, checkpoint and RAM byte copies"
+  },
+  "legacy_dispatch_bounds_using_min_policy_commands": {
+    "max_control_bytes_min": 638955028480,
+    "max_diagnostic_bytes_min_excluding_payload": 159738494976,
+    "requires_additional_max_payload_bytes": true
+  },
+  "unresolved": [
+    "actual selected seven per-graph policies and path/receipt encoded lengths",
+    "physical block and directory allocation/inode availability for selected output filesystem",
+    "transport control_history selection, exact record caps/shard bytes and legacy allowances preserved",
+    "typed ledger retained Python bytes/dicts and full-history audits are not bounded by metadata payload-only room",
+    "actual cumulative checkpoint bounds and file counts by saved phase",
+    "remote capacity/metadata/quota and genuine physical reservations",
+    "other writers and full neural runtime memory",
+    "prior tar total must be rejoined to actual selected current descriptor/metadata lengths"
+  ],
+  "source_pins": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/registered_offload.py": "0066bf2479211dc5bb8b96dc2dea621cdb8f3f77c60879b66a3a34db0954e7ee",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/typed_payload_operations.py": "ff7ef86d1605776e05a772a44428f77563e2f698098fbfb094f17d35627b836c",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/typed_payload_policy.py": "77e4c951e13e8ffdad0487b19e3b28a8a271dbe04b0b4f3ab19d047b42ae7cc1",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py": "4412c45b804e2eaebb363fbdc7fb11c84ef826e37cdd0a56160178da49328ab6",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_chunks.py": "f26f1cb62334497494f9b02579f53be9e2238889a81f56c04fd4e781542b38fe",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_consume.py": "9cfa242b77e42c2385e3c4cb8e51086965cc7d42768f2c52364fa3fd4ec77dc5",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py": "d1825c718b48d4267653405d9b637074b4a6d4bf1677842044418a2e8111aa13",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_dispatch.py": "cdfa2fbc71b9d7c9919493652b3032710371df001e75b3fa07d8df86c83658c2",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_control_history.py": "3ccfdeddd678a40e06192aa853fc3fbb53bb8825c86fd8b974ae31cbc591df67",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_owner_operations.py": "720c4b2484a268a0e94d8d978a347bbce7bcc3bfdd02cee159fcfa25565e421f",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_offload_semantics.py": "fdf22e8b709f257f6805ded70944485f47402f975cddfa011264e09374de3661",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_journal.py": "0d96f0f3fbe7a320161d8bd16ee7d0d0b0de0384cfbce22459dcf9a8aa9e92a4",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_checkpoint.py": "d5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-accelerated-capacity01-2026-10-09/PAYLOAD_CAPACITY01.json": "2ab8e1fbd74351e28d07a7bc9e2b286f5e99d71381efef59096566e7624f8967"
+  }
+}

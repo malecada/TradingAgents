@@ -1,3 +1,16 @@
+# Current coordination — 2026-10-09T03:11:55.191679+00:00
+
+No numerical job active. Root installed reviewed entry correction94ffab11 (three source files;12metadata checks/ten-role preload smoke). Fullperbatch capacity not admitted:2.336million controls exceed available physical allowance. Groupedcandidate303b2273 functional19checks and peer305c1386 accepted; UNINSTALLED/unreleased.
+
+- owner_policy_fix21: ONLY NEW mcm-batched-grouped-driver01 schema6 accumulation/tailflush/groupstageclosure, no Main/claim edits.
+- residual_metadata_review20: completed grouped-offload-review01 accepted305c1386; available for the changed driver/entry seam.
+- annealing_exact_acceleration: completed groupedoffload candidate; available.
+- Root: live integration, entry/reservation successor, shared bounds, STATE/Git/registration/accounting/preservation and ONE futurelauncher.
+
+No95amendment/adoption/claim. Fullseven-graph MCM and realjointupdate remain required. Preserve all original and failed sources/identities/evidence. Reuse accepted reviews; no generic frameworks/repeated old matrices.
+
+Previous coordination retained below.
+
 # Current coordination — 2026-10-09T02:44:14.762301+00:00
 
 No numerical job active; all3bounded assignmentscomplete. Root installed exact13module acceleratedschema5 source map5b9a58f3 after caller a3731a1d/Owner03d6b3fbeb/executor02d041/memo03898b/NumericExecution036c38 source reviews. Installed actual canonical-package source smoke passes; synthetic64cellcompletecore/corruptionrefusal passes; no realMCM/update/capacity/speedclaim. Originalsourcefailures/withhelds/claimed94/closed23 preserved.

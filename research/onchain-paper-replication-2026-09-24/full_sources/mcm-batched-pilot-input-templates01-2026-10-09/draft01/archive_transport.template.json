@@ -1,0 +1,49 @@
+{
+  "role": "archive_transport",
+  "status": "DRAFT_NOT_RELEASED",
+  "template": {
+    "connection": {
+      "$required_from_root": "existing reviewed actual connection object; no credential/config body copied",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "format": "archive-dispatch-v1",
+    "max_commands": {
+      "$required_from_root": "whole archive plus typed command bound",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "max_control_bytes": {
+      "$required_from_root": "actual finite transport/control-history allowance",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "max_diagnostic_bytes": {
+      "$required_from_root": "actual bounded diagnostic allowance",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "max_payload_bytes": {
+      "$required_from_root": "rounded whole archive plus typed capacity",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "max_seconds": {
+      "$required_from_root": "whole transfer deadline",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "namespace": {
+      "$required_from_root": "fresh unused dispatch namespace",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "rate_kbit": {
+      "$required_from_root": "genuine shared transport rate allowance",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "receipt_output": {
+      "$required_from_root": "registered transport receipt name",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "schema_version": 2,
+    "terminal_output": {
+      "$required_from_root": "registered transport terminal name",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "typed_payload_input": "typed_payload"
+  }
+}
