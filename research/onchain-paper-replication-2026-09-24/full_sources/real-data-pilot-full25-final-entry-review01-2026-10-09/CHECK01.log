@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full25-final-entry-review01-2026-10-09/review01.py", line 19, in <module>
+    if isinstance(ref,dict) and {'path','sha256'}<=ref.keys():pin(ref)
+                                                              ~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full25-final-entry-review01-2026-10-09/review01.py", line 12, in pin
+    p=ROOT/ref['path'];assert p.resolve()==p and p.is_file() and p.stat().st_nlink==1 and p.stat().st_size<=4*1024**2,ref['path'];assert h(p)==ref['sha256'],ref['path'];evidence[ref['path']]=ref['sha256']
+                                                                                                                                         ^^^^^^^^^^^^^^^^^^^
+AssertionError: research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full25-entry01-2026-10-09/gate01.json
