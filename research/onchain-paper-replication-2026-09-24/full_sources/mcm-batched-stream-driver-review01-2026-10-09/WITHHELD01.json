@@ -1,0 +1,36 @@
+{
+  "decision": "withheld-combined-source-driver",
+  "journal_sha256": "16d8c368195a166df0fbdf6f24b7ab0449b1cc06c122746dc132babbe97af06b",
+  "driver_sha256": "74d1105b595c65932b23dd0ac4232e5c07e55215b0c3375f3bd351bbc6b22478",
+  "reproduction_sha256": "a24c26995670fabfbd2e75733aa86f8e1105151689b59af28b1802b960c054de",
+  "blocking_findings": [
+    {
+      "location": "driver.py consumer invocation through final drive return",
+      "trigger": "At final sink callback ordinal60 in64-cell synthetic workload, consumer truncates final batch records.bin.",
+      "observed": "drive returns engineering_ordered_cells_delivered completed_cells64 despite final payload being3bytes instead of940bytes.",
+      "required": "Rejoin completed source closure after sink callbacks and before return/coverage credit, and refuse changed durable evidence."
+    },
+    {
+      "location": "driver.py final sink callback/root closure",
+      "trigger": "Final sink callback renames journal root and creates replacement empty declared root.",
+      "observed": "drive returns successful64-cell delivery with no final payload at declared root.",
+      "required": "Post-consumer root descriptor/path rejoin and durable batch checks, preserving primary errors and unavailable remainder on refusal."
+    }
+  ],
+  "positive_evidence": [
+    "Actual ArrayNeighborhoodIndex routes64 ordered purposes for2centers\u00d732motifs with48-cell batch crossing center boundary.",
+    "Weakref checks prove previous local released before next center and after driver return/failure.",
+    "Healthy driver uses actual03 consumer and bounded<=16B float32 sink chunks, with no dense full matrix.",
+    "Throwing sink retains original exception and incomplete-delivery note, closes index/generators/journal.",
+    "Static03 finite batch wrapper yields exactlycount before exhaustion probe; global upstream next is not called by wrapper probe.",
+    "Accepted02 executor and unchanged IO primitives reused; no numeric suite repeated."
+  ],
+  "scope": "Review stops at concrete final callback closure defects; no complete source03/driver02 acceptance claimed. Source03 standalone may be separable but its unchanged low-level acceptance does not establish driver post-sink currentness. Earlier reviews remain unchanged.",
+  "capacity_note": {
+    "record_width_bytes": 53,
+    "stream_header_bytes": 92,
+    "all_scalar_record_bytes_only": 22046310784,
+    "qualification": "Record bytes alone already exceed22GB; batch headers plus pending/completion metadata, filesystem allocation/inodes, output matrices, checkpoints, runtime and scratch add costs. Batch count depends on selected batch_cells and per-graph rounding; no full capacity claim."
+  },
+  "limits": "30s,256MiB AS,4MiB FSIZE,CPU3/4,nice10,threads1; tiny synthetic routing callbacks only, no numerical-equivalence or authority claim. No Main/Git/STATE/registration/process mutation."
+}

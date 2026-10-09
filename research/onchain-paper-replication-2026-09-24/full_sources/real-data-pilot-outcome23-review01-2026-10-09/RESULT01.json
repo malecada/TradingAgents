@@ -1,0 +1,3422 @@
+{
+  "decision": "accepted_narrow_closed_failed_outcome",
+  "observed_at": "2026-10-09T01:18:56.284365+00:00",
+  "pid_absence": {
+    "1119667": true,
+    "1120074": true,
+    "1120445": true,
+    "1120448": true
+  },
+  "cgroup_absent": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-2698c7f571fc4cb4a9cc08f60c7650c5.service",
+  "source_current_pins": 354,
+  "changed_registered_tradingagents_sources_from22": [
+    "tradingagents/research/onchain_replication/compact_mcm.py",
+    "tradingagents/research/onchain_replication/imported_authority_lease.py",
+    "tradingagents/research/onchain_replication/matching_annealing.py",
+    "tradingagents/research/onchain_replication/real_pilot_partial_progress.py"
+  ],
+  "run23": {
+    "id": "eth-paper-real-data-end-to-end-resource-20261009-23",
+    "source": "42ef3c06fcf62b9f5a2e0c1b61e76ad443734468",
+    "claim_sha256": "0de5a3f7ef829c1078cd60fbd1b083f7f1b95f3f261b50508faaa987afd6f7a7",
+    "failed_sha256": "3edbfe00a4a573458ca5283b97a28618eacfa6453734cc19085838e15c80ad21",
+    "diagnostic": {
+      "checkpoint_writes_before_this_snapshot": 132,
+      "claim_sha256": "0de5a3f7ef829c1078cd60fbd1b083f7f1b95f3f261b50508faaa987afd6f7a7",
+      "completed_scalar_pairs": 1024,
+      "full_mcm_complete": false,
+      "graph_completed_scalar_pairs": 1024,
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "kind": "partial_scalar_scoring_diagnostic",
+      "matching_elapsed_seconds": 4301.295888031997,
+      "model_update_complete": false,
+      "pairs_per_second": 0.23806778855860536,
+      "paper_financial_fits": 0,
+      "phase_timings": {
+        "advance_annealing_including_rank_transition": {
+          "calls": 1607,
+          "seconds": 1662.1355419050778
+        },
+        "advance_hardening": {
+          "calls": 1025,
+          "seconds": 6.379156522107223
+        },
+        "event_publication": {
+          "calls": 2048,
+          "seconds": 277.96593036877675
+        },
+        "lease": {
+          "calls": 88532,
+          "seconds": 1858.0374675474523
+        },
+        "lease_authority": {
+          "calls": 88532,
+          "seconds": 1849.0100906200132
+        },
+        "lease_progress": {
+          "calls": 88532,
+          "seconds": 0.22585506224640994
+        },
+        "lease_start_metadata": {
+          "calls": 88532,
+          "seconds": 7.10970423427716
+        },
+        "pair_validation": {
+          "calls": 1024,
+          "seconds": 0.03845632191951154
+        },
+        "retention_live": {
+          "calls": 4100,
+          "seconds": 276.7768114070568
+        },
+        "score_only": {
+          "calls": 1024,
+          "seconds": 15.554498300098203
+        },
+        "state_create": {
+          "calls": 1024,
+          "seconds": 6.065129260194226
+        }
+      },
+      "planned_stop_reached": true,
+      "policy": {
+        "checkpoint_every_pairs": 64,
+        "checkpoint_relative": "scoring-diagnostic/progress.json",
+        "max_completed_pairs": 1024,
+        "schema_version": 1
+      },
+      "qualification": "Completed pair-log acknowledgements only; final capped pair may not enter score tail. Timings are selected inclusive seams, not a disjoint profile; annealing advance includes atomic rank transition. Extraction is not isolated. Automatic refresh is sampled after timing callbacks, at most once per60seconds and480times; blocked calls have no guaranteed refresh. Remaining startup is measured after population/input/graph/model loading; phases include entry checkpoint publication and exclude exit publication. Matching entry precedes matcher/index preparation. Tail durability is a sampled watermark. Outer exit/recovery remain separate.",
+      "representation_credit": 0,
+      "schema_version": 1,
+      "scope_elapsed_seconds": 6229.0693010259965,
+      "source": "42ef3c06fcf62b9f5a2e0c1b61e76ad443734468",
+      "startup_progress": {
+        "active": null,
+        "phases": [
+          {
+            "elapsed_seconds": 31.770674749001046,
+            "entered_seconds": 0.013547705999371829,
+            "graph_index": null,
+            "phase": "archive_preflight",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 12.621101445998647,
+            "entered_seconds": 31.798264487999404,
+            "graph_index": null,
+            "phase": "archive_context",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 25.08608056400044,
+            "entered_seconds": 44.42846931500026,
+            "graph_index": null,
+            "phase": "bind",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 13.12588116400002,
+            "entered_seconds": 69.54210654499911,
+            "graph_index": null,
+            "phase": "import_preparation",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 122.7578590439989,
+            "entered_seconds": 82.70013020400074,
+            "graph_index": null,
+            "phase": "import_attach",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 16.19398568500037,
+            "entered_seconds": 205.464624010001,
+            "graph_index": null,
+            "phase": "import_execution",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 26.604650215998845,
+            "entered_seconds": 221.6632296280004,
+            "graph_index": null,
+            "phase": "lease_activation",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 85.972780701999,
+            "entered_seconds": 248.27466674199968,
+            "graph_index": 0,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 95.66521988099703,
+            "entered_seconds": 334.25440690400137,
+            "graph_index": 1,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 89.06290258100125,
+            "entered_seconds": 429.9263016619989,
+            "graph_index": 2,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 83.50607913899876,
+            "entered_seconds": 518.9967426809999,
+            "graph_index": 3,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 88.20421291500315,
+            "entered_seconds": 602.5095555189982,
+            "graph_index": 4,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 91.23184066400063,
+            "entered_seconds": 690.7208564809989,
+            "graph_index": 5,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 82.7592078350026,
+            "entered_seconds": 781.9549808269985,
+            "graph_index": 6,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 100.60622094800055,
+            "entered_seconds": 864.7211245309991,
+            "graph_index": 0,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 110.87525083799846,
+            "entered_seconds": 965.3344199710009,
+            "graph_index": 1,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 104.45702134599924,
+            "entered_seconds": 1076.2164664820011,
+            "graph_index": 2,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 99.01758801699907,
+            "entered_seconds": 1180.6750159490002,
+            "graph_index": 3,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 103.61868934599988,
+            "entered_seconds": 1279.694843450001,
+            "graph_index": 4,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 106.98519179499999,
+            "entered_seconds": 1383.3211081139998,
+            "graph_index": 5,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 98.62151209100193,
+            "entered_seconds": 1490.3131362239983,
+            "graph_index": 6,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 4633.651206694005,
+            "entered_seconds": 1589.0582072459983,
+            "failure_type": "PlannedScoringStop",
+            "graph_index": 0,
+            "phase": "production",
+            "state": "failed"
+          }
+        ]
+      },
+      "tail_observation": {
+        "acknowledged_tail_cells": 1023,
+        "completed_batch_cells": 0,
+        "durability_poisoned": false,
+        "durable_tail_cells": 1023
+      }
+    },
+    "persisted_checkpoint": {
+      "checkpoint_writes_before_this_snapshot": 131,
+      "claim_sha256": "0de5a3f7ef829c1078cd60fbd1b083f7f1b95f3f261b50508faaa987afd6f7a7",
+      "completed_scalar_pairs": 1024,
+      "full_mcm_complete": false,
+      "graph_completed_scalar_pairs": 1024,
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "kind": "partial_scalar_scoring_diagnostic",
+      "matching_elapsed_seconds": 4294.936011797003,
+      "model_update_complete": false,
+      "pairs_per_second": 0.23842031573633574,
+      "paper_financial_fits": 0,
+      "phase_timings": {
+        "advance_annealing_including_rank_transition": {
+          "calls": 1607,
+          "seconds": 1662.1355419050778
+        },
+        "advance_hardening": {
+          "calls": 1025,
+          "seconds": 6.379156522107223
+        },
+        "event_publication": {
+          "calls": 2048,
+          "seconds": 277.96593036877675
+        },
+        "lease": {
+          "calls": 88532,
+          "seconds": 1858.0374675474523
+        },
+        "lease_authority": {
+          "calls": 88532,
+          "seconds": 1849.0100906200132
+        },
+        "lease_progress": {
+          "calls": 88532,
+          "seconds": 0.22585506224640994
+        },
+        "lease_start_metadata": {
+          "calls": 88532,
+          "seconds": 7.10970423427716
+        },
+        "pair_validation": {
+          "calls": 1024,
+          "seconds": 0.03845632191951154
+        },
+        "retention_live": {
+          "calls": 4100,
+          "seconds": 276.7768114070568
+        },
+        "score_only": {
+          "calls": 1024,
+          "seconds": 15.554498300098203
+        },
+        "state_create": {
+          "calls": 1024,
+          "seconds": 6.065129260194226
+        }
+      },
+      "planned_stop_reached": true,
+      "policy": {
+        "checkpoint_every_pairs": 64,
+        "checkpoint_relative": "scoring-diagnostic/progress.json",
+        "max_completed_pairs": 1024,
+        "schema_version": 1
+      },
+      "qualification": "Completed pair-log acknowledgements only; final capped pair may not enter score tail. Timings are selected inclusive seams, not a disjoint profile; annealing advance includes atomic rank transition. Extraction is not isolated. Automatic refresh is sampled after timing callbacks, at most once per60seconds and480times; blocked calls have no guaranteed refresh. Remaining startup is measured after population/input/graph/model loading; phases include entry checkpoint publication and exclude exit publication. Matching entry precedes matcher/index preparation. Tail durability is a sampled watermark. Outer exit/recovery remain separate.",
+      "representation_credit": 0,
+      "schema_version": 1,
+      "scope_elapsed_seconds": 6222.709424791003,
+      "source": "42ef3c06fcf62b9f5a2e0c1b61e76ad443734468",
+      "startup_progress": {
+        "active": null,
+        "phases": [
+          {
+            "elapsed_seconds": 31.770674749001046,
+            "entered_seconds": 0.013547705999371829,
+            "graph_index": null,
+            "phase": "archive_preflight",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 12.621101445998647,
+            "entered_seconds": 31.798264487999404,
+            "graph_index": null,
+            "phase": "archive_context",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 25.08608056400044,
+            "entered_seconds": 44.42846931500026,
+            "graph_index": null,
+            "phase": "bind",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 13.12588116400002,
+            "entered_seconds": 69.54210654499911,
+            "graph_index": null,
+            "phase": "import_preparation",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 122.7578590439989,
+            "entered_seconds": 82.70013020400074,
+            "graph_index": null,
+            "phase": "import_attach",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 16.19398568500037,
+            "entered_seconds": 205.464624010001,
+            "graph_index": null,
+            "phase": "import_execution",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 26.604650215998845,
+            "entered_seconds": 221.6632296280004,
+            "graph_index": null,
+            "phase": "lease_activation",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 85.972780701999,
+            "entered_seconds": 248.27466674199968,
+            "graph_index": 0,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 95.66521988099703,
+            "entered_seconds": 334.25440690400137,
+            "graph_index": 1,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 89.06290258100125,
+            "entered_seconds": 429.9263016619989,
+            "graph_index": 2,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 83.50607913899876,
+            "entered_seconds": 518.9967426809999,
+            "graph_index": 3,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 88.20421291500315,
+            "entered_seconds": 602.5095555189982,
+            "graph_index": 4,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 91.23184066400063,
+            "entered_seconds": 690.7208564809989,
+            "graph_index": 5,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 82.7592078350026,
+            "entered_seconds": 781.9549808269985,
+            "graph_index": 6,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 100.60622094800055,
+            "entered_seconds": 864.7211245309991,
+            "graph_index": 0,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 110.87525083799846,
+            "entered_seconds": 965.3344199710009,
+            "graph_index": 1,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 104.45702134599924,
+            "entered_seconds": 1076.2164664820011,
+            "graph_index": 2,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 99.01758801699907,
+            "entered_seconds": 1180.6750159490002,
+            "graph_index": 3,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 103.61868934599988,
+            "entered_seconds": 1279.694843450001,
+            "graph_index": 4,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 106.98519179499999,
+            "entered_seconds": 1383.3211081139998,
+            "graph_index": 5,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 98.62151209100193,
+            "entered_seconds": 1490.3131362239983,
+            "graph_index": 6,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 4633.651206694005,
+            "entered_seconds": 1589.0582072459983,
+            "failure_type": "PlannedScoringStop",
+            "graph_index": 0,
+            "phase": "production",
+            "state": "failed"
+          }
+        ]
+      },
+      "tail_observation": {
+        "acknowledged_tail_cells": 1023,
+        "completed_batch_cells": 0,
+        "durability_poisoned": false,
+        "durable_tail_cells": 1023
+      }
+    },
+    "native_elapsed_seconds": 6550.677280232001,
+    "kernel_peak_bytes": 5371232256,
+    "memory_events": {
+      "high": 1415,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "guard_supervisor_pid": null,
+    "guard_supervisor_pid_field_present": false,
+    "owner_supervisor_pid": 1119667,
+    "journal_state": {
+      "events": 2048,
+      "started_pairs": 1024,
+      "completed_pairs": 1024,
+      "progress_events": 0,
+      "pending": null
+    },
+    "journal_failure": {
+      "archived_chunks": 0,
+      "error_type": "RuntimeError",
+      "events": 2048,
+      "schema_version": 1,
+      "status": "failed"
+    },
+    "iterations_sum": 49152,
+    "iterations_min": 48,
+    "iterations_max": 48,
+    "iterations_sequence_sha256": "eb67295fc149053ae8cb786eca8a2cacfebe0b7bfab58045613a522b5f6a20d5",
+    "tail_cells_chain_joined": 1023,
+    "tail_terminal_present": false,
+    "journal_terminal_present": false,
+    "graph_dispositions": [
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": 4633.652670770996,
+        "expected_motif_cells": 56584576,
+        "expected_nodes": 1768268,
+        "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "motifs": 32,
+        "reason": "PlannedScoringStop: registered completed scalar comparison limit reached",
+        "status": "failed"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 72495392,
+        "expected_nodes": 2265481,
+        "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 60105600,
+        "expected_nodes": 1878300,
+        "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 50606112,
+        "expected_nodes": 1581441,
+        "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 60001376,
+        "expected_nodes": 1875043,
+        "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 65558720,
+        "expected_nodes": 2048710,
+        "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 50616352,
+        "expected_nodes": 1581761,
+        "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      }
+    ],
+    "last_partial_observation": {
+      "acknowledged_computed_matching_pairs": 998,
+      "acknowledged_pairs_per_second": 0.23031343671284657,
+      "acknowledged_tail_cells": 998,
+      "claim_sha256": "0de5a3f7ef829c1078cd60fbd1b083f7f1b95f3f261b50508faaa987afd6f7a7",
+      "durability_poisoned": false,
+      "durability_watermark": "volatile sampled prefix; not restart authority",
+      "durable_batch_cells_per_second": 0.0,
+      "durable_score_batch_cells": 0,
+      "durable_score_batches": 0,
+      "durable_tail_cells": 997,
+      "expected_matching_pairs": 56584576,
+      "expected_nodes": 1768268,
+      "first_completed_batch_sample": null,
+      "full_mcm_completion_verified_here": false,
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "joint_update_verified_here": false,
+      "kind": "real_pilot_partial_mcm_progress",
+      "last_budget_slot": false,
+      "motifs": 32,
+      "observed_elapsed_seconds": 4333.225252699001,
+      "observed_process_cpu_seconds": 3216.065757484,
+      "paper_financial_fits": 0,
+      "pending_pair": true,
+      "process_cpu_scope": "whole caller since graph begin; not isolated matcher",
+      "qualification": "Last acknowledged diagnostic observation; not final counts, current local/remote availability, stage completion or authority. Full MCM and update require outer verified summary.",
+      "representation_credit": 0,
+      "schema_version": 2,
+      "scope_elapsed_seconds": 6190.266328356003,
+      "sequence": 67,
+      "source": "42ef3c06fcf62b9f5a2e0c1b61e76ad443734468",
+      "started_matching_pairs": 999
+    },
+    "roots": [
+      "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "research_artifacts/onchain_compact_mcm/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "research_artifacts/archive-dispatch-ethpilot-20261009-23"
+    ]
+  },
+  "run22_comparison": {
+    "id": "eth-paper-real-data-end-to-end-resource-20261008-22",
+    "source": "d00d8dfb34acce77f965dfcc87c79f264d132a69",
+    "claim_sha256": "03e46135def01a13cef89b236f41e861a121a67b3e8fb0bec844d4f12aaf0a46",
+    "failed_sha256": "97afc11d05ecc766e12c7ceb8dad2ca72db2c3b87fe252c8a73e661901a9ea84",
+    "diagnostic": {
+      "checkpoint_writes_before_this_snapshot": 129,
+      "claim_sha256": "03e46135def01a13cef89b236f41e861a121a67b3e8fb0bec844d4f12aaf0a46",
+      "completed_scalar_pairs": 1024,
+      "full_mcm_complete": false,
+      "graph_completed_scalar_pairs": 1024,
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "kind": "partial_scalar_scoring_diagnostic",
+      "matching_elapsed_seconds": 4224.698126349998,
+      "model_update_complete": false,
+      "pairs_per_second": 0.2423841821059775,
+      "paper_financial_fits": 0,
+      "phase_timings": {
+        "advance_annealing_including_rank_transition": {
+          "calls": 1607,
+          "seconds": 1652.1557929599148
+        },
+        "advance_hardening": {
+          "calls": 1025,
+          "seconds": 6.334716409925022
+        },
+        "event_publication": {
+          "calls": 2048,
+          "seconds": 272.981728148181
+        },
+        "lease": {
+          "calls": 88532,
+          "seconds": 1776.299689214844
+        },
+        "pair_validation": {
+          "calls": 1024,
+          "seconds": 0.039057627032889286
+        },
+        "retention_live": {
+          "calls": 4100,
+          "seconds": 230.46375397709562
+        },
+        "score_only": {
+          "calls": 1024,
+          "seconds": 15.772546073912963
+        },
+        "state_create": {
+          "calls": 1024,
+          "seconds": 6.03601849192637
+        }
+      },
+      "planned_stop_reached": true,
+      "policy": {
+        "checkpoint_every_pairs": 64,
+        "checkpoint_relative": "scoring-diagnostic/progress.json",
+        "max_completed_pairs": 1024,
+        "schema_version": 1
+      },
+      "qualification": "Completed pair-log acknowledgements only; final capped pair may not enter score tail. Timings are selected inclusive seams, not a disjoint profile; annealing advance includes atomic rank transition. Extraction is not isolated. Automatic refresh is sampled after timing callbacks, at most once per60seconds and480times; blocked calls have no guaranteed refresh. Remaining startup is measured after population/input/graph/model loading; phases include entry checkpoint publication and exclude exit publication. Matching entry precedes matcher/index preparation. Tail durability is a sampled watermark. Outer exit/recovery remain separate.",
+      "representation_credit": 0,
+      "schema_version": 1,
+      "scope_elapsed_seconds": 6074.615926855,
+      "source": "d00d8dfb34acce77f965dfcc87c79f264d132a69",
+      "startup_progress": {
+        "active": null,
+        "phases": [
+          {
+            "elapsed_seconds": 29.287081604998093,
+            "entered_seconds": 0.0122326000018802,
+            "graph_index": null,
+            "phase": "archive_preflight",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 11.81980314500106,
+            "entered_seconds": 29.30075348399987,
+            "graph_index": null,
+            "phase": "archive_context",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 24.088420850999682,
+            "entered_seconds": 41.12270075000197,
+            "graph_index": null,
+            "phase": "bind",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 12.216033772998344,
+            "entered_seconds": 65.2135007120014,
+            "graph_index": null,
+            "phase": "import_preparation",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 114.53083839799729,
+            "entered_seconds": 77.43615058200157,
+            "graph_index": null,
+            "phase": "import_attach",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 15.444128487000853,
+            "entered_seconds": 191.96841578599924,
+            "graph_index": null,
+            "phase": "import_execution",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 26.253519878999214,
+            "entered_seconds": 207.42188168400025,
+            "graph_index": null,
+            "phase": "lease_activation",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 83.52711374499995,
+            "entered_seconds": 233.67951873399943,
+            "graph_index": 0,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 92.94683137999891,
+            "entered_seconds": 317.2102682670011,
+            "graph_index": 1,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 85.8249104159986,
+            "entered_seconds": 410.1638334039999,
+            "graph_index": 2,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 80.28043721599897,
+            "entered_seconds": 495.9954292069997,
+            "graph_index": 3,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 84.5490577519995,
+            "entered_seconds": 576.2829064350008,
+            "graph_index": 4,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 87.51689203999922,
+            "entered_seconds": 660.8344534040007,
+            "graph_index": 5,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 80.36612930699994,
+            "entered_seconds": 748.3529117569997,
+            "graph_index": 6,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 97.40325141699941,
+            "entered_seconds": 828.7265523909991,
+            "graph_index": 0,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 107.6265179669972,
+            "entered_seconds": 926.1366938550018,
+            "graph_index": 1,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 100.86433879999822,
+            "entered_seconds": 1033.770319825002,
+            "graph_index": 2,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 94.82439207000061,
+            "entered_seconds": 1134.6365864139989,
+            "graph_index": 3,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 99.66634718400019,
+            "entered_seconds": 1229.4678054370015,
+            "graph_index": 4,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 102.08840374099964,
+            "entered_seconds": 1329.1361749870011,
+            "graph_index": 5,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 94.03033666099873,
+            "entered_seconds": 1431.231340997001,
+            "graph_index": 6,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 4543.344365065001,
+            "entered_seconds": 1525.3874246179985,
+            "failure_type": "PlannedScoringStop",
+            "graph_index": 0,
+            "phase": "production",
+            "state": "failed"
+          }
+        ]
+      },
+      "tail_observation": {
+        "acknowledged_tail_cells": 1023,
+        "completed_batch_cells": 0,
+        "durability_poisoned": false,
+        "durable_tail_cells": 1023
+      }
+    },
+    "persisted_checkpoint": {
+      "checkpoint_writes_before_this_snapshot": 128,
+      "claim_sha256": "03e46135def01a13cef89b236f41e861a121a67b3e8fb0bec844d4f12aaf0a46",
+      "completed_scalar_pairs": 1024,
+      "full_mcm_complete": false,
+      "graph_completed_scalar_pairs": 1024,
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "kind": "partial_scalar_scoring_diagnostic",
+      "matching_elapsed_seconds": 4218.813998996997,
+      "model_update_complete": false,
+      "pairs_per_second": 0.24272224379729734,
+      "paper_financial_fits": 0,
+      "phase_timings": {
+        "advance_annealing_including_rank_transition": {
+          "calls": 1607,
+          "seconds": 1652.1557929599148
+        },
+        "advance_hardening": {
+          "calls": 1025,
+          "seconds": 6.334716409925022
+        },
+        "event_publication": {
+          "calls": 2048,
+          "seconds": 272.981728148181
+        },
+        "lease": {
+          "calls": 88532,
+          "seconds": 1776.299689214844
+        },
+        "pair_validation": {
+          "calls": 1024,
+          "seconds": 0.039057627032889286
+        },
+        "retention_live": {
+          "calls": 4100,
+          "seconds": 230.46375397709562
+        },
+        "score_only": {
+          "calls": 1024,
+          "seconds": 15.772546073912963
+        },
+        "state_create": {
+          "calls": 1024,
+          "seconds": 6.03601849192637
+        }
+      },
+      "planned_stop_reached": true,
+      "policy": {
+        "checkpoint_every_pairs": 64,
+        "checkpoint_relative": "scoring-diagnostic/progress.json",
+        "max_completed_pairs": 1024,
+        "schema_version": 1
+      },
+      "qualification": "Completed pair-log acknowledgements only; final capped pair may not enter score tail. Timings are selected inclusive seams, not a disjoint profile; annealing advance includes atomic rank transition. Extraction is not isolated. Automatic refresh is sampled after timing callbacks, at most once per60seconds and480times; blocked calls have no guaranteed refresh. Remaining startup is measured after population/input/graph/model loading; phases include entry checkpoint publication and exclude exit publication. Matching entry precedes matcher/index preparation. Tail durability is a sampled watermark. Outer exit/recovery remain separate.",
+      "representation_credit": 0,
+      "schema_version": 1,
+      "scope_elapsed_seconds": 6068.7317995019985,
+      "source": "d00d8dfb34acce77f965dfcc87c79f264d132a69",
+      "startup_progress": {
+        "active": null,
+        "phases": [
+          {
+            "elapsed_seconds": 29.287081604998093,
+            "entered_seconds": 0.0122326000018802,
+            "graph_index": null,
+            "phase": "archive_preflight",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 11.81980314500106,
+            "entered_seconds": 29.30075348399987,
+            "graph_index": null,
+            "phase": "archive_context",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 24.088420850999682,
+            "entered_seconds": 41.12270075000197,
+            "graph_index": null,
+            "phase": "bind",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 12.216033772998344,
+            "entered_seconds": 65.2135007120014,
+            "graph_index": null,
+            "phase": "import_preparation",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 114.53083839799729,
+            "entered_seconds": 77.43615058200157,
+            "graph_index": null,
+            "phase": "import_attach",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 15.444128487000853,
+            "entered_seconds": 191.96841578599924,
+            "graph_index": null,
+            "phase": "import_execution",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 26.253519878999214,
+            "entered_seconds": 207.42188168400025,
+            "graph_index": null,
+            "phase": "lease_activation",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 83.52711374499995,
+            "entered_seconds": 233.67951873399943,
+            "graph_index": 0,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 92.94683137999891,
+            "entered_seconds": 317.2102682670011,
+            "graph_index": 1,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 85.8249104159986,
+            "entered_seconds": 410.1638334039999,
+            "graph_index": 2,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 80.28043721599897,
+            "entered_seconds": 495.9954292069997,
+            "graph_index": 3,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 84.5490577519995,
+            "entered_seconds": 576.2829064350008,
+            "graph_index": 4,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 87.51689203999922,
+            "entered_seconds": 660.8344534040007,
+            "graph_index": 5,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 80.36612930699994,
+            "entered_seconds": 748.3529117569997,
+            "graph_index": 6,
+            "phase": "target",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 97.40325141699941,
+            "entered_seconds": 828.7265523909991,
+            "graph_index": 0,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 107.6265179669972,
+            "entered_seconds": 926.1366938550018,
+            "graph_index": 1,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 100.86433879999822,
+            "entered_seconds": 1033.770319825002,
+            "graph_index": 2,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 94.82439207000061,
+            "entered_seconds": 1134.6365864139989,
+            "graph_index": 3,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 99.66634718400019,
+            "entered_seconds": 1229.4678054370015,
+            "graph_index": 4,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 102.08840374099964,
+            "entered_seconds": 1329.1361749870011,
+            "graph_index": 5,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 94.03033666099873,
+            "entered_seconds": 1431.231340997001,
+            "graph_index": 6,
+            "phase": "prepare",
+            "state": "completed"
+          },
+          {
+            "elapsed_seconds": 4543.344365065001,
+            "entered_seconds": 1525.3874246179985,
+            "failure_type": "PlannedScoringStop",
+            "graph_index": 0,
+            "phase": "production",
+            "state": "failed"
+          }
+        ]
+      },
+      "tail_observation": {
+        "acknowledged_tail_cells": 1023,
+        "completed_batch_cells": 0,
+        "durability_poisoned": false,
+        "durable_tail_cells": 1023
+      }
+    },
+    "native_elapsed_seconds": 6382.079276460998,
+    "kernel_peak_bytes": 5370662912,
+    "memory_events": {
+      "high": 926,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "guard_supervisor_pid": null,
+    "guard_supervisor_pid_field_present": false,
+    "owner_supervisor_pid": 684038,
+    "journal_state": {
+      "events": 2048,
+      "started_pairs": 1024,
+      "completed_pairs": 1024,
+      "progress_events": 0,
+      "pending": null
+    },
+    "journal_failure": {
+      "archived_chunks": 0,
+      "error_type": "RuntimeError",
+      "events": 2048,
+      "schema_version": 1,
+      "status": "failed"
+    },
+    "iterations_sum": 49152,
+    "iterations_min": 48,
+    "iterations_max": 48,
+    "iterations_sequence_sha256": "eb67295fc149053ae8cb786eca8a2cacfebe0b7bfab58045613a522b5f6a20d5",
+    "tail_cells_chain_joined": 1023,
+    "tail_terminal_present": false,
+    "journal_terminal_present": false,
+    "graph_dispositions": [
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": 4543.345804117998,
+        "expected_motif_cells": 56584576,
+        "expected_nodes": 1768268,
+        "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "motifs": 32,
+        "reason": "PlannedScoringStop: registered completed scalar comparison limit reached",
+        "status": "failed"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 72495392,
+        "expected_nodes": 2265481,
+        "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 60105600,
+        "expected_nodes": 1878300,
+        "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 50606112,
+        "expected_nodes": 1581441,
+        "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 60001376,
+        "expected_nodes": 1875043,
+        "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 65558720,
+        "expected_nodes": 2048710,
+        "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 50616352,
+        "expected_nodes": 1581761,
+        "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      }
+    ],
+    "last_partial_observation": {
+      "acknowledged_computed_matching_pairs": 975,
+      "acknowledged_pairs_per_second": 0.23054605140333595,
+      "acknowledged_tail_cells": 975,
+      "claim_sha256": "03e46135def01a13cef89b236f41e861a121a67b3e8fb0bec844d4f12aaf0a46",
+      "durability_poisoned": false,
+      "durability_watermark": "volatile sampled prefix; not restart authority",
+      "durable_batch_cells_per_second": 0.0,
+      "durable_score_batch_cells": 0,
+      "durable_score_batches": 0,
+      "durable_tail_cells": 973,
+      "expected_matching_pairs": 56584576,
+      "expected_nodes": 1768268,
+      "first_completed_batch_sample": null,
+      "full_mcm_completion_verified_here": false,
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "joint_update_verified_here": false,
+      "kind": "real_pilot_partial_mcm_progress",
+      "last_budget_slot": false,
+      "motifs": 32,
+      "observed_elapsed_seconds": 4229.089997703999,
+      "observed_process_cpu_seconds": 3169.415839573,
+      "paper_financial_fits": 0,
+      "pending_pair": false,
+      "process_cpu_scope": "whole caller since graph begin; not isolated matcher",
+      "qualification": "Last acknowledged diagnostic observation; not final counts, current local/remote availability, stage completion or authority. Full MCM and update require outer verified summary.",
+      "representation_credit": 0,
+      "schema_version": 2,
+      "scope_elapsed_seconds": 6012.669833511001,
+      "sequence": 65,
+      "source": "d00d8dfb34acce77f965dfcc87c79f264d132a69",
+      "started_matching_pairs": 975
+    },
+    "roots": [
+      "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22",
+      "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-22",
+      "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261008-22",
+      "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22",
+      "research_artifacts/onchain_compact_mcm/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22",
+      "research_artifacts/archive-dispatch-ethpilot-20261008-22"
+    ]
+  },
+  "scope": "No numerical replay, full MCM, update, financial, capacity or external recovery credit. Binary event/tail chains checked as scalar records; arrays not opened. Matching failed marker is not a successful terminal seal; tail lacks a terminal seal. Historical unsealed-journals empty is retained separately.",
+  "preservation_roots": [
+    {
+      "root": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "files": [
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/claim.json",
+          "bytes": 99534,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/failed.json",
+          "bytes": 1239,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/archive-terminal.json",
+          "bytes": 902,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/resource-journal.json",
+          "bytes": 209,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/real-pilot-scoring-diagnostic.json",
+          "bytes": 7152,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/resource-population-binding.json",
+          "bytes": 1180,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/resource-binding.json",
+          "bytes": 209,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/resource-population.json",
+          "bytes": 215222,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/cell-ledger.json",
+          "bytes": 270,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/archive-receipt.json",
+          "bytes": 879,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/pilot-summary.json",
+          "bytes": 14418,
+          "mode": 436
+        },
+        {
+          "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/artifacts/scoring-diagnostic/progress.json",
+          "bytes": 5274,
+          "mode": 384
+        }
+      ],
+      "directories": 3,
+      "logical_bytes": 346488
+    },
+    {
+      "root": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "files": [
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/worker-file-limit.json",
+          "bytes": 2427,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/unsealed-journals.json",
+          "bytes": 3,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/observer.json",
+          "bytes": 968,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/monitor-file-limit.json",
+          "bytes": 2242,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/launch.json",
+          "bytes": 213,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/owner.json",
+          "bytes": 275,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/postmortem-cells.json",
+          "bytes": 168,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/release.json",
+          "bytes": 39,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/child.log",
+          "bytes": 95540,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/child_exit.json",
+          "bytes": 1578,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/observer-death.json",
+          "bytes": 19507,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/cpu_ready.json",
+          "bytes": 2209,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/live.json",
+          "bytes": 19329,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/final.json",
+          "bytes": 19329,
+          "mode": 384
+        }
+      ],
+      "directories": 1,
+      "logical_bytes": 163827
+    },
+    {
+      "root": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "files": [
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261009-23/stdout.log",
+          "bytes": 922,
+          "mode": 436
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261009-23/stderr.log",
+          "bytes": 0,
+          "mode": 436
+        }
+      ],
+      "directories": 0,
+      "logical_bytes": 922
+    },
+    {
+      "root": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "files": [
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/claim.json",
+          "bytes": 5247,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/start.json",
+          "bytes": 795,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/failed.json",
+          "bytes": 909,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/owner.json",
+          "bytes": 238,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/owner.json",
+          "bytes": 26554,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/archive-operations/start.json",
+          "bytes": 330,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/archive-operations/writer-mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba-0000/intent.json",
+          "bytes": 531,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/archive-operations/writer-mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba-0000/failed.json",
+          "bytes": 102,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/intent.json",
+          "bytes": 850,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/dictionary-import/import-complete.json",
+          "bytes": 5019,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/dictionary-import/intent.json",
+          "bytes": 3407,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/reserve-000000000001.json",
+          "bytes": 308,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/selected-000000000000.json",
+          "bytes": 194,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/claim.json",
+          "bytes": 3803,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/reserve-000000000000.json",
+          "bytes": 261,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/failed.json",
+          "bytes": 242,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/start.json",
+          "bytes": 870,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/events-000000000000.bin",
+          "bytes": 344064,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/start.json",
+          "bytes": 678,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/failed.json",
+          "bytes": 101,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/archive-start.json",
+          "bytes": 627,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/batches/start.json",
+          "bytes": 662,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/tails/tail-000000000000/records.bin",
+          "bytes": 81840,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/tails/tail-000000000000/start.json",
+          "bytes": 761,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/events/complete-000000000001.json",
+          "bytes": 496,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/bridges/complete-000000000001.json",
+          "bytes": 3010,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/inputs/input-000000000000-0-node_features.npy",
+          "bytes": 288,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/inputs/input-000000000000-1-edge_features.npy",
+          "bytes": 384,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/inputs/input-000000000000-1-edge_index.npy",
+          "bytes": 384,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/inputs/input-000000000000-0-edge_index.npy",
+          "bytes": 192,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/inputs/input-000000000000.json",
+          "bytes": 2338,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/inputs/input-000000000000-0-edge_features.npy",
+          "bytes": 192,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/inputs/input-000000000000-1-node_features.npy",
+          "bytes": 608,
+          "mode": 384
+        }
+      ],
+      "directories": 17,
+      "logical_bytes": 486285
+    },
+    {
+      "root": "research_artifacts/onchain_compact_mcm/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23",
+      "files": [
+        {
+          "path": "research_artifacts/onchain_compact_mcm/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/start.json",
+          "bytes": 1445,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/onchain_compact_mcm/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/failed.json",
+          "bytes": 114,
+          "mode": 384
+        }
+      ],
+      "directories": 1,
+      "logical_bytes": 1559
+    },
+    {
+      "root": "research_artifacts/archive-dispatch-ethpilot-20261009-23",
+      "files": [
+        {
+          "path": "research_artifacts/archive-dispatch-ethpilot-20261009-23/close-failed.json",
+          "bytes": 118,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/archive-dispatch-ethpilot-20261009-23/intent.json",
+          "bytes": 7021,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/archive-dispatch-ethpilot-20261009-23/terminal.json",
+          "bytes": 746,
+          "mode": 384
+        },
+        {
+          "path": "research_artifacts/archive-dispatch-ethpilot-20261009-23/controls/control-00000000.bin",
+          "bytes": 728,
+          "mode": 384
+        }
+      ],
+      "directories": 3,
+      "logical_bytes": 8613
+    }
+  ],
+  "exclusions": [
+    "original graph/dictionary/sample stores",
+    "private transport connection/runtime caches",
+    "other claims/workflows",
+    "global shared lock and parent directories not owned exclusively"
+  ],
+  "evidence": {
+    "tradingagents/research/onchain_replication/compact_pair_log.py": {
+      "sha256": "70691d78c0f34184db43aa93234685eb3e6100c89573af6c1bc520bafac7e756",
+      "bytes": 17032
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/claim.json": {
+      "sha256": "03e46135def01a13cef89b236f41e861a121a67b3e8fb0bec844d4f12aaf0a46",
+      "bytes": 95471
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/failed.json": {
+      "sha256": "97afc11d05ecc766e12c7ceb8dad2ca72db2c3b87fe252c8a73e661901a9ea84",
+      "bytes": 1239
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/outputs/archive-receipt.json": {
+      "sha256": "52d03e2214b2c3faa5125e5c3cbaecd3690849b347869fae128d78493cdb4786",
+      "bytes": 879
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/outputs/archive-terminal.json": {
+      "sha256": "40ac45e781f5e33acd0fba506992cd075ea702267fb0217ab4dcb38b3706af10",
+      "bytes": 902
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/outputs/cell-ledger.json": {
+      "sha256": "481b925c641a21873185f204daf5384c1643a7ca83286135e2d40d4ae6539b0a",
+      "bytes": 270
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/outputs/pilot-summary.json": {
+      "sha256": "de66062a9f12d20b81b588cc0b292284fd76795459eaf31d078e108bb2637559",
+      "bytes": 14113
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/outputs/real-pilot-scoring-diagnostic.json": {
+      "sha256": "54a497c76fc2cef76cb48a4422bf2c4e74682977c83d227f541bf7ac53e9ce5f",
+      "bytes": 6870
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/outputs/resource-binding.json": {
+      "sha256": "6c5ef66a49e97281daf2a20a989417a59aea9a2f77fdcccb50815851cac1db18",
+      "bytes": 209
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/outputs/resource-journal.json": {
+      "sha256": "6c5ef66a49e97281daf2a20a989417a59aea9a2f77fdcccb50815851cac1db18",
+      "bytes": 209
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/outputs/resource-population-binding.json": {
+      "sha256": "363b51245af7a38217ccba9b6c8d0cf9283e38cd4fc0b03e1e4498a82555aa5e",
+      "bytes": 1180
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/outputs/resource-population.json": {
+      "sha256": "2bba5228869300fe51c40ce62ae482a23afd65d5a49b69d605e1f0e6b99101b0",
+      "bytes": 215222
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261008-22/artifacts/scoring-diagnostic/progress.json": {
+      "sha256": "a5dfa577b10740ff0badaafbfe3ba7fcdb017d8e499995cd06c4d58c33fbebc0",
+      "bytes": 5079
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-22/guard/final.json": {
+      "sha256": "8fe25b95cdccdf8895e0509f6a0910e636dac00108b7f2f6b6d0d7d74854734f",
+      "bytes": 19324
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-22/owner.json": {
+      "sha256": "fb75a3318a8f13d331933c3baa888a996c211e2468932df9ad048cc21a67bfe0",
+      "bytes": 273
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-22/launch.json": {
+      "sha256": "3b6495362ac0b87d115276ff1992422947997fa2903278c0d1e60aae73cc8a5f",
+      "bytes": 212
+    },
+    "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/owner.json": {
+      "sha256": "b6f3978f97a377c85e2230fa031061031120ae27096d1c51ed87e77252bfd2fa",
+      "bytes": 238
+    },
+    "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/compact/owner.json": {
+      "sha256": "74716a204f4c25244b89fde1a58e17c58f9cbceb9e75802d80e4709d0c51803d",
+      "bytes": 26554
+    },
+    "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/start.json": {
+      "sha256": "7763e55be5566a676fc02352480e8ae635cc9ccefcaf67a9a31a4d1d4af268ce",
+      "bytes": 678
+    },
+    "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/events-000000000000.bin": {
+      "sha256": "3a608381b9a78c339d2427d90d3ad294834497815e573f313aed359e1c41e8c1",
+      "bytes": 344064
+    },
+    "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/failed.json": {
+      "sha256": "4981d4468586e827be8349d898714e7aa51329f96d62c8cec88e186e62da8592",
+      "bytes": 101
+    },
+    "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/tails/tail-000000000000/start.json": {
+      "sha256": "226b33d2569a5f76bb63e5c3d2c7d1ce7865b6d687092dad7368f15abebe62c6",
+      "bytes": 761
+    },
+    "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/tails/tail-000000000000/records.bin": {
+      "sha256": "8ff10bb2826212a7ee2a835baacd9ad8482d76284bf8dd1d0269e7d6e67aa123",
+      "bytes": 81840
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261008-22/unsealed-journals.json": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/failed.json": {
+      "sha256": "6cb6b89fa3d449fe9ea186781090ca66c0ce9243b552d199ee2fc8fdd3a7229e",
+      "bytes": 909
+    },
+    "research_artifacts/onchain_compact_mcm/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/failed.json": {
+      "sha256": "1449e987541993dc310bfa01aa078ba2bb66d2003f18817433384f281e9ad182",
+      "bytes": 114
+    },
+    "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261008-22/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/failed.json": {
+      "sha256": "c12789d907cbe355f276783a228bb089d22b19efe9dbc21c80a978a68271ee19",
+      "bytes": 242
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/claim.json": {
+      "sha256": "0de5a3f7ef829c1078cd60fbd1b083f7f1b95f3f261b50508faaa987afd6f7a7",
+      "bytes": 99534
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/failed.json": {
+      "sha256": "3edbfe00a4a573458ca5283b97a28618eacfa6453734cc19085838e15c80ad21",
+      "bytes": 1239
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/archive-receipt.json": {
+      "sha256": "4877dbf674d3648cea6e15a2e08372320867748b93b353734046b0bb2b3a5276",
+      "bytes": 879
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/archive-terminal.json": {
+      "sha256": "0bb46871f5dccf416fef08a74c14704546a4c2779490d03babf75fc77313df2d",
+      "bytes": 902
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/cell-ledger.json": {
+      "sha256": "481b925c641a21873185f204daf5384c1643a7ca83286135e2d40d4ae6539b0a",
+      "bytes": 270
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/pilot-summary.json": {
+      "sha256": "f072610b3a14c0c66ed6ff4be55cb17af43f508e49a6e4c3bb31cb87afb936ae",
+      "bytes": 14418
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/real-pilot-scoring-diagnostic.json": {
+      "sha256": "68e999977917d25c48ec58d0b6ccda90dbd8df41099dc8a0dce7caefdb935bfc",
+      "bytes": 7152
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/resource-binding.json": {
+      "sha256": "6c5ef66a49e97281daf2a20a989417a59aea9a2f77fdcccb50815851cac1db18",
+      "bytes": 209
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/resource-journal.json": {
+      "sha256": "6c5ef66a49e97281daf2a20a989417a59aea9a2f77fdcccb50815851cac1db18",
+      "bytes": 209
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/resource-population-binding.json": {
+      "sha256": "363b51245af7a38217ccba9b6c8d0cf9283e38cd4fc0b03e1e4498a82555aa5e",
+      "bytes": 1180
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/resource-population.json": {
+      "sha256": "2bba5228869300fe51c40ce62ae482a23afd65d5a49b69d605e1f0e6b99101b0",
+      "bytes": 215222
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/artifacts/scoring-diagnostic/progress.json": {
+      "sha256": "825f11ab081e353c10f49493c960a5db112550951db6ee5b72f5a6c556e444a1",
+      "bytes": 5274
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/final.json": {
+      "sha256": "83b413a741cdb50a833fc4f3a3721de06717d276c98e4ac53cd49e4175e0cfc8",
+      "bytes": 19329
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/owner.json": {
+      "sha256": "ce3895809b7a64c39f1a1e556219cd656eb50896067ae18da79c16d47539922d",
+      "bytes": 275
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/launch.json": {
+      "sha256": "0521e42ec346e2a8b3c859c14245b2e0926efac2e994e131c24877a6b0e358d1",
+      "bytes": 213
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/owner.json": {
+      "sha256": "fdb9e516693807cf3f131c5ef0901335a29069bfe03a96fe93e8987da5aae4f4",
+      "bytes": 238
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/owner.json": {
+      "sha256": "62d34ef6548ad98e00879b631e8d1f7698b9a33613d0285e7c8f446aa8b48c38",
+      "bytes": 26554
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/start.json": {
+      "sha256": "2e1d7734fa2a5e3ecb68fce183ffdeb9f55071d0df82ac00ca95664b3da2c86b",
+      "bytes": 678
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/events-000000000000.bin": {
+      "sha256": "b86a2c535a771853e368f2031bb318465123ba8e97677aad0dfc4b3be923b93e",
+      "bytes": 344064
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/failed.json": {
+      "sha256": "4981d4468586e827be8349d898714e7aa51329f96d62c8cec88e186e62da8592",
+      "bytes": 101
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/tails/tail-000000000000/start.json": {
+      "sha256": "df4ffc1b0833f660c927449bf52f24bfd392d0a077d96564e85237b9a7bff743",
+      "bytes": 761
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/tails/tail-000000000000/records.bin": {
+      "sha256": "b545a24c1d4b74d27cf114e2ee90ff58395d26b6080804cb0930ecce96dd6360",
+      "bytes": 81840
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/unsealed-journals.json": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/failed.json": {
+      "sha256": "1d1dfacd966aa26f86fc7e53e3a63a37f572d71ab4132f105db9ff20c47c95e4",
+      "bytes": 909
+    },
+    "research_artifacts/onchain_compact_mcm/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/failed.json": {
+      "sha256": "5247ed21301ab186bbfe32ebfd64d03d42e6efa26e476485a32cf76850b4435d",
+      "bytes": 114
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/failed.json": {
+      "sha256": "c12789d907cbe355f276783a228bb089d22b19efe9dbc21c80a978a68271ee19",
+      "bytes": 242
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/ROOT_TERMINAL01.json": {
+      "sha256": "a7123ca97f80ce3885b250fd3e6985be409010537392f1f15eb890da204ef8c8",
+      "bytes": 523
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/ROOT_IO_CLOSED01.json": {
+      "sha256": "c5ecf5edc1cd650f5c5dd0d80a1ca2ab338d4eddc42424c276d5e63103cd17a7",
+      "bytes": 173
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/FINAL_STORAGE01.json": {
+      "sha256": "b58bcb5b2424d8d35bb34abf9ea76272681012d7b737204336e5a91486dce714",
+      "bytes": 9620
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/index-capacity02-review01-2026-10-08/SOURCE_REVIEW01.json": {
+      "sha256": "a4619e1ccdaa34834a257c5a69e778cf490f3a61c0b9f7b879cfc29125cb45b8",
+      "bytes": 5760
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/original-import-fixture-bridge-candidate-2026-10-02/imported_kernel.py": {
+      "sha256": "8d810af1448893858504a90537a0a76b6ba70306427d3385f9571b0677a99287",
+      "bytes": 4219
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py": {
+      "sha256": "30a957ad48997a3236203e1af2ccf9e0874b172ffac73773c31efc6bece9fc67",
+      "bytes": 8977
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-throughput23-review01-2026-10-09/EXTENSION94_REVIEW01.json": {
+      "sha256": "fdcccb350c8dd3f31157faa320c723eb21fa2731291313c741e0d87b96e16db7",
+      "bytes": 761
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-budget-review01-2026-10-08/EXTENSION91_REVIEW01.json": {
+      "sha256": "c685a1bd902f81dab42607ce6f9260ae1235f3863f04172a9b941c0b7f251cec",
+      "bytes": 620
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-budget-review01-2026-10-08/MANIFEST01.json": {
+      "sha256": "240aaf18e0d8a79cd234c27ae38a3c72c651325404c69f7f7f112db76690b4fb",
+      "bytes": 866
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection02-2026-10-08/imported_kernel.py": {
+      "sha256": "dc0a244b7cce4261093a95ce686a01bae0f26c8797a8616463c7d5078a2b2604",
+      "bytes": 4784
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-consolidation-integration01-2026-10-08/INTEGRATION01.json": {
+      "sha256": "e2aa68fcd062adb06fb6459dba6f40e7e1d48c1877a7b05f9d5789ee915438f6",
+      "bytes": 7286
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-consolidation-integration01-2026-10-08/INTEGRATION02.json": {
+      "sha256": "34e08b7bd033297a5e3d364a5788093547719f3e9499b06ec46fc03236a881fa",
+      "bytes": 989
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-consolidation-integration01-2026-10-08/INTEGRATION03.json": {
+      "sha256": "951ea9998bfdfe6771e2aea90ae3b406c382170f836ea443d261b46cb7d1d1ed",
+      "bytes": 555
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-diagnostic-source-adoption01-2026-10-08/SOURCE_ADOPTION01.json": {
+      "sha256": "8356898f9ab9156eac6ebd87d8ac03c72c0ff0573dddb3cb12805dae829c95d6",
+      "bytes": 6631
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-diagnostic-source-review01-2026-10-08/MANIFEST01.json": {
+      "sha256": "eaf4f10f5e244ccf46da3dec131e45bd739c79d29930edeede833cbd07837e75",
+      "bytes": 1403
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-exact-annealing-acceleration-review02-2026-10-08/REVIEW.md": {
+      "sha256": "638636d62f197259256d9ccc00928c98f59625b3193f318cbf2356be59fff7d5",
+      "bytes": 5265
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/archive_control_history.py": {
+      "sha256": "c11835de055bc02cc5c60c8f9866879cae3a3ae696ddb62bff6bfdc998cd4e72",
+      "bytes": 9350
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-feature-integration-successor01-2026-10-06/candidate/chunk_durability.py": {
+      "sha256": "da1fa8d8304a5241cdc44054901ecdf75231b8979569bcb373dec1471fb82f1e",
+      "bytes": 3488
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/CHARTER01.md": {
+      "sha256": "8ef0f6263fd59e4d8b997a9726e8e717b804d3062184d68576b3c02bfad9c727",
+      "bytes": 5528
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/preflight01.py": {
+      "sha256": "7cf52af97cc00a2854977acdeeac8142bf2a206d6d0e8444ca21be469eb8b115",
+      "bytes": 20064
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final08-2026-10-06/root_io.py": {
+      "sha256": "33a2cd01b193bc10e83041cd0650e68b48ea5fb2943ff42ce2624b0142c10e5d",
+      "bytes": 7363
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final09-2026-10-06/CHARTER01.md": {
+      "sha256": "5252a8401d27b75da95aa04082cd029b4e056ff7c52238d3458e6fd14ad6923a",
+      "bytes": 5998
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final09-2026-10-06/preflight01.py": {
+      "sha256": "6896669bf14590398e1b97ab5759478b1561c1d0f13b2cfafd48e6a8bf71a4af",
+      "bytes": 20064
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final09-2026-10-06/root_io.py": {
+      "sha256": "94313474631bd6e4b5cfdd74e413920053263eee1c296db1c353f426bff1f719",
+      "bytes": 7363
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final10-2026-10-06/CHARTER01.md": {
+      "sha256": "717e8ebdf89eda6059c37d0d38fbd582ce10b4a2e9babd0a75615ff2e2ecd156",
+      "bytes": 7057
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final10-2026-10-06/preflight01.py": {
+      "sha256": "c8a81da8cc5fd9fabd9f3093dd7a35d59193a7e7dfee6c04c1b611b7e73e6ebb",
+      "bytes": 20064
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final10-2026-10-06/root_io.py": {
+      "sha256": "8f28c99a44e12b9f4e7d73669f072ba341f962e3381a14e1800e20bf75abb3dc",
+      "bytes": 7363
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final11-2026-10-06/preflight01.py": {
+      "sha256": "fb0cffb7da690a54b82fd18e35c1af6ca34f6ca465e567acb18f518a52b310a8",
+      "bytes": 20064
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final11-2026-10-06/root_io.py": {
+      "sha256": "2fee36f02cdb17a842a461afa5223fce05957240d5db0d91cd1d9de84811d2f1",
+      "bytes": 7363
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final12-2026-10-06/preflight01.py": {
+      "sha256": "9c10792c2217669471668a16c5f8c0819de1fb07c30bc3e0d49b4d5457a7db32",
+      "bytes": 20064
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final12-2026-10-06/root_io.py": {
+      "sha256": "29584ef249bda63fef33619439cf400a413cdcec9e57496b695513c71e01d279",
+      "bytes": 7363
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final13-2026-10-06/preflight01.py": {
+      "sha256": "90e0925ad6b1db96ca716bcd82895e308cf87391482b213f7489b4b8eb58face",
+      "bytes": 20064
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final13-2026-10-06/preflight02.py": {
+      "sha256": "b441d7992029505e9f2ae2ce93e77a8a6b6bed0dc828dfef1797ec242bab99ea",
+      "bytes": 20064
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final13-2026-10-06/root_io.py": {
+      "sha256": "875d9a84f5b15ca213a629be0ee372ca27aa46b1629a0d80b7eb3e75dbefb067",
+      "bytes": 7363
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final13-2026-10-06/root_io02.py": {
+      "sha256": "793c6bdca81f27a157bb144d0efda41ba6c19c3ec4844ae055057287bc694856",
+      "bytes": 7363
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final14-2026-10-06/preflight01.py": {
+      "sha256": "7aa664bee5a6d3ef140527d343d7cb149c44477db8e839aa3d86e45be8bd3274",
+      "bytes": 20064
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final14-2026-10-06/root_io.py": {
+      "sha256": "3a4fb7f9fdc382753d99558b4b648f126f3b9eef8a3bf9d24c287335739d3671",
+      "bytes": 7363
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/bind20.py": {
+      "sha256": "42adbf9e13edf06f253cfbd0fc01d6b2dd3c2bb3177b0dbdd66203a5324e8bc3",
+      "bytes": 2833
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/correct_input_refs20.py": {
+      "sha256": "0b12eb0bcf8d1ce661cc0193bb427d5d27e83bc60b1f33a15e868b528a3cc07a",
+      "bytes": 3461
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final20-2026-10-08/register20.py": {
+      "sha256": "2fe7d47a659c9a03df9f08173f22ac0656a1f6654d869f2374a5f0d345915dcd",
+      "bytes": 7275
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final22-2026-10-08/preflight01.py": {
+      "sha256": "ed6cbe9db703088aef820b6a801591812131b6dd2ebe433df7fa296f5839df50",
+      "bytes": 23010
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final22-2026-10-08/prepare22_02.py": {
+      "sha256": "791724e5d4680a9557485805052e4981e555c3b72eecf4b6a1b0d0f6ebd83b63",
+      "bytes": 5321
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final22-2026-10-08/root_io.py": {
+      "sha256": "e9a7009d5b6b9dc366c11f2227a8c76e0a080adccb2fc364a14427b9c31f4daf",
+      "bytes": 7336
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/preflight01.py": {
+      "sha256": "e7a7fe4a314319e3dce73322d9f869ae4a80fdb933f2b4de0999c5503bf31bfa",
+      "bytes": 23010
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/preflight02.py": {
+      "sha256": "2549f576343d79f1511b12fe3e66044cdd64d276f9cabbd92c05c031ef30e39d",
+      "bytes": 23010
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/prepare23.py": {
+      "sha256": "3918890459c29f41769e278550c0a4ec67af135148c632c6581b92362f56f900",
+      "bytes": 5820
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/prepare23_02.py": {
+      "sha256": "0d39c957321b13e94a1a6e5a1a5a5f4d7c0076993951bdfc1ea05235f841132d",
+      "bytes": 5820
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/root_io.py": {
+      "sha256": "e9a7009d5b6b9dc366c11f2227a8c76e0a080adccb2fc364a14427b9c31f4daf",
+      "bytes": 7336
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/root_io02.py": {
+      "sha256": "4a623951cdfada9697433d9984498f3d7784fce14ab2d6833040e9c44d706f3a",
+      "bytes": 7336
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed08-metadata-successor01-2026-10-06/DEPENDENCIES02.json": {
+      "sha256": "afbf12f5b61158848c13098e8eb55ed8e3a860733a0999338860fee4bc75a3c6",
+      "bytes": 2102
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed08-metadata-successor01-2026-10-06/candidate/build_inputs03.py": {
+      "sha256": "da03e549a4540c65954a36272a03c48fe7280c7255cb1d17fab22ae47f0c6370",
+      "bytes": 24796
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed08-metadata-successor01-2026-10-06/candidate/controls01.py": {
+      "sha256": "eb4a7e908fb85a48ffa6937b69abf040718e84d24351cf16dc2ef8c6f8321d57",
+      "bytes": 15776
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed08-metadata-successor01-2026-10-06/successor02.py": {
+      "sha256": "4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed09-metadata-successor01-2026-10-06/DEPENDENCIES02.json": {
+      "sha256": "c764f8e34443cf4f4a051a903fa32e12bf4f20abad16b993c40bc553228766bb",
+      "bytes": 2102
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed09-metadata-successor01-2026-10-06/candidate/build_inputs03.py": {
+      "sha256": "088d29e5387041e116952da12f776b66a3e20d04b5988aa982fabe2b7add18aa",
+      "bytes": 24796
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed09-metadata-successor01-2026-10-06/candidate/controls01.py": {
+      "sha256": "e6a3068c2b4119e4e3953921220f4b75b14f3c6a5cbe11b32bada1bac75514b9",
+      "bytes": 15776
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed09-metadata-successor01-2026-10-06/successor02.py": {
+      "sha256": "4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed10-metadata-successor01-2026-10-06/DEPENDENCIES02.json": {
+      "sha256": "fb3d26fba8bc6eda7b8de3352f7649c2a88ed4202adc0a1b84ca7e2bc4343913",
+      "bytes": 2102
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed10-metadata-successor01-2026-10-06/candidate/build_inputs03.py": {
+      "sha256": "1e9519c199c94350a2f36402f4a325cfaa0a2543bb7db3052002e0fa36adb938",
+      "bytes": 24796
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed10-metadata-successor01-2026-10-06/candidate/controls01.py": {
+      "sha256": "687337f03504cf6ebc13834cc3e7c88324fad143e09a9a4df660c493d1467a09",
+      "bytes": 15776
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed10-metadata-successor01-2026-10-06/successor02.py": {
+      "sha256": "4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed11-metadata-successor01-2026-10-06/DEPENDENCIES02.json": {
+      "sha256": "23163b88dbebf7c02fe61529957efabc09a08502a4c88e512fc8933697d467ee",
+      "bytes": 2142
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed11-metadata-successor01-2026-10-06/candidate/build_inputs03.py": {
+      "sha256": "b305f31970dfb9d82de08ed35b13a7ac38885c606a7e548d4a0b59ad0bda1002",
+      "bytes": 24796
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed11-metadata-successor01-2026-10-06/candidate/controls01.py": {
+      "sha256": "d3970731df6b05203dbc170539774821b2f66cc88cb46821ff7416394b296b13",
+      "bytes": 15776
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed11-metadata-successor01-2026-10-06/successor02.py": {
+      "sha256": "4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed12-metadata-successor01-2026-10-06/DEPENDENCIES02.json": {
+      "sha256": "a16b1f718ba0a2849b91555d2645fd1aa024b1b799181d359b8569ffb60e9c0c",
+      "bytes": 2142
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed12-metadata-successor01-2026-10-06/candidate/build_inputs03.py": {
+      "sha256": "7c5841eb89e8f2fc3615afbfcf5cfa52626175faebd51e665fbb592763c463d9",
+      "bytes": 24796
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed12-metadata-successor01-2026-10-06/candidate/controls01.py": {
+      "sha256": "192de26e84dca1ac9f87574a277e954675177b1fc3905352ae28e1c4e4578717",
+      "bytes": 15776
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed12-metadata-successor01-2026-10-06/successor02.py": {
+      "sha256": "4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/DEPENDENCIES02.json": {
+      "sha256": "21b4ad24cca0be142d15bb8626026d78c239c18e1121904270da87c4f7642d75",
+      "bytes": 2102
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/candidate/build_inputs03.py": {
+      "sha256": "b331db3a526d2f0b0d91f0fc0220d87c32061ad2b00e1109a598f70f53717948",
+      "bytes": 24796
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/candidate/controls01.py": {
+      "sha256": "20e48155bb8b9a37ccfcaa7d48eb0e4bb7c33c0271e8c7fcc0bc5feadbfb8a82",
+      "bytes": 15776
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed13-metadata-successor01-2026-10-06/successor02.py": {
+      "sha256": "4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed14-metadata-successor01-2026-10-06/DEPENDENCIES02.json": {
+      "sha256": "775bf25f22c06dc5d8df68d73f4332ee413b77f3615fbddf992c86571bcd2217",
+      "bytes": 2142
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed14-metadata-successor01-2026-10-06/candidate/build_inputs03.py": {
+      "sha256": "c0ea8656e930bdfee43863c33c8ead7e54a5c6dfa92e0e425c31c7562f765ea0",
+      "bytes": 24796
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed14-metadata-successor01-2026-10-06/candidate/controls01.py": {
+      "sha256": "fda18ed03f484f9452c2d8a432ae10524cd84d91e6b7389516ce8e4863e35790",
+      "bytes": 15776
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed14-metadata-successor01-2026-10-06/candidate/real_pilot_storage.py": {
+      "sha256": "7c6ac2263fff1dbe4b6db0e502d0cf5352ac89ead8ab89379fdaed999c793c89",
+      "bytes": 15333
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed14-metadata-successor01-2026-10-06/successor02.py": {
+      "sha256": "4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/DEPENDENCIES02.json": {
+      "sha256": "ca55c7dbdc0b5b1937904e960eeca2185afcd91f206261352add7e1ae585f1a6",
+      "bytes": 2102
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/candidate/build_inputs03.py": {
+      "sha256": "947b875b3b2bf9247da97b2d1121acd64315db70ab38d3bc7ed9eef113e045f2",
+      "bytes": 24796
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/candidate/controls01.py": {
+      "sha256": "155d0e0123b98ea68cd1d8a88ee88c40f34e1bc7b85defa6133e8805e2bd46a1",
+      "bytes": 15776
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/candidate/real_pilot_storage.py": {
+      "sha256": "3e8114890dfbecfd70417923d56c15fcb761b8397d067e40ad30f4da90a48a37",
+      "bytes": 15333
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed19-metadata-successor01-2026-10-08/successor02.py": {
+      "sha256": "4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/DEPENDENCIES04.json": {
+      "sha256": "8996e1faa3498848102a9217c2ad8c137e530184be800c4b07d1e268d1d26e75",
+      "bytes": 2107
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/build_inputs04.py": {
+      "sha256": "5b25b38ae28a100a299efa2a152044f3322ee682feb37df168badd197e270ce6",
+      "bytes": 25351
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/controls02.py": {
+      "sha256": "3c73e2d335fc044362d3efd8ef532600a9ba1b006b46f8b012b90dcef4289e5d",
+      "bytes": 16332
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/prepare_builder04.py": {
+      "sha256": "551a7731b3b438baceb34eb21d050326d31a96265c860fb3db0c44e596b19746",
+      "bytes": 6343
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/candidate/residuals04.py": {
+      "sha256": "47d5538d80612ffaa426255bcfcd641a5d9e724a6e818116fb1c4c946341e970",
+      "bytes": 11149
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed20-metadata-successor01-2026-10-08/successor04.py": {
+      "sha256": "65f34aecd8f7b4e2505fb28586c10196c731e3ed51a95f3edca7b8761997e267",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/DEPENDENCIES04.json": {
+      "sha256": "c1c36f1ac0bb47e899fb839bb75058189f8f7cbf5fa515789d8c41dbf235421c",
+      "bytes": 2107
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/build_inputs04.py": {
+      "sha256": "918e9ac1824c26dfffba98f7647ff7336927107f51b33551b720e01196420533",
+      "bytes": 25351
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/controls02.py": {
+      "sha256": "9961dae6685e4cf7a6040ba86f6651f0846abbb07a3d42bdfb447c63416f1bc3",
+      "bytes": 16332
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/candidate/real_pilot_storage.py": {
+      "sha256": "37730532c0089acd179408e8815d4f76e699d5d7cf3bb481122a9019ea973fc3",
+      "bytes": 15333
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-fixed21-metadata-successor01-2026-10-08/successor04.py": {
+      "sha256": "65f34aecd8f7b4e2505fb28586c10196c731e3ed51a95f3edca7b8761997e267",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-import-name-fix-review01-2026-10-08/MANIFEST.json": {
+      "sha256": "1bc2c40194c7c2e3c66185803143805353242fd43b81e78ff5bceaeec6fb89fb",
+      "bytes": 1705
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-import-name-fix-review01-2026-10-08/REVIEW.md": {
+      "sha256": "95ebaa0597a25b8bf19da43eb309284a3dc4abcab9af9a514c10d4f3478b9d58",
+      "bytes": 2953
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity02-2026-10-08/candidate/index_capacity.py": {
+      "sha256": "f486a3b7d8930378df7e17bd347c0f70d61355b657da30c7bad338f31b0de9bb",
+      "bytes": 7344
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED72_01.json": {
+      "sha256": "989506a99d8adaec7d8161c66a5f39a681cb3c4b020e87987f72828ce8722585",
+      "bytes": 9083
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-registration01-2026-10-06/EXTENSION_PROPOSED72_01.json": {
+      "sha256": "9f8e443d2b64a2033bb4d67543cda9e027c260579f68fcc2227d6715631edae9",
+      "bytes": 8314
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-may30-ledger-continuation-review01-2026-10-06/allocation-addendum01/EXTENSION_REVIEW01.json": {
+      "sha256": "fa8e0889d9df00bf3918244e4eb748b3d6852774b21a5bf5948b276c7393107b",
+      "bytes": 448
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-review01-2026-10-08/EXTENSION92_REVIEW01.json": {
+      "sha256": "72c0a6df3edd3c1894e10c022d3be18bf76eca6fa737d9282893b99a87c8c131",
+      "bytes": 824
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-review01-2026-10-08/METADATA_IDENTITY_REVIEW01.json": {
+      "sha256": "f4b66b6520b02af566888b750f1e9fe300efb4f7be5347677db1572c3516f43e",
+      "bytes": 5246
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-owner-policy-review01-2026-10-08/SOURCE_REVIEW01.json": {
+      "sha256": "f8a3f7ad42213f0ead43f5bd322c325003ac35b880991c134becb015674f3b07",
+      "bytes": 3398
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor02-2026-10-06/candidate/archive_read_control_capacity.py": {
+      "sha256": "29d4c2dad463a977c99740b09d46199814dfdc3360c559bfdb12aacdd07d26b1",
+      "bytes": 1253
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor02-2026-10-06/candidate/prepare_builder03_input02.py": {
+      "sha256": "b603f62dca1ff298863d10143fc0337438f5efd82e3d378a0272373ad7646d60",
+      "bytes": 5710
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor04-2026-10-06/DEPENDENCIES02.json": {
+      "sha256": "f1b6259525a77f77f13c405b3d582c0cd71baad9940f89684b391ba241efb219",
+      "bytes": 2098
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor04-2026-10-06/candidate/build_inputs03.py": {
+      "sha256": "28cb24a3110adae0f404879dc331be250a4db92f32f081b622d7fc3ce74014d5",
+      "bytes": 24796
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor04-2026-10-06/candidate/controls01.py": {
+      "sha256": "6229339dda4884b6639ed3a892ba029876fdc802b4d5f1eb6ac0a0f80eef742a",
+      "bytes": 15776
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-packed-feature-successor04-2026-10-06/successor02.py": {
+      "sha256": "4cb59a54f4627e5236c63a35b734d44b174f108ebc86bd3ad803f1090ee88927",
+      "bytes": 3001
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-residual-metadata-review01-2026-10-08/prefix-review04/MANIFEST04.json": {
+      "sha256": "f401b3e0bfb30d06a8a9c4f00b24b2b4f8aed951da569d71ccc6f6664f2c2ca2",
+      "bytes": 2250
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-resource-buffer-allocation01-2026-10-06/allocation01.py": {
+      "sha256": "3912e68c232553f1fab5e39a92c0741c2c0ddab49316321c1189781d19611dfd",
+      "bytes": 3935
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry07-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED78_01.json": {
+      "sha256": "45ac07ecffa8fcd8f4f70fc904503649c65f4d67b380a6178c5167c7ca6525fb",
+      "bytes": 12402
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry07-registration01-2026-10-06/EXTENSION_PROPOSED78_01.json": {
+      "sha256": "826884890b50291d905b6a0c62a26c32ede2df39774834fb6775277786b561e1",
+      "bytes": 10723
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry07-review01-2026-10-06/EXTENSION_REVIEW01.json": {
+      "sha256": "ba27f8f9540996797c6095fa4fc98f1308002aa9ef101c772d335b8417a353b4",
+      "bytes": 701
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry08-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED79_01.json": {
+      "sha256": "75671637ef6de61cf796f7837794615a25927201cce80906b851509fb9ba4ec4",
+      "bytes": 12920
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry08-registration01-2026-10-06/EXTENSION_PROPOSED79_01.json": {
+      "sha256": "34d9b5a90300ef20a751f1826e0a910437b2946ad21c4b2f59f06d2d42835e7b",
+      "bytes": 11191
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry08-review01-2026-10-06/EXTENSION_MACHINE_REVIEW01.json": {
+      "sha256": "3da5875027d711a030badecdd3e6ba10650a1cad926a51dc8f59078c96f21219",
+      "bytes": 1858
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry08-review01-2026-10-06/EXTENSION_REVIEW01.json": {
+      "sha256": "57831ecbb2a094539a586ffbc87b5609b18b237654bcc9f2606979d83fd4730e",
+      "bytes": 758
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry09-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED80_01.json": {
+      "sha256": "6060744e5b4e6c2e96384067a41ef5bc06d0ab37a27abbfcfd523952521a02bf",
+      "bytes": 14090
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry09-registration01-2026-10-06/EXTENSION_PROPOSED80_01.json": {
+      "sha256": "8348d573b46353660d3232ba86965360867e05675aff465971afb50dd8ef9230",
+      "bytes": 11268
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry09-review01-2026-10-06/EXTENSION_MACHINE_REVIEW01.json": {
+      "sha256": "36e6c8120f1d032e30437229e14f6345e3c463fadd09308b0c4d500afc99975a",
+      "bytes": 1602
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry09-review01-2026-10-06/EXTENSION_REVIEW01.json": {
+      "sha256": "344414ef2038ecfe79f332e2a9d8ade6e1f3deca321ab0ee993603609aac2088",
+      "bytes": 703
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry10-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED81_01.json": {
+      "sha256": "fc797f720760a1f0cfa83f217c1314a2e4447eda940a267a8aa97c8599d901c7",
+      "bytes": 14701
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry10-registration01-2026-10-06/EXTENSION_PROPOSED81_01.json": {
+      "sha256": "7d6c032f28d064580abc4636b0bdf75877a064160261ecfbee5450700201e2d1",
+      "bytes": 11890
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry10-review01-2026-10-06/EXTENSION_MACHINE_REVIEW01.json": {
+      "sha256": "609572b2b474edf5a46a052d6ad9e094325cd61cef76e302efd45c9a43bd6763",
+      "bytes": 1862
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry10-review01-2026-10-06/EXTENSION_REVIEW01.json": {
+      "sha256": "29e4b6fa53dd0c42ba434f27bda22adc8aed775161ab8cc436ff6619d569ca07",
+      "bytes": 646
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry11-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED82_01.json": {
+      "sha256": "e2293c0d864dc23465d8b5f9b70d82ef671fe6181939335d89baab3377424ba9",
+      "bytes": 14697
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry11-registration01-2026-10-06/EXTENSION_PROPOSED82_01.json": {
+      "sha256": "0260eefc2a25b61cd18f391055c33beb5d17373a738ca362917e420c3895f1a4",
+      "bytes": 11891
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry11-review01-2026-10-06/EXTENSION_MACHINE_REVIEW01.json": {
+      "sha256": "359535a2cabac309ed1abc9c5b5e8023805ee2c0dc4b710102144a941d0eef40",
+      "bytes": 1848
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry11-review01-2026-10-06/EXTENSION_REVIEW01.json": {
+      "sha256": "5195512f345015b9cb1e0608cdfe05c3c748fb02ea0f18bae2b898c178a294bd",
+      "bytes": 723
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry11-review01-2026-10-06/SOURCE_REVIEW01.json": {
+      "sha256": "3451c0813b80ce6d225d00c4c98b05e69e95966f6d7c7bed443c74ea5d00cf4d",
+      "bytes": 3662
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry12-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED83_01.json": {
+      "sha256": "5c69c2b4d54213bfa282969e0ca0f8fa149ad439959a8d51907c966d192705f4",
+      "bytes": 14967
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry12-registration01-2026-10-06/EXTENSION_PROPOSED83_01.json": {
+      "sha256": "0b031829affb6253fd1259f2bfd756f5a95b01e15222477a902f218c32b7ff82",
+      "bytes": 12187
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry12-review01-2026-10-06/EXTENSION_MACHINE_REVIEW01.json": {
+      "sha256": "7fb876486c3b7ae9ada27b661ebc71675dc5bc413b98f8ca6f5a4e3e30132080",
+      "bytes": 1817
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry12-review01-2026-10-06/EXTENSION_REVIEW01.json": {
+      "sha256": "779c8c95c229b9d009e605d3a1a530146f2954aa9792e83afd844885cdd19684",
+      "bytes": 543
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry12-review01-2026-10-06/SOURCE_REVIEW01.json": {
+      "sha256": "248e3e314baaf1b638843f4dfc4694a7cf7d025d11d600e95561f734069f79e1",
+      "bytes": 4236
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry13-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED84_01.json": {
+      "sha256": "52a6508244b84ea9587290fb94d97c6d731004e06d738e2f86a0291a1b55659c",
+      "bytes": 15215
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry13-registration01-2026-10-06/EXTENSION_PROPOSED84_01.json": {
+      "sha256": "0de844e7868a16c2054ec1315c19338574046cc14e05831ae46d34a0104aa415",
+      "bytes": 12433
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry13-review01-2026-10-06/EXTENSION_MACHINE_REVIEW01.json": {
+      "sha256": "19032b14f27c2cd6422fd5848b5da0776b20e7af0b2c618d43d1901a3bbe58ec",
+      "bytes": 1817
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry13-review01-2026-10-06/EXTENSION_REVIEW01.json": {
+      "sha256": "c4ec8dc69943e2b1974cb776f08b67bda191a09d88fa9493221b635be159cd3c",
+      "bytes": 543
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry13-review01-2026-10-06/SOURCE_REVIEW01.json": {
+      "sha256": "8adf7cc7702d190396798961d42e3196e26964d851446a57f778eaac9402ca43",
+      "bytes": 2765
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry14-registration01-2026-10-06/CUMULATIVE_ALLOCATION_PROPOSED85_01.json": {
+      "sha256": "88cfcba3593436123e37c6bf2989ef430d5d7969eb6b031ac15ab37483e31fd9",
+      "bytes": 15664
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry14-registration01-2026-10-06/EXTENSION_PROPOSED85_01.json": {
+      "sha256": "e253291583893eed1b67397cea8d5430b02ab84a85814e2285637c515958a412",
+      "bytes": 12879
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry14-review01-2026-10-06/EXTENSION_MACHINE_REVIEW01.json": {
+      "sha256": "bcfb78ce167816f9e5a38b0c407fc8cc8ffdf7772aed744eb7c79f549cb68f94",
+      "bytes": 1817
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry14-review01-2026-10-06/EXTENSION_REVIEW01.json": {
+      "sha256": "c7885430a70d37928f3d4ad180a3af39516bb30b1e417668ed8136bc6f1a7669",
+      "bytes": 543
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry14-review01-2026-10-06/SOURCE_REVIEW01.json": {
+      "sha256": "4b06005e286ab7bdf020e3e6d39c3fec01afb3652a11a38bf65dca4928202217",
+      "bytes": 5261
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry15-registration01-2026-10-07/CUMULATIVE_ALLOCATION_PROPOSED86_01.json": {
+      "sha256": "85b18f8a6740a438577f25acae4971f9a3a97f692c988fa92c793d4edeb05509",
+      "bytes": 15963
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry15-registration01-2026-10-07/EXTENSION_PROPOSED86_01.json": {
+      "sha256": "076e3cfa931f4ca97f571b5c430f811d29e8b0a37942caad01c550c9fd3030d3",
+      "bytes": 13172
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry15-review01-2026-10-07/EXTENSION_MACHINE_REVIEW01.json": {
+      "sha256": "2cd3a1f309872cb796b6e4a9ba09bfe4f37160a2050b34facd6d05e1b12fa911",
+      "bytes": 1817
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry15-review01-2026-10-07/EXTENSION_REVIEW01.json": {
+      "sha256": "88a86b625f178b04b2ce9ec3ea3911623d8fa0dbfbada5e519d61a38e6e48a90",
+      "bytes": 543
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry15-review01-2026-10-07/SOURCE_REVIEW01.json": {
+      "sha256": "b1af265976ff64325628e9effdca3fc772cca797c7a683ccb263d889b0f7815b",
+      "bytes": 5572
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry19-registration01-2026-10-08/CUMULATIVE_ALLOCATION_PROPOSED90_02.json": {
+      "sha256": "4911b56e3d68255c1a1fad4cba73fd02b37445ea30aacae0e59f985c48e770c5",
+      "bytes": 18505
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry19-registration01-2026-10-08/EXTENSION_PROPOSED90_02.json": {
+      "sha256": "c6fe264b351b188c27ba0b66e55dd07d3a8846cb2dc193e205a5bc779887f1b9",
+      "bytes": 14632
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry19-review01-2026-10-08/EXTENSION90_REVIEW02.json": {
+      "sha256": "91435de4170e662ca67b2a2b506c1d15e51509669d4dc98ac739214993a9f0e1",
+      "bytes": 973
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry20-registration01-2026-10-08/CUMULATIVE_ALLOCATION_PROPOSED91_01.json": {
+      "sha256": "ee39a78add1b155fff60e03f71feaedf425e6bdf9c1c983aa8f9ffe6f518ccde",
+      "bytes": 18223
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry20-registration01-2026-10-08/EXTENSION_PROPOSED91_01.json": {
+      "sha256": "b24100c6b6dcc7a2acda708ab271ff7dee85ff55055d19876286f8c49e7795bd",
+      "bytes": 13736
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry21-registration01-2026-10-08/CUMULATIVE_ALLOCATION_PROPOSED92_01.json": {
+      "sha256": "ac434c4a9f786312311c8c4468a6d1755fa4c535594d796ded3d7bd868adfc3d",
+      "bytes": 18528
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry21-registration01-2026-10-08/EXTENSION_PROPOSED92_01.json": {
+      "sha256": "bb441f5af35421a9eb8d54b9315ccfddc0413a7a9c7177ed9eed988b8a06c83d",
+      "bytes": 14096
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry22-registration01-2026-10-08/CUMULATIVE_ALLOCATION_PROPOSED93_01.json": {
+      "sha256": "31d46dcb7b724b85b94c0c22063b4398d686d3a01b5011210033c388ce99a75b",
+      "bytes": 19268
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry22-registration01-2026-10-08/EXTENSION_PROPOSED93_01.json": {
+      "sha256": "8099641bcf44ba1f47c49cfd2779cb33e8d6d199f8de381909afb0417555d8e0",
+      "bytes": 14365
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry22-review01-2026-10-08/EXTENSION93_REVIEW01.json": {
+      "sha256": "73c077c977f0af85276f4a0ffb3aebdea388ab8937d3b8c5ff2ede8ac80c968c",
+      "bytes": 761
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry23-registration01-2026-10-09/CUMULATIVE_ALLOCATION_PROPOSED94_01.json": {
+      "sha256": "090383c48b114300eb79309b9acfbe5febd02b95f1bb7fe3f3921e8dca9a6c3a",
+      "bytes": 18709
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-retry23-registration01-2026-10-09/EXTENSION_PROPOSED94_01.json": {
+      "sha256": "a409fb387e80521a146b2c05ef5e7db7bd38efd929bdc71fc7766c8dcf85e48f",
+      "bytes": 14647
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/prepare_selected01.py": {
+      "sha256": "0bdcbeb2e6a85a89b3d11791fe2dd5c28d17977f333914391a2830b7f92e57d3",
+      "bytes": 14304
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/residuals02.py": {
+      "sha256": "34aeb5b492680bb804d3777e15ec4c640fe2a25517faf309563e58d265a751ac",
+      "bytes": 10051
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-input-control-review01-2026-10-08/MANIFEST01.json": {
+      "sha256": "04c240869f6207f3599f9df48c3f7f598d6ed2e80bada1a4fb58bd0ccee03904",
+      "bytes": 704
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-sixteenth-resource-failed-review01-2026-10-08/BUDGET88_MACHINE_REVIEW01.json": {
+      "sha256": "23acadf32f51c06a7c561b5c181e5d7ec9d130d7d8ae3e5a2ab2fce7b4a917e7",
+      "bytes": 2613
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-startup-composition05-2026-10-08/COMPOSITION05.json": {
+      "sha256": "3816cf2cc49233c3f597e741c7ef72566aa5ea7b90805293fedc2a1b3b567f3f",
+      "bytes": 7015
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/DEPENDENCIES04.json": {
+      "sha256": "7527d1ba8f15ad0819fe3745b440ec743512542e48b51763f39216b6542fc297",
+      "bytes": 2101
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/candidate/build_inputs04.py": {
+      "sha256": "e38aa1e9e6e98a06beff25a3c9a02eaf54788716d99812b39c65f3a7f6f47f8e",
+      "bytes": 25663
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/candidate/controls02.py": {
+      "sha256": "5428477789aee20620f1838b5bfcc16515b2ad6b9cd0dc26b957b678de602dfc",
+      "bytes": 16666
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/candidate/prepare_builder04.py": {
+      "sha256": "ee48fe9d8bc458c1d1936c55858fa0ead981a88de4d660c9130907545e24f4f4",
+      "bytes": 6693
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-storage-metadata-binding01-2026-10-08/successor04.py": {
+      "sha256": "0ca47a98e80cae9441c3718cdff8b5b5436ab5ab1036734c830e094c77d2dfe5",
+      "bytes": 3400
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-transport-binding-preparation01-2026-10-06/DEPENDENCIES01.json": {
+      "sha256": "c121c6b0c8eab3a9c22f3cef5f78863b0d4eab3bb2ed6a8be42d0c83a7647d25",
+      "bytes": 659
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-transport-binding-preparation01-2026-10-06/bind01.py": {
+      "sha256": "bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb",
+      "bytes": 10598
+    },
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-28-09/transfer.py": {
+      "sha256": "c07745682d5d4879a801d02934a4040719ae26f18bcdfde614eb8877099a2d82",
+      "bytes": 18897
+    },
+    "tradingagents/__init__.py": {
+      "sha256": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5",
+      "bytes": 51
+    },
+    "tradingagents/research/__init__.py": {
+      "sha256": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "bytes": 220
+    },
+    "tradingagents/research/__main__.py": {
+      "sha256": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "bytes": 1697
+    },
+    "tradingagents/research/admission.py": {
+      "sha256": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd",
+      "bytes": 19911
+    },
+    "tradingagents/research/budget_extensions.py": {
+      "sha256": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+      "bytes": 5359
+    },
+    "tradingagents/research/examples.py": {
+      "sha256": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "bytes": 3678
+    },
+    "tradingagents/research/lifecycle.py": {
+      "sha256": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+      "bytes": 10509
+    },
+    "tradingagents/research/onchain_replication/__init__.py": {
+      "sha256": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1",
+      "bytes": 83
+    },
+    "tradingagents/research/onchain_replication/aggregation.py": {
+      "sha256": "768c2ca743b2146fcc6bf606e4fa0bf41273ac15d06344d3a25a6aac78e8038f",
+      "bytes": 4534
+    },
+    "tradingagents/research/onchain_replication/archive_chunks.py": {
+      "sha256": "f26f1cb62334497494f9b02579f53be9e2238889a81f56c04fd4e781542b38fe",
+      "bytes": 8614
+    },
+    "tradingagents/research/onchain_replication/archive_consume.py": {
+      "sha256": "9cfa242b77e42c2385e3c4cb8e51086965cc7d42768f2c52364fa3fd4ec77dc5",
+      "bytes": 5925
+    },
+    "tradingagents/research/onchain_replication/archive_control_history.py": {
+      "sha256": "3ccfdeddd678a40e06192aa853fc3fbb53bb8825c86fd8b974ae31cbc591df67",
+      "bytes": 9602
+    },
+    "tradingagents/research/onchain_replication/archive_dispatch.py": {
+      "sha256": "cdfa2fbc71b9d7c9919493652b3032710371df001e75b3fa07d8df86c83658c2",
+      "bytes": 39437
+    },
+    "tradingagents/research/onchain_replication/archive_owner_operations.py": {
+      "sha256": "720c4b2484a268a0e94d8d978a347bbce7bcc3bfdd02cee159fcfa25565e421f",
+      "bytes": 17065
+    },
+    "tradingagents/research/onchain_replication/archive_owner_policy.py": {
+      "sha256": "3b57727513c59144ae7420aebb71be1098a0504a8702dae374e68a382f11f60a",
+      "bytes": 7301
+    },
+    "tradingagents/research/onchain_replication/archive_owner_seal.py": {
+      "sha256": "dc010ad083293e4bb7230adc879f410785bb92bb238dde95d9cf4f03ce82cef5",
+      "bytes": 20237
+    },
+    "tradingagents/research/onchain_replication/archive_owner_stage.py": {
+      "sha256": "21a1f134c4ed0d4f57c266f21d4dd130d61241117b11e7f66a6466db3ddec39c",
+      "bytes": 9354
+    },
+    "tradingagents/research/onchain_replication/archive_owner_writer.py": {
+      "sha256": "7980139206c4b2a0e8b11763f44d23a73c4e9f067d9c10799a081664c42135d1",
+      "bytes": 6709
+    },
+    "tradingagents/research/onchain_replication/archive_pair_reader.py": {
+      "sha256": "e50931dcd86602e21172eff3fbd0e42fdf8c4c9631a51b5c8fb682bd5f0fe9ed",
+      "bytes": 14565
+    },
+    "tradingagents/research/onchain_replication/archive_pair_writer.py": {
+      "sha256": "87464f872057a7483a7cc7a4a160541f5f56b1e0225b6dbefce6fb0bd85329f6",
+      "bytes": 22317
+    },
+    "tradingagents/research/onchain_replication/archive_read_control_capacity.py": {
+      "sha256": "29d4c2dad463a977c99740b09d46199814dfdc3360c559bfdb12aacdd07d26b1",
+      "bytes": 1253
+    },
+    "tradingagents/research/onchain_replication/archive_read_controls.py": {
+      "sha256": "c2cf6e17cc62012fbed8f282b3284e776a08ffbe01c4aea2ae2a058336ce3fd1",
+      "bytes": 8503
+    },
+    "tradingagents/research/onchain_replication/archive_transport.py": {
+      "sha256": "d1825c718b48d4267653405d9b637074b4a6d4bf1677842044418a2e8111aa13",
+      "bytes": 13472
+    },
+    "tradingagents/research/onchain_replication/archived_pair_log.py": {
+      "sha256": "e01d267c54be8bc786478d5647c90505f75f66dd96e1d57349ba3f76e6259b3f",
+      "bytes": 5206
+    },
+    "tradingagents/research/onchain_replication/archived_stage.py": {
+      "sha256": "00ed998275ef143ebbac77dae222e53ebbf2aac7c05b6aa82795221330d40216",
+      "bytes": 20757
+    },
+    "tradingagents/research/onchain_replication/array_neighborhoods.py": {
+      "sha256": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+      "bytes": 6909
+    },
+    "tradingagents/research/onchain_replication/baselines.py": {
+      "sha256": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a",
+      "bytes": 3956
+    },
+    "tradingagents/research/onchain_replication/btc.py": {
+      "sha256": "775838b3fc00534849d747f38c942f13187762b81c35ef5b1af52d67882a2dd0",
+      "bytes": 4060
+    },
+    "tradingagents/research/onchain_replication/btc_source.py": {
+      "sha256": "deb5f4003ab63a69f945756f1e40fdd6212733331b2ef0133bab2ba0f69acead",
+      "bytes": 5181
+    },
+    "tradingagents/research/onchain_replication/btc_store.py": {
+      "sha256": "79f78d1bfc46d3e975f506407f3fcea102835235b5aa5b68cf6b1d7674c10452",
+      "bytes": 5059
+    },
+    "tradingagents/research/onchain_replication/btc_subsets.py": {
+      "sha256": "79f1cc4de5b5bf52e491201d05941bbe0ff29555d814f343294411f4591ed736",
+      "bytes": 2147
+    },
+    "tradingagents/research/onchain_replication/btc_weekly.py": {
+      "sha256": "6d52650e2bc6225c73da9841e51ab03be33ba8f3dd32a5ae504d6b76908c4aed",
+      "bytes": 10251
+    },
+    "tradingagents/research/onchain_replication/cache.py": {
+      "sha256": "5fbbe0df14cfc1802dd1df4da6c8bdbd1153a9fcbb4c89dd202e791d1811ddba",
+      "bytes": 4654
+    },
+    "tradingagents/research/onchain_replication/calendar.py": {
+      "sha256": "c96e984a7d3482500a3a98231d859da1678cae4ca63960f33515a06dbda760f2",
+      "bytes": 1403
+    },
+    "tradingagents/research/onchain_replication/cells.py": {
+      "sha256": "1a15e33377030b6f3c533fd498bf75825778a59c35f2b0b8702cfaf79bb9bcfd",
+      "bytes": 3137
+    },
+    "tradingagents/research/onchain_replication/census_production.py": {
+      "sha256": "37ec0a081edaf2928146fab3984e362f1241809af43009eb05de307f247665b1",
+      "bytes": 7832
+    },
+    "tradingagents/research/onchain_replication/checkpoint_chunks.py": {
+      "sha256": "c3699ef76ad5932cf58f8cf0c6be6b36f0e4c01b0d18c6d88e85ad02fa7cd8d0",
+      "bytes": 10611
+    },
+    "tradingagents/research/onchain_replication/checkpoints.py": {
+      "sha256": "5bd40b1e573bad25807d8596472b437fee93eb7c644bc03e4cd45512e74437f0",
+      "bytes": 5016
+    },
+    "tradingagents/research/onchain_replication/chunk_durability.py": {
+      "sha256": "da1fa8d8304a5241cdc44054901ecdf75231b8979569bcb373dec1471fb82f1e",
+      "bytes": 3488
+    },
+    "tradingagents/research/onchain_replication/coinmetrics_prices.py": {
+      "sha256": "5e14eae6fafccdfe562ab07c73ac3854f5e86751d74e468807b82be0a3a0a62f",
+      "bytes": 8072
+    },
+    "tradingagents/research/onchain_replication/cold_files.py": {
+      "sha256": "3740b149a69ed10448ae0d4f177f8d93c3300765b9e20846d4cbda5aec75ca85",
+      "bytes": 9486
+    },
+    "tradingagents/research/onchain_replication/compact_closure.py": {
+      "sha256": "d59dc91c8aaeba381d104cd065adc2eeeb4698360a58009492ec8dd7730c22bf",
+      "bytes": 9538
+    },
+    "tradingagents/research/onchain_replication/compact_cold_features.py": {
+      "sha256": "9231e784a2085cbe4130568d748cbacb63d61e41fc955f3f0685831853ebd2c0",
+      "bytes": 18275
+    },
+    "tradingagents/research/onchain_replication/compact_cold_proof.py": {
+      "sha256": "d3e401618b214647d27387d18182153ab493e69177394823e483546b44a6a153",
+      "bytes": 21453
+    },
+    "tradingagents/research/onchain_replication/compact_cold_proof_inputs.py": {
+      "sha256": "cae64e3531207a9c3d62031a6e0969af72a0b0f8eb93814e643bfbe16ad8c42a",
+      "bytes": 11598
+    },
+    "tradingagents/research/onchain_replication/compact_cold_proof_native.py": {
+      "sha256": "efbda343637395a88d6349aacbb77421430d59bbad745a375aad989b107e0aba",
+      "bytes": 2628
+    },
+    "tradingagents/research/onchain_replication/compact_denominator.py": {
+      "sha256": "6579c4aa57804ecfd35010beb81df0e81f722285bea9fda856d1a7f8e466b372",
+      "bytes": 7486
+    },
+    "tradingagents/research/onchain_replication/compact_detached_handoff.py": {
+      "sha256": "6513f1f5899e803d75166f4fae106133c28b05b03c8b610db97ef776ccd79e52",
+      "bytes": 11749
+    },
+    "tradingagents/research/onchain_replication/compact_dictionary.py": {
+      "sha256": "1c2618cc3706f4bdbfaba0ec957e1fb908f63857403bbdcc9341181effe313dc",
+      "bytes": 18780
+    },
+    "tradingagents/research/onchain_replication/compact_features.py": {
+      "sha256": "584268806ac6b6ea713737e4f54a6ba0bd923397165c089f2f359dfb3d916752",
+      "bytes": 7001
+    },
+    "tradingagents/research/onchain_replication/compact_graph_artifacts.py": {
+      "sha256": "fd1395b0c274b1b51dc26365fd0c2954f904492cf77ddb3d553ce40c6dc6bf8a",
+      "bytes": 15615
+    },
+    "tradingagents/research/onchain_replication/compact_matcher.py": {
+      "sha256": "f479a737b6a841c2948a4df7e1af6492fe308af6a4ece50ce4b0e3e3e8b9e42b",
+      "bytes": 25242
+    },
+    "tradingagents/research/onchain_replication/compact_mcm.py": {
+      "sha256": "64ea0371c65b097cbebc56ac666e7bc3bb6600651799f3cc6bc4491b8644c530",
+      "bytes": 27837
+    },
+    "tradingagents/research/onchain_replication/compact_mcm_output.py": {
+      "sha256": "3e373a9eb2a02a85a3e1217a2d62c8298959cf3fbd2f59017970555b41de5a3d",
+      "bytes": 12116
+    },
+    "tradingagents/research/onchain_replication/compact_mcm_publication.py": {
+      "sha256": "713d92d8aee98ae3ab8b8cdd6b47b10369c3e2a62ea5ea3fc5ca6a2730467b46",
+      "bytes": 11390
+    },
+    "tradingagents/research/onchain_replication/compact_native_features.py": {
+      "sha256": "361de501e325663a65348059bcb5bc3d1e58d14d2c5b833e589b716c6343e1f7",
+      "bytes": 10689
+    },
+    "tradingagents/research/onchain_replication/compact_native_producer.py": {
+      "sha256": "8e46984f21c04fedfd91f235829de0aa7109da476680a19447c2656edb17aa54",
+      "bytes": 13143
+    },
+    "tradingagents/research/onchain_replication/compact_owner.py": {
+      "sha256": "e20cf08eba1e48ce215ada423af644ad2a63c283e7f2302eb26ac03c471bacb6",
+      "bytes": 29983
+    },
+    "tradingagents/research/onchain_replication/compact_policy.py": {
+      "sha256": "37918e01e3de476970493afa9e78e40bcfa2f841cd7ee59fbc211c7d579730dc",
+      "bytes": 6894
+    },
+    "tradingagents/research/onchain_replication/compact_publication.py": {
+      "sha256": "a620e5f84c2ec5095ae1715aae4a7962e64180075d139e424c671a2d486e935a",
+      "bytes": 7802
+    },
+    "tradingagents/research/onchain_replication/compact_sample_proof.py": {
+      "sha256": "cb94729af806f10b1c719cc240ec8c2546a1aa2a79591ef62cbf852c29256893",
+      "bytes": 10307
+    },
+    "tradingagents/research/onchain_replication/compact_sampler.py": {
+      "sha256": "7820254d9a9ac287e55b0d20d2c26e1907b625dd743e194fae0602110593a608",
+      "bytes": 13974
+    },
+    "tradingagents/research/onchain_replication/compact_samples.py": {
+      "sha256": "f14a11212edd281901aab69fbe9b1164251988472baa65da6b319d50ff436d7b",
+      "bytes": 14680
+    },
+    "tradingagents/research/onchain_replication/compact_stage.py": {
+      "sha256": "838e380a2b5e9d2fbc7f90f1284570250d2d6969ae9aa68af558a10e5f77e57d",
+      "bytes": 14368
+    },
+    "tradingagents/research/onchain_replication/compact_terminal.py": {
+      "sha256": "72e2604eb4f2829e15de6afac58966d0cc82ff88c91c15335ef0e66dde932328",
+      "bytes": 17348
+    },
+    "tradingagents/research/onchain_replication/compact_training.py": {
+      "sha256": "ef70263e79cf743aff6a389866a7fd86615b5bcdbd5b834ebe922ffd420bebd3",
+      "bytes": 14874
+    },
+    "tradingagents/research/onchain_replication/comparison.py": {
+      "sha256": "b157f41b2b98517c67152209bac46fbedf3a2eb9471fd27f9c588a41e60c8c23",
+      "bytes": 4382
+    },
+    "tradingagents/research/onchain_replication/component_store.py": {
+      "sha256": "ba0cf44dd7cf5af8c0b99cbe129f107ef7b40833a76b8162ae9d91512b566b68",
+      "bytes": 8448
+    },
+    "tradingagents/research/onchain_replication/contracts.py": {
+      "sha256": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a",
+      "bytes": 8253
+    },
+    "tradingagents/research/onchain_replication/dataset.py": {
+      "sha256": "c8d701b5646395bb94e5037aefcc2d0d29a55de95cca05e019ce35d3f53561df",
+      "bytes": 5586
+    },
+    "tradingagents/research/onchain_replication/dictionary.py": {
+      "sha256": "32e27a4a17dc2aa993d1440d6486c75b0d4dcff341969dbf99bdff412dd7e446",
+      "bytes": 6213
+    },
+    "tradingagents/research/onchain_replication/environment.py": {
+      "sha256": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+      "bytes": 804
+    },
+    "tradingagents/research/onchain_replication/eth_source.py": {
+      "sha256": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+      "bytes": 7627
+    },
+    "tradingagents/research/onchain_replication/evaluation.py": {
+      "sha256": "1b2dd721423e0408d8e7ccea23a8cacacdd3d04b45ca9da85e35fd34c82e7fac",
+      "bytes": 16891
+    },
+    "tradingagents/research/onchain_replication/feature_journal.py": {
+      "sha256": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+      "bytes": 16549
+    },
+    "tradingagents/research/onchain_replication/feature_pipeline.py": {
+      "sha256": "19ebe96275095ded92743a1a1bcadc4178f85cd5d39f1ed23786fba279b5fa41",
+      "bytes": 13599
+    },
+    "tradingagents/research/onchain_replication/feature_residency.py": {
+      "sha256": "4ea5370958b65edf0d37950f12d358ab562291c786f28a287514c77c3838ddcd",
+      "bytes": 2649
+    },
+    "tradingagents/research/onchain_replication/financial_execution.py": {
+      "sha256": "e16402d8625ed9b1c9fe5d308d18867b811b3acb2bb90b2e0bcb7132cd4a602e",
+      "bytes": 9594
+    },
+    "tradingagents/research/onchain_replication/gat.py": {
+      "sha256": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6",
+      "bytes": 2882
+    },
+    "tradingagents/research/onchain_replication/graph_baselines.py": {
+      "sha256": "f284a85a0ce3aa5dee24c748c6a376d9d44a2d775409b874540215ff0e594907",
+      "bytes": 11938
+    },
+    "tradingagents/research/onchain_replication/graph_ledger_continuation.py": {
+      "sha256": "c204412df8e0733e932feef171431ec50487181bb012c771a783ac63b807c2d8",
+      "bytes": 23365
+    },
+    "tradingagents/research/onchain_replication/graph_legacy_coverage.py": {
+      "sha256": "da4bccabb15f69ce55024cc291f963498ffdc473c30d1d69d7d8e4ea7a7c20e7",
+      "bytes": 10434
+    },
+    "tradingagents/research/onchain_replication/graph_production.py": {
+      "sha256": "ef3ba95b235725f7d969020b9129b96b342ec204d1e3a93ee9a9a57889839bbc",
+      "bytes": 18207
+    },
+    "tradingagents/research/onchain_replication/graph_residency.py": {
+      "sha256": "1ded72ad7c25135780a718455b430eafa020e8f3de6ca608b04e005b798609a6",
+      "bytes": 7240
+    },
+    "tradingagents/research/onchain_replication/graph_store.py": {
+      "sha256": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da",
+      "bytes": 5296
+    },
+    "tradingagents/research/onchain_replication/held_score_consumer.py": {
+      "sha256": "35da29691a5ef6c23f4bbdf178a55fd51bb6779214c1d38fb5a162e712ea0d41",
+      "bytes": 10736
+    },
+    "tradingagents/research/onchain_replication/hub_census_production.py": {
+      "sha256": "b9c406f19c32f2b78409b9a3260edebcad0ced042e9e4d187ff44e574d763d2a",
+      "bytes": 11496
+    },
+    "tradingagents/research/onchain_replication/hub_edges.py": {
+      "sha256": "e5858170437f6d9f0a994315e2b2aa30d502844cf0a1c1b8ec782a1e693887e9",
+      "bytes": 2468
+    },
+    "tradingagents/research/onchain_replication/import_metadata.py": {
+      "sha256": "1c9455bc80b8f424bf63d6fdd5b94338ce54c14ead720990a2f787aef9e93dfe",
+      "bytes": 4929
+    },
+    "tradingagents/research/onchain_replication/imported_authority_interval.py": {
+      "sha256": "e61ef97f883ed9d27107f6316b774697b8949d83c313928150a0ae717b283f6f",
+      "bytes": 4566
+    },
+    "tradingagents/research/onchain_replication/imported_authority_lease.py": {
+      "sha256": "bf3c3669a6907305b351adb43867822f9500d84d2c5d3b66b16a5650a0291b0a",
+      "bytes": 13688
+    },
+    "tradingagents/research/onchain_replication/imported_mcm_identity.py": {
+      "sha256": "75d4e269ad4e87a34061e8331381af417b3c850346d71711902fcd5bbf322c82",
+      "bytes": 8230
+    },
+    "tradingagents/research/onchain_replication/job.py": {
+      "sha256": "2f0f33fe858dfcd2b5f1d76f8aaefe3ba87a333992cf89183f0fa254d17380f0",
+      "bytes": 36922
+    },
+    "tradingagents/research/onchain_replication/job_payload.py": {
+      "sha256": "0303ea2e516e57e1d4a850b3eadf13b3b23ee047b48df1417e8ae559ff171ab0",
+      "bytes": 16938
+    },
+    "tradingagents/research/onchain_replication/journal_recovery.py": {
+      "sha256": "1f5a280789572a01d943e80081930e324e621127b742ef67b6d93b6041ed009d",
+      "bytes": 6764
+    },
+    "tradingagents/research/onchain_replication/mapped_graph.py": {
+      "sha256": "c5e93b325599a82bf65e5b31074e9c76a73b25d479ddea7d3ff3687e75f7b197",
+      "bytes": 6250
+    },
+    "tradingagents/research/onchain_replication/matching.py": {
+      "sha256": "e5a4cb7966a53522532158a13ef7293d4d081a26cffba56c2eb0761a628c72a6",
+      "bytes": 4437
+    },
+    "tradingagents/research/onchain_replication/matching_ancestry.py": {
+      "sha256": "51221522256e3f1babb03512a8dad4d293d12638c4579d4bddcf92945db5e4bc",
+      "bytes": 17823
+    },
+    "tradingagents/research/onchain_replication/matching_annealing.py": {
+      "sha256": "1d1377bd1faab3b563ff6d07c2e55908c556b71fb5add4126d5860d481a099fe",
+      "bytes": 17419
+    },
+    "tradingagents/research/onchain_replication/matching_checkpoint.py": {
+      "sha256": "4287d59c0ca92cdefce10af5bb2181d720eadc937b2b93912d098fac93232126",
+      "bytes": 13535
+    },
+    "tradingagents/research/onchain_replication/matching_death.py": {
+      "sha256": "f76a96274e77d4f728d9d7e0b93db2a8bb4e663654ae59c0480f6c66192c3ff8",
+      "bytes": 8975
+    },
+    "tradingagents/research/onchain_replication/matching_hardening.py": {
+      "sha256": "3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c",
+      "bytes": 8081
+    },
+    "tradingagents/research/onchain_replication/matching_identity.py": {
+      "sha256": "f011658abf3b56b04a0ec33a7bdfed2c68e2e2e79791aa96c5ca7f8fd1653f89",
+      "bytes": 2063
+    },
+    "tradingagents/research/onchain_replication/matching_owner.py": {
+      "sha256": "b7cb394c8c65a2d9688a9557c991a2e694b48fc0b3d2317f71a51c857680dfaa",
+      "bytes": 21859
+    },
+    "tradingagents/research/onchain_replication/matching_pair.py": {
+      "sha256": "4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e",
+      "bytes": 12746
+    },
+    "tradingagents/research/onchain_replication/matching_policy.py": {
+      "sha256": "5d552673fb772f61344d212606a5d9d2c22c91c8de44dfa501d57422c9b4e739",
+      "bytes": 868
+    },
+    "tradingagents/research/onchain_replication/matching_reference.py": {
+      "sha256": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332",
+      "bytes": 4226
+    },
+    "tradingagents/research/onchain_replication/matching_sparse.py": {
+      "sha256": "06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e",
+      "bytes": 4230
+    },
+    "tradingagents/research/onchain_replication/mcm.py": {
+      "sha256": "d2527cdc34f1032f6ed9a3ff175fd1e7c21412e19e1d449ac53f773bd582f9df",
+      "bytes": 2492
+    },
+    "tradingagents/research/onchain_replication/mcm_raw_parts.py": {
+      "sha256": "ebc8a683895b0f5921007828342b31471a90cadbff1015b339f47d38564e2e6d",
+      "bytes": 15345
+    },
+    "tradingagents/research/onchain_replication/mcm_score_stream.py": {
+      "sha256": "94fd45fe16c5d833e5918f461563d9f4b63e7111c8790b0d32dc0000e2604a27",
+      "bytes": 18332
+    },
+    "tradingagents/research/onchain_replication/metrics.py": {
+      "sha256": "9476c2052e02be278c01360fa598a3a136a791ffaa90d90f1fde992c8a27c84b",
+      "bytes": 3441
+    },
+    "tradingagents/research/onchain_replication/model.py": {
+      "sha256": "e15b1be0442437800a19a205ab048f5f6444b79c0811704ebbbcf72a37da2faa",
+      "bytes": 6537
+    },
+    "tradingagents/research/onchain_replication/model_registry.py": {
+      "sha256": "5a8be9dc05a1844528c1353cf2177185b4aa48cdc8a52581fdbb7acc5d910339",
+      "bytes": 2723
+    },
+    "tradingagents/research/onchain_replication/native_producer.py": {
+      "sha256": "5b7dff71ffe2b1e6c0570b859020d82af337d753665ae77cbea95ff07d1914ed",
+      "bytes": 9398
+    },
+    "tradingagents/research/onchain_replication/native_reuse.py": {
+      "sha256": "a84274b035278fb5d840f58420cdc4d70eb7c5d8ca2ee5247392cf6bb29b2bbb",
+      "bytes": 11609
+    },
+    "tradingagents/research/onchain_replication/neighborhood_census.py": {
+      "sha256": "be4704d1b19028c2ce734c35483986d6b49d7eecd6f6bd9048c96208b51c02a9",
+      "bytes": 7497
+    },
+    "tradingagents/research/onchain_replication/neighborhood_policy.py": {
+      "sha256": "f86e19de0bedd4c12ef73fe2ba243990256f592c604c083d8e772ce8131bc12a",
+      "bytes": 3212
+    },
+    "tradingagents/research/onchain_replication/neighborhoods.py": {
+      "sha256": "4f41912aa5d91e449eea4a30d813e5b57b65cbd7445e5ba153725e7bbe7ee00a",
+      "bytes": 9380
+    },
+    "tradingagents/research/onchain_replication/neural_authority.py": {
+      "sha256": "eed5f79f4c34819fb64ac2d79069ff56e4b24d175f2d391da9856f9d50186fb2",
+      "bytes": 7060
+    },
+    "tradingagents/research/onchain_replication/neural_phases.py": {
+      "sha256": "11af32f66fa1d9289c713da0304a5c7e0d6dd7a0623f783597bd0f9368988d71",
+      "bytes": 8072
+    },
+    "tradingagents/research/onchain_replication/neural_physical.py": {
+      "sha256": "8891e3ed52142f23ae987b8985cd4ee8e09caf86658623e43a37df7140dfe190",
+      "bytes": 23746
+    },
+    "tradingagents/research/onchain_replication/neural_resource.py": {
+      "sha256": "ae7cd7ff76b0ddfd5e55645ea7a36a56d12089388add620a99fc70b1bc6759b9",
+      "bytes": 23666
+    },
+    "tradingagents/research/onchain_replication/original_dictionary.py": {
+      "sha256": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9",
+      "bytes": 22148
+    },
+    "tradingagents/research/onchain_replication/original_import_preparation.py": {
+      "sha256": "553d88117d5c39fa8f8755bb702640ca619eaf4097c2183948587d7ef95b5941",
+      "bytes": 14843
+    },
+    "tradingagents/research/onchain_replication/original_import_stage.py": {
+      "sha256": "fada5f7c0f09a911009ced367f29b41b28839c4c24777bdba9b58fdd50a8557c",
+      "bytes": 12984
+    },
+    "tradingagents/research/onchain_replication/owned_io.py": {
+      "sha256": "09d1fbcc03f2c9303db95f34ca6c07ddb47bfdb49b35452f4cb6829a5d667aeb",
+      "bytes": 3099
+    },
+    "tradingagents/research/onchain_replication/parquet_ranges.py": {
+      "sha256": "482c0686e552aae3157bf6cf12f802e0d284c68ce14d879000253b895450b044",
+      "bytes": 6226
+    },
+    "tradingagents/research/onchain_replication/pooling.py": {
+      "sha256": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303",
+      "bytes": 838
+    },
+    "tradingagents/research/onchain_replication/population_assembly.py": {
+      "sha256": "4995037a26d2e6d7a8c18085acb59c535e31af48f1732dfb12a5b97604550263",
+      "bytes": 12569
+    },
+    "tradingagents/research/onchain_replication/population_batch_projection.py": {
+      "sha256": "09f11459e077066e16a5501378cf424f057b2b9cb39bffef8f961fe00b7039cf",
+      "bytes": 22321
+    },
+    "tradingagents/research/onchain_replication/preservation.py": {
+      "sha256": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+      "bytes": 10273
+    },
+    "tradingagents/research/onchain_replication/price_source.py": {
+      "sha256": "66af531218352999667f2cac88c8393e70ddcf956b8e9f05db16a52c6b2f6e74",
+      "bytes": 3824
+    },
+    "tradingagents/research/onchain_replication/prices.py": {
+      "sha256": "5f44f1e689b614121c4b9cab5da75e17322074a9ec9f2a30a174ac353093798f",
+      "bytes": 5295
+    },
+    "tradingagents/research/onchain_replication/provenance.py": {
+      "sha256": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+      "bytes": 2398
+    },
+    "tradingagents/research/onchain_replication/range_source.py": {
+      "sha256": "5f1e004a89e2339d1f21c941415dc3976e9523f509a1d1591f23a8ea7a836bd7",
+      "bytes": 14373
+    },
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": {
+      "sha256": "c7520b84b2f37cdb2676a26b281bcc3e7488bcbbad118f2f5225035749f117b2",
+      "bytes": 40424
+    },
+    "tradingagents/research/onchain_replication/real_pilot_legacy_graph.py": {
+      "sha256": "adab1e0784e510a36edf22e52765e2d196859cfe0f76988d58db1c9f2bba2c79",
+      "bytes": 2760
+    },
+    "tradingagents/research/onchain_replication/real_pilot_partial_progress.py": {
+      "sha256": "d424e92edba6e0d7ae3537649f3ebda228b3d9c1498fbe878530d31b519d64f7",
+      "bytes": 19652
+    },
+    "tradingagents/research/onchain_replication/real_pilot_population.py": {
+      "sha256": "e4671b48754c8f56d989d1905e7803d8111c10334f1110ff07cfcc79a1fb45db",
+      "bytes": 7624
+    },
+    "tradingagents/research/onchain_replication/real_pilot_reservations.py": {
+      "sha256": "fc8df324900e29f2c50332ab0992f46508e0917372cd798ec85ab982121010f3",
+      "bytes": 6875
+    },
+    "tradingagents/research/onchain_replication/real_pilot_storage.py": {
+      "sha256": "5c9e6a8e9c26d85065f60b52ef65581b5d2a3379be4ccfb2a2b3efd264aa941e",
+      "bytes": 15891
+    },
+    "tradingagents/research/onchain_replication/real_pilot_throughput.py": {
+      "sha256": "8311d706c89aadabb967aaef0073f08b313976c62d2dbd35af3a5331731a8c63",
+      "bytes": 5987
+    },
+    "tradingagents/research/onchain_replication/real_pilot_training.py": {
+      "sha256": "ca77a32b0c7b882fed6e6af7f5929c16264aad1084e47d07b05ab52940d47782",
+      "bytes": 15170
+    },
+    "tradingagents/research/onchain_replication/registered_features.py": {
+      "sha256": "8a79c459336773bd139f377fe44fe1006796378651d30a8eb22c966c72f7b267",
+      "bytes": 13975
+    },
+    "tradingagents/research/onchain_replication/replay.py": {
+      "sha256": "f9f016afad09ec5ec177a7fac04a0ca5d2fbb84262b06c6ea51e893e6b6433a0",
+      "bytes": 5550
+    },
+    "tradingagents/research/onchain_replication/resource_binding.py": {
+      "sha256": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d",
+      "bytes": 2280
+    },
+    "tradingagents/research/onchain_replication/resource_fixture.py": {
+      "sha256": "31cc0329e7246b260f64d6b608df9d9eb4d812cacbb90b9202d9d6f5f8886bc5",
+      "bytes": 26791
+    },
+    "tradingagents/research/onchain_replication/resources.py": {
+      "sha256": "7bd0fad9e790be8a024b490bdd604d7aeda146e00d21b095f4b21c1391147f7a",
+      "bytes": 52034
+    },
+    "tradingagents/research/onchain_replication/restart_retention.py": {
+      "sha256": "69a2708f43c4869dbebb764839d1dcc55e9bcd6e1de797b01d1dbf747eaae71f",
+      "bytes": 32053
+    },
+    "tradingagents/research/onchain_replication/run.py": {
+      "sha256": "27b05e965606632de8c379d476ac1363af1a1f2bb1858de4a364f7f8d958730a",
+      "bytes": 14432
+    },
+    "tradingagents/research/onchain_replication/sampling_policy.py": {
+      "sha256": "79d1253009e6ba5e8815f82fdf3422113d5559b92e5e0e36bfec84fc2963354d",
+      "bytes": 952
+    },
+    "tradingagents/research/onchain_replication/sampling_weights.py": {
+      "sha256": "5f1837f93fe0523d7c851654390584fc6c04fb803f2025fd027e74a5da8318d1",
+      "bytes": 5747
+    },
+    "tradingagents/research/onchain_replication/score_batches.py": {
+      "sha256": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45",
+      "bytes": 15150
+    },
+    "tradingagents/research/onchain_replication/score_tail.py": {
+      "sha256": "91e1c9ba69b2922e2f77ad07ae9de4efc84f94d420ff55316e120b1df19398ca",
+      "bytes": 15297
+    },
+    "tradingagents/research/onchain_replication/score_tail_archive.py": {
+      "sha256": "dbd6c4ca56ca2ae30f7c0f779b5a62a81258654c4c82802cdbc2d5ebeb78f20c",
+      "bytes": 15453
+    },
+    "tradingagents/research/onchain_replication/score_tail_semantics.py": {
+      "sha256": "cff38dda5367882d35d18c3f95ab6d6af849d5918e5005e41e1d4205a40cd009",
+      "bytes": 6393
+    },
+    "tradingagents/research/onchain_replication/serialization.py": {
+      "sha256": "f711a0a931fe9fb91aadf0ad7ba6e68b638f3874e736790e05edd21acdefc65b",
+      "bytes": 2078
+    },
+    "tradingagents/research/onchain_replication/source_footers.py": {
+      "sha256": "65005ceca3072760befb09680f9c7aa469d5aaa5ab3f2af6a741d4ed2fef660e",
+      "bytes": 5245
+    },
+    "tradingagents/research/onchain_replication/source_inventory.py": {
+      "sha256": "6d868efe77d4d84af97fdb1657585ad86fda15866b44541f111656d3e09759db",
+      "bytes": 7643
+    },
+    "tradingagents/research/onchain_replication/stage_retention.py": {
+      "sha256": "f42dbcae040e7fda5f8250b827408cc459d0632273d2db497fde9afdeb55d5c0",
+      "bytes": 27909
+    },
+    "tradingagents/research/onchain_replication/stage_retention_reader.py": {
+      "sha256": "ead36066a53ee59b9b8a8ed7893490c6fa674d327b92ab665e339b6f5c5e98e0",
+      "bytes": 12475
+    },
+    "tradingagents/research/onchain_replication/streamed_gat.py": {
+      "sha256": "e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f",
+      "bytes": 8065
+    },
+    "tradingagents/research/onchain_replication/subsets.py": {
+      "sha256": "59a17cb12711d8ec518f6f25ec4518f143647b79c3ef3286399dada114b7a22c",
+      "bytes": 3418
+    },
+    "tradingagents/research/onchain_replication/temporal.py": {
+      "sha256": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226",
+      "bytes": 2397
+    },
+    "tradingagents/research/onchain_replication/training.py": {
+      "sha256": "0e5ae299f48f21cde666d78319b7710208f6d959c0c2b1aea7e848f4252ff482",
+      "bytes": 8123
+    },
+    "tradingagents/research/onchain_replication/training_batch_observer.py": {
+      "sha256": "2a498466909e35849318d8256f40d47f20b7e356dfc1f9ca47757e2f54cca057",
+      "bytes": 20392
+    },
+    "tradingagents/research/onchain_replication/treatment_admission.py": {
+      "sha256": "65ffe3efecd0c972341ec2af8deaa2594560b5a36bc9ca2dcd3e1b8da006d81e",
+      "bytes": 40425
+    },
+    "tradingagents/research/onchain_replication/treatment_contract.py": {
+      "sha256": "fb148eb922431bdd46c2bd4c310d48b180d1f040c50e1d64d63ca0dc859a11fc",
+      "bytes": 5662
+    },
+    "tradingagents/research/onchain_replication/treatment_production.py": {
+      "sha256": "210db787eaf830974357831c4142260baf8d0043e8049f6794f31f05eb1d208c",
+      "bytes": 17458
+    },
+    "tradingagents/research/onchain_replication/typed_payload_operations.py": {
+      "sha256": "a527b761d12b3da02607c32f38c7261b129952fdeaed7b0f0b6fe5bf0c2875c1",
+      "bytes": 20601
+    },
+    "tradingagents/research/onchain_replication/typed_payload_policy.py": {
+      "sha256": "abe2a2a40cc7085aea088c9576d6f9e6ebf361a1c81ed1aa184643b33c4a3b1e",
+      "bytes": 3440
+    },
+    "tradingagents/research/onchain_replication/typed_score_store.py": {
+      "sha256": "433bab5d6c8bcb9581ff7e4b2bf12e61ddb0ffc60ed0e29b48cf468ac3ce5bee",
+      "bytes": 18002
+    },
+    "tradingagents/research/onchain_replication/typed_tail_binding.py": {
+      "sha256": "985bb44185e9a5dc6293d2e7b25c8815c2390c7f0326a568043d562d3f731706",
+      "bytes": 20961
+    },
+    "tradingagents/research/onchain_replication/verification.py": {
+      "sha256": "c492cc9be2eb0956035800c26bde5d6cc2999844cd7466eb151bd3ea82815873",
+      "bytes": 14535
+    },
+    "tradingagents/research/onchain_replication/weak_one_hop_census.py": {
+      "sha256": "4ee889efc0c70645f28f4188796718e93f588f98c98ae421eb222c7f54206b42",
+      "bytes": 4553
+    },
+    "tradingagents/research/onchain_replication/weekly.py": {
+      "sha256": "079a427f212738759109b31da23933549a8b7751851e3033703cdd03dc5f054a",
+      "bytes": 5711
+    },
+    "tradingagents/research/onchain_replication/weekly_retained_ledger.py": {
+      "sha256": "0e2c3a12ba19668f9b66840c18720cf2b9418909e08b0853dd6ed7ec6c1616da",
+      "bytes": 3064
+    },
+    "tradingagents/research/onchain_replication/workflow_storage.py": {
+      "sha256": "deff02766685c1e7fb8628766acf0e0c36dc324da4672f3adc094bfac3e24a74",
+      "bytes": 10946
+    },
+    "tradingagents/research/verify.py": {
+      "sha256": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce",
+      "bytes": 19938
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/worker-file-limit.json": {
+      "sha256": "b9cc97bdfea7cd85cc7093d77473b45ae55d5cb3c625622a2d463307f5772ca7",
+      "bytes": 2427
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/observer.json": {
+      "sha256": "348e99b729a4f635e6da88e0b1f534b90911bea3552652a5689b1844260e146d",
+      "bytes": 968
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/monitor-file-limit.json": {
+      "sha256": "cd8e7531ad720e149ef92c9ad6f915304f5f7abc7dc6326753016bb06b8d34a8",
+      "bytes": 2242
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/postmortem-cells.json": {
+      "sha256": "45c73526704c39d00fd3c0e305f4f234a6a7f2ea65ae576d96ce6a9e40908df7",
+      "bytes": 168
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/release.json": {
+      "sha256": "82560e2694628ad002f9cc4b76fe2cd7b1b545cc825269f01057f04c6fe268b5",
+      "bytes": 39
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/child.log": {
+      "sha256": "5938c3070b142cbd6c8ba08fdbf15770054a436743ec8b119c755e752e8e5242",
+      "bytes": 95540
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/child_exit.json": {
+      "sha256": "6970e7f7623bd18221fc50ea1d3e333fb829c8ac54124cd2f2f2cd19f364759f",
+      "bytes": 1578
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/observer-death.json": {
+      "sha256": "5fbc1c1d596b948f4697ce9f270bf20c276a98c59ae5f76eba3ca87637c222e9",
+      "bytes": 19507
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/cpu_ready.json": {
+      "sha256": "a57bf0a01604159388f6b8b3943b14fa6c54b910e8d22ed86a4b416ce9bdcc3f",
+      "bytes": 2209
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-23/guard/live.json": {
+      "sha256": "83b413a741cdb50a833fc4f3a3721de06717d276c98e4ac53cd49e4175e0cfc8",
+      "bytes": 19329
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261009-23/stdout.log": {
+      "sha256": "7951ee57987f3e0872c2e238bdc22c65cf50922c2682f6a54a7a13fb862b41c2",
+      "bytes": 922
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261009-23/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/claim.json": {
+      "sha256": "d480195a4205523147408fa8a1b44ff594935020e4cb7ff010592f450c523d45",
+      "bytes": 5247
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/start.json": {
+      "sha256": "c400c7a5d4a7d42782cb9b7cff46c78da8b549563e80f781b785339909666b13",
+      "bytes": 795
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/archive-operations/start.json": {
+      "sha256": "183efaa9bae0fa16767bcc8463f2aeab26966339ff66b09b2b6fa5d44c609fa7",
+      "bytes": 330
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/archive-operations/writer-mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba-0000/intent.json": {
+      "sha256": "c4e3858d45615b93174d7391d9e87b76f2a9c832b60ee469c8877ebc51fe6dff",
+      "bytes": 531
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/archive-operations/writer-mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba-0000/failed.json": {
+      "sha256": "78f2fe375d44e81d67696f59e472517fe0b08e62389af40a6c38ca2a9d314717",
+      "bytes": 102
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/intent.json": {
+      "sha256": "e0991228f9a8faa92f240ca19ccc56ff6b20e60156fbf2b46a33b6ff75d6f676",
+      "bytes": 850
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/dictionary-import/import-complete.json": {
+      "sha256": "f763a314867e06a03fd8b566d054ed74a9c684e8c29544f684a2b40c72db3ffe",
+      "bytes": 5019
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/dictionary-import/intent.json": {
+      "sha256": "04a61c61dbd7753720fb83ccf5872fdbf0095711c5229192057a455da152cc05",
+      "bytes": 3407
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/reserve-000000000001.json": {
+      "sha256": "8a43f38f70f4c16a448f4bdf067148c9a22624f383729650650b706ba53ecf5c",
+      "bytes": 308
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/selected-000000000000.json": {
+      "sha256": "5e6032e379ed216a2c4a4b7b6a511d08478135d1b3728baa64b00405cf173a71",
+      "bytes": 194
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/claim.json": {
+      "sha256": "325fc203e8ca28c24c435572eadd225f6d499a9609c4f93019b9c5d86dc85a1c",
+      "bytes": 3803
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/reserve-000000000000.json": {
+      "sha256": "ee2bd19eb3333e0bcca92fe709b6e6a9a4c49067e18e20336211a5e2ccab2575",
+      "bytes": 261
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/start.json": {
+      "sha256": "0c810f965f2cf00d88434b0b920182cb6d19316ff6544446bf565c62f7fb049f",
+      "bytes": 870
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/archive-start.json": {
+      "sha256": "52cb01dcbb0fc466e2a65ddd16d579f2f58c5f164bdb5fbaf56ae13bb2a5aae6",
+      "bytes": 627
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/batches/start.json": {
+      "sha256": "651f39b64904660384066061b125f2c9f446d83f1dcfe8d65e8c27f8e98ad4f5",
+      "bytes": 662
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/events/complete-000000000001.json": {
+      "sha256": "9a5beda3c723fe857d748b75e9c13c52a5639e2f9fc85ef7289fa33c27ff17f8",
+      "bytes": 496
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/bridges/complete-000000000001.json": {
+      "sha256": "a93e5c26a0e2aab1c9bc7aa1928cc537103b77296537430c1d51c94382d3572b",
+      "bytes": 3010
+    },
+    "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints/inputs/input-000000000000.json": {
+      "sha256": "7a0c17f8abcb3e37a349fdefe8af9b5dc1c520263fd20d4e614610bd04021c18",
+      "bytes": 2338
+    },
+    "research_artifacts/onchain_compact_mcm/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-23/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/start.json": {
+      "sha256": "557031ae57699eebe381129db428dbae4d113e905ed131bf9fa771f2c9fa377c",
+      "bytes": 1445
+    },
+    "research_artifacts/archive-dispatch-ethpilot-20261009-23/close-failed.json": {
+      "sha256": "4364f4a3ff69f97fbd6947c7b1a80e4d3c2c03a781e9b7ba014abcaa8ce406dc",
+      "bytes": 118
+    },
+    "research_artifacts/archive-dispatch-ethpilot-20261009-23/intent.json": {
+      "sha256": "23272ad45545b20c32163863c5d8900d1323edc4d54c7cdc1a7ad1c0f0f20e15",
+      "bytes": 7021
+    },
+    "research_artifacts/archive-dispatch-ethpilot-20261009-23/terminal.json": {
+      "sha256": "2d466b57d8390f17600bf6bcab42b26b1e416ed301e1d77fe214fc1257acee3c",
+      "bytes": 746
+    }
+  }
+}

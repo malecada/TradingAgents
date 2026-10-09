@@ -1,0 +1,72 @@
+--- matching_identity.py
++++ baseline_matching_identity.py
+@@ -19,11 +19,6 @@
+     if not isinstance(graph, AttributedGraph):
+         raise ValueError('unknown matching graph contract')
+     validate_attributed(graph)
+-    return _attributed_identity_checked(graph)
+-
+-
+-def _attributed_identity_checked(graph):
+-    """Fresh identity for an exclusively owned, already validated local graph."""
+     if any(not isinstance(node, str) or not node for node in graph.node_ids):
+         raise ValueError('nonempty string local node identities required')
+     result = hashlib.sha256(b'matching-local-v1\0')
+--- matching_annealing.py
++++ baseline_matching_annealing.py
+@@ -74,46 +74,6 @@
+ def identity(a,b,c):
+     return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+ 
+-_IDENTITY_ORIGINAL = identity
+-
+-# Same-call validation reuse only; all graph bytes are still freshly hashed.
+-_PAIR_VALIDATOR = validate_pair
+-_PAIR_CODE = validate_pair.__code__
+-_GRAPH_VALIDATOR = typed_identity.validate_attributed
+-_GRAPH_VALIDATOR_CODE = _GRAPH_VALIDATOR.__code__
+-_GRAPH_IDENTITY = graph_hash
+-_GRAPH_IDENTITY_CODE = graph_hash.__code__
+-
+-def _identity_after_pair_validation(a,b,c):
+-    eligible=(type(c) is dict and all(type(k) is str and type(v) in (str,int,float,bool) for k,v in c.items())
+-              and validate_pair is _PAIR_VALIDATOR and validate_pair.__code__ is _PAIR_CODE
+-              and validate_pair.__globals__.get('validate_attributed') is _GRAPH_VALIDATOR
+-              and typed_identity.validate_attributed is _GRAPH_VALIDATOR
+-              and _GRAPH_VALIDATOR.__code__ is _GRAPH_VALIDATOR_CODE
+-              and graph_hash is _GRAPH_IDENTITY and graph_hash.__code__ is _GRAPH_IDENTITY_CODE
+-              and identity is _IDENTITY_ORIGINAL)
+-    if eligible:
+-        for graph in (a,b):
+-            if (type(graph) is not AttributedGraph or type(graph.node_ids) is not tuple
+-                    or any(type(node) is not str for node in graph.node_ids)
+-                    or type(graph.parent_hash) is not str or type(graph.center_id) is not str):
+-                eligible=False;break
+-            for name in ('node_features','edge_index','edge_features'):
+-                array=getattr(graph,name)
+-                for _ in range(4):
+-                    if type(array) is bytes:break
+-                    if type(array) is not np.ndarray or array.flags.writeable:
+-                        eligible=False;break
+-                    array=array.base
+-                else:eligible=False
+-                if not eligible:break
+-            if not eligible:break
+-    if not eligible:return identity(a,b,c)
+-    return {'left':typed_identity._attributed_identity_checked(a),
+-            'right':typed_identity._attributed_identity_checked(b),
+-            'configuration':hashlib.sha256(body(c)).hexdigest()}
+-
+-
+ def bound(n,m,maximum):
+     if type(maximum) is not int or maximum<=0 or 24*n*m>maximum:raise ValueError('retained numeric state allowance exceeded')
+ 
+@@ -130,7 +90,7 @@
+ 
+ def check(state,a,b,c):
+     validate_pair(a,b,c)
+-    if set(state)!=META|set(NAMES) or type(state['schema_version']) is not int or state['schema_version']!=3 or state['safe'] is not True or state['identity']!=( _identity_after_pair_validation(a,b,c) if type(state) is dict else identity(a,b,c)) or state['shape']!=[len(a.node_ids),len(b.node_ids)]:raise ValueError('matching state identity differs')
++    if set(state)!=META|set(NAMES) or type(state['schema_version']) is not int or state['schema_version']!=3 or state['safe'] is not True or state['identity']!=identity(a,b,c) or state['shape']!=[len(a.node_ids),len(b.node_ids)]:raise ValueError('matching state identity differs')
+     if state['phase'] not in ('nodes','outer','edges','done')+NORMALIZATION:raise ValueError('state phase differs')
+     if type(state['iterations']) is not int or not 0<=state['iterations']<=c['max_iterations']:raise ValueError('state iteration differs')
+     beta=c['beta0']

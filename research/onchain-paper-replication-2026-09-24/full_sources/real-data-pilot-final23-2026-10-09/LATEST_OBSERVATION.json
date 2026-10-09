@@ -1,0 +1,65 @@
+{
+  "observed_at": "2026-10-09T00:36:55.401454+00:00",
+  "session_id": 1248,
+  "confirmed_live_poll": "7b997d and cell630/dbe783,a431ff,fda9b8",
+  "source_frozen": "42ef3c06fcf62b9f5a2e0c1b61e76ad443734468",
+  "guard": {
+    "elapsed_seconds": 4357.411617668,
+    "memory_current_bytes": 5219590144,
+    "limit_reason": null
+  },
+  "progress": {
+    "completed_scalar_pairs": 740,
+    "matching_elapsed_seconds": 2070.3457075649967,
+    "checkpoint_writes_before_this_snapshot": 89,
+    "full_mcm_complete": false,
+    "model_update_complete": false,
+    "phase_timings": {
+      "advance_annealing_including_rank_transition": {
+        "calls": 945,
+        "seconds": 574.7996406120255
+      },
+      "advance_hardening": {
+        "calls": 742,
+        "seconds": 1.3007215271172754
+      },
+      "event_publication": {
+        "calls": 1481,
+        "seconds": 184.86665031182565
+      },
+      "lease": {
+        "calls": 63174,
+        "seconds": 921.8728029448976
+      },
+      "lease_authority": {
+        "calls": 63174,
+        "seconds": 915.4455529430961
+      },
+      "lease_progress": {
+        "calls": 63174,
+        "seconds": 0.15926204219795181
+      },
+      "lease_start_metadata": {
+        "calls": 63174,
+        "seconds": 5.065513425444806
+      },
+      "pair_validation": {
+        "calls": 741,
+        "seconds": 0.02752974993927637
+      },
+      "retention_live": {
+        "calls": 2966,
+        "seconds": 221.106387723019
+      },
+      "score_only": {
+        "calls": 741,
+        "seconds": 2.6864065210502304
+      },
+      "state_create": {
+        "calls": 741,
+        "seconds": 1.0607790501417185
+      }
+    }
+  },
+  "qualification": "Read-only sampled observations; current memory is not peak. No complete MCM/update or causal speedup claim."
+}

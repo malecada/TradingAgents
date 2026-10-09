@@ -1,0 +1,81 @@
+"""Exclusive bounded engineering batch journal; deliberately different control trace."""
+import hashlib,json,math,os,struct
+from pathlib import Path
+
+def body(value):return (json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
+def digest(raw):return hashlib.sha256(raw).hexdigest()
+
+class BatchJournal:
+    def __init__(self,root,*,batch_cells,max_cells,max_bytes,max_body_bytes,boundary):
+        for value in (batch_cells,max_cells,max_bytes,max_body_bytes):
+            if type(value) is not int or value<=0:raise ValueError('positive finite bounds required')
+        if batch_cells>4096 or max_body_bytes>1024**2:raise ValueError('engineering hard bounds exceeded')
+        if not callable(boundary):raise ValueError('boundary callback required')
+        self.root=Path(root).absolute()
+        if self.root.parent.resolve()!=self.root.parent:raise ValueError('nonsymlink parent required')
+        self.root.mkdir(exist_ok=False)
+        self.fd=os.open(self.root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+        parent=os.open(self.root.parent,os.O_RDONLY|os.O_DIRECTORY)
+        try:os.fsync(parent)
+        finally:os.close(parent)
+        self.batch_cells=batch_cells;self.max_cells=max_cells;self.max_bytes=max_bytes;self.max_body=max_body_bytes
+        self.boundary=boundary;self.cells=0;self.bytes=0;self.batch=0;self.poisoned=False;self.closed=False
+    def _write(self,name,raw):
+        if len(raw)>self.max_body or self.bytes+len(raw)>self.max_bytes:raise ValueError('journal byte allowance exceeded')
+        fd=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.fd)
+        try:
+            self.bytes+=len(raw)
+            view=memoryview(raw)
+            while view:
+                n=os.write(fd,view)
+                if n<=0:raise OSError('zero write')
+                view=view[n:]
+            os.fsync(fd)
+        finally:os.close(fd)
+        fd=os.open(name,os.O_RDONLY|os.O_NOFOLLOW,dir_fd=self.fd)
+        try:
+            got=b''
+            while len(got)<=len(raw):
+                block=os.read(fd,min(65536,len(raw)+1-len(got)))
+                if not block:break
+                got+=block
+            if got!=raw or digest(got)!=digest(raw):raise ValueError('journal readback differs')
+        finally:os.close(fd)
+        os.fsync(self.fd)
+    def run_batch(self,tasks,executor):
+        if self.closed or self.poisoned:raise ValueError('journal unavailable')
+        try:
+            if type(tasks) not in (list,tuple) or not 0<len(tasks)<=self.batch_cells or self.cells+len(tasks)>self.max_cells:raise ValueError('batch cell allowance exceeded')
+            if 256+len(tasks)*256>self.max_body:raise ValueError('batch metadata reservation exceeded')
+            # Caller retains graphs; journal retains only bounded purpose hashes/results.
+            purposes=[]
+            for offset,(purpose,a,b) in enumerate(tasks):
+                if type(purpose) is not dict or type(purpose.get('ordinal')) is not int or purpose['ordinal']!=self.cells+offset:raise ValueError('fresh ordered occurrence purpose required')
+                raw=body(purpose)
+                if len(raw)>8192:raise ValueError('purpose extent exceeded')
+                purposes.append(digest(raw))
+            if len(set(purposes))!=len(purposes):raise ValueError('duplicate purpose within batch')
+            if self.bytes+2*self.max_body>self.max_bytes:raise ValueError('batch byte reservation exceeded')
+            self.boundary()
+            stem=f'{self.batch:08d}'
+            pending=body({'schema':1,'kind':'engineering_pending','start':self.cells,'stop':self.cells+len(tasks),'purposes':purposes,'disposition':'attempted_unknown_without_complete'})
+            self._write(stem+'.pending.json',pending)
+            records=[]
+            for offset,((purpose,a,b),key) in enumerate(zip(tasks,purposes,strict=True)):
+                if digest(body(purpose))!=key:raise ValueError('purpose mutated during batch')
+                score,iterations,status=executor(a,b,key)
+                if type(score) is not float or not math.isfinite(score) or not 0<=score<=1 or type(iterations) is not int or iterations<0 or status not in ('temperature_complete','iteration_cap'):raise ValueError('invalid numeric result')
+                records.append({'ordinal':self.cells+offset,'purpose_sha256':key,'score_f64_be':struct.pack('>d',score).hex(),'iterations':iterations,'status':status})
+            self.boundary()
+            complete=body({'schema':1,'kind':'engineering_complete','pending_sha256':digest(pending),'records':records})
+            self._write(stem+'.complete.tmp',complete)
+            # Link is atomic and exclusive: an existing final name is never replaced.
+            os.link(stem+'.complete.tmp',stem+'.complete.json',src_dir_fd=self.fd,dst_dir_fd=self.fd,follow_symlinks=False)
+            os.fsync(self.fd)
+            os.unlink(stem+'.complete.tmp',dir_fd=self.fd);os.fsync(self.fd)
+            self.cells+=len(tasks);self.batch+=1
+            return records
+        except BaseException:
+            self.poisoned=True;raise
+    def close(self):
+        if not self.closed:os.close(self.fd);self.closed=True

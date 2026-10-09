@@ -1,0 +1,52 @@
+[
+  {
+    "case": "healthy",
+    "returned_success": true,
+    "result": {
+      "status": "engineering_ordered_cells_delivered",
+      "completed_rows": 2,
+      "completed_cells": 64,
+      "output_bytes": 256,
+      "workload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "representation_complete": false
+    },
+    "declared_root_valid_payload": true,
+    "cleanup_verified": true
+  },
+  {
+    "case": "final_payload_mutation",
+    "refused": true,
+    "notes": [
+      "MCM delivery incomplete: {\"attempted_sink_cells\": 64, \"confirmed_post_sink_cells\": 48, \"journal_completed_cells\": 64, \"remaining_disposition\": \"unavailable; current sink chunk may be partial; no retry\"}"
+    ],
+    "confirmed_delivered": 64,
+    "cleanup_verified": true
+  },
+  {
+    "case": "final_root_replacement",
+    "refused": true,
+    "notes": [
+      "MCM delivery incomplete: {\"attempted_sink_cells\": 64, \"confirmed_post_sink_cells\": 48, \"journal_completed_cells\": 64, \"remaining_disposition\": \"unavailable; current sink chunk may be partial; no retry\"}"
+    ],
+    "confirmed_delivered": 64,
+    "cleanup_verified": true
+  },
+  {
+    "case": "earlier_payload_mutation",
+    "refused": true,
+    "notes": [
+      "MCM delivery incomplete: {\"attempted_sink_cells\": 64, \"confirmed_post_sink_cells\": 64, \"journal_completed_cells\": 64, \"remaining_disposition\": \"unavailable; current sink chunk may be partial; no retry\"}"
+    ],
+    "confirmed_delivered": 64,
+    "cleanup_verified": true
+  },
+  {
+    "case": "sink_throw",
+    "refused": true,
+    "notes": [
+      "MCM delivery incomplete: {\"attempted_sink_cells\": 8, \"confirmed_post_sink_cells\": 0, \"journal_completed_cells\": 48, \"remaining_disposition\": \"unavailable; current sink chunk may be partial; no retry\"}"
+    ],
+    "confirmed_delivered": 4,
+    "cleanup_verified": true
+  }
+]

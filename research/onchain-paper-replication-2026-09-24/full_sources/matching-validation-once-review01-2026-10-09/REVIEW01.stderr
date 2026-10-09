@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-validation-once-review01-2026-10-09/review01.py", line 71, in <module>
+    try:I.graph_identity(bad)
+        ~~~~~~~~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-validation-once01-2026-10-09/matching_identity.py", line 21, in graph_identity
+    validate_attributed(graph)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 212, in validate_attributed
+    if g.edge_features.ndim!=2 or g.edge_features.shape[0]!=e:raise ValueError('local feature dimensions')
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: local feature dimensions
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-validation-once-review01-2026-10-09/review01.py", line 72, in <module>
+    except ValueError as e:ck('public_graph_validation_preserved','duplicate' in str(e))
+                           ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-validation-once-review01-2026-10-09/review01.py", line 7, in ck
+    assert v,n
+           ^
+AssertionError: public_graph_validation_preserved

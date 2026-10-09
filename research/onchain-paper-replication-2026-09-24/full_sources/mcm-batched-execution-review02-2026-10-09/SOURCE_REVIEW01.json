@@ -1,0 +1,42 @@
+{
+  "decision": "accepted-source-only-bounded-engineering-domain",
+  "source_sha256": {
+    "batch_journal.py": "c862508a062eafb3a2c21bd3e05bc774a0839248415e8de3ec500a70328a0a7f",
+    "pair_executor.py": "6d1ad3a720eec15f63c7fd6423a9f0c92b4e5020c0d9962ef825f8b5cf73d34a"
+  },
+  "checks": [
+    "journal_pin",
+    "executor_unchanged",
+    "reproducer_refused_pending",
+    "reproducer_refused_root",
+    "reproducer_refused_purpose",
+    "reproducer_refused_throw",
+    "reproducer_refused_symlink",
+    "record_roundtrip_0",
+    "framing_0",
+    "record_roundtrip_1",
+    "framing_1",
+    "no_temp_success",
+    "consumer_refused_payload",
+    "consumer_refused_metadata",
+    "consumer_refused_mode",
+    "consumer_refused_links",
+    "limit_bytes",
+    "limit_cells",
+    "limit_ordinal",
+    "namespace_exclusive",
+    "original_numeric_loop_trace",
+    "reference_tolerance",
+    "success_cleanup",
+    "executor_failure_callback",
+    "reservation_charged_callback",
+    "executor_failure_exhaustion",
+    "reservation_charged_exhaustion",
+    "executor_failure_cumulative"
+  ],
+  "framing": {
+    "header_bytes": 60,
+    "record_bytes": 53
+  },
+  "qualification": "Version01 remains permanently withheld. Binary chunk/root/pending/current purpose joins refuse tested callback corruption and symlink replacement before credit; consumer validates exact pending/header/payload/metadata closure. Original engine result/iteration/convergence and12advance5checkpoint order independently verified with synthetic fixture;1e-12 reference tolerance. Deliberately changed batch control trace, not old per-pair authority. Explicit descriptor close remains caller responsibility; partial failed files retained, publication may exist after later error but zero in-memory credit/poison prevents continued use. Exclusive single-process namespace/immutable graph ownership and unchanged numerical runtime required; arbitrary concurrent hostile writes or monkeypatched OS guarantees not certified. No full capacity, genuine Owner/admission, numerical population, benchmark, source installation or launch claim."
+}

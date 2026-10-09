@@ -1,0 +1,47 @@
+{
+  "decision": "accepted-source-only",
+  "source_sha256": {
+    "matching_identity.py": "0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7",
+    "matching_annealing.py": "c04a26336e5da652b7cec5a357fcc8aeb596ef30359526102ffad8c82964acdc",
+    "baseline_matching_identity.py": "f011658abf3b56b04a0ec33a7bdfed2c68e2e2e79791aa96c5ca7f8fd1653f89",
+    "baseline_matching_annealing.py": "1d1377bd1faab3b563ff6d07c2e55908c556b71fb5add4126d5860d481a099fe"
+  },
+  "checks": [
+    "sourcepin_matching_identity.py",
+    "sourcepin_matching_annealing.py",
+    "sourcepin_baseline_matching_identity.py",
+    "sourcepin_baseline_matching_annealing.py",
+    "accepted_annealing_baseline",
+    "full_inverse_matching_identity.py",
+    "full_inverse_matching_annealing.py",
+    "unchanged_functions_matching_annealing.py",
+    "unchanged_functions_matching_identity.py",
+    "four_to_two_same_call",
+    "public_fresh_identity_bytes",
+    "fallback_mutable",
+    "fallback_graph_subclass",
+    "fallback_config_subclass",
+    "fallback_state_subclass",
+    "replacement_pair_fallback",
+    "replacement_identity_validator_fallback",
+    "error_graph_first",
+    "error_config",
+    "error_fresh_bytes",
+    "error_state",
+    "public_graph_validation_preserved",
+    "operations_state_10",
+    "operations_state_1000",
+    "no_persistent_state"
+  ],
+  "qualification": "Exact public validation and current-byte encoding retained; check reuses only its immediately preceding pair validation in exact immutable graph/plain config/state domain. No cross-call cache or changed arithmetic/RNG/checkpoint functions. Observational profiling used only to count original validator calls. Existing exclusive ownership/frozen runtime assumption required: arbitrary transitive global/helper/code mutation, malicious state field callbacks, concurrent mutation and fenv changes are not certified. Removed duplicate validation allocations and added eligibility operations alter resource/asynchronous failure boundaries; no universal MemoryError/error-trace equivalence or speedup claim. No scientific data, source installation, entry release, authority or launch.",
+  "resources": {
+    "seconds": 30,
+    "AS_bytes": 268435456,
+    "FSIZE_bytes": 4194304,
+    "affinity": [
+      3,
+      4
+    ],
+    "nice": 10
+  }
+}

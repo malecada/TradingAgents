@@ -1,0 +1,46 @@
+{
+  "decision": "accepted-source-only-with-ledger-correction",
+  "driver_sha256": "1d4017faa8e0e617d7b3c8189075299eb16d96f949e0787e883410fd61e3bd2b",
+  "journal_sha256": "16d8c368195a166df0fbdf6f24b7ab0449b1cc06c122746dc132babbe97af06b",
+  "executor_sha256": "6d1ad3a720eec15f63c7fd6423a9f0c92b4e5020c0d9962ef825f8b5cf73d34a",
+  "evidence": {
+    "RESULT01.json": "44182f07ea5e930d97b5a1bdebc7e5208c420f795d7551dce67211e85a33e5bc",
+    "STREAM02.json": "baaf76321b7615dd059aeab1a588a58fbff2e8b8f074c4480df163ee60c6e834",
+    "driver01.py": "79f62e3d893801372378c86ff9d8e0631c334b7619388d24da6f1ec666f66ca6",
+    "stream02.py": "a2b43ec79837c86efdf0b96f926d7f003fe11d35547c7f3dec0b0b83ff4bd33f"
+  },
+  "checks": [
+    "exact_driver_inverse",
+    "unchanged_tasks_batch_AST",
+    "unchanged8accepted02_IO_primitives",
+    "latest_payload_root_and_earlier_batch_corruption_refused",
+    "actual64node_motif_tasks_across48batch",
+    "single_local_lifetime_exact_bounded_f32",
+    "sink_primary_generator_index_journal_cleanup",
+    "token_cap_before_work",
+    "10stream_cases_short_extra_misorder_priorpurpose_workload_closemutation_pending_root_header"
+  ],
+  "arithmetic": {
+    "batch_cells": 4096,
+    "per_graph_batches": [
+      14675,
+      17700,
+      16006,
+      14649,
+      12356,
+      12358,
+      13815
+    ],
+    "batch_count": 101559,
+    "retained_files": 304677,
+    "record_bytes": 53,
+    "header_bytes": 92,
+    "conditional_logical_journal_bytes": 22111270537,
+    "fixed_token_payload_bytes": 17061912,
+    "max_token_cap": 67108864,
+    "additional_logical_sweeps": 6,
+    "additional_logical_read_bytes": 132667623222
+  },
+  "correction": "Author101555batch/304665file ledger rounded total across graph boundaries. Actual driver resets each graph:101559batches/304677files. Original failed101555 assertion preserved. Source correctness accepted; original ledger quantity not accepted.",
+  "qualification": "Reuses accepted02 numeric12advance5checkpoint evidence; routing deterministic callbacks are not numerical equality.168B/batch fixed token payload excludes Python headers,bounded reader/parsed records/runtime. Historical confirmed_post_sink counters do not certify currentness after later mutation; final rejoin refuses success, sink effects cannot roll back. All files must remain local through final join:offload/retirement blocker. Exact conditional ledger excludesfilesystem/outputs/checkpoints/scratch/physicalIO; six additional logical sweeps are costs, no speedup. Exclusive ownership/frozen numeric runtime assumptions; no hostile concurrency proof. Source-only, not genuine authority, installation, capacity, benchmark, empirical permission or launch. Prior withholdings unchanged."
+}

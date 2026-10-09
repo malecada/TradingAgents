@@ -1,0 +1,33 @@
+{
+  "decision": "withheld-source",
+  "candidate_sha256": {
+    "pair_executor.py": "6d1ad3a720eec15f63c7fd6423a9f0c92b4e5020c0d9962ef825f8b5cf73d34a",
+    "batch_journal.py": "34113867e8690e8d6a37d6b345c5f3501c920ed35cde77bef741c0513860b654"
+  },
+  "root_design_sha256": "14cd659c2aaf63f6c283f58535dfadd6dce80e174e155ca96ddd2b350faf171d",
+  "reproduction_sha256": "9d1342d06c7cdc8e58f58f605223e8a27a5063b7e0ba8c523129bfc3d2ec371c",
+  "findings": [
+    {
+      "id": "pending-rejoin",
+      "location": "batch_journal.py run_batch second boundary through complete publication",
+      "observed": "Second boundary overwrites pending with {}. run_batch returns success, cells=1, poisoned=false; completed pending_sha256 does not match durable pending body.",
+      "required": "Rejoin exact durable pending bytes/type/path identity after callbacks and before complete credit."
+    },
+    {
+      "id": "root-rejoin",
+      "location": "batch_journal.py root descriptor/publication",
+      "observed": "Second boundary renames root and replaces declared path with empty directory. run_batch returns success and credits1 while complete is only in moved directory; declared root has no complete.",
+      "required": "Bind/check root path and descriptor identity through callback/publication/cleanup; reject redirection or symlink replacement."
+    },
+    {
+      "id": "purpose-postcallback",
+      "location": "batch_journal.py executor return to records append",
+      "observed": "Executor mutates purpose.ordinal from0 to999 after pre-call check. run_batch returns success with ordinal0 and hash no longer matching supplied purpose.",
+      "required": "Rejoin owned purpose/task records after every external callback and at final publication or snapshot immutable bounded records before invoking callbacks."
+    }
+  ],
+  "positive_check": "Boundary exception identity retained; object poisoned, cells0, pending retained and complete absent. All four fixtures closed explicitly.",
+  "numerical_review": "Static PairExecutor retains original engine create/advance/score-only and nested schedule/done ordering with cumulative preallocation allowance and pre-callback checkpoint charging. This review stops at concrete journal blockers; no independent numerical equivalence acceptance or complete cleanup proof asserted. Author tests remain author evidence.",
+  "capacity": "JSON per-cell records contain purpose SHA hex and score hex plus pending purpose list, substantially more tail bytes than scalar payload. No full415968128-cell capacity admission follows.",
+  "qualification": "Engineering operational trace intentionally differs from old per-pair leases/publication. Withheld for explicitly requested callback/final-evidence domain, not because old trace differs. No authority/installation/empirical launch claim; Main/native untouched. Tiny stdlib-only fixtures at30s/256MiB AS/4MiB FSIZE/CPU3,4/nice10. No original arrays, numerical imports or benchmark. Missing .json design lookup resolved to actual .md; no source edits."
+}

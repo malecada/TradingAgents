@@ -1,0 +1,118 @@
+--- driver.py
++++ driver02.py
+@@ -2,7 +2,6 @@
+ import hashlib
+ import json
+ import math
+-import struct
+ import numpy as np
+ from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+ from tradingagents.research.onchain_replication.neighborhoods import graph_hash, node_order_hash
+@@ -44,43 +43,8 @@
+             del task
+ 
+ 
+-# Each batch has exactly three files; fixed-width tokens retain no score bodies.
+-TOKEN = struct.Struct('>QQQ32s')  # device, inode, byte extent, SHA256
+-SUFFIXES = ('.pending.json', '.records.bin', '.complete.json')
+-
+-
+-def _root(journal, original):
+-    require((str(journal.root), tuple(journal.pin)) == original, 'journal root binding changed')
+-    journal._root()
+-
+-
+-def _capture(journal, batch, records, original):
+-    _root(journal, original)
+-    bodies = [journal._read(f'{batch:08d}'+suffix) for suffix in SUFFIXES]
+-    # Captured bytes are accepted only after full closure validation and exact
+-    # bounded-body/pin readback. No callback occurs inside this bracket.
+-    require(records == journal.read_complete(batch), 'closure capture record mismatch')
+-    tokens = bytearray()
+-    for suffix, (body, pin) in zip(SUFFIXES, bodies, strict=True):
+-        journal._read(f'{batch:08d}'+suffix, body, pin=pin)
+-        tokens.extend(TOKEN.pack(*pin, len(body), hashlib.sha256(body).digest()))
+-    _root(journal, original)
+-    return tokens
+-
+-
+-def _rejoin(journal, batch, tokens, original):
+-    _root(journal, original)
+-    require(len(tokens) == 3*TOKEN.size, 'closure token extent differs')
+-    for offset, suffix in enumerate(SUFFIXES):
+-        dev, ino, size, digest = TOKEN.unpack_from(tokens, offset*TOKEN.size)
+-        body, _ = journal._read(f'{batch:08d}'+suffix, pin=(dev, ino))
+-        require(len(body) == size and hashlib.sha256(body).digest() == digest,
+-                'completed batch changed after consumer')
+-    _root(journal, original)
+-
+-
+ def drive(graph, dictionary, *, descriptor, policy, journal, executor, consumer,
+-          max_chunk_bytes, max_closure_token_bytes):
++          max_chunk_bytes):
+     """Consume a fresh journal; consumer(ordinal,center,motif_start,f32_bytes).
+ 
+     Consumer must synchronously copy/persist chunks, treating everything as
+@@ -88,7 +52,6 @@
+     Journal03 must drop each graph reference before requesting the next task.
+     """
+     delivered = 0
+-    attempted_sink_cells = 0
+     upstream = None
+     primary = None
+     try:
+@@ -104,12 +67,6 @@
+                 and descriptor['purpose_schema_version'] == 2 and n > 0 and descriptor['rows'] == n
+                 and descriptor['motifs'] == len(motifs) == 32 and descriptor['cells'] == n*32
+                 and journal.max_cells == n*32, 'full ordered MCM denominator differs')
+-        batch_count = (n*32 + journal.batch_cells-1)//journal.batch_cells
+-        token_bytes = batch_count*3*TOKEN.size
+-        require(type(max_closure_token_bytes) is int and 0 < max_closure_token_bytes <= 64*1024**2
+-                and token_bytes <= max_closure_token_bytes, 'closure token allowance exceeded')
+-        tokens = bytearray(token_bytes)
+-        original_root = (str(journal.root), tuple(journal.pin))
+         scope = descriptor['workload_sha256']
+         require(type(scope) is str and len(scope) == 64 and all(c in '0123456789abcdef' for c in scope), 'workload digest required')
+         require(graph_hash(graph) == descriptor['graph_hash'] and node_order_hash(graph.node_ids) == descriptor['node_order_hash'], 'graph/order differs')
+@@ -137,10 +94,6 @@
+                 require(record[0] == start+offset and record[1] == keys[offset]
+                         and type(record[2]) is float and math.isfinite(record[2]) and 0 <= record[2] <= 1,
+                         'completed ordered score differs')
+-            batch = journal.batch-1
+-            token = _capture(journal, batch, records, original_root)
+-            token_start = batch*3*TOKEN.size
+-            tokens[token_start:token_start+len(token)] = token
+             offset = 0
+             while offset < count:
+                 ordinal = start+offset
+@@ -148,28 +101,22 @@
+                 width = min(count-offset, 32-motif, max_chunk_bytes//4)
+                 payload = np.asarray([r[2] for r in records[offset:offset+width]],dtype=np.float32).tobytes()
+                 require(len(payload) == 4*width <= max_chunk_bytes, 'output bound differs')
+-                attempted_sink_cells += width
+                 consumer(ordinal, center, motif, payload)
++                delivered += width
+                 offset += width
+-            _rejoin(journal, batch, token, original_root)
+-            delivered += count
+         try:
+             next(upstream)
+         except StopIteration:
+             pass
+         else:
+             raise ValueError('extra MCM task beyond full coverage')
+-        require(journal.batch == batch_count, 'final batch count differs')
+-        for batch in range(batch_count):
+-            start = batch*3*TOKEN.size
+-            _rejoin(journal, batch, memoryview(tokens)[start:start+3*TOKEN.size], original_root)
+         require(delivered == journal.cells == n*32, 'incomplete MCM coverage')
+         return {'status':'engineering_ordered_cells_delivered','completed_rows':n,
+                 'completed_cells':delivered,'output_bytes':4*delivered,
+                 'workload_sha256':scope,'representation_complete':False}
+     except BaseException as error:
+         primary = error
+-        error.add_note('MCM delivery incomplete: '+json.dumps({'confirmed_post_sink_cells':delivered,'attempted_sink_cells':attempted_sink_cells,
++        error.add_note('MCM delivery incomplete: '+json.dumps({'confirmed_sink_cells':delivered,
+             'journal_completed_cells':journal.cells,'remaining_disposition':'unavailable; current sink chunk may be partial; no retry'},sort_keys=True))
+         raise
+     finally:

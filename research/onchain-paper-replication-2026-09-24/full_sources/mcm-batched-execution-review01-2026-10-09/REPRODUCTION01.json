@@ -1,0 +1,51 @@
+[
+  {
+    "case": "pending_mutation",
+    "returned_success": true,
+    "credited_cells": 1,
+    "poisoned": false,
+    "error": null,
+    "complete_exists_at_fd_root": true,
+    "complete_exists_at_declared_root": true,
+    "current_purpose_ordinal": 0,
+    "pending_hash_matches": false,
+    "recorded_ordinal": 0,
+    "purpose_hash_matches": true
+  },
+  {
+    "case": "root_replacement",
+    "returned_success": true,
+    "credited_cells": 1,
+    "poisoned": false,
+    "error": null,
+    "complete_exists_at_fd_root": true,
+    "complete_exists_at_declared_root": false,
+    "current_purpose_ordinal": 0,
+    "pending_hash_matches": true,
+    "recorded_ordinal": 0,
+    "purpose_hash_matches": true
+  },
+  {
+    "case": "purpose_mutation",
+    "returned_success": true,
+    "credited_cells": 1,
+    "poisoned": false,
+    "error": null,
+    "complete_exists_at_fd_root": true,
+    "complete_exists_at_declared_root": true,
+    "current_purpose_ordinal": 999,
+    "pending_hash_matches": true,
+    "recorded_ordinal": 0,
+    "purpose_hash_matches": false
+  },
+  {
+    "case": "boundary_exception",
+    "returned_success": false,
+    "credited_cells": 0,
+    "poisoned": true,
+    "error": "RuntimeError",
+    "complete_exists_at_fd_root": false,
+    "complete_exists_at_declared_root": false,
+    "current_purpose_ordinal": 0
+  }
+]

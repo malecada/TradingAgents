@@ -1,0 +1,21 @@
+{
+  "status": "PASS_SYNTHETIC_STREAM_ROUTING_ONLY",
+  "checks": [
+    "all_center_motif_purpose_f64_to_f32_order",
+    "executor_failure:original_error_and_partial_unavailable",
+    "consumer_failure:original_error_and_partial_unavailable",
+    "short:refused_before_sink_and_closed",
+    "malformed:refused_before_sink_and_closed",
+    "mutated_purpose:refused_before_sink_and_closed",
+    "reader_tamper:refused_before_sink_and_closed",
+    "one_local_across_48cell_batches",
+    "generator_index_journal_cleanup"
+  ],
+  "actual_affinity": [
+    0,
+    1
+  ],
+  "source_sha256": "74d1105b595c65932b23dd0ac4232e5c07e55215b0c3375f3bd351bbc6b22478",
+  "journal_sha256": "16d8c368195a166df0fbdf6f24b7ab0449b1cc06c122746dc132babbe97af06b",
+  "numeric_executor": "deterministic tiny callback; not scientific equivalence or authority"
+}
