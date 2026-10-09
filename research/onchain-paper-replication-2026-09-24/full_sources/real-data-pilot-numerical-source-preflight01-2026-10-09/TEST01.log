@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 75, in _source_git_batch
+    return subprocess.run(
+           ~~~~~~~~~~~~~~^
+        ["git", "cat-file", "--batch" if bodies else "--batch-check"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cwd=root, input=b"\n".join(requests) + b"\n",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', 'cat-file', '--batch-check']' returned non-zero exit status 128.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-numerical-source-preflight01-2026-10-09/verify.py", line 11, in <module>
+    ad=admit(root=ROOT,registration=gate,experiment=name,source=source,_own_claim=name)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 294, in admit
+    _source_files(root, source, design_source, exp["source_files"])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 169, in _source_files
+    batch(pending)
+    ~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 132, in batch
+    extents = _source_batch_parse(_source_git_batch(root, requests), len(requests))
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 80, in _source_git_batch
+    raise ValueError("committed source/registration cannot be verified") from exc
+ValueError: committed source/registration cannot be verified

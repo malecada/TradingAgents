@@ -283,12 +283,8 @@ def _archive_namespace(ad, s, p, *, fresh=False):
 def admitted(ad, job, *, fresh_archive=False):
     schema(job)
     name,s = next(iter(job['payload']['representation_jobs'].items()))
-    from .job import required_sources
-    from .matching_pair import hash_string
-    numerical=_read(ad,s['pair_checkpoint_input'])['numerical_source']
-    require(type(numerical) is dict and set(numerical)=={'commit','files'} and type(numerical['files']) is dict and set(numerical['files'])==required_sources(),'numerical source closure differs')
-    hash_string(numerical['commit'],40)
-    require(all(ad.experiment['source_files'].get(path)==pin for path,pin in numerical['files'].items()),'numerical source differs from current execution')
+    from .matching_owner import validate_numerical_source
+    validate_numerical_source(ad,_read(ad,s['pair_checkpoint_input'])['numerical_source'])
     p = validate_plan(_read(ad, s['real_pilot_input']))
     _bind_resources(ad,job,p)
     expected_archive={'policy_input':s['compact_archive_input'],'transport_input':s['compact_archive_transport_input']} if 'compact_archive_input' in s else None
