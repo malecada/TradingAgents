@@ -1,0 +1,62 @@
+{
+  "decision": "accepted_tools_source_selection_logic_only",
+  "at": "2026-10-09T11:00:33.319493+00:00",
+  "helpers": {
+    "select": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full28increment12/select12.py",
+      "sha256": "ed3ea7b5bbd63e62559eb7998b52eae527b803fe6e13a49541975f06cede9a9a"
+    },
+    "capture": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full28increment12/capture12.py",
+      "sha256": "ad1f1ee4454c25f2df035d37f181685028142489d8a5a96278a3889348492c6c"
+    },
+    "recover": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full28increment12/recover12.py",
+      "sha256": "c2afca381314956fe6d80fa3f9c42b1154a37215aa1770738aaa88d44ed2d529"
+    }
+  },
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full27-outcome-increment-tools-review01-2026-10-09/TOOLS_REVIEW01.json": "026d250adfdea4a4cd811e755cada03715b4e6a302267190c4956c32e3de51d2",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full27-outcome-increment-tools-review01-2026-10-09/returned11/RECOVERY_REVIEW01.json": "c9f8a3f5a797afc4993ce5703968ea20f17743c7e907264d9171d065466f4c9d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/FRESH_GIT_RECOVERY11.json": "b1a16d01de3045b409aef9487dfcea1d7481d525756c1ac400651c177a4d9075",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/CAPTURE11.json": "a6320f740e696defbc55019fe696b9167039b6183f9517412739f20b2abc948d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/SELECTION11.json": "9f50f6da5d3d70523ba10a57d606bbf2b0de4e1559b955dda9f79caf76adadfc",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/failed-outcome-increment11.tar": "9538c18f1bd78d9461f0624ee130f88235fd515b478998d095f7ad7071496246",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/fresh-git-recovered-outcome11.tar": "9538c18f1bd78d9461f0624ee130f88235fd515b478998d095f7ad7071496246",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/actual_external_archive_blob_return.stdout": "9538c18f1bd78d9461f0624ee130f88235fd515b478998d095f7ad7071496246",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/select11.py": "0b0cbca77d3ec74798eecd4a8381d06bc72febd006506e455acb1e63a3989e1b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/capture11.py": "21182e58932d0eebea42a992a4a81441752800b7655fd007dbfd4c969e40dca7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/recover11.py": "4bce08e9ffcd4c8c063872f88069a2aac44bffc2d5c3a3b9ab2aa09e0e013ca1"
+  },
+  "baseline_source": "1d23956e7057f11f1e57bf6c767a3a768981846f",
+  "exact_recovered_duplicate_exclusions": [
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/failed-outcome-increment11.tar",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/fresh-git-recovered-outcome11.tar",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome11/actual_external_archive_blob_return.stdout"
+  ],
+  "owned_public_directories": [
+    "real-data-pilot-full28-entry01-2026-10-09",
+    "real-data-pilot-full28-input-draft01-2026-10-09",
+    "real-data-pilot-full28-transport-binding01-2026-10-09",
+    "real-data-pilot-full28-allocation-review01-2026-10-09",
+    "real-data-pilot-full28-final-entry-review01-2026-10-09",
+    "pilot-full28-preparation-increment-tools-review01-2026-10-09"
+  ],
+  "empirical_output_scopes": [],
+  "checks": [
+    "capture/recover exact inverse after enumerated path/name/qualification substitutions only; mode100644 unchanged",
+    "select diff limited to authenticated baseline/6owned scopes/helper12 roster/identity28/no empirical scopes/selection11 ancestry/prose/output12",
+    "prior recovery source matches accepted returned11; capture and selection hashes joined; all three excluded archive bodies match actual returned archive SHA",
+    "unchanged prior regular rows reuse requires mode/size/bodyhash; existing secret/name/parent/type/singlelink/stability guards unchanged",
+    "actual baseline..HEAD plus HEAD working/index tracked diff selected; owned dirs add untracked public bodies, not blanket whole-tree replay",
+    "fresh bare and all declared outputs absent at review; exclusive archive/raw creation and no-alternates/13operation protocol unchanged"
+  ],
+  "limitations": [
+    "Tools were parsed/read only, not executed. No selection/capture/upload/fetch/claim/numerical execution.",
+    "64MiB bound is per regular preservation body, not a native cap or total archive bound.",
+    "Future actual selected content and returned typed archive require separate verification; name filters alone are not a universal secret detector.",
+    "Empty owned directories without selected descendants are not independently selected; empirical scopes intentionally empty. Symlink metadata preserved without reading target bytes.",
+    "Existing recovery writes final returned tar/receipt after exclusive freshbare/raw namespace checks; no stronger concurrent-writer exclusion claim.",
+    "Acceptance does not establish current remote availability, whole-tree/runtime completeness, POSIX reconstruction or retirement authority."
+  ]
+}
