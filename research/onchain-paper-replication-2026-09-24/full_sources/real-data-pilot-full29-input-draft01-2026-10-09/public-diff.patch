@@ -1,0 +1,246 @@
+--- public28/archive_policy
++++ draft29/archive_policy
+@@ -13,7 +13,7 @@
+     "schema_version": 1,
+     "shard_bytes": 4194304
+   },
+-  "remote_namespace": "ethpilot-20261009-28",
++  "remote_namespace": "ethpilot-20261009-29",
+   "schema_version": 1,
+-  "transport_identity": "553a31d3776219f2ef54ba0eef449dba08746d0ea8cc6c68ca120a37fe86ac84"
++  "transport_identity": null
+ }--- public28/archive_transport
++++ draft29/archive_transport
+@@ -17,7 +17,7 @@
+   "max_diagnostic_bytes": 1654523360,
+   "max_payload_bytes": 3940960571399,
+   "max_seconds": 28800,
+-  "namespace": "ethpilot-20261009-28",
++  "namespace": "ethpilot-20261009-29",
+   "rate_kbit": 262144,
+   "receipt_output": "archive-receipt.json",
+   "schema_version": 2,
+--- public28/execution_job
++++ draft29/execution_job
+@@ -13,7 +13,7 @@
+           "arm": "proposed",
+           "compact_archive_execution": {
+             "backend": "compact-archive-events-v1",
+-            "policy_sha256": "63ef9e97fbb17a58eb82dba415f341b683c697ef8c0f0f14bac24bba0ffb6cc0"
++            "policy_sha256": "47f6e1a858804d989aa13097ba467c8f71eb28c8176edcb63cb4eb4752b787dd"
+           },
+           "compact_execution": {
+             "backend": "resident-native-compact-current-owner-v1",
+@@ -90,7 +90,7 @@
+               "output": "float64_score",
+               "version": 2
+             },
+-            "policy_sha256": "85b287b0766ef9653c07a1fa3f7d659d836f783ccafb927b1f68e8645869f5cf"
++            "policy_sha256": "83b829ff7add88226e2aa76d4b14def768a849bb757a35a590dd8729a24035eb"
+           },
+           "required_graphs": [
+             "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+@@ -136,7 +136,7 @@
+     "start_reserve_bytes": 2684354560,
+     "storage_budget": {
+       "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+-      "experiment": "eth-paper-real-data-end-to-end-resource-20261009-28",
++      "experiment": "eth-paper-real-data-end-to-end-resource-20261009-29",
+       "kind": "real-pilot-writable-union",
+       "limits": {
+         "max_allocated_bytes": 21474836480,
+@@ -147,7 +147,7 @@
+       },
+       "roots": [
+         "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+-        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-28"
++        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-29"
+       ],
+       "schema_version": 2,
+       "shared_files": [
+--- public28/mcm_policy
++++ draft29/mcm_policy
+@@ -3,6 +3,20 @@
+     "authority_boundaries": "entry-batch-checkpoint-final",
+     "batch_cells": 4096,
+     "execution": {
++      "binding_timing": {
++        "format": "binding-lease-phases-v1",
++        "max_body_bytes": 640
++      },
++      "edge_cache_policy": {
++        "chunk_entries": 256,
++        "format": "adaptive-lazy-edge-cache-v1",
++        "max_edge_products": 16384,
++        "max_scratch_bytes": 262144
++      },
++      "geometry": {
++        "format": "provisional-pair-geometry-v1",
++        "max_body_bytes": 1536
++      },
+       "max_entries": 4096,
+       "max_key_bytes": 8388608,
+       "max_origin_bytes": 652458528,
+--- public28/pair_policy
++++ draft29/pair_policy
+@@ -27,7 +27,7 @@
+     "total_checkpoint_bytes": 269229056
+   },
+   "numerical_source": {
+-    "commit": "1d23956e7057f11f1e57bf6c767a3a768981846f",
++    "commit": "d6cf861d808ebcb67a25606209ce3eb3a4baae3a",
+     "files": {
+       "tradingagents/__init__.py": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5",
+       "tradingagents/research/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+@@ -37,11 +37,12 @@
+       "tradingagents/research/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+       "tradingagents/research/lifecycle.py": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+       "tradingagents/research/onchain_replication/__init__.py": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1",
++      "tradingagents/research/onchain_replication/adaptive_edge_policy.py": "31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af",
+       "tradingagents/research/onchain_replication/aggregation.py": "768c2ca743b2146fcc6bf606e4fa0bf41273ac15d06344d3a25a6aac78e8038f",
+       "tradingagents/research/onchain_replication/archive_chunks.py": "f26f1cb62334497494f9b02579f53be9e2238889a81f56c04fd4e781542b38fe",
+       "tradingagents/research/onchain_replication/archive_consume.py": "9cfa242b77e42c2385e3c4cb8e51086965cc7d42768f2c52364fa3fd4ec77dc5",
+       "tradingagents/research/onchain_replication/archive_control_history.py": "3ccfdeddd678a40e06192aa853fc3fbb53bb8825c86fd8b974ae31cbc591df67",
+-      "tradingagents/research/onchain_replication/archive_dispatch.py": "cdfa2fbc71b9d7c9919493652b3032710371df001e75b3fa07d8df86c83658c2",
++      "tradingagents/research/onchain_replication/archive_dispatch.py": "0c72d2593b036d54a654905e5ce88531b3d1f1c805196caeee8943e1d508a082",
+       "tradingagents/research/onchain_replication/archive_owner_operations.py": "720c4b2484a268a0e94d8d978a347bbce7bcc3bfdd02cee159fcfa25565e421f",
+       "tradingagents/research/onchain_replication/archive_owner_policy.py": "3b57727513c59144ae7420aebb71be1098a0504a8702dae374e68a382f11f60a",
+       "tradingagents/research/onchain_replication/archive_owner_seal.py": "dc010ad083293e4bb7230adc879f410785bb92bb238dde95d9cf4f03ce82cef5",
+@@ -51,17 +52,17 @@
+       "tradingagents/research/onchain_replication/archive_pair_writer.py": "87464f872057a7483a7cc7a4a160541f5f56b1e0225b6dbefce6fb0bd85329f6",
+       "tradingagents/research/onchain_replication/archive_read_control_capacity.py": "29d4c2dad463a977c99740b09d46199814dfdc3360c559bfdb12aacdd07d26b1",
+       "tradingagents/research/onchain_replication/archive_read_controls.py": "c2cf6e17cc62012fbed8f282b3284e776a08ffbe01c4aea2ae2a058336ce3fd1",
+-      "tradingagents/research/onchain_replication/archive_transport.py": "d1825c718b48d4267653405d9b637074b4a6d4bf1677842044418a2e8111aa13",
++      "tradingagents/research/onchain_replication/archive_transport.py": "adfb0cd6636f44cff36e49330ae8ef9a47649c4c1d46ce96dad6ff8d6f8c9f31",
+       "tradingagents/research/onchain_replication/archived_pair_log.py": "e01d267c54be8bc786478d5647c90505f75f66dd96e1d57349ba3f76e6259b3f",
+       "tradingagents/research/onchain_replication/archived_stage.py": "00ed998275ef143ebbac77dae222e53ebbf2aac7c05b6aa82795221330d40216",
+       "tradingagents/research/onchain_replication/array_neighborhoods.py": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+       "tradingagents/research/onchain_replication/baselines.py": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a",
+       "tradingagents/research/onchain_replication/batched_driver.py": "047a0762cc0eee53e0ad440339238baeb527158c3a2f33293164e0b91b7a395b",
+       "tradingagents/research/onchain_replication/batched_journal.py": "0d96f0f3fbe7a320161d8bd16ee7d0d0b0de0384cfbce22459dcf9a8aa9e92a4",
+-      "tradingagents/research/onchain_replication/batched_numeric_execution.py": "77ecaebb12f63d01a3784267d493c76683abfccd5c3cc20be3b8f8d14b7663d4",
+-      "tradingagents/research/onchain_replication/batched_numeric_reuse.py": "a9df46197c1284f7f6287cc5b04ded33cb9aae58eb9eca14d91f8bd6b8253440",
++      "tradingagents/research/onchain_replication/batched_numeric_execution.py": "1a704a8ae50bcdcaa067737454f36ebf4b3c82c65313d645bf61f5764b0e1c3c",
++      "tradingagents/research/onchain_replication/batched_numeric_reuse.py": "378bfc2aa48ab71c41b1b48594be384bd7deda521acb387ce77b1057f40a10fc",
+       "tradingagents/research/onchain_replication/batched_offload_semantics.py": "fdf22e8b709f257f6805ded70944485f47402f975cddfa011264e09374de3661",
+-      "tradingagents/research/onchain_replication/batched_pair_executor.py": "fea5c26c66e7047ad157fc0dc499918f50c2c4abde409df5b3c1699a8e6b12b3",
++      "tradingagents/research/onchain_replication/batched_pair_executor.py": "f7c51b9423a45c0e61defd9260924acb1e0611d5c8727de8abb96e42d1ad147e",
+       "tradingagents/research/onchain_replication/batched_pilot_reservations.py": "dfbdaf6019e7e63c23c74fc33455a9c661fbcee276882d88ea0990f2e08e25c6",
+       "tradingagents/research/onchain_replication/btc.py": "775838b3fc00534849d747f38c942f13187762b81c35ef5b1af52d67882a2dd0",
+       "tradingagents/research/onchain_replication/btc_source.py": "deb5f4003ab63a69f945756f1e40fdd6212733331b2ef0133bab2ba0f69acead",
+@@ -89,12 +90,12 @@
+       "tradingagents/research/onchain_replication/compact_graph_artifacts.py": "fd1395b0c274b1b51dc26365fd0c2954f904492cf77ddb3d553ce40c6dc6bf8a",
+       "tradingagents/research/onchain_replication/compact_matcher.py": "f479a737b6a841c2948a4df7e1af6492fe308af6a4ece50ce4b0e3e3e8b9e42b",
+       "tradingagents/research/onchain_replication/compact_mcm.py": "228f9199bf5b12f104dd91ee678fb12792d0295dc9adf9a3ddd8fbaeb2c4c574",
+-      "tradingagents/research/onchain_replication/compact_mcm_batched.py": "2054d914381d2f267625097ac642d8c6df857785ed2ddc7715054df6ced5d591",
++      "tradingagents/research/onchain_replication/compact_mcm_batched.py": "5f3b842d65cb4ee78d07cc7f7340955518fbca36086b99586aaa5036f2aa0fe0",
+       "tradingagents/research/onchain_replication/compact_mcm_output.py": "7231e53094e44885c93b1e9cbb682183be1061bd5a362d435443ebe30e6e8241",
+       "tradingagents/research/onchain_replication/compact_mcm_publication.py": "713d92d8aee98ae3ab8b8cdd6b47b10369c3e2a62ea5ea3fc5ca6a2730467b46",
+       "tradingagents/research/onchain_replication/compact_native_features.py": "361de501e325663a65348059bcb5bc3d1e58d14d2c5b833e589b716c6343e1f7",
+       "tradingagents/research/onchain_replication/compact_native_producer.py": "8e46984f21c04fedfd91f235829de0aa7109da476680a19447c2656edb17aa54",
+-      "tradingagents/research/onchain_replication/compact_owner.py": "205bf28317cbcd8472774d1a05f0ed9ca56d4597df11418e1aaeb56cfd6c618e",
++      "tradingagents/research/onchain_replication/compact_owner.py": "fa1221098270c6d4037ed74ed98541828b3da3dcc1bb07862c1d8b3bfa017188",
+       "tradingagents/research/onchain_replication/compact_pair_log.py": "70691d78c0f34184db43aa93234685eb3e6100c89573af6c1bc520bafac7e756",
+       "tradingagents/research/onchain_replication/compact_policy.py": "37918e01e3de476970493afa9e78e40bcfa2f841cd7ee59fbc211c7d579730dc",
+       "tradingagents/research/onchain_replication/compact_publication.py": "a620e5f84c2ec5095ae1715aae4a7962e64180075d139e424c671a2d486e935a",
+@@ -117,20 +118,22 @@
+       "tradingagents/research/onchain_replication/feature_residency.py": "4ea5370958b65edf0d37950f12d358ab562291c786f28a287514c77c3838ddcd",
+       "tradingagents/research/onchain_replication/financial_execution.py": "e16402d8625ed9b1c9fe5d308d18867b811b3acb2bb90b2e0bcb7132cd4a602e",
+       "tradingagents/research/onchain_replication/gat.py": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6",
++      "tradingagents/research/onchain_replication/geometry_publication.py": "28014e741d8ea6718efd18710bcb32522e5eca1e650d3b6af732731cf42e3426",
++      "tradingagents/research/onchain_replication/geometry_summary.py": "c37e25d12242db22b6cf19fdc1b637042d7e308a668ab38c6e33d7d31f18b46e",
+       "tradingagents/research/onchain_replication/graph_baselines.py": "f284a85a0ce3aa5dee24c748c6a376d9d44a2d775409b874540215ff0e594907",
+       "tradingagents/research/onchain_replication/graph_ledger_continuation.py": "c204412df8e0733e932feef171431ec50487181bb012c771a783ac63b807c2d8",
+       "tradingagents/research/onchain_replication/graph_legacy_coverage.py": "da4bccabb15f69ce55024cc291f963498ffdc473c30d1d69d7d8e4ea7a7c20e7",
+       "tradingagents/research/onchain_replication/graph_production.py": "ef3ba95b235725f7d969020b9129b96b342ec204d1e3a93ee9a9a57889839bbc",
+       "tradingagents/research/onchain_replication/graph_residency.py": "1ded72ad7c25135780a718455b430eafa020e8f3de6ca608b04e005b798609a6",
+       "tradingagents/research/onchain_replication/graph_store.py": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da",
+-      "tradingagents/research/onchain_replication/grouped_offload.py": "39498828cf221a05b9e4458bb54db12ec5129a5504efe671ca47230d7d55a0a2",
++      "tradingagents/research/onchain_replication/grouped_offload.py": "9ebb628a35feca852475b5e255d4ddf952d383b7a5f1a2fc08ad0054c90da3ea",
+       "tradingagents/research/onchain_replication/grouped_offload_semantics.py": "45e261dc36a24f6c805fcba18ffc4f4c90d1bd2f0f04955944aeea6e49b1f6e1",
+       "tradingagents/research/onchain_replication/held_score_consumer.py": "35da29691a5ef6c23f4bbdf178a55fd51bb6779214c1d38fb5a162e712ea0d41",
+       "tradingagents/research/onchain_replication/hub_census_production.py": "b9c406f19c32f2b78409b9a3260edebcad0ced042e9e4d187ff44e574d763d2a",
+       "tradingagents/research/onchain_replication/hub_edges.py": "e5858170437f6d9f0a994315e2b2aa30d502844cf0a1c1b8ec782a1e693887e9",
+       "tradingagents/research/onchain_replication/import_metadata.py": "1c9455bc80b8f424bf63d6fdd5b94338ce54c14ead720990a2f787aef9e93dfe",
+       "tradingagents/research/onchain_replication/imported_authority_interval.py": "e61ef97f883ed9d27107f6316b774697b8949d83c313928150a0ae717b283f6f",
+-      "tradingagents/research/onchain_replication/imported_authority_lease.py": "bf3c3669a6907305b351adb43867822f9500d84d2c5d3b66b16a5650a0291b0a",
++      "tradingagents/research/onchain_replication/imported_authority_lease.py": "439013e29914ea8aa3b65beb3ef36f12bd4fb8b5f753f4e10d471eb17ba1cd6d",
+       "tradingagents/research/onchain_replication/imported_mcm_identity.py": "75d4e269ad4e87a34061e8331381af417b3c850346d71711902fcd5bbf322c82",
+       "tradingagents/research/onchain_replication/job.py": "2f0f33fe858dfcd2b5f1d76f8aaefe3ba87a333992cf89183f0fa254d17380f0",
+       "tradingagents/research/onchain_replication/job_payload.py": "0303ea2e516e57e1d4a850b3eadf13b3b23ee047b48df1417e8ae559ff171ab0",
+@@ -138,13 +141,13 @@
+       "tradingagents/research/onchain_replication/mapped_graph.py": "c5e93b325599a82bf65e5b31074e9c76a73b25d479ddea7d3ff3687e75f7b197",
+       "tradingagents/research/onchain_replication/matching.py": "e5a4cb7966a53522532158a13ef7293d4d081a26cffba56c2eb0761a628c72a6",
+       "tradingagents/research/onchain_replication/matching_ancestry.py": "51221522256e3f1babb03512a8dad4d293d12638c4579d4bddcf92945db5e4bc",
+-      "tradingagents/research/onchain_replication/matching_annealing.py": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46",
+-      "tradingagents/research/onchain_replication/matching_checkpoint.py": "d5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c",
++      "tradingagents/research/onchain_replication/matching_annealing.py": "b9229da33098c6c00c2e0e85a0a25a7d1a6f7968befbf82e30a092c424dd967e",
++      "tradingagents/research/onchain_replication/matching_checkpoint.py": "309f260cdd0956966ecbd588df9da11f9c45f241ddeab93fb280c96f8ddf9f4a",
+       "tradingagents/research/onchain_replication/matching_death.py": "f76a96274e77d4f728d9d7e0b93db2a8bb4e663654ae59c0480f6c66192c3ff8",
+       "tradingagents/research/onchain_replication/matching_hardening.py": "3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c",
+       "tradingagents/research/onchain_replication/matching_identity.py": "0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7",
+-      "tradingagents/research/onchain_replication/matching_immutable_session.py": "c7c498ec5fa00f2e1bc501e47e8c106387ec63d3d6b93197750a99e1d9cc4e07",
+-      "tradingagents/research/onchain_replication/matching_owner.py": "b7cb394c8c65a2d9688a9557c991a2e694b48fc0b3d2317f71a51c857680dfaa",
++      "tradingagents/research/onchain_replication/matching_immutable_session.py": "c3fc9b7a9a456f269eded17ba5ece492edccc91e2fc8e6563a0febcca80baeef",
++      "tradingagents/research/onchain_replication/matching_owner.py": "7a7eaf323645007cadd56314e2877f1ea3c5cc1dea499b918108cba7f8519e38",
+       "tradingagents/research/onchain_replication/matching_pair.py": "4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e",
+       "tradingagents/research/onchain_replication/matching_policy.py": "5d552673fb772f61344d212606a5d9d2c22c91c8de44dfa501d57422c9b4e739",
+       "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332",
+@@ -212,7 +215,7 @@
+       "tradingagents/research/onchain_replication/treatment_admission.py": "65ffe3efecd0c972341ec2af8deaa2594560b5a36bc9ca2dcd3e1b8da006d81e",
+       "tradingagents/research/onchain_replication/treatment_contract.py": "fb148eb922431bdd46c2bd4c310d48b180d1f040c50e1d64d63ca0dc859a11fc",
+       "tradingagents/research/onchain_replication/treatment_production.py": "210db787eaf830974357831c4142260baf8d0043e8049f6794f31f05eb1d208c",
+-      "tradingagents/research/onchain_replication/typed_payload_operations.py": "275661a497b1759748342a88e132652570923cad9feafa40bc115d6df755e42f",
++      "tradingagents/research/onchain_replication/typed_payload_operations.py": "a5668d7fe9c261c1908170969b39d675947c19beb1d04fad824f6f6a4e801f56",
+       "tradingagents/research/onchain_replication/typed_payload_policy.py": "77e4c951e13e8ffdad0487b19e3b28a8a271dbe04b0b4f3ab19d047b42ae7cc1",
+       "tradingagents/research/onchain_replication/typed_score_store.py": "433bab5d6c8bcb9581ff7e4b2bf12e61ddb0ffc60ed0e29b48cf468ac3ce5bee",
+       "tradingagents/research/onchain_replication/typed_tail_binding.py": "985bb44185e9a5dc6293d2e7b25c8815c2390c7f0326a568043d562d3f731706",
+--- public28/pilot
++++ draft29/pilot
+@@ -5,7 +5,7 @@
+   },
+   "asset": "ETH",
+   "batch_size": 16,
+-  "cell_id": "real-eth-seven-graph-joint-update-resource28",
++  "cell_id": "real-eth-seven-graph-joint-update-resource29",
+   "decisions": [
+     "2022-06-07T00:00:00Z",
+     "2022-06-08T00:00:00Z",
+@@ -549,7 +549,7 @@
+     "start_reserve_bytes": 2684354560,
+     "storage_budget": {
+       "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+-      "experiment": "eth-paper-real-data-end-to-end-resource-20261009-28",
++      "experiment": "eth-paper-real-data-end-to-end-resource-20261009-29",
+       "kind": "real-pilot-writable-union",
+       "limits": {
+         "max_allocated_bytes": 21474836480,
+@@ -560,7 +560,7 @@
+       },
+       "roots": [
+         "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+-        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-28"
++        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-29"
+       ],
+       "schema_version": 2,
+       "shared_files": [
+--- public28/producer_plan
++++ draft29/producer_plan
+@@ -11,7 +11,7 @@
+         "arm": "proposed",
+         "compact_archive_execution": {
+           "backend": "compact-archive-events-v1",
+-          "policy_sha256": "63ef9e97fbb17a58eb82dba415f341b683c697ef8c0f0f14bac24bba0ffb6cc0"
++          "policy_sha256": "47f6e1a858804d989aa13097ba467c8f71eb28c8176edcb63cb4eb4752b787dd"
+         },
+         "compact_execution": {
+           "backend": "resident-native-compact-current-owner-v1",
+@@ -88,7 +88,7 @@
+             "output": "float64_score",
+             "version": 2
+           },
+-          "policy_sha256": "85b287b0766ef9653c07a1fa3f7d659d836f783ccafb927b1f68e8645869f5cf"
++          "policy_sha256": "83b829ff7add88226e2aa76d4b14def768a849bb757a35a590dd8729a24035eb"
+         },
+         "required_graphs": [
+           "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
