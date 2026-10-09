@@ -1,0 +1,81 @@
+{
+  "decision": "accepted",
+  "scope": "Changed helper source only; final-entry review directory must exist before selection",
+  "helpers": {
+    "capture14.py": "b70654a3918a8b4b7626c5b4958d9b52f9e9bc6819841655dc21a4be77ef9fb0",
+    "recover14.py": "47111b27dc570de7dbba965e2acd57eed391362968185527c2df50b27cfe4f37",
+    "select14.py": "364225437f0573202d69d0f5e9f4cbafc1accbd94aa1757a7ddef7f8a0bf7350"
+  },
+  "checks": {
+    "literal_capture_recover_inverse": true,
+    "literal_selector_remaining_logic_inverse": true,
+    "six_owned_directories": [
+      "real-data-pilot-full29-entry01-2026-10-09",
+      "real-data-pilot-full29-input-draft01-2026-10-09",
+      "real-data-pilot-full29-transport-binding01-2026-10-09",
+      "real-data-pilot-full29-allocation-review01-2026-10-09",
+      "real-data-pilot-full29-final-entry-review01-2026-10-09",
+      "pilot-full29-preparation-increment-tools-review01-2026-10-09"
+    ],
+    "owned_presence": {
+      "real-data-pilot-full29-entry01-2026-10-09": true,
+      "real-data-pilot-full29-input-draft01-2026-10-09": true,
+      "real-data-pilot-full29-transport-binding01-2026-10-09": true,
+      "real-data-pilot-full29-allocation-review01-2026-10-09": true,
+      "real-data-pilot-full29-final-entry-review01-2026-10-09": false,
+      "pilot-full29-preparation-increment-tools-review01-2026-10-09": true
+    },
+    "raw_scopes": [],
+    "baseline_source": "dde0a0de34389aa503bdd1e2820460b45932c81f",
+    "baseline_return_sha256": "dd1132f387574cd0d4104855c57d50dee9b56912e35ef2c0a2f50fb659fff806",
+    "baseline_selection_sha256": "6c3ffea3b98bbbd1faf4e5efb5d9dbeab6e11e6fc9a470c009699e541333a436",
+    "baseline_tool_review_sha256": "995491a3d3e13dd427bb8006dc92adc531b33902639ba89f0d70daf90b18dbb9",
+    "baseline_recovery_review_sha256": "ade5b90a4a5ff48e3a426c76cf23774bcee22178d773bef4cfca8ed4a06a9f02",
+    "three_exact_duplicate_hashes": "63f929b853b88add412ae0832133dee2a874e448f245b33726812499c1bf1020",
+    "fresh_namespaces_absent": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full29increment14/SELECTION14.json",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full29increment14/CAPTURE14.json",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full29increment14/FRESH_GIT_RECOVERY14.json",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full29increment14/GIT_OPERATIONS14.json",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full29increment14/full29-preparation-increment14.tar",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full29increment14/fresh-git-recovered-full29increment14.tar",
+      "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-full29-preparation-20261009-14.git"
+    ],
+    "helpers": {
+      "capture14.py": "b70654a3918a8b4b7626c5b4958d9b52f9e9bc6819841655dc21a4be77ef9fb0",
+      "recover14.py": "47111b27dc570de7dbba965e2acd57eed391362968185527c2df50b27cfe4f37",
+      "select14.py": "364225437f0573202d69d0f5e9f4cbafc1accbd94aa1757a7ddef7f8a0bf7350"
+    }
+  },
+  "remaining_before_selection": [
+    "Create/finalize actual real-data-pilot-full29-final-entry-review01-2026-10-09; verify six directory roster present before selection",
+    "Finish intended source/metadata commits and keep selected bodies stable"
+  ],
+  "evidence": {
+    "REPORT.md": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full29-preparation-increment-tools-review01-2026-10-09/REPORT.md",
+      "sha256": "2476244412e59270ba856fce3fcb140472b06158798a8b89e0eb2d1a0d694dad"
+    },
+    "check.py": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full29-preparation-increment-tools-review01-2026-10-09/check.py",
+      "sha256": "09ddb91cbb19d121ccc603e78cd1302bb6ec372da2e9aa6f65dd6a643c31a359"
+    },
+    "check02.py": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full29-preparation-increment-tools-review01-2026-10-09/check02.py",
+      "sha256": "9e436476c8965b127a994e2370d32aeb063a85974929fac03934f15dba8a2644"
+    },
+    "CHECK01.log": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full29-preparation-increment-tools-review01-2026-10-09/CHECK01.log",
+      "sha256": "9678d8a762dfc977395cecb59009ba8ce20067144bd4a7e7518ed6941a1ba222"
+    },
+    "CHECK02.log": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full29-preparation-increment-tools-review01-2026-10-09/CHECK02.log",
+      "sha256": "c26de83abdc9496cd1301470918ec39ecca1cf389ef0ae1c6504da1800d1c431"
+    },
+    "RESULT02.json": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full29-preparation-increment-tools-review01-2026-10-09/RESULT02.json",
+      "sha256": "4a81f06c470692d7829a5fad0133275f143fd26b56cd1687634c0f524dba01e5"
+    }
+  },
+  "no_execution_or_external_recovery_claim": true
+}
