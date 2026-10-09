@@ -1,0 +1,12 @@
+{
+  "decision": "accepted_single_runtime_pin_correction",
+  "binding_review_sha256": "ce2c9d7a3af38ed684378307e7e4cf5a969ddb203757d5bb8fa1d249d5196bae",
+  "old_runtime_hash": "585d66f526d88f8488c6efcc4989a09328006e393566a596fe9e95c6c7f60cfd",
+  "current_runtime_hash": "90bb459bcc7d9f73dda6965c59bf3d6f3bf75f3cbb8bd0ff3b869f7f8b76c930",
+  "checks": [
+    "Entire gate inverse changes only selected runtime_hashes.admission.py.",
+    "Current declaration equals installed source SHA and already admitted source pin; six other runtime hashes and seven fieldnames unchanged.",
+    "DRAFT05 inverse changes only gate ref;395 sources64 inputs and all other binding references retained."
+  ],
+  "qualification": "Previous acceptance omitted this runtime declaration drift; actual preclaim refusal preserved. Corrected source metadata only, no rerun/admission/claim or numerical execution."
+}

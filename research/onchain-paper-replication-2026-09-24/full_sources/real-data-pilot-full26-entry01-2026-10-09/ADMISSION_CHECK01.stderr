@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/__main__.py", line 37, in <module>
+    main()
+    ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/__main__.py", line 23, in main
+    admission = admit(**args)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 296, in admit
+    raise ValueError("source files/runtime hashes are missing or changed")
+ValueError: source files/runtime hashes are missing or changed
