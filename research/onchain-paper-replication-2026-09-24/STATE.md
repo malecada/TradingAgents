@@ -1,5 +1,15 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T05:43:00.459414+00:00: full25 genuine read-only admission PASS (386 source pins,64 input roles,reviewed allowance96); exact final source/input/entry release268ce640 installed. No numerical claim/job. Goal ACTIVE/incomplete.**
+
+Previous status-only turn NO PROGRESS. Current progress: actual corrected193-source numerical policy propagated,64role binding and51 mandatory dataset labels restored without changing paths/body hashes; genuine ADMISSION_CHECK03 at05:36:11Z passed effective96. Combined reviews51ef4942/17619b2f and final488-reference release268ce640 accepted. Original method/model/training/native limits unchanged. Earlier two metadata refusals preserved; no allowance spent. Actual full24 remains permanentFAILED390.398s,all7MCMunavailable/trainingnull; independently recovered outcome05e88b retained. Accounting64closed33COMPLETE31FAILED/highest adopted95; reviewed96 unused;28pending/3reserved unchanged.
+
+Next executable Root action: review/capture/push/freshrecover only actual public delta since outcome05source238ccc using narrowly adapted existingtools(full25increment06), independent returned-byte verification, fresh preflight then atmostONE unused25 RootIO. Final release requires actualincrement return and fresh native/source/runtime/namespace/resource checks before launch. No historical stores recopied. Root alone integration/Git/STATE/accounting/preservation/ONElauncher. Reviewer residual_metadata_review20 finalrelease complete; annealing_exact_acceleration only incremental tooling/return review. Physical16GB/fixed6GiBmax5GiBhigh/swap0/twoCPU/8h/2.5GiBreserve/1GiBFSIZE/10GiBfloor/16and20GiB writable union unchanged. Zero complete representative realMCM/jointupdate/financial fits; original seven whole graphs,415968128cells,32motifs512spent remain required. Broad heartbeat PAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T05:20:51.632351+00:00: reviewed six-line early numerical-source check INSTALLED at6c1a7faf5fc329b90eda3741474532b9536f4177; corrected full193-source policy draft prepared. No numerical job active. Full24 permanentFAILED/recovered. Goal ACTIVE/incomplete.**
 
 Current turn PROGRESS: actualfull24failedoutcome externally returned and independently accepted e88b493c (source238ccc239939b918b1e8646d373d037a6b76f8bf,50regular/20dirs/13Gitoperations,983040Barchive21b05150). Original outputs/failures/raw scopes preserved; no oldstore copied/retired. All7MCMunavailable andtrainingnull.64closed33COMPLETE31FAILED/highest95. Actual390.398s prep/sampledpeak5298184192B/lastnativekernel5370712064B/high131/OOM0 do not prove feature/training capacity.
