@@ -1,5 +1,33 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T03:43:05.281521+00:00: reviewed eight-file grouped schema6 route INSTALLED; actual source/preload/reservation smoke PASS. No numerical job active. Goal ACTIVE/incomplete.**
+
+Previous goal turn was a status explanation (NO PROGRESS). Current functional progress: [actual installation](full_sources/mcm-batched-grouped-root-install01-2026-10-09/INSTALL01.json) joins accepted grouped offload305c1386 and combined driver/entry2d936b08. [Installed smoke](full_sources/mcm-batched-grouped-root-install01-2026-10-09/INSTALLED_SMOKE01.json) verifies eight actual source bodies, thirteen preloaded roles and seven-graph/6352-group reservation metadata. It opens no scientific arrays/authority and establishes no real speedup/capacity. Original/default5 math and all raw/failed/spent histories remain.
+
+[Checkpoint reconciliation](full_sources/mcm-batched-checkpoint-reconciliation-review01-2026-10-09/SOURCE_REVIEW01.json)27e26c2f independently accepts selected one-fatal-attempt physical contribution273838080B; original43058298880B cumulative logical allowance stays unchanged. [Whole-store calculation02](full_sources/mcm-batched-grouped-capacity02-2026-10-09/CAPACITY01.json) remains conditional: directory/legacy-lifecycle terms, exact path/body constraints and remote reservation are not admitted. Archive healthy-control cap must explicitly select16384B for genuine grouped claims; native/storage caps remain unchanged.
+
+[Concrete cumulative95 proposal](full_sources/real-data-pilot-grouped-registration01-2026-10-09/EXTENSION_PROPOSED95_01.json) preserves originalbase51/prior17 and authenticates all46 actual closed receipts plus17 historical attempts=63 spent;28 pending+3 closed preclaim reservations+ONE fresh full pilot gives95. Proposal NOT reviewed/adopted yet; no claim/release. Fixed proposed unused identity eth-paper-real-data-end-to-end-resource-20261009-24, no prefix stop or financial fit credit. Actual selected native PIDs[] and fresh run/dispatch namespace absent in current-source receipt.
+
+Owners: owner_policy_fix21 ONLY NEW grouped-capacity03 resolving concrete remaining terms; annealing_exact_acceleration ONLY NEW input-templates02 deterministic full schema6 inputs; residual_metadata_review20 ONLY NEW full-pilot-allocation-review01. Root alone Main/Git/STATE/registrations/accounting/preservation/ONE launcher. **Next safe action:** finish exact finite whole-store bounds and full input binding using accepted tools, independently review changed entry once, commit registration and fresh recovery before one eligible full pilot. Zero complete real MCMs/joint updates/financial fits; whole7graph415968128cells/original32motifs512spent/model/fixed16GB ceiling/10GiBfloor remain. Broad heartbeat PAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-09T03:18:04.981619+00:00: reviewed entry integration committed/pushed; grouped driver and successor entry implemented and in combined review. No numerical job active. Goal ACTIVE/incomplete.**
+
+Actual Main/remote HEAD10395ff94a1ccb6f9a33dce008190ff94cd3f983 matched Root push41148exit0/f41bf5 and readback22610exit0/39b6ac. Local [confirmation](full_sources/mcm-batched-pilot-entry-integration01-2026-10-09/REMOTE_SOURCE_CONFIRMATION02.json) qualifies Git availability only. Accepted three-file entry installation94ffab11/12metadata checks/actual ten-role preload and accepted grouped offload source305c1386 are committed. Source5 numerical math/defaults remain; no source6 live adoption or claim.
+
+Concrete additional PROGRESS: [grouped driver01](full_sources/mcm-batched-grouped-driver01-2026-10-09/MANIFEST01.json)3716f28c and [Root entry02](full_sources/mcm-batched-pilot-entry-integration02-2026-10-09/MANIFEST01.json) implement explicit6/group16 accumulation and last-tail flush, every original token/group history/fresh recovered score join, genuine source pins, pre-lease grouped module loading and exact group archive/operation reservation arithmetic. Both remain UNINSTALLED/unreleased pending ONE combined changed-seam review. Existing5/default paths retained. No fake Owner/View/authority or science simplification.
+
+Current exclusive owners: residual_metadata_review20 ONLY NEW grouped-driver-entry-review01; owner_policy_fix21 ONLY NEW grouped-capacity01 actual pergraph group counts/encoded metadata/all stores/source bounds; annealing_exact_acceleration completed accepted grouped candidate, available. Root alone Main/Git/STATE/accounting/registration/external preservation/ONE futurelauncher. All other source directories frozen and preserved.
+
+**Next executable action:** resolve combined driver/entry review, integrate exact accepted6 sources, join the concrete grouped whole-store bounds including checkpoints/transport history/runtime/other writers, then prepare exact committed registration/cumulative amendment and genuine release for ONE unused full real pilot. Per-batch source5 remains physically unadmitted because2.336million retained controls exceed its space envelope; grouped implementation changes that requirement but has not yet proved whole capacity. Source reviews/fixtures do not prove genuine transport, retirement, real throughput/reuse rate or neural capacity. No allowance95/claim/activejob. Accounting63closed33COMPLETE30FAILED/highest94; failed23 fulldeclaredincrement recovery15f671a2 reused. Zero full real representative MCMs/joint updates/financial fits; fullseven graph/original32motifs/512spent/model remainsgoal.16GB RAM/10GiBfloor/fixednativecaps unchanged; broad1420-fitheartbeatPAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T03:11:55.191679+00:00: reviewed batched-pilot entry correction INSTALLED; grouped offload implementation/review underway. No numerical job active. Goal ACTIVE/incomplete.**
 
 Previous status-only goal turn: NO PROGRESS. This turn PROGRESS: three installed entry files address the actual schema5 reservation refusal, local-output typed role resolution, complete source-module preloading before lease activation, and an inherited legacy kind-roster KeyError. [Combined source review](full_sources/mcm-batched-pilot-entry-integration-review01-2026-10-09/SOURCE_REVIEW01.json)94ffab11 accepts changed arithmetic/caller and exact legacy inverse. [Installation](full_sources/mcm-batched-pilot-entry-integration01-2026-10-09/INSTALL01.json) records original/current hashes. Twelve focused metadata checks and actual installed ten-role preload smoke passed. No scientific arrays, Owner/Run instances or claims were created; source import footprint is separate from whole-job capacity.

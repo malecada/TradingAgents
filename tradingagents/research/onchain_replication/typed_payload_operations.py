@@ -215,6 +215,27 @@ class _Operation:
         self._publish('typed-batched-retired-'+self.sha+'.json',{'schema_version':1,
                       'operation_sha256':self.sha,'binding':binding,'files':3,'receipt_sha256':intent['receipt_sha256']})
 
+    def retire_batched_group(self,receipt,*,manifest,journal,items,attempt,semantic_root):
+        """Selected original-byte group: real recovery before any original unlink."""
+        from . import grouped_offload_semantics as semantic
+        self.lease()
+        require(self.record['kind']==policy.BATCHED_KIND and self.policy['schema_version']==2,'actual selected grouped payload kind required')
+        items=semantic.roster(items);binding=semantic.binding(journal,items,manifest)
+        require(journal.root==self.stage.root/'matching' and self.record['binding']==binding,'group source binding differs')
+        require(any(p['receipt']==receipt for p in self.proofs),'group lacks actual preservation proof')
+        data=self.recover(receipt,attempt=attempt)
+        self._path(Path(semantic_root));semantic.recover(data,manifest,journal,items,Path(semantic_root))
+        semantic.dispose_recovery(Path(semantic_root),manifest,items)
+        intent={'schema_version':1,'kind':'grouped-retirement-intent-v1','operation_sha256':self.sha,'binding':binding,'receipt_sha256':policy.sha(policy.raw(receipt)),'recovery_attempt':str(attempt),'semantic_root':str(semantic_root),'failure_disposition':'any subset may be retired; full group archive recovery required; no resume'}
+        self._publish('typed-grouped-retirement-'+self.sha+'.json',intent)
+        self.lease()
+        require(semantic.binding(journal,items,manifest)==binding and journal.root==self.stage.root/'matching','group retirement binding changed')
+        semantic.current(journal,items) # All originals rejoined after last callback.
+        for batch,_ in items:
+            for suffix in semantic.SUFFIXES:os.unlink(f'{batch:08d}'+suffix,dir_fd=journal.fd)
+        os.fsync(journal.fd);journal._root()
+        self._publish('typed-grouped-retired-'+self.sha+'.json',{'schema_version':1,'operation_sha256':self.sha,'binding':binding,'files':3*len(items),'receipt_sha256':intent['receipt_sha256']})
+
     def history(self):
         require(self.closed,'typed completion not yet anchored')
         return {'directory':str(self.ledger.root),'intent':self.claim_name,'intent_sha256':self.sha,'complete':self.complete_name,'complete_sha256':self.complete_sha}

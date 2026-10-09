@@ -1,3 +1,29 @@
+# Current coordination — 2026-10-09T03:43:05.281521+00:00
+
+No native numerical job. Actual eight schema6/grouped files installed and smoke PASS; accepted source reviews reused. Checkpoint conditional bound accepted27e26c2f. Proposal95 preserves63spent+28pending+3reserved+1newfullpilot; NOT adopted/claimed/released.
+
+- owner_policy_fix21 ONLY NEW grouped-capacity03 finite directory/legacy/lifecycle terms.
+- annealing_exact_acceleration ONLY NEW input-templates02 schema6 full seven-graph drafts.
+- residual_metadata_review20 ONLY NEW full-pilot-allocation-review01 actual accounting/proposal.
+- Root alone Main/Git/STATE/registration/preservation/ONEfuturelauncher.
+
+Next exact wholecapacity/inputbinding/reviewed committed registration+recovery. All science/spent identities/raw histories unchanged; no generic framework/oldmatrix replay.
+
+Previous coordination retained below.
+
+# Current coordination — 2026-10-09T03:18:04.981619+00:00
+
+No numericaljob; Main/actualremote10395ff94 matched. Entry installation94ffab11 and grouped-offload source305c1386 accepted, committed. Grouped driver3716f28c + Rootentry02 implemented UNINSTALLED/unreleased; oldsource5/defaults preserved.
+
+- residual_metadata_review20 ONLY NEW grouped-driver-entry-review01 combined source/entry review.
+- owner_policy_fix21 ONLY NEW grouped-capacity01 finite source/metadata/store bounds.
+- annealing_exact_acceleration completed grouped API/semantics; available.
+- Root alone liveintegration/STATE/Git/accounting/registration/preservation/ONEfuturelauncher.
+
+No95/claim. Next actual source adoption follows combined review; then wholecapacity/exactcommittedregistration/genuine release before realpilot. No generic framework/oldmatrix replay. All originals/spent/failed/withheld evidence immutable.
+
+Previous coordination retained below.
+
 # Current coordination — 2026-10-09T03:11:55.191679+00:00
 
 No numerical job active. Root installed reviewed entry correction94ffab11 (three source files;12metadata checks/ten-role preload smoke). Fullperbatch capacity not admitted:2.336million controls exceed available physical allowance. Groupedcandidate303b2273 functional19checks and peer305c1386 accepted; UNINSTALLED/unreleased.

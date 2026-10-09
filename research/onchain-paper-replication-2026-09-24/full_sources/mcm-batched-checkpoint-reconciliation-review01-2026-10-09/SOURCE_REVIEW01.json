@@ -1,0 +1,49 @@
+{
+  "decision": "accepted",
+  "scope": "source-derived conditional single fatal snapshot contribution only",
+  "candidate_manifest_sha256": "3565f4695c49cfbfddb15968a37750f761907f7f10ee76c1faf7514b4202f2b5",
+  "candidate_result_sha256": "262501593c6ba15415b09513f766d869b84f32b8ba83b3c37f7b01fe518dd487",
+  "source_pins": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/gate03.json": "fa4996ee06c75cbd3f9dd0783e176cb7e5094f2ecf7f1cdfe37c87db34722131",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/compact_policy.json": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/templates02/pair_policy01.json": "3f230ddd9464d8b818765ce8153663352cd667ca61df0f5e5325d18a1f12ab72",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_pair_executor.py": "5e722ec2035e2549f7584a31bf091e0de4d7854c196086f8736179f367d93b2e",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_numeric_reuse.py": "a0ceec1f60990905e49225a7faa9062a0ae40ece9f6148731b18db33a023626a",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_numeric_execution.py": "e3a6450c816a73c8ba60c270d88564a9728437f501d5df594f5f9c1018a1ec34",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_journal.py": "0d96f0f3fbe7a320161d8bd16ee7d0d0b0de0384cfbce22459dcf9a8aa9e92a4",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_driver.py": "c2857ee40fd8f673e6e50d1a6c0ab7f3000f8a5799f72d55865b663a6320b75a",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py": "de872f001186a2857ed39e260ba78369b1f57e50a5dd78f53f28036e1f02fa39",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py": "a383068497ff175eb56757559c81b7ab374878f7c6f9ee5627fdc865f0ad6c78",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_checkpoint.py": "d5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/checkpoint_chunks.py": "c3699ef76ad5932cf58f8cf0c6be6b36f0e4c01b0d18c6d88e85ad02fa7cd8d0",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_annealing.py": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_hardening.py": "3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_training.py": "ca77a32b0c7b882fed6e6af7f5929c16264aad1084e47d07b05ab52940d47782"
+  },
+  "independent_checks": {
+    "all_candidate_and_source_pins": true,
+    "pair_compact_schedule_join": true,
+    "single_callback_loop_terminal_raise": true,
+    "independent_per_file_rounding": true,
+    "snapshot_body": 269097984,
+    "snapshot_sidecar": 269106176,
+    "files": 136,
+    "snapshot_directories": 3,
+    "conditional4096_allocation": 269635584,
+    "plus_failure_and_training": 273838080,
+    "logical_cumulative_allowance_unchanged": 43058298880
+  },
+  "reused_control_tests": {
+    "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-checkpoint-reconciliation01-2026-10-09/TEST01.log",
+    "sha256": "e63d48180f8dc71cd0ea34aa925c357ab4e11a9660b962a9698c3f617de50305",
+    "cases": 4,
+    "rerun": false
+  },
+  "qualifications": [
+    "No numerical arrays, snapshot save or genuine pilot execution performed.",
+    "Ordinary frozen runtime and exact selected max_checkpoints=1/layout/limits required; future entry must join these values.",
+    "4096-byte rounding and three 4096-byte directory contributions are conditional, not a filesystem allocation measurement. Seven checkpoint parent directories and filesystem metadata remain separate.",
+    "Partial failure retains a prefix of one exclusive snapshot namespace; no disk staging copy or retry in inspected save path.",
+    "No full-job capacity, zero-checkpoint assumption, launch admission or source-context record-cap acceptance. Separate policy16384/capacity02 remains outside this review."
+  ]
+}

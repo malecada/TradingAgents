@@ -1,0 +1,24 @@
+{
+  "source_pins": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-grouped-driver01-2026-10-09/compact_mcm.py": "228f9199bf5b12f104dd91ee678fb12792d0295dc9adf9a3ddd8fbaeb2c4c574",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-grouped-driver01-2026-10-09/compact_mcm_batched.py": "de872f001186a2857ed39e260ba78369b1f57e50a5dd78f53f28036e1f02fa39",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-pilot-entry-integration02-2026-10-09/batched_pilot_reservations.py": "dfbdaf6019e7e63c23c74fc33455a9c661fbcee276882d88ea0990f2e08e25c6",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-pilot-entry-integration02-2026-10-09/real_pilot_import_caller.py": "a383068497ff175eb56757559c81b7ab374878f7c6f9ee5627fdc865f0ad6c78",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-pilot-entry-integration02-2026-10-09/real_pilot_reservations.py": "9670b15ff6a21e20c300020476f9cc746860972b079ea32525dee3d113a1e6d7"
+  },
+  "driver_manifest_sha256": "3716f28ccaa7a4f19ecd68621798263a1b4fc0904c20fd7f23fcbb502e6e8830",
+  "entry_manifest_sha256": "47859ab9cc5d7575aebe7fe28b512031c0a317e8f437b45ac05170f539da3f0e",
+  "exact_driver_and_caller_default_inverses": true,
+  "grouped_closure_predicates": [
+    "len(items) == count",
+    "token == expected",
+    "record['binding']['manifest_sha256']",
+    "complete['recovered_bytes'] == record['manifest']['archive_bytes']",
+    "anchors_hash.hexdigest() == external['group_anchors_sha256']",
+    "digest.hexdigest() == binding['tokens_sha256']",
+    "aggregate.hexdigest() == coverage['original_and_fresh_history_aggregate_sha256']"
+  ],
+  "inventory_before_and_after": true,
+  "new_source_roles_before_lease": true,
+  "grouped_source_review_reused": "305c1386047a8aae874a447e184f7cfdcecdda93f640425db72df90edd53b6b4"
+}

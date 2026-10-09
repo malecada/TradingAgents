@@ -1,0 +1,95 @@
+{
+  "status": "PASS_SOURCE_CONDITIONAL_ONE_ATTEMPT_BOUND",
+  "gate_experiment": "eth-paper-real-data-end-to-end-resource-20261009-23",
+  "schedule": {
+    "calls_per_checkpoint": 10000,
+    "max_checkpoints": 1,
+    "max_total_checkpoint_bytes": 43058298880,
+    "max_total_checkpoints": 160,
+    "operations_per_call": 1000000
+  },
+  "checks": [
+    {
+      "case": "done",
+      "creates": 2,
+      "advances": 2,
+      "callbacks": 0,
+      "session_closes": 2,
+      "engine_closes": 2,
+      "observed": null
+    },
+    {
+      "case": "stop",
+      "creates": 1,
+      "advances": 10000,
+      "callbacks": 1,
+      "session_closes": 1,
+      "engine_closes": 1,
+      "observed": "CheckpointStop"
+    },
+    {
+      "case": "callback_failure",
+      "creates": 1,
+      "advances": 10000,
+      "callbacks": 1,
+      "session_closes": 1,
+      "engine_closes": 1,
+      "observed": "RuntimeError"
+    },
+    {
+      "case": "cleanup_failure",
+      "creates": 1,
+      "advances": 10000,
+      "callbacks": 1,
+      "session_closes": 1,
+      "engine_closes": 1,
+      "observed": "CheckpointStop"
+    }
+  ],
+  "bounds": {
+    "max_pair_entries": 8402640,
+    "chunks_per_array": 33,
+    "chunk_max_file_bytes": 2097280,
+    "array_with_headers_bytes": 67225344,
+    "snapshot_body_bound": 269097984,
+    "callback_sidecar_bound": 8192,
+    "snapshot_plus_sidecar_bound": 269106176,
+    "snapshot_files_including_sidecar": 136,
+    "snapshot_directories": 3,
+    "parent_checkpoint_directory_count_separate": 7,
+    "conditional4096B_allocated_snapshot_files": 269623296,
+    "conditional4096B_snapshot_files_plus3dirs": 269635584,
+    "additional_producer_failed_json_bound": 8192,
+    "original_pair_logical_total_checkpoint_bytes": 269229056,
+    "original_global_cumulative_checkpoint_bytes": 43058298880,
+    "original_global_max_checkpoints": 160,
+    "callback_reservation_per_attempt": 269114368,
+    "io_scratch_memory_only_bytes": 6357376,
+    "training_checkpoint_separate_body_bytes": 4194304,
+    "checkpoint_plus_training_conservative_allocation": 273838080,
+    "snapshot_disk_staging_extra_bytes": 0,
+    "partial_failure_bound": "prefix of the same exclusive files; no second snapshot after first callback or callback failure"
+  },
+  "affinity": [
+    0,
+    1
+  ],
+  "no_numerical_arrays_or_authority": true,
+  "source_pins": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/gate03.json": "fa4996ee06c75cbd3f9dd0783e176cb7e5094f2ecf7f1cdfe37c87db34722131",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/compact_policy.json": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/templates02/pair_policy01.json": "3f230ddd9464d8b818765ce8153663352cd667ca61df0f5e5325d18a1f12ab72",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_pair_executor.py": "5e722ec2035e2549f7584a31bf091e0de4d7854c196086f8736179f367d93b2e",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_numeric_reuse.py": "a0ceec1f60990905e49225a7faa9062a0ae40ece9f6148731b18db33a023626a",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_numeric_execution.py": "e3a6450c816a73c8ba60c270d88564a9728437f501d5df594f5f9c1018a1ec34",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_journal.py": "0d96f0f3fbe7a320161d8bd16ee7d0d0b0de0384cfbce22459dcf9a8aa9e92a4",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_driver.py": "c2857ee40fd8f673e6e50d1a6c0ab7f3000f8a5799f72d55865b663a6320b75a",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py": "de872f001186a2857ed39e260ba78369b1f57e50a5dd78f53f28036e1f02fa39",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py": "a383068497ff175eb56757559c81b7ab374878f7c6f9ee5627fdc865f0ad6c78",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_checkpoint.py": "d5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/checkpoint_chunks.py": "c3699ef76ad5932cf58f8cf0c6be6b36f0e4c01b0d18c6d88e85ad02fa7cd8d0",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_annealing.py": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_hardening.py": "3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_training.py": "ca77a32b0c7b882fed6e6af7f5929c16264aad1084e47d07b05ab52940d47782"
+  }
+}

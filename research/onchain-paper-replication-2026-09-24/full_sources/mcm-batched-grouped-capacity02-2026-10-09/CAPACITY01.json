@@ -1,0 +1,110 @@
+{
+  "status": "CONDITIONAL_SOURCE_RECONCILIATION_NOT_ADMITTED",
+  "counts": {
+    "command": 31760,
+    "result_empty": 12704,
+    "result_get": 19056,
+    "reservation": 25408,
+    "typed_claim": 12704
+  },
+  "body_envelopes": {
+    "command": 204,
+    "result_empty": 716,
+    "result_get": 170,
+    "reservation": 217,
+    "typed_claim": 7682
+  },
+  "control_history_policy_candidate": {
+    "schema_version": 1,
+    "format": "bounded-archive-control-history-v1",
+    "assumption": "closed-history sampled; no writer exclusion; mandatory boundary full-byte audits",
+    "success_control_bytes": 16384,
+    "success_diagnostic_bytes": 2048,
+    "shard_bytes": 4194304,
+    "full_interval_ms": 10000,
+    "max_stale_ms": 60000,
+    "max_callbacks_between_full": 10000
+  },
+  "source_policy_capacity": {
+    "control_bytes": 5086713856,
+    "diagnostic_bytes": 187188736,
+    "control_files": 1226,
+    "diagnostic_files": 45,
+    "max_file_bytes": 8388608,
+    "payload_budget_semantics": "cumulative rounded IO remains separate; diagnostic bound is retained local bytes"
+  },
+  "selected_success_control": {
+    "encoded_bytes": 152003360,
+    "shards_upper": 37,
+    "allocated4096_upper": 152154875
+  },
+  "selected_success_diagnostic": {
+    "encoded_bytes": 74445440,
+    "shards_upper": 18,
+    "allocated4096_upper": 74519150
+  },
+  "context_failure_headroom_bytes": 9568256,
+  "context_logical_upper": 236017056,
+  "context_allocated_upper": 236283231,
+  "source_trace": {
+    "command_and_result": "Context._call one each per mkdir/put/get",
+    "reservation": "Transport.put once; Transport.get once; mkdir none",
+    "typed_claim": "_Operation.__init__ Context._publish once for each of2G operations",
+    "diagnostic": "Context._receive_control exactly one per command;2048 cap",
+    "other_legacy_operations": "NOT included in16G; must fit explicit other allowance or separately add exact source counts"
+  },
+  "physical_join": {
+    "baseline_logical": 5572261100,
+    "baseline_allocated": 5149306880,
+    "selected_persistent_logical": 9086624428,
+    "selected_persistent_allocated": 9480953856,
+    "checkpoint_fatal_attempt": 273838080,
+    "old_cumulative_checkpoint_allowance_unchanged": 43058298880,
+    "scratch_logical": 16090560,
+    "scratch_allocated": 16352640,
+    "runtime_residual_growth_logical": 268407622,
+    "runtime_residual_growth_allocated": 288063488,
+    "work_directory_count": 44485,
+    "conditional_directory_allowance": 795951104,
+    "other_selected_lifecycle_and_legacy_controls_allowance": 67108864,
+    "increment_logical": 9948086610,
+    "increment_allocated": 11158551263,
+    "whole_writer_logical": 15520347710,
+    "whole_writer_allocated": 16307858143,
+    "fixed_logical_cap": 17179869184,
+    "fixed_allocated_cap": 21474836480,
+    "logical_margin": 1659521474,
+    "allocated_margin": 5166978337,
+    "baseline_filesystem_free": 24779186176,
+    "floor": 10737418240,
+    "remaining_after_increment_and_floor": 2883216673
+  },
+  "constraints": {
+    "all_record_paths_ascii_safe_bytes_max": 512,
+    "typed_input_name_ascii_safe_max": 128,
+    "receipt_member_bytes_max": 255,
+    "integers_nonnegative_max": 9223372036854775807,
+    "mtime_ns_nonnegative_max": 9223372036854775807,
+    "journal_body_cap": 1024,
+    "canonical_block_size": 4096,
+    "group_batches": 16,
+    "these_constraints_require_actual_entry_check": true
+  },
+  "unclosed": [
+    "Actual final selected original/legacy operations count and lifecycle payload must fit explicit64MiB; no ignored legacy claims",
+    "Actual allocated directory growth bounded by16KiB/workdir plus64MiB flat/other directories; not a filesystem guarantee",
+    "Finite one-fatal-attempt checkpoint bound supplied by Root must bind actual schedule/source, not assumed from old cumulativecap",
+    "Actual current writer baseline/free space/other concurrent reservations and native memory required before entry",
+    "typed ledger in-memory203534275B body envelope plus dict/keys/digests, control journal101632 names/pins and repeated full audits remain unmeasured",
+    "Source01 ASCII/512-byte path and1024-byte journal body restrictions need actual admission-side check",
+    "Remote quota/full recovery/transport credentials remain uninspected; no real run"
+  ],
+  "source_pins": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-grouped-capacity01-2026-10-09/CAPACITY01.json": "b6654ba8f3a979554288b4a5f75bf2c9ed0d6c68f041569d5e47963b1fc59387",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-grouped-root-install01-2026-10-09/BASELINE01.json": "affc4bf65d1a606baac372d82725ec6ed00cee9ee3475f864ffa9b6f3c4ce550",
+    "tradingagents/research/onchain_replication/archive_control_history.py": "3ccfdeddd678a40e06192aa853fc3fbb53bb8825c86fd8b974ae31cbc591df67",
+    "tradingagents/research/onchain_replication/archive_dispatch.py": "cdfa2fbc71b9d7c9919493652b3032710371df001e75b3fa07d8df86c83658c2",
+    "tradingagents/research/onchain_replication/archive_transport.py": "d1825c718b48d4267653405d9b637074b4a6d4bf1677842044418a2e8111aa13",
+    "tradingagents/research/onchain_replication/typed_payload_operations.py": "275661a497b1759748342a88e132652570923cad9feafa40bc115d6df755e42f"
+  }
+}

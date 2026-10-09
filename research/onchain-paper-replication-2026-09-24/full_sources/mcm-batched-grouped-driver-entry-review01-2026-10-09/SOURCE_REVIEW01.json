@@ -1,0 +1,105 @@
+{
+  "source_pins": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-grouped-driver01-2026-10-09/compact_mcm.py": "228f9199bf5b12f104dd91ee678fb12792d0295dc9adf9a3ddd8fbaeb2c4c574",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-grouped-driver01-2026-10-09/compact_mcm_batched.py": "de872f001186a2857ed39e260ba78369b1f57e50a5dd78f53f28036e1f02fa39",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-pilot-entry-integration02-2026-10-09/batched_pilot_reservations.py": "dfbdaf6019e7e63c23c74fc33455a9c661fbcee276882d88ea0990f2e08e25c6",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-pilot-entry-integration02-2026-10-09/real_pilot_import_caller.py": "a383068497ff175eb56757559c81b7ab374878f7c6f9ee5627fdc865f0ad6c78",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-pilot-entry-integration02-2026-10-09/real_pilot_reservations.py": "9670b15ff6a21e20c300020476f9cc746860972b079ea32525dee3d113a1e6d7"
+  },
+  "driver_manifest_sha256": "3716f28ccaa7a4f19ecd68621798263a1b4fc0904c20fd7f23fcbb502e6e8830",
+  "entry_manifest_sha256": "47859ab9cc5d7575aebe7fe28b512031c0a317e8f437b45ac05170f539da3f0e",
+  "exact_driver_and_caller_default_inverses": true,
+  "grouped_closure_predicates": [
+    "len(items) == count",
+    "token == expected",
+    "record['binding']['manifest_sha256']",
+    "complete['recovered_bytes'] == record['manifest']['archive_bytes']",
+    "anchors_hash.hexdigest() == external['group_anchors_sha256']",
+    "digest.hexdigest() == binding['tokens_sha256']",
+    "aggregate.hexdigest() == coverage['original_and_fresh_history_aggregate_sha256']"
+  ],
+  "inventory_before_and_after": true,
+  "new_source_roles_before_lease": true,
+  "grouped_source_review_reused": "305c1386047a8aae874a447e184f7cfdcecdda93f640425db72df90edd53b6b4",
+  "decision": "accepted_source_only",
+  "arithmetic": {
+    "decision": "arithmetic_pass",
+    "checks": [
+      "schema5_actual_graph_exact_minima",
+      "schema5_max_operations_one_short_refused",
+      "schema5_max_chunks_one_short_refused",
+      "schema5_max_preserved_bytes_one_short_refused",
+      "schema5_max_recovered_bytes_one_short_refused",
+      "schema5_chunk_bytes_one_short_refused",
+      "schema6_actual_graph_exact_minima",
+      "schema6_max_operations_one_short_refused",
+      "schema6_max_chunks_one_short_refused",
+      "schema6_max_preserved_bytes_one_short_refused",
+      "schema6_max_recovered_bytes_one_short_refused",
+      "schema6_chunk_bytes_one_short_refused",
+      "partition_boundary_1",
+      "partition_boundary_4095",
+      "partition_boundary_4096",
+      "partition_boundary_4097",
+      "partition_boundary_65535",
+      "partition_boundary_65536",
+      "partition_boundary_65537"
+    ],
+    "totals": {
+      "5": {
+        "groups": 101559,
+        "conservative_archive_bytes": 24958187520
+      },
+      "6": {
+        "groups": 6352,
+        "conservative_archive_bytes": 23983267840
+      }
+    },
+    "empirical_arrays": false,
+    "genuine_authority": false,
+    "capacity_admitted": false
+  },
+  "routing": {
+    "status": "PASS",
+    "schema_refusals": 4,
+    "original_compute_AST_inverse": true,
+    "callback_batch_counts": [
+      1,
+      15,
+      16,
+      17,
+      32,
+      33
+    ],
+    "genuine_owner_transport": "UNEXECUTED",
+    "affinity": [
+      0,
+      1
+    ]
+  },
+  "failure_cases": {
+    "checks": [
+      "full16_failure_primary_no_coverage",
+      "tail_failure_primary_no_final_sweep"
+    ],
+    "genuine_authority": false
+  },
+  "genuine_owner_transport": false,
+  "installation_admitted": false,
+  "full_capacity_admitted": false,
+  "evidence": {
+    "ARITHMETIC01.json": "260a0144e9ec322a708798fdc121fe7b7da06c282fc189c6d036a4fee697691a",
+    "FAILURE04.json": "c923e11e64faea08b53eaf9677d7a33721b395ea4b8a95371e27e65842512e66",
+    "FAILURE04.log": "6fb937ff3180ffe78d40bd5f0330becb4945c043880bf154ff19d61ae21d2ddb",
+    "REPORT.md": "168da43380127e4a970906952f4f334712e0c3ea3791d3dacacd15314bffbcf8",
+    "ROUTING02.json": "0177d1b6f2a8c592e94095acd4acf63c856f190f1ef74edf072043d3a67dc924",
+    "ROUTING02.log": "cd66070548fac7cbf56994f91018f85a499c9620514e35350e90b4ca14503058",
+    "SOURCE03.json": "7dcac2eb7869366781aedb9bdd429a4aa420c631e63e7033d4718f0aeed89d55",
+    "SOURCE03.log": "0d68ad10acb77e388d05f68621d4769b37475d2e39d3483a43bd01508a381cfc",
+    "TEST01.log": "08fec383c21de4e707e29f50e3654950a65fd43c0e5ef1a5e7d917327c973cb3",
+    "failure04.py": "456d7e12d5d8c8145b5beee97565cd379f11e6c815b12ecb3568acd958acf003",
+    "review01.py": "69228c82fa2feb7c5737b3c8ca670ac51fe51e0a017b66ab0eafe52bc72688f7",
+    "routing02.py": "0510ef60e7b530cfddd1569b7ed57aed8646e2ab48f3f62c743e399e1c81f277",
+    "source03.py": "8dc727b6f91359cacca3cf263dccbf35a83fdb618f1178c7794e13c610546b1e"
+  }
+}
