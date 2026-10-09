@@ -1,0 +1,41 @@
+{
+  "decision": "accepted",
+  "scope": "source-only grouped offload Target continuity and selected bounded final wait",
+  "manifest_sha256": "1a6eddd7eee9848f356f21ac96b1252c455f72c3ca66cdb4aad9344e7de4e12a",
+  "source_map_sha256": "6941dfd6941ab584855f160f7ee60c1b669fe33f29142a146fece63d3093ee93",
+  "sources": {
+    "tradingagents/research/onchain_replication/archive_transport.py": "adfb0cd6636f44cff36e49330ae8ef9a47649c4c1d46ce96dad6ff8d6f8c9f31",
+    "tradingagents/research/onchain_replication/archive_dispatch.py": "0c72d2593b036d54a654905e5ce88531b3d1f1c805196caeee8943e1d508a082",
+    "tradingagents/research/onchain_replication/typed_payload_operations.py": "a5668d7fe9c261c1908170969b39d675947c19beb1d04fad824f6f6a4e801f56",
+    "tradingagents/research/onchain_replication/grouped_offload.py": "9ebb628a35feca852475b5e255d4ddf952d383b7a5f1a2fc08ad0054c90da3ea",
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": "36ef4280b57b775ed4eb86f21a19ef3f3f5fe18f0730e1bf60a429f7e10c56f5"
+  },
+  "evidence": {
+    "REPORT.md": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-offload-lease-poll-review01-2026-10-09/REPORT.md",
+      "sha256": "a677c2d04a28cc30f29d6f1e78b89229ed718653dba91bd10ce11baea576d15d"
+    },
+    "check.py": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-offload-lease-poll-review01-2026-10-09/check.py",
+      "sha256": "bd324eb520a6f6055ebe600f8ca0ea4863d139af83cb4a44e77ab94d94dced7e"
+    },
+    "LIMITER01.json": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-offload-lease-poll-review01-2026-10-09/LIMITER01.json",
+      "sha256": "823d6ceb3a76cc2360bce89b304befdff8f5ab4965a53dddacf3a5edb5ee56d2"
+    },
+    "RESULT01.json": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-offload-lease-poll-review01-2026-10-09/RESULT01.json",
+      "sha256": "7794fac0c89a0fafea75cff3e102b4e54254bb2f00dd52e9f19b796ab658cf8a"
+    },
+    "CHECK01.log": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-offload-lease-poll-review01-2026-10-09/CHECK01.log",
+      "sha256": "c26de83abdc9496cd1301470918ec39ecca1cf389ef0ae1c6504da1800d1c431"
+    }
+  },
+  "qualifications": [
+    "No genuine Owner/Target/Run or network execution",
+    "Synchronous callback/syscall stalls can still breach unchanged60000ms limit",
+    "Direct child cleanup only; no universal descendant absence",
+    "No Main installation, admission, capacity or empirical authorization"
+  ]
+}

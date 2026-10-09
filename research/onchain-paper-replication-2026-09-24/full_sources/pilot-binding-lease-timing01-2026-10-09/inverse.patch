@@ -1,0 +1,140 @@
+--- candidate
++++ baseline
+@@ -6,8 +6,6 @@
+ quotas must still be admitted before any pair allocation or numerical continuation.
+ """
+ import json
+-import time
+-from contextlib import contextmanager
+ import os
+ from pathlib import Path
+ import stat
+@@ -84,71 +82,6 @@
+     require(job.same_process_alive(guard_owner['monitor_pid'],guard_owner['monitor_start_ticks']),'guard monitor is no longer alive')
+ 
+ 
+-
+-# Explicitly selected, four-phase nested wall timing; never authority evidence.
+-_LEASE_TIMING_CLOCK=time.monotonic_ns
+-_LEASE_TIMING_PHASES=('first_guard','journal','snapshots','second_guard')
+-_LEASE_TIMING_LIMIT=2**63-1
+-
+-class BindingLeaseTiming:
+-    def __init__(self,binding):
+-        require(type(binding) is Binding,'actual Binding timing target required')
+-        self.binding=binding;self._binding_pin=binding
+-        self.clock=_LEASE_TIMING_CLOCK;self._last=None
+-        self._totals=(0,)*12;self.closed=False
+-
+-    def _check(self,binding,*,allow_closed=False):
+-        require(type(self) is BindingLeaseTiming and self.binding is binding is self._binding_pin,
+-                'binding timing identity differs')
+-        require(self.clock is _LEASE_TIMING_CLOCK,'binding timing clock differs')
+-        require(type(self.closed) is bool and (allow_closed or not self.closed),'binding timing closed')
+-        require(type(self._totals) is tuple and len(self._totals)==12
+-                and all(type(v) is int and 0<=v<=_LEASE_TIMING_LIMIT for v in self._totals)
+-                and all(self._totals[i+2]<=self._totals[i] for i in range(0,12,3)),
+-                'binding timing counters differ')
+-
+-    def _now(self):
+-        require(self.clock is _LEASE_TIMING_CLOCK,'binding timing clock differs')
+-        now=self.clock()
+-        require(self.clock is _LEASE_TIMING_CLOCK and type(now) is int and 0<=now<=_LEASE_TIMING_LIMIT
+-                and (self._last is None or now>=self._last),'binding timing clock invalid')
+-        self._last=now;return now
+-
+-    @contextmanager
+-    def phase(self,name,binding):
+-        primary=None
+-        try:
+-            self._check(binding)
+-            require(type(name) is str and name in _LEASE_TIMING_PHASES,'binding timing phase differs')
+-            index=3*_LEASE_TIMING_PHASES.index(name)
+-            start=self._now()
+-        except BaseException:
+-            self.closed=True;raise
+-        try:
+-            yield
+-        except BaseException as error:
+-            primary=error;raise
+-        finally:
+-            try:
+-                finish=self._now();self._check(binding)
+-                values=list(self._totals)
+-                values[index]+=1;values[index+1]+=finish-start;values[index+2]+=int(primary is not None)
+-                require(all(v<=_LEASE_TIMING_LIMIT for v in values),'binding timing counter overflow')
+-                self._totals=tuple(values)
+-            except BaseException as timing_error:
+-                self.closed=True
+-                if primary is None:raise
+-                BaseException.add_note(primary,'binding phase timing failed: '+type(timing_error).__name__)
+-
+-    def snapshot(self):
+-        self._check(self.binding,allow_closed=True)
+-        result={'binding_timing_closed':int(self.closed)}
+-        for i,name in enumerate(_LEASE_TIMING_PHASES):
+-            for j,suffix in enumerate(('calls','ns','failures')):
+-                result['binding_'+name+'_'+suffix]=self._totals[i*3+j]
+-        return result
+-
+-
+ class Binding:
+     def __init__(self,run,record,context,limits,resources_policy,snapshots,guard_owner,base,ancestry_arguments=None):
+         self._run=run;self.record=freeze(record);self.context=freeze(context);self.limits=freeze(limits)
+@@ -159,43 +92,22 @@
+     def _guard(self):
+         _guard(self._run,self._resources,self._owner,self._base)
+ 
+-    def lease(self,*,observer=None):
++    def lease(self):
+         """Cheap active claim/journal/guard check; does NOT recheck source/inputs."""
+-        if observer is None:
+-            run=self._run;run._active()
+-            directory=Path(self.record['journal_directory'])
+-            self._guard()
+-            if self._ancestry_arguments is None:
+-                require(list(directory.parent.iterdir())==[directory],'another representation owner appeared')
+-            else:
+-                ancestry.verify(run,**self._ancestry_arguments,current_journal=directory)
+-            require(not any((directory/name).exists() for name in ('complete.json','failed.json')),'representation journal is terminal')
+-            reader=metadata
+-            if self.record.get('resource_only') is True:
+-                from .import_metadata import metadata as reader
+-            for path,expected in self._snapshots.items():
+-                require(reader(path,run.admission.root)[1]==expected,'owner metadata changed after binding')
+-            self._guard()
+-            return
+-        require(type(observer) is BindingLeaseTiming,'exact binding timing observer required')
+         run=self._run;run._active()
+         directory=Path(self.record['journal_directory'])
+-        with observer.phase('first_guard',self):
+-            self._guard()
+-        with observer.phase('journal',self):
+-            if self._ancestry_arguments is None:
+-                require(list(directory.parent.iterdir())==[directory],'another representation owner appeared')
+-            else:
+-                ancestry.verify(run,**self._ancestry_arguments,current_journal=directory)
+-            require(not any((directory/name).exists() for name in ('complete.json','failed.json')),'representation journal is terminal')
+-        with observer.phase('snapshots',self):
+-            reader=metadata
+-            if self.record.get('resource_only') is True:
+-                from .import_metadata import metadata as reader
+-            for path,expected in self._snapshots.items():
+-                require(reader(path,run.admission.root)[1]==expected,'owner metadata changed after binding')
+-        with observer.phase('second_guard',self):
+-            self._guard()
++        self._guard()
++        if self._ancestry_arguments is None:
++            require(list(directory.parent.iterdir())==[directory],'another representation owner appeared')
++        else:
++            ancestry.verify(run,**self._ancestry_arguments,current_journal=directory)
++        require(not any((directory/name).exists() for name in ('complete.json','failed.json')),'representation journal is terminal')
++        reader=metadata
++        if self.record.get('resource_only') is True:
++            from .import_metadata import metadata as reader
++        for path,expected in self._snapshots.items():
++            require(reader(path,run.admission.root)[1]==expected,'owner metadata changed after binding')
++        self._guard()
+ 
+     def check(self):
+         """Full current-source/input/runtime and lease check; no pair work."""

@@ -1,0 +1,163 @@
+{
+  "status": "PASS_LIFECYCLE_ONLY",
+  "checks": [
+    {
+      "case": "baseline_source_close_RED",
+      "close_attempts": [
+        "source"
+      ],
+      "remaining_real_fds": [
+        "source",
+        "memfd"
+      ],
+      "returned_backend": false,
+      "error_type": "OSError",
+      "primary_preserved": null,
+      "notes": []
+    },
+    {
+      "case": "baseline_primary_masked_RED",
+      "close_attempts": [
+        "source"
+      ],
+      "remaining_real_fds": [
+        "source",
+        "memfd"
+      ],
+      "returned_backend": false,
+      "error_type": "OSError",
+      "primary_preserved": false,
+      "notes": []
+    },
+    {
+      "case": "success_transfer",
+      "close_attempts": [
+        "source"
+      ],
+      "remaining_real_fds": [
+        "memfd"
+      ],
+      "returned_backend": true,
+      "error_type": null,
+      "primary_preserved": null,
+      "notes": []
+    },
+    {
+      "case": "source_close_failure",
+      "close_attempts": [
+        "source",
+        "memfd"
+      ],
+      "remaining_real_fds": [
+        "source"
+      ],
+      "returned_backend": false,
+      "error_type": "OSError",
+      "primary_preserved": null,
+      "notes": [
+        "source fd 3 cleanup uncertain; no retry: OSError"
+      ]
+    },
+    {
+      "case": "both_cleanup_fail_primary_preserved",
+      "close_attempts": [
+        "source",
+        "memfd"
+      ],
+      "remaining_real_fds": [
+        "source",
+        "memfd"
+      ],
+      "returned_backend": false,
+      "error_type": "RuntimeError",
+      "primary_preserved": true,
+      "notes": [
+        "source fd 3 cleanup uncertain; no retry: OSError",
+        "memfd fd 4 cleanup uncertain; no retry: OSError"
+      ]
+    },
+    {
+      "case": "both_cleanup_fail_no_primary",
+      "close_attempts": [
+        "source",
+        "memfd"
+      ],
+      "remaining_real_fds": [
+        "source",
+        "memfd"
+      ],
+      "returned_backend": false,
+      "error_type": "OSError",
+      "primary_preserved": null,
+      "notes": [
+        "source fd 3 cleanup uncertain; no retry: OSError",
+        "memfd fd 4 cleanup uncertain; no retry: OSError"
+      ]
+    },
+    {
+      "case": "owned_close_fail_preserves_unsupported_primary",
+      "close_attempts": [
+        "source",
+        "memfd"
+      ],
+      "remaining_real_fds": [
+        "memfd"
+      ],
+      "returned_backend": false,
+      "error_type": "OSError",
+      "primary_preserved": true,
+      "notes": [
+        "memfd fd 4 cleanup uncertain; no retry: OSError"
+      ]
+    },
+    {
+      "case": "unsupported_clean_fallback",
+      "close_attempts": [
+        "source",
+        "memfd"
+      ],
+      "remaining_real_fds": [],
+      "returned_backend": false,
+      "error_type": null,
+      "primary_preserved": false,
+      "notes": []
+    },
+    {
+      "case": "unexpected_primary_clean",
+      "close_attempts": [
+        "source",
+        "memfd"
+      ],
+      "remaining_real_fds": [],
+      "returned_backend": false,
+      "error_type": "RuntimeError",
+      "primary_preserved": true,
+      "notes": []
+    },
+    {
+      "case": "terminal_close_idempotent",
+      "close_attempts": [
+        "memfd"
+      ],
+      "remaining_real_fds": [],
+      "disabled": true,
+      "same_error_on_repeat": false
+    },
+    {
+      "case": "terminal_close_failure_no_retry",
+      "close_attempts": [
+        "memfd"
+      ],
+      "remaining_real_fds": [
+        "memfd"
+      ],
+      "disabled": true,
+      "same_error_on_repeat": true
+    }
+  ],
+  "outside_lifecycle_AST_inverse": true,
+  "numerical_and_binary_bodies_unchanged": true,
+  "elapsed_ns": 25074801,
+  "maxrss_kib": 18776,
+  "qualification": "Actual real-FD open/close states; synthetic loader/seal stand-ins only. Failed closes not credited as closed; harness explicitly releases residual fixture descriptors afterward."
+}

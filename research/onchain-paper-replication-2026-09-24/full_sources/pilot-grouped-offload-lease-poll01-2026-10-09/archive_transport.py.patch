@@ -1,0 +1,80 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_transport.py
++++ archive_transport.py
+@@ -47,7 +47,7 @@
+ 
+ 
+ def receive_diagnostic(command, destination, *, expected_bytes, max_seconds,
+-                       bytes_per_second, lease_callback, receipt_sink=None):
++                       bytes_per_second, lease_callback, receipt_sink=None, poll_wait=False):
+     """Receive exact bytes, retaining a partial file and bounded diagnostic tail.
+ 
+     Deadline covers child execution and throttling; forced cleanup gets a
+@@ -60,6 +60,7 @@
+             or not _positive_finite(max_seconds) or not _positive_finite(bytes_per_second)
+             or not callable(lease_callback)):
+         raise ValueError('invalid receive bounds or live lease')
++    if type(poll_wait) is not bool:raise ValueError('explicit periodic wait selection required')
+     destination = Path(destination)
+     receipt = Path(str(destination) + '.transport.json')
+     if os.path.lexists(receipt):
+@@ -102,7 +103,16 @@
+         remaining = max_seconds - (time.monotonic() - began)
+         if remaining <= 0:
+             raise TimeoutError('bounded download deadline')
+-        if proc.wait(timeout=remaining):
++        if poll_wait:
++            while True:
++                lease_callback()
++                remaining=max_seconds-(time.monotonic()-began)
++                if remaining<=0:raise TimeoutError('bounded download deadline')
++                try:
++                    returncode=proc.wait(timeout=min(0.1,remaining));break
++                except subprocess.TimeoutExpired:pass
++        else:returncode=proc.wait(timeout=remaining)
++        if returncode:
+             raise RuntimeError('bounded download process failed; see transport receipt')
+         if received != expected_bytes:
+             raise ValueError('download size shorter than expected bytes')
+@@ -135,7 +145,7 @@
+         archive.io._cleanup(actions)
+     except BaseException as error:
+         cleanup_error = error
+-    failure = cleanup_error if cleanup_error is not None else primary
++    failure = primary if poll_wait and primary is not None else (cleanup_error if cleanup_error is not None else primary)
+     # Completion is publishable only after every owned cleanup has succeeded.
+     try:
+         record = {'status': 'failed' if failure is not None else 'complete',
+@@ -153,6 +163,9 @@
+         if failure is None:
+             raise
+         failure.add_note('transport receipt publication failed: ' + repr(error))
++    if poll_wait and primary is not None:
++        if cleanup_error is not None:primary.add_note('transport cleanup failed: '+repr(cleanup_error))
++        raise primary
+     if cleanup_error is not None:
+         if primary is not None:
+             raise cleanup_error from primary
+@@ -226,11 +239,13 @@
+     def reserve(self, size):
+         self.budget.reserve(size)
+ 
++    def _wait_options(self):return {}
++
+     def run(self, args):
+         self.live()
+         receive_diagnostic(args, self.next('command'), expected_bytes=0,
+             max_seconds=self.max_seconds, bytes_per_second=self.rate_bytes,
+-            lease_callback=self.live, **({"receipt_sink":self._receipt_sink} if hasattr(self,"_receipt_sink") else {}))
++            lease_callback=self.live, **self._wait_options(), **({"receipt_sink":self._receipt_sink} if hasattr(self,"_receipt_sink") else {}))
+ 
+     def mkdir(self, path):
+         self.run([*self.ssh, 'mkdir', self.remote_path(path)])
+@@ -277,7 +292,7 @@
+         self.live()
+         receive_diagnostic([*self.ssh, 'dd', 'if=' + path, 'bs=' + str(BLOCK_BYTES), 'count=' + str(count)],
+             staging, expected_bytes=expected_bytes, max_seconds=self.max_seconds,
+-            bytes_per_second=self.rate_bytes, lease_callback=self.live,
++            bytes_per_second=self.rate_bytes, lease_callback=self.live, **self._wait_options(),
+             **({"receipt_sink":self._receipt_sink} if hasattr(self,"_receipt_sink") else {}))
+         os.link(staging, destination)
+         staging.unlink()

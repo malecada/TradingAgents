@@ -1,0 +1,35 @@
+{
+  "status": "PASS_CONNECTED_FINITE_PROTOTYPE_ONLY",
+  "advances": 727,
+  "compiled_calls": 768,
+  "all_soft_state_bits_equal": true,
+  "max_state_abs_difference": 0.0,
+  "checkpoint_hash": "663cbb4d875875c6813a4e26ce8b9add7578a255f98fdc15356da1601c4023a3",
+  "assignments_equal": true,
+  "score_abs_difference": 0.0,
+  "iterations": 48,
+  "underflow_original_and_candidate": [
+    {
+      "type": "FloatingPointError",
+      "message": "underflow encountered in exp",
+      "safe": false,
+      "cursor": 0,
+      "bytes": "00000000000000000000000000408f400000000000408f400000000000000000"
+    },
+    {
+      "type": "FloatingPointError",
+      "message": "underflow encountered in exp",
+      "safe": false,
+      "cursor": 0,
+      "bytes": "00000000000000000000000000408f400000000000408f400000000000000000"
+    }
+  ],
+  "fallbacks": [
+    "under_raise",
+    "magnitude",
+    "missing_library",
+    "abi"
+  ],
+  "elapsed_ns": 801982010,
+  "maxrss_kib": 56596
+}

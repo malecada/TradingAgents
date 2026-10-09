@@ -1,0 +1,69 @@
+--- tradingagents/research/onchain_replication/batched_numeric_execution.py
++++ batched_numeric_execution.py
+@@ -2,6 +2,7 @@
+ import hashlib,json,math,os,stat,struct,time
+ from pathlib import Path
+ from . import batched_numeric_reuse as reuse
++from . import geometry_publication
+ 
+ RECORD=struct.Struct('>BQ')
+ SUMMARY_LIMIT=8192
+@@ -40,7 +41,7 @@
+     return value
+ 
+ class NumericExecution:
+-    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None):
++    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None):
+         self.fd=self.origins_fd=self.batches_fd=None;self.memo=None;self.closed=False;self.poisoned=False;self.finished=False
+         self.root=Path(stream_root).absolute();self.cells=cells;self.batch_cells=batch_cells
+         self.max_origin_bytes=max_origin_bytes;self.max_summary_bytes=max_summary_bytes
+@@ -51,12 +52,14 @@
+             require(type(cells) is int and 0<cells<2**63 and type(batch_cells) is int and 0<batch_cells<=4096,'finite numeric range required')
+             require(type(max_origin_bytes) is int and 9*cells<=max_origin_bytes<2**63 and type(max_summary_bytes) is int and 0<max_summary_bytes<2**63,'numeric storage reservation required')
+             self.batches=(cells+batch_cells-1)//batch_cells
++            self.geometry=geometry_publication.policy(geometry)
++            if self.geometry is not None:require(max_summary_bytes>=self.batches*SUMMARY_LIMIT,'selected geometry requires full bounded summary reservation')
+             self.fd=os.open(self.root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);self.root_pin=sig(os.fstat(self.fd))[:2];self._root()
+             os.mkdir('numeric-batches',mode=0o700,dir_fd=self.fd)
+             self.batches_fd=os.open('numeric-batches',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=self.fd);self.batches_pin=sig(os.fstat(self.batches_fd))[:2]
+             self.origins_fd=os.open('numeric-origins.bin',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.fd)
+             self.origin_sig=sig(os.fstat(self.origins_fd));os.fsync(self.fd)
+-            self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll)
++            self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}))
+         except BaseException as primary:
+             self.poisoned=True
+             try:self.close()
+@@ -98,6 +101,7 @@
+         self.memo.end_batch() # Genuine full guard precedes any summary credit.
+         start=self.ordinal-len(self.buffer)//9
+         summary={'format':FORMAT,'batch':self.batch,'start':start,'stop':self.ordinal,'computed':self.batch_computed,'reused':self.batch_reused,'origin_sha256':hashlib.sha256(self.buffer).hexdigest(),'receipt_sha256':self.receipts.hexdigest(),'receipt_framing':'u64be-length/canonical-json-newline','counters':counters(self.memo),'elapsed_seconds':self.batch_elapsed,'old_per_occurrence_execution_credit':False}
++        if self.geometry is not None:summary['geometry']=geometry_publication.completed(self.memo.last_geometry_summary,self.geometry,start,self.ordinal,self.batch_computed,self.batch_reused)
+         body=raw(summary);require(len(body)<=SUMMARY_LIMIT and self.summary_bytes+len(body)<=self.max_summary_bytes and 9*self.ordinal<=self.max_origin_bytes,'numeric retained byte cap')
+         self._origin_current();write_all(self.origins_fd,self.buffer);os.fsync(self.origins_fd)
+         self.origin_sig=sig(os.fstat(self.origins_fd));self._origin_current()
+@@ -121,6 +125,7 @@
+             require(self.ordinal==self.cells and self.batch==self.batches and not self.buffer and not self.memo.active,'numeric range incomplete')
+             self._origin_current();os.fsync(self.origins_fd)
+             binding={'format':FORMAT,'cells':self.cells,'batch_cells':self.batch_cells,'batches':self.batches,'computed':self.computed,'reused':self.reused,'origin_bytes':9*self.cells,'origin_sha256':self.origin_hash.hexdigest(),'origin_signature':list(self.origin_sig),'stream_inode':list(self.root_pin),'batches_inode':list(self.batches_pin),'batches_signature':list(sig(os.fstat(self.batches_fd))),'summary_bytes':self.summary_bytes,'summary_sha256':self.summary_hash.hexdigest(),'summary_inventory_sha256':self.summary_inventory.hexdigest(),'max_origin_bytes':self.max_origin_bytes,'max_summary_bytes':self.max_summary_bytes,'counters':counters(self.memo),'elapsed_seconds':self.elapsed_seconds,'old_per_occurrence_execution_credit':False,'independent_key_equivalence_recomputed':False,'resume_supported':False}
++            if self.geometry is not None:binding['geometry']=dict(self.geometry)
+             verify(self.root,binding);self.finished=True;return binding
+         except BaseException:self._poison();raise
+     def close(self):
+@@ -154,6 +159,8 @@
+     try:
+         require(binding['format']==FORMAT and type(binding['cells']) is int and 0<binding['cells']<2**63 and type(binding['batch_cells']) is int and 0<binding['batch_cells']<=4096,'numeric binding format/range')
+         cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells
++        geometry=geometry_publication.policy(binding.get('geometry'))
++        if geometry is not None:require(binding['max_summary_bytes']>=batches*SUMMARY_LIMIT,'geometry summary reservation differs')
+         require(binding['batches']==batches and binding['origin_bytes']==cells*9<=binding['max_origin_bytes'] and binding['summary_bytes']<=binding['max_summary_bytes'] and binding['old_per_occurrence_execution_credit'] is False and binding['independent_key_equivalence_recomputed'] is False and binding['resume_supported'] is False,'numeric binding closure')
+         fd=os.open(root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);require(root.resolve()==root and sig(os.fstat(fd))[:2]==tuple(binding['stream_inode'])==sig(root.lstat())[:2],'numeric stream identity')
+         bd=os.open('numeric-batches',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=fd);bst=sig(os.fstat(bd));require(bst==tuple(binding['batches_signature']) and bst[:2]==tuple(binding['batches_inode']),'numeric summary directory identity')
+@@ -167,6 +174,8 @@
+         for index in range(batches):
+             start=index*batch_cells;stop=min(cells,start+batch_cells);body,signature=read_file(bd,f'{index:012d}.json',SUMMARY_LIMIT);s=json.loads(body)
+             require(raw(s)==body and s['format']==FORMAT and s['batch']==index and s['start']==start and s['stop']==stop and s['old_per_occurrence_execution_credit'] is False and s['receipt_framing']=='u64be-length/canonical-json-newline' and len(s['receipt_sha256'])==64 and all(c in '0123456789abcdef' for c in s['receipt_sha256']),'numeric summary range/framing')
++            if geometry is not None:geometry_publication.check(s.get('geometry'),geometry,start,stop,s['computed'],s['reused'])
++            else:require('geometry' not in s,'unselected geometry summary')
+             chunk=os.pread(origin,9*(stop-start),9*start);require(len(chunk)==9*(stop-start) and hashlib.sha256(chunk).hexdigest()==s['origin_sha256'],'numeric origin range hash')
+             nc=nr=0
+             for ordinal,(mode,source) in enumerate(RECORD.iter_unpack(chunk),start):

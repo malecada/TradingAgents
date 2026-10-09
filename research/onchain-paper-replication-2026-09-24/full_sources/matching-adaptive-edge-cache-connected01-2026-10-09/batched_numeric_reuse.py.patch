@@ -1,0 +1,68 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_numeric_reuse.py
++++ batched_numeric_reuse.py
+@@ -1,28 +1,30 @@
+ """Explicit engineering result reuse; never old per-occurrence execution credit."""
+ import array,copy,ctypes,hashlib,json,math,struct,sys,types,time
+ from pathlib import Path
++from . import adaptive_edge_policy
+ import numpy as np
+ from tradingagents.research.onchain_replication.contracts import AttributedGraph
+-from tradingagents.research.onchain_replication import matching_checkpoint as engine
++from . import matching_checkpoint as engine
+ from tradingagents.research.onchain_replication import matching_pair as pair
+ from tradingagents.research.onchain_replication import matching_reference as reference
+ from tradingagents.research.onchain_replication import contracts
+ 
+ from . import batched_pair_executor as accepted
+-from tradingagents.research.onchain_replication import matching_immutable_session as immutable_session
+-
+-MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session)
++from . import matching_immutable_session as immutable_session
++
++MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy)
+ SOURCE_PINS=(
+-    (accepted, 'fea5c26c66e7047ad157fc0dc499918f50c2c4abde409df5b3c1699a8e6b12b3'),
+-    (engine, 'd5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c'),
+-    (engine.ann, '2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46'),
++    (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
++    (accepted, 'f7c51b9423a45c0e61defd9260924acb1e0611d5c8727de8abb96e42d1ad147e'),
++    (engine, '309f260cdd0956966ecbd588df9da11f9c45f241ddeab93fb280c96f8ddf9f4a'),
++    (engine.ann, 'b9229da33098c6c00c2e0e85a0a25a7d1a6f7968befbf82e30a092c424dd967e'),
+     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
+     (engine.sparse, '06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e'),
+     (engine.ann.typed_identity, '0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7'),
+     (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
+     (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
+     (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
+-    (immutable_session, 'c7c498ec5fa00f2e1bc501e47e8c106387ec63d3d6b93197750a99e1d9cc4e07'),
++    (immutable_session, 'c3fc9b7a9a456f269eded17ba5ece492edccc91e2fc8e6563a0febcca80baeef'),
+ )
+ 
+ def require(ok,message):
+@@ -92,7 +94,8 @@
+ 
+ class NumericReuseExecutor:
+     """Explicit batches; source/runtime attestation is NOT continuous authority."""
+-    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None):
++    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,edge_cache_policy=None):
++        adaptive_edge_policy.attach(self,edge_cache_policy)
+         require(type(max_entries) is int and 0<max_entries<=4096,'finite entry bound required')
+         require(type(max_retained_bytes) is int and 1024<=max_retained_bytes<=64*1024**2,'retained cache bound required')
+         require(type(max_key_bytes) is int and 0<max_key_bytes<=min(max_retained_bytes,8*1024**2),'bounded exact key required')
+@@ -131,7 +134,7 @@
+                         primary.add_note('authority timing failed: '+repr(timing_error))
+             authority_poll=measured_poll
+         self.authority_poll=authority_poll
+-        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll)
++        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self))
+         self.checkpoint_adapter=self.executor.checkpoint
+         self.policy_pin=raw(self.executor.policy);self.schedule_pin=raw(self.executor.schedule)
+         self.max_entries=max_entries;self.max_retained_bytes=max_retained_bytes;self.max_key_bytes=max_key_bytes
+@@ -149,6 +152,7 @@
+     @property
+     def retained_bytes(self):return self._bytes
+     def _current(self):
++        adaptive_edge_policy.join(self,self.executor)
+         light_environment()
+         require((accepted.PairExecutor.__call__,accepted.PairExecutor.__call__.__code__,reference.validate_pair,reference.validate_pair.__code__,pair.policy_check,pair.policy_check.__code__,engine.ann.typed_identity.graph_identity,engine.ann.typed_identity.graph_identity.__code__)==self._pins,'occurrence function pins changed')
+         require(self.executor.authority_poll is self.authority_poll,'authority poll changed')

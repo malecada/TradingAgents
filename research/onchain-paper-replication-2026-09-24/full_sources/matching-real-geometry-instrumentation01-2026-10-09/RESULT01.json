@@ -1,0 +1,69 @@
+{
+  "status": "PASS_SYNTHETIC_NO_AUTHORITY",
+  "literal_inverse": true,
+  "exact_results_receipts_callback_trace": true,
+  "routes": [
+    {
+      "geometry": "baseline",
+      "four_calls_ns": 15973468,
+      "poll_count": 13
+    },
+    {
+      "geometry": null,
+      "four_calls_ns": 15026764,
+      "poll_count": 13
+    },
+    {
+      "geometry": false,
+      "four_calls_ns": 15346489,
+      "poll_count": 13
+    },
+    {
+      "geometry": true,
+      "four_calls_ns": 14711486,
+      "poll_count": 13
+    }
+  ],
+  "geometry_only_4096_adds_and_finish_ns": 23680279,
+  "geometry_summary_bytes": 784,
+  "conservative_summary_upper_bytes": 1155,
+  "combined_with_prior_numeric_upper_1027": 2182,
+  "limits": {
+    "affinity": [
+      3
+    ],
+    "nice": 10,
+    "as": [
+      536870912,
+      536870912
+    ],
+    "fsize": [
+      4194304,
+      4194304
+    ],
+    "cpu": [
+      30,
+      30
+    ],
+    "wall": [
+      29.999985,
+      0.0
+    ],
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    }
+  },
+  "elapsed_seconds": 0.3590245840023272,
+  "tests": [
+    "None/False inverse",
+    "computed/reused exact receipts and result bits",
+    "original attestation refusal poisons no summary",
+    "serialization cap refusal",
+    "ordinal/product/cardinality refusals",
+    "finite fixed histogram",
+    "actual scalar tiny route"
+  ],
+  "qualification": "Single ordered route timings include ordinary noise, not speed comparison; isolated metadata timing excludes original numeric/authority work."
+}

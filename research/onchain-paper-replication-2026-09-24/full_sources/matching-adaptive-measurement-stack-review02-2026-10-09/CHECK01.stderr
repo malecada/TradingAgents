@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-adaptive-measurement-stack-review02-2026-10-09/check01.py", line 19, in <module>
+    old.verify(root,bad)
+    ~~~~~~~~~~^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-adaptive-measurement-stack01-2026-10-09/batched_numeric_execution.py", line 200, in verify
+    timing=matching_owner.binding_timing_policy(binding.get('binding_timing'))
+  File "actual_validators", line 157, in binding_timing_policy
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-adaptive-measurement-stack02-2026-10-09/geometry_summary.py", line 7, in require
+    if not ok:raise ValueError(message)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: explicit binding timing policy required

@@ -1,0 +1,136 @@
+{
+  "status": "PASS_SYNTHETIC_ONLY",
+  "limits": {
+    "affinity": [
+      3
+    ],
+    "as": [
+      536870912,
+      536870912
+    ],
+    "cpu": [
+      30,
+      30
+    ],
+    "fsize": [
+      4194304,
+      4194304
+    ],
+    "wall_timer_remaining": 29.999983,
+    "nice": 10
+  },
+  "equivalence": {
+    "pairs": 16,
+    "shapes": [
+      4,
+      5
+    ],
+    "edges": [
+      8,
+      14
+    ],
+    "iterations": 48,
+    "state_comparisons": 1536,
+    "state_mismatches": [],
+    "max_absolute_difference": 0.0,
+    "assignment_equal": true,
+    "score_bits_equal": true,
+    "prototype": {
+      "route": "batched_prototype",
+      "iterations": [
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48,
+        48
+      ],
+      "explicit_arrays_bytes": 93824,
+      "operation_checkpoint_compatible": false
+    },
+    "graph_setup_seconds": 0.0006020389992045239
+  },
+  "timings": [
+    {
+      "rep": 0,
+      "sequential": 0.3048063260066556,
+      "batched": 0.06591017400205601
+    },
+    {
+      "rep": 1,
+      "batched": 0.0655380959942704,
+      "sequential": 0.22581181800342165
+    },
+    {
+      "rep": 2,
+      "sequential": 0.21854030300164595,
+      "batched": 0.03853562100266572
+    },
+    {
+      "rep": 3,
+      "batched": 0.03891653499158565,
+      "sequential": 0.21669248699618038
+    }
+  ],
+  "medians": {
+    "sequential": 0.2221760605025338,
+    "batched": 0.05222731549292803
+  },
+  "ratio": 4.254020303467792,
+  "pairs_per_second": {
+    "sequential": 72.01495950468313,
+    "batched": 306.35309988633287
+  },
+  "elapsed_seconds": 2.2713460700033465,
+  "maxrss_kib": 57496,
+  "config": {
+    "alpha": 1.0,
+    "amendment": "matching-precision-v2.md",
+    "beta0": 1.0,
+    "beta_final": 30.0,
+    "beta_rate": 0.075,
+    "beta_update": "beta *= (1+beta_rate)",
+    "convergence": "temperature termination; no additional fixed-point stopping",
+    "edge_agreement_chunk_pairs": 65536,
+    "empty_nodes": "reject",
+    "hardening": "greedy global maximum; ties row-major; remove row and column; stop after min(n,m) matches",
+    "initialization": "node agreement s2 (Algorithm1 s1 symbol corrected by argument type)",
+    "internal_precision": "float64",
+    "max_iterations": 50,
+    "max_pair_entries": 8402640,
+    "normalization": "row then column, log-domain stable",
+    "normalization_iterations": 1,
+    "objective": "paper Eq1 literal including factor 2 in edge denominator",
+    "precision_accelerated": "float32 output with float64 affinity and annealing",
+    "precision_reference": "float64",
+    "rectangular": "un-padded rectangular one-pass normalization; soft row/column sums need not both equal 1; hard assignment must be injective",
+    "s1": "edge RBF exp(-mean squared feature difference); zero if either edge absent",
+    "s2": "node RBF exp(-mean squared feature difference)",
+    "schema_version": 1,
+    "solver": "algorithm1_literal",
+    "symmetric_dictionary_distance": "1 - (S(A,B)+S(B,A))/2",
+    "update": "Q_ui=0.5*sum_vj(edge_agreement_uvij*M_vj)+alpha*node_agreement_ui; literal Algorithm1, not claimed Eq2 derivative",
+    "zero_edges": "edge contribution zero if either graph has zero edges; retain node contribution divided by (1+alpha)"
+  },
+  "policy": {
+    "hardening_chunk_entries": 65536,
+    "hardening_buffer_bytes": 143195398,
+    "normalization_chunk_entries": 700220,
+    "max_state_bytes": 275241856
+  },
+  "runtime": {
+    "python": "3.13.13 (main, Apr 14 2026, 14:28:56) [Clang 22.1.3 ]",
+    "numpy": "2.3.0"
+  },
+  "fallback_empty_list": true
+}

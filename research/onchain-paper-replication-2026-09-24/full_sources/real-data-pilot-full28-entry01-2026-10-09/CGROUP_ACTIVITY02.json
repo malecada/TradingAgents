@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-09T12:30:32.991967+00:00",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-58ebb70983634176936b3d130240cbd9.service",
+  "first": {
+    "monotonic_ns": 77285478721213,
+    "unavailable": {
+      "io.stat": "[Errno 2] No such file or directory: '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-58ebb70983634176936b3d130240cbd9.service/io.stat'"
+    },
+    "values": {
+      "cgroup.procs": "2493664\n2493667\n",
+      "cpu.stat": "usage_usec 4636127805\nuser_usec 3754062123\nsystem_usec 882065682\ncore_sched.force_idle_usec 0\n"
+    }
+  },
+  "qualification": "Aggregate native-unit cgroup counters include all guard/workload children, no role assertion for listed PIDs; no pure solver/physicalwire attribution. Optional missing files remain unavailable, not zero.",
+  "same_root_session": 47933,
+  "second": {
+    "monotonic_ns": 77290478917680,
+    "unavailable": {
+      "io.stat": "[Errno 2] No such file or directory: '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-58ebb70983634176936b3d130240cbd9.service/io.stat'"
+    },
+    "values": {
+      "cgroup.procs": "2493664\n2493667\n2743258\n",
+      "cpu.stat": "usage_usec 4641565723\nuser_usec 3757517444\nsystem_usec 884048279\ncore_sched.force_idle_usec 0\n"
+    }
+  }
+}

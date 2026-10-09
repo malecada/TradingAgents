@@ -1,0 +1,27 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_checkpoint.py
++++ matching_checkpoint.py
+@@ -5,6 +5,7 @@
+ native sort workspace and I/O scratch; a process guard remains mandatory.
+ """
+ from pathlib import Path
++from . import adaptive_edge_policy
+ import hashlib,json
+ import numpy as np
+ from tradingagents.research.onchain_replication.matching import MatchScore
+@@ -69,13 +70,14 @@
+     if type(max_operations) is not int or max_operations<=0:raise ValueError('positive operation allowance required')
+     return _advance_owned(s,a,b,c,max_operations=max_operations)
+ 
+-def _advance_owned(s,a,b,c,*,max_operations):
++def _advance_owned(s,a,b,c,*,max_operations,edge_cache_policy=None):
+     """Private body; composite/input/budget checks precede entry, no callbacks."""
++    selected=adaptive_edge_policy.freeze(edge_cache_policy)
+     s['safe']=False
+     try:
+         used=0
+         if s['phase']=='annealing':
+-            used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations)
++            used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations,**({'edge_cache_policy':dict(selected)} if selected is not None else {}))
+             if s['annealing']['phase']=='done':
+                 matrix=s['annealing']['M'];digest=matrix_identity(matrix)
+                 h=hard.create(matrix,max_pair_entries=c['max_pair_entries'],max_explicit_bytes=s['policy']['hardening_buffer_bytes'])

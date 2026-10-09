@@ -1,0 +1,192 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/matching-real-geometry-instrumentation01-2026-10-09/batched_numeric_reuse.py
++++ batched_numeric_reuse.py
+@@ -1,29 +1,31 @@
+ """Explicit engineering result reuse; never old per-occurrence execution credit."""
+ import array,copy,ctypes,hashlib,json,math,struct,sys,types,time
+ from pathlib import Path
++from . import adaptive_edge_policy
+ import numpy as np
+ from tradingagents.research.onchain_replication.contracts import AttributedGraph
+-from tradingagents.research.onchain_replication import matching_checkpoint as engine
++from . import matching_checkpoint as engine
+ from tradingagents.research.onchain_replication import matching_pair as pair
+ from tradingagents.research.onchain_replication import matching_reference as reference
+ from tradingagents.research.onchain_replication import contracts
+ 
+ from . import batched_pair_executor as accepted
+ from .geometry_summary import Geometry
+-from tradingagents.research.onchain_replication import matching_immutable_session as immutable_session
+-
+-MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session)
++from . import matching_immutable_session as immutable_session
++
++MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy)
+ SOURCE_PINS=(
+-    (accepted, 'fea5c26c66e7047ad157fc0dc499918f50c2c4abde409df5b3c1699a8e6b12b3'),
+-    (engine, 'd5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c'),
+-    (engine.ann, '2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46'),
++    (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
++    (accepted, 'f7c51b9423a45c0e61defd9260924acb1e0611d5c8727de8abb96e42d1ad147e'),
++    (engine, '309f260cdd0956966ecbd588df9da11f9c45f241ddeab93fb280c96f8ddf9f4a'),
++    (engine.ann, 'b9229da33098c6c00c2e0e85a0a25a7d1a6f7968befbf82e30a092c424dd967e'),
+     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
+     (engine.sparse, '06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e'),
+     (engine.ann.typed_identity, '0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7'),
+     (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
+     (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
+     (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
+-    (immutable_session, 'c7c498ec5fa00f2e1bc501e47e8c106387ec63d3d6b93197750a99e1d9cc4e07'),
++    (immutable_session, 'c3fc9b7a9a456f269eded17ba5ece492edccc91e2fc8e6563a0febcca80baeef'),
+ )
+ 
+ def require(ok,message):
+@@ -93,7 +95,8 @@
+ 
+ class NumericReuseExecutor:
+     """Explicit batches; source/runtime attestation is NOT continuous authority."""
+-    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192):
++    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None):
++        adaptive_edge_policy.attach(self,edge_cache_policy)
+         require(type(max_entries) is int and 0<max_entries<=4096,'finite entry bound required')
+         require(type(max_retained_bytes) is int and 1024<=max_retained_bytes<=64*1024**2,'retained cache bound required')
+         require(type(max_key_bytes) is int and 0<max_key_bytes<=min(max_retained_bytes,8*1024**2),'bounded exact key required')
+@@ -135,7 +138,7 @@
+                         primary.add_note('authority timing failed: '+repr(timing_error))
+             authority_poll=measured_poll
+         self.authority_poll=authority_poll
+-        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll)
++        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self))
+         self.checkpoint_adapter=self.executor.checkpoint
+         self.policy_pin=raw(self.executor.policy);self.schedule_pin=raw(self.executor.schedule)
+         self.max_entries=max_entries;self.max_retained_bytes=max_retained_bytes;self.max_key_bytes=max_key_bytes
+@@ -153,6 +156,7 @@
+     @property
+     def retained_bytes(self):return self._bytes
+     def _current(self):
++        adaptive_edge_policy.join(self,self.executor)
+         light_environment()
+         require((accepted.PairExecutor.__call__,accepted.PairExecutor.__call__.__code__,reference.validate_pair,reference.validate_pair.__code__,pair.policy_check,pair.policy_check.__code__,engine.ann.typed_identity.graph_identity,engine.ann.typed_identity.graph_identity.__code__)==self._pins,'occurrence function pins changed')
+         require(self.executor.authority_poll is self.authority_poll,'authority poll changed')
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot-binding-lease-timing-publication01-2026-10-09/batched_numeric_execution.py
++++ batched_numeric_execution.py
+@@ -1,6 +1,7 @@
+ """Explicit numeric-reuse occurrence closure; no Owner or scientific authority."""
+ import hashlib,json,math,os,stat,struct,time
+ from pathlib import Path
++from . import adaptive_edge_policy
+ from . import batched_numeric_reuse as reuse
+ from . import geometry_publication, matching_owner
+ 
+@@ -41,7 +42,7 @@
+     return value
+ 
+ class NumericExecution:
+-    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None):
++    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None,edge_cache_policy=None):
+         self.fd=self.origins_fd=self.batches_fd=None;self.memo=None;self.closed=False;self.poisoned=False;self.finished=False
+         self.root=Path(stream_root).absolute();self.cells=cells;self.batch_cells=batch_cells
+         self.max_origin_bytes=max_origin_bytes;self.max_summary_bytes=max_summary_bytes
+@@ -49,6 +50,7 @@
+         self.buffer=bytearray();self.receipts=hashlib.sha256();self.summary_hash=hashlib.sha256();self.summary_inventory=hashlib.sha256();self.origin_hash=hashlib.sha256()
+         self.batch_computed=self.batch_reused=0;self.batch_elapsed=0.0
+         try:
++            adaptive_edge_policy.attach(self,edge_cache_policy)
+             require(type(cells) is int and 0<cells<2**63 and type(batch_cells) is int and 0<batch_cells<=4096,'finite numeric range required')
+             require(type(max_origin_bytes) is int and 9*cells<=max_origin_bytes<2**63 and type(max_summary_bytes) is int and 0<max_summary_bytes<2**63,'numeric storage reservation required')
+             self.batches=(cells+batch_cells-1)//batch_cells
+@@ -68,7 +70,7 @@
+             self.batches_fd=os.open('numeric-batches',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=self.fd);self.batches_pin=sig(os.fstat(self.batches_fd))[:2]
+             self.origins_fd=os.open('numeric-origins.bin',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.fd)
+             self.origin_sig=sig(os.fstat(self.origins_fd));os.fsync(self.fd)
+-            self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}))
++            self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}),**adaptive_edge_policy.options(self))
+         except BaseException as primary:
+             self.poisoned=True
+             try:self.close()
+@@ -103,9 +105,11 @@
+         require(not self.closed and not self.poisoned and not self.finished and self.ordinal<self.cells,'numeric execution unavailable')
+         try:
+             self._origin_current()
++            adaptive_edge_policy.join(self,self.memo)
+             if not self.buffer:self.memo.begin_batch()
+             started=time.perf_counter();result=self.memo(a,b,purpose);elapsed=time.perf_counter()-started
+             require(math.isfinite(elapsed) and elapsed>=0,'numeric timing invalid')
++            adaptive_edge_policy.join(self,self.memo)
+             receipt=self.memo.last_receipt
+             expected={'schema_version','kind','ordinal','purpose_sha256','mode','origin_purpose_sha256','origin_ordinal','score_f64_be','iterations','convergence','cached','checkpoint_attempt_delta','checkpoint_reserved_byte_delta','retained_cache_bytes','old_per_occurrence_execution_credit','boundary_validated_batch_complete'}
+             require(type(receipt) is dict and set(receipt)==expected and receipt['schema_version']==2 and receipt['kind']=='engineering_numeric_occurrence' and type(receipt['ordinal']) is int and receipt['ordinal']==self.ordinal and receipt['purpose_sha256']==purpose,'fresh provisional occurrence required')
+@@ -127,9 +131,11 @@
+         if self.binding_timing is not None:
+             self._timing_current()
+             self._timing_snapshot=raw(matching_owner.binding_timing_counters(self._timing_observer.snapshot()))
++        adaptive_edge_policy.join(self,self.memo)
+         start=self.ordinal-len(self.buffer)//9
+         summary={'format':FORMAT,'batch':self.batch,'start':start,'stop':self.ordinal,'computed':self.batch_computed,'reused':self.batch_reused,'origin_sha256':hashlib.sha256(self.buffer).hexdigest(),'receipt_sha256':self.receipts.hexdigest(),'receipt_framing':'u64be-length/canonical-json-newline','counters':self._counters(),'elapsed_seconds':self.batch_elapsed,'old_per_occurrence_execution_credit':False}
+         if self.geometry is not None:summary['geometry']=geometry_publication.completed(self.memo.last_geometry_summary,self.geometry,start,self.ordinal,self.batch_computed,self.batch_reused)
++        if self._edge_cache_policy is not None:summary['edge_cache_policy']=dict(self._edge_cache_policy)
+         body=raw(summary);require(len(body)<=SUMMARY_LIMIT and self.summary_bytes+len(body)<=self.max_summary_bytes and 9*self.ordinal<=self.max_origin_bytes,'numeric retained byte cap')
+         self._origin_current();write_all(self.origins_fd,self.buffer);os.fsync(self.origins_fd)
+         self.origin_sig=sig(os.fstat(self.origins_fd));self._origin_current()
+@@ -155,6 +161,8 @@
+             binding={'format':FORMAT,'cells':self.cells,'batch_cells':self.batch_cells,'batches':self.batches,'computed':self.computed,'reused':self.reused,'origin_bytes':9*self.cells,'origin_sha256':self.origin_hash.hexdigest(),'origin_signature':list(self.origin_sig),'stream_inode':list(self.root_pin),'batches_inode':list(self.batches_pin),'batches_signature':list(sig(os.fstat(self.batches_fd))),'summary_bytes':self.summary_bytes,'summary_sha256':self.summary_hash.hexdigest(),'summary_inventory_sha256':self.summary_inventory.hexdigest(),'max_origin_bytes':self.max_origin_bytes,'max_summary_bytes':self.max_summary_bytes,'counters':self._counters(),'elapsed_seconds':self.elapsed_seconds,'old_per_occurrence_execution_credit':False,'independent_key_equivalence_recomputed':False,'resume_supported':False}
+             if self.geometry is not None:binding['geometry']=dict(self.geometry)
+             if self.binding_timing is not None:binding['binding_timing']=dict(self.binding_timing)
++            adaptive_edge_policy.join(self,self.memo)
++            if self._edge_cache_policy is not None:binding['edge_cache_policy']=dict(self._edge_cache_policy)
+             verify(self.root,binding);self.finished=True;return binding
+         except BaseException:self._poison();raise
+     def close(self):
+@@ -188,6 +196,7 @@
+     try:
+         require(binding['format']==FORMAT and type(binding['cells']) is int and 0<binding['cells']<2**63 and type(binding['batch_cells']) is int and 0<binding['batch_cells']<=4096,'numeric binding format/range')
+         cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells
++        selected=adaptive_edge_policy.freeze(binding.get('edge_cache_policy'))
+         timing=matching_owner.binding_timing_policy(binding.get('binding_timing'))
+         if timing is not None:require(binding['max_summary_bytes']>=batches*SUMMARY_LIMIT,'binding timing summary reservation differs')
+         geometry=geometry_publication.policy(binding.get('geometry'))
+@@ -210,6 +219,7 @@
+             if timing is not None:
+                 names={'binding_timing_closed'}|{'binding_'+p+'_'+x for p in matching_owner._LEASE_TIMING_PHASES for x in ('calls','ns','failures')}
+                 matching_owner.binding_timing_counters({k:s['counters'][k] for k in names})
++            require(adaptive_edge_policy.freeze(s.get('edge_cache_policy'))==selected,'numeric summary adaptive policy differs')
+             chunk=os.pread(origin,9*(stop-start),9*start);require(len(chunk)==9*(stop-start) and hashlib.sha256(chunk).hexdigest()==s['origin_sha256'],'numeric origin range hash')
+             nc=nr=0
+             for ordinal,(mode,source) in enumerate(RECORD.iter_unpack(chunk),start):
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot-binding-lease-timing-publication01-2026-10-09/compact_mcm_batched.py
++++ compact_mcm_batched.py
+@@ -10,6 +10,7 @@
+ import stat
+ from contextlib import contextmanager
+ from pathlib import Path
++from . import adaptive_edge_policy
+ import numpy as np
+ from . import compact_owner as owners, compact_mcm as producer
+ from . import compact_mcm_publication as publication, score_batches as io
+@@ -41,7 +42,8 @@
+         require(type(b[k]) is int and 0 < b[k] < 2**63, 'positive batched allowance required')
+     require(b['batch_cells'] <= 4096 and 1024 <= b['max_body_bytes'] <= 1024**2 and b['max_closure_token_bytes'] <= 64*1024**2, 'batch bounds differ')
+     execution=b['execution']
+-    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()),'explicit numeric execution schema required')
++    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()),'explicit numeric execution schema required')
++    if 'edge_cache_policy' in execution:require(adaptive_edge_policy.freeze(execution['edge_cache_policy']) is not None,'explicit adaptive selection required')
+     require(execution['route']=='immutable-input-session+exact-byte-reuse-v1','explicit numerical operation deviation required')
+     require(all(type(execution[k]) is int for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')),'finite numeric execution allowances required')
+     require(1<=execution['max_entries']<=4096 and 1024<=execution['max_retained_bytes']<=64*1024**2 and 0<execution['max_key_bytes']<=min(execution['max_retained_bytes'],8*1024**2),'bounded exact result cache required')
+@@ -63,7 +65,7 @@
+     result={name:importlib.import_module(PACKAGE+'.'+module) for name,module in MODULES.items()}
+     # ONE packaged journal class is shared with the exact typed semantics helper.
+     if admission is not None:
+-        names=tuple(MODULES.values())+('matching_immutable_session','compact_mcm_batched','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations')
++        names=tuple(MODULES.values())+('matching_immutable_session','compact_mcm_batched','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations','adaptive_edge_policy')
+         if grouped:names+=('grouped_offload','grouped_offload_semantics')
+         if geometry:names+=('geometry_summary','geometry_publication')
+         if binding_timing:names+=('matching_owner','compact_owner','imported_authority_lease')
+@@ -330,7 +332,7 @@
+         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
+         execution=b['execution']
+-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}))
++        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}))
+         external=None;post_batch=final_batches=None
+         if b['retention']=='typed-recover-before-retire-v2':
+             from . import registered_offload as offload

@@ -1,0 +1,43 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_immutable_session.py
++++ matching_immutable_session.py
+@@ -8,6 +8,7 @@
+ the caller's entry/checkpoint/batch/final responsibility.
+ """
+ import json
++from . import adaptive_edge_policy
+ from types import MappingProxyType
+ import numpy as np
+ from tradingagents.research.onchain_replication.contracts import AttributedGraph
+@@ -70,12 +71,13 @@
+ 
+ 
+ class ImmutablePairSession:
+-    def __init__(self, a, b, config, *, engine, annealing):
++    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None):
+         require(engine.ann is annealing and
+                 callable(getattr(engine, '_check_owned', None)) and
+                 callable(getattr(engine, '_advance_owned', None)) and
+                 callable(getattr(annealing, '_check_state_identity', None)),
+                 'explicit changed engine required')
++        adaptive_edge_policy.attach(self,edge_cache_policy)
+         self.engine, self.annealing = engine, annealing
+         self.a, self.b, self.config = a, b, config
+         self.config_pin = config_pin(config)
+@@ -101,6 +103,7 @@
+ 
+     def current(self):
+         require(not self.closed, 'matching session closed')
++        adaptive_edge_policy.current(self)
+         require(config_pin(self.config) == self.config_pin, 'matching config changed')
+         rejoin(self.a, self.pins[0]); rejoin(self.b, self.pins[1])
+         for module, name, dependency in self.dependencies:
+@@ -125,7 +128,8 @@
+                 'positive operation allowance required')
+         # No external callback between current-input/state check and body.
+         result = self.engine._advance_owned(
+-            state, self.a, self.b, self.config, max_operations=max_operations)
++            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self))
++        adaptive_edge_policy.current(self)
+         self.advances += 1
+         return result
+ 

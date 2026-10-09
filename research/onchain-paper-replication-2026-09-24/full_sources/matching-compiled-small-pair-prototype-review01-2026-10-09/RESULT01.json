@@ -1,0 +1,157 @@
+{
+  "checks": [
+    {
+      "shape": [
+        2,
+        31
+      ],
+      "scale": 1e-12,
+      "max_abs": 0.0,
+      "bits_equal": true
+    },
+    {
+      "shape": [
+        2,
+        31
+      ],
+      "scale": 1.0,
+      "max_abs": 0.0,
+      "bits_equal": true
+    },
+    {
+      "shape": [
+        2,
+        31
+      ],
+      "scale": 1000.0,
+      "max_abs": 0.0,
+      "bits_equal": true
+    },
+    {
+      "shape": [
+        31,
+        2
+      ],
+      "scale": 1e-12,
+      "max_abs": 0.0,
+      "bits_equal": true
+    },
+    {
+      "shape": [
+        31,
+        2
+      ],
+      "scale": 1.0,
+      "max_abs": 0.0,
+      "bits_equal": true
+    },
+    {
+      "shape": [
+        31,
+        2
+      ],
+      "scale": 1000.0,
+      "max_abs": 0.0,
+      "bits_equal": true
+    },
+    {
+      "shape": [
+        17,
+        32
+      ],
+      "scale": 1e-12,
+      "max_abs": 5.551115123125783e-17,
+      "bits_equal": false
+    },
+    {
+      "shape": [
+        17,
+        32
+      ],
+      "scale": 1.0,
+      "max_abs": 1.1102230246251565e-16,
+      "bits_equal": false
+    },
+    {
+      "shape": [
+        17,
+        32
+      ],
+      "scale": 1000.0,
+      "max_abs": 0.0,
+      "bits_equal": true
+    },
+    {
+      "shape": [
+        32,
+        17
+      ],
+      "scale": 1e-12,
+      "max_abs": 2.7755575615628914e-17,
+      "bits_equal": false
+    },
+    {
+      "shape": [
+        32,
+        17
+      ],
+      "scale": 1.0,
+      "max_abs": 4.85722573273506e-17,
+      "bits_equal": false
+    },
+    {
+      "shape": [
+        32,
+        17
+      ],
+      "scale": 1000.0,
+      "max_abs": 0.0,
+      "bits_equal": true
+    },
+    {
+      "shape": [
+        32,
+        32
+      ],
+      "scale": 1e-12,
+      "max_abs": 2.7755575615628914e-17,
+      "bits_equal": false
+    },
+    {
+      "shape": [
+        32,
+        32
+      ],
+      "scale": 1.0,
+      "max_abs": 4.85722573273506e-17,
+      "bits_equal": false
+    },
+    {
+      "shape": [
+        32,
+        32
+      ],
+      "scale": 1000.0,
+      "max_abs": 0.0,
+      "bits_equal": true
+    }
+  ],
+  "nonbitwise_cases": 6,
+  "max_abs": 1.1102230246251565e-16,
+  "error_mode_counterexample": {
+    "input": [
+      [
+        0,
+        1000
+      ],
+      [
+        1000,
+        0
+      ]
+    ],
+    "numpy_errstate_under": "raise",
+    "original": "FloatingPointError",
+    "prototype_returns_finite": true
+  },
+  "qualification": "Distinct normalization-only synthetic cases; no new whole-match/checkpoint proof or timing benchmark."
+}

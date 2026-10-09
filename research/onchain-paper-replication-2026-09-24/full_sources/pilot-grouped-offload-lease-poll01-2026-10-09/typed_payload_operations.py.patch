@@ -1,0 +1,46 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/typed_payload_operations.py
++++ typed_payload_operations.py
+@@ -52,8 +52,13 @@
+     finally:a.io._release(lambda:os.close(fd))
+ 
+ class _Operation:
+-    def __init__(self,owner,stage,kind,binding,payload_bytes,chunk_count):
++    def __init__(self,owner,stage,kind,binding,payload_bytes,chunk_count,*,target=None):
+         from . import archive_dispatch as d, archive_owner_operations as a
++        self._target=target;self._target_pin=target
++        if target is not None:
++            from .imported_mcm_identity import Target
++            require(type(target) is Target and target.owner is owner and target.execution._owner is owner,'genuine same-owner target required')
++            target.lease()
+         self.owner=owner;self.stage=stage;self.ledger=getattr(owner,'_archive_operations',None)
+         require(type(owner) is a.owners.Owner and type(stage) is a.owners.Stage and type(self.ledger) is a.Ledger,'actual typed Owner/Stage/ledger required')
+         self.held=getattr(owner,'_held_transition',None)
+@@ -135,6 +140,15 @@
+             self.ledger._current(full=False);self.ledger._stage(self.stage)
+             require(self.ledger._active is None and ((self.record.get('batched_parent')=='actual-active-mcm-stage-v1' and self.policy['schema_version']==2 and self.record['kind']==policy.BATCHED_KIND and self.owner.active is self.stage and not self.stage.closed) or (self.stage.closed and self.owner.active is None and self.stage.reference==self.record['stage_reference'])),'typed selected stage changed')
+         self.held.check(self.owner)
++        self._poll_target()
++
++    def _poll_target(self):
++        require(self._target is self._target_pin,'typed target replaced')
++        if self._target is not None:
++            require(self._target.owner is self.owner and self._target.execution._owner is self.owner,'typed target owner changed')
++            self._target.lease()
++            require(self._target is self._target_pin and self.context._cap is self.cap,'typed target/capability changed after poll')
++            self.held.check(self.owner)
+ 
+     def preserve(self,source,*,expected_sha256,expected_bytes,index,attempt):
+         from . import archive_chunks as a
+@@ -241,10 +255,10 @@
+         return {'directory':str(self.ledger.root),'intent':self.claim_name,'intent_sha256':self.sha,'complete':self.complete_name,'complete_sha256':self.complete_sha}
+ 
+ @contextmanager
+-def operation(owner,stage,*,kind,binding,payload_bytes,chunk_count):
++def operation(owner,stage,*,kind,binding,payload_bytes,chunk_count,target=None):
+     op=None
+     try:
+-        op=_Operation(owner,stage,kind,binding,payload_bytes,chunk_count)
++        op=_Operation(owner,stage,kind,binding,payload_bytes,chunk_count,**({'target':target} if target is not None else {}))
+         op.lease();yield op;op.lease()
+         require(op.preserved==payload_bytes and len(op.proofs)==chunk_count,'typed operation incomplete')
+         result={'schema_version':1,'operation_sha256':op.sha,'parts':len(op.proofs),'parts_sha256':policy.sha(b''.join(bytes.fromhex(policy.sha(policy.raw(p))) for p in op.proofs)),'preserved_bytes':op.preserved,'recovered_bytes':op.recovered,'assumption':policy.ASSUMPTION}

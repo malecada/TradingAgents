@@ -1,0 +1,62 @@
+{
+  "decision": "accepted_as_uninstalled_finite_feasibility_prototype_only",
+  "production_numerical_acceptance": "withheld",
+  "manifest_sha256": "867997bd89dc66d9c94e0c58a433c09286c4cd193ff5c8a4b223d382a8961904",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/CASES01.json": "3aab5729f1f411d4e23b0b81d521dbe8c80f4eb92e070c97ef5aa420edb2ee13",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/COMPILE01.json": "93085873122ae33d6a5d0befdc50435ec1366bc034f0f368e0ebc2af1084f36e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/LIMITER01.json": "46ee841bed6ace6de22801086c6981be072b9be6b859435a7cc0e30cbb0a28d1",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/REPORT.md": "a22a3c00b66a9a440e15397ce065927c43a2c45c4e6b9bb8f854cc9526501030",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/RESULT01.json": "c6dd432cbdaedc0897ac9e4ba655f013a9a29a338393ead3502d307b841dba58",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/TEST01.log": "af8d5ec3517e01515410b3c956f7267923a875ead07a008aadc74f5ddc8900af",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/core-mapping.patch": "d505e3cddb0a226de2f30554d6e3123ffe753e8f2b190cef59ff572bd6e332cc",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/normalization.c": "015c5322530efeb2e0ae8be165f7d908ed7946500e621f7f79abf6dabc557196",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/normalization.so": "b40ae8453b3de00d25e77c01c6e7534daa8b3675aac8d2efa7a33ff4e466cb56",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/prototype.py": "677b36db9e4d6239d119d28553bad6b6cd629a6ff4eaad08ea4eb0a93792a117",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype01-2026-10-09/verify01.py": "3de89281e2c7bc72b3b95571e35e299a3222f5aa67f3a3b201d71e4881f83105",
+    ".venv/lib/python3.13/site-packages/scipy/special/_logsumexp.py": "39563dd5655d9bed1f2fe91a2d84d84e9dda817fb1ea4ba8699410c1e70ee3e1",
+    "/usr/bin/x86_64-linux-gnu-gcc-11": "821af3c74506283c179ca413bb33e6b528805a4dd8a5c09df125e5ad560a9e89",
+    "tradingagents/research/onchain_replication/contracts.py": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a",
+    "tradingagents/research/onchain_replication/matching_annealing.py": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46",
+    "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype-review01-2026-10-09/CHECK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype-review01-2026-10-09/LIMITS01.json": "1e9278cbb9bc63a5591ad7e52e55d8e6de94fe333fa2112e1a13dab6db058717",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype-review01-2026-10-09/CHECK01.stdout": "5e67361211422334586444e151ff4a07bea149339d95315ee16d0f6cf4579172",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype-review01-2026-10-09/RESULT01.json": "a7c1274ee2890a5afd0912daad173f5fee0d4d6fed8d78496ca57ed281e3ac9b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype-review01-2026-10-09/check01.py": "6ab4bef5322e29b1a301461e2ec67b98670787463f4207af2c249156959f1ca1"
+  },
+  "independent_normalization_cases": 15,
+  "nonbitwise_cases": 6,
+  "maximum_absolute_difference": 1.1102230246251565e-16,
+  "error_mode_counterexample": {
+    "input": [
+      [
+        0,
+        1000
+      ],
+      [
+        1000,
+        0
+      ]
+    ],
+    "numpy_errstate_under": "raise",
+    "original": "FloatingPointError",
+    "prototype_returns_finite": true
+  },
+  "source_findings": [
+    "Formula preserves beta scaling,row then column maximum-exclusion normalization and final exp. Sequential scalar C sum and libm functions differ from NumPy reduction/vector kernels; no universal bit equality.",
+    "C domain n/cols1..32,finite nonnegativeQ,finitepositive beta and products,FE_TONEAREST checked before output mutation. Dense output<=8192B; scalar reducer has no extra dense storage.",
+    "ctypes uses double pointers/int dimensions/double beta/int return against compiled symbol; Python validates exact ndarray,dtype,C-contiguity,2D,boundedshape. This is trusted prototype ABI, not hardened direct C pointer API or concurrent mutation safety.",
+    "Prototype whole-match preserves reference initialization,ordered edge accumulation,.5 coefficient,beta multiplication,hardening/objective, but lacks production per-advance cursor/checkpoint/poll/authority integration.",
+    "No binary/source runtime pin enforcement on import and no production fallback. Source/compiler/so hashes authenticate reviewed evidence, not future loader behavior.",
+    "No-fast-math and contraction-off do not establish NumPy warning callbacks, floating-point flags, allocation-failure or libm/vector equality. FE rounding check alone does not establish full floating environment equivalence."
+  ],
+  "timing": {
+    "author_derived_ratios_verified": {
+      "full_synthetic_match": 4.2175807841103,
+      "normalization": 24.479690439920763
+    },
+    "qualification": "Seven author whole-match comparisons and5timing samples retained without rerun. Timings show plausible dispatch-overhead savings for one3x3 synthetic pair: reference baseline, not production executor/authority/cache. No real population frequency, pilot gain, temperature/checkpoint integration or capacity conclusion."
+  },
+  "qualification": "One independent bounded CPU3 normalization-only worker; no author matrix rerun, empirical arrays, original labels, Owner/Run/claim/native unit/network/Main/Git edits. Original1e-12 tolerance unchanged; near-tie downstream assignment stability remains unproved for general domain."
+}

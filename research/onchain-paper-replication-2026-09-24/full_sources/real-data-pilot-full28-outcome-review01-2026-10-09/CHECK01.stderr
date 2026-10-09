@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full28-outcome-review01-2026-10-09/review01.py", line 28, in <module>
+    G=R/'research_artifacts/onchain_batched_offload/223798d84810b5f0f49aa89b17b35db96c6ddbcc7c86948472e81ec49573e5d6/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/preserve/00000000';off=load(G/'offload.json');manifest=load(G/'manifest.json');assert manifest==off['manifest'] and digest(raw(manifest))==off['binding']['manifest_sha256'];assert off['cells']==off['stop']==65536 and off['batches']==16 and off['retired_files']==48
+                                                                                                                                                                                                                                                 ~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full28-outcome-review01-2026-10-09/review01.py", line 12, in load
+    def load(p):return json.loads(read(p))
+                                  ~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full28-outcome-review01-2026-10-09/review01.py", line 10, in read
+    st=p.stat();b=p.read_bytes();assert p.stat()==st;cache[p]=b;read_bytes+=len(b);evidence[str(p.relative_to(R))]=digest(b)
+                                        ^^^^^^^^^^^^
+AssertionError

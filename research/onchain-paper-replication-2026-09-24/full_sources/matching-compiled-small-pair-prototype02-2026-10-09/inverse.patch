@@ -1,0 +1,29 @@
+--- candidate
++++ baseline
+@@ -14,7 +14,6 @@
+ import sys
+ from . import checkpoint_chunks as chunks
+ from scipy.special import logsumexp
+-from .compiled_small_lse import lse as _compiled_lse
+ from tradingagents.research.onchain_replication.matching_reference import validate_pair,agreement,harden,score_assignment,MatchResult
+ from . import matching_identity as typed_identity
+ graph_hash=typed_identity.graph_identity
+@@ -251,15 +250,15 @@
+                     limit=n*m;next_phase='normalize_rows'
+                 elif phase=='normalize_rows':
+                     end=min(n,start+max(1,cap//m));block=matrix[start:end]
+-                    block-=_compiled_lse(block,axis=1,keepdims=True,fallback=logsumexp)
++                    block-=logsumexp(block,axis=1,keepdims=True)
+                     limit=n;next_phase='normalize_columns'
+                 elif phase=='normalize_columns':
+                     end=min(m,start+max(1,cap//n));block=matrix[:,start:end]
+                     if block.shape[1]==1 and m>1:
+                         padded=np.repeat(block,2,axis=1)
+-                        block-=_compiled_lse(padded,axis=0,keepdims=True,fallback=logsumexp)[:,:1]
++                        block-=logsumexp(padded,axis=0,keepdims=True)[:,:1]
+                     else:
+-                        block-=_compiled_lse(block,axis=0,keepdims=True,fallback=logsumexp)
++                        block-=logsumexp(block,axis=0,keepdims=True)
+                     limit=m;next_phase='normalize_exp'
+                 else:
+                     end=min(n*m,start+cap)

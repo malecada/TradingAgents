@@ -1,0 +1,10 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/matching-adaptive-measurement-stack01-2026-10-09/batched_numeric_execution.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/matching-adaptive-measurement-stack02-2026-10-09/batched_numeric_execution.py
+@@ -219,6 +219,7 @@
+             if timing is not None:
+                 names={'binding_timing_closed'}|{'binding_'+p+'_'+x for p in matching_owner._LEASE_TIMING_PHASES for x in ('calls','ns','failures')}
+                 matching_owner.binding_timing_counters({k:s['counters'][k] for k in names})
++            else:require(not ({'binding_timing_closed'}|{'binding_'+p+'_'+x for p in matching_owner._LEASE_TIMING_PHASES for x in ('calls','ns','failures')})&set(s['counters']),'unselected binding timing counters')
+             require(adaptive_edge_policy.freeze(s.get('edge_cache_policy'))==selected,'numeric summary adaptive policy differs')
+             chunk=os.pread(origin,9*(stop-start),9*start);require(len(chunk)==9*(stop-start) and hashlib.sha256(chunk).hexdigest()==s['origin_sha256'],'numeric origin range hash')
+             nc=nr=0

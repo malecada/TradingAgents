@@ -1,0 +1,52 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/grouped_offload.py
++++ grouped_offload.py
+@@ -5,7 +5,7 @@
+ from . import grouped_offload_semantics as semantic,preservation
+ require=semantic.require;KIND=original.KIND
+ 
+-def preserve_and_retire(owner,stage,*,journal,items,work):
++def preserve_and_retire(owner,stage,*,journal,items,work,target=None):
+     budget=original._selected(owner,stage);items=semantic.roster(items);work=Path(work)
+     require(hasattr(typed._Operation,'retire_batched_group'),'grouped retirement source not selected')
+     artifact=owner.bound._run.admission.root/'research_artifacts'
+@@ -16,19 +16,19 @@
+     work.mkdir(exist_ok=False);manifest=preservation.build_bundle(rows,work/'bundle.tar',allowed_roots=[journal.root],start_index=3*items[0][0])
+     require(manifest['archive_bytes']==bound,'group archive extent changed');typed._write(work/'manifest.json',manifest)
+     binding=semantic.binding(journal,items,manifest)
+-    with typed.operation(owner,stage,kind=KIND,binding=binding,payload_bytes=bound,chunk_count=1) as op:
++    with typed.operation(owner,stage,kind=KIND,binding=binding,payload_bytes=bound,chunk_count=1,**({'target':target} if target is not None else {})) as op:
+         receipt=op.preserve(work/'bundle.tar',expected_sha256=manifest['archive_sha256'],expected_bytes=bound,index=0,attempt=work/'preserve')
+         op.retire_batched_group(receipt,manifest=manifest,journal=journal,items=items,attempt=work/'recover',semantic_root=work/'semantic')
+         op.retire_source(work/'bundle.tar',expected_sha256=manifest['archive_sha256'],expected_bytes=bound)
+     result={'schema_version':1,'format':'registered-grouped-offload-v1',**coverage,'binding':binding,'manifest':manifest,'history':op.history(),'receipt':receipt,'retired_files':3*len(items),'resume_supported':False}
+     require(len(semantic.raw(result))<=131072,'group offload record extent');typed._write(work/'offload.json',result);return result
+ 
+-def fresh_recover(owner,stage,*,record,journal,work,consume=None):
++def fresh_recover(owner,stage,*,record,journal,work,consume=None,target=None):
+     original._selected(owner,stage);require(record['format']=='registered-grouped-offload-v1' and record['resume_supported'] is False,'explicit grouped record required')
+     items=semantic.from_binding(record['binding']);manifest=record['manifest'];require(semantic.binding(journal,items,manifest)==record['binding'],'group historical binding differs')
+     parts=list(typed.iter_history_parts(record['history'],binding=record['binding'],kind=KIND));require(len(parts)==1 and parts[0]['receipt']==record['receipt'],'actual group preservation proof differs')
+     work=Path(work);work.mkdir(exist_ok=False)
+-    with typed.operation(owner,stage,kind=KIND,binding=record['binding'],payload_bytes=0,chunk_count=0) as op:
++    with typed.operation(owner,stage,kind=KIND,binding=record['binding'],payload_bytes=0,chunk_count=0,**({'target':target} if target is not None else {})) as op:
+         data=op.recover(record['receipt'],attempt=work/'recover')
+         evidence=semantic.recover(data,manifest,journal,items,work/'semantic',consume=consume)
+         require(evidence['start']==record['start'] and evidence['stop']==record['stop'],'group fresh coverage differs')
+@@ -36,7 +36,7 @@
+     result={'schema_version':1,'format':'registered-grouped-fresh-recovery-v1','original_history':record['history'],'history':op.history(),'source_binding':record['binding'],'start':evidence['start'],'stop':evidence['stop'],'first_batch':items[0][0],'batches':len(items)}
+     typed._write(work/'complete.json',result);return result
+ 
+-def finalize(owner,stage,*,records,group_count,batch_count,journal,work,spool_fd):
++def finalize(owner,stage,*,records,group_count,batch_count,journal,work,spool_fd,target=None):
+     """Fresh full recovery with the unchanged float64 -> float32 spool comparison."""
+     original._selected(owner,stage);require(type(group_count) is int and type(batch_count) is int and 0<group_count<=batch_count<=stage.pairs ,'finite grouped final coverage required')
+     import numpy as np
+@@ -52,7 +52,7 @@
+         except StopIteration as error:raise ValueError('short grouped offload roster') from error
+         body=typed._read(path);require(semantic.sha(body)==expected,'anchored grouped record changed');record=json.loads(body)
+         require(record['first_batch']==next_batch and record['start']==cursor,'group order/coverage differs')
+-        fresh=fresh_recover(owner,stage,record=record,journal=journal,work=work/f'{group:08d}',consume=consume)
++        fresh=fresh_recover(owner,stage,record=record,journal=journal,work=work/f'{group:08d}',consume=consume,**({'target':target} if target is not None else {}))
+         require(typed._read(path)==body,'group original record changed during recovery')
+         aggregate.update(bytes.fromhex(expected));aggregate.update(bytes.fromhex(semantic.sha(semantic.raw(fresh))));cursor=fresh['stop'];next_batch+=fresh['batches']
+     sentinel=object();require(next(iterator,sentinel) is sentinel and cursor==stage.pairs and next_batch==batch_count,'grouped final denominator differs')

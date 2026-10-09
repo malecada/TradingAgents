@@ -1,0 +1,31 @@
+--- actual.match_reference
++++ prototype.match
+@@ -1,7 +1,9 @@
+-def match_reference(left, right, config):
+-    validate_pair(left, right, config)
++def match(left, right, config):
++    original.validate_pair(left, right, config)
+     n, m = (len(left.node_ids), len(right.node_ids))
+-    V = np.array([[agreement(a, b) for b in right.node_features] for a in left.node_features], dtype=np.float64)
++    if not (1 <= n <= 32 and 1 <= m <= 32):
++        raise ValueError('small pair domain exceeded')
++    V = np.array([[original.agreement(a, b) for b in right.node_features] for a in left.node_features], dtype=np.float64)
+     M = V.copy()
+     beta = config['beta0']
+     iterations = 0
+@@ -9,12 +11,9 @@
+         Q = config['alpha'] * V
+         for k, (u, v) in enumerate(left.edge_index.T):
+             for l, (i, j) in enumerate(right.edge_index.T):
+-                Q[u, i] += 0.5 * agreement(left.edge_features[k], right.edge_features[l]) * M[v, j]
+-        log_M = beta * Q
+-        log_M -= logsumexp(log_M, axis=1, keepdims=True)
+-        log_M -= logsumexp(log_M, axis=0, keepdims=True)
+-        M = np.exp(log_M)
++                Q[u, i] += 0.5 * original.agreement(left.edge_features[k], right.edge_features[l]) * M[v, j]
++        M = normalize(Q, beta)
+         beta *= 1 + config['beta_rate']
+         iterations += 1
+-    assignment = harden(M)
+-    return MatchResult(assignment, score_assignment(left, right, assignment, config), 'temperature_complete' if beta > config['beta_final'] else 'iteration_cap', iterations, M.copy())+    assignment = original.harden(M)
++    return original.MatchResult(assignment, original.score_assignment(left, right, assignment, config), 'temperature_complete' if beta > config['beta_final'] else 'iteration_cap', iterations, M.copy())

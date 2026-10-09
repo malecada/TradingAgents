@@ -1,0 +1,22 @@
+[
+  [
+    "def advance(state,a,b,c,*,max_operations):",
+    "ADAPTIVE_EDGE_POLICY={'format':'adaptive-lazy-edge-cache-v1','max_edge_products':16384,'chunk_entries':256,'max_scratch_bytes':262144}\ndef _adaptive_selected(policy):\n    if policy is None or policy is False:return False\n    if type(policy) is not dict or set(policy)!=set(ADAPTIVE_EDGE_POLICY) or policy!=ADAPTIVE_EDGE_POLICY or type(policy['format']) is not str or any(type(policy[k]) is not int for k in ('max_edge_products','chunk_entries','max_scratch_bytes')):\n        raise ValueError('explicit adaptive edge cache policy required')\n    return True\n\ndef advance(state,a,b,c,*,max_operations,edge_cache_policy=None):"
+  ],
+  [
+    "return _advance_checked(state,a,b,c,max_operations=max_operations)",
+    "return _advance_checked(state,a,b,c,max_operations=max_operations,**({'edge_cache_policy':edge_cache_policy} if edge_cache_policy is not None and edge_cache_policy is not False else {}))"
+  ],
+  [
+    "def _advance_checked(state,a,b,c,*,max_operations):",
+    "def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None):"
+  ],
+  [
+    "    feature_pins=(a.edge_features,b.edge_features);cached=valid=None",
+    "    adaptive=False\n    if _adaptive_selected(edge_cache_policy) and 4096<total<=16384 and max_operations>total:\n        adaptive=(_immutable_edges(a) and _immutable_edges(b) and all(type(state[name]) is np.ndarray for name in NAMES)\n                  and _reuse_runtime() and np.geterr()==dict(divide='warn',over='warn',under='ignore',invalid='warn'))\n        if adaptive:reuse=True\n    feature_pins=(a.edge_features,b.edge_features);cached=valid=None"
+  ],
+  [
+    "count=min(1024,total-state['cursor'],max_operations-used)",
+    "count=min(256 if adaptive and reuse else 1024,total-state['cursor'],max_operations-used)"
+  ]
+]

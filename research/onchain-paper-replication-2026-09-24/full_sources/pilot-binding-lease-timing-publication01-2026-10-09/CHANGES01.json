@@ -1,0 +1,117 @@
+{
+  "matching_owner.py": [
+    [
+      "self._totals=(0,)*12;self.closed=False",
+      "self._totals=(0,)*12;self._counter_pin=self._totals;self.closed=False"
+    ],
+    [
+      "require(type(self._totals) is tuple and len(self._totals)==12",
+      "require(self._totals is self._counter_pin and type(self._totals) is tuple and len(self._totals)==12"
+    ],
+    [
+      "finish=self._now();self._check(binding)",
+      "finish=self._now();self._check(binding)\n                require(finish>=start,'binding timing interval reversed')"
+    ],
+    [
+      "self._totals=tuple(values)",
+      "self._totals=tuple(values);self._counter_pin=self._totals"
+    ],
+    [
+      "\nclass Binding:\n",
+      "\nBINDING_TIMING_POLICY={'format':'binding-lease-phases-v1','max_body_bytes':640}\n\ndef binding_timing_policy(value):\n    if value is None:return None\n    require(type(value) is dict and set(value)==set(BINDING_TIMING_POLICY)\n            and type(value['format']) is str and type(value['max_body_bytes']) is int\n            and value==BINDING_TIMING_POLICY,'explicit binding timing policy required')\n    return dict(value)\n\ndef binding_timing_counters(value):\n    names={'binding_timing_closed'}|{'binding_'+phase+'_'+suffix for phase in _LEASE_TIMING_PHASES for suffix in ('calls','ns','failures')}\n    require(type(value) is dict and set(value)==names and all(type(x) is int and 0<=x<=_LEASE_TIMING_LIMIT for x in value.values()),'exact binding counters required')\n    require(value['binding_timing_closed']==0 and all(value['binding_'+p+'_failures']<=value['binding_'+p+'_calls'] for p in _LEASE_TIMING_PHASES),'completed binding timing required')\n    encoded=(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\\n').encode()\n    require(len(encoded)<=640,'binding timing body cap')\n    return dict(value)\n\n\nclass Binding:\n"
+    ]
+  ],
+  "compact_owner.py": [
+    [
+      "        self.bound.lease()\n",
+      "        if not hasattr(self,'_binding_timing_pin'):\n            self.bound.lease()\n        else:\n            observer=self._binding_timing\n            require(observer is self._binding_timing_pin and type(observer) is matching_owner.BindingLeaseTiming,'selected binding observer changed')\n            observer._check(self.bound)\n            self.bound.lease(observer=observer)\n"
+    ],
+    [
+      "    def lease(self):\n        require(not self.poisoned and not self.closed, 'compact owner is terminal or poisoned')",
+      "    def select_binding_timing(self,selection):\n        require(type(self) is Owner and matching_owner.binding_timing_policy(selection) is not None,'actual selected owner timing required')\n        if not hasattr(self,'_binding_timing_pin'):\n            self._binding_timing=matching_owner.BindingLeaseTiming(self.bound)\n            self._binding_timing_pin=self._binding_timing\n        require(self._binding_timing is self._binding_timing_pin,'selected binding observer changed')\n        self._binding_timing._check(self.bound)\n        return self._binding_timing\n\n    def lease(self):\n        require(not self.poisoned and not self.closed, 'compact owner is terminal or poisoned')"
+    ]
+  ],
+  "compact_mcm_batched.py": [
+    [
+      "from . import geometry_publication",
+      "from . import geometry_publication, matching_owner"
+    ],
+    [
+      "| ({'geometry'} if 'geometry' in execution else set()),'explicit numeric execution schema required')",
+      "| ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()),'explicit numeric execution schema required')"
+    ],
+    [
+      "    if 'geometry' in execution:\n",
+      "    if 'binding_timing' in execution:\n        require(grouped and matching_owner.binding_timing_policy(execution['binding_timing']) is not None,'selected schema6 binding timing required')\n        require(execution['max_summary_bytes']>=count*8192,'full timing summary reservation required')\n    if 'geometry' in execution:\n"
+    ],
+    [
+      "*, grouped=False, geometry=False):",
+      "*, grouped=False, geometry=False, binding_timing=False):"
+    ],
+    [
+      "        if geometry:names+=('geometry_summary','geometry_publication')",
+      "        if geometry:names+=('geometry_summary','geometry_publication')\n        if binding_timing:names+=('matching_owner','compact_owner','imported_authority_lease')"
+    ],
+    [
+      "    checkpoints=stage.root/'checkpoints';",
+      "    timing=b['execution'].get('binding_timing')\n    if timing is not None:\n        require(authority_poll is not None,'binding timing requires selected genuine sampled lease')\n        target.owner.select_binding_timing(timing)\n    checkpoints=stage.root/'checkpoints';"
+    ],
+    [
+      "**({'geometry':execution['geometry']} if 'geometry' in execution else {}))",
+      "**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}))"
+    ],
+    [
+      "geometry='geometry' in b['execution'])",
+      "geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'])"
+    ]
+  ],
+  "batched_numeric_execution.py": [
+    [
+      "from . import geometry_publication",
+      "from . import geometry_publication, matching_owner"
+    ],
+    [
+      "authority_poll=None,geometry=None):",
+      "authority_poll=None,geometry=None,binding_timing=None,binding_owner=None):"
+    ],
+    [
+      "            self.geometry=geometry_publication.policy(geometry)",
+      "            self.binding_timing=matching_owner.binding_timing_policy(binding_timing)\n            self.binding_owner=binding_owner;self._timing_observer=None;self._timing_snapshot=None\n            if self.binding_timing is not None:\n                from . import compact_owner\n                require(type(binding_owner) is compact_owner.Owner,'genuine timing Owner required')\n                self._timing_observer=binding_owner._binding_timing_pin\n                self._timing_current()\n                require(max_summary_bytes>=self.batches*SUMMARY_LIMIT,'selected timing requires full summary reservation')\n            else:require(binding_owner is None,'unselected timing Owner')\n            self.geometry=geometry_publication.policy(geometry)"
+    ],
+    [
+      "    def _root(self):",
+      "    def _timing_current(self):\n        owner=self.binding_owner;observer=self._timing_observer\n        require(type(observer) is matching_owner.BindingLeaseTiming and owner._binding_timing is observer is owner._binding_timing_pin,'numeric binding observer changed')\n        observer._check(owner.bound)\n\n    def _counters(self):\n        value=counters(self.memo)\n        if self.binding_timing is not None:\n            require(type(self._timing_snapshot) is bytes,'attested timing snapshot missing')\n            timing=json.loads(self._timing_snapshot)\n            require(raw(timing)==self._timing_snapshot,'timing snapshot canonical bytes differ')\n            matching_owner.binding_timing_counters(timing)\n            require(not set(timing)&set(value),'binding counter collision')\n            value.update(timing)\n        return value\n\n    def _root(self):"
+    ],
+    [
+      "        start=self.ordinal-len(self.buffer)//9",
+      "        if self.binding_timing is not None:\n            self._timing_current()\n            self._timing_snapshot=raw(matching_owner.binding_timing_counters(self._timing_observer.snapshot()))\n        start=self.ordinal-len(self.buffer)//9"
+    ],
+    [
+      "'counters':counters(self.memo),'elapsed_seconds':self.batch_elapsed",
+      "'counters':self._counters(),'elapsed_seconds':self.batch_elapsed"
+    ],
+    [
+      "'counters':counters(self.memo),'elapsed_seconds':self.elapsed_seconds",
+      "'counters':self._counters(),'elapsed_seconds':self.elapsed_seconds"
+    ],
+    [
+      "            if self.geometry is not None:binding['geometry']=dict(self.geometry)",
+      "            if self.geometry is not None:binding['geometry']=dict(self.geometry)\n            if self.binding_timing is not None:binding['binding_timing']=dict(self.binding_timing)"
+    ],
+    [
+      "        geometry=geometry_publication.policy(binding.get('geometry'))",
+      "        timing=matching_owner.binding_timing_policy(binding.get('binding_timing'))\n        if timing is not None:require(binding['max_summary_bytes']>=batches*SUMMARY_LIMIT,'binding timing summary reservation differs')\n        geometry=geometry_publication.policy(binding.get('geometry'))"
+    ],
+    [
+      "            chunk=os.pread(origin,9*(stop-start),9*start);",
+      "            if timing is not None:\n                names={'binding_timing_closed'}|{'binding_'+p+'_'+x for p in matching_owner._LEASE_TIMING_PHASES for x in ('calls','ns','failures')}\n                matching_owner.binding_timing_counters({k:s['counters'][k] for k in names})\n            chunk=os.pread(origin,9*(stop-start),9*start);"
+    ]
+  ],
+  "imported_authority_lease.py": [
+    [
+      "'Target','Lease','Interval'}",
+      "'Target','Lease','Interval','BindingLeaseTiming'}"
+    ]
+  ],
+  "geometry_publication.py": []
+}

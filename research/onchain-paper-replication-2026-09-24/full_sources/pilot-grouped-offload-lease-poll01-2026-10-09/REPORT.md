@@ -1,0 +1,33 @@
+# Grouped offload imported-lease polling
+
+Source-only candidate; no Main/Git changes, credential/private transport read, network call, real child spawn, empirical graph or authority capability. Root supplied the actual failure observation: the first sixteen-batch offload returned a durable offload.json, then the post-flush Target boundary refused stale interval refresh. This report diagnoses the code path; it does not reclassify that spent failure or independently certify physical process closure.
+
+## Source-backed defect
+
+The real grouped post_batch calls flush_group, whose preserve_and_retire performs genuine typed preservation, full recovery and retirement, then calls boundary again. Existing typed `_Operation.lease` checks genuine held Owner/Stage/ledger/capability but has no Target reference. archive_dispatch.Context._live calls that typed lease. archive_transport.receive_diagnostic already invokes its supplied live callback before spawn and during100ms pipe select/drain iterations, but that chain cannot refresh the separate imported Target interval. Thus even healthy archive authority callbacks can leave Target's last full check older than60000ms.
+
+A separate wait gap exists: once both child pipes reach EOF, receive_diagnostic calls `proc.wait(timeout=remaining)` once. A child can close pipes and remain alive; that blocking wait has no callback and may exceed60000ms. An added after-the-fact boundary cannot repair either gap, because original Interval.validate refuses a stale interval before performing any refresh.
+
+## Functional candidate
+
+The genuine batched caller now passes its actual Target to grouped preserve_and_retire and final fresh recovery. Grouped functions forward that object into typed.operation. `_Operation` accepts an optional target; before using it, it requires exact existing Target type and same actual Owner/execution-owner, and performs the genuine target.lease. It captures and pins the target identity. Existing typed leases retain every original authority check, then rejoin target/owner identity, call Target.lease, and rejoin target/cap/held state. There is no caller-supplied arbitrary scientific callback, synthesized authority, refreshed timestamp or successful-validation cache.
+
+Consequently existing transport live callbacks now traverse Context._live → actual typed lease → actual Target.lease → original sampled imported lease and its genuine live/fingerprint/full checks. Original100/1000/10000ms scheduling,60000ms stale refusal and65536 call ceiling remain unchanged. Extra polling can cause real checks and real refusals; it cannot override them.
+
+The dispatch transport selects `poll_wait=True` only for its current typed operation with a target. Both command/upload and download paths forward that option to receive_diagnostic. After pipe EOF, the selected path calls the same genuine live callback before each bounded `proc.wait(timeout=min(.1,remaining))`; TimeoutExpired returns to the callback. The overall original deadline still includes callbacks and throttling. The base/default transport has empty wait options and retains its single original wait. Existing network command arguments, destination namespace, sealed upload, byte counters, grants, reservations and recovery/retirement order are unchanged.
+
+On a selected polling failure, existing owned kill/reap/drain/close actions run. If cleanup also fails, the selected path preserves the original poll failure with a cleanup note and publishes a failed diagnostic; default cleanup exception semantics are unchanged. The typed operation's original failure publication, poisoning and parent-cap restoration remain literal. Five changed modules invert byte-for-byte and AST-for-AST through CHANGES01.json.
+
+## Exact remaining limitations
+
+This implements periodic callbacks during select/drain and child-exit waits, not preemptive scheduling. `Popen`, individual OS reads/writes/fsyncs, local bundle construction, semantic recovery/retirement and a genuine authority callback itself can block beyond60000ms. No Python callback can execute in the middle of one such blocking syscall on this synchronous thread. Local grouped payloads remain<=4MiB/<=48files, but that is a byte/cardinality bound, not a physical latency guarantee. A stale result from any such interval must still fail; the candidate does not relax the threshold, make a late synthetic refresh, add a timeout ladder or claim guaranteed completion on arbitrary storage/network conditions.
+
+The source trace contains no new transport reentry: Target uses original authority/ledger evidence checks, while the actual typed operation retains its existing cap and held token. However genuine nested Owner/Target/transport integration has not been physically executed here. A selected-source integration review must verify those callbacks against actual source/runtime/registration before any future run. Existing successful local/remote archive evidence and failed-run identities remain historical and untouched.
+
+## Focused synthetic RED→GREEN
+
+The fixture executes actual original Interval, receive_diagnostic, dispatch `_live`/selected wait method and typed target-poll method, with explicit synthetic clock, fake child/pipes and metadata-only authority doubles. No real subprocess or network exists in the fixture. A65-second child lifetime after pipe EOF makes the original path stale at the following Target boundary. The selected path performs655 Target calls and actual scheduler full checks at approximately0,10.1,20.1,30.1,40.1,50.1,60.1 seconds; the following boundary succeeds. This proves the connected control flow against the original scheduler, not physical network or genuine Owner authority.
+
+A synthetic Target revocation around12.1 seconds remains the primary exception, triggers kill/reap and both pipe closes; an additional injected cleanup failure is attached without replacing that primary. The unchanged separate cleanup wait is10s; the selected normal child-exit waits are<=.1s. RESULT03's max_success_wait includes that cleanup10s and must not be interpreted as the normal polling interval.
+
+Initial test fixture omitted the subprocess.PIPE constant, producing an AttributeError before child simulation. CHECK01/02 and both failed fixture outputs are retained. check03 corrects only that fake-module omission in a fresh output namespace and passes. Actual readbacks CPU3/nice10,512MiB AS,4MiB FSIZE and30s CPU+wall are retained for every tiny stdlib attempt. No numerical matching or original data was loaded. Source maps and manifests freeze all candidate bytes; no live installation or new launch authorization follows.

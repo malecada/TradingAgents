@@ -1,0 +1,65 @@
+--- prototype04
++++ prototype03
+@@ -39,7 +39,6 @@
+ def _load_sealed():
+     """Authenticate once, then retain kernel-immutable bytes and descriptor."""
+     source=owned=None
+-    result=primary=None
+     try:
+         if not (sys.platform=='linux' and sys.byteorder=='little' and platform.machine()=='x86_64'
+                 and ctypes.sizeof(ctypes.c_double)==8 and fcntl is not None):return None
+@@ -69,46 +68,23 @@
+         info=os.fstat(owned);pin=(info.st_dev,info.st_ino,info.st_size)
+         library=ctypes.CDLL('/proc/self/fd/'+str(owned),mode=os.RTLD_NOW|os.RTLD_LOCAL)
+         function=library.small_lse;function.argtypes=list(_ARGS);function.restype=ctypes.c_int
+-        result=(library,function,owned,pin,seals)
+-    except (OSError,AttributeError) as error:
+-        primary=error  # Unsupported route may fall back only after clean release.
+-    except BaseException as error:
+-        primary=error
+-        raise
++        result=(library,function,owned,pin,seals);owned=None
++        return result
++    except (OSError,AttributeError):return None
+     finally:
+-        failures=[]
+-        if source is not None:
+-            try:os.close(source)
+-            except BaseException as error:failures.append(('source',source,error))
+-        # Successful source close is a prerequisite for retained-FD transfer.
+-        if owned is not None and (result is None or primary is not None or failures):
+-            try:os.close(owned)
+-            except BaseException as error:failures.append(('memfd',owned,error))
+-        if failures:
+-            failure=primary if primary is not None else failures[0][2]
+-            for kind,fd,error in failures:
+-                BaseException.add_note(failure,f'{kind} fd {fd} cleanup uncertain; no retry: {type(error).__name__}')
+-            raise failure
+-    return result
++        if source is not None:os.close(source)
++        if owned is not None:os.close(owned)
+ 
+ _loaded=_load_sealed()
+ if _loaded is not None:_lib,_fn,_fd,_pin,_SEALS=_loaded
+ _loaded=None
+ 
+-_close_error=None
+-
+ def close():
+-    """Terminal disable; never retry an ambiguous close on a possibly reused FD."""
+-    global _fn,_fd,_close_error
++    """Disable this route before releasing its owned descriptor; no resume."""
++    global _fn,_fd
+     _fn=None
+-    if _close_error is not None:raise _close_error
+     if _fd is not None:
+-        fd=_fd;_fd=None
+-        try:os.close(fd)
+-        except BaseException as error:
+-            _close_error=error
+-            BaseException.add_note(error,f'memfd {fd} close uncertain; backend disabled; no retry')
+-            raise
++        fd=_fd;_fd=None;os.close(fd)
+ 
+ def _live():
+     try:

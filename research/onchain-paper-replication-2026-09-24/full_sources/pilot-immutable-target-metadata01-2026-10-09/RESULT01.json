@@ -1,0 +1,56 @@
+{
+  "status": "PASS_STDLIB_SYNTHETIC_NO_AUTHORITY",
+  "checks": [
+    "two modules literal/AST inverse",
+    "no mutable caller alias; original alias mutation cannot change frozen snapshot; legacy mutation refuses",
+    "field/anchor/byte-pin/selection/mutable mapping/scope/authority-chain/array identity replacements refuse",
+    "exact JSON types, finite values and selected bytes/nodes/depth policy bounds",
+    "unchanged actual lease scheduler failure/clock seam preserves primary and closes lease; metadata-only doubles"
+  ],
+  "fixture_canonical_bytes": 4905,
+  "timing_iterations_per_repetition": 2048,
+  "timing_raw_ns": [
+    {
+      "old": 145629568,
+      "selected": 15308487
+    },
+    {
+      "selected": 14994648,
+      "old": 149565128
+    },
+    {
+      "old": 151396933,
+      "selected": 15551883
+    },
+    {
+      "selected": 15445794,
+      "old": 148281141
+    }
+  ],
+  "median_old_ns": 148923134.5,
+  "median_selected_ns": 15377140.5,
+  "limits": {
+    "affinity": [
+      3
+    ],
+    "nice": 10,
+    "as": [
+      536870912,
+      536870912
+    ],
+    "fsize": [
+      4194304,
+      4194304
+    ],
+    "cpu": [
+      30,
+      30
+    ],
+    "wall": [
+      29.999986,
+      0.0
+    ]
+  },
+  "elapsed_seconds": 0.6939249830029439,
+  "qualification": "Exact _pins source, fixed synthetic JSON. No actual causal lease share or real speed inferred. Actual original full boundaries/source/clock code unchanged."
+}

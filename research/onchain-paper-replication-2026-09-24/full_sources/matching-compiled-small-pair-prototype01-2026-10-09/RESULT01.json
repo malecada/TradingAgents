@@ -1,0 +1,152 @@
+{
+  "status": "PASS_FINITE_PROTOTYPE_ONLY",
+  "cases": [
+    {
+      "shape": [
+        1,
+        1
+      ],
+      "edges": false,
+      "tie": false,
+      "iterations": 48,
+      "soft_max_abs": 0.0,
+      "soft_bits_equal": true,
+      "score_abs": 0.0,
+      "assignment_equal": true,
+      "reference_assignment_equal": true
+    },
+    {
+      "shape": [
+        1,
+        4
+      ],
+      "edges": false,
+      "tie": false,
+      "iterations": 48,
+      "soft_max_abs": 0.0,
+      "soft_bits_equal": true,
+      "score_abs": 0.0,
+      "assignment_equal": true,
+      "reference_assignment_equal": true
+    },
+    {
+      "shape": [
+        4,
+        1
+      ],
+      "edges": false,
+      "tie": false,
+      "iterations": 48,
+      "soft_max_abs": 0.0,
+      "soft_bits_equal": true,
+      "score_abs": 0.0,
+      "assignment_equal": true,
+      "reference_assignment_equal": true
+    },
+    {
+      "shape": [
+        2,
+        3
+      ],
+      "edges": true,
+      "tie": false,
+      "iterations": 48,
+      "soft_max_abs": 0.0,
+      "soft_bits_equal": true,
+      "score_abs": 0.0,
+      "assignment_equal": true,
+      "reference_assignment_equal": true
+    },
+    {
+      "shape": [
+        4,
+        4
+      ],
+      "edges": true,
+      "tie": false,
+      "iterations": 48,
+      "soft_max_abs": 0.0,
+      "soft_bits_equal": true,
+      "score_abs": 0.0,
+      "assignment_equal": true,
+      "reference_assignment_equal": true
+    },
+    {
+      "shape": [
+        3,
+        3
+      ],
+      "edges": false,
+      "tie": true,
+      "iterations": 48,
+      "soft_max_abs": 0.0,
+      "soft_bits_equal": true,
+      "score_abs": 0.0,
+      "assignment_equal": true,
+      "reference_assignment_equal": true
+    },
+    {
+      "shape": [
+        8,
+        5
+      ],
+      "edges": true,
+      "tie": false,
+      "iterations": 48,
+      "soft_max_abs": 0.0,
+      "soft_bits_equal": true,
+      "score_abs": 0.0,
+      "assignment_equal": true,
+      "reference_assignment_equal": true
+    }
+  ],
+  "full_synthetic_match": {
+    "baseline": {
+      "ns_per_call_samples": [
+        9293370.375,
+        9391742.25,
+        9259635.875,
+        9125162.625,
+        9139959.125
+      ],
+      "median_ns": 9259635.875
+    },
+    "prototype": {
+      "ns_per_call_samples": [
+        2644643.25,
+        2140092.5,
+        2239599.125,
+        2112155.25,
+        2195485.125
+      ],
+      "median_ns": 2195485.125
+    },
+    "median_ratio": 4.2175807841103
+  },
+  "normalization": {
+    "baseline": {
+      "ns_per_call_samples": [
+        138040.24,
+        141925.12,
+        136345.86,
+        135908.74,
+        140003.92
+      ],
+      "median_ns": 138040.24
+    },
+    "prototype": {
+      "ns_per_call_samples": [
+        6067.77,
+        5638.97,
+        7221.74,
+        5500.82,
+        5612.42
+      ],
+      "median_ns": 5638.97
+    },
+    "median_ratio": 24.479690439920763
+  },
+  "elapsed_ns": 1047298317,
+  "maxrss_kib": 56568,
+  "numpy_version": "2.3.0"
+}

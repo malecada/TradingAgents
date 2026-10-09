@@ -1,0 +1,76 @@
+{
+  "status": "PASS_FINITE_LIFETIME_PROTOTYPE_ONLY",
+  "setup": {
+    "02": {
+      "elapsed_ns": 5253241
+    },
+    "03": {
+      "elapsed_ns": 5064226,
+      "fd": 5,
+      "pin": [
+        1,
+        52961,
+        15712
+      ],
+      "seals": 15,
+      "required_seals": 15,
+      "body_sha256": "9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2"
+    }
+  },
+  "compile_ns": 42050282,
+  "advances": 727,
+  "true_C_invocation_statement_counts": {
+    "02": 192,
+    "03": 192
+  },
+  "checkpoint_sha256": "663cbb4d875875c6813a4e26ce8b9add7578a255f98fdc15356da1601c4023a3",
+  "all_state_bits_equal": true,
+  "max_abs_difference": 0.0,
+  "score_abs_difference": 0.0,
+  "assignment_equal": true,
+  "timings": {
+    "original": {
+      "ns_per_match": [
+        19813800.4,
+        20456407.4,
+        19869138.4,
+        19933122.2,
+        21679713.4
+      ],
+      "median_ns": 19933122.2
+    },
+    "02": {
+      "ns_per_match": [
+        16181837.8,
+        14505488.6,
+        14576093.0,
+        14767291.2,
+        15623985.8
+      ],
+      "median_ns": 14767291.2
+    },
+    "03": {
+      "ns_per_match": [
+        8664890.4,
+        8403572.2,
+        8311375.4,
+        8226882.8,
+        8200994.4
+      ],
+      "median_ns": 8311375.4
+    }
+  },
+  "original_over_03": 2.3982940537134203,
+  "02_over_03": 1.7767566123893284,
+  "kernel_seal_refusals": [
+    "write",
+    "truncate",
+    "grow"
+  ],
+  "source_replacement_existing_lifetime_unchanged": true,
+  "new_load_wrong_hash_fallback": true,
+  "unsupported_memfd_no_fd_leak": true,
+  "close_fallback_fd_reaped": true,
+  "elapsed_ns": 1661041894,
+  "maxrss_kib": 57816
+}

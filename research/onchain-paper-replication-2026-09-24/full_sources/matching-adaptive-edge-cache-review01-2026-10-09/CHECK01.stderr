@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-adaptive-edge-cache-review01-2026-10-09/check01.py", line 29, in <module>
+    x=create(old);y=create(new);u=old.advance(x,a,b,c,max_operations=1000000);v=new.advance(y,a,b,c,max_operations=1000000,edge_cache_policy=policy);same(x,y);assert u==v and y['phase']=='done'
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-adaptive-edge-cache-review01-2026-10-09/check01.py", line 23, in create
+    def create(mod,aa=a):return mod.create(aa,b,c,max_state_bytes=1048576,max_chunk_entries=256)
+                                ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_annealing.py", line 126, in create
+    validate_pair(a,b,c);n,m=len(a.node_ids),len(b.node_ids);bound(n,m,max_state_bytes)
+    ~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_reference.py", line 24, in validate_pair
+    validate_attributed(left);validate_attributed(right)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 213, in validate_attributed
+    if len(set(map(tuple,g.edge_index.T)))!=e:raise ValueError('local duplicate edges')
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: local duplicate edges

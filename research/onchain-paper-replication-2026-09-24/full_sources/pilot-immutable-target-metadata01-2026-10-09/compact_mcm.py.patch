@@ -1,0 +1,20 @@
+--- tradingagents/research/onchain_replication/compact_mcm.py
++++ compact_mcm.py
+@@ -284,7 +284,7 @@
+         return _produce_locked(dictionary,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+ 
+ 
+-def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None):
++def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None,immutable_execution=None):
+     if progress is not None:
+         from .real_pilot_partial_progress import MCMProgress
+         require(type(progress) is MCMProgress,'exact optional pilot telemetry required')
+@@ -292,7 +292,7 @@
+         from .real_pilot_partial_progress import ScoringDiagnostic
+         require(type(diagnostic) is ScoringDiagnostic,'exact optional scoring diagnostic required')
+     from .imported_mcm_identity import Target
+-    target=Target(execution,graph,graph_hash)
++    target=Target(execution,graph,graph_hash,**({'immutable_execution':immutable_execution} if immutable_execution is not None and immutable_execution is not False else {}))
+     with compact_owner._held(target.owner) as held:
+         from . import compact_mcm_batched
+         selected_policy=json.loads(target.owner.bound._run.read_input(input_name))

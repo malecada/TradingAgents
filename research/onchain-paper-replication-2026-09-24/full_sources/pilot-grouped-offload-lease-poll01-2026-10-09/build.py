@@ -1,0 +1,38 @@
+from pathlib import Path
+import json,difflib
+D=Path(__file__).resolve().parent;S=D.parents[3]/'tradingagents/research/onchain_replication'
+e={
+'archive_transport.py':[
+('bytes_per_second, lease_callback, receipt_sink=None):','bytes_per_second, lease_callback, receipt_sink=None, poll_wait=False):'),
+("    destination = Path(destination)\n    receipt =", "    if type(poll_wait) is not bool:raise ValueError('explicit periodic wait selection required')\n    destination = Path(destination)\n    receipt ="),
+("        if proc.wait(timeout=remaining):", "        if poll_wait:\n            while True:\n                lease_callback()\n                remaining=max_seconds-(time.monotonic()-began)\n                if remaining<=0:raise TimeoutError('bounded download deadline')\n                try:\n                    returncode=proc.wait(timeout=min(0.1,remaining));break\n                except subprocess.TimeoutExpired:pass\n        else:returncode=proc.wait(timeout=remaining)\n        if returncode:"),
+("    failure = cleanup_error if cleanup_error is not None else primary", "    failure = primary if poll_wait and primary is not None else (cleanup_error if cleanup_error is not None else primary)"),
+('    if cleanup_error is not None:\n        if primary is not None:',"    if poll_wait and primary is not None:\n        if cleanup_error is not None:primary.add_note('transport cleanup failed: '+repr(cleanup_error))\n        raise primary\n    if cleanup_error is not None:\n        if primary is not None:"),
+('    def run(self, args):','    def _wait_options(self):return {}\n\n    def run(self, args):'),
+('lease_callback=self.live, **({"receipt_sink"','lease_callback=self.live, **self._wait_options(), **({"receipt_sink"'),
+('bytes_per_second=self.rate_bytes, lease_callback=self.live,\n','bytes_per_second=self.rate_bytes, lease_callback=self.live, **self._wait_options(),\n')],
+'archive_dispatch.py':[
+('class _Transport(low.Transport):\n',"class _Transport(low.Transport):\n    def _wait_options(self):\n        cap=self._dispatch_context._cap\n        operation=None if cap is None else cap.get('typed_operation')\n        return {'poll_wait':True} if operation is not None and getattr(operation,'_target',None) is not None else {}\n\n")],
+ 'typed_payload_operations.py':[
+('def __init__(self,owner,stage,kind,binding,payload_bytes,chunk_count):','def __init__(self,owner,stage,kind,binding,payload_bytes,chunk_count,*,target=None):'),
+('        self.owner=owner;self.stage=stage;', '        self._target=target;self._target_pin=target\n        if target is not None:\n            from .imported_mcm_identity import Target\n            require(type(target) is Target and target.owner is owner and target.execution._owner is owner,\'genuine same-owner target required\')\n            target.lease()\n        self.owner=owner;self.stage=stage;'),
+('    def preserve(self,source,*,expected_sha256,expected_bytes,index,attempt):',"    def _poll_target(self):\n        require(self._target is self._target_pin,'typed target replaced')\n        if self._target is not None:\n            require(self._target.owner is self.owner and self._target.execution._owner is self.owner,'typed target owner changed')\n            self._target.lease()\n            require(self._target is self._target_pin and self.context._cap is self.cap,'typed target/capability changed after poll')\n            self.held.check(self.owner)\n\n    def preserve(self,source,*,expected_sha256,expected_bytes,index,attempt):"),
+("        self.held.check(self.owner)\n\n    def _poll_target", "        self.held.check(self.owner)\n        self._poll_target()\n\n    def _poll_target"),
+('def operation(owner,stage,*,kind,binding,payload_bytes,chunk_count):','def operation(owner,stage,*,kind,binding,payload_bytes,chunk_count,target=None):'),
+('op=_Operation(owner,stage,kind,binding,payload_bytes,chunk_count)','op=_Operation(owner,stage,kind,binding,payload_bytes,chunk_count,**({\'target\':target} if target is not None else {}))')],
+'grouped_offload.py':[
+('def preserve_and_retire(owner,stage,*,journal,items,work):','def preserve_and_retire(owner,stage,*,journal,items,work,target=None):'),
+('def fresh_recover(owner,stage,*,record,journal,work,consume=None):','def fresh_recover(owner,stage,*,record,journal,work,consume=None,target=None):'),
+('def finalize(owner,stage,*,records,group_count,batch_count,journal,work,spool_fd):','def finalize(owner,stage,*,records,group_count,batch_count,journal,work,spool_fd,target=None):'),
+('chunk_count=1) as op:',"chunk_count=1,**({'target':target} if target is not None else {})) as op:"),
+('chunk_count=0) as op:',"chunk_count=0,**({'target':target} if target is not None else {})) as op:"),
+("work=work/f'{group:08d}',consume=consume)","work=work/f'{group:08d}',consume=consume,**({'target':target} if target is not None else {}))")],
+'compact_mcm_batched.py':[
+("items=items,work=work/f'preserve/{groups:08d}')","items=items,work=work/f'preserve/{groups:08d}',target=target)"),
+("work=work/'final',spool_fd=spool_fd)","work=work/'final',spool_fd=spool_fd,target=target)")]
+}
+for name,edits in e.items():
+ original=(S/name).read_text();text=original
+ for a,b in edits:assert text.count(a)==1,(name,a,text.count(a));text=text.replace(a,b)
+ (D/name).write_text(text);(D/(name+'.patch')).write_text(''.join(difflib.unified_diff(original.splitlines(True),text.splitlines(True),fromfile=str(S/name),tofile=name)))
+(D/'CHANGES01.json').write_text(json.dumps(e,indent=2)+'\n')

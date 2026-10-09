@@ -1,0 +1,30 @@
+[
+  [
+    "from . import batched_pair_executor as accepted",
+    "from . import batched_pair_executor as accepted\nfrom .geometry_summary import Geometry"
+  ],
+  [
+    "max_key_bytes,authority_poll=None):",
+    "max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192):"
+  ],
+  [
+    "        self.counters=dict(source_guard_calls=0",
+    "        require(geometry is None or type(geometry) is bool,'geometry opt-in must be bool or None')\n        self._geometry=Geometry(max_geometry_summary_bytes) if geometry is True else None\n        self.last_geometry_summary=None\n        self.counters=dict(source_guard_calls=0"
+  ],
+  [
+    "try:attest(self.counters);self._current();self.active=True",
+    "try:\n            attest(self.counters);self._current();self.active=True\n            if self._geometry is not None:\n                self.last_geometry_summary=None;self._geometry_counts=(self.computed,self.reused);self._geometry.begin(self.occurrences)"
+  ],
+  [
+    "try:self._current();attest(self.counters);self.active=False",
+    "try:\n            self._current();attest(self.counters);self.active=False\n            if self._geometry is not None:\n                self.last_geometry_summary=self._geometry.finish(self.occurrences,self.computed-self._geometry_counts[0],self.reused-self._geometry_counts[1])"
+  ],
+  [
+    "    def _poison(self):\n",
+    "    def _poison(self):\n        if self._geometry is not None:self._geometry.poison();self.last_geometry_summary=None\n"
+  ],
+  [
+    "            self.occurrences+=1;self.computed+=mode=='computed';self.reused+=mode=='reused';return result",
+    "            if self._geometry is not None:self._geometry.add(a,b,self.last_receipt)\n            self.occurrences+=1;self.computed+=mode=='computed';self.reused+=mode=='reused';return result"
+  ]
+]

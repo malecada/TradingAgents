@@ -1,0 +1,277 @@
+--- matching_owner.py-candidate
++++ matching_owner.py-baseline
+@@ -95,14 +95,14 @@
+         require(type(binding) is Binding,'actual Binding timing target required')
+         self.binding=binding;self._binding_pin=binding
+         self.clock=_LEASE_TIMING_CLOCK;self._last=None
+-        self._totals=(0,)*12;self._counter_pin=self._totals;self.closed=False
++        self._totals=(0,)*12;self.closed=False
+ 
+     def _check(self,binding,*,allow_closed=False):
+         require(type(self) is BindingLeaseTiming and self.binding is binding is self._binding_pin,
+                 'binding timing identity differs')
+         require(self.clock is _LEASE_TIMING_CLOCK,'binding timing clock differs')
+         require(type(self.closed) is bool and (allow_closed or not self.closed),'binding timing closed')
+-        require(self._totals is self._counter_pin and type(self._totals) is tuple and len(self._totals)==12
++        require(type(self._totals) is tuple and len(self._totals)==12
+                 and all(type(v) is int and 0<=v<=_LEASE_TIMING_LIMIT for v in self._totals)
+                 and all(self._totals[i+2]<=self._totals[i] for i in range(0,12,3)),
+                 'binding timing counters differ')
+@@ -131,11 +131,10 @@
+         finally:
+             try:
+                 finish=self._now();self._check(binding)
+-                require(finish>=start,'binding timing interval reversed')
+                 values=list(self._totals)
+                 values[index]+=1;values[index+1]+=finish-start;values[index+2]+=int(primary is not None)
+                 require(all(v<=_LEASE_TIMING_LIMIT for v in values),'binding timing counter overflow')
+-                self._totals=tuple(values);self._counter_pin=self._totals
++                self._totals=tuple(values)
+             except BaseException as timing_error:
+                 self.closed=True
+                 if primary is None:raise
+@@ -148,24 +147,6 @@
+             for j,suffix in enumerate(('calls','ns','failures')):
+                 result['binding_'+name+'_'+suffix]=self._totals[i*3+j]
+         return result
+-
+-
+-BINDING_TIMING_POLICY={'format':'binding-lease-phases-v1','max_body_bytes':640}
+-
+-def binding_timing_policy(value):
+-    if value is None:return None
+-    require(type(value) is dict and set(value)==set(BINDING_TIMING_POLICY)
+-            and type(value['format']) is str and type(value['max_body_bytes']) is int
+-            and value==BINDING_TIMING_POLICY,'explicit binding timing policy required')
+-    return dict(value)
+-
+-def binding_timing_counters(value):
+-    names={'binding_timing_closed'}|{'binding_'+phase+'_'+suffix for phase in _LEASE_TIMING_PHASES for suffix in ('calls','ns','failures')}
+-    require(type(value) is dict and set(value)==names and all(type(x) is int and 0<=x<=_LEASE_TIMING_LIMIT for x in value.values()),'exact binding counters required')
+-    require(value['binding_timing_closed']==0 and all(value['binding_'+p+'_failures']<=value['binding_'+p+'_calls'] for p in _LEASE_TIMING_PHASES),'completed binding timing required')
+-    encoded=(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode()
+-    require(len(encoded)<=640,'binding timing body cap')
+-    return dict(value)
+ 
+ 
+ class Binding:
+--- compact_owner.py-candidate
++++ compact_owner.py-baseline
+@@ -255,15 +255,6 @@
+                 'compact binding or run object replaced')
+         require(cache_key(self.binding_value()) == self._binding_sha256, 'compact binding authority changed')
+ 
+-    def select_binding_timing(self,selection):
+-        require(type(self) is Owner and matching_owner.binding_timing_policy(selection) is not None,'actual selected owner timing required')
+-        if not hasattr(self,'_binding_timing_pin'):
+-            self._binding_timing=matching_owner.BindingLeaseTiming(self.bound)
+-            self._binding_timing_pin=self._binding_timing
+-        require(self._binding_timing is self._binding_timing_pin,'selected binding observer changed')
+-        self._binding_timing._check(self.bound)
+-        return self._binding_timing
+-
+     def lease(self):
+         require(not self.poisoned and not self.closed, 'compact owner is terminal or poisoned')
+         self.check_binding()
+@@ -272,13 +263,7 @@
+         journal = Path(self.bound.record['journal_directory'])
+         require(not any(present(journal / name) for name in ('failed.json', 'complete.json')),
+                 'representation terminal marker exists')
+-        if not hasattr(self,'_binding_timing_pin'):
+-            self.bound.lease()
+-        else:
+-            observer=self._binding_timing
+-            require(observer is self._binding_timing_pin and type(observer) is matching_owner.BindingLeaseTiming,'selected binding observer changed')
+-            observer._check(self.bound)
+-            self.bound.lease(observer=observer)
++        self.bound.lease()
+         self.check_binding()
+         info = self.root.lstat()
+         require((info.st_dev, info.st_ino) == self.inode, 'compact owner directory changed')
+--- compact_mcm_batched.py-candidate
++++ compact_mcm_batched.py-baseline
+@@ -14,7 +14,7 @@
+ from . import compact_owner as owners, compact_mcm as producer
+ from . import compact_mcm_publication as publication, score_batches as io
+ from . import matching_checkpoint as engine, compact_policy
+-from . import geometry_publication, matching_owner
++from . import geometry_publication
+ from .cache import cache_key
+ from .provenance import freeze, thaw, durable_mkdir, file_hash
+ 
+@@ -41,15 +41,12 @@
+         require(type(b[k]) is int and 0 < b[k] < 2**63, 'positive batched allowance required')
+     require(b['batch_cells'] <= 4096 and 1024 <= b['max_body_bytes'] <= 1024**2 and b['max_closure_token_bytes'] <= 64*1024**2, 'batch bounds differ')
+     execution=b['execution']
+-    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()),'explicit numeric execution schema required')
++    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()),'explicit numeric execution schema required')
+     require(execution['route']=='immutable-input-session+exact-byte-reuse-v1','explicit numerical operation deviation required')
+     require(all(type(execution[k]) is int for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')),'finite numeric execution allowances required')
+     require(1<=execution['max_entries']<=4096 and 1024<=execution['max_retained_bytes']<=64*1024**2 and 0<execution['max_key_bytes']<=min(execution['max_retained_bytes'],8*1024**2),'bounded exact result cache required')
+     require(9*pairs<=execution['max_origin_bytes']<2**63 and 0<execution['max_summary_bytes']<2**63,'full numeric provenance reservation required')
+     count = (pairs+b['batch_cells']-1)//b['batch_cells']
+-    if 'binding_timing' in execution:
+-        require(grouped and matching_owner.binding_timing_policy(execution['binding_timing']) is not None,'selected schema6 binding timing required')
+-        require(execution['max_summary_bytes']>=count*8192,'full timing summary reservation required')
+     if 'geometry' in execution:
+         require(geometry_publication.policy(execution['geometry']) is not None,'selected geometry policy required')
+         require(execution['max_summary_bytes']>=count*8192,'full geometry summary reservation required')
+@@ -58,7 +55,7 @@
+     return b
+ 
+ 
+-def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False):
++def _modules(root, admission=None, *, grouped=False, geometry=False):
+     import importlib
+     result={name:importlib.import_module(PACKAGE+'.'+module) for name,module in MODULES.items()}
+     # ONE packaged journal class is shared with the exact typed semantics helper.
+@@ -66,7 +63,6 @@
+         names=tuple(MODULES.values())+('matching_immutable_session','compact_mcm_batched','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations')
+         if grouped:names+=('grouped_offload','grouped_offload_semantics')
+         if geometry:names+=('geometry_summary','geometry_publication')
+-        if binding_timing:names+=('matching_owner','compact_owner','imported_authority_lease')
+         for name in names:
+             module=importlib.import_module(PACKAGE+'.'+name)
+             relative='tradingagents/research/onchain_replication/'+name+'.py'
+@@ -294,10 +290,6 @@
+     """Shared functional core; genuine authority supplied only by produce()."""
+     b=validate(policy,start['cells']);p=thaw(target.owner.policy)
+     authority_poll=target.lease if policy['schema_version']==6 and getattr(target.execution,'_sampled_authority_lease',None) is not None else None
+-    timing=b['execution'].get('binding_timing')
+-    if timing is not None:
+-        require(authority_poll is not None,'binding timing requires selected genuine sampled lease')
+-        target.owner.select_binding_timing(timing)
+     checkpoints=stage.root/'checkpoints';checkpoints.mkdir();stream=stage.root/'stream';stream.mkdir()
+     checkpoint_bytes=0;pair_ordinal=0;checkpoint_count=0
+     checkpoint_inventory=_checkpoint_inventory(checkpoints)
+@@ -330,7 +322,7 @@
+         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
+         execution=b['execution']
+-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}))
++        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}))
+         external=None;post_batch=final_batches=None
+         if b['retention']=='typed-recover-before-retire-v2':
+             from . import registered_offload as offload
+@@ -443,7 +435,7 @@
+     owner=target.owner;held.check(owner);root=None;fd=None;stage=None;mapped=None;matrix=None
+     try:
+         graph,kernel,policy,start=producer._prepare(target,graph_hash,input_name,output_input)
+-        b=validate(policy,start['cells']);modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'])
++        b=validate(policy,start['cells']);modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'])
+         output_policy,_=publication._output_policy(owner,output_input,start['cells'])
+         require(output_policy['schema_version']==1,'batched local producer requires explicit local output policy; external route unadmitted')
+         own_source='tradingagents/research/onchain_replication/compact_mcm_batched.py'
+--- batched_numeric_execution.py-candidate
++++ batched_numeric_execution.py-baseline
+@@ -2,7 +2,7 @@
+ import hashlib,json,math,os,stat,struct,time
+ from pathlib import Path
+ from . import batched_numeric_reuse as reuse
+-from . import geometry_publication, matching_owner
++from . import geometry_publication
+ 
+ RECORD=struct.Struct('>BQ')
+ SUMMARY_LIMIT=8192
+@@ -41,7 +41,7 @@
+     return value
+ 
+ class NumericExecution:
+-    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None):
++    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None):
+         self.fd=self.origins_fd=self.batches_fd=None;self.memo=None;self.closed=False;self.poisoned=False;self.finished=False
+         self.root=Path(stream_root).absolute();self.cells=cells;self.batch_cells=batch_cells
+         self.max_origin_bytes=max_origin_bytes;self.max_summary_bytes=max_summary_bytes
+@@ -52,15 +52,6 @@
+             require(type(cells) is int and 0<cells<2**63 and type(batch_cells) is int and 0<batch_cells<=4096,'finite numeric range required')
+             require(type(max_origin_bytes) is int and 9*cells<=max_origin_bytes<2**63 and type(max_summary_bytes) is int and 0<max_summary_bytes<2**63,'numeric storage reservation required')
+             self.batches=(cells+batch_cells-1)//batch_cells
+-            self.binding_timing=matching_owner.binding_timing_policy(binding_timing)
+-            self.binding_owner=binding_owner;self._timing_observer=None;self._timing_snapshot=None
+-            if self.binding_timing is not None:
+-                from . import compact_owner
+-                require(type(binding_owner) is compact_owner.Owner,'genuine timing Owner required')
+-                self._timing_observer=binding_owner._binding_timing_pin
+-                self._timing_current()
+-                require(max_summary_bytes>=self.batches*SUMMARY_LIMIT,'selected timing requires full summary reservation')
+-            else:require(binding_owner is None,'unselected timing Owner')
+             self.geometry=geometry_publication.policy(geometry)
+             if self.geometry is not None:require(max_summary_bytes>=self.batches*SUMMARY_LIMIT,'selected geometry requires full bounded summary reservation')
+             self.fd=os.open(self.root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW);self.root_pin=sig(os.fstat(self.fd))[:2];self._root()
+@@ -74,22 +65,6 @@
+             try:self.close()
+             except BaseException as cleanup:primary.add_note('numeric constructor cleanup: '+repr(cleanup))
+             raise
+-    def _timing_current(self):
+-        owner=self.binding_owner;observer=self._timing_observer
+-        require(type(observer) is matching_owner.BindingLeaseTiming and owner._binding_timing is observer is owner._binding_timing_pin,'numeric binding observer changed')
+-        observer._check(owner.bound)
+-
+-    def _counters(self):
+-        value=counters(self.memo)
+-        if self.binding_timing is not None:
+-            require(type(self._timing_snapshot) is bytes,'attested timing snapshot missing')
+-            timing=json.loads(self._timing_snapshot)
+-            require(raw(timing)==self._timing_snapshot,'timing snapshot canonical bytes differ')
+-            matching_owner.binding_timing_counters(timing)
+-            require(not set(timing)&set(value),'binding counter collision')
+-            value.update(timing)
+-        return value
+-
+     def _root(self):
+         require(self.root.resolve()==self.root and sig(os.stat(self.root,follow_symlinks=False))[:2]==self.root_pin==sig(os.fstat(self.fd))[:2],'numeric stream root changed')
+         if self.batches_fd is not None:require(sig(os.stat('numeric-batches',dir_fd=self.fd,follow_symlinks=False))[:2]==self.batches_pin==sig(os.fstat(self.batches_fd))[:2],'numeric batch root changed')
+@@ -124,11 +99,8 @@
+             self._poison();raise
+     def _complete_batch(self):
+         self.memo.end_batch() # Genuine full guard precedes any summary credit.
+-        if self.binding_timing is not None:
+-            self._timing_current()
+-            self._timing_snapshot=raw(matching_owner.binding_timing_counters(self._timing_observer.snapshot()))
+         start=self.ordinal-len(self.buffer)//9
+-        summary={'format':FORMAT,'batch':self.batch,'start':start,'stop':self.ordinal,'computed':self.batch_computed,'reused':self.batch_reused,'origin_sha256':hashlib.sha256(self.buffer).hexdigest(),'receipt_sha256':self.receipts.hexdigest(),'receipt_framing':'u64be-length/canonical-json-newline','counters':self._counters(),'elapsed_seconds':self.batch_elapsed,'old_per_occurrence_execution_credit':False}
++        summary={'format':FORMAT,'batch':self.batch,'start':start,'stop':self.ordinal,'computed':self.batch_computed,'reused':self.batch_reused,'origin_sha256':hashlib.sha256(self.buffer).hexdigest(),'receipt_sha256':self.receipts.hexdigest(),'receipt_framing':'u64be-length/canonical-json-newline','counters':counters(self.memo),'elapsed_seconds':self.batch_elapsed,'old_per_occurrence_execution_credit':False}
+         if self.geometry is not None:summary['geometry']=geometry_publication.completed(self.memo.last_geometry_summary,self.geometry,start,self.ordinal,self.batch_computed,self.batch_reused)
+         body=raw(summary);require(len(body)<=SUMMARY_LIMIT and self.summary_bytes+len(body)<=self.max_summary_bytes and 9*self.ordinal<=self.max_origin_bytes,'numeric retained byte cap')
+         self._origin_current();write_all(self.origins_fd,self.buffer);os.fsync(self.origins_fd)
+@@ -152,9 +124,8 @@
+         try:
+             require(self.ordinal==self.cells and self.batch==self.batches and not self.buffer and not self.memo.active,'numeric range incomplete')
+             self._origin_current();os.fsync(self.origins_fd)
+-            binding={'format':FORMAT,'cells':self.cells,'batch_cells':self.batch_cells,'batches':self.batches,'computed':self.computed,'reused':self.reused,'origin_bytes':9*self.cells,'origin_sha256':self.origin_hash.hexdigest(),'origin_signature':list(self.origin_sig),'stream_inode':list(self.root_pin),'batches_inode':list(self.batches_pin),'batches_signature':list(sig(os.fstat(self.batches_fd))),'summary_bytes':self.summary_bytes,'summary_sha256':self.summary_hash.hexdigest(),'summary_inventory_sha256':self.summary_inventory.hexdigest(),'max_origin_bytes':self.max_origin_bytes,'max_summary_bytes':self.max_summary_bytes,'counters':self._counters(),'elapsed_seconds':self.elapsed_seconds,'old_per_occurrence_execution_credit':False,'independent_key_equivalence_recomputed':False,'resume_supported':False}
++            binding={'format':FORMAT,'cells':self.cells,'batch_cells':self.batch_cells,'batches':self.batches,'computed':self.computed,'reused':self.reused,'origin_bytes':9*self.cells,'origin_sha256':self.origin_hash.hexdigest(),'origin_signature':list(self.origin_sig),'stream_inode':list(self.root_pin),'batches_inode':list(self.batches_pin),'batches_signature':list(sig(os.fstat(self.batches_fd))),'summary_bytes':self.summary_bytes,'summary_sha256':self.summary_hash.hexdigest(),'summary_inventory_sha256':self.summary_inventory.hexdigest(),'max_origin_bytes':self.max_origin_bytes,'max_summary_bytes':self.max_summary_bytes,'counters':counters(self.memo),'elapsed_seconds':self.elapsed_seconds,'old_per_occurrence_execution_credit':False,'independent_key_equivalence_recomputed':False,'resume_supported':False}
+             if self.geometry is not None:binding['geometry']=dict(self.geometry)
+-            if self.binding_timing is not None:binding['binding_timing']=dict(self.binding_timing)
+             verify(self.root,binding);self.finished=True;return binding
+         except BaseException:self._poison();raise
+     def close(self):
+@@ -188,8 +159,6 @@
+     try:
+         require(binding['format']==FORMAT and type(binding['cells']) is int and 0<binding['cells']<2**63 and type(binding['batch_cells']) is int and 0<binding['batch_cells']<=4096,'numeric binding format/range')
+         cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells
+-        timing=matching_owner.binding_timing_policy(binding.get('binding_timing'))
+-        if timing is not None:require(binding['max_summary_bytes']>=batches*SUMMARY_LIMIT,'binding timing summary reservation differs')
+         geometry=geometry_publication.policy(binding.get('geometry'))
+         if geometry is not None:require(binding['max_summary_bytes']>=batches*SUMMARY_LIMIT,'geometry summary reservation differs')
+         require(binding['batches']==batches and binding['origin_bytes']==cells*9<=binding['max_origin_bytes'] and binding['summary_bytes']<=binding['max_summary_bytes'] and binding['old_per_occurrence_execution_credit'] is False and binding['independent_key_equivalence_recomputed'] is False and binding['resume_supported'] is False,'numeric binding closure')
+@@ -207,9 +176,6 @@
+             require(raw(s)==body and s['format']==FORMAT and s['batch']==index and s['start']==start and s['stop']==stop and s['old_per_occurrence_execution_credit'] is False and s['receipt_framing']=='u64be-length/canonical-json-newline' and len(s['receipt_sha256'])==64 and all(c in '0123456789abcdef' for c in s['receipt_sha256']),'numeric summary range/framing')
+             if geometry is not None:geometry_publication.check(s.get('geometry'),geometry,start,stop,s['computed'],s['reused'])
+             else:require('geometry' not in s,'unselected geometry summary')
+-            if timing is not None:
+-                names={'binding_timing_closed'}|{'binding_'+p+'_'+x for p in matching_owner._LEASE_TIMING_PHASES for x in ('calls','ns','failures')}
+-                matching_owner.binding_timing_counters({k:s['counters'][k] for k in names})
+             chunk=os.pread(origin,9*(stop-start),9*start);require(len(chunk)==9*(stop-start) and hashlib.sha256(chunk).hexdigest()==s['origin_sha256'],'numeric origin range hash')
+             nc=nr=0
+             for ordinal,(mode,source) in enumerate(RECORD.iter_unpack(chunk),start):
+--- imported_authority_lease.py-candidate
++++ imported_authority_lease.py-baseline
+@@ -3,7 +3,7 @@
+ from pathlib import Path
+ from .imported_authority_interval import Interval,fingerprint,policy,require
+ 
+-AUTHORITY_CLASSES={'ImportedOriginal','PreparedImport','MaterializedOriginal','ImportStage','ImportedExecution','Binding','Owner','Stage','Target','Lease','Interval','BindingLeaseTiming'}
++AUTHORITY_CLASSES={'ImportedOriginal','PreparedImport','MaterializedOriginal','ImportStage','ImportedExecution','Binding','Owner','Stage','Target','Lease','Interval'}
+ 
+ def _loaded(root,sources):
+     result={}

@@ -1,0 +1,70 @@
+from pathlib import Path
+import json,difflib,hashlib
+r=Path('/home/malecada/master_thesis/TradingAgents-audit-fixes');d=r/'research/onchain-paper-replication-2026-09-24/full_sources/matching-adaptive-edge-cache-connected01-2026-10-09';s=r/'tradingagents/research/onchain_replication'
+# All output writes confined to owned candidate directory.
+edits={
+'matching_checkpoint.py':[
+('from pathlib import Path','from pathlib import Path\nfrom . import adaptive_edge_policy'),
+('def _advance_owned(s,a,b,c,*,max_operations):','def _advance_owned(s,a,b,c,*,max_operations,edge_cache_policy=None):'),
+("    s['safe']=False\n    try:\n        used=0", "    selected=adaptive_edge_policy.freeze(edge_cache_policy)\n    s['safe']=False\n    try:\n        used=0"),
+("used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations)","used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations,**({'edge_cache_policy':dict(selected)} if selected is not None else {}))")],
+'matching_immutable_session.py':[
+('import json','import json\nfrom . import adaptive_edge_policy'),
+('def __init__(self, a, b, config, *, engine, annealing):','def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None):'),
+('        self.engine, self.annealing = engine, annealing','        adaptive_edge_policy.attach(self,edge_cache_policy)\n        self.engine, self.annealing = engine, annealing'),
+("        require(not self.closed, 'matching session closed')","        require(not self.closed, 'matching session closed')\n        adaptive_edge_policy.current(self)"),
+('state, self.a, self.b, self.config, max_operations=max_operations)','state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self))'),
+('        self.advances += 1','        adaptive_edge_policy.current(self)\n        self.advances += 1')],
+'batched_pair_executor.py':[
+('import copy','import copy\nfrom . import adaptive_edge_policy'),
+('from tradingagents.research.onchain_replication import matching_checkpoint as engine','from . import matching_checkpoint as engine'),
+('from tradingagents.research.onchain_replication import matching_annealing as annealing','from . import matching_annealing as annealing'),
+('from tradingagents.research.onchain_replication.matching_immutable_session import ImmutablePairSession','from .matching_immutable_session import ImmutablePairSession'),
+('def __init__(self,config,policy,schedule,checkpoint,*,authority_poll=None):','def __init__(self,config,policy,schedule,checkpoint,*,authority_poll=None,edge_cache_policy=None):'),
+('        self.config=copy.deepcopy(config);self.policy=copy.deepcopy(policy)','        adaptive_edge_policy.attach(self,edge_cache_policy)\n        self.config=copy.deepcopy(config);self.policy=copy.deepcopy(policy)'),
+('            pair.hash_string(purpose_hash)','            adaptive_edge_policy.current(self)\n            pair.hash_string(purpose_hash)'),
+('session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing)','session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing,**adaptive_edge_policy.options(self))'),
+("                    return float(result.score),result.iterations,result.convergence", "                    adaptive_edge_policy.join(self,session)\n                    return float(result.score),result.iterations,result.convergence")],
+'batched_numeric_reuse.py':[
+('from pathlib import Path','from pathlib import Path\nfrom . import adaptive_edge_policy'),
+('from tradingagents.research.onchain_replication import matching_checkpoint as engine','from . import matching_checkpoint as engine'),
+('from tradingagents.research.onchain_replication import matching_immutable_session as immutable_session','from . import matching_immutable_session as immutable_session'),
+('contracts,immutable_session)','contracts,immutable_session,adaptive_edge_policy)'),
+('max_key_bytes,authority_poll=None):','max_key_bytes,authority_poll=None,edge_cache_policy=None):'),
+("        require(type(max_entries) is int", "        adaptive_edge_policy.attach(self,edge_cache_policy)\n        require(type(max_entries) is int"),
+('self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll)','self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self))'),
+('    def _current(self):\n        light_environment()','    def _current(self):\n        adaptive_edge_policy.join(self,self.executor)\n        light_environment()')],
+'batched_numeric_execution.py':[
+('from pathlib import Path','from pathlib import Path\nfrom . import adaptive_edge_policy'),
+('max_key_bytes,authority_poll=None):','max_key_bytes,authority_poll=None,edge_cache_policy=None):'),
+("            require(type(cells) is int", "            adaptive_edge_policy.attach(self,edge_cache_policy)\n            require(type(cells) is int"),
+('max_key_bytes=max_key_bytes,authority_poll=authority_poll)','max_key_bytes=max_key_bytes,authority_poll=authority_poll,**adaptive_edge_policy.options(self))'),
+('            self._origin_current()\n            if not self.buffer:', '            self._origin_current()\n            adaptive_edge_policy.join(self,self.memo)\n            if not self.buffer:'),
+('            receipt=self.memo.last_receipt','            adaptive_edge_policy.join(self,self.memo)\n            receipt=self.memo.last_receipt'),
+('        start=self.ordinal-len(self.buffer)//9','        adaptive_edge_policy.join(self,self.memo)\n        start=self.ordinal-len(self.buffer)//9'),
+('        body=raw(summary);require(',"        if self._edge_cache_policy is not None:summary['edge_cache_policy']=dict(self._edge_cache_policy)\n        body=raw(summary);require("),
+('            verify(self.root,binding);self.finished=True;return binding',"            adaptive_edge_policy.join(self,self.memo)\n            if self._edge_cache_policy is not None:binding['edge_cache_policy']=dict(self._edge_cache_policy)\n            verify(self.root,binding);self.finished=True;return binding"),
+("        cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells", "        cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells\n        selected=adaptive_edge_policy.freeze(binding.get('edge_cache_policy'))"),
+('            chunk=os.pread(origin,9*(stop-start),9*start)',"            require(adaptive_edge_policy.freeze(s.get('edge_cache_policy'))==selected,'numeric summary adaptive policy differs')\n            chunk=os.pread(origin,9*(stop-start),9*start)")],
+'compact_mcm_batched.py':[
+('from pathlib import Path','from pathlib import Path\nfrom . import adaptive_edge_policy'),
+("set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'}", "set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set())"),
+("    require(execution['route']=='immutable-input-session+exact-byte-reuse-v1'", "    if 'edge_cache_policy' in execution:require(adaptive_edge_policy.freeze(execution['edge_cache_policy']) is not None,'explicit adaptive selection required')\n    require(execution['route']=='immutable-input-session+exact-byte-reuse-v1'"),
+("'typed_payload_operations')","'typed_payload_operations','adaptive_edge_policy')"),
+("for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')})", "for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}))")]
+}
+for name,changes in edits.items():
+ body=(s/name).read_text()
+ for old,new in changes:
+  assert body.count(old)==1,(name,old,body.count(old));body=body.replace(old,new)
+ (d/name).write_text(body)
+(d/'matching_annealing.py').write_bytes((d.parent/'matching-adaptive-edge-cache01-2026-10-09/matching_annealing.py').read_bytes())
+# Fixed joined source pins, never dynamic bypass. Record exact replacements inverse.
+name='batched_numeric_reuse.py';body=(d/name).read_text()
+for module,filename in [('accepted','batched_pair_executor.py'),('engine','matching_checkpoint.py'),('engine.ann','matching_annealing.py'),('immutable_session','matching_immutable_session.py')]:
+ import re
+ old=re.search(r"    \("+re.escape(module)+r", '[0-9a-f]{64}'\),",body).group();new="    ("+module+", '"+hashlib.sha256((d/filename).read_bytes()).hexdigest()+"'),";body=body.replace(old,new);edits[name].append((old,new))
+old='SOURCE_PINS=(\n';new="SOURCE_PINS=(\n    (adaptive_edge_policy, '"+hashlib.sha256((d/'adaptive_edge_policy.py').read_bytes()).hexdigest()+"'),\n";body=body.replace(old,new);edits[name].append((old,new));(d/name).write_text(body)
+for name in edits:
+ (d/(name+'.patch')).write_text(''.join(difflib.unified_diff((s/name).read_text().splitlines(True),(d/name).read_text().splitlines(True),fromfile=str(s/name),tofile=name)))
+(d/'CHANGES01.json').write_text(json.dumps(edits,indent=2)+'\n')

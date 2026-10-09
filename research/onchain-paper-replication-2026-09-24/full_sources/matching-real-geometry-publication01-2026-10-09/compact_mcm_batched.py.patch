@@ -1,0 +1,59 @@
+--- tradingagents/research/onchain_replication/compact_mcm_batched.py
++++ compact_mcm_batched.py
+@@ -14,6 +14,7 @@
+ from . import compact_owner as owners, compact_mcm as producer
+ from . import compact_mcm_publication as publication, score_batches as io
+ from . import matching_checkpoint as engine, compact_policy
++from . import geometry_publication
+ from .cache import cache_key
+ from .provenance import freeze, thaw, durable_mkdir, file_hash
+ 
+@@ -40,24 +41,28 @@
+         require(type(b[k]) is int and 0 < b[k] < 2**63, 'positive batched allowance required')
+     require(b['batch_cells'] <= 4096 and 1024 <= b['max_body_bytes'] <= 1024**2 and b['max_closure_token_bytes'] <= 64*1024**2, 'batch bounds differ')
+     execution=b['execution']
+-    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'},'explicit numeric execution schema required')
++    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()),'explicit numeric execution schema required')
+     require(execution['route']=='immutable-input-session+exact-byte-reuse-v1','explicit numerical operation deviation required')
+     require(all(type(execution[k]) is int for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')),'finite numeric execution allowances required')
+     require(1<=execution['max_entries']<=4096 and 1024<=execution['max_retained_bytes']<=64*1024**2 and 0<execution['max_key_bytes']<=min(execution['max_retained_bytes'],8*1024**2),'bounded exact result cache required')
+     require(9*pairs<=execution['max_origin_bytes']<2**63 and 0<execution['max_summary_bytes']<2**63,'full numeric provenance reservation required')
+     count = (pairs+b['batch_cells']-1)//b['batch_cells']
++    if 'geometry' in execution:
++        require(geometry_publication.policy(execution['geometry']) is not None,'selected geometry policy required')
++        require(execution['max_summary_bytes']>=count*8192,'full geometry summary reservation required')
+     require(type(b['max_offload_anchor_bytes']) is int and 0 <= b['max_offload_anchor_bytes'] <= 16*1024**2 and (b['retention']=='local-v2' or ((count+15)//16 if grouped else count)*32<=b['max_offload_anchor_bytes']),'offload anchor memory allowance exceeded')
+     require(count*168 <= b['max_closure_token_bytes'] and count*(2*b['max_body_bytes']+92)+pairs*53 <= b['max_journal_bytes'], 'full batch denominator not reserved')
+     return b
+ 
+ 
+-def _modules(root, admission=None, *, grouped=False):
++def _modules(root, admission=None, *, grouped=False, geometry=False):
+     import importlib
+     result={name:importlib.import_module(PACKAGE+'.'+module) for name,module in MODULES.items()}
+     # ONE packaged journal class is shared with the exact typed semantics helper.
+     if admission is not None:
+         names=tuple(MODULES.values())+('matching_immutable_session','compact_mcm_batched','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations')
+         if grouped:names+=('grouped_offload','grouped_offload_semantics')
++        if geometry:names+=('geometry_summary','geometry_publication')
+         for name in names:
+             module=importlib.import_module(PACKAGE+'.'+name)
+             relative='tradingagents/research/onchain_replication/'+name+'.py'
+@@ -317,7 +322,7 @@
+         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
+         execution=b['execution']
+-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')})
++        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}))
+         external=None;post_batch=final_batches=None
+         if b['retention']=='typed-recover-before-retire-v2':
+             from . import registered_offload as offload
+@@ -430,7 +435,7 @@
+     owner=target.owner;held.check(owner);root=None;fd=None;stage=None;mapped=None;matrix=None
+     try:
+         graph,kernel,policy,start=producer._prepare(target,graph_hash,input_name,output_input)
+-        b=validate(policy,start['cells']);modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6)
++        b=validate(policy,start['cells']);modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'])
+         output_policy,_=publication._output_policy(owner,output_input,start['cells'])
+         require(output_policy['schema_version']==1,'batched local producer requires explicit local output policy; external route unadmitted')
+         own_source='tradingagents/research/onchain_replication/compact_mcm_batched.py'

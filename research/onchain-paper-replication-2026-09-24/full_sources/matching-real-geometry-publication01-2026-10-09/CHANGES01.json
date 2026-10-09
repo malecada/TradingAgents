@@ -1,0 +1,66 @@
+{
+  "batched_numeric_execution.py": [
+    [
+      "from . import batched_numeric_reuse as reuse",
+      "from . import batched_numeric_reuse as reuse\nfrom . import geometry_publication"
+    ],
+    [
+      "max_key_bytes,authority_poll=None):",
+      "max_key_bytes,authority_poll=None,geometry=None):"
+    ],
+    [
+      "            self.batches=(cells+batch_cells-1)//batch_cells",
+      "            self.batches=(cells+batch_cells-1)//batch_cells\n            self.geometry=geometry_publication.policy(geometry)\n            if self.geometry is not None:require(max_summary_bytes>=self.batches*SUMMARY_LIMIT,'selected geometry requires full bounded summary reservation')"
+    ],
+    [
+      "max_key_bytes=max_key_bytes,authority_poll=authority_poll)",
+      "max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}))"
+    ],
+    [
+      "        body=raw(summary);require(",
+      "        if self.geometry is not None:summary['geometry']=geometry_publication.completed(self.memo.last_geometry_summary,self.geometry,start,self.ordinal,self.batch_computed,self.batch_reused)\n        body=raw(summary);require("
+    ],
+    [
+      "            verify(self.root,binding);self.finished=True;return binding",
+      "            if self.geometry is not None:binding['geometry']=dict(self.geometry)\n            verify(self.root,binding);self.finished=True;return binding"
+    ],
+    [
+      "        cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells",
+      "        cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells\n        geometry=geometry_publication.policy(binding.get('geometry'))\n        if geometry is not None:require(binding['max_summary_bytes']>=batches*SUMMARY_LIMIT,'geometry summary reservation differs')"
+    ],
+    [
+      "            chunk=os.pread(origin,9*(stop-start),9*start)",
+      "            if geometry is not None:geometry_publication.check(s.get('geometry'),geometry,start,stop,s['computed'],s['reused'])\n            else:require('geometry' not in s,'unselected geometry summary')\n            chunk=os.pread(origin,9*(stop-start),9*start)"
+    ]
+  ],
+  "compact_mcm_batched.py": [
+    [
+      "from . import matching_checkpoint as engine, compact_policy",
+      "from . import matching_checkpoint as engine, compact_policy\nfrom . import geometry_publication"
+    ],
+    [
+      "set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'}",
+      "set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set())"
+    ],
+    [
+      "    count = (pairs+b['batch_cells']-1)//b['batch_cells']",
+      "    count = (pairs+b['batch_cells']-1)//b['batch_cells']\n    if 'geometry' in execution:\n        require(geometry_publication.policy(execution['geometry']) is not None,'selected geometry policy required')\n        require(execution['max_summary_bytes']>=count*8192,'full geometry summary reservation required')"
+    ],
+    [
+      "def _modules(root, admission=None, *, grouped=False):",
+      "def _modules(root, admission=None, *, grouped=False, geometry=False):"
+    ],
+    [
+      "        if grouped:names+=('grouped_offload','grouped_offload_semantics')",
+      "        if grouped:names+=('grouped_offload','grouped_offload_semantics')\n        if geometry:names+=('geometry_summary','geometry_publication')"
+    ],
+    [
+      "for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')})",
+      "for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}))"
+    ],
+    [
+      "grouped=policy['schema_version']==6)",
+      "grouped=policy['schema_version']==6,geometry='geometry' in b['execution'])"
+    ]
+  ]
+}

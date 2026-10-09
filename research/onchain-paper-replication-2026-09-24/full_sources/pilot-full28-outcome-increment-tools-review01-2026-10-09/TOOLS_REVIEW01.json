@@ -1,0 +1,98 @@
+{
+  "decision": "accepted",
+  "scope": "Source-only helper delta; no execution or recovery claim",
+  "helpers": {
+    "capture13.py": "fdcf5523836132da373efdcb01323ddfd3b7832a66dfc08a925db58d1650e93b",
+    "recover13.py": "56ae724765e23c164d016027991e6b602e186bf03be0c481cda6d93a5342bbbb",
+    "select13.py": "4377eb87ac71a5bb316bf4212ed9977f0a710d3f7b21dec95f20c848cd1704b7"
+  },
+  "checks": {
+    "capture_recover_literal_inverse": true,
+    "selector_security_and_logic_literal_inverse": true,
+    "owned_directories": 36,
+    "scope_states": [
+      {
+        "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "exists": true
+      },
+      {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "exists": true
+      },
+      {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "exists": true
+      },
+      {
+        "path": "research_artifacts/onchain_representations/4d8349713a3f764fe931f0dda2330c5b7de5560f291241fdd8043a75ca4f4401/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "exists": true
+      },
+      {
+        "path": "research_artifacts/onchain_compact_mcm/4d8349713a3f764fe931f0dda2330c5b7de5560f291241fdd8043a75ca4f4401/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "exists": true
+      },
+      {
+        "path": "research_artifacts/onchain_batched_offload/223798d84810b5f0f49aa89b17b35db96c6ddbcc7c86948472e81ec49573e5d6",
+        "exists": true
+      },
+      {
+        "path": "research_artifacts/archive-dispatch-ethpilot-20261009-28",
+        "exists": true
+      }
+    ],
+    "baseline_return": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full28increment12/FRESH_GIT_RECOVERY12.json",
+      "sha256": "3aa8a936c272e48410e3de17536d33297670d36f474ae94fce3c1a74506c45d0"
+    },
+    "baseline_capture_sha256": "e3db9deb0182e0fe0fc3b2b398170b829c86369d8984f87c5ddfc9b0727cf32d",
+    "baseline_selection_sha256": "d018c8c7a06bd177cebe771ba8d99ba5a4f39c9ae8c56347a3619a418c8f90b5",
+    "three_duplicate_hashes_joined": true,
+    "original_group_return_included": true,
+    "fresh_namespaces_absent": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome13/SELECTION13.json",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome13/CAPTURE13.json",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome13/FRESH_GIT_RECOVERY13.json",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome13/GIT_OPERATIONS13.json",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome13/failed-outcome-increment13.tar",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome13/fresh-git-recovered-outcome13.tar",
+      "/home/malecada/master_thesis/onchain-pilot-recovery/real-pilot-full28-outcome-20261009-13.git"
+    ],
+    "outcome_review_sha256": "2f1654a6df490696a04857035dd7f3b2b3ef8c211c452cde6036016ebda2fe49",
+    "helpers": {
+      "capture13.py": "fdcf5523836132da373efdcb01323ddfd3b7832a66dfc08a925db58d1650e93b",
+      "recover13.py": "56ae724765e23c164d016027991e6b602e186bf03be0c481cda6d93a5342bbbb",
+      "select13.py": "4377eb87ac71a5bb316bf4212ed9977f0a710d3f7b21dec95f20c848cd1704b7"
+    }
+  },
+  "evidence": {
+    "REPORT.md": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full28-outcome-increment-tools-review01-2026-10-09/REPORT.md",
+      "sha256": "a61dd1950349910f5fcae3662752a94454876bab1563a717c883074b97f7c16a"
+    },
+    "check.py": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full28-outcome-increment-tools-review01-2026-10-09/check.py",
+      "sha256": "4064fb9b6772b136482f7702d0553b3158c1ed9eb77997b29ede6e3f1a42576f"
+    },
+    "check02.py": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full28-outcome-increment-tools-review01-2026-10-09/check02.py",
+      "sha256": "5c71ef4971e5eee53f6f2150756c7370a847b513661430236926263fbcff54fa"
+    },
+    "CHECK01.log": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full28-outcome-increment-tools-review01-2026-10-09/CHECK01.log",
+      "sha256": "439c00a699bc18c94de6443c3330f386c8eedabc3f906137fd46f6beec2aeb12"
+    },
+    "CHECK02.log": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full28-outcome-increment-tools-review01-2026-10-09/CHECK02.log",
+      "sha256": "c26de83abdc9496cd1301470918ec39ecca1cf389ef0ae1c6504da1800d1c431"
+    },
+    "RESULT02.json": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-full28-outcome-increment-tools-review01-2026-10-09/RESULT02.json",
+      "sha256": "a0ecd8dc84476ff06716fc95dd18c42c6a205a1ceb4eee16abaea6a1de16c98a"
+    }
+  },
+  "qualifications": [
+    "Source readiness only; Root owns actual selection/capture/commit/push/fresh recovery",
+    "Sampled namespace absence, not writer exclusion",
+    "Raw scientific/runtime/private complete scope excluded"
+  ]
+}

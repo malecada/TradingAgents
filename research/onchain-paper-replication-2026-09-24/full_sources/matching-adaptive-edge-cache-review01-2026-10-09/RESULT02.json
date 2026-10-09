@@ -1,0 +1,48 @@
+{
+  "decision": "passed_finite_synthetic",
+  "limits": {
+    "cpu": [
+      3
+    ],
+    "nice": 10,
+    "as": [
+      536870912,
+      536870912
+    ],
+    "file": [
+      4194304,
+      4194304
+    ],
+    "seconds": [
+      30,
+      30
+    ],
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    }
+  },
+  "literal_inverse": true,
+  "runtime_guard_unmodified_and_true": true,
+  "shape": [
+    9,
+    10
+  ],
+  "edges": [
+    70,
+    72
+  ],
+  "edge_product": 5040,
+  "full_used": 242250,
+  "iterations": 48,
+  "assignment_score_state_bitwise": true,
+  "checkpoint_sha256": "0008b17368b62dd269a46f5c16c9dbeca78ee233da8b6cd010847b6ad569e3dd",
+  "strict_mode_budget": 6000,
+  "strict_mode_used": 6000,
+  "strict_mode_state_equal": true,
+  "invalid_policy_refused_eligible_budget": 1000000,
+  "overflow_cursor": 360,
+  "overflow_prefix_state_equal": true,
+  "no_runtime_pins_modified": true
+}

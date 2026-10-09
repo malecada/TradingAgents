@@ -1,0 +1,62 @@
+--- tradingagents/research/onchain_replication/batched_numeric_reuse.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/matching-real-geometry-instrumentation01-2026-10-09/batched_numeric_reuse.py
+@@ -9,6 +9,7 @@
+ from tradingagents.research.onchain_replication import contracts
+ 
+ from . import batched_pair_executor as accepted
++from .geometry_summary import Geometry
+ from tradingagents.research.onchain_replication import matching_immutable_session as immutable_session
+ 
+ MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session)
+@@ -92,11 +93,14 @@
+ 
+ class NumericReuseExecutor:
+     """Explicit batches; source/runtime attestation is NOT continuous authority."""
+-    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None):
++    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192):
+         require(type(max_entries) is int and 0<max_entries<=4096,'finite entry bound required')
+         require(type(max_retained_bytes) is int and 1024<=max_retained_bytes<=64*1024**2,'retained cache bound required')
+         require(type(max_key_bytes) is int and 0<max_key_bytes<=min(max_retained_bytes,8*1024**2),'bounded exact key required')
+         require(callable(checkpoint),'checkpoint callback required')
++        require(geometry is None or type(geometry) is bool,'geometry opt-in must be bool or None')
++        self._geometry=Geometry(max_geometry_summary_bytes) if geometry is True else None
++        self.last_geometry_summary=None
+         self.counters=dict(source_guard_calls=0,source_hashed_bytes=0,key_hashed_bytes=0,lookup_probes=0,lru_link_updates=0,evictions=0)
+         attest(self.counters);self.configuration=config_bytes(config);self.checkpoint=checkpoint;self._user_checkpoint=checkpoint
+         if authority_poll is not None:
+@@ -155,11 +159,17 @@
+         require(not self.executor.poisoned and config_bytes(self.executor.config)==self.configuration and raw(self.executor.policy)==self.policy_pin and raw(self.executor.schedule)==self.schedule_pin and self.executor.checkpoint is self.checkpoint_adapter and self.checkpoint is self._user_checkpoint,'executor/config/policy/schedule changed')
+     def begin_batch(self):
+         require(not self.closed and not self.poisoned and not self.active,'batch entry unavailable')
+-        try:attest(self.counters);self._current();self.active=True
++        try:
++            attest(self.counters);self._current();self.active=True
++            if self._geometry is not None:
++                self.last_geometry_summary=None;self._geometry_counts=(self.computed,self.reused);self._geometry.begin(self.occurrences)
+         except BaseException:self._poison();raise
+     def end_batch(self):
+         require(not self.closed and not self.poisoned and self.active,'batch final unavailable')
+-        try:self._current();attest(self.counters);self.active=False
++        try:
++            self._current();attest(self.counters);self.active=False
++            if self._geometry is not None:
++                self.last_geometry_summary=self._geometry.finish(self.occurrences,self.computed-self._geometry_counts[0],self.reused-self._geometry_counts[1])
+         except BaseException:self._poison();raise
+     def _checkpoint(self,*args):
+         self._current();attest(self.counters)
+@@ -205,6 +215,7 @@
+     def _clear(self):
+         while self.count:self._evict()
+     def _poison(self):
++        if self._geometry is not None:self._geometry.poison();self.last_geometry_summary=None
+         self.poisoned=True;self.executor.poisoned=True;self.active=False;self._clear();self.last_receipt=None
+     def __call__(self,a,b,purpose_hash):
+         require(not self.closed and not self.poisoned and self.active,'active batch required')
+@@ -234,6 +245,7 @@
+                 else:cached=self._store(key,hashed,result,purpose_hash,ordinal)
+             require(self._bytes<=self.max_retained_bytes,'physical retained cache bound exceeded')
+             self.last_receipt={'schema_version':2,'kind':'engineering_numeric_occurrence','ordinal':ordinal,'purpose_sha256':purpose_hash,'mode':mode,'origin_purpose_sha256':origin_purpose,'origin_ordinal':origin_ordinal,'score_f64_be':struct.pack('>d',result[0]).hex(),'iterations':result[1],'convergence':result[2],'cached':cached,'checkpoint_attempt_delta':self.executor.checkpoints-before[0],'checkpoint_reserved_byte_delta':self.executor.reserved_bytes-before[1],'retained_cache_bytes':self._bytes,'old_per_occurrence_execution_credit':False,'boundary_validated_batch_complete':False}
++            if self._geometry is not None:self._geometry.add(a,b,self.last_receipt)
+             self.occurrences+=1;self.computed+=mode=='computed';self.reused+=mode=='reused';return result
+         except BaseException:self._poison();raise
+     def close(self):

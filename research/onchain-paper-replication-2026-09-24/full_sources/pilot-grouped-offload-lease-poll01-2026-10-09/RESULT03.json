@@ -1,0 +1,100 @@
+{
+  "status": "PASS_SOURCE_METADATA_SIMULATION",
+  "checks": [
+    "five modules literal/AST inverse",
+    "original65s pipe-closed child wait leaves target stale RED",
+    "selected actual receive loop and dispatch target seam poll through65s wait GREEN",
+    "poll revocation kills/reaps/closes and preserves primary",
+    "poll plus cleanup failure retains primary with note"
+  ],
+  "rows": [
+    {
+      "label": "RED_original",
+      "selected": false,
+      "synthetic_elapsed": 65.0,
+      "target_polls": 2,
+      "full_checks": [
+        0.0
+      ],
+      "exception": "import lease: stale interval cannot refresh",
+      "primary_identity_preserved": null,
+      "process_spawned": false,
+      "max_success_wait": 90.0,
+      "cleanup_closes": 2
+    },
+    {
+      "label": "GREEN_selected",
+      "selected": true,
+      "synthetic_elapsed": 65.0,
+      "target_polls": 655,
+      "full_checks": [
+        0.0,
+        10.09999999999998,
+        20.100000000000016,
+        30.100000000000158,
+        40.1000000000003,
+        50.10000000000044,
+        60.100000000000584
+      ],
+      "exception": null,
+      "primary_identity_preserved": null,
+      "process_spawned": false,
+      "max_success_wait": 10,
+      "cleanup_closes": 2
+    },
+    {
+      "label": "poll_failure",
+      "selected": true,
+      "synthetic_elapsed": 12.099999999999973,
+      "target_polls": 125,
+      "full_checks": [
+        0.0,
+        10.09999999999998
+      ],
+      "exception": "synthetic target revocation",
+      "primary_identity_preserved": true,
+      "process_spawned": false,
+      "max_success_wait": 10,
+      "cleanup_closes": 2
+    },
+    {
+      "label": "poll_and_cleanup_failure",
+      "selected": true,
+      "synthetic_elapsed": 12.099999999999973,
+      "target_polls": 125,
+      "full_checks": [
+        0.0,
+        10.09999999999998
+      ],
+      "exception": "synthetic target revocation",
+      "primary_identity_preserved": true,
+      "process_spawned": false,
+      "max_success_wait": 10,
+      "cleanup_closes": 2
+    }
+  ],
+  "limits": {
+    "affinity": [
+      3
+    ],
+    "nice": 10,
+    "as": [
+      536870912,
+      536870912
+    ],
+    "fsize": [
+      4194304,
+      4194304
+    ],
+    "cpu": [
+      30,
+      30
+    ],
+    "wall": [
+      29.999984,
+      0.0
+    ]
+  },
+  "elapsed_seconds": 0.1280777319916524,
+  "qualification": "Actual interval, receive, dispatch _live/_wait_options and typed _poll_target functions; explicit synthetic clock/child/authority doubles. No physical process, SSH/SFTP, credentials or real authority."
+}

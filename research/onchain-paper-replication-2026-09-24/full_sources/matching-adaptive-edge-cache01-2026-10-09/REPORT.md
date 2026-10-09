@@ -1,0 +1,33 @@
+# Opt-in adaptive positional edge cache
+
+Source-only, uninstalled. Main/live28/Git, scientific method, operations, checkpoints, resource caps and all prior candidates remain unchanged. No original empirical graph, Owner/Run, network or financial claim was used.
+
+## Callable change and inverse
+
+The actual public `matching_annealing.advance(..., edge_cache_policy=POLICY)` forwards to the original private body. The explicit fixed policy is `{"format":"adaptive-lazy-edge-cache-v1","max_edge_products":16384,"chunk_entries":256,"max_scratch_bytes":262144}`. None/False retain the original route. CHANGES01.json reverses the candidate literally and AST-for-AST to the pinned installed baseline.
+
+Only when4096<edge_products<=16384, budget>edge_products, exact original immutable-by-bytes graph/state/runtime guards hold and NumPy has its original default error modes, the local cache is enabled with256-position chunks. All other cases retain the old cache<=4096 and1024-position chunks. Runtime invalidation at outer boundaries retains the original cache drop; when reuse drops the original1024 chunk is restored. The cache remains lazy and local to ONE advance call. It records the original `.5*agreement` result only when that original ordered position is first reached, using unchanged math.fsum/math.exp and error-prefix publication. There is no eager full table evaluation, added state field, persistent cache or callback change.
+
+The underlying logical operation remains one node, outer transition, directed edge-product or normalization chunk as before. Reducing vector edge chunks does not change used counts, cursor, phase, beta, safe status or checkpoint representation. Original ordered add.at accumulation and scalar fallback statements are unchanged. New cache allocation can still fail under resource pressure; identical allocator-failure timing is not claimed. Original agreement-failure prefixes are preserved and tested across the changed chunk boundary.
+
+## Conservative explicit allocation envelope
+
+Let T<=16384 and C<=256. Cache payload is9T bytes (float64 weights plus bool validity). Charge all overlapping edge temporaries at256C bytes plus16384B for ndarray/Python headers and fixed references. The maximum is **9*16384+256*256+16384=229376B**, below the original262144B reservation by32768B. This is enforced algebraically by the exact policy and hard-coded admission/chunk limits; no caller can increase them.
+
+Payload accounting deliberately overcounts the original expressions: positions8C, divmod results16C, two gathered2xC endpoint bases32C, gathered M8C and weights8C total72C retained; replacement RHS arrays coexist with the previous loop bindings, and predicate gather/abs/bool expressions add bounded arrays. Charging three complete72C sets plus40C predicate/copy margin gives256C. Views into these arrays and cache do not add payload. All current indexed endpoint arrays use native integer elements<=8B on pinned NumPy; original validation rejects noninteger graph indices. Header allowance covers up to64 simultaneously referenced ndarray/view headers at128B plus128 scalar/reference bookkeeping objects at64B, deliberately above the live expression roster. No feature-row copies or all-domain edge-index arrays are introduced. NumPy add.at opaque iterator/library internals remain within the original runtime allowance rather than being claimed as new explicit arrays.
+
+Using this same deliberately conservative formula,512 would charge294912B and is refused by construction;256 is selected instead. The original<=4096/default path is literal and retains its earlier bound. This is an explicit edge/cache scratch bound only, not whole RSS, malloc-arena, library or native-unit capacity. Existing dense graph/state, validation and normalization allocations retain their original separately admitted scope. Cache and prior edge references can coexist with normalization, as before; the outer process/resource admission remains necessary. No native or heap cap was increased.
+
+## Focused evidence
+
+One immutable synthetic directed graph pair has8x16 nodes,64x128 ordered edges and8192 edge products; one-dimensional finite features, original matching-stable config,48 iterations,1,000,000-operation budget and256 normalization cap. Two alternating original/selected full advances compared every state key, ndarray bytes/dtype/shape, exact used393584,48 iterations, assignment and float64 score bits. A selected completed-state checkpoint was saved in the original sharded format and loaded by unmodified original code, with all state fields equal.
+
+Actual uninstrumented advance timings were original913186435ns/949247792ns and selected93799474ns/90567813ns. Setup/create and subsequent result/checkpoint verification are outside these timings. These are one deterministic fixture with two repetitions, not a population throughput or runtime-coverage estimate.
+
+Separate retained test-local AST copies count only original edge-agreement call sites; no agreement/NumPy primitive, guard, global production function, profiler or trace hook was replaced. Counts were393216 original and8192 selected, with counted states again equal. Production candidate source contains no counters. A finite1e308 edge feature causes original scalar agreement OverflowError at ordered position384: both variants retain identical cursor384, unsafe status, Q and all state fields, plus the same primary exception type/message. A short200-operation underflow-raise fixture also matched original state/used. This latter test exercises nonstandard-mode scalar fallback but its budget is below the extended-cache threshold; the independent source condition requiring the full default mode establishes nonstandard extended-cache exclusion. No stronger dynamic large-budget mode proof is claimed.
+
+One worker enforced/read back CPU3, nice10,512MiB AS,4MiB FSIZE,30s CPU+real timer and thread environment1; total elapsed3.493s. No failed fixture occurred. All raw timings, counter-source copies, checkpoint files and limiter evidence remain in this directory.
+
+## Future caller seam
+
+The public annealing API is executable now in this source candidate. The installed composite matching_checkpoint engine and ImmutablePairSession currently call `_advance_checked` without this option, so they remain default. Root must separately propagate an explicitly selected operational policy through the genuine session/composite caller, preserve its full validation and source pins, and register the joined source and unchanged resource envelope after the active job terminates. No actual motif/node geometry fraction is known and no causal claim about current batch9 is made.

@@ -1,0 +1,53 @@
+from pathlib import Path
+import json,hashlib,struct,os,subprocess,datetime
+R=Path.cwd();D=Path(__file__).resolve().parent;F=D.parent;E=F/'real-data-pilot-full28-entry01-2026-10-09';name='eth-paper-real-data-end-to-end-resource-20261009-28';L=R/'research_runs'/name;N=R/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/name
+evidence={};cache={};read_bytes=0
+raw=lambda x:(json.dumps(x,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n').encode();digest=lambda x:hashlib.sha256(x).hexdigest()
+def read(p):
+ global read_bytes
+ p=Path(p)
+ if p not in cache:
+  st=p.stat();b=p.read_bytes();assert p.stat()==st;cache[p]=b;read_bytes+=len(b);evidence[str(p.relative_to(R))]=digest(b)
+ return cache[p]
+def load(p):return json.loads(read(p))
+claim=load(L/'claim.json');failed=load(L/'failed.json');assert failed['claim_sha256']==digest(read(L/'claim.json')) and claim['effective_attempt_budget']==99 and failed['reason']=='ValueError: import lease: stale interval cannot refresh'
+outputs={}
+for n,h in failed['output_sha256'].items():assert digest(read(L/'outputs'/n))==h;outputs[n]=load(L/'outputs'/n)
+assert len(outputs)==8;s=outputs['pilot-summary.json'];t=s['throughput'];assert s['training'] is None and t['complete_graphs']==0 and t['failed_graphs']==1 and t['unavailable_graphs']==6 and t['verified_completed_motif_cells']==0
+assert sum(g['expected_motif_cells'] for g in t['graphs'])==415968128 and outputs['cell-ledger.json']==[s['cell']]
+assert all(g['completed_motif_cells'] is None for g in t['graphs']) and all(g['status']=='unavailable' for g in t['graphs'][1:])
+owner=load(N/'owner.json');launch=load(N/'launch.json');guard=load(N/'guard/final.json');child=load(N/'guard/child_exit.json');cpu=load(N/'guard/cpu_ready.json');closed=load(E/'ROOT_IO_CLOSED01.json');storage=load(E/'FINAL_STORAGE01.json');terminal=load(E/'ROOT_TERMINAL01.json');wait=load(E/'BOUNDED_WAIT05.json');post=load(N/'postmortem-cells.json')
+assert owner['nonce']==launch['nonce'] and owner['source_commit']==claim['source']==storage['source'];assert child['exit_code']==guard['child_exit_code']==closed['actual_parent_exit_code']==terminal['terminal_poll']['exit_code']==1
+assert guard['cleanup_verified'] and closed['supervisor_reaped'] and closed['outer_log_handles_closed'];assert wait[-1]['poll']==terminal['terminal_poll'];assert terminal['root_session']==47933
+for key,p in [('guard',N/'guard/final.json'),('owner',N/'owner.json'),('launch',N/'launch.json')]:assert storage['original_metadata_sha256'][key]==digest(read(p))
+pids=sorted({owner['supervisor_pid'],owner['monitor_pid'],cpu['pid'],child['workload_pid']});assert pids==[2492825,2493227,2493664,2493667]
+ps=subprocess.run(['ps','-o','pid=,ppid=,stat=,args=','-p',','.join(map(str,pids))],capture_output=True,text=True);assert ps.returncode==1 and ps.stdout=='' and all(not Path('/proc',str(p)).exists() for p in pids)
+assert not Path(guard['cgroup']).exists();unit=Path(guard['cgroup']).name;unit_result=subprocess.run(['systemctl','--user','show',unit,'--property=ActiveState,SubState,MainPID,ControlGroup,Result,ExecMainStatus'],capture_output=True,text=True)
+assert unit_result.returncode==0 and 'MainPID=0' in unit_result.stdout and 'ControlGroup=\n' in unit_result.stdout
+process={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'pids':pids,'all_proc_absent':True,'monitor_original_start_ticks':owner['monitor_start_ticks'],'cpu_ready_guard_pid':cpu['pid'],'authenticated_workload_pid':child['workload_pid'],'ps_returncode':ps.returncode,'ps_stdout':ps.stdout,'ps_stderr':ps.stderr,'unit_returncode':unit_result.returncode,'unit_stdout':unit_result.stdout,'unit_stderr':unit_result.stderr,'cgroup_absent':True};(D/'PROCESS_ABSENCE01.json').write_text(json.dumps(process,indent=2)+'\n')
+G=R/'research_artifacts/onchain_batched_offload/223798d84810b5f0f49aa89b17b35db96c6ddbcc7c86948472e81ec49573e5d6/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/preserve/00000000';off=load(G/'offload.json');manifest=load(G/'manifest.json');assert manifest==off['manifest'] and digest(raw(manifest))==off['binding']['manifest_sha256'];assert off['cells']==off['stop']==65536 and off['batches']==16 and off['retired_files']==48
+history=Path(off['history']['directory']);op=off['history']['intent_sha256'];intent=load(history/off['history']['intent']);complete=load(history/off['history']['complete']);assert digest(read(history/off['history']['intent']))==op and digest(read(history/off['history']['complete']))==off['history']['complete_sha256']
+assert intent['binding']==off['binding'] and complete['operation_sha256']==op
+part=load(history/f'typed-part-{op}-000000000000.json');assert part['receipt']==off['receipt'] and complete['parts_sha256']==digest(bytes.fromhex(digest(raw(part)))) and complete['parts']==1
+retired=load(history/f'typed-grouped-retired-{op}.json');retirement=load(history/f'typed-grouped-retirement-{op}.json');assert retired['binding']==retirement['binding']==off['binding'] and retired['files']==48
+receipt_hash=digest(raw(off['receipt']));assert part['receipt_sha256']==retired['receipt_sha256']==retirement['receipt_sha256']==receipt_hash
+for rel in ['preserve/intent.json','preserve/complete.json']:assert load(G/rel)==off['receipt']
+ri=load(G/'recover/intent.json');rv=load(G/'recover/verified.json');rc=load(G/'recover/complete.json');sv=load(G/'semantic/verified.json');disp=load(G/'preserve/disposed.json')
+assert ri['receipt']==off['receipt'] and rv['intent_sha256']==digest(read(G/'recover/intent.json')) and rc['verified_sha256']==digest(read(G/'recover/verified.json')) and rc['owned_cache_disposed']
+assert rv['payload_sha256']==sv['archive_sha256']==manifest['archive_sha256']==off['receipt']['source_sha256'];assert rv['bytes']==manifest['archive_bytes']==off['receipt']['bytes']==3532800
+assert sv['binding']==off['binding'] and sv['files']==48 and sv['start']==0 and sv['stop']==65536 and disp['owned_transfer_payloads_disposed']
+assert complete['preserved_bytes']==complete['recovered_bytes']==3532800
+stage=Path(off['binding']['root']).parent;tokens=read(stage/'stream/closure-tokens.bin');assert tokens.hex()==off['binding']['source_tokens'] and len(tokens)==2688
+for i,row in enumerate(manifest['members']):
+ dev,ino,size,h=struct.unpack_from('>QQQ32s',tokens,i*56);assert size==row['bytes'] and h.hex()==row['expected_sha256'] and row['member']==f'files/{i:08d}';assert not Path(row['source_path']).exists()
+assert not list((stage/'matching').iterdir()) and not (G/'bundle.tar').exists() and not (G/'semantic/recovered.tar').exists()
+trace=read(N/'guard/child.log').decode();assert '"journal_completed_cells": 65536' in trace and '"confirmed_post_sink_cells": 61440' in trace and '"attempted_sink_cells": 65536' in trace and 'line 371, in post_batch' in trace
+summaries=[];orig=read(stage/'stream/numeric-origins.bin');assert len(orig)==65536*9
+for i in range(16):
+ q=load(stage/f'stream/numeric-batches/{i:012d}.json');assert q['start']==4096*i and q['stop']==4096*(i+1) and q['computed']+q['reused']==4096 and digest(orig[9*q['start']:9*q['stop']])==q['origin_sha256'];summaries.append(q)
+assert (stage/'stream/scores.f32').stat().st_size==65536*4;assert not (stage/'stage-complete.json').exists()
+for module in ('grouped_offload.py','grouped_offload_semantics.py','typed_payload_operations.py','batched_driver.py','compact_mcm_batched.py','imported_authority_interval.py'):
+ p=R/'tradingagents/research/onchain_replication'/module;assert digest(read(p))==claim['experiment']['source_files'][str(p.relative_to(R))]
+prior=load(F/'real-data-pilot-full27-outcome-review01-2026-10-09/OUTCOME_REVIEW01.json');assert prior['accounting']['closed_total']==67
+out={'decision':'accepted_terminal_disposition_and_historical_group_receipt_joins','identity':name,'evidence':evidence,'read_bytes_cached':read_bytes,'failure':failed['reason'],'claim_sha256':failed['claim_sha256'],'source':claim['source'],'native':{'elapsed_seconds':guard['elapsed_seconds'],'sampled_memory_current_peak_bytes':guard['peak_sampled_memory_current_bytes'],'optional_last_kernel_peak_bytes':guard['optional_memory_telemetry']['unit']['kernel_peak_bytes'],'events':guard['memory_events'],'swap_bytes':guard['optional_memory_telemetry']['unit']['swap_current_bytes'],'cleanup_verified':True,'independent_absence':process,'root_terminal_qualification':'Root-authored tool-return transcription47933/56fc48 exit1, distinct from raw guard child/supervisor exits; no raw transcript export or authenticated Root PID inferred.'},'scientific_disposition':{'failed_graphs':1,'unavailable_graphs':6,'complete_graphs':0,'whole_cell_credit':0,'training':None,'journal_completed_cells_recorded':65536,'attempted_sink_cells':65536,'confirmed_post_sink_cells':61440,'remaining':'unavailable; no retry','original_nulls_preserved':True},'group':{'archive_bytes':3532800,'archive_sha256':manifest['archive_sha256'],'files':48,'batches':16,'cells':65536,'historical_transport_recovery_retirement_hash_chain_joined':True,'original_48_source_paths_currently_absent':True,'source_tokens_match_all_48_manifest_sizes_hashes':True,'fresh_archive_binary_parse':'pending separate actual returned copy; local archive disposed by original protocol','qualification':'Historical hash-linked protocol evidence is authenticated against original outputs and source, not current remote availability or independent full65536 binary reparse. No final grouped recovery/spool-cast/fullMCM completion inferred.'},'numeric_summaries':{'batches':16,'computed':sum(q['computed'] for q in summaries),'reused':sum(q['reused'] for q in summaries),'elapsed_seconds':sum(q['elapsed_seconds'] for q in summaries),'origin_bytes':len(orig),'score_extent_only_bytes':262144},'accounting':{'closed_total':68,'complete_total':33,'failed_total':35,'highest_claimed_allowance':99,'refunds':0,'qualification':'Prior accepted67 closed plus genuine failed28 only; unchanged historical accounting reused.'},'pending':'Fresh returned group archive and independent bounded member/binary semantic verification if Root supplies it. Terminal conclusion does not depend on replay.','qualification':'Partial engineering progress only. No full MCM/model, new attempt, universal capacity, current remote availability, POSIX restoration or deletion authorization.'}
+(D/'OUTCOME_REVIEW01.json').write_text(json.dumps(out,indent=2)+'\n');print(digest((D/'OUTCOME_REVIEW01.json').read_bytes()))

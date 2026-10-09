@@ -1,0 +1,45 @@
+--- tradingagents/research/onchain_replication/matching_annealing.py
++++ matching_annealing.py
+@@ -155,11 +155,18 @@
+         if not isinstance(x,np.ndarray) or x.dtype!=np.float64 or list(x.shape)!=state['shape'] or not x.flags.c_contiguous or not np.isfinite(x).all():raise ValueError('state numeric matrix differs')
+ 
+ 
+-def advance(state,a,b,c,*,max_operations):
++ADAPTIVE_EDGE_POLICY={'format':'adaptive-lazy-edge-cache-v1','max_edge_products':16384,'chunk_entries':256,'max_scratch_bytes':262144}
++def _adaptive_selected(policy):
++    if policy is None or policy is False:return False
++    if type(policy) is not dict or set(policy)!=set(ADAPTIVE_EDGE_POLICY) or policy!=ADAPTIVE_EDGE_POLICY or type(policy['format']) is not str or any(type(policy[k]) is not int for k in ('max_edge_products','chunk_entries','max_scratch_bytes')):
++        raise ValueError('explicit adaptive edge cache policy required')
++    return True
++
++def advance(state,a,b,c,*,max_operations,edge_cache_policy=None):
+     if type(max_operations) is not int or max_operations<=0:raise ValueError('positive operation budget required')
+     check(state,a,b,c)
+-    return _advance_checked(state,a,b,c,max_operations=max_operations)
+-def _advance_checked(state,a,b,c,*,max_operations):
++    return _advance_checked(state,a,b,c,max_operations=max_operations,**({'edge_cache_policy':edge_cache_policy} if edge_cache_policy is not None and edge_cache_policy is not False else {}))
++def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None):
+     """Private body for an exclusively owned state checked in this same call.
+ 
+     The caller must validate state, inputs and positive operation budget before
+@@ -169,6 +176,11 @@
+     # At most4096float64 weights+4096validity bytes =36864B; no state fields.
+     reuse=(0<total<=4096 and max_operations>total and _immutable_edges(a) and _immutable_edges(b)
+            and all(type(state[name]) is np.ndarray for name in NAMES) and _reuse_runtime())
++    adaptive=False
++    if _adaptive_selected(edge_cache_policy) and 4096<total<=16384 and max_operations>total:
++        adaptive=(_immutable_edges(a) and _immutable_edges(b) and all(type(state[name]) is np.ndarray for name in NAMES)
++                  and _reuse_runtime() and np.geterr()==dict(divide='warn',over='warn',under='ignore',invalid='warn'))
++        if adaptive:reuse=True
+     feature_pins=(a.edge_features,b.edge_features);cached=valid=None
+     state['safe']=False
+     try:
+@@ -190,7 +202,7 @@
+                 if state['cursor']==total:state.update(phase='normalize_scale',cursor=0);continue
+                 # Bounded ordered edge accumulation; no agreement approximation.
+                 # Keep single-operation and nonstandard error-mode calls scalar.
+-                count=min(1024,total-state['cursor'],max_operations-used)
++                count=min(256 if adaptive and reuse else 1024,total-state['cursor'],max_operations-used)
+                 if (count>=8 and a.edge_features.dtype==np.float64 and b.edge_features.dtype==np.float64
+                         and np.geterr()['under']=='ignore'
+                         and all(mode in ('ignore','warn') for mode in np.geterr().values())):

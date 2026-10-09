@@ -1,0 +1,20 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py
++++ compact_mcm_batched.py
+@@ -357,7 +357,7 @@
+                 nonlocal groups
+                 require(0<len(pending)<=16 and groups<group_total,'finite group flush required')
+                 items=tuple(pending)
+-                record=grouped_offload.preserve_and_retire(target.owner,stage,journal=j,items=items,work=work/f'preserve/{groups:08d}')
++                record=grouped_offload.preserve_and_retire(target.owner,stage,journal=j,items=items,work=work/f'preserve/{groups:08d}',target=target)
+                 encoded=grouped_offload.typed._read(work/f'preserve/{groups:08d}/offload.json')
+                 require(json.loads(encoded)==record,'actual grouped receipt differs')
+                 anchors[groups*32:(groups+1)*32]=hashlib.sha256(encoded).digest()
+@@ -376,7 +376,7 @@
+                 if pending:flush_group(j)
+                 require(groups==group_total,'group denominator differs')
+                 records=((work/f'preserve/{i:08d}/offload.json',bytes(anchors[i*32:(i+1)*32]).hex()) for i in range(groups))
+-                coverage=grouped_offload.finalize(target.owner,stage,records=records,group_count=groups,batch_count=batch_count,journal=j,work=work/'final',spool_fd=spool_fd)
++                coverage=grouped_offload.finalize(target.owner,stage,records=records,group_count=groups,batch_count=batch_count,journal=j,work=work/'final',spool_fd=spool_fd,target=target)
+                 inventory=_checkpoint_inventory(work,max_entries=b['max_offload_entries'])
+                 require(inventory['bytes']<=b['max_offload_metadata_bytes'],'offload retained metadata allowance exceeded')
+                 external={'directory':str(work),'coverage':coverage,'inventory':inventory,'max_entries':b['max_offload_entries'],'group_batches':16,'group_anchors_sha256':hashlib.sha256(anchors).hexdigest()}

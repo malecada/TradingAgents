@@ -1,0 +1,14 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_dispatch.py
++++ archive_dispatch.py
+@@ -205,6 +205,11 @@
+ 
+ 
+ class _Transport(low.Transport):
++    def _wait_options(self):
++        cap=self._dispatch_context._cap
++        operation=None if cap is None else cap.get('typed_operation')
++        return {'poll_wait':True} if operation is not None and getattr(operation,'_target',None) is not None else {}
++
+     def next(self,kind):
+         c=self._dispatch_context;c._live()
+         require(c._in_call and not c._diagnostic_started,'archive diagnostic allocation outside original command')

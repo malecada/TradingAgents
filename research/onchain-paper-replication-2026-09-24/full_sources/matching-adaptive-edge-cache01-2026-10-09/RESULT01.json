@@ -1,0 +1,75 @@
+{
+  "status": "PASS_SYNTHETIC_NO_AUTHORITY",
+  "checks": [
+    "literal/AST inverse",
+    "two alternating real8192-edge-product full advances: full state/used/48iterations/assignment/score bits equal",
+    "actual unchanged original checkpoint load of selected completed state",
+    "actual test-local edge agreement counter reduction393216\u21928192; primitive/runtime guards unchanged",
+    "ordered agreement failureprefix across256 boundary exact cursor384/Q/primary type-message",
+    "nonstandard runtime original fallback partial state/used equality"
+  ],
+  "shape": [
+    8,
+    16
+  ],
+  "edges": [
+    64,
+    128
+  ],
+  "edge_products": 8192,
+  "policy": {
+    "format": "adaptive-lazy-edge-cache-v1",
+    "max_edge_products": 16384,
+    "chunk_entries": 256,
+    "max_scratch_bytes": 262144
+  },
+  "maximum_explicit_charge": 229376,
+  "timings_ns": [
+    {
+      "original": 913186435,
+      "original_used": 393584,
+      "selected": 93799474,
+      "selected_used": 393584
+    },
+    {
+      "selected": 90567813,
+      "selected_used": 393584,
+      "original": 949247792,
+      "original_used": 393584
+    }
+  ],
+  "edge_agreement_calls": {
+    "original": 393216,
+    "selected": 8192
+  },
+  "checkpoint_sha256": "f9811546769e74aebddbd226575092832b3b5b6e9494bf61a07c0df35b3a330a",
+  "limits": {
+    "affinity": [
+      3
+    ],
+    "nice": 10,
+    "as": [
+      536870912,
+      536870912
+    ],
+    "fsize": [
+      4194304,
+      4194304
+    ],
+    "cpu": [
+      30,
+      30
+    ],
+    "wall": [
+      29.999984,
+      0.0
+    ],
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    }
+  },
+  "elapsed_seconds": 3.493415246004588,
+  "counter_qualification": "Separate retained test-local AST counter at exact agreement sites. Production modules/primitives unchanged; no profiler. Timings use uninstrumented candidate."
+}
