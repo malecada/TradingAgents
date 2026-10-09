@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-entry01-2026-10-09/preflight27_01.py", line 321, in <module>
+    if __name__=='__main__':print(json.dumps(check()[1],sort_keys=True))
+                                             ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-entry01-2026-10-09/preflight27_01.py", line 237, in check
+    authenticate_committed(source,committed_refs(refs,binding))
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-entry01-2026-10-09/preflight27_01.py", line 59, in authenticate_committed
+    need(len(header)==3 and header[1]==b'blob','reviewed body is missing or non-blob: '+query)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-entry01-2026-10-09/preflight27_01.py", line 32, in need
+    if not ok:raise ValueError(message)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: reviewed body is missing or non-blob: c070daac30ffc8dc6615dae2d33828cbc2788e4b:research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-final-entry-review01-2026-10-09/CHECK01.log
