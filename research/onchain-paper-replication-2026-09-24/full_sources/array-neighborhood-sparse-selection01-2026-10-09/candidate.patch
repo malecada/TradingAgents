@@ -1,0 +1,83 @@
+--- tradingagents/research/onchain_replication/array_neighborhoods.py
++++ candidate/array_neighborhoods.py
+@@ -9,6 +9,17 @@
+ from threading import Lock
+ from .contracts import AttributedGraph
+ from .neighborhoods import graph_hash
++
++
++def _merge_indices(selected, block):
++    # Explicit array scratch: concatenation, two boolean masks, result.
++    # Avoid np.union1d's version-dependent hash-table allocation.
++    merged=np.concatenate((selected,block))
++    merged.sort(kind='quicksort')
++    distinct=np.empty(len(merged),dtype=bool)
++    distinct[:1]=True
++    distinct[1:]=merged[1:]!=merged[:-1]
++    return merged[distinct]
+ 
+ 
+ class ArrayNeighborhoodIndex:
+@@ -74,26 +85,35 @@
+             raise ValueError('invalid center')
+         if type(hops) is not int or hops<0 or type(limit) is not int or limit<1:
+             raise ValueError('invalid neighborhood selection contract')
+-        selected=np.zeros(n,dtype=bool); selected[center]=True
+-        frontier=np.array([center],dtype=np.int64)
++        selected=np.array([center],dtype=np.int64)
++        frontier=selected
+         for _ in range(hops):
+-            following=np.zeros(n,dtype=bool)
++            candidates=np.empty(0,dtype=np.int64)
+             for node in frontier:
+                 for direction in (0,1):
+                     for edges in self._blocks(node,direction):
+-                        following[self.graph.edge_index[1-direction,edges]]=True
+-            following &= ~selected
+-            selected |= following
+-            if np.count_nonzero(selected)>limit:
++                        candidates=_merge_indices(candidates,self.graph.edge_index[1-direction,edges])
++            del frontier
++            positions=np.searchsorted(selected,candidates)
++            np.minimum(positions,len(selected)-1,out=positions)
++            following=candidates[candidates!=selected[positions]]
++            del positions,candidates
++            for pos in range(0,len(following),self.edge_chunk):
++                selected=_merge_indices(selected,following[pos:pos+self.edge_chunk])
++            if len(selected)>limit:
+                 raise ValueError('neighborhood capacity exceeded, no truncation')
+-            frontier=np.flatnonzero(following)
++            frontier=following
++            del following
+             if not len(frontier):break
+-        return np.flatnonzero(selected),selected
++        return selected,selected
+ 
+     def _induced_blocks(self,indices,selected):
+         for node in indices:
+             for edges in self._blocks(node,0):
+-                yield edges[selected[self.graph.edge_index[1,edges]]]
++                targets=self.graph.edge_index[1,edges]
++                positions=np.searchsorted(selected,targets)
++                np.minimum(positions,len(selected)-1,out=positions)
++                yield edges[selected[positions]==targets]
+ 
+     def selected(self,center,config):
+         """Return independent ascending global indices, not scratch-backed state."""
+@@ -125,8 +145,6 @@
+         for edges in self._induced_blocks(indices,selected):
+             keep[cursor:cursor+len(edges)]=edges;cursor+=len(edges)
+         keep.sort(kind='quicksort')  # Exact original directed edge-column order.
+-        mapping=np.full(len(g.node_ids),-1,dtype=np.int64)
+-        mapping[indices]=np.arange(len(indices),dtype=np.int64)
+         nodes=np.empty((len(indices),g.node_features.shape[1]),dtype=g.node_features.dtype)
+         edges=np.empty((2,count),dtype=np.int64)
+         features=np.empty((count,g.edge_features.shape[1]),dtype=g.edge_features.dtype)
+@@ -134,6 +152,6 @@
+             block=indices[pos:pos+self.edge_chunk];nodes[pos:pos+len(block)]=g.node_features[block]
+         for pos in range(0,count,self.edge_chunk):
+             block=keep[pos:pos+self.edge_chunk]
+-            edges[:,pos:pos+len(block)]=mapping[g.edge_index[:,block]]
++            edges[:,pos:pos+len(block)]=np.searchsorted(indices,g.edge_index[:,block])
+             features[pos:pos+len(block)]=g.edge_features[block]
+         return AttributedGraph(tuple(g.node_ids[i] for i in indices),nodes,edges,features,self.identity,g.node_ids[center])

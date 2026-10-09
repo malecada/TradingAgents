@@ -1,0 +1,42 @@
+{
+  "decision": "withheld",
+  "scope": "Initial outcome09 source-tool review; no helpers executed",
+  "helpers": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome09/select09.py",
+      "sha256": "0b0e008c3bf457058363ecc5bcd86b47df57ab798d4d299684228098f0631507"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome09/capture09.py",
+      "sha256": "06d84974f96bb68206d54e8ce34ac67c95826603faf94f5e96080cefbf4e9757"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome09/recover09.py",
+      "sha256": "9bb3b3a84927ba6d656d432ab6f423f4982f50b4e2543e70684180d2c61b385c"
+    }
+  ],
+  "baseline_actual_recovery": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/recovery02/FRESH_GIT_RECOVERY08.json",
+    "sha256": "e02eab8a259c98883f7c09907c03fcc5284d08c9b1ed4cd33fbc0d3e823df52f"
+  },
+  "baseline_source": "91bd4bee8c1560d6464349e7f37b60d581b329f4",
+  "findings": [
+    {
+      "severity": "blocking",
+      "detail": "select09 explicit helper roster contains outcome09/capture07.py and outcome09/recover07.py; both absent. Actual09 files are not those explicit names. Selection will refuse nonexistent paths before capture."
+    },
+    {
+      "severity": "scope",
+      "detail": "Excluded set dynamically covers every .tar and actual_external_archive_blob_return.stdout under full26increment08, not exact authenticated duplicate paths. This can silently omit a later unrelated tar; narrow to actual authenticated original/returned copies."
+    }
+  ],
+  "positive_checks": {
+    "actual_recovery_mode_literal": "parts[:2] == ['100644', 'blob'] and parts[3] == a['path']",
+    "baseline_corrected91bd_receipt_exists": true
+  },
+  "limitations": [
+    "No private runtime/credentials/network/numerical payload decoding or original mutation. Native caps unchanged.",
+    "Actual closed-store coverage/opaque36864B origins and actual external return not yet verified.",
+    "Retain this withheld source/hash receipt if Root edits tools; successor review must identify corrected hashes."
+  ]
+}

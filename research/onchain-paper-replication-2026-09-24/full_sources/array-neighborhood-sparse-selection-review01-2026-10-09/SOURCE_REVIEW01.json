@@ -1,0 +1,90 @@
+{
+  "decision": "accepted_source_only",
+  "candidate_sha256": "e3b4bf6ff403f3e942af536ae83bdbd1e773723961edb3d1851881df3ec8d855",
+  "baseline_sha256": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/array-neighborhood-sparse-selection01-2026-10-09/MANIFEST01.json": "372374d466a9ceb28a0d91531143f331af0f89f48789e78403ba9c0d0cafe525",
+    "research/onchain-paper-replication-2026-09-24/full_sources/array-neighborhood-sparse-selection01-2026-10-09/candidate.patch": "e85f47eae4c97e6734072bba11859e67c754d411f3efe6d1334ec3d1b87fcb49",
+    "research/onchain-paper-replication-2026-09-24/full_sources/array-neighborhood-sparse-selection01-2026-10-09/REPORT.md": "4a0abb6b48c194a6ec3a1a14158db26e0912d03c73cafb3f934612d08e6abe48",
+    "tradingagents/research/onchain_replication/array_neighborhoods.py": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f"
+  },
+  "checks": {
+    "changed_methods_only": [
+      "_induced_blocks",
+      "_neighborhood",
+      "_select"
+    ],
+    "additional_helper": "_merge_indices",
+    "independent_bfs_bitwise_hash_cases": [
+      [
+        "<f4",
+        0,
+        0
+      ],
+      [
+        "<f4",
+        3,
+        1
+      ],
+      [
+        "<f4",
+        0,
+        3
+      ],
+      [
+        "<f4",
+        6,
+        4
+      ],
+      [
+        "<f8",
+        0,
+        0
+      ],
+      [
+        "<f8",
+        3,
+        1
+      ],
+      [
+        "<f8",
+        0,
+        3
+      ],
+      [
+        "<f8",
+        6,
+        4
+      ]
+    ],
+    "refusals": [
+      [
+        "duplicate",
+        "duplicate aggregated edges"
+      ],
+      [
+        "limit",
+        "neighborhood capacity exceeded, no truncation"
+      ],
+      [
+        "budget",
+        "neighborhood index buffer allowance exceeded"
+      ]
+    ],
+    "numpy_version": "2.3.0"
+  },
+  "scratch_proof": {
+    "scope": "Numeric array storage, not RSS/Python allocator/validation/caller-held output",
+    "neighbor_merge_upper": "42N+26C <=44N+64C",
+    "difference_upper": "41N <=44N",
+    "selected_merge_upper": "34N+18C <=44N+64C",
+    "extraction": "selected8N+keep8E; bounded membership/remap/gathers within64C and existing width terms; outputs retain original2x charge",
+    "quicksort_assumption": "Pinned NumPy2.3.0 documents zero work-space quicksort; contiguous int64 in-place sort. Stack/internal allocator metadata excluded as in baseline.",
+    "unchanged_allowance": "retained16(E+N+1)+scratch16E+40(N+1)+4N+C(64+2node_width+2edge_width)"
+  },
+  "qualification": "Exact weak-hop selected IDs and original edge-column order/features/hash proven on tiny synthetic fixtures. Duplicate directed edges remain rejected by original graph validator. Lock/context/source validation methods unchanged; old author focused cases reused. Dense/growing sparse merges can regress. Allocation failure sites/timing differ; no universal hostile-runtime or total-memory proof, real graph, benchmark, speedup, source installation or empirical authority.",
+  "independent_checks": {
+    "check01.py": "be49bdb0ad48c80bd2e830ca85bfd3f9739e8d3afc027bf04d6e61bccd1e2e6e",
+    "CHECK01.log": "5f104a1577ce6c7c40502f90afc270db248ee462054dade4dad973eeaf0d63fc"
+  }
+}

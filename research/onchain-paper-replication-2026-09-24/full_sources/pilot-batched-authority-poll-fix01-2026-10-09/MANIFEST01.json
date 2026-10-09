@@ -1,0 +1,49 @@
+{
+  "status": "SOURCE_ONLY_PENDING_REVIEW",
+  "selected": {
+    "batched_pair_executor.py": {
+      "candidate_sha256": "fea5c26c66e7047ad157fc0dc499918f50c2c4abde409df5b3c1699a8e6b12b3",
+      "baseline_sha256": "5e722ec2035e2549f7584a31bf091e0de4d7854c196086f8736179f367d93b2e"
+    },
+    "batched_numeric_reuse.py": {
+      "candidate_sha256": "20ccbca53b9e7ef615704993c20f57e2568f4a52ae93e77528e68a017744a4d1",
+      "baseline_sha256": "a0ceec1f60990905e49225a7faa9062a0ae40ece9f6148731b18db33a023626a"
+    },
+    "batched_numeric_execution.py": {
+      "candidate_sha256": "77ecaebb12f63d01a3784267d493c76683abfccd5c3cc20be3b8f8d14b7663d4",
+      "baseline_sha256": "e3a6450c816a73c8ba60c270d88564a9728437f501d5df594f5f9c1018a1ec34"
+    },
+    "batched_driver.py": {
+      "candidate_sha256": "2ac888beb9f778c372fcda4122cb55b78c85e77bfbcec3193ac5d770bb8dc2c9",
+      "baseline_sha256": "c2857ee40fd8f673e6e50d1a6c0ab7f3000f8a5799f72d55865b663a6320b75a"
+    },
+    "compact_mcm_batched.py": {
+      "candidate_sha256": "2054d914381d2f267625097ac642d8c6df857785ed2ddc7715054df6ced5d591",
+      "baseline_sha256": "a50d3e72417eaee8bde863da9b6ecd96ba888946a55b94d63b52faf2bed74f3c"
+    }
+  },
+  "evidence": {
+    "CHANGES01.json": "2935ddf376dd5cd5cecce6e80857b4d4e44d40d56fe7345885b14abfe84dd5b0",
+    "CLEANUP03.json": "7d3d2c42d097b181dc9f093f3ab4978ce3b6d6754c0bca8bd58ca59599bb307c",
+    "EXTRACTION02.json": "cdeca151aeba0009a38d135b2bff188dc5f832974e04774dcfd5ee6b526ce549",
+    "REPORT.md": "da1b49544ef88c95abddde74c87ff08e1f44e17e1f186bb6a910237cfbea2302",
+    "RESULT01.json": "b5f81e16290233eba605040452812eb049aa54677213a25f5695f9509f474a6e",
+    "TEST01.log": "a52895f59dbf1187e3ae6dc722be28cf905e7411ec56d8e51f46be9f31a7c607",
+    "TEST02.log": "52ab94a80fadaa0205ad16454a029c8caf5c4d02780ad38d3705971f3577e478",
+    "TEST03.log": "2f328ca244eb2e0c636fbe95a0fccc1b7fbc6cf89cb56b71f88234b1bc0e5b01",
+    "batched_driver.py.inverse.patch": "938c53c2ca86e743e90c2f8448495c055264588a6b2faf09193050f0ae1816ff",
+    "batched_numeric_execution.py.inverse.patch": "224d01b6e1747c40559a521d0651737b0af234fdec48ebde2ebf66ef55baa6b0",
+    "batched_numeric_reuse.py.inverse.patch": "833b565f9c0473b687591a40c9b90416d85dae2170220e325068216984228c22",
+    "batched_pair_executor.py.inverse.patch": "40656308c8f07e477bbd36255d9fad30d98dd1af67445f74e7dc0983a434823b",
+    "build01.py": "e50b1162e44348d471d57dd083a62f96ffc193477d0825fec524618f264c0f74",
+    "check_cleanup03.py": "1497c50f065e198591964dfd124c5b0923d6439745c0a8f2baf11cb6ddccd7d2",
+    "check_extraction02.py": "b6b8f4579dbe91ebf62afa91bbeee4fb21e23c45a93d52fcfc95ab8914f8974d",
+    "compact_mcm_batched.py.inverse.patch": "3c5ad8343f7f4d42d3b08bed2613517d01ecc36fedb5cc69ce13a52b71cddcf6",
+    "verify01.py": "5a395dd3f050ae8b3c15efddbddcd3cd677eb1ad2a4d05cc2e1068876a52bf49"
+  },
+  "unchanged_scheduler_sha256": "e61ef97f883ed9d27107f6316b774697b8949d83c313928150a0ae717b283f6f",
+  "limitations": [
+    "Sampled polling only; any indivisible segment or authority callback exceeding remaining freshness budget still fails.",
+    "No genuine authority or empirical route executed; no performance/capacity claim."
+  ]
+}

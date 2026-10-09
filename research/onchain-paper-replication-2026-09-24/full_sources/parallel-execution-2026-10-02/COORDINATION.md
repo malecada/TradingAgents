@@ -1,3 +1,41 @@
+# Current replication checkpoint — 2026-10-09T08:50:26.906176+00:00
+
+PROGRESS: six exact reviewed source files INSTALLED after permanent full26 closure; INSTALL01 f995963a in full_sources/pilot-poll-eager-root-install01-2026-10-09 joins polling review98b2450a and eager-sweep reviewba5b8af6. Periodic genuine Target.lease checks are forwarded through batched computation/cache/extraction; original60s threshold unchanged and indivisible long operations still fail closed. Seven discarded eager preparations removed only in admitted full schema6/lease route; later-graph refusal may follow earlier production. Original numerical math/model/training/seven whole graphs/32 motifs/512 spent samples and all native/storage caps unchanged. Sparse candidate remains uninstalled after negative bounded benchmark. Metadata installer TypeError before source writes preserved separately; corrected installation syntax/hashes verified.
+
+No numerical job active. Full26 FAILED and all authenticated native processes/cgroup absent; 66closed=33COMPLETE33FAILED/highest97, no98 admitted yet. Actual partial batch4000computed+96reused/1749.007s has zero committed sink/MCM/training credit. Latest outcome external recovery not yet complete; tooling review verifies exact increment, no history replay. Offload scope existence is checked now rather than assuming prior absence. Root owns Main/Git/STATE/registration/accounting/actual recovery/ONE launcher. annealing ONLY outcome09 changed-tool/return review; owner ONLY NEW full27 input-source metadata drafts; residual available for combined changed-source/entry release. Next actual failed26 incremental recovery, concrete fresh27 input/registration98/combined release, then fresh eligibility before ONE unused27. Goal ACTIVE/incomplete; zero completed real MCM/joint update/financial fits.
+
+Earlier checkpoints retained below.
+
+
+# Current replication checkpoint — 2026-10-09T08:36:13.878251+00:00
+
+Full26 permanently FAILED/spent: stale60s authority interval at post-numeric journal boundary, originalclaimc6f55/failedee53. Root65328 exit1(chunkf4cf1c qualified transcription), actual native4275.255s, fourauthenticatedPIDs+cgroup absent; original RootIO/storageclosure plus ROOT_CLOSURE01 retained. Sourcefreeze ended; no job active. Numeric summary records4000computed+96reused in1749.007s and36864B opaqueorigins, correcting prior absent-summary observation; zero durable journal/sink/fullMCM/training/financial credit. AttemptedMCM2196.641s/firstgraphFAILED6UNAVAILABLE/trainingnull; sampledpeak4314329088B vs optional lastkernel4403785728B, noOOM/high/max/nativeSwap, not wholecapacity. Accounting66closed33COMPLETE33FAILED/highest97, no refunds/reopen/transfer.
+
+Owner onlynew sampled-poll fix42793c2c (five modules, genuine schema6 Target.lease callback through extraction/occurrence/iterations;60s freshness unchanged; indivisible long blocks remainfailclosed). Independent source review pending. Eager-sweep06b sourceaccepted/uninstalled. Sparsee3 sourceaccepted/uninstalled, bounded synthetic benchmarkregressed1.12–2.44x on tested cases; no adopted speedbenefit or realthroughput inference. Root next actual failedincrement preservation/recovery with existingtools and narrowed changed-source review, then any fresh committed registration/allowance before empirics. Never relaunch26. GoalACTIVE/incomplete, original7wholegraphs32motifs512samples/fullGAT→attentionLSTM unchanged.
+
+Earlier checkpoints retained below.
+
+# Current coordination — 2026-10-09T08:18:35.752457+00:00
+Functional source completion 2026-10-09T08:18:35.752457+00:00: sparse neighborhood candidatee3b4bf6 independently accepted SOURCE_ONLYf6f66c6b after13author+8independent synthetic old/new/independent-BFS cases. Removes per-center full-N masks/mapping through sorted sparse indices/chunk searchsorted; exact weak-hop induced nodes/edge columns/feature bytes preserved in tested cases. Static numeric temporaries fit unchanged conservative44N+16E+64C terms; Python/allocator/stack/wholeRSS and actual speed remain unproved, dense cases may regress. Candidate and eager-sweep06b60d5e UNINSTALLED; Main/Git39dc FROZEN. Same full26/session65328/native active, elapsed 4154.798s, no completed batch/checkpoint at latest08:14:56 observation. First-batch static report55e63ceb finds >=9 full admissions per genuine boundary but no193-body recursive admission; pending precedes lazyindex/firsttask, so no in-memory pair count inferred. All bounded assignments complete. Root next obtains actual batch counts/computed-reuse/timing or terminal disposition; no relaunch or scientificsource mutation. Zero complete fullMCM/jointupdate/financialfits; goal active.
+
+Previous coordination retained below.
+
+# Current coordination — 2026-10-09T07:41:29.138359+00:00
+Changed-seam completion 2026-10-09T07:41:29.138359+00:00: eager-sweep removal06b60d5e independently SOURCE_ACCEPTED_ONLY by ba5b8af6 (seven duplicate eager preparations removed in selected full schema6/lease route; fresh seven production preparations and original math/Owner/source checks unchanged; later-graph refusal timing deviation explicit). Candidate remains UNINSTALLED; frozen Main/Git39dc unchanged. Actual SAME full26/session65328/native guard active at sampled 1928.204s, no terminal receipt; original dictionary imported, fullMCM/joint update incomplete. All three bounded assignments complete. Root next observes first actual batch/terminal and preserves/reviews/recoveries attempted outcome; any future candidate adoption needs exact committed registration/release after current terminal, never restart26.
+
+Previous coordination retained below.
+
+# Current coordination — 2026-10-09T07:39:47.173133+00:00
+Current continuation 2026-10-09T07:39:47.173133+00:00: SAME full26/session65328/nativeunit active, dictionary import complete; no MCM intent yet. RESOURCE_OBSERVATION03 records elapsed 1826.189s/current 4158926848B/sampled peak 4290637824B and actual worker1976985 observations, no terminal receipt/limit reason. Source/Git39dc frozen; candidate eager-sweep removal06b60d5e SOURCE_ONLY_UNINSTALLED (one conditional, later-graph refusal timing deviation) prepared in exclusive new directory; residual_metadata_review20 owns ONLY new bounded changed-seam review01. Root owns same active launcher; no relaunch/integration/commit. Next first actual MCM batch measurement or terminal retention/recovery; zero complete real MCM/joint update/financial fits.
+
+Previous coordination retained below.
+
+# Current coordination — 2026-10-09T07:11:38.375389+00:00
+
+ONEnativefull26/Rootsession65328 RUNNING; genuineclaimc6f55b872fbe/effective97. Main scientificsource/GitFROZEN39dc86d0.65closed+ONEactive66thspent/highest97. All3agentscomplete; RootsoleSAMEhandle/nativeguard/stage observation, no integration/commit/relaunchwhileactive. ActualoriginalPIDs supervisor1976157/monitor1976569/worker1976981;unitonchain-replication-1cd049950b764ed8b7fc1b58fa962a3a.service. Next actualbatch measurements orterminalretention/review/newincrement recovery. Originalscience/data/caps preserved, no completedMCM/update/fit yet.
+
+Previous coordination retained below.
+
 # Current coordination — 2026-10-09T07:08:13.583414+00:00
 
 All3bounded assignmentscomplete. No numericaljob/claim26 yet. Exactreleaseaaa10514/genuine395source64inputadmission/livepreflight and actual131bodyincrement08+two correctionbody return58363219 accepted. Original4operation backuprefusal preserved; no scientificbudget spent. Root sole nextcommit/push→ONEroot_io26_01 freshcheck/launch→frozenMain/Git and SAMEhandle observation.65closed33C32F/highest96;97unused. Originalscope/science/nativecaps unchanged;0fullMCM/update/fit.

@@ -1,0 +1,11 @@
+--- candidate/caller
++++ baseline/caller
+@@ -540,7 +540,7 @@
+         require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
+         mark('original_import')
+         if diagnostic is None:
+-            checked = [] if p.get('imported_authority_lease_input') is not None and selected_mcm.get('schema_version') == 6 else [Target(execution,g,k) for k,g in graphs.items()]
++            checked = [Target(execution,g,k) for k,g in graphs.items()]
+         else:
+             checked=[]
+             for graph_index,(k,g) in enumerate(graphs.items()):

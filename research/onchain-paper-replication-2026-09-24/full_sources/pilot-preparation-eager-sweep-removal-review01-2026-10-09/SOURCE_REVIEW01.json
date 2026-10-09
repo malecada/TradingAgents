@@ -1,0 +1,35 @@
+{
+  "decision": "accepted_source_only",
+  "candidate_sha256": "06b60d5e0741fe5a8734e8f1f71f9cc3079644075e0a27d03f678bb74ca52ca0",
+  "baseline_sha256": "c7a13ec1176e2505b8a256e5bea64f5131a11a042523e0d9a6ce0adff5ee624e",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-preparation-eager-sweep-removal01-2026-10-09/MANIFEST01.json": "bff847283d0c4bcb7dca3a7c9184df7b2fe7a0a45ea6697365de25eb199a3d85",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-preparation-eager-sweep-removal01-2026-10-09/real_pilot_import_caller.py": "06b60d5e0741fe5a8734e8f1f71f9cc3079644075e0a27d03f678bb74ca52ca0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-preparation-eager-sweep-removal01-2026-10-09/CHECK01.log": "020820bbaa829a57b93542a6bf159383fe9be533298a106305e49aa67e6ecbfe",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-preparation-eager-sweep-removal01-2026-10-09/CHECK02.json": "a0081ef60ad64a2143397fd7863c9207a9d1b9b52a6b0b58247fee4aa9518fef",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-preparation-eager-sweep-removal01-2026-10-09/check02.py": "115595c90645c52520e3d2a9497f8faa0d62d408b6718010a1eec0708eced20a",
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": "c7a13ec1176e2505b8a256e5bea64f5131a11a042523e0d9a6ce0adff5ee624e",
+    "tradingagents/research/onchain_replication/compact_mcm.py": "228f9199bf5b12f104dd91ee678fb12792d0295dc9adf9a3ddd8fbaeb2c4c574",
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": "a50d3e72417eaee8bde863da9b6ecd96ba888946a55b94d63b52faf2bed74f3c",
+    "tradingagents/research/onchain_replication/imported_mcm_identity.py": "75d4e269ad4e87a34061e8331381af417b3c850346d71711902fcd5bbf322c82"
+  },
+  "checks": {
+    "single_assignment_literal_AST_inverse": true,
+    "healthy_eager_target_and_prepare_removed": [
+      7,
+      7
+    ],
+    "same_seven_ordered_production_entries": true,
+    "preserved_branch_cases": 5,
+    "no_lease_selected_mcm_undefined_safe": true,
+    "later_failure_original_completed": 0,
+    "later_failure_candidate_completed": 2,
+    "original_exception_object_preserved": true
+  },
+  "operational_deviation": "Selected nondiagnostic schema6 imported-lease route drops eager all-graph validation. Later graph refusal may follow earlier graph production; no prevalidation or unchanged complete failure-trace claim.",
+  "qualification": "Exact extracted branch and production statements exercised with inert metadata doubles only; genuine Target/Owner/lease/source checks remain in unchanged production source but were not instantiated. Existing early admitted schema validation is relied upon; no broader hostile runtime type guarantee. No numerical import, real graph, authority, launch, speedup, capacity or scientific completion claim.",
+  "independent_checks": {
+    "check01.py": "111739da60f50b7b6c99e8af8b5778a506f1355d205e2d2e7d96a82a1a5ee42d",
+    "CHECK01.log": "abd07660dc9c27158b80c46f82ac125411a0eaeeb61babca549d50b7cc307642"
+  }
+}

@@ -1,0 +1,53 @@
+--- 
++++ 
+@@ -13,7 +13,7 @@
+ 
+ MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session)
+ SOURCE_PINS=(
+-    (accepted, 'fea5c26c66e7047ad157fc0dc499918f50c2c4abde409df5b3c1699a8e6b12b3'),
++    (accepted, '5e722ec2035e2549f7584a31bf091e0de4d7854c196086f8736179f367d93b2e'),
+     (engine, 'd5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c'),
+     (engine.ann, '2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46'),
+     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
+@@ -92,15 +92,14 @@
+ 
+ class NumericReuseExecutor:
+     """Explicit batches; source/runtime attestation is NOT continuous authority."""
+-    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None):
++    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes):
+         require(type(max_entries) is int and 0<max_entries<=4096,'finite entry bound required')
+         require(type(max_retained_bytes) is int and 1024<=max_retained_bytes<=64*1024**2,'retained cache bound required')
+         require(type(max_key_bytes) is int and 0<max_key_bytes<=min(max_retained_bytes,8*1024**2),'bounded exact key required')
+         require(callable(checkpoint),'checkpoint callback required')
+         self.counters=dict(source_guard_calls=0,source_hashed_bytes=0,key_hashed_bytes=0,lookup_probes=0,lru_link_updates=0,evictions=0)
+         attest(self.counters);self.configuration=config_bytes(config);self.checkpoint=checkpoint;self._user_checkpoint=checkpoint
+-        self.authority_poll=authority_poll
+-        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll)
++        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint)
+         self.checkpoint_adapter=self.executor.checkpoint
+         self.policy_pin=raw(self.executor.policy);self.schedule_pin=raw(self.executor.schedule)
+         self.max_entries=max_entries;self.max_retained_bytes=max_retained_bytes;self.max_key_bytes=max_key_bytes
+@@ -120,7 +119,6 @@
+     def _current(self):
+         light_environment()
+         require((accepted.PairExecutor.__call__,accepted.PairExecutor.__call__.__code__,reference.validate_pair,reference.validate_pair.__code__,pair.policy_check,pair.policy_check.__code__,engine.ann.typed_identity.graph_identity,engine.ann.typed_identity.graph_identity.__code__)==self._pins,'occurrence function pins changed')
+-        require(self.executor.authority_poll is self.authority_poll,'authority poll changed')
+         require(not self.executor.poisoned and config_bytes(self.executor.config)==self.configuration and raw(self.executor.policy)==self.policy_pin and raw(self.executor.schedule)==self.schedule_pin and self.executor.checkpoint is self.checkpoint_adapter and self.checkpoint is self._user_checkpoint,'executor/config/policy/schedule changed')
+     def begin_batch(self):
+         require(not self.closed and not self.poisoned and not self.active,'batch entry unavailable')
+@@ -179,7 +177,6 @@
+         require(not self.closed and not self.poisoned and self.active,'active batch required')
+         self.last_receipt=None
+         try:
+-            if self.authority_poll is not None:self.authority_poll()
+             self._current();require(type(purpose_hash) is str and self.occurrences<2**64,'plain purpose and bounded occurrence required');pair.hash_string(purpose_hash)
+             reference.validate_pair(a,b,self.executor.config)
+             pair.policy_check(a,b,self.executor.config,self.executor.policy,allow_checkpoint_layout=True)
+@@ -194,7 +191,6 @@
+                 value=self._slots[index][1];result=value[:3];origin_purpose,origin_ordinal=value[3:];mode='reused'
+             else:result=self.executor(a,b,purpose_hash);origin_purpose,origin_ordinal=purpose_hash,ordinal;mode='computed'
+             require(type(result) is tuple and len(result)==3 and type(result[0]) is float and math.isfinite(result[0]) and 0<=result[0]<=1 and type(result[1]) is int and result[1]>=0 and result[2] in ('temperature_complete','iteration_cap'),'complete numeric result required')
+-            if self.authority_poll is not None:self.authority_poll()
+             self._current()
+             if key is not None:require(immutable(a) and immutable(b) and numeric_key(a,b,self.configuration,self.max_key_bytes)==key,'numeric inputs changed during computation')
+             cached=False

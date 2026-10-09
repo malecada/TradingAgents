@@ -1,0 +1,105 @@
+{
+  "decision": "accepted",
+  "scope": "Corrected source tooling only; actual capture/return unexecuted",
+  "helpers": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome09/select09_02.py",
+      "sha256": "063d3aef009f635237d0069a2443b886d5c7c749cd5112f0a77a50e9cbb3c444"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome09/capture09.py",
+      "sha256": "06d84974f96bb68206d54e8ce34ac67c95826603faf94f5e96080cefbf4e9757"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome09/recover09.py",
+      "sha256": "9bb3b3a84927ba6d656d432ab6f423f4982f50b4e2543e70684180d2c61b385c"
+    }
+  ],
+  "preserved_withheld_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome09/TOOLS_REVIEW09.json",
+    "sha256": "c6da64a58a684aa1b4eed4785a6f2777a45d16e5bb9170ad185ea112819d32e4"
+  },
+  "baseline_recovery": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/recovery02/FRESH_GIT_RECOVERY08.json",
+    "sha256": "e02eab8a259c98883f7c09907c03fcc5284d08c9b1ed4cd33fbc0d3e823df52f"
+  },
+  "checks": {
+    "capture_recover_literal_inverse_after_exact_named_substitutions": true,
+    "Git_mode_literal": "100644",
+    "exact_three_exclusions_authenticate_capture_and_return": [
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/release-increment08.tar",
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/recovery02/fresh-git-recovered-release08.tar",
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/recovery02/actual_external_archive_blob_return.stdout"
+    ],
+    "correct09_helper_paths": true,
+    "empty_scope_directories_seeded_into_directory_roster": true,
+    "actual_scope_metadata": [
+      {
+        "scope": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-26",
+        "exists": true,
+        "files": 10,
+        "bytes": 332258,
+        "empty_directories": [],
+        "numeric_origin_metadata": []
+      },
+      {
+        "scope": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-26",
+        "exists": true,
+        "files": 14,
+        "bytes": 74398,
+        "empty_directories": [],
+        "numeric_origin_metadata": []
+      },
+      {
+        "scope": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261009-26",
+        "exists": true,
+        "files": 2,
+        "bytes": 922,
+        "empty_directories": [],
+        "numeric_origin_metadata": []
+      },
+      {
+        "scope": "research_artifacts/onchain_representations/ccea3f67e8da09a42a57dca672b9426c4f437c63f2fbc50aa6efbf79c022f1e3/eth-paper-real-data-end-to-end-resource-20261009-26",
+        "exists": true,
+        "files": 14,
+        "bytes": 82627,
+        "empty_directories": [
+          "research_artifacts/onchain_representations/ccea3f67e8da09a42a57dca672b9426c4f437c63f2fbc50aa6efbf79c022f1e3/eth-paper-real-data-end-to-end-resource-20261009-26/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/checkpoints"
+        ],
+        "numeric_origin_metadata": [
+          [
+            "research_artifacts/onchain_representations/ccea3f67e8da09a42a57dca672b9426c4f437c63f2fbc50aa6efbf79c022f1e3/eth-paper-real-data-end-to-end-resource-20261009-26/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-origins.bin",
+            36864
+          ]
+        ]
+      },
+      {
+        "scope": "research_artifacts/onchain_compact_mcm/ccea3f67e8da09a42a57dca672b9426c4f437c63f2fbc50aa6efbf79c022f1e3/eth-paper-real-data-end-to-end-resource-20261009-26",
+        "exists": true,
+        "files": 2,
+        "bytes": 1585,
+        "empty_directories": [],
+        "numeric_origin_metadata": []
+      },
+      {
+        "scope": "research_artifacts/onchain_batched_offload/80b7bd11452bc082a48fcde522aaec5269abe5325fe06040695ed2336dfcd0c8",
+        "exists": true,
+        "files": 0,
+        "bytes": 0,
+        "empty_directories": [
+          "research_artifacts/onchain_batched_offload/80b7bd11452bc082a48fcde522aaec5269abe5325fe06040695ed2336dfcd0c8/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/preserve"
+        ],
+        "numeric_origin_metadata": []
+      }
+    ],
+    "regular_symlink_stability64MiB_checks_unchanged": true
+  },
+  "observation_correction": "Initial absence assertion refused: actual offload80b root exists at review time. Its actual metadata above supersedes absent prose. Selector records existence and retains empty directories, so this does not block source-tool acceptance. No causal claim about directory birth.",
+  "limitations": [
+    "Original withheld09 untouched. Capture directory modes/names only; no timestamps/ownership/POSIX reconstruction guarantee.",
+    "Symlink targets recorded without following; canonical parent/directory routes required. No hostile writer exclusion.",
+    "Exact artifact/run scope guard and secret path exclusions retained; not a universal credential-content classifier.",
+    "Numeric origins lstat only, never decoded; offload actual existence recorded, not invented absent state.",
+    "Final committed delta/frozen selection/actual returned archive require separate review; no science/capacity/launch/deletion credit."
+  ]
+}

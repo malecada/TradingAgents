@@ -1,0 +1,38 @@
+--- 
++++ 
+@@ -10,11 +10,9 @@
+ class CheckpointStop(RuntimeError): pass
+ 
+ class PairExecutor:
+-    def __init__(self,config,policy,schedule,checkpoint,*,authority_poll=None):
++    def __init__(self,config,policy,schedule,checkpoint):
+         self.config=copy.deepcopy(config);self.policy=copy.deepcopy(policy)
+         self.schedule=copy.deepcopy(schedule);self.checkpoint=checkpoint;self.poisoned=False;self.checkpoints=0;self.reserved_bytes=0
+-        if authority_poll is not None and not callable(authority_poll):raise ValueError('optional authority poll must be callable')
+-        self.authority_poll=authority_poll
+         if not callable(checkpoint):raise ValueError('checkpoint callback required')
+         for k in ('max_checkpoints','calls_per_checkpoint','operations_per_call','max_total_checkpoints','max_total_checkpoint_bytes'):
+             if type(schedule.get(k)) is not int or schedule[k]<=0:raise ValueError('positive schedule required')
+@@ -23,7 +21,6 @@
+         if self.poisoned:raise ValueError('executor poisoned')
+         state=None;session=None;primary=None
+         try:
+-            if self.authority_poll is not None:self.authority_poll()
+             pair.hash_string(purpose_hash)
+             pair.policy_check(a,b,self.config,self.policy,allow_checkpoint_layout=True)
+             reserved=self.policy['max_checkpoint_bytes']+2*pair.LIMIT
+@@ -34,14 +31,10 @@
+             session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing)
+             for ordinal in range(self.schedule['max_checkpoints']):
+                 for _ in range(self.schedule['calls_per_checkpoint']):
+-                    if self.authority_poll is not None:self.authority_poll()
+                     session.advance(state,max_operations=self.schedule['operations_per_call'])
+                     if state['phase']=='done':break
+                 if state['phase']=='done':
+-                    if self.authority_poll is not None:self.authority_poll()
+                     result=engine.score_only(state,a,b,self.config,max_buffer_bytes=self.policy['max_score_buffer_bytes'],chunk_edges=self.policy['chunk_edges'])
+-                    if self.authority_poll is not None:
+-                        self.authority_poll();session.check(state)
+                     return float(result.score),result.iterations,result.convergence
+                 self.checkpoints+=1;self.reserved_bytes+=reserved
+                 self.checkpoint(purpose_hash,ordinal,state,a,b,self.config,self.policy)

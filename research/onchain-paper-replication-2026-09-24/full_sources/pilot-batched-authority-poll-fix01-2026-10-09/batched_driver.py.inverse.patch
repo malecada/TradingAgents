@@ -1,0 +1,48 @@
+--- 
++++ 
+@@ -14,17 +14,13 @@
+         raise ValueError(message)
+ 
+ 
+-def _tasks(graph, motifs, extraction, policy, descriptor, typed, authority_poll=None):
++def _tasks(graph, motifs, extraction, policy, descriptor, typed):
+     """One driver-owned local; consumer must drop prior task before next()."""
+-    if authority_poll is not None:authority_poll()
+     with ArrayNeighborhoodIndex(graph, max_buffer_bytes=policy['max_buffer_bytes'],
+                                 edge_chunk=policy['edge_chunk']) as index:
+-        if authority_poll is not None:authority_poll()
+         for center in range(len(graph.node_ids)):
+-            if authority_poll is not None:authority_poll()
+             local = index.neighborhood(center, extraction)
+             try:
+-                if authority_poll is not None:authority_poll()
+                 local_id = graph_identity(local)
+                 for motif in range(32):
+                     purpose = {'schema_version':2,'kind':'mcm',
+@@ -84,7 +80,7 @@
+ 
+ 
+ def drive(graph, dictionary, *, descriptor, policy, journal, executor, consumer,
+-          max_chunk_bytes, max_closure_token_bytes, post_batch=None, final_batches=None, authority_poll=None):
++          max_chunk_bytes, max_closure_token_bytes, post_batch=None, final_batches=None):
+     """Consume a fresh journal; consumer(ordinal,center,motif_start,f32_bytes).
+ 
+     Consumer must synchronously copy/persist chunks, treating everything as
+@@ -96,8 +92,6 @@
+     upstream = None
+     primary = None
+     try:
+-        require(authority_poll is None or callable(authority_poll),'optional authority poll must be callable')
+-        if authority_poll is not None:authority_poll()
+         require((post_batch is None and final_batches is None) or (callable(post_batch) and callable(final_batches)), 'paired explicit offload hooks required')
+         require(callable(executor) and callable(consumer), 'explicit executor/consumer required')
+         require(type(max_chunk_bytes) is int and 4 <= max_chunk_bytes <= 128, 'bounded f32 chunk required')
+@@ -127,7 +121,7 @@
+         extraction['maximum_neighborhood_nodes'] = policy['extraction_limit']
+         typed = [graph_identity(m) for m in motifs]
+         descriptor = dict(descriptor)
+-        upstream = _tasks(graph, motifs, extraction, policy, descriptor, typed, authority_poll)
++        upstream = _tasks(graph, motifs, extraction, policy, descriptor, typed)
+         while journal.cells < n*32:
+             start = journal.cells
+             count = min(journal.batch_cells, n*32-start)

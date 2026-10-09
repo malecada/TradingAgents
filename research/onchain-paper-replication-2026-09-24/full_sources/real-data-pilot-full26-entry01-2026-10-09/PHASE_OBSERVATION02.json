@@ -1,0 +1,89 @@
+{
+  "observed_at": "2026-10-09T07:50:09.464484+00:00",
+  "guard": {
+    "elapsed_seconds": 2448.5509986230027,
+    "memory_current_bytes": 4159545344,
+    "peak_sampled_memory_current_bytes": 4290637824,
+    "limit_reason": null
+  },
+  "intent": {
+    "path": "research_artifacts/onchain_representations/ccea3f67e8da09a42a57dca672b9426c4f437c63f2fbc50aa6efbf79c022f1e3/eth-paper-real-data-end-to-end-resource-20261009-26/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/intent.json",
+    "sha256": "b46ddc74aa8f2226d3e67730719368895c06b0593e0c3dd0a8c56d14cfcc71fd",
+    "body": {
+      "kind": "mcm",
+      "logical_reservation_bytes": 30997104960,
+      "owner": "80b7bd11452bc082a48fcde522aaec5269abe5325fe06040695ed2336dfcd0c8",
+      "pairs": 56584576,
+      "policy_sha256": "35878d91da3b64006d17c906c2446eee561087b7f3310775343d8744e0fc9c35",
+      "restart_retention_selection": {
+        "kind": "mcm",
+        "members": [
+          [
+            0,
+            0
+          ],
+          [
+            1768267,
+            31
+          ]
+        ],
+        "population": {
+          "motifs": 32,
+          "nodes": 1768268
+        }
+      },
+      "schema_version": 1,
+      "scope": {
+        "config": "97a1d64d1c8b97a8971d4632bf9137ca1eb2daf9e22f041e2fcc3a89b4d6d379",
+        "context": "317c7018560eb631b79689942f68d0aaea13a1464cb68ad68423b4fe1c7aa05b",
+        "numerical_source": "0ee524599f4608135a588ae7b785bb837189fb7ba34ef67bcf28c5d6ca773577",
+        "policy": "4575a3d6df9d1d66b5e5ac903cff0049404569c783b384886260d15d9d021630",
+        "workflow": "14e9aedf19147b58c8080c197d3b0e2a6681fdec4fbfecd1957ba57d64d2fd39"
+      },
+      "stage": "mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba"
+    }
+  },
+  "producer_start": {
+    "path": "research_artifacts/onchain_compact_mcm/ccea3f67e8da09a42a57dca672b9426c4f437c63f2fbc50aa6efbf79c022f1e3/eth-paper-real-data-end-to-end-resource-20261009-26/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/start.json",
+    "sha256": "fa4c280e196b43f61e579bfbee74ac22737fcd114e758a48e58da489e997f9e6",
+    "body": {
+      "cells": 56584576,
+      "dictionary_identity": "48832eeb9774ef6ca13915364c17d1ac89f5c67165636de5811ebf82ad6ad726",
+      "dictionary_receipt_sha256": "4091213c48f910eb4d672f451f3d6e81a31ddba1f9b6231cab1fe3ba32c8e96a",
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "kind": "compact-required-graph-mcm",
+      "motifs": 32,
+      "output_input": "mcm_output_policy",
+      "output_policy_sha256": "4c45712816a0f59bbb18477c7f78cd05f16a62b338348750ed9743a594f6d447",
+      "owner": "80b7bd11452bc082a48fcde522aaec5269abe5325fe06040695ed2336dfcd0c8",
+      "policy_input": "mcm_policy",
+      "policy_sha256": "eef61c1885ee2d614e1ad4a3486c56a92a9761482d7c463d409f345a067fdd44",
+      "representation_admitted": false,
+      "reserved_workflow_metadata_bytes": 172032,
+      "reserved_workflow_output_bytes": 2030043008,
+      "resumable": false,
+      "rows": 1768268,
+      "schema_version": 1,
+      "scope": {
+        "dictionary": "48832eeb9774ef6ca13915364c17d1ac89f5c67165636de5811ebf82ad6ad726",
+        "graph": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "matching": "545963079b0086032ca851b989a1af6209172099fab9bca1b13c71bd3fd588a5",
+        "node_order": "5dc2a871dd496f582043fab005688c0a3ac765abac45120cb158de30bf0ab575",
+        "ordered_motifs": "f3c9a348f9f7f22f7b71f89279ded5a5177cc4cf4459a84863db7ab18a8585ec",
+        "workflow": "14e9aedf19147b58c8080c197d3b0e2a6681fdec4fbfecd1957ba57d64d2fd39"
+      },
+      "sources": {
+        "kind": "registered-source-map-v1",
+        "source_count": 195,
+        "source_sha256": "1cc7964d33f971a9908770bcae620211a8bc209c30789c35d53d86d23f807799"
+      }
+    }
+  },
+  "selected_stage_files": [
+    {
+      "path": "start.json",
+      "bytes": 1445
+    }
+  ],
+  "qualification": "Original first-stage intent and producer start observed. No completion or measured numerical throughput inferred from entry markers."
+}

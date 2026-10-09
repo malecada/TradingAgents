@@ -1,0 +1,40 @@
+{
+  "status": "PASS_SYNTHETIC_ONLY",
+  "registered_interval": {
+    "assumption": "Source/input/runtime and live claim/Owner/native revocation detection are sampled within registered intervals; full validation precedes successful boundaries. Independent native enforcement remains. No atomic writer exclusion.",
+    "fingerprint_interval_ms": 1000,
+    "full_interval_ms": 10000,
+    "kind": "imported-authority-sampled-stage-interval",
+    "live_interval_ms": 100,
+    "max_calls_between_full": 65536,
+    "max_stale_ms": 60000,
+    "schema_version": 1
+  },
+  "batch_clock_cases": [
+    {
+      "selected": false,
+      "failure": "import lease: stale interval cannot refresh",
+      "cells": 0,
+      "clock": 81.92000000000084
+    },
+    {
+      "selected": true,
+      "failure": null,
+      "cells": 4096,
+      "clock": 81.92000000000084
+    }
+  ],
+  "numeric_equal": [
+    0.5,
+    48,
+    "temperature_complete"
+  ],
+  "pair_poll_calls": 26,
+  "wrapper_poll_calls": 30,
+  "true_gap_and_callback_and_clock_refusals": true,
+  "literal_inverses": true,
+  "limitations": [
+    "No genuine authority callbacks exercised.",
+    "Single uninterruptible construction/extraction/advance/score or authority callback longer than freshness budget remains fatal."
+  ]
+}
