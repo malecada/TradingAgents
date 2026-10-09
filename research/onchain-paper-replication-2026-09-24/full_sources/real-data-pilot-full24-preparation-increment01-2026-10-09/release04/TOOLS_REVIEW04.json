@@ -1,0 +1,48 @@
+{
+  "decision": "accepted",
+  "scope": "Source tools only; actual release selection/archive/remote return not executed or verified",
+  "helpers": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/release04/select04.py",
+      "sha256": "54d05ed88e090a25d4cb2fa259a890a9416a36721b39163ed0ce4e9c7fc2b442"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/release04/capture04.py",
+      "sha256": "0e398ee96e3ea680e1686f804730b4d61cb793cb14579e8f0983ff835c30cde2"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/release04/recover04.py",
+      "sha256": "714319cb17b83aa34ec0831665987ac59b74e0e031fad627d587f96fe6dfd59d"
+    }
+  ],
+  "baseline_recovery": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/correction03/FRESH_GIT_RECOVERY03.json",
+    "sha256": "5384b6548a4c6b94ebf70f1eee7d907f28ab68a03a97b5a91558e1fe39dc4e3b"
+  },
+  "baseline_source": "acdcabfa219a296bbaf37f0ea3cba5e923958d89",
+  "reused_tools_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/correction03/TOOLS_REVIEW03.json",
+    "sha256": "b1f76ee7cc56074eea23b8b280667e5a92de46338abcd378dde8c177cf0d10cc"
+  },
+  "checks": {
+    "literal_inverse_all_three_after_declared_names_baseline_allowlist_changes": true,
+    "actual_AST_path_allowlist_results": {
+      "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/claim.json": true,
+      "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/failed.json": true,
+      "research_runs/other/claim.json": false,
+      "research_runs/eth-paper-real-data-end-to-end-resource-20261009-23/outputs/x": false,
+      "research_artifacts/public.json": false,
+      "tradingagents/public.py": true
+    },
+    "symlink64MiB_body_mode_hash_checks_unchanged": true,
+    "owned_empty": true,
+    "isolated_new_raw_operation_namespace": true
+  },
+  "review_harness_correction": "First blanket04-to03 inverse incorrectly rewrote unchanged mode format04o and failed assertion. Corrected inverse preserves04o; original helper was unchanged and correct. No helper execution occurred.",
+  "limitations": [
+    "Only two exact terminal23 research_runs paths newly allowed. This is preservation of existing metadata, not creation or reopening of a claim.",
+    "No helpers executed, network/private transport/credential bodies read, or original files mutated.",
+    "Current release/preflight is not independently admitted by this source review. Actual frozen selection/source and returned members require subsequent review.",
+    "Inherited tools02/03 finite scope and non-atomic filesystem qualifications retained."
+  ]
+}
