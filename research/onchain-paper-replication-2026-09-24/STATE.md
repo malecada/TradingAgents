@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T07:00:09.842785+00:00: corrected unused26 genuine metadata admission PASS3.620s; final independent releaseaaa10514; actual live entry PASS8.233s. No numerical claim/job. Goal ACTIVE/incomplete.**
+
+Concrete395 registered source pins/64 labelled inputs/193 numerical-source bodies at genuinee5c9 anchor and original365 capacity closure verified. Reviewed97 extension02 d2e487 authenticates actual97 allocation; original stale96 cross-reference and earlier runtime declaration/refusals remain preserved. Selected runtime admission.py now exactly installed90bb; other six runtime hashes unchanged. Complete actual metadata admission usedsource0194e462/no scientific reads/Run; current live entry covers finalsource/input/release/runtime/native/namespace/whole sampled storage eligibility. Instantaneous MemAvailable11134533632B/free24450965504B vs startup24288793181B. Not feature throughput or measured whole capacity.
+
+All three implementation changes remain explicitly reviewed; scientific math, original32 motifs/512 spent samples, seven wholegraphs415968128cells, originalGAT→attentionLSTM update/model/training/native limits unchanged. Permanent failed25 actual declared increment remotely returned/accepted1239c4fe; no historical store copied or retired. Accounting65closed33C32F/highest adopted96;97 reviewed unused,28pending/3reserved fixed.
+
+Next immediate Root action: accepted tools61bb8eab capture/push/fresh recover ONLY actual public delta since verified8add8946, independent returned-byte check, then ONE unused26 RootIO (fresh preflight within launcher) or exact preclaim refusal. Root alone liveintegration/registration/accounting/Git/STATE/preservation/ONElauncher. residual finalrelease complete; owner97review complete; annealing owns onlynewincrement returnreview. Preserve all originals/closed identities. Zero fullrealMCM/jointupdate/financial fits; broad heartbeat paused.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T06:49:58.866597+00:00: failed25 outcome fully returned within declared increment and independently accepted1239c4fe; reviewed three-file fixes installed/committed8add8946. No numerical job. Goal ACTIVE/incomplete.**
 
 Full25 stays permanently FAILED/spent: 41.4-minute native execution, first numerical pair-policy refusal, zero completed motif cells, six downstream graphs unavailable/training null. Original outputs, cleanup and sampled memory preserved. Actual outcome07 fresh return authenticates127 regular bodies/39 directories/13 Git operations, including all eight outputs and13 representation files. The declared scope excludes runtime package bodies/private dispatch/unrelated stores; no deletion or capacity credit. Original failures and identities remain immutable.
