@@ -1,0 +1,55 @@
+{
+  "decision": "accepted_source_only_pinned_runtime_domain",
+  "candidate_sha256": "677017eff0e51c872fec74bd73a639f2a2b3128b4f9929c8f4a39b527738f362",
+  "baseline_sha256": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-small-pair-kernel-acceleration01-2026-10-09/MANIFEST01.json": "ed86195ee6acf223cd27be9a253805f8a0a664e1e823338480290676476f7045",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-small-pair-kernel-acceleration01-2026-10-09/matching_annealing.py": "677017eff0e51c872fec74bd73a639f2a2b3128b4f9929c8f4a39b527738f362",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-small-pair-kernel-acceleration01-2026-10-09/candidate.diff": "ed686906c8e2e68d1e950ded91e4689e68bc4a8eafc80e1e1cd39ec5a310e439",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-small-pair-kernel-acceleration01-2026-10-09/CHECK01.log": "78139c56e416294f64062fb0bb7654efda21f07941dfd399c394c615c819f99b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-small-pair-kernel-acceleration01-2026-10-09/RESULT02.json": "164a676ab788c6b5d94d3ab4d8591822ce1cc16d0bfdc16d5c33d70ba4ff5f6e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-small-pair-kernel-acceleration-review01-2026-10-09/check01.py": "7f890c72c3fd6f397b2beca29de84014338a6535382e19423d4515d309b8f286",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-small-pair-kernel-acceleration-review01-2026-10-09/CHECK01.log": "ccc2c5463c3331c1995d4b57424488054749f1b370d1146141912ecb39a68367",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-small-pair-kernel-acceleration-review01-2026-10-09/CHECK01.json": "d9b656e6a19e3e65bad2ed4f381fb21f9464f96332183a50999f8fa840f45f7b",
+    "tradingagents/research/onchain_replication/matching_annealing.py": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46",
+    ".venv/lib/python3.13/site-packages/scipy/special/_logsumexp.py": "39563dd5655d9bed1f2fe91a2d84d84e9dda817fb1ea4ba8699410c1e70ee3e1",
+    ".venv/lib/python3.13/site-packages/scipy/_lib/_array_api.py": "e7b6d08f877456b9d26af808267263f41f2870261951a19d9ff133301d15e1e2"
+  },
+  "source_proof": [
+    "Literal inverse removes only helper/import/constants and restores three normalization dispatch calls. All annealing arithmetic/order/RNG/state/operation/checkpoint and polling caller bodies unchanged.",
+    "Pinned SciPy wrapper for exact nonempty2Dfloat64,axes0/1,keepdimsTrue,bNone preserves original exp/sum/log fallback then private stable reduction then isfinite/where, with original errstate ordering. Dtype promotion/broadcast/atleast_nd and complex/squeeze/scalar return branches are no-ops in this domain.",
+    "Exact type/dtype/shape/domain guards and public/private function identity/code guards fall back to public wrapper. Ordinary fixed SciPy namespace assumed; no arbitrary monkeypatch immunity."
+  ],
+  "independent_checks": {
+    "status": "PASS_SYNTHETIC_ONLY",
+    "affinity": [
+      2
+    ],
+    "normalization_comparisons": 20,
+    "runs": [
+      {
+        "shape": [
+          1,
+          2
+        ],
+        "operation_boundaries": 3
+      },
+      {
+        "shape": [
+          3,
+          4
+        ],
+        "operation_boundaries": 3
+      }
+    ],
+    "all_state_and_result_bytes_equal": true,
+    "public_private_substitution_fallback": true,
+    "literal_inverse": true,
+    "runtime_dependency_hashes": {
+      ".venv/lib/python3.13/site-packages/scipy/special/_logsumexp.py": "39563dd5655d9bed1f2fe91a2d84d84e9dda817fb1ea4ba8699410c1e70ee3e1",
+      ".venv/lib/python3.13/site-packages/scipy/_lib/_array_api.py": "e7b6d08f877456b9d26af808267263f41f2870261951a19d9ff133301d15e1e2"
+    },
+    "qualification": "No timing benchmark. Exact pinned ordinary namespace domain only; private-library/public-dispatch changes outside guarded identities require new review; allocation/asynchronous/profiler trace equivalence unsupported."
+  },
+  "qualification": "Uninstalled candidate only. Future source/runtime closure must bind private SciPy dependencies and compatible namespace behavior. No real scientific data, live-source change, research/native job, Run/Owner/claim/network or benchmark. Synthetic author timing is not independently promoted to full-pilot speedup or capacity evidence. Removed generic dispatch changes Python calls and potential allocation-failure/profiler/asynchronous boundaries; universal failure-trace equality not claimed."
+}

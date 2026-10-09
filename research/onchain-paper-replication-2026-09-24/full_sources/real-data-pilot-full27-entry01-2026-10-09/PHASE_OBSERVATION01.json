@@ -1,0 +1,794 @@
+{
+  "at": "2026-10-09T09:23:56.062490+00:00",
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261009-27",
+  "markers": [
+    {
+      "bytes": 5247,
+      "mtime": 1791537592.7420995,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/claim.json",
+      "sha256": "76365c1f1bbc977f191afc1792a6d01b0e13eb1cfb7f5224272511e9ff888c8a",
+      "value": {
+        "binding_output": "resource-binding.json",
+        "continuation_input": null,
+        "death_input": null,
+        "descriptor": {
+          "arm": "proposed",
+          "compact_archive_execution": {
+            "backend": "compact-archive-events-v1",
+            "policy_sha256": "16d0232d60ed8c8da2ddc52227031bac0012c9a30b684c82d5fc75fb706e4892"
+          },
+          "compact_execution": {
+            "backend": "resident-native-compact-current-owner-v1",
+            "policy_sha256": "e0c0ae4150c6ddc97662209df7ae60ed08adf7dc00518e94237c9ee94d376ada"
+          },
+          "configs": {
+            "dictionary": {
+              "capacity_action": "raise explicit capacity error, no truncation",
+              "hop_depth": 1,
+              "insufficient_samples": "explicit unavailable if fewer than dictionary size",
+              "linkage": "average pairwise distance",
+              "maximum_neighborhood_nodes": 10000,
+              "neighborhood": "weak one-hop induced subgraph retaining directed edges and center",
+              "partition": "seeded permutation chunks; min(32,chunk size) medoids each; recursively cluster medoids to 32",
+              "partition_size": 512,
+              "partition_threshold": 2048,
+              "representative": "medoid minimizing within-cluster sum distance; ties sample index",
+              "rng": "numpy PCG64",
+              "sample_count": 512,
+              "sampling": "without replacement over (training week,center); equal initial mass per candidate; after selection halve weights of remaining centers inside sampled neighborhood in that week",
+              "schema_version": 1,
+              "seed_scope": "one dictionary per asset/fold/seed/variant",
+              "size": 32,
+              "training_scope": "only graph snapshots fully available inside training interval"
+            },
+            "matching": {
+              "alpha": 1.0,
+              "amendment": "matching-precision-v2.md",
+              "beta0": 1.0,
+              "beta_final": 30.0,
+              "beta_rate": 0.075,
+              "beta_update": "beta *= (1+beta_rate)",
+              "convergence": "temperature termination; no additional fixed-point stopping",
+              "edge_agreement_chunk_pairs": 65536,
+              "empty_nodes": "reject",
+              "hardening": "greedy global maximum; ties row-major; remove row and column; stop after min(n,m) matches",
+              "initialization": "node agreement s2 (Algorithm1 s1 symbol corrected by argument type)",
+              "internal_precision": "float64",
+              "max_iterations": 50,
+              "max_pair_entries": 4000000,
+              "normalization": "row then column, log-domain stable",
+              "normalization_iterations": 1,
+              "objective": "paper Eq1 literal including factor 2 in edge denominator",
+              "precision_accelerated": "float32 output with float64 affinity and annealing",
+              "precision_reference": "float64",
+              "rectangular": "un-padded rectangular one-pass normalization; soft row/column sums need not both equal 1; hard assignment must be injective",
+              "s1": "edge RBF exp(-mean squared feature difference); zero if either edge absent",
+              "s2": "node RBF exp(-mean squared feature difference)",
+              "schema_version": 1,
+              "solver": "algorithm1_literal",
+              "symmetric_dictionary_distance": "1 - (S(A,B)+S(B,A))/2",
+              "update": "Q_ui=0.5*sum_vj(edge_agreement_uvij*M_vj)+alpha*node_agreement_ui; literal Algorithm1, not claimed Eq2 derivative",
+              "zero_edges": "edge contribution zero if either graph has zero edges; retain node contribution divided by (1+alpha)"
+            }
+          },
+          "dictionary_origin": "imported-original-v1",
+          "original_dictionary_import": {
+            "input": "original_import",
+            "sha256": "635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee"
+          },
+          "original_dictionary_stage": {
+            "input": "original_import_stage",
+            "sha256": "a00d61c743c6f2a9a5534ab772dc5ef383bde94bfcd5b1ed7c5003f89b5cde9b"
+          },
+          "pair_execution": {
+            "backend": {
+              "affinity": "scalar_float64",
+              "checkpoint_schema": 3,
+              "device": "cpu",
+              "hardening": "stable_descending_row_major",
+              "name": "scalar_ranked_typed_graph",
+              "normalization": "scipy_float64",
+              "objective": "sparse_scalar_float64",
+              "output": "float64_score",
+              "version": 2
+            },
+            "policy_sha256": "3ddc1e9eed7c75a9d719bda51d5db4d6892c16f857697cde2b4011b04e0b49d1"
+          },
+          "required_graphs": [
+            "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+          ],
+          "resource_graph_inputs": {
+            "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba": "graph_20220613",
+            "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459": "graph_20220509",
+            "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531": "graph_20220502",
+            "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c": "graph_20220530",
+            "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb": "graph_20220523",
+            "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75": "graph_20220516",
+            "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805": "graph_20220606"
+          }
+        },
+        "job_input": "execution_job",
+        "job_sha256": "2cde18afc746fd37ccb623db128fa9c89c4dc776bfae57cb75b30d97b2570109",
+        "owner": {
+          "experiment": "eth-paper-real-data-end-to-end-resource-20261009-27",
+          "producer": "original32",
+          "source_commit": "36ed6802f880857fc432c59a51b4b9b55cab1daa",
+          "workflow_identity": "f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a"
+        },
+        "pair_checkpoint_input": "pair_policy",
+        "pair_checkpoint_policy_sha256": "3ddc1e9eed7c75a9d719bda51d5db4d6892c16f857697cde2b4011b04e0b49d1",
+        "plan_input": "producer_plan",
+        "registration_sha256": "e7490c8514adbd46c1be05bcfabe051e8d2e2b50625c8f2ff8bc7f91037bb089",
+        "resource_only": true
+      }
+    },
+    {
+      "bytes": 795,
+      "mtime": 1791537592.7410996,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/start.json",
+      "sha256": "a0d932b34319a520e689f439cb5e3d42850187f4dff121b651bf9587719d7431",
+      "value": {
+        "owner": {
+          "experiment": "eth-paper-real-data-end-to-end-resource-20261009-27",
+          "producer": "original32",
+          "source_commit": "36ed6802f880857fc432c59a51b4b9b55cab1daa",
+          "workflow_identity": "f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a"
+        },
+        "parent": null,
+        "required_graphs": [
+          "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+          "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+          "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+          "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+          "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+          "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+          "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+        ],
+        "schema_version": 1,
+        "workflow_identity": null
+      }
+    },
+    {
+      "bytes": 238,
+      "mtime": 1791537592.7400994,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/owner.json",
+      "sha256": "142b947f784bc04e0699739c54be8fea07b3682238782d6c1d0836b18e29cd6a",
+      "value": {
+        "experiment": "eth-paper-real-data-end-to-end-resource-20261009-27",
+        "producer": "original32",
+        "source_commit": "36ed6802f880857fc432c59a51b4b9b55cab1daa",
+        "workflow_identity": "f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a"
+      }
+    },
+    {
+      "bytes": 3407,
+      "mtime": 1791537735.5428233,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/compact/dictionary-import/intent.json",
+      "sha256": "2e4780013a342491d31404bc99f8c3b233bbcda0c752476f2bca03e9686f72d2",
+      "value": {
+        "binding_sha256": "422c1693c77fcd09aef342c93ec4cecd301d87166382bf4723f13058a8b89d83",
+        "execution": {
+          "backend": {
+            "affinity": "scalar_float64",
+            "checkpoint_schema": 3,
+            "device": "cpu",
+            "hardening": "stable_descending_row_major",
+            "name": "scalar_ranked_typed_graph",
+            "normalization": "scipy_float64",
+            "objective": "sparse_scalar_float64",
+            "output": "float64_score",
+            "version": 2
+          },
+          "current_binding": "422c1693c77fcd09aef342c93ec4cecd301d87166382bf4723f13058a8b89d83",
+          "current_source": "36ed6802f880857fc432c59a51b4b9b55cab1daa",
+          "execution_matching": "545963079b0086032ca851b989a1af6209172099fab9bca1b13c71bd3fd588a5",
+          "mcm_execution_admitted": false,
+          "original_dictionary": "48832eeb9774ef6ca13915364c17d1ac89f5c67165636de5811ebf82ad6ad726",
+          "original_matching": "97a1d64d1c8b97a8971d4632bf9137ca1eb2daf9e22f041e2fcc3a89b4d6d379",
+          "runtime_hash": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87",
+          "source_modules": {
+            "tradingagents/research/onchain_replication/original_dictionary.py": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9",
+            "tradingagents/research/onchain_replication/original_import_preparation.py": "553d88117d5c39fa8f8755bb702640ca619eaf4097c2183948587d7ef95b5941"
+          },
+          "stage_contract": {
+            "control_input": "original_import",
+            "control_sha256": "635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee",
+            "current_binding": "422c1693c77fcd09aef342c93ec4cecd301d87166382bf4723f13058a8b89d83",
+            "descriptor_sha256": "f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a",
+            "job_input": "execution_job",
+            "job_sha256": "2cde18afc746fd37ccb623db128fa9c89c4dc776bfae57cb75b30d97b2570109",
+            "kind": "dictionary-import",
+            "required_stages": [
+              "dictionary-import",
+              "mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+              "mcm-0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+              "mcm-2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+              "mcm-683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+              "mcm-7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+              "mcm-825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+              "mcm-efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+            ]
+          }
+        },
+        "kind": "dictionary-import",
+        "owner": "a6ee40154ee6fe9e2b9e3cd7796d6eeab1d9a94baf5ce82b3a5e2d363cb54e0a",
+        "policy": {
+          "max_numeric_bytes": 16777216,
+          "max_stage_bytes": 262144,
+          "schema_version": 1
+        },
+        "prebirth_contract": {
+          "control_input": "original_import",
+          "control_sha256": "635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee",
+          "current_binding": "422c1693c77fcd09aef342c93ec4cecd301d87166382bf4723f13058a8b89d83",
+          "descriptor_sha256": "f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a",
+          "job_input": "execution_job",
+          "job_sha256": "2cde18afc746fd37ccb623db128fa9c89c4dc776bfae57cb75b30d97b2570109",
+          "kind": "dictionary-import",
+          "required_stages": [
+            "dictionary-import",
+            "mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+            "mcm-0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+            "mcm-2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+            "mcm-683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+            "mcm-7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+            "mcm-825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+            "mcm-efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+          ]
+        },
+        "reserved_logical_bytes": 262144,
+        "schema_version": 1,
+        "stage": "dictionary-import"
+      }
+    },
+    {
+      "bytes": 5019,
+      "mtime": 1791537763.4517767,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/compact/dictionary-import/import-complete.json",
+      "sha256": "ede1408b73b17ee8f67775fadb282d7faf4069a7f36e39886a493fc4235ed792",
+      "value": {
+        "current_matching_pairs": 0,
+        "execution": {
+          "backend": {
+            "affinity": "scalar_float64",
+            "checkpoint_schema": 3,
+            "device": "cpu",
+            "hardening": "stable_descending_row_major",
+            "name": "scalar_ranked_typed_graph",
+            "normalization": "scipy_float64",
+            "objective": "sparse_scalar_float64",
+            "output": "float64_score",
+            "version": 2
+          },
+          "current_binding": "422c1693c77fcd09aef342c93ec4cecd301d87166382bf4723f13058a8b89d83",
+          "current_source": "36ed6802f880857fc432c59a51b4b9b55cab1daa",
+          "execution_matching": "545963079b0086032ca851b989a1af6209172099fab9bca1b13c71bd3fd588a5",
+          "mcm_execution_admitted": false,
+          "original_dictionary": "48832eeb9774ef6ca13915364c17d1ac89f5c67165636de5811ebf82ad6ad726",
+          "original_matching": "97a1d64d1c8b97a8971d4632bf9137ca1eb2daf9e22f041e2fcc3a89b4d6d379",
+          "runtime_hash": "1ff7418a2b7c77300aea731cea5bba78277d323241ac0ec59f41f43207c66d87",
+          "source_modules": {
+            "tradingagents/research/onchain_replication/original_dictionary.py": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9",
+            "tradingagents/research/onchain_replication/original_import_preparation.py": "553d88117d5c39fa8f8755bb702640ca619eaf4097c2183948587d7ef95b5941"
+          },
+          "stage_contract": {
+            "control_input": "original_import",
+            "control_sha256": "635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee",
+            "current_binding": "422c1693c77fcd09aef342c93ec4cecd301d87166382bf4723f13058a8b89d83",
+            "descriptor_sha256": "f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a",
+            "job_input": "execution_job",
+            "job_sha256": "2cde18afc746fd37ccb623db128fa9c89c4dc776bfae57cb75b30d97b2570109",
+            "kind": "dictionary-import",
+            "required_stages": [
+              "dictionary-import",
+              "mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+              "mcm-0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+              "mcm-2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+              "mcm-683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+              "mcm-7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+              "mcm-825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+              "mcm-efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805"
+            ]
+          }
+        },
+        "historical_work_recomputed": false,
+        "intent_sha256": "2e4780013a342491d31404bc99f8c3b233bbcda0c752476f2bca03e9686f72d2",
+        "kind": "dictionary-import-complete",
+        "numeric": {
+          "bundle_sha256": "6b4a41e05a141688248b6b9765afc066c893e43ea56f8c33403561faa7ce414e",
+          "mcm_execution_admitted": false,
+          "numeric_bytes": 11136,
+          "ordered_motifs": [
+            "891f66a8d2a3238878437accf371bc4bb28ccf12c515d2e47610f78a27c97cf8",
+            "76e8fcb2a99e9082a027201bf9af0e2acefacd55eb691585e932a10c043e134b",
+            "ee224f83625f4236910f3104c2e20942d6192f102a0bf26c3840eb54b898813b",
+            "c45c04b99a5dc29e96c6724c1f3354cb6b903b8f788b42bdfbd82bb3453bb74d",
+            "91c66b353bf64841e19c0419779737b64fa825549f1d4c6ca4bdb9202e8d9187",
+            "859f0f3c2222d8f37a8d1523c4bab43b02597ba1ead209b6f5014fdffe3ba8ae",
+            "6d346476d3b9cac616f94ff82df5a112259510006cc194ca5bbacb0c8e4a6941",
+            "866baa0721f09a56527fe180f9761b071f99d81bf47051e23101349997f78410",
+            "1710ebb895ea3a0761c058395534373391a6e682760d73d7e59dafd781ce4fc0",
+            "d11a2524516e110bd99b84172a2e7ce458057a7991d26ad4dc7cb301822fbc1e",
+            "0b3b4ffbf313587262b25816fc57b4a86c8979e7caa65b29d4b052b67e13d270",
+            "67ef74e69f72d522f9295e63b7dc31e53ca8f39a84b12d7f7b8c35ec9f7e6634",
+            "f3c73433f3eef20dc4c5732cb24d501f0f81a8525af65a734e8b76891783bf4b",
+            "e001584b549b5271ceede3d3a2f6967ee84b3ae7617b8c4a41f6f5d11f17d5d7",
+            "748e04b78c391e6cea62c00e0eab59f7a15f5154d45d4175a8f63002c5582e4a",
+            "44f904f92bcf071514eaf32514c79512950725be54e20c84c0da7782ab426bfe",
+            "fbbcba3944c4edc04c2a4c432af554e3726e4abcfc3316170996dc67df37cd84",
+            "7ca4760ac9624508fa78c141469be914a4befd8aab4b37dd510f45dc21865d08",
+            "464a941b486c00e0330c086aee4edc90110a348483eb37482534d0bb9f1d75c6",
+            "eefc6334038c8c04b5af3a774d964ec7430de09c0371cddc6ec055b1105ab3b3",
+            "0125c6eb23927b9e7f27763c7cf0264d8365abf70547cd5f2bfbb047b36c9006",
+            "0b762f540d813569974684bc6965c8e8833e8d75894ff8568204bb10a1b72072",
+            "4ea6b9adc0404e0dc41e47faff03cf87bd2d299a0f3ac3fe959097103addcd38",
+            "23881dd682e8897321952e96a12b5ac3040f48a5f53a4b738e2a62fff722cfcc",
+            "b9d42a4ed9b7e945a044cd793790529c002dd94637063d58932667610efcb457",
+            "c52a8b59fff401289e918b00e0e670d96ba209e73f3e164cebf4e7f289e660e1",
+            "7d3d1f2ef3ac7ea84ecada2ae447808dc2ff24695bf844b8dc79a81a5573edcd",
+            "a1f798fb5e8bb86a4f97c845bee2905a23608a05031f3520bd63c4a597d9e314",
+            "b543d8f1af4cee27cd8c802863cb58453c0e4414b58309b70e17c511ffe74da1",
+            "d772ea63270aaa19d507b3afeba8794df1c3f94ab8549b49de025c90842d1fb8",
+            "d00db533f75295cd242b9daf62e65e9ef981a7486cd4dac95cb1a3b26e10271e",
+            "d96bfa898ce3f72bd2ea1b208424d8ff08e7a932c2915416eb6ef68645a930a5"
+          ],
+          "original_dictionary": "48832eeb9774ef6ca13915364c17d1ac89f5c67165636de5811ebf82ad6ad726",
+          "original_matching": "97a1d64d1c8b97a8971d4632bf9137ca1eb2daf9e22f041e2fcc3a89b4d6d379",
+          "owner_stage_completed": false,
+          "representative_sample_indices": [
+            2,
+            17,
+            33,
+            44,
+            56,
+            63,
+            85,
+            94,
+            118,
+            146,
+            152,
+            162,
+            199,
+            205,
+            211,
+            216,
+            233,
+            315,
+            332,
+            337,
+            342,
+            344,
+            378,
+            417,
+            420,
+            423,
+            450,
+            459,
+            460,
+            473,
+            494,
+            496
+          ]
+        },
+        "owner": "a6ee40154ee6fe9e2b9e3cd7796d6eeab1d9a94baf5ce82b3a5e2d363cb54e0a",
+        "schema_version": 1
+      }
+    }
+  ],
+  "original_guard_sample": {
+    "boot_id": "f5d0c168-ba35-451c-956d-82b7315c92e7",
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-a6b3b185c9204ba0ac2efd6b282594ca.service",
+    "child_exit_code": null,
+    "command": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "-m",
+      "tradingagents.research.onchain_replication.job",
+      "--mode",
+      "worker",
+      "--root",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "--registration",
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-entry01-2026-10-09/gate01.json",
+      "--experiment",
+      "eth-paper-real-data-end-to-end-resource-20261009-27",
+      "--source",
+      "36ed6802f880857fc432c59a51b4b9b55cab1daa"
+    ],
+    "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+    "cpu_quota_controller_available": false,
+    "cpu_thread_readback": {
+      "2206961": [
+        0,
+        1
+      ],
+      "2206964": [
+        0,
+        1
+      ],
+      "2207387": [
+        0,
+        1
+      ],
+      "2207393": [
+        0,
+        1
+      ],
+      "2207410": [
+        0,
+        1
+      ],
+      "2259641": [
+        0,
+        1
+      ]
+    },
+    "cpus": [
+      0,
+      1
+    ],
+    "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "disk_floor_bytes": 10737418240,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 24387129344
+    },
+    "disk_minimum_qualification": "Sampled whole-volume free-space minimum per guarded path; includes unnamed temporary files and unrelated activity. Not a kernel quota, continuous minimum or per-job attribution.",
+    "disk_paths": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+    ],
+    "elapsed_seconds": 639.5619660709926,
+    "elapsed_time_kill": false,
+    "host_mem_available_bytes": 7669596160,
+    "initial_memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "kernel_controls": {
+      "memory.high": "5368709120",
+      "memory.max": "6442450944",
+      "memory.swap.max": "0"
+    },
+    "lease_seconds": 15.0,
+    "limit_reason": null,
+    "memory_current_bytes": 3771654144,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_high_bytes": 5368709120,
+    "memory_max_bytes": 6442450944,
+    "memory_swap_max_bytes": 0,
+    "minimum_sampled_disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 24387129344
+    },
+    "monitor_pid": 2206550,
+    "monotonic_seconds": 66093.311903963,
+    "native_environment": {
+      "CUDA_CACHE_PATH": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/cuda",
+      "HF_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/hf",
+      "MKL_NUM_THREADS": "2",
+      "MPLCONFIGDIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/matplotlib",
+      "NUMBA_CACHE_DIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/numba",
+      "NUMEXPR_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": "2",
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "TEMP": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/tmp",
+      "TMP": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/tmp",
+      "TMPDIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/tmp",
+      "TORCHINDUCTOR_CACHE_DIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/torchinductor",
+      "TORCH_EXTENSIONS_DIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/torch-extensions",
+      "TORCH_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/torch",
+      "TRITON_CACHE_DIR": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/triton",
+      "XDG_CACHE_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/cache",
+      "XDG_CONFIG_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/config",
+      "XDG_DATA_HOME": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime/data"
+    },
+    "native_metadata_limit_bytes": 4194304,
+    "native_unit_limits": {
+      "file_size_bytes": 1073741824
+    },
+    "native_unit_properties": {
+      "LimitFSIZE": "1073741824",
+      "LimitFSIZESoft": "1073741824",
+      "RuntimeMaxUSec": "8h"
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 3133579264,
+        "file_bytes": 628043776,
+        "kernel_peak_bytes": 4019609600,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-a6b3b185c9204ba0ac2efd6b282594ca.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=133435\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=133435",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 6755946496,
+        "file_bytes": 5947318272,
+        "kernel_peak_bytes": 14325780480,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=6203324\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=6093115",
+        "swap_current_bytes": 2112892928,
+        "unavailable": {}
+      }
+    },
+    "owner_identity": {
+      "experiment": "eth-paper-real-data-end-to-end-resource-20261009-27",
+      "monitor_pid": 2206550,
+      "monitor_start_ticks": "6544803",
+      "nonce": "2145de51d59f47f69eb128c7fec0cca6",
+      "source_commit": "36ed6802f880857fc432c59a51b4b9b55cab1daa",
+      "supervisor_pid": 2206126
+    },
+    "peak_sampled_memory_current_bytes": 3919355904,
+    "phase": "running",
+    "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-27/guard",
+    "reserve_bytes": 2684354560,
+    "residual_domain_peaks": {
+      "runtime_temp_cache": {
+        "allocated_bytes": 331776,
+        "directories": 46,
+        "entries": 80,
+        "logical_file_bytes": 32484,
+        "regular_files": 35
+      },
+      "training_and_lifecycle": {
+        "allocated_bytes": 401408,
+        "directories": 5,
+        "entries": 16,
+        "logical_file_bytes": 352520,
+        "regular_files": 14
+      }
+    },
+    "retry": false,
+    "sample_seconds": 0.25,
+    "start_reserve_bytes": 2684354560,
+    "storage_budget": {
+      "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "experiment": "eth-paper-real-data-end-to-end-resource-20261009-27",
+      "kind": "real-pilot-writable-union",
+      "limits": {
+        "max_allocated_bytes": 21474836480,
+        "max_depth": 64,
+        "max_entries": 1000000,
+        "max_logical_bytes": 17179869184,
+        "max_scan_seconds": 5
+      },
+      "roots": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-27"
+      ],
+      "schema_version": 2,
+      "shared_files": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+      ]
+    },
+    "storage_enforcement": "Sampled stop on observed breach; not a hard filesystem quota. Scan-time checks cannot preempt blocked metadata syscalls. Guard receipts and writer overshoot require separate reserved allowance.",
+    "storage_observation": {
+      "allocated_bytes": 5150273536,
+      "authority_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "directories": 1241,
+      "elapsed_seconds": 0.13599433199851774,
+      "entries": 17534,
+      "logical_file_bytes": 5572703678,
+      "qualification": "Sampled exact writer closure including shared parent directory allocation and lock. Historical claim siblings/source/runtime outside writer scope; no kernel quota, atomic snapshot, or absent-tree allocation credit.",
+      "regular_files": 16295,
+      "residual_domains": {
+        "runtime_temp_cache": {
+          "allocated_bytes": 331776,
+          "allocated_threshold_bytes": 288354304,
+          "directories": 46,
+          "entries": 80,
+          "logical_file_bytes": 32484,
+          "observed_monotonic_seconds": 66093.172191475,
+          "policy": {
+            "directories": 256,
+            "logical_bytes": 268435456,
+            "max_file_bytes": 67108864,
+            "regular_files": 4096
+          },
+          "qualification": "Sampled subset totals already included in the writable union, never charged twice. Includes all scratch/partial files in the selected paths. No hard quota, atomic snapshot, backend-cache maximum or finite inter-sample overshoot bound.",
+          "regular_files": 35,
+          "roots": [
+            {
+              "aggregate_entry_visit_bound": 13056,
+              "allocated_bytes": 331776,
+              "directories": 46,
+              "elapsed_seconds": 0.0020766109955729917,
+              "entries": 80,
+              "hardlink_observations": [],
+              "logical_file_bytes": 32484,
+              "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+              "regular_files": 35,
+              "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/real_pilot_runtime",
+              "root_device": 66310,
+              "root_inode": 8431074,
+              "scan_attempts": 1
+            }
+          ]
+        },
+        "training_and_lifecycle": {
+          "allocated_bytes": 401408,
+          "allocated_threshold_bytes": 33933244,
+          "directories": 5,
+          "entries": 16,
+          "logical_file_bytes": 352513,
+          "observed_monotonic_seconds": 66093.173055333,
+          "policy": {
+            "directories": 16,
+            "logical_bytes": 33554432,
+            "max_file_bytes": 4194304,
+            "regular_files": 68
+          },
+          "qualification": "Sampled subset totals already included in the writable union, never charged twice. Includes all scratch/partial files in the selected paths. No hard quota, atomic snapshot, backend-cache maximum or finite inter-sample overshoot bound.",
+          "regular_files": 14,
+          "roots": [
+            {
+              "aggregate_entry_visit_bound": 252,
+              "allocated_bytes": 344064,
+              "directories": 2,
+              "elapsed_seconds": 0.0023610739881405607,
+              "entries": 5,
+              "hardlink_observations": [],
+              "logical_file_bytes": 327309,
+              "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+              "regular_files": 4,
+              "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-27",
+              "root_device": 66310,
+              "root_inode": 11666636,
+              "scan_attempts": 1
+            },
+            {
+              "aggregate_entry_visit_bound": 252,
+              "allocated_bytes": 53248,
+              "directories": 2,
+              "elapsed_seconds": 0.002704867991269566,
+              "entries": 9,
+              "hardlink_observations": [],
+              "logical_file_bytes": 25204,
+              "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+              "regular_files": 8,
+              "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-27",
+              "root_device": 66310,
+              "root_inode": 11666627,
+              "scan_attempts": 1
+            },
+            {
+              "aggregate_entry_visit_bound": 252,
+              "allocated_bytes": 4096,
+              "directories": 1,
+              "elapsed_seconds": 0.002944056992419064,
+              "entries": 2,
+              "hardlink_observations": [],
+              "logical_file_bytes": 0,
+              "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+              "regular_files": 2,
+              "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261009-27",
+              "root_device": 66310,
+              "root_inode": 11666624,
+              "scan_attempts": 1
+            }
+          ]
+        }
+      },
+      "root_identities": [
+        {
+          "device": 66310,
+          "inode": 7882933,
+          "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts"
+        },
+        {
+          "device": 66310,
+          "inode": 11666636,
+          "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-27",
+          "state": "observed-born"
+        },
+        {
+          "device": 66310,
+          "inode": 7773186,
+          "shared_parent": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs"
+        }
+      ],
+      "roots": [
+        {
+          "allocated_bytes": 0,
+          "device": 66310,
+          "inode": 7773187,
+          "logical_file_bytes": 0,
+          "shared_file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock"
+        },
+        {
+          "aggregate_entry_visit_bound": 2999994,
+          "allocated_bytes": 5149917184,
+          "directories": 1238,
+          "elapsed_seconds": 0.1325450889999047,
+          "entries": 17527,
+          "hardlink_observations": [],
+          "logical_file_bytes": 5572376369,
+          "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+          "regular_files": 16290,
+          "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+          "root_device": 66310,
+          "root_inode": 7882933,
+          "scan_attempts": 1,
+          "shared_scan_elapsed_seconds": 0.13565950399788562
+        },
+        {
+          "aggregate_entry_visit_bound": 2947413,
+          "allocated_bytes": 344064,
+          "directories": 2,
+          "elapsed_seconds": 0.00013742700684815645,
+          "entries": 5,
+          "hardlink_observations": [],
+          "logical_file_bytes": 327309,
+          "qualification": "Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee. At most three fresh complete scans share one time budget; only singly linked regular files occur in an accepted scan. Transient links may occur between/during discarded observations.",
+          "regular_files": 4,
+          "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-27",
+          "root_device": 66310,
+          "root_inode": 11666636,
+          "scan_attempts": 1,
+          "shared_scan_elapsed_seconds": 0.13586916698841378
+        }
+      ],
+      "shared_parent_identity": [
+        66310,
+        7773186
+      ]
+    },
+    "storage_peak_allocated_bytes": 5150273536,
+    "storage_peak_entries": 17534,
+    "storage_peak_logical_file_bytes": 5572703684,
+    "storage_watched_root_identities": [
+      {
+        "device": 66310,
+        "inode": 7882933,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts"
+      },
+      {
+        "device": 66310,
+        "inode": 11666636,
+        "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-27",
+        "state": "observed-born"
+      },
+      {
+        "device": 66310,
+        "inode": 7773186,
+        "shared_parent": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs"
+      }
+    ],
+    "unit": "onchain-replication-a6b3b185c9204ba0ac2efd6b282594ca.service",
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-a6b3b185c9204ba0ac2efd6b282594ca.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    },
+    "wait_seconds": 30.0,
+    "wall_seconds": 28800
+  },
+  "original_guard_sha256": "f66476082280e919c438e50e0399d2b460ba9853ec8bbefbae0baa8967621e68",
+  "qualification": "Actual original dictionary import publication observed. Does not prove MCM completion, training, numerical throughput or full capacity; opaque raw graph/checkpoint bodies not read.",
+  "root_handle_verified_live_chunk": "a7cfd6",
+  "root_session": 96567,
+  "source_frozen": "36ed6802f880857fc432c59a51b4b9b55cab1daa",
+  "workflow_identity": "f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a"
+}

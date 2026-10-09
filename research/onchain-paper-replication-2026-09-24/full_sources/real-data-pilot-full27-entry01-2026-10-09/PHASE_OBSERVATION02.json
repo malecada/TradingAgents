@@ -1,0 +1,106 @@
+{
+  "actual_native_readback": "MainPID=2206961\nActiveState=active\nSubState=running\n",
+  "at": "2026-10-09T09:32:17.080264+00:00",
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261009-27",
+  "guard_fields": {
+    "child_exit_code": null,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 24382394368
+    },
+    "elapsed_seconds": 1140.4280217560008,
+    "limit_reason": null,
+    "memory_current_bytes": 3841093632,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "peak_sampled_memory_current_bytes": 3919355904,
+    "phase": "running",
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-a6b3b185c9204ba0ac2efd6b282594ca.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    }
+  },
+  "markers": [
+    {
+      "bytes": 850,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/intent.json",
+      "sha256": "0a6850d5e320660577f617cbcecc8dca9f5687c8be22a68a50be4dfa9185f169",
+      "value": {
+        "kind": "mcm",
+        "logical_reservation_bytes": 30997104960,
+        "owner": "a6ee40154ee6fe9e2b9e3cd7796d6eeab1d9a94baf5ce82b3a5e2d363cb54e0a",
+        "pairs": 56584576,
+        "policy_sha256": "35878d91da3b64006d17c906c2446eee561087b7f3310775343d8744e0fc9c35",
+        "restart_retention_selection": {
+          "kind": "mcm",
+          "members": [
+            [
+              0,
+              0
+            ],
+            [
+              1768267,
+              31
+            ]
+          ],
+          "population": {
+            "motifs": 32,
+            "nodes": 1768268
+          }
+        },
+        "schema_version": 1,
+        "scope": {
+          "config": "97a1d64d1c8b97a8971d4632bf9137ca1eb2daf9e22f041e2fcc3a89b4d6d379",
+          "context": "8b73b0ee91accd2756c43d795d19af0bc59d919fc0c7cff085119a38a12e8238",
+          "numerical_source": "0ee524599f4608135a588ae7b785bb837189fb7ba34ef67bcf28c5d6ca773577",
+          "policy": "4575a3d6df9d1d66b5e5ac903cff0049404569c783b384886260d15d9d021630",
+          "workflow": "96f07aad89ec68655c02614e7e08bbbfd856a445cd69b830a1651e33e48ffa13"
+        },
+        "stage": "mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba"
+      }
+    },
+    {
+      "bytes": 200,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000000.pending.json",
+      "sha256": "ac7d26f9b723820f3d96d88ff8f7b1694da09466c90bbc0a868f40c6fb28265d",
+      "value": {
+        "disposition": "attempted_unknown_without_complete",
+        "kind": "engineering_pending",
+        "schema": 3,
+        "start": 0,
+        "stop": 4096,
+        "workload_sha256": "fe9dea7fcef68cfde3a23014bb80cb9df0dc6da9a10833a1105399f193d15c31"
+      }
+    }
+  ],
+  "original_guard_raw_sha256": "2d87878ae3a75317972a4a48d0f2c9ad32b8c9d420738c4c5c7b3faaff0230ca",
+  "payload_file_stats_only": [
+    {
+      "allocated_bytes": 0,
+      "bytes": 0,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/scores.f32"
+    },
+    {
+      "allocated_bytes": 0,
+      "bytes": 0,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/closure-tokens.bin"
+    },
+    {
+      "allocated_bytes": 0,
+      "bytes": 0,
+      "path": "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-27/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-origins.bin"
+    }
+  ],
+  "qualification": "Sampled actual first-graph intent/pending and same native running state. No completed batch/MCM/training proof. Payload arrays not read. Kernel peak and sampled peak remain distinct. Source/Git unchanged; no new launch.",
+  "root_live_chunk": "858246",
+  "root_session": 96567,
+  "source": "36ed6802f880857fc432c59a51b4b9b55cab1daa"
+}

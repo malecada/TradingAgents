@@ -1,0 +1,47 @@
+--- 
++++ 
+@@ -1,5 +1,5 @@
+ """Explicit engineering result reuse; never old per-occurrence execution credit."""
+-import array,copy,ctypes,hashlib,json,math,struct,sys,types,time
++import array,copy,ctypes,hashlib,json,math,struct,sys,types
+ from pathlib import Path
+ import numpy as np
+ from tradingagents.research.onchain_replication.contracts import AttributedGraph
+@@ -99,37 +99,6 @@
+         require(callable(checkpoint),'checkpoint callback required')
+         self.counters=dict(source_guard_calls=0,source_hashed_bytes=0,key_hashed_bytes=0,lookup_probes=0,lru_link_updates=0,evictions=0)
+         attest(self.counters);self.configuration=config_bytes(config);self.checkpoint=checkpoint;self._user_checkpoint=checkpoint
+-        if authority_poll is not None:
+-            require(callable(authority_poll),'optional authority poll must be callable')
+-            original_poll=authority_poll;clock=time.perf_counter_ns
+-            require(type(clock) is types.BuiltinFunctionType and clock.__module__=='time' and clock.__name__=='perf_counter_ns','builtin authority timer required')
+-            self._authority_poll_original=original_poll
+-            names=('authority_poll_calls','authority_poll_ns','authority_poll_failures')
+-            totals=[0,0,0];limit=2**63-1
+-            self.counters.update(dict(zip(names,totals)))
+-            def current_poll():
+-                require(self._authority_poll_original is original_poll and time.perf_counter_ns is clock,'authority callback/timer changed')
+-                require(all(type(self.counters.get(k)) is int and self.counters[k]==v for k,v in zip(names,totals)),'authority timing counters changed')
+-            def measured_poll():
+-                current_poll();start=clock()
+-                require(type(start) is int and 0<=start<=limit and totals[0]<limit,'authority timing bound exceeded')
+-                totals[0]+=1;self.counters[names[0]]=totals[0]
+-                primary=None
+-                try:
+-                    return original_poll()
+-                except BaseException as error:
+-                    primary=error;raise
+-                finally:
+-                    try:
+-                        stop=clock();current_poll()
+-                        require(type(stop) is int and start<=stop<=limit and totals[1]+stop-start<=limit,'authority timing bound exceeded')
+-                        totals[1]+=stop-start
+-                        if primary is not None:totals[2]+=1
+-                        self.counters.update(dict(zip(names,totals)))
+-                    except BaseException as timing_error:
+-                        if primary is None:raise
+-                        primary.add_note('authority timing failed: '+repr(timing_error))
+-            authority_poll=measured_poll
+         self.authority_poll=authority_poll
+         self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll)
+         self.checkpoint_adapter=self.executor.checkpoint

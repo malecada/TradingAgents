@@ -1,0 +1,31 @@
+{
+  "status": "PASS_SYNTHETIC_ONLY",
+  "affinity": [
+    2
+  ],
+  "normalization_comparisons": 20,
+  "runs": [
+    {
+      "shape": [
+        1,
+        2
+      ],
+      "operation_boundaries": 3
+    },
+    {
+      "shape": [
+        3,
+        4
+      ],
+      "operation_boundaries": 3
+    }
+  ],
+  "all_state_and_result_bytes_equal": true,
+  "public_private_substitution_fallback": true,
+  "literal_inverse": true,
+  "runtime_dependency_hashes": {
+    ".venv/lib/python3.13/site-packages/scipy/special/_logsumexp.py": "39563dd5655d9bed1f2fe91a2d84d84e9dda817fb1ea4ba8699410c1e70ee3e1",
+    ".venv/lib/python3.13/site-packages/scipy/_lib/_array_api.py": "e7b6d08f877456b9d26af808267263f41f2870261951a19d9ff133301d15e1e2"
+  },
+  "qualification": "No timing benchmark. Exact pinned ordinary namespace domain only; private-library/public-dispatch changes outside guarded identities require new review; allocation/asynchronous/profiler trace equivalence unsupported."
+}

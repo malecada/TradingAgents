@@ -1,0 +1,18 @@
+# Installed pair-route synthetic attribution
+
+The actual installed PairExecutor and NumericReuseExecutor complete these small synthetic cache misses in about14–20ms, not the actual26 mixed-call mean of427.004ms. The bare-kernel normalization profile does not explain that real prefix by itself. Real pair sizes/edge counts and genuine authority costs remain unmeasured here; shape skew cannot be inferred from this timing gap.
+
+| Pair nodes (directed edges) | PairExecutor median ms | Memo miss ms | Memo hit ms | Bare annealing ms | Session advance ms | Score ms |
+|---|---:|---:|---:|---:|---:|---:|
+| (4, 5) (8, 14) | 13.727 | 13.885 | 0.309 | 12.389 | 12.605 | 0.439 |
+| (8, 7) (38, 28) | 20.109 | 20.391 | 0.367 | 18.491 | 18.555 | 0.823 |
+
+Six repetitions per pair were retained, each with one direct executor call, a fresh memo cache miss and four same-numeric fresh-purpose hits. All compared float64 score bits/iterations/status match. No checkpoint was needed. Configuration is the existing50-step matching-stable file plus the existing compact capacity fixture converted using actual compact_policy.pair_policy/effective_matching; original1,000,000 operations/call and10,000 calls/checkpoint schedule retained. This is synthetic engineering with authority_poll=None, not genuine Owner/Binding/provenance. No state publication or empirical receipt was generated.
+
+The separately timed exact numerical call sequence attributes most small-pair cost to session.advance (12.605/18.555ms), which closely tracks bare annealing (12.389/18.491ms). Engine create and immutable-session construction each take0.175–0.241ms; score_only takes0.439–0.823ms. Memo validation/key helpers are tens of microseconds: _current~33µs, validate_pair65–87µs, policy_check23–24µs, numeric_key~33µs. These independent component timings are not an exhaustive additive decomposition of actual memo calls. The actual unmodified direct and memo cumulative route measurements are retained separately.
+
+Memo constructor medians0.563–0.579ms, begin_batch0.413–0.419ms and end_batch0.443–0.481ms include their real source guards. They are outside measured __call__ and normally amortized across a batch. No sys.setprofile/trace or monkeypatched function was used: the installed runtime correctly disallows those. The staged experiment invokes original functions with clock reads around boundaries, does not change their code, and cannot measure nested normalization independently. Earlier accepted70% normalization attribution applies only to its fixed4×5 synthetic bare kernel, not to427ms real calls.
+
+The installed memo is roughly1.5ms above bare annealing at4×5 and1.9ms at8×7 on median comparisons; neither establishes a hundreds-of-milliseconds generic memo overhead. The actual26 prefix includes different source-era policy/authority behavior, unknown graph-size/feature skew, mixed reuse and possible system effects. No cause is selected from these alternatives without real authorized metadata. This experiment neither measures nor removes actual authority polling. No linear scaling/GPU/population-speed claim follows.
+
+RUN01 refused pair-policy schema before solver execution because the raw compact policy still contained max_pair_entries_override. Both failed harness and log remain. RUN02 uses the exact installed caller conversion and passed exit0. Actual affinity[2], nice10, threads1,512MiB address-space/4MiB file ceilings,25s command timeout; successful script elapsed1.025s including imports and all numerical work (failed attempt~0.109s). No original arrays, Torch, Owner, Run, native unit, network, installation or live mutation.

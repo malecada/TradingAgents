@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-small-pair-kernel-acceleration01-2026-10-09/check.py", line 21, in <module>
+    x=old.create(a,b,c,max_state_bytes=1000000,max_chunk_entries=chunk);y=new.create(a,b,c,max_state_bytes=1000000,max_chunk_entries=chunk)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_annealing.py", line 127, in create
+    normalization_policy(n,m,max_chunk_entries)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_annealing.py", line 122, in normalization_policy
+    raise ValueError('complete reduction axis and singleton padding allowance required')
+ValueError: complete reduction axis and singleton padding allowance required

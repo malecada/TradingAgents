@@ -1,0 +1,51 @@
+{
+  "status": "ADDITIVE_AUTHOR_CORRECTION_NO_RERUN",
+  "supersedes_claims_in": [
+    "REPORT.md",
+    "MANIFEST01.json"
+  ],
+  "original_hashes": {
+    "profile_route.py": "f1bb77d95b3ba08ae142bf2e30f407879f84131ab6301054071544045ff68c2b",
+    "RUN01.log": "6a4411b3d8a0c9bca902620d82b588dbe2d8fdd503ee016f09838a30cd918fe0",
+    "RUN02.log": "04d467cb3ea036a90183b607fbf65d9091230aa4305007b93878477df03f5657",
+    "MANIFEST01.json": "5055a926c5996ff2db7dad82adb2bf2c3cc3f1f2affd5e460b00dca75bf208bd",
+    "profile_route02.py": "4601b09a8c5c9c1a283fc168627bb5cc1a8717044b8da7c46ff54c9347eb7f3e",
+    "RESULT02.json": "19c42fa521d133c1aa71e9a8ef437daab7c4b686d9ac43f4172550516c30a08d",
+    "REPORT.md": "722a754cb4c52492fc708d0e2875ac2c665a43fd44973dfc9c240f15ed6e8fc9"
+  },
+  "launcher_evidence": {
+    "type": "author transcription of original conversation tool invocation/result; not independently retained launcher receipt",
+    "successful_command": "timeout 25s nice -n 10 taskset -c 2 bash -c 'ulimit -v 524288; ulimit -f 8192; export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1; exec .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/profile_route02.py' > research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/RUN02.log 2>&1",
+    "working_directory": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "tool": "functions.exec invoking tools.exec_command",
+    "successful_result_chunk_id": "13bd93",
+    "successful_result": {
+      "exit_code": 0,
+      "wall_time_seconds": 0.975891152
+    },
+    "failed_first_result_chunk_id": "7f78ee",
+    "failed_first_result": {
+      "exit_code": 1,
+      "wall_time_seconds": 0.109005499
+    },
+    "first_command_difference": "timeout30s, profile_route.py and RUN01.log; remaining flags identical",
+    "retained_shell_limit_readback": false,
+    "retained_supervisor_or_launcher_receipt": false,
+    "independent_resource_enforcement_proved": false
+  },
+  "resource_qualifications": {
+    "affinity": "RESULT02.json self-observes os.sched_getaffinity(0)==[2]; this is a point observation, not continuous affinity enforcement proof.",
+    "address_space": "Reported command requested ulimit -v524288 (512MiB). No retained getrlimit/readback or launcher receipt proves application.",
+    "file_size": "Reported command used ulimit -f8192. Earlier 4MiB claim is withdrawn: ordinary Bash non-POSIX block units are1024 bytes, making this8MiB, not4MiB. Shell unit mode and effective RLIMIT_FSIZE were not retained.4MiB enforcement is unproved and should not be credited.",
+    "timeout": "Reported successful command requested25s timeout (first30s). No independent retained timeout receipt; process self-reports runtime1.024791097996058s. Author-reported tool results indicate quick termination, not independent resource-ceiling proof.",
+    "nice_threads": "nice10 and three thread environment variables1 were requested in reported command, without retained process readback.",
+    "shell_failure_handling": "ulimit commands were separated by semicolons without set-e or an explicit readback check; command text alone cannot prove application."
+  },
+  "timing_qualifications": {
+    "direct_and_memo": "Timers include lambda dispatch and fresh purpose(): increment, string conversion, encoding and SHA256, followed by actual executor/memo call. They are not pure isolated call timings.",
+    "staged": "Separate timed sequence invokes original numerical functions. It is not an instrumented decomposition of the exact original PairExecutor call; medians do not form an exhaustive additive attribution.",
+    "bare": "Bare _advance_checked timer includes function dispatch and completion; afterward only phase==done is asserted. No bare V/M/Q or score bits are joined against executor/staged state.",
+    "bits_actually_compared": "For each repetition struct.pack(>d,score), iterations and convergence compare direct PairExecutor, actual memo miss, four memo hits and separately staged engine.score_only. No state/checkpoint byte equivalence asserted."
+  },
+  "no_new_execution": "No numerical rerun, new benchmark, live/source mutation or retrospective limit proof."
+}

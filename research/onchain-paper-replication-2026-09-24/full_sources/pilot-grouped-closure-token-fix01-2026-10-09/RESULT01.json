@@ -1,0 +1,17 @@
+{
+  "decision": "PASS",
+  "checks": [
+    "exact one-line inverse",
+    "two real completed batches preserve all 168 bytes and rejoin",
+    "baseline mutable token RED at actual grouped consumer",
+    "candidate GREEN sequential grouped append; wrong order/short/mutable refused",
+    "corrupt digest and short rejoin refused",
+    "closure record mismatch remains refused",
+    "actual file corruption remains refused",
+    "journal descriptor closed"
+  ],
+  "baseline_refusal": "ordered grouped batch/token differs",
+  "elapsed_ns": 51243646,
+  "maxrss_kib": 22524,
+  "scope": "synthetic routing/byte closure only; no numerical or authority proof"
+}

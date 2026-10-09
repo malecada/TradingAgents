@@ -1,0 +1,11 @@
+--- candidate
++++ baseline
+@@ -69,7 +69,7 @@
+         journal._read(f'{batch:08d}'+suffix, body, pin=pin)
+         tokens.extend(TOKEN.pack(*pin, len(body), hashlib.sha256(body).digest()))
+     _root(journal, original)
+-    return bytes(tokens)
++    return tokens
+ 
+ 
+ def _rejoin(journal, batch, tokens, original):

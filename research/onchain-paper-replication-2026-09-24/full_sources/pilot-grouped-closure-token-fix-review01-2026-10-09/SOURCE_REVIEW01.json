@@ -1,0 +1,101 @@
+{
+  "decision": "ACCEPTED_SOURCE_ONLY_NARROW_TOKEN_TYPE_CORRECTION",
+  "candidate_sha256": "047a0762cc0eee53e0ad440339238baeb527158c3a2f33293164e0b91b7a395b",
+  "source_refs_sha256": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-closure-token-fix01-2026-10-09/MANIFEST01.json": "702078409a871ca772e762fed8fd81f1239473b041c63bfc590f9d8554a3920e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-closure-token-fix01-2026-10-09/batched_driver.py": "047a0762cc0eee53e0ad440339238baeb527158c3a2f33293164e0b91b7a395b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-closure-token-fix01-2026-10-09/verify01.py": "90752e2782ca8069adeabff92eacb9a3742a2ceed523080cf8628161d5b8e756",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-closure-token-fix01-2026-10-09/RESULT01.json": "f5a7ed6849f3f135fbcda206bc3a0c74afd6c6e6180ed92cb6aab2aa0f624b30",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-closure-token-fix01-2026-10-09/LIMITER01.json": "f1e52dce72d1dafc0b0e1972a2c4083d37c73adff4ebb6a3ab2ec73cad796d21",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-closure-token-fix-review01-2026-10-09/check.py": "7a19950bf67fbaffe317ab848e8f7eb89a8eda9561980b1d8cd426f4751754dd",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-closure-token-fix-review01-2026-10-09/CHECK01.log": "d7d3324d1e4788e7b96dae6a732066949c3ab68f9cb43b19ff2ab764b7609719",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-closure-token-fix-review01-2026-10-09/RESULT01.json": "994e3667bb0403ff75f3f4ef1bcb2deb48b6003470984493384e68f70d2d4491",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-grouped-closure-token-fix-review01-2026-10-09/LIMITER01.json": "dc96544b0b00a021f8afd0763bb3da29cf00b5b6cdb3ecd4b97dad418dfea7be",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-authority-cost-instrumentation-review01-2026-10-09/SOURCE_REVIEW01.json": "6d889af87351a589ef3be395d25973421536787d80a9ef285cfb53376a8f3779",
+    "tradingagents/research/onchain_replication/batched_driver.py": "2ac888beb9f778c372fcda4122cb55b78c85e77bfbcec3193ac5d770bb8dc2c9",
+    "tradingagents/research/onchain_replication/grouped_offload_semantics.py": "45e261dc36a24f6c805fcba18ffc4f4c90d1bd2f0f04955944aeea6e49b1f6e1",
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": "2054d914381d2f267625097ac642d8c6df857785ed2ddc7715054df6ced5d591"
+  },
+  "defect": "Installed batched_driver._capture returns bytearray; installed grouped post_batch and grouped_offload_semantics.roster require exact bytes. Original otherwise-valid168-byte closure token refuses before grouped progress.",
+  "change": "Only return tokens -> return bytes(tokens). All168 content bytes/packing/order/pins/digests and capture readback checks unchanged.",
+  "source_proof": [
+    "Literal inverse equals installed baseline byte-for-byte.",
+    "Actual grouped post_batch exact type/extent and ordinal checks remain unchanged; immutable returned token now satisfies them.",
+    "Retained whole-driver bytearray token-store slice assignment accepts bytes unchanged; final whole-store representation remains original bytearray.",
+    "_rejoin buffer unpack and exact hash checks accept bytes; no archive/journal/score/policy/schema/body-cap change.",
+    "Adds one finite168-byte payload copy and Python bytes object at capture; does not grow retained on-disk token extent or per-group record count. Immutability intentionally changes returned object type."
+  ],
+  "author_evidence": {
+    "connected_checks": 8,
+    "actual_journal_batches": 2,
+    "red_to_green": "ordered grouped batch/token differs",
+    "limiter": {
+      "pid": 2463338,
+      "affinity": [
+        3
+      ],
+      "nice": 10,
+      "AS": [
+        536870912,
+        536870912
+      ],
+      "CPU": [
+        60,
+        60
+      ],
+      "FSIZE": [
+        4194304,
+        4194304
+      ],
+      "alarm_seconds": 60
+    }
+  },
+  "independent_checks": {
+    "decision": "PASS_STDLIB_ONLY",
+    "checks": [
+      "literal one-line inverse",
+      "same original capture reads/order",
+      "all168 bytes and every packed field unchanged",
+      "candidate rejoin succeeds",
+      "actual grouped roster rejects original bytearray and accepts bytes",
+      "returned bytes independent of mutable original",
+      "existing bytearray token-store assignment compatible"
+    ],
+    "limitations": "Independent fixture uses explicit journal double; author eight connected actual-journal checks separately authenticated. No Owner or numerical runtime imported.",
+    "limits": {
+      "affinity": [
+        3
+      ],
+      "as": [
+        536870912,
+        536870912
+      ],
+      "fsize": [
+        4194304,
+        4194304
+      ],
+      "cpu": [
+        30,
+        30
+      ],
+      "wall_remaining": 29.999987,
+      "nice": 10
+    }
+  },
+  "test_execution": {
+    "exit_code": 0,
+    "original_tool_result_chunk": "c027ed",
+    "limits_readback_retained": true
+  },
+  "instrumentation_composition": {
+    "reused_review_sha256": "6d889af87351a589ef3be395d25973421536787d80a9ef285cfb53376a8f3779",
+    "conflict_found": false,
+    "reason": "Token candidate edits batched_driver.py; authority timing candidate edits batched_numeric_reuse.py constructor/time import only. No overlapping definitions or invocation changes; token capture still follows original completed numerical/consumer joins.",
+    "qualification": "Combined installed source closure/pins and future configuration remain Root integration obligations; no combined genuine Owner/transport run performed."
+  },
+  "limitations": [
+    "No numerical/runtime graph imports, native launch, real graph bodies, Owner/Run/transport authority or network used.",
+    "Author connected fixture and independent journal-double extraction are engineering tests, not real grouped offload proof.",
+    "Current live source remains unchanged; no success, restart or retrospective failed-run repair follows."
+  ]
+}

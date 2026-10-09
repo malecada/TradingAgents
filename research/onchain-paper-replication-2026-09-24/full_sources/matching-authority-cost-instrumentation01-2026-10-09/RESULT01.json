@@ -1,0 +1,18 @@
+{
+  "status": "PASS_SYNTHETIC_CALLBACKS_ONLY",
+  "checks": [
+    "None adds no counters or timer samples",
+    "exact return identity and one original call per invocation",
+    "same original callback exception object, failure counted",
+    "timer replacement refuses even during ambient exception",
+    "timing failure annotates and preserves callback primary",
+    "counter mutation/type refusal",
+    "signed63 count exhaustion refuses before callback",
+    "actual summary emitter maximum-width counters fit existing8192 limit"
+  ],
+  "summary_bytes": 1027,
+  "limit": 8192,
+  "default_None_no_fabricated_time": true,
+  "literal_inverse": true,
+  "limiter_sha256": "45cf629e2853edd790bfb553a2c3cd7ff4f0834810a7258635c3ab8525f6c956"
+}

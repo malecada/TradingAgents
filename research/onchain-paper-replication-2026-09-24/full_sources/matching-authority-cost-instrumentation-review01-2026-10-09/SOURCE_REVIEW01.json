@@ -1,0 +1,110 @@
+{
+  "decision": "ACCEPTED_NARROW_SOURCE_INSTRUMENTATION_WITH_QUALIFICATIONS",
+  "candidate_sha256": "a9df46197c1284f7f6287cc5b04ded33cb9aae58eb9eca14d91f8bd6b8253440",
+  "baseline_sha256": "20ccbca53b9e7ef615704993c20f57e2568f4a52ae93e77528e68a017744a4d1",
+  "source_refs_sha256": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-authority-cost-instrumentation01-2026-10-09/MANIFEST01.json": "e88d7022becb0c55a556873545ca31918b0a1bcab2eff48c8e5b850515e71083",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-authority-cost-instrumentation01-2026-10-09/batched_numeric_reuse.py": "a9df46197c1284f7f6287cc5b04ded33cb9aae58eb9eca14d91f8bd6b8253440",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-authority-cost-instrumentation01-2026-10-09/LIMITER01.json": "45cf629e2853edd790bfb553a2c3cd7ff4f0834810a7258635c3ab8525f6c956",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-authority-cost-instrumentation01-2026-10-09/REPORT.md": "7ba890c6a6b85c8185e2e2b307e488eed08a833dac639338867920291d1447a7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-authority-cost-instrumentation-review01-2026-10-09/check.py": "105fff9df2fb884e396cbf9f18a7464d1bea0a9a7574359daad9d6bc543e381b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-authority-cost-instrumentation-review01-2026-10-09/RESULT01.json": "300788945c5f90897cf60f3166a93feb6ca2695513ea06ec131b32035b5ee125",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-authority-cost-instrumentation-review01-2026-10-09/LIMITER01.json": "72188a392cba9ea7fcfdaa02699c4e66f5ce59ee1da4422f683b41f8c4d57f6b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-authority-cost-instrumentation-review01-2026-10-09/CHECK01.log": "c056fa97377a3f7c76e769c47b339b3c7623c63ee58f5753a3e9e96b47b4bbd8",
+    "tradingagents/research/onchain_replication/batched_numeric_reuse.py": "20ccbca53b9e7ef615704993c20f57e2568f4a52ae93e77528e68a017744a4d1",
+    "tradingagents/research/onchain_replication/batched_numeric_execution.py": "77ecaebb12f63d01a3784267d493c76683abfccd5c3cc20be3b8f8d14b7663d4",
+    "tradingagents/research/onchain_replication/batched_pair_executor.py": "fea5c26c66e7047ad157fc0dc499918f50c2c4abde409df5b3c1699a8e6b12b3"
+  },
+  "source_findings": [
+    "Literal inverse removes only time import and one constructor conditional; all existing callbacks, policy/source/currentness checks and numerical/persistence bodies remain unchanged.",
+    "None creates no wrapper/counters/clock samples; original None path otherwise unchanged.",
+    "When timing guards hold, each existing callback invocation executes the original callback once with zero arguments, identical return identity, same relative callback ordering.",
+    "Original callback identity and captured builtin clock identity and exact typed counter totals are rejoined before/after invocation. Callback failures retain their primary BaseException; simultaneous timing failures add a note.",
+    "Additional two clock reads and counter/guard work are deliberate operational instrumentation. Clock/identity/counter failures introduce refusal boundaries; no universal failure-trace equivalence is claimed.",
+    "Totals are fixed three plain integer values bounded by signed63; failures<=calls under valid publication. Nanoseconds include bookkeeping between clocks; they are inclusive wall time, not pure authority CPU nor additive to inclusive numeric-call timer.",
+    "Original PairExecutor and NumericMemo callback sites remain; actual outer stage/driver/extraction polls outside this wrapper are not counted. Failed batches may lack a durable numeric summary."
+  ],
+  "focused_checks": {
+    "status": "PASS_STDLIB_ONLY",
+    "checks": [
+      "None exact no instrumentation",
+      "two invocations exact zero arguments order return identity",
+      "BaseException identity and failure accounting",
+      "callback_identity refusal and callback count",
+      "bool_counter refusal and callback count",
+      "count_exhaustion refusal and callback count",
+      "ns_exhaustion refusal and callback count",
+      "postcallback timer identity mutation refuses under ambient exception",
+      "callback primary survives secondary timer failure",
+      "actual summary original1027 fixture and conservative legal-width upper bound"
+    ],
+    "inverse": true,
+    "author_fixture_bytes": 1027,
+    "conservative_actual_schema_upper_bytes": 1016,
+    "source_summary_limit": 8192,
+    "author_resource_deviation": "actual author affinity[0,1,2], not requested[3]; reviewer run does not repair author history",
+    "limits": {
+      "affinity": [
+        3
+      ],
+      "nice": 10,
+      "as": [
+        536870912,
+        536870912
+      ],
+      "fsize": [
+        4194304,
+        4194304
+      ],
+      "cpu": [
+        30,
+        30
+      ],
+      "wall_timer_remaining": 29.999984
+    }
+  },
+  "summary_capacity": {
+    "author_fixture_bytes": 1027,
+    "literal_maximum_claim_qualified": "1027 reproduces author fixture with unreachable computed/reused counts2**60; it is not the exact maximum reachable batch.",
+    "conservative_known_schema_bound_bytes": 1016,
+    "derivation": "Seven existing counters <=39 decimal digits and three added counters <=19; start/stop/batch each <=19 digits; batch computed/reused each <=4096 (4digits); finite nonnegative binary64 JSON representation conservatively <=24 chars; original fixed names/framing/hash fields. Width bound deliberately allows mutually incompatible maxima.",
+    "unchanged_summary_limit": 8192,
+    "scope": "Known source-generated ten-counter roster only; existing arbitrary-key counters API is not globally bounded by1016. Existing body and cumulative max_summary_bytes refusal remains unchanged; arbitrary extra keys do not get capacity credit."
+  },
+  "resource_qualification": {
+    "author_actual_affinity": [
+      0,
+      1,
+      2
+    ],
+    "author_requested_cpu3_compliant": false,
+    "preserved_deviation": "Author execution overlaps active CPU0/1; this review does not repair or retrospectively credit it.",
+    "reviewer_limits_readback": {
+      "affinity": [
+        3
+      ],
+      "nice": 10,
+      "as": [
+        536870912,
+        536870912
+      ],
+      "fsize": [
+        4194304,
+        4194304
+      ],
+      "cpu": [
+        30,
+        30
+      ],
+      "wall_timer_remaining": 29.999984
+    },
+    "reviewer_test_exit_code": 0,
+    "reviewer_tool_result_chunk": "8faeb0",
+    "numerical_imports": false
+  },
+  "limitations": [
+    "No genuine Owner/Binding/authority integration, scientific numeric execution or empirical timing measured.",
+    "This receipt accepts only the changed source seam; candidate remains uninstalled and current27 unchanged.",
+    "Future source pins/registration and whole-process headroom remain Root obligations; no cap increase or operational launch authority follows."
+  ]
+}

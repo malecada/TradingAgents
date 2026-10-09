@@ -1,0 +1,38 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job.py", line 600, in <module>
+    result = globals()[args.mode](args)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job.py", line 396, in worker
+    cells=route.execute(run,job['payload'])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 637, in execute
+    if primary is not None: raise primary
+                            ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 608, in execute
+    try:archive_context.close(primary)
+        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_dispatch.py", line 517, in close
+    if failure is not None:raise failure
+                           ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 558, in execute
+    result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
+        **({'progress':progress} if progress is not None else {}),
+        **({'diagnostic':diagnostic} if diagnostic is not None else {}))
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 301, in produce_imported
+    return compact_mcm_batched.produce(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py", line 449, in produce
+    boundary();binding=_compute(target,stage,graph,policy,start,modules,boundary);boundary()
+                       ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py", line 400, in _compute
+    result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches,authority_poll=authority_poll)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_driver.py", line 162, in drive
+    if post_batch is not None:post_batch(journal,batch,token,original_root)
+                              ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py", line 368, in post_batch
+    require(type(batch) is int and batch==next_batch<batch_total and type(token) is bytes and len(token)==168,'ordered grouped batch/token differs')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/score_batches.py", line 41, in _require
+    raise ValueError(message)
+ValueError: ordered grouped batch/token differs
+MCM delivery incomplete: {"attempted_sink_cells": 4096, "confirmed_post_sink_cells": 0, "journal_completed_cells": 4096, "remaining_disposition": "unavailable; current sink chunk may be partial; no retry"}

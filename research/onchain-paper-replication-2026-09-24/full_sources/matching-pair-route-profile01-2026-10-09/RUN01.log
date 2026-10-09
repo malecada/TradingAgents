@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/profile_route.py", line 29, in <module>
+    v,row['pair_executor']=measure(lambda:direct(a,b,purpose()))
+                           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/profile_route.py", line 17, in measure
+    t=time.perf_counter();v=fn();return v,time.perf_counter()-t
+                            ~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/profile_route.py", line 29, in <lambda>
+    v,row['pair_executor']=measure(lambda:direct(a,b,purpose()))
+                                          ~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_pair_executor.py", line 28, in __call__
+    pair.policy_check(a,b,self.config,self.policy,allow_checkpoint_layout=True)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_pair.py", line 90, in policy_check
+    require(isinstance(policy, dict) and set(policy) in ((POLICY_FIELDS, POLICY_FIELDS|{'checkpoint_layout'}) if allow_checkpoint_layout else (POLICY_FIELDS,)), 'pair policy schema')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_pair.py", line 37, in require
+    raise ValueError(message)
+ValueError: pair policy schema

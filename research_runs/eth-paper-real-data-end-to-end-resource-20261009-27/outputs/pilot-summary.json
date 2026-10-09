@@ -1,0 +1,130 @@
+{
+  "cell": {
+    "financial_fit_complete": false,
+    "id": "real-eth-seven-graph-joint-update-resource27",
+    "paper_financial_fits": 0,
+    "reason": "ValueError: ordered grouped batch/token differs",
+    "resource_only": true,
+    "status": "failed"
+  },
+  "events": [
+    {
+      "elapsed_seconds": 299.24225851599476,
+      "phase": "original_import"
+    }
+  ],
+  "final_outer_inventory_required": true,
+  "financial_fit_complete": false,
+  "full_graphs": 7,
+  "full_size_capacity": false,
+  "kind": "real-data-import-training-pilot-v1",
+  "original_motifs": 32,
+  "original_samples": 512,
+  "retained_target_count": 0,
+  "schema_version": 1,
+  "throughput": {
+    "attempted_mcm_seconds": 3894.047093100002,
+    "complete_graphs": 0,
+    "completed_mcm_seconds": 0,
+    "completed_motif_cells_per_second": null,
+    "decisions": 16,
+    "failed_graphs": 1,
+    "financial_fit_complete": false,
+    "full_fold_fit": false,
+    "graph_denominator": 7,
+    "graphs": [
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": 3894.047093100002,
+        "expected_motif_cells": 56584576,
+        "expected_nodes": 1768268,
+        "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+        "motifs": 32,
+        "reason": "ValueError: ordered grouped batch/token differs",
+        "status": "failed"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 72495392,
+        "expected_nodes": 2265481,
+        "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 60105600,
+        "expected_nodes": 1878300,
+        "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 50606112,
+        "expected_nodes": 1581441,
+        "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 60001376,
+        "expected_nodes": 1875043,
+        "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 65558720,
+        "expected_nodes": 2048710,
+        "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      },
+      {
+        "completed_motif_cells": null,
+        "completed_nodes": null,
+        "elapsed_seconds": null,
+        "expected_motif_cells": 50616352,
+        "expected_nodes": 1581761,
+        "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+        "motifs": 32,
+        "reason": "not_attempted_after_failure",
+        "status": "unavailable"
+      }
+    ],
+    "guard_resource_evidence": null,
+    "lookback_days": 28,
+    "one_update_phase_seconds": null,
+    "original_samples": 512,
+    "paper_financial_fits": 0,
+    "population_scope": "resource_pilot_subset",
+    "qualification": "Intervals start after population and graph loading; MCM intervals include production plus retained verification. Partial failed work is unknown and receives no completed count. Guard/kernel peaks, storage and actual outer exits require separately joined closure evidence.",
+    "schema_version": 1,
+    "scope": "seven full graphs/original32 motifs and one resource update only",
+    "scope_elapsed_seconds": 4201.139935979008,
+    "unavailable_graphs": 6,
+    "verified_completed_motif_cells": 0,
+    "verified_completed_nodes": 0,
+    "verified_motif_cells_per_attempted_second": null
+  },
+  "training": null
+}

@@ -1,0 +1,53 @@
+--- installed/matching_annealing.py
++++ candidate/matching_annealing.py
+@@ -36,6 +36,31 @@
+ _NORMALIZATION_ORIGINAL = logsumexp
+ _NORMALIZATION_CODE = logsumexp.__code__
+ 
++
++
++# Specialization of the pinned SciPy public wrapper for this kernel's real,
++# nonempty float64 matrices. All floating operations remain in original order.
++from scipy._lib.array_api_compat import numpy as _normalization_xp
++_NORMALIZATION_INNER = logsumexp.__globals__['_logsumexp']
++_NORMALIZATION_INNER_CODE = _NORMALIZATION_INNER.__code__
++
++def _matrix_logsumexp(a, *, axis, keepdims):
++    if (type(a) is not np.ndarray or a.dtype != np.float64 or a.ndim != 2
++            or not a.size or axis not in (0, 1) or keepdims is not True
++            or logsumexp is not _NORMALIZATION_ORIGINAL
++            or logsumexp.__code__ is not _NORMALIZATION_CODE
++            or logsumexp.__globals__.get('_logsumexp') is not _NORMALIZATION_INNER
++            or _NORMALIZATION_INNER.__code__ is not _NORMALIZATION_INNER_CODE):
++        return logsumexp(a, axis=axis, keepdims=keepdims)
++    xp = _normalization_xp
++    with np.errstate(divide='ignore', invalid='ignore', over='ignore'):
++        b_exp_a = xp.exp(a)
++        sum_ = xp.sum(b_exp_a, axis=axis, keepdims=True)
++        out_inf = xp.log(sum_)
++    with np.errstate(divide='ignore', invalid='ignore'):
++        out, sgn = _NORMALIZATION_INNER(a, None, axis=axis, return_sign=False, xp=xp)
++    out_finite = xp.isfinite(out)
++    return xp.where(out_finite, out, out_inf)
+ 
+ def _immutable_edges(graph):
+     if type(graph) is not AttributedGraph:return False
+@@ -250,15 +275,15 @@
+                     limit=n*m;next_phase='normalize_rows'
+                 elif phase=='normalize_rows':
+                     end=min(n,start+max(1,cap//m));block=matrix[start:end]
+-                    block-=logsumexp(block,axis=1,keepdims=True)
++                    block-=_matrix_logsumexp(block,axis=1,keepdims=True)
+                     limit=n;next_phase='normalize_columns'
+                 elif phase=='normalize_columns':
+                     end=min(m,start+max(1,cap//n));block=matrix[:,start:end]
+                     if block.shape[1]==1 and m>1:
+                         padded=np.repeat(block,2,axis=1)
+-                        block-=logsumexp(padded,axis=0,keepdims=True)[:,:1]
++                        block-=_matrix_logsumexp(padded,axis=0,keepdims=True)[:,:1]
+                     else:
+-                        block-=logsumexp(block,axis=0,keepdims=True)
++                        block-=_matrix_logsumexp(block,axis=0,keepdims=True)
+                     limit=m;next_phase='normalize_exp'
+                 else:
+                     end=min(n*m,start+cap)

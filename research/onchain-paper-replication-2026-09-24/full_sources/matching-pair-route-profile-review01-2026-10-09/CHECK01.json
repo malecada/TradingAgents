@@ -1,0 +1,95 @@
+{
+  "status": "PASS_READ_ONLY_ARITHMETIC_SOURCE_JOINS",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/profile_route.py": "f1bb77d95b3ba08ae142bf2e30f407879f84131ab6301054071544045ff68c2b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/RUN01.log": "6a4411b3d8a0c9bca902620d82b588dbe2d8fdd503ee016f09838a30cd918fe0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/RUN02.log": "04d467cb3ea036a90183b607fbf65d9091230aa4305007b93878477df03f5657",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/profile_route02.py": "4601b09a8c5c9c1a283fc168627bb5cc1a8717044b8da7c46ff54c9347eb7f3e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/RESULT02.json": "19c42fa521d133c1aa71e9a8ef437daab7c4b686d9ac43f4172550516c30a08d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/REPORT.md": "722a754cb4c52492fc708d0e2875ac2c665a43fd44973dfc9c240f15ed6e8fc9",
+    "research/onchain-paper-replication-2026-09-24/config/matching-stable.json": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/compact_policy.json": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786",
+    "tradingagents/research/onchain_replication/batched_pair_executor.py": "fea5c26c66e7047ad157fc0dc499918f50c2c4abde409df5b3c1699a8e6b12b3",
+    "tradingagents/research/onchain_replication/batched_numeric_reuse.py": "20ccbca53b9e7ef615704993c20f57e2568f4a52ae93e77528e68a017744a4d1",
+    "tradingagents/research/onchain_replication/compact_policy.py": "37918e01e3de476970493afa9e78e40bcfa2f841cd7ee59fbc211c7d579730dc",
+    "tradingagents/research/onchain_replication/matching_checkpoint.py": "d5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c",
+    "tradingagents/research/onchain_replication/matching_annealing.py": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46",
+    "tradingagents/research/onchain_replication/matching_hardening.py": "3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c",
+    "tradingagents/research/onchain_replication/matching_sparse.py": "06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e",
+    "tradingagents/research/onchain_replication/matching_identity.py": "0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7",
+    "tradingagents/research/onchain_replication/matching_pair.py": "4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e",
+    "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332",
+    "tradingagents/research/onchain_replication/contracts.py": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a",
+    "tradingagents/research/onchain_replication/matching_immutable_session.py": "c7c498ec5fa00f2e1bc501e47e8c106387ec63d3d6b93197750a99e1d9cc4e07",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-route-profile01-2026-10-09/MANIFEST01.json": "5055a926c5996ff2db7dad82adb2bf2c3cc3f1f2affd5e460b00dca75bf208bd",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full26-outcome-review01-2026-10-09/OUTCOME_REVIEW01.json": "2254c014fc63d158280ac88923adabffeb5915ea297bcadf5c5df37e3577fe7b"
+  },
+  "actual26_mixed_mean_seconds": 0.4270037061715737,
+  "summary": {
+    "(4, 5)": {
+      "route_medians": {
+        "pair_executor": 0.013727370496781077,
+        "memo_constructor": 0.0005787949994555674,
+        "memo_begin": 0.00041883550147758797,
+        "memo_miss": 0.013884815503843129,
+        "memo_end": 0.00044310100201983005
+      },
+      "memo_hit_median": 0.0003085985008510761,
+      "staged_medians": {
+        "policy_check": 1.7618003766983747e-05,
+        "create": 0.0001770670060068369,
+        "session_constructor": 0.00017472750187152997,
+        "advance": 0.012605056494066957,
+        "score": 0.00043926850048592314,
+        "session_close": 1.772998075466603e-06,
+        "state_close": 2.8355061658658087e-06,
+        "bare_annealing_advance": 0.012389458002871834
+      },
+      "independent_component_medians": {
+        "memo_current": 3.366299642948434e-05,
+        "validate_pair": 6.481699529103935e-05,
+        "policy_check": 2.2872503905091435e-05,
+        "numeric_key": 3.288699372205883e-05
+      }
+    },
+    "(8, 7)": {
+      "route_medians": {
+        "pair_executor": 0.020109060002141632,
+        "memo_constructor": 0.0005626045021926984,
+        "memo_begin": 0.00041298950236523524,
+        "memo_miss": 0.02039099399553379,
+        "memo_end": 0.00048100650019478053
+      },
+      "memo_hit_median": 0.00036712849396280944,
+      "staged_medians": {
+        "policy_check": 1.747199712553993e-05,
+        "create": 0.00024114200641633943,
+        "session_constructor": 0.00024021550052566454,
+        "advance": 0.01855459100625012,
+        "score": 0.0008225569981732406,
+        "session_close": 2.0635052351281047e-06,
+        "state_close": 3.512002876959741e-06,
+        "bare_annealing_advance": 0.01849072099867044
+      },
+      "independent_component_medians": {
+        "memo_current": 3.2530995667912066e-05,
+        "validate_pair": 8.694800635566935e-05,
+        "policy_check": 2.3814995074644685e-05,
+        "numeric_key": 3.303699486423284e-05
+      }
+    }
+  },
+  "source_count": 14,
+  "timer_scopes": [
+    "Direct timer includes purpose hash construction and PairExecutor call; executor construction outside.",
+    "Memo miss/hit includes purpose hash construction,validation/key/call; constructor,begin,end measured separately;close untimed.",
+    "Staged sequence times original numerical functions separately; cleanup timed; not nested attribution of original direct/memo calls.",
+    "Bare state construction excluded; private advance only timed; completion asserted but bare result bits not compared."
+  ],
+  "limitations": [
+    "Real26 summary elapsed excludes/integrates different source-era wrapper scopes; not population pair distribution or a matched experiment.",
+    "No genuine authority polling measured:authority_pollNone throughout.",
+    "Bit equality is the retained script assertion outcome, not a stored per-result score corpus.",
+    "CPU2 self-observation is retained; launcher resource/timeout enforcement requires separate evidence, absent from supplied scripts/logs/manifest."
+  ]
+}

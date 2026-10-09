@@ -1,0 +1,9 @@
+# Immutable grouped closure token correction
+
+Uninstalled source candidate only. `_capture` constructs a bytearray containing three `>QQQ32s` entries (device, inode, extent, SHA256), but the actual schema6 grouped `post_batch` requires exact `bytes` of length168 before appending. This explains the reported first completed-journal refusal without requiring a numerical or memory failure.
+
+The sole source change is `return bytes(tokens)`. All capture reads, full `read_complete` validation, exact body/pin readbacks, root checks, token fields and order remain identical. The grouped consumer remains strict; mutable or short tokens remain refused. Legacy callers now receive immutable bytes instead of bytearray: this is an explicit return-type deviation. Existing internal concatenation/unpack/rejoin operations accept bytes. No math, ordering, limits or registration changes.
+
+One stdlib synthetic worker used the actual journal implementation and AST-extracted actual capture/rejoin and grouped post_batch bodies. Two two-cell batches reproduced baseline RED then candidate GREEN; all168 bytes matched exactly. Wrong order, mutable/short tokens, corrupt digest, record mismatch and actual file corruption were refused. Journal FD closure was checked. Eight focused checks passed. The extracted consumer used inert boundaries and never reached transport/group flush: this proves the connected token contract, not genuine Owner/transport or scientific correctness.
+
+Actual limiter: affinity [3], nice10, AS512MiB, CPU60s, FSIZE4MiB, alarm60s. Recorded worker elapsed51,243,646ns and peakRSS22,524KiB. No rerun, numerical package import, real graph or native job. Tiny deliberately corrupted journal evidence remains retained. `inverse.patch` exactly restores the baseline. Independent review and Root integration remain outstanding; no launch authority or performance/capacity claim.

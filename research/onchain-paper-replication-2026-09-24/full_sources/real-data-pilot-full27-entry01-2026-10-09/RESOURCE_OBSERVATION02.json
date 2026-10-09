@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-09T10:12:46.871459+00:00",
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261009-27",
+  "guard": {
+    "child_exit_code": null,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 24369397760
+    },
+    "elapsed_seconds": 3570.229512410995,
+    "host_mem_available_bytes": 7505743872,
+    "limit_reason": null,
+    "memory_current_bytes": 3948838912,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "peak_sampled_memory_current_bytes": 3950694400,
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-a6b3b185c9204ba0ac2efd6b282594ca.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    }
+  },
+  "native_cpu_stat_raw": "usage_usec 3730854942\nuser_usec 3007514468\nsystem_usec 723340474\ncore_sched.force_idle_usec 0\n",
+  "native_readback": "MainPID=2206961\nActiveState=active\nSubState=running\n",
+  "original_guard_raw_sha256": "e212d33fe8e910a659499d28c7e6f7927a66afa7ceae5ca5563919e866d2744d",
+  "proc_observations": [
+    {
+      "clock_ticks_per_second": 100,
+      "comm": "python",
+      "io_raw": "rchar: 497988927\nwchar: 397248062\nsyscr: 532124\nsyscw: 62358\nread_bytes: 24576\nwrite_bytes: 185495552\ncancelled_write_bytes: 4096\n",
+      "pid": 2206550,
+      "stat_raw": "2206550 (python) R 2206126 2205299 2205299 0 -1 4194304 117150 2026662 0 3 73211 48024 1132 1966 20 0 4 0 6544803 5481132032 167157 18446744073709551615 4329472 33424632 140725466481968 0 0 0 0 16781312 16386 0 0 0 17 4 0 0 0 0 0 23068672 33424632 228970496 140725466490441 140725466490947 140725466490947 140725466496944 0\n",
+      "system_seconds": 480.24,
+      "user_seconds": 732.11,
+      "waited_child_system_seconds": 19.66,
+      "waited_child_user_seconds": 11.32
+    },
+    {
+      "clock_ticks_per_second": 100,
+      "comm": "python",
+      "io_raw": "rchar: 633927526\nwchar: 2218\nsyscr: 71303\nsyscw: 3\nread_bytes: 0\nwrite_bytes: 4096\ncancelled_write_bytes: 0\n",
+      "pid": 2206961,
+      "stat_raw": "2206961 (python) S 4540 2206961 2206961 0 -1 4194304 4793 0 0 0 1197 138 0 0 20 0 1 0 6545389 57221120 6531 18446744073709551615 4329472 33424632 140732791299920 0 0 0 0 16781312 16386 1 0 0 17 1 0 0 0 0 0 23068672 33424632 689438720 140732791308032 140732791308902 140732791308902 140732791312304 0\n",
+      "system_seconds": 1.38,
+      "user_seconds": 11.97,
+      "waited_child_system_seconds": 0.0,
+      "waited_child_user_seconds": 0.0
+    },
+    {
+      "clock_ticks_per_second": 100,
+      "comm": "python",
+      "io_raw": "rchar: 139734311372\nwchar: 107950826189\nsyscr: 22027785\nsyscw: 20618350\nread_bytes: 627904512\nwrite_bytes: 425984\ncancelled_write_bytes: 4096\n",
+      "pid": 2206964,
+      "stat_raw": "2206964 (python) R 2206961 2206964 2206964 0 -1 4194304 975538 124825895 0 5 218440 11989 81709 59575 20 0 4 0 6545415 8417247232 881737 18446744073709551615 4329472 33424632 140737228203568 0 0 0 0 16781312 16386 0 0 0 17 0 0 0 0 0 0 23068672 33424632 116752384 140737228210333 140737228210777 140737228210777 140737228214192 0\n",
+      "system_seconds": 119.89,
+      "user_seconds": 2184.4,
+      "waited_child_system_seconds": 595.75,
+      "waited_child_user_seconds": 817.09
+    }
+  ],
+  "qualification": "Same active unit and known observed process roles; original numerical-child receipt not yet authenticated. Sampled process/cgroup CPU and logical IO include differing scopes/reaped-child accounting; not storage throughput/wire nor causal attribution to validation or solver. No real arrays, source change, profiling attachment, second launcher or full capacity/completion claim.",
+  "root_session": 96567,
+  "source": "36ed6802f880857fc432c59a51b4b9b55cab1daa"
+}

@@ -1,0 +1,32 @@
+{
+  "decision": "PASS_STDLIB_ONLY",
+  "checks": [
+    "literal one-line inverse",
+    "same original capture reads/order",
+    "all168 bytes and every packed field unchanged",
+    "candidate rejoin succeeds",
+    "actual grouped roster rejects original bytearray and accepts bytes",
+    "returned bytes independent of mutable original",
+    "existing bytearray token-store assignment compatible"
+  ],
+  "limitations": "Independent fixture uses explicit journal double; author eight connected actual-journal checks separately authenticated. No Owner or numerical runtime imported.",
+  "limits": {
+    "affinity": [
+      3
+    ],
+    "as": [
+      536870912,
+      536870912
+    ],
+    "fsize": [
+      4194304,
+      4194304
+    ],
+    "cpu": [
+      30,
+      30
+    ],
+    "wall_remaining": 29.999987,
+    "nice": 10
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "status": "READ_ONLY_SOURCE_INVESTIGATION_NO_AUTHORITY",
+  "evidence": {
+    "tradingagents/research/lifecycle.py": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc",
+    "tradingagents/research/admission.py": "90bb459bcc7d9f73dda6965c59bf3d6f3bf75f3cbb8bd0ff3b869f7f8b76c930",
+    "tradingagents/research/onchain_replication/imported_authority_lease.py": "bf3c3669a6907305b351adb43867822f9500d84d2c5d3b66b16a5650a0291b0a",
+    "tradingagents/research/onchain_replication/imported_authority_interval.py": "e61ef97f883ed9d27107f6316b774697b8949d83c313928150a0ae717b283f6f",
+    "tradingagents/research/onchain_replication/imported_mcm_identity.py": "75d4e269ad4e87a34061e8331381af417b3c850346d71711902fcd5bbf322c82",
+    "tradingagents/research/onchain_replication/original_import_stage.py": "fada5f7c0f09a911009ced367f29b41b28839c4c24777bdba9b58fdd50a8557c",
+    "tradingagents/research/onchain_replication/original_import_preparation.py": "553d88117d5c39fa8f8755bb702640ca619eaf4097c2183948587d7ef95b5941",
+    "tradingagents/research/onchain_replication/original_dictionary.py": "e05aa225b6bcf8f4e14a644d0a03f2a9aff6cb36ae4a5b02a3dded72d94580b9",
+    "tradingagents/research/onchain_replication/compact_owner.py": "205bf28317cbcd8472774d1a05f0ed9ca56d4597df11418e1aaeb56cfd6c618e",
+    "tradingagents/research/onchain_replication/matching_owner.py": "b7cb394c8c65a2d9688a9557c991a2e694b48fc0b3d2317f71a51c857680dfaa",
+    "tradingagents/research/onchain_replication/resource_binding.py": "06db541c97a122b911c91106daef524cd1e69a33c8a44b4d3abde77f7eb4fb5d",
+    "tradingagents/research/onchain_replication/resources.py": "7bd0fad9e790be8a024b490bdd604d7aeda146e00d21b095f4b21c1391147f7a",
+    "tradingagents/research/onchain_replication/job.py": "2f0f33fe858dfcd2b5f1d76f8aaefe3ba87a333992cf89183f0fa254d17380f0",
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": "06b60d5e0741fe5a8734e8f1f71f9cc3079644075e0a27d03f678bb74ca52ca0",
+    "tradingagents/research/onchain_replication/archive_owner_operations.py": "720c4b2484a268a0e94d8d978a347bbce7bcc3bfdd02cee159fcfa25565e421f",
+    "tradingagents/research/onchain_replication/typed_payload_operations.py": "275661a497b1759748342a88e132652570923cad9feafa40bc115d6df755e42f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-first-batch-preparation-callpath01-2026-10-09/REPORT01.md": "55e63ceb6c718b8cd1cec877943ac584f46fafbe44283b75f9891707b695bf2e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-authority-admission-cost-seam01-2026-10-09/REPORT.md": "60d55c5abc8266b8d4e162957fdf31c48699a9a2113417a862fd00f1679e06e7"
+  },
+  "counts": {
+    "successful_Lease_full": {
+      "ImportedExecution_check": 1,
+      "PreparedImport_check": 2,
+      "Binding_check": 2,
+      "ResearchRun_check_source": 2,
+      "admit": 2,
+      "loaded_source_authentication": 1
+    },
+    "Lease_live": {
+      "admit": 0
+    },
+    "inherited_production_boundary_minimum_admit": 9
+  },
+  "locations": {
+    "Lease_full": "imported_authority_lease.py:118",
+    "Lease_live": "imported_authority_lease.py:125",
+    "ImportedExecution_check": "original_import_stage.py:163",
+    "ImportStage_lease": "original_import_stage.py:65",
+    "Prepared_check": "original_import_preparation.py:74",
+    "Binding_check": "matching_owner.py:112",
+    "Binding_lease": "matching_owner.py:95",
+    "Run_check_source": "tradingagents/research/lifecycle.py:145",
+    "candidate_seam": [
+      "tradingagents/research/admission.py:107",
+      "matching_owner.py:148"
+    ]
+  },
+  "qualification": "Static mandatory successful-path count only, not actual observed admission frequency or timing. No inference from live I/O/CPU counters to causal attribution. One proposed invocation-local Git-content reuse seam; no implementation/admission reduction or measured savings."
+}

@@ -1,0 +1,61 @@
+{
+  "status": "SOURCE_ONLY_UNINSTALLED_PENDING_INDEPENDENT_REVIEW",
+  "baseline": {
+    "tradingagents/research/onchain_replication/matching_annealing.py": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46"
+  },
+  "runtime_dependencies": {
+    ".venv/lib/python3.13/site-packages/scipy/special/_logsumexp.py": "39563dd5655d9bed1f2fe91a2d84d84e9dda817fb1ea4ba8699410c1e70ee3e1",
+    ".venv/lib/python3.13/site-packages/scipy/_lib/_array_api.py": "e7b6d08f877456b9d26af808267263f41f2870261951a19d9ff133301d15e1e2"
+  },
+  "files": {
+    "CHECK01.log": {
+      "bytes": 958,
+      "sha256": "78139c56e416294f64062fb0bb7654efda21f07941dfd399c394c615c819f99b"
+    },
+    "CHECK02.log": {
+      "bytes": 60,
+      "sha256": "f96b6870892bc0abb20ee9b9c39281177c2aebd6a2f8c4d77efe36200a79f773"
+    },
+    "PROFILE01.json": {
+      "bytes": 2096,
+      "sha256": "66180c1c893b730d9a89ff784e0f9f0a68e308d74aa3b4f6884a09065255e399"
+    },
+    "PROFILE01.log": {
+      "bytes": 255,
+      "sha256": "65fd494e1762f8fa40bf81cce1edf0b03d3e3e69d30e52f67f98e10b67e6c665"
+    },
+    "REPORT.md": {
+      "bytes": 3143,
+      "sha256": "d2e3120de8c438e565e428836500e6c2608ca5a71aaf415310c0d2ea1c818b29"
+    },
+    "RESULT02.json": {
+      "bytes": 4582,
+      "sha256": "164a676ab788c6b5d94d3ab4d8591822ce1cc16d0bfdc16d5c33d70ba4ff5f6e"
+    },
+    "build.py": {
+      "bytes": 1882,
+      "sha256": "534541340d9ca9784d1fda085384308d95cda0bc6d4e494137efde131997771b"
+    },
+    "candidate.diff": {
+      "bytes": 2695,
+      "sha256": "ed686906c8e2e68d1e950ded91e4689e68bc4a8eafc80e1e1cd39ec5a310e439"
+    },
+    "check.py": {
+      "bytes": 3423,
+      "sha256": "ecd58e1191c30030c685787d86f7a7401249049f8a02afb68d21006f258999a5"
+    },
+    "check02.py": {
+      "bytes": 3424,
+      "sha256": "d2e74b3da9957853751f2b80972ce417657499db458d3535c615b772599d728e"
+    },
+    "matching_annealing.py": {
+      "bytes": 21074,
+      "sha256": "677017eff0e51c872fec74bd73a639f2a2b3128b4f9929c8f4a39b527738f362"
+    },
+    "profile.py": {
+      "bytes": 2613,
+      "sha256": "eeb7775b1ab0d265cd2f5cdffd3e254f5af10c21420203161bac9114c1ee9b30"
+    }
+  },
+  "inverse": "Remove inserted helper/import/constants and replace three _matrix_logsumexp call sites with logsumexp; candidate.diff records exact change."
+}
