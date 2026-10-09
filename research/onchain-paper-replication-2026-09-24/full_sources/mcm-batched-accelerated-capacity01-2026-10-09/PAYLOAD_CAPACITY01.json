@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-09T02:30:35.378740+00:00",
+  "scope": "read-only host sample and conditional full-workload payload accounting",
+  "payloads": {
+    "original_node_motif_cells": 415968128,
+    "per_graph_batches_total": 101559,
+    "original_score_journal_record_payload_bytes": 22046310784,
+    "numeric_origin_payload_bytes": 3743713152,
+    "numeric_summary_body_upper_bytes": 831971328,
+    "float32_spool_bytes": 1663872512,
+    "float32_published_output_bytes": 1663872512,
+    "closure_token_bytes": 17061912,
+    "offload_record_anchor_bytes": 3249888
+  },
+  "retained_selected_payload_upper_bytes": 7923741304,
+  "current_filesystem_available_bytes": 24828579840,
+  "required_remaining_disk_floor_bytes": 10737418240,
+  "unallocated_room_after_floor_and_selected_payloads_bytes": 6167420296,
+  "memory": {
+    "MemTotal": 16135794688,
+    "MemAvailable": 11345395712
+  },
+  "physical_capacity_admitted": false,
+  "remote_reservation_proved": false,
+  "logical_budget_reduced": false,
+  "exclusions": [
+    "external offload operation/command receipts and logs",
+    "checkpoints",
+    "archive/recovery/transient scratch",
+    "filesystem allocation and inode overhead",
+    "existing other writer reservations",
+    "runtime staging and whole neural memory"
+  ],
+  "next_requirement": "Freeze bounds for every excluded retained/transient store, join shared physical-store reservations and original logical IO/command allowances, measure actual whole job. A positive payload-only remainder is not capacity admission."
+}

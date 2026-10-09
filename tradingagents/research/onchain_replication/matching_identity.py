@@ -19,6 +19,11 @@ def graph_identity(graph):
     if not isinstance(graph, AttributedGraph):
         raise ValueError('unknown matching graph contract')
     validate_attributed(graph)
+    return _attributed_identity_checked(graph)
+
+
+def _attributed_identity_checked(graph):
+    """Fresh identity for an exclusively owned, already validated local graph."""
     if any(not isinstance(node, str) or not node for node in graph.node_ids):
         raise ValueError('nonempty string local node identities required')
     result = hashlib.sha256(b'matching-local-v1\0')

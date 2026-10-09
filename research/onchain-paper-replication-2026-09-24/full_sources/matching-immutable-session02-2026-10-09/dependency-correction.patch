@@ -1,0 +1,30 @@
+--- immutable_pair01.py
++++ immutable_pair02.py
+@@ -86,9 +86,16 @@
+         self.functions = tuple((module, name, getattr(module, name),
+                                 getattr(module, name).__code__) for module, name in
+             ((engine, 'policy'), (engine, '_check_owned'),
+-             (engine, '_advance_owned'), (engine.hard, 'check'),
++             (engine, '_advance_owned'), (engine, 'matrix_identity'),
++             (engine.hard, 'check'), (engine.hard, 'create'),
++             (engine.hard, 'advance'),
++             (annealing, 'normalization_policy'),
+              (annealing, '_check_state_identity'),
+              (annealing, '_advance_checked')))
++        self.dependencies = ((engine, 'ann', annealing),
++                             (engine, 'hard', engine.hard),
++                             (engine, 'np', engine.np),
++                             (annealing, 'np', annealing.np))
+         self.closed = False
+         self.advances = 0
+ 
+@@ -96,6 +103,9 @@
+         require(not self.closed, 'matching session closed')
+         require(config_pin(self.config) == self.config_pin, 'matching config changed')
+         rejoin(self.a, self.pins[0]); rejoin(self.b, self.pins[1])
++        for module, name, dependency in self.dependencies:
++            require(getattr(module, name) is dependency,
++                    'matching module dependency changed')
+         for module, name, function, code in self.functions:
+             require(getattr(module, name) is function and function.__code__ is code,
+                     'matching function changed')

@@ -1,0 +1,7 @@
+# Immutable-input pair executor integration
+
+The selected route uses installed independently reviewed ImmutablePairSession02 for each original engine advance. The original policy admission, engine creation, nested schedule, operation allowance, scoring call, checkpoint callback order and charges, poisoned-executor behavior and engine cleanup remain. Accepted executor03 is retained unchanged. Selection is explicit through this new source module and EXECUTION_ROUTE; no default route is replaced.
+
+The focused synthetic proof compares identical scores, iterations, convergence, advance/checkpoint order and checkpoint charges against executor03. Original 12-advance/5-checkpoint execution is preserved; repeated graph validation inside advances falls from 24 calls to zero in this fixture. Callback failure, exhaustion, cumulative refusal and config mutation poison and clean up the executor. Public checkpoint/scoring checks remain. Independent immutable-session numerical/state/restore proof is reused.
+
+No real-data speedup, cache hit rate, full capacity, genuine Owner/View/registration or launch is established. This source must be joined to the accepted packaged Owner route and exact source/runtime admission before empirical execution. Immutable input exclusive ownership and batch/checkpoint/final source-currentness checks remain requirements. No paper mathematical change or result reuse is introduced here.

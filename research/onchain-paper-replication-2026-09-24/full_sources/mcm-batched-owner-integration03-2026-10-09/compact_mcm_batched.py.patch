@@ -1,0 +1,98 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration02-2026-10-09/compact_mcm_batched.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/compact_mcm_batched.py
+@@ -90,7 +90,12 @@
+         else:
+             require(stat.S_ISREG(st.st_mode) and st.st_nlink==1,'inventory special/link refused')
+             body_hash=hashlib.sha256();child=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
+-            with os.fdopen(child,'rb') as stream:
++            try:stream=os.fdopen(child,'rb')
++            except BaseException as primary:
++                try:os.close(child)
++                except BaseException as failure:primary.add_note('Inventory acquisition cleanup failed: '+repr(failure))
++                raise
++            with stream:
+                 require(io._signature(os.fstat(stream.fileno()))==io._signature(st),'inventory opened inode differs')
+                 for block in iter(lambda:stream.read(262144),b''):body_hash.update(block)
+                 require(io._signature(os.fstat(stream.fileno()))==io._signature(st),'inventory opened body changed')
+@@ -256,11 +261,11 @@
+     def execute(a,m,purpose):
+         nonlocal pair_ordinal
+         result=executor(a,m,purpose);pair_ordinal+=1;return result
+-    journal=modules['journal'].BatchJournal(stage.root/'matching',batch_cells=b['batch_cells'],max_cells=start['cells'],max_bytes=b['max_journal_bytes'],max_body_bytes=b['max_body_bytes'],boundary=boundary)
+-    original=(str(journal.root),tuple(journal.pin));fd=os.open(stream/'closure-tokens.bin',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+-    token_pin=io._signature(os.fstat(fd))[:2];token_hash=hashlib.sha256();seen=0
+-    spool_fd=None
+-    try:
++    journal=None; fd=None; spool_fd=None; primary=None
++    try:
++        journal=modules['journal'].BatchJournal(stage.root/'matching',batch_cells=b['batch_cells'],max_cells=start['cells'],max_bytes=b['max_journal_bytes'],max_body_bytes=b['max_body_bytes'],boundary=boundary)
++        original=(str(journal.root),tuple(journal.pin));fd=os.open(stream/'closure-tokens.bin',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
++        token_pin=io._signature(os.fstat(fd))[:2];token_hash=hashlib.sha256();seen=0
+         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
+         external=None;post_batch=final_batches=None
+@@ -290,32 +295,44 @@
+                 require(inventory['bytes']<=b['max_offload_metadata_bytes'],'offload retained metadata allowance exceeded')
+                 external={'directory':str(work),'coverage':coverage,'inventory':inventory,'max_entries':b['max_offload_entries']}
+                 boundary();require(_checkpoint_inventory(work,max_entries=b['max_offload_entries'])==inventory,'external closure changed after final boundary')
+-    except BaseException:
+-        io._cleanup((lambda:os.close(fd),journal.close)+((lambda:os.close(spool_fd),) if spool_fd is not None else ()))
+-        raise
+-    def sink(ordinal,center,motif,payload):
+-        nonlocal seen
+-        require(ordinal==seen and ordinal==center*32+motif and 0<len(payload)<=128 and len(payload)%4==0,'ordered bounded publication sink differs')
+-        view=memoryview(payload)
+-        while view:
+-            written=os.write(spool_fd,view);require(written>0,'short spool write');view=view[written:]
+-        spool_hash.update(payload);seen+=len(payload)//4
+-        require(4*seen<=b['max_spool_bytes'],'spool reservation exceeded')
+-        if seen==journal.cells:
+-            batch=journal.batch-1;records=journal.read_complete(batch)
+-            token=modules['driver']._capture(journal,batch,records,original)
+-            view=memoryview(token)
++        def sink(ordinal,center,motif,payload):
++            nonlocal seen
++            require(ordinal==seen and ordinal==center*32+motif and 0<len(payload)<=128 and len(payload)%4==0,'ordered bounded publication sink differs')
++            view=memoryview(payload)
+             while view:
+-                n=os.write(fd,view);require(n>0,'zero token write');view=view[n:]
+-            token_hash.update(token);os.fsync(fd)
+-    descriptor={'rows':start['rows'],'cells':start['cells'],'motifs':32,'graph_hash':start['graph_hash'],'node_order_hash':start['scope']['node_order'],'workload_sha256':start['scope']['workflow'],'purpose_schema_version':2}
+-    try:
++                written=os.write(spool_fd,view);require(written>0,'short spool write');view=view[written:]
++            spool_hash.update(payload);seen+=len(payload)//4
++            require(4*seen<=b['max_spool_bytes'],'spool reservation exceeded')
++            if seen==journal.cells:
++                batch=journal.batch-1;records=journal.read_complete(batch)
++                token=modules['driver']._capture(journal,batch,records,original)
++                view=memoryview(token)
++                while view:
++                    n=os.write(fd,view);require(n>0,'zero token write');view=view[n:]
++                token_hash.update(token);os.fsync(fd)
++        descriptor={'rows':start['rows'],'cells':start['cells'],'motifs':32,'graph_hash':start['graph_hash'],'node_order_hash':start['scope']['node_order'],'workload_sha256':start['scope']['workflow'],'purpose_schema_version':2}
+         result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches)
+         require(seen==result['completed_cells']==start['cells'],'batched sink coverage differs')
+         os.fsync(spool_fd)
+         require(io._signature(os.fstat(fd))[:2]==token_pin and io._signature(os.fstat(spool_fd))[:2]==spool_pin,'token/spool descriptor replaced')
++    except BaseException as error:
++        primary=error
++        raise
+     finally:
+-        io._cleanup((lambda:os.close(fd),lambda:os.close(spool_fd),journal.close) if not journal.closed else (lambda:os.close(fd),lambda:os.close(spool_fd)))
++        # Attempt every acquired resource even if an earlier cleanup fails.
++        # Preserve the originating exception; cleanup-only failure still refuses.
++        actions=[]
++        if fd is not None:actions.append(lambda:os.close(fd))
++        if spool_fd is not None:actions.append(lambda:os.close(spool_fd))
++        if journal is not None and not journal.closed:actions.append(journal.close)
++        cleanup_error=None
++        for action in actions:
++            try:action()
++            except BaseException as failure:
++                if primary is not None:primary.add_note('Batched resource cleanup failed: '+repr(failure))
++                elif cleanup_error is None:cleanup_error=failure
++                else:cleanup_error.add_note('Batched resource cleanup failed: '+repr(failure))
++        if primary is None and cleanup_error is not None:raise cleanup_error
+     return {'child_directories':{name:list(io._signature((stage.root/name).lstat())) for name in ('matching','stream')},'retention':b['retention'],'external':external,'spool_inode':list(spool_pin),'spool_sha256':spool_hash.hexdigest(),'format':FORMAT,'rows':start['rows'],'cells':start['cells'],'batch_cells':b['batch_cells'],'batches':journal.batch,'max_body_bytes':b['max_body_bytes'],'journal_inode':list(original[1]),'token_inode':list(token_pin),'tokens_sha256':token_hash.hexdigest(),'stage_inode':list(stage.inode),'scientific_scope':start['scope'],'checkpoint_inventory':checkpoint_inventory,'checkpoint_count':checkpoint_count,'checkpoint_reserved_bytes':checkpoint_bytes,'restart_permitted':False,'authority_boundaries':'entry-batch-checkpoint-final'}
+ 
+ 

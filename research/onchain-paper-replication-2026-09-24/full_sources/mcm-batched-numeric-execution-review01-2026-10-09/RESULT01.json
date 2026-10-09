@@ -1,0 +1,29 @@
+{
+  "synthetic_metadata_only": true,
+  "source_sha256": "51d8f87f2dfc3392638e2302a4be59b100cb7cab370efc7e2a44156afe653544",
+  "results": [
+    {
+      "injected_close_failure": false,
+      "type": "ValueError",
+      "message": "numeric file extent",
+      "is_cleanup": false
+    },
+    {
+      "injected_close_failure": true,
+      "type": "OSError",
+      "message": "synthetic descriptor close failure after actual close",
+      "is_cleanup": true
+    },
+    {
+      "case": "summary-write-and-close",
+      "primary_preserved": false,
+      "observed": "synthetic descriptor close failure after actual close",
+      "summary_credit": 0
+    }
+  ],
+  "arrays_or_authority_objects": false,
+  "affinity": [
+    3,
+    4
+  ]
+}

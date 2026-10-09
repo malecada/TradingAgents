@@ -1,0 +1,55 @@
+--- baseline/numeric_execution.py
++++ candidate/numeric_execution.py
+@@ -17,6 +17,7 @@
+         n=os.write(fd,view);require(n>0,'numeric write made no progress');view=view[n:]
+ def read_file(fd,name,limit):
+     child=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK,dir_fd=fd)
++    primary=None
+     try:
+         before=os.fstat(child);regular(before);require(0<=before.st_size<=limit,'numeric file extent')
+         body=b''
+@@ -26,8 +27,9 @@
+             body+=block
+         require(len(body)==before.st_size and sig(os.fstat(child))==sig(before)==sig(os.stat(name,dir_fd=fd,follow_symlinks=False)),'numeric body changed')
+         return body,sig(before)
++    except BaseException as error:
++        primary=error;raise
+     finally:
+-        primary=__import__('sys').exception()
+         try:os.close(child)
+         except BaseException as cleanup:
+             if primary is None:raise
+@@ -101,9 +103,11 @@
+         self.origin_sig=sig(os.fstat(self.origins_fd));self._origin_current()
+         require(os.pread(self.origins_fd,len(self.buffer),9*start)==self.buffer,'numeric origin write readback differs')
+         name=f'{self.batch:012d}.json';child=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.batches_fd)
++        primary=None
+         try:write_all(child,body);os.fsync(child)
++        except BaseException as error:
++            primary=error;raise
+         finally:
+-            primary=__import__('sys').exception()
+             try:os.close(child)
+             except BaseException as cleanup:
+                 if primary is None:raise
+@@ -146,7 +150,7 @@
+ 
+ def verify(stream_root,binding):
+     """Storage/range closure only; does not recompute numeric key equivalence."""
+-    root=Path(stream_root).absolute();fd=bd=origin=None
++    root=Path(stream_root).absolute();fd=bd=origin=None;primary=None
+     try:
+         require(binding['format']==FORMAT and type(binding['cells']) is int and 0<binding['cells']<2**63 and type(binding['batch_cells']) is int and 0<binding['batch_cells']<=4096,'numeric binding format/range')
+         cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells
+@@ -177,8 +181,10 @@
+             name=f'{index:012d}.json';current_inventory.update(raw({'name':name,'signature':sig(os.stat(name,dir_fd=bd,follow_symlinks=False))}))
+         require(current_inventory.hexdigest()==binding['summary_inventory_sha256'],'numeric summary inventory changed')
+         return {'cells':cells,'computed':computed,'reused':reused,'origin_bytes':9*cells,'summary_bytes':summary_bytes}
++    except BaseException as error:
++        primary=error;raise
+     finally:
+-        primary=__import__('sys').exception();cleanup_error=None
++        cleanup_error=None
+         for value in (origin,bd,fd):
+             if value is not None:
+                 try:os.close(value)

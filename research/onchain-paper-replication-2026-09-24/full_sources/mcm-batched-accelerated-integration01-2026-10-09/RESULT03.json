@@ -1,0 +1,67 @@
+{
+  "decision": "PASS",
+  "checks": [
+    "actual_index_journal_session_cache_spool_composition",
+    "complete64cell_two_batch_coverage",
+    "durable_origin_and_summary_verification",
+    "no_owner_or_admission_fabricated",
+    "tampered_provenance_refuses_completed_stage"
+  ],
+  "numeric_binding": {
+    "format": "numeric-reuse-origins-v1",
+    "cells": 64,
+    "batch_cells": 48,
+    "batches": 2,
+    "computed": 1,
+    "reused": 63,
+    "origin_bytes": 576,
+    "origin_sha256": "3a23c5e03f9c14d1b69fe44d69086cf7d0d7898ab53fe81f40b005239bd567ea",
+    "origin_signature": [
+      66310,
+      11444847,
+      33152,
+      1,
+      576,
+      1791512692001408703,
+      1791512692001408703
+    ],
+    "stream_inode": [
+      66310,
+      11444842
+    ],
+    "batches_inode": [
+      66310,
+      11444846
+    ],
+    "batches_signature": [
+      66310,
+      11444846,
+      16832,
+      2,
+      4096,
+      1791512692002408703,
+      1791512692002408703
+    ],
+    "summary_bytes": 1145,
+    "summary_sha256": "40a089270e96d398607de9320aa2a4e6339afc6238a25129201f8b5573788617",
+    "summary_inventory_sha256": "80081e8f207a88ad622d2974f77693cefea2f0c302f9319ffb839a40fc873869",
+    "max_origin_bytes": 576,
+    "max_summary_bytes": 16384,
+    "counters": {
+      "source_guard_calls": 5,
+      "source_hashed_bytes": 417665,
+      "key_hashed_bytes": 36288,
+      "lookup_probes": 63,
+      "lru_link_updates": 1,
+      "evictions": 0,
+      "accounted_cache_bytes": 1731
+    },
+    "elapsed_seconds": 0.01833852397976443,
+    "old_per_occurrence_execution_credit": false,
+    "independent_key_equivalence_recomputed": false,
+    "resume_supported": false
+  },
+  "scientific_arrays": false,
+  "genuine_authority": false,
+  "benchmark": false
+}

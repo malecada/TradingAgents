@@ -1,0 +1,23 @@
+--- tradingagents/research/onchain_replication/compact_mcm_output.py
++++ tradingagents/research/onchain_replication/compact_mcm_output.py
+@@ -42,6 +42,9 @@
+ 
+ 
+ def _source(args):
++    if 'batched' in args['contract']:
++        from .compact_mcm_batched import output_source
++        return output_source(args)
+     root = args['stage_root']; contract = args['contract']
+     if 'archive' in contract:
+         from . import archive_owner_seal
+@@ -59,6 +62,10 @@
+ 
+ 
+ def _chunks(args, start):
++    if 'batched' in args['contract']:
++        from .compact_mcm_batched import output_chunks
++        yield from output_chunks(args,start)
++        return
+     root, fd = io._open(args['stage_root'] / 'stream/batches')
+     try:
+         count = start['rows'] * start['motifs']; chunk = start['chunk_cells']

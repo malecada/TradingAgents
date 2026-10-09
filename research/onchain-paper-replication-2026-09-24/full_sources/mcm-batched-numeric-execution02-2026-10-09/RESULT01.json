@@ -1,0 +1,87 @@
+{
+  "status": "RED01_GREEN02",
+  "cases": [
+    {
+      "version": "01",
+      "scope": "read_file",
+      "primary_failure": true,
+      "observed": "actual close succeeded; synthetic cleanup failure",
+      "cleanup_primary": true,
+      "notes": []
+    },
+    {
+      "version": "01",
+      "scope": "read_file",
+      "primary_failure": false,
+      "observed": "actual close succeeded; synthetic cleanup failure",
+      "cleanup_primary": true,
+      "notes": []
+    },
+    {
+      "version": "01",
+      "scope": "summary",
+      "primary_failure": true,
+      "observed": "actual close succeeded; synthetic cleanup failure",
+      "primary_preserved": false,
+      "cleanup_primary": true,
+      "notes": [],
+      "batch_credit": 0
+    },
+    {
+      "version": "01",
+      "scope": "summary",
+      "primary_failure": false,
+      "observed": "actual close succeeded; synthetic cleanup failure",
+      "primary_preserved": false,
+      "cleanup_primary": true,
+      "notes": [],
+      "batch_credit": 0
+    },
+    {
+      "version": "02",
+      "scope": "read_file",
+      "primary_failure": true,
+      "observed": "numeric file extent",
+      "cleanup_primary": false,
+      "notes": [
+        "numeric read cleanup: OSError('actual close succeeded; synthetic cleanup failure')"
+      ]
+    },
+    {
+      "version": "02",
+      "scope": "read_file",
+      "primary_failure": false,
+      "observed": "actual close succeeded; synthetic cleanup failure",
+      "cleanup_primary": true,
+      "notes": []
+    },
+    {
+      "version": "02",
+      "scope": "summary",
+      "primary_failure": true,
+      "observed": "synthetic summary write failure",
+      "primary_preserved": true,
+      "cleanup_primary": false,
+      "notes": [
+        "numeric summary cleanup: OSError('actual close succeeded; synthetic cleanup failure')"
+      ],
+      "batch_credit": 0
+    },
+    {
+      "version": "02",
+      "scope": "summary",
+      "primary_failure": false,
+      "observed": "actual close succeeded; synthetic cleanup failure",
+      "primary_preserved": false,
+      "cleanup_primary": true,
+      "notes": [],
+      "batch_credit": 0
+    }
+  ],
+  "affinity": [
+    0,
+    1
+  ],
+  "numerical_imports": false,
+  "source_sha256": "54d406da0836c90a4db16ee0300a083b1e63e7dd1204abafa5e32394a0c05b55"
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution01-2026-10-09/verify02.py", line 56, in <module>
+    finally:os.write=write;y.close()
+                           ~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution01-2026-10-09/numeric_execution.py", line 127, in close
+    self.buffer.clear();self.closed=True
+    ~~~~~~~~~~~~~~~~~^^
+BufferError: Existing exports of data: object cannot be re-sized

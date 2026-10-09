@@ -1,0 +1,27 @@
+{
+  "decision": "withheld",
+  "scope": "source-only changed executor seam",
+  "literal_inverse": true,
+  "finding": "unguarded session.close masks primary exception and skips engine.close(state)",
+  "failure_injection_scope": "A real checkpoint callback installs a throwing session.close. This proves exception robustness failure; it does not assert ordinary frozen close naturally raises.",
+  "required_fix": "Attempt session and engine cleanup independently; preserve existing primary and append cleanup notes; if no primary, poison and raise cleanup failure after attempting state cleanup.",
+  "inherited_numeric_and_session_proof": true,
+  "actual_author_validation_counts": [
+    12,
+    0
+  ],
+  "genuine_authority_or_empirical_execution": false,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-immutable-pair-executor01-2026-10-09/pair_executor.py": "16d756e0b930f1eb0ccc05fbfa74dc659845fb7be3514df5d9f3141ba7165560",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-immutable-pair-executor01-2026-10-09/MANIFEST01.json": "f759923eeca367e61be5929e65df1fdf693b519e092ff37fe71de48bcd95c850",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-immutable-pair-executor01-2026-10-09/RESULT01.json": "07d72a65f652d922fcb32d4e2bbbab3e65a83059c913214ab775392e42244321",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-execution03-2026-10-09/pair_executor.py": "6d1ad3a720eec15f63c7fd6423a9f0c92b4e5020c0d9962ef825f8b5cf73d34a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-immutable-session-review02-2026-10-09/SOURCE_REVIEW01.json": "7048ee20bf21443ee69fa036a229014b6e57420e9388000a16a2e52505234a9e",
+    "tradingagents/research/onchain_replication/matching_immutable_session.py": "c7c498ec5fa00f2e1bc501e47e8c106387ec63d3d6b93197750a99e1d9cc4e07",
+    "tradingagents/research/onchain_replication/matching_annealing.py": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46",
+    "tradingagents/research/onchain_replication/matching_checkpoint.py": "d5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-immutable-pair-executor-review01-2026-10-09/reproduce.py": "df43404afd64118bbf119e71dbcd5392278f1e6f6b4a0f4cbbca4fc3190c3c2a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-immutable-pair-executor-review01-2026-10-09/TEST01.log": "51ea72677953e493b02472d95fbc04f076e2b1265899d8c45089fb31ff07922a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-immutable-pair-executor-review01-2026-10-09/RESULT01.json": "63213b37a84c79e2696f2746141d7a8033edcc7c751e40dc948b104e89453284"
+  }
+}

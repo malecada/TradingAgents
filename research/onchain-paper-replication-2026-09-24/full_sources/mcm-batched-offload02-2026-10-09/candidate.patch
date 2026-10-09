@@ -1,0 +1,113 @@
+--- baseline/typed_payload_policy.py
++++ candidate/typed_payload_policy.py
+@@ -3,7 +3,9 @@
+ import json
+ import re
+ 
+-KINDS = {'score-tail-f64':80,'score-batch-f64':8,'mcm-output-f32':4}
++LEGACY_KINDS = {'score-tail-f64':80,'score-batch-f64':8,'mcm-output-f32':4}
++BATCHED_KIND = 'mcm-batched-bundle-v3'
++KINDS = {**LEGACY_KINDS,BATCHED_KIND:1}
+ ASSUMPTION = ('Historical proof authenticates prior full byte and semantic recovery against '
+  'the original roster. It does not establish current remote byte availability; '
+  'every future restore/use must freshly retrieve and authenticate its bytes.')
+@@ -17,8 +19,9 @@
+ def sha(value):return hashlib.sha256(value).hexdigest()
+ 
+ def validate(value):
+-    require(type(value) is dict and set(value)=={'schema_version','format','assumption','graphs','local_free_floor_bytes','max_control_bytes'},'typed payload policy fields')
+-    require(type(value['schema_version']) is int and value['schema_version']==1 and value['format']=='typed-payload-budget-v1' and value['assumption']==ASSUMPTION,'explicit selected historical recovery assumption required')
++    require(type(value) is dict and set(value)==({'schema_version','format','assumption','graphs','local_free_floor_bytes','max_control_bytes'} | ({'batched_parent'} if value.get('schema_version')==2 else set())),'typed payload policy fields')
++    require(type(value['schema_version']) is int and (value['schema_version'],value['format']) in ((1,'typed-payload-budget-v1'),(2,'typed-payload-budget-v2')) and value['assumption']==ASSUMPTION,'explicit selected historical recovery assumption required')
++    if value['schema_version']==2:require(value['batched_parent']=='actual-active-mcm-stage-v1','explicit batched parent grant required')
+     require(type(value['local_free_floor_bytes']) is int and value['local_free_floor_bytes']>=0,'typed floor')
+     require(type(value['max_control_bytes']) is int and 0<value['max_control_bytes']<2**63,'typed cumulative metadata allowance')
+     graphs=value['graphs'];require(type(graphs) is dict and 0<len(graphs)<=1024,'finite typed graph roster')
+@@ -26,13 +29,13 @@
+         require(type(graph) is str and re.fullmatch('[0-9a-f]{64}',graph),'typed graph hash')
+         require(type(entry) is dict and set(entry)=={'rows','chunk_cells','kinds'},'typed graph fields')
+         require(all(type(entry[k]) is int and 0<entry[k]<2**63 for k in ('rows','chunk_cells')) and entry['chunk_cells']<=65536,'typed population bound')
+-        require(type(entry['kinds']) is dict and set(entry['kinds'])==set(KINDS),'all three original payload types must be explicitly budgeted')
++        require(type(entry['kinds']) is dict and set(entry['kinds'])==set(LEGACY_KINDS if value['schema_version']==1 else KINDS),'selected payload types must be explicitly budgeted')
+         for kind, budget in entry['kinds'].items():
+             require(type(budget) is dict and set(budget)=={'max_operations','max_preserved_bytes','max_recovered_bytes','max_chunks','chunk_bytes'},'typed budget fields')
+             require(all(type(v) is int and 0<v<2**63 for v in budget.values()),'finite positive typed budget')
+             require(budget['chunk_bytes']<=4*1024**2 and budget['chunk_bytes']%KINDS[kind]==0,'aligned native-bounded typed part')
+             if kind=='score-batch-f64':require(budget['chunk_bytes']>=entry['chunk_cells']*8,'original bounded f64 batch must fit registered part')
+-            require(budget['max_preserved_bytes']>=entry['rows']*32*KINDS[kind],'full original graph payload allowance required')
++            require(budget['max_preserved_bytes']>=entry['rows']*32*(53 if kind==BATCHED_KIND else KINDS[kind]),'full original graph payload allowance required')
+     return value
+ 
+ def capacity(value):
+--- baseline/typed_payload_operations.py
++++ candidate/typed_payload_operations.py
+@@ -68,12 +68,13 @@
+         require(stage.pairs==32*self.policy['graphs'][self.graph]['rows'],'typed full original row population')
+         require(type(binding) is dict and 0<len(policy.raw(binding))<=8192,'bounded typed source binding')
+         require(type(payload_bytes) is int and 0<=payload_bytes<=self.budget['max_preserved_bytes'] and type(chunk_count) is int and 0<=chunk_count<=self.budget['max_chunks'],'typed operation finite declaration')
++        batched_open=(self.parent is None and self.policy['schema_version']==2 and kind==policy.BATCHED_KIND and not stage.closed)
+         if self.parent is not None:
+             require(self.parent['ledger'] is self.ledger and self.parent['held'] is self.held and self.parent['view'] is self.view and self.parent['thread']==get_ident(),'typed parent capability differs')
+             require((self.ledger._active is not None and self.ledger._active._stage is stage) or (type(self.parent.get('typed_operation')) is _Operation and self.parent['typed_operation'].stage is stage),'typed actual parent operation')
+             self.parent_operation=self.ledger._active
+         else:
+-            require(stage.closed and owner.active is None and self.ledger._active is None,'typed standalone requires actual closed stage and idle ledger')
++            require(self.ledger._active is None and ((batched_open and self.policy['batched_parent']=='actual-active-mcm-stage-v1' and owner.active is stage) or (stage.closed and owner.active is None)),'typed standalone requires selected actual active batched stage or closed idle stage')
+             self.parent_operation=None
+         self.context._outer();self.ledger._current(full=True);self.ledger._stage(stage)
+         registry=getattr(self.ledger,'_typed_payload_registry',None)
+@@ -92,6 +93,7 @@
+             'kind':kind,'binding':binding,'input':record['input'],'input_sha256':record['input_sha256'],
+             'ledger_identity':self.ledger._identity,'parent_claim_sha256':None if self.parent is None else self.parent['claim_sha256'],
+             'ordinal':self.counter['operations'],'reserved_payload_bytes':payload_bytes,'reserved_chunks':chunk_count,'reserved':dict(self.counter)}
++        if batched_open:self.record['batched_parent']='actual-active-mcm-stage-v1'
+         self.sha=policy.sha(policy.raw(self.record));self.closed=False;self.proofs=[];self.preserved=0;self.recovered=0
+         self.claim_name='typed-'+self.sha+'.json';self._publish(self.claim_name,self.record)
+         # Context also persists the reservation before any command. Parent event
+@@ -131,7 +133,7 @@
+             self.parent['lease']()
+         else:
+             self.ledger._current(full=False);self.ledger._stage(self.stage)
+-            require(self.stage.closed and self.owner.active is None and self.ledger._active is None and self.stage.reference==self.record['stage_reference'],'typed closed stage changed')
++            require(self.ledger._active is None and ((self.record.get('batched_parent')=='actual-active-mcm-stage-v1' and self.policy['schema_version']==2 and self.record['kind']==policy.BATCHED_KIND and self.owner.active is self.stage and not self.stage.closed) or (self.stage.closed and self.owner.active is None and self.stage.reference==self.record['stage_reference'])),'typed selected stage changed')
+         self.held.check(self.owner)
+ 
+     def preserve(self,source,*,expected_sha256,expected_bytes,index,attempt):
+@@ -181,6 +183,37 @@
+         self.lease();source=Path(source);self._path(source)
+         require(any(p['source']==str(source) and p['receipt']['source_sha256']==expected_sha256 and p['receipt']['bytes']==expected_bytes for p in self.proofs),'typed original source lacks successful full recovery')
+         dispose(source,expected_bytes,expected_sha256)
++
++    def retire_batched_sources(self,receipt,*,manifest,journal,batch,tokens,attempt,semantic_root):
++        """Selected bundle only: fresh real transport recovery precedes retirement.
++
++        This is sequential three-file retirement, not an atomic group unlink.
++        The durable intent and archive proof retain partial-failure disposition.
++        """
++        from . import batched_offload_semantics as semantic
++        self.lease()
++        require(self.record['kind']==policy.BATCHED_KIND and self.policy['schema_version']==2,'new batched kind not selected')
++        require(journal.root==self.stage.root/'matching','only actual stage generated batch namespace')
++        binding=semantic.binding(journal,batch,tokens,manifest)
++        require(self.record['binding']==binding,'batched original binding differs')
++        require(any(p['receipt']==receipt for p in self.proofs),'archive lacks this operation preserve proof')
++        raw=self.recover(receipt,attempt=attempt) # Genuine View/held/shared budget, never callback success.
++        self._path(Path(semantic_root))
++        semantic.recover(raw,manifest,journal,batch,tokens,Path(semantic_root))
++        semantic.dispose_recovery(Path(semantic_root),manifest,batch,tokens)
++        intent={'schema_version':1,'kind':'batched-retirement-intent-v1','operation_sha256':self.sha,
++                'binding':binding,'receipt_sha256':policy.sha(policy.raw(receipt)),
++                'recovery_attempt':str(attempt),'semantic_root':str(semantic_root),
++                'failure_disposition':'any subset may be retired; archive recovery required'}
++        self._publish('typed-batched-retirement-'+self.sha+'.json',intent)
++        self.lease() # Last external lease before exact no-callback source join/unlinks.
++        require(semantic.binding(journal,batch,tokens,manifest)==binding and journal.root==self.stage.root/'matching','retirement namespace binding changed')
++        semantic.current(journal,batch,tokens)
++        for suffix in semantic.SUFFIXES:
++            os.unlink(f'{batch:08d}'+suffix,dir_fd=journal.fd)
++        os.fsync(journal.fd);journal._root()
++        self._publish('typed-batched-retired-'+self.sha+'.json',{'schema_version':1,
++                      'operation_sha256':self.sha,'binding':binding,'files':3,'receipt_sha256':intent['receipt_sha256']})
+ 
+     def history(self):
+         require(self.closed,'typed completion not yet anchored')

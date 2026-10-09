@@ -1,0 +1,35 @@
+--- tradingagents/research/onchain_replication/compact_mcm.py
++++ tradingagents/research/onchain_replication/compact_mcm.py
+@@ -127,6 +127,9 @@
+         and selected.get('compact_mcm_input') == item.get('compact_mcm_input') == input_name,
+         'explicit compact MCM route differs')
+     policy = json.loads(run.read_input(input_name))
++    from . import compact_mcm_batched
++    batched_selected = compact_mcm_batched.selected(policy)
++    if batched_selected:compact_mcm_batched.validate(policy,pairs)
+     durability_selected = type(policy.get('schema_version')) is int and policy['schema_version']==2
+     if durability_selected:
+         from .chunk_durability import policy as durability_policy
+@@ -137,8 +140,8 @@
+                 'explicit registered resource-only pilot required')
+         durability_policy(policy['durability'])
+     require(set(policy) == ({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','durability'}
+-            if durability_selected else {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'})
+-        and type(policy['schema_version']) is int and policy['schema_version'] in (1,2)
++            if durability_selected else ({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','batched'} if batched_selected else {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'}))
++        and type(policy['schema_version']) is int and policy['schema_version'] in (1,2,3)
+         and type(policy['max_entries']) is int and 0 < pairs <= policy['max_entries'] < 2**63
+         and type(policy['max_workflow_metadata_bytes']) is int
+         and 3*io.META_LIMIT*(len(owner.required)-1) <= policy['max_workflow_metadata_bytes'] < 2**63,
+@@ -291,6 +294,11 @@
+     from .imported_mcm_identity import Target
+     target=Target(execution,graph,graph_hash)
+     with compact_owner._held(target.owner) as held:
++        from . import compact_mcm_batched
++        selected_policy=json.loads(target.owner.bound._run.read_input(input_name))
++        if compact_mcm_batched.selected(selected_policy):
++            require(progress is None and diagnostic is None,'batched scoring diagnostic/partial-stop route not implemented')
++            return compact_mcm_batched.produce(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+         return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held,progress=progress,diagnostic=diagnostic)
+ 
+ 

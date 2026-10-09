@@ -1,0 +1,49 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-offload02-2026-10-09/registered_offload.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration02-2026-10-09/registered_offload.py
+@@ -49,7 +49,22 @@
+     result={'schema_version':1,'format':'registered-batched-offload-v1','batch':batch,'start':rows[0][0],'stop':rows[-1][0]+1,'binding':binding,'manifest':manifest,'history':op.history(),'receipt':receipt,'retired_files':3}
+     typed._write(work/'offload.json',result);return result
+ 
+-def fresh_recover(owner,stage,*,record,journal,work):
++def _consume_recovered(journal,evidence,batch,directory,consume):
++    # Actual recovered files, exact same registered journal class. This
++    # is a read-only handle; no journal birth or authority is invented.
++    reader=object.__new__(type(journal));reader.root=directory/'tree'
++    reader.pin=tuple(evidence['root_pin']);reader.batch_cells=4096
++    reader.max_cells=2**63;reader.max_body=1024**2
++    import os
++    reader.fd=os.open(reader.root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
++    try:
++        rows=reader._read_complete(batch)
++        consume(batch,rows)
++        require(rows==reader._read_complete(batch),'recovered records changed during consumer')
++        reader._root()
++    finally:os.close(reader.fd)
++
++def fresh_recover(owner,stage,*,record,journal,work,consume=None):
+     """Caller must anchor exact record hash; fresh transport retrieval always runs."""
+     _selected(owner,stage);work=Path(work)
+     require(record['format']=='registered-batched-offload-v1','batched offload record required')
+@@ -62,11 +77,12 @@
+         data=op.recover(record['receipt'],attempt=work/'recover')
+         evidence=semantic.recover(data,manifest,journal,batch,tokens,work/'semantic')
+         require(evidence['start']==record['start'] and evidence['stop']==record['stop'],'fresh recovered coverage differs')
++        if consume is not None:_consume_recovered(journal,evidence,batch,work/'semantic',consume)
+         semantic.dispose_recovery(work/'semantic',manifest,batch,tokens)
+     result={'schema_version':1,'format':'registered-batched-fresh-recovery-v1','original_history':record['history'],'history':op.history(),'source_binding':record['binding'],'start':evidence['start'],'stop':evidence['stop']}
+     typed._write(work/'complete.json',result);return result
+ 
+-def finalize(owner,stage,*,records,batch_count,journal,work):
++def finalize(owner,stage,*,records,batch_count,journal,work,consume=None):
+     """Fresh full sweep of externally anchored (record_path, SHA256) entries."""
+     import hashlib
+     _selected(owner,stage);require(type(batch_count) is int and 0<batch_count<=stage.pairs,'finite final batch count required')
+@@ -79,7 +95,7 @@
+         import json
+         record=json.loads(encoded)
+         require(record['batch']==batch and record['start']==cursor,'final offload coverage order differs')
+-        fresh=fresh_recover(owner,stage,record=record,journal=journal,work=work/f'{batch:08d}')
++        fresh=fresh_recover(owner,stage,record=record,journal=journal,work=work/f'{batch:08d}',consume=consume)
+         require(typed._read(path)==encoded,'offload record changed during final recovery')
+         aggregate.update(bytes.fromhex(expected));aggregate.update(bytes.fromhex(policy.sha(policy.raw(fresh))));cursor=fresh['stop']
+     sentinel=object();require(next(iterator,sentinel) is sentinel and cursor==stage.pairs,'extra/missing final cells')

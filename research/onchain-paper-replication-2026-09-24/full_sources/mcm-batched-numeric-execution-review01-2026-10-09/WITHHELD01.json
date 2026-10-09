@@ -1,0 +1,32 @@
+{
+  "decision": "withheld",
+  "scope": "source-only numeric occurrence closure",
+  "findings": [
+    {
+      "function": "read_file",
+      "failure": "close masks body refusal"
+    },
+    {
+      "function": "NumericExecution._complete_batch",
+      "failure": "summary close masks original write failure"
+    }
+  ],
+  "required_change": "Preserve primary errors and attach close failures in both inner child-descriptor scopes; cleanup-only failures must propagate.",
+  "unchanged_numeric_proof_reused": true,
+  "arrays_or_authority_execution": false,
+  "key_equivalence_independently_recomputed": false,
+  "whole_capacity_or_transport_admission": false,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution01-2026-10-09/numeric_execution.py": "51d8f87f2dfc3392638e2302a4be59b100cb7cab370efc7e2a44156afe653544",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution01-2026-10-09/MANIFEST01.json": "3caeeb569468feb3055f0e951f08a343887a6230acd8ab81e58a5dde57a55bf0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution01-2026-10-09/RESULT03.json": "0979a9211cdf8263af708dbd5b2c0077ea0c20dc0c982bf12ecbc50a91318626",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution01-2026-10-09/TEST02.log": "e57a807145c8d52c6a57952d664aa2df0cda2cdb57534df3b8d93cfbeb130485",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution01-2026-10-09/TEST03.log": "519a9ab71ba0544adaa5046eaa02db11aaf35b03b7bb2018fe772f726a1fd0dd",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-exact-numeric-reuse-review03-2026-10-09/SOURCE_REVIEW01.json": "898ba87982610ca93faab99c5c1c53da10e2e889bb51759ed055484b1b2d9525",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-immutable-pair-executor-review02-2026-10-09/SOURCE_REVIEW01.json": "d0412a8fac80bb91f1688660cfa2c4134b1356a9f974a77c98e69db5ed2118e9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review01-2026-10-09/reproduce.py": "8fe610a7a4230242b6a8aa79c7264e22b6431df9419712bdee962ad75da5fae8",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review01-2026-10-09/RESULT01.json": "1b27e358d03b99e5ad2d5353e9487090d3851ae016dbb6da6c9f88253d607c60",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review01-2026-10-09/TEST01.log": "7eb2e032cbdcd989170d8d95323bd0a8f6a90325f9829b66c32062dad72fc8ae",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review01-2026-10-09/REPORT.md": "970e7aba1d0589799c44f9833c4e0294c6d64f81bb75e2f6df93b65cd6223f92"
+  }
+}

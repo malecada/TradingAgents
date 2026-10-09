@@ -1,0 +1,31 @@
+{
+  "status": "PASS_CHANGED_SEAMS_ONLY",
+  "checks": [
+    "outside_batch_refused",
+    "same_numeric_new_identity_reused",
+    "no_source_or_roster_per_hit",
+    "one_probe_per_same_key_hit",
+    "final_guard_once",
+    "all4096slots_bounded",
+    "incremental_actual_object_accounting",
+    "hash_lookup_no_full_table_walk",
+    "hash_collision_exact_bytes",
+    "constant_lru_relink",
+    "eviction_incremental_accounting",
+    "final_roster_change_refuses",
+    "final_source_change_refuses",
+    "light_config_refuses",
+    "checkpoint_final_roster_refuses",
+    "unchanged_exact_key_eligibility"
+  ],
+  "actual33occurrence_counters": {
+    "source_guard_calls": 3,
+    "source_hashed_bytes": 227625,
+    "key_hashed_bytes": 18711,
+    "lookup_probes": 32,
+    "lru_link_updates": 1,
+    "evictions": 0
+  },
+  "4096_lookup_probes": 5114,
+  "no_benchmark": true
+}

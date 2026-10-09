@@ -1,0 +1,59 @@
+{
+  "source_only": true,
+  "replacements": {
+    "compact_mcm_batched.py": {
+      "old_sha256": "da92cebd2303735399ef91f4931a2aaf778233bae957831b213c9d49d7800b9a",
+      "source_sha256": "9dc3e82d5388a2743e863632160fc8d538712ab375c9e37681c3b5802592e1ae"
+    },
+    "batched_journal.py": {
+      "old_sha256": "16d8c368195a166df0fbdf6f24b7ab0449b1cc06c122746dc132babbe97af06b",
+      "source_sha256": "0d96f0f3fbe7a320161d8bd16ee7d0d0b0de0384cfbce22459dcf9a8aa9e92a4"
+    }
+  },
+  "inherited_from": "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration02-2026-10-09",
+  "inherited_sources": {
+    "compact_mcm.py": "2d228931314994fcaebf2b5bec987e9cb6a9bb72cb1c72e98fa551ed8f4ae259",
+    "compact_owner.py": "205bf28317cbcd8472774d1a05f0ed9ca56d4597df11418e1aaeb56cfd6c618e",
+    "compact_mcm_output.py": "7231e53094e44885c93b1e9cbb682183be1061bd5a362d435443ebe30e6e8241",
+    "batched_driver.py": "c2857ee40fd8f673e6e50d1a6c0ab7f3000f8a5799f72d55865b663a6320b75a",
+    "batched_pair_executor.py": "6d1ad3a720eec15f63c7fd6423a9f0c92b4e5020c0d9962ef825f8b5cf73d34a",
+    "registered_offload.py": "0066bf2479211dc5bb8b96dc2dea621cdb8f3f77c60879b66a3a34db0954e7ee",
+    "typed_payload_policy.py": "77e4c951e13e8ffdad0487b19e3b28a8a271dbe04b0b4f3ab19d047b42ae7cc1",
+    "typed_payload_operations.py": "ff7ef86d1605776e05a772a44428f77563e2f698098fbfb094f17d35627b836c",
+    "batched_offload_semantics.py": "fdf22e8b709f257f6805ded70944485f47402f975cddfa011264e09374de3661"
+  },
+  "unchanged_adapter_functions": [
+    "checkpoint",
+    "execute",
+    "sink",
+    "post_batch",
+    "consume",
+    "final_batches",
+    "produce",
+    "verify_content",
+    "_modules",
+    "validate",
+    "stage_content",
+    "output_chunks",
+    "output_source"
+  ],
+  "journal_non_constructor_AST_identical": true,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration02-2026-10-09/MANIFEST.json": "47129b0020d364f4fa9395d66bcfa6d74fe28f5492a36b8bbd3b719b31b0de42",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration-review02-2026-10-09/WITHHELD02.json": "059b9df8a50b59f21de3898c6ef44effafbb9afc0af10412613f75582e955694",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration-review02-2026-10-09/ACQUISITION02.json": "44e224a4ce01b7fea6a0d33f7675ba8f4cc3e05a10871e08d30fe8373d7d0ff3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration-review02-2026-10-09/INVENTORY03.json": "fd03732d9fcb23765d14f9d9eac118002e4a524dbbfff10d4db7237d8c098ced",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/CLEANUP_RESULT01.json": "f7635fd49dac1f303567a8d28b27206e4fd347cd84707d2dc4bf5fdddb053d8e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/ACQUISITION01.json": "bb647e85e12375a67bfa2c425719940bac45bb47d0bedab55f50e7b61df7774d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/INVENTORY01.json": "9ce4665414d0be2d9c79187a97807081e0b2e326288c98b00e3902f79eadcd24",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/REPORT.md": "60f7b5820618b1bf46dacc1890ddcdb1081e4031b01cbbadf06461f110da5e17",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/CLEANUP_TEST01.log": "d9fa326e5620f3b0902037d99d4b68823de813a10be0d69725fa48bef2731848",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/ACQUISITION_TEST01.log": "664e5a942b38a97be6625ce6127f0e86685c70528046e4f3f485a4a66b7a3b07",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/INVENTORY_TEST01.log": "0e75b7767e0462a90350bd2e50efa7d67b26b4fb5ff7025bf8a2dccc1e1346c4",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/verify_inventory.py": "1eb70e384e11c974eda0985acda44452ddf4e1fa252963628039a1a0ec4e4c2d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/verify_acquisition.py": "0485375262e8bbf93899ba261b72affb57ad54f8df5f25b5f08854c4aec190d2",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/verify_cleanup_errors.py": "56f08ac1a1408afeb825df2c5bcb4434803f61e6f0c700ee2ed7a9a9fe92b002"
+  },
+  "genuine_authority_or_numerical_execution": false,
+  "admission": false
+}

@@ -1,0 +1,23 @@
+--- withheld-executor01
++++ executor02
+@@ -42,10 +42,15 @@
+         except BaseException as error:
+             self.poisoned=True;primary=error;raise
+         finally:
+-            if session is not None:session.close()
+-            if state is not None:
+-                try:engine.close(state)
++            cleanup_error=None
++            actions=[]
++            if session is not None:actions.append(session.close)
++            if state is not None:actions.append(lambda:engine.close(state))
++            for action in actions:
++                try:action()
+                 except BaseException as cleanup:
+                     self.poisoned=True
+-                    if primary is not None:primary.add_note('engine cleanup failed: '+repr(cleanup))
+-                    else:raise
++                    if primary is not None:primary.add_note('executor cleanup failed: '+repr(cleanup))
++                    elif cleanup_error is None:cleanup_error=cleanup
++                    else:cleanup_error.add_note('additional executor cleanup failed: '+repr(cleanup))
++            if primary is None and cleanup_error is not None:raise cleanup_error

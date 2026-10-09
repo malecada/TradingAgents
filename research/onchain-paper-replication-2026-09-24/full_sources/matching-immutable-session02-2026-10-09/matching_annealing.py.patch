@@ -1,0 +1,15 @@
+--- tradingagents/research/onchain_replication/matching_annealing.py
++++ matching_annealing.py
+@@ -130,7 +130,11 @@
+ 
+ def check(state,a,b,c):
+     validate_pair(a,b,c)
+-    if set(state)!=META|set(NAMES) or type(state['schema_version']) is not int or state['schema_version']!=3 or state['safe'] is not True or state['identity']!=( _identity_after_pair_validation(a,b,c) if type(state) is dict else identity(a,b,c)) or state['shape']!=[len(a.node_ids),len(b.node_ids)]:raise ValueError('matching state identity differs')
++    return _check_state_identity(state,a,b,c,lambda:(_identity_after_pair_validation(a,b,c) if type(state) is dict else identity(a,b,c)))
++
++def _check_state_identity(state,a,b,c,expected_identity):
++    """Private mutable-state checks after current exclusive immutable-input proof."""
++    if set(state)!=META|set(NAMES) or type(state['schema_version']) is not int or state['schema_version']!=3 or state['safe'] is not True or state['identity']!=expected_identity() or state['shape']!=[len(a.node_ids),len(b.node_ids)]:raise ValueError('matching state identity differs')
+     if state['phase'] not in ('nodes','outer','edges','done')+NORMALIZATION:raise ValueError('state phase differs')
+     if type(state['iterations']) is not int or not 0<=state['iterations']<=c['max_iterations']:raise ValueError('state iteration differs')
+     beta=c['beta0']

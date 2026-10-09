@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py", line 14, in <module>
+    from . import compact_owner as owners, compact_mcm as producer
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_owner.py", line 21, in <module>
+    from . import matching_owner, compact_policy, compact_matcher, compact_stage
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_owner.py", line 18, in <module>
+    from .feature_journal import FeatureJournal,required_set
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/feature_journal.py", line 4, in <module>
+    from .component_store import save_component,load_component,reference_bytes,materialize_component
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/component_store.py", line 11, in <module>
+    import torch
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/torch/__init__.py", line 436, in <module>
+    from torch._C import *  # noqa: F403
+    ^^^^^^^^^^^^^^^^^^^^^^
+ImportError: libtorch_cpu.so: failed to map segment from shared object

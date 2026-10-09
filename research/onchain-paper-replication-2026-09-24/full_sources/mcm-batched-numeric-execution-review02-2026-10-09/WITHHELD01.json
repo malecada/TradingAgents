@@ -1,0 +1,26 @@
+{
+  "decision": "withheld",
+  "literal_two_finally_inverse": true,
+  "original_findings_fixed": true,
+  "new_finding": "Ambient sys.exception suppresses cleanup-only errors under an enclosing handled exception, including summary batch credit.",
+  "required_fix": "Track the local primary with explicit except in read, summary and verifier scopes.",
+  "source_sha256": "54d406da0836c90a4db16ee0300a083b1e63e7dd1204abafa5e32394a0c05b55",
+  "numeric_or_authority_execution": false,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution01-2026-10-09/numeric_execution.py": "51d8f87f2dfc3392638e2302a4be59b100cb7cab370efc7e2a44156afe653544",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution02-2026-10-09/numeric_execution.py": "54d406da0836c90a4db16ee0300a083b1e63e7dd1204abafa5e32394a0c05b55",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution02-2026-10-09/MANIFEST01.json": "77764ee77ccc2f5c2d0d5b7a4a5cf032879d345fe930a0c49336b611666809d7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution02-2026-10-09/RESULT01.json": "843ad391fd3b102015ba645074788a9b0ccd8c1303dba4f1f82ed30cf54ce3c7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review01-2026-10-09/WITHHELD01.json": "d8d6274d190bd62d48f849663e38c7e9bc872f8c8d11f9b113dc12aa4559c8a9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/REPORT.md": "bf796d539ffaf31fdbae71993c027dfb5d90881a2813abe7236dffc8c1a5e375",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/SUMMARY_ENCLOSING_RESULT01.json": "e5bfec9511c2242cca51c5ee26c4fa95cffbe585c16c7a72ab91290c6e690b55",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/ENCLOSING_RESULT01.json": "51933ec8961e89aae10cdbf7322678e1204877ad0b3c1fea7aa07fab2bb66623",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/RESULT01.json": "788d05c256ea537939365456a7fb5ac5f54c6919926701f92aadaa9de24f614f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/TEST01.log": "c4d3a452c4e237ffaf0222cae939e45ecda9041d109500170833650e4043b37d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/ENCLOSING_TEST01.log": "b4f7627969b4ad05dace2177d0f8025d9f457d9abb63f71329079191d6e804b0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/SUMMARY_ENCLOSING_TEST01.log": "d48e3144eefaca2959f8d08b7ab03e0537dbccedbb0916d02b79497a217b869a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/verify.py": "33cc93995352eb4e0ad0c775269799eec8d23dac8bad8485fbce2b876a95c55f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/enclosing_exception.py": "a88afa38e3da33b49c15742ee7ae5524ff9aec566c0bfa666cd06cfde964fb13",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-numeric-execution-review02-2026-10-09/summary_enclosing.py": "982f79f323da5a1af5cc43894ec2cb213c7436dab01c289370b7d4c365907754"
+  }
+}

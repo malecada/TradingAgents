@@ -1,0 +1,63 @@
+{
+  "status": "PASS_ENGINEERING_ONLY",
+  "checks": [
+    "identity_only_reuse_exact",
+    "reference_tolerance",
+    "miss_node",
+    "miss_edgefeature",
+    "miss_edgeorder",
+    "miss_dtype",
+    "miss_signedzero",
+    "lru_eviction",
+    "no_graph_retention",
+    "oversize_not_cached",
+    "mutable_not_reused",
+    "configuration_refuses_poisoned",
+    "runtime_replacement_refuses",
+    "unfinished_never_cached",
+    "close_clears",
+    "closed_refuses"
+  ],
+  "example_occurrence_receipts": [
+    {
+      "schema_version": 1,
+      "kind": "engineering_numeric_occurrence",
+      "ordinal": 0,
+      "purpose_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "mode": "computed",
+      "origin_purpose_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "origin_ordinal": 0,
+      "score_f64_be": "3fe6969696969697",
+      "iterations": 3,
+      "convergence": "iteration_cap",
+      "cached": true,
+      "checkpoint_attempt_delta": 5,
+      "checkpoint_reserved_byte_delta": 1966080,
+      "retained_cache_bytes": 1303,
+      "old_per_occurrence_execution_credit": false
+    },
+    {
+      "schema_version": 1,
+      "kind": "engineering_numeric_occurrence",
+      "ordinal": 1,
+      "purpose_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "mode": "reused",
+      "origin_purpose_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "origin_ordinal": 0,
+      "score_f64_be": "3fe6969696969697",
+      "iterations": 3,
+      "convergence": "iteration_cap",
+      "cached": true,
+      "checkpoint_attempt_delta": 0,
+      "checkpoint_reserved_byte_delta": 0,
+      "retained_cache_bytes": 1303,
+      "old_per_occurrence_execution_credit": false
+    }
+  ],
+  "reference_tolerance": 1e-12,
+  "affinity": [
+    3,
+    4
+  ],
+  "no_benchmark": true
+}

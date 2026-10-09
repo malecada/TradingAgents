@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-immutable-session01-2026-10-09/verify01.py", line 27, in <module>
+    c=copy.deepcopy(config);left=original.create(a,b,c,**policy);right=engine.create(a,b,c,**policy);s=session.ImmutablePairSession(a,b,c,engine=engine,annealing=ann);calls=0
+                                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_checkpoint.py", line 36, in create
+    p=policy(n,m,c,max_state_bytes=max_state_bytes,normalization_chunk_entries=normalization_chunk_entries,hardening_chunk_entries=hardening_chunk_entries,hardening_buffer_bytes=hardening_buffer_bytes)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_checkpoint.py", line 22, in policy
+    ann.normalization_policy(n,m,normalization_chunk_entries)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_annealing.py", line 122, in normalization_policy
+    raise ValueError('complete reduction axis and singleton padding allowance required')
+ValueError: complete reduction axis and singleton padding allowance required

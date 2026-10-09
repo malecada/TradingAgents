@@ -1,0 +1,9 @@
+# Numeric execution03 — narrow source review accepted
+
+Accepted exact source e3a6450c816a73c8ba60c270d88564a9728437f501d5df594f5f9c1018a1ec34, subject to the prior source-only integration qualifications. The three changed scopes now initialize a local primary=None and set it only in their explicit except block: read_file, summary publication and final verify. Exact literal inverse returns candidate02 byte-for-byte. No numeric, receipt, origin, counter, timing, capacity, closure or authority logic changed.
+
+Independent fresh metadata fixtures verify all three cleanup-only failures propagate inside an unrelated caller except block. The enclosing exception receives no misleading cleanup notes; summary batch credit remains0 and every opened descriptor is actually closed by the fixture. Independent repetitions also confirm the original extent/write errors remain primary when close additionally fails. Earlier RED artifacts remain unchanged; author six ambient and eight prior cases are reused and pinned. No numerical matrix was rerun.
+
+Inherited review01 covers actual memo begin/end boundaries, fresh provisional receipt joins, fixed9B provenance and bounded summaries/counters. Inherited accepted memo03/executor02 proofs cover their numerical domains. This review authenticates the changed source composition only; it does not independently recompute numeric key equivalence, execute genuine Owner/transport/claims, admit whole capacity, or validate Root's separate caller by implication. The new source must be selected through the reviewed genuine caller and current registered source map before any empirical execution.
+
+Tests used source AST and synthetic metadata only, no arrays or numerical imports, AS256MiB/FSIZE4MiB/30s/nice10/observed CPUs[3,4]. No Main, Git, STATE or earlier artifacts were changed. Source review stops after closing the exact ambient-exception defect.

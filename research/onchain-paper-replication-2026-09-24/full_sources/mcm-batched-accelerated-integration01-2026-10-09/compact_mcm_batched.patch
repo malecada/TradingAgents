@@ -1,0 +1,108 @@
+--- accepted-owner03
++++ accelerated-schema5
+@@ -19,24 +19,30 @@
+ 
+ FORMAT = 'ordered-mcm-batch-closure-v2'
+ PACKAGE = 'tradingagents.research.onchain_replication'
+-MODULES = {'driver':'batched_driver','journal':'batched_journal','executor':'batched_pair_executor'}
++MODULES = {'driver':'batched_driver','journal':'batched_journal','executor':'batched_pair_executor','numeric_execution':'batched_numeric_execution','numeric_reuse':'batched_numeric_reuse'}
+ require = io._require
+ 
+ 
+ def selected(policy):
+-    return type(policy) is dict and type(policy.get('schema_version')) is int and policy['schema_version'] == 4
++    return type(policy) is dict and type(policy.get('schema_version')) is int and policy['schema_version'] == 5
+ 
+ 
+ def validate(policy, pairs):
+     require(selected(policy) and set(policy) == {'schema_version','max_entries','max_workflow_metadata_bytes','numeric','batched'}, 'batched MCM policy schema')
+     b = policy['batched']
+-    require(type(b) is dict and set(b) == {'format','authority_boundaries','batch_cells','max_journal_bytes','max_body_bytes','max_closure_token_bytes','max_checkpoint_bytes','retention','max_spool_bytes','max_offload_metadata_bytes','max_offload_entries','max_offload_anchor_bytes'}, 'batched bounds schema')
++    require(type(b) is dict and set(b) == {'format','authority_boundaries','batch_cells','max_journal_bytes','max_body_bytes','max_closure_token_bytes','max_checkpoint_bytes','retention','max_spool_bytes','max_offload_metadata_bytes','max_offload_entries','max_offload_anchor_bytes','execution'}, 'batched bounds schema')
+     require(b['format'] == FORMAT and b['authority_boundaries'] == 'entry-batch-checkpoint-final', 'explicit operational deviation required')
+     require(b['retention'] in ('local-v2','typed-recover-before-retire-v2'),'explicit batched retention route required')
+     require(type(b['max_spool_bytes']) is int and 4*pairs <= b['max_spool_bytes'] < 2**63 and type(b['max_offload_metadata_bytes']) is int and 0 < b['max_offload_metadata_bytes'] < 2**63 and type(b['max_offload_entries']) is int and 0 < b['max_offload_entries'] <= 4000000,'explicit spool/metadata bounds required')
+     for k in ('batch_cells','max_journal_bytes','max_body_bytes','max_closure_token_bytes','max_checkpoint_bytes'):
+         require(type(b[k]) is int and 0 < b[k] < 2**63, 'positive batched allowance required')
+     require(b['batch_cells'] <= 4096 and 1024 <= b['max_body_bytes'] <= 1024**2 and b['max_closure_token_bytes'] <= 64*1024**2, 'batch bounds differ')
++    execution=b['execution']
++    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'},'explicit numeric execution schema required')
++    require(execution['route']=='immutable-input-session+exact-byte-reuse-v1','explicit numerical operation deviation required')
++    require(all(type(execution[k]) is int for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')),'finite numeric execution allowances required')
++    require(1<=execution['max_entries']<=4096 and 1024<=execution['max_retained_bytes']<=64*1024**2 and 0<execution['max_key_bytes']<=min(execution['max_retained_bytes'],8*1024**2),'bounded exact result cache required')
++    require(9*pairs<=execution['max_origin_bytes']<2**63 and 0<execution['max_summary_bytes']<2**63,'full numeric provenance reservation required')
+     count = (pairs+b['batch_cells']-1)//b['batch_cells']
+     require(type(b['max_offload_anchor_bytes']) is int and 0 <= b['max_offload_anchor_bytes'] <= 16*1024**2 and (b['retention']=='local-v2' or count*32<=b['max_offload_anchor_bytes']),'offload anchor memory allowance exceeded')
+     require(count*168 <= b['max_closure_token_bytes'] and count*(2*b['max_body_bytes']+92)+pairs*53 <= b['max_journal_bytes'], 'full batch denominator not reserved')
+@@ -48,7 +54,7 @@
+     result={name:importlib.import_module(PACKAGE+'.'+module) for name,module in MODULES.items()}
+     # ONE packaged journal class is shared with the exact typed semantics helper.
+     if admission is not None:
+-        names=tuple(MODULES.values())+('compact_mcm_batched','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations')
++        names=tuple(MODULES.values())+('matching_immutable_session','compact_mcm_batched','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations')
+         for name in names:
+             module=importlib.import_module(PACKAGE+'.'+name)
+             relative='tradingagents/research/onchain_replication/'+name+'.py'
+@@ -173,7 +179,9 @@
+             require(child in ('matching','stream') and stat.S_ISDIR((root/child).lstat().st_mode) and list(io._signature((root/child).lstat()))==signature,'batched child directory identity differs')
+         require(set(binding['child_directories'])=={'matching','stream'},'child directory roster differs')
+         require(io._signature((root/'matching').lstat())[:2]==tuple(binding['journal_inode']),'matching root inode differs')
+-        _children(root/'stream',{'closure-tokens.bin','scores.f32'})
++        _children(root/'stream',{'closure-tokens.bin','scores.f32','numeric-origins.bin','numeric-batches'})
++        numeric=modules['numeric_execution'].verify(root/'stream',binding['numeric_execution'])
++        require(numeric['cells']==binding['cells'] and numeric['batch_cells']==binding['batch_cells'],'numeric occurrence/full MCM denominator differs')
+         if binding['retention']=='local-v2':
+             _children(root/'matching',(f'{i:08d}'+suffix for i in range(binding['batches']) for suffix in modules['driver'].SUFFIXES))
+             for _ in _tokens(root,binding,modules):pass
+@@ -257,7 +265,7 @@
+         checkpoint_count+=1;checkpoint_inventory=_checkpoint_inventory(checkpoints)
+         require(checkpoint_inventory['bytes']<=checkpoint_bytes,'actual checkpoint bytes exceed reservation')
+         boundary();require(_checkpoint_inventory(checkpoints)==checkpoint_inventory,'checkpoint changed at boundary')
+-    executor=modules['executor'].PairExecutor(thaw(target.owner.matching),p['pair'],p['schedule'],checkpoint)
++    executor=None
+     def execute(a,m,purpose):
+         nonlocal pair_ordinal
+         result=executor(a,m,purpose);pair_ordinal+=1;return result
+@@ -268,6 +276,8 @@
+         token_pin=io._signature(os.fstat(fd))[:2];token_hash=hashlib.sha256();seen=0
+         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
++        execution=b['execution']
++        executor=modules['numeric_execution'].NumericExecution(stream,thaw(target.owner.matching),p['pair'],p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')})
+         external=None;post_batch=final_batches=None
+         if b['retention']=='typed-recover-before-retire-v2':
+             from . import registered_offload as offload
+@@ -313,6 +323,7 @@
+         descriptor={'rows':start['rows'],'cells':start['cells'],'motifs':32,'graph_hash':start['graph_hash'],'node_order_hash':start['scope']['node_order'],'workload_sha256':start['scope']['workflow'],'purpose_schema_version':2}
+         result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches)
+         require(seen==result['completed_cells']==start['cells'],'batched sink coverage differs')
++        numeric_binding=executor.finish()
+         os.fsync(spool_fd)
+         require(io._signature(os.fstat(fd))[:2]==token_pin and io._signature(os.fstat(spool_fd))[:2]==spool_pin,'token/spool descriptor replaced')
+     except BaseException as error:
+@@ -325,6 +336,7 @@
+         if fd is not None:actions.append(lambda:os.close(fd))
+         if spool_fd is not None:actions.append(lambda:os.close(spool_fd))
+         if journal is not None and not journal.closed:actions.append(journal.close)
++        if executor is not None:actions.append(executor.close)
+         cleanup_error=None
+         for action in actions:
+             try:action()
+@@ -333,7 +345,7 @@
+                 elif cleanup_error is None:cleanup_error=failure
+                 else:cleanup_error.add_note('Batched resource cleanup failed: '+repr(failure))
+         if primary is None and cleanup_error is not None:raise cleanup_error
+-    return {'child_directories':{name:list(io._signature((stage.root/name).lstat())) for name in ('matching','stream')},'retention':b['retention'],'external':external,'spool_inode':list(spool_pin),'spool_sha256':spool_hash.hexdigest(),'format':FORMAT,'rows':start['rows'],'cells':start['cells'],'batch_cells':b['batch_cells'],'batches':journal.batch,'max_body_bytes':b['max_body_bytes'],'journal_inode':list(original[1]),'token_inode':list(token_pin),'tokens_sha256':token_hash.hexdigest(),'stage_inode':list(stage.inode),'scientific_scope':start['scope'],'checkpoint_inventory':checkpoint_inventory,'checkpoint_count':checkpoint_count,'checkpoint_reserved_bytes':checkpoint_bytes,'restart_permitted':False,'authority_boundaries':'entry-batch-checkpoint-final'}
++    return {'child_directories':{name:list(io._signature((stage.root/name).lstat())) for name in ('matching','stream')},'numeric_execution':numeric_binding,'retention':b['retention'],'external':external,'spool_inode':list(spool_pin),'spool_sha256':spool_hash.hexdigest(),'format':FORMAT,'rows':start['rows'],'cells':start['cells'],'batch_cells':b['batch_cells'],'batches':journal.batch,'max_body_bytes':b['max_body_bytes'],'journal_inode':list(original[1]),'token_inode':list(token_pin),'tokens_sha256':token_hash.hexdigest(),'stage_inode':list(stage.inode),'scientific_scope':start['scope'],'checkpoint_inventory':checkpoint_inventory,'checkpoint_count':checkpoint_count,'checkpoint_reserved_bytes':checkpoint_bytes,'restart_permitted':False,'authority_boundaries':'entry-batch-checkpoint-final'}
+ 
+ 
+ def produce(target, *, graph_hash,input_name,output_input,held):
+@@ -354,7 +366,7 @@
+         from . import stage_retention
+         selection=stage_retention.mcm_selection(graph,target.dictionary) if 'restart_retention' in owner.policy else None
+         stage=owner._begin('mcm-'+graph_hash,start['scope']['workflow'],start['cells'],None,retention_selection=selection)
+-        require(b['max_journal_bytes']+b['max_closure_token_bytes']+b['max_checkpoint_bytes']+b['max_spool_bytes']+b['max_offload_metadata_bytes']+4*io.META_LIMIT<=stage.reservation,'new batched retained bytes exceed genuine stage reservation')
++        require(b['max_journal_bytes']+b['max_closure_token_bytes']+b['max_checkpoint_bytes']+b['max_spool_bytes']+b['max_offload_metadata_bytes']+b['execution']['max_origin_bytes']+b['execution']['max_summary_bytes']+4*io.META_LIMIT<=stage.reservation,'new batched retained bytes exceed genuine stage reservation')
+         def boundary():
+             held.check(owner);target.check();owner.boundary();stage.lease();target.final();io._root(root,fd)
+             require(io._read(fd,'start.json',io.META_LIMIT)==io._json(start),'batched producer start changed')

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-offload02-2026-10-09/verify.py", line 10, in <module>
+    policy.validate(base);v2=json.loads(json.dumps(base));v2.update(schema_version=2,format='typed-payload-budget-v2');v2['graphs']['a'*64]['kinds'][policy.BATCHED_KIND]=dict(budget);policy.validate(v2)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-offload02-2026-10-09/typed_payload_policy.py", line 35, in validate
+    require(budget['chunk_bytes']<=4*1024**2 and budget['chunk_bytes']%KINDS[kind]==0,'aligned native-bounded typed part')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-offload02-2026-10-09/typed_payload_policy.py", line 14, in require
+    if not ok: raise ValueError(message)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: aligned native-bounded typed part

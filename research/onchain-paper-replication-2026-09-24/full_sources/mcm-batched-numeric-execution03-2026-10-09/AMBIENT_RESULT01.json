@@ -1,0 +1,65 @@
+{
+  "status": "RED02_GREEN03",
+  "cases": [
+    {
+      "version": "02",
+      "scope": "read",
+      "returned_success": true,
+      "cleanup_exception_propagated": false,
+      "ambient_notes": [
+        "numeric read cleanup: OSError('synthetic close failure after real close')"
+      ],
+      "batch_credit": 0
+    },
+    {
+      "version": "02",
+      "scope": "summary",
+      "returned_success": true,
+      "cleanup_exception_propagated": false,
+      "ambient_notes": [
+        "numeric summary cleanup: OSError('synthetic close failure after real close')",
+        "numeric read cleanup: OSError('synthetic close failure after real close')"
+      ],
+      "batch_credit": 1
+    },
+    {
+      "version": "02",
+      "scope": "verify",
+      "returned_success": true,
+      "cleanup_exception_propagated": false,
+      "ambient_notes": [
+        "numeric verifier cleanup: OSError('synthetic close failure after real close')"
+      ],
+      "batch_credit": 1
+    },
+    {
+      "version": "03",
+      "scope": "read",
+      "returned_success": false,
+      "cleanup_exception_propagated": true,
+      "ambient_notes": [],
+      "batch_credit": 0
+    },
+    {
+      "version": "03",
+      "scope": "summary",
+      "returned_success": false,
+      "cleanup_exception_propagated": true,
+      "ambient_notes": [],
+      "batch_credit": 0
+    },
+    {
+      "version": "03",
+      "scope": "verify",
+      "returned_success": false,
+      "cleanup_exception_propagated": true,
+      "ambient_notes": [],
+      "batch_credit": 1
+    }
+  ],
+  "affinity": [
+    0,
+    1
+  ],
+  "numerical_imports": false
+}

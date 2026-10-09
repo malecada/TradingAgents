@@ -1,0 +1,28 @@
+--- tradingagents/research/onchain_replication/matching_checkpoint.py
++++ matching_checkpoint.py
+@@ -39,9 +39,13 @@
+ 
+ 
+ def check(s,a,b,c):
++    return _check_owned(s,a,b,c,ann.check)
++
++def _check_owned(s,a,b,c,annealing_check):
++    """Private state check with an explicit same-call input validator."""
+     if not isinstance(s,dict) or set(s)!=FIELDS or type(s['version']) is not int or s['version']!=3 or s['safe'] is not True:raise ValueError('invalid or poisoned ranked composite')
+     if not isinstance(s['policy'],dict) or set(s['policy'])!=POLICY_FIELDS:raise ValueError('policy schema differs')
+-    p=policy(len(a.node_ids),len(b.node_ids),c,**s['policy']);ann.check(s['annealing'],a,b,c)
++    p=policy(len(a.node_ids),len(b.node_ids),c,**s['policy']);annealing_check(s['annealing'],a,b,c)
+     if s['annealing']['max_chunk_entries']!=p['normalization_chunk_entries']:raise ValueError('annealing policy differs')
+     if s['phase']=='annealing':
+         if s['annealing']['phase']=='done' or s['hardening'] is not None or s['matrix_sha256'] is not None:raise ValueError('unreachable annealing phase')
+@@ -63,6 +67,10 @@
+ def advance(s,a,b,c,*,max_operations):
+     check(s,a,b,c)
+     if type(max_operations) is not int or max_operations<=0:raise ValueError('positive operation allowance required')
++    return _advance_owned(s,a,b,c,max_operations=max_operations)
++
++def _advance_owned(s,a,b,c,*,max_operations):
++    """Private body; composite/input/budget checks precede entry, no callbacks."""
+     s['safe']=False
+     try:
+         used=0

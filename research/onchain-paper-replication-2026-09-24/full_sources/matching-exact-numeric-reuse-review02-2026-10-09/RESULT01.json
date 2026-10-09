@@ -1,0 +1,40 @@
+{
+  "status": "PASS_CHANGED_CONTROL_SEAMS_SYNTHETIC_DEPENDENCIES",
+  "checks": [
+    "outside_batch_refuses",
+    "fresh_identity_on_hit",
+    "fresh_purpose_and_origin",
+    "provisional_not_old_credit",
+    "hit_without_source_rescan",
+    "final_attestation",
+    "close_clears",
+    "collision_exact_bytes",
+    "correct_lru_eviction",
+    "actual_incremental_accounting",
+    "clear_freelist_reusable",
+    "oversize_entry_no_retention",
+    "end_source_mutation_refuses_clears",
+    "per_call_config_refuses",
+    "primary_exception_poison_cleanup",
+    "checkpoint_runtime_mutation_refuses",
+    "close_failure_still_clears",
+    "unchanged_numeric_framing"
+  ],
+  "source_sha256": "04f809dbd56deedde50fd4c8b1169fc3f652bbfe94e3a86e9834700bde2fb237",
+  "source_pin_mismatches": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_checkpoint.py": {
+      "frozen": "4287d59c0ca92cdefce10af5bb2181d720eadc937b2b93912d098fac93232126",
+      "current": "d5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c"
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_annealing.py": {
+      "frozen": "c04a26336e5da652b7cec5a357fcc8aeb596ef30359526102ffad8c82964acdc",
+      "current": "2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46"
+    }
+  },
+  "affinity": [
+    0,
+    1
+  ],
+  "numerical_runtime_imported": false,
+  "numeric_evidence": "unchanged prior evidence reused; synthetic executor does not prove numerical execution"
+}

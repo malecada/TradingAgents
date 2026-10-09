@@ -1,0 +1,21 @@
+--- tradingagents/research/onchain_replication/compact_owner.py
++++ tradingagents/research/onchain_replication/compact_owner.py
+@@ -93,6 +93,9 @@
+         from .original_import_stage import content
+         return content(stage)
+     contract = thaw(stage.contract)
++    if 'batched' in contract:
++        from .compact_mcm_batched import stage_content
++        return stage_content(stage)
+     if 'archive' not in contract:
+         return compact_stage.verify(stage.root, expected_sha256=stage.reference,
+                                     lease=lambda: None, **contract)
+@@ -376,6 +379,8 @@
+             self.poisoned = True; raise
+ 
+     def _stage_bindings(self, stage):
++        if stage.contract is not None and 'batched' in stage.contract:
++            _stage_content(stage);return
+         if stage.kind=='dictionary-import':
+             _stage_content(stage);return
+         if stage.count_policy is not None:

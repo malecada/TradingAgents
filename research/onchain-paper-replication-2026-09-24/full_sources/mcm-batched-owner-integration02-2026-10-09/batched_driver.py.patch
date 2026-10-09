@@ -1,0 +1,44 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-driver03-2026-10-09/driver.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration02-2026-10-09/batched_driver.py
+@@ -80,7 +80,7 @@
+ 
+ 
+ def drive(graph, dictionary, *, descriptor, policy, journal, executor, consumer,
+-          max_chunk_bytes, max_closure_token_bytes):
++          max_chunk_bytes, max_closure_token_bytes, post_batch=None, final_batches=None):
+     """Consume a fresh journal; consumer(ordinal,center,motif_start,f32_bytes).
+ 
+     Consumer must synchronously copy/persist chunks, treating everything as
+@@ -92,6 +92,7 @@
+     upstream = None
+     primary = None
+     try:
++        require((post_batch is None and final_batches is None) or (callable(post_batch) and callable(final_batches)), 'paired explicit offload hooks required')
+         require(callable(executor) and callable(consumer), 'explicit executor/consumer required')
+         require(type(max_chunk_bytes) is int and 4 <= max_chunk_bytes <= 128, 'bounded f32 chunk required')
+         require(journal.cells == journal.batch == 0 and not journal.closed and not journal.poisoned,
+@@ -152,6 +153,7 @@
+                 consumer(ordinal, center, motif, payload)
+                 offset += width
+             _rejoin(journal, batch, token, original_root)
++            if post_batch is not None:post_batch(journal,batch,token,original_root)
+             delivered += count
+         try:
+             next(upstream)
+@@ -160,9 +162,13 @@
+         else:
+             raise ValueError('extra MCM task beyond full coverage')
+         require(journal.batch == batch_count, 'final batch count differs')
+-        for batch in range(batch_count):
+-            start = batch*3*TOKEN.size
+-            _rejoin(journal, batch, memoryview(tokens)[start:start+3*TOKEN.size], original_root)
++        if final_batches is None:
++            for batch in range(batch_count):
++                start = batch*3*TOKEN.size
++                _rejoin(journal, batch, memoryview(tokens)[start:start+3*TOKEN.size], original_root)
++        else:
++            final_batches(journal,tokens,batch_count,original_root)
++            _root(journal,original_root)
+         require(delivered == journal.cells == n*32, 'incomplete MCM coverage')
+         return {'status':'engineering_ordered_cells_delivered','completed_rows':n,
+                 'completed_cells':delivered,'output_bytes':4*delivered,

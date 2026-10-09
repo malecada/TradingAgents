@@ -1,3 +1,25 @@
+# Current coordination — 2026-10-09T02:44:14.762301+00:00
+
+No numerical job active; all3bounded assignmentscomplete. Root installed exact13module acceleratedschema5 source map5b9a58f3 after caller a3731a1d/Owner03d6b3fbeb/executor02d041/memo03898b/NumericExecution036c38 source reviews. Installed actual canonical-package source smoke passes; synthetic64cellcompletecore/corruptionrefusal passes; no realMCM/update/capacity/speedclaim. Originalsourcefailures/withhelds/claimed94/closed23 preserved.
+
+Root alone next: physical/logical store/transport/resource bounds, one fresh committed pilot registration/cumulative amendment/combined entryreview with reused tooling, then atmostONE eligible identity. Otheragents available for bounded changedseam implementation/review. No empirical95/protocolrelease/claim yet. Localpayloads7.923GB leave6.167GB beyond10GiBfloor atlatestread for unboundedexcludedcontrols/scratch/filesystem/otherwriters; remote reservationunproved. Full7graph/415968128cell plusrealjointupdate remainsgoal.
+
+Previous coordination retained below.
+
+# Current coordination — 2026-10-09T02:19:27.850955+00:00
+
+No numerical process active. Main session02 exact accepted source installed; Root sole Main/Git/accounting/registration/STATE/actual preservation/one launcher. Previous status turn no progress; current actual implementation progress.
+
+- annealing_exact_acceleration: ONLY NEW mcm-batched-numeric-execution01 finite cache-batch guards/origin references/durable summaries; no Main/claims/real arrays.
+- Root: ONLY NEW mcm-batched-accelerated-integration01 explicitschema5 composition and eventual integration.
+- owner_policy_fix21 and residual_metadata_review20: completed Owner03/executor02 reviewed assignments, available.
+
+Accepted source: Owner03d6b3fbeb, executor02d0412a8f, memo03 actual joined review898ba879. Old withheld sources/failures preserved. No empirical95 adopted or new registration/claim. Fullseven feature/training milestone remains incomplete; no measured real speedup/capacity.
+
+Previous coordination retained below.
+
+Current owners: owner_policy_fix21 ONLY NEW Ownerintegration02 (inventory correction + actualoffload/spool/publication seam); residual_metadata_review20 ONLY NEW exactnumericreuse02 (bounded hashedLRU and declaredbatch/checkpointsourceguards); annealing_exact_acceleration completed Owner01WITHHELD review and is available for successor review. Root owns Main/STATE/Git/accounting and externalrecovery; native none. Actualfailed23 recovery accepted15f671a2. ImmutableSession02 narrowaccepted7048, uninstalled; source-onlyoffloadsemantic review available. Previous local snapshots below.
+
 # Current coordination — 2026-10-09
 
 Native23 closed FAILED; Root1248 exited1, all4PIDs/cgroup absent; freeze ended. No active numerical job. Outcome accepted3d3f2fd4; actual local140-body capture ready for commit/push/fresh recovery. Root alone Main/Git/registration/accounting/preservation/ONE launcher.

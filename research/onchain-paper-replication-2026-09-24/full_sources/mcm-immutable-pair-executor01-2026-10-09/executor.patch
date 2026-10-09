@@ -1,0 +1,42 @@
+--- accepted-executor03
++++ immutable-executor01
+@@ -2,6 +2,10 @@
+ import copy
+ from tradingagents.research.onchain_replication import matching_checkpoint as engine
+ from tradingagents.research.onchain_replication import matching_pair as pair
++from tradingagents.research.onchain_replication import matching_annealing as annealing
++from tradingagents.research.onchain_replication.matching_immutable_session import ImmutablePairSession
++
++EXECUTION_ROUTE = "immutable-input-session-v1"
+ 
+ class CheckpointStop(RuntimeError): pass
+ 
+@@ -15,7 +19,7 @@
+         if schedule['max_checkpoints']>policy['max_publications']:raise ValueError('checkpoint count exceeds policy')
+     def __call__(self,a,b,purpose_hash):
+         if self.poisoned:raise ValueError('executor poisoned')
+-        state=None;primary=None
++        state=None;session=None;primary=None
+         try:
+             pair.hash_string(purpose_hash)
+             pair.policy_check(a,b,self.config,self.policy,allow_checkpoint_layout=True)
+@@ -24,9 +28,10 @@
+                     or self.reserved_bytes+self.schedule['max_checkpoints']*reserved>self.schedule['max_total_checkpoint_bytes']):
+                 raise ValueError('cumulative checkpoint allowance exceeded')
+             state=engine.create(a,b,self.config,**{k:self.policy[k] for k in pair.ENGINE_FIELDS})
++            session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing)
+             for ordinal in range(self.schedule['max_checkpoints']):
+                 for _ in range(self.schedule['calls_per_checkpoint']):
+-                    engine.advance(state,a,b,self.config,max_operations=self.schedule['operations_per_call'])
++                    session.advance(state,max_operations=self.schedule['operations_per_call'])
+                     if state['phase']=='done':break
+                 if state['phase']=='done':
+                     result=engine.score_only(state,a,b,self.config,max_buffer_bytes=self.policy['max_score_buffer_bytes'],chunk_edges=self.policy['chunk_edges'])
+@@ -37,6 +42,7 @@
+         except BaseException as error:
+             self.poisoned=True;primary=error;raise
+         finally:
++            if session is not None:session.close()
+             if state is not None:
+                 try:engine.close(state)
+                 except BaseException as cleanup:

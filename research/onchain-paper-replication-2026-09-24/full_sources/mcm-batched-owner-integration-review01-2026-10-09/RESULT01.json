@@ -1,0 +1,43 @@
+{
+  "status": "DEFECT_REPRODUCED",
+  "defect": "Unexpected checkpoint directory leaves recorded inventory unchanged",
+  "before": {
+    "files": 1,
+    "bytes": 24,
+    "sha256": "29b22996561733360420317880266297b82825f45eef76b7c323edb460d7d04a"
+  },
+  "after": {
+    "files": 1,
+    "bytes": 24,
+    "sha256": "29b22996561733360420317880266297b82825f45eef76b7c323edb460d7d04a"
+  },
+  "actual_entries": [
+    "retained.bin",
+    "unexpected-directory"
+  ],
+  "source_sha256": "3ba47a91c7f016eba8f1987e57bc1755cb2c7fe2536b478e77302646d950ee54",
+  "candidate_manifest_sha256": "fd405e4a808aa565bc5fc06d9223742043cc0ff1cbf169c82e841a86559671a3",
+  "inverse_checks": {
+    "compact_mcm.py": {
+      "baseline_matches_main": true,
+      "inverse_matches_main": true,
+      "candidate_pin_matches": true
+    },
+    "compact_owner.py": {
+      "baseline_matches_main": true,
+      "inverse_matches_main": true,
+      "candidate_pin_matches": true
+    },
+    "compact_mcm_output.py": {
+      "baseline_matches_main": true,
+      "inverse_matches_main": true,
+      "candidate_pin_matches": true
+    }
+  },
+  "affinity": [
+    0,
+    1
+  ],
+  "numerical_imports": false,
+  "genuine_owner_executed": false
+}

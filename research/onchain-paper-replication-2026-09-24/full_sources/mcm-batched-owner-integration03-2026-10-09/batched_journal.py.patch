@@ -1,0 +1,34 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration02-2026-10-09/batched_journal.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration03-2026-10-09/batched_journal.py
+@@ -17,13 +17,24 @@
+         require(batch_cells<=4096 and max_cells<2**64 and 1024<=max_body_bytes<=1024**2,'format bounds exceeded')
+         require(callable(boundary),'boundary callback required')
+         self.root=Path(root).absolute();require(self.root.parent.resolve()==self.root.parent,'nonsymlink parent required')
+-        self.root.mkdir(exist_ok=False);self.fd=os.open(self.root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+-        s=os.fstat(self.fd);self.pin=(s.st_dev,s.st_ino)
+-        parent=os.open(self.root.parent,os.O_RDONLY|os.O_DIRECTORY)
+-        try:os.fsync(parent)
+-        finally:os.close(parent)
+-        self.batch_cells=batch_cells;self.max_cells=max_cells;self.max_bytes=max_bytes;self.max_body=max_body_bytes
+-        self.boundary=boundary;self.cells=0;self.bytes=0;self.batch=0;self.poisoned=False;self.closed=False
++        self.root.mkdir(exist_ok=False)
++        self.fd=None;parent=None
++        try:
++            self.fd=os.open(self.root,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
++            s=os.fstat(self.fd);self.pin=(s.st_dev,s.st_ino)
++            parent=os.open(self.root.parent,os.O_RDONLY|os.O_DIRECTORY)
++            os.fsync(parent)
++            closing=parent;parent=None;os.close(closing)
++            self.batch_cells=batch_cells;self.max_cells=max_cells;self.max_bytes=max_bytes;self.max_body=max_body_bytes
++            self.boundary=boundary;self.cells=0;self.bytes=0;self.batch=0;self.poisoned=False;self.closed=False
++        except BaseException as primary:
++            # A constructor which has not returned still owns every acquired FD.
++            for descriptor in (parent,self.fd):
++                if descriptor is not None:
++                    try:os.close(descriptor)
++                    except BaseException as failure:primary.add_note('Journal acquisition cleanup failed: '+repr(failure))
++            self.closed=True
++            raise
+     def _root(self):
+         s=self.root.lstat();f=os.fstat(self.fd)
+         require(stat.S_ISDIR(s.st_mode) and (s.st_dev,s.st_ino)==self.pin==(f.st_dev,f.st_ino) and self.root.resolve()==self.root,'journal root replaced')

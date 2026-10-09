@@ -1,0 +1,30 @@
+--- baseline/numeric_execution.py
++++ candidate/numeric_execution.py
+@@ -26,7 +26,12 @@
+             body+=block
+         require(len(body)==before.st_size and sig(os.fstat(child))==sig(before)==sig(os.stat(name,dir_fd=fd,follow_symlinks=False)),'numeric body changed')
+         return body,sig(before)
+-    finally:os.close(child)
++    finally:
++        primary=__import__('sys').exception()
++        try:os.close(child)
++        except BaseException as cleanup:
++            if primary is None:raise
++            primary.add_note('numeric read cleanup: '+repr(cleanup))
+ def counters(memo):
+     value=dict(memo.counters)
+     require(all(type(k) is str and type(v) is int and 0<=v<2**127 for k,v in value.items()),'numeric counters invalid')
+@@ -97,7 +102,12 @@
+         require(os.pread(self.origins_fd,len(self.buffer),9*start)==self.buffer,'numeric origin write readback differs')
+         name=f'{self.batch:012d}.json';child=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.batches_fd)
+         try:write_all(child,body);os.fsync(child)
+-        finally:os.close(child)
++        finally:
++            primary=__import__('sys').exception()
++            try:os.close(child)
++            except BaseException as cleanup:
++                if primary is None:raise
++                primary.add_note('numeric summary cleanup: '+repr(cleanup))
+         readback,file_signature=read_file(self.batches_fd,name,SUMMARY_LIMIT);require(readback==body,'numeric summary readback differs');os.fsync(self.batches_fd);self._root()
+         self.summary_inventory.update(raw({'name':name,'signature':file_signature}));self.origin_hash.update(self.buffer);self.summary_hash.update(struct.pack('>Q',len(body)));self.summary_hash.update(body);self.summary_bytes+=len(body);self.batch+=1
+         self.elapsed_seconds+=self.batch_elapsed;self.buffer.clear();self.receipts=hashlib.sha256();self.batch_computed=self.batch_reused=0;self.batch_elapsed=0.0

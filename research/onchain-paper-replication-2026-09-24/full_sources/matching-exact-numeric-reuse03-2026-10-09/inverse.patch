@@ -1,0 +1,57 @@
+--- 03/numeric_reuse.py
++++ 02/numeric_reuse.py
+@@ -1,5 +1,5 @@
+ """Explicit engineering result reuse; never old per-occurrence execution credit."""
+-import array,copy,ctypes,hashlib,json,math,struct,sys,types
++import array,copy,ctypes,hashlib,importlib.util,json,math,struct,sys,types
+ from pathlib import Path
+ import numpy as np
+ from tradingagents.research.onchain_replication.contracts import AttributedGraph
+@@ -8,26 +8,19 @@
+ from tradingagents.research.onchain_replication import matching_reference as reference
+ from tradingagents.research.onchain_replication import contracts
+ 
+-from . import batched_pair_executor as accepted
+-from tradingagents.research.onchain_replication import matching_immutable_session as immutable_session
+-
+-MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session)
+-SOURCE_PINS=(
+-    (accepted, '5e722ec2035e2549f7584a31bf091e0de4d7854c196086f8736179f367d93b2e'),
+-    (engine, 'd5d24aeb4f4c309ebc2a4e4dba53b561ec974e141f84acc94e61932a555b670c'),
+-    (engine.ann, '2037c5bb5dd4244b5e83e252d0394e3060ff0adc4c334b1a605823f15bf9ed46'),
+-    (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
+-    (engine.sparse, '06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e'),
+-    (engine.ann.typed_identity, '0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7'),
+-    (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
+-    (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
+-    (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
+-    (immutable_session, 'c7c498ec5fa00f2e1bc501e47e8c106387ec63d3d6b93197750a99e1d9cc4e07'),
+-)
++HERE=Path(__file__).resolve().parent
++EXECUTOR_PATH=HERE.parent/'mcm-batched-execution03-2026-10-09/pair_executor.py'
++EXECUTOR_SHA='6d1ad3a720eec15f63c7fd6423a9f0c92b4e5020c0d9962ef825f8b5cf73d34a'
+ 
+ def require(ok,message):
+     if not ok:raise ValueError(message)
+ def raw(value):return json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
++def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
++require(digest(EXECUTOR_PATH)==EXECUTOR_SHA,'accepted executor source changed')
++spec=importlib.util.spec_from_file_location('accepted_pair_executor_for_numeric_reuse',EXECUTOR_PATH)
++accepted=importlib.util.module_from_spec(spec);spec.loader.exec_module(accepted)
++MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts)
++SOURCE_PINS=json.loads((HERE/'SOURCE_PINS.json').read_bytes())
+ # Snapshots originate only in this trusted module import, never caller input.
+ def roster():
+     result=[]
+@@ -46,9 +39,9 @@
+     counters['source_guard_calls']+=1
+     require(roster()==ROSTER,'numeric runtime function/code changed')
+     light_environment()
+-    for module,pin in SOURCE_PINS:
++    for path,pin in SOURCE_PINS.items():
+         h=hashlib.sha256()
+-        with Path(module.__file__).open('rb') as stream:
++        with Path(path).open('rb') as stream:
+             for chunk in iter(lambda:stream.read(65536),b''):
+                 counters['source_hashed_bytes']+=len(chunk);h.update(chunk)
+         require(h.hexdigest()==pin,'numeric source changed')

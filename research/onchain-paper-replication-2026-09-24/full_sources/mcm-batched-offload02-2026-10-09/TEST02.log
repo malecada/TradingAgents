@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-offload02-2026-10-09/verify02.py", line 16, in <module>
+    try:adapter._selected(None,None)
+        ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-offload02-2026-10-09/registered_offload.py", line 12, in _selected
+    record=typed.selected(owner)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-offload02-2026-10-09/typed_payload_operations.py", line 19, in selected
+    from . import archive_dispatch as dispatch, archive_owner_operations as ops
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_dispatch.py", line 18, in <module>
+    from ..lifecycle import ResearchRun, _encode
+ImportError: attempted relative import beyond top-level package
