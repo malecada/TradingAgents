@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-full28-outcome-increment-tools-review01-2026-10-09/returned13/check01.py", line 53, in <module>
+    line=git(['ls-tree',source,'--',name]).decode().strip();assert line;mode,kind,rest=line.split(maxsplit=2);oid,path=rest.split('\t',1);assert path==name and kind=='blob' and hashlib.sha1(b'blob '+str(len(body)).encode()+b'\0'+body).hexdigest()==oid;tracked+=1
+                                                                   ^^^^
+AssertionError
