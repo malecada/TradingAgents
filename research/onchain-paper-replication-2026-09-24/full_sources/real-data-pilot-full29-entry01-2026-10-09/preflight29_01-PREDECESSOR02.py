@@ -21,7 +21,7 @@ from tradingagents.research.onchain_replication.real_pilot_storage import Writab
 ROOT=Path(__file__).resolve().parents[4]
 HERE=Path(__file__).resolve().parent
 NAME='eth-paper-real-data-end-to-end-resource-20261009-29'
-GATE=str((HERE/'gate03.json').relative_to(ROOT))
+GATE=str((HERE/'gate01.json').relative_to(ROOT))
 EXPECTED_RESOURCES={'disk_floor_bytes': 10737418240, 'disk_paths': ['/home/malecada/master_thesis/TradingAgents-audit-fixes'], 'memory_high_bytes': 5368709120, 'memory_max_bytes': 6442450944, 'native_unit_limits': {'file_size_bytes': 1073741824}, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 2684354560, 'storage_budget': {'authority_root': '/home/malecada/master_thesis/TradingAgents-audit-fixes', 'experiment': 'eth-paper-real-data-end-to-end-resource-20261009-29', 'kind': 'real-pilot-writable-union', 'limits': {'max_allocated_bytes': 21474836480, 'max_depth': 64, 'max_entries': 1000000, 'max_logical_bytes': 17179869184, 'max_scan_seconds': 5}, 'roots': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-29'], 'schema_version': 2, 'shared_files': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock']}, 'wall_seconds': 28800}
 INDEX_CAPACITY={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity02-2026-10-08/candidate/index_capacity.py', 'sha256': 'f486a3b7d8930378df7e17bd347c0f70d61355b657da30c7bad338f31b0de9bb'}
 BINDER={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/binder02/bind01.py', 'sha256': 'bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb'}
@@ -174,7 +174,7 @@ def prepared_inputs(binding,release,admission,job):
         if role not in changed:need(actual[role]['sha256']==ref['sha256'],'unrelated public04 input changed: '+role)
     need(admission.experiment['cumulative_budget_extension']['review']==binding['budget_review'],'genuine budget96 review differs')
     prepared=read(binding['preparation']);unbound=read(binding['unbound_archive'])
-    need(prepared['preparation_origin']['public_manifest']==binding['public_preparation'],'prepared public04 origin differs')
+    need(prepared['preparation_origin']['public_manifest']==binding['public_manifest'],'prepared public04 origin differs')
     need(bound['source_request']['prepared']==binding['preparation'] and bound['source_request']['archive_policy']==binding['unbound_archive'],'actual binder source request differs')
     need(prepared['builder03_spec']['references']['archive_policy']==binding['unbound_archive'],'unbound archive role differs')
     binder_body=read_path(reference(BINDER));need(hashlib.sha256(binder_body).hexdigest()==BINDER['sha256'] and release['evidence'].get(BINDER['path'])==BINDER['sha256'],'unchanged accepted binder source required')
