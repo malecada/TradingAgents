@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/preflight29_02.py", line 326, in <module>
+    if __name__=='__main__':print(json.dumps(check()[1],sort_keys=True))
+                                             ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/preflight29_02.py", line 316, in check
+    if free<startup:raise ValueError('full projected source/scratch plus disk floor unavailable')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: full projected source/scratch plus disk floor unavailable
