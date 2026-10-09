@@ -1,0 +1,20 @@
+--- 
++++ 
+@@ -13,7 +13,7 @@
+ import numpy as np
+ from . import compact_owner as owners, compact_mcm as producer
+ from . import compact_mcm_publication as publication, score_batches as io
+-from . import matching_checkpoint as engine, compact_policy
++from . import matching_checkpoint as engine
+ from .cache import cache_key
+ from .provenance import freeze, thaw, durable_mkdir, file_hash
+ 
+@@ -316,7 +316,7 @@
+         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
+         execution=b['execution']
+-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')})
++        executor=modules['numeric_execution'].NumericExecution(stream,thaw(target.owner.matching),p['pair'],p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')})
+         external=None;post_batch=final_batches=None
+         if b['retention']=='typed-recover-before-retire-v2':
+             from . import registered_offload as offload

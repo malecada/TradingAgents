@@ -1,0 +1,310 @@
+{
+  "cases": [
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 192,
+          "requests": 4
+        },
+        {
+          "body": true,
+          "bytes": 216,
+          "requests": 4
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 192,
+          "requests": 4
+        },
+        {
+          "body": true,
+          "bytes": 54,
+          "requests": 1
+        }
+      ],
+      "name": "four_positions_one_blob",
+      "outcome": "PASS"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "name": "distinct_design_retains_refusal",
+      "outcome": "source differs from design freeze"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 54,
+          "requests": 1
+        }
+      ],
+      "name": "registered_digest_refusal",
+      "outcome": "registered source hash differs: a.py"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 192,
+          "requests": 4
+        },
+        {
+          "body": true,
+          "bytes": 216,
+          "requests": 4
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 192,
+          "requests": 4
+        },
+        {
+          "body": true,
+          "bytes": 54,
+          "requests": 1
+        }
+      ],
+      "name": "local_body_and_failure_order",
+      "outcome": "committed source differs: a.py"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 54,
+          "requests": 1
+        }
+      ],
+      "name": "short",
+      "outcome": "committed source/registration cannot be verified"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 54,
+          "requests": 1
+        }
+      ],
+      "name": "suffix",
+      "outcome": "committed source/registration cannot be verified"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 54,
+          "requests": 1
+        }
+      ],
+      "name": "oid",
+      "outcome": "committed source/registration cannot be verified"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "name": "size_conflict",
+      "outcome": "committed source/registration cannot be verified"
+    },
+    {
+      "baseline": [],
+      "candidate": [],
+      "name": "argv_newline_fallback",
+      "outcome": "PASS"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        }
+      ],
+      "name": "oversize_original_fallback",
+      "outcome": "PASS"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 54,
+          "requests": 1
+        }
+      ],
+      "name": "second_call_fresh",
+      "outcome": "PASS"
+    },
+    {
+      "baseline": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 108,
+          "requests": 2
+        }
+      ],
+      "candidate": [
+        {
+          "body": false,
+          "bytes": 96,
+          "requests": 2
+        },
+        {
+          "body": true,
+          "bytes": 54,
+          "requests": 1
+        }
+      ],
+      "name": "second_call_mutation_refuses",
+      "outcome": "committed source differs: a.py"
+    }
+  ],
+  "qualification": "Actual tiny offline Git objects and focused response mutations only; no empirical inputs, numerical imports, live installation or measured pilot speed claim.",
+  "status": "PASS"
+}

@@ -1,0 +1,15 @@
+--- 
++++ 
+@@ -342,12 +342,6 @@
+         mcm=_read(ad,s['compact_mcm_input'])
+         batched=type(mcm.get('schema_version')) is int and mcm['schema_version'] in (5,6)
+         if batched:
+-            from . import compact_policy, matching_pair
+-            compact_pair=_read(ad,s['compact_policy_input'])['stage_policy']['pair']
+-            require(compact_pair==_read(ad,s['pair_checkpoint_input'])['limits'],'batched compact/pair limits differ')
+-            effective=compact_policy.effective_matching(s['descriptor']['configs']['matching'],compact_pair)
+-            normalized=compact_policy.pair_policy(compact_pair)
+-            require(set(normalized) in (matching_pair.POLICY_FIELDS,matching_pair.POLICY_FIELDS|{'checkpoint_layout'}) and effective['max_pair_entries']>=s['descriptor']['configs']['matching']['max_pair_entries'],'batched execution pair policy differs')
+             require('partial_progress' not in p and 'scoring_diagnostic' not in p,'legacy per-pair progress/stop incompatible with full batched pilot')
+             transport=_read(ad,p['archive_inputs']['transport_input'])
+             require(type(transport.get('schema_version')) is int and transport['schema_version']==2,'batched typed transport must be explicitly selected')

@@ -1,0 +1,75 @@
+{
+  "status": "PASS_SYNTHETIC_ENGINEERING_ONLY",
+  "registered_metadata": {
+    "compact_policy": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full25-transport-binding01-2026-10-09/inputs01/compact_policy.json",
+      "sha256": "e0c0ae4150c6ddc97662209df7ae60ed08adf7dc00518e94237c9ee94d376ada"
+    },
+    "pair_policy": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full25-transport-binding01-2026-10-09/inputs01/pair_policy.json",
+      "sha256": "e53604ce93de201eafee630369e3b5120671b8ed5a220e28c024d25b6c1368d9"
+    },
+    "producer_plan": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full25-transport-binding01-2026-10-09/inputs01/producer_plan.json",
+      "sha256": "7f7db71905e4f51e93f901a6f091b20dbc7ee75cb47dd9fe895d8a2ea463d870"
+    }
+  },
+  "original_refusal": "pair policy schema",
+  "original_type": "dict",
+  "extra_capacity_field": 8402640,
+  "original_capacity": 4000000,
+  "effective_capacity": 8402640,
+  "score": [
+    0.5,
+    48,
+    "temperature_complete"
+  ],
+  "first_receipt": {
+    "schema_version": 2,
+    "kind": "engineering_numeric_occurrence",
+    "ordinal": 0,
+    "purpose_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "mode": "computed",
+    "origin_purpose_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "origin_ordinal": 0,
+    "score_f64_be": "3fe0000000000000",
+    "iterations": 48,
+    "convergence": "temperature_complete",
+    "cached": true,
+    "checkpoint_attempt_delta": 0,
+    "checkpoint_reserved_byte_delta": 0,
+    "retained_cache_bytes": 2722,
+    "old_per_occurrence_execution_credit": false,
+    "boundary_validated_batch_complete": false
+  },
+  "second_receipt": {
+    "schema_version": 2,
+    "kind": "engineering_numeric_occurrence",
+    "ordinal": 1,
+    "purpose_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+    "mode": "reused",
+    "origin_purpose_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+    "origin_ordinal": 0,
+    "score_f64_be": "3fe0000000000000",
+    "iterations": 48,
+    "convergence": "temperature_complete",
+    "cached": true,
+    "checkpoint_attempt_delta": 0,
+    "checkpoint_reserved_byte_delta": 0,
+    "retained_cache_bytes": 2722,
+    "old_per_occurrence_execution_credit": false,
+    "boundary_validated_batch_complete": false
+  },
+  "refusals": {
+    "unknown": "compact pair policy schema",
+    "bool_override": "positive bounded integer required",
+    "decreased_override": "pair capacity cannot decrease original",
+    "bad_layout": "explicit bounded checkpoint layout required"
+  },
+  "literal_inverses": true,
+  "real_graphs": false,
+  "Run_Owner_Binding": false
+}

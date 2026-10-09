@@ -1,0 +1,54 @@
+{
+  "decision": "accepted_source_only",
+  "selected": {
+    "compact_mcm_batched.py": {
+      "sha256": "a50d3e72417eaee8bde863da9b6ecd96ba888946a55b94d63b52faf2bed74f3c",
+      "baseline_sha256": "de872f001186a2857ed39e260ba78369b1f57e50a5dd78f53f28036e1f02fa39"
+    },
+    "real_pilot_import_caller.py": {
+      "sha256": "c7a13ec1176e2505b8a256e5bea64f5131a11a042523e0d9a6ce0adff5ee624e",
+      "baseline_sha256": "4bbcbe7c698ff8eb94fdaf9c9bdbad66fcb5a6af48898c87bdcc752fc5d28269"
+    }
+  },
+  "manifest_sha256": "84aefbd27855282214a2f097af2a706b02cd6dfd388bf9865beaa2f607457b80",
+  "unchanged_modules": {
+    "compact_policy.py": "37918e01e3de476970493afa9e78e40bcfa2f841cd7ee59fbc211c7d579730dc",
+    "batched_pair_executor.py": "5e722ec2035e2549f7584a31bf091e0de4d7854c196086f8736179f367d93b2e",
+    "batched_numeric_reuse.py": "a0ceec1f60990905e49225a7faa9062a0ae40ece9f6148731b18db33a023626a",
+    "matching_pair.py": "4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e"
+  },
+  "metadata_evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full25-transport-binding01-2026-10-09/inputs01/compact_policy.json": "e0c0ae4150c6ddc97662209df7ae60ed08adf7dc00518e94237c9ee94d376ada",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full25-transport-binding01-2026-10-09/inputs01/pair_policy.json": "e53604ce93de201eafee630369e3b5120671b8ed5a220e28c024d25b6c1368d9",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full25-transport-binding01-2026-10-09/inputs01/producer_plan.json": "7f7db71905e4f51e93f901a6f091b20dbc7ee75cb47dd9fe895d8a2ea463d870"
+  },
+  "checks": {
+    "full_literal_inverses": true,
+    "original_refusal": "pair policy schema",
+    "early_refusals": {
+      "mismatch": "batched compact/pair limits differ",
+      "unknown": "compact pair policy schema",
+      "boolean": "positive bounded integer required",
+      "decrease": "pair capacity cannot decrease original",
+      "layout": "explicit bounded checkpoint layout required"
+    },
+    "legacy_projection_unchanged": true,
+    "score_iterations_convergence": [
+      0.5,
+      48,
+      "temperature_complete"
+    ],
+    "computed_reused": [
+      "computed",
+      "reused"
+    ],
+    "checkpoint_calls": 1,
+    "checkpoint_reserved_bytes": 269229056,
+    "effective_capacity": 8402640
+  },
+  "qualification": "Tiny immutable synthetic graph only; original arithmetic and Owner/persistence/schedule bodies unchanged. Explicitly honors already declared resource override; no empirical capacity, performance, complete pilot, actual Owner/Admission, external recovery or launch authorization. Early predicates are metadata compatibility checks; unchanged downstream validators remain authoritative.",
+  "independent_checks": {
+    "check01.py": "b87f636eedbc23ff438becf0758c6bd5560ebf2599d7f592ffaecbb84d1e19b6",
+    "CHECK01.log": "c720bc7e1b35b1e9bfcd667668b151c8320736761c628409696c8ec3a71a1555"
+  }
+}

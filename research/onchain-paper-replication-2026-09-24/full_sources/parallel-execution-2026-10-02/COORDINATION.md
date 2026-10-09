@@ -1,3 +1,27 @@
+# Current coordination — 2026-10-09T06:30:52.608939+00:00
+
+No numericaljob; full25 permanentFAILED pairpolicyschema atfirstnumericcall/native2483.581s/Root1813exit1. Actual5PIDs+cgroup absent/finalstoragepassed, sourcefreezeended.65closed33C32F/highest96. Root owns Main/Git/STATE/registration/accounting/preservation/ONEfuturelauncher. owner_policy_fix21 ONLY NEW pairpolicyfix01; residual_metadata_review20 ONLY NEW full25outcomereview01; annealing revieweravailable foractualnewincrementtool/returnreview. Next preserveactualfailedincrement/review, narrowactualpolicyseamfix+earlyproof andacceptedadmissiondedupintegration; no rerun25/capladder/framework/oldmatrix/historyreplay. Originalmethod/caps/data preserved;0fullMCM/update/fit.
+
+Previous coordination retained below.
+
+# Current coordination — 2026-10-09T06:02:48.239123+00:00
+
+Actual MCM stage progress 2026-10-09T06:25:47.753768+00:00: SAME pilot25 now has firstrealgraph mcm-0114d619…/intent.json (publicationmtime06:24:36Z), genuine56584576pairs declared. PHASE_OBSERVATION02 preserves exactintent/hash andnativeguard. This proves stage entry, not completednumericpairs/batches/fullMCM. Originaldictionaryimport complete observed; remaining6graphs andrealjointupdate stillpending. Rootsession1813/nativeunitc7266b15 active; sourcef26 frozen; allnative limits/method/data unchanged. Next observeactual firstbatch markers andthroughput, then terminalretention/review/recovery.
+
+Phase correction 2026-10-09T06:21:52.045479+00:00: actual representationeaa4af06c76fe2276b9f0cedb6a361613a7db9c585d03ed8a157b0b972aadd47 has genuine owner/start/claim and dictionary-import/import-complete.json (filesystemmtime05:55:39Z), observed in PHASE_OBSERVATION01. Final output absence did not prove continued startup; earlier startup-only labels after that time were too strong. Dictionary import observed complete, MCM/training completion still unproved; independent terminal review remains required. Rootsession1813/native25 stillsameactive, no sourceintegration/relaunch.
+
+Latest verified wait 2026-10-09T06:19:30.225754+00:00: SAME Rootsession1813/nativeunitc7266b15 active,elapsed1971.158s,sampledpeak5182185472B,limitreasonNone; observedoutputs=['resource-population-binding.json', 'resource-population.json', 'archive-receipt.json']. RESOURCE_OBSERVATION03 retains actual guard sample. No MCM/update completion yet; no sourceintegration/commit/relaunch.
+
+ONE nativefull25/session1813 stillactive; source/Gitf26e2ef63 FROZEN. Root alone observes samehandle, nointegration/commits. Allagentscomplete. Separate admissiondedup90bb SOURCE_ACCEPTEDf758/12author+5independent focusedcases, UNINSTALLED only. Actualsource585 unchanged. Accounting64closed+1active/highest96. Next originaljob numericalprogress/terminalretention/review/recovery, then anyfuture sourceadoption; neverrestart25. No fullMCM/update/fit or measuredspeedup.
+
+Previous coordination retained below.
+
+# Current coordination — 2026-10-09T05:47:46.962952+00:00
+
+ONE nativefull25job/session1813 live. Genuine claimdec4456b6eb9/effective96,64closed+ONEactive65thspent. Main/GitHEADFROZEN f26e2ef63; no code integration/commits whileactive. Root alone observes SAMEhandle/nativeunitc7266b15, supervisor1764785/monitor1765212; RootPID1763948 separatelyobserved. Allagentscomplete. Next sameprocess progress→actualterminal retention/review/newincrement recovery; never relaunch25. No fullMCM/update/fit yet. Originalmethod/data/native limits unchanged.
+
+Previous coordination retained below.
+
 # Current coordination — 2026-10-09T05:45:46.308284+00:00
 
 No numerical job/claim yet. Release268ce640 and actual169bodyincrement06returne6f7f67e accepted; LIVE_CHECK01PASS386/64/96unused. Root exclusively next commits/pushes actualmetadata thenONE root_io25_01 (freshpreflight internally), freezesMain/Git whileactive andobservesSAMEhandle. Allagentscomplete. Accounting64closed33C31F/highest95; no refund/reopen. Originalmethod/data/native limits unchanged. No completeMCM/update/fit.

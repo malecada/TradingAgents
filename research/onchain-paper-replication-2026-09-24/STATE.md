@@ -1,5 +1,41 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T06:30:52.608939+00:00: full25 permanently FAILED at firstnumericcall (pair policy schema), native2483.581s/Rootsession1813exit1; actualcleanup/finalstorage/all5PIDs+cgroup absent. No numerical job active; sourcefreeze ended. Goal ACTIVE/incomplete.**
+
+Actualclaimdec4456b/failedreceipt daca7748 preserved. Originaldictionaryimport completed and first fullrealgraph MCMintent existed, then batched_numeric_reuse called originalpair validator with mismatched executorpolicy. Zero completed motifcells; firstgraphFAILED,remaining6UNAVAILABLE/trainingnull. Native noOOM/high0/max0/wallkillfalse; sampledpeak5182185472B vs optionallastkernel5294460928B separate, no wholecapacity claim. OriginalROOT_IO_CLOSED01 parent1/reaped/logsclosed andFINAL_STORAGE01 actualunit/cgroupclosure preserved. Rootclosure retains actual rawps/unit observations plus qualifiedRoottooltranscription (notrawexport/nativehistory). Accounting65closed33COMPLETE32FAILED/highest96; no refund/reopen/transfer.
+
+Next executable work inparallel: owner_policy_fix21 ONLY NEW pilot-batched-pair-policy-fix01 actualexecutor/policy metadata+tiny-route reproduction and smallestfix/earlyrefusal; residual_metadata_review20 ONLY NEW full25outcome-review01; Root actualnewfailedincrementpreservation withacceptedexistingtools andadmissiondedup90bb sourceintegration after narrowreviewf758 (no method/capchange). Root alone Main/Git/STATE/accounting/preservation/ONEfuturelauncher. Closed25 neverrelaunch. Beforefutureunused26: exact reviewedchangedsource/input/registration/cumulativeallowance/newincrementreturn/fresheligibility. Originalsevenwholegraphs415968128cells/32motifs512spent/fullGAT→attentionLSTM update stillrequired. Physical16GB/native6GiBmax5GiBhigh/swap0/twoCPU/8h/2.5GiBreserve/1GiBFSIZE/10GiBfloor fixed. BroadheartbeatPAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+Actual MCM stage progress 2026-10-09T06:25:47.753768+00:00: SAME pilot25 now has firstrealgraph mcm-0114d619…/intent.json (publicationmtime06:24:36Z), genuine56584576pairs declared. PHASE_OBSERVATION02 preserves exactintent/hash andnativeguard. This proves stage entry, not completednumericpairs/batches/fullMCM. Originaldictionaryimport complete observed; remaining6graphs andrealjointupdate stillpending. Rootsession1813/nativeunitc7266b15 active; sourcef26 frozen; allnative limits/method/data unchanged. Next observeactual firstbatch markers andthroughput, then terminalretention/review/recovery.
+
+Phase correction 2026-10-09T06:21:52.045479+00:00: actual representationeaa4af06c76fe2276b9f0cedb6a361613a7db9c585d03ed8a157b0b972aadd47 has genuine owner/start/claim and dictionary-import/import-complete.json (filesystemmtime05:55:39Z), observed in PHASE_OBSERVATION01. Final output absence did not prove continued startup; earlier startup-only labels after that time were too strong. Dictionary import observed complete, MCM/training completion still unproved; independent terminal review remains required. Rootsession1813/native25 stillsameactive, no sourceintegration/relaunch.
+
+Latest verified wait 2026-10-09T06:19:30.225754+00:00: SAME Rootsession1813/nativeunitc7266b15 active,elapsed1971.158s,sampledpeak5182185472B,limitreasonNone; observedoutputs=['resource-population-binding.json', 'resource-population.json', 'archive-receipt.json']. RESOURCE_OBSERVATION03 retains actual guard sample. No MCM/update completion yet; no sourceintegration/commit/relaunch.
+
+**TOP 2026-10-09T06:02:48.239123+00:00: SAME full25 native job/session1813 remains active; separate bounded admission-body optimization independently SOURCE_ACCEPTED/uninstalled. Goal ACTIVE/incomplete.**
+
+Current turn verified SAME running handle plus functional source-only progress: originaladmission585d66f5 unchanged; candidate90bb459b fetches each identical(OID,size) once inside each existing boundedGitbodycall, expands to originalpositions, retains every boundary/localread/hash/design/parser/batchlimit/fallback. Author12actualtinyGit cases and5independent cases acceptedf758c680, including conflicting-size refusal, mutation/failure ordering andsamefunction fresh secondcall. No cross-call authoritycache, liveinstallation or measuredpilotspeedup. Candidate/review exclusive newdirectories, preserved uncommitted during active sourcefreeze.
+
+Actual RESOURCE_OBSERVATION02 retains currentguard/outputs: elapsed969.168s/sampledpeak5182185472B/limitreasonNone; nofullMCM/update/fit completed. Main/GitHEAD FROZEN f26e2ef63; no sourceintegration/commits whileactive. Genuineclaimdec4456b6eb9/highest96;64closed33C31F plusONEactive65thspent. Allagentscomplete. Root alone observes SAMEsession1813/unitc7266b15; next actual numericalprogress/terminal retention→review/newincrement recovery. Accepted optimization available only after closure for a future reviewedsource change; never restartactive25. Originalscience/data/spent identities/native limits remain unchanged. BroadheartbeatPAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-09T05:47:46.962952+00:00: full25 RUNNING ONCE, genuine claimdec4456b6eb9, allowance96 adopted; native active, Rootsession1813 live. Goal ACTIVE/incomplete.**
+
+Originalunused eth-paper-real-data-end-to-end-resource-20261009-25 actually launched at05:46:24Z after exact release268ce640, actual newincrement06 return independently accepted e6f7f67e and fresh RootIOpreflight. Source/GitHEAD FROZEN f26e2ef63fd7fce9c673be02e554eb0a39cf1177 (actualremote matched dfaf2e); no package integration or commits while active. RootIO observed1763948→supervisor1764785→monitor1765212; nativeunitonchain-replication-c7266b15844842f6b143eaa4080f8013.service active. Actual RESOURCE_OBSERVATION01 preserves original guard/owner/cpu receipts plus separateRootobservation. Source checks/startup underway; no fullMCM/update/fit complete or throughput estimate yet.
+
+Accounting64closed33COMPLETE31FAILED plusONEactive65thspent;highestactual96. All prior outcomes/raw/spent identities remain fixed. Observe SAME execsession1813 and actualguard/featureprogress; never relaunch25. On actual terminal preserveallattempted/unavailable cells, originalRootIO/nativecleanup/finalstorage and independently verify/recover only newoutcome before any successor. Allboundedagentscomplete. Physical16GB/native6GiBmax5GiBhigh/swap0/twoCPU/8h/2.5GiBreserve/1GiBFSIZE/10GiBfloor/16and20GiBunion unchanged. Originalsevenwholegraphs415968128cells/32motifs512spent→fullMCM→GAT→attentionLSTM realjointupdate required. BroadheartbeatPAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T05:45:46.308284+00:00: corrected full25 entry LIVE_CHECK01 PASS; exact source/input release268ce640 and actual increment06 external return independently accepted e6f7f67e. No numerical claim/job yet. Goal ACTIVE/incomplete.**
 
 Actual increment06 sourcebbf426dbf1a7d52bb6dfe2617988760968507b0f:169regular bodies/24directories/13actualGitoperations;3123200B archive19a1d75e. ActualremoteHEAD/fetchHEAD/source and returned bytes matched, freshbare noalternates. Declaration excludes private dispatch/runtime bodies/scientific stores/POSIX restore/deletion authority. Prior failure stores and recoveries retained; only public changed increment selected. Current release/gate/input/helper bodies are in declared selected archive.
