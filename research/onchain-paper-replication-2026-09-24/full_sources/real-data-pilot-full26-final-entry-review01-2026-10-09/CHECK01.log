@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full26-final-entry-review01-2026-10-09/review01.py", line 63, in <module>
+    pin(entry['charter']);extref=entry['cumulative_budget_extension']['extension'];pin(extref);ext=j(ROOT/extref['path']);pin(ext['allocation']);assert entry['cumulative_budget_extension']['review']==b['budget_review'];br=j(ROOT/b['budget_review']['path']);assert br['decision']=='accepted' and br['extension_sha256']==extref['sha256'] and ext['cumulative_ceiling']==97 and ext['consumed_before']==65
+                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
