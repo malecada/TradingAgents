@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T04:34:59.528982+00:00: genuine read-only full24 admission PASS at829fc6723ca54c17cad1c2a80b4dd0364f970243;379 source pins/64 inputs/reviewed allowance95. No numerical job/claim/launch attempt. Goal ACTIVE/incomplete.**
+
+Previous goal turn NO PROGRESS (status explanation). This turn PROGRESS: actual opaque binding, successor entry03, fixed prospective budget distinct from fresh eligibility, literal terminal23 parent and canonical policy descriptors, and complete package census are implemented. [Actual admission](full_sources/real-data-pilot-full24-entry01-2026-10-09/ADMISSION_CHECK03.json) passed genuine job._admitted; source/supplement [review](full_sources/real-data-pilot-full24-final-entry-review01-2026-10-09/SOURCE_REVIEW02.json)b0e5f7a0 and bindingd3068736 accepted. All original refusals/source/bindings/unused private dispatch01 are retained. Actual code/math/native limits unchanged by final descriptor/parent corrections.
+
+[First actual preparation recovery](full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/FRESH_GIT_RECOVERY02.json) returned13,854,720B from actualremotecc5665b939960521c99455c6c64994c6fe30e994; [independent review](full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/returned-preparation02/RECOVERY_REVIEW01.json)8d11b889 authenticates1570 regular bodies/two symlinks/350 directories. This predates later corrections and is NOT final-current recovery. Only actual subsequent delta needs preservation; old recovered source/stores stay untouched.
+
+Next immediate Root action: preserve/recover corrected gate/binder/input/review increment sincecc566, independently verify actual return and seal final binding/release, then fresh live source/runtime/namespace/process/storage/RAM check before at mostONE unused24 native launch. Root alone integration/registrations/accounting/STATE/Git/external preservation/ONE launcher; bounded owners finish changed-seam reviews only. No generic framework/oldmatrix replay.
+
+Accounting63 spent33 COMPLETE30 FAILED/highest adopted94;95 reviewed but unused. Full pilot remains seven original whole graphs/415,968,128 cells/32 motifs512 spent→fullMCM→originalGAT/attentionLSTM realjointupdate/checkpoint. Zero complete representative realMCMs/updates/financial fits. Original raw/history/results/failed and reserved identities preserved; broad1420-fit heartbeat PAUSED. Fixed16GB physical/6GiB max5GiB high/swap0/twoCPU/8h/2.5GiB reserves/1GiB file limit/10GiB disk floor and16/20GiB union unchanged. Prospective2GiB directories+1GiB other writers are budgets, not observed usage/quota/writer exclusion; actual guards stay sampled.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T03:56:23.146019+00:00: grouped full-pilot implementation committed/pushed; concrete full24 public inputs and same-family cumulative95 proposal independently accepted within their stated scopes. No numerical job active. Goal ACTIVE/incomplete.**
 
 This turn PROGRESS: eight installed schema6 source files and actual smoke committed958f3b801cf65393aa5325255e516c7572da4d80, pushed20835exit0/f71bc4; actual readback32586exit0/e8edc5 matched. [Confirmation](full_sources/mcm-batched-grouped-root-install01-2026-10-09/REMOTE_SOURCE_CONFIRMATION01.json) proves Git availability, not fresh whole declared-increment recovery.

@@ -1,0 +1,45 @@
+{
+  "decision": "accepted",
+  "scope": "Source tooling only; no helpers executed; no current correction archive or external return verified",
+  "helpers": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/correction03/select03.py",
+      "sha256": "7c296adad78bbf1013955b65c1e067814ece1b9fbd7dbc2c403cef4ccaff5e85"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/correction03/capture03.py",
+      "sha256": "ac04ca50cfa13a375ad85fcc243df65f8dd20d79d9527d769b601997d1e729c6"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/correction03/recover03.py",
+      "sha256": "cc0b163fb17a4469735edb5e51606669dd21ab77c75d0c4ccbbbe044c7c14764"
+    }
+  ],
+  "reused_tools_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/TOOLS_REVIEW02.json",
+    "sha256": "f0c65b44e412eb30be0cf2e4ebedcb55bc1019b95aa9dd968aeb75ba275ed8b5"
+  },
+  "baseline_actual_recovery": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/FRESH_GIT_RECOVERY02.json",
+    "sha256": "f56b5e445bc604a08213126fd2dee9bda870a319df8cb872bcf52656b218f1a8"
+  },
+  "baseline_source": "cc5665b939960521c99455c6c64994c6fe30e994",
+  "baseline_return_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/returned-preparation02/RECOVERY_REVIEW01.json",
+    "sha256": "8d11b8892ca1df3bad6dbc1dc6a5a8a3c3a76e88c8a09db0d76dd8176ebcfbb3"
+  },
+  "checks": {
+    "all_three_literal_inverse_after_declared_substitutions": true,
+    "all_three_parse": true,
+    "owned_empty_no_full_directory_replay": true,
+    "source_root_parent_depth_correct": true,
+    "distinct_correction_subdirectory_for_raw_operation_names": true,
+    "symlink_and64MiB_logic_unchanged": true
+  },
+  "limitations": [
+    "Actual selection is committed base-to-HEAD delta plus three03 helpers and this review; no arbitrary untracked/uncommitted inclusion. Root must commit intended later controls before selection.",
+    "Duplicate old archive/returned stdout exclusion follows immutable unchanged Git status, not a content exemption: a genuinely changed tracked body remains selected.",
+    "No current actual roster, archive, source commit, remote head or returned bytes verified here; separate actual recovery review required.",
+    "All accepted02 qualifications on finite extent, public-roster exclusions, observed stability and no POSIX extraction remain. No network/private/credential/scientific body access."
+  ]
+}
