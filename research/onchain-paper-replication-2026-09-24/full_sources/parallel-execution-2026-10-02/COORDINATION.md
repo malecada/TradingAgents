@@ -1,3 +1,11 @@
+# Current replication checkpoint — 2026-10-09T09:07:51.876600+00:00
+
+PROGRESS: exact unused27 final bindingd73bb08c/release96e6ca21 (517refs) independently accepted and committed; genuine metadata admission passed3.727s at8c213. Initial preclaim live check01 refused only ignored CHECK01.log absent from Git; exact unchanged log committed0e76a539, failure preserved, no claim. Actual LIVE_CHECK02 now PASSED8.402s:406sources/64roles/effective98, MemAvailable11564302336B, diskfree24402259968B vs declaredstartup24288793181B. This113466787B spare is instantaneous, not whole capacity; no bound reduced. Final checked code/method/data/native envelope unchanged. Allowance98 reviewed unused;66closed33C33F/highest97. No numerical job active, new27 namespaces absent. Earlierfailed26 actualincrement09 returned/independentlyacceptede03a9664; no history replay/deletion.
+
+Final preparation increment10 tooling narrowly acceptedb8e1af6b, no empirical output scopes/private bodies, actual public delta since recovered97a822 plus exactlive observations. Root next captures/pushes/freshly returns ONE new27 preparation increment, independent typedbody verification, commits outcome/readback then fresh preflight within ONE RootIO27. At mostONE unused27 can claim after exact accepted recovery. Source freeze starts only upon actual launch. Other bounded owners completed; annealing available only for actualreturnedincrement10 verification. Root owns Main/Git/STATE/registrations/accounting/preservation/ONElauncher. GoalACTIVE/incomplete:0completeMCM/update/financialfits; all original7wholegraphs32motifs512samples/scientificarchitecture and failures retained.
+
+Earlier checkpoints retained below.
+
 # Current replication checkpoint — 2026-10-09T09:01:48.462000+00:00
 
 PROGRESS: six reviewed polling/eager preparation files installed and committed a6b48346; actual201-body/62directory failed26+source increment captured2324480B/de8bc909, pushed97a8220a, freshly returned through13actual Git operations, independent returned reviewe03a9664 accepted. Includes original five failed26 stores, actual empty offload directories and opaque36864B partial origins; no fullMCM/score/training or whole capacity follows. Original private/runtime/unrelated stores excluded; no deletion. No numerical job active, full26 stays FAILED/spent,66closed33C33F/highest97.
