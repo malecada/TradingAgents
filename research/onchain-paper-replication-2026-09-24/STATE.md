@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T05:20:51.632351+00:00: reviewed six-line early numerical-source check INSTALLED at6c1a7faf5fc329b90eda3741474532b9536f4177; corrected full193-source policy draft prepared. No numerical job active. Full24 permanentFAILED/recovered. Goal ACTIVE/incomplete.**
+
+Current turn PROGRESS: actualfull24failedoutcome externally returned and independently accepted e88b493c (source238ccc239939b918b1e8646d373d037a6b76f8bf,50regular/20dirs/13Gitoperations,983040Barchive21b05150). Original outputs/failures/raw scopes preserved; no oldstore copied/retired. All7MCMunavailable andtrainingnull.64closed33COMPLETE31FAILED/highest95. Actual390.398s prep/sampledpeak5298184192B/lastnativekernel5370712064B/high131/OOM0 do not prove feature/training capacity.
+
+[Installed source](full_sources/real-data-pilot-numerical-source-root-install01-2026-10-09/INSTALL01.json) exactly matches reviewedcaller4bbcbe7c; source-only review552c0bf3 verifies literal six-line inverse and genuine metadata181RED/193GREEN plus necessary refusals. OriginalOwner/full runtime anchor validation, numerical math/native caps unchanged. Early check validates roster/pins/anchor syntax only; runtime still authenticates complete committed anchor. Unselected broad drafts and4failedharness logs remain.
+
+[Corrected policy preparation](full_sources/real-data-pilot-full25-numerical-policy01-2026-10-09/POLICY_PREPARATION01.json) is concrete DRAFT_NOT_REGISTERED_NOT_RELEASED:193sourcefiles/e53604ce,12missingmodules added, only existingcallerpin changed, actualsourceanchor6c1a7faf has all193 exact committed bodies. Backend/limits original. Fixed prospectiveunusedidentity25/terminalparent24; no newclaim/reservation/allowance96review/admission or private binding. Failed24policy181 andspentidentity immutable.
+
+Next immediately executable Root action: propagate corrected policy hash/source/identity into exact new25 public inputs/descriptors/gate/entry using existing bind/launch/recovery tools; prepare/review same-family cumulative96 proposal preserving64spent+28pending+3reserved+1fresh; combined changed-source/input/entry review, actual new-increment preservation and fresh eligibility beforeONEunused25. Reuse allaccepted unchanged evidence; no oldmatrix/framework/store replay. Root alone liveintegration/Git/STATE/registration/accounting/preservation/ONElauncher; allbounded assignmentscomplete. Original7wholegraphs/415968128cells/32motifs512spent→MCM→GAT→attentionLSTM jointupdate/checkpoint remain incomplete. Physical16GB/fixednative6GiBmax5GiBhigh/swap0/twoCPU/8h/2.5GiBreserve/1GiBFSIZE/10GiBfloor/16and20GiBunion unchanged. BroadheartbeatPAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T05:14:52.122433+00:00: full24 permanently FAILED after390.398s on numerical-source metadata closure. Root23318exit1; actual native cleanup/final storage passed; all5selectedPIDs absent. No numerical job active. Goal ACTIVE/incomplete.**
 
 Current turn PROGRESS: actual same-process observation and terminal closure, measured preparation memory, precise metadata diagnosis and independent qualified outcome review10fb7f24. Genuine failedreceipt563c3e9b joins claim8b6b02bd/allowance95. All eight outputs retained; allsevenMCMunavailable/trainingnull. Native noOOM/max0/swap0, high131; sampledpeak5298184192B and last native kernelreadback5370712064B are separate. Actual finalcleanup andRootIO reaped/logclosed/finalstorage receipts retained. Rootexit/PID self-observation is explicitly a conversation transcription, not originalnative history/rawtranscript export.
