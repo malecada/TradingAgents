@@ -1,5 +1,33 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T05:14:52.122433+00:00: full24 permanently FAILED after390.398s on numerical-source metadata closure. Root23318exit1; actual native cleanup/final storage passed; all5selectedPIDs absent. No numerical job active. Goal ACTIVE/incomplete.**
+
+Current turn PROGRESS: actual same-process observation and terminal closure, measured preparation memory, precise metadata diagnosis and independent qualified outcome review10fb7f24. Genuine failedreceipt563c3e9b joins claim8b6b02bd/allowance95. All eight outputs retained; allsevenMCMunavailable/trainingnull. Native noOOM/max0/swap0, high131; sampledpeak5298184192B and last native kernelreadback5370712064B are separate. Actual finalcleanup andRootIO reaped/logclosed/finalstorage receipts retained. Rootexit/PID self-observation is explicitly a conversation transcription, not originalnative history/rawtranscript export.
+
+[Actual source diagnosis](full_sources/real-data-pilot-full24-root-closure01-2026-10-09/SOURCE_CLOSURE_DIAGNOSIS01.json): registeredsource379complete, but pair_policy numerical_source has181 while actualjob.required_sources193. Exactly12batch/session/offload/reservation modules missing, noextras; actual original958f3b801 anchor has all193 byte-identical current bodies. No model/kernel change or lowered verification is needed. Next inputs must use full actual numerical roster; an early metadata-only predicate is being implemented before empirical graph work. Original181policy/failedidentity24 remain immutable.
+
+Accounting64closed33COMPLETE31FAILED/highest95, no active/refund/transfer. Sourcefreezeended after actual4originalnativePIDs plus separately observedRootPID allabsent/cgroupabsent. Root alone Main/Git/STATE/accounting/actualpreservation/ONEfuturelauncher. owner_policy_fix21 ONLY NEW numerical-source-preflight01 candidate/test; annealing_exact_acceleration ONLY reviewedoutcome05tools and next actualreturned archive review; residual_metadata_review20 completed qualifiedactualoutcome.
+
+Next executable action: capture/push/freshrecover only actual failed24increment with accepted adapted existingtools, independentreturncheck; inparallel finish precise earlyvalidator and corrected future193source policy. Exact unused successor registration/cumulativeamendment/release required before any next empiricalclaim. No oldtrial rerun/genericframework/historycopy. Original7wholegraphs/415968128cells/32motifs512spent→MCM→GAT→attentionLSTM jointupdate/checkpoint remain incomplete; no fullrealMCM/update/financial fit. Physical16GB and fixednative6GiBmax5GiBhigh/swap0/twoCPU/8h/2.5GiBreserve/1GiBFSIZE/10GiBfloor/16and20GiBunion unchanged; broadheartbeatPAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
+**TOP 2026-10-09T05:01:53.599509+00:00: full real-data pilot24 RUNNING ONCE; genuine claim8b6b02bd910f/allowance95 adopted. Native unit active; Root launcher session23318 live. Goal ACTIVE/incomplete.**
+
+Current turn PROGRESS: final release committed, final live preflight passed and exact current public increment freshly externally recovered atb05fe1d90fdc0952d0293e72793474de884b1201. Independent release04 returned-review01 receipt5705783e accepts18regular bodies/12dirs/13actualGitoperations/563200B archivec263d0f2. Existing prior preparation/correction recoveries reused; no historical store recopied.
+
+Source/Git HEAD FROZEN b05fe1d90fdc0952d0293e72793474de884b1201 for active job; no package integration/commits until native terminal closure. RootIO1699428→supervisor1700247→monitor1700649; native guard1701093/worker1701096, unitonchain-replication-00d874c12c7146eca0fd6f3defc7ff58.service. Launch-attempt01 at05:00:52.172147UTC and actual claim exist. Read-only live sample elapsed47.390s/memory.current429424640B/no limit reason; kernel high/max/swap enforced and no OOM. This sample is not peak, feature throughput or completion.
+
+Accounting63closed33COMPLETE30FAILED plusONEactive64thspent; highest actual allowance95. Original paper accounting unchanged. Whole seven graphs/415968128cells/32motifs512spent→MCM→GAT→attentionLSTM real jointupdate/checkpoint required; no real fullMCM/update/financial fit complete.
+
+Next safe action: poll SAME execsession23318 and actual native guard/worker/feature receipts; never relaunch this claimed identity. On terminal preserve RootIO/final storage or actual unavailable observation, original failed/completed cells and cleanup; independently verify/recover only actual outcome increment before any successor. All bounded agents complete. Physical16GB/native6GiBmax5GiBhigh/swap0/twoCPU/8h/2.5GiBreserve/1GiBFSIZE/10GiBfloor and16/20GiB union unchanged. Broad heartbeat PAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T04:58:41.983715+00:00: final independent release committed c4a1a7d00f561d787cbf3fa213e9ab7959f4e5fb; genuine full24 LIVE_CHECK04 PASS. No numerical job, claim or launch attempt. Goal ACTIVE/incomplete.**
 
 Previous status-only turn NO PROGRESS. Current PROGRESS: exact 506 public release bodies committed (the sole private dispatch remains local), final release6558b0e6 and actual read-only source/runtime/input/namespace/resource preflight passed. LIVE_CHECK04.stdout records379source pins/64inputs/allowance95, MemAvailable10755465216B/free24519442432B versus projected startup24288793181B. These are sampled eligibility, not whole-job capacity or throughput.
