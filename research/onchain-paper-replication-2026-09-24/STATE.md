@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T05:45:46.308284+00:00: corrected full25 entry LIVE_CHECK01 PASS; exact source/input release268ce640 and actual increment06 external return independently accepted e6f7f67e. No numerical claim/job yet. Goal ACTIVE/incomplete.**
+
+Actual increment06 sourcebbf426dbf1a7d52bb6dfe2617988760968507b0f:169regular bodies/24directories/13actualGitoperations;3123200B archive19a1d75e. ActualremoteHEAD/fetchHEAD/source and returned bytes matched, freshbare noalternates. Declaration excludes private dispatch/runtime bodies/scientific stores/POSIX restore/deletion authority. Prior failure stores and recoveries retained; only public changed increment selected. Current release/gate/input/helper bodies are in declared selected archive.
+
+Actual read-only LIVE_CHECK01 at05:43:16Z PASS386sources/64inputs/effective96, runtime/native/unusednamespaces and prospective storage check; sampledMemAvailable10794688512B/free24493309952B vs startup24288793181B, not whole capacity. Genuine03admission and accepted corrected193numerical source roster reused; original mathematical method/caps unchanged. Accounting64closed33COMPLETE31FAILED/highestadopted95;96reviewedunused;28pending/3reserved unchanged. All agentscomplete.
+
+Next immediate Root action: commit actual incremental recovery/checkpoint and push, then ONE RootIO25 launcher performs fresh exact preflight and either refuses before claim or launches originalunused25 once. Source/Git freeze while active; observe samehandle, preserve/review/recover actual terminal before successor. Original7wholegraphs415968128cells/32motifs512spent→fullMCM→GAT→attentionLSTM realjointupdate remains incomplete. Physical16GB/native6GiBmax5GiBhigh/swap0/twoCPU/8h/2.5GiBreserve/1GiBFSIZE/10GiBfloor/16and20GiBunion fixed. BroadheartbeatPAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T05:43:00.459414+00:00: full25 genuine read-only admission PASS (386 source pins,64 input roles,reviewed allowance96); exact final source/input/entry release268ce640 installed. No numerical claim/job. Goal ACTIVE/incomplete.**
 
 Previous status-only turn NO PROGRESS. Current progress: actual corrected193-source numerical policy propagated,64role binding and51 mandatory dataset labels restored without changing paths/body hashes; genuine ADMISSION_CHECK03 at05:36:11Z passed effective96. Combined reviews51ef4942/17619b2f and final488-reference release268ce640 accepted. Original method/model/training/native limits unchanged. Earlier two metadata refusals preserved; no allowance spent. Actual full24 remains permanentFAILED390.398s,all7MCMunavailable/trainingnull; independently recovered outcome05e88b retained. Accounting64closed33COMPLETE31FAILED/highest adopted95; reviewed96 unused;28pending/3reserved unchanged.

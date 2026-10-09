@@ -1,3 +1,9 @@
+# Current coordination — 2026-10-09T05:45:46.308284+00:00
+
+No numerical job/claim yet. Release268ce640 and actual169bodyincrement06returne6f7f67e accepted; LIVE_CHECK01PASS386/64/96unused. Root exclusively next commits/pushes actualmetadata thenONE root_io25_01 (freshpreflight internally), freezesMain/Git whileactive andobservesSAMEhandle. Allagentscomplete. Accounting64closed33C31F/highest95; no refund/reopen. Originalmethod/data/native limits unchanged. No completeMCM/update/fit.
+
+Previous coordination retained below.
+
 # Current coordination — 2026-10-09T05:43:00.459414+00:00
 
 No native job/claim/launch attempt25. Actual admission03PASS386/64/effective96; exactfinalrelease268ce640 installed conditional onactualincrement06return+freshpreflight.64closed33C31F/highest95;96reviewedunused. Root owns Main/Git/STATE/accounting/preservation/ONElauncher. residual_metadata_review20 finalrelease complete; annealing_exact_acceleration ONLY full25increment06 tooling/returnedreview. Next actual public delta capture/push/freshreturn→independentverify→fresh25preflight→ONEunused25. Reuseaccepted evidence, nohistoricalstore replay. Originalmethod/data/spenthistory/native limits unchanged; nofullMCM/update/fit.
