@@ -1,5 +1,19 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T04:58:41.983715+00:00: final independent release committed c4a1a7d00f561d787cbf3fa213e9ab7959f4e5fb; genuine full24 LIVE_CHECK04 PASS. No numerical job, claim or launch attempt. Goal ACTIVE/incomplete.**
+
+Previous status-only turn NO PROGRESS. Current PROGRESS: exact 506 public release bodies committed (the sole private dispatch remains local), final release6558b0e6 and actual read-only source/runtime/input/namespace/resource preflight passed. LIVE_CHECK04.stdout records379source pins/64inputs/allowance95, MemAvailable10755465216B/free24519442432B versus projected startup24288793181B. These are sampled eligibility, not whole-job capacity or throughput.
+
+Actual correction recovery at acdcabfa219a296bbaf37f0ea3cba5e923958d89 independently accepted f043a5ab:69regular bodies/11directories/13actualGitoperations. Existing recovery reused; only subsequent final evidence delta requires preservation. Actual seven-header file-ceiling audit61e9c0f5 disproves the earlier Root concern: largest graph2265481nodes; score289981568B and numeric origin652458528B each below1GiB. Unnecessary partial segmentation remains untested/unintegrated; no scientific/native cap changed.
+
+Next executable action: existing accepted preservation tools narrowly adapted for the final public delta; changed-tool review then capture/push/fresh actual return and one return review, followed by fresh RootIO preflight and at mostONE original unused24 launch. Root owns Main/Git/STATE/accounting/preservation/ONE launcher. annealing_exact_acceleration owns only release04 tool/return reviews; other bounded owners complete. No old store recopied or historical trial rerun.
+
+Accounting63spent33COMPLETE30FAILED/highest94; reviewed95unused. Original seven whole graphs/415968128cells/32motifs512spent→MCM→GAT→attentionLSTM and real joint update/checkpoint remain required. Zero completed representative realMCMs/updates/financial fits. Physical16GB/fixed native6GiBmax5GiBhigh/swap0/twoCPU/8h/2.5GiBreserve/1GiBFSIZE/10GiBfloor and16/20GiB writable union unchanged; broad heartbeat PAUSED.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T04:34:59.528982+00:00: genuine read-only full24 admission PASS at829fc6723ca54c17cad1c2a80b4dd0364f970243;379 source pins/64 inputs/reviewed allowance95. No numerical job/claim/launch attempt. Goal ACTIVE/incomplete.**
 
 Previous goal turn NO PROGRESS (status explanation). This turn PROGRESS: actual opaque binding, successor entry03, fixed prospective budget distinct from fresh eligibility, literal terminal23 parent and canonical policy descriptors, and complete package census are implemented. [Actual admission](full_sources/real-data-pilot-full24-entry01-2026-10-09/ADMISSION_CHECK03.json) passed genuine job._admitted; source/supplement [review](full_sources/real-data-pilot-full24-final-entry-review01-2026-10-09/SOURCE_REVIEW02.json)b0e5f7a0 and bindingd3068736 accepted. All original refusals/source/bindings/unused private dispatch01 are retained. Actual code/math/native limits unchanged by final descriptor/parent corrections.
