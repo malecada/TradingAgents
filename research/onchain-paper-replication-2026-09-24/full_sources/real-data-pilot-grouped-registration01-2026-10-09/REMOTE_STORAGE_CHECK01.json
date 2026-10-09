@@ -1,0 +1,26 @@
+{
+  "actual_free_bytes": 5330979651584,
+  "actual_quota_block_bytes": 512,
+  "actual_total_bytes": 5497558138880,
+  "at": "2026-10-09T04:05:59.223552+00:00",
+  "fresh_remote_namespace_absent": true,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261009-24",
+  "operations": [
+    {
+      "exit_code": 0,
+      "operation": "quota",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "84b5e1d306b42e61527350b4b1425ab9dd4d46e3bcfe93d69e5198143785c53d"
+    },
+    {
+      "exit_code": 2,
+      "operation": "fresh_namespace",
+      "stderr_sha256": "1a00a691fde95314ca1f288a41fc12f8dccad2c9d3ff1431cee5426e87b5e7d6",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "prospective_remote_persistent_payload_bytes": 255625226752,
+  "prospective_whole_transfer_allowance_bytes": 3940960571399,
+  "qualification": "Actual authenticated StorageBox quota/free-space and absent selected namespace only. Conservative prospective shared budget includes all old archive/typed allowances plus new grouped reservations. No physical preallocation, writer exclusion, empirical View/Owner or upload/recovery is inferred. All actual worker shared reservations remain genuine after ResearchRun.start.",
+  "whole_transfer_headroom_bytes": 1390019080185
+}

@@ -1,0 +1,56 @@
+{
+  "decision": "accepted",
+  "scope": "Source tools and current public selection logic only; actual selection/capture/external return unexecuted and unverified",
+  "at": "2026-10-09T04:20:24.408765+00:00",
+  "helpers": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/select02.py",
+      "sha256": "811ae080cf60b055caf1eb1979e53ee53015b6f83d53a14daf109bf7b49805b0"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/capture02.py",
+      "sha256": "ff4c40e3b5b76b719306d7a91e4d3d1a79974d0994e6cb8f433635ca0585ce31"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/recover02.py",
+      "sha256": "3d8dbf1d367a70e18af654b096255499172ccca0c4f190f75bcbbde4f168e2e2"
+    }
+  ],
+  "prior_withheld_receipt": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/TOOLS_REVIEW01.json",
+    "sha256": "4a1db3604a10b7781be76bcb34218a2ad83f25086f8b381cb2e1abf41d289d58"
+  },
+  "checks": {
+    "recover_literal_inverse_after_explicit_name_substitutions": true,
+    "capture_changed_seam": "Only os import, selection/archive/receipt02 names, symlink TarInfo and exact linkname readback; regular and directory body branches unchanged apart from nonsymlink assertion moved to type branches.",
+    "actual_roster_metadata_count_before_helper_additions": 1554,
+    "actual_symlink_fixture_paths": [
+      "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-accelerated-integration-review01-2026-10-09/children/numeric-batches",
+      "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration-review02-2026-10-09/inventory/symlink"
+    ],
+    "owned_directory_unhandled_dangling_or_directory_symlinks": [],
+    "actual_regular_roster_within64MiB": true,
+    "focused_seam_evidence": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/tools-review02/RESULT01.log",
+      "sha256": "a4f0765882eefbe11dc382e3567380342ed04fed49e0e8e1cf1f9cb0fe88bdc2"
+    },
+    "focused_test_source": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/tools-review02/check.py",
+      "sha256": "b27bf0055e54ec34055106604d73f3e15b560589d0d0bc3fb10157d5a19facbe"
+    }
+  },
+  "accepted_properties": [
+    "Original two symlink fixture names/types/targets now preserved as metadata, without target body reads.",
+    "Actual 4331520-byte prior returned archive retained under explicit 64MiB preservation bound; no empirical/native cap changed.",
+    "Single-link regular metadata/body SHA/mode and observed before/after stability retained; sorted archive exact member readback includes linknames.",
+    "Same actual base-to-HEAD roster plus five named public directories, old and new helpers/reviews; no silent removal of prior evidence."
+  ],
+  "limitations": [
+    "Selection is a finite public-roster tool, not a generic secret-content detector or adversarial concurrent-filesystem guarantee. Path/basename exclusions remain scoped to actual reviewed namespace.",
+    "Named-directory discovery uses is_file: future dangling/directory symlinks there could be omitted; current metadata check found none. Tracked Git delta symlinks are included regardless of target existence.",
+    "Existing sample symlink targets may point outside selected tree; preserve as opaque link metadata only. Do not extract them into original paths or follow targets.",
+    "No frozen selection bodies, actual capture, network, credentials, private transport, returned archive or external reconstruction verified here. Root must perform separate actual selection and return checks.",
+    "Regular per-file limit64MiB is not a cumulative archive/RAM cap; actual finite selection extent remains to be frozen and bounded before execution.",
+    "01 withheld receipt and helpers preserved; no Main, claims, registrations, originals or Root helpers modified."
+  ]
+}

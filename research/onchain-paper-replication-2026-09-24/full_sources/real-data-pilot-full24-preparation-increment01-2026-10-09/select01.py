@@ -1,0 +1,73 @@
+"""Select actual public increments since the last verified external return."""
+import datetime
+import hashlib
+import json
+import stat
+import subprocess
+from pathlib import Path
+
+ROOT = Path.cwd().resolve()
+HERE = Path(__file__).resolve().parent
+F = HERE.parent
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+prior = F/'real-data-pilot-twentythird-failed-increment01-2026-10-09/FRESH_GIT_RECOVERY01.json'
+base = json.loads(prior.read_bytes())['source']
+names = set(subprocess.check_output(
+    ['git', 'diff', '--name-only', base, 'HEAD'], cwd=ROOT, text=True).splitlines())
+owned = [
+    'real-data-pilot-grouped-registration01-2026-10-09',
+    'real-data-pilot-full24-transport-binding01-2026-10-09',
+    'real-data-pilot-full24-entry01-2026-10-09',
+    'real-data-pilot-full24-currentness01-2026-10-09',
+    'real-data-pilot-full24-final-entry-review01-2026-10-09']
+for name in owned:
+    for path in (F/name).rglob('*'):
+        if path.is_file():
+            names.add(str(path.relative_to(ROOT)))
+for name in ('capture01.py', 'recover01.py', 'select01.py', 'TOOLS_REVIEW01.json'):
+    names.add(str((HERE/name).relative_to(ROOT)))
+names = sorted(names)
+rows = []
+directories = set()
+for relative in names:
+    path = ROOT/relative
+    assert path.is_file() and not path.is_symlink(), relative
+    assert path.resolve(strict=True) == path, relative
+    assert not ({'.git', '.venv', 'node_modules', 'keys', 'apis'} & set(path.parts)), relative
+    assert path.name not in ('.env', 'hf_token.txt', 'connection.json', 'id_ed25519_storagebox_u676273'), relative
+    assert not relative.startswith(('research_artifacts/', 'research_runs/')), relative
+    before = path.stat()
+    assert stat.S_ISREG(before.st_mode) and before.st_nlink == 1 and before.st_size <= 4*1024**2, relative
+    body = path.read_bytes()
+    after = path.stat()
+    assert all(getattr(before, k) == getattr(after, k) for k in ('st_dev', 'st_ino', 'st_mode', 'st_nlink', 'st_size', 'st_mtime_ns', 'st_ctime_ns')), relative
+    rows.append({'path': relative, 'type': 'regular',
+                 'mode': format(stat.S_IMODE(before.st_mode), '04o'),
+                 'bytes': len(body), 'sha256': hashlib.sha256(body).hexdigest()})
+    parent = path.parent
+    while parent != ROOT:
+        directories.add(parent)
+        parent = parent.parent
+dirs = []
+for path in sorted(directories):
+    assert path.resolve(strict=True) == path and not path.is_symlink()
+    dirs.append({'path': str(path.relative_to(ROOT)), 'type': 'directory',
+                 'mode': format(stat.S_IMODE(path.stat().st_mode), '04o')})
+selection = {
+    'at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'baseline_actual_recovery': {'path': str(prior.relative_to(ROOT)), 'sha256': sha(prior)},
+    'baseline_source': base,
+    'selection_rule': 'Actual tracked body delta since verified prior recovery plus the five named new public full24 directories and narrowly adapted preservation tools. All unchanged historical stores and opaque transport bodies are excluded.',
+    'files': len(rows), 'body_bytes': sum(r['bytes'] for r in rows),
+    'rows': rows, 'directories': dirs,
+    'qualification': 'Public incremental byte/name/type/mode selection only. No originals are copied or retired; no source/runtime/empirical store completeness beyond these selected new bodies is asserted.'}
+with (HERE/'SELECTION01.json').open('x') as stream:
+    json.dump(selection, stream, indent=2, sort_keys=True)
+    stream.write('\n')
+print(json.dumps({'selected_files': len(rows), 'selected_bytes': selection['body_bytes'],
+                  'directories': len(dirs)}))

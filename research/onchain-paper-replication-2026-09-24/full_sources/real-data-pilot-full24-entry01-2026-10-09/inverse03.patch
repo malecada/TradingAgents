@@ -1,0 +1,18 @@
+--- preflight24_03.py
++++ preflight24_02.py
+@@ -167,13 +167,12 @@
+             if role!='binding_review':need(review['evidence'].get(ref['path'])==ref['sha256'],'current binding evidence not independently joined')
+     for role,info in actual.items():
+         need(len(role.encode('ascii'))<=128,'actual input role encoding differs');_path_envelope(str(ROOT/info['path']))
+-    bound=read(binding['transport_binding'])
+-    changed={'archive_transport','matching_ordered_edge_scratch'}|set(bound['inputs'])
++    changed={'archive_transport','archive_policy','producer_plan','execution_job','matching_ordered_edge_scratch'}
+     need(set(prior)==set(actual),'public04 original role roster differs')
+     for role,ref in prior.items():
+         if role not in changed:need(actual[role]['sha256']==ref['sha256'],'unrelated public04 input changed: '+role)
+     need(admission.experiment['cumulative_budget_extension']['review']==binding['budget_review'],'genuine budget95 review differs')
+-    prepared=read(binding['preparation']);unbound=read(binding['unbound_archive'])
++    prepared=read(binding['preparation']);unbound=read(binding['unbound_archive']);bound=read(binding['transport_binding'])
+     need(prepared['preparation_origin']['public_manifest']==binding['public_manifest'],'prepared public04 origin differs')
+     need(bound['source_request']['prepared']==binding['preparation'] and bound['source_request']['archive_policy']==binding['unbound_archive'],'actual binder source request differs')
+     need(prepared['builder03_spec']['references']['archive_policy']==binding['unbound_archive'],'unbound archive role differs')

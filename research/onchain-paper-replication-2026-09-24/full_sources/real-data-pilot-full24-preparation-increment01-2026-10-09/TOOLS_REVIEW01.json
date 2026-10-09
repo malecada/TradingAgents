@@ -1,0 +1,79 @@
+{
+  "decision": "withheld",
+  "scope": "Tools and source selection logic only; no select/capture/recover execution or external verification",
+  "at": "2026-10-09T04:17:42.270328+00:00",
+  "helpers": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/select01.py",
+      "sha256": "996737a259ebba7cd9fca3ff182ed82bd030a3b046bcdbae1cccd607ee8e0ed6"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/capture01.py",
+      "sha256": "77208dc1b32df2e4949e38c736263845ac877b890b1370e61eaeb29fd66be6ea"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/recover01.py",
+      "sha256": "033c7342b7b45de171509170c084ee32f4efba0c65ac89b8332db0f29729ea8d"
+    }
+  ],
+  "baseline_helpers": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twentythird-failed-increment01-2026-10-09/capture01.py",
+      "sha256": "cc4afc591473445fda66a94efd3c095efc483db5c5c3ac2e2b0d3db05d527133"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twentythird-failed-increment01-2026-10-09/recover01.py",
+      "sha256": "51b96dcbd56fd9b274dcd070ecebc37886b2adb620c92e4673e0e78c249633f6"
+    }
+  ],
+  "baseline_recovery": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twentythird-failed-increment01-2026-10-09/FRESH_GIT_RECOVERY01.json",
+    "sha256": "53ba53443a5cf38539b34a23d368102b0af43e296bf08e2cebc875a90b3d5396"
+  },
+  "baseline_source": "c379ac9e7abb4af6aa9dab55729f9d3280e9e2ee",
+  "checks": {
+    "all_three_parse": true,
+    "capture_literal_inverse": true,
+    "recover_literal_inverse": true,
+    "tracked_delta_count": 1466,
+    "actual_metadata_refusals": [
+      {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-accelerated-integration-review01-2026-10-09/children/numeric-batches",
+        "lstat_mode": 41471,
+        "bytes": 178,
+        "nlink": 1,
+        "reason": "nonregular"
+      },
+      {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-owner-integration-review02-2026-10-09/inventory/symlink",
+        "lstat_mode": 41471,
+        "bytes": 178,
+        "nlink": 1,
+        "reason": "nonregular"
+      },
+      {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-twentythird-failed-increment01-2026-10-09/actual_external_archive_blob_return.stdout",
+        "lstat_mode": 33204,
+        "bytes": 4331520,
+        "nlink": 1,
+        "reason": "exceeds_4MiB"
+      }
+    ]
+  },
+  "findings": [
+    "Actual selected delta cannot pass current selector: two intentional symlink fixtures and one 4331520-byte prior returned archive stdout. Do not silently discard preserved evidence.",
+    "Selector names only committed base-to-HEAD delta plus five named directories and four helper/receipt files; unrelated uncommitted or untracked changes are not included.",
+    "Exclusions are path-component/basename checks, not a universal credential-content classifier. Actual final public roster must still be reviewed."
+  ],
+  "accepted_properties": [
+    "Capture/recover literal inverse after only announced selection path, archive name, fresh bare namespace, and descriptive qualification replacements.",
+    "Selection source checks canonical nonsymlink routes, regular single-link bodies <=4MiB, before/after stat stability, exact SHA/bytes and POSIX mode; no original writes.",
+    "Sorted names and inherited archive member readback preserve declared file/directory names/types/modes."
+  ],
+  "limitations": [
+    "No final frozen selection or member bodies reviewed; metadata-only lstat of tracked roster used to identify refusal.",
+    "No network, credentials, private transport, empirical arrays, select/capture/recover execution, or original mutation.",
+    "No external recovery, POSIX reconstruction, writer exclusion, launch or deletion authority.",
+    "Inherited capture reads selected files under observed stability checks, not adversarial filesystem atomicity; inherited recovery confirms returned archive hash, with separate returned-member review still required."
+  ]
+}

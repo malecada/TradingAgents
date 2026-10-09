@@ -1,0 +1,11 @@
+# Entry successor02: committed ancestry instead of self-reference
+
+Frozen preflight24.py, root_io24.py and MANIFEST01.json are preserved. New callable sources are preflight24_02.py and root_io24_02.py. The latter differs only in the imported preflight module. No Main, registration, claims, private body, network or actual preflight was accessed by this correction.
+
+The capacity declaration now requires `source_anchor` (actual40-hex committed ancestor) and `source_body_pins` (exact365-or-more mapping equal to the accepted public04 manifest's source_pins). Each mapping entry must equal the genuine current admission's source_files entry. At entry, `git merge-base --is-ancestor` verifies ancestry and the original authenticate_committed helper joins each current local body to its exact blob at that ancestor. Any newly registered entry/review/helper bodies remain subject to the unchanged current admission/release/Git checks. The policy therefore inherits the exact accepted source bodies without requiring its own future commit hash.
+
+Remove the old capacity `source` and `max_age_seconds` fields; their presence refuses to prevent ambiguity. Keep `at` timezone-aware and not future. Its age no longer represents live eligibility. All other capacity fields and explicit prospective-headroom semantics remain unchanged. The declaration, its static prospective budgets and exact source map must still be authenticated by the genuine independent binding/release evidence.
+
+Current storage, namespace, source/runtime, free-disk and RAM observations still execute in check(); the output retains its actual entry timestamp. No hard quota, measured future directory use, writer exclusion or successful capacity claim is introduced. The original single30-second Torch inventory and native/claim/cleanup checks are unchanged.
+
+Focused tests pass: old declaration age is allowed; ancestor check precedes exact body join; self-reference, obsolete expiry, future/naive time, changed declared/admitted pin and nonancestor refuse. All original functions except the narrow prepared_inputs seam are AST-identical, and RootIO has a literal one-import inverse. The test uses explicit metadata/function doubles solely for routing/refusal; no genuine Admission or Git result is fabricated as evidence.

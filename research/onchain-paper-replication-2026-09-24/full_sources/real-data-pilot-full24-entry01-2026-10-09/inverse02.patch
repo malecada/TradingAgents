@@ -1,0 +1,39 @@
+--- preflight24_02.py
++++ preflight24.py
+@@ -139,20 +139,6 @@
+ def _path_envelope(path):
+     import re
+     need(type(path) is str and len(path.encode('ascii'))<=512 and re.fullmatch(r'[A-Za-z0-9_./-]+',path) and '..' not in Path(path).parts,'actual path encoding envelope differs')
+-
+-def _capacity_source(capacity,public,admitted_sources,current_source):
+-    """Immutable prospective policy ancestry; live eligibility is sampled in check()."""
+-    anchor=capacity.get('source_anchor');pins=capacity.get('source_body_pins')
+-    need(type(anchor) is str and len(anchor)==40 and all(c in '0123456789abcdef' for c in anchor),'actual committed capacity source anchor required')
+-    need(type(pins) is dict and pins==public['source_pins'] and len(pins)>=365,'exact accepted public04 source body map required')
+-    need(all(admitted_sources.get(path)==pin for path,pin in pins.items()),'capacity source bodies differ from current admission')
+-    need('source' not in capacity and 'max_age_seconds' not in capacity,'capacity declaration must not impersonate current-source measurement')
+-    declared=datetime.datetime.fromisoformat(capacity['at']);now=datetime.datetime.now(datetime.timezone.utc)
+-    need(declared.tzinfo is not None and declared<=now,'capacity declaration timestamp missing timezone/future')
+-    ancestry=subprocess.run(['git','merge-base','--is-ancestor',anchor,current_source],cwd=ROOT,check=False)
+-    need(ancestry.returncode==0,'capacity source anchor is not an ancestor of current admission')
+-    authenticate_committed(anchor,pins)
+-
+ 
+ def prepared_inputs(binding,release,admission,job):
+     """Exact independently reviewed current inputs; no obsolete builder replay."""
+@@ -194,10 +180,12 @@
+     schedule=compact['stage_policy']['schedule']
+     need(schedule['max_total_checkpoints']==160 and schedule['max_total_checkpoint_bytes']==43058298880 and schedule['max_checkpoints']==1,'original cumulative checkpoint schedule differs')
+     capacity=read(binding['capacity_observation'])
+-    need(capacity['identity']==NAME and capacity['decision']=='accepted','authenticated Root prospective capacity declaration required')
+-    _capacity_source(capacity,public,admission.experiment['source_files'],admission.source)
+-    for field in ('new_logical_growth_bytes','new_allocated_growth_bytes','non_directory_new_allocated_growth_bytes','new_entries','directory_allocated_bound_bytes','other_writer_reserved_bytes'):
++    need(capacity['identity']==NAME and capacity['decision']=='accepted' and capacity['source']==admission.source,'authenticated Root current capacity observation required')
++    for field in ('new_logical_growth_bytes','new_allocated_growth_bytes','non_directory_new_allocated_growth_bytes','new_entries','directory_allocated_bound_bytes','other_writer_reserved_bytes','max_age_seconds'):
+         need(type(capacity.get(field)) is int and capacity[field]>=0,'missing explicit capacity term: '+field)
++    need(capacity['max_age_seconds']>0 and capacity['max_age_seconds']<=300,'finite current capacity observation required')
++    observed=datetime.datetime.fromisoformat(capacity['at']);now=datetime.datetime.now(datetime.timezone.utc)
++    need(observed.tzinfo is not None and 0<=(now-observed).total_seconds()<=capacity['max_age_seconds'],'Root capacity observation stale/future')
+     need(capacity.get('allocation_semantics')=='prospective-headroom-sampled-aggregate-guards','explicit guarded prospective headroom semantics required')
+     need(capacity['new_allocated_growth_bytes']>=capacity['non_directory_new_allocated_growth_bytes']+capacity['directory_allocated_bound_bytes']+capacity['other_writer_reserved_bytes'],'declared growth omits prospective headroom')
+     need(capacity['directory_and_other_writers_included'] is True and capacity['runtime_residuals_included'] is True,'complete physical closure unjoined')

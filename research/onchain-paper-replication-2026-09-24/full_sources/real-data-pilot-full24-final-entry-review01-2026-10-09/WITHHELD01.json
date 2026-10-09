@@ -1,0 +1,30 @@
+{
+  "decision": "withheld_predecessor_only",
+  "preflight_sha256": "35921e4e9943f5c7b849d81eba45c65b4ef3cfd0d067fbfe910cd7118f3f73bd",
+  "draft01_sha256": "43bad59330de6afb9ea080b040e243c26f37ef514ab9bc9d0f1326902a75ca3e",
+  "defects": [
+    {
+      "seam": "exact binder reference dictionaries",
+      "reason": "public_manifest/preparation/unbound_archive missing original bytes fields; actual prepared_inputs equality fails",
+      "correction": "additive draft02 restores original dicts; reported corrected by Root"
+    },
+    {
+      "seam": "prepared_inputs unchanged-public SHA loop",
+      "reason": "accepted binder canonical serialization changes hashes of bound public documents although decoded bodies are identical; exception set omits8 bound roles",
+      "correction": "retain inherited-input hash equality outside bound document roles; all bound documents must still equal actual binder inputs and actual core bodies"
+    }
+  ],
+  "remaining_checks": "All375source/64input hashes,365ancestor blobs and remaining joins passed when onlythese defects isolated; no release granted.",
+  "raw_evidence": {
+    "FINAL_CHECK01.log": "7b399bfb0744a16c44fc2e4ee3c414d69c0e34b0a4ef37e6f22ef703a422826b",
+    "REMAINING_CHECK04.log": "32530c43b8e9688a703702a96ed1b0a4e9c35064e7f8433a072739d5736a4829",
+    "REMAINING_CHECK01.log": "335fb716721ff69d7139c3d7943b39d619b18ece6e2f513d3c87a2d5359b55bf",
+    "REMAINING_CHECK02.log": "0c9e64be3af0798f863da318acf3ff864748a5b43fcf68f95ff2b71b1bd2c76d",
+    "TRANSPORT_CHECK01.log": "5b4228e17a98f45346c1280f02746299f505442311c7527abc0c31e8538d60fb",
+    "REMAINING_CHECK03.log": "5675d9e564395218ce3d6823bc8bf9d63b5146697037455d5cb02980a93838b1"
+  },
+  "harness_limitations": [
+    "Reviewer incorrect diagnostic output name corrected additively.",
+    "Default Git mmap refused at256MiB AS; bounded1m window/8m limit succeeded; no persistent Git config change."
+  ]
+}
