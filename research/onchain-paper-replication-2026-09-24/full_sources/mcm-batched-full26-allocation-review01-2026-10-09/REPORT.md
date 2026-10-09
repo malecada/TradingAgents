@@ -1,0 +1,7 @@
+# Full26 cumulative allowance review
+
+Accepted allowance only. Actual25 claim dec4456b… and FAILED daca7748… match the sole appended row in both proposed97 documents; COMPLETE is absent. Its recorded effective ceiling is96. The actual same-family claim-name census equals all48 proposed rows, with no omitted/new live claim. The prior47 terminal checks and17 historical closures are reused from exact accepted96 review6ffa07fd… and CHECK01 7da1c462…; all inherited claim rows remain identical.
+
+65 spent =48 actual (20 complete/28 failed) +17 historical (13 complete/4 failed), totaling33 complete/32 failed. 97 =65 spent +28 unchanged pending +3 unchanged closed preclaim reserves +1 fixed unused26. Five selected26 claim/run/artifact/archive/parent paths were absent at review. All allocation fields outside the eight explicit count/identity/question changes equal prior96. Base51/prior17, financial allocations/1420 ceiling, preclaim reserves and zero refunds/transfers/reopenings remain unchanged. No prior failed identity is reopened.
+
+EXTENSION97_REVIEW01.json uses the exact five-field accepted machine schema and hashes the concrete proposed97 extension. CHECK01.json binds both proposals, inherited review/evidence and new actual receipts. This is a changed accounting review only: no old matrix, claim, Run, empirical work, network, adoption or registry mutation. Source, numerical policy, capacity, genuine entry and launch require their separate reviews and Root actions.
