@@ -1,0 +1,60 @@
+{
+  "imported_mcm_identity.py": [
+    [
+      "from pathlib import Path",
+      "from pathlib import Path\nfrom . import immutable_target_metadata"
+    ],
+    [
+      "def __init__(self,execution,graph,key):",
+      "def __init__(self,execution,graph,key,*,immutable_execution=None):"
+    ],
+    [
+      "        require(type(execution) is original_import_stage.ImportedExecution,'genuine imported execution required')",
+      "        require(type(execution) is original_import_stage.ImportedExecution,'genuine imported execution required')\n        require(not immutable_target_metadata.selected(immutable_execution) or getattr(execution,'_sampled_authority_lease',None) is not None,'immutable target requires sampled checked JSON return')"
+    ],
+    [
+      "        self._node_order=node_order_hash(graph.node_ids)",
+      "        self._immutable_execution=immutable_target_metadata.selected(immutable_execution)\n        self._immutable_execution_pin=self._immutable_execution\n        if self._immutable_execution:\n            self._execution_anchor=immutable_target_metadata.snapshot(self._execution)\n            self._execution_anchor_pin=self._execution_anchor\n            self._execution,self._execution_pin=self._execution_anchor\n        self._node_order=node_order_hash(graph.node_ids)"
+    ],
+    [
+      "        require(canonical_bytes(self._execution)==self._execution_pin and canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')",
+      "        require(self._immutable_execution is self._immutable_execution_pin,'target immutable selection changed')\n        if self._immutable_execution:\n            immutable_target_metadata.current(self)\n            require(canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')\n        else:\n            require(canonical_bytes(self._execution)==self._execution_pin and canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')"
+    ]
+  ],
+  "compact_mcm.py": [
+    [
+      "def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None):",
+      "def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None,immutable_execution=None):"
+    ],
+    [
+      "    target=Target(execution,graph,graph_hash)",
+      "    target=Target(execution,graph,graph_hash,**({'immutable_execution':immutable_execution} if immutable_execution is not None and immutable_execution is not False else {}))"
+    ]
+  ],
+  "real_pilot_import_caller.py": [
+    [
+      "import time",
+      "import time\nfrom . import immutable_target_metadata"
+    ],
+    [
+      "    partial = 'partial_progress' in p",
+      "    immutable = 'immutable_target_execution' in p\n    if immutable:\n        immutable_target_metadata.selected(p['immutable_target_execution'])\n        require(full and interval,'immutable target requires sampled schema2 plan')\n    partial = 'partial_progress' in p"
+    ],
+    [
+      "| ({'scoring_diagnostic'} if diagnostic else set()), 'pilot plan fields differ')",
+      "| ({'scoring_diagnostic'} if diagnostic else set()) | ({'immutable_target_execution'} if immutable else set()), 'pilot plan fields differ')"
+    ],
+    [
+      "[Target(execution,g,k) for k,g in graphs.items()]",
+      "[Target(execution,g,k,**({'immutable_execution':p['immutable_target_execution']} if 'immutable_target_execution' in p else {})) for k,g in graphs.items()]"
+    ],
+    [
+      "checked.append(Target(execution,g,k))",
+      "checked.append(Target(execution,g,k,**({'immutable_execution':p['immutable_target_execution']} if 'immutable_target_execution' in p else {})))"
+    ],
+    [
+      "**({'diagnostic':diagnostic} if diagnostic is not None else {}))",
+      "**({'diagnostic':diagnostic} if diagnostic is not None else {}),\n                **({'immutable_execution':p['immutable_target_execution']} if 'immutable_target_execution' in p else {}))"
+    ]
+  ]
+}

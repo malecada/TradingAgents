@@ -1,0 +1,55 @@
+--- Main/real_pilot_import_caller.py
++++ real_pilot_import_caller.py
+@@ -9,6 +9,7 @@
+ import json
+ from pathlib import Path
+ import time
++from . import immutable_target_metadata
+ 
+ KIND = 'real-data-import-training-pilot-v1'
+ FILE_MAX = 4 * 1024**2
+@@ -47,6 +48,10 @@
+         require(full and type(refs) is dict and set(refs)=={'policy_input','transport_input'} and all(type(v) is str and v for v in refs.values()) and len(set(refs.values()))==2,'explicit schema2 archive input pair required')
+     interval='imported_authority_lease_input' in p
+     require(not interval or (full and type(p['imported_authority_lease_input']) is str and bool(p['imported_authority_lease_input'])),'explicit schema2 interval input required')
++    immutable = 'immutable_target_execution' in p
++    if immutable:
++        immutable_target_metadata.selected(p['immutable_target_execution'])
++        require(full and interval,'immutable target requires sampled schema2 plan')
+     partial = 'partial_progress' in p
+     if partial:
+         from .real_pilot_partial_progress import policy
+@@ -59,7 +64,7 @@
+         diagnostic_policy(p['scoring_diagnostic'])
+     resource_subset = 'population_scope' in p
+     require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
+-    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()), 'pilot plan fields differ')
++    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()) | ({'immutable_target_execution'} if immutable else set()), 'pilot plan fields differ')
+     require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+@@ -540,12 +545,12 @@
+         require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
+         mark('original_import')
+         if diagnostic is None:
+-            checked = [] if p.get('imported_authority_lease_input') is not None and selected_mcm.get('schema_version') == 6 else [Target(execution,g,k) for k,g in graphs.items()]
++            checked = [] if p.get('imported_authority_lease_input') is not None and selected_mcm.get('schema_version') == 6 else [Target(execution,g,k,**({'immutable_execution':p['immutable_target_execution']} if 'immutable_target_execution' in p else {})) for k,g in graphs.items()]
+         else:
+             checked=[]
+             for graph_index,(k,g) in enumerate(graphs.items()):
+                 diagnostic.startup_enter('target',graph_index)
+-                checked.append(Target(execution,g,k))
++                checked.append(Target(execution,g,k,**({'immutable_execution':p['immutable_target_execution']} if 'immutable_target_execution' in p else {})))
+                 diagnostic.startup_complete()
+         for graph_index,target in enumerate(checked):
+             if diagnostic is not None:diagnostic.startup_enter('prepare',graph_index)
+@@ -557,7 +562,8 @@
+             if diagnostic is not None:diagnostic.startup_enter('production',graph_index)
+             result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
+                 **({'progress':progress} if progress is not None else {}),
+-                **({'diagnostic':diagnostic} if diagnostic is not None else {}))
++                **({'diagnostic':diagnostic} if diagnostic is not None else {}),
++                **({'immutable_execution':p['immutable_target_execution']} if 'immutable_target_execution' in p else {}))
+             if diagnostic is not None:diagnostic.startup_complete()
+             targets.append(result); result.check()
+             retained = resource_fixture.verify_retained(result,owner)

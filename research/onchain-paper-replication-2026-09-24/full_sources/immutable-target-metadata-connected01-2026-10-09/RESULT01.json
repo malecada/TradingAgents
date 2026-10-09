@@ -1,0 +1,58 @@
+{
+  "status": "PASS_STDLIB_SYNTHETIC_NO_AUTHORITY",
+  "checks": [
+    "three modules literal/AST inverse",
+    "no mutable caller alias; original alias mutation cannot change frozen snapshot; legacy mutation refuses",
+    "field/anchor/byte-pin/selection/mutable mapping/scope/authority-chain/array identity replacements refuse",
+    "exact JSON types, finite values and selected bytes/nodes/depth policy bounds",
+    "unchanged actual lease scheduler failure/clock seam preserves primary and closes lease; metadata-only doubles",
+    "actual checked-value fresh tree; mutable execution root rejoin refuses after mutation",
+    "actual plan validator/defaults/refusals; three actual forwarding callsites; resource validator stubbed, no authority instantiated"
+  ],
+  "fixture_canonical_bytes": 4905,
+  "timing_iterations_per_repetition": 2048,
+  "timing_raw_ns": [
+    {
+      "old": 138043265,
+      "selected": 14889222
+    },
+    {
+      "selected": 14676713,
+      "old": 136656970
+    },
+    {
+      "old": 135738083,
+      "selected": 14627131
+    },
+    {
+      "selected": 14514158,
+      "old": 136433821
+    }
+  ],
+  "median_old_ns": 136545395.5,
+  "median_selected_ns": 14651922.0,
+  "limits": {
+    "affinity": [
+      3
+    ],
+    "nice": 10,
+    "as": [
+      536870912,
+      536870912
+    ],
+    "fsize": [
+      4194304,
+      4194304
+    ],
+    "cpu": [
+      30,
+      30
+    ],
+    "wall": [
+      29.999978,
+      0.0
+    ]
+  },
+  "elapsed_seconds": 0.6907195290114032,
+  "qualification": "Exact _pins source, fixed synthetic JSON. No actual causal lease share or real speed inferred. Actual original full boundaries/source/clock code unchanged."
+}

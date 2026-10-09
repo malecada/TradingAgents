@@ -1,0 +1,47 @@
+--- Main/imported_mcm_identity.py
++++ imported_mcm_identity.py
+@@ -1,5 +1,6 @@
+ """Typed target/workload adapter for a genuine completed original import stage."""
+ from pathlib import Path
++from . import immutable_target_metadata
+ from . import original_import_stage,compact_owner,original_dictionary,job
+ from .cache import cache_key
+ from .provenance import canonical_bytes,thaw,file_hash
+@@ -32,8 +33,9 @@
+ 
+ 
+ class Target:
+-    def __init__(self,execution,graph,key):
++    def __init__(self,execution,graph,key,*,immutable_execution=None):
+         require(type(execution) is original_import_stage.ImportedExecution,'genuine imported execution required')
++        require(not immutable_target_metadata.selected(immutable_execution) or getattr(execution,'_sampled_authority_lease',None) is not None,'immutable target requires sampled checked JSON return')
+         require(type(graph) is GraphSnapshot,'actual registered weekly graph required')
+         _checkpoint(execution,value=True)
+         self.execution=execution;self.graph=graph;self.key=key
+@@ -52,6 +54,12 @@
+         _checkpoint(execution)
+         require(manifest['graph_hash']==key and graph_hash(graph)==key,'target graph content differs')
+         self._execution=_checkpoint(execution,value=True);self._execution_pin=canonical_bytes(self._execution)
++        self._immutable_execution=immutable_target_metadata.selected(immutable_execution)
++        self._immutable_execution_pin=self._immutable_execution
++        if self._immutable_execution:
++            self._execution_anchor=immutable_target_metadata.snapshot(self._execution)
++            self._execution_anchor_pin=self._execution_anchor
++            self._execution,self._execution_pin=self._execution_anchor
+         self._node_order=node_order_hash(graph.node_ids)
+         self._motifs=[graph_identity(m) for m in self.dictionary.representatives]
+         self.scope=self.derive_scope();self._scope_pin=canonical_bytes(self.scope)
+@@ -66,7 +74,12 @@
+         require(self.execution._owner is self.owner and self.execution._materialized._dictionary is self.dictionary and self.execution._stage.reference==self.receipt_sha256,'import target authority chain changed')
+         descriptor=self.execution._stage.prepared._selection['selected']['descriptor']
+         require(canonical_bytes(descriptor['resource_graph_inputs'])==self._mapping and descriptor['resource_graph_inputs'][self.key]==self._input,'target input mapping changed')
+-        require(canonical_bytes(self._execution)==self._execution_pin and canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')
++        require(self._immutable_execution is self._immutable_execution_pin,'target immutable selection changed')
++        if self._immutable_execution:
++            immutable_target_metadata.current(self)
++            require(canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')
++        else:
++            require(canonical_bytes(self._execution)==self._execution_pin and canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')
+ 
+     def derive_scope(self):
+         current=self._execution['current'];ordered=[graph_identity(m) for m in self.dictionary.representatives]

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-full29-preparation-increment-tools-review01-2026-10-09/returned14/check01.py", line 52, in <module>
+    tree=git(['ls-tree','-r',source]).decode();treepins={line.split('\t',1)[1]:line.split()[2] for line in tree.splitlines() if '\t'in line};tracked=0;archive_only=[]
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-full29-preparation-increment-tools-review01-2026-10-09/returned14/check01.py", line 36, in git
+    result=subprocess.check_output(['git',*args],cwd=cwd,env=env,timeout=15);git_bytes+=len(result);assert disk_bytes+git_bytes<=limit;return result
+                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
