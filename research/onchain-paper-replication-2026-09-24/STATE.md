@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T07:08:13.583414+00:00: actual corrected increment08 remote return91bd4bee independently accepted58363219; exact unused26 releasedaaa10514/admission and livepreflight passed. No numerical claim/job yet. Goal ACTIVE/incomplete.**
+
+Fresh original131 public bodies/16directories/2969600B archive6844438d and two separately returned corrected recovery bodies authenticated through19actual Git operations. Original backup-helper typo100844 mode stopped afterfour successful metadata operations beforefreshbare; failedscript/review/rawoperations and corrected100644 proof retained. No scientificattempt/budget spent by metadata/recovery refusals. Declared recovery excludes private dispatch/installed package bodies/unrelated empiricalstores/POSIX restoration/deletion; no oldhistory recopy.
+
+Concrete395sources/64inputs/193 numerical roster; final97 extension02 and selected actual admission runtime90bb match genuine successful check3.620s. LIVE_CHECK01 passes8.233s with original native6GiBmax5GiBhigh/swap0/twoCPUs/8h/2.5GiBreserve/1GiBFSIZE/10GiBdiskfloor and16/20GiBunion; instantaneous RAM/disk is not measured whole capacity. Source fixes/three pins accepted; original sevenwholegraphs415968128cells/32motifs512samples/fullGAT→attentionLSTM realjointupdate unchanged.
+
+Accounting65closed33COMPLETE32FAILED/highest adopted96;97 reviewed unused+28pending/3reserved fixed. All bounded review assignmentscomplete. Immediate Root action: commit/push actual recovery/checkpoint, ONE RootIO26 performs fresh exact preflight then either refuses preclaim or launches original unused26 once. Freeze Main scientific source/Git whileactive, observe SAMEhandle/nativeunit and actualfirstbatch markers; retain/review/recover everyterminal outcome before any successor. No fullrealMCM/jointupdate/financialfit yet; broadheartbeatpaused.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T07:00:09.842785+00:00: corrected unused26 genuine metadata admission PASS3.620s; final independent releaseaaa10514; actual live entry PASS8.233s. No numerical claim/job. Goal ACTIVE/incomplete.**
 
 Concrete395 registered source pins/64 labelled inputs/193 numerical-source bodies at genuinee5c9 anchor and original365 capacity closure verified. Reviewed97 extension02 d2e487 authenticates actual97 allocation; original stale96 cross-reference and earlier runtime declaration/refusals remain preserved. Selected runtime admission.py now exactly installed90bb; other six runtime hashes unchanged. Complete actual metadata admission usedsource0194e462/no scientific reads/Run; current live entry covers finalsource/input/release/runtime/native/namespace/whole sampled storage eligibility. Instantaneous MemAvailable11134533632B/free24450965504B vs startup24288793181B. Not feature throughput or measured whole capacity.

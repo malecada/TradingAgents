@@ -1,0 +1,42 @@
+{
+  "decision": "accepted",
+  "scope": "Corrected recovery source and focused local mode test only; actual new remote return pending",
+  "corrected_helper": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/recover08_02.py",
+    "sha256": "cbf90cf249ba61e5a4643fba760aa19646719b0e777705c2ee0064775e50dc0f"
+  },
+  "preserved_failed_helper": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/recover08.py",
+    "sha256": "648c4f47970f8f92a1e7f5ea94ebfceb156fd3d15f9f216f8618b37678153b3b"
+  },
+  "preserved_refusal": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/RECOVERY_REFUSAL01.json",
+    "sha256": "8ad2ff65333d32c767749a280e8a87e29dd45d6870d2a75924f9406ae90754df"
+  },
+  "original_correct_mode_helper": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full25increment06/recover06.py",
+    "sha256": "41954fbc7c3727e26b383eb36b6ab406ac31a313b443d9beef10f7dec4e91ce4"
+  },
+  "test_source": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/review_mode02.py",
+    "sha256": "17a91d4f1d09b7c7f996c9cb8278e446a20ac74a81f58e144ebd428d84ecbbae"
+  },
+  "test_result": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full26increment08/MODE_REVIEW02.log",
+    "sha256": "1e10b2f590c0905de5acb98abce5bd2b575c4ea6a3e91cf2b09cee4a336a52e9"
+  },
+  "checks": {
+    "literal_inverse_to_failed08_after_only_mode_outputnamespace_and_two_extra_returns": true,
+    "corrected_mode_assert_AST_identical_to_original06": true,
+    "actual_local_Git100644_accepted": true,
+    "100844_100755_symlink_modes_rejected": true,
+    "extra_return_sequence": "Two exact paths (corrected helper and this receipt), each source ls-tree100644/blob/path join, actual remote direct blob fetch, raw return equality to current local body, SHA/bytes/OID in final receipt; six additional recorded operations.",
+    "original_archive_selection_capture_unchanged": true
+  },
+  "correction": "Previous tools08 acceptance was incorrect: broad inverse08\u219206 silently changed invalid100844 back to100644. This reviewer owns that missed literal defect. Original failed evidence and erroneous review remain immutable; this receipt supersedes recovery-helper acceptance only.",
+  "limitations": [
+    "No helper execution/network or remote-success assertion here. Root must commit/push both extra paths and execute one new exclusive recovery02; later review must authenticate19operations,131archive bodies and two direct-return correction bodies.",
+    "Source reads use existing nonconcurrent operator assumptions; no hostile writer exclusion or POSIX reconstruction claim.",
+    "No numerical source/input/cap changes, empirical claim, launch or deletion authority."
+  ]
+}
