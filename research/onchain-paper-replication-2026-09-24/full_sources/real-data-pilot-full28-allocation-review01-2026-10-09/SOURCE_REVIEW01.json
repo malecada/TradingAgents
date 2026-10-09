@@ -1,0 +1,94 @@
+{
+  "harness_correction": "CHECK01 used overly strict prose assertion unchanged in qualification; actual qualification says limits retained. All prior substantive checks passed. Original script/failure retained; CHECK02 checks actual wording.",
+  "decision": "accepted_allocation_delta_only",
+  "extension_review_sha256": "c68b0e95300ae867f6b758a5cabb0bbf4e208437324187e2d57a6d577e24d22c",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full28-entry01-2026-10-09/CUMULATIVE_ALLOCATION_PROPOSED99_01.json": "43fe2fd045ef82ca00f5c622ef4b6dcde43574bca3c542d4491619b37e61ac5e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full28-entry01-2026-10-09/EXTENSION_PROPOSED99_01.json": "4ac58f7519727260efca1a941459c2527ae9d85ccef9852ccc7923b43af9893e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full28-entry01-2026-10-09/ACCOUNTING_PREPARATION01.json": "62147817bd4d12c66a9e2bf62ca1200502007a877996bed04bde5df58707918d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-entry01-2026-10-09/CUMULATIVE_ALLOCATION_PROPOSED98_01.json": "e2c98f78988eee7381ca13bf6202690afde487f914c6ca44657807a2da605eb2",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-entry01-2026-10-09/EXTENSION_PROPOSED98_01.json": "fa2bb97d038e5dc6b12283f5f949d209a098b4ad9a8b8354c1cab7884e0e9324",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-allocation-review01-2026-10-09/EXTENSION98_REVIEW01.json": "5be69234c9e12461c48194d30abd57c87b17d53e3241d353cf3f465313bc3207",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-27/claim.json": "738ca092c09d51b87912b602d09e331d52e79fc53d7fbd924481d905cbbcf455",
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-27/failed.json": "873bc460bce36cf38d4072f3fbf446d9614834111255455d6ffe423dfa126c67",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full27-outcome-review01-2026-10-09/OUTCOME_REVIEW01.json": "b47ee40c1d359f0d2464f0bb6ba3825dbcb49ff16525fc676f5e335201015fef"
+  },
+  "checks": {
+    "closed_lists": "both exact49-row prefixes unchanged; one failed27 appended identically",
+    "changed_allocation_keys": [
+      "closed_claims",
+      "consumed_before",
+      "equation",
+      "identities",
+      "prior_adopted_cumulative_ceiling",
+      "prior_reviewed_reserved_ceiling",
+      "proposed_cumulative_ceiling",
+      "qualification",
+      "question"
+    ],
+    "changed_extension_keys": [
+      "allocation",
+      "claims",
+      "consumed_before",
+      "cumulative_ceiling",
+      "initial_experiment",
+      "reason"
+    ],
+    "counts": {
+      "historical": 17,
+      "actual": 50,
+      "closed": 67,
+      "complete": 33,
+      "failed": 34,
+      "pending": 28,
+      "reserved": 3,
+      "fixed_new": 1,
+      "proposed_ceiling": 99,
+      "highest_actual_claimed": 98
+    },
+    "fresh_namespace_lstat_absence": {
+      "at": "2026-10-09T10:48:58.744533+00:00",
+      "paths": [
+        "research_runs/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/e7b2a93577e73995bf10ce326f943bfed1b3958aea50020d6c40becf94ae5a97/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/ed80da61b74eef519c95e45b1832e260c7e28bef3679ce12b4e9b22df80b6b45/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/ccea3f67e8da09a42a57dca672b9426c4f437c63f2fbc50aa6efbf79c022f1e3/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/599257ccf97e01a5ad0b34574c05a882e4c9083a0c8d533c6e63cfebfe1897ef/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/da2b0c231c60ee44f6766601da45444792dadfe2770330a86db7825e04c2828f/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/c76446199cc2e9147323c71d90af0af2cb61f38a97f304bf26f152edfb7b7e9d/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/1b83ea65bd24404d601ff4644b5df138aff0cbb68c13d2e994521ca0b562ce88/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/17cc8f89a6f49bd6e236bdb7976fc85628c9f6db37ec7297226481736a261a0f/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/f6ed2b5697184fe4c2d89810035f6ac69f5645e1f8e0cd05a6f7b18646f0c664/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/885258df6934f62af3d655c37d8a00cb8092973819232dc17e4b03735c5ace6f/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/eaa4af06c76fe2276b9f0cedb6a361613a7db9c585d03ed8a157b0b972aadd47/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/997fd8dbb98023d23098c1690dba372be9c02b46f69d72dabf35c86e20f8ecbd/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/3dee2bb24fb9604a5227607121aa7abfa15b977551fedca74a94b64e248c3046/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_representations/caf196a1c7c00892d546c2f0ab60de295cfa80f47b1334f2531fb5337057920c/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_compact_mcm/ccea3f67e8da09a42a57dca672b9426c4f437c63f2fbc50aa6efbf79c022f1e3/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_compact_mcm/da2b0c231c60ee44f6766601da45444792dadfe2770330a86db7825e04c2828f/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_compact_mcm/db8a30b46d4a51935c063f6ab718cab337aca2e15be0d9c49460466aae02ca15/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_compact_mcm/f6ed2b5697184fe4c2d89810035f6ac69f5645e1f8e0cd05a6f7b18646f0c664/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_compact_mcm/eaa4af06c76fe2276b9f0cedb6a361613a7db9c585d03ed8a157b0b972aadd47/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_compact_mcm/f21085f7c2c46091df3be8ac951e7570bf2f9e3e3d74d885bbc0d499edcc1d5a/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_compact_mcm/c8ee0523d3741efff3c09b9ae348f9315163075cc10099f734d66113ec10bda9/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_compact_mcm/25448ca4ffc3a83aa4286ddd95a438b4af170c7b194c357e80ff98f09639a16d/eth-paper-real-data-end-to-end-resource-20261009-28",
+        "research_artifacts/onchain_compact_mcm/57f440b1f12a5b495f9a346a787441d334b9a8723fb97482adcfb6a04a64fb80/eth-paper-real-data-end-to-end-resource-20261009-28"
+      ],
+      "all_absent": true,
+      "qualification": "Scoped local name checks only. Future derived owner/transport namespaces need exact bound-entry review; no blanket filesystem exclusion."
+    }
+  },
+  "limits_of_review": [
+    "No proposal adoption, admission/claim or launch performed.",
+    "Unchanged family/pending/reserved/financial allowances are literal metadata equality; historical receipts reused through accepted98 review, not reread/reexecuted.",
+    "Question states original science/limits unchanged; these allocation documents do not contain complete operational/source/input policies, so exact joined equality is deferred to Root combined entry release.",
+    "New28 namespace absence is a point observation; no future exclusion or process claim.",
+    "Outcome status and permanent spending do not convert partial4096 durable scores into completed graph/training."
+  ]
+}
