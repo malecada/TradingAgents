@@ -1,5 +1,17 @@
 # Current replication checkpoint
 
+**TOP 2026-10-09T06:49:58.866597+00:00: failed25 outcome fully returned within declared increment and independently accepted1239c4fe; reviewed three-file fixes installed/committed8add8946. No numerical job. Goal ACTIVE/incomplete.**
+
+Full25 stays permanently FAILED/spent: 41.4-minute native execution, first numerical pair-policy refusal, zero completed motif cells, six downstream graphs unavailable/training null. Original outputs, cleanup and sampled memory preserved. Actual outcome07 fresh return authenticates127 regular bodies/39 directories/13 Git operations, including all eight outputs and13 representation files. The declared scope excludes runtime package bodies/private dispatch/unrelated stores; no deletion or capacity credit. Original failures and identities remain immutable.
+
+Successor26 concrete preparation: complete193-source policy at genuine e5c9 source anchor; exactly three reviewed changed pins (admission-body deduplication, batched policy normalization, early caller predicates). Twelve public documents, all64 dataset-labelled roles and actual accepted offline opaque binder prepared. The earlier read-only two-pin assertion refused before publication; actual closure includes admission.py. Ordinary metadata preparation also encountered wrong ledger-key assumptions, corrected from actual schemas before any claim. Existing accepted mathematical/runtime/capacity evidence reused; numerical method, seven whole graphs, original32 motifs/512spent samples, model/training and native limits unchanged.
+
+Accounting65closed33COMPLETE32FAILED/highest adopted96. Proposed97=65spent+28unchanged pending+3reserved+1fresh fixed26; not reviewed/adopted/claimed yet. Root owns live integration/registration/STATE/Git/preservation/ONElauncher. owner_policy_fix21 reviews only new97 accounting; residual_metadata_review20 reviews only changed26 source/input/entry; annealing completed outcome07 return review. Next executable action: finish exact gate with independent97 review, combined entry release and genuine read-only admission, preserve/recover only new public increment, fresh eligibility then at mostONE original unused26. Zero fullMCM/jointupdate/financial fits; broad heartbeat paused.
+
+Earlier checkpoints retained below.
+
+# Current replication checkpoint
+
 **TOP 2026-10-09T06:30:52.608939+00:00: full25 permanently FAILED at firstnumericcall (pair policy schema), native2483.581s/Rootsession1813exit1; actualcleanup/finalstorage/all5PIDs+cgroup absent. No numerical job active; sourcefreeze ended. Goal ACTIVE/incomplete.**
 
 Actualclaimdec4456b/failedreceipt daca7748 preserved. Originaldictionaryimport completed and first fullrealgraph MCMintent existed, then batched_numeric_reuse called originalpair validator with mismatched executorpolicy. Zero completed motifcells; firstgraphFAILED,remaining6UNAVAILABLE/trainingnull. Native noOOM/high0/max0/wallkillfalse; sampledpeak5182185472B vs optionallastkernel5294460928B separate, no wholecapacity claim. OriginalROOT_IO_CLOSED01 parent1/reaped/logsclosed andFINAL_STORAGE01 actualunit/cgroupclosure preserved. Rootclosure retains actual rawps/unit observations plus qualifiedRoottooltranscription (notrawexport/nativehistory). Accounting65closed33COMPLETE32FAILED/highest96; no refund/reopen/transfer.
