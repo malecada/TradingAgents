@@ -1,0 +1,56 @@
+{
+  "decision": "accepted",
+  "scope": "Finite source-tool selection review only; no capture/recovery execution or launch authority",
+  "helpers": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full25increment06/select06.py",
+      "sha256": "0be125abecb6053aa86bcf53365d5238474db1828b49a5e621e33fa4349e6322"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full25increment06/capture06.py",
+      "sha256": "7b2f2fae7fe76c35a5d6169d608049567771e19d76a9f3cd4339be198c5061c3"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full25increment06/recover06.py",
+      "sha256": "41954fbc7c3727e26b383eb36b6ab406ac31a313b443d9beef10f7dec4e91ce4"
+    }
+  ],
+  "baseline_actual_recovery": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome05/FRESH_GIT_RECOVERY05.json",
+    "sha256": "1d0ef735a48dd9241e2e267e59eb608dc92df4bc62283140347ee9796fcb643e"
+  },
+  "baseline_source": "238ccc239939b918b1e8646d373d037a6b76f8bf",
+  "reused_tools_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/release04/TOOLS_REVIEW04.json",
+    "sha256": "2d3d3bec6ce2d5d20b8365afabd567b732c06519e170c0cfc94ebbbe93c900d4"
+  },
+  "reused_outcome_return_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome05/returned-review01/RECOVERY_REVIEW01.json",
+    "sha256": "e88b493cf1f287c45e4286abd24f5b8775d3f6f41e082d7ca459056cdc8381ee"
+  },
+  "checks": {
+    "all_three_literal_inverse_after_declared_names_baseline_and_exact_exclusion_block": true,
+    "owned_empty": true,
+    "unchanged_regular64MiB_singlelink_mode_hash_stability_and_symlink_logic": true,
+    "excluded_duplicate_current_bytes_authenticated": [
+      {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome05/fresh-git-recovered-outcome05.tar",
+        "bytes": 983040,
+        "sha256": "21b051508798f2d4f46b12bf0940130e099a9ba5282ab64397acffd9bfcc167a"
+      },
+      {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome05/actual_external_archive_blob_return.stdout",
+        "bytes": 983040,
+        "sha256": "21b051508798f2d4f46b12bf0940130e099a9ba5282ab64397acffd9bfcc167a"
+      }
+    ]
+  },
+  "review_harness_correction": "Initial broad06-to04 substitution altered unchanged literal Git mode100644 and failed inverse. Corrected inverse preserves100644; helper itself unchanged.",
+  "limitations": [
+    "Exclusion is exactly two already-returned outcome05 duplicate bodies, not arbitrary archive/history filtering. Both presently match authenticated returned archive hash; no originals deleted or rewritten.",
+    "Selector retains release04 exact terminal23 claim/failed path allowlist; other research_runs and every research_artifacts body still refused.",
+    "No directory replay, private transport reads, credentials, network, empirical imports, numerical run or claim creation.",
+    "Actual frozen selection and returned member verification remain separate. Native limits unchanged;64MiB only inherited preservation per-body bound.",
+    "If excluded duplicates later change their new bytes are outside selection; prior authenticated archive defines their preserved scope."
+  ]
+}
