@@ -311,7 +311,7 @@ def check(*,binding_ref=None,release_ref=None):
     if free<startup:raise ValueError('full projected source/scratch plus disk floor unavailable')
     if available<job['resources']['start_reserve_bytes']:raise ValueError('frozen startup RAM reserve unavailable')
     return args,{'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'experiment':NAME,
-        'registration_sha256':file_hash(HERE/'gate01.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':99,
+        'registration_sha256':file_hash(HERE/'gate01.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':98,
         'source_pins':len(admission.experiment['source_files']),'compact_input_pins':len(admission.inputs),
         'index_capacity':index_capacity,'projected_reservations':scopes,'host_mem_available_bytes':available,'free_disk_bytes':free,
         'startup_free_requirement_bytes':startup,'storage_observation':storage,
