@@ -1,0 +1,47 @@
+{
+  "role": "archive_policy",
+  "status": "DRAFT_NOT_RELEASED",
+  "template": {
+    "backend": "compact-archive-events-v1",
+    "local_free_floor_bytes": 10737418240,
+    "max_decoded_transfer_bytes": {
+      "$required_from_root": "whole registered archive max_decoded_transfer_bytes",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "max_read_metadata_bytes": {
+      "$required_from_root": "whole registered archive max_read_metadata_bytes",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "max_remote_payload_bytes": {
+      "$required_from_root": "whole registered archive max_remote_payload_bytes",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "max_stage_bytes": {
+      "$required_from_root": "whole registered archive max_stage_bytes",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "max_stage_verifications": 16,
+    "max_workflow_metadata_bytes": {
+      "$required_from_root": "whole registered archive max_workflow_metadata_bytes",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "max_writer_metadata_bytes": {
+      "$required_from_root": "whole registered archive max_writer_metadata_bytes",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "read_controls": {
+      "format": "packed-archive-read-controls-v1",
+      "schema_version": 1,
+      "shard_bytes": 4194304
+    },
+    "remote_namespace": {
+      "$required_from_root": "fresh unused archive namespace",
+      "status": "DRAFT_NOT_RELEASED"
+    },
+    "schema_version": 1,
+    "transport_identity": {
+      "$required_from_root": "actual fresh dispatch identity",
+      "status": "DRAFT_NOT_RELEASED"
+    }
+  }
+}

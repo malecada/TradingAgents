@@ -1,0 +1,139 @@
+--- templates01/build.py
++++ templates02/build.py
+@@ -1,5 +1,5 @@
+ """Deterministic metadata drafts only. No admission, graph loading or launch."""
+-import ast,copy,hashlib,json
++import ast,copy,hashlib,json,subprocess
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent
+ ROOT=HERE.parents[3]
+@@ -7,7 +7,7 @@
+ EXPERIMENT='eth-paper-real-data-end-to-end-resource-20261009-23'
+ PACKAGE=ROOT/'tradingagents/research/onchain_replication'
+ STATUS='DRAFT_NOT_RELEASED'
+-BATCH=4096;BODY=1024;SUMMARY=8192
++BATCH=4096;BODY=1024;SUMMARY=8192;GROUP=16
+ 
+ def raw(x):return (json.dumps(x,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+ def sha(x):return hashlib.sha256(x).hexdigest()
+@@ -19,7 +19,7 @@
+  entry=gate['experiments'][EXPERIMENT];refs={};values={}
+  # Only these public metadata roles are read. Never transport-private bodies,
+  # scientific arrays, graph manifests, credentials or raw source datasets.
+- for role in ('producer_plan','execution_job','pilot','compact_policy','mcm_policy','mcm_output_policy','typed_payload','archive_policy','pair_policy','model','training'):
++ for role in ('producer_plan','execution_job','pilot','compact_policy','mcm_policy','mcm_output_policy','typed_payload','archive_policy','pair_policy','model','training','original_import','original_import_stage','original_claim','original_gate'):
+   ref=entry['inputs'][role];path=ROOT/ref['path'];body=path.read_bytes()
+   require(sha(body)==ref['sha256'],'final23 metadata pin changed: '+role)
+   refs[role]=dict(path=ref['path'],sha256=ref['sha256'],bytes=len(body));values[role]=json.loads(body)
+@@ -27,39 +27,58 @@
+  keys=sorted(pilot['graph_inputs']);require(len(keys)==7 and keys==sorted(typed['graphs'])==descriptor['required_graphs'],'actual seven graph roster mismatch')
+  dictionary=descriptor['configs']['dictionary'];require(dictionary['size']==32 and dictionary['sample_count']==512,'original dictionary denominator differs')
+  require(compact['stage_policy']['pair']==values['pair_policy']['limits'],'original checkpoint limits differ')
+- source_names=['compact_mcm_batched','compact_mcm','compact_mcm_output','compact_mcm_publication','compact_owner','batched_driver','batched_journal','batched_pair_executor','batched_numeric_execution','batched_numeric_reuse','matching_immutable_session','matching_annealing','matching_checkpoint','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations','real_pilot_import_caller','real_pilot_reservations','archive_dispatch']
++ source_names=['compact_mcm_batched','compact_mcm','compact_mcm_output','compact_mcm_publication','compact_owner','batched_driver','batched_journal','batched_pair_executor','batched_numeric_execution','batched_numeric_reuse','matching_immutable_session','matching_annealing','matching_checkpoint','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations','real_pilot_import_caller','real_pilot_reservations','archive_dispatch','archive_control_history','grouped_offload','grouped_offload_semantics','checkpoint_chunks','matching_identity','matching_hardening','matching_sparse','matching_pair','matching_reference','contracts','original_dictionary','original_import_preparation','original_import_stage']
+  pins={str((PACKAGE/(name+'.py')).relative_to(ROOT)):sha((PACKAGE/(name+'.py')).read_bytes()) for name in source_names}
++ # Current bodies for the explicit historical source roster plus newly selected modules.
++ for relative in entry['source_files']:
++  path=ROOT/relative
++  require(path.resolve().is_relative_to(ROOT) and path.suffix in ('.py','.json','.md','.toml','.txt'), 'public source closure path required')
++  pins[relative]=sha(path.read_bytes())
+  tree=ast.parse((PACKAGE/'compact_mcm_batched.py').read_text());assignments={n.targets[0].id:ast.literal_eval(n.value) for n in tree.body if isinstance(n,ast.Assign) and isinstance(n.targets[0],ast.Name) and n.targets[0].id in ('FORMAT','MODULES','PACKAGE')}
+  format=assignments['FORMAT'];modules=assignments['MODULES']
+- def tar_bound(count):
+-  extents=(BODY,92+53*count,BODY)
+-  return ((sum(512+((n+511)//512)*512 for n in extents)+1024+10239)//10240)*10240
++ def tar_bound(counts):
++  extents=[n for count in counts for n in (BODY,92+53*count,BODY)]
++  total=((sum(512+((n+511)//512)*512 for n in extents)+1024+10239)//10240)*10240
++  require(total<=4*1024**2,'group archive exceeds selected4MiB');return total
+  graph_bounds={}
+  for key in keys:
+   rows=typed['graphs'][key]['rows'];require(type(rows) is int and rows>0,'positive original rows required');cells=rows*32;full,last=divmod(cells,BATCH);batches=full+bool(last)
+-  graph_bounds[key]={'rows':rows,'cells':cells,'batches':batches,'origin_bytes':9*cells,'summary_payload_cap':SUMMARY*batches,'spool_bytes':4*cells,'published_f32_bytes':4*cells,'closure_tokens_bytes':168*batches,'offload_anchor_memory_bytes':32*batches,'journal_logical_reservation':53*cells+(92+2*BODY)*batches,'archive_tar_payload_upper_bound':full*tar_bound(BATCH)+(tar_bound(last) if last else 0)}
++  batch_counts=[BATCH]*full+([last] if last else []);groups=[batch_counts[i:i+GROUP] for i in range(0,len(batch_counts),GROUP)]
++  graph_bounds[key]={'rows':rows,'cells':cells,'batches':batches,'groups':len(groups),'origin_bytes':9*cells,'summary_payload_cap':SUMMARY*batches,'spool_bytes':4*cells,'published_f32_bytes':4*cells,'closure_tokens_bytes':168*batches,'offload_anchor_memory_bytes':32*len(groups),'journal_logical_reservation':53*cells+(92+2*BODY)*batches,'archive_tar_payload_upper_bound':sum(tar_bound(group) for group in groups)}
+  maxcells=max(g['cells'] for g in graph_bounds.values());maxbatches=(maxcells+BATCH-1)//BATCH
+  require(values['mcm_policy']['max_entries']==maxcells,'actual max graph population changed')
+  schedule=compact['stage_policy']['schedule'];pair=compact['stage_policy']['pair'];checkpoint_charge=pair['max_checkpoint_bytes']+2*8192
+  checkpoint_envelope=schedule['max_total_checkpoint_bytes']
+  require(checkpoint_envelope>=checkpoint_charge*schedule['max_total_checkpoints'],'inherited checkpoint accounting does not cover retained publications')
+- mcm={'schema_version':5,'max_entries':maxcells,'max_workflow_metadata_bytes':values['mcm_policy']['max_workflow_metadata_bytes'],'numeric':copy.deepcopy(values['mcm_policy']['numeric']),
+-  'batched':{'format':format,'authority_boundaries':'entry-batch-checkpoint-final','batch_cells':BATCH,'max_journal_bytes':53*maxcells+(92+2*BODY)*maxbatches,'max_body_bytes':BODY,'max_closure_token_bytes':168*maxbatches,'max_checkpoint_bytes':checkpoint_envelope,'retention':'typed-recover-before-retire-v2','max_spool_bytes':4*maxcells,'max_offload_metadata_bytes':need('per-stage retained offload metadata capacity'),'max_offload_entries':need('per-stage offload tree entry bound <=4000000'),'max_offload_anchor_bytes':32*maxbatches,
++ mcm={'schema_version':6,'max_entries':maxcells,'max_workflow_metadata_bytes':values['mcm_policy']['max_workflow_metadata_bytes'],'numeric':copy.deepcopy(values['mcm_policy']['numeric']),
++  'batched':{'format':format,'authority_boundaries':'entry-batch-checkpoint-final','batch_cells':BATCH,'max_journal_bytes':53*maxcells+(92+2*BODY)*maxbatches,'max_body_bytes':BODY,'max_closure_token_bytes':168*maxbatches,'max_checkpoint_bytes':checkpoint_envelope,'retention':'typed-grouped-recover-before-retire-v1','group_batches':GROUP,'max_spool_bytes':4*maxcells,'max_offload_metadata_bytes':need('per-stage retained offload metadata capacity'),'max_offload_entries':need('per-stage offload tree entry bound <=4000000'),'max_offload_anchor_bytes':32*((maxbatches+15)//16),
+   'execution':{'route':'immutable-input-session+exact-byte-reuse-v1','max_entries':4096,'max_retained_bytes':64*1024**2,'max_key_bytes':8*1024**2,'max_origin_bytes':9*maxcells,'max_summary_bytes':SUMMARY*maxbatches}}}
+  output=copy.deepcopy(values['mcm_output_policy']);output['schema_version']=1;output.pop('payload_archive_input')
+  typed.update(schema_version=2,format='typed-payload-budget-v2',batched_parent='actual-active-mcm-stage-v1',max_control_bytes=need('whole typed ledger control metadata capacity'))
+  for key,g in typed['graphs'].items():
+   # Preserve existing legacy kinds/score chunk; no refund of old reservations.
+   n=graph_bounds[key];payload=n['archive_tar_payload_upper_bound']
+-  g['kinds']['mcm-batched-bundle-v3']={'max_operations':2*n['batches'],'max_preserved_bytes':payload,'max_recovered_bytes':2*payload,'max_chunks':n['batches'],'chunk_bytes':tar_bound(BATCH)}
++  g['kinds']['mcm-batched-bundle-v3']={'max_operations':2*n['groups'],'max_preserved_bytes':payload,'max_recovered_bytes':2*payload,'max_chunks':3*n['groups'],'chunk_bytes':tar_bound([BATCH]*GROUP)}
+  compact['max_workflow_retained_logical_bytes']=need('actual complete owner logical envelope')
+- compact['stage_policy']['max_retained_logical_bytes']=need('actual stage logical envelope covering schema5 stores')
++ compact['stage_policy']['max_retained_logical_bytes']=need('actual stage logical envelope covering schema6 stores')
+  # Original log and checkpoint schedule are intentionally retained. Their
+  # cumulative logical bounds are not simultaneous physical-store capacity.
+  for field in ('compact_execution','compact_archive_execution','pair_execution'):
+   descriptor[field]['policy_sha256']=need('final registered '+field+' policy bytes/hash')
+- for field in ('original_dictionary_import','original_dictionary_stage'):
+-  descriptor[field]['sha256']=need('genuine current ancestry '+field+' input bytes/hash')
++ for field,role in (('original_dictionary_import','original_import'),('original_dictionary_stage','original_import_stage')):
++  descriptor[field]['sha256']=refs[role]['sha256']
++ # Historical ancestry references remain exact; public code bytes are reconstructed, never fresh authority.
++ claim=values['original_claim'];original_gate=values['original_gate']
++ require(claim['experiment']==original_gate['experiments'][claim['experiment_id']], 'original claim/gate experiment differs')
++ require(claim['source']==values['original_import']['original_source'],'original source identity differs')
++ original_sources=claim['experiment']['source_files'];require(len(original_sources)==26,'original source denominator differs')
++ ancestry=[];source_bodies={}
++ for index,(name,expected) in enumerate(sorted(original_sources.items())):
++  require(name.endswith('.py') and not name.startswith('/') and '..' not in Path(name).parts,'public original source path required')
++  result=subprocess.run(['git','show',claim['source']+':'+name],cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=10,check=False)
++  if result.returncode==0 and sha(result.stdout)==expected:
++   member=f'{index:02d}-'+Path(name).name;source_bodies[member]=result.stdout.hex();ancestry.append({'original_path':name,'sha256':expected,'preserved_member':'ancestry-source/'+member,'status':'exact_original_public_source'})
++  else:ancestry.append({'original_path':name,'sha256':expected,'status':STATUS,'prerequisite':need('supply exact public source '+claim['source']+':'+name+' SHA '+expected)})
+  resource=copy.deepcopy(pilot['resource_policy']);budget=resource['storage_budget'];budget['experiment']=need('fresh genuine experiment identity');budget['roots']=need('exact new writable union roots plus existing residual scopes');budget['limits']=need('actual whole allocated/logical/inode/scan capacity including all existing stores')
+  pilot.pop('partial_progress',None);pilot.pop('scoring_diagnostic',None);pilot['outputs'].pop('diagnostic',None);pilot['cell_id']=need('separately registered full seven-graph resource-update cell');pilot['resource_policy']=resource
+  job=copy.deepcopy(values['execution_job']);job['resources']=copy.deepcopy(resource)
+@@ -69,18 +88,36 @@
+   archive[key]=need('whole registered archive '+key)
+  dispatch_format=next(ast.literal_eval(n.value) for n in ast.parse((PACKAGE/'archive_dispatch.py').read_text()).body if isinstance(n,ast.Assign) and isinstance(n.targets[0],ast.Name) and n.targets[0].id=='FORMAT')
+  transport={'schema_version':2,'format':dispatch_format,'typed_payload_input':'typed_payload','connection':need('existing reviewed actual connection object; no credential/config body copied'),'rate_kbit':need('genuine shared transport rate allowance'),'max_seconds':need('whole transfer deadline'),'max_payload_bytes':need('rounded whole archive plus typed capacity'),'max_commands':need('whole archive plus typed command bound'),'max_diagnostic_bytes':need('actual bounded diagnostic allowance'),'max_control_bytes':need('actual finite transport/control-history allowance'),'namespace':need('fresh unused dispatch namespace'),'receipt_output':need('registered transport receipt name'),'terminal_output':need('registered transport terminal name')}
+- templates={'producer_plan':producer,'execution_job':job,'mcm_policy':mcm,'mcm_output_policy':output,'typed_payload':typed,'archive_policy':archive,'archive_transport':transport,'pilot':pilot,'compact_policy':compact}
++ capref=HERE.parent/'mcm-batched-grouped-capacity02-2026-10-09/CAPACITY01.json'
++ history=json.loads(capref.read_bytes())['control_history_policy_candidate'];require(history['success_control_bytes']==16384 and history['success_diagnostic_bytes']==2048 and history['shard_bytes']==4194304,'reviewed grouped control selection differs');transport['control_history']=copy.deepcopy(history)
++ refs['grouped_capacity']={'path':str(capref.relative_to(ROOT)),'sha256':sha(capref.read_bytes()),'bytes':capref.stat().st_size}
++ templates={'original_import':copy.deepcopy(values['original_import']),'original_import_stage':copy.deepcopy(values['original_import_stage']),'producer_plan':producer,'execution_job':job,'mcm_policy':mcm,'mcm_output_policy':output,'typed_payload':typed,'archive_policy':archive,'archive_transport':transport,'pilot':pilot,'compact_policy':compact}
+  totals={k:sum(g[k] for g in graph_bounds.values()) for k in next(iter(graph_bounds.values()))}
+- obligations=['Fresh committed gate/current source-map plus accepted source reviews; no historical source commit grants new admission.','Genuine dictionary512/32 ancestry, Owner/Binding/Stage, fresh namespace and actual transport View/ledger; placeholders are not capabilities.','Full current physical disk/inodes/RAM/native scratch/checkpoints/metadata/staging/free-floor calculation; logical history bounds are not simultaneous physical stores.','Root successor real_pilot_import_caller/reservations currently required: existing caller requires output.payload_archive_input before validator requiring MCM2/output2.','Preload one complete selected batched module closure before imported authority activation.','Native guard and numeric batch summaries are the new progress evidence; no MCMProgress/scoring stop is selected.','Key-equivalence recomputation, reuse operational deviation and lower-RAM protocol remain explicit accepted-source limitations.','Joint original model update and full seven-graph MCM denominator remain unchanged; output1 requires complete local published matrix.']
+- return {'templates':templates,'graph_bounds':graph_bounds,'totals':totals,'source_pins':pins,'modules':modules,'baseline_inputs':refs,'baseline_gate_sha256':sha(gate_bytes),'requirements':obligations,'historical_science':{'dictionary':dictionary,'matching':descriptor['configs']['matching'],'model_input':refs['model'],'training_input':refs['training']},'checkpoint_accounting':{'publication_charge':checkpoint_charge,'max_total_checkpoints':schedule['max_total_checkpoints'],'max_total_checkpoint_bytes':checkpoint_envelope,'qualification':'Preserved finite cumulative logical schedule. No all-occurrence checkpoint product or simultaneous physical-fit claim.'}}
++ obligations=['Fresh committed gate/current source-map plus accepted source reviews; no historical source commit grants new admission.','Genuine dictionary512/32 ancestry, Owner/Binding/Stage, fresh namespace and actual transport View/ledger; placeholders are not capabilities.','Full current physical disk/inodes/RAM/native scratch/checkpoints/metadata/staging/free-floor calculation; logical history bounds are not simultaneous physical stores.','Root must bind final registered schema6 grouped producer ancestry and selected installed caller/reservations/source closure; no historical gate grants successor execution.','Preload one complete selected batched module closure before imported authority activation.','Native guard and numeric batch summaries are the new progress evidence; no MCMProgress/scoring stop is selected.','Key-equivalence recomputation, reuse operational deviation and lower-RAM protocol remain explicit accepted-source limitations.','Joint original model update and full seven-graph MCM denominator remain unchanged; output1 requires complete local published matrix.']
++ constraints={'journal_body_max_bytes':1024,'ascii_path_max_bytes':512,'input_name_max_bytes':128,'positive_integer_max_exclusive':2**63,'status':'CONDITIONAL_ROOT_MUST_ENFORCE','not_installed_validator_fields':True}
++ for role in refs:require(role.isascii() and len(role.encode())<=128,'capacity input-name condition')
++ for record in ancestry:require(record['original_path'].isascii() and len(str(ROOT/record['original_path']).encode())<=512,'capacity public-source path condition')
++ def integers(value):
++  if type(value) is int:require(-(2**63)<value<2**63,'capacity int63 condition')
++  elif type(value) is dict:
++   for item in value.values():integers(item)
++  elif type(value) is list:
++   for item in value:integers(item)
++ integers(templates)
++ original_metadata={role:(ROOT/refs[role]['path']).read_bytes().hex() for role in ('original_import','original_import_stage','original_claim','original_gate')}
++ return {'original_metadata_hex':original_metadata,'ancestry':ancestry,'ancestry_source_hex':source_bodies,'capacity_constraints':constraints,'templates':templates,'graph_bounds':graph_bounds,'totals':totals,'source_pins':pins,'modules':modules,'baseline_inputs':refs,'baseline_gate_sha256':sha(gate_bytes),'requirements':obligations,'historical_science':{'dictionary':dictionary,'matching':descriptor['configs']['matching'],'model_input':refs['model'],'training_input':refs['training']},'checkpoint_accounting':{'publication_charge':checkpoint_charge,'max_total_checkpoints':schedule['max_total_checkpoints'],'max_total_checkpoint_bytes':checkpoint_envelope,'qualification':'Preserved finite cumulative logical schedule. No all-occurrence checkpoint product or simultaneous physical-fit claim.'}}
+ 
+ def write(destination):
+  destination=Path(destination);require(destination.parent.resolve()==destination.parent,'canonical draft destination required');destination.mkdir(exist_ok=False);result=build()
++ (destination/'ancestry-metadata').mkdir()
++ for name,value in result['original_metadata_hex'].items():(destination/'ancestry-metadata'/(name+'.json')).write_bytes(bytes.fromhex(value))
++ (destination/'ancestry-source').mkdir()
++ for name,value in result['ancestry_source_hex'].items():(destination/'ancestry-source'/name).write_bytes(bytes.fromhex(value))
+  for role,value in result['templates'].items():
+   (destination/(role+'.template.json')).write_bytes(raw({'status':STATUS,'role':role,'template':value}))
+- for name,key in [('GRAPH_BOUNDS','graph_bounds'),('TOTALS','totals'),('SOURCE_PINS','source_pins'),('MODULES','modules'),('BASELINE_INPUTS','baseline_inputs'),('REQUIREMENTS','requirements'),('SCIENCE','historical_science'),('CHECKPOINT_ACCOUNTING','checkpoint_accounting')]:
++ for name,key in [('ANCESTRY','ancestry'),('CAPACITY_CONSTRAINTS','capacity_constraints'),('GRAPH_BOUNDS','graph_bounds'),('TOTALS','totals'),('SOURCE_PINS','source_pins'),('MODULES','modules'),('BASELINE_INPUTS','baseline_inputs'),('REQUIREMENTS','requirements'),('SCIENCE','historical_science'),('CHECKPOINT_ACCOUNTING','checkpoint_accounting')]:
+   (destination/(name+'.json')).write_bytes(raw({'status':STATUS,'value':result[key]}))
+- manifest={'status':STATUS,'builder_sha256':sha(Path(__file__).read_bytes()),'baseline_experiment':EXPERIMENT,'baseline_gate_sha256':result['baseline_gate_sha256'],'files':{p.name:sha(p.read_bytes()) for p in sorted(destination.iterdir())},'new_identity_or_admission':False,'array_or_numeric_imports':False}
++ manifest={'status':STATUS,'builder_sha256':sha(Path(__file__).read_bytes()),'baseline_experiment':EXPERIMENT,'baseline_gate_sha256':result['baseline_gate_sha256'],'files':{str(p.relative_to(destination)):sha(p.read_bytes()) for p in sorted(destination.rglob('*')) if p.is_file()},'new_identity_or_admission':False,'array_or_numeric_imports':False}
+  (destination/'MANIFEST.json').write_bytes(raw(manifest));return manifest
+ if __name__=='__main__':
+  import sys

@@ -1,0 +1,148 @@
+{
+  "status": "SOURCE_JOIN_WITH_EXPLICIT_DIRECTORY_CURRENTNESS_GAP_NOT_ADMITTED",
+  "sidecar_roster": [
+    {
+      "scope": "binding claim.json",
+      "count": 1,
+      "max_body_bytes": 65536,
+      "source": "matching_owner.bind resource import_metadata.write"
+    },
+    {
+      "scope": "FeatureJournal owner/start/complete.json",
+      "count": 3,
+      "max_body_bytes": 65536,
+      "source": "feature_journal._publish resource metadata"
+    },
+    {
+      "scope": "compact Owner owner/complete.json",
+      "count": 2,
+      "max_body_bytes": 65536,
+      "source": "compact_owner constructor/_finish import_metadata.write"
+    },
+    {
+      "scope": "dictionary-import intent/import-complete.json",
+      "count": 2,
+      "max_body_bytes": 65536,
+      "source": "original_import_stage complete_import"
+    },
+    {
+      "scope": "seven MCM stage intent/stage-complete.json",
+      "count": 14,
+      "max_body_bytes": 8192,
+      "source": "compact_owner.Stage; compact_mcm_batched.produce"
+    },
+    {
+      "scope": "seven compact producer start/complete/failed.json",
+      "count": 21,
+      "max_body_bytes": 8192,
+      "source": "compact_mcm_batched.produce"
+    },
+    {
+      "scope": "seven publication receipt/artifact manifest.json",
+      "count": 14,
+      "max_body_bytes": 8192,
+      "source": "compact_mcm_publication._publish; compact_mcm_output.publish"
+    },
+    {
+      "scope": "archive ledger fixed start/closed/failure headroom",
+      "count": 4,
+      "max_body_bytes": 8192,
+      "source": "archive_owner_operations4-record initial reservation"
+    },
+    {
+      "scope": "one fatal typed operation failure",
+      "count": 1,
+      "max_body_bytes": 131072,
+      "source": "typed_payload_operations.operation typed-failed publication"
+    }
+  ],
+  "sidecar_logical_upper": 1089536,
+  "sidecar_files": 62,
+  "training_lifecycle_residual": {
+    "source_policy": {
+      "directories": 16,
+      "logical_bytes": 33554432,
+      "max_file_bytes": 4194304,
+      "regular_files": 68
+    },
+    "sampled_in_baseline_logical": 511237,
+    "sampled_in_baseline_allocated": 618496,
+    "growth_logical": 33043195,
+    "growth_allocated": 33314748,
+    "training_snapshot_also_in_checkpoint_contribution": "Conservative overlap retained; no downward capacity credit."
+  },
+  "legacy_transport_route": {
+    "additional_successful_legacy_operations": 0,
+    "condition": "schema6 grouped retention, output schema1, imported dictionary, no alternate old archive stage writer/read/seal calls",
+    "original_cumulative_allowances_unchanged": true,
+    "unsupported_route": "refuse/recalculate; original final23 legacy route is not this successor"
+  },
+  "joined": {
+    "whole_logical_source_upper": 15487371577,
+    "fixed_logical_cap": 17179869184,
+    "logical_margin": 1692497607,
+    "non_directory_increment_allocated_upper": 10330149469,
+    "non_directory_whole_allocated_upper": 15479456349,
+    "fixed_allocated_cap": 21474836480,
+    "remaining_under_writer_cap": 5995380131,
+    "remaining_under_recorded_free_minus_floor": 3711618467,
+    "directory_plus_unmodeled_concurrent_writer_remaining_bytes": 3711618467,
+    "floor_bytes": 10737418240,
+    "directory_bytes_assumed": null,
+    "other_writer_bytes_assumed": null
+  },
+  "runtime_constraint": {
+    "existing_enforcement": "WritableUnion.check sums regular-file and directory st_blocks*512 and refuses whole max_allocated_bytes20GiB/max_logical_bytes16GiB; native guard separately enforces10GiB filesystem floor",
+    "required_before_entry": "Fresh original union and filesystem observations; source pin/policy/whole path joins; measure actual directory allocated growth, subtract ALL other writer reservation/growth from remaining room. If unknown, not admitted.",
+    "during_execution": "Keep same native watcher and fatal storage refusals, including partial files and residual domains; no monitoring frequency/cap changes.",
+    "limitation": "Sampled checks are not quota/reservation/writer exclusion; no source-only upper bound for filesystem directory allocation or unbounded inter-sample external growth."
+  },
+  "source_inputs": {
+    "archive_policy": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/inputs02/archive_policy.json",
+      "sha256": "2b84726fa501f03e4357d2020e8b18c469a2b0559f7fd63188726fd704ae2069"
+    },
+    "compact_policy": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection03-2026-10-08/compact_policy.json",
+      "sha256": "636d70d7e805be856ae76a40e6e3bd0b5b34531feead8e635b4f64fd7faba786"
+    },
+    "execution_job": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/inputs02/execution_job.json",
+      "sha256": "e51fb07c2ea96a0dd4764ef4e0830f2152a57cf007830c93b92791406b5fc4a9"
+    },
+    "pilot": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/inputs02/pilot.json",
+      "sha256": "2b1e36024eedc3f7df128760f2beeee79c06ab00369d1217f2b0aa95d4363cb1"
+    }
+  },
+  "checkpoint_review_sha256": "27e26c2fbe0c6e66f77b93391f66841c65b7e214220ee38e3916e5ed2d5c196c",
+  "checkpoint_contribution": 273838080,
+  "cumulative_checkpoint_allowance_unchanged": 43058298880,
+  "source_pins": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-grouped-capacity02-2026-10-09/CAPACITY01.json": "e7a0de4784bf072c000886daff631656f002baef72dd899b4528cbec9c61c04a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-grouped-root-install01-2026-10-09/BASELINE01.json": "affc4bf65d1a606baac372d82725ec6ed00cee9ee3475f864ffa9b6f3c4ce550",
+    "research/onchain-paper-replication-2026-09-24/full_sources/mcm-batched-checkpoint-reconciliation-review01-2026-10-09/SOURCE_REVIEW01.json": "27e26c2fbe0c6e66f77b93391f66841c65b7e214220ee38e3916e5ed2d5c196c",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-final23-2026-10-09/gate03.json": "fa4996ee06c75cbd3f9dd0783e176cb7e5094f2ecf7f1cdfe37c87db34722131",
+    "tradingagents/research/onchain_replication/matching_owner.py": "b7cb394c8c65a2d9688a9557c991a2e694b48fc0b3d2317f71a51c857680dfaa",
+    "tradingagents/research/onchain_replication/feature_journal.py": "00f157d8a2e0d1e1b8d657a7030ab1fe8e43bf4b113a1ca29288a5635d524665",
+    "tradingagents/research/onchain_replication/compact_owner.py": "205bf28317cbcd8472774d1a05f0ed9ca56d4597df11418e1aaeb56cfd6c618e",
+    "tradingagents/research/onchain_replication/original_import_stage.py": "fada5f7c0f09a911009ced367f29b41b28839c4c24777bdba9b58fdd50a8557c",
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": "de872f001186a2857ed39e260ba78369b1f57e50a5dd78f53f28036e1f02fa39",
+    "tradingagents/research/onchain_replication/compact_mcm_publication.py": "713d92d8aee98ae3ab8b8cdd6b47b10369c3e2a62ea5ea3fc5ca6a2730467b46",
+    "tradingagents/research/onchain_replication/compact_mcm_output.py": "7231e53094e44885c93b1e9cbb682183be1061bd5a362d435443ebe30e6e8241",
+    "tradingagents/research/onchain_replication/archive_owner_operations.py": "720c4b2484a268a0e94d8d978a347bbce7bcc3bfdd02cee159fcfa25565e421f",
+    "tradingagents/research/onchain_replication/archive_owner_seal.py": "dc010ad083293e4bb7230adc879f410785bb92bb238dde95d9cf4f03ce82cef5",
+    "tradingagents/research/onchain_replication/typed_payload_operations.py": "275661a497b1759748342a88e132652570923cad9feafa40bc115d6df755e42f",
+    "tradingagents/research/onchain_replication/real_pilot_storage.py": "5c9e6a8e9c26d85065f60b52ef65581b5d2a3379be4ccfb2a2b3efd264aa941e",
+    "tradingagents/research/onchain_replication/workflow_storage.py": "deff02766685c1e7fb8628766acf0e0c36dc324da4672f3adc094bfac3e24a74",
+    "tradingagents/research/onchain_replication/resources.py": "7bd0fad9e790be8a024b490bdd604d7aeda146e00d21b095f4b21c1391147f7a",
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": "a383068497ff175eb56757559c81b7ab374878f7c6f9ee5627fdc865f0ad6c78",
+    "tradingagents/research/onchain_replication/real_pilot_population.py": "e4671b48754c8f56d989d1905e7803d8111c10334f1110ff07cfcc79a1fb45db",
+    "tradingagents/research/onchain_replication/import_metadata.py": "1c9455bc80b8f424bf63d6fdd5b94338ce54c14ead720990a2f787aef9e93dfe",
+    "tradingagents/research/onchain_replication/score_batches.py": "4018ad121fcf7b6abf0ec93afe7b78857a1254611a02791965974437558c7a45"
+  }
+}
