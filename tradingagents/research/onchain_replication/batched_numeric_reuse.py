@@ -2,6 +2,7 @@
 import array,copy,ctypes,hashlib,json,math,struct,sys,types,time
 from pathlib import Path
 from . import adaptive_edge_policy
+from . import compiled_normalization_policy
 import numpy as np
 from tradingagents.research.onchain_replication.contracts import AttributedGraph
 from . import matching_checkpoint as engine
@@ -13,19 +14,20 @@ from . import batched_pair_executor as accepted
 from .geometry_summary import Geometry
 from . import matching_immutable_session as immutable_session
 
-MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy)
+MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy)
 SOURCE_PINS=(
+    (compiled_normalization_policy, 'f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01'),
     (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
-    (accepted, 'f7c51b9423a45c0e61defd9260924acb1e0611d5c8727de8abb96e42d1ad147e'),
-    (engine, '309f260cdd0956966ecbd588df9da11f9c45f241ddeab93fb280c96f8ddf9f4a'),
-    (engine.ann, 'b9229da33098c6c00c2e0e85a0a25a7d1a6f7968befbf82e30a092c424dd967e'),
+    (accepted, '2e4c5b51f991e1c02eed00d1044a423222eebe77d0f540057f1108df562e34ff'),
+    (engine, '0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0'),
+    (engine.ann, 'eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43'),
     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
     (engine.sparse, '06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e'),
     (engine.ann.typed_identity, '0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7'),
     (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
     (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
     (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
-    (immutable_session, 'c3fc9b7a9a456f269eded17ba5ece492edccc91e2fc8e6563a0febcca80baeef'),
+    (immutable_session, '3c4652633ea8658f5a4b96bba54763d2b52a1f2cc07b53f681e8a355b2fcf0aa'),
 )
 
 def require(ok,message):
@@ -95,8 +97,9 @@ def entry_size(entry):
 
 class NumericReuseExecutor:
     """Explicit batches; source/runtime attestation is NOT continuous authority."""
-    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None):
+    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None,compiled_normalization_policy_value=None):
         adaptive_edge_policy.attach(self,edge_cache_policy)
+        compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
         require(type(max_entries) is int and 0<max_entries<=4096,'finite entry bound required')
         require(type(max_retained_bytes) is int and 1024<=max_retained_bytes<=64*1024**2,'retained cache bound required')
         require(type(max_key_bytes) is int and 0<max_key_bytes<=min(max_retained_bytes,8*1024**2),'bounded exact key required')
@@ -138,7 +141,8 @@ class NumericReuseExecutor:
                         primary.add_note('authority timing failed: '+repr(timing_error))
             authority_poll=measured_poll
         self.authority_poll=authority_poll
-        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self))
+        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self))
+        self._executor_pin=self.executor;self._executor_cleanup=self.executor.close
         self.checkpoint_adapter=self.executor.checkpoint
         self.policy_pin=raw(self.executor.policy);self.schedule_pin=raw(self.executor.schedule)
         self.max_entries=max_entries;self.max_retained_bytes=max_retained_bytes;self.max_key_bytes=max_key_bytes
@@ -156,7 +160,9 @@ class NumericReuseExecutor:
     @property
     def retained_bytes(self):return self._bytes
     def _current(self):
+        require(self.executor is self._executor_pin,'numeric executor replaced')
         adaptive_edge_policy.join(self,self.executor)
+        compiled_normalization_policy.join(self,self.executor)
         light_environment()
         require((accepted.PairExecutor.__call__,accepted.PairExecutor.__call__.__code__,reference.validate_pair,reference.validate_pair.__code__,pair.policy_check,pair.policy_check.__code__,engine.ann.typed_identity.graph_identity,engine.ann.typed_identity.graph_identity.__code__)==self._pins,'occurrence function pins changed')
         require(self.executor.authority_poll is self.authority_poll,'authority poll changed')
@@ -219,8 +225,22 @@ class NumericReuseExecutor:
     def _clear(self):
         while self.count:self._evict()
     def _poison(self):
-        if self._geometry is not None:self._geometry.poison();self.last_geometry_summary=None
-        self.poisoned=True;self.executor.poisoned=True;self.active=False;self._clear();self.last_receipt=None
+        primary=sys.exception()
+        try:
+            if self._geometry is not None:self._geometry.poison();self.last_geometry_summary=None
+            self.poisoned=True;self._executor_pin.poisoned=True;self.active=False;self._clear();self.last_receipt=None
+        except BaseException as error:
+            if primary is None:primary=error
+            elif error is not primary:
+                try:BaseException.add_note(primary,'numeric poison cleanup failed: '+repr(error))
+                except BaseException:pass
+            raise primary
+        finally:
+            try:self._executor_cleanup()
+            except BaseException as cleanup:
+                if primary is None:raise
+                try:BaseException.add_note(primary,'numeric backend cleanup failed: '+repr(cleanup))
+                except BaseException:pass
     def __call__(self,a,b,purpose_hash):
         require(not self.closed and not self.poisoned and self.active,'active batch required')
         self.last_receipt=None
@@ -254,6 +274,23 @@ class NumericReuseExecutor:
         except BaseException:self._poison();raise
     def close(self):
         # Close does not silently turn an unfinished batch into an attested one.
+        primary=None
         try:
             if self.active and not self.poisoned:self.end_batch()
-        finally:self._clear();self.last_receipt=None;self.closed=True
+        except BaseException as error:
+            primary=error;raise
+        finally:
+            cleanup_error=None
+            try:self._clear()
+            except BaseException as cleanup:cleanup_error=cleanup
+            self.last_receipt=None;self.closed=True
+            try:self._executor_cleanup()
+            except BaseException as cleanup:
+                if cleanup_error is None:cleanup_error=cleanup
+                else:
+                    try:BaseException.add_note(cleanup_error,'additional backend cleanup failed: '+repr(cleanup))
+                    except BaseException:pass
+            if cleanup_error is not None:
+                if primary is None:raise cleanup_error
+                try:BaseException.add_note(primary,'numeric close cleanup failed: '+repr(cleanup_error))
+                except BaseException:pass

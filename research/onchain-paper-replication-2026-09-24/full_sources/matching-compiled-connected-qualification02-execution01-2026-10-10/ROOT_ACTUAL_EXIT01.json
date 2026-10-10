@@ -1,0 +1,21 @@
+{
+  "actual_exit_code": 1,
+  "actual_tool_chunk": "dba8f2",
+  "at": "2026-10-10T23:32:01.368448+00:00",
+  "engineering_identity_terminal": true,
+  "no_rerun": true,
+  "numerical_operations_completed": false,
+  "observed_exception_message": "libtorch_cpu.so: failed to map segment from shared object",
+  "observed_exception_type": "ImportError",
+  "observed_import_chain": [
+    "batched_numeric_execution",
+    "matching_owner",
+    "feature_journal",
+    "component_store",
+    "torch"
+  ],
+  "original_prefight_sha256": "41d8b4e15d8523a197eb8913a42617cb953c24dc6351f3a3fad17dbc88c33c19",
+  "original_result_present": false,
+  "qualification": "Failure occurred during scientific imports before existing try/finally. Virtual-address mapping cap 3GiB; not an empirical physical-capacity failure. Original02output remains unchanged.",
+  "source": "Original Root exec tool output, transcribed metadata; not a fabricated worker RESULT or original stderr file"
+}

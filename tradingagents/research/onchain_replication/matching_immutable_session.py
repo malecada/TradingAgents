@@ -9,6 +9,7 @@ the caller's entry/checkpoint/batch/final responsibility.
 """
 import json
 from . import adaptive_edge_policy
+from . import compiled_normalization_policy
 from types import MappingProxyType
 import numpy as np
 from tradingagents.research.onchain_replication.contracts import AttributedGraph
@@ -71,13 +72,14 @@ def rejoin(graph, pin):
 
 
 class ImmutablePairSession:
-    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None):
+    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None):
         require(engine.ann is annealing and
                 callable(getattr(engine, '_check_owned', None)) and
                 callable(getattr(engine, '_advance_owned', None)) and
                 callable(getattr(annealing, '_check_state_identity', None)),
                 'explicit changed engine required')
         adaptive_edge_policy.attach(self,edge_cache_policy)
+        compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
         self.engine, self.annealing = engine, annealing
         self.a, self.b, self.config = a, b, config
         self.config_pin = config_pin(config)
@@ -100,10 +102,48 @@ class ImmutablePairSession:
                              (annealing, 'np', annealing.np))
         self.closed = False
         self.advances = 0
+        # Allocate the terminal cleanup closure before acquiring any backend.
+        # Its original capability is independent of the checked mutable attrs.
+        owned_close = None
+        close_attempted = False
+        close_error = None
+        def owned_cleanup():
+            nonlocal close_attempted, close_error
+            if close_error is not None:raise close_error
+            if close_attempted:return
+            close_attempted = True
+            if owned_close is not None:
+                try:owned_close()
+                except BaseException as error:
+                    close_error = error
+                    raise
+        self._normalizer_cleanup = owned_cleanup
+        normalizer = None
+        try:
+            normalizer = compiled_normalization_policy.open_backend(self) if _normalization_owner is None else _normalization_owner.borrow(self)
+            owned_close = normalizer.close if normalizer is not None else None
+            self._normalizer = normalizer
+            self._normalizer_pin = normalizer
+            self._normalizer_functions = tuple((name,getattr(normalizer,name),getattr(normalizer,name).__code__) for name in (("lse","close") if _normalization_owner is None else ("lse","close","current"))) if normalizer is not None else ()
+        except BaseException as primary:
+            # Until this constructor returns, the executor has no session to
+            # close. Attempt acquired cleanup here, retaining the primary error.
+            try:
+                if normalizer is not None and owned_close is None:owned_close = normalizer.close
+                owned_cleanup()
+            except BaseException as cleanup:
+                try:BaseException.add_note(primary, 'session construction cleanup failed: '+repr(cleanup))
+                except BaseException:pass
+            raise
 
     def current(self):
         require(not self.closed, 'matching session closed')
         adaptive_edge_policy.current(self)
+        compiled_normalization_policy.current(self)
+        require(self._normalizer is self._normalizer_pin, "normalization backend changed")
+        for name,function,code in self._normalizer_functions:
+            require(getattr(self._normalizer,name) is function and function.__code__ is code, "normalization function changed")
+        if len(self._normalizer_functions)==3:self._normalizer_functions[2][1]()
         require(config_pin(self.config) == self.config_pin, 'matching config changed')
         rejoin(self.a, self.pins[0]); rejoin(self.b, self.pins[1])
         for module, name, dependency in self.dependencies:
@@ -128,12 +168,26 @@ class ImmutablePairSession:
                 'positive operation allowance required')
         # No external callback between current-input/state check and body.
         result = self.engine._advance_owned(
-            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self))
+            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self),**({"normalizer":self._normalizer} if self._normalizer is not None else {}))
         adaptive_edge_policy.current(self)
+        compiled_normalization_policy.current(self)
+        require(self._normalizer is self._normalizer_pin, "normalization backend changed")
+        for name,function,code in self._normalizer_functions:
+            require(getattr(self._normalizer,name) is function and function.__code__ is code, "normalization function changed")
+        if len(self._normalizer_functions)==3:self._normalizer_functions[2][1]()
         self.advances += 1
         return result
 
     def close(self):
         # Session never owns state/ranking files; caller must engine.close(state).
-        self.closed = True
-        self.a = self.b = self.config = self.pins = self.identity = None
+        cleanup = self._normalizer_cleanup
+        try:
+            self.closed = True
+            self.a = self.b = self.config = self.pins = self.identity = None
+        except BaseException as primary:
+            try:cleanup()
+            except BaseException as error:
+                try:BaseException.add_note(primary, 'session close cleanup failed: '+repr(error))
+                except BaseException:pass
+            raise
+        else:cleanup()

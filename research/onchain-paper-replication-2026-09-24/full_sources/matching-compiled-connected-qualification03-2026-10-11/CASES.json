@@ -1,0 +1,105 @@
+{
+  "format": "connected02-finite-synthetic-qualification-v1",
+  "graph_cases": [
+    {
+      "name": "near_tie_3x3",
+      "n": 3,
+      "m": 3,
+      "mode": "near_tie"
+    },
+    {
+      "name": "rectangular_2x4",
+      "n": 2,
+      "m": 4,
+      "mode": "ordinary"
+    },
+    {
+      "name": "fallback_5x3",
+      "n": 5,
+      "m": 3,
+      "mode": "ordinary"
+    },
+    {
+      "name": "extreme_2x2",
+      "n": 2,
+      "m": 2,
+      "mode": "extreme"
+    }
+  ],
+  "primitive_cases": [
+    {
+      "name": "near_tie",
+      "values": [
+        [
+          0.0,
+          2.220446049250313e-16
+        ],
+        [
+          0.0,
+          -2.220446049250313e-16
+        ]
+      ],
+      "axis": 1
+    },
+    {
+      "name": "eligible_extremes",
+      "values": [
+        [
+          -256.0,
+          256.0
+        ],
+        [
+          256.0,
+          -256.0
+        ]
+      ],
+      "axis": 0
+    },
+    {
+      "name": "out_of_bound_fallback",
+      "values": [
+        [
+          257.0,
+          -257.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "axis": 1
+    },
+    {
+      "name": "dimension_fallback",
+      "values": [
+        [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ]
+      ],
+      "axis": 1
+    }
+  ],
+  "operation_budgets": [
+    1,
+    7,
+    31
+  ],
+  "max_advances_per_pair": 4096,
+  "max_direct_checkpoints_per_pair": 3,
+  "max_numeric_checkpoints_per_route": 32,
+  "numeric_repeats": 2,
+  "max_output_files": 512,
+  "max_output_bytes": 134217728,
+  "per_file_bytes": 4194304,
+  "cpu_seconds": 120,
+  "wall_seconds": 180,
+  "address_space_bytes": 17179869184,
+  "criteria": "exact logical state bytes, assignment bytes, float64 score bytes, iterations and convergence; no tolerance relaxation",
+  "post_terminal_only": true,
+  "resident_cgroup_bytes": 3221225472,
+  "cgroup_unit": "onchain-compiled-qualification-20261011-03.service"
+}

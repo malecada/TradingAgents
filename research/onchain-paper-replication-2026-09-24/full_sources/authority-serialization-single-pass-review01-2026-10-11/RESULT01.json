@@ -1,0 +1,83 @@
+{
+  "author_104_checks_reused_not_reexecuted": true,
+  "authority_objects_instantiated": false,
+  "checks": 16,
+  "custom_evaluation_order_counterexamples": [
+    {
+      "custom_dict_getitem_mutates_earlier_field": "old snapshots inputs before later getitem; new gets reference before getitem then traverses changed inputs",
+      "difference_confirmed": true,
+      "method": "__init__"
+    },
+    {
+      "custom_dict_getitem_mutates_earlier_field": "old snapshots inputs before later getitem; new gets reference before getitem then traverses changed inputs",
+      "difference_confirmed": true,
+      "method": "_finger"
+    }
+  ],
+  "exact_literal_six_removals": true,
+  "expression_sites": [
+    "Lease.__init__",
+    "Lease._finger"
+  ],
+  "native_scientific_imports": false,
+  "references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-serialization-single-pass01-2026-10-11/INVERSE.diff": {
+      "bytes": 2879,
+      "sha256": "b02c18b1be22169ffe93bf9b4743c6cf410cdfb853d1adc3392ac52d8d581ef7"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-serialization-single-pass01-2026-10-11/MANIFEST.json": {
+      "bytes": 1893,
+      "sha256": "2e9589f3af0407942c8e36fd03163fa4494965107c4211e31840bb073a5abf2d"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-serialization-single-pass01-2026-10-11/PATCH.diff": {
+      "bytes": 2879,
+      "sha256": "ebe76a44042bbf418c10a511f995630c1b7c791c5d77edd046964a2ebce3a5ed"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-serialization-single-pass01-2026-10-11/REPORT.md": {
+      "bytes": 4563,
+      "sha256": "841267f85ad840ad79ad2ccd8244463bb2a4c40cca6572f780b612c1bdcd206a"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-serialization-single-pass01-2026-10-11/RESULT.json": {
+      "bytes": 1048,
+      "sha256": "04e06a0c8ff95463586a5ea1fc638938d8a57673fa1e56315dff05fd2fed75af"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-serialization-single-pass01-2026-10-11/baseline.py": {
+      "bytes": 13709,
+      "sha256": "439013e29914ea8aa3b65beb3ef36f12bd4fb8b5f753f4e10d471eb17ba1cd6d"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-serialization-single-pass01-2026-10-11/candidate.py": {
+      "bytes": 13673,
+      "sha256": "edd14622f3b5948a057e38bcce937c4080b9acc985c9a419fa0ac038aa158119"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-serialization-single-pass01-2026-10-11/check.py": {
+      "bytes": 7636,
+      "sha256": "e977c20652b2af8f9748d29a4d5f10d605203e599785dc6dc64701103f2efb9b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-serialization-single-pass01-2026-10-11/provenance-baseline.py": {
+      "bytes": 2398,
+      "sha256": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471"
+    },
+    "tradingagents/research/admission.py": {
+      "bytes": 20076,
+      "sha256": "90bb459bcc7d9f73dda6965c59bf3d6f3bf75f3cbb8bd0ff3b869f7f8b76c930"
+    },
+    "tradingagents/research/onchain_replication/compact_owner.py": {
+      "bytes": 31130,
+      "sha256": "fa1221098270c6d4037ed74ed98541828b3da3dcc1bb07862c1d8b3bfa017188"
+    },
+    "tradingagents/research/onchain_replication/imported_authority_lease.py": {
+      "bytes": 13709,
+      "sha256": "439013e29914ea8aa3b65beb3ef36f12bd4fb8b5f753f4e10d471eb17ba1cd6d"
+    },
+    "tradingagents/research/onchain_replication/matching_owner.py": {
+      "bytes": 27485,
+      "sha256": "7a7eaf323645007cadd56314e2877f1ea3c5cc1dea499b918108cba7f8519e38"
+    },
+    "tradingagents/research/onchain_replication/provenance.py": {
+      "bytes": 2398,
+      "sha256": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471"
+    }
+  },
+  "status": "PASS_FOCUSED_ADMITTED_DOMAIN_AND_CONFIRMED_LIMIT",
+  "timing_measured": false
+}

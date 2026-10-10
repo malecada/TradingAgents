@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--unit=onchain-compiled-qualification-20261011-03",
+    "--slice=app.slice",
+    "--wait",
+    "--collect",
+    "--pipe",
+    "--working-directory=/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "--property=MemoryAccounting=yes",
+    "--property=MemoryHigh=3221225472",
+    "--property=MemoryMax=3221225472",
+    "--property=MemorySwapMax=0",
+    "--property=AllowedCPUs=3",
+    "--property=CPUAffinity=3",
+    "--property=RuntimeMaxSec=185",
+    "--property=LimitFSIZE=4194304:4194304",
+    "--setenv=OMP_NUM_THREADS=1",
+    "--setenv=OPENBLAS_NUM_THREADS=1",
+    "--setenv=MKL_NUM_THREADS=1",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-connected-qualification03-2026-10-11/qualify.py",
+    "--runtime-policy",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/POLICY01.json",
+    "--output",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-connected-qualification03-execution01-2026-10-11",
+    "--execute-after-terminal"
+  ],
+  "at": "2026-10-10T23:37:19.991176+00:00",
+  "caller_sha256": "26d41aebf0cc4b804eb68ad176ada8290717b80c8ceaf41d47cd84b283c85dde",
+  "financial_claim": false,
+  "fresh_output_absent": true,
+  "fresh_unit_properties": {
+    "ControlGroup": "",
+    "LoadState": "not-found",
+    "MainPID": "0"
+  },
+  "one_use": true,
+  "source_review_sha256": "0e4e7868814829690bbe21c08e2e0fb5b48e8b467526cf4070db9969b9269552",
+  "unit": "onchain-compiled-qualification-20261011-03.service"
+}

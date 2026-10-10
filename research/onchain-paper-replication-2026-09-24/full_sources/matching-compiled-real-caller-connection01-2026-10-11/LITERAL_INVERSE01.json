@@ -1,0 +1,54 @@
+{
+  "baseline_path": "tradingagents/research/onchain_replication/compact_mcm_batched.py",
+  "baseline_sha256": "5f3b842d65cb4ee78d07cc7f7340955518fbca36086b99586aaa5036f2aa0fe0",
+  "changes": [
+    {
+      "before": "from . import adaptive_edge_policy",
+      "after": "from . import adaptive_edge_policy\nfrom . import compiled_normalization_policy"
+    },
+    {
+      "before": " | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()),'explicit numeric execution schema required')",
+      "after": " | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()),'explicit numeric execution schema required')"
+    },
+    {
+      "before": "    if 'edge_cache_policy' in execution:require",
+      "after": "    _compiled_policy(execution)\n    if 'edge_cache_policy' in execution:require"
+    },
+    {
+      "before": "def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False):",
+      "after": "def _compiled_policy(execution):\n    if 'compiled_normalization_policy' not in execution:\n        require('compiled_normalization_inputs' not in execution,'normalization roles without selection')\n        return None\n    value=compiled_normalization_policy.freeze(execution['compiled_normalization_policy'])\n    require(value is not None,'explicit compiled normalization selection required')\n    roles=execution.get('compiled_normalization_inputs')\n    require(type(roles) is dict and set(roles)=={'source','library','runtime'},'exact registered normalization roles required')\n    require(all(type(role) is str and 0<len(role)<=128 and role.isascii() and all(c.isalnum() or c in '_-' for c in role) for role in roles.values()) and len(set(roles.values()))==3 and 'environment' not in roles.values(),'distinct finite registered normalization roles required')\n    return value\n\n\ndef _compiled_inputs(execution,run):\n    value=_compiled_policy(execution)\n    if value is None:return None\n    policy=dict(value);ad=run.admission;runtime=None\n    for kind in ('source','library','runtime'):\n        role=execution['compiled_normalization_inputs'][kind]\n        require(role in ad.inputs,'normalization role not admitted')\n        info=ad.inputs[role];path=ad.root/info['path']\n        require(str(path)==policy[kind+'_path'] and path.resolve()==path and info['sha256']==policy[kind+'_sha256'],'normalization registered path/hash differs')\n        limit=4096 if kind=='runtime' else 65536\n        bounded=compiled_normalization_policy.read_reference(path,info['sha256'],limit,policy['runtime_bytes'] if kind=='runtime' else None,owned=kind=='library')\n        require(run.read_input(role)==bounded,'normalization genuine input bytes differ')\n        if kind=='runtime':runtime=compiled_normalization_policy.runtime_metadata(bounded)\n    require('environment' in ad.inputs and runtime['runtime_inventory_sha256']==ad.inputs['environment']['sha256'],'normalization inventory not joined to genuine environment input')\n    environment=ad.inputs['environment'];path=ad.root/environment['path']\n    bounded=compiled_normalization_policy.read_reference(path,environment['sha256'],1024**2)\n    require(run.read_input('environment')==bounded,'normalization environment input changed')\n    return value\n\n\ndef _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False):"
+    },
+    {
+      "before": "        if binding_timing:names+=('matching_owner','compact_owner','imported_authority_lease')",
+      "after": "        if binding_timing:names+=('matching_owner','compact_owner','imported_authority_lease')\n        if compiled:names+=('compiled_normalization_policy','compiled_small_lse','matching_annealing','matching_checkpoint')"
+    },
+    {
+      "before": "        numeric=modules['numeric_execution'].verify(root/'stream',binding['numeric_execution'])",
+      "after": "        require(compiled_normalization_policy.freeze(binding.get('compiled_normalization_policy'))==compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy')),'batched/numeric normalization selection differs')\n        numeric=modules['numeric_execution'].verify(root/'stream',binding['numeric_execution'])"
+    },
+    {
+      "before": "    require(info['sha256']==binding['mcm_policy_sha256'],'batched policy admission pin differs')",
+      "after": "    require(info['sha256']==binding['mcm_policy_sha256'],'batched policy admission pin differs')\n    if 'compiled_normalization_policy' in binding:\n        policy=json.loads(stage.owner.bound._run.read_input(binding['mcm_policy_input']))\n        execution=validate(policy,binding['cells'])['execution']\n        require(_compiled_inputs(execution,stage.owner.bound._run)==compiled_normalization_policy.freeze(binding['compiled_normalization_policy']),'closed normalization policy differs from admitted input')"
+    },
+    {
+      "before": "**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}))",
+      "after": "**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}))"
+    },
+    {
+      "before": "binding_timing='binding_timing' in b['execution'])",
+      "after": "binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'])"
+    },
+    {
+      "before": "        owner.boundary();target.check()",
+      "after": "        normalization=_compiled_inputs(b['execution'],owner.bound._run)\n        owner.boundary();target.check()"
+    },
+    {
+      "before": "            held.check(owner);target.check();owner.boundary();stage.lease();target.final();io._root(root,fd)",
+      "after": "            held.check(owner);target.check();owner.boundary();stage.lease();target.final();io._root(root,fd)\n            require(_compiled_policy(b['execution'])==normalization,'batched normalization selection changed')"
+    },
+    {
+      "before": "        binding.update(mcm_policy_input=input_name,mcm_policy_sha256=start['policy_sha256'])",
+      "after": "        require(compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy'))==normalization,'completed numeric normalization selection differs')\n        if normalization is not None:binding['compiled_normalization_policy']=dict(normalization)\n        binding.update(mcm_policy_input=input_name,mcm_policy_sha256=start['policy_sha256'])"
+    }
+  ]
+}

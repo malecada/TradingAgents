@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-10T23:36:27.492402+00:00",
+  "caller": [
+    "systemd-run",
+    "--user",
+    "--unit=onchain-compiled-qualification-20261011-03",
+    "--slice=app.slice",
+    "--wait",
+    "--collect",
+    "--pipe",
+    "--working-directory=/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "--property=MemoryAccounting=yes",
+    "--property=MemoryHigh=3221225472",
+    "--property=MemoryMax=3221225472",
+    "--property=MemorySwapMax=0",
+    "--property=AllowedCPUs=3",
+    "--property=CPUAffinity=3",
+    "--property=RuntimeMaxSec=185",
+    "--property=LimitFSIZE=4194304:4194304",
+    "--setenv=OMP_NUM_THREADS=1",
+    "--setenv=OPENBLAS_NUM_THREADS=1",
+    "--setenv=MKL_NUM_THREADS=1",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-connected-qualification03-2026-10-11/qualify.py",
+    "--runtime-policy",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/POLICY01.json",
+    "--output",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-connected-qualification03-execution01-2026-10-11",
+    "--execute-after-terminal"
+  ],
+  "caller_evidence_sha256": "26d41aebf0cc4b804eb68ad176ada8290717b80c8ceaf41d47cd84b283c85dde",
+  "candidate_manifest_sha256": "a7b67aa9933217ce187f290dbcffbb5d4cbc7fc9a2cd5a00fc5dccc779530e7e",
+  "checks": 97,
+  "conditions": [
+    "Root alone invokes exact argv once under a fresh local user unit; no same-output overwrite/retry.",
+    "Exact current-process kernel guard must pass before scientific imports; source tests and Root metadata preflight are not kernel proof.",
+    "Preserve original02 PREFLIGHT/missing RESULT/Root exit and all03 failure/partial outputs.",
+    "A successful return still needs actual RESULT/output review before finite numerical claims."
+  ],
+  "disposition": "RELEASE_EXACT_LOCAL_QUALIFICATION03_CALLER_ONCE",
+  "findings": [],
+  "qualify_sha256": "e3add7dd56333c0117f1e8e02728607e8f01030f4b00a5722ec71a80db6d70de",
+  "review_actions": "Stdlib source/AST, parser fixtures, hash/metadata only; no execute/native guard/Git/SSH/network/Owner/arrays",
+  "source_check_sha256": "14d9c4ba39bc5618ffca47b9d1f5f5ed1827fffa04f753d2c4ff2324ef3e7387",
+  "untested": [
+    "Actual systemd03 launch, native cgroup memory/readback enforcement, actual VmPeak/RSS and terminal cleanup",
+    "Actual scientific imports, connected numerical equivalence/restored continuation, native mappings/FD lifetime, runtime-currentness beyond authenticated Root metadata preflight",
+    "Scientific/financial validity, empirical capacity or production admission"
+  ]
+}

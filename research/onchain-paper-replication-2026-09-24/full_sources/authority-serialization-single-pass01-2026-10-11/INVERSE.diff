@@ -1,0 +1,20 @@
+--- a/tradingagents/research/onchain_replication/imported_authority_lease.py
++++ b/tradingagents/research/onchain_replication/imported_authority_lease.py
+@@ -92,7 +92,7 @@
+         self.execution=execution;self.owner=execution._owner;self.stage=execution._stage;self.prepared=self.stage.prepared;self.bound=execution._bound;self.run=self.bound._run
+         self.objects=(execution,self.owner,self.stage,self.prepared,self.bound,self.run,execution._materialized,self.prepared._cap)
+         self.scheduler=Interval(selected);self._scheduler_pin=self.scheduler;self._policy_pin=self.scheduler.policy;self._clock_pin=self.scheduler.clock;self.closed=False;self.target=None;self.targets={}
+-        self.configuration=canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':execution._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':self.run.admission.inputs,'sources':self.run.admission.experiment['source_files'],'runtime':self.bound.context})
++        self.configuration=canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':execution._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':thaw(self.run.admission.inputs),'sources':thaw(self.run.admission.experiment['source_files']),'runtime':thaw(self.bound.context)})
+         self.sources=dict(self.run.admission.experiment['source_files']);root=self.run.admission.root
+         paths={root/name for name in self.sources} # registered source paths; inputs appended below
+         paths.update(root/v['path'] for v in self.run.admission.inputs.values())
+@@ -110,7 +110,7 @@
+     def _finger(self):
+         from .provenance import canonical_bytes,thaw
+         e=self.execution
+-        current=canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':e._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':self.run.admission.inputs,'sources':self.run.admission.experiment['source_files'],'runtime':self.bound.context})
++        current=canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':e._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':thaw(self.run.admission.inputs),'sources':thaw(self.run.admission.experiment['source_files']),'runtime':thaw(self.bound.context)})
+         require(current==self.configuration,'import interval baseline changed')
+         self._identity();require(tuple(fingerprint(p) for p in self.paths)==self.fingerprints,'source/input identity changed')
+         current=_loaded(self.run.admission.root,self.sources)

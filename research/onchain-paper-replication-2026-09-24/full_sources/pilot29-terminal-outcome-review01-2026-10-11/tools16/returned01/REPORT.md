@@ -1,0 +1,17 @@
+# Outcome16 actual returned-byte review
+
+**Accepted: actual external recovery of the declared public outcome16 increment at source `41b55367bd226c7292c1f4a802c200cc5cd1f841`.** No material returned-scope defect found. The6822 checks passed in one bounded attempt; original source/caller review files remain unchanged.
+
+The selection hash `86473a6f3a5a824519e7d08153ef2e082409948d1e90dcab38b66ff1d535c959` joins to capture, and capture joins to recovery. All13 recorded Git operations have exit0 and their actual stdout/stderr byte counts and SHA256 match. Raw local, remote-branch and fetched source agree; independent commit-object and blob-object encoding reproduces the recorded IDs. The exact fresh bare directory exists with no alternate-object file; no Git internal body or credential was read.
+
+The returned archive contains exactly1124 ordered unique members:1022 regular files,1 symlink and101 directories. Every member name, type, mode, target, size and regular-body hash matches the selection. Regular bodies total25,241,412B. Independent full PAX reencoding reproduces all27,217,920 archive bytes, SHA256 `aa118384a578c7e66c2080ce8f4ffb823b9db69e75fb309d5b41e64c7bb1e827`, blob `0bd4975444219d41fa99f38fe1cb411e2a513262`. The local archive, actual raw returned-blob stdout and saved returned archive all match.
+
+The51 reused rows are unique, absent from the new archive, and still match accepted14 regular-body mode/size/hash metadata. Accepted14 recovery/capture/selection references and source join. Its three previously recovered archive duplicates remain the only prior archive exclusions; no historical store/archive replay was performed.
+
+All three exact synthetic `.git` exclusions propagate through selection/capture/recovery and are absent from returned members. Exactly two14B alias fixtures are present as separate regular bodies, each with the authenticated original device/inode/nlink provenance. This proves body/name preservation; it does not restore hardlinks or grant deletion authority.
+
+All12 original tail members for batches48–51 returned, representing16,384 journal cells. Their pending ranges, complete receipts, payload byte/hash references and original closure-token hashes join independently to the accepted terminal evidence. The original failed claim returned with its accepted hash and claim identity. Previously absent terminal-completion paths are not fabricated in the archive. The terminal finding remains failed: no complete MCM graph, training result or financial fit.
+
+Scope limits: this is declared public incremental recovery plus authenticated accepted14 reuse. It excludes the three synthetic Git subtrees, private runtime and whole scientific-store/POSIX reconstruction. The6822 checks establish preservation and closure joins, not mathematical score correctness or permission to execute compiled04 qualification. No arrays, numerical/native/Owner/science actions, Git or network operations were executed. Historical terminal/accounting findings were reused rather than rerun. Remote evidence is authenticated as recorded, without a new freshness query.
+
+The check used384MiB address space,30CPU seconds and4MiB per-output limits. The logged110,522,208B covers bounded streaming digests; bounded reencoding/blob-hash reads add approximately52.5MiB. Source/receipt reads were each capped at2MiB. Original source/caller and old outcome15 refusal records remain immutable.
